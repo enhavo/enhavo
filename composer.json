@@ -1,0 +1,76 @@
+{
+  "name": "xqweb/xqweb-symfony",
+  "license": "MIT",
+  "type": "project",
+  "description": "symfony xqweb edition",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.xq-web.de"
+    }
+  ],
+  "autoload": {
+    "psr-0": { "": "src/" }
+  },
+  "require": {
+    "php": ">=5.3.3",
+    "symfony/symfony": "~2.4",
+    "doctrine/orm": "~2.2,>=2.2.3",
+    "doctrine/doctrine-bundle": "~1.3@dev",
+    "twig/extensions": "~1.0",
+    "symfony/assetic-bundle": "~2.3",
+    "symfony/swiftmailer-bundle": "~2.3",
+    "symfony/monolog-bundle": "~2.4",
+    "sensio/distribution-bundle": "~2.3",
+    "sensio/framework-extra-bundle": "~3.0",
+    "sensio/generator-bundle": "~2.3",
+    "phpunit/phpunit": "3.7.*",
+    "incenteev/composer-parameter-handler": "~2.0",
+    "doctrine/doctrine-migrations-bundle": "dev-master",
+    "doctrine/migrations": "dev-master",
+    "doctrine/doctrine-fixtures-bundle": "dev-master",
+    "sylius/resource-bundle": "v0.10.0",
+    "sylius/product-bundle": "v0.10.0",
+    "sylius/cart-bundle": "v0.10.0",
+    "sylius/taxation-bundle": "v0.10.0",
+    "sylius/promotion-bundle": "v0.10.0",
+    "friendsofsymfony/user-bundle": "~2.0@dev",
+    "friendsofsymfony/jsrouting-bundle": "@stable",
+    "willdurand/js-translation-bundle" : "@stable",
+    "dg/rss-php": "1.1",
+    "rhumsaa/uuid": "~2.7",
+    "bacon/bacon-string-utils": "1.0.3",
+    "mrclay/minify": "dev-master",
+    "natxet/CssMin": "dev-master",
+    "liip/imagine-bundle": "1.0.6",
+    "zendframework/zend-soap": "2.3.3",
+    "massive/search-bundle": "0.2",
+    "knplabs/knp-menu-bundle": "~2.0"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+    ],
+    "post-update-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+    ]
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-web-dir": "web",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
+    }
+  }
+}

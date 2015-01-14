@@ -1,0 +1,43 @@
+esperanto_project:
+    resource: "@esperantoProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+esperanto_media:
+    resource: "@esperantoMediaBundle/Resources/config/routing.yml"
+
+esperanto_user_security:
+    resource: "@esperantoUserBundle/Resources/config/routing/security.yml"
+
+esperanto_admin_admin:
+    resource: "@esperantoAdminBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin
+
+esperanto_news_admin:
+    resource: "@esperantoNewsBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin/news
+
+esperanto_page_admin:
+    resource: "@esperantoPageBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin/page
+
+esperanto_page_frontend:
+    resource: "@esperantoPageBundle/Resources/config/routing/frontend.yml"
+    prefix:   /
+
+esperanto_project_frontend:
+    resource: "@esperantoProjectBundle/Resources/config/frontend.yml"
+    prefix:   /
+
+esperanto_content_admin:
+    prefix:   /admin/content
+    resource: "@esperantoContentBundle/Resources/config/routing/admin.yml"
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
