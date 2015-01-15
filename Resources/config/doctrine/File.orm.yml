@@ -1,0 +1,21 @@
+esperanto\MediaBundle\Entity\File:
+    type: entity
+    table: media_file
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        mimeType:
+            type: string
+            length: 255
+            nullable: true
+
+        extension:
+            type: string
+            length: 255
+            nullable: true
+
+    lifecycleCallbacks: {  }

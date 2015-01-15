@@ -1,0 +1,56 @@
+{% block esperanto_files_widget %}
+    {% spaceless %}
+            <div class="uploadForm">
+
+                <script type="text/html" data-id="files-template">
+                    <li class="imgContainer">
+                        <div class="imgdelete">
+                            <i class="icon-remove icon-2x"></i>
+                        </div>
+                        <div style="height: 100px; width: 100px; background-color: blue">
+                            <img src="/file/{file_id}/100/100">
+                        </div>
+                        <input type="hidden" name="{full_name}[]" value="{file_id}" />
+                    </li>
+                </script>
+
+                <div class="layer">
+                    {% if form.information %}
+                        <div class="hintBox mb1">
+                            <ul class="bullList">
+                                {% for info in form.information %}
+                                   <li>{{ info|trans }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="progress">
+                        <div class="bar" style="width: 0%;"></div>
+                    </div>
+
+                    <div class="dropzone fade well">
+                        <ul class="list clearfix" data-name="{{ full_name }}">
+                            {% for file in form.vars.value %}
+                               {% if file %}
+                                  <li class="imgContainer">
+                                      <div class="imgdelete">
+                                          <i class="icon-remove icon-2x"></i>
+                                      </div>
+                                      <div style="height: 100px; width: 100px; background-color: blue">
+                                          <img src="/file/{{ file.id }}/100/100">
+                                      </div>
+                                      <input type="hidden" name="{{ full_name }}[]" value="{{ file.id }}" />
+                                  </li>
+                               {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <input id="{{ id }}" class="fileupload hide" type="file" data-url="{{ path('esperanto_media_upload') }}" multiple>
+                    <div class="mt1em">
+                        <button class="btnsmall upload-button"><i class="icon-arrow-up"></i> Datei hochladen</button>
+                    </div>
+                </div>
+            </div>
+    {% endspaceless %}
+{% endblock %}
