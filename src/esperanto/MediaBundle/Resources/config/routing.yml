@@ -1,0 +1,12 @@
+esperanto_media_upload:
+    pattern:  /file/add
+    defaults:
+        _controller: esperantoMediaBundle:File:upload
+
+esperanto_media_show:
+    pattern:  /file/{id}/{width}/{height}
+    defaults:
+        _controller: esperantoMediaBundle:File:show
+        width: null
+        height: null
+        _method: GET

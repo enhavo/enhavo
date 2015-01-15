@@ -1,0 +1,57 @@
+/* upload Form */
+
+.uploadForm .bar {
+    height: 18px;
+    background: green;
+}
+
+.uploadForm .dropzone {
+    background: palegreen;
+    width: 100%;
+    min-height: 100px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.uploadForm .dropzone.in {
+    width: 600px;
+    height: 200px;
+    line-height: 200px;
+    font-size: larger;
+}
+
+.uploadForm .dropzone.hover {
+    background: lawngreen;
+}
+
+.uploadForm .dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+
+
+.uploadForm .list li {
+    float:left;
+    margin:5px;
+    position:relative;
+}
+
+.uploadForm .list li .imgdelete {
+    position: absolute;
+    top:0;
+    right:0;
+    color:#fff;
+    background:#666666;
+    padding:1px 4px;
+    display:none;
+    cursor:pointer;
+}
+
+.uploadForm .list li:hover .imgdelete {
+    display:block;
+}
