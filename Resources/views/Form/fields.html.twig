@@ -1,0 +1,62 @@
+{% block esperanto_content_widget %}
+
+    <div class="row mb1 contentForm">
+        <div class="menu">
+            <div class="triangle-up"></div>
+            <div class="triangle-down"></div>
+            <ul>
+                <li class="addItem" data-item="text">Text</li>
+                <li class="addItem" data-item="picture">Bild</li>
+            </ul>
+        </div>
+
+        <div class="span9" float="left">
+            <div>
+              <i class="icon-plus btnsmall addButton" data-name="{{ full_name }}" data-position="top" ></i>
+            </div>
+            <div class="mt1em">
+              <div class="item-container">
+                {% for child in form.children %}
+                  {% for item in child.children %}
+                    {% set formItem = item.configuration %}
+                    {% set formName = item.vars.full_name %}
+                    {% set formOrder = item.vars.value.order %}
+                    {% set created = false %}
+                    {% include 'esperantoContentBundle:Form:form.html.twig' %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="mt1em">
+                <i class="icon-plus btnsmall addButton" data-name="{{ full_name }}" data-position="bottom"></i>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block esperanto_content_item_widget %}
+    <input type="text" name="{{ full_name }}[type]" value="{{ form.type.vars.value }}">
+{% endblock %}
+
+{% block esperanto_content_configuration_widget %}
+    {{ form_widget(form.form) }}
+{% endblock %}
+
+{% block esperanto_content_item_picture_widget %}
+    {{ form_widget(form.files) }}
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_text_widget %}
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text) }}
+    </div>
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+

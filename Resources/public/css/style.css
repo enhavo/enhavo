@@ -1,0 +1,100 @@
+.contentForm {
+    position: relative;
+}
+
+.contentForm .menu {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    color: #DDD;
+    z-index: 1000;
+    padding: 5px;
+}
+
+.contentForm .menu.bottomTriangle .triangle-up {
+    display: none;
+}
+
+.contentForm .menu.topTriangle .triangle-down {
+    display: none;
+}
+
+.contentForm .menu .triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #444;
+    position: absolute;
+    top: -10px;
+    left: 2px;
+}
+
+.contentForm .menu .triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #444;
+    position: absolute;
+    bottom: -10px;
+    left: 2px;
+}
+
+.contentForm .menu ul {
+    background-color: #444;
+}
+
+.contentForm .menu li:first-child {
+    margin-top: 0;
+}
+
+.contentForm .menu li {
+    margin-top: 5px;
+    background-color: #777;
+    padding: 5px;
+    min-width: 100px;
+}
+
+.contentForm .menu li:hover {
+    color: #000000;
+    background-color: #eee;
+}
+
+.contentForm .addItem {
+    cursor: pointer;
+}
+
+.contentForm .item {
+    background-color: #DDD;
+    margin-bottom: 10px;
+}
+
+.contentForm .padding {
+    padding: 10px;
+}
+
+.contentForm .item .button-container {
+    background-color: #aaa;
+    height: 20px;
+    position: relative;
+}
+
+.contentForm .item .button-container .button {
+    position: absolute;
+    color: #5A5A5A;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.contentForm .item .button-container .button-up {
+    left: 5px;
+}
+
+.contentForm .item .button-container .button-down {
+    left: 20px;
+}
+
+.contentForm .item .button-container .button-delete {
+    right: 5px;
+}

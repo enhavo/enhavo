@@ -1,0 +1,28 @@
+esperanto\ContentBundle\Entity\Item:
+    type: entity
+    table: content_item
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        order:
+            type: integer
+            column: '`order`'
+            nullable: true
+
+        configuration:
+            type: blob
+            nullable: true
+
+    manyToOne:
+        column:
+            targetEntity: Column
+
+        content:
+            targetEntity: Content
+
+    lifecycleCallbacks: {  }
