@@ -1,0 +1,14 @@
+<div class="row p1 head-row">
+    <div class="span2">Alle Seiten</div>
+</div>
+
+<div class="row-container">
+    {% for item in data %}
+        <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
+            {% set title = 'label.' ~ item.title %}
+            <div class="span3">{{ title | trans }}</div>
+        </div>
+    {% else %}
+        {{ 'table.empty'|trans }}
+    {% endfor %}
+</div>

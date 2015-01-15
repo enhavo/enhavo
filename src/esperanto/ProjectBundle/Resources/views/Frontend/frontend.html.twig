@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoproject/css/reset.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoproject/css/frontend.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,800,700,100,900,400,200,300' rel='stylesheet' type='text/css'>
+
+    <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/esperanto/esperanto_fullscreen.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/esperanto/esperanto_scrollto.js') }}?2"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoproject/js/frontend.js') }}"></script>
+</head>
+<body id="top">
+<header>
+    <div class="container">
+        <nav>
+            <ul>
+                <li id="li-top">
+                    <a id="logo" href="#" data-scrollto="#top">
+                        <img src="{{ asset('bundles/esperantoproject/img/141107_Logo.jpg') }}">
+                    </a>
+                </li>
+                <li id="li-home" data-scrollto="#top">
+                    <div class="menue-div">
+                        <img class="menue-icons" src="{{ asset('bundles/esperantoproject/img/Home.png') }}">
+                    </div>
+                    <div class="menue-links">Home</div>
+                </li>
+                <li id="li-concept" data-scrollto="#concept">
+                    <div class="menue-div">
+                        <img class="menue-icons" src="{{ asset('bundles/esperantoproject/img/Konzept_baige.png') }}">
+                    </div>
+                    <div class="menue-links">Konzept</div>
+                </li>
+                <li id="li-about_us" data-scrollto="#about_us">
+                    <div class="menue-div">
+                        <img class="menue-icons" src="{{ asset('bundles/esperantoproject/img/UeberUns_baige.png') }}">
+                    </div>
+                    <div class="menue-links">&Uumlber Uns</div>
+                </li>
+                <li id="li-appointments" data-scrollto="#appointments">
+                    <div class="menue-div">
+                        <img class="menue-icons" src="{{ asset('bundles/esperantoproject/img/Termine_baige.png') }}">
+                    </div>
+                    <div class="menue-links">Termine</div>
+                </li>
+                <li id="li-download" data-scrollto="#download">
+                    <div class="menue-div">
+                        <img class="menue-icons" src="{{ asset('bundles/esperantoproject/img/downloads_baige.png') }}">
+                    </div>
+                    <div class="menue-links">Downloads</div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="posrel" data-fullscreen-container>
+    <img data-fullscreen src="{{ asset('bundles/esperantoproject/img/shutterstock_113590159_v2.jpg') }}">
+    <div class="container">
+        <div id="citation">{{ home.citation | nl2br }}</div>
+        <div id="author">- {{ home.author }} -</div>
+        <div id="home-text-container">
+            <img id="home-arrow-up" src="{{ asset('bundles/esperantoproject/img/thin_up.png') }}">
+            <div id="text-home">
+                <div id="text-content">
+                   {{ home.text | nl2br}}
+                </div>
+            </div>
+            <img id="home-arrow-down" data-home-arrow-down="false" src="{{ asset('bundles/esperantoproject/img/thin_down.png') }}">
+        </div>
+    </div>
+</section>
+
+<section id="concept">
+    <div class="images">
+        <div class="slider" data-slider>
+            {% set counter = "1" %}
+            {% for picture in concept.picture %}
+                <img class="concept-img" data-img id={{ counter }} src="/file/{{ picture.id }}">
+                {% set counter = counter+1 %}
+            {% endfor %}
+        </div>
+    </div>
+    <div id="concept_arrows">
+        <img class="arrow-left-thik" data-arrow-left src="{{ asset('bundles/esperantoproject/img/thik_left.png') }}">
+        <img class="arrow-right-thik" data-arrow-right src="{{ asset('bundles/esperantoproject/img/thik_right.png') }}">
+    </div>
+    <div class="content-small" data-content-small>
+        <div class="heading" data-heading> {{ concept.heading }}</div>
+        <div class="underline" data-underline>
+            <img class="arrow arrow-right" src="{{ asset('bundles/esperantoproject/img/long_white_right.png') }}">
+            <img class="underline-img" src="{{ asset('bundles/esperantoproject/img/Konzept_white.png') }}">
+            <img class="arrow arrow-left" src="{{ asset('bundles/esperantoproject/img/long_white_left.png') }}">
+        </div>
+        <div id="d2" data-d2>
+            <img id="close" src="{{ asset('bundles/esperantoproject/img/close.png') }}">
+            <div class="text">
+               {{ concept.text | nl2br}}
+            </div>
+        </div>
+        <div id="read_more">weiterlesen...</div>
+    </div>
+</section>
+
+<section id="about_us">
+    <div class="images">
+        <div class="slider" data-slider>
+            {% set counter = "1" %}
+            {% for picture in about_us.picture %}
+                <img class="about_us-img" data-img id={{ counter }} src="/file/{{ picture.id }}">
+                {% set counter = counter+1 %}
+            {% endfor %}
+        </div>
+    </div>
+    <div id="about_us_arrows">
+        <img class="arrow-left-thik" data-arrow-left src="{{ asset('bundles/esperantoproject/img/thik_left.png') }}">
+        <img class="arrow-right-thik" data-arrow-right src="{{ asset('bundles/esperantoproject/img/thik_right.png') }}">
+    </div>
+    <div class="content-small" data-content-small>
+        <div class="heading" data-heading>{{ about_us.heading }}</div>
+        <div class="underline" data-underline>
+            <img class="arrow arrow-right" src="{{ asset('bundles/esperantoproject/img/thin_baige_right.png') }}">
+            <img class="underline-img" src="{{ asset('bundles/esperantoproject/img/UeberUns_baige.png') }}">
+            <img class="arrow arrow-left" src="{{ asset('bundles/esperantoproject/img/thin_baige_left.png') }}">
+        </div>
+        <div id="d2" data-d2>
+            <img id="close" src="{{ asset('bundles/esperantoproject/img/close.png') }}">
+            <div class="text">
+                {{ about_us.text | nl2br}}
+            </div>
+        </div>
+        <div id="read_more">weiterlesen...</div>
+    </div>
+</section>
+
+<section id="appointments">
+    <div class="container">
+        <img id="appointment_back" src="{{ asset('bundles/esperantoproject/img/thik_red_left.png') }}">
+        <div class="heading text-red">Termine</div>
+        <div class="underline">
+            <img class="arrow arrow-right" src="{{ asset('bundles/esperantoproject/img/thin_red_right.png') }}">
+            <img class="underline-img" src="{{ asset('bundles/esperantoproject/img/Termine_red.png') }}">
+            <img class="arrow arrow-left" src="{{ asset('bundles/esperantoproject/img/thin_red_left.png') }}">
+        </div>
+        <div id="appointment-text">
+            {% set counter = "1" %}
+            {% for appointment in appointments %}
+                {% set counter1 = 'i'~counter  %}
+                {% set counter = counter+1 %}
+                <div class="item clearfix" name="item" id={{ counter1 }}>
+                    <img class="calender" src="{{ asset('bundles/esperantoproject/img/kalenderblatt.png') }}">
+                    <div class="date" time={{ appointment.time }}>
+                        <div class="day">{{ appointment.day }}</div>
+                        <div class="month">{{ appointment.month }}</div>
+                    </div>
+                    <div class="title">{{ appointment.title }}</div>
+                    <div class="text">{{ appointment.text | nl2br}}</div>
+                    <div id="read_more">weiterlesen...</div>
+                    <img class="pen-img" id={{ counter1 }} src="{{ asset('bundles/esperantoproject/img/Konzept_red.png') }}">
+                </div>
+            {% endfor %}
+        </div>
+        <div id="appointment_content">
+            <div class="item" name="item">
+                <img class="calender" src="{{ asset('bundles/esperantoproject/img/kalenderblatt.png') }}">
+                <div class="date">
+                    <div class="day"></div>
+                    <div class="month"></div>
+                </div>
+                <div class="title"></div>
+                <div class="time"></div>
+                <div class="text"></div>
+                <form method="POST" action="/appointmentMail" id="appointmentForm">
+                    <input type="hidden" id="input_title" name="esperanto_project_appointmentMail[title]" value="">
+                    <input type="hidden" id="input_date" name="esperanto_project_appointmentMail[date]" value="">
+                    Name<input name="esperanto_project_appointmentMail[name]" type="text"><br>
+                    E-Mail <input name="esperanto_project_appointmentMail[email]" type="text"><br>
+                    Alter <input name="esperanto_project_appointmentMail[age]" type="text"><br>
+                    Beruf <input name="esperanto_project_appointmentMail[occupation]" type="text">
+                    <div id="participate">teilnehmen</div>
+                    <img id="arrow_right_tick" src="{{ asset('bundles/esperantoproject/img/thik_blue_right.png') }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="download">
+    <div class="container">
+        <div class="heading">Downloads</div>
+        <div class="underline">
+            <img class="arrow arrow-right" src="{{ asset('bundles/esperantoproject/img/long_white_right.png') }}">
+            <img class="underline-img" src="{{ asset('bundles/esperantoproject/img/downloads_white.png') }}">
+            <img class="arrow arrow-left" src="{{ asset('bundles/esperantoproject/img/long_white_left.png') }}">
+        </div>
+        <div id="download-text">
+            {% for download in downloads %}
+                <div class="item">
+                    {% if download.file.first != null %}
+                        <a href={{"download/"~download.file.first.id }}>
+                        {% if download.file.first.extension == "pdf" %}
+                            <img class="file-img" src="{{ asset('bundles/esperantoproject/img/PDF.png') }}">
+                        {% elseif download.file.first.extension == "zip" %}
+                            <img class="file-img" src="{{ asset('bundles/esperantoproject/img/ZIP.png') }}">
+                        {% elseif download.file.first.extension == "jpeg" %}
+                            <img class="file-img" src="{{ asset('bundles/esperantoproject/img/JPG.png') }}">
+                        {% elseif download.file.first.extension == "png" %}
+                            <img class="file-img" src="{{ asset('bundles/esperantoproject/img/PNG.png') }}">
+                        {% endif %}
+                    {% endif %}
+                    <div class="title">{{ download.title }}</div>
+                    <div class="text">{{ download.text | nl2br}}</div></a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="overlay" id="about">
+        <img id="about_close" src="{{ asset('bundles/esperantoproject/img/close.png') }}">
+        <div id="about_content">{{ about.text |nl2br }}</div>
+
+    </div>
+
+    <div class="overlay" id="contact">
+        <div id="contact_content">
+            <div id="maps_mail">
+                <ul>
+                    <li id="maps">Maps</li>
+                    <li id="mail">Mail</li>
+                </ul>
+                <div id="mapContainer">Map</div>
+                <div id="mail_formular">
+                    <form  method="POST" action="/email" id="emailForm">
+                        <div class="line">
+                            <input name="esperanto_project_email[name]" class="i1"><br>
+                            <input name="esperanto_project_email[email]" class="i2"><br>
+                            <input name="esperanto_project_email[name]" class="i3"><br>
+                        </div>
+                        Name<br>
+                        E-Mail<br>
+                        Betreff<br>
+                        Nachricht
+                        <textarea class="i4" name="esperanto_project_email[message]"></textarea>
+                        <div class="message-line"></div>
+                        <img id="arrow_send" src="{{ asset('bundles/esperantoproject/img/thik_right.png') }}">
+                    </form>
+                </div>
+            </div>
+            <div id="contact_text">
+                <p id="contact_heading">INITIATIVE MASTERPLAN</p>
+                <p class="contact_data" style="margin-top: 8px">{{ contact.name1 }}</p>
+                <p class="contact_data">{{ contact.street1 }}</p>
+                <p class="contact_data">{{ contact.place1 }}</p>
+                <p class="contact_data">{{ contact.phone1 }}</p>
+                <p class="contact_data">{{ contact.fax1 }}</p>
+                <p class="contact_data">{{ contact.mail1 }}</p>
+                <p class="contact_data" style="margin-top: 15px">{{ contact.name2 }}</p>
+                <p class="contact_data">{{ contact.street2 }}</p>
+                <p class="contact_data">{{ contact.place2 }}</p>
+                <p class="contact_data">{{ contact.phone2 }}</p>
+                <p class="contact_data">{{ contact.fax2 }}</p>
+                <p class="contact_data">{{ contact.mail2 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div id="d1">
+            <div id="social-media-buttons">
+                <img style="display: none" class="social-media-img" src="{{ asset('bundles/esperantoproject/img/xing.png') }}">
+                <a href="https://www.facebook.com/InitiativeMasterplan" target="_blank"><img class="social-media-img" src="{{ asset('bundles/esperantoproject/img/facebook.png') }}"></a>
+                <a href="https://plus.google.com/u/0/103819276145249348679/posts" target="_blank"><img class="social-media-img" src="{{ asset('bundles/esperantoproject/img/google+.png') }}"></a>
+            </div>
+            <div id="about-text">Impressum</div>
+            <img id="arrow-footer" src="{{ asset('bundles/esperantoproject/img/thik_up.png') }}">
+            <img id="arrow_close" src="{{ asset('bundles/esperantoproject/img/thik_red_down.png') }}">
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

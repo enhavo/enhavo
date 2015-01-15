@@ -1,0 +1,30 @@
+parameters:
+    esperanto_page.event.page.class: esperanto\ProjectBundle\EventListener\ContentBuilderSubscriber
+    esperanto_project.event.appointment.class: esperanto\ProjectBundle\EventListener\AppointmentBuilderSubscriber
+    esperanto_project.event.download.class: esperanto\ProjectBundle\EventListener\DownloadBuilderSubscriber
+
+services:
+    esperanto_project.event.appointment:
+        class: %esperanto_project.event.appointment.class%
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    esperanto_project.event.download:
+        class: %esperanto_project.event.download.class%
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    esperanto_project_appointment:
+        class: %esperanto_project.form.type.appointment.class%
+        arguments:
+            - '@router'
+        tags:
+            - { name: form.type }
+
+    esperanto_project_download:
+        class: %esperanto_project.form.type.download.class%
+        arguments:
+            - '@router'
+        tags:
+            - { name: form.type }
+
