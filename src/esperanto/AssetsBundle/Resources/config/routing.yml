@@ -1,0 +1,3 @@
+esperanto_assets_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: esperantoAssetsBundle:Default:index }
