@@ -1,0 +1,3 @@
+esperanto_reference_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: esperantoSliderBundle:Default:index }

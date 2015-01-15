@@ -1,0 +1,16 @@
+esperanto\SliderBundle\Entity\Slider:
+    type: mappedSuperclass
+    table: slider_slider
+    repositoryClass: esperanto\SliderBundle\Repository\SliderRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
