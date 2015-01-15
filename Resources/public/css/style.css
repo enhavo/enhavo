@@ -1,0 +1,7 @@
+#leftNavi li a.menu-icon-appointment {
+    background-image: url(../img/calendar_edit.png);
+}
+
+#leftNavi li a.menu-icon-download {
+    background-image: url(../img/arrow_down.png);
+}

@@ -1,0 +1,15 @@
+esperanto_project_frontend:
+  pattern:  /
+  defaults: { _controller: esperantoProjectBundle:Default:frontend }
+
+esperanto_project_email:
+  pattern:  /email
+  defaults: { _controller: esperantoProjectBundle:Default:email }
+
+esperanto_project_appointmentMail:
+  pattern:  /appointmentMail
+  defaults: { _controller: esperantoProjectBundle:Default:appointmentMail }
+
+esperanto_project_download:
+  pattern:  /download/{file}
+  defaults: { _controller: esperantoProjectBundle:Default:download }
