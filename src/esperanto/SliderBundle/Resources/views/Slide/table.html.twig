@@ -1,0 +1,23 @@
+<div class="row p1 head-row">
+    <div class="span1">{{ 'label.id'|trans }}</div>
+    <div class="span8">{{ 'label.title'|trans }}</div>
+    <div class="span1">{{ 'label.public'|trans }}</div>
+</div>
+
+<div class="row-container">
+    {% for item in data %}
+        <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
+            <div class="span1">{{ item.id }}</div>
+            <div class="span8">{{ item.title }}</div>
+            <div class="span1 text-center">
+                {% if item.public %}
+                    <i class="fa icon-ok success"></i>
+                {% else %}
+                    <i class="fa icon-remove error"></i>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        {{ 'table.empty'|trans }}
+    {% endfor %}
+</div>

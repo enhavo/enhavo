@@ -1,0 +1,36 @@
+parameters:
+    esperanto_slider.event.slide.class: esperanto\SliderBundle\EventListener\AdminSlideBuilderSubscriber
+    esperanto_slider.event.slider.class: esperanto\SliderBundle\EventListener\AdminSliderBuilderSubscriber
+    esperanto_slider.form.type.slider_order.class: esperanto\SliderBundle\Form\Type\SlideOrderType
+
+services:
+    esperanto_slider.event.slide:
+        class: %esperanto_slider.event.slide.class%
+        tags:
+            - { name: kernel.event_subscriber }
+
+    esperanto_slider_slide_order:
+        class: %esperanto_slider.form.type.slider_order.class%
+        arguments:
+            - %esperanto_slider.model.slide.class%
+        tags:
+            - { name: form.type }
+
+    esperanto_slider_slide:
+        class: %esperanto_slider.form.type.slide.class%
+        arguments:
+            - %esperanto_slider.model.slide.class%
+        tags:
+            - { name: form.type }
+
+    esperanto_slider.event.slider:
+        class: %esperanto_slider.event.slider.class%
+        tags:
+            - { name: kernel.event_subscriber }
+
+    esperanto_slider_slider:
+        class: %esperanto_slider.form.type.slider.class%
+        arguments:
+            - %esperanto_slider.model.slider.class%
+        tags:
+            - { name: form.type }
