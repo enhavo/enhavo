@@ -1,0 +1,17 @@
+<div class="row p1 head-row">
+    <div class="span1">{{ 'label.id'|trans }}</div>
+    <div class="span5">{{ 'label.title'|trans }}</div>
+    <div class="span3">{{ 'label.publication_date'|trans }}</div>
+</div>
+
+<div class="row-container">
+    {% for item in data %}
+        <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
+            <div class="span1">{{ item.id }}</div>
+            <div class="span5">{{ item.title }}</div>
+            <div class="span3">{{ item.publicationDate|date("d.m.Y") }}</div>
+        </div>
+    {% else %}
+        {{ 'table.empty'|trans }}
+    {% endfor %}
+</div>
