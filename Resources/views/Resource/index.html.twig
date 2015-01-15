@@ -1,0 +1,27 @@
+{% extends '::admin.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function() {
+            admin.initPagination('{{ view.getParameter('table_route') }}');
+            admin.initTable();
+            admin.initTopButton('.action .btn.create', {}, '{{ view.getParameter('create_route') }}');
+            admin.initTopButton('.action .btn.category-sector', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-sector'});
+            admin.initTopButton('.action .btn.category-style', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-style'});
+            admin.initAfterSaveHandler();
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row mb3 action">
+        <button class="btn create span3"><i class="icon-plus-sign"></i> {{ view.getParameter('add_button_text')|trans }}</button>
+        <button class="btn category-sector span3"><i class="icon-cog"></i> {{ 'button.manage_category_sector'|trans }}</button>
+        <button class="btn category-style span3"><i class="icon-cog"></i> {{ 'button.manage_category_style'|trans }}</button>
+    </div>
+
+    <div class="table-container" data-edit-route="{{ view.getParameter('edit_route') }}" data-refresh-route="{{ view.getParameter('table_route') }}">
+        {% include view.getParameter('table_template') %}
+    </div>
+    {{ pagination_render(data) }}
+{% endblock %}
