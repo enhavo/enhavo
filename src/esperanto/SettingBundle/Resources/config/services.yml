@@ -1,0 +1,23 @@
+parameters:
+    esperanto_setting.form.setting.class: esperanto\SettingBundle\Form\Type\SettingType
+    esperanto_setting.event.setting.class: esperanto\SettingBundle\EventListener\AdminBuilderSubscriber
+    esperanto_setting.setting_service.class: esperanto\SettingBundle\Service\SettingService
+
+services:
+    esperanto_setting.event.setting:
+        class: %esperanto_setting.event.setting.class%
+        tags:
+            - { name: kernel.event_subscriber }
+
+    esperanto_setting_setting:
+        class: %esperanto_setting.form.setting.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: form.type }
+
+    esperanto_setting.setting_service:
+        class: %esperanto_setting.setting_service.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @event_dispatcher
