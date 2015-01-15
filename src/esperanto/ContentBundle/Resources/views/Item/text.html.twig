@@ -1,0 +1,8 @@
+<div class="user-data-container mb3">
+    {% if data.title %}
+        <h2>{{ data.title }}</h2>
+    {% endif %}
+    {% if data.text %}
+        {{ data.text|raw }}
+    {% endif %}
+</div>

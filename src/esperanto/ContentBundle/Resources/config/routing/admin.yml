@@ -1,0 +1,6 @@
+esperanto_content_item:
+    pattern: /item/{name}
+    defaults:
+        _controller: esperantoContentBundle:Content:item
+    options:
+            expose: true
