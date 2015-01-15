@@ -1,0 +1,7 @@
+#leftNavi li a.menu-icon-user {
+    background-image: url(../img/user.png);
+}
+
+#leftNavi li a.menu-icon-group {
+    background-image: url(../img/group.png);
+}
