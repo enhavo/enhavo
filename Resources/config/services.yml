@@ -1,0 +1,21 @@
+parameters:
+    esperanto_news.event.news.class: esperanto\NewsBundle\EventListener\AdminBuilderSubscriber
+    esperanto_news.news_resolver.class: esperanto\NewsBundle\Service\NewsResolver
+
+services:
+    esperanto_news.event.news:
+        class: %esperanto_news.event.news.class%
+        tags:
+            - { name: kernel.event_subscriber }
+
+    esperanto_news_news:
+        class: %esperanto_news.form.type.news.class%
+        arguments:
+            - @router
+        tags:
+            - { name: form.type }
+
+    esperanto_news.news_resolver:
+        class: %esperanto_news.news_resolver.class%
+        arguments:
+            - @service_container
