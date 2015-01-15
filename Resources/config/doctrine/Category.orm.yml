@@ -1,0 +1,21 @@
+esperanto\CategoryBundle\Entity\Category:
+    type: entity
+    repositoryClass: esperanto\CategoryBundle\Repository\CategoryRepository
+    table: category_category
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        collection:
+            targetEntity: Collection
+
+    lifecycleCallbacks: {  }
