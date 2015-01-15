@@ -1,0 +1,21 @@
+parameters:
+    esperanto_reference.event.reference.class: esperanto\ReferenceBundle\EventListener\AdminBuilderSubscriber
+    esperanto_reference.reference_resolver.class: esperanto\ReferenceBundle\Service\ReferenceResolver
+
+services:
+    esperanto_reference.event.reference:
+        class: %esperanto_reference.event.reference.class%
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    esperanto_reference_reference:
+        class: '%esperanto_reference.form.type.reference.class%'
+        arguments:
+            - '@router'
+        tags:
+            - { name: form.type }
+
+    esperanto_reference.reference_resolver:
+            class: %esperanto_reference.reference_resolver.class%
+            arguments:
+                - '@service_container'

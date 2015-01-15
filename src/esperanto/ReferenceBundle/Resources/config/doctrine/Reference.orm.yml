@@ -1,0 +1,68 @@
+esperanto\ReferenceBundle\Entity\Reference:
+    type: mappedSuperclass
+    table: reference_reference
+    repositoryClass: esperanto\ReferenceBundle\Repository\ReferenceRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        teaser:
+            type: text
+            nullable: true
+
+        slug:
+            type: string
+            length: 255
+            nullable: true
+
+        page_title:
+            type: text
+            nullable: true
+
+        meta_description:
+            type: text
+            nullable: true
+
+        social_media:
+            type: boolean
+            nullable: true
+
+        public:
+            type: boolean
+            nullable: true
+
+        priority:
+            type: float
+            nullable: true
+
+        change_frequency:
+            type: string
+            length: 255
+            nullable: true
+
+        created:
+            type: datetime
+            nullable: true
+
+        updated:
+            type: datetime
+            nullable: true
+
+        order:
+            type: integer
+            column: '`order`'
+            nullable: true
+
+
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]
