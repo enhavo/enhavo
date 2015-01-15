@@ -1,0 +1,50 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block datetime_widget -%}
+    <div class="inputContainer">
+        <input class="datetimepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{%- endblock %}
+
+{% block choice_widget_expanded %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+        <span class="choice-input-with-label">
+            {{- form_widget(child) -}}
+            {{- form_label(child) -}}
+        </span>
+        {% endfor -%}
+    </div>
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="row mb1">
+            <label class="span2 text-right label-container">{{ form_label(form) }}</label>
+            <div class="span9 input-container">{{ form_widget(form) }}</div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block text_widget %}
+    <div class="inputContainer">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block text_integer %}
+   <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+{% endblock %}
+
+{% block textarea_widget %}
+  <div class="inputContainer">
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+  </div>
+{% endblock %}
+
+{% block password_widget %}
+    <div class="inputContainer">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="password" />
+    </div>
+{% endblock %}
+

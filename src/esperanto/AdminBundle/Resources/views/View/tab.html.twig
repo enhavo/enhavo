@@ -1,0 +1,19 @@
+<div class="row mb1em tabContainer">
+    <div class="offset2 span9">
+        {% for tab in tabs.getTabs %}
+          <a href="#" tabId="tab{{ loop.index }}">{{ tab.getLabel() }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="tabContentContainer mb1em pv1em">
+    {% for tab in tabs.getTabs %}
+        <div id="tab{{ loop.index }}">
+            {% if tab.getContent() %}
+                {{ tab.getContent() }}
+            {% else %}
+                {{ form(tab.getForm()) }}
+            {% endif%}
+        </div>
+    {% endfor %}
+</div>

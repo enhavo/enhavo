@@ -1,0 +1,7 @@
+esperanto_admin_index:
+    pattern:  /
+    defaults: { _controller: esperantoAdminBundle:Admin:index }
+
+esperanto_admin_extra:
+    resource: .
+    type: extra

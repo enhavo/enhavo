@@ -1,0 +1,30 @@
+parameters:
+    esperanto_admin.admin_register.class: esperanto\AdminBundle\Admin\AdminRegister
+    esperanto_admin.route_loader.class: esperanto\AdminBundle\Admin\RouteLoader
+    esperanto_admin.form.wysiwyg.class: esperanto\AdminBundle\Form\Type\WysiwygType
+    security.roles.provider.class: esperanto\AdminBundle\Security\Roles\AdminRolesProvider
+
+services:
+    esperanto_admin.admin_register:
+         class: %esperanto_admin.admin_register.class%
+
+    esperanto_admin.route_loader:
+        class: %esperanto_admin.route_loader.class%
+        arguments:
+          - '@esperanto_admin.admin_register'
+        tags:
+            - { name: routing.loader }
+
+    esperanto_admin.form.wysiwyg:
+        class: '%esperanto_admin.form.wysiwyg.class%'
+        tags:
+            - { name: form.type, alias: 'wysiwyg' }
+
+    cache:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments: [%kernel.cache_dir%]
+
+    security.roles.provider:
+        class: %security.roles.provider.class%
+        arguments:
+            - %security.role_hierarchy.roles%
