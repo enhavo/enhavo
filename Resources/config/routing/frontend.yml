@@ -1,0 +1,3 @@
+esperanto_page_frontend_show:
+    path:      /page/{id}/{slug}
+    defaults:  { _controller: esperantoPageBundle:Page:show }
