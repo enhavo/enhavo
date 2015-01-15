@@ -1,0 +1,63 @@
+esperanto\PageBundle\Entity\Page:
+    type: mappedSuperclass
+    table: page_page
+    repositoryClass: esperanto\PageBundle\Repository\PageRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        teaser:
+            type: string
+            length: 255
+            nullable: true
+
+        slug:
+            type: string
+            length: 255
+            nullable: true
+
+        priority:
+            type: float
+            nullable: true
+
+        change_frequency:
+            type: string
+            length: 255
+            nullable: true
+
+        public:
+            type: boolean
+            nullable: true
+
+        meta_description:
+            type: text
+            nullable: true
+
+        page_title:
+            type: text
+            nullable: true
+
+        social_media:
+            type: boolean
+            nullable: true
+
+        created:
+            type: datetime
+            nullable: true
+
+        updated:
+            type: datetime
+            nullable: true
+
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]
