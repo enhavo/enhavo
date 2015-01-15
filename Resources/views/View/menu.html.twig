@@ -1,0 +1,9 @@
+<ul id="leftNavi">
+{% for menu in menus %}
+    <li class="{% if menu.isCurrent() %}selected{% endif %}">
+        <a href="{{ menu.uri }}" class="{{ menu.attribute('class') }}">
+          <span>{{ menu.label|trans }}</span>
+        </a>
+    </li>
+{% endfor %}
+</ul>

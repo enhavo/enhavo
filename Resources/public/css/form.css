@@ -1,0 +1,134 @@
+/* label container */
+
+.label-container label {
+    padding-top:5px;
+    color:#ddd;
+}
+
+
+/* input container */
+
+.input-container label {
+    margin-top: 8px;
+    padding-left: 5px;
+    padding-right: 15px;
+    color:#ddd;
+}
+
+.input-container .icheckbox-esperanto {
+    margin-top: 0px;
+}
+
+
+.input-container input[type=file] {
+    border:0;
+    background:transparent;
+}
+
+.input-container .select2-container {
+    width: 100%;
+}
+
+.input-container .select2-container .select2-choice {
+    border-radius: 0;
+}
+
+.input-container textarea {
+    font: 14px/20px "Arial";
+}
+
+.inputContainer {
+    display: inline-block;
+    min-height: 30px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #777;
+    background:#fff;
+    width: 100%;
+}
+
+.inputContainer.disabled {
+    background:#f3f3f3;
+}
+
+.inputContainer.textarea {
+    height:65px;
+}
+
+.inputContainer input,
+.inputContainer textarea {
+    margin: 5px 6px;
+    background:transparent;
+    border:0px;
+    resize:none;
+    width: 100%;
+}
+
+.inputContainer textarea {
+    margin-right: 20px;
+}
+
+.inputContainer.span12 input,
+.inputContainer.span12 textarea {
+    width: 930px;
+}
+
+.inputContainer.span11 input,
+.inputContainer.span11 textarea {
+    width: 850px;
+}
+
+.inputContainer.span10 input,
+.inputContainer.span10 textarea {
+    width: 770px;
+}
+
+.inputContainer.span9 input,
+.inputContainer.span9 textarea {
+    width: 690px;
+}
+
+.inputContainer.span8 input,
+.inputContainer.span8 textarea {
+    width: 610px;
+}
+
+.inputContainer.span7 input,
+.inputContainer.span7 textarea {
+    width: 530px;
+}
+
+.inputContainer.span6 input,
+.inputContainer.span6 textarea {
+    width: 450px;
+}
+
+.inputContainer.span5 input,
+.inputContainer.span5 textarea {
+    width: 370px;
+}
+
+.inputContainer.span4 input,
+.inputContainer.span4 textarea {
+    width: 290px;
+}
+
+.inputContainer.span3 input,
+.inputContainer.span3 textarea {
+    width: 210px;
+}
+
+.inputContainer.span2 input,
+.inputContainer.span2 textarea {
+    width: 130px;
+}
+
+.inputContainer.span1 input,
+.inputContainer.span1 textarea {
+    width: 50px;
+}
+
+.category-list .choice-input-with-label {
+    display: block;
+    margin-bottom: 3px;
+}

@@ -1,0 +1,8 @@
+{% if pagination.getNbPages() > 1 %}
+    <div class="pagination">
+
+        {% for page in 1..pagination.getNbPages() %}
+            <a href="javascript:void(null)" page="{{ loop.index }}" {% if loop.index == pagination.currentPage %}class="selected"{% endif %}>{{ loop.index }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
