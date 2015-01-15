@@ -1,0 +1,57 @@
+/* iCheck plugin esperanto skin
+----------------------------------- */
+.icheckbox-esperanto,
+.iradio-esperanto {
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+
+    border-radius: 11px;
+    background: #FFF;
+    color: #A58E62;
+    padding: 3px 3px 3px 3px;
+    height: 16px;
+    width: 16px;
+    font-size: 21px;
+    line-height: 16px;
+    cursor: pointer;
+
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    -webkit-font-smoothing: antialiased;
+    *margin-right: .3em;
+}
+
+.icheckbox-esperanto {
+
+}
+
+.icheckbox-esperanto.checked:before {
+    content: "\f00d";
+}
+
+.icheckbox-esperanto.disabled {
+
+}
+
+.icheckbox-esperanto.checked.disabled {
+
+}
+
+.iradio-esperanto {
+
+}
+
+.iradio-esperanto.checked:before {
+    content: "\f00d";
+}
+
+.iradio-esperanto.disabled {
+
+}
+
+.iradio-esperanto.checked.disabled {
+
+}
