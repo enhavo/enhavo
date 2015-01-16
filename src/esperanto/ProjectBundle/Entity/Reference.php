@@ -112,7 +112,7 @@ class Reference extends BaseReference implements SearchIndexInterface
 
     public function getIndexRoute()
     {
-        return 'how_to_video_main_reference_show';
+        return 'esperanto_project_index';
     }
 
     public function getIndexRouteParameter()

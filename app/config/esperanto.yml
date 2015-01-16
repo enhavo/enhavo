@@ -1,0 +1,41 @@
+esperanto_admin:
+    permission_check: false
+
+esperanto_page:
+    classes:
+        page:
+            model: esperanto\ProjectBundle\Entity\Page
+            form: esperanto\ProjectBundle\Form\Type\PageType
+
+esperanto_project:
+    classes:
+        appointment:
+            model: esperanto\ProjectBundle\Entity\Appointment
+            form: esperanto\ProjectBundle\Form\Type\AppointmentType
+            repository: esperanto\ProjectBundle\Repository\AppointmentRepository
+        download:
+            model: esperanto\ProjectBundle\Entity\Download
+            form: esperanto\ProjectBundle\Form\Type\DownloadType
+            repository: esperanto\ProjectBundle\Repository\DownloadRepository
+
+esperanto_news:
+    classes:
+         news:
+            model: esperanto\ProjectBundle\Entity\News
+            form: esperanto\ProjectBundle\Form\Type\NewsType
+            repository: esperanto\NewsBundle\Repository\NewsRepository
+
+esperanto_reference:
+    classes:
+         reference:
+            model: esperanto\ProjectBundle\Entity\Reference
+            form: esperanto\ProjectBundle\Form\Type\ReferenceType
+
+esperanto_slider:
+    classes:
+        slide:
+            model: esperanto\ProjectBundle\Entity\Slide
+            form: esperanto\ProjectBundle\Form\Type\SlideType
+        slider:
+            model: esperanto\ProjectBundle\Entity\Slider
+            form: esperanto\ProjectBundle\Form\Type\SliderType

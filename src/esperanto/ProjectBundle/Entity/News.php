@@ -127,7 +127,7 @@ class News extends BaseNews implements SearchIndexInterface
 
     public function getIndexRoute()
     {
-        return 'how_to_video_main_news_show';
+        return 'esperanto_project_index';
     }
 
     public function getIndexRouteParameter()

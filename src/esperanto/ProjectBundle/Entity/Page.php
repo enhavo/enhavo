@@ -66,7 +66,7 @@ class Page extends BasePage implements SearchIndexInterface
 
     public function getIndexRoute()
     {
-        return 'how_to_video_main_page_show';
+        return 'esperanto_project_index';
     }
 
     public function getIndexRouteParameter()

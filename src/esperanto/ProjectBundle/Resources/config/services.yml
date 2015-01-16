@@ -1,5 +1,4 @@
 parameters:
-    esperanto_page.event.page.class: esperanto\ProjectBundle\EventListener\ContentBuilderSubscriber
     esperanto_project.event.appointment.class: esperanto\ProjectBundle\EventListener\AppointmentBuilderSubscriber
     esperanto_project.event.download.class: esperanto\ProjectBundle\EventListener\DownloadBuilderSubscriber
 

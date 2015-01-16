@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace HowToVideo\MainBundle\DataFixtures\ORM;
+namespace esperanto\ProjectBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
