@@ -1,0 +1,92 @@
+esperanto\ProjectBundle\Entity\Reference:
+    type: entity
+    table: reference_reference
+
+    fields:
+        detail_title:
+            type: string
+            length: 255
+            nullable: true
+
+        link:
+            type: string
+            length: 255
+            nullable: true
+
+        landing_page:
+            type: boolean
+            nullable: true
+
+        style:
+            type: string
+            length: 255
+            nullable: true
+
+        channel:
+            type: string
+            length: 255
+            nullable: true
+
+        target_group:
+            type: string
+            length: 255
+            nullable: true
+
+        client:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\ContentBundle\Entity\Content
+
+    manyToMany:
+        images:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_image
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+        preview_picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_preview_picture
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+        sectors:
+              targetEntity: esperanto\CategoryBundle\Entity\Category
+              joinTable:
+                  name: reference_reference_sector
+                  joinColumns:
+                      reference_id:
+                          referencedColumnName: id
+                  inverseJoinColumns:
+                      category_id:
+                          referencedColumnName: id
+
+        styles:
+              targetEntity: esperanto\CategoryBundle\Entity\Category
+              joinTable:
+                  name: reference_reference_style
+                  joinColumns:
+                      reference_id:
+                          referencedColumnName: id
+                  inverseJoinColumns:
+                      category_id:
+                          referencedColumnName: id
+
+    lifecycleCallbacks: {  }
