@@ -59,7 +59,7 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
         $viewBuilder->setTab('category', 'tab.label.category', 'esperantoReferenceBundle:Tab:category.html.twig');
         $viewBuilder->setTab('seo', 'tab.label.seo', 'esperantoReferenceBundle:Tab:seo.html.twig');
         //ToDo: Preview should be defined in sub bundle or be a config var
-        $viewBuilder->setParameter('preview_route', 'how_to_video_main_reference_show');
+        $viewBuilder->setParameter('preview_route', 'esperanto_project_index');
 
         return $viewBuilder;
     }
