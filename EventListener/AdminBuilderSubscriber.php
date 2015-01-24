@@ -86,7 +86,7 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
         $viewBuilder->setTab('content', 'tab.label.content', 'esperantoNewsBundle:Tab:content.html.twig');
         $viewBuilder->setTab('seo', 'tab.label.seo', 'esperantoNewsBundle:Tab:seo.html.twig');
         //ToDo: Preview should be defined in sub bundle or be a config var
-        $viewBuilder->setParameter('preview_route', 'how_to_video_main_news_show');
+        $viewBuilder->setParameter('preview_route', 'esperanto_project_index');
         return $viewBuilder;
     }
 }
