@@ -2,11 +2,6 @@ esperanto\ProjectBundle\Entity\Page:
     type: entity
     table: page_page
 
-    fields:
-        landing_page:
-            type: boolean
-            nullable: true
-
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

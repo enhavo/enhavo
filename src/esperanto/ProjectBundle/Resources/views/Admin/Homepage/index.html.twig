@@ -1,0 +1,34 @@
+{% extends '::admin.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function() {
+            admin.initPagination('esperanto_slider_slide_table');
+            admin.initTable();
+            admin.initTopButton('.action .btn.create', {}, 'esperanto_slider_slide_create');
+            admin.initAfterSaveHandler();
+            admin.initTopButton('.action .btn.sort', {}, 'esperanto_slider_slider_edit', {id: 1});
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% block topButtons %}
+        <div class="row mb3 action">
+            <div class="span10">
+                <button class="btn create span3"><i class="icon-plus-sign"></i> {{ 'button.add_slide'|trans }}</button>
+                <button class="btn sort span3"><i class="icon-sort"></i> {{ 'button.label.slide_sort'|trans }}</button>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block table %}
+        <div class="table-headline">Slides</div>
+        <div class="table-container" data-edit-route="esperanto_slider_slide_edit" data-refresh-route="esperanto_slider_slide_table">
+            {% include 'esperantoSliderBundle:Slide:table.html.twig' %}
+        </div>
+    {% endblock %}
+
+    {{ pagination_render(data) }}
+{% endblock %}
+

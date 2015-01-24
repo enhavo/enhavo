@@ -15,8 +15,6 @@ class SliderType extends BaseSliderType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('slides', 'collection', array(
-            'type' => 'esperanto_slider_slide_order'
-        ));
+        parent::buildForm($builder, $options);
     }
 }

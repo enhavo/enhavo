@@ -3,10 +3,6 @@ esperanto\ProjectBundle\Entity\News:
     table: news_news
 
     fields:
-        landing_page:
-            type: boolean
-            nullable: true
-
         sticky:
             type: boolean
             nullable: true
@@ -28,3 +24,5 @@ esperanto\ProjectBundle\Entity\News:
                 inverseJoinColumns:
                     file_id:
                         referencedColumnName: id
+            orderBy: { 'order': 'ASC' }
+

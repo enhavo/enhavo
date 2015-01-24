@@ -1,4 +1,5 @@
 <?php
+
 namespace esperanto\ProjectBundle\Form\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

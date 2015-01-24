@@ -14,10 +14,6 @@ class ReferenceType extends BaseReferenceType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('link', 'text', array(
-            'label' => 'form.label.video_url'
-        ));
-
         $builder->add('detail_title', 'text', array(
             'label' => 'form.label.title.h1',
         ));
@@ -32,17 +28,6 @@ class ReferenceType extends BaseReferenceType
             'multiple' => false
         ));
 
-        $builder->add('styles', 'esperanto_category', array(
-            'label' => 'form.label.styles',
-            'category_name' => 'reference-style',
-            'attr' => array('class' => 'category-list')
-        ));
-
-        $builder->add('sectors', 'esperanto_category', array(
-            'label' => 'form.label.sectors',
-            'category_name' => 'reference-sector',
-            'attr' => array('class' => 'category-list')
-        ));
 
         $builder->add('style', 'text', array(
             'label' => 'form.label.style',

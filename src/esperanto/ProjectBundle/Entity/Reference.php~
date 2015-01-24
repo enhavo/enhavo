@@ -382,4 +382,70 @@ class Reference extends BaseReference implements SearchIndexInterface
     {
         return $this->images;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $services;
+
+
+    /**
+     * Add services
+     *
+     * @param \esperanto\CategoryBundle\Entity\Category $services
+     * @return Reference
+     */
+    public function addService(\esperanto\CategoryBundle\Entity\Category $services)
+    {
+        $this->services[] = $services;
+
+        return $this;
+    }
+
+    /**
+     * Remove services
+     *
+     * @param \esperanto\CategoryBundle\Entity\Category $services
+     */
+    public function removeService(\esperanto\CategoryBundle\Entity\Category $services)
+    {
+        $this->services->removeElement($services);
+    }
+
+    /**
+     * Get services
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
+    /**
+     * @var string
+     */
+    private $description;
+
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Reference
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
