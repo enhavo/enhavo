@@ -24,10 +24,6 @@ class File
      */
     private $extension;
 
-    /**
-     * @var integer
-     */
-    private $order;
 
     /**
      * Get id
@@ -98,28 +94,5 @@ class File
     public function __equals()
     {
 
-    }
-
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return File
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer 
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 }

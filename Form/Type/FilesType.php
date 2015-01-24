@@ -40,8 +40,9 @@ class FilesType extends AbstractType
             function (FormEvent $event) use ($manager, &$collection) {
                 $data = $event->getData();
                 if($data) {
-                    foreach($data as $id) {
-                        $file = $manager->getRepository('esperantoMediaBundle:File')->find($id);
+                    foreach($data as $formFile) {
+                        $file = $manager->getRepository('esperantoMediaBundle:File')->find($formFile['id']);
+                        $file->setOrder($formFile['order']);
                         $collection->add($file);
                     }
                 }

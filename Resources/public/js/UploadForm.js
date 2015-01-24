@@ -8,7 +8,14 @@ function UploadForm(routing)
   var self = this;
 
   this.initUploadForm = function(form) {
-    $(form).find('.uploadForm').each(function(index, element) {
+    var currentIndexes = [];
+    $(form).find('.uploadForm').each(function(formIndex, element) {
+      $(this).find('[data-file-list]').sortable({
+        update: function() {
+          self.setFileOrder(element);
+        }
+      });
+      currentIndexes[formIndex] = $(this).find('[data-file-element]').length-1;
       $(element).find('.fileupload').fileupload({
         dataType: 'json',
 
@@ -19,12 +26,14 @@ function UploadForm(routing)
 
             var html = templating.render($(element).find('script[data-id=files-template]'), {
               file_id: file.id,
-              full_name: inputName
+              full_name: inputName,
+              file_index: ++currentIndexes[formIndex]
             });
 
-            $(element).find('.list').append(html);
+            $(element).find('[data-file-list]').append(html);
           });
           $(element).find('.progress .bar').css('width', '0%');
+          self.setFileOrder(element);
         },
 
         add: function (event, data) {
@@ -47,35 +56,40 @@ function UploadForm(routing)
 
       $(element).bind('click', '.imgdelete', function(event)
       {
-        var imageContainer = $(event.target).parentRecursive('.imgContainer');
+        var imageContainer = $(event.target).parents('.imgContainer');
         if(imageContainer != null) {
           imageContainer.remove();
         }
       });
     });
-
-    var start = function() {
-      $(document).bind('dragover', function (e)
-      {
-        $('.dropzone').css('background-color', 'red');
-      });
-
-      $(document).bind('dragleave drop', function (e)
-      {
-        $('.dropzone').css('background-color', 'palegreen');
-      });
-    };
-
-    start();
+    self.start();
   };
 
-  var init = function() {
+  this.setFileOrder = function(form) {
+    $(form).find('[data-file-element-order]').each(function(index) {
+      $(this).val(index);
+    });
+  };
+
+  this.start = function() {
+    $(document).bind('dragover', function (e)
+    {
+      $('.dropzone').css('background-color', 'red');
+    });
+
+    $(document).bind('dragleave drop', function (e)
+    {
+      $('.dropzone').css('background-color', 'palegreen');
+    });
+  };
+
+  this.init = function() {
     $(document).on('formOpenAfter', function(event, form) {
       self.initUploadForm(form);
     });
   };
 
-  init();
+  this.init();
 }
 var uploadForm = new UploadForm(Routing);
 

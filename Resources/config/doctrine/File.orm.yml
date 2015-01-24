@@ -17,5 +17,9 @@ esperanto\MediaBundle\Entity\File:
             type: string
             length: 255
             nullable: true
+        order:
+            type: integer
+            nullable: true
+            column: '`order`'
 
     lifecycleCallbacks: {  }
