@@ -1,0 +1,25 @@
+{% extends '::admin.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function() {
+            admin.initPagination('{{ view.getParameter('table_route') }}');
+            admin.initTable();
+            admin.initTopButton('.action .btn.create', {}, '{{ view.getParameter('create_route') }}');
+            admin.initAfterSaveHandler();
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% block topButtons %}
+    {% endblock %}
+
+    {% block table %}
+        <div class="table-container" data-edit-route="{{ view.getParameter('edit_route') }}" data-refresh-route="{{ view.getParameter('table_route') }}">
+            {% include view.getParameter('table_template') %}
+        </div>
+    {% endblock %}
+
+    {{ pagination_render(data) }}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'esperantoAdminBundle:Resource:manage.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block collection_widget %}
+    <div class="row-container sort-container" data-sort-container>
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block esperanto_slider_slide_order_widget %}
+    <div class="row mb1 entry-row p1" data-sort-row data-sort-handle>
+        <div class="span4">
+            {% if form.vars.value.title %}
+                {{ form.vars.value.title  }}
+            {% endif %}
+        </div>
+        <div class="sort-up" data-sort-up-button>
+            <i class="fa icon-angle-up"></i>
+        </div>
+        <div class="sort-down" data-sort-down-button>
+            <i class="fa icon-angle-down"></i>
+        </div>
+        <div class="sort-handle" data-sort-handle>
+            <i class="fa icon-reorder"></i>
+        </div>
+        {{ form_widget(form.order) }}
+    </div>
+{% endblock %}
+
+{% block form %}
+    {{ form_widget(form.slides) }}
+    {{ form_row(form._token) }}
+{% endblock %}

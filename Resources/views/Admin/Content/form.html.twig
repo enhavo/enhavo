@@ -1,0 +1,31 @@
+{% if data.title == "homepage" %}
+    {{ form_row(form.citation) }}
+    {{ form_row(form.author) }}
+    {{ form_row(form.text) }}
+    {{ form_row(form.picture) }}
+{% elseif data.title == "concept" %}
+    {{ form_row(form.heading) }}
+    {{ form_row(form.text) }}
+    {{ form_row(form.picture) }}
+{% elseif data.title == "about_us" %}
+    {{ form_row(form.heading) }}
+    {{ form_row(form.text) }}
+    {{ form_row(form.picture) }}
+{% elseif data.title == "contact_details" %}
+    {{ form_row(form.name1) }}
+    {{ form_row(form.street1) }}
+    {{ form_row(form.place1) }}
+    {{ form_row(form.phone1) }}
+    {{ form_row(form.fax1) }}
+    {{ form_row(form.mail1) }}
+    {{ form_row(form.name2) }}
+    {{ form_row(form.street2) }}
+    {{ form_row(form.place2) }}
+    {{ form_row(form.phone2) }}
+    {{ form_row(form.fax2) }}
+    {{ form_row(form.mail2) }}
+{% elseif data.title == "impressum" %}
+    {{ form_row(form.text) }}
+{% endif %}
+
+{{ form_row(form._token) }}

@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace HowToVideo\MainBundle\DataFixtures\ORM;
+namespace esperanto\ProjectBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -19,11 +19,7 @@ class UserData implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->addUser('gseidel', '403582256', 'gseidel@xq-web.de'));
-        $manager->persist($this->addUser('blutze', 'blu', 'blutze@xq-web.de'));
-        $manager->persist($this->addUser('mkellermann', 'enterprise', 'michael.kellermann@xq-web.de'));
-        $manager->persist($this->addUser('admin', 'initiative_masterplan', 'info@initiative-masterplan.de'));
-
+        $manager->persist($this->addUser('admin', 'admin', 'admin@esperanto-agentur.com'));
         $manager->flush();
     }
 

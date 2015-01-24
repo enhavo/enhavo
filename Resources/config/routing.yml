@@ -1,5 +1,3 @@
 esperanto_project_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: esperantoProjectBundle:Default:index }
-
-
+    path:     /
+    defaults: { _controller: esperantoProjectBundle:Demo:index }

@@ -1,0 +1,71 @@
+esperanto\ProjectBundle\Entity\Reference:
+    type: entity
+    table: reference_reference
+
+    fields:
+        description:
+            type: text
+            nullable: true
+
+        link:
+            type: string
+            length: 255
+            nullable: true
+
+        style:
+            type: string
+            length: 255
+            nullable: true
+
+        channel:
+            type: string
+            length: 255
+            nullable: true
+
+        target_group:
+            type: string
+            length: 255
+            nullable: true
+
+        client:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToMany:
+        images:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_image
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+        preview_picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_preview_picture
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+        services:
+              targetEntity: esperanto\CategoryBundle\Entity\Category
+              joinTable:
+                  name: reference_reference_service
+                  joinColumns:
+                      reference_id:
+                          referencedColumnName: id
+                  inverseJoinColumns:
+                      category_id:
+                          referencedColumnName: id
+
+    lifecycleCallbacks: {  }

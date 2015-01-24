@@ -1,0 +1,11 @@
+esperanto\ProjectBundle\Entity\Slider:
+    type: entity
+    table: slider_slider2
+
+    oneToMany:
+        slides:
+            orderBy:
+                order: ASC
+            targetEntity: Slide
+            mappedBy: slider
+            cascade: ['persist', 'refresh', 'remove']
