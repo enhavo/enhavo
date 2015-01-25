@@ -42,6 +42,10 @@ class esperantoPageExtension extends SyliusResourceExtension
             self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
         );
 
+        $configuration = new Configuration();
+        $processedConfig = $this->processConfiguration( $configuration, $config );
+        $container->setParameter( 'esperanto_page.page_route', $processedConfig['page_route']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

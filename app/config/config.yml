@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: esperanto.yml }
     - { resource: security.yml }
 
 framework:
@@ -40,7 +39,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'esperantoAdminBundle' ]
+    bundles:        [ 'esperantoProjectBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -71,17 +70,10 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: smtp
-    host:      w012aa15.kasserver.com
-    username:  m031179a
-    password:  MkzR8AUEBLrgYEFx
-
-
-stof_doctrine_extensions:
-    orm:
-        default:
-            sluggable: true
-            timestampable: true
+    transport: %mailer_transport%
+    host: %mailer_host%
+    username: %mailer_user%
+    password: %mailer_password%
 
 fos_user:
     db_driver: orm
@@ -102,3 +94,26 @@ liip_imagine:
             filters:
                 thumbnail: { size: [300, 110], mode: outbound }
 
+esperanto_admin:
+    permission_check: false
+
+esperanto_page:
+    page_route: esperanto_project_page_detail
+    classes:
+        page:
+            model: esperanto\ProjectBundle\Entity\Page
+            form: esperanto\ProjectBundle\Form\Type\PageType
+
+esperanto_news:
+    news_route: esperanto_project_news_detail
+    classes:
+         news:
+            model: esperanto\ProjectBundle\Entity\News
+            form: esperanto\ProjectBundle\Form\Type\NewsType
+
+esperanto_reference:
+    reference_route: esperanto_project_reference_detail
+    classes:
+         reference:
+            model: esperanto\ProjectBundle\Entity\Reference
+            form: esperanto\ProjectBundle\Form\Type\ReferenceType

@@ -1,2 +1,1 @@
-{{ form_row(form.description) }}
-{{ form_row(form.images) }}
+{% if form._token is defined %}{{ form_row(form._token) }}{% endif %}

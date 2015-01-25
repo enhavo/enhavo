@@ -1,7 +1,6 @@
-esperanto_project:
-    resource: "@esperantoProjectBundle/Resources/config/routing.yml"
-    prefix:   /
-
+#
+# esperanto-cms
+#
 esperanto_media:
     resource: "@esperantoMediaBundle/Resources/config/routing.yml"
 
@@ -20,14 +19,6 @@ esperanto_page_admin:
     resource: "@esperantoPageBundle/Resources/config/routing/admin.yml"
     prefix:   /admin/page
 
-esperanto_page_frontend:
-    resource: "@esperantoPageBundle/Resources/config/routing/frontend.yml"
-    prefix:   /
-
-esperanto_project_frontend:
-    resource: "@esperantoProjectBundle/Resources/config/frontend.yml"
-    prefix:   /
-
 esperanto_content_admin:
     prefix:   /admin/content
     resource: "@esperantoContentBundle/Resources/config/routing/admin.yml"
@@ -41,3 +32,13 @@ fos_js_routing:
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
+#
+# project
+#
+esperanto_project:
+    resource: "@esperantoProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+esperanto_project_admin:
+    resource: "@esperantoProjectBundle/Resources/config/admin.yml"
+    prefix:   /admin

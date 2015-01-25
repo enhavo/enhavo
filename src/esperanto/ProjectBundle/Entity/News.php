@@ -25,16 +25,6 @@ class News extends BaseNews implements SearchIndexInterface
     private $picture;
 
     /**
-     * @var boolean
-     */
-    private $landing_page;
-
-    /**
-     * @var boolean
-     */
-    private $sticky;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -136,58 +126,5 @@ class News extends BaseNews implements SearchIndexInterface
             'id' => $this->getId(),
             'slug' => $this->getSlug()
         );
-    }
-    /**
-     * Set landing_page
-     *
-     * @param boolean $landingPage
-     * @return News
-     */
-    public function setLandingPage($landingPage)
-    {
-        $this->landing_page = $landingPage;
-
-        return $this;
-    }
-
-    /**
-     * Get landing_page
-     *
-     * @return boolean
-     */
-    public function getLandingPage()
-    {
-        if($this->landing_page === null) {
-            return false;
-        }
-
-        return $this->landing_page;
-    }
-
-    /**
-     * Set sticky
-     *
-     * @param boolean $sticky
-     * @return News
-     */
-    public function setSticky($sticky)
-    {
-        $this->sticky = $sticky;
-
-        return $this;
-    }
-
-    /**
-     * Get sticky
-     *
-     * @return boolean
-     */
-    public function getSticky()
-    {
-        if($this->sticky === null) {
-            return false;
-        }
-
-        return $this->sticky;
     }
 }

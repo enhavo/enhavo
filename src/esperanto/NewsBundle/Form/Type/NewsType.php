@@ -5,20 +5,55 @@ namespace esperanto\NewsBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Router;
 
 class NewsType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    /**
+     * @var Router
+     */
     protected $router;
 
-    public function __construct(Router $router)
+    /**
+     * @var string
+     */
+    protected $route;
+
+    public function __construct($dataClass, $route, Router $router)
     {
+        $this->route = $route;
+        $this->dataClass = $dataClass;
         $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $router = $this->router;
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($router) {
+            $news = $event->getData();
+            $form = $event->getForm();
+
+            if (!empty($news) && $news->getId()) {
+                $url = $router->generate($this->route, array(
+                    'id' => $news->getId(),
+                    'slug' => $news->getSlug(),
+                ), true);
+
+                $form->add('link', 'text', array(
+                    'mapped' => false,
+                    'data' => $url,
+                    'disabled' => true
+                ));
+            }
+        });
+
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
         ));
@@ -102,7 +137,7 @@ class NewsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
-            'data_class' => 'esperanto\NewsBundle\Entity\News'
+            'data_class' => $this->dataClass
         ));
     }
 

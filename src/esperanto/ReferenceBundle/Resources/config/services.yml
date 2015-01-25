@@ -5,17 +5,21 @@ parameters:
 services:
     esperanto_reference.event.reference:
         class: %esperanto_reference.event.reference.class%
+        arguments:
+            - @service_container
         tags:
-            - { name: 'kernel.event_subscriber' }
+            - { name: kernel.event_subscriber }
 
     esperanto_reference_reference:
-        class: '%esperanto_reference.form.type.reference.class%'
+        class: %esperanto_reference.form.type.reference.class%
         arguments:
-            - '@router'
+            - %esperanto_reference.model.reference.class%
+            - %esperanto_reference.reference_route%
+            - @router
         tags:
             - { name: form.type }
 
     esperanto_reference.reference_resolver:
             class: %esperanto_reference.reference_resolver.class%
             arguments:
-                - '@service_container'
+                - @service_container

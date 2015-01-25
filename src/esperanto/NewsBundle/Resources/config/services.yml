@@ -5,12 +5,16 @@ parameters:
 services:
     esperanto_news.event.news:
         class: %esperanto_news.event.news.class%
+        arguments:
+            - @service_container
         tags:
             - { name: kernel.event_subscriber }
 
     esperanto_news_news:
         class: %esperanto_news.form.type.news.class%
         arguments:
+            - %esperanto_news.model.news.class%
+            - %esperanto_news.news_route%
             - @router
         tags:
             - { name: form.type }

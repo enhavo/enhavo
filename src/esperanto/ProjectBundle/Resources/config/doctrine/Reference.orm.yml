@@ -4,35 +4,6 @@ esperanto\ProjectBundle\Entity\Reference:
 
     fields:
 
-        description:
-            type: text
-            nullable: true
-
-        link:
-            type: string
-            length: 255
-            nullable: true
-
-        style:
-            type: string
-            length: 255
-            nullable: true
-
-        channel:
-            type: string
-            length: 255
-            nullable: true
-
-        target_group:
-            type: string
-            length: 255
-            nullable: true
-
-        client:
-            type: string
-            length: 255
-            nullable: true
-
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

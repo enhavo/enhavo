@@ -1,0 +1,3 @@
+esperanto_admin_homepage_index:
+  pattern:  /
+  defaults: { _controller: esperantoProjectBundle:Main:index }

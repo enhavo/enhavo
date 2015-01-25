@@ -11,13 +11,20 @@ namespace esperanto\ReferenceBundle\EventListener;
 use esperanto\AdminBundle\Builder\View\DialogViewBuilder;
 use esperanto\AdminBundle\Event\RouteBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use esperanto\AdminBundle\Builder\View\ViewBuilder;
-use esperanto\AdminBundle\Builder\Route\SyliusRouteBuilder;
-use esperanto\AdminBundle\Event\BuilderEvent;
-
+use Symfony\Component\DependencyInjection\Container;
 
 class AdminBuilderSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     public static function getSubscribedEvents()
     {
         return array(
@@ -58,8 +65,9 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
         $viewBuilder->setTab('details', 'tab.label.details', 'esperantoReferenceBundle:Tab:details.html.twig');
         $viewBuilder->setTab('category', 'tab.label.category', 'esperantoReferenceBundle:Tab:category.html.twig');
         $viewBuilder->setTab('seo', 'tab.label.seo', 'esperantoReferenceBundle:Tab:seo.html.twig');
-        //ToDo: Preview should be defined in sub bundle or be a config var
-        $viewBuilder->setParameter('preview_route', 'esperanto_project_index');
+
+        $previewRoute = $this->container->getParameter('esperanto_reference.reference_route');
+        $viewBuilder->setParameter('reference_route', $previewRoute);
 
         return $viewBuilder;
     }

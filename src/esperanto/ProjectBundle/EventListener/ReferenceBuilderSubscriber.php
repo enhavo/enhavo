@@ -26,7 +26,7 @@ class ReferenceBuilderSubscriber implements EventSubscriberInterface
         $event->getBuilder()->setSorting(array(
             'order' => 'asc'
         ));
-        $event->getBuilder()->setTemplate('esperantoProjectBundle:Reference:Default/index.html.twig');
+        $event->getBuilder()->setTemplate('esperantoProjectBundle:Admin/Reference:Default/index.html.twig');
         $viewBuilder = new ViewBuilder();
         $viewBuilder->setParameter('category_route', 'esperanto_category_collection_manage');
         $event->getBuilder()->setViewBuilder($viewBuilder);
@@ -35,7 +35,7 @@ class ReferenceBuilderSubscriber implements EventSubscriberInterface
     public function onBuildTableRoute(RouteBuilderEvent $event)
     {
         $event->getBuilder()->setSorting(array('order' => 'ASC'));
-        $event->getBuilder()->setTemplate('esperantoReferenceBundle:Resource:table.html.twig');
+        //$event->getBuilder()->setTemplate('esperantoProjectBundle:Admin/Reference:Default/index.html.twig');
     }
 
     public function onBuildCreateRoute(RouteBuilderEvent $event)
@@ -53,12 +53,10 @@ class ReferenceBuilderSubscriber implements EventSubscriberInterface
     protected function getTabViewBuilder()
     {
         $viewBuilder = new DialogViewBuilder();
-        $viewBuilder->setTab('overview', 'tab.label.overview', 'esperantoProjectBundle:Reference:Tab/overview.html.twig');
-        $viewBuilder->setTab('details', 'tab.label.details', 'esperantoProjectBundle:Reference:Tab/details.html.twig');
-        $viewBuilder->setTab('category', 'tab.label.category', 'esperantoProjectBundle:Reference:Tab/category.html.twig');
-        $viewBuilder->setTab('seo', 'tab.label.seo', 'esperantoProjectBundle:Reference:Tab/seo.html.twig');
-        //ToDo: Preview should be defined in sub bundle or be a config var
-        $viewBuilder->setParameter('preview_route', 'esperanto_project_index');
+        $viewBuilder->setTab('overview', 'tab.label.overview', 'esperantoProjectBundle:Admin/Reference:Tab/overview.html.twig');
+        $viewBuilder->setTab('details', 'tab.label.details', 'esperantoProjectBundle:Admin/Reference:Tab/details.html.twig');
+        $viewBuilder->setTab('category', 'tab.label.category', 'esperantoProjectBundle:Admin/Reference:Tab/category.html.twig');
+        $viewBuilder->setTab('seo', 'tab.label.seo', 'esperantoProjectBundle:Admin/Reference:Tab/seo.html.twig');
 
         return $viewBuilder;
     }

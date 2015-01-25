@@ -1,3 +1,0 @@
-esperanto_project_index:
-  pattern:  /
-  defaults: { _controller: esperantoProjectBundle:Default:index }

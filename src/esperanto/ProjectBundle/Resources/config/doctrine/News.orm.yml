@@ -3,9 +3,6 @@ esperanto\ProjectBundle\Entity\News:
     table: news_news
 
     fields:
-        sticky:
-            type: boolean
-            nullable: true
 
     oneToOne:
         content:

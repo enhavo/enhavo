@@ -6,19 +6,54 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class PageType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    /**
+     * @var Router
+     */
     protected $router;
 
-    public function __construct(Router $router)
+    /**
+     * @var string
+     */
+    protected $route;
+
+    public function __construct($dataClass, $route, Router $router)
     {
+        $this->route = $route;
+        $this->dataClass = $dataClass;
         $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $router = $this->router;
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($router) {
+            $page = $event->getData();
+            $form = $event->getForm();
+
+            if (!empty($page) && $page->getId()) {
+                $url = $router->generate($this->route, array(
+                    'id' => $page->getId(),
+                    'slug' => $page->getSlug(),
+                ), true);
+
+                $form->add('link', 'text', array(
+                    'mapped' => false,
+                    'data' => $url,
+                    'disabled' => true
+                ));
+            }
+        });
+
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
         ));
@@ -96,7 +131,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\PageBundle\Entity\Page'
+            'data_class' => $this->dataClass
         ));
     }
 

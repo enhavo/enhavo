@@ -44,6 +44,10 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->scalarNode('news_route')->defaultValue(null)->end()
+            ->end()
         ;
 
         return $treeBuilder;

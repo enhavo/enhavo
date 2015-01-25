@@ -42,6 +42,10 @@ class esperantoReferenceExtension extends SyliusResourceExtension
             self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
         );
 
+        $configuration = new Configuration();
+        $processedConfig = $this->processConfiguration( $configuration, $config );
+        $container->setParameter( 'esperanto_reference.reference_route', $processedConfig[ 'reference_route' ]);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

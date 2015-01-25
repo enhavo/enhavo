@@ -6,18 +6,56 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class ReferenceType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    /**
+     * @var Router
+     */
     protected $router;
 
-    public function __construct(Router $router)
+    /**
+     * @var string
+     */
+    protected $route;
+
+    public function __construct($dataClass, $route, Router $router)
     {
+        $this->route = $route;
+        $this->dataClass = $dataClass;
         $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $router = $this->router;
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($router) {
+            $reference = $event->getData();
+            $form = $event->getForm();
+
+            if (!empty($reference) && $reference->getId()) {
+                $url = $router->generate($this->route, array(
+                    'id' => $reference->getId(),
+                    'slug' => $reference->getSlug(),
+                ), true);
+
+                $form->add('url', 'text', array(
+                    'mapped' => false,
+                    'data' => $url,
+                    'disabled' => true,
+                    'label' => 'form.label.page_link'
+                ));
+            }
+        });
+
+
         $builder->add('title', 'text', array(
             'label' => 'form.label.title'
         ));
@@ -99,7 +137,7 @@ class ReferenceType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ReferenceBundle\Entity\Reference'
+            'data_class' => $this->dataClass
         ));
     }
 

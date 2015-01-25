@@ -62,8 +62,6 @@ esperanto\NewsBundle\Entity\News:
             type: boolean
             nullable: true
 
-
-
     lifecycleCallbacks:
         prePersist: [ prePersist ]
         preUpdate: [ preUpdate ]

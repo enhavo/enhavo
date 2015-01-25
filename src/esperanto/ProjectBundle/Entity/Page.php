@@ -25,11 +25,6 @@ class Page extends BasePage implements SearchIndexInterface
     private $picture;
 
     /**
-     * @var boolean
-     */
-    private $landing_page;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -75,33 +70,6 @@ class Page extends BasePage implements SearchIndexInterface
             'id' => $this->getId(),
             'slug' => $this->getSlug()
         );
-    }
-
-    /**
-     * Set landing_page
-     *
-     * @param boolean $landingPage
-     * @return Page
-     */
-    public function setLandingPage($landingPage)
-    {
-        $this->landing_page = $landingPage;
-
-        return $this;
-    }
-
-    /**
-     * Get landing_page
-     *
-     * @return boolean
-     */
-    public function getLandingPage()
-    {
-        if($this->landing_page === null) {
-            return false;
-        }
-
-        return $this->landing_page;
     }
 
     /**

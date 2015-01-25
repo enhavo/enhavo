@@ -1,6 +1,4 @@
-{{ form_row(form._token) }}
+{% if form._token is defined %}{{ form_row(form._token) }}{% endif %}
 {% if form.url is defined %}{{ form_row(form.url) }}{% endif %}
-{{ form_row(form.title) }}
-{{ form_row(form.client) }}
-{{ form_row(form.preview_picture) }}
-{{ form_row(form.public) }}
+{% if form.title is defined %}{{ form_row(form.title) }}{% endif %}
+{% if form.public is defined %}{{ form_row(form.public) }}{% endif %}

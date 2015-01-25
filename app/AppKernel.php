@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
@@ -43,20 +42,6 @@ class AppKernel extends Kernel
             new esperanto\SettingBundle\esperantoSettingBundle(),
             new esperanto\SearchBundle\esperantoSearchBundle(),
 
-            //new esperanto\MenuBundle\esperantoMenuBundle(),
-            //new esperanto\RecipeBundle\esperantoRecipeBundle(),
-            //new esperanto\FrontendTemplateBundle\esperantoFrontendTemplateBundle(),
-            //new esperanto\ShopBundle\esperantoShopBundle(),
-            //new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
-            //new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
-            //new Sylius\Bundle\CartBundle\SyliusCartBundle(),
-            //new Sylius\Bundle\ProductBundle\SyliusProductBundle(),
-            //new MKS\AdminBundle\MKSAdminBundle(),
-            //new MKS\FrontendBundle\MKSFrontendBundle(),
-            //new MKS\ShopBundle\MKSShopBundle(),
-            //new blutzeMedia\WAFBundle\blutzeMediaWAFBundle(),
-
-            //new HowToVideo\MainBundle\HowToVideoMainBundle(),
             new esperanto\ProjectBundle\esperantoProjectBundle(),
         );
 
