@@ -8,52 +8,52 @@ use BaconStringUtils\Slugifier;
 /**
  * Page
  */
-abstract class Page
+class Page
 {
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $teaser;
+    protected $teaser;
 
     /**
      * @var boolean
      */
-    private $social_media;
+    protected $social_media;
 
     /**
      * @var string
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var string
      */
-    private $meta_description;
+    protected $meta_description;
 
     /**
      * @var string
      */
-    private $page_title;
+    protected $page_title;
 
     /**
      * @var float
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @var string
      */
-    private $change_frequency;
+    protected $change_frequency;
 
     /**
      * @var boolean
@@ -63,12 +63,30 @@ abstract class Page
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      */
-    private $updated;
+    protected $updated;
+
+    /**
+     * @var \esperanto\ContentBundle\Entity\Content
+     */
+    protected $content;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $picture;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -380,5 +398,61 @@ abstract class Page
     public function preUpdate()
     {
         $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * Set content
+     *
+     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @return Page
+     */
+    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \esperanto\ContentBundle\Entity\Content
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Add picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @return Page
+     */
+    public function addPicture(\esperanto\MediaBundle\Entity\File $picture)
+    {
+        $this->picture[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $picture
+     */
+    public function removePicture(\esperanto\MediaBundle\Entity\File $picture)
+    {
+        $this->picture->removeElement($picture);
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

@@ -58,6 +58,24 @@ esperanto\PageBundle\Entity\Page:
             type: datetime
             nullable: true
 
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\ContentBundle\Entity\Content
+
+    manyToMany:
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: page_page_picture
+                joinColumns:
+                    page_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
     lifecycleCallbacks:
         prePersist: [ prePersist ]
         preUpdate: [ preUpdate ]

@@ -101,8 +101,8 @@ esperanto_page:
     page_route: esperanto_project_page_detail
     classes:
         page:
-            model: esperanto\ProjectBundle\Entity\Page
-            form: esperanto\ProjectBundle\Form\Type\PageType
+            model: esperanto\PageBundle\Entity\Page
+            form: esperanto\PageBundle\Form\Type\PageType
 
 esperanto_news:
     news_route: esperanto_project_news_detail
