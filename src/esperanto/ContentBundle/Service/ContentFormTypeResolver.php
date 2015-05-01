@@ -8,6 +8,10 @@
 
 namespace esperanto\ContentBundle\Service;
 
+use esperanto\ContentBundle\Form\Type\ContactType;
+use esperanto\ContentBundle\Form\Type\CiteTextType;
+use esperanto\ContentBundle\Form\Type\PicturePictureType;
+use esperanto\ContentBundle\Form\Type\TextTextType;
 
 use esperanto\ContentBundle\Form\Type\PictureType;
 use esperanto\ContentBundle\Form\Type\TextType;
@@ -22,6 +26,21 @@ class ContentFormTypeResolver
                 break;
             case('picture'):
                 $formType = new PictureType($formName, $data);
+                break;
+            case('textpicture'):
+                $formType = new TextPictureType($formName, $data);
+                break;
+            case('texttext'):
+                $formType = new TextTextType($formName, $data);
+                break;
+            case('picturepicture'):
+                $formType = new PicturePictureType($formName, $data);
+                break;
+            case('citetext'):
+                $formType = new CiteTextType($formName, $data);
+                break;
+            case('contact'):
+                $formType = new ContactType($formName, $data);
                 break;
             default:
                 throw new \Exception('cant resolve form type');

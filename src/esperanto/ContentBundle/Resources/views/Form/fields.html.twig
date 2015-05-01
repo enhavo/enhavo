@@ -7,6 +7,11 @@
             <ul>
                 <li class="addItem" data-item="text">Text</li>
                 <li class="addItem" data-item="picture">Bild</li>
+                <li class="addItem" data-item="textpicture">Text - Bild</li>
+                <li class="addItem" data-item="texttext">Text - Text</li>
+                <li class="addItem" data-item="picturepicture">Bild - Bild</li>
+                <li class="addItem" data-item="citetext">Zitat - Text</li>
+                <li class="addItem" data-item="contact">Kontakt</li>
             </ul>
         </div>
 
@@ -45,6 +50,79 @@
 
 {% block esperanto_content_item_picture_widget %}
     {{ form_widget(form.files) }}
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_textpicture_widget %}
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text) }}
+    </div>
+
+    {{ form_widget(form.files) }}
+
+    <div class="padding textleft">
+       {{ form_widget(form.textleft) }}
+    </div>
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_texttext_widget %}
+    <div class="padding">
+        {{ form_widget(form.title1) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text1) }}
+    </div>
+
+    <div class="padding">
+        {{ form_widget(form.title2) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text2) }}
+    </div>
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_picturepicture_widget %}
+    {{ form_widget(form.files1) }}
+
+    {{ form_widget(form.files2) }}
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_citetext_widget %}
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.cite) }}
+    </div>
+    <div class="padding textleft">
+        {{ form_widget(form.textLeft) }}
+    </div>
+
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_contact_widget %}
+
+    {{ form_widget(form.files) }}
+
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text) }}
+    </div>
 
     {{ form_widget(form.type) }}
 {% endblock %}

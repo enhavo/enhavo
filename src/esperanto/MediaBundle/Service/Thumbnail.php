@@ -14,13 +14,29 @@ class Thumbnail
         if($oldWidth > $oldHeight)
         {
             //landscape
-            $factor = $oldHeight/$height;
-            $widthRelative = $width*$factor;
-            $halfOfRelativeWidth = $widthRelative/2;
+            $ratioOld = $oldWidth/$oldHeight;
+            $ratioNew = $width/$height;
+            if($ratioNew <= $ratioOld) {
+                $factor = $oldHeight/$height;
+                $widthRelative = $width*$factor;
+                $halfOfRelativeWidth = $widthRelative/2;
 
-            $src_x = ($oldWidth/2)-$halfOfRelativeWidth;
-            $src_y = 0;
+                $src_x = ($oldWidth/2)-$halfOfRelativeWidth;
+                $src_y = 0;
 
+                $src_w = $widthRelative;
+                $src_h = $oldHeight;
+            } else {
+                $factor = $oldWidth/$width;
+                $heightRelative = $height*$factor;
+                $halfOfRelativeHeight = $heightRelative/2;
+
+                $src_x = 0;
+                $src_y = ($oldHeight/2)-$halfOfRelativeHeight;
+
+                $src_h = $heightRelative;
+                $src_w = $oldWidth;
+            }
             $dst_x = 0;
             $dst_y = 0;
 

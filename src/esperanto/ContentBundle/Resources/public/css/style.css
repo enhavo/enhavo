@@ -98,3 +98,7 @@
 .contentForm .item .button-container .button-delete {
     right: 5px;
 }
+
+.textleft label{
+    color: black !important;
+}

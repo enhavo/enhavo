@@ -6,6 +6,12 @@
     </div>
 {%- endblock %}
 
+{% block date_widget -%}
+    <div class="inputContainer">
+        <input class="datepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{%- endblock %}
+
 {% block choice_widget_expanded %}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}

@@ -23,10 +23,11 @@ class NewsRepository extends EntityRepository
         $query->andWhere('n.public = true');
 
         if($year >= 1970 && $month > 0 && $month < 13) {
+            $monthEnd = new \DateTime(sprintf('%s-%s-01 23:59:59', $year, $month));
             $query->Where('n.publication_date >= :monthStart');
             $query->AndWhere('n.publication_date <= :monthEnd');
             $query->setParameter('monthStart', new \DateTime(sprintf('%s-%s-01 00:00:00', $year, $month)));
-            $query->setParameter('monthEnd', (new \DateTime(sprintf('%s-%s-01 23:59:59', $year, $month)))->modify('last day of this month'));
+            $query->setParameter('monthEnd', $monthEnd->modify('last day of this month'));
         } elseif($year >= 1970) {
             $query->Where('n.publication_date >= :yearStart');
             $query->AndWhere('n.publication_date <= :yearEnd');

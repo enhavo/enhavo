@@ -18,7 +18,14 @@ var Form = function(router, templating, admin, translator)
       currentText: 'Jetzt',
       closeText: 'Fertig',
       dateFormat: 'dd.mm.yy',
-      stepMinute: 10
+      stepMinute: 10,
+      firstDay: 1
+    });
+
+    $(form).find('input.datepicker').datepicker({
+      closeText: 'Fertig',
+      dateFormat: 'dd.mm.yy',
+      firstDay: 1
     });
   };
 

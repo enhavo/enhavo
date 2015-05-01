@@ -1,0 +1,18 @@
+<div class="row content">
+    <div class="content_picturepicture">
+        <div class="col-xs-6 left6">
+            {% for file in data.files1 %}
+                {% if loop.first %}
+                <img class="content_img" src="{{ media_url(file,960) }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-xs-6 right6">
+            {% for file in data.files2 %}
+                {% if loop.first %}
+                <img class="content_img" src="{{ media_url(file,960) }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
