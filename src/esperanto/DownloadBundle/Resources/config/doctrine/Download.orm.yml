@@ -1,0 +1,22 @@
+esperanto\DownloadBundle\Entity\Download:
+    type: mappedSuperclass
+    table: download_download
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        text:
+            type: text
+            nullable: true
+
+    lifecycleCallbacks: {  }
