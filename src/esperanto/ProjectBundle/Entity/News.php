@@ -24,70 +24,6 @@ class News extends BaseNews implements SearchIndexInterface
      */
     private $picture;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set content
-     *
-     * @param \esperanto\ContentBundle\Entity\Content $content
-     * @return News
-     */
-    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return \esperanto\ContentBundle\Entity\Content
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Add picture
-     *
-     * @param \esperanto\MediaBundle\Entity\File $picture
-     * @return News
-     */
-    public function addPicture(\esperanto\MediaBundle\Entity\File $picture)
-    {
-        $this->picture[] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Remove picture
-     *
-     * @param \esperanto\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\esperanto\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
-     * Get picture
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
     public function getIndexTitle()
     {
         return $this->getTitle();
@@ -126,5 +62,69 @@ class News extends BaseNews implements SearchIndexInterface
             'id' => $this->getId(),
             'slug' => $this->getSlug()
         );
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set content
+     *
+     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @return News
+     */
+    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \esperanto\ContentBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Add picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @return News
+     */
+    public function addPicture(\esperanto\MediaBundle\Entity\File $picture)
+    {
+        $this->picture[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $picture
+     */
+    public function removePicture(\esperanto\MediaBundle\Entity\File $picture)
+    {
+        $this->picture->removeElement($picture);
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

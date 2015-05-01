@@ -8,7 +8,7 @@ use BaconStringUtils\Slugifier;
 /**
  * Reference
  */
-abstract class Reference
+class Reference
 {
     /**
      * @var integer
@@ -74,6 +74,30 @@ abstract class Reference
      * @var integer
      */
     private $order;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+    /**
+     * @var \esperanto\ContentBundle\Entity\Content
+     */
+    private $content;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $preview_picture;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->preview_picture = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -402,5 +426,95 @@ abstract class Reference
     public function getOrder()
     {
         return $this->order;
+    }
+
+
+    /**
+     * Add preview_picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $previewPicture
+     * @return Reference
+     */
+    public function addPreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
+    {
+        $this->preview_picture[] = $previewPicture;
+
+        return $this;
+    }
+
+    /**
+     * Remove preview_picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $previewPicture
+     */
+    public function removePreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
+    {
+        $this->preview_picture->removeElement($previewPicture);
+    }
+
+    /**
+     * Get preview_picture
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPreviewPicture()
+    {
+        return $this->preview_picture;
+    }
+
+    /**
+     * Set content
+     *
+     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @return Reference
+     */
+    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \esperanto\ContentBundle\Entity\Content
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \esperanto\MediaBundle\Entity\File $images
+     * @return Reference
+     */
+    public function addImage(\esperanto\MediaBundle\Entity\File $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \esperanto\MediaBundle\Entity\File $images
+     */
+    public function removeImage(\esperanto\MediaBundle\Entity\File $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

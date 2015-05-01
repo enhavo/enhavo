@@ -47,10 +47,22 @@ class Slide
     private $public;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $image;
+
+    /**
+     * @var Slider
+     */
+    private $slider;
+
+
+    /**
      * Constructor
      */
     public function __construct()
     {
+        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
         $this->link_type = self::LINK_TYPE_EXTERNAL;
     }
 
@@ -204,5 +216,61 @@ class Slide
         }
 
         return $this->public;
+    }
+
+    /**
+     * Set slider
+     *
+     * @param Slider $slider
+     * @return Slide
+     */
+    public function setSlider(Slider $slider = null)
+    {
+        $this->slider = $slider;
+
+        return $this;
+    }
+
+    /**
+     * Get slider
+     *
+     * @return Slider
+     */
+    public function getSlider()
+    {
+        return $this->slider;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \esperanto\MediaBundle\Entity\File $image
+     * @return Slider
+     */
+    public function addImage(\esperanto\MediaBundle\Entity\File $image)
+    {
+        $this->image[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \esperanto\MediaBundle\Entity\File $image
+     */
+    public function removeImage(\esperanto\MediaBundle\Entity\File $image)
+    {
+        $this->image->removeElement($image);
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

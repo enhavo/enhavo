@@ -132,6 +132,18 @@ class ReferenceType extends AbstractType
             'expanded' => true,
             'multiple' => false
         ));
+
+        $builder->add('content', 'esperanto_content', array(
+            'label' => 'form.label.content'
+        ));
+
+        $builder->add('images', 'esperanto_files', array(
+            'label' => 'form.label.homepage_picture'
+        ));
+
+        $builder->add('preview_picture', 'esperanto_files', array(
+            'label' => 'form.label.preview_picture'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

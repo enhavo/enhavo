@@ -14,11 +14,6 @@ use esperanto\ProjectBundle\Entity\Slider;
 class Slide extends BaseSlide
 {
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $image;
-
-    /**
      * @var string
      */
     private $link;
@@ -37,20 +32,6 @@ class Slide extends BaseSlide
      * @var \esperanto\NewsBundle\Entity\News
      */
     private $news;
-
-    /**
-     * @var Slider
-     */
-    private $slider;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set link
@@ -73,39 +54,6 @@ class Slide extends BaseSlide
     public function getLink()
     {
         return $this->link;
-    }
-
-    /**
-     * Add image
-     *
-     * @param \esperanto\MediaBundle\Entity\File $image
-     * @return Slider
-     */
-    public function addImage(\esperanto\MediaBundle\Entity\File $image)
-    {
-        $this->image[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param \esperanto\MediaBundle\Entity\File $image
-     */
-    public function removeImage(\esperanto\MediaBundle\Entity\File $image)
-    {
-        $this->image->removeElement($image);
-    }
-
-    /**
-     * Get image
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 
     /**
@@ -192,26 +140,50 @@ class Slide extends BaseSlide
         return $this->reference;
     }
 
+
     /**
-     * Set slider
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $image;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add image
      *
-     * @param Slider $slider
+     * @param \esperanto\MediaBundle\Entity\File $image
      * @return Slide
      */
-    public function setSlider(Slider $slider = null)
+    public function addImage(\esperanto\MediaBundle\Entity\File $image)
     {
-        $this->slider = $slider;
+        $this->image[] = $image;
 
         return $this;
     }
 
     /**
-     * Get slider
+     * Remove image
      *
-     * @return Slider
+     * @param \esperanto\MediaBundle\Entity\File $image
      */
-    public function getSlider()
+    public function removeImage(\esperanto\MediaBundle\Entity\File $image)
     {
-        return $this->slider;
+        $this->image->removeElement($image);
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

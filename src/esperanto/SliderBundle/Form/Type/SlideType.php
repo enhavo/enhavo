@@ -49,6 +49,11 @@ class SlideType extends AbstractType
             'expanded' => true,
             'multiple' => false
         ));
+
+        $builder->add('image', 'esperanto_files', array(
+            'label' => 'form.label.image',
+            'information' => array('Bilder in der Größe 640x360 Pixel (oder ein vielfaches davon) hochladen'),
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

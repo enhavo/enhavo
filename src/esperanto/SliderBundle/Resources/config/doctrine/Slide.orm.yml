@@ -37,3 +37,20 @@ esperanto\SliderBundle\Entity\Slide:
             type: integer
             column: '`order`'
             nullable: true
+
+    manyToMany:
+        image:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: slider_slide_image
+                joinColumns:
+                    slider_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+    manyToOne:
+        slider:
+            targetEntity: Slider

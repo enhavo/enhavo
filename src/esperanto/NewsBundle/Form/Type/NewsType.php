@@ -132,6 +132,14 @@ class NewsType extends AbstractType
             'expanded' => true,
             'multiple' => false
         ));
+
+        $builder->add('picture', 'esperanto_files', array(
+            'label' => 'form.label.picture'
+        ));
+
+        $builder->add('content', 'esperanto_content', array(
+
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -15,11 +15,6 @@ use esperanto\ContentBundle\Entity\Item;
 class Reference extends BaseReference implements SearchIndexInterface
 {
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $images;
-
-    /**
      * @var \esperanto\ContentBundle\Entity\Content
      */
     private $content;
@@ -27,16 +22,12 @@ class Reference extends BaseReference implements SearchIndexInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $preview_picture;
+    private $images;
 
     /**
-     * Constructor
+     * @var \Doctrine\Common\Collections\Collection
      */
-    public function __construct()
-    {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->preview_picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $preview_picture;
 
     public function getIndexTitle()
     {
@@ -79,36 +70,12 @@ class Reference extends BaseReference implements SearchIndexInterface
     }
 
     /**
-     * Add preview_picture
-     *
-     * @param \esperanto\MediaBundle\Entity\File $previewPicture
-     * @return Reference
+     * Constructor
      */
-    public function addPreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
+    public function __construct()
     {
-        $this->preview_picture[] = $previewPicture;
-
-        return $this;
-    }
-
-    /**
-     * Remove preview_picture
-     *
-     * @param \esperanto\MediaBundle\Entity\File $previewPicture
-     */
-    public function removePreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
-    {
-        $this->preview_picture->removeElement($previewPicture);
-    }
-
-    /**
-     * Get preview_picture
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPreviewPicture()
-    {
-        return $this->preview_picture;
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->preview_picture = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -127,7 +94,7 @@ class Reference extends BaseReference implements SearchIndexInterface
     /**
      * Get content
      *
-     * @return \esperanto\ContentBundle\Entity\Content
+     * @return \esperanto\ContentBundle\Entity\Content 
      */
     public function getContent()
     {
@@ -160,10 +127,43 @@ class Reference extends BaseReference implements SearchIndexInterface
     /**
      * Get images
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Add preview_picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $previewPicture
+     * @return Reference
+     */
+    public function addPreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
+    {
+        $this->preview_picture[] = $previewPicture;
+
+        return $this;
+    }
+
+    /**
+     * Remove preview_picture
+     *
+     * @param \esperanto\MediaBundle\Entity\File $previewPicture
+     */
+    public function removePreviewPicture(\esperanto\MediaBundle\Entity\File $previewPicture)
+    {
+        $this->preview_picture->removeElement($previewPicture);
+    }
+
+    /**
+     * Get preview_picture
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreviewPicture()
+    {
+        return $this->preview_picture;
     }
 }

@@ -9,8 +9,6 @@ esperanto\ProjectBundle\Entity\Slide:
             nullable: true
 
     manyToOne:
-        slider:
-            targetEntity: Slider
 
         page:
             targetEntity: esperanto\ProjectBundle\Entity\Page
@@ -20,16 +18,3 @@ esperanto\ProjectBundle\Entity\Slide:
 
         reference:
             targetEntity: esperanto\ProjectBundle\Entity\Reference
-
-    manyToMany:
-        image:
-            cascade: ['persist', 'refresh']
-            targetEntity: esperanto\MediaBundle\Entity\File
-            joinTable:
-                name: slider_slide_image
-                joinColumns:
-                    slider_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id

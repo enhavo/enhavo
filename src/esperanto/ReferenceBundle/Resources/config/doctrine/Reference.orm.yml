@@ -62,6 +62,35 @@ esperanto\ReferenceBundle\Entity\Reference:
             column: '`order`'
             nullable: true
 
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\ContentBundle\Entity\Content
+
+    manyToMany:
+        images:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_image
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+        preview_picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: reference_reference_preview_picture
+                joinColumns:
+                    reference_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
 
     lifecycleCallbacks:
         prePersist: [ prePersist ]
