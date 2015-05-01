@@ -41,7 +41,7 @@ class PicturePicture
      */
     public function getFiles1()
     {
-        return $this->files1;
+        return $this->files1->toArray();
     }
 
     /**
@@ -61,7 +61,7 @@ class PicturePicture
      */
     public function getFiles2()
     {
-        return $this->files2;
+        return $this->files2->toArray();
     }
 
     /**
