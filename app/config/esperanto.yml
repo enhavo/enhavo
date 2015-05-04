@@ -1,22 +1,15 @@
 esperanto_admin:
     permission_check: false
+    stylesheets:
+      - '@esperantoDownloadBundle/Resources/public/css/style.css'
+    javascripts:
+
 
 esperanto_page:
     classes:
         page:
             model: esperanto\ProjectBundle\Entity\Page
             form: esperanto\ProjectBundle\Form\Type\PageType
-
-esperanto_project:
-    classes:
-        appointment:
-            model: esperanto\ProjectBundle\Entity\Appointment
-            form: esperanto\ProjectBundle\Form\Type\AppointmentType
-            repository: esperanto\ProjectBundle\Repository\AppointmentRepository
-        download:
-            model: esperanto\ProjectBundle\Entity\Download
-            form: esperanto\ProjectBundle\Form\Type\DownloadType
-            repository: esperanto\ProjectBundle\Repository\DownloadRepository
 
 esperanto_news:
     classes:

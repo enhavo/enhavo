@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new esperanto\SliderBundle\esperantoSliderBundle(),
             new esperanto\SettingBundle\esperantoSettingBundle(),
             new esperanto\SearchBundle\esperantoSearchBundle(),
+            new esperanto\DownloadBundle\esperantoDownloadBundle(),
 
             new esperanto\ProjectBundle\esperantoProjectBundle(),
         );

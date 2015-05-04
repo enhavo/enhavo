@@ -23,6 +23,8 @@ class esperantoAdminExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('esperanto_admin.permission_check', $config[ 'permission_check' ]);
+        $container->setParameter('esperanto_admin.stylesheets', $config[ 'stylesheets' ]);
+        $container->setParameter('esperanto_admin.javascripts', $config[ 'javascripts' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

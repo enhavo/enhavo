@@ -59,11 +59,21 @@ class SyliusBuilder
     protected $routeBuilders = array();
 
     /**
+     * @var array
+     */
+    protected $stylesheets;
+
+    /**
+     * @var array
+     */
+    protected $javascripts;
+
+    /**
      * @var string
      */
     protected $defaultTemplatePattern;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, $companyName, $bundleName, $resourceName)
+    public function __construct(EventDispatcherInterface $eventDispatcher, $companyName, $bundleName, $resourceName, $stylesheets, $javascripts)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->companyName = $companyName;
@@ -79,6 +89,9 @@ class SyliusBuilder
         $this->defaultTemplatePattern = 'esperantoAdminBundle:Resource:%s.html.twig';
         $this->defaultAdmin = sprintf('%s.admin.%s', $this->applicationName, $this->resourceName);
         $this->defaultPagination = 10;
+
+        $this->stylesheets = $stylesheets;
+        $this->javascripts = $javascripts;
     }
 
     public function addRouteBuilder($routeBuilder)
@@ -102,6 +115,8 @@ class SyliusBuilder
         $config->setParameter('entity', $this->resourceName);
         $config->setParameter('bundle', $this->bundleName);
         $config->setParameter('paginate', $this->defaultPagination);
+        $config->setParameter('stylesheets', $this->stylesheets);
+        $config->setParameter('javascripts', $this->javascripts);
 
         if($indexRouteBuilder) {
             $config->setRoute('index', $indexRouteBuilder->getRouteName(), $indexRouteBuilder->getRoute());

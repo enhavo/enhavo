@@ -8,12 +8,19 @@
 
 namespace esperanto\AdminBundle\Controller;
 
+use esperanto\AdminBundle\Model\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdminController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('esperantoAdminBundle:Admin:index.html.twig');
+        $view = new View();
+        $view->setParameter('javascripts', $this->container->getParameter('esperanto_admin.javascripts'));
+        $view->setParameter('stylesheets', $this->container->getParameter('esperanto_admin.stylesheets'));
+
+        return $this->render('esperantoAdminBundle:Admin:index.html.twig', array(
+            'view' => $view
+        ));
     }
-} 
+}

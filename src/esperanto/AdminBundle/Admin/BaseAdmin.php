@@ -68,7 +68,9 @@ class BaseAdmin implements Admin
             $this->container->get('event_dispatcher'),
             $this->company,
             $this->bundle,
-            $this->entity
+            $this->entity,
+            $this->container->getParameter('esperanto_admin.stylesheets'),
+            $this->container->getParameter('esperanto_admin.javascripts')
         );
         $this->config = $builder->getConfig();
     }

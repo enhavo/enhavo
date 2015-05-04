@@ -26,6 +26,18 @@ class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('stylesheets')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('javascripts')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;
