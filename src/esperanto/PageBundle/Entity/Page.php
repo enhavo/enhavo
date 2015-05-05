@@ -13,47 +13,47 @@ class Page
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $teaser;
+    private $teaser;
 
     /**
      * @var boolean
      */
-    protected $social_media;
+    private $social_media;
 
     /**
      * @var string
      */
-    protected $slug;
+    private $slug;
 
     /**
      * @var string
      */
-    protected $meta_description;
+    private $meta_description;
 
     /**
      * @var string
      */
-    protected $page_title;
+    private $page_title;
 
     /**
      * @var float
      */
-    protected $priority;
+    private $priority;
 
     /**
      * @var string
      */
-    protected $change_frequency;
+    private $change_frequency;
 
     /**
      * @var boolean
@@ -63,22 +63,22 @@ class Page
     /**
      * @var \DateTime
      */
-    protected $created;
+    private $created;
 
     /**
      * @var \DateTime
      */
-    protected $updated;
+    private $updated;
 
     /**
      * @var \esperanto\ContentBundle\Entity\Content
      */
-    protected $content;
+    private $content;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $picture;
+    private $picture;
 
     /**
      * Constructor

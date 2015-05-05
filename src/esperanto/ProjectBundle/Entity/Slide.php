@@ -34,6 +34,19 @@ class Slide extends BaseSlide
     private $news;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $image;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Set link
      *
      * @param string $link
@@ -138,20 +151,6 @@ class Slide extends BaseSlide
     public function getReference()
     {
         return $this->reference;
-    }
-
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $image;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

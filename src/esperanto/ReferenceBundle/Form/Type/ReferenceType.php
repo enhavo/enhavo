@@ -40,7 +40,7 @@ class ReferenceType extends AbstractType
             $reference = $event->getData();
             $form = $event->getForm();
 
-            if (!empty($reference) && $reference->getId()) {
+            if (!empty($reference) && $reference->getId() && !empty($route)) {
                 $url = $router->generate($this->route, array(
                     'id' => $reference->getId(),
                     'slug' => $reference->getSlug(),

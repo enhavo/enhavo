@@ -40,7 +40,7 @@ class NewsType extends AbstractType
             $news = $event->getData();
             $form = $event->getForm();
 
-            if (!empty($news) && $news->getId()) {
+            if (!empty($news) && $news->getId() && !empty($route)) {
                 $url = $router->generate($this->route, array(
                     'id' => $news->getId(),
                     'slug' => $news->getSlug(),

@@ -40,7 +40,7 @@ class PageType extends AbstractType
             $page = $event->getData();
             $form = $event->getForm();
 
-            if (!empty($page) && $page->getId()) {
+            if (!empty($page) && $page->getId() && !empty($route)) {
                 $url = $router->generate($this->route, array(
                     'id' => $page->getId(),
                     'slug' => $page->getSlug(),
