@@ -5,7 +5,6 @@ if there is a parent of an element having attribute 'data-fullscreen-container' 
 it will be fill out that parent. else $(window) will be used as its parent.
  */
 function esperanto_fullscreen(selector) {
-  this.elements = selector;
   var self = this;
 
   this.init = function() {
@@ -38,6 +37,8 @@ function esperanto_fullscreen(selector) {
           self.setElementCSS(element);
           self.setElementPosition(element,img.width,img.height);
           self.replacePreviewWithHighRes(element);
+          element.data('width',img.width);
+          element.data('height',img.height);
         }, 1);
       });
       img.src = element.prop('src');
@@ -59,10 +60,11 @@ function esperanto_fullscreen(selector) {
     var containerHeight = container.height();
     var containerWidth = container.width();
     var containerRatio = containerWidth / containerHeight;
+    console.log(containerHeight,containerWidth,elementwidth,elementheight);
 
     if(containerRatio > ratio) {
-      element.width(containerWidth+150);
-      element.height((containerWidth+150) / ratio);
+      element.width(containerWidth);
+      element.height((containerWidth) / ratio);
       element.css('top', (containerHeight - element.height()) / 2);
       element.css('left', 0);
     } else {
@@ -81,5 +83,6 @@ function esperanto_fullscreen(selector) {
       img.src = element.data('large-src');
     }
   },
+  this.elements = selector;
   this.init();
-}
+};

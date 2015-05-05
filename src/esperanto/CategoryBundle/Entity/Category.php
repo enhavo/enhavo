@@ -89,4 +89,32 @@ class Category
         }
         return '';
     }
+    /**
+     * @var integer
+     */
+    private $order;
+
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Category
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 }

@@ -15,6 +15,7 @@ use esperanto\ContentBundle\Item\Type\TextText;
 use esperanto\ContentBundle\Item\Type\TextPicture;
 use esperanto\ContentBundle\Item\Type\Picture;
 use esperanto\ContentBundle\Item\Type\Text;
+use esperanto\ContentBundle\Item\Type\Video;
 
 class ContentTypeResolver
 {
@@ -100,6 +101,12 @@ class ContentTypeResolver
                 }
                 if(array_key_exists('title', $data)) {
                     $itemType->setTitle($data['title']);
+                }
+                break;
+            case('video'):
+                $itemType = new Video();
+                if(array_key_exists('url', $data)) {
+                    $itemType->setUrl($data['url']);
                 }
                 break;
             default:

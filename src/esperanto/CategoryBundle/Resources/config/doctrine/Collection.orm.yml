@@ -19,5 +19,6 @@ esperanto\CategoryBundle\Entity\Collection:
             mappedBy: collection
             targetEntity: Category
             cascade: ['persist', 'refresh', 'remove']
+            orderBy: { 'order': 'ASC' }
 
     lifecycleCallbacks: {  }

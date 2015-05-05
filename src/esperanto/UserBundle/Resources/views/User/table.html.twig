@@ -1,21 +1,21 @@
 <div class="row p1 head-row">
-    <div class="span1">{{ 'label.id'|trans }}</div>
-    <div class="span3">{{ 'label.username'|trans }}</div>
-    <div class="span3">{{ 'label.groups'|trans }}</div>
-    <div class="span3">{{ 'label.name'|trans }}</div>
+    <div class="col-md-1">{{ 'label.id'|trans }}</div>
+    <div class="col-md-3">{{ 'label.username'|trans }}</div>
+    <div class="col-md-3">{{ 'label.groups'|trans }}</div>
+    <div class="col-md-3">{{ 'label.name'|trans }}</div>
 </div>
 
 <div class="row-container">
     {% for item in data %}
         <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
-            <div class="span1">{{ item.id }}</div>
-            <div class="span3">{{ item.username }}</div>
-            <div class="span3">
+            <div class="col-md-1">{{ item.id }}</div>
+            <div class="col-md-3">{{ item.username }}</div>
+            <div class="col-md-3">
                 {% for group in item.groups %}
                     {{ group.name }}{% if not loop.last %},{% endif %}
                 {% endfor %}
             </div>
-            <div class="span3">{{ item.firstName }}{% if item.firstName %} {% endif %}{{ item.lastName }}</div>
+            <div class="col-md-3">{{ item.firstName }}{% if item.firstName %} {% endif %}{{ item.lastName }}</div>
         </div>
     {% else %}
         {{ 'table.empty'|trans }}

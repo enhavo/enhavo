@@ -108,7 +108,15 @@ function ContentForm(router)
         var index = container.children().index(item);
 
         if(index > 0) { // is not first element
-          $(container.children().get(index - 1)).before(item); //move element before last
+          if(item.find('.wysiwyg').length) {
+            console.log(item.find('.wysiwyg').length);
+            var editorid = item.find('.wysiwyg').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorid);
+            $(container.children().get(index - 1)).before(item); //move element before last
+            tinymce.execCommand('mceAddEditor', false, editorid);
+          } else {
+            $(container.children().get(index - 1)).before(item); //move element before last
+          }
         }
 
         setOrderForContainer(container);
@@ -121,7 +129,15 @@ function ContentForm(router)
         var size = container.children().size();
 
         if(index < (size - 1)) { // is not last element
-          $(container.children().get(index + 1)).after(item); //move element after next
+          if(item.find('.wysiwyg').length) {
+            console.log(item.find('.wysiwyg').length);
+            var editorid = item.find('.wysiwyg').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorid);
+            $(container.children().get(index + 1)).after(item); //move element after next
+            tinymce.execCommand('mceAddEditor', false, editorid);
+          } else {
+            $(container.children().get(index + 1)).after(item); //move element after next
+          }
         }
 
         setOrderForContainer(container)

@@ -27,7 +27,7 @@ class ContentRender extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('content_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('content_render', array($this, 'render'), array('is_safe' => array('html')))
         );
     }
 

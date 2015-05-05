@@ -11,6 +11,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text', array());
+        $builder->add('order', 'hidden', array('attr' => array('data-category-item-order' => '')));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

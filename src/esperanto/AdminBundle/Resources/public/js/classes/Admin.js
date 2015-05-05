@@ -34,6 +34,13 @@ function Admin (router, templating, translator)
 
     var init = function() {
 
+      $(document).one('keyup',function(event) {
+        if(event.keyCode == 27) {
+          event.stopPropagation();
+          event.preventDefault();
+          self.overlayClose();
+        }
+      });
 
       overlayContent.find('.close').click(function(event) {
         event.stopPropagation();

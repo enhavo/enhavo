@@ -2,13 +2,14 @@
 
 .uploadForm .bar {
     height: 18px;
-    background: green;
+    background: #eeaa33;
+    margin-bottom:1px;
 }
 
 .uploadForm .dropzone {
-    background: palegreen;
+    background: #dd9933;
     width: 100%;
-    min-height: 100px;
+    min-height: 110px;
     line-height: 50px;
     text-align: center;
     font-weight: bold;
@@ -47,11 +48,16 @@
     right:0;
     color:#fff;
     background:#666666;
-    padding:1px 4px;
     display:none;
     cursor:pointer;
+    width:35px;
+    height:35px;
 }
+
+.uploadForm .list li .imgdelete i {position:absolute;top:3px;right:6px;}
 
 .uploadForm .list li:hover .imgdelete {
     display:block;
 }
+
+.uploadForm-image-container {background: repeating-linear-gradient(45deg,#aaaaaa,#aaaaaa 10px,#ffffff 10px,#ffffff 20px);width:100px;height:100px;}

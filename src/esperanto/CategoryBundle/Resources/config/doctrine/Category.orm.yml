@@ -13,6 +13,10 @@ esperanto\CategoryBundle\Entity\Category:
             type: string
             length: 255
             nullable: true
+        order:
+            type: integer
+            nullable: true
+            column: '`order`'
 
     manyToOne:
         collection:

@@ -29,9 +29,9 @@ class PaginationRender extends \Twig_Extension
         );
     }
 
-    public function render(Pagerfanta $pagination)
+    public function render(Pagerfanta $pagination,$cssClass='pagination',$dataSelector=null)
     {
-        return $this->twigEnvironment->render($this->template, array('pagination' => $pagination));
+        return $this->twigEnvironment->render($this->template, array('pagination' => $pagination,'cssClass' => $cssClass,'dataSelector' => $dataSelector));
     }
 
     public function getName()

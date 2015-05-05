@@ -10,6 +10,7 @@ var CategoryForm = function()
       var index = container.children().size();
       var newForm = prototype.replace(/__name__/g, index);
       container.append(newForm);
+      self.setFileOrder(form);
     };
 
     selector.on('click', '.button-add-category' , function(event) {
@@ -21,6 +22,20 @@ var CategoryForm = function()
     selector.on('click', '.button-delete-category' , function(event) {
       event.preventDefault();
       $(this).parent().parent().remove();
+      self.setFileOrder(form);
+    });
+
+    selector.find('[data-category-item-list]').sortable({
+      update: function() {
+        self.setFileOrder(form);
+      },
+      items: '[data-category-item]'
+    });
+  };
+
+  this.setFileOrder = function(form) {
+    $(form).find('[data-category-item-order]').each(function(index) {
+      $(this).val(index);
     });
   };
 

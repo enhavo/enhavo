@@ -36,7 +36,8 @@ class Picture
     {
         foreach($files as $file) {
             $newFile = new File();
-            $newFile->setId($file);
+            $newFile->setId($file['id']);
+            $newFile->setOrder($file['order']);
             $this->files->add($newFile);
         }
     }

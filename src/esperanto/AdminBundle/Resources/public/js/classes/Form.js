@@ -49,7 +49,7 @@ var Form = function(router, templating, admin, translator)
   this.initWysiwyg = function(form)
   {
     var addTinymce = function(element) {
-      var bodyHeight = 300;
+      var bodyHeight = 150;
       if(typeof $(element).attr("height") != "undefined") {
         bodyHeight = $(this).attr("height");
       }

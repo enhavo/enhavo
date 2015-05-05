@@ -5,9 +5,9 @@
                 <script type="text/html" data-id="files-template">
                     <li class="imgContainer" data-file-element>
                         <div class="imgdelete">
-                            <i class="icon-remove icon-2x"></i>
+                            <i class="fa fa-times fa-2x"></i>
                         </div>
-                        <div style="height: 100px; width: 100px; background-color: blue">
+                        <div class="uploadForm-image-container">
                             <img src="/file/{file_id}/100/100">
                         </div>
                         <input type="hidden" name="{full_name}[{file_index}][id]" value="{file_id}" />
@@ -36,9 +36,9 @@
                                {% if file %}
                                   <li class="imgContainer" data-file-element>
                                       <div class="imgdelete">
-                                          <i class="icon-remove icon-2x"></i>
+                                          <i class="fa fa-times fa-2x"></i>
                                       </div>
-                                      <div style="height: 100px; width: 100px; background-color: blue">
+                                      <div class="uploadForm-image-container">
                                           <img src="/file/{{ file.id }}/100/100">
                                       </div>
                                       <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][id]" value="{{ file.id }}" />
@@ -50,7 +50,7 @@
                     </div>
                     <input id="{{ id }}" class="fileupload hide" type="file" data-url="{{ path('esperanto_media_upload') }}" multiple>
                     <div class="mt1em">
-                        <button class="btnsmall upload-button"><i class="icon-arrow-up"></i> Datei hochladen</button>
+                        <button class="btnsmall upload-button"><i class="fa fa-arrow-up"></i> Datei hochladen</button>
                     </div>
                 </div>
             </div>

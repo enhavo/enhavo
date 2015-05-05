@@ -15,6 +15,7 @@ use esperanto\ContentBundle\Form\Type\TextTextType;
 
 use esperanto\ContentBundle\Form\Type\PictureType;
 use esperanto\ContentBundle\Form\Type\TextType;
+use esperanto\ContentBundle\Form\Type\VideoType;
 
 class ContentFormTypeResolver
 {
@@ -41,6 +42,9 @@ class ContentFormTypeResolver
                 break;
             case('contact'):
                 $formType = new ContactType($formName, $data);
+                break;
+            case('video'):
+                $formType = new VideoType($formName, $data);
                 break;
             default:
                 throw new \Exception('cant resolve form type');

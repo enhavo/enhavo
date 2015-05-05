@@ -38,13 +38,14 @@ class ContentType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-
+        $view->vars['item_types'] = $options['item_types'];
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Entity\Content'
+            'data_class' => 'esperanto\ContentBundle\Entity\Content',
+            'item_types' => array(array('type' => 'text','label' => 'Text'),array('type' => 'picture','label' => 'Bild'),array('type' => 'video','label' => 'Video'))
         ));
     }
 

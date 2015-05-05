@@ -8,6 +8,7 @@
 
 namespace esperanto\ContentBundle\Controller;
 
+use esperanto\ContentBundle\Form\Type\VideoType;
 use esperanto\ContentBundle\Form\Type\PictureType;
 use esperanto\ContentBundle\Form\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

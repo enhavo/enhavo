@@ -5,19 +5,15 @@
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
             <ul>
-                <li class="addItem" data-item="text">Text</li>
-                <li class="addItem" data-item="picture">Bild</li>
-                <li class="addItem" data-item="textpicture">Text - Bild</li>
-                <li class="addItem" data-item="texttext">Text - Text</li>
-                <li class="addItem" data-item="picturepicture">Bild - Bild</li>
-                <li class="addItem" data-item="citetext">Zitat - Text</li>
-                <li class="addItem" data-item="contact">Kontakt</li>
+                {% for item_type in item_types %}
+                    <li class="addItem" data-item="{{ item_type.type }}">{{ item_type.label }}</li>
+                {% endfor %}
             </ul>
         </div>
 
-        <div class="span9" float="left">
+        <div class="col-md-9" float="left">
             <div>
-              <i class="icon-plus btnsmall addButton" data-name="{{ full_name }}" data-position="top" ></i>
+              <i class="fa fa-plus btnsmall addButton" data-name="{{ full_name }}" data-position="top" ></i>
             </div>
             <div class="mt1em">
               <div class="item-container">
@@ -33,7 +29,7 @@
               </div>
             </div>
             <div class="mt1em">
-                <i class="icon-plus btnsmall addButton" data-name="{{ full_name }}" data-position="bottom"></i>
+                <i class="fa fa-plus btnsmall addButton" data-name="{{ full_name }}" data-position="bottom"></i>
             </div>
         </div>
 
@@ -135,6 +131,14 @@
         {{ form_widget(form.text) }}
     </div>
 
+    {{ form_widget(form.type) }}
+{% endblock %}
+
+{% block esperanto_content_item_video_widget %}
+    <div class="padding">
+        Video URL (youtube/vimeo)
+        {{ form_widget(form.url) }}
+    </div>
     {{ form_widget(form.type) }}
 {% endblock %}
 
