@@ -38,6 +38,6 @@ class AdminSlideBuilderSubscriber implements EventSubscriberInterface
 
     public function onBuildMenu(MenuBuilderEvent $event)
     {
-        $event->setBuilder(null);
+        return;
     }
 }
