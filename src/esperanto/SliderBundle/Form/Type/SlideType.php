@@ -36,7 +36,7 @@ class SlideType extends AbstractType
             'label' => 'form.label.text'
         ));
 
-        $builder->add('link', 'text', array(
+        $builder->add('link_type', 'text', array(
             'label' => 'form.label.link'
         ));
 
