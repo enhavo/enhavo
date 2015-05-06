@@ -5,8 +5,8 @@
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
             <ul>
-                {% for item_type in item_types %}
-                    <li class="addItem" data-item="{{ item_type.type }}">{{ item_type.label }}</li>
+                {% for item in items %}
+                    <li class="addItem" data-item="{{ item.type }}">{{ item.label }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -19,9 +19,10 @@
               <div class="item-container">
                 {% for child in form.children %}
                   {% for item in child.children %}
-                    {% set formItem = item.configuration %}
+                    {% set formItem = item.itemType %}
                     {% set formName = item.vars.full_name %}
                     {% set formOrder = item.vars.value.order %}
+                    {% set formType = item.vars.value.type %}
                     {% set created = false %}
                     {% include 'esperantoContentBundle:Form:form.html.twig' %}
                   {% endfor %}
@@ -45,9 +46,7 @@
 {% endblock %}
 
 {% block esperanto_content_item_picture_widget %}
-    {{ form_widget(form.files) }}
-
-    {{ form_widget(form.type) }}
+    {{ form_widget(form.title) }}
 {% endblock %}
 
 {% block esperanto_content_item_textpicture_widget %}
@@ -63,7 +62,6 @@
     <div class="padding textleft">
        {{ form_widget(form.textleft) }}
     </div>
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_texttext_widget %}
@@ -80,16 +78,12 @@
     <div class="padding">
         {{ form_widget(form.text2) }}
     </div>
-
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_picturepicture_widget %}
     {{ form_widget(form.files1) }}
 
     {{ form_widget(form.files2) }}
-
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_citetext_widget %}
@@ -105,8 +99,6 @@
     <div class="padding textleft">
         {{ form_widget(form.textLeft) }}
     </div>
-
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_contact_widget %}
@@ -119,8 +111,6 @@
     <div class="padding">
         {{ form_widget(form.text) }}
     </div>
-
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_text_widget %}
@@ -130,8 +120,6 @@
     <div class="padding">
         {{ form_widget(form.text) }}
     </div>
-
-    {{ form_widget(form.type) }}
 {% endblock %}
 
 {% block esperanto_content_item_video_widget %}
@@ -139,6 +127,5 @@
         Video URL (youtube/vimeo)
         {{ form_widget(form.url) }}
     </div>
-    {{ form_widget(form.type) }}
 {% endblock %}
 

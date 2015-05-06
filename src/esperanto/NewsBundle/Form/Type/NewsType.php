@@ -137,9 +137,7 @@ class NewsType extends AbstractType
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'esperanto_content', array(
-
-        ));
+        $builder->add('content', 'esperanto_content');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

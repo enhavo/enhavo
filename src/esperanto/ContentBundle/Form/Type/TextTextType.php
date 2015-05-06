@@ -18,10 +18,9 @@ class TextTextType extends AbstractType
     protected $formName;
     protected $configuration;
 
-    public function __construct($formName, $configuration = null)
+    public function __construct()
     {
-        $this->formName = $formName;
-        $this->configuration = $configuration;
+
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -33,23 +32,6 @@ class TextTextType extends AbstractType
         $builder->add('text2', 'wysiwyg');
         $builder->add('title1', 'text');
         $builder->add('title2', 'text');
-
-        if($this->configuration instanceof Configuration) {
-            $data = $this->configuration->getData();
-        } else {
-            $data = null;
-        }
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($data) {
-
-                if(!empty($data)) {
-                    $event->setData($data);
-                }
-                return;
-            }
-        );
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

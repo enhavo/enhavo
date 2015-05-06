@@ -3,6 +3,7 @@
 namespace esperanto\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use esperanto\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * Item
@@ -33,6 +34,21 @@ class Item
      * @var \esperanto\ContentBundle\Entity\Column
      */
     private $column;
+
+    /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var integer
+     */
+    private $itemTypeId;
+
+    /**
+     * @var ItemTypeInterface
+     */
+    private $itemType;
 
     /**
      * Get id
@@ -150,5 +166,67 @@ class Item
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Item
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set itemTypeId
+     *
+     * @param integer $itemTypeId
+     * @return Item
+     */
+    public function setItemTypeId($itemTypeId)
+    {
+        $this->itemTypeId = $itemTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get itemId
+     *
+     * @return integer 
+     */
+    public function getItemTypeId()
+    {
+        return $this->itemTypeId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getItemType()
+    {
+        return $this->itemType;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function setItemType($item)
+    {
+        $this->itemType = $item;
     }
 }

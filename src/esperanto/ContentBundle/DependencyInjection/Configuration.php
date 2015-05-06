@@ -20,9 +20,34 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('esperanto_content');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+
+                ->arrayNode('render')
+                    ->children()
+                        ->arrayNode('sets')
+                            ->prototype('array')
+                                ->prototype('scalar')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('items')
+                    ->isRequired()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('model')->isRequired()->end()
+                            ->scalarNode('form')->isRequired()->end()
+                            ->scalarNode('repository')->isRequired()->end()
+                            ->scalarNode('template')->isRequired()->end()
+                            ->scalarNode('label')->end()
+                        ->end()
+                    ->end()
+                 ->end()
+
+            ->end();
 
         return $treeBuilder;
     }

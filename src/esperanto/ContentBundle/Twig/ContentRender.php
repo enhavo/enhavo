@@ -10,6 +10,8 @@ namespace esperanto\ContentBundle\Twig;
 
 use esperanto\ContentBundle\Entity\Content;
 use esperanto\ContentBundle\Entity\Item;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
 class ContentRender extends \Twig_Extension
@@ -17,11 +19,13 @@ class ContentRender extends \Twig_Extension
     protected $router;
     protected $engine;
     protected $container;
+    protected $resolver;
 
-    public function __construct($router, $container)
+    public function __construct(Router $router, Container $container)
     {
         $this->router = $router;
         $this->container = $container;
+        $this->resolver = $container->get('esperanto_content.item_type_resolver');
     }
 
     public function getFunctions()
@@ -42,7 +46,7 @@ class ContentRender extends \Twig_Extension
         return $this->engine;
     }
 
-    public function render(Content $content)
+    public function render(Content $content, $set = null)
     {
         if(empty($content)) {
             return '';
@@ -53,9 +57,9 @@ class ContentRender extends \Twig_Extension
         if($items) {
             /** @var $item Item */
             foreach($items as $item) {
-                $type = $item->getConfiguration()->getType();
-                $data = $item->getConfiguration()->getData();
-                $template = sprintf('esperantoContentBundle:Item:%s.html.twig', $type);
+                $type = $item->getType();
+                $data = $item->getItemType();
+                $template = $this->resolver->getTemplate($type, $set);
                 $html[] = $this->getEngine()->render($template, array('data' => $data));
             }
         }

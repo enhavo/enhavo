@@ -14,6 +14,14 @@ esperanto\ContentBundle\Entity\Item:
             column: '`order`'
             nullable: true
 
+        type:
+            type: string
+            nullable: true
+
+        itemTypeId:
+            type: integer
+            nullable: true
+
         configuration:
             type: blob
             nullable: true

@@ -15,10 +15,10 @@ function ContentForm(router)
       var addButton = null;
       var index = container.children().length;
 
-      var addItem = function(itemName) {
+      var addItem = function(type) {
 
         var url = router.generate('esperanto_content_item', {
-          name: itemName
+          type: type
         });
 
         var formName = addButton.attr('data-name') + '[items]['+index+']';

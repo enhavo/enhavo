@@ -5,6 +5,25 @@ esperanto_admin:
     javascripts:
 
 
+esperanto_content:
+    render:
+        sets:
+            default:
+                picture: esperantoProjectBundle:ItemType:picture.html.twig
+
+    items:
+        picture:
+            model: esperanto\ContentBundle\Entity\Picture
+            form: esperanto\ContentBundle\Form\Type\PictureType
+            repository: esperantoContentBundle:Picture
+            template: esperantoContentBundle:Item:picture.html
+        text:
+            model: esperanto\ContentBundle\Entity\Text
+            form: esperanto\ContentBundle\Form\Type\TextType
+            repository: esperantoContentBundle:Text
+            template: esperantoContentBundle:Item:text.html
+            label: Text
+
 esperanto_page:
     classes:
         page:
