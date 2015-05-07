@@ -78,14 +78,14 @@ function ContentForm(router)
           menu.removeClass('bottomTriangle');
           if(top) {
             menu.addClass('topTriangle');
-            menu.css('top', 30 + position.top + 'px');
+            menu.css('top', 35 + position.top + 'px');
           } else {
             menu.addClass('bottomTriangle');
-            menu.css('top', -80 + position.top + 'px');
+            menu.css('top', -menu.height()-25 + position.top + 'px');
           }
           menu.css('left', position.left + 'px');
 
-          menu.fadeIn(200);
+          menu.show();
 
 
           addButton = $(this);
@@ -109,7 +109,6 @@ function ContentForm(router)
 
         if(index > 0) { // is not first element
           if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
             var editorid = item.find('.wysiwyg').attr('id');
             tinymce.execCommand('mceRemoveEditor', false, editorid);
             $(container.children().get(index - 1)).before(item); //move element before last
@@ -130,7 +129,6 @@ function ContentForm(router)
 
         if(index < (size - 1)) { // is not last element
           if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
             var editorid = item.find('.wysiwyg').attr('id');
             tinymce.execCommand('mceRemoveEditor', false, editorid);
             $(container.children().get(index + 1)).after(item); //move element after next

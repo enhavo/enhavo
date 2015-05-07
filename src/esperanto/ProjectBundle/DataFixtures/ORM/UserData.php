@@ -11,6 +11,7 @@ namespace esperanto\ProjectBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use esperanto\UserBundle\Entity\User;
+use esperanto\UserBundle\Entity\Group;
 
 class UserData implements FixtureInterface
 {
@@ -19,7 +20,16 @@ class UserData implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->addUser('admin', 'admin', 'admin@esperanto-agentur.com'));
+        $user = $this->addUser('admin', 'admin', 'admin@esperanto-agentur.com');
+
+        $adminGroup = $this->addAdminGroup();
+        $user->addGroup($adminGroup);
+
+        $editorialGroup = $this->addEditorGroup();
+
+        $manager->persist($user);
+        $manager->persist($adminGroup);
+        $manager->persist($editorialGroup);
         $manager->flush();
     }
 
@@ -38,5 +48,38 @@ class UserData implements FixtureInterface
         $user->setEnabled(true);
 
         return $user;
+    }
+
+    public function addAdminGroup() {
+        $roles = $this->container->get('security.roles.provider')->getRoles();
+        $group = new Group();
+
+        foreach($roles as $role => $value) {
+            if(preg_match('/esperanto/i', $role)) {
+                $group->addRole($role);
+            }
+        }
+
+        $group->setName('Administratoren');
+
+        return $group;
+    }
+
+    public function addEditorGroup() {
+        $roles = $this->container->get('security.roles.provider')->getRoles();
+        $group = new Group();
+
+        foreach($roles as $role => $value) {
+
+            if(preg_match('/ROLE_ESPERANTO_USER_ADMIN_USER/i', $role)) continue;
+            if(preg_match('/ROLE_ESPERANTO_USER_ADMIN_GROUP/i', $role)) continue;
+            if(preg_match('/esperanto/i', $role)) {
+                $group->addRole($role);
+            }
+        }
+
+        $group->setName('Redakteure');
+
+        return $group;
     }
 } 

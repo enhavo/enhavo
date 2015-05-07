@@ -15,9 +15,11 @@
 {% block content %}
     {% block topButtons %}
         <div class="row mb3 action">
-            <div class="span10">
-                <button class="btn create span3"><i class="icon-plus-sign"></i> {{ 'button.add_slide'|trans }}</button>
-                <button class="btn sort span3"><i class="icon-sort"></i> {{ 'button.label.slide_sort'|trans }}</button>
+            <div class="col-md-3">
+                <button class="btn create col-md-12"><i class="icon-plus-sign"></i> {{ 'button.add_slide'|trans }}</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn sort col-md-12"><i class="icon-sort"></i> {{ 'button.label.slide_sort'|trans }}</button>
             </div>
         </div>
     {% endblock %}

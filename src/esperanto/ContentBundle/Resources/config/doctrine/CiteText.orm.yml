@@ -9,17 +9,7 @@ esperanto\ContentBundle\Entity\CiteText:
                 strategy: AUTO
 
     fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-        text:
-            type: text
-            nullable: true
         cite:
             type: text
-            nullable: true
-        textLeft:
-            type: boolean
             nullable: true
 lifecycleCallbacks: {  }

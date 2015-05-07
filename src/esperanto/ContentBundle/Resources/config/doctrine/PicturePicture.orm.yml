@@ -11,6 +11,7 @@ esperanto\ContentBundle\Entity\PicturePicture:
     fields:
         frame:
             type: boolean
+            nullable: true
 
     manyToMany:
         filesLeft:

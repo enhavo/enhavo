@@ -1,5 +1,5 @@
 <div class="row mb1em tabContainer">
-    <div class="offset2 span9">
+    <div class="col-md-push-2 col-md-9">
         {% for tab in tabs.getTabs %}
           <a href="#" tabId="tab{{ loop.index }}">{{ tab.getLabel() }}</a>
         {% endfor %}

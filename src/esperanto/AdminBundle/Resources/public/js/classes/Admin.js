@@ -61,9 +61,9 @@ function Admin (router, templating, translator)
     var overlayStart = function() {
       overlayContent.trigger('formOpenBefore');
 
-      overlay.fadeIn(200);
+      overlay.fadeIn(100);
       overlayContent.append($.parseHTML(html));
-      overlayContent.fadeIn(350, function() {
+      overlayContent.fadeIn(200, function() {
         overlayContent.trigger('formOpenAfter', [ overlayContent.find('form').get(0) ]);
       });
       overlayContent.animate({
@@ -84,8 +84,8 @@ function Admin (router, templating, translator)
     var overlayStop = function() {
       overlayContent.trigger('formCloseBefore', [overlayContent]);
       overlayContent.html('');
-      overlay.fadeOut(350);
-      overlayContent.fadeOut(200);
+      overlay.fadeOut(200);
+      overlayContent.fadeOut(100);
       overlayContent.trigger('formCloseAfter', [overlayContent]);
     };
     overlayStop();
@@ -155,7 +155,7 @@ function Admin (router, templating, translator)
       $(form).submit();
     }
 
-    iframeContainer.fadeIn(300);
+    iframeContainer.fadeIn(100);
     iframeContainer.find('.close').on('click',function(event) {
       event.stopPropagation();
       event.preventDefault();
@@ -186,9 +186,9 @@ function Admin (router, templating, translator)
     overlayMessage.removeClass(MessageType.Success);
     overlayMessage.addClass(type);
 
-    overlayMessage.html(content).stop().fadeIn(200,function() {
+    overlayMessage.html(content).stop().fadeIn(150,function() {
       overlayTimeout = setTimeout(function() {
-        overlayMessage.fadeOut(200);
+        overlayMessage.fadeOut(150);
       }, 3500);
     });
   };

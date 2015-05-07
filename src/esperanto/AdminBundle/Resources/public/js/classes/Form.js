@@ -67,7 +67,7 @@ var Form = function(router, templating, admin, translator)
         toolbar2: "table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | code",
         force_br_newlines : true,
         force_p_newlines : false,
-        forced_root_block : "",
+        forced_root_block : "div",
         cleanup : false,
         cleanup_on_startup : false,
         font_size_style_values : "xx-small,x-small,small,medium,large,x-large,xx-large",

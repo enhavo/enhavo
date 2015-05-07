@@ -9,8 +9,12 @@
                 {% endblock %}
             </div>
             <div class="row pl2em">
-                <button class="btn  span2 close"><i class="icon-remove"></i> {{ 'label.cancel'|trans }}</button>
-                <button class="btn span2 save" type="button"><i class="icon-ok"></i> {{ 'label.save'|trans }}</button>
+                <div class="col-md-2">
+                    <button class="btn col-md-12 close"><i class="icon-remove"></i> {{ 'label.cancel'|trans }}</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn col-md-12 save" type="button"><i class="icon-ok"></i> {{ 'label.save'|trans }}</button>
+                </div>
             </div>
         </form>
     {% endblock %}

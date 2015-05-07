@@ -141,5 +141,28 @@ class Gallery implements ItemTypeInterface
     {
         return $this->files;
     }
-}
 
+    /**
+     * Add file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     *
+     * @return Gallery
+     */
+    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     */
+    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+    }
+}

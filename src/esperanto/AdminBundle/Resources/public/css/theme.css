@@ -320,12 +320,7 @@ img {max-width:100%;}
 
 #loginBox {
     width: 500px;
-    height: 100px;
     margin: 0 auto;
     margin-top: 0px;
     padding: 50px;
-}
-
-#loginBox .loginButton {
-    margin-left: 160px;
 }

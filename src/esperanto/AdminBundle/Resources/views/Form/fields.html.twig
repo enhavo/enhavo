@@ -26,8 +26,8 @@
 {% block form_row %}
     {% spaceless %}
         <div class="row mb1">
-            <label class="span2 text-right label-container">{{ form_label(form) }}</label>
-            <div class="span9 input-container">{{ form_widget(form) }}</div>
+            <label class="col-md-2 text-right label-container">{{ form_label(form) }}</label>
+            <div class="col-md-9 input-container">{{ form_widget(form) }}</div>
         </div>
     {% endspaceless %}
 {% endblock %}
