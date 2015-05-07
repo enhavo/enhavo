@@ -54,3 +54,11 @@
     </div>
 {% endblock %}
 
+{% block wysiwyg_widget %}
+    <div class="inputContainer">
+        <textarea data-wysiwyg data-config="{{ config|e }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
+{% endblock %}
+
+
+

@@ -108,12 +108,11 @@ function ContentForm(router)
         var index = container.children().index(item);
 
         if(index > 0) { // is not first element
-          if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
-            var editorid = item.find('.wysiwyg').attr('id');
-            tinymce.execCommand('mceRemoveEditor', false, editorid);
+          if(item.find('[data-wysiwyg]').length) {
+            var editorId = item.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
             $(container.children().get(index - 1)).before(item); //move element before last
-            tinymce.execCommand('mceAddEditor', false, editorid);
+            tinymce.execCommand('mceAddEditor', false, editorId);
           } else {
             $(container.children().get(index - 1)).before(item); //move element before last
           }
@@ -129,12 +128,11 @@ function ContentForm(router)
         var size = container.children().size();
 
         if(index < (size - 1)) { // is not last element
-          if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
-            var editorid = item.find('.wysiwyg').attr('id');
-            tinymce.execCommand('mceRemoveEditor', false, editorid);
+          if(item.find('[data-wysiwyg]').length) {
+            var editorId = item.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
             $(container.children().get(index + 1)).after(item); //move element after next
-            tinymce.execCommand('mceAddEditor', false, editorid);
+            tinymce.execCommand('mceAddEditor', false, editorId);
           } else {
             $(container.children().get(index + 1)).after(item); //move element after next
           }

@@ -3,6 +3,7 @@ parameters:
     esperanto_admin.route_loader.class: esperanto\AdminBundle\Admin\RouteLoader
     esperanto_admin.form.wysiwyg.class: esperanto\AdminBundle\Form\Type\WysiwygType
     security.roles.provider.class: esperanto\AdminBundle\Security\Roles\AdminRolesProvider
+    esperanto_admin.form.config.wysiwyg.class: esperanto\AdminBundle\Form\Config\WysiwygConfig
 
 services:
     esperanto_admin.admin_register:
@@ -11,14 +12,21 @@ services:
     esperanto_admin.route_loader:
         class: %esperanto_admin.route_loader.class%
         arguments:
-          - '@esperanto_admin.admin_register'
+          - @esperanto_admin.admin_register
         tags:
             - { name: routing.loader }
 
     esperanto_admin.form.wysiwyg:
-        class: '%esperanto_admin.form.wysiwyg.class%'
+        class: %esperanto_admin.form.wysiwyg.class%
+        arguments:
+            - @esperanto_admin.form.config.wysiwyg
         tags:
             - { name: form.type, alias: 'wysiwyg' }
+
+    esperanto_admin.form.config.wysiwyg:
+        class: %esperanto_admin.form.config.wysiwyg.class%
+        arguments:
+            - %kernel.root_dir%/config/wysiwyg.yml
 
     cache:
         class: Doctrine\Common\Cache\PhpFileCache
