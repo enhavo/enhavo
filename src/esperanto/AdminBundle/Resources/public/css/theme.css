@@ -203,7 +203,6 @@ img {max-width:100%;}
 /** table */
 
 .entry-row {
-	border-bottom: 1px solid #f3f3f3;
     box-shadow: 0 0 1px #666;
 	background:#eee;
 	cursor:pointer;
@@ -211,17 +210,12 @@ img {max-width:100%;}
 
 .entry-row:hover {
 	background-color:#a58e62;
-	border-bottom-color:#bda577;
 	border-top-color:transparent;
 	color:#fff;
 }
 
 .head-row {
 	color:#eee;
-}
-
-.table-container {
-    margin-left: 20px;
 }
 
 .small-dialog {
