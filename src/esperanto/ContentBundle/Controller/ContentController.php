@@ -8,14 +8,9 @@
 
 namespace esperanto\ContentBundle\Controller;
 
-use esperanto\ContentBundle\Entity\Content;
-use esperanto\ContentBundle\Entity\Item;
-use esperanto\ContentBundle\Entity\Text;
-use esperanto\ContentBundle\Entity\Picture;
-use esperanto\ProjectBundle\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use esperanto\ContentBundle\Item\ItemFormType;
 
 class ContentController extends Controller
 {
@@ -27,6 +22,7 @@ class ContentController extends Controller
         $formFactory = $this->container->get('form.factory');
 
         $resolver = $this->container->get('esperanto_content.item_type_resolver');
+        /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $formType->setFormName($formName);
         $form = $formFactory->create($formType)->createView();
@@ -35,8 +31,7 @@ class ContentController extends Controller
             'formItem' => $form,
             'formName' => $formName,
             'formOrder' => 0,
-            'formType' => $type,
-            'created' => true
+            'formType' => $type
         ));
     }
 } 
