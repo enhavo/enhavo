@@ -6,9 +6,9 @@
             {% endfor %}
         </div>
     </div>
-    <div class="tabContentContainer mb1em pv1em">
+    <div class="row tabContentContainer mb1em pv1em">
         {% for tab in view.getParameter('tabs') %}
-            <div id="tab{{ loop.index }}">
+            <div id="tab{{ loop.index }}" class="col-md-12">
                 {% include tab.template %}
             </div>
         {% endfor %}

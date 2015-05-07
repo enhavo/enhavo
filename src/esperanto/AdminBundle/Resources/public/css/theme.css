@@ -1,5 +1,7 @@
 [class*="span"].nomargin {margin-left:0;}
 
+a:focus,*:focus {outline:none;}
+
 a {
 	color:#A58E62;
 	text-decoration:none;
@@ -127,7 +129,6 @@ img {max-width:100%;}
 	cursor: pointer;
 	background-color: #eee;
 	border: 0;
-	box-shadow:1px 1px 2px #444;
 	font-weight:bold;
 }
 
@@ -144,15 +145,13 @@ img {max-width:100%;}
 
 .btnsmall {
 	display: inline-block;
-	padding: 4px 7px;
+	padding: 5px 7px;
 	color:#777;
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
 	background-color: #eee;
     border:0;
-	box-shadow:1px 1px 2px #555;
-	font-weight:bold;
 }
 
 .btnsmall:hover {
@@ -234,6 +233,8 @@ img {max-width:100%;}
 	color:#fff;
 }
 
+.label-container {background:#6f6f6f;font-weight: bold;padding: 2px 5px;}
+
 .table-headline {
     color:#fff;
     margin-top:20px;
@@ -264,10 +265,10 @@ img {max-width:100%;}
 	border-color:#856e42;
 }
 
-.tabContainer a {float:left;display:block;padding:3px 6px;background:#ccc;border:1px solid #ccc;margin-right:10px;color:#777;box-shadow:0 0 1px #666;font-weight:bold;}
+.tabContainer a {float:left;display:block;padding:3px 12px;background:#ccc;margin-right:10px;color:#777;text-decoration:none;font-weight:bold;}
 .tabContainer a:last-child {margin-right:0;}
 .tabContainer a.selected,
-.tabContainer a:hover {background-color:#a58e62;border-color:#a58e62;color:#fff;}
+.tabContainer a:hover {background-color:#a58e62;color:#fff;}
 .tabContentContainer {background:#666;}
 
 .error {color:#d87676;}
