@@ -28,13 +28,13 @@ esperanto_content:
             model: esperanto\ContentBundle\Entity\CiteText
             form: esperanto\ContentBundle\Form\Type\CiteTextType
             repository: esperantoContentBundle:CiteText
-            template: esperantoContentBundle:Item:citetext.html
+            template: esperantoContentBundle:Item:cite_text.html
             label: Zitat - Text
         picture_picture:
             model: esperanto\ContentBundle\Entity\PicturePicture
             form: esperanto\ContentBundle\Form\Type\PicturePictureType
             repository: esperantoContentBundle:PicturePicture
-            template: esperantoContentBundle:Item:picturepicture.html
+            template: esperantoContentBundle:Item:picture_picture.html
             label: Bild - Bild
         gallery:
             model: esperanto\ContentBundle\Entity\Gallery
@@ -46,14 +46,15 @@ esperanto_content:
             model: esperanto\ContentBundle\Entity\TextPicture
             form: esperanto\ContentBundle\Form\Type\TextPictureType
             repository: esperantoContentBundle:TextPicture
-            template: esperantoContentBundle:Item:textpicture.html
+            template: esperantoContentBundle:Item:text_picture.html
             label: Text - Bild
         text_text:
             model: esperanto\ContentBundle\Entity\TextText
             form: esperanto\ContentBundle\Form\Type\TextTextType
             repository: esperantoContentBundle:TextText
-            template: esperantoContentBundle:Item:texttext.html
+            template: esperantoContentBundle:Item:text_text.html
             label: Text - Text
+
 esperanto_page:
     classes:
         page:
