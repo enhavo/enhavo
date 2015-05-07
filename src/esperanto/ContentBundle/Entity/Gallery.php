@@ -2,15 +2,14 @@
 
 namespace esperanto\ContentBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use esperanto\ContentBundle\Item\ItemTypeInterface;
 use esperanto\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Picture
+ * Gallery
  */
-class Picture implements ItemTypeInterface
+class Gallery implements ItemTypeInterface
 {
     /**
      * @var integer
@@ -22,7 +21,10 @@ class Picture implements ItemTypeInterface
      */
     private $title;
 
-    private $caption;
+    /**
+     * @var string
+     */
+    private $text;
 
     private $files;
 
@@ -35,7 +37,7 @@ class Picture implements ItemTypeInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -46,7 +48,8 @@ class Picture implements ItemTypeInterface
      * Set title
      *
      * @param string $title
-     * @return Picture
+     *
+     * @return Gallery
      */
     public function setTitle($title)
     {
@@ -58,7 +61,7 @@ class Picture implements ItemTypeInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -66,19 +69,27 @@ class Picture implements ItemTypeInterface
     }
 
     /**
-     * @return mixed
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return Gallery
      */
-    public function getCaption()
+    public function setText($text)
     {
-        return $this->caption;
+        $this->text = $text;
+
+        return $this;
     }
 
     /**
-     * @param mixed $caption
+     * Get text
+     *
+     * @return string
      */
-    public function setCaption($caption)
+    public function getText()
     {
-        $this->caption = $caption;
+        return $this->text;
     }
 
     /**
@@ -131,3 +142,4 @@ class Picture implements ItemTypeInterface
         return $this->files;
     }
 }
+

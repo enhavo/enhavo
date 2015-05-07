@@ -2,15 +2,14 @@
 
 namespace esperanto\ContentBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
 use esperanto\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use esperanto\ContentBundle\Item\ItemTypeInterface;
 
 /**
- * Picture
+ * TextPicture
  */
-class Picture implements ItemTypeInterface
+class TextPicture implements ItemTypeInterface
 {
     /**
      * @var integer
@@ -20,12 +19,21 @@ class Picture implements ItemTypeInterface
     /**
      * @var string
      */
+    private $text;
+
+    /**
+     * @var string
+     */
     private $title;
 
-    private $caption;
+    /**
+     * @var boolean
+     */
+    private $textleft;
 
     private $files;
 
+    private $frame;
 
     public function __construct()
     {
@@ -35,7 +43,7 @@ class Picture implements ItemTypeInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -43,10 +51,35 @@ class Picture implements ItemTypeInterface
     }
 
     /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return TextPicture
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
-     * @return Picture
+     *
+     * @return TextPicture
      */
     public function setTitle($title)
     {
@@ -58,7 +91,7 @@ class Picture implements ItemTypeInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -66,19 +99,27 @@ class Picture implements ItemTypeInterface
     }
 
     /**
-     * @return mixed
+     * Set textleft
+     *
+     * @param boolean $textleft
+     *
+     * @return TextPicture
      */
-    public function getCaption()
+    public function setTextleft($textleft)
     {
-        return $this->caption;
+        $this->textleft = $textleft;
+
+        return $this;
     }
 
     /**
-     * @param mixed $caption
+     * Get textleft
+     *
+     * @return boolean
      */
-    public function setCaption($caption)
+    public function getTextleft()
     {
-        $this->caption = $caption;
+        return $this->textleft;
     }
 
     /**
@@ -130,4 +171,21 @@ class Picture implements ItemTypeInterface
     {
         return $this->files;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFrame()
+    {
+        return $this->frame;
+    }
+
+    /**
+     * @param mixed $frame
+     */
+    public function setFrame($frame)
+    {
+        $this->frame = $frame;
+    }
 }
+

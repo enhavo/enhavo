@@ -1,6 +1,6 @@
-esperanto\ContentBundle\Entity\Picture:
+esperanto\ContentBundle\Entity\TextPicture:
     type: entity
-    table: content_type_picture
+    table: content_type_textpicture
     id:
         id:
             type: integer
@@ -8,23 +8,22 @@ esperanto\ContentBundle\Entity\Picture:
             generator:
                 strategy: AUTO
     fields:
+        text:
+            type: text
         title:
             type: string
             length: 255
-            nullable: true
-        caption:
-            type: string
-            length: 255
-            nullable: true
+        textleft:
+            type: boolean
 
     manyToMany:
         files:
             cascade: ['persist', 'refresh']
             targetEntity: esperanto\MediaBundle\Entity\File
             joinTable:
-                name: content_picture_files
+                name: content_textpicture_files
                 joinColumns:
-                    picture_id:
+                    textpicture_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:

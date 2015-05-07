@@ -1,0 +1,38 @@
+esperanto\ContentBundle\Entity\PicturePicture:
+    type: entity
+    table: content_type_picturepicture
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        frame:
+            type: boolean
+
+    manyToMany:
+        filesLeft:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: content_pictureleft_files
+                joinColumns:
+                    picturepictrue_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+        filesRight:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: content_pictureright_files
+                joinColumns:
+                    picturepictrue_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+    lifecycleCallbacks: {  }

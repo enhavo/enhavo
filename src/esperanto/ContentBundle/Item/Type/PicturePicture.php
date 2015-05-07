@@ -11,8 +11,8 @@ class PicturePicture
     /**
      * @var array
      */
-    private $files1;
-    private $files2;
+    private $filesLeft;
+    private $filesRight;
     /**
      * @var string
      */
@@ -20,48 +20,48 @@ class PicturePicture
 
     public function __construct()
     {
-        $this->files1 = new ArrayCollection();
-        $this->files2 = new ArrayCollection();
+        $this->filesLeft = new ArrayCollection();
+        $this->filesRight = new ArrayCollection();
     }
 
     /**
-     * @param array $files1
+     * @param array $filesLeft
      */
-    public function setFiles1($files1)
+    public function setFilesLeft($filesLeft)
     {
-        foreach($files1 as $file) {
+        foreach($filesLeft as $file) {
             $newFile = new File();
             $newFile->setId($file);
-            $this->files1->add($newFile);
+            $this->filesLeft->add($newFile);
         }
     }
 
     /**
      * @return array
      */
-    public function getFiles1()
+    public function getFilesLeft()
     {
-        return $this->files1->toArray();
+        return $this->filesLeft->toArray();
     }
 
     /**
-     * @param array $files2
+     * @param array $filesRight
      */
-    public function setFiles2($files2)
+    public function setFilesRight($filesRight)
     {
-        foreach($files2 as $file) {
+        foreach($filesRight as $file) {
             $newFile = new File();
             $newFile->setId($file);
-            $this->files2->add($newFile);
+            $this->filesRight->add($newFile);
         }
     }
 
     /**
      * @return array
      */
-    public function getFiles2()
+    public function getFilesRight()
     {
-        return $this->files2->toArray();
+        return $this->filesRight->toArray();
     }
 
     /**

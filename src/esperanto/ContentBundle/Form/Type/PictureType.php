@@ -17,7 +17,8 @@ class PictureType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text');
-        #$builder->add('files', 'esperanto_files');
+        $builder->add('files', 'esperanto_files');
+        $builder->add('caption', 'text');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
