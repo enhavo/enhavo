@@ -78,14 +78,14 @@ function ContentForm(router)
           menu.removeClass('bottomTriangle');
           if(top) {
             menu.addClass('topTriangle');
-            menu.css('top', 30 + position.top + 'px');
+            menu.css('top', 35 + position.top + 'px');
           } else {
             menu.addClass('bottomTriangle');
-            menu.css('top', -80 + position.top + 'px');
+            menu.css('top', -menu.height()-25 + position.top + 'px');
           }
           menu.css('left', position.left + 'px');
 
-          menu.fadeIn(200);
+          menu.show();
 
 
           addButton = $(this);

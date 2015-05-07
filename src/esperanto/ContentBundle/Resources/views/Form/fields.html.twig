@@ -1,6 +1,6 @@
 {% block esperanto_content_widget %}
 
-    <div class="row mb1 contentForm">
+    <div class="mb1 contentForm">
         <div class="menu">
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
@@ -11,7 +11,7 @@
             </ul>
         </div>
 
-        <div class="col-md-9" float="left">
+        <div>
             <div>
               <i class="fa fa-plus btnsmall addButton" data-name="{{ full_name }}" data-position="top" ></i>
             </div>
@@ -94,23 +94,15 @@
 
     {{ form_widget(form.filesRight) }}
 
-    <div class="padding frame">
+    <div class="padding darkbg">
+        <div>Bilder mit Rahmen</div>
         {{ form_widget(form.frame) }}
     </div>
 {% endblock %}
 
 {% block esperanto_content_item_citetext_widget %}
     <div class="padding">
-        {{ form_widget(form.title) }}
-    </div>
-    <div class="padding">
-        {{ form_widget(form.text) }}
-    </div>
-    <div class="padding">
         {{ form_widget(form.cite) }}
-    </div>
-    <div class="padding textleft">
-        {{ form_widget(form.textLeft) }}
     </div>
 {% endblock %}
 

@@ -11,8 +11,10 @@ esperanto\ContentBundle\Entity\Gallery:
         title:
             type: string
             length: 255
+            nullable: true
         text:
             type: text
+            nullable: true
 
     manyToMany:
         files:

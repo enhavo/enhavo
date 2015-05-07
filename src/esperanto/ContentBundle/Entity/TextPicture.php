@@ -187,5 +187,28 @@ class TextPicture implements ItemTypeInterface
     {
         $this->frame = $frame;
     }
-}
 
+    /**
+     * Add file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     *
+     * @return TextPicture
+     */
+    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     */
+    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+    }
+}

@@ -3,13 +3,15 @@
     <div class="col-md-3">{{ 'label.title'|trans }}</div>
 </div>
 
-<div class="row-container">
-    {% for item in data %}
-        <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
-            <div class="col-md-1">{{ item.id }}</div>
-            <div class="col-md-3">{{ item.title }}</div>
-        </div>
-    {% else %}
-        {{ 'table.empty'|trans }}
-    {% endfor %}
+<div class="row row-container">
+    <div class="col-md-12">
+        {% for item in data %}
+            <div class="col-md-12 mb1 entry-row p1" data-id="{{ item.id }}">
+                <div class="col-md-1">{{ item.id }}</div>
+                <div class="col-md-3">{{ item.title }}</div>
+            </div>
+        {% else %}
+            {{ 'table.empty'|trans }}
+        {% endfor %}
+    </div>
 </div>

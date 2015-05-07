@@ -68,66 +68,6 @@
     margin-right: 20px;
 }
 
-.inputContainer.span12 input,
-.inputContainer.span12 textarea {
-    width: 930px;
-}
-
-.inputContainer.span11 input,
-.inputContainer.span11 textarea {
-    width: 850px;
-}
-
-.inputContainer.span10 input,
-.inputContainer.span10 textarea {
-    width: 770px;
-}
-
-.inputContainer.span9 input,
-.inputContainer.span9 textarea {
-    width: 690px;
-}
-
-.inputContainer.span8 input,
-.inputContainer.span8 textarea {
-    width: 610px;
-}
-
-.inputContainer.span7 input,
-.inputContainer.span7 textarea {
-    width: 530px;
-}
-
-.inputContainer.span6 input,
-.inputContainer.span6 textarea {
-    width: 450px;
-}
-
-.inputContainer.span5 input,
-.inputContainer.span5 textarea {
-    width: 370px;
-}
-
-.inputContainer.span4 input,
-.inputContainer.span4 textarea {
-    width: 290px;
-}
-
-.inputContainer.span3 input,
-.inputContainer.span3 textarea {
-    width: 210px;
-}
-
-.inputContainer.span2 input,
-.inputContainer.span2 textarea {
-    width: 130px;
-}
-
-.inputContainer.span1 input,
-.inputContainer.span1 textarea {
-    width: 50px;
-}
-
 .category-list .choice-input-with-label {
     display: block;
     margin-bottom: 3px;

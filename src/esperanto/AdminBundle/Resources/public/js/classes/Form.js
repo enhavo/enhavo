@@ -61,7 +61,7 @@ var Form = function(router, templating, admin, translator)
               "insertdatetime media table contextmenu paste"],
           force_br_newlines : true,
           force_p_newlines : false,
-          forced_root_block : "",
+          forced_root_block : "div",
           cleanup : false,
           cleanup_on_startup : false,
           font_size_style_values : "xx-small,x-small,small,medium,large,x-large,xx-large",
@@ -106,8 +106,6 @@ var Form = function(router, templating, admin, translator)
       if(config.toolbar2) {
           options.toolbar2 = config.toolbar2
       }
-
-      console.log(options);
 
       $(element).tinymce(options);
     };

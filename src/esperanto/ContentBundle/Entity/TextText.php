@@ -141,4 +141,3 @@ class TextText implements ItemTypeInterface
         return $this->titleRight;
     }
 }
-

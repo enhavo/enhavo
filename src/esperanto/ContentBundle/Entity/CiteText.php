@@ -96,4 +96,3 @@ class CiteText implements ItemTypeInterface
         $this->text = $text;
     }
 }
-

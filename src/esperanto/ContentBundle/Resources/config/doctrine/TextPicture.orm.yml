@@ -10,11 +10,14 @@ esperanto\ContentBundle\Entity\TextPicture:
     fields:
         text:
             type: text
+            nullable: true
         title:
             type: string
             length: 255
+            nullable: true
         textLeft:
             type: boolean
+            nullable: true
 
     manyToMany:
         files:

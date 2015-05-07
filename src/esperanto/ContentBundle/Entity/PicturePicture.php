@@ -147,5 +147,13 @@ class PicturePicture implements ItemTypeInterface
     {
         $this->frame = $frame;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->filesLeft = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->filesRight = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+}

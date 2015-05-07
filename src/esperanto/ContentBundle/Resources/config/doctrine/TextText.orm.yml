@@ -10,12 +10,16 @@ esperanto\ContentBundle\Entity\TextText:
     fields:
         textLeft:
             type: text
+            nullable: true
         titleLeft:
             type: string
             length: 255
+            nullable: true
         textRight:
             type: text
+            nullable: true
         titleRight:
             type: string
             length: 255
+            nullable: true
     lifecycleCallbacks: {  }
