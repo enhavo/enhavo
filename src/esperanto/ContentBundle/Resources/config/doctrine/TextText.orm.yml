@@ -1,6 +1,6 @@
 esperanto\ContentBundle\Entity\TextText:
     type: entity
-    table: content_type_texttext
+    table: content_type_text_text
     id:
         id:
             type: integer

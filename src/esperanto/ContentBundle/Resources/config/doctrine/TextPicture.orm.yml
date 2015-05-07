@@ -1,6 +1,6 @@
 esperanto\ContentBundle\Entity\TextPicture:
     type: entity
-    table: content_type_textpicture
+    table: content_type_text_picture
     id:
         id:
             type: integer
@@ -13,7 +13,7 @@ esperanto\ContentBundle\Entity\TextPicture:
         title:
             type: string
             length: 255
-        textleft:
+        textLeft:
             type: boolean
 
     manyToMany:

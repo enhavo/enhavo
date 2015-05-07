@@ -12,7 +12,6 @@ esperanto\ContentBundle\Entity\Text:
             type: string
             length: 255
             nullable: true
-
         text:
             type: text
             nullable: true

@@ -1,6 +1,6 @@
 esperanto\ContentBundle\Entity\PicturePicture:
     type: entity
-    table: content_type_picturepicture
+    table: content_type_picture_picture
     id:
         id:
             type: integer

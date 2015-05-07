@@ -29,7 +29,7 @@ class TextPicture implements ItemTypeInterface
     /**
      * @var boolean
      */
-    private $textleft;
+    private $textLeft;
 
     private $files;
 
@@ -101,13 +101,13 @@ class TextPicture implements ItemTypeInterface
     /**
      * Set textleft
      *
-     * @param boolean $textleft
+     * @param boolean $textLeft
      *
      * @return TextPicture
      */
-    public function setTextleft($textleft)
+    public function setTextLeft($textLeft)
     {
-        $this->textleft = $textleft;
+        $this->textLeft = $textLeft;
 
         return $this;
     }
@@ -117,9 +117,9 @@ class TextPicture implements ItemTypeInterface
      *
      * @return boolean
      */
-    public function getTextleft()
+    public function getTextLeft()
     {
-        return $this->textleft;
+        return $this->textLeft;
     }
 
     /**
