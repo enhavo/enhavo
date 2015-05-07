@@ -1,25 +1,25 @@
-esperanto\ContentBundle\Entity\Text:
+esperanto\ContentBundle\Entity\CiteText:
     type: entity
-    table: content_type_text
+    table: content_type_citetext
     id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
+
     fields:
         title:
             type: string
             length: 255
             nullable: true
-
         text:
             type: text
             nullable: true
-
-        subtitle:
-            type: string
-            length: 255
+        cite:
+            type: text
             nullable: true
-
-    lifecycleCallbacks: {  }
+        textleft:
+            type: boolean
+            nullable: true
+lifecycleCallbacks: {  }

@@ -1,48 +1,34 @@
 <?php
+namespace esperanto\ContentBundle\Item\Type;
 
-namespace esperanto\ContentBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
-use Doctrine\ORM\Mapping as ORM;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
-
-/**
- * Text
- */
-class Text implements ItemTypeInterface
+class Gallery
 {
-    /**
-     * @var integer
-     */
-    private $id;
-
     /**
      * @var string
      */
     private $title;
-
-    private $subtitle;
 
     /**
      * @var string
      */
     private $text;
 
+    private $files;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
+
+    public function __construct()
     {
-        return $this->id;
+        $this->files = new ArrayCollection();
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return Text
+     *
+     * @return Gallery
      */
     public function setTitle($title)
     {
@@ -54,7 +40,7 @@ class Text implements ItemTypeInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -65,7 +51,8 @@ class Text implements ItemTypeInterface
      * Set text
      *
      * @param string $text
-     * @return Text
+     *
+     * @return Gallery
      */
     public function setText($text)
     {
@@ -77,28 +64,32 @@ class Text implements ItemTypeInterface
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
         return $this->text;
     }
 
+
     /**
-     * @return mixed
+     * @param array $files
      */
-    public function getSubtitle()
+    public function setFiles($files)
     {
-        return $this->subtitle;
+        foreach($files as $file) {
+            $newFile = new File();
+            $newFile->setId($file['id']);
+            $newFile->setOrder($file['order']);
+            $this->files->add($newFile);
+        }
     }
 
     /**
-     * @param mixed $subtitle
+     * @return array
      */
-    public function setSubtitle($subtitle)
+    public function getFiles()
     {
-        $this->subtitle = $subtitle;
+        return $this->files;
     }
-
-
 }

@@ -46,7 +46,7 @@
 {% endblock %}
 
 {% block esperanto_content_item_picture_widget %}
-    {{ form_widget(form.title) }}
+    {{ form_widget(form.files) }}
 {% endblock %}
 
 {% block esperanto_content_item_textpicture_widget %}
@@ -66,24 +66,38 @@
 
 {% block esperanto_content_item_texttext_widget %}
     <div class="padding">
-        {{ form_widget(form.title1) }}
+        {{ form_widget(form.titleLeft) }}
     </div>
     <div class="padding">
-        {{ form_widget(form.text1) }}
+        {{ form_widget(form.textLeft) }}
     </div>
 
     <div class="padding">
-        {{ form_widget(form.title2) }}
+        {{ form_widget(form.titleRight) }}
     </div>
     <div class="padding">
-        {{ form_widget(form.text2) }}
+        {{ form_widget(form.textRight) }}
     </div>
 {% endblock %}
 
-{% block esperanto_content_item_picturepicture_widget %}
-    {{ form_widget(form.files1) }}
+{% block esperanto_content_item_gallery_widget %}
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.text) }}
+    </div>
+    {{ form_widget(form.files) }}
+{% endblock %}
 
-    {{ form_widget(form.files2) }}
+{% block esperanto_content_item_picturepicture_widget %}
+    {{ form_widget(form.filesLeft) }}
+
+    {{ form_widget(form.filesRight) }}
+
+    <div class="padding frame">
+        {{ form_widget(form.frame) }}
+    </div>
 {% endblock %}
 
 {% block esperanto_content_item_citetext_widget %}
@@ -97,7 +111,7 @@
         {{ form_widget(form.cite) }}
     </div>
     <div class="padding textleft">
-        {{ form_widget(form.textLeft) }}
+        {{ form_widget(form.textleft) }}
     </div>
 {% endblock %}
 

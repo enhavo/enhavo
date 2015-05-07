@@ -16,27 +16,27 @@ class CiteText
 
     private $type;
 
-    private $textLeft;
+    private $textleft;
 
     public function __construct()
     {
         $this->files = new ArrayCollection();
     }
 
-    public function setTextLeft($textLeft)
+    public function setTextLeft($textleft)
     {
-        $this->textLeft = $textLeft;
+        $this->textleft = $textleft;
 
         return $this;
     }
 
-    public function getTextLeft()
+    public function getTextleft()
     {
-        if($this->textLeft === null) {
+        if($this->textleft === null) {
             return false;
         }
 
-        return $this->textLeft;
+        return $this->textleft;
     }
 
 

@@ -1,69 +1,39 @@
 <?php
+/**
+ * TextType.php
+ *
+ * @since 23/08/14
+ * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ */
+
 namespace esperanto\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Entity\Configuration;
-use Symfony\Component\Form\AbstractType;
+use esperanto\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use esperanto\ContentBundle\Item\Type\PicturePicture;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 
-class PicturePictureType extends AbstractType
+class PicturePictureType extends ItemFormType
 {
-    protected $formName;
-    protected $configuration;
-
-    public function __construct($formName, $configuration = null)
-    {
-        $this->formName = $formName;
-        $this->configuration = $configuration;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type', 'hidden', array(
-            'data' => 'picturepicture'
+        $builder->add('filesLeft', 'esperanto_files');
+        $builder->add('filesRight', 'esperanto_files');
+        $builder->add('frame', 'choice', array(
+            'label' => 'form.label.public',
+            'choices'   => array(
+                '1' => 'label.yes',
+                '0' => 'label.no'
+            ),
+            'expanded' => true,
+            'multiple' => false
         ));
-        $builder->add('files1', 'esperanto_files');
-        $builder->add('files2', 'esperanto_files');
-
-        if($this->configuration instanceof Configuration) {
-            $data = $this->configuration->getData();
-        } else {
-            $data = null;
-        }
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($data) {
-
-                if(!empty($data)) {
-                    $event->setData($data);
-                }
-                return;
-            }
-        );
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        if($this->formName) {
-            $view->vars['full_name'] = $this->formName.'[configuration]';
-        } else {
-            $view->vars['full_name'] = preg_replace('/\[form\]/', '', $view->vars['full_name']);
-        }
-
-        return;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Item\Type\PicturePicture'
+            'data_class' => 'esperanto\ContentBundle\Entity\PicturePicture'
         ));
     }
 

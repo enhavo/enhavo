@@ -1,6 +1,6 @@
-esperanto\ContentBundle\Entity\Text:
+esperanto\ContentBundle\Entity\TextText:
     type: entity
-    table: content_type_text
+    table: content_type_texttext
     id:
         id:
             type: integer
@@ -8,18 +8,14 @@ esperanto\ContentBundle\Entity\Text:
             generator:
                 strategy: AUTO
     fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-
-        text:
+        textLeft:
             type: text
-            nullable: true
-
-        subtitle:
+        titleLeft:
             type: string
             length: 255
-            nullable: true
-
+        textRight:
+            type: text
+        titleRight:
+            type: string
+            length: 255
     lifecycleCallbacks: {  }

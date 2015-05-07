@@ -2,21 +2,21 @@
     <div class="content_texttext">
         <div class="col-xs-6 left6">
             <div class="content_text">
-                {% if data.title1 %}
-                    <h2>{{ data.title1 }}</h2>
+                {% if data.titleLeft %}
+                    <h2>{{ data.titleLeft }}</h2>
                 {% endif %}
-                {% if data.text1 %}
-                    {{ data.text1|raw }}
+                {% if data.textLeft %}
+                    {{ data.textLeft|raw }}
                 {% endif %}
             </div>
         </div>
         <div class="col-xs-6 right6">
             <div class="content_text">
-                {% if data.title2 %}
-                    <h2>{{ data.title2 }}</h2>
+                {% if data.titleRight %}
+                    <h2>{{ data.titleRight }}</h2>
                 {% endif %}
-                {% if data.text2 %}
-                    {{ data.text2|raw }}
+                {% if data.textRight %}
+                    {{ data.textRight|raw }}
                 {% endif %}
             </div>
         </div>
