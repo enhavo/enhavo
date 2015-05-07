@@ -193,36 +193,44 @@ function Admin (router, templating, translator)
     });
   };
 
-  this.initPagination = function(route)
+  this.initPagination = function(route,selector)
   {
-    $('.pagination a').click(function() {
+    if(selector) {
+      var pagination = $(selector);
+    } else {
+      var pagination = $('.pagination');
+    }
+    var referingTableContainer = pagination.siblings('.table-container');
+    $('a',pagination).click(function() {
+
       var page = $(this).attr('page');
       var link = router.generate(route, { page: page });
-      $(this).parent().find('a.selected').removeClass('selected');
-      $(this).addClass('selected');
-      self.updateTable(link);
+      $('a',pagination).removeClass('selected');
+      $('a[page='+page+']',pagination).addClass('selected');
+      self.updateTable(referingTableContainer,link);
     });
   };
 
   this.initTable = function() {
     $(document).on('click', '.table-container .entry-row', function() {
-      var route = $('.table-container').attr('data-edit-route');
+      var tableContainer = $(this).parents('.table-container');
+      var route = tableContainer.attr('data-edit-route');
       var id = $(this).attr('data-id');
       var url = router.generate(route, { id: id });
       self.ajaxOverlay(url);
     });
   };
 
-  this.updateTable = function(url, callback)
+  this.updateTable = function(tableContainer,url, callback)
   {
     if(!url) {
-      url = router.generate($('.table-container').attr('data-refresh-route'));
+      url = router.generate(tableContainer.attr('data-refresh-route'));
     }
 
     $.ajax({
       url: url,
       success : function(data) {
-        $('.table-container').html(data);
+        tableContainer.html(data);
         if(callback) {
           callback();
         }
@@ -244,29 +252,31 @@ function Admin (router, templating, translator)
 
   this.initTabs = function(selector)
   {
-      $(selector + " .tabContainer a").each(function() {
-        var tab = $("#"+$(this).attr("tabId"));
-        if(tab.length > 0) {
-          tab.hide();
-          $(this).on("click",function(e) {
-            e.preventDefault();
-            $(this).siblings("a").each(function() {
-              var toHide = $("#"+$(this).attr("tabId"));
-              toHide.hide();
-              $(this).removeClass("selected");
-            });
-            $(this).addClass("selected");
-            tab.show();
+    $(selector + " .tabContainer a").each(function() {
+      var tab = $("#"+$(this).attr("tabId"));
+      if(tab.length > 0) {
+        tab.hide();
+        $(this).on("click",function(e) {
+          e.preventDefault();
+          $(this).siblings("a").each(function() {
+            var toHide = $("#"+$(this).attr("tabId"));
+            toHide.hide();
+            $(this).removeClass("selected");
           });
-        }
-      });
-      $(selector + " .tabContainer a:first-child").trigger("click");
+          $(this).addClass("selected");
+          tab.show();
+        });
+      }
+    });
+    $(selector + " .tabContainer a:first-child").trigger("click");
   };
 
   this.initAfterSaveHandler = function()
   {
     $(document).on('formSaveAfter', function() {
-      self.updateTable();
+      $('.table-container').each(function() {
+        self.updateTable($(this));
+      });
       self.overlayClose();
     });
   };
