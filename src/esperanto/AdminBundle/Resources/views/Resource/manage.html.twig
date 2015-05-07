@@ -3,16 +3,16 @@
 <div class="container form-container small-dialog ">
     {% block content %}
         <form method="POST" action="{% block form_action %}{{ path(view.getParameter('manage_route'), { id: data.id }) }}{% endblock %}">
-            <div class="pl2em mb2em">
+            <div class="row mb1em">
                 {% block form %}
                    {{ form(form) }}
                 {% endblock %}
             </div>
-            <div class="row pl2em">
-                <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-4">
                     <button class="btn col-md-12 close"><i class="icon-remove"></i> {{ 'label.cancel'|trans }}</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <button class="btn col-md-12 save" type="button"><i class="icon-ok"></i> {{ 'label.save'|trans }}</button>
                 </div>
             </div>
