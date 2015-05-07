@@ -169,5 +169,8 @@ $(function() {
   $(document).on('contentAddAfter', function(event, data) {
     uploadForm.initUploadForm(data);
     form.initWysiwyg(data);
+    form.initRadioAndCheckbox(data);
+    form.initSelect(data);
+    form.initDataPicker(data);
   });
 });
