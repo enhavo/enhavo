@@ -13,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use esperanto\AdminBundle\Builder\Route\SyliusRouteBuilder;
 use esperanto\AdminBundle\Builder\View\ViewBuilder;
 use esperanto\AdminBundle\Event\BuilderEvent;
+use esperanto\AdminBundle\Event\MenuBuilderEvent;
 
 class AdminSliderBuilderSubscriber implements EventSubscriberInterface
 {
