@@ -4,6 +4,7 @@ parameters:
     esperanto_admin.form.wysiwyg.class: esperanto\AdminBundle\Form\Type\WysiwygType
     security.roles.provider.class: esperanto\AdminBundle\Security\Roles\AdminRolesProvider
     esperanto_admin.form.config.wysiwyg.class: esperanto\AdminBundle\Form\Config\WysiwygConfig
+    esperanto_admin.menu_loader.class: esperanto\AdminBundle\Menu\MenuLoader
 
 services:
     esperanto_admin.admin_register:
@@ -32,7 +33,26 @@ services:
         class: Doctrine\Common\Cache\PhpFileCache
         arguments: [%kernel.cache_dir%]
 
+    esperanto_admin.menu_loader:
+        class: %esperanto_admin.menu_loader.class%
+        arguments:
+            - 'esperanto_admin.menu'
+            - %esperanto_admin.menu%
+            - @knp_menu.factory
+            - @event_dispatcher
+
     security.roles.provider:
         class: %security.roles.provider.class%
         arguments:
             - %security.role_hierarchy.roles%
+
+    esperanto_admin.menu_event_listener:
+        class: esperanto\AdminBundle\EventListener\MenuEventListener
+        arguments:
+            - %esperanto_admin.permission_check%
+            - @security.context
+            - @knp_menu.factory
+            - %esperanto_admin.menu%
+            - @request_stack
+        tags:
+          - { name: kernel.event_listener, event: esperanto_admin.menu, method: onMenu  }
