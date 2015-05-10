@@ -16,14 +16,14 @@
 
 {% block buttons %}
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 close"><i class="icon-remove"></i> {{ 'label.cancel'|trans }}</button>
+        <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans }}</button>
     </div>
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="button"><i class="icon-ok"></i> {{ 'label.save'|trans }}</button>
+        <button class="btn col-md-12 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans }}</button>
     </div>
     {% if view.getParameter('preview_route') %}
         <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 preview" type="button"><i class="icon-eye-open"></i> {{ 'label.preview'|trans }}</button>
+            <button class="btn col-md-12 preview" type="button"><i class="fa fa-eye"></i> {{ 'label.preview'|trans }}</button>
         </div>
     {% endif %}
 {% endblock %}
