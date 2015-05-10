@@ -45,11 +45,11 @@ class MenuLoader
     {
         $menuList = $this->factory->createItem($this->name);
 
-        foreach($this->menu as $name => $menu) {
+        foreach($this->menu as $name => $menuItem) {
             $menu = $this->factory->createItem($name, array(
-                'route' => $menu['route']
+                'route' => $menuItem['route']
             ));
-            $menu->setLabel($menu['label']);
+            $menu->setLabel($menuItem['label']);
             $menuList->addChild($menu);
         }
 
