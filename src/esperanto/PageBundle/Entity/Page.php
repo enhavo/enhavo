@@ -203,7 +203,7 @@ class Page
             $this->slug = '';
             if($this->getTitle()) {
                 $slugifier = new Slugifier;
-                $this->slug = $slugifier->slugify($this->getTitle()).'.html';
+                $this->slug = $slugifier->slugify($this->getTitle());
             }
         }
         return $this->slug;
