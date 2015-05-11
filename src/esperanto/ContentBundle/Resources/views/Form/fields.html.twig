@@ -45,7 +45,17 @@
 {% endblock %}
 
 {% block esperanto_content_item_picture_widget %}
-    {{ form_widget(form.files) }}
+    <div class="padding">
+        Titel:
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        Bildunterschrift:
+        {{ form_widget(form.caption) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.files) }}
+    </div>
 {% endblock %}
 
 {% block esperanto_content_item_textpicture_widget %}
