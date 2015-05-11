@@ -87,6 +87,7 @@ class MenuEventListener
             'route' => 'fos_user_security_logout'
         ));
         $logout->setLabel('label.logout');
+        $logout->setAttribute('class', 'menu-icon-logout');
         $menu->addChild($logout);
     }
 }
