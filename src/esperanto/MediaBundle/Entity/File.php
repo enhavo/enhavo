@@ -30,6 +30,16 @@ class File
     private $order;
 
     /**
+     * @var string
+     */
+    private $filename;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -121,5 +131,46 @@ class File
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return File
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }

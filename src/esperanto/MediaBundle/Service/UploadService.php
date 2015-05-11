@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use esperanto\MediaBundle\Service\Thumbnail;
 use esperanto\MediaBundle\Service\Resize;
+use BaconStringUtils\Slugifier;
 
 class UploadService
 {
@@ -59,10 +60,17 @@ class UploadService
         $data = array();
 
         foreach($files as $file) {
+
+            $slugifier = new Slugifier;
+            $filePathinfo = pathinfo($file->getClientOriginalName());
+            $slugifiedTitle = $slugifier->slugify($filePathinfo['filename']);
+
             /** @var $file UploadedFile */
             $entityFile = new File();
             $entityFile->setMimeType($file->getMimeType());
             $entityFile->setExtension($file->guessExtension());
+            $entityFile->setTitle($slugifiedTitle);
+            $entityFile->setFilename($file->getClientOriginalName());
 
             $this->manager->persist($entityFile);
             $this->manager->flush();

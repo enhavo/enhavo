@@ -15,16 +15,19 @@ class MediaExtension extends \Twig_Extension
 {
     protected $engine;
     protected $container;
+    protected $em;
 
-    public function __construct($container)
+    public function __construct($container, $em)
     {
         $this->container = $container;
+        $this->em = $em;
     }
 
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('media_url', array($this, 'getMediaUrl')),
+            new \Twig_SimpleFunction('media_title', array($this, 'getMediaTitle')),
         );
     }
 
@@ -40,8 +43,10 @@ class MediaExtension extends \Twig_Extension
 
     public function getMediaUrl($file,$width=null,$height=null)
     {
+
         $path = '';
         if($file) {
+            $entityFile = $this->em->getRepository('esperantoMediaBundle:File')->find($file->getId());
             $path .= '/file/'.$file->getId();
         }
         if($width) {
@@ -52,7 +57,26 @@ class MediaExtension extends \Twig_Extension
 
         }
 
+        if($file && $entityFile) {
+            $filename = $entityFile->getFilename();
+            if (!empty($filename)) {
+                $path .= '/' . $entityFile->getFilename();
+            }
+        }
+
         return $path;
+    }
+
+    public function getMediaTitle($file)
+    {
+
+        $title = '';
+        if($file) {
+            $entityFile = $this->em->getRepository('esperantoMediaBundle:File')->find($file->getId());
+            $title = $entityFile->getTitle();
+        }
+
+        return $title;
     }
 
     public function getName()
