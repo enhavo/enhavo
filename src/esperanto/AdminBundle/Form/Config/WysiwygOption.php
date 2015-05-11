@@ -8,6 +8,7 @@
 
 namespace esperanto\AdminBundle\Form\Config;
 
+use esperanto\AdminBundle\Util\Assetic;
 
 class WysiwygOption
 {
@@ -18,6 +19,8 @@ class WysiwygOption
     private $toolbar1;
 
     private $toolbar2;
+
+    private $contentCss;
 
     /**
      * @return mixed
@@ -102,5 +105,38 @@ class WysiwygOption
     public function setToolbar2($toolbar2)
     {
         $this->toolbar2 = $toolbar2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentCss($contentCss)
+    {
+        if(is_string($this->contentCss) || is_array($this->contentCss)) {
+            $css = $this->contentCss;
+        } else {
+            $css = $contentCss;
+        }
+
+        if(empty($css)) {
+            return $css;
+        }
+
+        if(is_array($css)) {
+            foreach($css as &$path) {
+                $path = Assetic::convertPathToAsset($path);
+            }
+        } else {
+            $css = Assetic::convertPathToAsset($css);
+        }
+        return $css;
+    }
+
+    /**
+     * @param mixed $contentCss
+     */
+    public function setContentCss($contentCss)
+    {
+        $this->contentCss = $contentCss;
     }
 }

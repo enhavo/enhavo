@@ -40,6 +40,7 @@ class WysiwygType extends AbstractType
         $option->setToolbar1($options['toolbar1']);
         $option->setToolbar2($options['toolbar2']);
         $option->setHeight($options['height']);
+        $option->setContentCss($options['content_css']);
         $view->vars['config'] = $this->config->getData($option);
     }
 
@@ -49,7 +50,8 @@ class WysiwygType extends AbstractType
             'formats' => array(),
             'toolbar1' => null,
             'toolbar2' => null,
-            'height' => null
+            'height' => null,
+            'content_css' => null
         ));
     }
 

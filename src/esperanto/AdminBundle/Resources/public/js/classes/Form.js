@@ -107,6 +107,10 @@ var Form = function(router, templating, admin, translator)
           options.toolbar2 = config.toolbar2
       }
 
+      if(config.content_css) {
+        options.content_css = config.content_css
+      }
+
       $(element).tinymce(options);
     };
 

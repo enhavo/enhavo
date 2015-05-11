@@ -23,3 +23,5 @@ formats:
       underline: {inline: 'span', 'classes': 'underline', exact: true}
       strikethrough: {inline: 'del'}
       customformat: {inline: 'span', styles: {color: '#00ff00', fontSize: '20px'}, attributes: {title: 'My custom format'}}
+
+content_css: ~

@@ -30,7 +30,8 @@ class WysiwygConfig
             'toolbar1' => $option->getToolbar1($this->getConfig('toolbar1')),
             'toolbar2' => $option->getToolbar2($this->getConfig('toolbar2')),
             'height' => $option->getHeight($this->getConfig('height')),
-            'style_formats' => $option->getFormats($this->getConfig('style_formats'))
+            'style_formats' => $option->getFormats($this->getConfig('style_formats')),
+            'content_css' => $option->getContentCss($this->getConfig('content_css')),
         );
         return json_encode($data);
     }
