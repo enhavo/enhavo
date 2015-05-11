@@ -17,6 +17,8 @@ class Gallery
 
     private $files;
 
+    private $type;
+
 
     public function __construct()
     {
@@ -36,6 +38,24 @@ class Gallery
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+
 
     /**
      * Get title
