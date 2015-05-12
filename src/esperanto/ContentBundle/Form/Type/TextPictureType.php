@@ -51,6 +51,6 @@ class TextPictureType extends ItemFormType
 
     public function getName()
     {
-        return 'esperanto_content_item_textpicture';
+        return 'esperanto_content_item_text_picture';
     }
 } 

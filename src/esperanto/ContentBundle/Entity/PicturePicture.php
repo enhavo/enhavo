@@ -16,11 +16,34 @@ class PicturePicture implements ItemTypeInterface
      */
     private $id;
 
+    /**
+     * @var mixed
+     */
     private $filesLeft;
 
+    /**
+     * @var mixed
+     */
     private $filesRight;
 
+    /**
+     * @var boolean
+     */
     private $frame;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->filesLeft = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->filesRight = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -147,13 +170,20 @@ class PicturePicture implements ItemTypeInterface
     {
         $this->frame = $frame;
     }
+
     /**
-     * Constructor
+     * @return string
      */
-    public function __construct()
+    public function getTitle()
     {
-        $this->filesLeft = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->filesRight = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->title;
     }
 
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 }

@@ -58,7 +58,7 @@
     </div>
 {% endblock %}
 
-{% block esperanto_content_item_textpicture_widget %}
+{% block esperanto_content_item_text_picture_widget %}
     <div class="padding">
         {{ form_widget(form.title) }}
     </div>
@@ -73,8 +73,14 @@
     </div>
 {% endblock %}
 
-{% block esperanto_content_item_texttext_widget %}
+{% block esperanto_content_item_text_text_widget %}
     <div class="padding">
+        Titel:
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div class="padding">
+        Links:
         {{ form_widget(form.titleLeft) }}
     </div>
     <div class="padding">
@@ -82,6 +88,7 @@
     </div>
 
     <div class="padding">
+        Rechts:
         {{ form_widget(form.titleRight) }}
     </div>
     <div class="padding">
@@ -99,10 +106,19 @@
     {{ form_widget(form.files) }}
 {% endblock %}
 
-{% block esperanto_content_item_picturepicture_widget %}
-    {{ form_widget(form.filesLeft) }}
+{% block esperanto_content_item_picture_picture_widget %}
+    <div class="padding">
+        Titel:
+        {{ form_widget(form.title) }}
+    </div>
 
-    {{ form_widget(form.filesRight) }}
+    <div class="padding">
+        {{ form_widget(form.filesLeft) }}
+    </div>
+
+    <div class="padding">
+        {{ form_widget(form.filesRight) }}
+    </div>
 
     <div class="padding darkbg">
         <div>Bilder mit Rahmen</div>

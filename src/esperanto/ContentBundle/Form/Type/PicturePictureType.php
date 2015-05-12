@@ -17,6 +17,7 @@ class PicturePictureType extends ItemFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('title', 'text');
         $builder->add('filesLeft', 'esperanto_files');
         $builder->add('filesRight', 'esperanto_files');
         $builder->add('frame', 'choice', array(
@@ -39,6 +40,6 @@ class PicturePictureType extends ItemFormType
 
     public function getName()
     {
-        return 'esperanto_content_item_picturepicture';
+        return 'esperanto_content_item_picture_picture';
     }
 } 

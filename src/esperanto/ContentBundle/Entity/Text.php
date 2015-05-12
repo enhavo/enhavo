@@ -20,13 +20,10 @@ class Text implements ItemTypeInterface
      */
     private $title;
 
-    private $subtitle;
-
     /**
      * @var string
      */
     private $text;
-
 
     /**
      * Get id
@@ -83,22 +80,4 @@ class Text implements ItemTypeInterface
     {
         return $this->text;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getSubtitle()
-    {
-        return $this->subtitle;
-    }
-
-    /**
-     * @param mixed $subtitle
-     */
-    public function setSubtitle($subtitle)
-    {
-        $this->subtitle = $subtitle;
-    }
-
-
 }

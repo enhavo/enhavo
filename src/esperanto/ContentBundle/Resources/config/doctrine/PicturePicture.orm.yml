@@ -9,6 +9,11 @@ esperanto\ContentBundle\Entity\PicturePicture:
                 strategy: AUTO
 
     fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
         frame:
             type: boolean
             nullable: true
