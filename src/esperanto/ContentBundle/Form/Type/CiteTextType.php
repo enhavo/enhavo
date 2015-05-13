@@ -15,19 +15,7 @@ class CiteTextType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'wysiwyg');
-        $builder->add('title', 'text');
         $builder->add('cite', 'wysiwyg');
-
-        $builder->add('textleft', 'choice', array(
-            'label' => 'form.label.textleft',
-            'choices'   => array(
-                '1' => 'label.text_left-picture_right',
-                '0' => 'label.picture_left-text_right'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

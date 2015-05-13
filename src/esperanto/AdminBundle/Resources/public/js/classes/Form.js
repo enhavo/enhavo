@@ -49,50 +49,72 @@ var Form = function(router, templating, admin, translator)
   this.initWysiwyg = function(form)
   {
     var addTinymce = function(element) {
-      var bodyHeight = 150;
-      if(typeof $(element).attr("height") != "undefined") {
-        bodyHeight = $(this).attr("height");
+
+      var options = {
+          // Location of TinyMCE script
+          script_url : '/js/lib/tinymce/tinymce.min.js',
+          //content_css: "/css/editor.css",
+          menubar: false,
+          // General options
+          plugins: ["advlist autolink lists link image charmap print preview anchor",
+              "searchreplace visualblocks code fullscreen",
+              "insertdatetime media table contextmenu paste"],
+          force_br_newlines : true,
+          force_p_newlines : false,
+          forced_root_block : "div",
+          cleanup : false,
+          cleanup_on_startup : false,
+          font_size_style_values : "xx-small,x-small,small,medium,large,x-large,xx-large",
+          convert_fonts_to_spans : true,
+
+          relative_urls : false,
+          oninit: function(ed) {
+              $(ed.contentAreaContainer).droppable({
+                  accept: ".imgList li.imgContainer",
+                  drop: function(event, ui) {
+                      var draggedImg = ui.draggable.find("img");
+                      var src = '';
+                      if(typeof draggedImg.attr("largesrc") == "undefined") {
+                          src = draggedImg.attr("src")
+                      } else {
+                          src = draggedImg.attr("largesrc");
+                      }
+                      ed.execCommand('mceInsertContent', false, "<img src=\""+src+"\" />");
+                  }
+              });
+          }
+      };
+
+      var config = $(element).data('config');
+
+      if(config.height) {
+          options.height = config.height;
       }
-      $(element).tinymce({
-        // Location of TinyMCE script
-        script_url : '/js/lib/tinymce/tinymce.min.js',
-//        content_css: "/css/editor.css",
-        menubar: false,
-        // General options
-        plugins: ["advlist autolink lists link image charmap print preview anchor",
-          "searchreplace visualblocks code fullscreen",
-          "insertdatetime media table contextmenu paste"],
-        // Theme options
-        toolbar1: "undo redo | bold italic underline strikethrough subscript superscript removeformat | link",
-        toolbar2: "table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | code",
-        force_br_newlines : true,
-        force_p_newlines : false,
-        forced_root_block : "",
-        cleanup : false,
-        cleanup_on_startup : false,
-        font_size_style_values : "xx-small,x-small,small,medium,large,x-large,xx-large",
-        convert_fonts_to_spans : true,
-        height : bodyHeight,
-        relative_urls : false,
-        oninit: function(ed) {
-          $(ed.contentAreaContainer).droppable({
-            accept: ".imgList li.imgContainer",
-            drop: function(event, ui) {
-              var draggedImg = ui.draggable.find("img");
-              var src = '';
-              if(typeof draggedImg.attr("largesrc") == "undefined") {
-                src = draggedImg.attr("src")
-              } else {
-                src = draggedImg.attr("largesrc");
-              }
-              ed.execCommand('mceInsertContent', false, "<img src=\""+src+"\" />");
-            }
-          });
-        }
-      });
+
+      if(config.style_formats) {
+         options.style_formats = config.style_formats;
+      }
+
+      if(config.formats) {
+          options.formats = config.formats;
+      }
+
+      if(config.toolbar1) {
+          options.toolbar1 = config.toolbar1
+      }
+
+      if(config.toolbar2) {
+          options.toolbar2 = config.toolbar2
+      }
+
+      if(config.content_css) {
+        options.content_css = config.content_css
+      }
+
+      $(element).tinymce(options);
     };
 
-    $(form).find('.wysiwyg').each(function(index, element) {
+    $(form).find('[data-wysiwyg]').each(function(index, element) {
       addTinymce(element);
     });
   };

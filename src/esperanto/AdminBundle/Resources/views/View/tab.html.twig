@@ -1,14 +1,14 @@
 <div class="row mb1em tabContainer">
-    <div class="offset2 span9">
+    <div class="col-md-push-2 col-md-9">
         {% for tab in tabs.getTabs %}
           <a href="#" tabId="tab{{ loop.index }}">{{ tab.getLabel() }}</a>
         {% endfor %}
     </div>
 </div>
 
-<div class="tabContentContainer mb1em pv1em">
+<div class="row tabContentContainer mb1em pv1em">
     {% for tab in tabs.getTabs %}
-        <div id="tab{{ loop.index }}">
+        <div id="tab{{ loop.index }}" class="col-md-12">
             {% if tab.getContent() %}
                 {{ tab.getContent() }}
             {% else %}

@@ -11,7 +11,6 @@ namespace esperanto\ContentBundle\Form\Type;
 use esperanto\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use esperanto\ContentBundle\Item\Type\Text;
 
 class TextType extends ItemFormType
 {
@@ -32,4 +31,4 @@ class TextType extends ItemFormType
     {
         return 'esperanto_content_item_text';
     }
-} 
+}

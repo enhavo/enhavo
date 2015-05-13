@@ -26,8 +26,8 @@
 {% block form_row %}
     {% spaceless %}
         <div class="row mb1">
-            <label class="span2 text-right label-container">{{ form_label(form) }}</label>
-            <div class="span9 input-container">{{ form_widget(form) }}</div>
+            <label class="col-md-2 text-right label-container">{{ form_label(form) }}</label>
+            <div class="col-md-9 input-container">{{ form_widget(form) }}</div>
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -53,4 +53,12 @@
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="password" />
     </div>
 {% endblock %}
+
+{% block wysiwyg_widget %}
+    <div class="inputContainer">
+        <textarea data-wysiwyg data-config="{{ config|e }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
+{% endblock %}
+
+
 

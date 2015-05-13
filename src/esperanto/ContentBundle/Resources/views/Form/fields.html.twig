@@ -1,6 +1,6 @@
 {% block esperanto_content_widget %}
 
-    <div class="row mb1 contentForm">
+    <div class="mb1 contentForm">
         <div class="menu">
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
@@ -11,7 +11,7 @@
             </ul>
         </div>
 
-        <div class="col-md-9" float="left">
+        <div>
             <div>
               <i class="fa fa-plus btnsmall addButton" data-name="{{ full_name }}" data-position="top" ></i>
             </div>
@@ -23,7 +23,6 @@
                     {% set formName = item.vars.full_name %}
                     {% set formOrder = item.vars.value.order %}
                     {% set formType = item.vars.value.type %}
-                    {% set created = false %}
                     {% include 'esperantoContentBundle:Form:form.html.twig' %}
                   {% endfor %}
                 {% endfor %}
@@ -46,10 +45,20 @@
 {% endblock %}
 
 {% block esperanto_content_item_picture_widget %}
-    {{ form_widget(form.files) }}
+    <div class="padding">
+        Titel:
+        {{ form_widget(form.title) }}
+    </div>
+    <div class="padding">
+        Bildunterschrift:
+        {{ form_widget(form.caption) }}
+    </div>
+    <div class="padding">
+        {{ form_widget(form.files) }}
+    </div>
 {% endblock %}
 
-{% block esperanto_content_item_textpicture_widget %}
+{% block esperanto_content_item_text_picture_widget %}
     <div class="padding">
         {{ form_widget(form.title) }}
     </div>
@@ -60,12 +69,18 @@
     {{ form_widget(form.files) }}
 
     <div class="padding textleft">
-       {{ form_widget(form.textleft) }}
+       {{ form_widget(form.textLeft) }}
     </div>
 {% endblock %}
 
-{% block esperanto_content_item_texttext_widget %}
+{% block esperanto_content_item_text_text_widget %}
     <div class="padding">
+        Titel:
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div class="padding">
+        Links:
         {{ form_widget(form.titleLeft) }}
     </div>
     <div class="padding">
@@ -73,6 +88,7 @@
     </div>
 
     <div class="padding">
+        Rechts:
         {{ form_widget(form.titleRight) }}
     </div>
     <div class="padding">
@@ -90,38 +106,34 @@
     {{ form_widget(form.files) }}
 {% endblock %}
 
-{% block esperanto_content_item_picturepicture_widget %}
+{% block esperanto_content_item_picture_picture_widget %}
     <div class="padding">
+        Titel:
         {{ form_widget(form.title) }}
     </div>
 
-    {{ form_widget(form.filesLeft) }}
+    <div class="padding">
+        {{ form_widget(form.filesLeft) }}
+    </div>
     <div class="padding">
         {{ form_widget(form.captionLeft) }}
     </div>
 
-    {{ form_widget(form.filesRight) }}
     <div class="padding">
-        {{ form_widget(form.captionLeft) }}
+        {{ form_widget(form.filesRight) }}
+    <div class="padding">
+        {{ form_widget(form.captionRight) }}
     </div>
 
-    <div class="padding frame">
+    <div class="padding darkbg">
+        <div>Bilder mit Rahmen</div>
         {{ form_widget(form.frame) }}
     </div>
 {% endblock %}
 
 {% block esperanto_content_item_citetext_widget %}
     <div class="padding">
-        {{ form_widget(form.title) }}
-    </div>
-    <div class="padding">
-        {{ form_widget(form.text) }}
-    </div>
-    <div class="padding">
         {{ form_widget(form.cite) }}
-    </div>
-    <div class="padding textleft">
-        {{ form_widget(form.textleft) }}
     </div>
 {% endblock %}
 

@@ -17,6 +17,11 @@ class TextText implements ItemTypeInterface
     /**
      * @var string
      */
+    private $title;
+
+    /**
+     * @var string
+     */
     private $textLeft;
 
     /**
@@ -140,5 +145,20 @@ class TextText implements ItemTypeInterface
     {
         return $this->titleRight;
     }
-}
 
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+}

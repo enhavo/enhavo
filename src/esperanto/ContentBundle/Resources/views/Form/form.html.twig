@@ -6,15 +6,7 @@
     </div>
 
     <div>
-        {% if created %}
-            {{ form_widget(formItem) }}
-        {% else %}
-            {% for child in formItem -%}
-                {% if not child.rendered %}
-                    {{ form_widget(child) }}
-                {% endif %}
-            {%- endfor %}
-        {% endif %}
+        {{ form_widget(formItem) }}
     </div>
 
     <input type="hidden" class="typeInput" name="{{ formName }}[type]" value="{{ formType }}">

@@ -17,9 +17,4 @@ esperanto\ContentBundle\Entity\Text:
             type: text
             nullable: true
 
-        subtitle:
-            type: string
-            length: 255
-            nullable: true
-
     lifecycleCallbacks: {  }

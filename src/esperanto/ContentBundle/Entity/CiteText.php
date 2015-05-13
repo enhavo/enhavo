@@ -20,7 +20,7 @@ class CiteText implements ItemTypeInterface
 
     private $cite;
 
-    private $textleft;
+    private $textLeft;
 
     /**
      * Get id
@@ -35,17 +35,17 @@ class CiteText implements ItemTypeInterface
     /**
      * @return mixed
      */
-    public function getTextleft()
+    public function getTextLeft()
     {
-        return $this->textleft;
+        return $this->textLeft;
     }
 
     /**
      * @param mixed $textLeft
      */
-    public function setTextleft($textleft)
+    public function setTextLeft($textLeft)
     {
-        $this->textleft = $textleft;
+        $this->textLeft = $textLeft;
     }
 
     /**
@@ -96,4 +96,3 @@ class CiteText implements ItemTypeInterface
         $this->text = $text;
     }
 }
-

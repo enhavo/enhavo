@@ -7,6 +7,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/font-awesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/jquery_ui/jquery-ui.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/icheck/icheck-esperanto.css') }}" >
@@ -75,11 +76,11 @@
     <div id="overlayContent"></div>
     <div id="overlayMessage"></div>
     <div id="iframeContainer">
-        <div class="close"><i class="icon-remove"></i></div>
+        <div class="close"><i class="fa fa-times"></i></div>
         <iframe src="" id="iframe" name="iframe"></iframe>
     </div>
     <div id="left">{{ admin_menu_render() }}</div>
-    <div id="contentContainer">
+    <div id="contentContainer" class="container">
         {% block content %}{% endblock %}
     </div>
 {% endblock %}

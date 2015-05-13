@@ -80,7 +80,7 @@
             self.find(".imgdelete").trigger("click.xq");
           }
 
-          var imgItem = $("<li class=\"imgContainer\" fileid=\""+response.data.fileId+"\"><div class=\"imgdelete\"><i class=\"icon-remove icon-2x\"></i></div><img src=\"/media/thumb/"+response.data.fileId+"\" largesrc=\"/media/get/"+response.data.fileId+"\" /></li>");
+          var imgItem = $("<li class=\"imgContainer\" fileid=\""+response.data.fileId+"\"><div class=\"imgdelete\"><i class=\"fa fa-times fa-2x\"></i></div><img src=\"/media/thumb/"+response.data.fileId+"\" largesrc=\"/media/get/"+response.data.fileId+"\" /></li>");
           self.find(".imgList").append(imgItem);
           handleDeleteImage();
           sortMedia();

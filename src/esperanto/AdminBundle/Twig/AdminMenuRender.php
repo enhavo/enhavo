@@ -61,38 +61,11 @@ class AdminMenuRender extends \Twig_Extension
 
     public function render()
     {
-        if($this->router === null) {
-            $this->router = $this->container->get('router');
-        }
-
-        if($this->adminRegister === null) {
-            $this->adminRegister = $this->container->get('esperanto_admin.admin_register');
-        }
-
         if($this->templateEngine === null) {
             $this->templateEngine = $this->container->get('templating');
         }
 
-        /** @var $request Request */
-        $request = $this->container->get('request');
-
-        $menus = $this->container->get('knp_menu.factory')->createItem('admin_menu');
-
-        /** @var $admin Admin */
-        $currentUri = $request->getRequestUri();
-        foreach($this->adminRegister->getAdmins() as $admin) {
-            if($admin->isActionGranted(Admin::GRANTED_ACTION_INDEX)) {
-                $menu = $admin->getMenu();
-                if($menu instanceof MenuItem) {
-                    if($currentUri == $menu->getUri()) {
-                        $menu->setCurrent(true);
-                    }
-                    $menus->addChild($menu);
-                }
-            }
-        }
-
-        $menus->addChild($this->createLogoutMenu());
+        $menus = $this->container->get('esperanto_admin.menu_loader')->getMenu();
 
         return $this->templateEngine->render($this->template, array(
             'menus' => $menus

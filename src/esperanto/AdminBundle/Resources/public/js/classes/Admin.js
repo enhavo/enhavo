@@ -61,9 +61,9 @@ function Admin (router, templating, translator)
     var overlayStart = function() {
       overlayContent.trigger('formOpenBefore');
 
-      overlay.fadeIn(200);
+      overlay.fadeIn(100);
       overlayContent.append($.parseHTML(html));
-      overlayContent.fadeIn(350, function() {
+      overlayContent.fadeIn(200, function() {
         overlayContent.trigger('formOpenAfter', [ overlayContent.find('form').get(0) ]);
       });
       overlayContent.animate({
@@ -84,8 +84,8 @@ function Admin (router, templating, translator)
     var overlayStop = function() {
       overlayContent.trigger('formCloseBefore', [overlayContent]);
       overlayContent.html('');
-      overlay.fadeOut(350);
-      overlayContent.fadeOut(200);
+      overlay.fadeOut(200);
+      overlayContent.fadeOut(100);
       overlayContent.trigger('formCloseAfter', [overlayContent]);
     };
     overlayStop();
@@ -155,7 +155,7 @@ function Admin (router, templating, translator)
       $(form).submit();
     }
 
-    iframeContainer.fadeIn(300);
+    iframeContainer.fadeIn(100);
     iframeContainer.find('.close').on('click',function(event) {
       event.stopPropagation();
       event.preventDefault();
@@ -186,43 +186,51 @@ function Admin (router, templating, translator)
     overlayMessage.removeClass(MessageType.Success);
     overlayMessage.addClass(type);
 
-    overlayMessage.html(content).stop().fadeIn(200,function() {
+    overlayMessage.html(content).stop().fadeIn(150,function() {
       overlayTimeout = setTimeout(function() {
-        overlayMessage.fadeOut(200);
+        overlayMessage.fadeOut(150);
       }, 3500);
     });
   };
 
-  this.initPagination = function(route)
+  this.initPagination = function(route,selector)
   {
-    $('.pagination a').click(function() {
+    if(selector) {
+      var pagination = $(selector);
+    } else {
+      var pagination = $('.pagination');
+    }
+    var referingTableContainer = pagination.siblings('.table-container');
+    $('a',pagination).click(function() {
+
       var page = $(this).attr('page');
       var link = router.generate(route, { page: page });
-      $(this).parent().find('a.selected').removeClass('selected');
-      $(this).addClass('selected');
-      self.updateTable(link);
+      $('a',pagination).removeClass('selected');
+      $('a[page='+page+']',pagination).addClass('selected');
+      self.updateTable(referingTableContainer,link);
     });
   };
 
   this.initTable = function() {
     $(document).on('click', '.table-container .entry-row', function() {
-      var route = $('.table-container').attr('data-edit-route');
+      var tableContainer = $(this).parents('.table-container');
+      var route = tableContainer.attr('data-edit-route');
       var id = $(this).attr('data-id');
       var url = router.generate(route, { id: id });
       self.ajaxOverlay(url);
     });
   };
 
-  this.updateTable = function(url, callback)
+  this.updateTable = function(tableContainer,url, callback)
   {
     if(!url) {
-      url = router.generate($('.table-container').attr('data-refresh-route'));
+      url = router.generate(tableContainer.attr('data-refresh-route'));
     }
 
     $.ajax({
       url: url,
       success : function(data) {
-        $('.table-container').html(data);
+        tableContainer.html(data);
         if(callback) {
           callback();
         }
@@ -244,29 +252,31 @@ function Admin (router, templating, translator)
 
   this.initTabs = function(selector)
   {
-      $(selector + " .tabContainer a").each(function() {
-        var tab = $("#"+$(this).attr("tabId"));
-        if(tab.length > 0) {
-          tab.hide();
-          $(this).on("click",function(e) {
-            e.preventDefault();
-            $(this).siblings("a").each(function() {
-              var toHide = $("#"+$(this).attr("tabId"));
-              toHide.hide();
-              $(this).removeClass("selected");
-            });
-            $(this).addClass("selected");
-            tab.show();
+    $(selector + " .tabContainer a").each(function() {
+      var tab = $("#"+$(this).attr("tabId"));
+      if(tab.length > 0) {
+        tab.hide();
+        $(this).on("click",function(e) {
+          e.preventDefault();
+          $(this).siblings("a").each(function() {
+            var toHide = $("#"+$(this).attr("tabId"));
+            toHide.hide();
+            $(this).removeClass("selected");
           });
-        }
-      });
-      $(selector + " .tabContainer a:first-child").trigger("click");
+          $(this).addClass("selected");
+          tab.show();
+        });
+      }
+    });
+    $(selector + " .tabContainer a:first-child").trigger("click");
   };
 
   this.initAfterSaveHandler = function()
   {
     $(document).on('formSaveAfter', function() {
-      self.updateTable();
+      $('.table-container').each(function() {
+        self.updateTable($(this));
+      });
       self.overlayClose();
     });
   };

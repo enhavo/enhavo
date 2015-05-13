@@ -12,6 +12,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use esperanto\ContentBundle\Entity\Item;
 use esperanto\ContentBundle\Item\ItemTypeResolver;
+use esperanto\ContentBundle\Exception\NoTypeFoundException;
 
 class DoctrineSubscriber implements EventSubscriber
 {
@@ -64,9 +65,13 @@ class DoctrineSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         if ($entity instanceof Item) {
-            $repository = $this->resolver->getRepository($entity->getType());
-            $itemType = $repository->find($entity->getItemTypeId());
-            $entity->setItemType($itemType);
+            try {
+                $repository = $this->resolver->getRepository($entity->getType());
+                $itemType = $repository->find($entity->getItemTypeId());
+                $entity->setItemType($itemType);
+            } catch(NoTypeFoundException $e ) {
+                //@TODO: log something
+            }
         }
     }
 }

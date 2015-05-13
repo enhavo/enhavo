@@ -1,6 +1,6 @@
 esperanto\ContentBundle\Entity\PicturePicture:
     type: entity
-    table: content_type_picturepicture
+    table: content_type_picture_picture
     id:
         id:
             type: integer
@@ -9,6 +9,11 @@ esperanto\ContentBundle\Entity\PicturePicture:
                 strategy: AUTO
 
     fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
         frame:
             type: boolean
         title:

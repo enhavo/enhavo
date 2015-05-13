@@ -13,7 +13,6 @@ esperanto\ContentBundle\Entity\Item:
             type: integer
             column: '`order`'
             nullable: true
-
         type:
             type: string
             nullable: true

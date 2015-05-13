@@ -15,12 +15,12 @@ class TextTextType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('title', 'text');
         $builder->add('textLeft', 'wysiwyg');
         $builder->add('textRight', 'wysiwyg');
         $builder->add('titleLeft', 'text');
         $builder->add('titleRight', 'text');
     }
-
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -31,6 +31,6 @@ class TextTextType extends ItemFormType
 
     public function getName()
     {
-        return 'esperanto_content_item_texttext';
+        return 'esperanto_content_item_text_text';
     }
 } 
