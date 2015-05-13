@@ -91,9 +91,19 @@
 {% endblock %}
 
 {% block esperanto_content_item_picturepicture_widget %}
+    <div class="padding">
+        {{ form_widget(form.title) }}
+    </div>
+
     {{ form_widget(form.filesLeft) }}
+    <div class="padding">
+        {{ form_widget(form.captionLeft) }}
+    </div>
 
     {{ form_widget(form.filesRight) }}
+    <div class="padding">
+        {{ form_widget(form.captionLeft) }}
+    </div>
 
     <div class="padding frame">
         {{ form_widget(form.frame) }}

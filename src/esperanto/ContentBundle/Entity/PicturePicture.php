@@ -22,6 +22,10 @@ class PicturePicture implements ItemTypeInterface
 
     private $frame;
 
+    private $captionLeft;
+
+    private $captionRight;
+
     /**
      * Get id
      *
@@ -147,5 +151,39 @@ class PicturePicture implements ItemTypeInterface
     {
         $this->frame = $frame;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCaptionLeft()
+    {
+        return $this->captionLeft;
+    }
+
+    /**
+     * @param mixed $captionLeft
+     */
+    public function setCaptionLeft($captionLeft)
+    {
+        $this->captionLeft = $captionLeft;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCaptionRight()
+    {
+        return $this->captionRight;
+    }
+
+    /**
+     * @param mixed $captionRight
+     */
+    public function setCaptionRight($captionRight)
+    {
+        $this->captionRight = $captionRight;
+    }
+
+
 }
 

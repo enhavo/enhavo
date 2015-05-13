@@ -11,6 +11,18 @@ esperanto\ContentBundle\Entity\PicturePicture:
     fields:
         frame:
             type: boolean
+        title:
+            type: string
+            length: 255
+            nullable: true
+        captionLeft:
+            type: string
+            length: 255
+            nullable: true
+        captionRight:
+            type: string
+            length: 255
+            nullable: true
 
     manyToMany:
         filesLeft:
