@@ -29,6 +29,8 @@ class PicturePictureType extends ItemFormType
             'expanded' => true,
             'multiple' => false
         ));
+        $builder->add('captionLeft', 'text');
+        $builder->add('captionRight', 'text');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
