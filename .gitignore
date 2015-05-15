@@ -15,6 +15,7 @@
 /vendor/
 /bin/
 /composer.phar
+/composer.lock
 /test
 /app/media/*
 !app/media/.gitkeep
