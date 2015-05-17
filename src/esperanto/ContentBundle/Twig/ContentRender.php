@@ -10,7 +10,7 @@ namespace esperanto\ContentBundle\Twig;
 
 use esperanto\ContentBundle\Entity\Content;
 use esperanto\ContentBundle\Entity\Item;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -21,7 +21,7 @@ class ContentRender extends \Twig_Extension
     protected $container;
     protected $resolver;
 
-    public function __construct(Router $router, Container $container)
+    public function __construct(RouterInterface $router, Container $container)
     {
         $this->router = $router;
         $this->container = $container;
