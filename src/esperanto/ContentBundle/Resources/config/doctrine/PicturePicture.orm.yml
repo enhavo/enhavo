@@ -16,6 +16,8 @@ esperanto\ContentBundle\Entity\PicturePicture:
 
         frame:
             type: boolean
+            nullabel: true
+
         title:
             type: string
             length: 255
@@ -36,7 +38,7 @@ esperanto\ContentBundle\Entity\PicturePicture:
             joinTable:
                 name: content_pictureleft_files
                 joinColumns:
-                    picturepictrue_id:
+                    picturepicture_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:
@@ -47,7 +49,7 @@ esperanto\ContentBundle\Entity\PicturePicture:
             joinTable:
                 name: content_pictureright_files
                 joinColumns:
-                    picturepictrue_id:
+                    picturepicture_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:
