@@ -16,7 +16,7 @@ esperanto\ContentBundle\Entity\PicturePicture:
 
         frame:
             type: boolean
-            nullabel: true
+            nullable: true
 
         title:
             type: string

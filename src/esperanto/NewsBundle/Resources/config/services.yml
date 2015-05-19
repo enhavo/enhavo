@@ -1,6 +1,8 @@
 parameters:
     esperanto_news.event.news.class: esperanto\NewsBundle\EventListener\AdminBuilderSubscriber
     esperanto_news.news_resolver.class: esperanto\NewsBundle\Service\NewsResolver
+    esperanto_news.news.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
+
 
 services:
     esperanto_news.event.news:
@@ -23,3 +25,12 @@ services:
         class: %esperanto_news.news_resolver.class%
         arguments:
             - @service_container
+
+    esperanto_news.news.route_content_loader:
+        class: %esperanto_news.news.route_content_loader.class%
+        arguments:
+            - 'esperanto_news.news'
+            - %esperanto_news.model.news.class%
+            - 'esperanto_news.repository.news'
+        tags:
+            - { name: esperanto_route_content_loader }
