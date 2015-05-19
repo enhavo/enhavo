@@ -81,6 +81,11 @@ class Page
     private $picture;
 
     /**
+     * @var \esperanto\AdminBundle\Entity\Route
+     */
+    private $route;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -454,5 +459,21 @@ class Page
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * @return \esperanto\AdminBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param \esperanto\AdminBundle\Entity\Route $route
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
     }
 }

@@ -58,6 +58,11 @@ esperanto\PageBundle\Entity\Page:
             type: datetime
             nullable: true
 
+    manyToOne:
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\AdminBundle\Entity\Route
+
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

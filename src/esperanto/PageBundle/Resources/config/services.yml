@@ -1,7 +1,7 @@
 parameters:
     esperanto_page.event.page.class: esperanto\PageBundle\EventListener\AdminBuilderSubscriber
     esperanto_page.page_resolver.class: esperanto\PageBundle\Service\PageResolver
-
+    esperanto_page.page.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
 services:
     esperanto_page.event.page:
         class: %esperanto_page.event.page.class%
@@ -23,3 +23,12 @@ services:
         class: %esperanto_page.page_resolver.class%
         arguments:
             - @service_container
+
+    esperanto_page.page.route_content_loader:
+        class: %esperanto_page.page.route_content_loader.class%
+        arguments:
+            - 'esperanto_page.page'
+            - %esperanto_page.model.page.class%
+            - 'esperanto_page.repository.page'
+        tags:
+            - { name: esperanto_route_content_loader }

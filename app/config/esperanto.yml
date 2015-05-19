@@ -1,3 +1,8 @@
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            esperanto\ProjectBundle\Entity\Page: esperantoProjectBundle:Main:page
+
 esperanto_admin:
     permission_check: false
     stylesheets:
@@ -33,7 +38,6 @@ esperanto_admin:
             label: label.homepage
             route: esperanto_project_homepage
             role: ROLE_ESPERANTO_PROJECT_HOMEPAGE_INDEX
-
 
 esperanto_content:
     render:

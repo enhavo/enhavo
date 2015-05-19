@@ -10,15 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
-    public function showAction($id, $slug)
+    public function showAction(Page $page)
     {
-        $repository = $this->get('esperanto_page.repository.page');
-        $page = $repository->find($id);
-
-        if(empty($page)) {
-            throw $this->createNotFoundException();
-        }
-
         return $this->render('esperantoPageBundle:Frontend:show.html.twig', array(
             'page' => $page
         ));

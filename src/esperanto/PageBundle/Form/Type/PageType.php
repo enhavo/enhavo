@@ -5,7 +5,7 @@ namespace esperanto\PageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -26,7 +26,7 @@ class PageType extends AbstractType
      */
     protected $route;
 
-    public function __construct($dataClass, $route, Router $router)
+    public function __construct($dataClass, $route, RouterInterface $router)
     {
         $this->route = $route;
         $this->dataClass = $dataClass;
@@ -53,6 +53,8 @@ class PageType extends AbstractType
                 ));
             }
         });
+
+        $builder->add('route', 'esperanto_route');
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'

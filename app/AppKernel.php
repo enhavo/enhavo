@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
+            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+
             new esperanto\AdminBundle\esperantoAdminBundle(),
             new esperanto\UserBundle\esperantoUserBundle(),
             new esperanto\MediaBundle\esperantoMediaBundle(),
