@@ -1,6 +1,7 @@
 parameters:
     esperanto_reference.event.reference.class: esperanto\ReferenceBundle\EventListener\AdminBuilderSubscriber
     esperanto_reference.reference_resolver.class: esperanto\ReferenceBundle\Service\ReferenceResolver
+    esperanto_reference.reference.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
 
 services:
     esperanto_reference.event.reference:
@@ -23,3 +24,12 @@ services:
             class: %esperanto_reference.reference_resolver.class%
             arguments:
                 - @service_container
+
+    esperanto_reference.reference.route_content_loader:
+        class: %esperanto_reference.reference.route_content_loader.class%
+        arguments:
+            - 'esperanto_reference.reference'
+            - %esperanto_reference.model.reference.class%
+            - 'esperanto_reference.repository.reference'
+        tags:
+            - { name: esperanto_route_content_loader }
