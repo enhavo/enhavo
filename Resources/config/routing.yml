@@ -1,0 +1,3 @@
+esperanto_newsletter_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: esperantoNewsletterBundle:Default:index }
