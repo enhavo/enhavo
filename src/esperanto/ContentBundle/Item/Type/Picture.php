@@ -19,6 +19,8 @@ class Picture
      */
     private $files;
 
+    private $title;
+
     /**
      * @var string
      */
@@ -48,6 +50,22 @@ class Picture
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     /**

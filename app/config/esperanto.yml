@@ -2,6 +2,8 @@ cmf_routing:
     dynamic:
         controllers_by_class:
             esperanto\ProjectBundle\Entity\Page: esperantoProjectBundle:Main:page
+            esperanto\ProjectBundle\Entity\News: esperantoProjectBundle:Main:news
+            esperanto\ProjectBundle\Entity\Reference: esperantoProjectBundle:Main:reference
 
 esperanto_admin:
     permission_check: false
