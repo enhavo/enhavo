@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use esperanto\ContentBundle\Item\ItemFormType;
 
-
 class DownloadItemType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
