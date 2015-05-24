@@ -90,6 +90,12 @@ esperanto_content:
             repository: esperantoContentBundle:CiteText
             template: esperantoContentBundle:Item:cite_text.html
             label: Zitat
+        download:
+            model: esperanto\DownloadBundle\Entity\DownloadItem
+            form: esperanto\DownloadBundle\Form\Type\DownloadItemType
+            repository: esperantoDownloadBundle:DownloadItem
+            template: esperantoDownloadBundle:Item:download.html.twig
+            label: Download
 
 esperanto_page:
     classes:

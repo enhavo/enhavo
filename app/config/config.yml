@@ -37,6 +37,7 @@ twig:
             - 'esperantoContentBundle:Form:fields.html.twig'
             - 'esperantoCategoryBundle:Form:fields.html.twig'
             - 'esperantoMediaBundle:Form:fields.html.twig'
+            - 'esperantoDownloadBundle:Item:fields.html.twig'
 
 # Assetic Configuration
 assetic:

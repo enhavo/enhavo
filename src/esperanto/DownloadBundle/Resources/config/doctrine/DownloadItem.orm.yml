@@ -1,0 +1,15 @@
+esperanto\DownloadBundle\Entity\DownloadItem:
+    type: entity
+    table: content_item_download
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        download:
+            targetEntity: esperanto\DownloadBundle\Entity\Download
+
+    lifecycleCallbacks: {  }
