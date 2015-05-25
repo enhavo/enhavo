@@ -20,6 +20,11 @@ class DownloadItem implements ItemTypeInterface
     private $download;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $file;
+
+    /**
      * Get id
      *
      * @return integer
@@ -51,5 +56,47 @@ class DownloadItem implements ItemTypeInterface
     public function getDownload()
     {
         return $this->download;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     *
+     * @return DownloadItem
+     */
+    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->file[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \esperanto\MediaBundle\Entity\File $file
+     */
+    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    {
+        $this->file->removeElement($file);
+    }
+
+    /**
+     * Get file
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

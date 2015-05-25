@@ -17,6 +17,8 @@ class DownloadItemType extends ItemFormType
             'expanded' => false,
             'empty_value' => 'label.download.item.choose'
         ));
+
+        $builder->add('file', 'esperanto_files');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
