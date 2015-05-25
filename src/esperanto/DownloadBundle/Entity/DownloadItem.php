@@ -25,6 +25,11 @@ class DownloadItem implements ItemTypeInterface
     private $file;
 
     /**
+     * @var string
+     */
+    private $title;
+
+    /**
      * Get id
      *
      * @return integer
@@ -98,5 +103,29 @@ class DownloadItem implements ItemTypeInterface
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return DownloadItem
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

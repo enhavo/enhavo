@@ -8,6 +8,11 @@ esperanto\DownloadBundle\Entity\DownloadItem:
             generator:
                 strategy: AUTO
 
+    fields:
+        title:
+            type: string
+            length: 255
+
     manyToOne:
         download:
             targetEntity: esperanto\DownloadBundle\Entity\Download

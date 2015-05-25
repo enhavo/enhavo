@@ -18,6 +18,8 @@ class DownloadItemType extends ItemFormType
             'empty_value' => 'label.download.item.choose'
         ));
 
+        $builder->add('title', 'text');
+
         $builder->add('file', 'esperanto_files');
     }
 
