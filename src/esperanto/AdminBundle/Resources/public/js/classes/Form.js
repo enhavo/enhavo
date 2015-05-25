@@ -18,7 +18,7 @@ var Form = function(router, templating, admin, translator)
       currentText: 'Jetzt',
       closeText: 'Fertig',
       dateFormat: 'dd.mm.yy',
-      stepMinute: 10,
+      stepMinute: 5,
       firstDay: 1
     });
 
