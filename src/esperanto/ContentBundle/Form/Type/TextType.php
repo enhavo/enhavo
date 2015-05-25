@@ -16,8 +16,13 @@ class TextType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'wysiwyg');
-        $builder->add('title', 'text');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
+        ));
+
+        $builder->add('text', 'wysiwyg', array(
+            'label' => 'form.label.text'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -15,12 +15,17 @@ class DownloadItemType extends ItemFormType
             'property' => 'title',
             'multiple' => false,
             'expanded' => false,
-            'empty_value' => 'label.download.item.choose'
+            'empty_value' => 'label.download.item.choose',
+            'label' => 'form.label.download'
         ));
 
-        $builder->add('title', 'text');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
+        ));
 
-        $builder->add('file', 'esperanto_files');
+        $builder->add('file', 'esperanto_files', array(
+            'label' => 'form.label.file'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

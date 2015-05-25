@@ -15,12 +15,20 @@ class TextPictureType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'wysiwyg');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
+        ));
 
-        $builder->add('title', 'text');
+        $builder->add('text', 'wysiwyg', array(
+            'label' => 'form.label.text'
+        ));
+
+        $builder->add('files', 'esperanto_files', array(
+            'label' => 'form.label.picture'
+        ));
 
         $builder->add('textLeft', 'choice', array(
-            'label' => 'form.label.textLeft',
+            'label' => 'form.label.position',
             'choices'   => array(
                 '1' => 'label.text_left-picture_right',
                 '0' => 'label.picture_left-text_right'
@@ -29,10 +37,8 @@ class TextPictureType extends ItemFormType
             'multiple' => false
         ));
 
-        $builder->add('files', 'esperanto_files');
-
         $builder->add('frame', 'choice', array(
-            'label' => 'form.label.public',
+            'label' => 'form.label.frame',
             'choices'   => array(
                 '1' => 'label.yes',
                 '0' => 'label.no'

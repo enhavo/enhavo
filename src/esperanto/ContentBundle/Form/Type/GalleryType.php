@@ -14,9 +14,17 @@ class GalleryType extends ItemFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
-        $builder->add('text', 'wysiwyg');
-        $builder->add('files', 'esperanto_files');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
+        ));
+
+        $builder->add('text', 'wysiwyg', array(
+            'label' => 'form.label.text'
+        ));
+
+        $builder->add('files', 'esperanto_files', array(
+            'label' => 'form.label.pictures'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

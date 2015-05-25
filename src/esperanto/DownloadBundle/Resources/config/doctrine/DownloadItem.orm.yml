@@ -12,6 +12,7 @@ esperanto\DownloadBundle\Entity\DownloadItem:
         title:
             type: string
             length: 255
+            nullable: true
 
     manyToOne:
         download:
