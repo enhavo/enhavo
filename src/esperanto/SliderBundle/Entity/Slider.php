@@ -71,7 +71,7 @@ class Slider
      * @param \esperanto\ProjectBundle\Entity\Slide $slides
      * @return Slider
      */
-    public function addSlide(\esperanto\ProjectBundle\Entity\Slide $slides)
+    public function addSlide(\esperanto\SliderBundle\Entity\Slide $slides)
     {
         $this->slides[] = $slides;
         $slides->setSlider($this);
@@ -83,7 +83,7 @@ class Slider
      *
      * @param \esperanto\ProjectBundle\Entity\Slide $slides
      */
-    public function removeSlide(\esperanto\ProjectBundle\Entity\Slide $slides)
+    public function removeSlide(\esperanto\SliderBundle\Entity\Slide $slides)
     {
         $this->slides->removeElement($slides);
     }

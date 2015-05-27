@@ -1,4 +1,5 @@
 esperanto\SliderBundle\Entity\Slider:
+    type: entity
     table: slider_slider
     repositoryClass: esperanto\SliderBundle\Repository\SliderRepository
 
@@ -18,3 +19,4 @@ esperanto\SliderBundle\Entity\Slider:
         slides:
             targetEntity: Slide
             mappedBy: slider
+            orderBy: {'order': 'ASC'}
