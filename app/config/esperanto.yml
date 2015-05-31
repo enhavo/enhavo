@@ -14,31 +14,38 @@ esperanto_admin:
     menu:
         user:
             label: label.user
-            route: esperanto_user_user_index
+            #route: esperanto_user_user_index
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         group:
             label: label.group
-            route: esperanto_user_group_index
+            #route: esperanto_user_group_index
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         news:
             label: label.news
-            route: esperanto_news_news_index
+            #route: esperanto_news_news_index
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
             route: esperanto_page_page_index
+            #route: esperanto_admin_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         reference:
             label: label.reference
-            route: esperanto_reference_reference_index
+            #route: esperanto_reference_reference_index
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_REFERENCE_REFERENCE_INDEX
         download:
             label: label.download
-            route: esperanto_download_download_index
+            #route: esperanto_download_download_index
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
         homepage:
             label: label.homepage
-            route: esperanto_project_homepage
+            #route: esperanto_project_homepage
+            route: esperanto_admin_index
             role: ROLE_ESPERANTO_PROJECT_HOMEPAGE_INDEX
 
 esperanto_content:

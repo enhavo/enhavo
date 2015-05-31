@@ -1,0 +1,7 @@
+
+
+services:
+    viewer.factory:
+        class: esperanto\AdminBundle\Viewer\ViewerFactory
+        arguments:
+            - @service_container

@@ -49,13 +49,6 @@ function Admin (router, templating, translator)
       });
 
       self.initTabs('#overlayContent');
-
-      /*
-      form.initTinymce('#overlayContent');
-      form.contentForm('#overlayContent');
-      form.handleCheckboxes('#overlayContent');
-      form.handleRadioBoxes('#overlayContent');
-      */
     };
 
     var overlayStart = function() {
@@ -79,8 +72,8 @@ function Admin (router, templating, translator)
     overlayStart();
   };
 
-  this.overlayClose = function() {
-
+  this.overlayClose = function()
+  {
     var overlayStop = function() {
       overlayContent.trigger('formCloseBefore', [overlayContent]);
       overlayContent.html('');
@@ -193,22 +186,20 @@ function Admin (router, templating, translator)
     });
   };
 
-  this.initPagination = function(route,selector)
+  this.initPagination = function(route, selector)
   {
-    if(selector) {
-      var pagination = $(selector);
-    } else {
-      var pagination = $('.pagination');
-    }
-    var referingTableContainer = pagination.siblings('.table-container');
-    $('a',pagination).click(function() {
-
-      var page = $(this).attr('page');
+      /*
+    $(document).on('click', '[data-pagination] [data-page]', function() {
+      console.log(this);
+      var block = $(this).parents('[data-block]');
+      console.log(block);
+      var page = $(this).data('page');
       var link = router.generate(route, { page: page });
       $('a',pagination).removeClass('selected');
       $('a[page='+page+']',pagination).addClass('selected');
       self.updateTable(referingTableContainer,link);
     });
+    */
   };
 
   this.initTable = function() {
@@ -273,11 +264,46 @@ function Admin (router, templating, translator)
 
   this.initAfterSaveHandler = function()
   {
-    $(document).on('formSaveAfter', function() {
-      $('.table-container').each(function() {
-        self.updateTable($(this));
+      $(document).on('formSaveAfter', function() {
+          self.overlayClose();
       });
-      self.overlayClose();
+  };
+
+  this.initBlocks = function()
+  {
+    $('[data-block]').each(function(index, element) {
+        var type = $(this).data('block-type');
+        var route = $(element).data('block-table-route');
+        var url = router.generate(route);
+        var block = $(this);
+        $.get(url, function (data) {
+            block.html(data);
+
+            $(document).on('formSaveAfter', function() {
+                var page = block.data('block-page');
+                var url = router.generate(route, {page: page});
+                $.get(url, function (data) {
+                    block.html(data);
+                });
+            });
+
+
+            block.on('click', '[data-page]', function() {
+               var page = $(this).data('page');
+               block.data('block-page', page);
+               var url = router.generate(route, {page: page});
+                $.get(url, function (data) {
+                    block.html(data);
+                });
+            });
+
+            block.on('click', '[data-id]', function() {
+                var id = $(this).data('id');
+                var route = block.data('block-update-route');
+                var url = router.generate(route, {id: id});
+                self.ajaxOverlay(url);
+            });
+        })
     });
   };
 }

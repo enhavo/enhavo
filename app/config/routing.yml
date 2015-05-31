@@ -17,7 +17,7 @@ esperanto_news_admin:
 
 esperanto_page_admin:
     resource: "@esperantoPageBundle/Resources/config/routing/admin.yml"
-    prefix:   /admin/page
+    prefix:   /admin/esperanto/page
 
 esperanto_content_admin:
     prefix:   /admin/content

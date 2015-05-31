@@ -24,9 +24,7 @@ class ResourceController extends BaseController
      */
     public function createAction(Request $request)
     {
-        if(!$this->getAdmin()->isActionGranted(BaseAdmin::GRANTED_ACTION_CREATE)) {
-            throw new AccessDeniedHttpException();
-        }
+        $viewer = $this->get('viewer.factory')->create($request);
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -43,14 +41,14 @@ class ResourceController extends BaseController
             return $this->handleView($view);
         }
 
+        $viewer->setResource($resource);
+        $viewer->setForm($form);
+        $viewer->dispatchEvent('');
+
         $view = $this
             ->view()
             ->setTemplate($this->config->getTemplate('create.html'))
-            ->setData(array(
-                'form' => $form->createView(),
-                'data' => $resource,
-                'view' => $this->getAdmin()->createView()
-            ))
+            ->setData($viewer->getParameters())
         ;
 
         return $this->handleView($view);
@@ -61,9 +59,7 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request)
     {
-        if(!$this->getAdmin()->isActionGranted(BaseAdmin::GRANTED_ACTION_EDIT)) {
-            throw new AccessDeniedHttpException();
-        }
+        $viewer = $this->get('viewer.factory')->create($request);
 
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource);
@@ -80,14 +76,14 @@ class ResourceController extends BaseController
             return $this->handleView($view);
         }
 
+        $viewer->setResource($resource);
+        $viewer->setForm($form);
+        $viewer->dispatchEvent('');
+
         $view = $this
             ->view()
             ->setTemplate($this->config->getTemplate('update.html'))
-            ->setData(array(
-                'form' => $form->createView(),
-                'data' => $resource,
-                'view' => $this->getAdmin()->createView()
-            ))
+            ->setData($viewer->getParameters())
         ;
 
         return $this->handleView($view);
@@ -98,14 +94,11 @@ class ResourceController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        if(!$this->getAdmin()->isActionGranted(BaseAdmin::GRANTED_ACTION_INDEX)) {
-            throw new AccessDeniedHttpException();
-        }
+        $viewer = $this->get('viewer.factory')->create($request);
 
+        //fire event for permission
         $criteria = $this->config->getCriteria();
         $sorting = $this->config->getSorting();
-
-
         $repository = $this->getRepository();
 
         if ($this->config->isPaginated()) {
@@ -124,13 +117,13 @@ class ResourceController extends BaseController
             );
         }
 
+        $viewer->setResource($resources);
+        $viewer->dispatchEvent('');
+
         $view = $this
             ->view()
             ->setTemplate($this->config->getTemplate('index.html'))
-            ->setData(array(
-                'data' => $resources,
-                'view' => $this->getAdmin()->createView()
-            ))
+            ->setData($viewer->getParameters())
         ;
 
         return $this->handleView($view);

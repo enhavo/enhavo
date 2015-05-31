@@ -31,5 +31,7 @@ class esperantoAdminExtension extends Extension
         $loader->load('services.yml');
         $loader->load('twig.yml');
         $loader->load('route.yml');
+        $loader->load('viewer.yml');
+        $loader->load('block.yml');
     }
 }

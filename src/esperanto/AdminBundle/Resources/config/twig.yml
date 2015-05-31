@@ -2,8 +2,7 @@ parameters:
     esperanto_admin.twig.admin_menu_render.class: esperanto\AdminBundle\Twig\AdminMenuRender
     esperanto_admin.twig.admin_menu_render.template: 'esperantoAdminBundle:View:menu.html.twig'
 
-    esperanto_admin.twig.tab_render.class: esperanto\AdminBundle\Twig\TabRender
-    esperanto_admin.twig.tab_render.template: 'esperantoAdminBundle:View:tab.html.twig'
+    esperanto_admin.twig.block_render.class: esperanto\AdminBundle\Twig\BlockRender
 
     esperanto_admin.twig.pagination_render.class: esperanto\AdminBundle\Twig\PaginationRender
     esperanto_admin.twig.pagination_render.template: 'esperantoAdminBundle:View:pagination.html.twig'
@@ -19,10 +18,10 @@ services:
         tags:
             - { name: twig.extension }
 
-    esperanto_admin.twig.tab_render:
-        class: %esperanto_admin.twig.tab_render.class%
+    esperanto_admin.twig.block_render:
+        class: %esperanto_admin.twig.block_render.class%
         arguments:
-            - %esperanto_admin.twig.tab_render.template%
+            - @esperanto_admin.block.factory
         tags:
             - { name: twig.extension }
 

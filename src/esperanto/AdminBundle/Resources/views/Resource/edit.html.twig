@@ -2,14 +2,14 @@
 
 {% block content %}
     <form method="POST"
-          action="{{ path(view.getParameter('edit_route'), { id: data.id }) }}"
-          data-delete-url="{{ path(view.getParameter('delete_route'), { id: data.id }) }}"
-            {% if view.getParameter('preview_route') %}
-                data-preview-url="{{ path(view.getParameter('preview_route'), { id: 'preview' }) }}"
+          action="{{ path(edit_route, { id: data.id }) }}"
+          data-delete-url="{{ path(delete_route, { id: data.id }) }}"
+            {% if preview_route %}
+                data-preview-url="{{ path(preview_route, { id: 'preview' }) }}"
             {% endif %}
             >
         {% block form %}
-            {% include view.getParameter('form_template') %}
+            {% include form_template %}
         {% endblock %}
         {{ block('buttonRow') }}
     </form>
@@ -25,7 +25,7 @@
     <div class="col-md-push-2 col-md-2">
         <button class="btn col-md-12 delete" type="button"><i class="fa fa-trash"></i> {{ 'label.delete'|trans }}</button>
     </div>
-    {% if view.getParameter('preview_route') %}
+    {% if preview_route %}
         <div class="col-md-push-2 col-md-2">
             <button class="btn col-md-12 preview" type="button"><i class="fa fa-eye"></i> {{ 'label.preview'|trans }}</button>
         </div>

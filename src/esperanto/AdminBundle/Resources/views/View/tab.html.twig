@@ -1,19 +1,15 @@
 <div class="row mb1em tabContainer">
     <div class="col-md-push-2 col-md-9">
-        {% for tab in tabs.getTabs %}
-          <a href="#" tabId="tab{{ loop.index }}">{{ tab.getLabel() }}</a>
+        {% for tab in tabs %}
+          <a href="#" tabId="tab{{ loop.index }}">{{ tab.label }}</a>
         {% endfor %}
     </div>
 </div>
 
 <div class="row tabContentContainer mb1em pv1em">
-    {% for tab in tabs.getTabs %}
+    {% for tab in tabs %}
         <div id="tab{{ loop.index }}" class="col-md-12">
-            {% if tab.getContent() %}
-                {{ tab.getContent() }}
-            {% else %}
-                {{ form(tab.getForm()) }}
-            {% endif%}
+            {% include tab.template  %}
         </div>
     {% endfor %}
 </div>
