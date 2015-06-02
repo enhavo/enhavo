@@ -11,6 +11,9 @@ esperanto_admin:
       - '@esperantoDownloadBundle/Resources/public/css/style.css'
     javascripts:
 
+    #viewer:
+    #    layout: 'esperantoAdminBundle::base.html.twig'
+
     menu:
         user:
             label: label.user

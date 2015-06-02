@@ -2,7 +2,7 @@
 
 {% block content %}
     <form method="POST"
-          action="{{ path(edit_route, { id: data.id }) }}"
+          action="{{ path(update_route, { id: data.id }) }}"
           data-delete-url="{{ path(delete_route, { id: data.id }) }}"
             {% if preview_route %}
                 data-preview-url="{{ path(preview_route, { id: 'preview' }) }}"

@@ -9,6 +9,7 @@
 namespace esperanto\AdminBundle\Controller;
 
 use esperanto\AdminBundle\Admin\BaseAdmin;
+use esperanto\AdminBundle\Viewer\ConfigParser;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,9 @@ class ResourceController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $viewer = $this->get('viewer.factory')->create($request);
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setConfig($config);
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -59,7 +62,9 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request)
     {
-        $viewer = $this->get('viewer.factory')->create($request);
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource);
@@ -94,7 +99,9 @@ class ResourceController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $viewer = $this->get('viewer.factory')->create($request);
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setConfig($config);
 
         //fire event for permission
         $criteria = $this->config->getCriteria();

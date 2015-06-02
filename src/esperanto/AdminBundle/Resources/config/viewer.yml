@@ -5,3 +5,7 @@ services:
         class: esperanto\AdminBundle\Viewer\ViewerFactory
         arguments:
             - @service_container
+
+    viewer.config:
+        class: esperanto\AdminBundle\Viewer\ConfigParser
+        scope: prototype

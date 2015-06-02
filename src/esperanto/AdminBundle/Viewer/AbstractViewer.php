@@ -22,6 +22,8 @@ abstract class AbstractViewer implements ContainerAwareInterface
 
     private $form;
 
+    private $config;
+
     /**
      * @param mixed $container
      */
@@ -80,74 +82,26 @@ abstract class AbstractViewer implements ContainerAwareInterface
         $this->request = $request;
     }
 
-    public function getParameters()
+    /**
+     * @return mixed
+     */
+    public function getConfig()
     {
-        $parameters = array(
-            'viewer' => $this,
-            'table_route' => 'esperanto_page_page_table',
-            'create_route' => 'esperanto_page_page_create',
-            'delete_route' => 'esperanto_page_page_delete',
-            'data' => $this->getResource(),
-            'add_button_text' => 'label.button',
-            'edit_route' => 'esperanto_page_page_update',
-            'table_template' => 'esperantoAdminBundle:Resource:table.html.twig',
-            'blocks' => array(
-                'table' => array(
-                    'type' => 'table',
-                    'parameters' => array(
-                        'table_route' => 'esperanto_page_page_table',
-                        'update_route' => 'esperanto_page_page_update'
-                    )
-                ),
-            ),
-            'preview_route' => null,
-            'form_template' => 'esperantoAdminBundle:View:tab.html.twig',
-            'tabs' => array(
-                array(
-                    'label' => 'page',
-                    'template' => 'esperantoPageBundle:Tab:page.html.twig'
-                ),
-                array(
-                    'label' => 'content',
-                    'template' => 'esperantoPageBundle:Tab:content.html.twig'
-                ),
-                array(
-                    'label' => 'seo',
-                    'template' => 'esperantoPageBundle:Tab:seo.html.twig'
-                )
-            ),
-            'columns' => array(
-                'id' => array(
-                    'label' => 'label.id',
-                    'property' => 'id',
-                    'width' => 1
-                ),
-                'title' => array(
-                    'label' => 'label.title',
-                    'property' => 'title',
-                    'width' => 1
-                ),
-                'public' => array(
-                    'label' => 'label.public',
-                    'property' => 'public',
-                    'width' => 1
-                ),
-            ),
-            'form' => $this->getForm()
-        );
-
-        return $parameters;
+        return $this->config;
     }
+
+    /**
+     * @param mixed $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+    
+    abstract function getParameters();
 
     public function getTheme()
     {
         return '::admin.html.twig';
-    }
-
-    public function getProperty($resource, $property)
-    {
-        $method = sprintf('get%s', ucfirst($property));
-        $value = call_user_func(array($resource, $method));
-        return $value;
     }
 }

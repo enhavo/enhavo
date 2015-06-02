@@ -232,12 +232,13 @@ function Admin (router, templating, translator)
     })
   };
 
-  this.initTopButton = function(selector, options, route, parameters) {
-    $(document).on('click', selector , function(event) {
+  this.initActions = function() {
+    $(document).on('click', '[data-action]' , function(event) {
       event.stopPropagation();
       event.preventDefault();
-      var link = router.generate(route, parameters);
-      self.ajaxOverlay(link, options);
+      var route = $(this).data('action-route');
+      var link = router.generate(route);
+      self.ajaxOverlay(link);
     });
   };
 

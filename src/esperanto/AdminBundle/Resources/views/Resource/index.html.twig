@@ -3,10 +3,8 @@
 {% block javascripts %}
     <script type="text/javascript">
         $(function() {
-            admin.initPagination('{{ table_route }}');
-            admin.initTable();
             admin.initBlocks();
-            admin.initTopButton('.action .btn.create', {}, '{{ create_route }}');
+            admin.initActions();
             admin.initAfterSaveHandler();
         });
     </script>
@@ -16,7 +14,9 @@
     {% block topButtons %}
         <div class="row mb3 action">
             <div class="col-md-3">
-                <button class="btn create col-md-12"><i class="icon-plus-sign"></i> {{ add_button_text|trans }}</button>
+                {% for action in actions %}
+                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-md-12"><i class="icon-{{ action.icon }}"></i> {{ action.label|trans }}</button>
+                {% endfor %}
             </div>
         </div>
     {% endblock %}

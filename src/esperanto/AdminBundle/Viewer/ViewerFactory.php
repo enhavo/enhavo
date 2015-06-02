@@ -25,23 +25,35 @@ class ViewerFactory
         $this->container = $container;
     }
 
-    public function create(Request $request)
+    public function create($type)
     {
-        $class = $this->matchViewer($request);
+        $request = $this->getRequest();
+        try {
+            $class = $this->matchViewer($type);
+        } catch(ViewerNotFoundException $e) {
+            throw new ViewerNotFoundException(sprintf(
+                '%s. Using route "%s"',
+                $e->getMessage(),
+                $request->get('_route'))
+            );
+        }
+
         /** @var $viewer AbstractViewer */
         $viewer = new $class;
         if($viewer instanceof ContainerAwareInterface) {
             $viewer->setContainer($this->container);
         }
         $viewer->setRequest($request);
-
         return $viewer;
     }
 
-    public function matchViewer(Request $request)
+    public function getRequest()
     {
-        $viewer = $request->get('_viewer');
-        $name = $viewer['viewer'];
+        return $this->container->get('request_stack')->getMasterRequest();
+    }
+
+    public function matchViewer($type)
+    {
         $list = array(
             'viewer.table' => 'esperanto\AdminBundle\Viewer\TableViewer',
             'viewer.create' => 'esperanto\AdminBundle\Viewer\CreateViewer',
@@ -49,11 +61,10 @@ class ViewerFactory
             'viewer.edit' => 'esperanto\AdminBundle\Viewer\EditViewer'
         );
 
-        if(isset($list[$name])) {
-            return $list[$name];
+        if(isset($list[$type])) {
+            return $list[$type];
         }
 
-        $route = $request->get('_route');
-        throw new ViewerNotFoundException(sprintf('Trying to match viewer by name "%s" with route "%s"', $name, $route));
+        throw new ViewerNotFoundException(sprintf('Trying to match viewer by type "%s" but no viewer found', $type));
     }
 }
