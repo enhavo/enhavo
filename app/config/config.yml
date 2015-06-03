@@ -105,3 +105,9 @@ cmf_routing:
     dynamic:
         enabled: true
         route_provider_service_id: esperanto_admin.route_provider
+
+esperanto_newsletter:
+    subscriber:
+        send_from: 'TestFrom'
+        subject: 'TestSubject'
+        template:  'subscriber-email.html.twig'

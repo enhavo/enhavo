@@ -1,4 +1,24 @@
+parameters:
+    esperanto_newsletter.event.newsletter.class: esperanto\NewsletterBundle\EventListener\NewsletterBuilderSubscriber
+
 services:
-#    esperanto_newsletter.example:
-#        class: esperanto\NewsletterBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    esperanto_newsletter_newsletter_render:
+        class: esperanto\NewsletterBundle\Twig\NewsletterRender
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+
+    esperanto_newsletter_subscriber:
+        class: esperanto\NewsletterBundle\Form\Type\SubscriberType
+        tags:
+            - { name: form.type }
+
+    esperanto_newsletter.event.newsletter:
+        class: %esperanto_newsletter.event.newsletter.class%
+        arguments:
+            - @service_container
+            - %esperanto_newsletter.subscriber%
+        tags:
+            - { name: kernel.event_subscriber }

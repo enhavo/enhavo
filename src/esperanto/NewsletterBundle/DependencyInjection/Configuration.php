@@ -20,9 +20,55 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('esperanto_newsletter');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                // Driver used by the resource bundle
+                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+
+                // Object manager used by the resource bundle, if not specified "default" will used
+                ->scalarNode('object_manager')->defaultValue('default')->end()
+
+                // The resources
+                ->arrayNode('classes')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('newsletter')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('model')->defaultValue('esperanto\NewsletterBundle\Entity\Newsletter')->end()
+                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('esperanto\NewsletterBundle\Repository\NewsletterRepository')->end()
+                                ->scalarNode('form')->defaultValue('esperanto\NewsletterBundle\Form\Type\NewsletterType')->end()
+                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('subscriber')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('model')->defaultValue('esperanto\NewsletterBundle\Entity\Subscriber')->end()
+                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('esperanto\NewsletterBundle\Repository\SubscriberRepository')->end()
+                                ->scalarNode('form')->defaultValue('esperanto\NewsletterBundle\Form\Type\SubscriberType')->end()
+                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        $rootNode
+            ->children()
+                ->arrayNode('subscriber')
+                    ->children()
+                        ->scalarNode('send_from')->end()
+                        ->scalarNode('subject')->end()
+                        ->scalarNode('template')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
 
         return $treeBuilder;
     }
