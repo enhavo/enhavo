@@ -24,6 +24,8 @@ class TableViewer extends AbstractViewer
             'columns' => $this->getColumns()
         );
 
+        $parameters = array_merge($this->getTemplateVars(), $parameters);
+
         return $parameters;
     }
 

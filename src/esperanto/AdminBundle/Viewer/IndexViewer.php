@@ -29,6 +29,8 @@ class IndexViewer extends AbstractViewer
             'actions' => $this->getActions()
         );
 
+        $parameters = array_merge($this->getTemplateVars(), $parameters);
+
         return $parameters;
     }
 

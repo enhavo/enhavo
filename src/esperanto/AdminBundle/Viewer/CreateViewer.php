@@ -42,6 +42,8 @@ class CreateViewer extends AbstractViewer
             'tabs' => $this->getTabs()
         );
 
+        $parameters = array_merge($this->getTemplateVars(), $parameters);
+
         return $parameters;
     }
 }

@@ -49,6 +49,8 @@ class EditViewer extends AbstractViewer
             'data' => $this->getResource()
         );
 
+        $parameters = array_merge($this->getTemplateVars(), $parameters);
+
         return $parameters;
     }
 }

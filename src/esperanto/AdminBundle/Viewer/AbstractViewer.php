@@ -104,4 +104,9 @@ abstract class AbstractViewer implements ContainerAwareInterface
     {
         return '::admin.html.twig';
     }
+
+    public function getTemplateVars()
+    {
+        return $this->getConfig()->get('parameters');
+    }
 }
