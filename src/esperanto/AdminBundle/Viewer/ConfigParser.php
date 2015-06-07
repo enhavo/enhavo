@@ -32,7 +32,7 @@ class ConfigParser
         return $this->config['type'];
     }
 
-    public function getByKeyArray($config, $keyArray)
+    protected function getByKeyArray($config, $keyArray)
     {
         if(empty($keyArray)) {
             return null;

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use esperanto\AdminBundle\Exception\ViewerNotFoundException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ViewerFactory
 {
@@ -20,9 +21,15 @@ class ViewerFactory
      */
     protected $container;
 
-    public function __construct(Container $container)
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    public function __construct(Container $container, RequestStack $requestStack)
     {
         $this->container = $container;
+        $this->requestStack = $requestStack;
     }
 
     public function create($type)
@@ -47,12 +54,15 @@ class ViewerFactory
         return $viewer;
     }
 
-    public function getRequest()
+    /**
+     * @return null|Request
+     */
+    protected function getRequest()
     {
-        return $this->container->get('request_stack')->getMasterRequest();
+        return $this->requestStack->getMasterRequest();
     }
 
-    public function matchViewer($type)
+    protected function matchViewer($type)
     {
         $list = array(
             'viewer.table' => 'esperanto\AdminBundle\Viewer\TableViewer',
