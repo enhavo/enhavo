@@ -7,6 +7,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/font-awesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/jquery_ui/jquery-ui.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/icheck/icheck-esperanto.css') }}" >
@@ -24,9 +25,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantouser/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantomedia/css/style.css') }}">
 
-    {% for stylesheet in view.getParameter('stylesheets') %}
-        <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
-    {% endfor %}
+    {% if view is defined %}
+        {% for stylesheet in view.getParameter('stylesheets') %}
+            <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
+        {% endfor %}
+    {% endif %}
 
     {% block stylesheets %}{% endblock %}
 
@@ -59,9 +62,11 @@
     <script type="text/javascript" src="{{ asset('bundles/esperantocategory/js/CategoryForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/esperantoslider/js/SliderForm.js') }}"></script>
 
-    {% for javascript in view.getParameter('javascripts') %}
-        <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
-    {% endfor %}
+    {% if view is defined %}
+        {% for javascript in view.getParameter('javascripts') %}
+            <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
+        {% endfor %}
+    {% endif %}
 
     {% block javascripts %}{% endblock %}
 </head>
@@ -71,11 +76,11 @@
     <div id="overlayContent"></div>
     <div id="overlayMessage"></div>
     <div id="iframeContainer">
-        <div class="close"><i class="icon-remove"></i></div>
+        <div class="close"><i class="fa fa-times"></i></div>
         <iframe src="" id="iframe" name="iframe"></iframe>
     </div>
     <div id="left">{{ admin_menu_render() }}</div>
-    <div id="contentContainer">
+    <div id="contentContainer" class="container">
         {% block content %}{% endblock %}
     </div>
 {% endblock %}

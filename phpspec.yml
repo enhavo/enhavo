@@ -1,0 +1,12 @@
+suites:
+    AssetsBundle:
+        namespace: esperanto\AssetsBundle
+        psr4_prefix: esperanto\AssetsBundle
+        spec_path: src/esperanto/AssetsBundle
+        src_path: src/esperanto/AssetsBundle
+
+    AdminBundle:
+        namespace: esperanto\AdminBundle
+        psr4_prefix: esperanto\AdminBundle
+        spec_path: src/esperanto/AdminBundle
+        src_path: src/esperanto/AdminBundle

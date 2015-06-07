@@ -25,9 +25,13 @@ class esperantoAdminExtension extends Extension
         $container->setParameter('esperanto_admin.permission_check', $config[ 'permission_check' ]);
         $container->setParameter('esperanto_admin.stylesheets', $config[ 'stylesheets' ]);
         $container->setParameter('esperanto_admin.javascripts', $config[ 'javascripts' ]);
+        $container->setParameter('esperanto_admin.menu', $config[ 'menu' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('twig.yml');
+        $loader->load('route.yml');
+        $loader->load('viewer.yml');
+        $loader->load('block.yml');
     }
 }

@@ -52,8 +52,8 @@ class AdminLoader
 
     public function load()
     {
-        $definition = $this->getAdminDefinition();
-        $this->container->setDefinition($this->getAdminDefinitionId(), $definition);
+        #$definition = $this->getAdminDefinition();
+        #$this->container->setDefinition($this->getAdminDefinitionId(), $definition);
     }
 
     protected function getAdminDefinitionId()

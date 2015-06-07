@@ -1,5 +1,5 @@
 esperanto_content_item:
-    pattern: /item/{name}
+    pattern: /item/{type}
     defaults:
         _controller: esperantoContentBundle:Content:item
     options:

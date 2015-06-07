@@ -1,0 +1,151 @@
+esperanto_app_default:
+    path: /admin/esperanto/app/resource/index
+    methods: [GET]
+    defaults:
+        _admin:
+            viewer: viewer.index
+            parameters:
+                param1: value1
+                param2: value2
+            stylesheets:
+                esperanto_app_style:
+                    resource: '@esperantoAppBundle/Resource/public/css/style.css'
+                    depends: ~
+            javascripts:
+                esperanto_app_bootstrap:
+                    resource: '@esperantoAppBundle/Resource/public/js/bootstrap.css'
+                    depends: jquery
+
+esperanto_page_page_index:
+    path: /page/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_page.controller.page:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+            type: viewer.index
+            parameters:
+                param1: value1
+                param2: value2
+            stylesheets:
+                esperanto_app_style:
+                    resource: '@esperantoAppBundle/Resource/public/css/style.css'
+                    depends: ~
+            javascripts:
+                esperanto_app_bootstrap:
+                    resource: '@esperantoAppBundle/Resource/public/js/bootstrap.css'
+                    depends: jquery
+            blocks:
+                table:
+                    type: esperanto_page_page_table
+                    parameters:
+                        table_route: esperanto_page_page_table
+                        update_route: esperanto_page_page_update
+            actions:
+                create:
+                    type: overlay
+                    route: esperanto_page_page_create
+                    icon: plus-sign
+                    label: label.create
+
+esperanto_page_page_create:
+    path: /page/create
+    methods: [GET,POST]
+    options:
+        expose: true
+    defaults:
+        _controller: esperanto_page.controller.page:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+            type: viewer.create
+            parameters:
+                param1: value1
+                param2: value2
+            tabs:
+                page:
+                    label: page
+                    template: esperantoPageBundle:Tab:page.html.twig
+                content:
+                    label: Content
+                    template: esperantoPageBundle:Tab:content.html.twig
+                seo:
+                    label: Seo
+                    template: esperantoPageBundle:Tab:seo.html.twig
+            preview_route: ~
+            create_route: esperanto_page_page_create
+            form_template: esperantoAdminBundle:View:tab.html.twig
+
+esperanto_page_page_update:
+    options:
+        expose: true
+    path: /page/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_page.controller.page:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+            type: viewer.edit
+            parameters:
+                param1: value1
+                param2: value2
+            tabs:
+                page:
+                    label: page
+                    template: esperantoPageBundle:Tab:page.html.twig
+                content:
+                    label: Content
+                    template: esperantoPageBundle:Tab:content.html.twig
+                seo:
+                    label: Seo
+                    template: esperantoPageBundle:Tab:seo.html.twig
+            preview_route: ~
+            update_route: esperanto_page_page_update
+            delete_route: esperanto_page_page_delete
+            form_template: esperantoAdminBundle:View:tab.html.twig
+
+esperanto_page_page_table:
+    options:
+        expose: true
+    path: /page/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_page.controller.page:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+            #criteria:
+            #    title: test
+            #    enabled:  true
+            #repository:
+            #    method: findOneWithFriends
+            #    arguments: [$username]
+            #sortable: true
+            #sorting:
+            #    score: desc
+            #paginate: 2
+            #limit: 3
+            #page: 2
+        _viewer:
+            type: viewer.table
+            parameters:
+                param1: value1
+                param2: value2
+            filter:
+
+            table:
+                width: 5
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                        width: 1
+                    title:
+                        label: title
+                        property: title
+                        widget: tur
+
+esperanto_page_page_delete:
+    path: /page/delete/{id}

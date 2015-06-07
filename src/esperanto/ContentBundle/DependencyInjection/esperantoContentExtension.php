@@ -22,6 +22,14 @@ class esperantoContentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('esperanto_content.items', $config['items']);
+
+        if(isset($config['render']) && isset($config['render']['sets'])) {
+            $container->setParameter('esperanto_content.render.sets', $config['render']['sets']);
+        } else {
+            $container->setParameter('esperanto_content.render.sets', array());
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

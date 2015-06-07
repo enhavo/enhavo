@@ -1,11 +1,10 @@
-{% extends '::admin.html.twig' %}
+{% extends viewer.theme %}
 
 {% block javascripts %}
     <script type="text/javascript">
         $(function() {
-            admin.initPagination('{{ view.getParameter('table_route') }}');
-            admin.initTable();
-            admin.initTopButton('.action .btn.create', {}, '{{ view.getParameter('create_route') }}');
+            admin.initBlocks();
+            admin.initActions();
             admin.initAfterSaveHandler();
         });
     </script>
@@ -14,17 +13,15 @@
 {% block content %}
     {% block topButtons %}
         <div class="row mb3 action">
-            <div class="span9">
-                <button class="btn create span3"><i class="icon-plus-sign"></i> {{ view.getParameter('add_button_text')|trans }}</button>
+            <div class="col-md-3">
+                {% for action in actions %}
+                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-md-12"><i class="icon-{{ action.icon }}"></i> {{ action.label|trans }}</button>
+                {% endfor %}
             </div>
         </div>
     {% endblock %}
 
-    {% block table %}
-        <div class="table-container" data-edit-route="{{ view.getParameter('edit_route') }}" data-refresh-route="{{ view.getParameter('table_route') }}">
-            {% include view.getParameter('table_template') %}
-        </div>
-    {% endblock %}
-
-    {{ pagination_render(data) }}
+    {% for block in blocks %}
+        {{ block_render(block.type, block.parameters) }}
+    {% endfor %}
 {% endblock %}

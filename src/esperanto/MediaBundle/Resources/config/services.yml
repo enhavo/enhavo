@@ -1,32 +1,27 @@
 parameters:
-    esperanto_media.file_type_extension.class: esperanto\MediaBundle\Form\Extension\FileTypeExtension
     esperanto_media.form.files_type.class: esperanto\MediaBundle\Form\Type\FilesType
     esperanto_media.upload.class: esperanto\MediaBundle\Service\UploadService
     esperanto_media.twig_extension.class: esperanto\MediaBundle\Twig\MediaExtension
 
 services:
-    esperanto_media.file_type_extension:
-        class: %esperanto_media.file_type_extension.class%
-        tags:
-            - { name: form.type_extension, alias: file }
-
     esperanto_media_files:
-        class: '%esperanto_media.form.files_type.class%'
+        class: %esperanto_media.form.files_type.class%
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - @doctrine.orm.entity_manager
         tags:
-            - { name: form.type, alias: 'esperanto_files' }
+            - { name: form.type, alias: esperanto_files }
 
     esperanto_media.upload:
-        class: '%esperanto_media.upload.class%'
+        class: %esperanto_media.upload.class%
         arguments:
-            - '%kernel.root_dir%/media'
-            - '@doctrine.orm.entity_manager'
+            - %kernel.root_dir%/media
+            - @doctrine.orm.entity_manager
 
 
     esperanto_media.twig_extension:
         class: %esperanto_media.twig_extension.class%
         arguments:
-            - '@service_container'
+            - @service_container
+            - @doctrine.orm.entity_manager
         tags:
             - { name: twig.extension }

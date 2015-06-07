@@ -14,30 +14,30 @@ class TextText
     /**
      * @var string
      */
-    private $text1;
+    private $textLeft;
 
-    private $title1;
+    private $titleLeft;
 
-    private $text2;
+    private $textRight;
 
-    private $title2;
+    private $titleRight;
 
     private $type;
 
     /**
      * @param string $text
      */
-    public function setText1($text1)
+    public function setTextLeft($textLeft)
     {
-        $this->text1 = $text1;
+        $this->textLeft = $textLeft;
     }
 
     /**
      * @return string
      */
-    public function getText1()
+    public function getTextLeft()
     {
-        return $this->text1;
+        return $this->textLeft;
     }
 
     /**
@@ -59,48 +59,48 @@ class TextText
     /**
      * @param mixed $title
      */
-    public function setTitle1($title1)
+    public function setTitleLeft($titleLeft)
     {
-        $this->title1 = $title1;
+        $this->titleLeft = $titleLeft;
     }
 
     /**
      * @return mixed
      */
-    public function getTitle1()
+    public function getTitleLeft()
     {
-        return $this->title1;
+        return $this->titleLeft;
     }
 
     /**
      * @return mixed
      */
-    public function getText2()
+    public function getTextRight()
     {
-        return $this->text2;
+        return $this->textRight;
     }
 
     /**
-     * @param mixed $text2
+     * @param mixed $textRight
      */
-    public function setText2($text2)
+    public function setTextRight($textRight)
     {
-        $this->text2 = $text2;
+        $this->textRight = $textRight;
     }
 
     /**
      * @return mixed
      */
-    public function getTitle2()
+    public function getTitleRight()
     {
-        return $this->title2;
+        return $this->titleRight;
     }
 
     /**
-     * @param mixed $title2
+     * @param mixed $titleRight
      */
-    public function setTitle2($title2)
+    public function setTitleRight($titleRight)
     {
-        $this->title2 = $title2;
+        $this->titleRight = $titleRight;
     }
 }

@@ -3,6 +3,8 @@
 .build
 /web/bundles/
 /www/bundles/
+/app/check.php
+/app/SymfonyRequirements.php
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -13,6 +15,7 @@
 /vendor/
 /bin/
 /composer.phar
+/composer.lock
 /test
 /app/media/*
 !app/media/.gitkeep

@@ -42,9 +42,6 @@ class Thumbnail
 
             $dst_w = $width;
             $dst_h = $height;
-
-            $src_w = $widthRelative;
-            $src_h = $oldHeight;
         } else {
             //portrait
             $factor = $oldWidth/$width;

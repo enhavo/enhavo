@@ -38,6 +38,20 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('menu')
+                    ->isRequired()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('label')->isRequired()->end()
+                            ->scalarNode('route')->isRequired()->end()
+                            ->scalarNode('role')->isRequired()->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

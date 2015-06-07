@@ -1,0 +1,34 @@
+esperanto\DownloadBundle\Entity\DownloadItem:
+    type: entity
+    table: content_item_download
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        download:
+            targetEntity: esperanto\DownloadBundle\Entity\Download
+
+    manyToMany:
+        file:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: content_item_download_file
+                joinColumns:
+                    download_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+    lifecycleCallbacks: {  }

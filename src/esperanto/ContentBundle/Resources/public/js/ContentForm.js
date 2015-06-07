@@ -15,10 +15,10 @@ function ContentForm(router)
       var addButton = null;
       var index = container.children().length;
 
-      var addItem = function(itemName) {
+      var addItem = function(type) {
 
         var url = router.generate('esperanto_content_item', {
-          name: itemName
+          type: type
         });
 
         var formName = addButton.attr('data-name') + '[items]['+index+']';
@@ -78,14 +78,14 @@ function ContentForm(router)
           menu.removeClass('bottomTriangle');
           if(top) {
             menu.addClass('topTriangle');
-            menu.css('top', 30 + position.top + 'px');
+            menu.css('top', 35 + position.top + 'px');
           } else {
             menu.addClass('bottomTriangle');
-            menu.css('top', -80 + position.top + 'px');
+            menu.css('top', -menu.height()-25 + position.top + 'px');
           }
           menu.css('left', position.left + 'px');
 
-          menu.fadeIn(200);
+          menu.show();
 
 
           addButton = $(this);
@@ -108,12 +108,11 @@ function ContentForm(router)
         var index = container.children().index(item);
 
         if(index > 0) { // is not first element
-          if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
-            var editorid = item.find('.wysiwyg').attr('id');
-            tinymce.execCommand('mceRemoveEditor', false, editorid);
+          if(item.find('[data-wysiwyg]').length) {
+            var editorId = item.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
             $(container.children().get(index - 1)).before(item); //move element before last
-            tinymce.execCommand('mceAddEditor', false, editorid);
+            tinymce.execCommand('mceAddEditor', false, editorId);
           } else {
             $(container.children().get(index - 1)).before(item); //move element before last
           }
@@ -129,12 +128,11 @@ function ContentForm(router)
         var size = container.children().size();
 
         if(index < (size - 1)) { // is not last element
-          if(item.find('.wysiwyg').length) {
-            console.log(item.find('.wysiwyg').length);
-            var editorid = item.find('.wysiwyg').attr('id');
-            tinymce.execCommand('mceRemoveEditor', false, editorid);
+          if(item.find('[data-wysiwyg]').length) {
+            var editorId = item.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
             $(container.children().get(index + 1)).after(item); //move element after next
-            tinymce.execCommand('mceAddEditor', false, editorid);
+            tinymce.execCommand('mceAddEditor', false, editorId);
           } else {
             $(container.children().get(index + 1)).after(item); //move element after next
           }
@@ -169,5 +167,8 @@ $(function() {
   $(document).on('contentAddAfter', function(event, data) {
     uploadForm.initUploadForm(data);
     form.initWysiwyg(data);
+    form.initRadioAndCheckbox(data);
+    form.initSelect(data);
+    form.initDataPicker(data);
   });
 });

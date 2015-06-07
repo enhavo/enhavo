@@ -11,13 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Download
  */
-abstract class Download
+class Download
 {
     /**
      * @var integer
      */
     private $id;
-
 
     /**
      * @var string
@@ -29,8 +28,10 @@ abstract class Download
      */
     private $text;
 
+    /**
+     * @var \esperanto\MediaBundle\Entity\File
+     */
     private $file;
-
 
     /**
      * Get id

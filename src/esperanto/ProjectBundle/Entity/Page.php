@@ -24,6 +24,11 @@ class Page extends BasePage implements SearchIndexInterface
      */
     private $picture;
 
+    /**
+     * @var \esperanto\AdminBundle\Entity\Route
+     */
+    private $route;
+
     public function getIndexTitle()
     {
         return $this->getTitle();

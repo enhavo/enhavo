@@ -1,77 +1,50 @@
 <?php
+/**
+ * TextTextType.php
+ *
+ */
 
 namespace esperanto\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Entity\Configuration;
-use Symfony\Component\Form\AbstractType;
+use esperanto\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use esperanto\ContentBundle\Item\Type\TextText;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
+use esperanto\ContentBundle\Item\Type\Text;
 
-class TextTextType extends AbstractType
+class TextTextType extends ItemFormType
 {
-    protected $formName;
-    protected $configuration;
-
-    public function __construct($formName, $configuration = null)
-    {
-        $this->formName = $formName;
-        $this->configuration = $configuration;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type', 'hidden', array(
-            'data' => 'texttext'
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
         ));
-        $builder->add('text1', 'wysiwyg');
-        $builder->add('text2', 'wysiwyg');
-        $builder->add('title1', 'text');
-        $builder->add('title2', 'text');
 
-        if($this->configuration instanceof Configuration) {
-            $data = $this->configuration->getData();
-        } else {
-            $data = null;
-        }
+        $builder->add('titleLeft', 'text', array(
+            'label' => 'form.label.title_left'
+        ));
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($data) {
+        $builder->add('textLeft', 'wysiwyg', array(
+            'label' => 'form.label.text_left'
+        ));
 
-                if(!empty($data)) {
-                    $event->setData($data);
-                }
-                return;
-            }
-        );
-    }
+        $builder->add('titleRight', 'text', array(
+            'label' => 'form.label.title_right'
+        ));
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        if($this->formName) {
-            $view->vars['full_name'] = $this->formName.'[configuration]';
-        } else {
-            $view->vars['full_name'] = preg_replace('/\[form\]/', '', $view->vars['full_name']);
-        }
-
-        return;
+        $builder->add('textRight', 'wysiwyg', array(
+            'label' => 'form.label.text_right'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Item\Type\TextText'
+            'data_class' => 'esperanto\ContentBundle\Entity\TextText'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content_item_texttext';
+        return 'esperanto_content_item_text_text';
     }
 } 

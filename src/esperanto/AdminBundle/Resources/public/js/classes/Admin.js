@@ -49,21 +49,14 @@ function Admin (router, templating, translator)
       });
 
       self.initTabs('#overlayContent');
-
-      /*
-      form.initTinymce('#overlayContent');
-      form.contentForm('#overlayContent');
-      form.handleCheckboxes('#overlayContent');
-      form.handleRadioBoxes('#overlayContent');
-      */
     };
 
     var overlayStart = function() {
       overlayContent.trigger('formOpenBefore');
 
-      overlay.fadeIn(200);
+      overlay.fadeIn(100);
       overlayContent.append($.parseHTML(html));
-      overlayContent.fadeIn(350, function() {
+      overlayContent.fadeIn(200, function() {
         overlayContent.trigger('formOpenAfter', [ overlayContent.find('form').get(0) ]);
       });
       overlayContent.animate({
@@ -79,13 +72,13 @@ function Admin (router, templating, translator)
     overlayStart();
   };
 
-  this.overlayClose = function() {
-
+  this.overlayClose = function()
+  {
     var overlayStop = function() {
       overlayContent.trigger('formCloseBefore', [overlayContent]);
       overlayContent.html('');
-      overlay.fadeOut(350);
-      overlayContent.fadeOut(200);
+      overlay.fadeOut(200);
+      overlayContent.fadeOut(100);
       overlayContent.trigger('formCloseAfter', [overlayContent]);
     };
     overlayStop();
@@ -155,7 +148,7 @@ function Admin (router, templating, translator)
       $(form).submit();
     }
 
-    iframeContainer.fadeIn(300);
+    iframeContainer.fadeIn(100);
     iframeContainer.find('.close').on('click',function(event) {
       event.stopPropagation();
       event.preventDefault();
@@ -186,43 +179,49 @@ function Admin (router, templating, translator)
     overlayMessage.removeClass(MessageType.Success);
     overlayMessage.addClass(type);
 
-    overlayMessage.html(content).stop().fadeIn(200,function() {
+    overlayMessage.html(content).stop().fadeIn(150,function() {
       overlayTimeout = setTimeout(function() {
-        overlayMessage.fadeOut(200);
+        overlayMessage.fadeOut(150);
       }, 3500);
     });
   };
 
-  this.initPagination = function(route)
+  this.initPagination = function(route, selector)
   {
-    $('.pagination a').click(function() {
-      var page = $(this).attr('page');
+      /*
+    $(document).on('click', '[data-pagination] [data-page]', function() {
+      console.log(this);
+      var block = $(this).parents('[data-block]');
+      console.log(block);
+      var page = $(this).data('page');
       var link = router.generate(route, { page: page });
-      $(this).parent().find('a.selected').removeClass('selected');
-      $(this).addClass('selected');
-      self.updateTable(link);
+      $('a',pagination).removeClass('selected');
+      $('a[page='+page+']',pagination).addClass('selected');
+      self.updateTable(referingTableContainer,link);
     });
+    */
   };
 
   this.initTable = function() {
     $(document).on('click', '.table-container .entry-row', function() {
-      var route = $('.table-container').attr('data-edit-route');
+      var tableContainer = $(this).parents('.table-container');
+      var route = tableContainer.attr('data-edit-route');
       var id = $(this).attr('data-id');
       var url = router.generate(route, { id: id });
       self.ajaxOverlay(url);
     });
   };
 
-  this.updateTable = function(url, callback)
+  this.updateTable = function(tableContainer,url, callback)
   {
     if(!url) {
-      url = router.generate($('.table-container').attr('data-refresh-route'));
+      url = router.generate(tableContainer.attr('data-refresh-route'));
     }
 
     $.ajax({
       url: url,
       success : function(data) {
-        $('.table-container').html(data);
+        tableContainer.html(data);
         if(callback) {
           callback();
         }
@@ -233,41 +232,79 @@ function Admin (router, templating, translator)
     })
   };
 
-  this.initTopButton = function(selector, options, route, parameters) {
-    $(document).on('click', selector , function(event) {
+  this.initActions = function() {
+    $(document).on('click', '[data-action]' , function(event) {
       event.stopPropagation();
       event.preventDefault();
-      var link = router.generate(route, parameters);
-      self.ajaxOverlay(link, options);
+      var route = $(this).data('action-route');
+      var link = router.generate(route);
+      self.ajaxOverlay(link);
     });
   };
 
   this.initTabs = function(selector)
   {
-      $(selector + " .tabContainer a").each(function() {
-        var tab = $("#"+$(this).attr("tabId"));
-        if(tab.length > 0) {
-          tab.hide();
-          $(this).on("click",function(e) {
-            e.preventDefault();
-            $(this).siblings("a").each(function() {
-              var toHide = $("#"+$(this).attr("tabId"));
-              toHide.hide();
-              $(this).removeClass("selected");
-            });
-            $(this).addClass("selected");
-            tab.show();
+    $(selector + " .tabContainer a").each(function() {
+      var tab = $("#"+$(this).attr("tabId"));
+      if(tab.length > 0) {
+        tab.hide();
+        $(this).on("click",function(e) {
+          e.preventDefault();
+          $(this).siblings("a").each(function() {
+            var toHide = $("#"+$(this).attr("tabId"));
+            toHide.hide();
+            $(this).removeClass("selected");
           });
-        }
-      });
-      $(selector + " .tabContainer a:first-child").trigger("click");
+          $(this).addClass("selected");
+          tab.show();
+        });
+      }
+    });
+    $(selector + " .tabContainer a:first-child").trigger("click");
   };
 
   this.initAfterSaveHandler = function()
   {
-    $(document).on('formSaveAfter', function() {
-      self.updateTable();
-      self.overlayClose();
+      $(document).on('formSaveAfter', function() {
+          self.overlayClose();
+      });
+  };
+
+  this.initBlocks = function()
+  {
+    $('[data-block]').each(function(index, element) {
+        var type = $(this).data('block-type');
+        var route = $(element).data('block-table-route');
+        var url = router.generate(route);
+        var block = $(this);
+        $.get(url, function (data) {
+            block.html(data);
+
+            $(document).on('formSaveAfter', function() {
+                var page = block.data('block-page');
+                var url = router.generate(route, {page: page});
+                $.get(url, function (data) {
+                    block.html(data);
+                });
+            });
+
+
+            block.on('click', '[data-page]', function() {
+               var page = $(this).data('page');
+               block.data('block-page', page);
+               var url = router.generate(route, {page: page});
+                $.get(url, function (data) {
+                    block.html(data);
+                });
+            });
+
+            block.on('click', '[data-id]', function() {
+                var id = $(this).data('id');
+                var route = block.data('block-update-route');
+                var url = router.generate(route, {id: id});
+                self.ajaxOverlay(url);
+            });
+        })
     });
   };
 }

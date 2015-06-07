@@ -13,12 +13,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use esperanto\AdminBundle\Builder\Route\SyliusRouteBuilder;
 use esperanto\AdminBundle\Builder\View\ViewBuilder;
 use esperanto\AdminBundle\Event\BuilderEvent;
+use esperanto\AdminBundle\Event\MenuBuilderEvent;
 
 class AdminSliderBuilderSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
         return array(
+            'esperanto_slider.slider.build_menu' => array('onBuildMenu', 0),
             'esperanto_slider.slider.build_table_route' => array('onBuildTableRoute', 0),
             'esperanto_slider.slider.build_index_route' => array('onBuildIndexRoute', 0),
         );
@@ -32,5 +34,10 @@ class AdminSliderBuilderSubscriber implements EventSubscriberInterface
     public function onBuildIndexRoute(RouteBuilderEvent $event)
     {
 
+    }
+
+    public function onBuildMenu(MenuBuilderEvent $event)
+    {
+        $event->setBuilder(null);
     }
 }

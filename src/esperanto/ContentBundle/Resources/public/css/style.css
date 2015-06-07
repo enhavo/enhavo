@@ -70,8 +70,27 @@
     margin-bottom: 10px;
 }
 
-.contentForm .padding {
+.contentForm .form-field {
     padding: 10px;
+    position: relative;
+}
+
+.contentForm .form-field label {
+    color: #5A5A5A;
+}
+
+.contentForm .form-field div.label label {
+    color: #ddd !important;
+}
+
+.contentForm .form-field div.label {
+    position: absolute;
+    background: #6f6f6f;
+    font-weight: bold;
+    padding: 2px 5px;
+    left: -145px;
+    width: 150px;
+    text-align: right;
 }
 
 .contentForm .item .button-container {
@@ -85,6 +104,16 @@
     color: #5A5A5A;
     cursor: pointer;
     margin-bottom: 10px;
+    z-index: 10;
+}
+
+.contentForm .item .button-container .label {
+    position: absolute;
+    color: #5A5A5A;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
 }
 
 .contentForm .item .button-container .button-up {
@@ -99,6 +128,8 @@
     right: 5px;
 }
 
-.textleft label{
+.textleft label {
     color: black !important;
 }
+
+.darkbg {background-color:#777;}

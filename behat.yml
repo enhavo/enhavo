@@ -1,0 +1,16 @@
+default:
+    extensions:
+        Behat\Symfony2Extension: ~
+
+    formatters:
+        pretty:
+            verbose:  true
+            paths:    false
+            snippets: false
+
+    suites:
+        admin:
+            paths:
+                - %paths.base%/src/esperanto/AdminBundle/Resources/features
+            contexts:
+                - esperanto\AdminBundle\Behat\AdminContext

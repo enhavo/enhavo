@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
+            new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+
             new esperanto\AdminBundle\esperantoAdminBundle(),
             new esperanto\UserBundle\esperantoUserBundle(),
             new esperanto\MediaBundle\esperantoMediaBundle(),
@@ -44,6 +46,7 @@ class AppKernel extends Kernel
             new esperanto\DownloadBundle\esperantoDownloadBundle(),
 
             new esperanto\ProjectBundle\esperantoProjectBundle(),
+            new esperanto\NewsletterBundle\esperantoNewsletterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

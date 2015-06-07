@@ -8,21 +8,29 @@
 
 namespace esperanto\ContentBundle\Form\Type;
 
+use esperanto\ContentBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 
 class ContentType extends AbstractType
 {
+    /**
+     * @var ObjectManager
+     */
     protected $manager;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var ItemTypeResolver
+     */
+    protected $resolver;
+
+    public function __construct(ObjectManager $manager, ItemTypeResolver $resolver)
     {
+        $this->resolver = $resolver;
         $this->manager = $manager;
     }
 
@@ -38,14 +46,30 @@ class ContentType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['item_types'] = $options['item_types'];
+        $items = array();
+        if(count($options['items'])) {
+            foreach($options['items'] as $item) {
+                $items[] = array(
+                    'type' => $item['type'],
+                    'label' => isset($item['label']) ? $item['label'] : $this->resolver->getLabel($item['type'])
+                );
+            }
+        } else {
+            foreach($this->resolver->getItems() as $name => $item) {
+                $items[] = array(
+                    'type' => $name,
+                    'label' => $this->resolver->getLabel($name)
+                );
+            }
+        }
+        $view->vars['items'] = $items;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'esperanto\ContentBundle\Entity\Content',
-            'item_types' => array(array('type' => 'text','label' => 'Text'),array('type' => 'picture','label' => 'Bild'),array('type' => 'video','label' => 'Video'))
+            'items' => array()
         ));
     }
 

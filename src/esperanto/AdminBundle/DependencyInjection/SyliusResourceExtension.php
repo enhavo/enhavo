@@ -44,8 +44,8 @@ abstract class SyliusResourceExtension extends AbstractResourceExtension
         $config = $processor->processConfiguration($configuration, $config);
         $config = $this->process($config, $container);
 
-        if ($configure & self::CONFIGURE_ADMIN) {
-            $this->loadAdmin($config, $container);
-        }
+        #if ($configure & self::CONFIGURE_ADMIN) {
+        #    $this->loadAdmin($config, $container);
+        #}
     }
 }

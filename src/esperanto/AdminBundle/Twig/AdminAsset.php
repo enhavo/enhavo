@@ -8,6 +8,8 @@
 
 namespace esperanto\AdminBundle\Twig;
 
+use esperanto\AdminBundle\Util\Assetic;
+
 class AdminAsset extends \Twig_Extension
 {
     public function getFunctions()
@@ -19,15 +21,7 @@ class AdminAsset extends \Twig_Extension
 
     public function render($path)
     {
-        $path = str_replace('@', '', $path);
-        $pathArray = explode('/', $path);
-        $bundle = str_replace('Bundle', '', array_shift($pathArray));
-        $bundle = str_replace('@', '', $bundle);
-        $bundle = strtolower($bundle);
-        array_shift($pathArray);
-        array_shift($pathArray);
-        $path = implode('/', $pathArray);
-        $path = sprintf('/bundles/%s/%s', $bundle, $path);
+        $path = Assetic::convertPathToAsset($path);
         return $path;
     }
 

@@ -11,6 +11,6 @@ services:
     esperanto_download_download:
         class: %esperanto_download.form.type.download.class%
         arguments:
-            - @router
+            - %esperanto_download.model.download.class%
         tags:
             - { name: form.type }

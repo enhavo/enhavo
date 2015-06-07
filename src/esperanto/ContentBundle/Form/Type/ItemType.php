@@ -8,6 +8,7 @@
 
 namespace esperanto\ContentBundle\Form\Type;
 
+use esperanto\ContentBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,14 +17,18 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use esperanto\ContentBundle\Entity\Item;
 
 class ItemType extends AbstractType
 {
-    protected $typeService;
+    /**
+     * @var ItemTypeResolver
+     */
+    protected $resolver;
 
-    public function __construct($typeService)
+    public function __construct(ItemTypeResolver $itemTypeResolver)
     {
-        $this->typeService = $typeService;
+        $this->resolver = $itemTypeResolver;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,12 +36,38 @@ class ItemType extends AbstractType
         $builder->add('order', 'hidden', array(
             'data' => 0
         ));
-        $builder->add('configuration', new ConfigurationType($this->typeService));
+
+        $builder->add('type', 'hidden');
+
+        $resolver = $this->resolver;
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver){
+            $item = $event->getData();
+            $form = $event->getForm();
+            if(!empty($item) && isset($item['type'])) {
+                $form->add('itemType', $resolver->getFormType($item['type']));
+            }
+        });
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver){
+            $item = $event->getData();
+            $form = $event->getForm();
+            if(!empty($item) && $item->getType()) {
+                $form->add('itemType', $resolver->getFormType($item->getType()));
+            }
+        });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $data = $form->getData();
+        if($data instanceof Item) {
+            $view->vars['label'] = $this->resolver->getLabel($data->getType());
+        }
 
+        return;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

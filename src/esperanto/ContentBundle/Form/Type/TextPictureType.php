@@ -1,47 +1,34 @@
 <?php
 /**
- * TextType.php
+ * TextPictureType.php
  *
- * @since 23/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
 namespace esperanto\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Entity\Configuration;
-use Symfony\Component\Form\AbstractType;
+use esperanto\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use esperanto\ContentBundle\Item\Type\TextPicture;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
+use esperanto\ContentBundle\Item\Type\Text;
 
-class TextPictureType extends AbstractType
+class TextPictureType extends ItemFormType
 {
-    protected $formName;
-    protected $configuration;
-
-    public function __construct($formName, $configuration = null)
-    {
-        $this->formName = $formName;
-        $this->configuration = $configuration;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type', 'hidden', array(
-            'data' => 'textpicture'
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
         ));
-        $builder->add('text', 'wysiwyg');
-        $builder->add('files', 'esperanto_files');
-        $builder->add('title', 'text');
 
+        $builder->add('text', 'wysiwyg', array(
+            'label' => 'form.label.text'
+        ));
 
-        $builder->add('textleft', 'choice', array(
-            'label' => 'form.label.textleft',
+        $builder->add('files', 'esperanto_files', array(
+            'label' => 'form.label.picture'
+        ));
+
+        $builder->add('textLeft', 'choice', array(
+            'label' => 'form.label.position',
             'choices'   => array(
                 '1' => 'label.text_left-picture_right',
                 '0' => 'label.picture_left-text_right'
@@ -50,44 +37,26 @@ class TextPictureType extends AbstractType
             'multiple' => false
         ));
 
-        if($this->configuration instanceof Configuration) {
-            $data = $this->configuration->getData();
-        } else {
-            $data = null;
-        }
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($data) {
-
-                if(!empty($data)) {
-                    $event->setData($data);
-                }
-                return;
-            }
-        );
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        if($this->formName) {
-            $view->vars['full_name'] = $this->formName.'[configuration]';
-        } else {
-            $view->vars['full_name'] = preg_replace('/\[form\]/', '', $view->vars['full_name']);
-        }
-
-        return;
+        $builder->add('frame', 'choice', array(
+            'label' => 'form.label.frame',
+            'choices'   => array(
+                '1' => 'label.yes',
+                '0' => 'label.no'
+            ),
+            'expanded' => true,
+            'multiple' => false
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Item\Type\TextPicture'
+            'data_class' => 'esperanto\ContentBundle\Entity\TextPicture'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content_item_textpicture';
+        return 'esperanto_content_item_text_picture';
     }
 } 

@@ -1,13 +1,21 @@
 <div class="row p1 head-row">
-    <div class="span5">{{ 'label.id'|trans }}</div>
-</div>
-
-<div class="row-container">
-    {% for item in data %}
-        <div class="row mb1 entry-row p1" data-id="{{ item.id }}">
-            <div class="span5">{{ item.id }}</div>
-        </div>
-    {% else %}
-        {{ 'table.empty'|trans }}
+    {% for column in columns %}
+        <div class="col-md-2">{{ column.label|trans }}</div>
     {% endfor %}
 </div>
+
+<div class="row row-container">
+    <div class="col-md-12">
+        {% for item in data %}
+            <div class="col-md-12 mb1 entry-row p1" data-id="{{ item.id }}">
+                {% for column in columns %}
+                    <div class="col-md-2">{{ viewer.getProperty(item, column.property) }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ 'table.empty'|trans }}
+        {% endfor %}
+    </div>
+</div>
+
+{{ pagination_render(data) }}

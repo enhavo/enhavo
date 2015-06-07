@@ -19,4 +19,17 @@ esperanto\DownloadBundle\Entity\Download:
             type: text
             nullable: true
 
+    manyToMany:
+        file:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: download_download_file
+                joinColumns:
+                    download_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
     lifecycleCallbacks: {  }

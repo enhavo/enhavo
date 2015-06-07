@@ -8,36 +8,34 @@
 
 namespace esperanto\ContentBundle\Controller;
 
-use esperanto\ContentBundle\Form\Type\VideoType;
-use esperanto\ContentBundle\Form\Type\PictureType;
-use esperanto\ContentBundle\Form\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormFactory;
-use esperanto\ContentBundle\Service\ContentTypeService;
+use esperanto\ContentBundle\Item\ItemFormType;
 
 class ContentController extends Controller
 {
     public function itemAction(Request $request)
     {
         $formName = $request->get('formName');
-        $name = $request->get('name');
+        $type = $request->get('type');
 
-        /** @var $formFactory FormFactory */
         $formFactory = $this->container->get('form.factory');
 
-        /** @var $contentService ContentTypeService */
-        $contentService = $this->container->get('esperanto_content.service.content');
-        $formType = $contentService->getFormTypeResolver()->resolve($name, $formName);
-        $form = $formFactory->create($formType)->createView();
+        $resolver = $this->container->get('esperanto_content.item_type_resolver');
+        /** @var $formType ItemFormType */
+        $formType = $resolver->getFormType($type);
+        $formType->setFormName($formName);
+        $form = $formFactory->create($formType, null, array(
+            'csrf_protection' => false,
+        ));
+        $label = $resolver->getLabel($type);
 
-        $template = sprintf('esperantoContentBundle:Form:form.html.twig', $name);
-
-        return $this->render($template, array(
-            'formItem' => $form,
+        return $this->render('esperantoContentBundle:Form:form.html.twig', array(
+            'formItem' => $form->createView(),
             'formName' => $formName,
             'formOrder' => 0,
-            'created' => true
+            'formType' => $type,
+            'label' => $label
         ));
     }
 } 

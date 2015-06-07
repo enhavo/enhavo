@@ -7,8 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Routing\Router;
-
+use Symfony\Component\Routing\RouterInterface;
 class NewsType extends AbstractType
 {
     /**
@@ -26,7 +25,7 @@ class NewsType extends AbstractType
      */
     protected $route;
 
-    public function __construct($dataClass, $route, Router $router)
+    public function __construct($dataClass, $route, RouterInterface $router)
     {
         $this->route = $route;
         $this->dataClass = $dataClass;
@@ -40,7 +39,7 @@ class NewsType extends AbstractType
             $news = $event->getData();
             $form = $event->getForm();
 
-            if (!empty($news) && $news->getId()) {
+            if (!empty($news) && $news->getId() && !empty($route)) {
                 $url = $router->generate($this->route, array(
                     'id' => $news->getId(),
                     'slug' => $news->getSlug(),
@@ -53,6 +52,8 @@ class NewsType extends AbstractType
                 ));
             }
         });
+
+        $builder->add('route', 'esperanto_route');
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
@@ -137,9 +138,7 @@ class NewsType extends AbstractType
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'esperanto_content', array(
-
-        ));
+        $builder->add('content', 'esperanto_content');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
