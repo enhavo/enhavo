@@ -7,10 +7,10 @@ php:
   - 5.6
 
 before_script:
-  - composer self-update
+  - curl -sS https://getcomposer.org/installer | php
 
 install:
-  - composer install --prefer-source --no-interaction --dev
+  - php composer.phar install
 
 script:
   - bin/phpspec run -v
