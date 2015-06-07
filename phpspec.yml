@@ -10,3 +10,15 @@ suites:
         psr4_prefix: esperanto\AdminBundle
         spec_path: src/esperanto/AdminBundle
         src_path: src/esperanto/AdminBundle
+
+#extensions:
+#    - PhpSpec\Extension\CodeCoverageExtension
+
+code_coverage:
+    format:
+        - html
+        - clover
+    output:
+        html: build/coverage
+        clover: coverage.xml
+    whitelist: src
