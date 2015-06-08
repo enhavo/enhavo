@@ -125,12 +125,3 @@ esperanto_reference:
          reference:
             model: esperanto\ProjectBundle\Entity\Reference
             form: esperanto\ProjectBundle\Form\Type\ReferenceType
-
-esperanto_slider:
-    classes:
-        slide:
-            model: esperanto\ProjectBundle\Entity\Slide
-            form: esperanto\ProjectBundle\Form\Type\SlideType
-        slider:
-            model: esperanto\ProjectBundle\Entity\Slider
-            form: esperanto\ProjectBundle\Form\Type\SliderType
