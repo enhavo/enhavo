@@ -1,5 +1,5 @@
 esperanto\SliderBundle\Entity\Slider:
-    type: mappedSuperclass
+    type: entity
     table: slider_slider
     repositoryClass: esperanto\SliderBundle\Repository\SliderRepository
 
@@ -14,3 +14,9 @@ esperanto\SliderBundle\Entity\Slider:
         title:
             type: string
             length: 255
+
+    oneToMany:
+        slides:
+            targetEntity: Slide
+            mappedBy: slider
+            orderBy: {'order': 'ASC'}
