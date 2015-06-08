@@ -14,7 +14,22 @@ class TableViewer extends AbstractViewer
 {
     protected function getColumns()
     {
-        return $this->getConfig()->get('table.columns');
+        $columns = $this->getConfig()->get('table.columns');
+        foreach($columns as &$column) {
+            if(!array_key_exists('width', $column)) {
+                $column['width'] = 1;
+            }
+        }
+        return $columns;
+    }
+
+    protected function getConfigTableWidth()
+    {
+        $width = $this->getConfig()->get('table.width');
+        if($width === null) {
+            return 12;
+        }
+        return $width;
     }
 
     /**
@@ -52,6 +67,20 @@ class TableViewer extends AbstractViewer
             $method,
             get_class($resource),
             $property
+        ));
+    }
+
+    public function getTableWidth()
+    {
+        return $this->getConfigTableWidth();
+    }
+
+    public function renderWidget($widget, $property, $item)
+    {
+        $templateEngine = $this->container->get('templating');
+        return $templateEngine->render($widget, array(
+            'data' => $item,
+            'value' => $this->getProperty($item, $property)
         ));
     }
 }

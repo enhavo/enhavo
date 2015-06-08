@@ -16,7 +16,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
 {
     private $resource;
 
-    private $container;
+    protected $container;
 
     private $request;
 

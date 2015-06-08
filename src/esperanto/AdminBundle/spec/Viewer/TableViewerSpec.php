@@ -6,6 +6,8 @@ use esperanto\AdminBundle\Viewer\ConfigParser;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use esperanto\AdminBundle\Entity\Route;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Templating\EngineInterface;
 
 class TableViewerSpec extends ObjectBehavior
 {
@@ -33,7 +35,8 @@ class TableViewerSpec extends ObjectBehavior
     {
         $columns = array(
             'id' => array(
-                'property' => 'id'
+                'property' => 'id',
+                'width' => 1
             )
         );
 
@@ -44,10 +47,72 @@ class TableViewerSpec extends ObjectBehavior
 
         $configParser->get('table.columns')->willReturn($columns);
         $configParser->get('parameters')->willReturn($templateVars);
+        $configParser->get('table.width')->willReturn(null);
 
         $this->setConfig($configParser);
         $this->getParameters()->shouldHaveKeyWithValue('columns', $columns);
         $this->getParameters()->shouldHaveKeyWithValue('hello', 'world');
         $this->getParameters()->shouldHaveKeyWithValue('foo', 'bar');
+    }
+
+    function it_should_return_column_width(ConfigParser $configParser)
+    {
+        $definedColumns = array(
+            'id' => array(
+                'property' => 'id'
+            ),
+            'name' => array(
+                'property' => 'name',
+                'width' => 5
+            )
+        );
+
+        $resultColumns = array(
+            'id' => array(
+                'property' => 'id',
+                'width' => 1
+            ),
+            'name' => array(
+                'property' => 'name',
+                'width' => 5
+            )
+        );
+
+        $configParser->get('table.width')->willReturn(null);
+        $configParser->get('table.columns')->willReturn($definedColumns);
+        $configParser->get('parameters')->willReturn(array());
+
+        $this->setConfig($configParser);
+
+        $this->getParameters()->shouldHaveKeyWithValue('columns', $resultColumns);
+    }
+
+    function it_should_render_widget(ConfigParser $configParser, Container $container, EngineInterface $engine)
+    {
+        $columns = array(
+            'id' => array(
+                'property' => 'id',
+                'widget' => 'esperantoAdminBundle:Widget:id.html.twig'
+            ),
+        );
+        $object = new Route();
+        $object->setName('something');
+        $parameters = array(
+            'data' => $object,
+            'value' => 'something'
+        );
+        $template = 'esperantoAdminBundle:Widget:id.html.twig';
+
+        $engine->render($template, $parameters)->willReturn('hello');
+        $container->get('templating')->willReturn($engine);
+        $configParser->get('table.width')->willReturn(null);
+        $configParser->get('table.columns')->willReturn($columns);
+        $configParser->get('parameters')->willReturn(array());
+
+        $this->setResource($object);
+        $this->setConfig($configParser);
+        $this->setContainer($container);
+
+        $this->renderWidget('esperantoAdminBundle:Widget:id.html.twig', 'name', $object)->shouldBe('hello');
     }
 }

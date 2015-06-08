@@ -118,16 +118,17 @@ esperanto_page_page_table:
             filter:
 
             table:
-                width: 5
                 columns:
                     id:
                         label: ID
                         property: id
-                        width: 1
                     title:
                         label: title
                         property: title
-                        widget: tur
+                    public:
+                        label: public
+                        property: public
+                        widget: esperantoAdminBundle:Widget:boolean.html.twig
 
 esperanto_page_page_delete:
     path: /page/delete/{id}
