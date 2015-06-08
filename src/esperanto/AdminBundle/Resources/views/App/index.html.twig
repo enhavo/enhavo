@@ -15,7 +15,7 @@
         <div class="row mb3 action">
             <div class="col-md-3">
                 {% for action in actions %}
-                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-md-12"><i class="icon-{{ action.icon }}"></i> {{ action.label|trans }}</button>
+                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-md-12"><i class="fa fa-{{ action.icon }}"></i> {{ action.label|trans }}</button>
                 {% endfor %}
             </div>
         </div>

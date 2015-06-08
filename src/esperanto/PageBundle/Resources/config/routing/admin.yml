@@ -28,7 +28,7 @@ esperanto_page_page_app:
                 create:
                     type: overlay
                     route: esperanto_page_page_create
-                    icon: plus-sign
+                    icon: plus
                     label: label.create
 
 esperanto_page_page_create:
