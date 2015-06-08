@@ -8,18 +8,13 @@
 
 namespace esperanto\AdminBundle\Controller;
 
-use esperanto\AdminBundle\Admin\BaseAdmin;
-use esperanto\AdminBundle\Viewer\ConfigParser;
+use esperanto\AdminBundle\Exception\BadMethodCallException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Form\Test\FormInterface;
 
 class ResourceController extends BaseController
 {
-    protected $admin;
-
     /**
      * {@inheritdoc}
      */
@@ -94,10 +89,34 @@ class ResourceController extends BaseController
         return $this->handleView($view);
     }
 
+    public function indexAction(Request $request)
+    {
+        throw new BadMethodCallException(sprintf(
+            'Don\'t use the indexAction in class, use "appAction" action instead ', get_class($this)
+        ));
+    }
+
+    public function appAction(Request $request)
+    {
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setConfig($config);
+
+        $viewer->dispatchEvent('');
+
+        $view = $this
+            ->view()
+            ->setTemplate($this->config->getTemplate('index.html'))
+            ->setData($viewer->getParameters())
+        ;
+
+        return $this->handleView($view);
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function indexAction(Request $request)
+    public function tableAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
@@ -188,25 +207,5 @@ class ResourceController extends BaseController
         ;
 
         return $this->handleView($view);
-    }
-
-    protected function getAdmin()
-    {
-        if($this->admin == null) {
-            $request = $this->container->get('request');
-            $adminServiceName = $request->attributes->get('_admin');
-            $this->admin = $this->container->get($adminServiceName);
-        }
-        return $this->admin;
-    }
-
-    /**
-     * @param object|null $resource
-     *
-     * @return FormInterface
-     */
-    protected function getBatchUpdateForm()
-    {
-        return;
     }
 }

@@ -26,6 +26,7 @@ class esperantoAdminExtension extends Extension
         $container->setParameter('esperanto_admin.stylesheets', $config[ 'stylesheets' ]);
         $container->setParameter('esperanto_admin.javascripts', $config[ 'javascripts' ]);
         $container->setParameter('esperanto_admin.menu', $config[ 'menu' ]);
+        $container->setParameter('esperanto_admin.viewer', $config[ 'viewer' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

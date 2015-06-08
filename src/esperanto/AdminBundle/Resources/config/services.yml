@@ -56,3 +56,8 @@ services:
             - @request_stack
         tags:
           - { name: kernel.event_listener, event: esperanto_admin.menu, method: onMenu  }
+
+    esperanto_admin.controller.app:
+        class: esperanto\AdminBundle\Controller\AppController
+        calls:
+            - [setContainer, [@service_container]]

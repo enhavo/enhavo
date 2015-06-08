@@ -5,6 +5,8 @@ services:
         class: esperanto\AdminBundle\Viewer\ViewerFactory
         arguments:
             - @service_container
+            - @request_stack
+            - %esperanto_admin.viewer%
 
     viewer.config:
         class: esperanto\AdminBundle\Viewer\ConfigParser

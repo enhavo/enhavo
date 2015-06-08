@@ -52,6 +52,18 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('viewer')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('app')->defaultValue('esperanto\AdminBundle\Viewer\AppViewer')->end()
+                        ->scalarNode('create')->defaultValue('esperanto\AdminBundle\Viewer\CreateViewer')->end()
+                        ->scalarNode('table')->defaultValue('esperanto\AdminBundle\Viewer\TableViewer')->end()
+                        ->scalarNode('edit')->defaultValue('esperanto\AdminBundle\Viewer\EditViewer')->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

@@ -105,8 +105,13 @@ abstract class AbstractViewer implements ContainerAwareInterface
         return '::admin.html.twig';
     }
 
-    public function getTemplateVars()
+    protected function getTemplateVars()
     {
         return $this->getConfig()->get('parameters');
+    }
+
+    public function getTemplate()
+    {
+        return 'esperantoAdminBundle:App:index.html.twig';
     }
 }

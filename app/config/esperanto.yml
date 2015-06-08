@@ -11,9 +11,9 @@ esperanto_admin:
       - '@esperantoDownloadBundle/Resources/public/css/style.css'
     javascripts:
 
-    #viewer:
-    #    layout: 'esperantoAdminBundle::base.html.twig'
-
+    viewer:
+#        layout: 'esperantoAdminBundle::base.html.twig'
+        app: esperanto\AdminBundle\Viewer\AppViewer
     menu:
         user:
             label: label.user
@@ -32,7 +32,7 @@ esperanto_admin:
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
-            route: esperanto_page_page_index
+            route: esperanto_page_page_app
             #route: esperanto_admin_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         reference:

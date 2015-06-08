@@ -26,10 +26,16 @@ class ViewerFactory
      */
     protected $requestStack;
 
-    public function __construct(Container $container, RequestStack $requestStack)
+    /**
+     * @var array
+     */
+    protected $list;
+
+    public function __construct(Container $container, RequestStack $requestStack, $viewerList)
     {
         $this->container = $container;
         $this->requestStack = $requestStack;
+        $this->list = $viewerList;
     }
 
     public function create($type)
@@ -64,15 +70,8 @@ class ViewerFactory
 
     protected function matchViewer($type)
     {
-        $list = array(
-            'viewer.table' => 'esperanto\AdminBundle\Viewer\TableViewer',
-            'viewer.create' => 'esperanto\AdminBundle\Viewer\CreateViewer',
-            'viewer.index' => 'esperanto\AdminBundle\Viewer\IndexViewer',
-            'viewer.edit' => 'esperanto\AdminBundle\Viewer\EditViewer'
-        );
-
-        if(isset($list[$type])) {
-            return $list[$type];
+        if(isset($this->list[$type])) {
+            return $this->list[$type];
         }
 
         throw new ViewerNotFoundException(sprintf('Trying to match viewer by type "%s" but no viewer found', $type));

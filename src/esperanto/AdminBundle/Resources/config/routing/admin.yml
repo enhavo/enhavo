@@ -1,7 +1,22 @@
-esperanto_admin_index:
-    pattern:  /
-    defaults: { _controller: esperantoAdminBundle:Admin:index }
-
 esperanto_admin_extra:
     resource: .
     type: extra
+
+esperanto_admin_index:
+    pattern:  /
+    methods: [GET]
+    defaults:
+        _controller: esperanto_admin.controller.app:indexAction
+        _viewer:
+            type: app
+            parameters:
+                param1: value1
+                param2: value2
+            stylesheets:
+                esperanto_app_style:
+                    resource: '@esperantoAppBundle/Resource/public/css/style.css'
+                    depends: ~
+            javascripts:
+                esperanto_app_bootstrap:
+                    resource: '@esperantoAppBundle/Resource/public/js/bootstrap.css'
+                    depends: jquery
