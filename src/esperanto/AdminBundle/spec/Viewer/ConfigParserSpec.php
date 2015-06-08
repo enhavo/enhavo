@@ -15,14 +15,14 @@ class ConfigParserSpec extends ObjectBehavior
 
     function it_should_give_back_configs(Request $request)
     {
-        $config = [
+        $config = array(
             'type' => 'viewer.table',
-            'columns' => [
-                'id' => [
+            'columns' => array(
+                'id' => array(
                     'property' => 'id'
-                ]
-            ]
-        ];
+                )
+            )
+        );
         $request->get('_viewer')->willReturn($config);
         $this->parse($request);
         $this->get('type')->shouldReturn('viewer.table');

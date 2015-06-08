@@ -31,16 +31,16 @@ class TableViewerSpec extends ObjectBehavior
 
     function it_should_return_parameters(ConfigParser $configParser)
     {
-        $columns = [
-            'id' => [
+        $columns = array(
+            'id' => array(
                 'property' => 'id'
-            ]
-        ];
+            )
+        );
 
-        $templateVars = [
+        $templateVars = array(
             'hello' => 'world',
             'foo' => 'bar'
-        ];
+        );
 
         $configParser->get('table.columns')->willReturn($columns);
         $configParser->get('parameters')->willReturn($templateVars);
