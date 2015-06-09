@@ -9,6 +9,7 @@
 namespace esperanto\AdminBundle\Controller;
 
 use esperanto\AdminBundle\Exception\BadMethodCallException;
+use esperanto\AdminBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,21 +97,12 @@ class ResourceController extends BaseController
         ));
     }
 
-    public function appAction(Request $request)
+    public function previewAction(Request $request)
     {
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
-        $viewer->setConfig($config);
-
-        $viewer->dispatchEvent('');
-
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('index.html'))
-            ->setData($viewer->getParameters())
-        ;
-
-        return $this->handleView($view);
+        $resource = $this->createNew();
+        $form = $this->getForm($resource);
+        $form->handleRequest($request);
+        return $this->invokePreview($resource);
     }
 
     /**
@@ -207,5 +199,48 @@ class ResourceController extends BaseController
         ;
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @param $resource
+     * @return Response
+     * @throws PreviewException
+     */
+    protected function invokePreview($resource)
+    {
+        $map = $this->container->getParameter('cmf_routing.controllers_by_class');
+        $controllerDefinition = null;
+        foreach ($map as $class => $value) {
+            if ($resource instanceof $class) {
+                $controllerDefinition = $value;
+                break;
+            }
+        }
+
+        if($controllerDefinition === null) {
+            throw new PreviewException(
+                sprintf(
+                    'No controller found for resource, did you add "%s" to cmf_routing.dynamic.controller_by_class in your configuration?',
+                    get_class($resource)
+                )
+            );
+        }
+
+        try {
+            $request = new Request(array(), array(), array('_controller' => $controllerDefinition));
+            $controller = $this->container->get('debug.controller_resolver')->getController($request);
+            $response = call_user_func_array($controller, array($resource));
+        } catch(\Exception $e) {
+            throw new PreviewException(
+                sprintf(
+                    'Something went wrong while trying to invoke the controller "%s", this "%s" was thrown before with message: %s',
+                    $controllerDefinition,
+                    get_class($e),
+                    $e->getMessage()
+                )
+            );
+        }
+
+        return $response;
     }
 }

@@ -55,9 +55,15 @@ esperanto_page_page_create:
                 seo:
                     label: Seo
                     template: esperantoPageBundle:Tab:seo.html.twig
-            preview_route: ~
+            preview_route: esperanto_page_page_preview
             create_route: esperanto_page_page_create
             form_template: esperantoAdminBundle:View:tab.html.twig
+
+esperanto_page_page_preview:
+    path: /page/preview
+    methods: [POST]
+    defaults:
+        _controller: esperanto_page.controller.page:previewAction
 
 esperanto_page_page_update:
     options:
