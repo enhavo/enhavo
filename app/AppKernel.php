@@ -47,6 +47,8 @@ class AppKernel extends Kernel
 
             new esperanto\ProjectBundle\esperantoProjectBundle(),
             new esperanto\NewsletterBundle\esperantoNewsletterBundle(),
+            new esperanto\CalendarBundle\esperantoCalendarBundle(),
+            new esperanto\ShopBundle\esperantoShopBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
