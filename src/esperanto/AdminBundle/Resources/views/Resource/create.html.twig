@@ -1,12 +1,7 @@
 {% extends 'esperantoAdminBundle::dialog.html.twig' %}
 
 {% block content %}
-    <form method="POST"
-          action="{{ path(create_route) }}"
-            {% if preview_route %}
-                data-preview-url="{{ path(preview_route ,{ id: 'preview' }) }}"
-            {% endif %}
-            >
+    <form method="POST" action="{{ form_action }}">
         {% block form %}
             {% include form_template %}
         {% endblock %}
@@ -15,15 +10,11 @@
 {% endblock %}
 
 {% block buttons %}
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans }}</button>
-    </div>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans }}</button>
-    </div>
-    {% if preview_route %}
-        <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 preview" type="button"><i class="fa fa-eye"></i> {{ 'label.preview'|trans }}</button>
-        </div>
-    {% endif %}
+    {% for name, button in buttons %}
+        {% if button.display %}
+            <div class="col-md-push-2 col-md-2">
+                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-md-12 save" type="button"><i class="fa fa-{{ button.icon }}"></i> {{ button.label|trans }}</button>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

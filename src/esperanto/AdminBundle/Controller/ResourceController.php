@@ -243,4 +243,11 @@ class ResourceController extends BaseController
 
         return $response;
     }
+
+    public function deleteAction(Request $request)
+    {
+        $this->isGrantedOr403('delete');
+        $this->domainManager->delete($this->findOr404($request));
+        return new Response();
+    }
 }

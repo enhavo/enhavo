@@ -23,7 +23,7 @@ class CreateViewerSpec extends ObjectBehavior
         $parameters = array();
 
         $configParser->get('tabs')->willReturn($tabs);
-        $configParser->get('create_route')->willReturn($createRoute);
+        $configParser->get('buttons')->willReturn($createRoute);
         $configParser->get('preview_route')->willReturn($previewRoute);
         $configParser->get('form_template')->willReturn($formTemplate);
         $configParser->get('parameters')->willReturn($parameters);

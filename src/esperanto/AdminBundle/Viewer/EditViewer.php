@@ -16,37 +16,43 @@ class EditViewer extends AbstractViewer
         return $this->getConfig()->get('tabs');
     }
 
-    public function getPreviewRoute()
+    public function getButtons()
     {
-        return $this->getConfig()->get('preview_route');
-    }
-
-    public function getUpdateRoute()
-    {
-        return $this->getConfig()->get('update_route');
-    }
-
-    public function getDeleteRoute()
-    {
-        return $this->getConfig()->get('delete_route');
+        return $this->getConfig()->get('buttons');
     }
 
     public function getFormTemplate()
     {
-        return $this->getConfig()->get('form_template');
+        return $this->getConfig()->get('form.template');
+    }
+
+    public function getFormDelete()
+    {
+        $route = $this->getConfig()->get('form.delete');
+        return $this->container->get('router')->generate($route, array(
+            'id' => $this->getResource()->getId()
+        ));
+    }
+
+    public function getFormAction()
+    {
+        $action = $this->getConfig()->get('form.action');
+        return $this->container->get('router')->generate($action, array(
+            'id' => $this->getResource()->getId()
+        ));
     }
 
     public function getParameters()
     {
         $parameters = array(
-            'preview_route' => $this->getPreviewRoute(),
-            'update_route' => $this->getUpdateRoute(),
-            'delete_route' => $this->getDeleteRoute(),
-            'form_template' => $this->getFormTemplate(),
+            'buttons' => $this->getButtons(),
             'form' => $this->getForm(),
             'viewer' => $this,
             'tabs' => $this->getTabs(),
-            'data' => $this->getResource()
+            'resource' => $this->getResource(),
+            'form_template' => $this->getFormTemplate(),
+            'form_action' => $this->getFormAction(),
+            'form_delete' => $this->getFormDelete()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

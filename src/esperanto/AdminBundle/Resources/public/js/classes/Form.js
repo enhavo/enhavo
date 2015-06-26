@@ -120,7 +120,7 @@ var Form = function(router, templating, admin, translator)
   };
 
   this.initSave = function (form) {
-    $(form).find('.save').click(function() {
+    $(form).find('[data-button][data-type=save]').click(function() {
       $(this).trigger('formSaveBefore', form);
 
       form = $(form);
@@ -175,10 +175,11 @@ var Form = function(router, templating, admin, translator)
   };
 
   this.initPreviewButton = function(form) {
-    $('.btn.preview',form).on('click',function(e) {
+    $(form).find('[data-button][data-type=preview]').click(function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var link = $(form).data('preview-url');
+      var route = $(this).data('route');
+      var link = router.generate(route);
       admin.iframeOverlay(form,link,{
         submit: true
       });
@@ -187,8 +188,8 @@ var Form = function(router, templating, admin, translator)
 
   this.initDelete = function(form)
   {
-    $(form).find('.delete').click(function() {
-      var url = $(form).data('delete-url');
+    $(form).find('[data-button][data-type=delete]').click(function() {
+      var url = $(form).data('delete');
       if(confirm(translator.trans('form.delete.question'))) {
         $.ajax({
           type: 'POST',
@@ -258,6 +259,10 @@ var Form = function(router, templating, admin, translator)
       self.initDelete(form);
       self.initSelect(form);
       self.initSorting(form);
+    });
+
+    $(document).on('formSaveAfter', function() {
+      admin.overlayClose();
     });
 
     $(document).on('formCloseAfter', function(event, content) {

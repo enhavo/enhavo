@@ -55,11 +55,33 @@ esperanto_page_page_create:
                 seo:
                     label: Seo
                     template: esperantoPageBundle:Tab:seo.html.twig
-            preview_route: esperanto_page_page_preview
-            create_route: esperanto_page_page_create
-            form_template: esperantoAdminBundle:View:tab.html.twig
+            buttons:
+                cancel:
+                    route:
+                    display: true
+                    role: ~
+                    label: label.cancel
+                    icon: close
+                save:
+                    route: ~
+                    display: true
+                    role: ~
+                    label: label.save
+                    icon: check
+                preview:
+                    route: esperanto_page_page_preview
+                    display: true
+                    role: ~
+                    label: label.preview
+                    icon: eye
+            form:
+                template: esperantoAdminBundle:View:tab.html.twig
+                theme: ~
+                action: esperanto_page_page_create
 
 esperanto_page_page_preview:
+    options:
+        expose: true
     path: /page/preview
     methods: [POST]
     defaults:
@@ -89,10 +111,36 @@ esperanto_page_page_update:
                 seo:
                     label: Seo
                     template: esperantoPageBundle:Tab:seo.html.twig
-            preview_route: ~
-            update_route: esperanto_page_page_update
-            delete_route: esperanto_page_page_delete
-            form_template: esperantoAdminBundle:View:tab.html.twig
+            buttons:
+                cancel:
+                    route:
+                    display: true
+                    role: ~
+                    label: label.cancel
+                    icon: close
+                save:
+                    route: ~
+                    display: true
+                    role: ~
+                    label: label.save
+                    icon: check
+                preview:
+                    route: esperanto_page_page_preview
+                    display: true
+                    role: ~
+                    label: label.preview
+                    icon: eye
+                delete:
+                    route:
+                    display: true
+                    role: ~
+                    label: label.delete
+                    icon: trash
+            form:
+                template: esperantoAdminBundle:View:tab.html.twig
+                theme: ~
+                action: esperanto_page_page_update
+                delete: esperanto_page_page_delete
 
 esperanto_page_page_table:
     options:
@@ -138,3 +186,6 @@ esperanto_page_page_table:
 
 esperanto_page_page_delete:
     path: /page/delete/{id}
+    defaults:
+        page: 1
+        _controller: esperanto_page.controller.page:deleteAction

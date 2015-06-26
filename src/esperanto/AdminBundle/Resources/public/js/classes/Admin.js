@@ -265,7 +265,7 @@ function Admin (router, templating, translator)
 
   this.initAfterSaveHandler = function()
   {
-      $(document).on('formSaveAfter', function() {
+      $(document).on('click', '[data-button][data-type=cancel]', function() {
           self.overlayClose();
       });
   };
@@ -287,7 +287,6 @@ function Admin (router, templating, translator)
                     block.html(data);
                 });
             });
-
 
             block.on('click', '[data-page]', function() {
                var page = $(this).data('page');

@@ -1,15 +1,8 @@
 parameters:
-    esperanto_page.event.page.class: esperanto\PageBundle\EventListener\AdminBuilderSubscriber
     esperanto_page.page_resolver.class: esperanto\PageBundle\Service\PageResolver
     esperanto_page.page.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
-services:
-    esperanto_page.event.page:
-        class: %esperanto_page.event.page.class%
-        arguments:
-            - @service_container
-        tags:
-            - { name: kernel.event_subscriber }
 
+services:
     esperanto_page_page:
         class: %esperanto_page.form.type.page.class%
         arguments:

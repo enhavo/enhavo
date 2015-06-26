@@ -16,30 +16,31 @@ class CreateViewer extends AbstractViewer
         return $this->getConfig()->get('tabs');
     }
 
-    public function getCreateRoute()
+    public function getButtons()
     {
-        return $this->getConfig()->get('create_route');
-    }
-
-    public function getPreviewRoute()
-    {
-        return $this->getConfig()->get('preview_route');
+        return $this->getConfig()->get('buttons');
     }
 
     public function getFormTemplate()
     {
-        return $this->getConfig()->get('form_template');
+        return $this->getConfig()->get('form.template');
+    }
+
+    public function getFormAction()
+    {
+        $action = $this->getConfig()->get('form.action');
+        return $this->container->get('router')->generate($action);
     }
 
     public function getParameters()
     {
         $parameters = array(
-            'create_route' => $this->getCreateRoute(),
-            'preview_route' => $this->getPreviewRoute(),
-            'form_template' => $this->getFormTemplate(),
+            'buttons' => $this->getButtons(),
             'form' => $this->getForm(),
             'viewer' => $this,
-            'tabs' => $this->getTabs()
+            'tabs' => $this->getTabs(),
+            'form_template' => $this->getFormTemplate(),
+            'form_action' => $this->getFormAction()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);
