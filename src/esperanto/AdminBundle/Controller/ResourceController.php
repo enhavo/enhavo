@@ -92,9 +92,13 @@ class ResourceController extends BaseController
 
     public function indexAction(Request $request)
     {
-        throw new BadMethodCallException(sprintf(
-            'Don\'t use the indexAction in class, use "appAction" action instead ', get_class($this)
-        ));
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setConfig($config);
+
+        $viewer->dispatchEvent('');
+
+        return $this->render($viewer->getTemplate(), $viewer->getParameters());
     }
 
     public function previewAction(Request $request)

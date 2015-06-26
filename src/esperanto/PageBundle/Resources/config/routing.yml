@@ -1,4 +1,4 @@
-esperanto_page_page_app:
+esperanto_page_page_index:
     path: /admin/esperanto/page/page/index
     methods: [GET]
     defaults:

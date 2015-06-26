@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('create')->defaultValue('esperanto\AdminBundle\Viewer\CreateViewer')->end()
                         ->scalarNode('table')->defaultValue('esperanto\AdminBundle\Viewer\TableViewer')->end()
                         ->scalarNode('edit')->defaultValue('esperanto\AdminBundle\Viewer\EditViewer')->end()
+                        ->scalarNode('index')->defaultValue('esperanto\AdminBundle\Viewer\IndexViewer')->end()
                     ->end()
                 ->end()
             ->end()

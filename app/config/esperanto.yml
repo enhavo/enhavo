@@ -32,7 +32,7 @@ esperanto_admin:
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
-            route: esperanto_page_page_app
+            route: esperanto_page_page_index
             #route: esperanto_admin_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         reference:
