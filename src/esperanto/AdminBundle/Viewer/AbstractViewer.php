@@ -118,6 +118,12 @@ abstract class AbstractViewer implements ContainerAwareInterface
     public function setConfig($config)
     {
         $this->config = $config;
+        $this->config->setDefault($this->getDefaultConfig());
+    }
+
+    public function getDefaultConfig()
+    {
+        return array();
     }
     
     abstract function getParameters();
@@ -129,7 +135,11 @@ abstract class AbstractViewer implements ContainerAwareInterface
 
     protected function getTemplateVars()
     {
-        return $this->getConfig()->get('parameters');
+        $parameters = $this->getConfig()->get('parameters');
+        if(!is_array($parameters)) {
+            return array();
+        }
+        return $parameters;
     }
 
     public function getTemplate()

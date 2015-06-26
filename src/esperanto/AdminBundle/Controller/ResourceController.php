@@ -23,6 +23,8 @@ class ResourceController extends BaseController
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setBundlePrefix($this->config->getBundlePrefix());
+        $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
 
         $resource = $this->createNew();
@@ -60,6 +62,8 @@ class ResourceController extends BaseController
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setBundlePrefix($this->config->getBundlePrefix());
+        $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
@@ -94,9 +98,9 @@ class ResourceController extends BaseController
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
-        $viewer->setConfig($config);
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setConfig($config);
 
         $viewer->dispatchEvent('');
 
@@ -118,6 +122,8 @@ class ResourceController extends BaseController
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer->setBundlePrefix($this->config->getBundlePrefix());
+        $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
 
         //fire event for permission

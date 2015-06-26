@@ -12,6 +12,20 @@ use esperanto\AdminBundle\Exception\PropertyNotExistsException;
 
 class TableViewer extends AbstractViewer
 {
+    public function getDefaultConfig()
+    {
+        return array(
+            'table' => array(
+                'columns' => array(
+                    'id' => array(
+                        'label' => 'ID',
+                        'property' => 'id'
+                    )
+                ),
+            )
+        );
+    }
+
     protected function getColumns()
     {
         $columns = $this->getConfig()->get('table.columns');

@@ -11,6 +11,29 @@ namespace esperanto\AdminBundle\Viewer;
 
 class IndexViewer extends AbstractViewer
 {
+    public function getDefaultConfig()
+    {
+        return array(
+            'blocks' => array(
+                'table' => array(
+                    'type' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
+                    'parameters' => array(
+                        'table_route' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
+                        'update_route' => sprintf('%s_%s_update', $this->getBundlePrefix(), $this->getResourceName()),
+                    )
+                )
+            ),
+            'actions' => array(
+                'create' => array(
+                    'type' => 'overlay',
+                    'route' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName()),
+                    'icon' => 'plus',
+                    'label' => 'label.create'
+                )
+            )
+        );
+    }
+
     public function getBlocks()
     {
         return $this->getConfig()->get('blocks');

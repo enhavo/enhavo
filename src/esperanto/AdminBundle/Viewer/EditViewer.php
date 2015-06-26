@@ -11,14 +11,47 @@ namespace esperanto\AdminBundle\Viewer;
 
 class EditViewer extends CreateViewer
 {
-    public function getButtons()
+    public function getDefaultConfig()
     {
-        return $this->getConfig()->get('buttons');
-    }
+        return array(
+            'buttons' => array(
+                'cancel' => array(
+                    'route' => null,
+                    'display' => true,
+                    'role' => null,
+                    'label' => 'label.cancel',
+                    'icon' => 'close'
+                ),
+                'save' => array(
+                    'route' => null,
+                    'display' => true,
+                    'role' => null,
+                    'label' => 'label.save',
+                    'icon' => 'check'
+                ),
+                'preview' => array(
+                    'route' => sprintf('%s_%s_preview', $this->getBundlePrefix(), $this->getResourceName()),
+                    'display' => true,
+                    'role' => null,
+                    'label' => 'label.preview',
+                    'icon' => 'eye'
+                ),
+                'delete' => array(
+                    'route' => null,
+                    'display' => true,
+                    'role' => null,
+                    'label' => 'label.delete',
+                    'icon' => 'trash'
+                )
 
-    public function getFormTemplate()
-    {
-        return $this->getConfig()->get('form.template');
+            ),
+            'form' => array(
+                'template' => 'esperantoAdminBundle:View:tab.html.twig',
+                'theme' => '',
+                'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName()),
+                'delete' => sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName())
+            )
+        );
     }
 
     public function getFormDelete()

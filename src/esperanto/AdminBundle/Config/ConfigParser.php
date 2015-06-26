@@ -13,7 +13,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ConfigParser
 {
+    /**
+     * @var array
+     */
     protected $config;
+
+    /**
+     * @var array
+     */
+    protected $defaultConfig = array();
+
+    /**
+     * @var array|null
+     */
+    protected $mergedConfig = null;
 
     public function parse(Request $request)
     {
@@ -21,10 +34,21 @@ class ConfigParser
         return $this;
     }
 
+    public function setDefault($defaultConfig)
+    {
+        $this->defaultConfig = $defaultConfig;
+    }
+
     public function get($key, $default = null)
     {
         $keyArray = preg_split('/\./', $key);
-        return $this->getByKeyArray($this->config, $keyArray);
+
+        if($this->mergedConfig === null) {
+            $this->mergedConfig = $this->merge($this->defaultConfig, $this->config);
+        }
+
+        $value = $this->getByKeyArray($this->mergedConfig, $keyArray);
+        return $value;
     }
 
     public function getType()
@@ -50,5 +74,28 @@ class ConfigParser
         }
 
         return null;
+    }
+
+    protected function merge($default, $config)
+    {
+        $mergedArray = array();
+
+        foreach($config as $key => $value) {
+            $mergedArray[$key] = $value;
+        }
+
+        foreach($default as $key => $value) {
+            if(array_key_exists($key, $config)) {
+                if(is_array($config[$key]) && is_array($value)) {
+                    $mergedArray[$key] = $this->merge($value, $config[$key]);
+                } else {
+                    $mergedArray[$key] = $config[$key];
+                }
+            } else {
+                $mergedArray[$key] = $value;
+            }
+        }
+
+        return $mergedArray;
     }
 }
