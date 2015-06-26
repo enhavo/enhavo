@@ -95,6 +95,8 @@ class ResourceController extends BaseController
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType());
         $viewer->setConfig($config);
+        $viewer->setBundlePrefix($this->config->getBundlePrefix());
+        $viewer->setResourceName($this->config->getResourceName());
 
         $viewer->dispatchEvent('');
 

@@ -2,7 +2,7 @@ esperanto_page_page_index:
     path: /admin/esperanto/page/page/index
     methods: [GET]
     defaults:
-        _controller: esperanto_admin.controller.app:indexAction
+        _controller: esperanto_page.controller.page:indexAction
         _sylius:
             template: esperantoAdminBundle:Resource:index.html.twig
         _viewer:

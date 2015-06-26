@@ -9,13 +9,8 @@
 namespace esperanto\AdminBundle\Viewer;
 
 
-class EditViewer extends AbstractViewer
+class EditViewer extends CreateViewer
 {
-    public function getTabs()
-    {
-        return $this->getConfig()->get('tabs');
-    }
-
     public function getButtons()
     {
         return $this->getConfig()->get('buttons');
@@ -36,8 +31,8 @@ class EditViewer extends AbstractViewer
 
     public function getFormAction()
     {
-        $action = $this->getConfig()->get('form.action');
-        return $this->container->get('router')->generate($action, array(
+        $route = $this->getConfig()->get('form.action');
+        return $this->container->get('router')->generate($route, array(
             'id' => $this->getResource()->getId()
         ));
     }
@@ -49,7 +44,7 @@ class EditViewer extends AbstractViewer
             'form' => $this->getForm(),
             'viewer' => $this,
             'tabs' => $this->getTabs(),
-            'resource' => $this->getResource(),
+            'data' => $this->getResource(),
             'form_template' => $this->getFormTemplate(),
             'form_action' => $this->getFormAction(),
             'form_delete' => $this->getFormDelete()

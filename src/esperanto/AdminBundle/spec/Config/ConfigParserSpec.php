@@ -10,7 +10,7 @@ class ConfigParserSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('esperanto\AdminBundle\Viewer\ConfigParser');
+        $this->shouldHaveType('esperanto\AdminBundle\Config\ConfigParser');
     }
 
     function it_should_give_back_configs(Request $request)

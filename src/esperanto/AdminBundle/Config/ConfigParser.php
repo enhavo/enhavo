@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace esperanto\AdminBundle\Config;
 
 
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class ConfigParser
         return $this;
     }
 
-    public function get($key)
+    public function get($key, $default = null)
     {
         $keyArray = preg_split('/\./', $key);
         return $this->getByKeyArray($this->config, $keyArray);

@@ -2,9 +2,12 @@
 
 namespace spec\esperanto\AdminBundle\Viewer;
 
+use esperanto\AdminBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use esperanto\AdminBundle\Viewer\ConfigParser;
+use esperanto\AdminBundle\Config\ConfigParser;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Router;
 
 class EditViewerSpec extends ObjectBehavior
 {
@@ -13,34 +16,39 @@ class EditViewerSpec extends ObjectBehavior
         $this->shouldHaveType('esperanto\AdminBundle\Viewer\EditViewer');
     }
 
-    function it_should_return_parameters(ConfigParser $configParser)
+    function it_should_return_parameters(ConfigParser $configParser, ContainerInterface $container, Router $router)
     {
         $tabs = 'tabs';
-        $previewRoute = 'preview_route';
-        $updateRoute = 'update_route';
-        $deleteRoute = 'delete_route';
+        $formActionUrl = 'some_action_url';
+        $formDeleteUrl = 'some_delete_url';
         $formTemplate = 'form_template';
-        $resource = 'resource';
+        $resource = new EntityMock();
         $form = 'form';
+        $buttons = array();
         $parameters = array();
 
         $configParser->get('tabs')->willReturn($tabs);
-        $configParser->get('preview_route')->willReturn($previewRoute);
-        $configParser->get('update_route')->willReturn($updateRoute);
-        $configParser->get('delete_route')->willReturn($deleteRoute);
-        $configParser->get('form_template')->willReturn($formTemplate);
+        $configParser->get('form.template')->willReturn($formTemplate);
+        $configParser->get('form.action')->willReturn('form_action_route');
+        $configParser->get('form.delete')->willReturn('form_delete_route');
+        $configParser->get('buttons')->willReturn($buttons);
         $configParser->get('parameters')->willReturn($parameters);
+        $router->generate('form_action_route', array('id' => 1))->willReturn($formActionUrl);
+        $router->generate('form_delete_route', array('id' => 1))->willReturn($formDeleteUrl);
+        $container->get('router')->willReturn($router);
 
         $this->setConfig($configParser);
         $this->setResource($resource);
         $this->setForm($form);
+        $this->setContainer($container);
 
         $this->getParameters()->shouldHaveKeyWithValue('tabs', $tabs);
-        $this->getParameters()->shouldHaveKeyWithValue('preview_route', $previewRoute);
-        $this->getParameters()->shouldHaveKeyWithValue('update_route', $updateRoute);
-        $this->getParameters()->shouldHaveKeyWithValue('delete_route', $deleteRoute);
+        $this->getParameters()->shouldHaveKeyWithValue('buttons', $buttons);
+        $this->getParameters()->shouldHaveKeyWithValue('form_action', $formActionUrl);
         $this->getParameters()->shouldHaveKeyWithValue('form_template', $formTemplate);
-        $this->getParameters()->shouldHaveKeyWithValue('data', $resource);
+        $this->getParameters()->shouldHaveKeyWithValue('form_delete', $formDeleteUrl);
         $this->getParameters()->shouldHaveKeyWithValue('form', $form);
+        $this->getParameters()->shouldHaveKeyWithValue('data', $resource);
+        $this->getParameters()->shouldHaveKey('viewer');
     }
 }

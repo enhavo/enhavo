@@ -21,11 +21,30 @@ abstract class AbstractViewer implements ContainerAwareInterface
      */
     protected $container;
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     private $request;
 
+    /**
+     * @var \Symfony\Component\Form\Form
+     */
     private $form;
 
+    /**
+     * @var \esperanto\AdminBundle\Config\ConfigParser
+     */
     private $config;
+
+    /**
+     * @var string
+     */
+    private $bundlePrefix;
+
+    /**
+     * @var string
+     */
+    private $resourceName;
 
     /**
      * @param mixed $container
@@ -116,5 +135,31 @@ abstract class AbstractViewer implements ContainerAwareInterface
     public function getTemplate()
     {
         return 'esperantoAdminBundle:App:index.html.twig';
+    }
+
+    public function setBundlePrefix($bundlePrefix)
+    {
+        $this->bundlePrefix = $bundlePrefix;
+    }
+
+    public function setResourceName($resourceName)
+    {
+        $this->resourceName = $resourceName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBundlePrefix()
+    {
+        return $this->bundlePrefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceName()
+    {
+        return $this->resourceName;
     }
 }

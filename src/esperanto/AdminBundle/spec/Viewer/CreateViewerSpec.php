@@ -4,7 +4,9 @@ namespace spec\esperanto\AdminBundle\Viewer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use esperanto\AdminBundle\Viewer\ConfigParser;
+use esperanto\AdminBundle\Config\ConfigParser;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Router;
 
 class CreateViewerSpec extends ObjectBehavior
 {
@@ -13,28 +15,33 @@ class CreateViewerSpec extends ObjectBehavior
         $this->shouldHaveType('esperanto\AdminBundle\Viewer\CreateViewer');
     }
 
-    function it_should_return_parameters(ConfigParser $configParser)
+    function it_should_return_parameters(ConfigParser $configParser, ContainerInterface $container, Router $router)
     {
         $tabs = 'tabs';
-        $previewRoute = 'preview_route';
-        $createRoute = 'create_route';
+        $formActionUrl = 'some_action_url';
         $formTemplate = 'form_template';
+        $resource = 'resource';
         $form = 'form';
+        $buttons = array();
         $parameters = array();
 
         $configParser->get('tabs')->willReturn($tabs);
-        $configParser->get('buttons')->willReturn($createRoute);
-        $configParser->get('preview_route')->willReturn($previewRoute);
-        $configParser->get('form_template')->willReturn($formTemplate);
+        $configParser->get('form.template')->willReturn($formTemplate);
+        $configParser->get('form.action')->willReturn('form_action_route');
+        $configParser->get('buttons')->willReturn($buttons);
         $configParser->get('parameters')->willReturn($parameters);
+        $router->generate('form_action_route')->willReturn($formActionUrl);
+        $container->get('router')->willReturn($router);
 
         $this->setConfig($configParser);
         $this->setForm($form);
+        $this->setContainer($container);
 
         $this->getParameters()->shouldHaveKeyWithValue('tabs', $tabs);
-        $this->getParameters()->shouldHaveKeyWithValue('preview_route', $previewRoute);
+        $this->getParameters()->shouldHaveKeyWithValue('buttons', $buttons);
+        $this->getParameters()->shouldHaveKeyWithValue('form_action', $formActionUrl);
         $this->getParameters()->shouldHaveKeyWithValue('form_template', $formTemplate);
-        $this->getParameters()->shouldHaveKeyWithValue('create_route', $createRoute);
         $this->getParameters()->shouldHaveKeyWithValue('form', $form);
+        $this->getParameters()->shouldHaveKey('viewer');
     }
 }

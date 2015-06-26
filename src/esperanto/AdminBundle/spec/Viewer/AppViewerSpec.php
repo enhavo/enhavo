@@ -4,7 +4,7 @@ namespace spec\esperanto\AdminBundle\Viewer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use esperanto\AdminBundle\Viewer\ConfigParser;
+use esperanto\AdminBundle\Config\ConfigParser;
 
 class AppViewerSpec extends ObjectBehavior
 {

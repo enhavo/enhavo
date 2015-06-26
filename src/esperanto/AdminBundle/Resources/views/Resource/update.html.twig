@@ -1,7 +1,7 @@
 {% extends 'esperantoAdminBundle::dialog.html.twig' %}
 
 {% block content %}
-    <form method="POST" action="{{ form_action }}" data-delete="{{ form_delete }}" data-id="{{ resource.id }}">
+    <form method="POST" action="{{ form_action }}" data-delete="{{ form_delete }}" data-id="{{ data.id }}">
         {% block form %}
             {% include form_template %}
         {% endblock %}

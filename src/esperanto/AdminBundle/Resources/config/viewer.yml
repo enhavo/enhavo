@@ -9,5 +9,5 @@ services:
             - %esperanto_admin.viewer%
 
     viewer.config:
-        class: esperanto\AdminBundle\Viewer\ConfigParser
+        class: esperanto\AdminBundle\Config\ConfigParser
         scope: prototype

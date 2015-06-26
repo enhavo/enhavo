@@ -2,10 +2,10 @@
 
 namespace spec\esperanto\AdminBundle\Viewer;
 
-use esperanto\AdminBundle\Viewer\ConfigParser;
+use esperanto\AdminBundle\Config\ConfigParser;
+use esperanto\AdminBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use esperanto\AdminBundle\Entity\Route;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -18,7 +18,7 @@ class TableViewerSpec extends ObjectBehavior
 
     function it_should_return_value_by_property_on_object()
     {
-        $object = new Route();
+        $object = new EntityMock();
         $object->setName('my name is route');
         $this->getProperty($object, 'name')->shouldReturn('my name is route');
 
@@ -95,7 +95,7 @@ class TableViewerSpec extends ObjectBehavior
                 'widget' => 'esperantoAdminBundle:Widget:id.html.twig'
             ),
         );
-        $object = new Route();
+        $object = new EntityMock();
         $object->setName('something');
         $parameters = array(
             'data' => $object,
