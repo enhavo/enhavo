@@ -1,7 +1,3 @@
-esperanto_admin_extra:
-    resource: .
-    type: extra
-
 esperanto_admin_index:
     pattern:  /
     methods: [GET]

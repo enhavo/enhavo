@@ -1,22 +1,10 @@
 parameters:
-    esperanto_admin.admin_register.class: esperanto\AdminBundle\Admin\AdminRegister
-    esperanto_admin.route_loader.class: esperanto\AdminBundle\Admin\RouteLoader
     esperanto_admin.form.wysiwyg.class: esperanto\AdminBundle\Form\Type\WysiwygType
     security.roles.provider.class: esperanto\AdminBundle\Security\Roles\AdminRolesProvider
     esperanto_admin.form.config.wysiwyg.class: esperanto\AdminBundle\Form\Config\WysiwygConfig
     esperanto_admin.menu_loader.class: esperanto\AdminBundle\Menu\MenuLoader
 
 services:
-    esperanto_admin.admin_register:
-         class: %esperanto_admin.admin_register.class%
-
-    esperanto_admin.route_loader:
-        class: %esperanto_admin.route_loader.class%
-        arguments:
-          - @esperanto_admin.admin_register
-        tags:
-            - { name: routing.loader }
-
     esperanto_admin.form.wysiwyg:
         class: %esperanto_admin.form.wysiwyg.class%
         arguments:
@@ -32,14 +20,6 @@ services:
     cache:
         class: Doctrine\Common\Cache\PhpFileCache
         arguments: [%kernel.cache_dir%]
-
-    esperanto_admin.menu_loader:
-        class: %esperanto_admin.menu_loader.class%
-        arguments:
-            - 'esperanto_admin.menu'
-            - %esperanto_admin.menu%
-            - @knp_menu.factory
-            - @event_dispatcher
 
     security.roles.provider:
         class: %security.roles.provider.class%
@@ -61,3 +41,11 @@ services:
         class: esperanto\AdminBundle\Controller\AppController
         calls:
             - [setContainer, [@service_container]]
+
+    esperanto_admin.menu_loader:
+        class: %esperanto_admin.menu_loader.class%
+        arguments:
+            - 'esperanto_admin.menu'
+            - %esperanto_admin.menu%
+            - @knp_menu.factory
+            - @event_dispatcher
