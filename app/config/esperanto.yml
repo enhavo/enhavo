@@ -27,8 +27,7 @@ esperanto_admin:
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         news:
             label: label.news
-            #route: esperanto_news_news_index
-            route: esperanto_admin_index
+            route: esperanto_news_news_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page

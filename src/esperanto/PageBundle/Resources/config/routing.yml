@@ -3,6 +3,10 @@ esperanto_page_page_index:
     methods: [GET]
     defaults:
         _controller: esperanto_page.controller.page:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+            type: index
 
 esperanto_page_page_create:
     path: /admin/esperanto/page/page/create
@@ -41,6 +45,8 @@ esperanto_page_page_update:
     methods: [GET,POST]
     defaults:
         _controller: esperanto_page.controller.page:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
         _viewer:
             type: edit
             tabs:
@@ -61,6 +67,8 @@ esperanto_page_page_table:
     methods: [GET]
     defaults:
         _controller: esperanto_page.controller.page:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
         _viewer:
             type: table
             table:

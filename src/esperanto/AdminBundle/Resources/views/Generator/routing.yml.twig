@@ -5,6 +5,8 @@
     methods: [GET]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_create:
@@ -14,15 +16,8 @@
     methods: [GET,POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:createAction
-        _viewer:
-
-{{ app }}_{{ resource }}_preview:
-    options:
-        expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/preview
-    methods: [POST]
-    defaults:
-        _controller: {{ app }}.controller.{{ resource }}:previewAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_update:
@@ -32,6 +27,8 @@
     methods: [GET,POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_table:
@@ -41,6 +38,8 @@
     methods: [GET]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_delete:
@@ -50,4 +49,11 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:deleteAction
-        _viewer:
+
+{{ app }}_{{ resource }}_preview:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/preview
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:previewAction

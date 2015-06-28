@@ -13,7 +13,6 @@ esperanto_admin_admin:
 
 esperanto_news_admin:
     resource: "@esperantoNewsBundle/Resources/config/routing/admin.yml"
-    prefix:   /admin/news
 
 esperanto_page:
     resource: "@esperantoPageBundle/Resources/config/routing.yml"
