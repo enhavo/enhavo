@@ -1,0 +1,53 @@
+{{ app }}_{{ resource }}_index:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/index
+    methods: [GET]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:indexAction
+        _viewer:
+
+{{ app }}_{{ resource }}_create:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/create
+    methods: [GET,POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:createAction
+        _viewer:
+
+{{ app }}_{{ resource }}_preview:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/preview
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:previewAction
+        _viewer:
+
+{{ app }}_{{ resource }}_update:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:updateAction
+        _viewer:
+
+{{ app }}_{{ resource }}_table:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/table/{page}
+    methods: [GET]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:tableAction
+        _viewer:
+
+{{ app }}_{{ resource }}_delete:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:deleteAction
+        _viewer:

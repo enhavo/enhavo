@@ -49,3 +49,8 @@ services:
             - %esperanto_admin.menu%
             - @knp_menu.factory
             - @event_dispatcher
+
+    esperanto_admin.generator.route_generator:
+        class: esperanto\AdminBundle\Generator\RoutingGenerator
+        arguments:
+            - @templating

@@ -22,7 +22,7 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
@@ -61,7 +61,7 @@ class ResourceController extends BaseController
     public function updateAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'edit');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
@@ -97,7 +97,7 @@ class ResourceController extends BaseController
     public function indexAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'index');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
@@ -121,7 +121,7 @@ class ResourceController extends BaseController
     public function tableAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'table');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);

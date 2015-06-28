@@ -30,7 +30,11 @@ class ConfigParser
 
     public function parse(Request $request)
     {
-        $this->config = $request->get('_viewer');
+        $config = $request->get('_viewer');
+        if($config === null) {
+            $config = array();
+        }
+        $this->config = $config;
         return $this;
     }
 
@@ -39,7 +43,7 @@ class ConfigParser
         $this->defaultConfig = $defaultConfig;
     }
 
-    public function get($key, $default = null)
+    public function get($key)
     {
         $keyArray = preg_split('/\./', $key);
 
@@ -53,6 +57,9 @@ class ConfigParser
 
     public function getType()
     {
+        if(!isset($this->config['type'])) {
+            return null;
+        }
         return $this->config['type'];
     }
 
