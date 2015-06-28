@@ -1,0 +1,95 @@
+esperanto_reference_reference_index:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_reference.controller.reference:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+esperanto_reference_reference_create:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/create
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_reference.controller.reference:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+            tabs:
+                overview:
+                    label: overview
+                    template: esperantoReferenceBundle:Tab:overview.html.twig
+                details:
+                    label: details
+                    template: esperantoReferenceBundle:Tab:details.html.twig
+                category:
+                    label: category
+                    template: esperantoReferenceBundle:Tab:category.html.twig
+                seo:
+                    label: seo
+                    template: esperantoReferenceBundle:Tab:seo.html.twig
+
+esperanto_reference_reference_update:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_reference.controller.reference:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+            tabs:
+                overview:
+                    label: overview
+                    template: esperantoReferenceBundle:Tab:overview.html.twig
+                details:
+                    label: details
+                    template: esperantoReferenceBundle:Tab:details.html.twig
+                category:
+                    label: category
+                    template: esperantoReferenceBundle:Tab:category.html.twig
+                seo:
+                    label: seo
+                    template: esperantoReferenceBundle:Tab:seo.html.twig
+
+esperanto_reference_reference_table:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_reference.controller.reference:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    title:
+                        label: title
+                        property: id
+
+esperanto_reference_reference_delete:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: esperanto_reference.controller.reference:deleteAction
+
+esperanto_reference_reference_preview:
+    options:
+        expose: true
+    path: /admin/esperanto/reference/reference/preview
+    methods: [POST]
+    defaults:
+        _controller: esperanto_reference.controller.reference:previewAction
+

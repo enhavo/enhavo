@@ -57,6 +57,7 @@ esperanto_news_news_table:
     path: /admin/esperanto/news/news/table/{page}
     methods: [GET]
     defaults:
+        page: 1
         _controller: esperanto_news.controller.news:tableAction
         _sylius:
             template: esperantoAdminBundle:Resource:table.html.twig

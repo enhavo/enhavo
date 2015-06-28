@@ -37,6 +37,7 @@
     path: /admin/{{ app_url }}/{{ resource_url }}/table/{page}
     methods: [GET]
     defaults:
+        page: 1
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
             template: esperantoAdminBundle:Resource:table.html.twig

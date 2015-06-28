@@ -66,6 +66,7 @@ esperanto_page_page_table:
     path: /admin/esperanto/page/page/table/{page}
     methods: [GET]
     defaults:
+        page: 1
         _controller: esperanto_page.controller.page:tableAction
         _sylius:
             template: esperantoAdminBundle:Resource:table.html.twig

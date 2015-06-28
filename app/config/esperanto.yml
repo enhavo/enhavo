@@ -32,12 +32,10 @@ esperanto_admin:
         page:
             label: label.page
             route: esperanto_page_page_index
-            #route: esperanto_admin_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         reference:
             label: label.reference
-            #route: esperanto_reference_reference_index
-            route: esperanto_admin_index
+            route: esperanto_reference_reference_index
             role: ROLE_ESPERANTO_REFERENCE_REFERENCE_INDEX
         download:
             label: label.download

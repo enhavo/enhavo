@@ -7,15 +7,18 @@ esperanto_media:
 esperanto_user_security:
     resource: "@esperantoUserBundle/Resources/config/routing/security.yml"
 
-esperanto_admin_admin:
+esperanto_admin:
     resource: "@esperantoAdminBundle/Resources/config/routing/admin.yml"
     prefix:   /admin
 
-esperanto_news_admin:
+esperanto_news:
     resource: "@esperantoNewsBundle/Resources/config/routing/admin.yml"
 
 esperanto_page:
     resource: "@esperantoPageBundle/Resources/config/routing.yml"
+
+esperanto_reference:
+    resource: "@esperantoReferenceBundle/Resources/config/routing.yml"
 
 esperanto_content_admin:
     prefix:   /admin/content
