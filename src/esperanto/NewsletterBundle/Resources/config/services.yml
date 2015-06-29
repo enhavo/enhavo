@@ -11,9 +11,15 @@ services:
 
 
     esperanto_newsletter_subscriber:
-        class: esperanto\NewsletterBundle\Form\Type\SubscriberType
+        class: %esperanto_newsletter.form.type.subscriber.class%
         tags:
             - { name: form.type }
+
+    esperanto_newsletter_newsletter:
+        class: %esperanto_newsletter.form.type.newsletter.class%
+        tags:
+            - { name: form.type }
+
 
     esperanto_newsletter.event.newsletter:
         class: %esperanto_newsletter.event.newsletter.class%

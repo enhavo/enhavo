@@ -108,6 +108,6 @@ cmf_routing:
 
 esperanto_newsletter:
     subscriber:
-        send_from: 'TestFrom'
+        send_from: 'test@test.com'
         subject: 'TestSubject'
-        template:  'subscriber-email.html.twig'
+        template:  'esperantoNewsletterBundle:Default:subscriber-email.html.twig'

@@ -248,6 +248,7 @@ var Form = function(router, templating, admin, translator)
     setOrder();
   };
 
+
   var init = function() {
     $(document).on('formOpenAfter', function(event, form) {
       self.initDataPicker(form);

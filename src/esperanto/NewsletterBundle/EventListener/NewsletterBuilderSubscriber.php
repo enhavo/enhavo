@@ -8,9 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use esperanto\AdminBundle\DependencyInjection\Configuration;
-use Symfony\Component\Config\Definition\Processor;
+use esperanto\AdminBundle\Event\RouteBuilderEvent;
 
 
 class NewsletterBuilderSubscriber extends Controller implements EventSubscriberInterface
@@ -32,36 +30,57 @@ class NewsletterBuilderSubscriber extends Controller implements EventSubscriberI
         return array(
             'esperanto_newsletter.subscriber.pre_create' => array('onPreCreate', 0),
             'esperanto_newsletter.subscriber.post_create' => array('onPostCreate', 0),
+            'esperanto_newsletter.newsletter.build_index_route' => array('onBuildIndexRoute', 0),
+            'esperanto_newsletter.newsletter.build_create_route' => array('onBuildCreateRoute', 0),
+            'esperanto_newsletter.newsletter.build_edit_route' => array('onBuildEditRoute', 0),
+            'esperanto_newsletter.newsletter.build_table_route' => array('onBuildTableRoute', 0),
         );
+    }
+
+    public function onBuildIndexRoute(RouteBuilderEvent $event)
+    {
+        $event->getBuilder()->setTemplate('esperantoNewsletterBundle:Resource:index.html.twig');
+    }
+
+    public function onBuildCreateRoute(RouteBuilderEvent $event)
+    {
+        $event->getBuilder()->setTemplate('esperantoNewsletterBundle:Resource:create.html.twig');
+    }
+
+    public function onBuildEditRoute(RouteBuilderEvent $event)
+    {
+        $event->getBuilder()->setTemplate('esperantoNewsletterBundle:Resource:edit.html.twig');
+    }
+
+    public function onBuildTableRoute(RouteBuilderEvent $event)
+    {
+        $event->getBuilder()->setTemplate('esperantoNewsletterBundle:Resource:table.html.twig');
     }
 
     public function onPreCreate(GenericEvent $event)
     {
         $subscriber = $event->getSubject();
 
-        //Erstellungszeitpunkt in DB speichern
         $subscriber->setCreated(new \DateTime());
 
         //Token
         $tokenId = time();
         $tokenId = $tokenId.$subscriber->getEmail();
-        $csrfToken = $this->get('security.csrf.token_manager')->getToken($tokenId)->getValue();
+        $token = $this->get('security.csrf.token_manager')->getToken($tokenId)->getValue();
 
-        //Token in DB speichern
-        $subscriber->setToken($csrfToken);
+        $subscriber->setToken($token);
         $subscriber->setActive(false);
     }
 
     public function onPostCreate(GenericEvent $event)
     {
-        //Email senden
         $subscriber = $event->getSubject();
         $email = $subscriber->getEmail();
         $code = $subscriber->getToken();
 
         $router = $this->container->get('router');
-        $link = $router->getContext()->getHost().$router->generate('esperanto_newsletter_emailactivation', array('code' => $code));
-        $text = $this->render('esperantoNewsletterBundle:Default:'.$this->subscriber['template'], array(
+        $link = $router->generate('esperanto_newsletter_activation', array('code' => $code), true);
+        $text = $this->render($this->subscriber['template'], array(
             "link" => $link
         ));
 

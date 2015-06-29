@@ -4,9 +4,7 @@ namespace esperanto\NewsletterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-use Sylius\Bundle\ResourceBundle\DependencyInjection\AbstractResourceExtension;
 use esperanto\AdminBundle\DependencyInjection\SyliusResourceExtension;
 
 
@@ -19,6 +17,10 @@ class esperantoNewsletterExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container (the default value is sylius).
     protected $applicationName = 'esperanto_newsletter';
+
+    protected $bundleName = 'newsletter';
+
+    protected $companyName = 'esperanto';
 
     // You can define where yours service definitions are
     protected $configDirectory = '/../Resources/config';

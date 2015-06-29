@@ -6,14 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class SubscriberController extends Controller
 {
-    public function indexAction($name)
-    {
-        return $this->render('esperantoNewsletterBundle:Default:index.html.twig', array('name' => $name));
-    }
-
-    public function emailactivationAction(Request $request)
+    public function activationAction(Request $request)
     {
         $code = $request->get('code');
         $newsletter = $this->get('esperanto_newsletter.repository.subscriber')
@@ -34,7 +29,7 @@ class DefaultController extends Controller
 
     public function sendEmailAction(Request $request) {
         $newsletter = $request->get('esperanto_newsletter_newsletter');
-        $id = $newsletter['id'];
+        $id = $request->get('newsletterId');
         $title = $newsletter['title'];
         $subject = $newsletter['subject'];
         $text = $newsletter['text'];

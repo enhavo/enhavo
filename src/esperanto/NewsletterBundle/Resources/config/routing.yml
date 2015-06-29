@@ -7,6 +7,10 @@ esperanto_newsletter_create:
         _controller: esperanto_newsletter.controller.subscriber:createAction
         _admin: esperanto_newsletter.admin.subscriber
 
-esperanto_newsletter_emailactivation:
+esperanto_newsletter_activation:
     pattern: /newsletter/add/{code}
-    defaults: { _controller: esperantoNewsletterBundle:Default:emailactivation }
+    defaults: { _controller: esperantoNewsletterBundle:Subscriber:activation }
+
+esperanto_newsletter_sendEmail:
+    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
+    defaults: { _controller: esperantoNewsletterBundle:Subscriber:sendEmail }

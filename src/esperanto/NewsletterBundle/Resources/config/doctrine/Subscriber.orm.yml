@@ -1,6 +1,6 @@
 esperanto\NewsletterBundle\Entity\Subscriber:
     type: entity
-    table: null
+    table: newsletter_subscriber
     id:
         id:
             type: integer

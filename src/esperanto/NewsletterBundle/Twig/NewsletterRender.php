@@ -33,18 +33,25 @@ class NewsletterRender extends \Twig_Extension
         );
     }
 
-    public function render($template)
+    public function render($template=null)
     {
         if($this->templateEngine === null) {
             $this->templateEngine = $this->container->get('templating');
         }
 
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create('esperanto_newsletter_'.$template);
-        $formView = $form->createView();
+        if($template == null){
+            $form = $formFactory->create('esperanto_newsletter_subscriber');
+            $formView = $form->createView();
 
-        $template = 'esperantoProjectBundle:Newsletter:'.$template.'.html.twig';
+            $template = 'esperantoNewsletterBundle:Newsletter:subscriber.html.twig';
+        } else {
 
+            $form = $formFactory->create('esperanto_newsletter_subscriber');
+            $formView = $form->createView();
+
+            $template = $template;
+        }
         return $this->templateEngine->render($template, array(
             'form' => $formView
         ));
