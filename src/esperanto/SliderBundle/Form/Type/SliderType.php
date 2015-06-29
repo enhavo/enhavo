@@ -23,9 +23,6 @@ class SliderType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

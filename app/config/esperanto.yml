@@ -94,6 +94,12 @@ esperanto_content:
             repository: esperantoContentBundle:CiteText
             template: esperantoContentBundle:Item:cite_text.html
             label: Zitat
+        download:
+            model: esperanto\DownloadBundle\Entity\DownloadItem
+            form: esperanto\DownloadBundle\Form\Type\DownloadItemType
+            repository: esperantoDownloadBundle:DownloadItem
+            template: esperantoDownloadBundle:Item:download.html.twig
+            label: Download
 
 esperanto_page:
     classes:
@@ -113,12 +119,3 @@ esperanto_reference:
          reference:
             model: esperanto\ProjectBundle\Entity\Reference
             form: esperanto\ProjectBundle\Form\Type\ReferenceType
-
-esperanto_slider:
-    classes:
-        slide:
-            model: esperanto\ProjectBundle\Entity\Slide
-            form: esperanto\ProjectBundle\Form\Type\SlideType
-        slider:
-            model: esperanto\ProjectBundle\Entity\Slider
-            form: esperanto\ProjectBundle\Form\Type\SliderType

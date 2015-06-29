@@ -17,11 +17,28 @@ class PicturePictureType extends ItemFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
-        $builder->add('filesLeft', 'esperanto_files');
-        $builder->add('filesRight', 'esperanto_files');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title'
+        ));
+
+        $builder->add('filesLeft', 'esperanto_files', array(
+            'label' => 'form.label.picture_left'
+        ));
+
+        $builder->add('captionLeft', 'text', array(
+            'label' => 'form.label.caption_left'
+        ));
+
+        $builder->add('filesRight', 'esperanto_files', array(
+            'label' => 'form.label.picture_right'
+        ));
+
+        $builder->add('captionRight', 'text', array(
+            'label' => 'form.label.caption_right'
+        ));
+
         $builder->add('frame', 'choice', array(
-            'label' => 'form.label.public',
+            'label' => 'form.label.frame',
             'choices'   => array(
                 '1' => 'label.yes',
                 '0' => 'label.no'
@@ -29,8 +46,6 @@ class PicturePictureType extends ItemFormType
             'expanded' => true,
             'multiple' => false
         ));
-        $builder->add('captionLeft', 'text');
-        $builder->add('captionRight', 'text');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

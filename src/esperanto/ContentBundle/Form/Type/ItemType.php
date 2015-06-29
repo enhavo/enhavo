@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use esperanto\ContentBundle\Entity\Item;
 
 class ItemType extends AbstractType
 {
@@ -54,6 +55,19 @@ class ItemType extends AbstractType
                 $form->add('itemType', $resolver->getFormType($item->getType()));
             }
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $data = $form->getData();
+        if($data instanceof Item) {
+            $view->vars['label'] = $this->resolver->getLabel($data->getType());
+        }
+
+        return;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

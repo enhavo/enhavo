@@ -25,13 +25,17 @@ class ContentController extends Controller
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $formType->setFormName($formName);
-        $form = $formFactory->create($formType)->createView();
+        $form = $formFactory->create($formType, null, array(
+            'csrf_protection' => false,
+        ));
+        $label = $resolver->getLabel($type);
 
         return $this->render('esperantoContentBundle:Form:form.html.twig', array(
-            'formItem' => $form,
+            'formItem' => $form->createView(),
             'formName' => $formName,
             'formOrder' => 0,
-            'formType' => $type
+            'formType' => $type,
+            'label' => $label
         ));
     }
 } 

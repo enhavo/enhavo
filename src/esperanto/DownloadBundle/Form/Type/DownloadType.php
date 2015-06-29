@@ -5,16 +5,14 @@ namespace esperanto\DownloadBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-
 
 class DownloadType extends AbstractType
 {
-    protected $router;
+    protected $dataClass;
 
-    public function __construct(Router $router)
+    public function __construct($dataClass)
     {
-        $this->router = $router;
+        $this->dataClass = $dataClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -35,7 +33,7 @@ class DownloadType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\DownloadBundle\Entity\Download'
+            'data_class' => $this->dataClass
         ));
     }
 
