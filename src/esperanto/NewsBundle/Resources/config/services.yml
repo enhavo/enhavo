@@ -3,7 +3,6 @@ parameters:
     esperanto_news.news_resolver.class: esperanto\NewsBundle\Service\NewsResolver
     esperanto_news.news.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
 
-
 services:
     esperanto_news.event.news:
         class: %esperanto_news.event.news.class%

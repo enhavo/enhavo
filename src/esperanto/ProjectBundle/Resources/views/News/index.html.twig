@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="de">
+<head>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoproject/js/base.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantonewsletter/js/NewsletterForm.js') }}"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+</head>
+<body>
+    {{ newsletter_render('esperantoNewsletterBundle:Newsletter:subscriber.html.twig') }}
+</body>

@@ -40,6 +40,10 @@ esperanto_admin:
             label: label.homepage
             route: esperanto_project_homepage
             role: ROLE_ESPERANTO_PROJECT_HOMEPAGE_INDEX
+        newsletter:
+            label: label.newsletter
+            route: esperanto_newsletter_newsletter_index
+            role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
 
 esperanto_content:
     render:
