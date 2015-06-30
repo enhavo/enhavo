@@ -106,6 +106,12 @@ cmf_routing:
         enabled: true
         route_provider_service_id: esperanto_admin.route_provider
 
+esperanto_newsletter:
+    subscriber:
+        send_from: 'test@test.com'
+        subject: 'TestSubject'
+        template:  'esperantoNewsletterBundle:Default:subscriber-email.html.twig'
+
 parameters:
     pdo.db_options:
         db_table:    admin_session

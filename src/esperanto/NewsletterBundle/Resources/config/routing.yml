@@ -1,3 +1,16 @@
-esperanto_newsletter_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: esperantoNewsletterBundle:Default:index }
+esperanto_newsletter_create:
+    path: /newsletter/new
+    methods: [GET, POST]
+    options:
+        expose: true
+    defaults:
+        _controller: esperanto_newsletter.controller.subscriber:createAction
+        _admin: esperanto_newsletter.admin.subscriber
+
+esperanto_newsletter_activation:
+    pattern: /newsletter/add/{code}
+    defaults: { _controller: esperantoNewsletterBundle:Subscriber:activation }
+
+esperanto_newsletter_sendEmail:
+    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
+    defaults: { _controller: esperantoNewsletterBundle:Subscriber:sendEmail }

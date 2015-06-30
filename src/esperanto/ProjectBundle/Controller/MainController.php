@@ -2,6 +2,7 @@
 
 namespace esperanto\ProjectBundle\Controller;
 
+use esperanto\NewsletterBundle\Form\Type\SubscriberType;
 use esperanto\ProjectBundle\Entity\Page;
 use esperanto\ProjectBundle\Entity\News;
 use esperanto\ProjectBundle\Entity\Reference;

@@ -40,6 +40,10 @@ esperanto_project:
     resource: "@esperantoProjectBundle/Resources/config/routing.yml"
     prefix:   /
 
+esperanto_newsletter:
+    resource: "@esperantoNewsletterBundle/Resources/config/routing.yml"
+    prefix:   /
+
 esperanto_project_admin:
     resource: "@esperantoProjectBundle/Resources/config/admin.yml"
     prefix:   /admin
