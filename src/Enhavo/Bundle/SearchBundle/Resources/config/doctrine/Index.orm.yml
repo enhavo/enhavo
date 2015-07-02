@@ -1,0 +1,33 @@
+esperanto\SearchBundle\Entity\Index:
+    type: entity
+    table: search_index
+    repositoryClass: esperanto\SearchBundle\Repository\IndexRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        teaser:
+            type: text
+            nullable: true
+
+        content:
+            type: text
+            nullable: true
+
+        route:
+            type: string
+            length: 255
+
+        routeParameter:
+            type: string
+            length: 255
+
+    lifecycleCallbacks: {  }
