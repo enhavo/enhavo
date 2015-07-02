@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>{% block title %}esperanto CMS{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/font-awesome.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/jquery_ui/jquery-ui.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/icheck/icheck-esperanto.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/select2/select2.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoadmin/css/base.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoadmin/css/theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoadmin/css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantocontent/css/style.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantopage/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoreference/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantonews/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoslider/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantouser/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantomedia/css/style.css') }}">
+
+    {% if view is defined %}
+        {% for stylesheet in view.getParameter('stylesheets') %}
+            <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
+        {% endfor %}
+    {% endif %}
+
+    {% block stylesheets %}{% endblock %}
+
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/jquery-plugin/jquery.timepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/fileupload/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/fileupload/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/js/fileupload/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/icheck/icheck.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/select2/select2.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script type="text/javascript" src="{{ path('bazinga_jstranslation_js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/esperantoadmin/js/classes/Form.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoadmin/js/classes/Admin.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoadmin/js/classes/Templating.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoadmin/js/plugin.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoadmin/js/bootstrap.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ asset('bundles/esperantomedia/js/UploadForm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantocontent/js/ContentForm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantocategory/js/CategoryForm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoslider/js/SliderForm.js') }}"></script>
+
+
+    {% if view is defined %}
+        {% for javascript in view.getParameter('javascripts') %}
+            <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
+        {% endfor %}
+    {% endif %}
+
+    {% block javascripts %}{% endblock %}
+</head>
+<body>
+{% block body %}
+    <div id="overlay"></div>
+    <div id="overlayContent"></div>
+    <div id="overlayMessage"></div>
+
+    <div id="iframeContainer">
+        <div class="close"><i class="fa fa-times"></i></div>
+        <iframe src="" id="iframe" name="iframe"></iframe>
+    </div>
+
+    <div id="menu-main-background"></div>
+    <div class="clearfix">
+        <div id="menu-main-container">{{ admin_menu_render() }}</div>
+        <div id="content-container" class="container">{% block content %}{% endblock %}</div>
+    </div>
+{% endblock %}
+</body>
+</html>

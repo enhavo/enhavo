@@ -1,0 +1,25 @@
+esperanto_admin_index:
+    pattern:  /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /admin/dashboard
+        permanent: true
+
+esperanto_admin_dashboard:
+    pattern:  /dashboard
+    methods: [GET]
+    defaults:
+        _controller: esperanto_admin.controller.app:indexAction
+        _viewer:
+            type: app
+            parameters:
+                param1: value1
+                param2: value2
+            stylesheets:
+                esperanto_app_style:
+                    resource: '@esperantoAppBundle/Resource/public/css/style.css'
+                    depends: ~
+            javascripts:
+                esperanto_app_bootstrap:
+                    resource: '@esperantoAppBundle/Resource/public/js/bootstrap.css'
+                    depends: jquery

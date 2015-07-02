@@ -1,0 +1,23 @@
+{
+  "name": "esperanto/admin-bundle",
+  "type": "library",
+  "description": "esperantoAdminBundle",
+  "keywords": ["framework"],
+  "homepage": "http://www.esperanto-agentur.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "doctrine/orm": "~2.2,>=2.2.3",
+    "doctrine/doctrine-bundle": "~1.2",
+    "symfony-cmf/routing-bundle": "1.3.4"
+  },
+  "autoload": {
+    "psr-4": { "esperanto\\AdminBundle\\": "" }
+  }
+}

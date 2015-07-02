@@ -1,0 +1,60 @@
+{{ app }}_{{ resource }}_index:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/index
+    methods: [GET]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+{{ app }}_{{ resource }}_create:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/create
+    methods: [GET,POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+
+{{ app }}_{{ resource }}_update:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+
+{{ app }}_{{ resource }}_table:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: {{ app }}.controller.{{ resource }}:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+
+{{ app }}_{{ resource }}_delete:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:deleteAction
+
+{{ app }}_{{ resource }}_preview:
+    options:
+        expose: true
+    path: /admin/{{ app_url }}/{{ resource_url }}/preview
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:previewAction

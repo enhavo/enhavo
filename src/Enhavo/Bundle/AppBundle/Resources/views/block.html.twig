@@ -1,0 +1,20 @@
+{% block buttons %}
+    <div class="col-md-push-2 col-md-2">
+        <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans }}</button>
+    </div>
+    <div class="col-md-push-2 col-md-2">
+        <button class="btn col-md-12 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans }}</button>
+    </div>
+
+    {% if showDeleteButton is defined %}
+        <div class="col-md-push-2 col-md-2">
+            <button class="btn col-md-12 delete" type="button"><i class="fa fa-trash"></i> {{ 'label.delete'|trans }}</button>
+        </div>
+    {% endif %}
+{%- endblock -%}
+
+{% block buttonRow %}
+    <div class="row">
+        {{ block('buttons') }}
+    </div>
+{% endblock %}
