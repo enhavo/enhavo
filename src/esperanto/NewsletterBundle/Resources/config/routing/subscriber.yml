@@ -1,3 +1,7 @@
+esperanto_newsletter_activation:
+    pattern: /newsletter/add/{code}
+    defaults: { _controller: esperantoNewsletterBundle:Subscriber:activation }
+
 esperanto_newsletter_create:
     path: /newsletter/new
     methods: [GET, POST]
@@ -7,10 +11,6 @@ esperanto_newsletter_create:
         _controller: esperanto_newsletter.controller.subscriber:createAction
         _admin: esperanto_newsletter.admin.subscriber
 
-esperanto_newsletter_activation:
-    pattern: /newsletter/add/{code}
-    defaults: { _controller: esperantoNewsletterBundle:Subscriber:activation }
-
-esperanto_newsletter_sendEmail:
+esperanto_newsletter_send_email:
     pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
     defaults: { _controller: esperantoNewsletterBundle:Subscriber:sendEmail }

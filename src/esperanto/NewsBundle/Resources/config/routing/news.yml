@@ -62,6 +62,14 @@ esperanto_news_news_table:
         _sylius:
             template: esperantoAdminBundle:Resource:table.html.twig
         _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    title:
+                        label: title
+                        property: title
 
 esperanto_news_news_delete:
     options:

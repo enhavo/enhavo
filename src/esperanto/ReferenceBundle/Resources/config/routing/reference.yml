@@ -1,7 +1,7 @@
 esperanto_reference_reference_index:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/index
+    path: /esperanto/reference/reference/index
     methods: [GET]
     defaults:
         _controller: esperanto_reference.controller.reference:indexAction
@@ -12,7 +12,7 @@ esperanto_reference_reference_index:
 esperanto_reference_reference_create:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/create
+    path: /esperanto/reference/reference/create
     methods: [GET,POST]
     defaults:
         _controller: esperanto_reference.controller.reference:createAction
@@ -36,7 +36,7 @@ esperanto_reference_reference_create:
 esperanto_reference_reference_update:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/update/{id}
+    path: /esperanto/reference/reference/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: esperanto_reference.controller.reference:updateAction
@@ -60,7 +60,7 @@ esperanto_reference_reference_update:
 esperanto_reference_reference_table:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/table/{page}
+    path: /esperanto/reference/reference/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -75,12 +75,12 @@ esperanto_reference_reference_table:
                         property: id
                     title:
                         label: title
-                        property: id
+                        property: title
 
 esperanto_reference_reference_delete:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/delete/{id}
+    path: /esperanto/reference/reference/delete/{id}
     methods: [POST]
     defaults:
         _controller: esperanto_reference.controller.reference:deleteAction
@@ -88,7 +88,7 @@ esperanto_reference_reference_delete:
 esperanto_reference_reference_preview:
     options:
         expose: true
-    path: /admin/esperanto/reference/reference/preview
+    path: /esperanto/reference/reference/preview
     methods: [POST]
     defaults:
         _controller: esperanto_reference.controller.reference:previewAction

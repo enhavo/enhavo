@@ -1,5 +1,5 @@
 esperanto_page_page_index:
-    path: /admin/esperanto/page/page/index
+    path: /esperanto/page/page/index
     methods: [GET]
     defaults:
         _controller: esperanto_page.controller.page:indexAction
@@ -9,7 +9,7 @@ esperanto_page_page_index:
             type: index
 
 esperanto_page_page_create:
-    path: /admin/esperanto/page/page/create
+    path: /esperanto/page/page/create
     methods: [GET,POST]
     options:
         expose: true
@@ -33,7 +33,7 @@ esperanto_page_page_create:
 esperanto_page_page_preview:
     options:
         expose: true
-    path: /admin/esperanto/page/page/preview
+    path: /esperanto/page/page/preview
     methods: [POST]
     defaults:
         _controller: esperanto_page.controller.page:previewAction
@@ -41,7 +41,7 @@ esperanto_page_page_preview:
 esperanto_page_page_update:
     options:
         expose: true
-    path: /admin/esperanto/page/page/update/{id}
+    path: /esperanto/page/page/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: esperanto_page.controller.page:updateAction
@@ -63,7 +63,7 @@ esperanto_page_page_update:
 esperanto_page_page_table:
     options:
         expose: true
-    path: /admin/esperanto/page/page/table/{page}
+    path: /esperanto/page/page/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -86,11 +86,6 @@ esperanto_page_page_table:
                         widget: esperantoAdminBundle:Widget:boolean.html.twig
 
 esperanto_page_page_delete:
-    path: /admin/esperanto/page/page/delete/{id}
+    path: /esperanto/page/page/delete/{id}
     defaults:
         _controller: esperanto_page.controller.page:deleteAction
-
-esperanto_page_page_show:
-    path: /page/{id}/{slug}
-    defaults:
-        _controller: esperantoPageBundle:Page:show

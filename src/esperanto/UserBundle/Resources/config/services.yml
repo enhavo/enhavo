@@ -1,21 +1,9 @@
 parameters:
-    esperanto_user.event.user.class: esperanto\UserBundle\EventListener\AdminUserBuilderSubscriber
-    esperanto_user.event.group.class: esperanto\UserBundle\EventListener\AdminGroupBuilderSubscriber
     security.authentication.voter.group_role_voter.class: esperanto\UserBundle\Security\Authentication\Voter\GroupRoleVoter
     security.authentication.success_handler.class: esperanto\UserBundle\Security\Authentication\AuthenticationSuccessHandler
     esperanto_user.event.save_user.class: esperanto\UserBundle\EventListener\SaveUserSubscriber
 
 services:
-    esperanto_user.event.user:
-        class: %esperanto_user.event.user.class%
-        tags:
-            - { name: kernel.event_subscriber }
-
-    esperanto_user.event.group:
-        class: %esperanto_user.event.group.class%
-        tags:
-            - { name: kernel.event_subscriber }
-
     esperanto_user.event.save_user:
         class: %esperanto_user.event.save_user.class%
         arguments:

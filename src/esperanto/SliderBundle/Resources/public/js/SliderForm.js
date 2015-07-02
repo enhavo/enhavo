@@ -39,7 +39,7 @@ function SliderForm(router)
 
   var init = function() {
     $(document).on('formOpenAfter', function(event, form) {
-      self.initLinkTypeSelector(form);
+      //self.initLinkTypeSelector(form);
     });
   };
 

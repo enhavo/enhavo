@@ -15,15 +15,17 @@ esperanto_admin:
 #        layout: 'esperantoAdminBundle::base.html.twig'
         app: esperanto\AdminBundle\Viewer\AppViewer
     menu:
+        dashboard:
+            label: label.dashboard
+            route: esperanto_admin_dashboard
+            role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
             label: label.user
-            #route: esperanto_user_user_index
-            route: esperanto_admin_index
+            route: esperanto_user_user_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         group:
             label: label.group
-            #route: esperanto_user_group_index
-            route: esperanto_admin_index
+            route: esperanto_user_group_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         news:
             label: label.news
@@ -39,14 +41,12 @@ esperanto_admin:
             role: ROLE_ESPERANTO_REFERENCE_REFERENCE_INDEX
         download:
             label: label.download
-            #route: esperanto_download_download_index
-            route: esperanto_admin_index
+            route: esperanto_download_download_index
             role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
-        homepage:
-            label: label.homepage
-            #route: esperanto_project_homepage
-            route: esperanto_admin_index
-            role: ROLE_ESPERANTO_PROJECT_HOMEPAGE_INDEX
+        slider:
+            label: label.slider
+            route: esperanto_slider_slide_index
+            role: ROLE_ESPERANTO_SLIDER_SLIDER_INDEX
         newsletter:
             label: label.newsletter
             route: esperanto_newsletter_newsletter_index

@@ -1,0 +1,60 @@
+esperanto_slider_slide_index:
+    options:
+        expose: true
+    path: /esperanto/slider/slide/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_slider.controller.slide:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+esperanto_slider_slide_create:
+    options:
+        expose: true
+    path: /esperanto/slider/slide/create
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_slider.controller.slide:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+
+esperanto_slider_slide_update:
+    options:
+        expose: true
+    path: /esperanto/slider/slide/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_slider.controller.slide:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+
+esperanto_slider_slide_table:
+    options:
+        expose: true
+    path: /esperanto/slider/slide/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_slider.controller.slide:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+            table:
+                columns:
+                    id:
+                        label: id
+                        property: id
+                    title:
+                        label: title
+                        property: title
+
+esperanto_slider_slide_delete:
+    options:
+        expose: true
+    path: /esperanto/slider/slide/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: esperanto_slider.controller.slide:deleteAction

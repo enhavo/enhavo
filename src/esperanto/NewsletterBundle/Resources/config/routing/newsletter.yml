@@ -1,0 +1,68 @@
+esperanto_newsletter_newsletter_index:
+    options:
+        expose: true
+    path: /esperanto/newsletter/newsletter/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_newsletter.controller.newsletter:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+esperanto_newsletter_newsletter_create:
+    options:
+        expose: true
+    path: /esperanto/newsletter/newsletter/create
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_newsletter.controller.newsletter:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+
+esperanto_newsletter_newsletter_update:
+    options:
+        expose: true
+    path: /esperanto/newsletter/newsletter/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_newsletter.controller.newsletter:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+
+esperanto_newsletter_newsletter_table:
+    options:
+        expose: true
+    path: /esperanto/newsletter/newsletter/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_newsletter.controller.newsletter:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    title:
+                        label: title
+                        property: title
+
+esperanto_newsletter_newsletter_delete:
+    options:
+        expose: true
+    path: /esperanto/newsletter/newsletter/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: esperanto_newsletter.controller.newsletter:deleteAction
+
+esperanto_newsletter_newsletter_preview:
+    options:
+        expose: true
+    path: /admin/esperanto/newsletter/newsletter/preview
+    methods: [POST]
+    defaults:
+        _controller: esperanto_newsletter.controller.newsletter:previewAction

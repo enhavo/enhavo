@@ -1,5 +1,12 @@
 esperanto_admin_index:
     pattern:  /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /admin/dashboard
+        permanent: true
+
+esperanto_admin_dashboard:
+    pattern:  /dashboard
     methods: [GET]
     defaults:
         _controller: esperanto_admin.controller.app:indexAction

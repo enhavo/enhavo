@@ -1,5 +1,4 @@
 parameters:
-    esperanto_reference.event.reference.class: esperanto\ReferenceBundle\EventListener\AdminBuilderSubscriber
     esperanto_reference.reference_resolver.class: esperanto\ReferenceBundle\Service\ReferenceResolver
     esperanto_reference.reference.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
 

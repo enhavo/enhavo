@@ -1,13 +1,6 @@
 parameters:
-    esperanto_download.event.download.class: esperanto\DownloadBundle\EventListener\DownloadBuilderSubscriber
-
 
 services:
-    esperanto_download.event.download:
-        class: %esperanto_download.event.download.class%
-        tags:
-            - { name: kernel.event_subscriber }
-
     esperanto_download_download:
         class: %esperanto_download.form.type.download.class%
         arguments:

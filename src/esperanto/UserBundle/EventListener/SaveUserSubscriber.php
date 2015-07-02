@@ -8,7 +8,6 @@
 
 namespace esperanto\UserBundle\EventListener;
 
-use esperanto\AdminBundle\Event\RouteBuilderEvent;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -21,7 +20,8 @@ class SaveUserSubscriber implements EventSubscriberInterface
      */
     protected $userManager;
 
-    public function __construct(UserManager $userManger) {
+    public function __construct(UserManager $userManger)
+    {
         $this->userManager = $userManger;
     }
 
@@ -44,10 +44,5 @@ class SaveUserSubscriber implements EventSubscriberInterface
         $this->userManager->updateCanonicalFields($user);
 
         return;
-    }
-
-    public function onBuildTableRoute(RouteBuilderEvent $event)
-    {
-        $event->getBuilder()->setTemplate('esperantoUserBundle:User:table.html.twig');
     }
 }
