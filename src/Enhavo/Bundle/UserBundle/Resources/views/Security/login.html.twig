@@ -1,0 +1,47 @@
+{% extends "esperantoAdminBundle::base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    <div id="loginBox">
+        {% if error %}
+            <div class="col-md-push-2 col-md-4 error" id="overlayMessage" style="display: block;">
+                <div>{{ 'error.login'|trans }}</div>
+            </div>
+        {% endif %}
+
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <input type="hidden" id="remember_me" name="_remember_me" value="on">
+            <div class="row mb1">
+                <div class="col-md-4 text-right">
+                    <div class="label-container">
+                        <label>{{ 'security.login.username'|trans }}</label>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="input-container">
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mb1">
+                <div class="col-md-4 text-right">
+                    <div class="label-container">
+                        <label>{{ 'security.login.password'|trans }}</label>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="input-container">
+                       <input type="password" id="password" name="_password" required="required" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-push-4 col-md-4">
+                    <button class="btn col-md-12 loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock body %}
