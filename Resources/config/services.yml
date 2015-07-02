@@ -1,0 +1,44 @@
+parameters:
+    esperanto_content.form.content.class: esperanto\ContentBundle\Form\Type\ContentType
+    esperanto_content.form.item.class: esperanto\ContentBundle\Form\Type\ItemType
+    esperanto_content.twig.content_render.class: esperanto\ContentBundle\Twig\ContentRender
+    esperanto_content.doctrine_subscriber.class: esperanto\ContentBundle\EventListener\DoctrineSubscriber
+    esperanto_content.item_type_resolver.class: esperanto\ContentBundle\Item\ItemTypeResolver
+
+services:
+    esperanto_content:
+        class: %esperanto_content.form.content.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @esperanto_content.item_type_resolver
+        tags:
+            - { name: form.type, alias: esperanto_content }
+
+    esperanto_content_item:
+        class: %esperanto_content.form.item.class%
+        arguments:
+            - @esperanto_content.item_type_resolver
+        tags:
+            - { name: form.type, alias: esperanto_content_item }
+
+    esperanto_content.twig.content_render:
+        class: %esperanto_content.twig.content_render.class%
+        arguments:
+            - @router
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    esperanto_content.doctrine_subscriber:
+        class: %esperanto_content.doctrine_subscriber.class%
+        arguments:
+            - @esperanto_content.item_type_resolver
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    esperanto_content.item_type_resolver:
+        class: %esperanto_content.item_type_resolver.class%
+        arguments:
+            - %esperanto_content.items%
+            - %esperanto_content.render.sets%
+            - @service_container

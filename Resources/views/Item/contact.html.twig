@@ -1,0 +1,19 @@
+<div class="row content">
+    <div class="content_contact">
+        <div class="contact_left">
+            {% for file in data.files %}
+                <img class="content_img" src="{{ media_url(file,960) }}">
+            {% endfor %}
+        </div>
+        <div class="contact_right">
+            <div class="content_text">
+                {% if data.title %}
+                    <h2>{{ data.title }}</h2>
+                {% endif %}
+                {% if data.text %}
+                    {{ data.text|raw }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
