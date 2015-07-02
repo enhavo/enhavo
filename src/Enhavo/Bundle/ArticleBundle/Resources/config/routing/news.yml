@@ -1,0 +1,98 @@
+esperanto_news_news_index:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_news.controller.news:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+esperanto_news_news_create:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/create
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_news.controller.news:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+            tabs:
+                news:
+                    label: News
+                    template: esperantoNewsBundle:Tab:news.html.twig
+                content:
+                    label: Content
+                    template: esperantoNewsBundle:Tab:content.html.twig
+                seo:
+                    label: Seo
+                    template: esperantoNewsBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
+
+esperanto_news_news_update:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_news.controller.news:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+            tabs:
+                news:
+                    label: News
+                    template: esperantoNewsBundle:Tab:news.html.twig
+                content:
+                    label: Content
+                    template: esperantoNewsBundle:Tab:content.html.twig
+                seo:
+                    label: Seo
+                    template: esperantoNewsBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
+
+esperanto_news_news_table:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_news.controller.news:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    title:
+                        label: title
+                        property: title
+
+esperanto_news_news_delete:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: esperanto_news.controller.news:deleteAction
+
+esperanto_news_news_preview:
+    options:
+        expose: true
+    path: /admin/esperanto/news/news/preview
+    methods: [POST]
+    defaults:
+        _controller: esperanto_news.controller.news:previewAction
