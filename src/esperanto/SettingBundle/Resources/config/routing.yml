@@ -1,3 +1,0 @@
-esperanto_setting_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: esperantoSettingBundle:Default:index }

@@ -1,4 +1,0 @@
-esperanto\NewsBundle\Entity\News:
-    properties:
-        title:
-            - NotBlank: ~

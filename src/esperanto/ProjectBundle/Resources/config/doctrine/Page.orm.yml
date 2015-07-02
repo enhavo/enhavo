@@ -1,6 +1,0 @@
-esperanto\ProjectBundle\Entity\Page:
-    type: entity
-    table: page_page
-
-    fields:
-

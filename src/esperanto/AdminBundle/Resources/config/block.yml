@@ -1,5 +1,0 @@
-services:
-    esperanto_admin.block.factory:
-        class: esperanto\AdminBundle\Block\BlockFactory
-        calls:
-            - [setContainer, [@service_container]]

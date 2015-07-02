@@ -1,3 +1,0 @@
-esperanto_search_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: esperantoSearchBundle:Default:index }

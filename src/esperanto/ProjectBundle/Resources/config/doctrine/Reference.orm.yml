@@ -1,7 +1,0 @@
-esperanto\ProjectBundle\Entity\Reference:
-    type: entity
-    table: reference_reference
-
-    fields:
-
-    lifecycleCallbacks: {  }

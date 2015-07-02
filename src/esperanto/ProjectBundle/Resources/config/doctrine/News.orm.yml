@@ -1,5 +1,0 @@
-esperanto\ProjectBundle\Entity\News:
-    type: entity
-    table: news_news
-
-    fields:
