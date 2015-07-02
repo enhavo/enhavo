@@ -1,0 +1,19 @@
+esperanto\UserBundle\Entity\Group:
+    type: entity
+    table: user_group
+    repositoryClass: esperanto\UserBundle\Repository\GroupRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+
+    manyToMany:
+        users:
+            targetEntity: User
+            mappedBy: groups
+
+    lifecycleCallbacks: {  }
