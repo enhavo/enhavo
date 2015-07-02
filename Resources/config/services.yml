@@ -1,0 +1,18 @@
+parameters:
+    esperanto_news.news_resolver.class: esperanto\NewsBundle\Service\NewsResolver
+    esperanto_news.news.route_content_loader.class: esperanto\AdminBundle\Route\RouteContentLoader
+
+services:
+    esperanto_news_news:
+        class: %esperanto_news.form.type.news.class%
+        arguments:
+            - %esperanto_news.model.news.class%
+            - %esperanto_news.news_route%
+            - @router
+        tags:
+            - { name: form.type }
+
+    esperanto_news.news_resolver:
+        class: %esperanto_news.news_resolver.class%
+        arguments:
+            - @service_container

@@ -1,0 +1,91 @@
+esperanto\NewsBundle\Entity\News:
+    type: mappedSuperclass
+    table: news_news
+    repositoryClass: esperanto\NewsBundle\Repository\NewsRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        teaser:
+            type: text
+            nullable: true
+
+        slug:
+            type: string
+            length: 255
+            nullable: true
+
+        meta_description:
+            type: text
+            nullable: true
+
+        page_title:
+            type: text
+            nullable: true
+
+        publication_date:
+            type: datetime
+            nullable: true
+
+        priority:
+            type: float
+            nullable: true
+
+        change_frequency:
+            type: string
+            length: 255
+            nullable: true
+
+        public:
+            type: boolean
+            nullable: true
+
+        created:
+            type: datetime
+            nullable: true
+
+        updated:
+            type: datetime
+            nullable: true
+
+        social_media:
+            type: boolean
+            nullable: true
+
+    manyToOne:
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\AdminBundle\Entity\Route
+
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\ContentBundle\Entity\Content
+
+    manyToMany:
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: news_news_picture
+                joinColumns:
+                    news_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+            orderBy: { 'order': 'ASC' }
+            
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]
