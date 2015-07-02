@@ -1,0 +1,30 @@
+esperanto\NewsletterBundle\Entity\Subscriber:
+    type: entity
+    table: newsletter_subscriber
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        email:
+            type: string
+            lenght: 255
+            nullable: true
+
+        active:
+            type: boolean
+            nullable: true
+
+        created:
+            type: datetime
+            nullable: true
+
+        token:
+            type: string
+            lenght: 255
+            nullable: true
+
+    lifecycleCallbacks: {  }
