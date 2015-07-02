@@ -1,9 +1,9 @@
 parameters:
-    enhavo_content.form.content.class: enhavo\ContentBundle\Form\Type\ContentType
-    enhavo_content.form.item.class: enhavo\ContentBundle\Form\Type\ItemType
-    enhavo_content.twig.content_render.class: enhavo\ContentBundle\Twig\ContentRender
-    enhavo_content.doctrine_subscriber.class: enhavo\ContentBundle\EventListener\DoctrineSubscriber
-    enhavo_content.item_type_resolver.class: enhavo\ContentBundle\Item\ItemTypeResolver
+    enhavo_content.form.content.class: Enhavo\Bundle\ContentBundle\Form\Type\ContentType
+    enhavo_content.form.item.class: Enhavo\Bundle\ContentBundle\Form\Type\ItemType
+    enhavo_content.twig.content_render.class: Enhavo\Bundle\ContentBundle\Twig\ContentRender
+    enhavo_content.doctrine_subscriber.class: Enhavo\Bundle\ContentBundle\EventListener\DoctrineSubscriber
+    enhavo_content.item_type_resolver.class: Enhavo\Bundle\ContentBundle\Item\ItemTypeResolver
 
 services:
     enhavo_content:

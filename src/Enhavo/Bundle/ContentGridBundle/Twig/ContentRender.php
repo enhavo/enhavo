@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Twig;
+namespace Enhavo\Bundle\ContentBundle\Twig;
 
-use enhavo\ContentBundle\Entity\Content;
-use enhavo\ContentBundle\Entity\Item;
+use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\ContentBundle\Entity\Item;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;

@@ -1,4 +1,4 @@
-enhavo\NewsletterBundle\Entity\Newsletter:
+Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     type: entity
     table: newsletter_newsletter
     id:

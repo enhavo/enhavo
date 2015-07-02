@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\enhavo\AdminBundle\Viewer;
+namespace spec\Enhavo\Bundle\AdminBundle\Viewer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use enhavo\AdminBundle\Config\ConfigParser;
+use Enhavo\Bundle\AdminBundle\Config\ConfigParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Router;
 
@@ -12,7 +12,7 @@ class CreateViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('enhavo\AdminBundle\Viewer\CreateViewer');
+        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Viewer\CreateViewer');
     }
 
     function it_should_return_parameters(ConfigParser $configParser, ContainerInterface $container, Router $router)

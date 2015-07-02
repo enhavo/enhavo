@@ -1,5 +1,5 @@
 parameters:
-    enhavo_search.manager.class: enhavo\SearchBundle\Search\SearchManager
+    enhavo_search.manager.class: Enhavo\Bundle\SearchBundle\Search\SearchManager
 
 services:
     enhavo_search.manager:

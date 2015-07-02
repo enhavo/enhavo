@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\spec;
+namespace Enhavo\Bundle\AdminBundle\spec;
 
 class EntityMock
 {

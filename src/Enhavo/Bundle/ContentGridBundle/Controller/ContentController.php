@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Controller;
+namespace Enhavo\Bundle\ContentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use enhavo\ContentBundle\Item\ItemFormType;
+use Enhavo\Bundle\ContentBundle\Item\ItemFormType;
 
 class ContentController extends Controller
 {

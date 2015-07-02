@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\ShopBundle\DependencyInjection;
+namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

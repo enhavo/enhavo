@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SearchBundle\Tests\Controller;
+namespace Enhavo\Bundle\SearchBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

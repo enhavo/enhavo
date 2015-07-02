@@ -1,6 +1,6 @@
-enhavo\CategoryBundle\Entity\Category:
+Enhavo\Bundle\CategoryBundle\Entity\Category:
     type: entity
-    repositoryClass: enhavo\CategoryBundle\Repository\CategoryRepository
+    repositoryClass: Enhavo\Bundle\CategoryBundle\Repository\CategoryRepository
     table: category_category
     id:
         id:

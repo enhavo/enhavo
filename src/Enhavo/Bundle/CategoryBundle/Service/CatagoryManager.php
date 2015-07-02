@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\RecipeBundle\Service;
+namespace Enhavo\Bundle\RecipeBundle\Service;
 
 
 class CatagoryManager {

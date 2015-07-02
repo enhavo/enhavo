@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsBundle\Form\Type;
+namespace Enhavo\Bundle\NewsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

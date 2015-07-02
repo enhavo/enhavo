@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\enhavo\AdminBundle\Config;
+namespace spec\Enhavo\Bundle\AdminBundle\Config;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -10,7 +10,7 @@ class ConfigParserSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('enhavo\AdminBundle\Config\ConfigParser');
+        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Config\ConfigParser');
     }
 
     function it_should_give_back_configs(Request $request)

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\CategoryBundle\Form\Type;
+namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
@@ -41,7 +41,7 @@ class CategoryEntityType extends AbstractType
         $resolver->setDefaults(array(
             'expanded' => true,
             'multiple' => true,
-            'class' => 'enhavo\CategoryBundle\Entity\Category'
+            'class' => 'Enhavo\Bundle\CategoryBundle\Entity\Category'
         ));
     }
 

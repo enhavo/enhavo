@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\enhavo\AssetsBundle\Asset;
+namespace spec\Enhavo\Bundle\AssetsBundle\Asset;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class AssetCollectionSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('enhavo\AssetsBundle\Asset\AssetCollection');
+        $this->shouldHaveType('Enhavo\Bundle\AssetsBundle\Asset\AssetCollection');
     }
 
     function it_add_asset_to_collection_and_get_a_list_in_right_dependency_order()

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\CalendarBundle;
+namespace Enhavo\Bundle\CalendarBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

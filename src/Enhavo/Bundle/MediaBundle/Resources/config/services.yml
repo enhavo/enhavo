@@ -1,7 +1,7 @@
 parameters:
-    enhavo_media.form.files_type.class: enhavo\MediaBundle\Form\Type\FilesType
-    enhavo_media.upload.class: enhavo\MediaBundle\Service\UploadService
-    enhavo_media.twig_extension.class: enhavo\MediaBundle\Twig\MediaExtension
+    enhavo_media.form.files_type.class: Enhavo\Bundle\MediaBundle\Form\Type\FilesType
+    enhavo_media.upload.class: Enhavo\Bundle\MediaBundle\Service\UploadService
+    enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
 
 services:
     enhavo_media_files:

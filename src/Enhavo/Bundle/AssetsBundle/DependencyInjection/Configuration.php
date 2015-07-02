@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AssetsBundle\DependencyInjection;
+namespace Enhavo\Bundle\AssetsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

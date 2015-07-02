@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SearchBundle;
+namespace Enhavo\Bundle\SearchBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Generator;
+namespace Enhavo\Bundle\AdminBundle\Generator;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 

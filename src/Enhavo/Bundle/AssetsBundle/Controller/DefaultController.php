@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AssetsBundle\Controller;
+namespace Enhavo\Bundle\AssetsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

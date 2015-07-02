@@ -3,7 +3,7 @@
   "type": "library",
   "description": "enhavoCalendarBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.enhavo-agentur.com",
+  "homepage": "http://enhavo.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "enhavo\\CalendarBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\CalendarBundle\\": "" }
   }
 }

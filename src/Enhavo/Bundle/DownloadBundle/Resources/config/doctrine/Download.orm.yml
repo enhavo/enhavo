@@ -1,4 +1,4 @@
-enhavo\DownloadBundle\Entity\Download:
+Enhavo\Bundle\DownloadBundle\Entity\Download:
     type: mappedSuperclass
     table: download_download
 
@@ -22,7 +22,7 @@ enhavo\DownloadBundle\Entity\Download:
     manyToMany:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: enhavo\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
                 name: download_download_file
                 joinColumns:

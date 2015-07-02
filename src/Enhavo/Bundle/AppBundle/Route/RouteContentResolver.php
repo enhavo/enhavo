@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Route;
+namespace Enhavo\Bundle\AdminBundle\Route;
 
 use Symfony\Component\DependencyInjection\Container;
 
@@ -39,7 +39,7 @@ class RouteContentResolver
     public function getRepository($type)
     {
         foreach ($this->collector->getCollection() as $item) {
-            /** @var $item \enhavo\AdminBundle\Route\RouteContentLoader */
+            /** @var $item \Enhavo\Bundle\AdminBundle\Route\RouteContentLoader */
             if($item->getType() === $type) {
                 return $this->container->get($item->getRepository());
             }
@@ -51,7 +51,7 @@ class RouteContentResolver
     {
         $className = get_class($content);
         foreach ($this->collector->getCollection() as $item) {
-            /** @var $item \enhavo\AdminBundle\Route\RouteContentLoader */
+            /** @var $item \Enhavo\Bundle\AdminBundle\Route\RouteContentLoader */
             if($item->getClassName() === $className) {
                 return $item->getType();
             }

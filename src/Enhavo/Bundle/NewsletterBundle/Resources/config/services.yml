@@ -1,9 +1,9 @@
 parameters:
-    enhavo_newsletter.event.newsletter.class: enhavo\NewsletterBundle\EventListener\NewsletterBuilderSubscriber
+    enhavo_newsletter.event.newsletter.class: Enhavo\Bundle\NewsletterBundle\EventListener\NewsletterBuilderSubscriber
 
 services:
     enhavo_newsletter_newsletter_render:
-        class: enhavo\NewsletterBundle\Twig\NewsletterRender
+        class: Enhavo\Bundle\NewsletterBundle\Twig\NewsletterRender
         arguments:
             - @service_container
         tags:

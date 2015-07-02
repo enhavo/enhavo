@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SliderBundle;
+namespace Enhavo\Bundle\SliderBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

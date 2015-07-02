@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Form\Config;
+namespace Enhavo\Bundle\AdminBundle\Form\Config;
 
-use enhavo\AdminBundle\Util\Assetic;
+use Enhavo\Bundle\AdminBundle\Util\Assetic;
 
 class WysiwygOption
 {

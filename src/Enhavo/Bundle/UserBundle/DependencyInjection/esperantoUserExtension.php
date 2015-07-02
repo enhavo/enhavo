@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\UserBundle\DependencyInjection;
+namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
-use enhavo\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;

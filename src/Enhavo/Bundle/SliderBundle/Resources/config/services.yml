@@ -1,5 +1,5 @@
 parameters:
-    enhavo_slider.form.type.slider_order.class: enhavo\SliderBundle\Form\Type\SlideOrderType
+    enhavo_slider.form.type.slider_order.class: Enhavo\Bundle\SliderBundle\Form\Type\SlideOrderType
 
 services:
     enhavo_slider_slide_order:

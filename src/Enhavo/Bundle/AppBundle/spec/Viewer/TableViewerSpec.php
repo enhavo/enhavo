@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\enhavo\AdminBundle\Viewer;
+namespace spec\Enhavo\Bundle\AdminBundle\Viewer;
 
-use enhavo\AdminBundle\Config\ConfigParser;
-use enhavo\AdminBundle\spec\EntityMock;
+use Enhavo\Bundle\AdminBundle\Config\ConfigParser;
+use Enhavo\Bundle\AdminBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\Container;
@@ -13,7 +13,7 @@ class TableViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('enhavo\AdminBundle\Viewer\TableViewer');
+        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Viewer\TableViewer');
     }
 
     function it_should_return_value_by_property_on_object()
@@ -22,7 +22,7 @@ class TableViewerSpec extends ObjectBehavior
         $object->setName('my name is route');
         $this->getProperty($object, 'name')->shouldReturn('my name is route');
 
-        $this->shouldThrow('enhavo\AdminBundle\Exception\PropertyNotExistsException')->during(
+        $this->shouldThrow('Enhavo\Bundle\AdminBundle\Exception\PropertyNotExistsException')->during(
             'getProperty',
             array(
                 $object,

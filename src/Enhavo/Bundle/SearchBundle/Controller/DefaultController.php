@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SearchBundle\Controller;
+namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

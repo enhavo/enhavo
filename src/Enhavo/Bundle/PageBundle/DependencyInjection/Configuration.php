@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\PageBundle\DependencyInjection;
+namespace Enhavo\Bundle\PageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('page')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\PageBundle\Entity\Page')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\PageBundle\Entity\Page')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\PageBundle\Form\Type\PageType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\PageBundle\Form\Type\PageType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

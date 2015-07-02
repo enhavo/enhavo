@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\UserBundle\Form\Type;
+namespace Enhavo\Bundle\UserBundle\Form\Type;
 
-use enhavo\AdminBundle\Security\Roles\RolesProvider;
+use Enhavo\Bundle\AdminBundle\Security\Roles\RolesProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

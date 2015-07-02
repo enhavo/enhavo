@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\DownloadBundle\Entity;
+namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use enhavo\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use BaconStringUtils\Slugifier;
 
@@ -29,7 +29,7 @@ class Download
     private $text;
 
     /**
-     * @var \enhavo\MediaBundle\Entity\File
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     private $file;
 
@@ -105,10 +105,10 @@ class Download
     /**
      * Add file
      *
-     * @param \enhavo\MediaBundle\Entity\File file
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File file
      * @return Page
      */
-    public function addFile(\enhavo\MediaBundle\Entity\File $file)
+    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
     {
         if($this->file === null) {
             $this->file = new ArrayCollection();
@@ -122,9 +122,9 @@ class Download
     /**
      * Remove file
      *
-     * @param \enhavo\MediaBundle\Entity\File $file
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
      */
-    public function removeFile(\enhavo\MediaBundle\Entity\File $file)
+    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
     {
         $this->file->removeElement($file);
     }

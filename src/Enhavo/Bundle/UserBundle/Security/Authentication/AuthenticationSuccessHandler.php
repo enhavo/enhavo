@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\UserBundle\Security\Authentication;
+namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 use Symfony\Component\HttpFoundation\Request;

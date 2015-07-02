@@ -6,7 +6,7 @@
  * Time: 16:32
  */
 
-namespace enhavo\AdminBundle\Form\Type;
+namespace Enhavo\Bundle\AdminBundle\Form\Type;
 
 
 class ListType {

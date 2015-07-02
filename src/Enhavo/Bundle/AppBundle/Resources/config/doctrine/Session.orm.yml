@@ -1,4 +1,4 @@
-enhavo\AdminBundle\Entity\Session:
+Enhavo\Bundle\AdminBundle\Entity\Session:
     type: entity
     table: admin_session
     id:

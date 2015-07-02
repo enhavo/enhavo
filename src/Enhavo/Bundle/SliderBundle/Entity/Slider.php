@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SliderBundle\Entity;
+namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -68,10 +68,10 @@ class Slider
     /**
      * Add slides
      *
-     * @param \enhavo\ProjectBundle\Entity\Slide $slides
+     * @param \Enhavo\Bundle\ProjectBundle\Entity\Slide $slides
      * @return Slider
      */
-    public function addSlide(\enhavo\SliderBundle\Entity\Slide $slides)
+    public function addSlide(\Enhavo\Bundle\SliderBundle\Entity\Slide $slides)
     {
         $this->slides[] = $slides;
         $slides->setSlider($this);
@@ -81,9 +81,9 @@ class Slider
     /**
      * Remove slides
      *
-     * @param \enhavo\ProjectBundle\Entity\Slide $slides
+     * @param \Enhavo\Bundle\ProjectBundle\Entity\Slide $slides
      */
-    public function removeSlide(\enhavo\SliderBundle\Entity\Slide $slides)
+    public function removeSlide(\Enhavo\Bundle\SliderBundle\Entity\Slide $slides)
     {
         $this->slides->removeElement($slides);
     }

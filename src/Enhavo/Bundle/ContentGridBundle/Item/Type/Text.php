@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Item\Type;
+namespace Enhavo\Bundle\ContentBundle\Item\Type;
 
 
 class Text

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\MediaBundle\Entity;
+namespace Enhavo\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

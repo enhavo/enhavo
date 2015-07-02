@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\Repository;
+namespace Enhavo\Bundle\NewsletterBundle\Repository;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 

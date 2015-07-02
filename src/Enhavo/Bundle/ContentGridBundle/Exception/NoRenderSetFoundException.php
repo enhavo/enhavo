@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\ContentBundle\Exception;
+namespace Enhavo\Bundle\ContentBundle\Exception;
 
 use Exception;
 

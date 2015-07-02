@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AdminBundle\Viewer;
 
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -32,7 +32,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
     private $form;
 
     /**
-     * @var \enhavo\AdminBundle\Config\ConfigParser
+     * @var \Enhavo\Bundle\AdminBundle\Config\ConfigParser
      */
     private $config;
 

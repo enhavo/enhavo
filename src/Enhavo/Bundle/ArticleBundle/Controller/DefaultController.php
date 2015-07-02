@@ -1,10 +1,10 @@
 <?php
 
-namespace enhavo\NewsBundle\Controller;
+namespace Enhavo\Bundle\NewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use enhavo\NewsBundle\Entity\News;
-use enhavo\NewsBundle\Form\NewsType;
+use Enhavo\Bundle\NewsBundle\Entity\News;
+use Enhavo\Bundle\NewsBundle\Form\NewsType;
 
 class DefaultController extends Controller
 {

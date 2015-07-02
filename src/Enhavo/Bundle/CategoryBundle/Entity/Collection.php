@@ -1,5 +1,5 @@
 <?php
-namespace enhavo\CategoryBundle\Entity;
+namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -65,10 +65,10 @@ class Collection
     /**
      * Add categories
      *
-     * @param \enhavo\CategoryBundle\Entity\Category $categories
+     * @param \Enhavo\Bundle\CategoryBundle\Entity\Category $categories
      * @return Collection
      */
-    public function addCategory(\enhavo\CategoryBundle\Entity\Category $category)
+    public function addCategory(\Enhavo\Bundle\CategoryBundle\Entity\Category $category)
     {
         $category->setCollection($this);
         $this->categories[] = $category;
@@ -79,9 +79,9 @@ class Collection
     /**
      * Remove categories
      *
-     * @param \enhavo\CategoryBundle\Entity\Category $categories
+     * @param \Enhavo\Bundle\CategoryBundle\Entity\Category $categories
      */
-    public function removeCategory(\enhavo\CategoryBundle\Entity\Category $category)
+    public function removeCategory(\Enhavo\Bundle\CategoryBundle\Entity\Category $category)
     {
         $category->setCollection(null);
         $this->categories->removeElement($category);

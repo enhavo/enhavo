@@ -1,5 +1,5 @@
 <?php
-namespace enhavo\CategoryBundle\Form\Type;
+namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class CollectionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\CategoryBundle\Entity\Collection',
+            'data_class' => 'Enhavo\Bundle\CategoryBundle\Entity\Collection',
         ));
     }
 

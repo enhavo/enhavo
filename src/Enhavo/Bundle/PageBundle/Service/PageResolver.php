@@ -6,12 +6,12 @@
  * Time: 18:26
  */
 
-namespace enhavo\PageBundle\Service;
+namespace Enhavo\Bundle\PageBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactory;
-use enhavo\PageBundle\Form\Type\PageType;
+use Enhavo\Bundle\PageBundle\Form\Type\PageType;
 
 class PageResolver
 {

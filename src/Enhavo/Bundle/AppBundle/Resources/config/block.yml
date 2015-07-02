@@ -1,5 +1,5 @@
 services:
     enhavo_admin.block.factory:
-        class: enhavo\AdminBundle\Block\BlockFactory
+        class: Enhavo\Bundle\AdminBundle\Block\BlockFactory
         calls:
             - [setContainer, [@service_container]]

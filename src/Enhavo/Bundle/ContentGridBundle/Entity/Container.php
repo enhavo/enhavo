@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,12 +40,12 @@ class Container
     private $columns;
 
     /**
-     * @var \enhavo\ContentBundle\Entity\Content
+     * @var \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     private $content;
 
     /**
-     * @var \enhavo\ContentBundle\Entity\Column
+     * @var \Enhavo\Bundle\ContentBundle\Entity\Column
      */
     private $column;
 
@@ -106,10 +106,10 @@ class Container
     /**
      * Add columns
      *
-     * @param \enhavo\ContentBundle\Entity\Column $columns
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Column $columns
      * @return Container
      */
-    public function addColumn(\enhavo\ContentBundle\Entity\Column $columns)
+    public function addColumn(\Enhavo\Bundle\ContentBundle\Entity\Column $columns)
     {
         $this->columns[] = $columns;
 
@@ -119,9 +119,9 @@ class Container
     /**
      * Remove columns
      *
-     * @param \enhavo\ContentBundle\Entity\Column $columns
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Column $columns
      */
-    public function removeColumn(\enhavo\ContentBundle\Entity\Column $columns)
+    public function removeColumn(\Enhavo\Bundle\ContentBundle\Entity\Column $columns)
     {
         $this->columns->removeElement($columns);
     }
@@ -139,10 +139,10 @@ class Container
     /**
      * Set content
      *
-     * @param \enhavo\ContentBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
      * @return Container
      */
-    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -152,7 +152,7 @@ class Container
     /**
      * Get content
      *
-     * @return \enhavo\ContentBundle\Entity\Content
+     * @return \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     public function getContent()
     {
@@ -162,10 +162,10 @@ class Container
     /**
      * Set column
      *
-     * @param \enhavo\ContentBundle\Entity\Column $column
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Column $column
      * @return Container
      */
-    public function setColumn(\enhavo\ContentBundle\Entity\Column $column = null)
+    public function setColumn(\Enhavo\Bundle\ContentBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -175,7 +175,7 @@ class Container
     /**
      * Get column
      *
-     * @return \enhavo\ContentBundle\Entity\Column
+     * @return \Enhavo\Bundle\ContentBundle\Entity\Column
      */
     public function getColumn()
     {

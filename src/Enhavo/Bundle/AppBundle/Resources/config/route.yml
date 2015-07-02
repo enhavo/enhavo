@@ -1,9 +1,9 @@
 parameters:
-    cmf_routing.route_entity.class: enhavo\AdminBundle\Entity\Route
+    cmf_routing.route_entity.class: Enhavo\Bundle\AdminBundle\Entity\Route
     cmf_routing.orm_candidates.class: Symfony\Cmf\Component\Routing\Candidates\Candidates
     cmf_routing.route_entity_provider: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
-    enhavo_content.doctrine_route_content_subscriber.class: enhavo\AdminBundle\EventListener\DoctrineRouteContentSubscriber
-    enhavo_admin.form.route.class: enhavo\AdminBundle\Form\Type\RouteType
+    enhavo_content.doctrine_route_content_subscriber.class: Enhavo\Bundle\AdminBundle\EventListener\DoctrineRouteContentSubscriber
+    enhavo_admin.form.route.class: Enhavo\Bundle\AdminBundle\Form\Type\RouteType
 
 services:
     enhavo_admin.orm_candidates:
@@ -22,10 +22,10 @@ services:
             - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]
 
     enhavo_admin.route_content_collector:
-        class: enhavo\AdminBundle\Route\RouteContentCollector
+        class: Enhavo\Bundle\AdminBundle\Route\RouteContentCollector
 
     enhavo_admin.route_content_resolver:
-        class: enhavo\AdminBundle\Route\RouteContentResolver
+        class: Enhavo\Bundle\AdminBundle\Route\RouteContentResolver
         arguments:
             - @enhavo_admin.route_content_collector
             - @service_container
@@ -43,7 +43,7 @@ services:
             - { name: form.type, alias: 'enhavo_route' }
 
     enhavo_admin.validator.unique_url:
-        class: enhavo\AdminBundle\Validator\Constraints\RouteValidator
+        class: Enhavo\Bundle\AdminBundle\Validator\Constraints\RouteValidator
         arguments:
           - @router
         tags:

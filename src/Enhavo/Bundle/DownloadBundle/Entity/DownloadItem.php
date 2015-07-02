@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\DownloadBundle\Entity;
+namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use enhavo\ContentBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * DownloadItem
@@ -15,7 +15,7 @@ class DownloadItem implements ItemTypeInterface
     private $id;
 
     /**
-     * @var \enhavo\DownloadBundle\Entity\Download
+     * @var \Enhavo\Bundle\DownloadBundle\Entity\Download
      */
     private $download;
 
@@ -42,11 +42,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Set download
      *
-     * @param \enhavo\DownloadBundle\Entity\Download $download
+     * @param \Enhavo\Bundle\DownloadBundle\Entity\Download $download
      *
      * @return DownloadItem
      */
-    public function setDownload(\enhavo\DownloadBundle\Entity\Download $download = null)
+    public function setDownload(\Enhavo\Bundle\DownloadBundle\Entity\Download $download = null)
     {
         $this->download = $download;
 
@@ -56,7 +56,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Get download
      *
-     * @return \enhavo\DownloadBundle\Entity\Download
+     * @return \Enhavo\Bundle\DownloadBundle\Entity\Download
      */
     public function getDownload()
     {
@@ -74,11 +74,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Add file
      *
-     * @param \enhavo\MediaBundle\Entity\File $file
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
      *
      * @return DownloadItem
      */
-    public function addFile(\enhavo\MediaBundle\Entity\File $file)
+    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
     {
         $this->file[] = $file;
 
@@ -88,9 +88,9 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Remove file
      *
-     * @param \enhavo\MediaBundle\Entity\File $file
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
      */
-    public function removeFile(\enhavo\MediaBundle\Entity\File $file)
+    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
     {
         $this->file->removeElement($file);
     }

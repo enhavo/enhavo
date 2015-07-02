@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SearchBundle\DependencyInjection;
+namespace Enhavo\Bundle\SearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

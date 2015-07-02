@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Block;
+namespace Enhavo\Bundle\AdminBundle\Block;
 
 interface BlockInterface
 {

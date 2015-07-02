@@ -1,14 +1,14 @@
 <?php
 
-namespace enhavo\AdminBundle\Twig;
+namespace Enhavo\Bundle\AdminBundle\Twig;
 
-use enhavo\AdminBundle\Admin\AdminRegister;
+use Enhavo\Bundle\AdminBundle\Admin\AdminRegister;
 use Knp\Menu\MenuItem;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use enhavo\AdminBundle\Admin\Admin;
+use Enhavo\Bundle\AdminBundle\Admin\Admin;
 
 class AdminMenuRender extends \Twig_Extension
 {

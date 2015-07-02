@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AssetsBundle;
+namespace Enhavo\Bundle\AssetsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

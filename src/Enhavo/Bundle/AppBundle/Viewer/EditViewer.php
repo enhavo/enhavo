@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AdminBundle\Viewer;
 
 
 class EditViewer extends CreateViewer

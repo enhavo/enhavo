@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SettingBundle\Entity;
+namespace Enhavo\Bundle\SettingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

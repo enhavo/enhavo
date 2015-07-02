@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Exception;
+namespace Enhavo\Bundle\AdminBundle\Exception;
 
 class PreviewException extends \Exception {
 

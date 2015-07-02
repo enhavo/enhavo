@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\MediaBundle\Service;
+namespace Enhavo\Bundle\MediaBundle\Service;
 
 class Resize
 {

@@ -1,7 +1,7 @@
-enhavo\PageBundle\Entity\Page:
+Enhavo\Bundle\PageBundle\Entity\Page:
     type: mappedSuperclass
     table: page_page
-    repositoryClass: enhavo\PageBundle\Repository\PageRepository
+    repositoryClass: Enhavo\Bundle\PageBundle\Repository\PageRepository
 
     id:
         id:
@@ -61,17 +61,17 @@ enhavo\PageBundle\Entity\Page:
     manyToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\AdminBundle\Entity\Route
+            targetEntity: Enhavo\Bundle\AdminBundle\Entity\Route
 
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\ContentBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\ContentBundle\Entity\Content
 
     manyToMany:
         picture:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
                 name: page_page_picture
                 joinColumns:

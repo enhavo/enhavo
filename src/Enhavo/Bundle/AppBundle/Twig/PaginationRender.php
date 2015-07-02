@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AdminBundle\Twig;
+namespace Enhavo\Bundle\AdminBundle\Twig;
 
 use Pagerfanta\Pagerfanta;
 use Twig_Environment;

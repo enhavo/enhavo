@@ -1,7 +1,7 @@
-enhavo\SliderBundle\Entity\Slider:
+Enhavo\Bundle\SliderBundle\Entity\Slider:
     type: entity
     table: slider_slider
-    repositoryClass: enhavo\SliderBundle\Repository\SliderRepository
+    repositoryClass: Enhavo\Bundle\SliderBundle\Repository\SliderRepository
 
     id:
         id:

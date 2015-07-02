@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\ContentBundle\Item;
+namespace Enhavo\Bundle\ContentBundle\Item;
 
 interface ItemTypeInterface
 {

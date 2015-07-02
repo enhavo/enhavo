@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Item\Type;
+namespace Enhavo\Bundle\ContentBundle\Item\Type;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use enhavo\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 
 class Picture
 {

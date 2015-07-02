@@ -1,4 +1,4 @@
-enhavo\ContentBundle\Entity\Picture:
+Enhavo\Bundle\ContentBundle\Entity\Picture:
     type: entity
     table: content_type_picture
     id:
@@ -20,7 +20,7 @@ enhavo\ContentBundle\Entity\Picture:
     manyToMany:
         files:
             cascade: ['persist', 'refresh']
-            targetEntity: enhavo\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
                 name: content_picture_files
                 joinColumns:

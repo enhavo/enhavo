@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\MediaBundle\Controller;
+namespace Enhavo\Bundle\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

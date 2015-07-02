@@ -1,8 +1,8 @@
 parameters:
-    enhavo_admin.form.wysiwyg.class: enhavo\AdminBundle\Form\Type\WysiwygType
-    security.roles.provider.class: enhavo\AdminBundle\Security\Roles\AdminRolesProvider
-    enhavo_admin.form.config.wysiwyg.class: enhavo\AdminBundle\Form\Config\WysiwygConfig
-    enhavo_admin.menu_loader.class: enhavo\AdminBundle\Menu\MenuLoader
+    enhavo_admin.form.wysiwyg.class: Enhavo\Bundle\AdminBundle\Form\Type\WysiwygType
+    security.roles.provider.class: Enhavo\Bundle\AdminBundle\Security\Roles\AdminRolesProvider
+    enhavo_admin.form.config.wysiwyg.class: Enhavo\Bundle\AdminBundle\Form\Config\WysiwygConfig
+    enhavo_admin.menu_loader.class: Enhavo\Bundle\AdminBundle\Menu\MenuLoader
 
 services:
     enhavo_admin.form.wysiwyg:
@@ -27,7 +27,7 @@ services:
             - %security.role_hierarchy.roles%
 
     enhavo_admin.menu_event_listener:
-        class: enhavo\AdminBundle\EventListener\MenuEventListener
+        class: Enhavo\Bundle\AdminBundle\EventListener\MenuEventListener
         arguments:
             - %enhavo_admin.permission_check%
             - @security.context
@@ -38,7 +38,7 @@ services:
           - { name: kernel.event_listener, event: enhavo_admin.menu, method: onMenu  }
 
     enhavo_admin.controller.app:
-        class: enhavo\AdminBundle\Controller\AppController
+        class: Enhavo\Bundle\AdminBundle\Controller\AppController
         calls:
             - [setContainer, [@service_container]]
 
@@ -51,6 +51,6 @@ services:
             - @event_dispatcher
 
     enhavo_admin.generator.route_generator:
-        class: enhavo\AdminBundle\Generator\RoutingGenerator
+        class: Enhavo\Bundle\AdminBundle\Generator\RoutingGenerator
         arguments:
             - @templating

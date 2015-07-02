@@ -1,7 +1,7 @@
-enhavo\UserBundle\Entity\Group:
+Enhavo\Bundle\UserBundle\Entity\Group:
     type: entity
     table: user_group
-    repositoryClass: enhavo\UserBundle\Repository\GroupRepository
+    repositoryClass: Enhavo\Bundle\UserBundle\Repository\GroupRepository
 
     id:
         id:

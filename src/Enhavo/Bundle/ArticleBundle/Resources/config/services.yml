@@ -1,6 +1,6 @@
 parameters:
-    enhavo_news.news_resolver.class: enhavo\NewsBundle\Service\NewsResolver
-    enhavo_news.news.route_content_loader.class: enhavo\AdminBundle\Route\RouteContentLoader
+    enhavo_news.news_resolver.class: Enhavo\Bundle\NewsBundle\Service\NewsResolver
+    enhavo_news.news.route_content_loader.class: Enhavo\Bundle\AdminBundle\Route\RouteContentLoader
 
 services:
     enhavo_news_news:

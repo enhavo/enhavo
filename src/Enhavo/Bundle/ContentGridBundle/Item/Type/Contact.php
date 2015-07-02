@@ -1,8 +1,8 @@
 <?php
-namespace enhavo\ContentBundle\Item\Type;
+namespace Enhavo\Bundle\ContentBundle\Item\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use enhavo\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 
 class Contact
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace enhavo\PageBundle\Controller;
+namespace Enhavo\Bundle\PageBundle\Controller;
 
-use enhavo\PageBundle\Entity\Page;
+use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use enhavo\PageBundle\Form\Type\PageType;
+use Enhavo\Bundle\PageBundle\Form\Type\PageType;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller

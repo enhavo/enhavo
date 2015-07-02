@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Menu;
+namespace Enhavo\Bundle\AdminBundle\Menu;
 
 use Symfony\Component\EventDispatcher\Event;
 use Knp\Menu\ItemInterface;

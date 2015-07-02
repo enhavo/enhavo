@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsBundle\DependencyInjection;
+namespace Enhavo\Bundle\NewsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('news')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\NewsBundle\Entity\News')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\NewsBundle\Repository\NewsRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\NewsBundle\Form\Type\NewsType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsBundle\Entity\News')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsBundle\Repository\NewsRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsBundle\Form\Type\NewsType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

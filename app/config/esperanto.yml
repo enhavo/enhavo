@@ -1,9 +1,9 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            enhavo\ProjectBundle\Entity\Page: enhavoProjectBundle:Main:page
-            enhavo\ProjectBundle\Entity\News: enhavoProjectBundle:Main:news
-            enhavo\ProjectBundle\Entity\Reference: enhavoProjectBundle:Main:reference
+            Enhavo\Bundle\ProjectBundle\Entity\Page: enhavoProjectBundle:Main:page
+            Enhavo\Bundle\ProjectBundle\Entity\News: enhavoProjectBundle:Main:news
+            Enhavo\Bundle\ProjectBundle\Entity\Reference: enhavoProjectBundle:Main:reference
 
 enhavo_admin:
     permission_check: false
@@ -13,7 +13,7 @@ enhavo_admin:
 
     viewer:
 #        layout: 'enhavoAdminBundle::base.html.twig'
-        app: enhavo\AdminBundle\Viewer\AppViewer
+        app: Enhavo\Bundle\AdminBundle\Viewer\AppViewer
     menu:
         dashboard:
             label: label.dashboard
@@ -60,50 +60,50 @@ enhavo_content:
 
     items:
         picture:
-            model: enhavo\ContentBundle\Entity\Picture
-            form: enhavo\ContentBundle\Form\Type\PictureType
+            model: Enhavo\Bundle\ContentBundle\Entity\Picture
+            form: Enhavo\Bundle\ContentBundle\Form\Type\PictureType
             repository: enhavoContentBundle:Picture
             template: enhavoContentBundle:Item:picture.html
             label: Bild
         picture_picture:
-            model: enhavo\ContentBundle\Entity\PicturePicture
-            form: enhavo\ContentBundle\Form\Type\PicturePictureType
+            model: Enhavo\Bundle\ContentBundle\Entity\PicturePicture
+            form: Enhavo\Bundle\ContentBundle\Form\Type\PicturePictureType
             repository: enhavoContentBundle:PicturePicture
             template: enhavoContentBundle:Item:picture_picture.html
             label: Bild | Bild
         gallery:
-            model: enhavo\ContentBundle\Entity\Gallery
-            form: enhavo\ContentBundle\Form\Type\GalleryType
+            model: Enhavo\Bundle\ContentBundle\Entity\Gallery
+            form: Enhavo\Bundle\ContentBundle\Form\Type\GalleryType
             repository: enhavoContentBundle:Gallery
             template: enhavoContentBundle:Item:gallery.html
             label: Galerie
         text:
-            model: enhavo\ContentBundle\Entity\Text
-            form: enhavo\ContentBundle\Form\Type\TextType
+            model: Enhavo\Bundle\ContentBundle\Entity\Text
+            form: Enhavo\Bundle\ContentBundle\Form\Type\TextType
             repository: enhavoContentBundle:Text
             template: enhavoContentBundle:Item:text.html
             label: Text
         text_picture:
-            model: enhavo\ContentBundle\Entity\TextPicture
-            form: enhavo\ContentBundle\Form\Type\TextPictureType
+            model: Enhavo\Bundle\ContentBundle\Entity\TextPicture
+            form: Enhavo\Bundle\ContentBundle\Form\Type\TextPictureType
             repository: enhavoContentBundle:TextPicture
             template: enhavoContentBundle:Item:text_picture.html
             label: Text | Bild
         text_text:
-            model: enhavo\ContentBundle\Entity\TextText
-            form: enhavo\ContentBundle\Form\Type\TextTextType
+            model: Enhavo\Bundle\ContentBundle\Entity\TextText
+            form: Enhavo\Bundle\ContentBundle\Form\Type\TextTextType
             repository: enhavoContentBundle:TextText
             template: enhavoContentBundle:Item:text_text.html
             label: Text | Text
         cite_text:
-            model: enhavo\ContentBundle\Entity\CiteText
-            form: enhavo\ContentBundle\Form\Type\CiteTextType
+            model: Enhavo\Bundle\ContentBundle\Entity\CiteText
+            form: Enhavo\Bundle\ContentBundle\Form\Type\CiteTextType
             repository: enhavoContentBundle:CiteText
             template: enhavoContentBundle:Item:cite_text.html
             label: Zitat
         download:
-            model: enhavo\DownloadBundle\Entity\DownloadItem
-            form: enhavo\DownloadBundle\Form\Type\DownloadItemType
+            model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem
+            form: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
             repository: enhavoDownloadBundle:DownloadItem
             template: enhavoDownloadBundle:Item:download.html.twig
             label: Download
@@ -111,18 +111,18 @@ enhavo_content:
 enhavo_page:
     classes:
         page:
-            model: enhavo\ProjectBundle\Entity\Page
-            form: enhavo\ProjectBundle\Form\Type\PageType
+            model: Enhavo\Bundle\ProjectBundle\Entity\Page
+            form: Enhavo\Bundle\ProjectBundle\Form\Type\PageType
 
 enhavo_news:
     classes:
          news:
-            model: enhavo\ProjectBundle\Entity\News
-            form: enhavo\ProjectBundle\Form\Type\NewsType
-            repository: enhavo\NewsBundle\Repository\NewsRepository
+            model: Enhavo\Bundle\ProjectBundle\Entity\News
+            form: Enhavo\Bundle\ProjectBundle\Form\Type\NewsType
+            repository: Enhavo\Bundle\NewsBundle\Repository\NewsRepository
 
 enhavo_reference:
     classes:
          reference:
-            model: enhavo\ProjectBundle\Entity\Reference
-            form: enhavo\ProjectBundle\Form\Type\ReferenceType
+            model: Enhavo\Bundle\ProjectBundle\Entity\Reference
+            form: Enhavo\Bundle\ProjectBundle\Form\Type\ReferenceType

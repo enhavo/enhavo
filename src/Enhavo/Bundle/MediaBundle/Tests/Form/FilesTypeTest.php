@@ -6,18 +6,18 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\PageBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\PageBundle\Tests\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use enhavo\MediaBundle\Form\Type\FilesType;
-use enhavo\TestingBundle\Doctrine\ObjectMangerMock;
+use Enhavo\Bundle\MediaBundle\Form\Type\FilesType;
+use Enhavo\Bundle\TestingBundle\Doctrine\ObjectMangerMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class FileTypeTest extends TypeTestCase
 {
     protected function generateFileEntityObject($id)
     {
-        $mock = $this->getMock('\enhavo\MediaBundle\Entity\File', array(
+        $mock = $this->getMock('\Enhavo\Bundle\MediaBundle\Entity\File', array(
             'getId'
         ));
         $mock->expects($this->any())

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\Controller;
+namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

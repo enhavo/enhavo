@@ -1,9 +1,9 @@
 <?php
 
-namespace enhavo\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use enhavo\ContentBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * Item
@@ -21,7 +21,7 @@ class Item
     private $order;
 
     /**
-     * @var \enhavo\ContentBundle\Entity\Content
+     * @var \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     private $content;
 
@@ -31,7 +31,7 @@ class Item
     private $configuration;
 
     /**
-     * @var \enhavo\ContentBundle\Entity\Column
+     * @var \Enhavo\Bundle\ContentBundle\Entity\Column
      */
     private $column;
 
@@ -108,10 +108,10 @@ class Item
     /**
      * Set column
      *
-     * @param \enhavo\ContentBundle\Entity\Column $column
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Column $column
      * @return Item
      */
-    public function setColumn(\enhavo\ContentBundle\Entity\Column $column = null)
+    public function setColumn(\Enhavo\Bundle\ContentBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -121,7 +121,7 @@ class Item
     /**
      * Get column
      *
-     * @return \enhavo\ContentBundle\Entity\Column
+     * @return \Enhavo\Bundle\ContentBundle\Entity\Column
      */
     public function getColumn()
     {
@@ -131,10 +131,10 @@ class Item
     /**
      * Set content
      *
-     * @param \enhavo\ContentBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
      * @return Item
      */
-    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -144,7 +144,7 @@ class Item
     /**
      * Get content
      *
-     * @return \enhavo\ContentBundle\Entity\Content
+     * @return \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     public function getContent()
     {

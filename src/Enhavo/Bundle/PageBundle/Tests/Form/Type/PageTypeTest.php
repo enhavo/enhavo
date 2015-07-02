@@ -6,12 +6,12 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\PageBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\PageBundle\Tests\Form\Type;
 
-use enhavo\MediaBundle\Form\Type\FilesType;
-use enhavo\PageBundle\Form\Type\PageType;
-use enhavo\PageBundle\Entity\Page;
-use enhavo\TestingBundle\Doctrine\ObjectMangerMock;
+use Enhavo\Bundle\MediaBundle\Form\Type\FilesType;
+use Enhavo\Bundle\PageBundle\Form\Type\PageType;
+use Enhavo\Bundle\PageBundle\Entity\Page;
+use Enhavo\Bundle\TestingBundle\Doctrine\ObjectMangerMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\PreloadedExtension;
 
@@ -19,7 +19,7 @@ class PageTypeTest  extends TypeTestCase
 {
     protected function generateFileEntityObject($id)
     {
-        $mock = $this->getMock('\enhavo\MediaBundle\Entity\File', array(
+        $mock = $this->getMock('\Enhavo\Bundle\MediaBundle\Entity\File', array(
             'getId'
         ));
         $mock->expects($this->any())

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AdminBundle\DependencyInjection;
+namespace Enhavo\Bundle\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -57,11 +57,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('viewer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('app')->defaultValue('enhavo\AdminBundle\Viewer\AppViewer')->end()
-                        ->scalarNode('create')->defaultValue('enhavo\AdminBundle\Viewer\CreateViewer')->end()
-                        ->scalarNode('table')->defaultValue('enhavo\AdminBundle\Viewer\TableViewer')->end()
-                        ->scalarNode('edit')->defaultValue('enhavo\AdminBundle\Viewer\EditViewer')->end()
-                        ->scalarNode('index')->defaultValue('enhavo\AdminBundle\Viewer\IndexViewer')->end()
+                        ->scalarNode('app')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\AppViewer')->end()
+                        ->scalarNode('create')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\CreateViewer')->end()
+                        ->scalarNode('table')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\TableViewer')->end()
+                        ->scalarNode('edit')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\EditViewer')->end()
+                        ->scalarNode('index')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\IndexViewer')->end()
                     ->end()
                 ->end()
             ->end()

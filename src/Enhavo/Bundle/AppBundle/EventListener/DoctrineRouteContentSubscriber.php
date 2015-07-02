@@ -6,12 +6,12 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\EventListener;
+namespace Enhavo\Bundle\AdminBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use enhavo\AdminBundle\Route\RouteContentResolver;
-use enhavo\AdminBundle\Entity\Route;
+use Enhavo\Bundle\AdminBundle\Route\RouteContentResolver;
+use Enhavo\Bundle\AdminBundle\Entity\Route;
 
 class DoctrineRouteContentSubscriber implements EventSubscriber
 {

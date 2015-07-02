@@ -1,7 +1,7 @@
-enhavo\UserBundle\Entity\User:
+Enhavo\Bundle\UserBundle\Entity\User:
     type: entity
     table: user_user
-    repositoryClass: enhavo\UserBundle\Repository\UserRepository
+    repositoryClass: Enhavo\Bundle\UserBundle\Repository\UserRepository
 
     id:
         id:

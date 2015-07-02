@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AdminBundle\DependencyInjection\Compiler;
+namespace Enhavo\Bundle\AdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Form\Config;
+namespace Enhavo\Bundle\AdminBundle\Form\Config;
 
 use Symfony\Component\Yaml\Yaml;
 

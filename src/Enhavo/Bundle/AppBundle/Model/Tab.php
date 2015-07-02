@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AdminBundle\Model;
+namespace Enhavo\Bundle\AdminBundle\Model;
 
 class Tab
 {

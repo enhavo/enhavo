@@ -1,7 +1,7 @@
 parameters:
-    enhavo_setting.form.setting.class: enhavo\SettingBundle\Form\Type\SettingType
-    enhavo_setting.event.setting.class: enhavo\SettingBundle\EventListener\AdminBuilderSubscriber
-    enhavo_setting.setting_service.class: enhavo\SettingBundle\Service\SettingService
+    enhavo_setting.form.setting.class: Enhavo\Bundle\SettingBundle\Form\Type\SettingType
+    enhavo_setting.event.setting.class: Enhavo\Bundle\SettingBundle\EventListener\AdminBuilderSubscriber
+    enhavo_setting.setting_service.class: Enhavo\Bundle\SettingBundle\Service\SettingService
 
 services:
     enhavo_setting.event.setting:

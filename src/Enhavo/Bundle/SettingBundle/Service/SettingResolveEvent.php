@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\SettingBundle\Service;
+namespace Enhavo\Bundle\SettingBundle\Service;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\EventDispatcher\Event;

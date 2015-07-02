@@ -81,9 +81,9 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: enhavo\UserBundle\Entity\User
+    user_class: Enhavo\Bundle\UserBundle\Entity\User
     group:
-        group_class: enhavo\UserBundle\Entity\Group
+        group_class: Enhavo\Bundle\UserBundle\Entity\Group
 
 liip_imagine:
     resolvers:

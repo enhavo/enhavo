@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Config;
+namespace Enhavo\Bundle\AdminBundle\Config;
 
 
 use Symfony\Component\HttpFoundation\Request;

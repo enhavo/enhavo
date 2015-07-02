@@ -1,4 +1,4 @@
 services:
 #    enhavo_shop.example:
-#        class: enhavo\ShopBundle\Example
+#        class: Enhavo\Bundle\ShopBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

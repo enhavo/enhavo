@@ -1,12 +1,12 @@
 <?php
 
-namespace enhavo\SettingBundle\Controller;
+namespace Enhavo\Bundle\SettingBundle\Controller;
 
-use enhavo\AdminBundle\Controller\ResourceController as BaseController;
+use Enhavo\Bundle\AdminBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use enhavo\AdminBundle\Admin\BaseAdmin;
+use Enhavo\Bundle\AdminBundle\Admin\BaseAdmin;
 
 class ResourceController extends BaseController
 {

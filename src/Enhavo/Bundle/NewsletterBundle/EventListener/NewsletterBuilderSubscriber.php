@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\EventListener;
+namespace Enhavo\Bundle\NewsletterBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Loader;
-use enhavo\AdminBundle\Event\RouteBuilderEvent;
+use Enhavo\Bundle\AdminBundle\Event\RouteBuilderEvent;
 
 
 class NewsletterBuilderSubscriber extends Controller implements EventSubscriberInterface

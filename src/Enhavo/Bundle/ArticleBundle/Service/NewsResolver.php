@@ -6,12 +6,12 @@
  * Time: 18:26
  */
 
-namespace enhavo\NewsBundle\Service;
+namespace Enhavo\Bundle\NewsBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactory;
-use enhavo\NewsBundle\Form\Type\NewsType;
+use Enhavo\Bundle\NewsBundle\Form\Type\NewsType;
 
 class NewsResolver
 {

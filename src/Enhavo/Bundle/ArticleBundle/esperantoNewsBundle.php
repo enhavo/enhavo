@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsBundle;
+namespace Enhavo\Bundle\NewsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

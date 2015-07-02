@@ -6,10 +6,10 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AdminBundle\Viewer;
 
 use Symfony\Component\HttpFoundation\Request;
-use enhavo\AdminBundle\Exception\ViewerNotFoundException;
+use Enhavo\Bundle\AdminBundle\Exception\ViewerNotFoundException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\CategoryBundle;
+namespace Enhavo\Bundle\CategoryBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

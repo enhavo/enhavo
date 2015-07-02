@@ -1,7 +1,7 @@
-enhavo\SettingBundle\Entity\Setting:
+Enhavo\Bundle\SettingBundle\Entity\Setting:
     type: mappedSuperclass
     table: setting_setting
-    repositoryClass: enhavo\SettingBundle\Repository\SettingRepository
+    repositoryClass: Enhavo\Bundle\SettingBundle\Repository\SettingRepository
 
     id:
         id:

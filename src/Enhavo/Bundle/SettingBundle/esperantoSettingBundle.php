@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SettingBundle;
+namespace Enhavo\Bundle\SettingBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

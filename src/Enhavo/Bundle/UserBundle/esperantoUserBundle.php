@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\UserBundle;
+namespace Enhavo\Bundle\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

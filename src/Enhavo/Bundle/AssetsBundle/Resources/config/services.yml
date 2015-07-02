@@ -1,5 +1,5 @@
 parameters:
-#    enhavo_assets.example.class: enhavo\AssetsBundle\Example
+#    enhavo_assets.example.class: Enhavo\Bundle\AssetsBundle\Example
 
 services:
 #    enhavo_assets.example:

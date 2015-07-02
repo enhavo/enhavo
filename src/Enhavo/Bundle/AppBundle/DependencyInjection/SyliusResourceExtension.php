@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AdminBundle\DependencyInjection;
+namespace Enhavo\Bundle\AdminBundle\DependencyInjection;
 
 use Sylius\Bundle\ResourceBundle\DependencyInjection\AbstractResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

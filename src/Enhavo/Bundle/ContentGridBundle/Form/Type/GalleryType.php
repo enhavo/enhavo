@@ -3,9 +3,9 @@
  * GalleryType.php
  */
 
-namespace enhavo\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
-use enhavo\ContentBundle\Item\ItemFormType;
+use Enhavo\Bundle\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -30,7 +30,7 @@ class GalleryType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\ContentBundle\Entity\Gallery'
+            'data_class' => 'Enhavo\Bundle\ContentBundle\Entity\Gallery'
         ));
     }
 

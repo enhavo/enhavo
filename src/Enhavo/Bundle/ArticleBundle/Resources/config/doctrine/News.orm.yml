@@ -1,7 +1,7 @@
-enhavo\NewsBundle\Entity\News:
+Enhavo\Bundle\NewsBundle\Entity\News:
     type: mappedSuperclass
     table: news_news
-    repositoryClass: enhavo\NewsBundle\Repository\NewsRepository
+    repositoryClass: Enhavo\Bundle\NewsBundle\Repository\NewsRepository
 
     id:
         id:
@@ -65,17 +65,17 @@ enhavo\NewsBundle\Entity\News:
     manyToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\AdminBundle\Entity\Route
+            targetEntity: Enhavo\Bundle\AdminBundle\Entity\Route
 
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\ContentBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\ContentBundle\Entity\Content
 
     manyToMany:
         picture:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: enhavo\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
                 name: news_news_picture
                 joinColumns:

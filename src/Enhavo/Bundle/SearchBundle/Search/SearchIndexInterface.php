@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\SearchBundle\Search;
+namespace Enhavo\Bundle\SearchBundle\Search;
 
 
 interface SearchIndexInterface

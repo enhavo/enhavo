@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\DownloadBundle;
+namespace Enhavo\Bundle\DownloadBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

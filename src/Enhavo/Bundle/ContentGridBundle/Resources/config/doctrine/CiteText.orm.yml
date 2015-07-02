@@ -1,4 +1,4 @@
-enhavo\ContentBundle\Entity\CiteText:
+Enhavo\Bundle\ContentBundle\Entity\CiteText:
     type: entity
     table: content_type_cite_text
     id:

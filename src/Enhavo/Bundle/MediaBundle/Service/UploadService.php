@@ -6,19 +6,19 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\MediaBundle\Service;
+namespace Enhavo\Bundle\MediaBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use enhavo\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use enhavo\MediaBundle\Service\Thumbnail;
-use enhavo\MediaBundle\Service\Resize;
+use Enhavo\Bundle\MediaBundle\Service\Thumbnail;
+use Enhavo\Bundle\MediaBundle\Service\Resize;
 use BaconStringUtils\Slugifier;
 
 class UploadService

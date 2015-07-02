@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentBundle\Entity;
 
-use enhavo\ContentBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * TextText

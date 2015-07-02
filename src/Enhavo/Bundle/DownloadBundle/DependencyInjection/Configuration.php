@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\DownloadBundle\DependencyInjection;
+namespace Enhavo\Bundle\DownloadBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('download')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\DownloadBundle\Entity\Download')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\DownloadBundle\Entity\Download')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\DownloadBundle\Form\Type\DownloadType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\DownloadBundle\Form\Type\DownloadType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

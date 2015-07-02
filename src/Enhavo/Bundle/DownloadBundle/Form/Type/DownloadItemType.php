@@ -1,17 +1,17 @@
 <?php
 
-namespace enhavo\DownloadBundle\Form\Type;
+namespace Enhavo\Bundle\DownloadBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use enhavo\ContentBundle\Item\ItemFormType;
+use Enhavo\Bundle\ContentBundle\Item\ItemFormType;
 
 class DownloadItemType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('download', 'entity', array(
-            'class' => 'enhavo\DownloadBundle\Entity\Download',
+            'class' => 'Enhavo\Bundle\DownloadBundle\Entity\Download',
             'property' => 'title',
             'multiple' => false,
             'expanded' => false,
@@ -31,7 +31,7 @@ class DownloadItemType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\DownloadBundle\Entity\DownloadItem'
+            'data_class' => 'Enhavo\Bundle\DownloadBundle\Entity\DownloadItem'
         ));
     }
 

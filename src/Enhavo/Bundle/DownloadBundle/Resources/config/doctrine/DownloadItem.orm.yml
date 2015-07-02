@@ -1,4 +1,4 @@
-enhavo\DownloadBundle\Entity\DownloadItem:
+Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
     type: entity
     table: content_item_download
     id:
@@ -16,12 +16,12 @@ enhavo\DownloadBundle\Entity\DownloadItem:
 
     manyToOne:
         download:
-            targetEntity: enhavo\DownloadBundle\Entity\Download
+            targetEntity: Enhavo\Bundle\DownloadBundle\Entity\Download
 
     manyToMany:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: enhavo\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
                 name: content_item_download_file
                 joinColumns:

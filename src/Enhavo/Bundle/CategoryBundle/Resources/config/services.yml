@@ -1,8 +1,8 @@
 parameters:
-    enhavo_category.event.collection.class: enhavo\CategoryBundle\EventListener\AdminBuilderSubscriber
-    enhavo_category.form.collection.class: enhavo\CategoryBundle\Form\Type\CollectionType
-    enhavo_category_manager.class: enhavo\CategoryBundle\Form\Type\CollectionType
-    enhavo_category.class: enhavo\CategoryBundle\Form\Type\CategoryEntityType
+    enhavo_category.event.collection.class: Enhavo\Bundle\CategoryBundle\EventListener\AdminBuilderSubscriber
+    enhavo_category.form.collection.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType
+    enhavo_category_manager.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType
+    enhavo_category.class: Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType
 
 services:
     enhavo_category.event.collection:

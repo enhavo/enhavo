@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\AdminBundle;
+namespace Enhavo\Bundle\AdminBundle;
 
-use enhavo\AdminBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

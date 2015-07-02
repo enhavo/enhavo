@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\MediaBundle\DependencyInjection;
+namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

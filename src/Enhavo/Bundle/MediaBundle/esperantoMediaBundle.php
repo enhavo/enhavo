@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\MediaBundle;
+namespace Enhavo\Bundle\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\Entity;
+namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 /**
  * Subscriber

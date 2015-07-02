@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\Twig;
+namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;

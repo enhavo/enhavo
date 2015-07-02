@@ -1,16 +1,16 @@
 <?php
 
-namespace spec\enhavo\AdminBundle\Viewer;
+namespace spec\Enhavo\Bundle\AdminBundle\Viewer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use enhavo\AdminBundle\Config\ConfigParser;
+use Enhavo\Bundle\AdminBundle\Config\ConfigParser;
 
 class AppViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('enhavo\AdminBundle\Viewer\AppViewer');
+        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Viewer\AppViewer');
     }
 
     function it_should_return_parameters(ConfigParser $configParser)

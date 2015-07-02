@@ -13,4 +13,4 @@ default:
             paths:
                 - %paths.base%/src/enhavo/AdminBundle/Resources/features
             contexts:
-                - enhavo\AdminBundle\Behat\AdminContext
+                - Enhavo\Bundle\AdminBundle\Behat\AdminContext

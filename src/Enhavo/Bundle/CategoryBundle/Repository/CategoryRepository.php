@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\CategoryBundle\Repository;
+namespace Enhavo\Bundle\CategoryBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\CalendarBundle\Tests\Controller;
+namespace Enhavo\Bundle\CalendarBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace enhavo\AdminBundle\Util;
+namespace Enhavo\Bundle\AdminBundle\Util;
 
 class Assetic
 {

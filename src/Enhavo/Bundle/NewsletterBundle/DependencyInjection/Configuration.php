@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\DependencyInjection;
+namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -35,21 +35,21 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('newsletter')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\NewsletterBundle\Entity\Newsletter')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\NewsletterBundle\Repository\NewsletterRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\NewsletterBundle\Form\Type\NewsletterType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\Newsletter')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\NewsletterRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                         ->arrayNode('subscriber')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\NewsletterBundle\Entity\Subscriber')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\NewsletterBundle\Repository\SubscriberRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\NewsletterBundle\Form\Type\SubscriberType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsletterBundle\Entity\Subscriber')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\SubscriberRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

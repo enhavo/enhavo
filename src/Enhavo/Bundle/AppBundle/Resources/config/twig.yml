@@ -1,13 +1,13 @@
 parameters:
-    enhavo_admin.twig.admin_menu_render.class: enhavo\AdminBundle\Twig\AdminMenuRender
+    enhavo_admin.twig.admin_menu_render.class: Enhavo\Bundle\AdminBundle\Twig\AdminMenuRender
     enhavo_admin.twig.admin_menu_render.template: 'enhavoAdminBundle:View:menu.html.twig'
 
-    enhavo_admin.twig.block_render.class: enhavo\AdminBundle\Twig\BlockRender
+    enhavo_admin.twig.block_render.class: Enhavo\Bundle\AdminBundle\Twig\BlockRender
 
-    enhavo_admin.twig.pagination_render.class: enhavo\AdminBundle\Twig\PaginationRender
+    enhavo_admin.twig.pagination_render.class: Enhavo\Bundle\AdminBundle\Twig\PaginationRender
     enhavo_admin.twig.pagination_render.template: 'enhavoAdminBundle:View:pagination.html.twig'
 
-    enhavo_admin.twig.admin_asset.class: enhavo\AdminBundle\Twig\AdminAsset
+    enhavo_admin.twig.admin_asset.class: Enhavo\Bundle\AdminBundle\Twig\AdminAsset
 
 services:
     enhavo_admin.twig.admin_menu_render:

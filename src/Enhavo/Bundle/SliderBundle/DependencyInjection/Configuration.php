@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SliderBundle\DependencyInjection;
+namespace Enhavo\Bundle\SliderBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -35,22 +35,22 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('slider')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\SliderBundle\Entity\Slider')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\SliderBundle\Repository\SliderRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\SliderBundle\Form\Type\SliderType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\SliderBundle\Entity\Slider')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SliderBundle\Repository\SliderRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\SliderBundle\Form\Type\SliderType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
 
                         ->arrayNode('slide')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\SliderBundle\Entity\Slide')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\SliderBundle\Repository\SlideRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\SliderBundle\Form\Type\SlideType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\SliderBundle\Entity\Slide')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SliderBundle\Repository\SlideRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\SliderBundle\Form\Type\SlideType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
 

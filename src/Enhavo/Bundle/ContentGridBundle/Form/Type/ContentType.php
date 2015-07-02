@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
-use enhavo\ContentBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\ContentBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -68,7 +68,7 @@ class ContentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\ContentBundle\Entity\Content',
+            'data_class' => 'Enhavo\Bundle\ContentBundle\Entity\Content',
             'items' => array()
         ));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,10 +40,10 @@ class Content
     /**
      * Add containers
      *
-     * @param \enhavo\ContentBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Container $containers
      * @return Content
      */
-    public function addContainer(\enhavo\ContentBundle\Entity\Container $containers)
+    public function addContainer(\Enhavo\Bundle\ContentBundle\Entity\Container $containers)
     {
         $this->containers[] = $containers;
 
@@ -53,9 +53,9 @@ class Content
     /**
      * Remove containers
      *
-     * @param \enhavo\ContentBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Container $containers
      */
-    public function removeContainer(\enhavo\ContentBundle\Entity\Container $containers)
+    public function removeContainer(\Enhavo\Bundle\ContentBundle\Entity\Container $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -78,10 +78,10 @@ class Content
     /**
      * Add items
      *
-     * @param \enhavo\ContentBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Item $items
      * @return Content
      */
-    public function addItem(\enhavo\ContentBundle\Entity\Item $item)
+    public function addItem(\Enhavo\Bundle\ContentBundle\Entity\Item $item)
     {
         $item->setContent($this);
         $this->items[] = $item;
@@ -92,9 +92,9 @@ class Content
     /**
      * Remove items
      *
-     * @param \enhavo\ContentBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Item $items
      */
-    public function removeItem(\enhavo\ContentBundle\Entity\Item $item)
+    public function removeItem(\Enhavo\Bundle\ContentBundle\Entity\Item $item)
     {
         $item->setContent(null);
         $this->items->removeElement($item);

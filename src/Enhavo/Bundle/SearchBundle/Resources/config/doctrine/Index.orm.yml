@@ -1,7 +1,7 @@
-enhavo\SearchBundle\Entity\Index:
+Enhavo\Bundle\SearchBundle\Entity\Index:
     type: entity
     table: search_index
-    repositoryClass: enhavo\SearchBundle\Repository\IndexRepository
+    repositoryClass: Enhavo\Bundle\SearchBundle\Repository\IndexRepository
     id:
         id:
             type: integer

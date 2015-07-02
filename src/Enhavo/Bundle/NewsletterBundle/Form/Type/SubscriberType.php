@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle\Form\Type;
+namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class SubscriberType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\NewsletterBundle\Entity\Subscriber'
+            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\Subscriber'
         ));
     }
 

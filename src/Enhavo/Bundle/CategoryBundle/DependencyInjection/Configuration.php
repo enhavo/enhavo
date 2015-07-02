@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\CategoryBundle\DependencyInjection;
+namespace Enhavo\Bundle\CategoryBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('collection')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\CategoryBundle\Entity\Collection')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\CategoryBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\CategoryBundle\Entity\Collection')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CategoryBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\CategoryBundle\Form\Type\CollectionType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

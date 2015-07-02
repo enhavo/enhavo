@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\MediaBundle\Twig;
+namespace Enhavo\Bundle\MediaBundle\Twig;
 
 use Symfony\Component\Templating\EngineInterface;
-use enhavo\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Entity\File;
 
 class MediaExtension extends \Twig_Extension
 {

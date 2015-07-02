@@ -1,11 +1,11 @@
 <?php
 
-namespace enhavo\NewsletterBundle\DependencyInjection;
+namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
-use enhavo\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 
 
 /**

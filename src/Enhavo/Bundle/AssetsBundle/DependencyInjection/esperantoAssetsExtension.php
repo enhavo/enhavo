@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\AssetsBundle\DependencyInjection;
+namespace Enhavo\Bundle\AssetsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

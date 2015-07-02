@@ -1,8 +1,8 @@
 <?php
 
-namespace enhavo\SliderBundle\Controller;
+namespace Enhavo\Bundle\SliderBundle\Controller;
 
-use enhavo\AdminBundle\Controller\ResourceController as BaseController;
+use Enhavo\Bundle\AdminBundle\Controller\ResourceController as BaseController;
 
 class ResourceController extends BaseController
 {

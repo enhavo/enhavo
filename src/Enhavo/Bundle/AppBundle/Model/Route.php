@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\AdminBundle\Model;
+namespace Enhavo\Bundle\AdminBundle\Model;
 
 use Symfony\Component\Routing\Route as RoutingRoute;
 

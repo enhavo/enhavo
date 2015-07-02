@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\SettingBundle\Form\Type;
+namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use enhavo\SettingBundle\Service\SettingService;
+use Enhavo\Bundle\SettingBundle\Service\SettingService;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;

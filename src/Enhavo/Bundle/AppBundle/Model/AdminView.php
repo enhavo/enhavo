@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\AdminBundle\Model;
+namespace Enhavo\Bundle\AdminBundle\Model;
 
 
-use enhavo\AdminBundle\Admin\Config;
+use Enhavo\Bundle\AdminBundle\Admin\Config;
 
 class AdminView
 {

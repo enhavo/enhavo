@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\NewsletterBundle;
+namespace Enhavo\Bundle\NewsletterBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 class enhavoNewsletterBundle extends Bundle

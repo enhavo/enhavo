@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\UserBundle\EventListener;
+namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

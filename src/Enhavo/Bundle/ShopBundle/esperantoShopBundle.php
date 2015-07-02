@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\ShopBundle;
+namespace Enhavo\Bundle\ShopBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace enhavo\DownloadBundle\DependencyInjection;
+namespace Enhavo\Bundle\DownloadBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use enhavo\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**

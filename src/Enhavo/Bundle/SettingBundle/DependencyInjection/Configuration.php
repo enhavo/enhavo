@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\SettingBundle\DependencyInjection;
+namespace Enhavo\Bundle\SettingBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -37,11 +37,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('setting')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('enhavo\SettingBundle\Entity\Setting')->end()
-                                ->scalarNode('controller')->defaultValue('enhavo\SettingBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('enhavo\SettingBundle\Repository\SettingRepository')->end()
-                                ->scalarNode('form')->defaultValue('enhavo\SettingBundle\Form\Type\SettingType')->end()
-                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\SettingBundle\Entity\Setting')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\SettingBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SettingBundle\Repository\SettingRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\SettingBundle\Form\Type\SettingType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

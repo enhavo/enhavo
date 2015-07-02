@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\SearchBundle\Search;
+namespace Enhavo\Bundle\SearchBundle\Search;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
-use enhavo\SearchBundle\Entity\Index;
+use Enhavo\Bundle\SearchBundle\Entity\Index;
 
 class SearchManager
 {

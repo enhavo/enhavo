@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\PageBundle\Entity;
+namespace Enhavo\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BaconStringUtils\Slugifier;
@@ -71,7 +71,7 @@ class Page
     private $updated;
 
     /**
-     * @var \enhavo\ContentBundle\Entity\Content
+     * @var \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     private $content;
 
@@ -81,7 +81,7 @@ class Page
     private $picture;
 
     /**
-     * @var \enhavo\AdminBundle\Entity\Route
+     * @var \Enhavo\Bundle\AdminBundle\Entity\Route
      */
     private $route;
 
@@ -408,10 +408,10 @@ class Page
     /**
      * Set content
      *
-     * @param \enhavo\ContentBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
      * @return Page
      */
-    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -421,7 +421,7 @@ class Page
     /**
      * Get content
      *
-     * @return \enhavo\ContentBundle\Entity\Content
+     * @return \Enhavo\Bundle\ContentBundle\Entity\Content
      */
     public function getContent()
     {
@@ -431,10 +431,10 @@ class Page
     /**
      * Add picture
      *
-     * @param \enhavo\MediaBundle\Entity\File $picture
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
      * @return Page
      */
-    public function addPicture(\enhavo\MediaBundle\Entity\File $picture)
+    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
     {
         $this->picture[] = $picture;
 
@@ -444,9 +444,9 @@ class Page
     /**
      * Remove picture
      *
-     * @param \enhavo\MediaBundle\Entity\File $picture
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
      */
-    public function removePicture(\enhavo\MediaBundle\Entity\File $picture)
+    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
     {
         $this->picture->removeElement($picture);
     }
@@ -462,7 +462,7 @@ class Page
     }
 
     /**
-     * @return \enhavo\AdminBundle\Entity\Route
+     * @return \Enhavo\Bundle\AdminBundle\Entity\Route
      */
     public function getRoute()
     {
@@ -470,7 +470,7 @@ class Page
     }
 
     /**
-     * @param \enhavo\AdminBundle\Entity\Route $route
+     * @param \Enhavo\Bundle\AdminBundle\Entity\Route $route
      */
     public function setRoute($route)
     {

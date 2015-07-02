@@ -1,6 +1,6 @@
 <?php
 
-namespace enhavo\ShopBundle\Controller;
+namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

@@ -6,13 +6,13 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\CategoryBundle\EventListener;
+namespace Enhavo\Bundle\CategoryBundle\EventListener;
 
-use enhavo\AdminBundle\Builder\Route\SyliusRouteBuilder;
-use enhavo\AdminBundle\Builder\View\ViewBuilder;
-use enhavo\AdminBundle\Event\BuilderEvent;
-use enhavo\AdminBundle\Event\MenuBuilderEvent;
-use enhavo\AdminBundle\Event\RouteBuilderEvent;
+use Enhavo\Bundle\AdminBundle\Builder\Route\SyliusRouteBuilder;
+use Enhavo\Bundle\AdminBundle\Builder\View\ViewBuilder;
+use Enhavo\Bundle\AdminBundle\Event\BuilderEvent;
+use Enhavo\Bundle\AdminBundle\Event\MenuBuilderEvent;
+use Enhavo\Bundle\AdminBundle\Event\RouteBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AdminBuilderSubscriber implements EventSubscriberInterface

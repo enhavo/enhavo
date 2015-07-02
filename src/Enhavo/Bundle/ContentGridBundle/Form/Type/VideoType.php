@@ -6,16 +6,16 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace enhavo\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
-use enhavo\ContentBundle\Entity\Configuration;
+use Enhavo\Bundle\ContentBundle\Entity\Configuration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use enhavo\ContentBundle\Item\Type\Video;
+use Enhavo\Bundle\ContentBundle\Item\Type\Video;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
@@ -71,7 +71,7 @@ class VideoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'enhavo\ContentBundle\Item\Type\Video'
+            'data_class' => 'Enhavo\Bundle\ContentBundle\Item\Type\Video'
         ));
     }
 
