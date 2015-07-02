@@ -1,0 +1,17 @@
+esperanto\AdminBundle\Entity\Session:
+    type: entity
+    table: admin_session
+    id:
+        id:
+            type: string
+            length: 255
+            id: true
+    fields:
+        value:
+            type: text
+        time:
+            type: integer
+        lifetime:
+            type: integer
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,21 @@
+{% use 'esperantoAdminBundle::block.html.twig' %}
+
+<div class="container form-container small-dialog ">
+    {% block content %}
+        <form method="POST" action="{% block form_action %}{{ path(view.getParameter('manage_route'), { id: data.id }) }}{% endblock %}">
+            <div class="row mb1em">
+                {% block form %}
+                   {{ form(form) }}
+                {% endblock %}
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans }}</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn col-md-12 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans }}</button>
+                </div>
+            </div>
+        </form>
+    {% endblock %}
+</div>
