@@ -1,0 +1,56 @@
+esperanto\SliderBundle\Entity\Slide:
+    type: mappedSuperclass
+    table: slider_slide
+    repositoryClass: esperanto\SliderBundle\Repository\SlideRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        text:
+            type: text
+            nullable: true
+
+        url:
+            type: text
+            length: 255
+            nullable: true
+
+        link_type:
+            type: text
+            length: 255
+            nullable: true
+
+        public:
+            type: boolean
+            nullable: true
+
+        order:
+            type: integer
+            column: '`order`'
+            nullable: true
+
+    manyToMany:
+        image:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: slider_slide_image
+                joinColumns:
+                    slider_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+    manyToOne:
+        slider:
+            targetEntity: Slider

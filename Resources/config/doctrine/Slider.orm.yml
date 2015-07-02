@@ -1,0 +1,22 @@
+esperanto\SliderBundle\Entity\Slider:
+    type: entity
+    table: slider_slider
+    repositoryClass: esperanto\SliderBundle\Repository\SliderRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+
+    oneToMany:
+        slides:
+            targetEntity: Slide
+            mappedBy: slider
+            orderBy: {'order': 'ASC'}
