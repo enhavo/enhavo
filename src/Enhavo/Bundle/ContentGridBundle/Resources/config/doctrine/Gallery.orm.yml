@@ -1,0 +1,31 @@
+esperanto\ContentBundle\Entity\Gallery:
+    type: entity
+    table: content_type_gallery
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        text:
+            type: text
+            nullable: true
+
+    manyToMany:
+        files:
+            cascade: ['persist', 'refresh']
+            targetEntity: esperanto\MediaBundle\Entity\File
+            joinTable:
+                name: content_gallery_files
+                joinColumns:
+                    gallery_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+    lifecycleCallbacks: {  }
