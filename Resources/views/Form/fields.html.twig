@@ -1,0 +1,58 @@
+{% block esperanto_files_widget %}
+    {% spaceless %}
+            <div class="uploadForm">
+
+                <script type="text/html" data-id="files-template">
+                    <li class="imgContainer" data-file-element>
+                        <div class="imgdelete">
+                            <i class="fa fa-times fa-2x"></i>
+                        </div>
+                        <div class="uploadForm-image-container">
+                            <img src="/file/{file_id}/100/100">
+                        </div>
+                        <input type="hidden" name="{full_name}[{file_index}][id]" value="{file_id}" />
+                        <input type="hidden" name="{full_name}[{file_index}][order]" data-file-element-order value="" />
+                    </li>
+                </script>
+
+                <div class="layer posrel">
+                    {% if form.information %}
+                        <div class="hintBox mb1">
+                            <ul class="bullList">
+                                {% for info in form.information %}
+                                   <li>{{ info|trans }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="progress">
+                        <div class="bar" style="width: 0%;"></div>
+                    </div>
+
+                    <div class="dropzone fade well">
+                        <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
+                            {% for file in form.vars.value %}
+                               {% if file %}
+                                  <li class="imgContainer" data-file-element>
+                                      <div class="imgdelete">
+                                          <i class="fa fa-times fa-2x"></i>
+                                      </div>
+                                      <div class="uploadForm-image-container">
+                                          <img src="/file/{{ file.id }}/100/100">
+                                      </div>
+                                      <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][id]" value="{{ file.id }}" />
+                                      <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][order]" data-file-element-order value="{{ file.order }}" />
+                                  </li>
+                               {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('esperanto_media_upload') }}" multiple>
+                    <div class="mt1">
+                        <button class="btnsmall upload-button"><i class="fa fa-arrow-up"></i> Datei hochladen</button>
+                    </div>
+                </div>
+            </div>
+    {% endspaceless %}
+{% endblock %}
