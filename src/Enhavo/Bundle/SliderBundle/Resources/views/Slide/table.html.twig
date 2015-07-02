@@ -1,0 +1,25 @@
+<div class="row p1 head-row">
+    <div class="col-md-2">{{ 'label.id'|trans }}</div>
+    <div class="col-md-8">{{ 'label.title'|trans }}</div>
+    <div class="col-md-2">{{ 'label.public'|trans }}</div>
+</div>
+
+<div class="row row-container">
+    <div class="col-md-12">
+        {% for item in data %}
+            <div class="col-md-12 mb1 entry-row p1" data-id="{{ item.id }}">
+                <div class="col-md-2">{{ item.id }}</div>
+                <div class="col-md-8">{{ item.title }}</div>
+                <div class="col-md-2 text-center">
+                    {% if item.public %}
+                        <i class="fa fa-check success"></i>
+                    {% else %}
+                        <i class="fa fa-times error"></i>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            {{ 'table.empty'|trans }}
+        {% endfor %}
+    </div>
+</div>
