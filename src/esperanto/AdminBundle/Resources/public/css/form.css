@@ -1,74 +1,30 @@
-/* label container */
+.category-list .choice-input-with-label {display: block;margin-bottom: 3px;}
 
-.label-container label {
-    padding-top:5px;
-    color:#ddd;
-}
-
+.choice-input-container {padding-top:4px;}
+.choice-input-container label {padding-right:10px;}
 
 /* input container */
 
-.input-container label {
-    margin-top: 8px;
-    padding-left: 5px;
-    padding-right: 15px;
-    color:#ddd;
-}
+.formwidget-container input[type=file] {border:0;background:transparent;}
+.formwidget-container label {margin-top: 8px;padding-left: 5px;color:#000;}
+.formwidget-container .icheckbox-esperanto {margin-top: 0px;}
+.formwidget-container .select2-container {width: 100%;}
+.formwidget-container .select2-container .select2-choice {border-radius: 0;}
 
-.input-container .icheckbox-esperanto {
-    margin-top: 0px;
-}
+.input-container {display:inline-block;padding:5px 6px;color: #000;background:#eee;width:100%;}
+.input-container.disabled {background:#ddd;}
+.input-container input,
+.input-container textarea {font: 13px/1.6em "Open Sans";margin:0;background:transparent;border:0px;resize:none;width: 100%;}
+.input-container textarea {margin-right: 20px;}
 
+.label-container label {color:#000;}
 
-.input-container input[type=file] {
-    border:0;
-    background:transparent;
-}
-
-.input-container .select2-container {
-    width: 100%;
-}
-
-.input-container .select2-container .select2-choice {
-    border-radius: 0;
-}
-
-.input-container textarea {
-    font: 14px/20px "Arial";
-}
-
-.inputContainer {
-    display: inline-block;
-    min-height: 30px;
-    font-size: 14px;
-    line-height: 20px;
-    color: #777;
-    background:#fff;
-    width: 100%;
-}
-
-.inputContainer.disabled {
-    background:#f3f3f3;
-}
-
-.inputContainer.textarea {
-    height:65px;
-}
-
-.inputContainer input,
-.inputContainer textarea {
-    margin: 5px 6px;
-    background:transparent;
-    border:0px;
-    resize:none;
-    width: 100%;
-}
-
-.inputContainer textarea {
-    margin-right: 20px;
-}
-
-.category-list .choice-input-with-label {
-    display: block;
-    margin-bottom: 3px;
-}
+.wysiwyg-container .mce-panel {background:#eee;border:1px solid #eee;}
+.wysiwyg-container .mce-tinymce {border-radius:0;}
+.wysiwyg-container .mce-btn-group .mce-btn {box-shadow:none;}
+.wysiwyg-container .mce-btn-group .mce-btn button {border-right:1px solid #c5c5c5;}
+.wysiwyg-container .mce-btn-group .mce-first {border-radius:0;}
+.wysiwyg-container .mce-btn-group .mce-first.mce-last {border-radius:0;}
+.wysiwyg-container .mce-btn-group .mce-last {border-radius:0;}
+.wysiwyg-container .mce-btn-group .mce-last button {border-right:0;}
+.wysiwyg-container .mce-splitbtn .mce-open {border-left:0;}

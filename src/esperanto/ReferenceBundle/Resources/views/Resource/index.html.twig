@@ -5,16 +5,16 @@
         $(function() {
             admin.initPagination('{{ view.getParameter('table_route') }}');
             admin.initTable();
-            admin.initTopButton('.action .btn.create', {}, '{{ view.getParameter('create_route') }}');
-            admin.initTopButton('.action .btn.category-sector', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-sector'});
-            admin.initTopButton('.action .btn.category-style', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-style'});
+            admin.initTopButton('[data-action-row] .btn.create', {}, '{{ view.getParameter('create_route') }}');
+            admin.initTopButton('[data-action-row] .btn.category-sector', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-sector'});
+            admin.initTopButton('[data-action-row] .btn.category-style', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-style'});
             admin.initAfterSaveHandler();
         });
     </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row mb3 action">
+    <div class="row action-row" data-action-row>
         <div class="col-md-3">
             <button class="btn create col-md-3"><i class="fa fa-plus-circle"></i> {{ view.getParameter('add_button_text')|trans }}</button>
         </div>

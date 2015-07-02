@@ -1,3 +1,1 @@
-#leftNavi li a.menu-icon-page {
-    background-image: url(../img/page_white_text.png);
-}
+#menu-main li a.menu-icon-page {background-image: url(../img/page_white_text.png);}

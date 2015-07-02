@@ -1948,7 +1948,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }).html([
                 "<a href='javascript:void(0)' class='select2-choice' tabindex='-1'>",
                 "   <span class='select2-chosen'>&#160;</span><abbr class='select2-search-choice-close'></abbr>",
-                "   <span class='select2-arrow' role='presentation'><b role='presentation'></b></span>",
+                "   <span class='select2-arrow' role='presentation'><i class='fa fa-angle-down'></i></span>",
                 "</a>",
                 "<label for='' class='select2-offscreen'></label>",
                 "<input class='select2-focusser select2-offscreen' type='text' aria-haspopup='true' role='button' />",

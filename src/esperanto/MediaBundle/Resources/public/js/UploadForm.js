@@ -74,12 +74,12 @@ function UploadForm(routing)
   this.start = function() {
     $(document).bind('dragover', function (e)
     {
-      $('.dropzone').css('background-color', '#cb442d');
+      $('.dropzone').css('background-color', '#49a4e5');
     });
 
     $(document).bind('dragleave drop', function (e)
     {
-      $('.dropzone').css('background-color', '#dd9933');
+      $('.dropzone').css('background-color', '');
     });
   };
 

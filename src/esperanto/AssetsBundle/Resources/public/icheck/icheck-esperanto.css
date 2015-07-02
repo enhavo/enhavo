@@ -5,17 +5,15 @@
     display: inline-block;
     vertical-align: middle;
     border: none;
-
-    border-radius: 11px;
-    background: #FFF;
-    color: #A58E62;
+    background: #eee;
+    color: #000;
     padding: 3px 3px 3px 3px;
     height: 22px;
     width: 22px;
-    font-size: 21px;
+    font-size: 15px;
     line-height: 16px;
     cursor: pointer;
-
+    text-align:center;
     font-family: FontAwesome;
     font-weight: normal;
     font-style: normal;

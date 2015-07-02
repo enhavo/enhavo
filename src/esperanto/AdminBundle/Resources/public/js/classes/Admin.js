@@ -61,14 +61,14 @@ function Admin (router, templating, translator)
     var overlayStart = function() {
       overlayContent.trigger('formOpenBefore');
 
-      overlay.fadeIn(100);
+      overlay.fadeIn(50);
       overlayContent.append($.parseHTML(html));
-      overlayContent.fadeIn(200, function() {
+      overlayContent.fadeIn(100, function() {
         overlayContent.trigger('formOpenAfter', [ overlayContent.find('form').get(0) ]);
       });
       overlayContent.animate({
         scrollTop: 0
-      }, 500, "swing");
+      }, 100);
 
       init();
       if(options.init) {
@@ -84,8 +84,8 @@ function Admin (router, templating, translator)
     var overlayStop = function() {
       overlayContent.trigger('formCloseBefore', [overlayContent]);
       overlayContent.html('');
-      overlay.fadeOut(200);
-      overlayContent.fadeOut(100);
+      overlay.fadeOut(100);
+      overlayContent.fadeOut(50);
       overlayContent.trigger('formCloseAfter', [overlayContent]);
     };
     overlayStop();

@@ -1,132 +1,28 @@
-.contentForm {
-    position: relative;
-}
+.contentForm {position: relative;}
 
-.contentForm .menu {
-    display: none;
-    position: absolute;
-    background-color: #444;
-    color: #DDD;
-    z-index: 1000;
-    padding: 5px;
-}
+.contentForm .add-content-button {font-size:14px;line-height:19px;}
 
-.contentForm .menu.bottomTriangle .triangle-up {
-    display: none;
-}
+.contentForm .menu {display: none;position: absolute;background-color: #eee;color: #000;z-index: 1000;padding: 1px;}
+.contentForm .menu.bottomTriangle .triangle-up {display: none;}
+.contentForm .menu.topTriangle .triangle-down {display: none;}
+.contentForm .menu .triangle-up {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 10px solid #eee;position: absolute;top: -10px;left:0;}
+.contentForm .menu .triangle-down {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-top: 10px solid #eee;position: absolute;bottom: -10px;left: 0;}
+.contentForm .menu li:first-child {margin-top: 0;}
+.contentForm .menu li {margin-top: 1px;background-color: #fff;padding: 2px 5px;min-width: 100px;}
+.contentForm .menu li:hover {background-color: #4395d1;color:#fff;}
 
-.contentForm .menu.topTriangle .triangle-down {
-    display: none;
-}
+.contentForm .addItem {cursor: pointer;}
 
-.contentForm .menu .triangle-up {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #444;
-    position: absolute;
-    top: -10px;
-    left: 2px;
-}
+.contentForm .item {margin-bottom:15px;border:1px solid #ddd;}
+.contentForm .item .button-container {background-color: #ddd;padding-left:85px;position: relative;line-height:25px;}
+.contentForm .item .button-container .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;}
+.contentForm .item .button-container .button:hover {color:#fff;background:#4395d1;}
 
-.contentForm .menu .triangle-down {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #444;
-    position: absolute;
-    bottom: -10px;
-    left: 2px;
-}
+.contentForm .item .button-container .button-up {left:0;}
+.contentForm .item .button-container .button-down {left:34px;}
+.contentForm .item .button-container .button-delete {right:0;}
 
-.contentForm .menu ul {
-    background-color: #444;
-}
-
-.contentForm .menu li:first-child {
-    margin-top: 0;
-}
-
-.contentForm .menu li {
-    margin-top: 5px;
-    background-color: #777;
-    padding: 5px;
-    min-width: 100px;
-}
-
-.contentForm .menu li:hover {
-    color: #000000;
-    background-color: #eee;
-}
-
-.contentForm .addItem {
-    cursor: pointer;
-}
-
-.contentForm .item {
-    background-color: #DDD;
-    margin-bottom: 10px;
-}
-
-.contentForm .form-field {
-    padding: 10px;
-    position: relative;
-}
-
-.contentForm .form-field label {
-    color: #5A5A5A;
-}
-
-.contentForm .form-field div.label label {
-    color: #ddd !important;
-}
-
-.contentForm .form-field div.label {
-    position: absolute;
-    background: #6f6f6f;
-    font-weight: bold;
-    padding: 2px 5px;
-    left: -145px;
-    width: 150px;
-    text-align: right;
-}
-
-.contentForm .item .button-container {
-    background-color: #aaa;
-    height: 20px;
-    position: relative;
-}
-
-.contentForm .item .button-container .button {
-    position: absolute;
-    color: #5A5A5A;
-    cursor: pointer;
-    margin-bottom: 10px;
-    z-index: 10;
-}
-
-.contentForm .item .button-container .label {
-    position: absolute;
-    color: #5A5A5A;
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-}
-
-.contentForm .item .button-container .button-up {
-    left: 5px;
-}
-
-.contentForm .item .button-container .button-down {
-    left: 20px;
-}
-
-.contentForm .item .button-container .button-delete {
-    right: 5px;
-}
+.contentForm .item .button-container .label {font-weight: 700;}
 
 .textleft label {
     color: black !important;

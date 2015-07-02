@@ -5,21 +5,21 @@
         $(function() {
             admin.initPagination('esperanto_slider_slide_table');
             admin.initTable();
-            admin.initTopButton('.action .btn.create', {}, 'esperanto_slider_slide_create');
+            admin.initTopButton('[data-action-row] .btn.create', {}, 'esperanto_slider_slide_create');
             admin.initAfterSaveHandler();
-            admin.initTopButton('.action .btn.sort', {}, 'esperanto_slider_slider_edit', {id: 1});
+            admin.initTopButton('[data-action-row] .btn.sort', {}, 'esperanto_slider_slider_edit', {id: 1});
         });
     </script>
 {% endblock %}
 
 {% block content %}
     {% block topButtons %}
-        <div class="row mb3 action">
+        <div class="row action-row" data-action-row>
             <div class="col-md-3">
-                <button class="btn create col-md-12"><i class="icon-plus-sign"></i> {{ 'button.add_slide'|trans }}</button>
+                <button class="btn create col-md-12"><i class="fa fa-plus-square"></i> {{ 'button.add_slide'|trans }}</button>
             </div>
             <div class="col-md-3">
-                <button class="btn sort col-md-12"><i class="icon-sort"></i> {{ 'button.label.slide_sort'|trans }}</button>
+                <button class="btn sort col-md-12"><i class="fa fa-sort"></i> {{ 'button.label.slide_sort'|trans }}</button>
             </div>
         </div>
     {% endblock %}
