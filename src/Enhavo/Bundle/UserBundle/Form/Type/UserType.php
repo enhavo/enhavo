@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\UserBundle\Form\Type;
+namespace enhavo\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +40,7 @@ class UserType extends AbstractType
         ));
 
         $builder->add('groups', 'entity', array(
-            'class' => 'esperantoUserBundle:Group',
+            'class' => 'enhavoUserBundle:Group',
             'property' => 'name',
             'multiple' => true,
             'expanded' => true,
@@ -52,12 +52,12 @@ class UserType extends AbstractType
     public function getDefaultOptions()
     {
         return array(
-            'data_class' => 'esperanto/UserBundle/Entity/User'
+            'data_class' => 'enhavo/UserBundle/Entity/User'
         );
     }
 
     public function getName()
     {
-        return 'esperanto_user_user';
+        return 'enhavo_user_user';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\AdminBundle\Twig;
+namespace enhavo\AdminBundle\Twig;
 
 use Pagerfanta\Pagerfanta;
 use Twig_Environment;

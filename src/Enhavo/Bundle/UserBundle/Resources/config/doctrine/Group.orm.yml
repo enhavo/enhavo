@@ -1,7 +1,7 @@
-esperanto\UserBundle\Entity\Group:
+enhavo\UserBundle\Entity\Group:
     type: entity
     table: user_group
-    repositoryClass: esperanto\UserBundle\Repository\GroupRepository
+    repositoryClass: enhavo\UserBundle\Repository\GroupRepository
 
     id:
         id:

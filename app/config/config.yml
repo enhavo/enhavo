@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: esperanto.yml }
+    - { resource: enhavo.yml }
 
 framework:
     #esi:             ~
@@ -33,16 +33,16 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources:
-            - 'esperantoAdminBundle:Form:fields.html.twig'
-            - 'esperantoContentBundle:Form:fields.html.twig'
-            - 'esperantoCategoryBundle:Form:fields.html.twig'
-            - 'esperantoMediaBundle:Form:fields.html.twig'
+            - 'enhavoAdminBundle:Form:fields.html.twig'
+            - 'enhavoContentBundle:Form:fields.html.twig'
+            - 'enhavoCategoryBundle:Form:fields.html.twig'
+            - 'enhavoMediaBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'esperantoProjectBundle' ]
+    bundles:        [ 'enhavoProjectBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -81,9 +81,9 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: esperanto\UserBundle\Entity\User
+    user_class: enhavo\UserBundle\Entity\User
     group:
-        group_class: esperanto\UserBundle\Entity\Group
+        group_class: enhavo\UserBundle\Entity\Group
 
 liip_imagine:
     resolvers:
@@ -104,13 +104,13 @@ cmf_routing:
             cmf_routing.dynamic_router: 100
     dynamic:
         enabled: true
-        route_provider_service_id: esperanto_admin.route_provider
+        route_provider_service_id: enhavo_admin.route_provider
 
-esperanto_newsletter:
+enhavo_newsletter:
     subscriber:
         send_from: 'test@test.com'
         subject: 'TestSubject'
-        template:  'esperantoNewsletterBundle:Default:subscriber-email.html.twig'
+        template:  'enhavoNewsletterBundle:Default:subscriber-email.html.twig'
 
 parameters:
     pdo.db_options:

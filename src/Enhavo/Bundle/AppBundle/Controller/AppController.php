@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Controller;
+namespace enhavo\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

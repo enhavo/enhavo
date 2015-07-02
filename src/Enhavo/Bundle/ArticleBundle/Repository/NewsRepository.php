@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\NewsBundle\Repository;
+namespace enhavo\NewsBundle\Repository;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use esperanto\NewsBundle\Entity\News;
+use enhavo\NewsBundle\Entity\News;
 
 class NewsRepository extends EntityRepository
 {

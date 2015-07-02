@@ -6,11 +6,11 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Route;
+namespace enhavo\AdminBundle\Route;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use esperanto\AdminBundle\Route\RouteContentLoader;
+use enhavo\AdminBundle\Route\RouteContentLoader;
 
 class RouteContentCollector
 {

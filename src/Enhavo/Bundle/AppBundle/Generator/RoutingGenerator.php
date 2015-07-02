@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Generator;
+namespace enhavo\AdminBundle\Generator;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
@@ -21,7 +21,7 @@ class RoutingGenerator
 
     public function generate($appName, $resourceName)
     {
-        return $this->templateEngine->render('esperantoAdminBundle:Generator:routing.yml.twig',
+        return $this->templateEngine->render('enhavoAdminBundle:Generator:routing.yml.twig',
             array(
                 'app' => $appName,
                 'resource' => $resourceName,

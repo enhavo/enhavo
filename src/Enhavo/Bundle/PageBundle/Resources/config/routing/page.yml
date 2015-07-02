@@ -1,85 +1,85 @@
-esperanto_page_page_index:
-    path: /esperanto/page/page/index
+enhavo_page_page_index:
+    path: /enhavo/page/page/index
     methods: [GET]
     defaults:
-        _controller: esperanto_page.controller.page:indexAction
+        _controller: enhavo_page.controller.page:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
             type: index
 
-esperanto_page_page_create:
-    path: /esperanto/page/page/create
+enhavo_page_page_create:
+    path: /enhavo/page/page/create
     methods: [GET,POST]
     options:
         expose: true
     defaults:
-        _controller: esperanto_page.controller.page:createAction
+        _controller: enhavo_page.controller.page:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
             type: create
             tabs:
                 page:
                     label: page
-                    template: esperantoPageBundle:Tab:page.html.twig
+                    template: enhavoPageBundle:Tab:page.html.twig
                 content:
                     label: Content
-                    template: esperantoPageBundle:Tab:content.html.twig
+                    template: enhavoPageBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: esperantoPageBundle:Tab:seo.html.twig
+                    template: enhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: esperanto_news_news_preview
+                    route: enhavo_news_news_preview
                     label: label.preview
                     icon: eye
 
-esperanto_page_page_preview:
+enhavo_page_page_preview:
     options:
         expose: true
-    path: /esperanto/page/page/preview
+    path: /enhavo/page/page/preview
     methods: [POST]
     defaults:
-        _controller: esperanto_page.controller.page:previewAction
+        _controller: enhavo_page.controller.page:previewAction
 
-esperanto_page_page_update:
+enhavo_page_page_update:
     options:
         expose: true
-    path: /esperanto/page/page/update/{id}
+    path: /enhavo/page/page/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_page.controller.page:updateAction
+        _controller: enhavo_page.controller.page:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
             type: edit
             tabs:
                 page:
                     label: page
-                    template: esperantoPageBundle:Tab:page.html.twig
+                    template: enhavoPageBundle:Tab:page.html.twig
                 content:
                     label: Content
-                    template: esperantoPageBundle:Tab:content.html.twig
+                    template: enhavoPageBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: esperantoPageBundle:Tab:seo.html.twig
+                    template: enhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: esperanto_news_news_preview
+                    route: enhavo_news_news_preview
                     label: label.preview
                     icon: eye
 
-esperanto_page_page_table:
+enhavo_page_page_table:
     options:
         expose: true
-    path: /esperanto/page/page/table/{page}
+    path: /enhavo/page/page/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_page.controller.page:tableAction
+        _controller: enhavo_page.controller.page:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             type: table
             table:
@@ -93,9 +93,9 @@ esperanto_page_page_table:
                     public:
                         label: public
                         property: public
-                        widget: esperantoAdminBundle:Widget:boolean.html.twig
+                        widget: enhavoAdminBundle:Widget:boolean.html.twig
 
-esperanto_page_page_delete:
-    path: /esperanto/page/page/delete/{id}
+enhavo_page_page_delete:
+    path: /enhavo/page/page/delete/{id}
     defaults:
-        _controller: esperanto_page.controller.page:deleteAction
+        _controller: enhavo_page.controller.page:deleteAction

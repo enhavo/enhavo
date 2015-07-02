@@ -13,7 +13,7 @@ function Newsletter() {
     this.init = function () {
         $("#addEmail").click(function () {
             var url = $("#addEmailForm").attr('action');
-            var email = $('input[name="esperanto_newsletter_subscriber[email]"]').val();
+            var email = $('input[name="enhavo_newsletter_subscriber[email]"]').val();
             data = $("#addEmailForm").serialize();
             console.log(data);
             $.post(url, data, function (response) {

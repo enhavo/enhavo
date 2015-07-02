@@ -31,8 +31,8 @@ var Form = function(router, templating, admin, translator)
 
   this.initRadioAndCheckbox = function (form) {
     $(form).find('input[type=radio],input[type=checkbox]').iCheck({
-      checkboxClass: 'icheckbox-esperanto',
-      radioClass: 'icheckbox-esperanto'
+      checkboxClass: 'icheckbox-enhavo',
+      radioClass: 'icheckbox-enhavo'
     });
   };
 

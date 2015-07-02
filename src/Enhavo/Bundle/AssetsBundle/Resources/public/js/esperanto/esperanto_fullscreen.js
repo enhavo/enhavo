@@ -4,7 +4,7 @@ selector: jquery element(s), like $('.fullscreen-element.')
 if there is a parent of an element having attribute 'data-fullscreen-container' set,
 it will be fill out that parent. else $(window) will be used as its parent.
  */
-function esperanto_fullscreen(selector) {
+function enhavo_fullscreen(selector) {
   var self = this;
 
   this.init = function() {
@@ -47,11 +47,11 @@ function esperanto_fullscreen(selector) {
   this.setElementCSS = function(element) {
     var container = element.parents('[data-fullscreen-container]');
     if(!container.length) {
-      element.removeClass('esperanto-fullscreen-within');
-      element.addClass('esperanto-fullscreen');
+      element.removeClass('enhavo-fullscreen-within');
+      element.addClass('enhavo-fullscreen');
     } else {
-      element.removeClass('esperanto-fullscreen');
-      element.addClass('esperanto-fullscreen-within');
+      element.removeClass('enhavo-fullscreen');
+      element.addClass('enhavo-fullscreen-within');
     }
   },
   this.setElementPosition = function(element,elementwidth,elementheight) {

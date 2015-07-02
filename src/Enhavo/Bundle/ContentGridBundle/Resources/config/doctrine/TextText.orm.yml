@@ -1,4 +1,4 @@
-esperanto\ContentBundle\Entity\TextText:
+enhavo\ContentBundle\Entity\TextText:
     type: entity
     table: content_type_text_text
     id:

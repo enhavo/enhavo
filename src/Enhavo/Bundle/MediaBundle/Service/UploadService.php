@@ -6,19 +6,19 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\MediaBundle\Service;
+namespace enhavo\MediaBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use esperanto\MediaBundle\Service\Thumbnail;
-use esperanto\MediaBundle\Service\Resize;
+use enhavo\MediaBundle\Service\Thumbnail;
+use enhavo\MediaBundle\Service\Resize;
 use BaconStringUtils\Slugifier;
 
 class UploadService
@@ -91,7 +91,7 @@ class UploadService
 
     public function getCustomImageSizeResponse($id,$width,$height)
     {
-        $repository = $this->manager->getRepository('esperantoMediaBundle:File');
+        $repository = $this->manager->getRepository('enhavoMediaBundle:File');
         $file = $repository->find($id);
         if($file === null) {
             throw new NotFoundResourceException;
@@ -120,7 +120,7 @@ class UploadService
 
     public function getResponse($id)
     {
-        $repository = $this->manager->getRepository('esperantoMediaBundle:File');
+        $repository = $this->manager->getRepository('enhavoMediaBundle:File');
         $file = $repository->find($id);
         if($file === null) {
             throw new NotFoundResourceException;

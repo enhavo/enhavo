@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace enhavo\AdminBundle\Viewer;
 
 
 class CreateViewer extends AbstractViewer
@@ -31,7 +31,7 @@ class CreateViewer extends AbstractViewer
                 )
             ),
             'form' => array(
-                'template' => 'esperantoAdminBundle:View:tab.html.twig',
+                'template' => 'enhavoAdminBundle:View:tab.html.twig',
                 'theme' => '',
                 'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName())
             )
@@ -45,7 +45,7 @@ class CreateViewer extends AbstractViewer
             return array(
                 $this->getResourceName() => array(
                     'label' => $this->getResourceName(),
-                    'template' => 'esperantoAdminBundle:Tab:default.html.twig'
+                    'template' => 'enhavoAdminBundle:Tab:default.html.twig'
                 )
             );
         }

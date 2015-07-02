@@ -1,46 +1,46 @@
-esperanto_newsletter_newsletter_index:
+enhavo_newsletter_newsletter_index:
     options:
         expose: true
-    path: /esperanto/newsletter/newsletter/index
+    path: /enhavo/newsletter/newsletter/index
     methods: [GET]
     defaults:
-        _controller: esperanto_newsletter.controller.newsletter:indexAction
+        _controller: enhavo_newsletter.controller.newsletter:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
 
-esperanto_newsletter_newsletter_create:
+enhavo_newsletter_newsletter_create:
     options:
         expose: true
-    path: /esperanto/newsletter/newsletter/create
+    path: /enhavo/newsletter/newsletter/create
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_newsletter.controller.newsletter:createAction
+        _controller: enhavo_newsletter.controller.newsletter:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
 
-esperanto_newsletter_newsletter_update:
+enhavo_newsletter_newsletter_update:
     options:
         expose: true
-    path: /esperanto/newsletter/newsletter/update/{id}
+    path: /enhavo/newsletter/newsletter/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_newsletter.controller.newsletter:updateAction
+        _controller: enhavo_newsletter.controller.newsletter:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
 
-esperanto_newsletter_newsletter_table:
+enhavo_newsletter_newsletter_table:
     options:
         expose: true
-    path: /esperanto/newsletter/newsletter/table/{page}
+    path: /enhavo/newsletter/newsletter/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_newsletter.controller.newsletter:tableAction
+        _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
@@ -51,18 +51,18 @@ esperanto_newsletter_newsletter_table:
                         label: title
                         property: title
 
-esperanto_newsletter_newsletter_delete:
+enhavo_newsletter_newsletter_delete:
     options:
         expose: true
-    path: /esperanto/newsletter/newsletter/delete/{id}
+    path: /enhavo/newsletter/newsletter/delete/{id}
     methods: [POST]
     defaults:
-        _controller: esperanto_newsletter.controller.newsletter:deleteAction
+        _controller: enhavo_newsletter.controller.newsletter:deleteAction
 
-esperanto_newsletter_newsletter_preview:
+enhavo_newsletter_newsletter_preview:
     options:
         expose: true
-    path: /admin/esperanto/newsletter/newsletter/preview
+    path: /admin/enhavo/newsletter/newsletter/preview
     methods: [POST]
     defaults:
-        _controller: esperanto_newsletter.controller.newsletter:previewAction
+        _controller: enhavo_newsletter.controller.newsletter:previewAction

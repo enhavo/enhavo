@@ -1,4 +1,4 @@
-esperanto\MediaBundle\Entity\File:
+enhavo\MediaBundle\Entity\File:
     type: entity
     table: media_file
     id:

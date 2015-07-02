@@ -6,13 +6,13 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\CategoryBundle\EventListener;
+namespace enhavo\CategoryBundle\EventListener;
 
-use esperanto\AdminBundle\Builder\Route\SyliusRouteBuilder;
-use esperanto\AdminBundle\Builder\View\ViewBuilder;
-use esperanto\AdminBundle\Event\BuilderEvent;
-use esperanto\AdminBundle\Event\MenuBuilderEvent;
-use esperanto\AdminBundle\Event\RouteBuilderEvent;
+use enhavo\AdminBundle\Builder\Route\SyliusRouteBuilder;
+use enhavo\AdminBundle\Builder\View\ViewBuilder;
+use enhavo\AdminBundle\Event\BuilderEvent;
+use enhavo\AdminBundle\Event\MenuBuilderEvent;
+use enhavo\AdminBundle\Event\RouteBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AdminBuilderSubscriber implements EventSubscriberInterface
@@ -20,13 +20,13 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'esperanto_category.collection.build_index_route' => array('resetRoute', 0),
-            'esperanto_category.collection.build_create_route' => array('resetRoute', 0),
-            'esperanto_category.collection.build_delete_route' => array('resetRoute', 0),
-            'esperanto_category.collection.build_table_route' => array('resetRoute', 0),
-            'esperanto_category.collection.build_edit_route' => array('resetRoute', 0),
-            'esperanto_category.collection.build_menu' => array('onBuildMenu', 0),
-            'esperanto_category.collection.post_build' => array('onPostBuild', 0),
+            'enhavo_category.collection.build_index_route' => array('resetRoute', 0),
+            'enhavo_category.collection.build_create_route' => array('resetRoute', 0),
+            'enhavo_category.collection.build_delete_route' => array('resetRoute', 0),
+            'enhavo_category.collection.build_table_route' => array('resetRoute', 0),
+            'enhavo_category.collection.build_edit_route' => array('resetRoute', 0),
+            'enhavo_category.collection.build_menu' => array('onBuildMenu', 0),
+            'enhavo_category.collection.post_build' => array('onPostBuild', 0),
         );
     }
 
@@ -45,19 +45,19 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
         $routeBuilder = new SyliusRouteBuilder();
 
         $view = new ViewBuilder();
-        $view->setParameter('manage_route', 'esperanto_category_collection_manage');
+        $view->setParameter('manage_route', 'enhavo_category_collection_manage');
 
         $routeBuilder
-            ->setRouteName('esperanto_category_collection_manage')
+            ->setRouteName('enhavo_category_collection_manage')
             ->setPattern('/category/collection/{name}/manage')
             ->allowGetMethod()
             ->allowPostMethod()
             ->allowExpose()
-            ->setController('esperanto_category.controller.collection')
+            ->setController('enhavo_category.controller.collection')
             ->setAction('updateAction')
-            ->setAdmin('esperanto_category.admin.collection')
+            ->setAdmin('enhavo_category.admin.collection')
             ->setViewBuilder($view)
-            ->setTemplate('esperantoCategoryBundle:Resource:manage.html.twig');
+            ->setTemplate('enhavoCategoryBundle:Resource:manage.html.twig');
 
         $event->getBuilder()->addRouteBuilder($routeBuilder);
     }

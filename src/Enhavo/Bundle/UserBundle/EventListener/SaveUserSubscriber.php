@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\UserBundle\EventListener;
+namespace enhavo\UserBundle\EventListener;
 
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -28,8 +28,8 @@ class SaveUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'esperanto_user.user.pre_update' => array('onSave', 1),
-            'esperanto_user.user.pre_create' => array('onSave', 1),
+            'enhavo_user.user.pre_update' => array('onSave', 1),
+            'enhavo_user.user.pre_create' => array('onSave', 1),
         );
     }
 

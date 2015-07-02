@@ -11,7 +11,7 @@
   spacing_top: offset to top window border in px (default 0)
   complete: define function to be executed after scrolling has finished (default null)
  */
-function esperanto_scrollto(selector,options) {
+function enhavo_scrollto(selector,options) {
   var defaultoptions = {duration:1500,easing:'linear',queue:false,spacing_top:0,complete:null};
   this.options = $.extend({},defaultoptions,options);
   this.elements = selector;

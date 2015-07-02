@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\SliderBundle\DependencyInjection;
+namespace enhavo\SliderBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_slider');
+        $rootNode = $treeBuilder->root('enhavo_slider');
 
         $rootNode
             // Driver used by the resource bundle
@@ -35,22 +35,22 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('slider')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\SliderBundle\Entity\Slider')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('esperanto\SliderBundle\Repository\SliderRepository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\SliderBundle\Form\Type\SliderType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\SliderBundle\Entity\Slider')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('enhavo\SliderBundle\Repository\SliderRepository')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\SliderBundle\Form\Type\SliderType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
 
                         ->arrayNode('slide')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\SliderBundle\Entity\Slide')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('esperanto\SliderBundle\Repository\SlideRepository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\SliderBundle\Form\Type\SlideType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\SliderBundle\Entity\Slide')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('enhavo\SliderBundle\Repository\SlideRepository')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\SliderBundle\Form\Type\SlideType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
 

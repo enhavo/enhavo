@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\SearchBundle;
+namespace enhavo\SearchBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoSearchBundle extends Bundle
+class enhavoSearchBundle extends Bundle
 {
 }

@@ -6,12 +6,12 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\PageBundle\Tests\Form\Type;
+namespace enhavo\PageBundle\Tests\Form\Type;
 
-use esperanto\MediaBundle\Form\Type\FilesType;
-use esperanto\PageBundle\Form\Type\PageType;
-use esperanto\PageBundle\Entity\Page;
-use esperanto\TestingBundle\Doctrine\ObjectMangerMock;
+use enhavo\MediaBundle\Form\Type\FilesType;
+use enhavo\PageBundle\Form\Type\PageType;
+use enhavo\PageBundle\Entity\Page;
+use enhavo\TestingBundle\Doctrine\ObjectMangerMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\PreloadedExtension;
 
@@ -19,7 +19,7 @@ class PageTypeTest  extends TypeTestCase
 {
     protected function generateFileEntityObject($id)
     {
-        $mock = $this->getMock('\esperanto\MediaBundle\Entity\File', array(
+        $mock = $this->getMock('\enhavo\MediaBundle\Entity\File', array(
             'getId'
         ));
         $mock->expects($this->any())
@@ -31,8 +31,8 @@ class PageTypeTest  extends TypeTestCase
     protected function getObjectManagerMock()
     {
         $om = new ObjectMangerMock();
-        $om->getRepository('esperantoMediaBundle:File')->add($this->generateFileEntityObject(1));
-        $om->getRepository('esperantoMediaBundle:File')->add($this->generateFileEntityObject(2));
+        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(1));
+        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(2));
         return $om;
     }
 

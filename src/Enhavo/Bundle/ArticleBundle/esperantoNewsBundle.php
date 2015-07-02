@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\NewsBundle;
+namespace enhavo\NewsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoNewsBundle extends Bundle
+class enhavoNewsBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

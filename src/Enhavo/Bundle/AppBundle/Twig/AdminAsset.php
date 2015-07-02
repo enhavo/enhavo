@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Twig;
+namespace enhavo\AdminBundle\Twig;
 
-use esperanto\AdminBundle\Util\Assetic;
+use enhavo\AdminBundle\Util\Assetic;
 
 class AdminAsset extends \Twig_Extension
 {

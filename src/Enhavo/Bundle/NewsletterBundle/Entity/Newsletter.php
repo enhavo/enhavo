@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsletterBundle\Entity;
+namespace enhavo\NewsletterBundle\Entity;
 
 /**
  * Newsletter

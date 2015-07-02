@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\ContentBundle\Exception;
+namespace enhavo\ContentBundle\Exception;
 
 use Exception;
 

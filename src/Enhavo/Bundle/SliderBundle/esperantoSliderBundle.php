@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\SliderBundle;
+namespace enhavo\SliderBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoSliderBundle extends Bundle
+class enhavoSliderBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

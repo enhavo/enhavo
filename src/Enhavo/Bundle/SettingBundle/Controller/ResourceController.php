@@ -1,12 +1,12 @@
 <?php
 
-namespace esperanto\SettingBundle\Controller;
+namespace enhavo\SettingBundle\Controller;
 
-use esperanto\AdminBundle\Controller\ResourceController as BaseController;
+use enhavo\AdminBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use esperanto\AdminBundle\Admin\BaseAdmin;
+use enhavo\AdminBundle\Admin\BaseAdmin;
 
 class ResourceController extends BaseController
 {

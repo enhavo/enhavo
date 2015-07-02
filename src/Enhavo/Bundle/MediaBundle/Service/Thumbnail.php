@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\MediaBundle\Service;
+namespace enhavo\MediaBundle\Service;
 
 class Thumbnail
 {

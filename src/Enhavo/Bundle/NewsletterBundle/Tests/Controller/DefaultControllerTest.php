@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsletterBundle\Tests\Controller;
+namespace enhavo\NewsletterBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

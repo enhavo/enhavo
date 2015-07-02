@@ -6,12 +6,12 @@
  * Time: 18:26
  */
 
-namespace esperanto\PageBundle\Service;
+namespace enhavo\PageBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactory;
-use esperanto\PageBundle\Form\Type\PageType;
+use enhavo\PageBundle\Form\Type\PageType;
 
 class PageResolver
 {
@@ -38,7 +38,7 @@ class PageResolver
     {
         /** @var $formFactory FormFactory */
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create('esperanto_page_page');
+        $form = $formFactory->create('enhavo_page_page');
         $form->submit($request);
         return $form->getData();
     }
@@ -49,7 +49,7 @@ class PageResolver
         $doctrine = $this->container->get('doctrine');
         $id = $request->get('id');
 
-        $repository = $this->container->get('esperanto_page.repository.page');
+        $repository = $this->container->get('enhavo_page.repository.page');
         $page = $repository->find($id);
         return $page;
     }

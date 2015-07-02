@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsletterBundle\Twig;
+namespace enhavo\NewsletterBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
@@ -41,13 +41,13 @@ class NewsletterRender extends \Twig_Extension
 
         $formFactory = $this->container->get('form.factory');
         if($template == null){
-            $form = $formFactory->create('esperanto_newsletter_subscriber');
+            $form = $formFactory->create('enhavo_newsletter_subscriber');
             $formView = $form->createView();
 
-            $template = 'esperantoNewsletterBundle:Newsletter:subscriber.html.twig';
+            $template = 'enhavoNewsletterBundle:Newsletter:subscriber.html.twig';
         } else {
 
-            $form = $formFactory->create('esperanto_newsletter_subscriber');
+            $form = $formFactory->create('enhavo_newsletter_subscriber');
             $formView = $form->createView();
 
             $template = $template;

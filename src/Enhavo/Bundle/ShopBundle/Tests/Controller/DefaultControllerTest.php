@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\ShopBundle\Tests\Controller;
+namespace enhavo\ShopBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

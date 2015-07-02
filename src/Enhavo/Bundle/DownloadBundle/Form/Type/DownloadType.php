@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\DownloadBundle\Form\Type;
+namespace enhavo\DownloadBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class DownloadType extends AbstractType
             'label' => 'form.label.text'
         ));
 
-        $builder->add('file', 'esperanto_files', array(
+        $builder->add('file', 'enhavo_files', array(
             'label' => 'form.label.file'
         ));
     }
@@ -39,6 +39,6 @@ class DownloadType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_download_download';
+        return 'enhavo_download_download';
     }
 }

@@ -1,7 +1,7 @@
-esperanto\SliderBundle\Entity\Slider:
+enhavo\SliderBundle\Entity\Slider:
     type: entity
     table: slider_slider
-    repositoryClass: esperanto\SliderBundle\Repository\SliderRepository
+    repositoryClass: enhavo\SliderBundle\Repository\SliderRepository
 
     id:
         id:

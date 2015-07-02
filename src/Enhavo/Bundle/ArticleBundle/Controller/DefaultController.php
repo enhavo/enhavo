@@ -1,24 +1,24 @@
 <?php
 
-namespace esperanto\NewsBundle\Controller;
+namespace enhavo\NewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use esperanto\NewsBundle\Entity\News;
-use esperanto\NewsBundle\Form\NewsType;
+use enhavo\NewsBundle\Entity\News;
+use enhavo\NewsBundle\Form\NewsType;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('esperantoNewsBundle:Default:index.html.twig');
+        return $this->render('enhavoNewsBundle:Default:index.html.twig');
     }
 
     public function dialogAddAction()
     {
-        $news = $this->get('esperanto_news.repository.news')->createNew();
+        $news = $this->get('enhavo_news.repository.news')->createNew();
         $form = $this->createForm(new NewsType, $news);
 
-        return $this->render('esperantoNewsBundle:Default:dialogAdd.html.twig', array(
+        return $this->render('enhavoNewsBundle:Default:dialogAdd.html.twig', array(
             "news" => $news,
             "form" => $form->createView()
         ));
@@ -26,16 +26,16 @@ class DefaultController extends Controller
 
     public function tableAction()
     {
-        $news = $this->get('esperanto_news.repository.news')
+        $news = $this->get('enhavo_news.repository.news')
             ->findAll();
-        return $this->render('esperantoRecipeBundle:Default:table.html.twig', array(
+        return $this->render('enhavoRecipeBundle:Default:table.html.twig', array(
             "news" => $news
         ));
     }
 
     public function saveAction(Request $request)
     {
-        $news = $this->get('esperanto_news.repository.news')->createNew();
+        $news = $this->get('enhavo_news.repository.news')->createNew();
         $form = $this->createForm(new NewsType, $news);
 
 
@@ -50,9 +50,9 @@ class DefaultController extends Controller
         $em->persist($news);
         $em->flush();
 
-        $news = $this->get('esperanto_news.repository.news')->findAll();
+        $news = $this->get('enhavo_news.repository.news')->findAll();
 
-        return $this->render('esperantoNewsBundle:Default:index.html.twig', array(
+        return $this->render('enhavoNewsBundle:Default:index.html.twig', array(
             "recipes" => $news
         ));
     }

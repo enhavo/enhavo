@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Twig;
+namespace enhavo\ContentBundle\Twig;
 
-use esperanto\ContentBundle\Entity\Content;
-use esperanto\ContentBundle\Entity\Item;
+use enhavo\ContentBundle\Entity\Content;
+use enhavo\ContentBundle\Entity\Item;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
@@ -25,7 +25,7 @@ class ContentRender extends \Twig_Extension
     {
         $this->router = $router;
         $this->container = $container;
-        $this->resolver = $container->get('esperanto_content.item_type_resolver');
+        $this->resolver = $container->get('enhavo_content.item_type_resolver');
     }
 
     public function getFunctions()

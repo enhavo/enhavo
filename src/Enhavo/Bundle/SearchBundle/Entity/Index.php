@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\SearchBundle\Entity;
+namespace enhavo\SearchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

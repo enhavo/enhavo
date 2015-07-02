@@ -1,4 +1,4 @@
-esperanto\NewsletterBundle\Entity\Newsletter:
+enhavo\NewsletterBundle\Entity\Newsletter:
     type: entity
     table: newsletter_newsletter
     id:

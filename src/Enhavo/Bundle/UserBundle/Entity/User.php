@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\UserBundle\Entity;
+namespace enhavo\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;

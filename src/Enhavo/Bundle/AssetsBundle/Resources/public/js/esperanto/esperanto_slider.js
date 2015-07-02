@@ -1,4 +1,4 @@
-function esperanto_slider(containerselector,options) {
+function enhavo_slider(containerselector,options) {
   this.container = containerselector;
   this.slidescontainer = containerselector.find('[data-slide-container]');
   this.options = options || {speed:1000,onswitch:null};

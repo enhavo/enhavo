@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/setting-bundle",
+  "name": "enhavo/setting-bundle",
   "type": "library",
-  "description": "esperantoSettingBundle",
+  "description": "enhavoSettingBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "esperanto\\SettingBundle\\": "" }
+    "psr-4": { "enhavo\\SettingBundle\\": "" }
   }
 }

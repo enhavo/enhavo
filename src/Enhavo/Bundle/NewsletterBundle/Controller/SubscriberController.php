@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsletterBundle\Controller;
+namespace enhavo\NewsletterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +11,7 @@ class SubscriberController extends Controller
     public function activationAction(Request $request)
     {
         $code = $request->get('code');
-        $newsletter = $this->get('esperanto_newsletter.repository.subscriber')
+        $newsletter = $this->get('enhavo_newsletter.repository.subscriber')
             ->findOneBy(array('token' => $code, 'active' => false));
 
         if(!$newsletter)
@@ -22,24 +22,24 @@ class SubscriberController extends Controller
         {
             $newsletter->setActive(true);
             $this->getDoctrine()->getManager()->flush();
-            $response = $this->render('esperantoNewsletterBundle:Default:email-activation.html.twig');
+            $response = $this->render('enhavoNewsletterBundle:Default:email-activation.html.twig');
             return $response;
         }
     }
 
     public function sendEmailAction(Request $request) {
-        $newsletter = $request->get('esperanto_newsletter_newsletter');
+        $newsletter = $request->get('enhavo_newsletter_newsletter');
         $id = $request->get('newsletterId');
         $title = $newsletter['title'];
         $subject = $newsletter['subject'];
         $text = $newsletter['text'];
 
         $subscriber = $this->getDoctrine()
-            ->getRepository('esperantoNewsletterBundle:Subscriber')
+            ->getRepository('enhavoNewsletterBundle:Subscriber')
             ->findBy(array('active' => true));
 
         $container = $this->container;
-        $test = $container->getParameter('esperanto_newsletter.subscriber');
+        $test = $container->getParameter('enhavo_newsletter.subscriber');
 
         for($i = 0; $i < count($subscriber); $i++)
         {
@@ -53,7 +53,7 @@ class SubscriberController extends Controller
         }
 
         $currentNewsletter = $this->getDoctrine()
-            ->getRepository('esperantoNewsletterBundle:Newsletter')
+            ->getRepository('enhavoNewsletterBundle:Newsletter')
             ->findBy(array('id' => $id));
 
         $currentNewsletter[0]->setSent(true);

@@ -1,12 +1,12 @@
 <?php
 
-namespace esperanto\AdminBundle;
+namespace enhavo\AdminBundle;
 
-use esperanto\AdminBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
+use enhavo\AdminBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class esperantoAdminBundle extends Bundle
+class enhavoAdminBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

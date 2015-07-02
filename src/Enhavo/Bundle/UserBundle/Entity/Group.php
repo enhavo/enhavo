@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\UserBundle\Entity;
+namespace enhavo\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\Group as BaseGroup;
@@ -42,10 +42,10 @@ class Group extends BaseGroup
     /**
      * Add users
      *
-     * @param \esperanto\UserBundle\Entity\User $users
+     * @param \enhavo\UserBundle\Entity\User $users
      * @return Group
      */
-    public function addUser(\esperanto\UserBundle\Entity\User $users)
+    public function addUser(\enhavo\UserBundle\Entity\User $users)
     {
         $this->users[] = $users;
 
@@ -55,9 +55,9 @@ class Group extends BaseGroup
     /**
      * Remove users
      *
-     * @param \esperanto\UserBundle\Entity\User $users
+     * @param \enhavo\UserBundle\Entity\User $users
      */
-    public function removeUser(\esperanto\UserBundle\Entity\User $users)
+    public function removeUser(\enhavo\UserBundle\Entity\User $users)
     {
         $this->users->removeElement($users);
     }

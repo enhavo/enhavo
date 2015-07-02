@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\PageBundle\Entity;
+namespace enhavo\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BaconStringUtils\Slugifier;
@@ -71,7 +71,7 @@ class Page
     private $updated;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Content
+     * @var \enhavo\ContentBundle\Entity\Content
      */
     private $content;
 
@@ -81,7 +81,7 @@ class Page
     private $picture;
 
     /**
-     * @var \esperanto\AdminBundle\Entity\Route
+     * @var \enhavo\AdminBundle\Entity\Route
      */
     private $route;
 
@@ -408,10 +408,10 @@ class Page
     /**
      * Set content
      *
-     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @param \enhavo\ContentBundle\Entity\Content $content
      * @return Page
      */
-    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -421,7 +421,7 @@ class Page
     /**
      * Get content
      *
-     * @return \esperanto\ContentBundle\Entity\Content
+     * @return \enhavo\ContentBundle\Entity\Content
      */
     public function getContent()
     {
@@ -431,10 +431,10 @@ class Page
     /**
      * Add picture
      *
-     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @param \enhavo\MediaBundle\Entity\File $picture
      * @return Page
      */
-    public function addPicture(\esperanto\MediaBundle\Entity\File $picture)
+    public function addPicture(\enhavo\MediaBundle\Entity\File $picture)
     {
         $this->picture[] = $picture;
 
@@ -444,9 +444,9 @@ class Page
     /**
      * Remove picture
      *
-     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @param \enhavo\MediaBundle\Entity\File $picture
      */
-    public function removePicture(\esperanto\MediaBundle\Entity\File $picture)
+    public function removePicture(\enhavo\MediaBundle\Entity\File $picture)
     {
         $this->picture->removeElement($picture);
     }
@@ -462,7 +462,7 @@ class Page
     }
 
     /**
-     * @return \esperanto\AdminBundle\Entity\Route
+     * @return \enhavo\AdminBundle\Entity\Route
      */
     public function getRoute()
     {
@@ -470,7 +470,7 @@ class Page
     }
 
     /**
-     * @param \esperanto\AdminBundle\Entity\Route $route
+     * @param \enhavo\AdminBundle\Entity\Route $route
      */
     public function setRoute($route)
     {

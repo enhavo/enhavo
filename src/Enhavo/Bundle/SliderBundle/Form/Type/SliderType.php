@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SliderBundle\Form\Type;
+namespace enhavo\SliderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,6 +34,6 @@ class SliderType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_slider_slider';
+        return 'enhavo_slider_slider';
     }
 } 

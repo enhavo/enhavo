@@ -1,7 +1,7 @@
-esperanto\SearchBundle\Entity\Index:
+enhavo\SearchBundle\Entity\Index:
     type: entity
     table: search_index
-    repositoryClass: esperanto\SearchBundle\Repository\IndexRepository
+    repositoryClass: enhavo\SearchBundle\Repository\IndexRepository
     id:
         id:
             type: integer

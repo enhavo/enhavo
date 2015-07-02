@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/slider-bundle",
+  "name": "enhavo/slider-bundle",
   "type": "library",
-  "description": "esperantoSliderBundle",
+  "description": "enhavoSliderBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "esperanto\\SliderBundle\\": "" }
+    "psr-4": { "enhavo\\SliderBundle\\": "" }
   }
 }

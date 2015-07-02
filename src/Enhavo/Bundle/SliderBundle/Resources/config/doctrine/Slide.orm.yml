@@ -1,7 +1,7 @@
-esperanto\SliderBundle\Entity\Slide:
+enhavo\SliderBundle\Entity\Slide:
     type: mappedSuperclass
     table: slider_slide
-    repositoryClass: esperanto\SliderBundle\Repository\SlideRepository
+    repositoryClass: enhavo\SliderBundle\Repository\SlideRepository
 
     id:
         id:
@@ -41,7 +41,7 @@ esperanto\SliderBundle\Entity\Slide:
     manyToMany:
         image:
             cascade: ['persist', 'refresh']
-            targetEntity: esperanto\MediaBundle\Entity\File
+            targetEntity: enhavo\MediaBundle\Entity\File
             joinTable:
                 name: slider_slide_image
                 joinColumns:

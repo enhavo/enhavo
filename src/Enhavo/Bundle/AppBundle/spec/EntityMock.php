@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\spec;
+namespace enhavo\AdminBundle\spec;
 
 class EntityMock
 {

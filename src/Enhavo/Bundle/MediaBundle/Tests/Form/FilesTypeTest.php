@@ -6,18 +6,18 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\PageBundle\Tests\Form\Type;
+namespace enhavo\PageBundle\Tests\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use esperanto\MediaBundle\Form\Type\FilesType;
-use esperanto\TestingBundle\Doctrine\ObjectMangerMock;
+use enhavo\MediaBundle\Form\Type\FilesType;
+use enhavo\TestingBundle\Doctrine\ObjectMangerMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class FileTypeTest extends TypeTestCase
 {
     protected function generateFileEntityObject($id)
     {
-        $mock = $this->getMock('\esperanto\MediaBundle\Entity\File', array(
+        $mock = $this->getMock('\enhavo\MediaBundle\Entity\File', array(
             'getId'
         ));
         $mock->expects($this->any())
@@ -29,8 +29,8 @@ class FileTypeTest extends TypeTestCase
     protected function getObjectManagerMock()
     {
         $om = new ObjectMangerMock();
-        $om->getRepository('esperantoMediaBundle:File')->add($this->generateFileEntityObject(1));
-        $om->getRepository('esperantoMediaBundle:File')->add($this->generateFileEntityObject(2));
+        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(1));
+        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(2));
         return $om;
     }
 

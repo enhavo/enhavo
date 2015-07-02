@@ -1,23 +1,23 @@
 parameters:
-    security.authentication.voter.group_role_voter.class: esperanto\UserBundle\Security\Authentication\Voter\GroupRoleVoter
-    security.authentication.success_handler.class: esperanto\UserBundle\Security\Authentication\AuthenticationSuccessHandler
-    esperanto_user.event.save_user.class: esperanto\UserBundle\EventListener\SaveUserSubscriber
+    security.authentication.voter.group_role_voter.class: enhavo\UserBundle\Security\Authentication\Voter\GroupRoleVoter
+    security.authentication.success_handler.class: enhavo\UserBundle\Security\Authentication\AuthenticationSuccessHandler
+    enhavo_user.event.save_user.class: enhavo\UserBundle\EventListener\SaveUserSubscriber
 
 services:
-    esperanto_user.event.save_user:
-        class: %esperanto_user.event.save_user.class%
+    enhavo_user.event.save_user:
+        class: %enhavo_user.event.save_user.class%
         arguments:
             - @fos_user.user_manager
         tags:
             - { name: kernel.event_subscriber }
 
-    esperanto_user_user:
-        class: %esperanto_user.form.type.user.class%
+    enhavo_user_user:
+        class: %enhavo_user.form.type.user.class%
         tags:
             - { name: form.type }
 
-    esperanto_user_group:
-        class: %esperanto_user.form.type.group.class%
+    enhavo_user_group:
+        class: %enhavo_user.form.type.group.class%
         tags:
             - { name: form.type }
         arguments:

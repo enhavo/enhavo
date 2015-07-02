@@ -1,1 +1,1 @@
-For further information check the [main repository](https://github.com/xqweb/esperanto-cms)
+For further information check the [main repository](https://github.com/xqweb/enhavo)

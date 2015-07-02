@@ -1,128 +1,128 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            esperanto\ProjectBundle\Entity\Page: esperantoProjectBundle:Main:page
-            esperanto\ProjectBundle\Entity\News: esperantoProjectBundle:Main:news
-            esperanto\ProjectBundle\Entity\Reference: esperantoProjectBundle:Main:reference
+            enhavo\ProjectBundle\Entity\Page: enhavoProjectBundle:Main:page
+            enhavo\ProjectBundle\Entity\News: enhavoProjectBundle:Main:news
+            enhavo\ProjectBundle\Entity\Reference: enhavoProjectBundle:Main:reference
 
-esperanto_admin:
+enhavo_admin:
     permission_check: false
     stylesheets:
-      - '@esperantoDownloadBundle/Resources/public/css/style.css'
+      - '@enhavoDownloadBundle/Resources/public/css/style.css'
     javascripts:
 
     viewer:
-#        layout: 'esperantoAdminBundle::base.html.twig'
-        app: esperanto\AdminBundle\Viewer\AppViewer
+#        layout: 'enhavoAdminBundle::base.html.twig'
+        app: enhavo\AdminBundle\Viewer\AppViewer
     menu:
         dashboard:
             label: label.dashboard
-            route: esperanto_admin_dashboard
+            route: enhavo_admin_dashboard
             role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
             label: label.user
-            route: esperanto_user_user_index
+            route: enhavo_user_user_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         group:
             label: label.group
-            route: esperanto_user_group_index
+            route: enhavo_user_group_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         news:
             label: label.news
-            route: esperanto_news_news_index
+            route: enhavo_news_news_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
-            route: esperanto_page_page_index
+            route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         reference:
             label: label.reference
-            route: esperanto_reference_reference_index
+            route: enhavo_reference_reference_index
             role: ROLE_ESPERANTO_REFERENCE_REFERENCE_INDEX
         download:
             label: label.download
-            route: esperanto_download_download_index
+            route: enhavo_download_download_index
             role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
         slider:
             label: label.slider
-            route: esperanto_slider_slide_index
+            route: enhavo_slider_slide_index
             role: ROLE_ESPERANTO_SLIDER_SLIDER_INDEX
         newsletter:
             label: label.newsletter
-            route: esperanto_newsletter_newsletter_index
+            route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
 
-esperanto_content:
+enhavo_content:
     render:
         sets:
             default:
-                picture: esperantoProjectBundle:ItemType:picture.html.twig
+                picture: enhavoProjectBundle:ItemType:picture.html.twig
 
     items:
         picture:
-            model: esperanto\ContentBundle\Entity\Picture
-            form: esperanto\ContentBundle\Form\Type\PictureType
-            repository: esperantoContentBundle:Picture
-            template: esperantoContentBundle:Item:picture.html
+            model: enhavo\ContentBundle\Entity\Picture
+            form: enhavo\ContentBundle\Form\Type\PictureType
+            repository: enhavoContentBundle:Picture
+            template: enhavoContentBundle:Item:picture.html
             label: Bild
         picture_picture:
-            model: esperanto\ContentBundle\Entity\PicturePicture
-            form: esperanto\ContentBundle\Form\Type\PicturePictureType
-            repository: esperantoContentBundle:PicturePicture
-            template: esperantoContentBundle:Item:picture_picture.html
+            model: enhavo\ContentBundle\Entity\PicturePicture
+            form: enhavo\ContentBundle\Form\Type\PicturePictureType
+            repository: enhavoContentBundle:PicturePicture
+            template: enhavoContentBundle:Item:picture_picture.html
             label: Bild | Bild
         gallery:
-            model: esperanto\ContentBundle\Entity\Gallery
-            form: esperanto\ContentBundle\Form\Type\GalleryType
-            repository: esperantoContentBundle:Gallery
-            template: esperantoContentBundle:Item:gallery.html
+            model: enhavo\ContentBundle\Entity\Gallery
+            form: enhavo\ContentBundle\Form\Type\GalleryType
+            repository: enhavoContentBundle:Gallery
+            template: enhavoContentBundle:Item:gallery.html
             label: Galerie
         text:
-            model: esperanto\ContentBundle\Entity\Text
-            form: esperanto\ContentBundle\Form\Type\TextType
-            repository: esperantoContentBundle:Text
-            template: esperantoContentBundle:Item:text.html
+            model: enhavo\ContentBundle\Entity\Text
+            form: enhavo\ContentBundle\Form\Type\TextType
+            repository: enhavoContentBundle:Text
+            template: enhavoContentBundle:Item:text.html
             label: Text
         text_picture:
-            model: esperanto\ContentBundle\Entity\TextPicture
-            form: esperanto\ContentBundle\Form\Type\TextPictureType
-            repository: esperantoContentBundle:TextPicture
-            template: esperantoContentBundle:Item:text_picture.html
+            model: enhavo\ContentBundle\Entity\TextPicture
+            form: enhavo\ContentBundle\Form\Type\TextPictureType
+            repository: enhavoContentBundle:TextPicture
+            template: enhavoContentBundle:Item:text_picture.html
             label: Text | Bild
         text_text:
-            model: esperanto\ContentBundle\Entity\TextText
-            form: esperanto\ContentBundle\Form\Type\TextTextType
-            repository: esperantoContentBundle:TextText
-            template: esperantoContentBundle:Item:text_text.html
+            model: enhavo\ContentBundle\Entity\TextText
+            form: enhavo\ContentBundle\Form\Type\TextTextType
+            repository: enhavoContentBundle:TextText
+            template: enhavoContentBundle:Item:text_text.html
             label: Text | Text
         cite_text:
-            model: esperanto\ContentBundle\Entity\CiteText
-            form: esperanto\ContentBundle\Form\Type\CiteTextType
-            repository: esperantoContentBundle:CiteText
-            template: esperantoContentBundle:Item:cite_text.html
+            model: enhavo\ContentBundle\Entity\CiteText
+            form: enhavo\ContentBundle\Form\Type\CiteTextType
+            repository: enhavoContentBundle:CiteText
+            template: enhavoContentBundle:Item:cite_text.html
             label: Zitat
         download:
-            model: esperanto\DownloadBundle\Entity\DownloadItem
-            form: esperanto\DownloadBundle\Form\Type\DownloadItemType
-            repository: esperantoDownloadBundle:DownloadItem
-            template: esperantoDownloadBundle:Item:download.html.twig
+            model: enhavo\DownloadBundle\Entity\DownloadItem
+            form: enhavo\DownloadBundle\Form\Type\DownloadItemType
+            repository: enhavoDownloadBundle:DownloadItem
+            template: enhavoDownloadBundle:Item:download.html.twig
             label: Download
 
-esperanto_page:
+enhavo_page:
     classes:
         page:
-            model: esperanto\ProjectBundle\Entity\Page
-            form: esperanto\ProjectBundle\Form\Type\PageType
+            model: enhavo\ProjectBundle\Entity\Page
+            form: enhavo\ProjectBundle\Form\Type\PageType
 
-esperanto_news:
+enhavo_news:
     classes:
          news:
-            model: esperanto\ProjectBundle\Entity\News
-            form: esperanto\ProjectBundle\Form\Type\NewsType
-            repository: esperanto\NewsBundle\Repository\NewsRepository
+            model: enhavo\ProjectBundle\Entity\News
+            form: enhavo\ProjectBundle\Form\Type\NewsType
+            repository: enhavo\NewsBundle\Repository\NewsRepository
 
-esperanto_reference:
+enhavo_reference:
     classes:
          reference:
-            model: esperanto\ProjectBundle\Entity\Reference
-            form: esperanto\ProjectBundle\Form\Type\ReferenceType
+            model: enhavo\ProjectBundle\Entity\Reference
+            form: enhavo\ProjectBundle\Form\Type\ReferenceType

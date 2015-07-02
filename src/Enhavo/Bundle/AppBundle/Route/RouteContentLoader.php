@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Route;
+namespace enhavo\AdminBundle\Route;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 

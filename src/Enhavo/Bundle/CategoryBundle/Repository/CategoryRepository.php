@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\CategoryBundle\Repository;
+namespace enhavo\CategoryBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

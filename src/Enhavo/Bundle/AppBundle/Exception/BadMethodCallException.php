@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Exception;
+namespace enhavo\AdminBundle\Exception;
 
 class BadMethodCallException extends \Exception {
 

@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\UserBundle\Security\Authentication\Voter;
+namespace enhavo\UserBundle\Security\Authentication\Voter;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use esperanto\UserBundle\Entity\User;
+use enhavo\UserBundle\Entity\User;
 
 class GroupRoleVoter  implements VoterInterface
 {

@@ -1,8 +1,8 @@
 {
-  "name": "xqweb/esperanto-cms",
+  "name": "xqweb/enhavo",
   "license": "MIT",
   "type": "project",
-  "description": "esperanto-cms",
+  "description": "enhavo",
   "autoload": {
     "psr-0": { "": "src/" }
   },

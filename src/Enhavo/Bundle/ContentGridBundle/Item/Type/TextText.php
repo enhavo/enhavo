@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Item\Type;
+namespace enhavo\ContentBundle\Item\Type;
 
 
 class TextText

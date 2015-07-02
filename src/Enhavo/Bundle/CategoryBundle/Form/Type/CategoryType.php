@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\CategoryBundle\Form\Type;
+namespace enhavo\CategoryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,12 +17,12 @@ class CategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
-            'data_class' => 'esperanto\CategoryBundle\Entity\Category'
+            'data_class' => 'enhavo\CategoryBundle\Entity\Category'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_category_category';
+        return 'enhavo_category_category';
     }
 }

@@ -1,30 +1,30 @@
 parameters:
-    esperanto_newsletter.event.newsletter.class: esperanto\NewsletterBundle\EventListener\NewsletterBuilderSubscriber
+    enhavo_newsletter.event.newsletter.class: enhavo\NewsletterBundle\EventListener\NewsletterBuilderSubscriber
 
 services:
-    esperanto_newsletter_newsletter_render:
-        class: esperanto\NewsletterBundle\Twig\NewsletterRender
+    enhavo_newsletter_newsletter_render:
+        class: enhavo\NewsletterBundle\Twig\NewsletterRender
         arguments:
             - @service_container
         tags:
             - { name: twig.extension }
 
 
-    esperanto_newsletter_subscriber:
-        class: %esperanto_newsletter.form.type.subscriber.class%
+    enhavo_newsletter_subscriber:
+        class: %enhavo_newsletter.form.type.subscriber.class%
         tags:
             - { name: form.type }
 
-    esperanto_newsletter_newsletter:
-        class: %esperanto_newsletter.form.type.newsletter.class%
+    enhavo_newsletter_newsletter:
+        class: %enhavo_newsletter.form.type.newsletter.class%
         tags:
             - { name: form.type }
 
 
-    esperanto_newsletter.event.newsletter:
-        class: %esperanto_newsletter.event.newsletter.class%
+    enhavo_newsletter.event.newsletter:
+        class: %enhavo_newsletter.event.newsletter.class%
         arguments:
             - @service_container
-            - %esperanto_newsletter.subscriber%
+            - %enhavo_newsletter.subscriber%
         tags:
             - { name: kernel.event_subscriber }

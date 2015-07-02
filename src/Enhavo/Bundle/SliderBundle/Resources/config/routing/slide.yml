@@ -1,46 +1,46 @@
-esperanto_slider_slide_index:
+enhavo_slider_slide_index:
     options:
         expose: true
-    path: /esperanto/slider/slide/index
+    path: /enhavo/slider/slide/index
     methods: [GET]
     defaults:
-        _controller: esperanto_slider.controller.slide:indexAction
+        _controller: enhavo_slider.controller.slide:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
 
-esperanto_slider_slide_create:
+enhavo_slider_slide_create:
     options:
         expose: true
-    path: /esperanto/slider/slide/create
+    path: /enhavo/slider/slide/create
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_slider.controller.slide:createAction
+        _controller: enhavo_slider.controller.slide:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
 
-esperanto_slider_slide_update:
+enhavo_slider_slide_update:
     options:
         expose: true
-    path: /esperanto/slider/slide/update/{id}
+    path: /enhavo/slider/slide/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_slider.controller.slide:updateAction
+        _controller: enhavo_slider.controller.slide:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
 
-esperanto_slider_slide_table:
+enhavo_slider_slide_table:
     options:
         expose: true
-    path: /esperanto/slider/slide/table/{page}
+    path: /enhavo/slider/slide/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_slider.controller.slide:tableAction
+        _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
@@ -51,10 +51,10 @@ esperanto_slider_slide_table:
                         label: title
                         property: title
 
-esperanto_slider_slide_delete:
+enhavo_slider_slide_delete:
     options:
         expose: true
-    path: /esperanto/slider/slide/delete/{id}
+    path: /enhavo/slider/slide/delete/{id}
     methods: [POST]
     defaults:
-        _controller: esperanto_slider.controller.slide:deleteAction
+        _controller: enhavo_slider.controller.slide:deleteAction

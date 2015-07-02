@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Command;
+namespace enhavo\AdminBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,7 +19,7 @@ class GenerateRoutingCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('esperanto:generate:routing')
+            ->setName('enhavo:generate:routing')
             ->setDescription('Create default routing')
             ->addArgument(
                 'app',
@@ -39,7 +39,7 @@ class GenerateRoutingCommand extends ContainerAwareCommand
         $app = $input->getArgument('app');
         $resource = $input->getArgument('resource');
 
-        $generator = $this->getContainer()->get('esperanto_admin.generator.route_generator');
+        $generator = $this->getContainer()->get('enhavo_admin.generator.route_generator');
         $outputCode = $generator->generate($app, $resource);
 
         $output->writeln($outputCode);

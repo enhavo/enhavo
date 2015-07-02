@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Form\Type;
+namespace enhavo\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Item\ItemTypeResolver;
+use enhavo\ContentBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use esperanto\ContentBundle\Entity\Item;
+use enhavo\ContentBundle\Entity\Item;
 
 class ItemType extends AbstractType
 {
@@ -73,12 +73,12 @@ class ItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Entity\Item'
+            'data_class' => 'enhavo\ContentBundle\Entity\Item'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content_item';
+        return 'enhavo_content_item';
     }
 } 

@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\CategoryBundle\DependencyInjection;
+namespace enhavo\CategoryBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_category');
+        $rootNode = $treeBuilder->root('enhavo_category');
 
         $rootNode
             // Driver used by the resource bundle
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('collection')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\CategoryBundle\Entity\Collection')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\CategoryBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\CategoryBundle\Entity\Collection')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\CategoryBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\CategoryBundle\Form\Type\CollectionType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\CategoryBundle\Form\Type\CollectionType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

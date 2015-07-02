@@ -1,4 +1,4 @@
-esperanto\ContentBundle\Entity\Gallery:
+enhavo\ContentBundle\Entity\Gallery:
     type: entity
     table: content_type_gallery
     id:
@@ -19,7 +19,7 @@ esperanto\ContentBundle\Entity\Gallery:
     manyToMany:
         files:
             cascade: ['persist', 'refresh']
-            targetEntity: esperanto\MediaBundle\Entity\File
+            targetEntity: enhavo\MediaBundle\Entity\File
             joinTable:
                 name: content_gallery_files
                 joinColumns:

@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\esperanto\AdminBundle\Viewer;
+namespace spec\enhavo\AdminBundle\Viewer;
 
-use esperanto\AdminBundle\Config\ConfigParser;
-use esperanto\AdminBundle\spec\EntityMock;
+use enhavo\AdminBundle\Config\ConfigParser;
+use enhavo\AdminBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\Container;
@@ -13,7 +13,7 @@ class TableViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('esperanto\AdminBundle\Viewer\TableViewer');
+        $this->shouldHaveType('enhavo\AdminBundle\Viewer\TableViewer');
     }
 
     function it_should_return_value_by_property_on_object()
@@ -22,7 +22,7 @@ class TableViewerSpec extends ObjectBehavior
         $object->setName('my name is route');
         $this->getProperty($object, 'name')->shouldReturn('my name is route');
 
-        $this->shouldThrow('esperanto\AdminBundle\Exception\PropertyNotExistsException')->during(
+        $this->shouldThrow('enhavo\AdminBundle\Exception\PropertyNotExistsException')->during(
             'getProperty',
             array(
                 $object,
@@ -92,7 +92,7 @@ class TableViewerSpec extends ObjectBehavior
         $columns = array(
             'id' => array(
                 'property' => 'id',
-                'widget' => 'esperantoAdminBundle:Widget:id.html.twig'
+                'widget' => 'enhavoAdminBundle:Widget:id.html.twig'
             ),
         );
         $object = new EntityMock();
@@ -101,7 +101,7 @@ class TableViewerSpec extends ObjectBehavior
             'data' => $object,
             'value' => 'something'
         );
-        $template = 'esperantoAdminBundle:Widget:id.html.twig';
+        $template = 'enhavoAdminBundle:Widget:id.html.twig';
 
         $engine->render($template, $parameters)->willReturn('hello');
         $container->get('templating')->willReturn($engine);
@@ -113,6 +113,6 @@ class TableViewerSpec extends ObjectBehavior
         $this->setConfig($configParser);
         $this->setContainer($container);
 
-        $this->renderWidget('esperantoAdminBundle:Widget:id.html.twig', 'name', $object)->shouldBe('hello');
+        $this->renderWidget('enhavoAdminBundle:Widget:id.html.twig', 'name', $object)->shouldBe('hello');
     }
 }

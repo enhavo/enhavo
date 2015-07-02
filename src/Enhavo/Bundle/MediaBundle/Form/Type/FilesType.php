@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\MediaBundle\Form\Type;
+namespace enhavo\MediaBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
@@ -41,7 +41,7 @@ class FilesType extends AbstractType
                 $data = $event->getData();
                 if($data) {
                     foreach($data as $formFile) {
-                        $file = $manager->getRepository('esperantoMediaBundle:File')->find($formFile['id']);
+                        $file = $manager->getRepository('enhavoMediaBundle:File')->find($formFile['id']);
                         $file->setOrder($formFile['order']);
                         $collection->add($file);
                     }
@@ -83,7 +83,7 @@ class FilesType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_files';
+        return 'enhavo_files';
     }
 
     public function getParent()

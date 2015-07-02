@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsBundle\Form\Type;
+namespace enhavo\NewsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,7 +53,7 @@ class NewsType extends AbstractType
             }
         });
 
-        $builder->add('route', 'esperanto_route');
+        $builder->add('route', 'enhavo_route');
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
@@ -134,11 +134,11 @@ class NewsType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('picture', 'esperanto_files', array(
+        $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'esperanto_content');
+        $builder->add('content', 'enhavo_content');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -150,6 +150,6 @@ class NewsType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_news_news';
+        return 'enhavo_news_news';
     }
 }

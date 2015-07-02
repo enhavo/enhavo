@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
+use enhavo\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * Text

@@ -6,10 +6,10 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace enhavo\AdminBundle\Viewer;
 
 use Symfony\Component\HttpFoundation\Request;
-use esperanto\AdminBundle\Exception\ViewerNotFoundException;
+use enhavo\AdminBundle\Exception\ViewerNotFoundException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SettingBundle\Form\Type;
+namespace enhavo\SettingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use esperanto\SettingBundle\Service\SettingService;
+use enhavo\SettingBundle\Service\SettingService;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
@@ -22,7 +22,7 @@ class SettingType extends AbstractType
 
     public function __construct($container)
     {
-        $this->settingService = $container->get('esperanto_setting.setting_service');
+        $this->settingService = $container->get('enhavo_setting.setting_service');
         $this->container = $container;
     }
 
@@ -42,7 +42,7 @@ class SettingType extends AbstractType
      */
     public function getName()
     {
-        return 'esperanto_setting_setting';
+        return 'enhavo_setting_setting';
     }
 
     public function getFormType()

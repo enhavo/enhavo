@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\DownloadBundle\Entity;
+namespace enhavo\DownloadBundle\Entity;
 
-use esperanto\ContentBundle\Item\ItemTypeInterface;
+use enhavo\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * DownloadItem
@@ -15,7 +15,7 @@ class DownloadItem implements ItemTypeInterface
     private $id;
 
     /**
-     * @var \esperanto\DownloadBundle\Entity\Download
+     * @var \enhavo\DownloadBundle\Entity\Download
      */
     private $download;
 
@@ -42,11 +42,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Set download
      *
-     * @param \esperanto\DownloadBundle\Entity\Download $download
+     * @param \enhavo\DownloadBundle\Entity\Download $download
      *
      * @return DownloadItem
      */
-    public function setDownload(\esperanto\DownloadBundle\Entity\Download $download = null)
+    public function setDownload(\enhavo\DownloadBundle\Entity\Download $download = null)
     {
         $this->download = $download;
 
@@ -56,7 +56,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Get download
      *
-     * @return \esperanto\DownloadBundle\Entity\Download
+     * @return \enhavo\DownloadBundle\Entity\Download
      */
     public function getDownload()
     {
@@ -74,11 +74,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Add file
      *
-     * @param \esperanto\MediaBundle\Entity\File $file
+     * @param \enhavo\MediaBundle\Entity\File $file
      *
      * @return DownloadItem
      */
-    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    public function addFile(\enhavo\MediaBundle\Entity\File $file)
     {
         $this->file[] = $file;
 
@@ -88,9 +88,9 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Remove file
      *
-     * @param \esperanto\MediaBundle\Entity\File $file
+     * @param \enhavo\MediaBundle\Entity\File $file
      */
-    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    public function removeFile(\enhavo\MediaBundle\Entity\File $file)
     {
         $this->file->removeElement($file);
     }

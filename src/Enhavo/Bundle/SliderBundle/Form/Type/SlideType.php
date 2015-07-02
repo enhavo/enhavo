@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SliderBundle\Form\Type;
+namespace enhavo\SliderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,7 +50,7 @@ class SlideType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('image', 'esperanto_files', array(
+        $builder->add('image', 'enhavo_files', array(
             'label' => 'form.label.image',
             'information' => array('Bilder in der Größe 640x360 Pixel (oder ein vielfaches davon) hochladen'),
         ));
@@ -65,6 +65,6 @@ class SlideType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_slider_slide';
+        return 'enhavo_slider_slide';
     }
 } 

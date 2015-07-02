@@ -1,7 +1,7 @@
 parameters:
-    esperanto_search.manager.class: esperanto\SearchBundle\Search\SearchManager
+    enhavo_search.manager.class: enhavo\SearchBundle\Search\SearchManager
 
 services:
-    esperanto_search.manager:
-        class: '%esperanto_search.manager.class%'
+    enhavo_search.manager:
+        class: '%enhavo_search.manager.class%'
         arguments: [@doctrine.orm.entity_manager]

@@ -1,4 +1,4 @@
-esperanto\CategoryBundle\Entity\Collection:
+enhavo\CategoryBundle\Entity\Collection:
     type: entity
     table: category_collection
     id:

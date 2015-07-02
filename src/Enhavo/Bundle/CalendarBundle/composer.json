@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/calendar-bundle",
+  "name": "enhavo/calendar-bundle",
   "type": "library",
-  "description": "esperantoCalendarBundle",
+  "description": "enhavoCalendarBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "esperanto\\CalendarBundle\\": "" }
+    "psr-4": { "enhavo\\CalendarBundle\\": "" }
   }
 }

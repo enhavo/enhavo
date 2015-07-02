@@ -6,11 +6,11 @@
  * @author gseidel
  */
 
-namespace esperanto\ContentBundle\Item;
+namespace enhavo\ContentBundle\Item;
 
-use esperanto\ContentBundle\Exception\NoRenderSetFoundException;
+use enhavo\ContentBundle\Exception\NoRenderSetFoundException;
 use Symfony\Component\DependencyInjection\Container;
-use esperanto\ContentBundle\Exception\NoTypeFoundException;
+use enhavo\ContentBundle\Exception\NoTypeFoundException;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class ItemTypeResolver

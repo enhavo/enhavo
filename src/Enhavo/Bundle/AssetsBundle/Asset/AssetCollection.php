@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AssetsBundle\Asset;
+namespace enhavo\AssetsBundle\Asset;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PlasmaConduit\DependencyGraph;

@@ -1,46 +1,46 @@
-esperanto_download_download_index:
+enhavo_download_download_index:
     options:
         expose: true
-    path: /admin/esperanto/download/download/index
+    path: /admin/enhavo/download/download/index
     methods: [GET]
     defaults:
-        _controller: esperanto_download.controller.download:indexAction
+        _controller: enhavo_download.controller.download:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
 
-esperanto_download_download_create:
+enhavo_download_download_create:
     options:
         expose: true
-    path: /admin/esperanto/download/download/create
+    path: /admin/enhavo/download/download/create
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_download.controller.download:createAction
+        _controller: enhavo_download.controller.download:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
 
-esperanto_download_download_update:
+enhavo_download_download_update:
     options:
         expose: true
-    path: /admin/esperanto/download/download/update/{id}
+    path: /admin/enhavo/download/download/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_download.controller.download:updateAction
+        _controller: enhavo_download.controller.download:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
 
-esperanto_download_download_table:
+enhavo_download_download_table:
     options:
         expose: true
-    path: /admin/esperanto/download/download/table/{page}
+    path: /admin/enhavo/download/download/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_download.controller.download:tableAction
+        _controller: enhavo_download.controller.download:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
@@ -52,10 +52,10 @@ esperanto_download_download_table:
                         property: title
                         width: 8
 
-esperanto_download_download_delete:
+enhavo_download_download_delete:
     options:
         expose: true
-    path: /admin/esperanto/download/download/delete/{id}
+    path: /admin/enhavo/download/download/delete/{id}
     methods: [POST]
     defaults:
-        _controller: esperanto_download.controller.download:deleteAction
+        _controller: enhavo_download.controller.download:deleteAction

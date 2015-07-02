@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\CategoryBundle\Entity;
+namespace enhavo\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,7 +21,7 @@ class Category
     private $name;
 
     /**
-     * @var \esperanto\CategoryBundle\Entity\Collection
+     * @var \enhavo\CategoryBundle\Entity\Collection
      */
     private $collection;
 
@@ -62,10 +62,10 @@ class Category
     /**
      * Set collection
      *
-     * @param \esperanto\CategoryBundle\Entity\Collection $collection
+     * @param \enhavo\CategoryBundle\Entity\Collection $collection
      * @return Category
      */
-    public function setCollection(\esperanto\CategoryBundle\Entity\Collection $collection = null)
+    public function setCollection(\enhavo\CategoryBundle\Entity\Collection $collection = null)
     {
         $this->collection = $collection;
 
@@ -75,7 +75,7 @@ class Category
     /**
      * Get collection
      *
-     * @return \esperanto\CategoryBundle\Entity\Collection 
+     * @return \enhavo\CategoryBundle\Entity\Collection
      */
     public function getCollection()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\MediaBundle\Entity;
+namespace enhavo\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

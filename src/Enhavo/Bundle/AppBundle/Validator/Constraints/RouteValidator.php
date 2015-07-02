@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Validator\Constraints;
+namespace enhavo\AdminBundle\Validator\Constraints;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraint;

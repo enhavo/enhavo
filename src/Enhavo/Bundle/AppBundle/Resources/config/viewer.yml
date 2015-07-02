@@ -2,12 +2,12 @@
 
 services:
     viewer.factory:
-        class: esperanto\AdminBundle\Viewer\ViewerFactory
+        class: enhavo\AdminBundle\Viewer\ViewerFactory
         arguments:
             - @service_container
             - @request_stack
-            - %esperanto_admin.viewer%
+            - %enhavo_admin.viewer%
 
     viewer.config:
-        class: esperanto\AdminBundle\Config\ConfigParser
+        class: enhavo\AdminBundle\Config\ConfigParser
         scope: prototype

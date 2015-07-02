@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\DownloadBundle\Entity;
+namespace enhavo\DownloadBundle\Entity;
 
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use BaconStringUtils\Slugifier;
 
@@ -29,7 +29,7 @@ class Download
     private $text;
 
     /**
-     * @var \esperanto\MediaBundle\Entity\File
+     * @var \enhavo\MediaBundle\Entity\File
      */
     private $file;
 
@@ -105,10 +105,10 @@ class Download
     /**
      * Add file
      *
-     * @param \esperanto\MediaBundle\Entity\File file
+     * @param \enhavo\MediaBundle\Entity\File file
      * @return Page
      */
-    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    public function addFile(\enhavo\MediaBundle\Entity\File $file)
     {
         if($this->file === null) {
             $this->file = new ArrayCollection();
@@ -122,9 +122,9 @@ class Download
     /**
      * Remove file
      *
-     * @param \esperanto\MediaBundle\Entity\File $file
+     * @param \enhavo\MediaBundle\Entity\File $file
      */
-    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    public function removeFile(\enhavo\MediaBundle\Entity\File $file)
     {
         $this->file->removeElement($file);
     }

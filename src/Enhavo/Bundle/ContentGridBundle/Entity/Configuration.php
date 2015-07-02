@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
 
 class Configuration

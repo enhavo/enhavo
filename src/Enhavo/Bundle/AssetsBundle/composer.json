@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/assets-bundle",
+  "name": "enhavo/assets-bundle",
   "type": "library",
-  "description": "esperantoAssetsBundle",
+  "description": "enhavoAssetsBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -16,6 +16,6 @@
     "plasmaconduit/dependency-graph" :"0.1.0"
   },
   "autoload": {
-    "psr-4": { "esperanto\\AssetsBundle\\": "" }
+    "psr-4": { "enhavo\\AssetsBundle\\": "" }
   }
 }

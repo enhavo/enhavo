@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\AdminBundle\Model;
+namespace enhavo\AdminBundle\Model;
 
 
 class View

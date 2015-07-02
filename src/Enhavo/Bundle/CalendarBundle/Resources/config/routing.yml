@@ -1,3 +1,3 @@
-esperanto_calendar_homepage:
+enhavo_calendar_homepage:
     path:     /hello/{name}
-    defaults: { _controller: esperantoCalendarBundle:Default:index }
+    defaults: { _controller: enhavoCalendarBundle:Default:index }

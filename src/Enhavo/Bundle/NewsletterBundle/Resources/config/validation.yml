@@ -1,4 +1,4 @@
-esperanto\NewsletterBundle\Entity\Subscriber:
+enhavo\NewsletterBundle\Entity\Subscriber:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
     properties:

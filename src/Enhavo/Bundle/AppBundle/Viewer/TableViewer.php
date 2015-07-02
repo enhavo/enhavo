@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace enhavo\AdminBundle\Viewer;
 
-use esperanto\AdminBundle\Exception\PropertyNotExistsException;
+use enhavo\AdminBundle\Exception\PropertyNotExistsException;
 
 class TableViewer extends AbstractViewer
 {

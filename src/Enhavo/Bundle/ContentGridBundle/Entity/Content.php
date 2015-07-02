@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,10 +40,10 @@ class Content
     /**
      * Add containers
      *
-     * @param \esperanto\ContentBundle\Entity\Container $containers
+     * @param \enhavo\ContentBundle\Entity\Container $containers
      * @return Content
      */
-    public function addContainer(\esperanto\ContentBundle\Entity\Container $containers)
+    public function addContainer(\enhavo\ContentBundle\Entity\Container $containers)
     {
         $this->containers[] = $containers;
 
@@ -53,9 +53,9 @@ class Content
     /**
      * Remove containers
      *
-     * @param \esperanto\ContentBundle\Entity\Container $containers
+     * @param \enhavo\ContentBundle\Entity\Container $containers
      */
-    public function removeContainer(\esperanto\ContentBundle\Entity\Container $containers)
+    public function removeContainer(\enhavo\ContentBundle\Entity\Container $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -78,10 +78,10 @@ class Content
     /**
      * Add items
      *
-     * @param \esperanto\ContentBundle\Entity\Item $items
+     * @param \enhavo\ContentBundle\Entity\Item $items
      * @return Content
      */
-    public function addItem(\esperanto\ContentBundle\Entity\Item $item)
+    public function addItem(\enhavo\ContentBundle\Entity\Item $item)
     {
         $item->setContent($this);
         $this->items[] = $item;
@@ -92,9 +92,9 @@ class Content
     /**
      * Remove items
      *
-     * @param \esperanto\ContentBundle\Entity\Item $items
+     * @param \enhavo\ContentBundle\Entity\Item $items
      */
-    public function removeItem(\esperanto\ContentBundle\Entity\Item $item)
+    public function removeItem(\enhavo\ContentBundle\Entity\Item $item)
     {
         $item->setContent(null);
         $this->items->removeElement($item);

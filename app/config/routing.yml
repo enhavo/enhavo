@@ -1,54 +1,54 @@
 #
-# esperanto-cms
+# enhavo
 #
-esperanto_media:
-    resource: "@esperantoMediaBundle/Resources/config/routing.yml"
+enhavo_media:
+    resource: "@enhavoMediaBundle/Resources/config/routing.yml"
 
-esperanto_user_security:
-    resource: "@esperantoUserBundle/Resources/config/routing/security.yml"
+enhavo_user_security:
+    resource: "@enhavoUserBundle/Resources/config/routing/security.yml"
 
-esperanto_admin:
-    resource: "@esperantoAdminBundle/Resources/config/routing/admin.yml"
+enhavo_admin:
+    resource: "@enhavoAdminBundle/Resources/config/routing/admin.yml"
     prefix: /admin
 
-esperanto_news:
-    resource: "@esperantoNewsBundle/Resources/config/routing/news.yml"
+enhavo_news:
+    resource: "@enhavoNewsBundle/Resources/config/routing/news.yml"
     prefix: /admin
 
-esperanto_page:
-    resource: "@esperantoPageBundle/Resources/config/routing/page.yml"
+enhavo_page:
+    resource: "@enhavoPageBundle/Resources/config/routing/page.yml"
     prefix: /admin
 
-esperanto_reference:
-    resource: "@esperantoReferenceBundle/Resources/config/routing/reference.yml"
+enhavo_reference:
+    resource: "@enhavoReferenceBundle/Resources/config/routing/reference.yml"
     prefix: /admin
 
-esperanto_download:
-    resource: "@esperantoDownloadBundle/Resources/config/routing/download.yml"
+enhavo_download:
+    resource: "@enhavoDownloadBundle/Resources/config/routing/download.yml"
     prefix: /admin
 
-esperanto_slide:
-    resource: "@esperantoSliderBundle/Resources/config/routing/slide.yml"
+enhavo_slide:
+    resource: "@enhavoSliderBundle/Resources/config/routing/slide.yml"
     prefix: /admin
 
-esperanto_user:
-    resource: "@esperantoUserBundle/Resources/config/routing/user.yml"
+enhavo_user:
+    resource: "@enhavoUserBundle/Resources/config/routing/user.yml"
     prefix: /admin
 
-esperanto_group:
-    resource: "@esperantoUserBundle/Resources/config/routing/group.yml"
+enhavo_group:
+    resource: "@enhavoUserBundle/Resources/config/routing/group.yml"
     prefix: /admin
 
-esperanto_content_admin:
+enhavo_content_admin:
     prefix:   /admin/content
-    resource: "@esperantoContentBundle/Resources/config/routing/admin.yml"
+    resource: "@enhavoContentBundle/Resources/config/routing/admin.yml"
 
-esperanto_newsletter_newsletter:
-    resource: "@esperantoNewsletterBundle/Resources/config/routing/newsletter.yml"
+enhavo_newsletter_newsletter:
+    resource: "@enhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
     prefix:   /admin
 
-esperanto_newsletter_subscriber:
-    resource: "@esperantoNewsletterBundle/Resources/config/routing/subscriber.yml"
+enhavo_newsletter_subscriber:
+    resource: "@enhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
     prefix:   /
 
 
@@ -64,10 +64,10 @@ _liip_imagine:
 #
 # project
 #
-esperanto_project:
-    resource: "@esperantoProjectBundle/Resources/config/routing.yml"
+enhavo_project:
+    resource: "@enhavoProjectBundle/Resources/config/routing.yml"
     prefix:   /
 
-esperanto_project_admin:
-    resource: "@esperantoProjectBundle/Resources/config/admin.yml"
+enhavo_project_admin:
+    resource: "@enhavoProjectBundle/Resources/config/admin.yml"
     prefix:   /admin

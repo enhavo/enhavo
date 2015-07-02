@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
+use enhavo\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * TextPicture
@@ -138,10 +138,10 @@ class TextPicture implements ItemTypeInterface
     /**
      * Add files
      *
-     * @param \esperanto\MediaBundle\Entity\File files
+     * @param \enhavo\MediaBundle\Entity\File files
      * @return Content
      */
-    public function addFiles(\esperanto\MediaBundle\Entity\File $files)
+    public function addFiles(\enhavo\MediaBundle\Entity\File $files)
     {
         if ($this->files === null) {
             $this->files = new ArrayCollection();
@@ -155,9 +155,9 @@ class TextPicture implements ItemTypeInterface
     /**
      * Remove files
      *
-     * @param \esperanto\MediaBundle\Entity\File $files
+     * @param \enhavo\MediaBundle\Entity\File $files
      */
-    public function removeFiles(\esperanto\MediaBundle\Entity\File $files)
+    public function removeFiles(\enhavo\MediaBundle\Entity\File $files)
     {
         $this->files->removeElement($files);
     }
@@ -191,11 +191,11 @@ class TextPicture implements ItemTypeInterface
     /**
      * Add file
      *
-     * @param \esperanto\MediaBundle\Entity\File $file
+     * @param \enhavo\MediaBundle\Entity\File $file
      *
      * @return TextPicture
      */
-    public function addFile(\esperanto\MediaBundle\Entity\File $file)
+    public function addFile(\enhavo\MediaBundle\Entity\File $file)
     {
         $this->files[] = $file;
 
@@ -205,9 +205,9 @@ class TextPicture implements ItemTypeInterface
     /**
      * Remove file
      *
-     * @param \esperanto\MediaBundle\Entity\File $file
+     * @param \enhavo\MediaBundle\Entity\File $file
      */
-    public function removeFile(\esperanto\MediaBundle\Entity\File $file)
+    public function removeFile(\enhavo\MediaBundle\Entity\File $file)
     {
         $this->files->removeElement($file);
     }

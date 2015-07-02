@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
+use enhavo\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * PicturePicture
@@ -75,10 +75,10 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Add filesLeft
      *
-     * @param \esperanto\MediaBundle\Entity\File filesLeft
+     * @param \enhavo\MediaBundle\Entity\File filesLeft
      * @return Content
      */
-    public function addFilesLeft(\esperanto\MediaBundle\Entity\File $filesLeft)
+    public function addFilesLeft(\enhavo\MediaBundle\Entity\File $filesLeft)
     {
         if ($this->filesLeft === null) {
             $this->filesLeft = new ArrayCollection();
@@ -92,9 +92,9 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Remove filesLeft
      *
-     * @param \esperanto\MediaBundle\Entity\File $filesLeft
+     * @param \enhavo\MediaBundle\Entity\File $filesLeft
      */
-    public function removeFilesLeft(\esperanto\MediaBundle\Entity\File $filesLeft)
+    public function removeFilesLeft(\enhavo\MediaBundle\Entity\File $filesLeft)
     {
         $this->filesLeft->removeElement($filesLeft);
     }
@@ -125,10 +125,10 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Add filesRight
      *
-     * @param \esperanto\MediaBundle\Entity\File filesRight
+     * @param \enhavo\MediaBundle\Entity\File filesRight
      * @return Content
      */
-    public function addFilesRight(\esperanto\MediaBundle\Entity\File $filesRight)
+    public function addFilesRight(\enhavo\MediaBundle\Entity\File $filesRight)
     {
         if ($this->filesRight === null) {
             $this->filesRight = new ArrayCollection();
@@ -142,9 +142,9 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Remove filesRight
      *
-     * @param \esperanto\MediaBundle\Entity\File $filesRight
+     * @param \enhavo\MediaBundle\Entity\File $filesRight
      */
-    public function removeFilesRight(\esperanto\MediaBundle\Entity\File $filesRight)
+    public function removeFilesRight(\enhavo\MediaBundle\Entity\File $filesRight)
     {
         $this->filesRight->removeElement($filesRight);
     }

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\ContentBundle\Item;
+namespace enhavo\ContentBundle\Item;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;

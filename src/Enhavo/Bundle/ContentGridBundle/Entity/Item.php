@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use esperanto\ContentBundle\Item\ItemTypeInterface;
+use enhavo\ContentBundle\Item\ItemTypeInterface;
 
 /**
  * Item
@@ -21,7 +21,7 @@ class Item
     private $order;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Content
+     * @var \enhavo\ContentBundle\Entity\Content
      */
     private $content;
 
@@ -31,7 +31,7 @@ class Item
     private $configuration;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Column
+     * @var \enhavo\ContentBundle\Entity\Column
      */
     private $column;
 
@@ -108,10 +108,10 @@ class Item
     /**
      * Set column
      *
-     * @param \esperanto\ContentBundle\Entity\Column $column
+     * @param \enhavo\ContentBundle\Entity\Column $column
      * @return Item
      */
-    public function setColumn(\esperanto\ContentBundle\Entity\Column $column = null)
+    public function setColumn(\enhavo\ContentBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -121,7 +121,7 @@ class Item
     /**
      * Get column
      *
-     * @return \esperanto\ContentBundle\Entity\Column 
+     * @return \enhavo\ContentBundle\Entity\Column
      */
     public function getColumn()
     {
@@ -131,10 +131,10 @@ class Item
     /**
      * Set content
      *
-     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @param \enhavo\ContentBundle\Entity\Content $content
      * @return Item
      */
-    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -144,7 +144,7 @@ class Item
     /**
      * Get content
      *
-     * @return \esperanto\ContentBundle\Entity\Content 
+     * @return \enhavo\ContentBundle\Entity\Content
      */
     public function getContent()
     {

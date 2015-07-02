@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\UserBundle\Form\Type;
+namespace enhavo\UserBundle\Form\Type;
 
-use esperanto\AdminBundle\Security\Roles\RolesProvider;
+use enhavo\AdminBundle\Security\Roles\RolesProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -42,12 +42,12 @@ class GroupType extends AbstractType
     public function getDefaultOptions()
     {
         return array(
-            'data_class' => 'esperanto/UserBundle/Entity/Group'
+            'data_class' => 'enhavo/UserBundle/Entity/Group'
         );
     }
 
     public function getName()
     {
-        return 'esperanto_user_group';
+        return 'enhavo_user_group';
     }
 }

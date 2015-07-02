@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace enhavo\AdminBundle\Viewer;
 
 
 class EditViewer extends CreateViewer
@@ -39,7 +39,7 @@ class EditViewer extends CreateViewer
 
             ),
             'form' => array(
-                'template' => 'esperantoAdminBundle:View:tab.html.twig',
+                'template' => 'enhavoAdminBundle:View:tab.html.twig',
                 'theme' => '',
                 'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName()),
                 'delete' => sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName())

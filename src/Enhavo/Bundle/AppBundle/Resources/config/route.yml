@@ -1,49 +1,49 @@
 parameters:
-    cmf_routing.route_entity.class: esperanto\AdminBundle\Entity\Route
+    cmf_routing.route_entity.class: enhavo\AdminBundle\Entity\Route
     cmf_routing.orm_candidates.class: Symfony\Cmf\Component\Routing\Candidates\Candidates
     cmf_routing.route_entity_provider: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
-    esperanto_content.doctrine_route_content_subscriber.class: esperanto\AdminBundle\EventListener\DoctrineRouteContentSubscriber
-    esperanto_admin.form.route.class: esperanto\AdminBundle\Form\Type\RouteType
+    enhavo_content.doctrine_route_content_subscriber.class: enhavo\AdminBundle\EventListener\DoctrineRouteContentSubscriber
+    enhavo_admin.form.route.class: enhavo\AdminBundle\Form\Type\RouteType
 
 services:
-    esperanto_admin.orm_candidates:
+    enhavo_admin.orm_candidates:
         class: %cmf_routing.orm_candidates.class%
         arguments:
             - %cmf_routing.dynamic.locales%
             - %cmf_routing.dynamic.limit_candidates%
 
-    esperanto_admin.route_provider:
+    enhavo_admin.route_provider:
         class: %cmf_routing.route_entity_provider%
         arguments:
             - @doctrine
-            - @esperanto_admin.orm_candidates
+            - @enhavo_admin.orm_candidates
             - %cmf_routing.route_entity.class%
         calls:
             - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]
 
-    esperanto_admin.route_content_collector:
-        class: esperanto\AdminBundle\Route\RouteContentCollector
+    enhavo_admin.route_content_collector:
+        class: enhavo\AdminBundle\Route\RouteContentCollector
 
-    esperanto_admin.route_content_resolver:
-        class: esperanto\AdminBundle\Route\RouteContentResolver
+    enhavo_admin.route_content_resolver:
+        class: enhavo\AdminBundle\Route\RouteContentResolver
         arguments:
-            - @esperanto_admin.route_content_collector
+            - @enhavo_admin.route_content_collector
             - @service_container
 
-    esperanto_admin.doctrine_route_content_subscriber:
-        class: %esperanto_content.doctrine_route_content_subscriber.class%
+    enhavo_admin.doctrine_route_content_subscriber:
+        class: %enhavo_content.doctrine_route_content_subscriber.class%
         arguments:
-            - @esperanto_admin.route_content_resolver
+            - @enhavo_admin.route_content_resolver
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    esperanto_admin.form.route:
-        class: %esperanto_admin.form.route.class%
+    enhavo_admin.form.route:
+        class: %enhavo_admin.form.route.class%
         tags:
-            - { name: form.type, alias: 'esperanto_route' }
+            - { name: form.type, alias: 'enhavo_route' }
 
-    esperanto_admin.validator.unique_url:
-        class: esperanto\AdminBundle\Validator\Constraints\RouteValidator
+    enhavo_admin.validator.unique_url:
+        class: enhavo\AdminBundle\Validator\Constraints\RouteValidator
         arguments:
           - @router
         tags:

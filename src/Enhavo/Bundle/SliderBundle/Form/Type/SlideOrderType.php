@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SliderBundle\Form\Type;
+namespace enhavo\SliderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,6 +40,6 @@ class SlideOrderType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_slider_slide_order';
+        return 'enhavo_slider_slide_order';
     }
 } 

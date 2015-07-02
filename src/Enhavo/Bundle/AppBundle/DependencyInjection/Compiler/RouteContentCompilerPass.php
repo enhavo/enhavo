@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\AdminBundle\DependencyInjection\Compiler;
+namespace enhavo\AdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -11,16 +11,16 @@ class RouteContentCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('esperanto_admin.route_content_collector')) {
+        if (!$container->hasDefinition('enhavo_admin.route_content_collector')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'esperanto_admin.route_content_collector'
+            'enhavo_admin.route_content_collector'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'esperanto_route_content_loader'
+            'enhavo_route_content_loader'
         );
 
         foreach ($taggedServices as $id => $tagAttributes) {

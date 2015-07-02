@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\PageBundle\Form\Type;
+namespace enhavo\PageBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -54,7 +54,7 @@ class PageType extends AbstractType
             }
         });
 
-        $builder->add('route', 'esperanto_route');
+        $builder->add('route', 'enhavo_route');
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
@@ -129,11 +129,11 @@ class PageType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('picture', 'esperanto_files', array(
+        $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'esperanto_content', array(
+        $builder->add('content', 'enhavo_content', array(
         ));
     }
 
@@ -146,6 +146,6 @@ class PageType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_page_page';
+        return 'enhavo_page_page';
     }
 }

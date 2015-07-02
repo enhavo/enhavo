@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\NewsBundle\Entity;
+namespace enhavo\NewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BaconStringUtils\Slugifier;
@@ -74,7 +74,7 @@ abstract class News {
     private $public;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Content
+     * @var \enhavo\ContentBundle\Entity\Content
      */
     private $content;
 
@@ -84,7 +84,7 @@ abstract class News {
     private $picture;
 
     /**
-     * @var \esperanto\AdminBundle\Entity\Route
+     * @var \enhavo\AdminBundle\Entity\Route
      */
     private $route;
 
@@ -430,10 +430,10 @@ abstract class News {
     /**
      * Set content
      *
-     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @param \enhavo\ContentBundle\Entity\Content $content
      * @return News
      */
-    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -443,7 +443,7 @@ abstract class News {
     /**
      * Get content
      *
-     * @return \esperanto\ContentBundle\Entity\Content
+     * @return \enhavo\ContentBundle\Entity\Content
      */
     public function getContent()
     {
@@ -453,10 +453,10 @@ abstract class News {
     /**
      * Add picture
      *
-     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @param \enhavo\MediaBundle\Entity\File $picture
      * @return News
      */
-    public function addPicture(\esperanto\MediaBundle\Entity\File $picture)
+    public function addPicture(\enhavo\MediaBundle\Entity\File $picture)
     {
         $this->picture[] = $picture;
 
@@ -466,9 +466,9 @@ abstract class News {
     /**
      * Remove picture
      *
-     * @param \esperanto\MediaBundle\Entity\File $picture
+     * @param \enhavo\MediaBundle\Entity\File $picture
      */
-    public function removePicture(\esperanto\MediaBundle\Entity\File $picture)
+    public function removePicture(\enhavo\MediaBundle\Entity\File $picture)
     {
         $this->picture->removeElement($picture);
     }
@@ -484,7 +484,7 @@ abstract class News {
     }
 
     /**
-     * @return \esperanto\AdminBundle\Entity\Route
+     * @return \enhavo\AdminBundle\Entity\Route
      */
     public function getRoute()
     {
@@ -492,7 +492,7 @@ abstract class News {
     }
 
     /**
-     * @param \esperanto\AdminBundle\Entity\Route $route
+     * @param \enhavo\AdminBundle\Entity\Route $route
      */
     public function setRoute($route)
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace spec\esperanto\AdminBundle\Viewer;
+namespace spec\enhavo\AdminBundle\Viewer;
 
-use esperanto\AdminBundle\spec\EntityMock;
+use enhavo\AdminBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use esperanto\AdminBundle\Config\ConfigParser;
+use enhavo\AdminBundle\Config\ConfigParser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Router;
 
@@ -13,7 +13,7 @@ class EditViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('esperanto\AdminBundle\Viewer\EditViewer');
+        $this->shouldHaveType('enhavo\AdminBundle\Viewer\EditViewer');
     }
 
     function it_should_return_parameters(ConfigParser $configParser, ContainerInterface $container, Router $router)

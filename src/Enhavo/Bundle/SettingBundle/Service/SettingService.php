@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SettingBundle\Service;
+namespace enhavo\SettingBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -30,7 +30,7 @@ class SettingService
     public function resolve($name)
     {
         $event = new SettingResolveEvent($this->resolveCollection, $name);
-        $this->dispatcher->dispatch('esperanto_setting.resolve', $event);
+        $this->dispatcher->dispatch('enhavo_setting.resolve', $event);
 
         if($this->resolveCollection->isEmpty()) {
             return null;
@@ -41,7 +41,7 @@ class SettingService
 
     public function getSetting($name)
     {
-        $setting = $this->manager->getRepository('esperantoSettingBundle:Setting')->findOneBy(array('name' => $name));
+        $setting = $this->manager->getRepository('enhavoSettingBundle:Setting')->findOneBy(array('name' => $name));
         if(!empty($setting)) {
             return $setting->getContainer();
         }

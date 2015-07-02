@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\DownloadBundle\Controller;
+namespace enhavo\DownloadBundle\Controller;
 
-use esperanto\AdminBundle\Controller\ResourceController as BaseController;
+use enhavo\AdminBundle\Controller\ResourceController as BaseController;
 
 class ResourceController extends BaseController
 {

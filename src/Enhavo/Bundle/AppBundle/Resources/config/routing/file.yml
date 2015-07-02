@@ -1,10 +1,10 @@
-esperanto_media_download:
+enhavo_media_download:
     pattern:  /media/download/{path}
     defaults:
         _controller: CmfMediaBundle:File:download
         _method: GET
 
-esperanto_media_upload:
+enhavo_media_upload:
     pattern:  /media/file/upload/{editor}
     defaults:
         _controller: CmfMediaBundle:File:upload

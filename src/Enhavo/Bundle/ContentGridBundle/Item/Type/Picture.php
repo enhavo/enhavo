@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Item\Type;
+namespace enhavo\ContentBundle\Item\Type;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 
 class Picture
 {

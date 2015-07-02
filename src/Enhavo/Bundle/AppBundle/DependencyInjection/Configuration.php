@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\AdminBundle\DependencyInjection;
+namespace enhavo\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_admin');
+        $rootNode = $treeBuilder->root('enhavo_admin');
 
         $rootNode
             ->children()
@@ -57,11 +57,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('viewer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('app')->defaultValue('esperanto\AdminBundle\Viewer\AppViewer')->end()
-                        ->scalarNode('create')->defaultValue('esperanto\AdminBundle\Viewer\CreateViewer')->end()
-                        ->scalarNode('table')->defaultValue('esperanto\AdminBundle\Viewer\TableViewer')->end()
-                        ->scalarNode('edit')->defaultValue('esperanto\AdminBundle\Viewer\EditViewer')->end()
-                        ->scalarNode('index')->defaultValue('esperanto\AdminBundle\Viewer\IndexViewer')->end()
+                        ->scalarNode('app')->defaultValue('enhavo\AdminBundle\Viewer\AppViewer')->end()
+                        ->scalarNode('create')->defaultValue('enhavo\AdminBundle\Viewer\CreateViewer')->end()
+                        ->scalarNode('table')->defaultValue('enhavo\AdminBundle\Viewer\TableViewer')->end()
+                        ->scalarNode('edit')->defaultValue('enhavo\AdminBundle\Viewer\EditViewer')->end()
+                        ->scalarNode('index')->defaultValue('enhavo\AdminBundle\Viewer\IndexViewer')->end()
                     ->end()
                 ->end()
             ->end()

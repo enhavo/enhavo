@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\AdminBundle\Security\Roles;
+namespace enhavo\AdminBundle\Security\Roles;
 
 interface RolesProvider
 {

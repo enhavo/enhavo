@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\AdminBundle\Model;
+namespace enhavo\AdminBundle\Model;
 
 class Tab
 {

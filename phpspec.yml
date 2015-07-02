@@ -1,15 +1,15 @@
 suites:
     #AssetsBundle:
-    #    namespace: esperanto\AssetsBundle
-    #    psr4_prefix: esperanto\AssetsBundle
-    #    spec_path: src/esperanto/AssetsBundle
-    #    src_path: src/esperanto/AssetsBundle
+    #    namespace: enhavo\AssetsBundle
+    #    psr4_prefix: enhavo\AssetsBundle
+    #    spec_path: src/enhavo/AssetsBundle
+    #    src_path: src/enhavo/AssetsBundle
 
     AdminBundle:
-        namespace: esperanto\AdminBundle
-        psr4_prefix: esperanto\AdminBundle
-        spec_path: src/esperanto/AdminBundle
-        src_path: src/esperanto/AdminBundle
+        namespace: enhavo\AdminBundle
+        psr4_prefix: enhavo\AdminBundle
+        spec_path: src/enhavo/AdminBundle
+        src_path: src/enhavo/AdminBundle
 
 #extensions:
 #    - PhpSpec\Extension\CodeCoverageExtension

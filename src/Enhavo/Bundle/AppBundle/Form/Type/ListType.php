@@ -6,7 +6,7 @@
  * Time: 16:32
  */
 
-namespace esperanto\AdminBundle\Form\Type;
+namespace enhavo\AdminBundle\Form\Type;
 
 
 class ListType {

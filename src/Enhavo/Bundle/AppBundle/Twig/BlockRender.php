@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\AdminBundle\Twig;
+namespace enhavo\AdminBundle\Twig;
 
-use esperanto\AdminBundle\Block\BlockFactory;
+use enhavo\AdminBundle\Block\BlockFactory;
 
 class BlockRender extends \Twig_Extension
 {

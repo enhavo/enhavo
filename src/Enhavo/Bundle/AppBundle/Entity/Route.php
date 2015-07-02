@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Entity;
+namespace enhavo\AdminBundle\Entity;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 

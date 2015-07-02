@@ -6,13 +6,13 @@
  * @author gseidel
  */
 
-namespace esperanto\ContentBundle\EventListener;
+namespace enhavo\ContentBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use esperanto\ContentBundle\Entity\Item;
-use esperanto\ContentBundle\Item\ItemTypeResolver;
-use esperanto\ContentBundle\Exception\NoTypeFoundException;
+use enhavo\ContentBundle\Entity\Item;
+use enhavo\ContentBundle\Item\ItemTypeResolver;
+use enhavo\ContentBundle\Exception\NoTypeFoundException;
 
 class DoctrineSubscriber implements EventSubscriber
 {

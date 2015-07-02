@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Viewer;
+namespace enhavo\AdminBundle\Viewer;
 
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -32,7 +32,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
     private $form;
 
     /**
-     * @var \esperanto\AdminBundle\Config\ConfigParser
+     * @var \enhavo\AdminBundle\Config\ConfigParser
      */
     private $config;
 
@@ -144,7 +144,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
 
     public function getTemplate()
     {
-        return 'esperantoAdminBundle:App:index.html.twig';
+        return 'enhavoAdminBundle:App:index.html.twig';
     }
 
     public function setBundlePrefix($bundlePrefix)

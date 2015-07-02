@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SearchBundle\Repository;
+namespace enhavo\SearchBundle\Repository;
 
 use  Doctrine\ORM\EntityRepository;
 

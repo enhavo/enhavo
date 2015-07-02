@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Util;
+namespace enhavo\AdminBundle\Util;
 
 class Assetic
 {

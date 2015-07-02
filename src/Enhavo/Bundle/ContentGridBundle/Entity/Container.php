@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\ContentBundle\Entity;
+namespace enhavo\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,12 +40,12 @@ class Container
     private $columns;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Content
+     * @var \enhavo\ContentBundle\Entity\Content
      */
     private $content;
 
     /**
-     * @var \esperanto\ContentBundle\Entity\Column
+     * @var \enhavo\ContentBundle\Entity\Column
      */
     private $column;
 
@@ -106,10 +106,10 @@ class Container
     /**
      * Add columns
      *
-     * @param \esperanto\ContentBundle\Entity\Column $columns
+     * @param \enhavo\ContentBundle\Entity\Column $columns
      * @return Container
      */
-    public function addColumn(\esperanto\ContentBundle\Entity\Column $columns)
+    public function addColumn(\enhavo\ContentBundle\Entity\Column $columns)
     {
         $this->columns[] = $columns;
 
@@ -119,9 +119,9 @@ class Container
     /**
      * Remove columns
      *
-     * @param \esperanto\ContentBundle\Entity\Column $columns
+     * @param \enhavo\ContentBundle\Entity\Column $columns
      */
-    public function removeColumn(\esperanto\ContentBundle\Entity\Column $columns)
+    public function removeColumn(\enhavo\ContentBundle\Entity\Column $columns)
     {
         $this->columns->removeElement($columns);
     }
@@ -139,10 +139,10 @@ class Container
     /**
      * Set content
      *
-     * @param \esperanto\ContentBundle\Entity\Content $content
+     * @param \enhavo\ContentBundle\Entity\Content $content
      * @return Container
      */
-    public function setContent(\esperanto\ContentBundle\Entity\Content $content = null)
+    public function setContent(\enhavo\ContentBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -152,7 +152,7 @@ class Container
     /**
      * Get content
      *
-     * @return \esperanto\ContentBundle\Entity\Content 
+     * @return \enhavo\ContentBundle\Entity\Content
      */
     public function getContent()
     {
@@ -162,10 +162,10 @@ class Container
     /**
      * Set column
      *
-     * @param \esperanto\ContentBundle\Entity\Column $column
+     * @param \enhavo\ContentBundle\Entity\Column $column
      * @return Container
      */
-    public function setColumn(\esperanto\ContentBundle\Entity\Column $column = null)
+    public function setColumn(\enhavo\ContentBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -175,7 +175,7 @@ class Container
     /**
      * Get column
      *
-     * @return \esperanto\ContentBundle\Entity\Column 
+     * @return \enhavo\ContentBundle\Entity\Column
      */
     public function getColumn()
     {

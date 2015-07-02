@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\NewsletterBundle;
+namespace enhavo\NewsletterBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-class esperantoNewsletterBundle extends Bundle
+class enhavoNewsletterBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

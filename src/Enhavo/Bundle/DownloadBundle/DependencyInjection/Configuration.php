@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\DownloadBundle\DependencyInjection;
+namespace enhavo\DownloadBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_download');
+        $rootNode = $treeBuilder->root('enhavo_download');
 
         $rootNode
             // Driver used by the resource bundle
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('download')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\DownloadBundle\Entity\Download')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\DownloadBundle\Entity\Download')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\DownloadBundle\Form\Type\DownloadType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\DownloadBundle\Form\Type\DownloadType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

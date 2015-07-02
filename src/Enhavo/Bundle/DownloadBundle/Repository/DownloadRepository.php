@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\DownloadBundle\Repository;
+namespace enhavo\DownloadBundle\Repository;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 

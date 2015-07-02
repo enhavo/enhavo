@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Block;
+namespace enhavo\AdminBundle\Block;
 
 interface BlockInterface
 {

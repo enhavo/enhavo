@@ -1,46 +1,46 @@
-esperanto_user_group_index:
+enhavo_user_group_index:
     options:
         expose: true
-    path: /esperanto/user/group/index
+    path: /enhavo/user/group/index
     methods: [GET]
     defaults:
-        _controller: esperanto_user.controller.group:indexAction
+        _controller: enhavo_user.controller.group:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
 
-esperanto_user_group_create:
+enhavo_user_group_create:
     options:
         expose: true
-    path: /esperanto/user/group/create
+    path: /enhavo/user/group/create
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_user.controller.group:createAction
+        _controller: enhavo_user.controller.group:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
 
-esperanto_user_group_update:
+enhavo_user_group_update:
     options:
         expose: true
-    path: /esperanto/user/group/update/{id}
+    path: /enhavo/user/group/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_user.controller.group:updateAction
+        _controller: enhavo_user.controller.group:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
 
-esperanto_user_group_table:
+enhavo_user_group_table:
     options:
         expose: true
-    path: /esperanto/user/group/table/{page}
+    path: /enhavo/user/group/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_user.controller.group:tableAction
+        _controller: enhavo_user.controller.group:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
@@ -52,10 +52,10 @@ esperanto_user_group_table:
                         property: name
 
 
-esperanto_user_group_delete:
+enhavo_user_group_delete:
     options:
         expose: true
-    path: /esperanto/user/group/delete/{id}
+    path: /enhavo/user/group/delete/{id}
     methods: [POST]
     defaults:
-        _controller: esperanto_user.controller.group:deleteAction
+        _controller: enhavo_user.controller.group:deleteAction

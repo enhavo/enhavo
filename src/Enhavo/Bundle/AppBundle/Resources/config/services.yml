@@ -1,19 +1,19 @@
 parameters:
-    esperanto_admin.form.wysiwyg.class: esperanto\AdminBundle\Form\Type\WysiwygType
-    security.roles.provider.class: esperanto\AdminBundle\Security\Roles\AdminRolesProvider
-    esperanto_admin.form.config.wysiwyg.class: esperanto\AdminBundle\Form\Config\WysiwygConfig
-    esperanto_admin.menu_loader.class: esperanto\AdminBundle\Menu\MenuLoader
+    enhavo_admin.form.wysiwyg.class: enhavo\AdminBundle\Form\Type\WysiwygType
+    security.roles.provider.class: enhavo\AdminBundle\Security\Roles\AdminRolesProvider
+    enhavo_admin.form.config.wysiwyg.class: enhavo\AdminBundle\Form\Config\WysiwygConfig
+    enhavo_admin.menu_loader.class: enhavo\AdminBundle\Menu\MenuLoader
 
 services:
-    esperanto_admin.form.wysiwyg:
-        class: %esperanto_admin.form.wysiwyg.class%
+    enhavo_admin.form.wysiwyg:
+        class: %enhavo_admin.form.wysiwyg.class%
         arguments:
-            - @esperanto_admin.form.config.wysiwyg
+            - @enhavo_admin.form.config.wysiwyg
         tags:
             - { name: form.type, alias: 'wysiwyg' }
 
-    esperanto_admin.form.config.wysiwyg:
-        class: %esperanto_admin.form.config.wysiwyg.class%
+    enhavo_admin.form.config.wysiwyg:
+        class: %enhavo_admin.form.config.wysiwyg.class%
         arguments:
             - %kernel.root_dir%/config/wysiwyg.yml
 
@@ -26,31 +26,31 @@ services:
         arguments:
             - %security.role_hierarchy.roles%
 
-    esperanto_admin.menu_event_listener:
-        class: esperanto\AdminBundle\EventListener\MenuEventListener
+    enhavo_admin.menu_event_listener:
+        class: enhavo\AdminBundle\EventListener\MenuEventListener
         arguments:
-            - %esperanto_admin.permission_check%
+            - %enhavo_admin.permission_check%
             - @security.context
             - @knp_menu.factory
-            - %esperanto_admin.menu%
+            - %enhavo_admin.menu%
             - @request_stack
         tags:
-          - { name: kernel.event_listener, event: esperanto_admin.menu, method: onMenu  }
+          - { name: kernel.event_listener, event: enhavo_admin.menu, method: onMenu  }
 
-    esperanto_admin.controller.app:
-        class: esperanto\AdminBundle\Controller\AppController
+    enhavo_admin.controller.app:
+        class: enhavo\AdminBundle\Controller\AppController
         calls:
             - [setContainer, [@service_container]]
 
-    esperanto_admin.menu_loader:
-        class: %esperanto_admin.menu_loader.class%
+    enhavo_admin.menu_loader:
+        class: %enhavo_admin.menu_loader.class%
         arguments:
-            - 'esperanto_admin.menu'
-            - %esperanto_admin.menu%
+            - 'enhavo_admin.menu'
+            - %enhavo_admin.menu%
             - @knp_menu.factory
             - @event_dispatcher
 
-    esperanto_admin.generator.route_generator:
-        class: esperanto\AdminBundle\Generator\RoutingGenerator
+    enhavo_admin.generator.route_generator:
+        class: enhavo\AdminBundle\Generator\RoutingGenerator
         arguments:
             - @templating

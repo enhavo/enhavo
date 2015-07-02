@@ -1,5 +1,5 @@
 <?php
-namespace esperanto\ContentBundle\Item\Type;
+namespace enhavo\ContentBundle\Item\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

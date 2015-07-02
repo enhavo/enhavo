@@ -1,14 +1,14 @@
 <?php
 
-namespace esperanto\AdminBundle\Twig;
+namespace enhavo\AdminBundle\Twig;
 
-use esperanto\AdminBundle\Admin\AdminRegister;
+use enhavo\AdminBundle\Admin\AdminRegister;
 use Knp\Menu\MenuItem;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use esperanto\AdminBundle\Admin\Admin;
+use enhavo\AdminBundle\Admin\Admin;
 
 class AdminMenuRender extends \Twig_Extension
 {
@@ -65,7 +65,7 @@ class AdminMenuRender extends \Twig_Extension
             $this->templateEngine = $this->container->get('templating');
         }
 
-        $menus = $this->container->get('esperanto_admin.menu_loader')->getMenu();
+        $menus = $this->container->get('enhavo_admin.menu_loader')->getMenu();
 
         return $this->templateEngine->render($this->template, array(
             'menus' => $menus

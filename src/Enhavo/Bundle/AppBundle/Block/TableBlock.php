@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace esperanto\AdminBundle\Block;
+namespace enhavo\AdminBundle\Block;
 
 use Symfony\Component\Templating\EngineInterface;
 
@@ -21,6 +21,6 @@ class TableBlock implements BlockInterface
 
     public function render($parameters)
     {
-        return $this->engine->render('esperantoAdminBundle:Block:table.html.twig', $parameters);
+        return $this->engine->render('enhavoAdminBundle:Block:table.html.twig', $parameters);
     }
 }

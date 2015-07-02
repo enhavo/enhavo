@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\DownloadBundle;
+namespace enhavo\DownloadBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoDownloadBundle extends Bundle
+class enhavoDownloadBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

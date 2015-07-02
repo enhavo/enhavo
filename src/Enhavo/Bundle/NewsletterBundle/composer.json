@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/newsletter-bundle",
+  "name": "enhavo/newsletter-bundle",
   "type": "library",
-  "description": "esperantoNewsletterBundle",
+  "description": "enhavoNewsletterBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "esperanto\\NewsletterBundle\\": "" }
+    "psr-4": { "enhavo\\NewsletterBundle\\": "" }
   }
 }

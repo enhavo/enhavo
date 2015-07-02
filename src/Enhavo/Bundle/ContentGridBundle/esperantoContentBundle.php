@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\ContentBundle;
+namespace enhavo\ContentBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoContentBundle extends Bundle
+class enhavoContentBundle extends Bundle
 {
 }

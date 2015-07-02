@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\MediaBundle\Twig;
+namespace enhavo\MediaBundle\Twig;
 
 use Symfony\Component\Templating\EngineInterface;
-use esperanto\MediaBundle\Entity\File;
+use enhavo\MediaBundle\Entity\File;
 
 class MediaExtension extends \Twig_Extension
 {
@@ -46,7 +46,7 @@ class MediaExtension extends \Twig_Extension
 
         $path = '';
         if($file) {
-            $entityFile = $this->em->getRepository('esperantoMediaBundle:File')->find($file->getId());
+            $entityFile = $this->em->getRepository('enhavoMediaBundle:File')->find($file->getId());
             $path .= '/file/'.$file->getId();
         }
         if($width) {
@@ -72,7 +72,7 @@ class MediaExtension extends \Twig_Extension
 
         $title = '';
         if($file) {
-            $entityFile = $this->em->getRepository('esperantoMediaBundle:File')->find($file->getId());
+            $entityFile = $this->em->getRepository('enhavoMediaBundle:File')->find($file->getId());
             $title = $entityFile->getTitle();
         }
 
@@ -81,6 +81,6 @@ class MediaExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'esperanto_media_media_extension';
+        return 'enhavo_media_media_extension';
     }
 } 

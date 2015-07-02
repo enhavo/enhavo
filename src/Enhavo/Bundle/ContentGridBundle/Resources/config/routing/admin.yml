@@ -1,6 +1,6 @@
-esperanto_content_item:
+enhavo_content_item:
     pattern: /item/{type}
     defaults:
-        _controller: esperantoContentBundle:Content:item
+        _controller: enhavoContentBundle:Content:item
     options:
             expose: true

@@ -1,46 +1,46 @@
-esperanto_user_user_index:
+enhavo_user_user_index:
     options:
         expose: true
-    path: /esperanto/user/user/index
+    path: /enhavo/user/user/index
     methods: [GET]
     defaults:
-        _controller: esperanto_user.controller.user:indexAction
+        _controller: enhavo_user.controller.user:indexAction
         _sylius:
-            template: esperantoAdminBundle:Resource:index.html.twig
+            template: enhavoAdminBundle:Resource:index.html.twig
         _viewer:
 
-esperanto_user_user_create:
+enhavo_user_user_create:
     options:
         expose: true
-    path: /esperanto/user/user/create
+    path: /enhavo/user/user/create
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_user.controller.user:createAction
+        _controller: enhavo_user.controller.user:createAction
         _sylius:
-            template: esperantoAdminBundle:Resource:create.html.twig
+            template: enhavoAdminBundle:Resource:create.html.twig
         _viewer:
 
-esperanto_user_user_update:
+enhavo_user_user_update:
     options:
         expose: true
-    path: /esperanto/user/user/update/{id}
+    path: /enhavo/user/user/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: esperanto_user.controller.user:updateAction
+        _controller: enhavo_user.controller.user:updateAction
         _sylius:
-            template: esperantoAdminBundle:Resource:update.html.twig
+            template: enhavoAdminBundle:Resource:update.html.twig
         _viewer:
 
-esperanto_user_user_table:
+enhavo_user_user_table:
     options:
         expose: true
-    path: /esperanto/user/user/table/{page}
+    path: /enhavo/user/user/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: esperanto_user.controller.user:tableAction
+        _controller: enhavo_user.controller.user:tableAction
         _sylius:
-            template: esperantoAdminBundle:Resource:table.html.twig
+            template: enhavoAdminBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
@@ -51,10 +51,10 @@ esperanto_user_user_table:
                         label: username
                         property: username
 
-esperanto_user_user_delete:
+enhavo_user_user_delete:
     options:
         expose: true
-    path: /esperanto/user/user/delete/{id}
+    path: /enhavo/user/user/delete/{id}
     methods: [POST]
     defaults:
-        _controller: esperanto_user.controller.user:deleteAction
+        _controller: enhavo_user.controller.user:deleteAction

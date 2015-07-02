@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\SearchBundle\Search;
+namespace enhavo\SearchBundle\Search;
 
 
 interface SearchIndexInterface

@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\SettingBundle;
+namespace enhavo\SettingBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoSettingBundle extends Bundle
+class enhavoSettingBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

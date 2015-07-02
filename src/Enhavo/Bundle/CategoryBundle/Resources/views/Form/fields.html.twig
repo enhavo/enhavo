@@ -1,4 +1,4 @@
-{% block esperanto_category_collection_widget %}
+{% block enhavo_category_collection_widget %}
     <div class="category-container" data-prototype="{{ form_widget(form.categories.vars.prototype)|e }}" data-category-item-list>
         {% for category in form.categories %}
             {{ form_widget(category) }}
@@ -18,7 +18,7 @@
 {% endblock %}
 
 
-{% block esperanto_category_category_widget %}
+{% block enhavo_category_category_widget %}
     <div class="row pt2" data-category-item>
         <div class="col-md-5">
             {{ form_widget(form.name) }}

@@ -1,17 +1,17 @@
 <?php
 
-namespace esperanto\DownloadBundle\Form\Type;
+namespace enhavo\DownloadBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use esperanto\ContentBundle\Item\ItemFormType;
+use enhavo\ContentBundle\Item\ItemFormType;
 
 class DownloadItemType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('download', 'entity', array(
-            'class' => 'esperanto\DownloadBundle\Entity\Download',
+            'class' => 'enhavo\DownloadBundle\Entity\Download',
             'property' => 'title',
             'multiple' => false,
             'expanded' => false,
@@ -23,7 +23,7 @@ class DownloadItemType extends ItemFormType
             'label' => 'form.label.title'
         ));
 
-        $builder->add('file', 'esperanto_files', array(
+        $builder->add('file', 'enhavo_files', array(
             'label' => 'form.label.file'
         ));
     }
@@ -31,12 +31,12 @@ class DownloadItemType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\DownloadBundle\Entity\DownloadItem'
+            'data_class' => 'enhavo\DownloadBundle\Entity\DownloadItem'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_download_item_download';
+        return 'enhavo_download_item_download';
     }
 }

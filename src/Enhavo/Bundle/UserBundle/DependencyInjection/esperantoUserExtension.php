@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\UserBundle\DependencyInjection;
+namespace enhavo\UserBundle\DependencyInjection;
 
-use esperanto\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use enhavo\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class esperantoUserExtension extends SyliusResourceExtension
+class enhavoUserExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'esperanto_user';
+    protected $applicationName = 'enhavo_user';
 
-    protected $companyName = 'esperanto';
+    protected $companyName = 'enhavo';
 
     protected $bundleName = 'user';
 

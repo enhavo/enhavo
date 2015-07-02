@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\CategoryBundle\Form\Type;
+namespace enhavo\CategoryBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
@@ -33,7 +33,7 @@ class CategoryEntityType extends AbstractType
         $resolver->setNormalizers(array(
             'query_builder' => function (Options $options, $configs) use ($manager) {
                     return function() use ($manager, $options) {
-                        return $manager->getRepository('esperantoCategoryBundle:Category')->getByCollectionName($options['category_name']);
+                        return $manager->getRepository('enhavoCategoryBundle:Category')->getByCollectionName($options['category_name']);
                     };
                 },
         ));
@@ -41,7 +41,7 @@ class CategoryEntityType extends AbstractType
         $resolver->setDefaults(array(
             'expanded' => true,
             'multiple' => true,
-            'class' => 'esperanto\CategoryBundle\Entity\Category'
+            'class' => 'enhavo\CategoryBundle\Entity\Category'
         ));
     }
 
@@ -52,6 +52,6 @@ class CategoryEntityType extends AbstractType
 
     public function getName()
     {
-        return 'esperanto_category';
+        return 'enhavo_category';
     }
 }

@@ -1,4 +1,4 @@
-esperanto\ContentBundle\Entity\Column:
+enhavo\ContentBundle\Entity\Column:
     type: entity
     table: content_column
     id:

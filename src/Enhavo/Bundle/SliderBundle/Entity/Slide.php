@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\SliderBundle\Entity;
+namespace enhavo\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -244,10 +244,10 @@ class Slide
     /**
      * Add image
      *
-     * @param \esperanto\MediaBundle\Entity\File $image
+     * @param \enhavo\MediaBundle\Entity\File $image
      * @return Slider
      */
-    public function addImage(\esperanto\MediaBundle\Entity\File $image)
+    public function addImage(\enhavo\MediaBundle\Entity\File $image)
     {
         $this->image[] = $image;
 
@@ -257,9 +257,9 @@ class Slide
     /**
      * Remove image
      *
-     * @param \esperanto\MediaBundle\Entity\File $image
+     * @param \enhavo\MediaBundle\Entity\File $image
      */
-    public function removeImage(\esperanto\MediaBundle\Entity\File $image)
+    public function removeImage(\enhavo\MediaBundle\Entity\File $image)
     {
         $this->image->removeElement($image);
     }

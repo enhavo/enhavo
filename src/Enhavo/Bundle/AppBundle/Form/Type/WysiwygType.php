@@ -6,15 +6,15 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\AdminBundle\Form\Type;
+namespace enhavo\AdminBundle\Form\Type;
 
-use esperanto\AdminBundle\Form\Config\WysiwygOption;
+use enhavo\AdminBundle\Form\Config\WysiwygOption;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Rhumsaa\Uuid\Uuid;
-use esperanto\AdminBundle\Form\Config\WysiwygConfig;
+use enhavo\AdminBundle\Form\Config\WysiwygConfig;
 
 class WysiwygType extends AbstractType
 {

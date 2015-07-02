@@ -1,10 +1,10 @@
 <?php
 
-namespace esperanto\UserBundle;
+namespace enhavo\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoUserBundle extends Bundle
+class enhavoUserBundle extends Bundle
 {
     public function getParent()
     {

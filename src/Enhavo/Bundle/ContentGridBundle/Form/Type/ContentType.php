@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Form\Type;
+namespace enhavo\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Item\ItemTypeResolver;
+use enhavo\ContentBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -37,7 +37,7 @@ class ContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('items', 'collection', array(
-            'type' => 'esperanto_content_item',
+            'type' => 'enhavo_content_item',
             'allow_delete' => true,
             'allow_add'    => true,
             'by_reference' => false
@@ -68,13 +68,13 @@ class ContentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Entity\Content',
+            'data_class' => 'enhavo\ContentBundle\Entity\Content',
             'items' => array()
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content';
+        return 'enhavo_content';
     }
 }

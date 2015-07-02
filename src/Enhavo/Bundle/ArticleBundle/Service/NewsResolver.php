@@ -6,12 +6,12 @@
  * Time: 18:26
  */
 
-namespace esperanto\NewsBundle\Service;
+namespace enhavo\NewsBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactory;
-use esperanto\NewsBundle\Form\Type\NewsType;
+use enhavo\NewsBundle\Form\Type\NewsType;
 
 class NewsResolver
 {
@@ -38,7 +38,7 @@ class NewsResolver
     {
         /** @var $formFactory FormFactory */
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create('esperanto_news_news');
+        $form = $formFactory->create('enhavo_news_news');
         $form->submit($request);
         return $form->getData();
     }
@@ -49,7 +49,7 @@ class NewsResolver
         $doctrine = $this->container->get('doctrine');
         $id = $request->get('id');
 
-        $repository = $this->container->get('esperanto_news.repository.news');
+        $repository = $this->container->get('enhavo_news.repository.news');
         $news = $repository->find($id);
         return $news;
     }

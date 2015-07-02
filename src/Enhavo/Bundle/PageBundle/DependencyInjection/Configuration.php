@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\PageBundle\DependencyInjection;
+namespace enhavo\PageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_page');
+        $rootNode = $treeBuilder->root('enhavo_page');
 
         $rootNode
             // Driver used by the resource bundle
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('page')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\PageBundle\Entity\Page')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\PageBundle\Entity\Page')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\PageBundle\Form\Type\PageType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\PageBundle\Form\Type\PageType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

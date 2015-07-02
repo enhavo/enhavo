@@ -1,4 +1,4 @@
-esperanto\NewsBundle\Entity\News:
+enhavo\NewsBundle\Entity\News:
     properties:
         title:
             - NotBlank: ~

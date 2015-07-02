@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\AdminBundle\Controller;
+namespace enhavo\AdminBundle\Controller;
 
-use esperanto\AdminBundle\Exception\BadMethodCallException;
-use esperanto\AdminBundle\Exception\PreviewException;
+use enhavo\AdminBundle\Exception\BadMethodCallException;
+use enhavo\AdminBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

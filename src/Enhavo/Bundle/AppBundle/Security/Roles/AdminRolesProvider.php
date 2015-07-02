@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\AdminBundle\Security\Roles;
+namespace enhavo\AdminBundle\Security\Roles;
 
 class AdminRolesProvider implements RolesProvider
 {
@@ -18,7 +18,7 @@ class AdminRolesProvider implements RolesProvider
     public function __construct($roles)
     {
         foreach($roles as $role => $value) {
-            if(preg_match('/esperanto/i', $role)) {
+            if(preg_match('/enhavo/i', $role)) {
                 $this->roles[$role] = $value;
             }
         }

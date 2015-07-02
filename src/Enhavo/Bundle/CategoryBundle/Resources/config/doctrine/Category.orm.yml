@@ -1,6 +1,6 @@
-esperanto\CategoryBundle\Entity\Category:
+enhavo\CategoryBundle\Entity\Category:
     type: entity
-    repositoryClass: esperanto\CategoryBundle\Repository\CategoryRepository
+    repositoryClass: enhavo\CategoryBundle\Repository\CategoryRepository
     table: category_category
     id:
         id:

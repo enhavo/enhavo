@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\NewsBundle\DependencyInjection;
+namespace enhavo\NewsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_news');
+        $rootNode = $treeBuilder->root('enhavo_news');
 
         $rootNode
             // Driver used by the resource bundle
@@ -34,11 +34,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('news')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\NewsBundle\Entity\News')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\AdminBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('esperanto\NewsBundle\Repository\NewsRepository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\NewsBundle\Form\Type\NewsType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\NewsBundle\Entity\News')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\AdminBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('enhavo\NewsBundle\Repository\NewsRepository')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\NewsBundle\Form\Type\NewsType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

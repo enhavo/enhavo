@@ -1,6 +1,6 @@
 <?php
 
-namespace esperanto\SettingBundle\DependencyInjection;
+namespace enhavo\SettingBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('esperanto_setting');
+        $rootNode = $treeBuilder->root('enhavo_setting');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
@@ -37,11 +37,11 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('setting')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('esperanto\SettingBundle\Entity\Setting')->end()
-                                ->scalarNode('controller')->defaultValue('esperanto\SettingBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('esperanto\SettingBundle\Repository\SettingRepository')->end()
-                                ->scalarNode('form')->defaultValue('esperanto\SettingBundle\Form\Type\SettingType')->end()
-                                ->scalarNode('admin')->defaultValue('esperanto\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('model')->defaultValue('enhavo\SettingBundle\Entity\Setting')->end()
+                                ->scalarNode('controller')->defaultValue('enhavo\SettingBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->defaultValue('enhavo\SettingBundle\Repository\SettingRepository')->end()
+                                ->scalarNode('form')->defaultValue('enhavo\SettingBundle\Form\Type\SettingType')->end()
+                                ->scalarNode('admin')->defaultValue('enhavo\AdminBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

@@ -1,9 +1,9 @@
 {
-  "name": "esperanto/page-bundle",
+  "name": "enhavo/page-bundle",
   "type": "library",
-  "description": "esperantoPageBundle",
+  "description": "enhavoPageBundle",
   "keywords": ["framework"],
-  "homepage": "http://www.esperanto-agentur.com",
+  "homepage": "http://www.enhavo-agentur.com",
   "license": "MIT",
   "authors": [
     {
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "esperanto\\PageBundle\\": "" }
+    "psr-4": { "enhavo\\PageBundle\\": "" }
   }
 }

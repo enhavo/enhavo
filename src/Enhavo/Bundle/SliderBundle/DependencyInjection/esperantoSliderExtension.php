@@ -1,8 +1,8 @@
 <?php
 
-namespace esperanto\SliderBundle\DependencyInjection;
+namespace enhavo\SliderBundle\DependencyInjection;
 
-use esperanto\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use enhavo\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
@@ -12,14 +12,14 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class esperantoSliderExtension extends SyliusResourceExtension
+class enhavoSliderExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'esperanto_slider';
+    protected $applicationName = 'enhavo_slider';
 
     protected $bundleName = 'slider';
 
-    protected $companyName = 'esperanto';
+    protected $companyName = 'enhavo';
 
     // You can define where yours service definitions are
     protected $configDirectory = '/../Resources/config';

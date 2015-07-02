@@ -4,12 +4,12 @@
  *
  */
 
-namespace esperanto\ContentBundle\Form\Type;
+namespace enhavo\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Item\ItemFormType;
+use enhavo\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use esperanto\ContentBundle\Item\Type\Text;
+use enhavo\ContentBundle\Item\Type\Text;
 
 class TextPictureType extends ItemFormType
 {
@@ -23,7 +23,7 @@ class TextPictureType extends ItemFormType
             'label' => 'form.label.text'
         ));
 
-        $builder->add('files', 'esperanto_files', array(
+        $builder->add('files', 'enhavo_files', array(
             'label' => 'form.label.picture'
         ));
 
@@ -51,12 +51,12 @@ class TextPictureType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Entity\TextPicture'
+            'data_class' => 'enhavo\ContentBundle\Entity\TextPicture'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content_item_text_picture';
+        return 'enhavo_content_item_text_picture';
     }
 } 

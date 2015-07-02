@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\MediaBundle;
+namespace enhavo\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoMediaBundle extends Bundle
+class enhavoMediaBundle extends Bundle
 {
 }

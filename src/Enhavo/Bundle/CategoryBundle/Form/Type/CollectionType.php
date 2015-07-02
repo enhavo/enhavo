@@ -1,5 +1,5 @@
 <?php
-namespace esperanto\CategoryBundle\Form\Type;
+namespace enhavo\CategoryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,12 +20,12 @@ class CollectionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\CategoryBundle\Entity\Collection',
+            'data_class' => 'enhavo\CategoryBundle\Entity\Collection',
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_category_collection';
+        return 'enhavo_category_collection';
     }
 }

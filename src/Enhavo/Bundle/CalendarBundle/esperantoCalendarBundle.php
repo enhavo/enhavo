@@ -1,9 +1,9 @@
 <?php
 
-namespace esperanto\CalendarBundle;
+namespace enhavo\CalendarBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class esperantoCalendarBundle extends Bundle
+class enhavoCalendarBundle extends Bundle
 {
 }

@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace esperanto\ContentBundle\Form\Type;
+namespace enhavo\ContentBundle\Form\Type;
 
-use esperanto\ContentBundle\Item\ItemFormType;
+use enhavo\ContentBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -21,7 +21,7 @@ class PicturePictureType extends ItemFormType
             'label' => 'form.label.title'
         ));
 
-        $builder->add('filesLeft', 'esperanto_files', array(
+        $builder->add('filesLeft', 'enhavo_files', array(
             'label' => 'form.label.picture_left'
         ));
 
@@ -29,7 +29,7 @@ class PicturePictureType extends ItemFormType
             'label' => 'form.label.caption_left'
         ));
 
-        $builder->add('filesRight', 'esperanto_files', array(
+        $builder->add('filesRight', 'enhavo_files', array(
             'label' => 'form.label.picture_right'
         ));
 
@@ -51,12 +51,12 @@ class PicturePictureType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'esperanto\ContentBundle\Entity\PicturePicture'
+            'data_class' => 'enhavo\ContentBundle\Entity\PicturePicture'
         ));
     }
 
     public function getName()
     {
-        return 'esperanto_content_item_picture_picture';
+        return 'enhavo_content_item_picture_picture';
     }
 } 
