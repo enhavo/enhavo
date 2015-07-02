@@ -32,6 +32,11 @@ esperanto_reference_reference_create:
                 seo:
                     label: seo
                     template: esperantoReferenceBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
 
 esperanto_reference_reference_update:
     options:
@@ -56,6 +61,11 @@ esperanto_reference_reference_update:
                 seo:
                     label: seo
                     template: esperantoReferenceBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
 
 esperanto_reference_reference_table:
     options:

@@ -29,6 +29,11 @@ esperanto_news_news_create:
                 seo:
                     label: Seo
                     template: esperantoNewsBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
 
 esperanto_news_news_update:
     options:
@@ -50,6 +55,11 @@ esperanto_news_news_update:
                 seo:
                     label: Seo
                     template: esperantoNewsBundle:Tab:seo.html.twig
+            buttons:
+                preview:
+                    route: esperanto_news_news_preview
+                    label: label.preview
+                    icon: eye
 
 esperanto_news_news_table:
     options:

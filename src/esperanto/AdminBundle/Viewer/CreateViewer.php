@@ -28,13 +28,6 @@ class CreateViewer extends AbstractViewer
                     'role' => null,
                     'label' => 'label.save',
                     'icon' => 'check'
-                ),
-                'preview' => array(
-                    'route' => sprintf('%s_%s_preview', $this->getBundlePrefix(), $this->getResourceName()),
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.preview',
-                    'icon' => 'eye'
                 )
             ),
             'form' => array(
@@ -61,7 +54,24 @@ class CreateViewer extends AbstractViewer
 
     public function getButtons()
     {
-        return $this->getConfig()->get('buttons');
+        $defaults = array(
+            'route' => null,
+            'display' => true,
+            'role' => null,
+            'label' => 'label.button',
+            'icon' => null
+        );
+
+        $buttons = $this->getConfig()->get('buttons');
+
+        foreach($buttons as &$button) {
+            foreach($defaults as $key => $value)
+            if(!array_key_exists($key, $button)) {
+                $button[$key] = $value;
+            }
+        }
+
+        return $buttons;
     }
 
     public function getFormTemplate()

@@ -13,7 +13,7 @@
     {% for name, button in buttons %}
         {% if button.display %}
             <div class="col-md-push-2 col-md-2">
-                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-md-12 save" type="button"><i class="fa fa-{{ button.icon }}"></i> {{ button.label|trans }}</button>
+                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-md-12 save" type="button"><i class="{% if button.icon %}fa fa-{{ button.icon }}{% endif %}"></i> {{ button.label|trans }}</button>
             </div>
         {% endif %}
     {% endfor %}

@@ -29,13 +29,6 @@ class EditViewer extends CreateViewer
                     'label' => 'label.save',
                     'icon' => 'check'
                 ),
-                'preview' => array(
-                    'route' => sprintf('%s_%s_preview', $this->getBundlePrefix(), $this->getResourceName()),
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.preview',
-                    'icon' => 'eye'
-                ),
                 'delete' => array(
                     'route' => null,
                     'display' => true,
