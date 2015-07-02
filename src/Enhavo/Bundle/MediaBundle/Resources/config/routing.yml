@@ -1,0 +1,18 @@
+esperanto_media_upload:
+    pattern:  /file/add
+    defaults:
+        _controller: esperantoMediaBundle:File:upload
+
+esperanto_media_show_two_dim:
+    pattern:  /file/{id}/{width}/{height}/{filename}
+    defaults: { _controller: esperantoMediaBundle:File:show,filename:'',_method: GET}
+    requirements: {width: \d+,height: \d+}
+
+esperanto_media_show_one_dim:
+    pattern:  /file/{id}/{width}/{filename}
+    defaults: { _controller: esperantoMediaBundle:File:show,height:'',filename:'',_method: GET}
+    requirements: {width: \d+}
+
+esperanto_media_show:
+    pattern:  /file/{id}/{filename}
+    defaults: { _controller: esperantoMediaBundle:File:show,width:'',height:'',filename:'',_method: GET}
