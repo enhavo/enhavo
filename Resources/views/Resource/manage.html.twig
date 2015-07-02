@@ -1,0 +1,13 @@
+{% extends 'esperantoAdminBundle::dialog.html.twig' %}
+
+{% block content %}
+    <form method="POST" action="{{ path(view.getParameter('manage_route'), { name: data.name }) }}">
+        {{ form_widget(form.container) }}
+        {% for child in form %}
+            {% if not child.rendered %}
+                {{ form_row(child) }}
+            {% endif %}
+        {% endfor %}
+        {{ block('buttonRow') }}
+    </form>
+{% endblock %}
