@@ -1,0 +1,61 @@
+esperanto_download_download_index:
+    options:
+        expose: true
+    path: /admin/esperanto/download/download/index
+    methods: [GET]
+    defaults:
+        _controller: esperanto_download.controller.download:indexAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:index.html.twig
+        _viewer:
+
+esperanto_download_download_create:
+    options:
+        expose: true
+    path: /admin/esperanto/download/download/create
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_download.controller.download:createAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:create.html.twig
+        _viewer:
+
+esperanto_download_download_update:
+    options:
+        expose: true
+    path: /admin/esperanto/download/download/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: esperanto_download.controller.download:updateAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:update.html.twig
+        _viewer:
+
+esperanto_download_download_table:
+    options:
+        expose: true
+    path: /admin/esperanto/download/download/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: esperanto_download.controller.download:tableAction
+        _sylius:
+            template: esperantoAdminBundle:Resource:table.html.twig
+        _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    title:
+                        label: title
+                        property: title
+                        width: 8
+
+esperanto_download_download_delete:
+    options:
+        expose: true
+    path: /admin/esperanto/download/download/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: esperanto_download.controller.download:deleteAction
