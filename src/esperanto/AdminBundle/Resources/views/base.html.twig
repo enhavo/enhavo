@@ -7,6 +7,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700"  type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/font-awesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/esperantoassets/css/jquery_ui/jquery-ui.css') }}" >
@@ -42,7 +43,7 @@
     <script type="text/javascript" src="{{ asset('bundles/esperantoassets/icheck/icheck.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/esperantoassets/tinymce/jquery.tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/esperantoassets/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/esperantoassets/select2/select2.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
@@ -76,13 +77,16 @@
     <div id="overlay"></div>
     <div id="overlayContent"></div>
     <div id="overlayMessage"></div>
+
     <div id="iframeContainer">
         <div class="close"><i class="fa fa-times"></i></div>
         <iframe src="" id="iframe" name="iframe"></iframe>
     </div>
-    <div id="left">{{ admin_menu_render() }}</div>
-    <div id="contentContainer" class="container">
-        {% block content %}{% endblock %}
+
+    <div id="menu-main-background"></div>
+    <div class="clearfix">
+        <div id="menu-main-container">{{ admin_menu_render() }}</div>
+        <div id="content-container" class="container">{% block content %}{% endblock %}</div>
     </div>
 {% endblock %}
 </body>

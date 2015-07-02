@@ -59,14 +59,14 @@ var Form = function(router, templating, admin, translator)
           plugins: ["advlist autolink lists link image charmap print preview anchor",
               "searchreplace visualblocks code fullscreen",
               "insertdatetime media table contextmenu paste"],
-          force_br_newlines : true,
-          force_p_newlines : false,
-          forced_root_block : "div",
+          force_br_newlines : false,
+          force_p_newlines : true,
+          forced_root_block : "p",
           cleanup : false,
           cleanup_on_startup : false,
           font_size_style_values : "xx-small,x-small,small,medium,large,x-large,xx-large",
           convert_fonts_to_spans : true,
-
+          resize: false,
           relative_urls : false,
           oninit: function(ed) {
               $(ed.contentAreaContainer).droppable({

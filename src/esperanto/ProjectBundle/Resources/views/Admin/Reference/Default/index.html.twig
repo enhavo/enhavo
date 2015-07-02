@@ -5,20 +5,20 @@
         $(function() {
             admin.initPagination('{{ view.getParameter('table_route') }}');
             admin.initTable();
-            admin.initTopButton('.action .btn.create', {}, '{{ view.getParameter('create_route') }}');
-            admin.initTopButton('.action .btn.category-service', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-service'});
+            admin.initTopButton('[data-action-row] .btn.create', {}, '{{ view.getParameter('create_route') }}');
+            admin.initTopButton('[data-action-row] .btn.category-service', {}, '{{ view.getParameter('category_route') }}', {name : 'reference-service'});
             admin.initAfterSaveHandler();
         });
     </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row mb3 action">
+    <div class="row action-row" data-action-row>
         <div class="col-md-3">
-            <button class="btn create col-md-12"><i class="icon-plus-sign"></i> {{ view.getParameter('add_button_text')|trans }}</button>
+            <button class="btn create col-md-12"><i class="fa fa-plus-square"></i> {{ view.getParameter('add_button_text')|trans }}</button>
         </div>
         <div class="col-md-3">
-            <button class="btn category-service col-md-12"><i class="icon-cog"></i> {{ 'button.manage_category_service'|trans }}</button>
+            <button class="btn category-service col-md-12"><i class="fa fa-cog"></i> {{ 'button.manage_category_service'|trans }}</button>
         </div>
     </div>
 

@@ -1,19 +1,19 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block datetime_widget -%}
-    <div class="inputContainer">
+    <div class="input-container">
         <input class="datetimepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
     </div>
 {%- endblock %}
 
 {% block date_widget -%}
-    <div class="inputContainer">
+    <div class="input-container">
         <input class="datepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
     </div>
 {%- endblock %}
 
 {% block choice_widget_expanded %}
-    <div {{ block('widget_container_attributes') }}>
+    <div class="choice-input-container" {{ block('widget_container_attributes') }}>
         {%- for child in form %}
         <span class="choice-input-with-label">
             {{- form_widget(child) -}}
@@ -27,13 +27,13 @@
     {% spaceless %}
         <div class="row mb1">
             <label class="col-md-2 text-right label-container">{{ form_label(form) }}</label>
-            <div class="col-md-9 input-container">{{ form_widget(form) }}</div>
+            <div class="col-md-9 formwidget-container">{{ form_widget(form) }}</div>
         </div>
     {% endspaceless %}
 {% endblock %}
 
 {% block text_widget %}
-    <div class="inputContainer">
+    <div class="input-container">
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
     </div>
 {% endblock %}
@@ -43,19 +43,19 @@
 {% endblock %}
 
 {% block textarea_widget %}
-  <div class="inputContainer">
+  <div class="input-container">
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
   </div>
 {% endblock %}
 
 {% block password_widget %}
-    <div class="inputContainer">
+    <div class="input-container">
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="password" />
     </div>
 {% endblock %}
 
 {% block wysiwyg_widget %}
-    <div class="inputContainer">
+    <div class="wysiwyg-container">
         <textarea data-wysiwyg data-config="{{ config|e }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
     </div>
 {% endblock %}

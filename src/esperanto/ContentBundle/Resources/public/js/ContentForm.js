@@ -58,11 +58,10 @@ function ContentForm(router)
         setOrderForContainer(container);
       };
 
-      contentForm.on('click', '.addButton', function() {
+      contentForm.on('click', '.add-content-button', function() {
 
-        if(menu.css('display') == 'none') {
+        if(!menu.is(':visible')) {
           var position = $(this).position();
-
 
           var data = $.parseHTML(data);
 

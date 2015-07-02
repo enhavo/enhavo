@@ -15,7 +15,7 @@
                     </li>
                 </script>
 
-                <div class="layer">
+                <div class="layer posrel">
                     {% if form.information %}
                         <div class="hintBox mb1">
                             <ul class="bullList">
@@ -48,8 +48,8 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <input id="{{ id }}" class="fileupload hide" type="file" data-url="{{ path('esperanto_media_upload') }}" multiple>
-                    <div class="mt1em">
+                    <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('esperanto_media_upload') }}" multiple>
+                    <div class="mt1">
                         <button class="btnsmall upload-button"><i class="fa fa-arrow-up"></i> Datei hochladen</button>
                     </div>
                 </div>
