@@ -16,7 +16,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $url = $this->httpUtils->generateUri($request, 'enhavo_admin_index');
+        $url = $this->httpUtils->generateUri($request, 'enhavo_app_index');
         return $this->httpUtils->createRedirectResponse($request, $url);
     }
 }

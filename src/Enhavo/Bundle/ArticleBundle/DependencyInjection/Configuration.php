@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('classes')
                 ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('news')
+                        ->arrayNode('article')
                         ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('model')->defaultValue('Enhavo\Bundle\ArticleBundle\Entity\Article')->end()
@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->scalarNode('news_route')->defaultValue(null)->end()
+                ->scalarNode('article_route')->defaultValue(null)->end()
             ->end()
         ;
 

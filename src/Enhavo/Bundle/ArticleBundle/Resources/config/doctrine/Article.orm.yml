@@ -1,6 +1,6 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
     type: mappedSuperclass
-    table: news_news
+    table: article_article
     repositoryClass: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
     id:
@@ -77,9 +77,9 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
-                name: news_news_picture
+                name: article_article_picture
                 joinColumns:
-                    news_id:
+                    article_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:

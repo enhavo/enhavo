@@ -1,11 +1,10 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\ProjectBundle\Entity\Page: enhavoProjectBundle:Main:page
-            Enhavo\Bundle\ProjectBundle\Entity\News: enhavoProjectBundle:Main:news
-            Enhavo\Bundle\ProjectBundle\Entity\Reference: enhavoProjectBundle:Main:reference
+            Enhavo\Bundle\ArticleBundle\Entity\Article: EnhavoAppBundle:App:show
+            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:App:show
 
-enhavo_admin:
+enhavo_app:
     permission_check: false
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
@@ -17,7 +16,7 @@ enhavo_admin:
     menu:
         dashboard:
             label: label.dashboard
-            route: enhavo_admin_dashboard
+            route: enhavo_app_dashboard
             role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
             label: label.user
@@ -27,18 +26,14 @@ enhavo_admin:
             label: label.group
             route: enhavo_user_group_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
-        news:
-            label: label.news
+        article:
+            label: label.article
             route: enhavo_article_article_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
             route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
-        reference:
-            label: label.reference
-            route: enhavo_reference_reference_index
-            role: ROLE_ESPERANTO_REFERENCE_REFERENCE_INDEX
         download:
             label: label.download
             route: enhavo_download_download_index
@@ -52,11 +47,11 @@ enhavo_admin:
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
 
-enhavo_content_grid_grid:
+enhavo_content_grid:
     render:
         sets:
             default:
-                picture: enhavoProjectBundle:ItemType:picture.html.twig
+#                picture: enhavoProjectBundle:ItemType:picture.html.twig
 
     items:
         picture:
@@ -111,18 +106,12 @@ enhavo_content_grid_grid:
 enhavo_page:
     classes:
         page:
-            model: Enhavo\Bundle\ProjectBundle\Entity\Page
-            form: Enhavo\Bundle\ProjectBundle\Form\Type\PageType
+            model: Enhavo\Bundle\PageBundle\Entity\Page
+            form: Enhavo\Bundle\PageBundle\Form\Type\PageType
 
 enhavo_article:
     classes:
-         news:
-            model: Enhavo\Bundle\ProjectBundle\Entity\News
-            form: Enhavo\Bundle\ProjectBundle\Form\Type\NewsType
-            repository: Enhavo\Bundle\ArticleBundle\Repository\NewsRepository
-
-enhavo_reference:
-    classes:
-         reference:
-            model: Enhavo\Bundle\ProjectBundle\Entity\Reference
-            form: Enhavo\Bundle\ProjectBundle\Form\Type\ReferenceType
+         article:
+            model: Enhavo\Bundle\ArticleBundle\Entity\Article
+            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
+            repository: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository

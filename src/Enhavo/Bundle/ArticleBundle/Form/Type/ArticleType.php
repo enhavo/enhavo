@@ -36,13 +36,13 @@ class ArticleType extends AbstractType
     {
         $router = $this->router;
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($router) {
-            $news = $event->getData();
+            $article = $event->getData();
             $form = $event->getForm();
 
-            if (!empty($news) && $news->getId() && !empty($route)) {
+            if (!empty($article) && $article->getId() && !empty($route)) {
                 $url = $router->generate($this->route, array(
-                    'id' => $news->getId(),
-                    'slug' => $news->getSlug(),
+                    'id' => $article->getId(),
+                    'slug' => $article->getSlug(),
                 ), true);
 
                 $form->add('link', 'text', array(
@@ -138,7 +138,7 @@ class ArticleType extends AbstractType
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'enhavo_content_grid_grid');
+        $builder->add('content', 'enhavo_content_grid');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

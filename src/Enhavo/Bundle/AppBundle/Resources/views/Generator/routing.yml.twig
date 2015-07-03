@@ -47,7 +47,7 @@
     options:
         expose: true
     path: /admin/{{ app_url }}/{{ resource_url }}/delete/{id}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:deleteAction
 

@@ -1,6 +1,6 @@
 Enhavo\Bundle\AppBundle\Entity\Session:
     type: entity
-    table: admin_session
+    table: app_session
     id:
         id:
             type: string

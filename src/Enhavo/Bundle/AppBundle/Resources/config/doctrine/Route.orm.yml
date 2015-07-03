@@ -1,6 +1,6 @@
 Enhavo\Bundle\AppBundle\Entity\Route:
     type: entity
-    table: admin_route
+    table: app_route
     indexes:
         name_idx:
             columns: [ name ]

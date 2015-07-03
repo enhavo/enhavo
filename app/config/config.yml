@@ -42,7 +42,6 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'enhavoProjectBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -104,7 +103,7 @@ cmf_routing:
             cmf_routing.dynamic_router: 100
     dynamic:
         enabled: true
-        route_provider_service_id: enhavo_admin.route_provider
+        route_provider_service_id: enhavo_app.route_provider
 
 enhavo_newsletter:
     subscriber:
@@ -114,7 +113,7 @@ enhavo_newsletter:
 
 parameters:
     pdo.db_options:
-        db_table:    admin_session
+        db_table:    app_session
         db_id_col:   id
         db_data_col: value
         db_time_col: time

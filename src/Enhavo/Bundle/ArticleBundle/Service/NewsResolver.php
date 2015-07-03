@@ -26,12 +26,12 @@ class ArticleResolver
     {
         if($request->get('id') == 'preview' && $request->getMethod() === 'POST')
         {
-            $news = $this->getPreviewArticle($request);
+            $article = $this->getPreviewArticle($request);
         } else {
-            $news = $this->getLiveArticle($request);
+            $article = $this->getLiveArticle($request);
         }
 
-        return $news;
+        return $article;
     }
 
     public function getPreviewArticle(Request $request)
@@ -49,8 +49,8 @@ class ArticleResolver
         $doctrine = $this->container->get('doctrine');
         $id = $request->get('id');
 
-        $repository = $this->container->get('enhavo_article.repository.news');
-        $news = $repository->find($id);
-        return $news;
+        $repository = $this->container->get('enhavo_article.repository.article');
+        $article = $repository->find($id);
+        return $article;
     }
 } 

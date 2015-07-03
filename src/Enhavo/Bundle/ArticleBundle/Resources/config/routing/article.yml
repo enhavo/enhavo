@@ -1,10 +1,10 @@
 enhavo_article_article_index:
     options:
         expose: true
-    path: /admin/enhavo/news/news/index
+    path: /enhavo/article/article/index
     methods: [GET]
     defaults:
-        _controller: enhavo_article.controller.news:indexAction
+        _controller: enhavo_article.controller.article:indexAction
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
@@ -12,17 +12,17 @@ enhavo_article_article_index:
 enhavo_article_article_create:
     options:
         expose: true
-    path: /admin/enhavo/news/news/create
+    path: /enhavo/article/article/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_article.controller.news:createAction
+        _controller: enhavo_article.controller.article:createAction
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             tabs:
-                news:
+                article:
                     label: Article
-                    template: EnhavoArticleBundle:Tab:news.html.twig
+                    template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
                     label: Content
                     template: EnhavoArticleBundle:Tab:content.html.twig
@@ -38,17 +38,17 @@ enhavo_article_article_create:
 enhavo_article_article_update:
     options:
         expose: true
-    path: /admin/enhavo/news/news/update/{id}
+    path: /enhavo/article/article/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_article.controller.news:updateAction
+        _controller: enhavo_article.controller.article:updateAction
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             tabs:
-                news:
+                article:
                     label: Article
-                    template: EnhavoArticleBundle:Tab:news.html.twig
+                    template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
                     label: Content
                     template: EnhavoArticleBundle:Tab:content.html.twig
@@ -64,11 +64,11 @@ enhavo_article_article_update:
 enhavo_article_article_table:
     options:
         expose: true
-    path: /admin/enhavo/news/news/table/{page}
+    path: /enhavo/article/article/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: enhavo_article.controller.news:tableAction
+        _controller: enhavo_article.controller.article:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
@@ -84,15 +84,15 @@ enhavo_article_article_table:
 enhavo_article_article_delete:
     options:
         expose: true
-    path: /admin/enhavo/news/news/delete/{id}
-    methods: [POST]
+    path: /enhavo/article/article/delete/{id}
+    methods: [DELETE]
     defaults:
-        _controller: enhavo_article.controller.news:deleteAction
+        _controller: enhavo_article.controller.article:deleteAction
 
 enhavo_article_article_preview:
     options:
         expose: true
-    path: /admin/enhavo/news/news/preview
+    path: /enhavo/article/article/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_article.controller.news:previewAction
+        _controller: enhavo_article.controller.article:previewAction

@@ -41,7 +41,7 @@ class EditViewer extends CreateViewer
             'form' => array(
                 'template' => 'EnhavoAppBundle:View:tab.html.twig',
                 'theme' => '',
-                'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName()),
+                'action' => sprintf('%s_%s_update', $this->getBundlePrefix(), $this->getResourceName()),
                 'delete' => sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName())
             )
         );

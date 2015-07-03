@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ArticleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use BaconStringUtils\Slugifier;
 
-abstract class Article {
+class Article {
 
     /**
      * @var \DateTime

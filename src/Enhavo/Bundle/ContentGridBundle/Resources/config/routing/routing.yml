@@ -1,5 +1,5 @@
 enhavo_content_grid_item:
-    pattern: /item/{type}
+    pattern: /enhavo/content/grid/item/{type}
     defaults:
         _controller: EnhavoContentGridBundle:Content:item
     options:

@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoContentExtension extends Extension
+class EnhavoContentGridExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -22,12 +22,12 @@ class enhavoContentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_content_grid_grid.items', $config['items']);
+        $container->setParameter('enhavo_content_grid.items', $config['items']);
 
         if(isset($config['render']) && isset($config['render']['sets'])) {
-            $container->setParameter('enhavo_content_grid_grid.render.sets', $config['render']['sets']);
+            $container->setParameter('enhavo_content_grid.render.sets', $config['render']['sets']);
         } else {
-            $container->setParameter('enhavo_content_grid_grid.render.sets', array());
+            $container->setParameter('enhavo_content_grid.render.sets', array());
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

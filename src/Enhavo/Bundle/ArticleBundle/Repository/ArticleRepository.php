@@ -54,12 +54,12 @@ class ArticleRepository extends EntityRepository
         $query->andWhere('n.publication_date <= :currentDate');
         $query->setParameter('currentDate', new \DateTime());
         $query->orderBy('n.publication_date','desc');
-        $news = $query->getQuery()->getResult();
+        $article = $query->getQuery()->getResult();
 
         $tmpDates = array();
 
         /** @var $item Article */
-        foreach($news as $item) {
+        foreach($article as $item) {
             if($item->getPublicationDate()) {
                 $tmpDates[] = $item->getPublicationDate()->format('Y-m');
             }

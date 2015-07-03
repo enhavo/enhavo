@@ -12,15 +12,11 @@ enhavo_admin:
     prefix: /admin
 
 enhavo_article:
-    resource: "@EnhavoArticleBundle/Resources/config/routing/news.yml"
+    resource: "@EnhavoArticleBundle/Resources/config/routing/article.yml"
     prefix: /admin
 
 enhavo_page:
     resource: "@EnhavoPageBundle/Resources/config/routing/page.yml"
-    prefix: /admin
-
-enhavo_reference:
-    resource: "@enhavoReferenceBundle/Resources/config/routing/reference.yml"
     prefix: /admin
 
 enhavo_download:
@@ -39,9 +35,9 @@ enhavo_group:
     resource: "@EnhavoUserBundle/Resources/config/routing/group.yml"
     prefix: /admin
 
-enhavo_content_grid_grid_admin:
-    prefix:   /admin/content
-    resource: "@EnhavoContentGridBundle/Resources/config/routing/admin.yml"
+enhavo_content_grid:
+    resource: "@EnhavoContentGridBundle/Resources/config/routing/routing.yml"
+    prefix: /admin
 
 enhavo_newsletter_newsletter:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
@@ -60,14 +56,3 @@ fos_js_routing:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
-
-#
-# project
-#
-enhavo_project:
-    resource: "@enhavoProjectBundle/Resources/config/routing.yml"
-    prefix:   /
-
-enhavo_project_admin:
-    resource: "@enhavoProjectBundle/Resources/config/admin.yml"
-    prefix:   /admin

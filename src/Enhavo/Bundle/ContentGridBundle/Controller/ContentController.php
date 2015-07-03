@@ -21,7 +21,7 @@ class ContentController extends Controller
 
         $formFactory = $this->container->get('form.factory');
 
-        $resolver = $this->container->get('enhavo_content_grid_grid.item_type_resolver');
+        $resolver = $this->container->get('enhavo_content_grid.item_type_resolver');
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $formType->setFormName($formName);

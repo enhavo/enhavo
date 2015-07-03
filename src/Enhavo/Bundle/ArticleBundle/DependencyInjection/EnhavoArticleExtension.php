@@ -17,7 +17,7 @@ class EnhavoArticleExtension extends SyliusResourceExtension
     // You can choose your application name, it will use to prefix the configuration keys in the container.
     protected $applicationName = 'enhavo_article';
 
-    protected $bundleName = 'news';
+    protected $bundleName = 'article';
 
     protected $companyName = 'enhavo';
 
@@ -44,7 +44,7 @@ class EnhavoArticleExtension extends SyliusResourceExtension
 
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration( $configuration, $config );
-        $container->setParameter( 'enhavo_article.news_route', $processedConfig['news_route']);
+        $container->setParameter( 'enhavo_article.article_route', $processedConfig['article_route']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
