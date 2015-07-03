@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
+namespace Enhavo\Bundle\CalendarBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoMediaExtension extends Extension
+class EnhavoCalendarExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

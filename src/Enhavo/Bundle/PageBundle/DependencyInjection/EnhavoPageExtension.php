@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\SliderBundle\DependencyInjection;
+namespace Enhavo\Bundle\PageBundle\DependencyInjection;
 
 use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoSliderExtension extends SyliusResourceExtension
+class EnhavoPageExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'enhavo_slider';
+    protected $applicationName = 'enhavo_page';
 
-    protected $bundleName = 'slider';
+    protected $bundleName = 'page';
 
     protected $companyName = 'enhavo';
 
@@ -41,6 +41,10 @@ class enhavoSliderExtension extends SyliusResourceExtension
             $container,
             self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
         );
+
+        $configuration = new Configuration();
+        $processedConfig = $this->processConfiguration( $configuration, $config );
+        $container->setParameter( 'enhavo_page.page_route', $processedConfig['page_route']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

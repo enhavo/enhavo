@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\SettingBundle\DependencyInjection;
+namespace Enhavo\Bundle\DownloadBundle\DependencyInjection;
 
-use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -12,14 +12,14 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoSettingExtension extends SyliusResourceExtension
+class EnhavoDownloadExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'enhavo_setting';
+    protected $applicationName = 'enhavo_download';
+
+    protected $bundleName = 'download';
 
     protected $companyName = 'enhavo';
-
-    protected $bundleName = 'setting';
 
     // You can define where yours service definitions are
     protected $configDirectory = '/../Resources/config';

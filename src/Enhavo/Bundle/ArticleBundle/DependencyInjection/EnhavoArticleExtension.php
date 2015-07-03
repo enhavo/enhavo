@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\PageBundle\DependencyInjection;
+namespace Enhavo\Bundle\NewsBundle\DependencyInjection;
 
-use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoPageExtension extends SyliusResourceExtension
+class EnhavoNewsExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'enhavo_page';
+    protected $applicationName = 'enhavo_news';
 
-    protected $bundleName = 'page';
+    protected $bundleName = 'news';
 
     protected $companyName = 'enhavo';
 
@@ -44,7 +44,7 @@ class enhavoPageExtension extends SyliusResourceExtension
 
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration( $configuration, $config );
-        $container->setParameter( 'enhavo_page.page_route', $processedConfig['page_route']);
+        $container->setParameter( 'enhavo_news.news_route', $processedConfig['news_route']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

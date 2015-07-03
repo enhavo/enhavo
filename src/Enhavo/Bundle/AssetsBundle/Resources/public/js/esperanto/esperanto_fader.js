@@ -1,4 +1,4 @@
-function enhavo_fader(containerselector,options) {
+function esperanto_fader(containerselector,options) {
   this.container = containerselector;
   //this.slidescontainer = containerselector.find('[data-slide-container]');
   this.options = options || {speed: 1000, duration: 5000, onswitch: null};

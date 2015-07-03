@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AssetsBundle\DependencyInjection;
+namespace Enhavo\Bundle\ShopBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoAssetsExtension extends Extension
+class EnhavoShopExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

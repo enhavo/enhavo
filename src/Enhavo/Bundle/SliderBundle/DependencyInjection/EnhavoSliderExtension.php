@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\NewsBundle\DependencyInjection;
+namespace Enhavo\Bundle\SliderBundle\DependencyInjection;
 
+use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class enhavoNewsExtension extends SyliusResourceExtension
+class EnhavoSliderExtension extends SyliusResourceExtension
 {
     // You can choose your application name, it will use to prefix the configuration keys in the container.
-    protected $applicationName = 'enhavo_news';
+    protected $applicationName = 'enhavo_slider';
 
-    protected $bundleName = 'news';
+    protected $bundleName = 'slider';
 
     protected $companyName = 'enhavo';
 
@@ -41,10 +41,6 @@ class enhavoNewsExtension extends SyliusResourceExtension
             $container,
             self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
         );
-
-        $configuration = new Configuration();
-        $processedConfig = $this->processConfiguration( $configuration, $config );
-        $container->setParameter( 'enhavo_news.news_route', $processedConfig['news_route']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

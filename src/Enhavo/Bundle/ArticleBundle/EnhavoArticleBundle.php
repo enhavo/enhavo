@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\NewsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoNewsBundle extends Bundle
+class EnhavoNewsBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

@@ -1,7 +1,7 @@
-/* iCheck plugin enhavo skin
+esperanto_fullscreen.css/* iCheck plugin esperanto skin
 ----------------------------------- */
-.icheckbox-enhavo,
-.iradio-enhavo {
+.icheckbox-esperanto,
+.iradio-esperanto {
     display: inline-block;
     vertical-align: middle;
     border: none;
@@ -22,34 +22,34 @@
     *margin-right: .3em;
 }
 
-.icheckbox-enhavo {
+.icheckbox-esperanto {
 
 }
 
-.icheckbox-enhavo.checked:before {
+.icheckbox-esperanto.checked:before {
     content: "\f00d";
 }
 
-.icheckbox-enhavo.disabled {
+.icheckbox-esperanto.disabled {
 
 }
 
-.icheckbox-enhavo.checked.disabled {
+.icheckbox-esperanto.checked.disabled {
 
 }
 
-.iradio-enhavo {
+.iradio-esperanto {
 
 }
 
-.iradio-enhavo.checked:before {
+.iradio-esperanto.checked:before {
     content: "\f00d";
 }
 
-.iradio-enhavo.disabled {
+.iradio-esperanto.disabled {
 
 }
 
-.iradio-enhavo.checked.disabled {
+.iradio-esperanto.checked.disabled {
 
 }

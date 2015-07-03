@@ -6,7 +6,7 @@ use Enhavo\Bundle\AdminBundle\DependencyInjection\Compiler\RouteContentCompilerP
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class enhavoAdminBundle extends Bundle
+class EnhavoAdminBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
