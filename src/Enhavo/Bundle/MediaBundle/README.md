@@ -1,1 +1,1 @@
-For further information check the [main repository](https://github.com/xqweb/enhavo)
+For further information check the [main repository](https://github.com/enhavo/enhavo)

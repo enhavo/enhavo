@@ -1,4 +1,4 @@
-[![Build status...](https://api.travis-ci.org/xqweb/enhavo.svg)](https://travis-ci.org/xqweb/enhavo)
+[![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg)](https://travis-ci.org/enhavo/enhavo)
 
 The enhavo is a PHP open source content management system based on the fullstack symfony 2 framework.
 
