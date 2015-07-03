@@ -6,14 +6,14 @@
  * Time: 18:26
  */
 
-namespace Enhavo\Bundle\NewsBundle\Service;
+namespace Enhavo\Bundle\ArticleBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactory;
-use Enhavo\Bundle\NewsBundle\Form\Type\NewsType;
+use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType;
 
-class NewsResolver
+class ArticleResolver
 {
     protected $container;
 
@@ -22,34 +22,34 @@ class NewsResolver
         $this->container = $container;
     }
 
-    public function getNews(Request $request)
+    public function getArticle(Request $request)
     {
         if($request->get('id') == 'preview' && $request->getMethod() === 'POST')
         {
-            $news = $this->getPreviewNews($request);
+            $news = $this->getPreviewArticle($request);
         } else {
-            $news = $this->getLiveNews($request);
+            $news = $this->getLiveArticle($request);
         }
 
         return $news;
     }
 
-    public function getPreviewNews(Request $request)
+    public function getPreviewArticle(Request $request)
     {
         /** @var $formFactory FormFactory */
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->create('enhavo_news_news');
+        $form = $formFactory->create('enhavo_article_article');
         $form->submit($request);
         return $form->getData();
     }
 
-    public function getLiveNews(Request $request)
+    public function getLiveArticle(Request $request)
     {
         /** @var $doctrine EntityManager */
         $doctrine = $this->container->get('doctrine');
         $id = $request->get('id');
 
-        $repository = $this->container->get('enhavo_news.repository.news');
+        $repository = $this->container->get('enhavo_article.repository.news');
         $news = $repository->find($id);
         return $news;
     }

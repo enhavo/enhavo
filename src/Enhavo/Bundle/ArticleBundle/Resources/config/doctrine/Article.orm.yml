@@ -1,7 +1,7 @@
-Enhavo\Bundle\NewsBundle\Entity\News:
+Enhavo\Bundle\ArticleBundle\Entity\Article:
     type: mappedSuperclass
     table: news_news
-    repositoryClass: Enhavo\Bundle\NewsBundle\Repository\NewsRepository
+    repositoryClass: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
     id:
         id:

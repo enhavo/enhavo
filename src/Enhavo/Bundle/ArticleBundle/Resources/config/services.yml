@@ -1,18 +1,18 @@
 parameters:
-    enhavo_news.news_resolver.class: Enhavo\Bundle\NewsBundle\Service\NewsResolver
-    enhavo_news.news.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
+    enhavo_article.news_resolver.class: Enhavo\Bundle\ArticleBundle\Service\ArticleResolver
+    enhavo_article.news.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
 
 services:
-    enhavo_news_news:
-        class: %enhavo_news.form.type.news.class%
+    enhavo_article_article:
+        class: %enhavo_article.form.type.news.class%
         arguments:
-            - %enhavo_news.model.news.class%
-            - %enhavo_news.news_route%
+            - %enhavo_article.model.news.class%
+            - %enhavo_article.news_route%
             - @router
         tags:
             - { name: form.type }
 
-    enhavo_news.news_resolver:
-        class: %enhavo_news.news_resolver.class%
+    enhavo_article.news_resolver:
+        class: %enhavo_article.news_resolver.class%
         arguments:
             - @service_container

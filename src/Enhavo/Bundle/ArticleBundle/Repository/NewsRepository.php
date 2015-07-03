@@ -1,17 +1,17 @@
 <?php
 /**
- * NewsRepository.php
+ * ArticleRepository.php
  *
  * @since 27/09/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\NewsBundle\Repository;
+namespace Enhavo\Bundle\ArticleBundle\Repository;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\NewsBundle\Entity\News;
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
 
-class NewsRepository extends EntityRepository
+class ArticleRepository extends EntityRepository
 {
     public function filterByDate($year = 0, $month = 0, $limit = 0)
     {
@@ -58,7 +58,7 @@ class NewsRepository extends EntityRepository
 
         $tmpDates = array();
 
-        /** @var $item News */
+        /** @var $item Article */
         foreach($news as $item) {
             if($item->getPublicationDate()) {
                 $tmpDates[] = $item->getPublicationDate()->format('Y-m');

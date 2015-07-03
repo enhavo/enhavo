@@ -29,7 +29,7 @@ enhavo_admin:
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         news:
             label: label.news
-            route: enhavo_news_news_index
+            route: enhavo_article_article_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
@@ -114,12 +114,12 @@ enhavo_page:
             model: Enhavo\Bundle\ProjectBundle\Entity\Page
             form: Enhavo\Bundle\ProjectBundle\Form\Type\PageType
 
-enhavo_news:
+enhavo_article:
     classes:
          news:
             model: Enhavo\Bundle\ProjectBundle\Entity\News
             form: Enhavo\Bundle\ProjectBundle\Form\Type\NewsType
-            repository: Enhavo\Bundle\NewsBundle\Repository\NewsRepository
+            repository: Enhavo\Bundle\ArticleBundle\Repository\NewsRepository
 
 enhavo_reference:
     classes:

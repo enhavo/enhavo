@@ -1,17 +1,17 @@
 <?php
 /**
- * News.php
+ * Article.php
  *
  * @since 03/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\NewsBundle\Entity;
+namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BaconStringUtils\Slugifier;
 
-abstract class News {
+abstract class Article {
 
     /**
      * @var \DateTime
@@ -111,7 +111,7 @@ abstract class News {
      * Set created
      *
      * @param \DateTime $created
-     * @return News
+     * @return Article
      */
     public function setCreated($created)
     {
@@ -134,7 +134,7 @@ abstract class News {
      * Set updated
      *
      * @param \DateTime $updated
-     * @return News
+     * @return Article
      */
     public function setUpdated($updated)
     {
@@ -175,7 +175,7 @@ abstract class News {
      * Set title
      *
      * @param string $title
-     * @return News
+     * @return Article
      */
     public function setTitle($title)
     {
@@ -198,7 +198,7 @@ abstract class News {
      * Set teaser
      *
      * @param string $teaser
-     * @return News
+     * @return Article
      */
     public function setTeaser($teaser)
     {
@@ -221,7 +221,7 @@ abstract class News {
      * Set publication_date
      *
      * @param \DateTime $publicationDate
-     * @return News
+     * @return Article
      */
     public function setPublicationDate($publicationDate)
     {
@@ -250,7 +250,7 @@ abstract class News {
      * Set social_media
      *
      * @param boolean $socialMedia
-     * @return News
+     * @return Article
      */
     public function setSocialMedia($socialMedia)
     {
@@ -277,7 +277,7 @@ abstract class News {
      * Set slug
      *
      * @param string $slug
-     * @return News
+     * @return Article
      */
     public function setSlug($slug)
     {
@@ -307,7 +307,7 @@ abstract class News {
      * Set meta_description
      *
      * @param string $metaDescription
-     * @return News
+     * @return Article
      */
     public function setMetaDescription($metaDescription)
     {
@@ -330,7 +330,7 @@ abstract class News {
      * Set page_title
      *
      * @param string $pageTitle
-     * @return News
+     * @return Article
      */
     public function setPageTitle($pageTitle)
     {
@@ -353,7 +353,7 @@ abstract class News {
      * Set priority
      *
      * @param float $priority
-     * @return News
+     * @return Article
      */
     public function setPriority($priority)
     {
@@ -379,7 +379,7 @@ abstract class News {
      * Set change_frequency
      *
      * @param string $changeFrequency
-     * @return News
+     * @return Article
      */
     public function setChangeFrequency($changeFrequency)
     {
@@ -405,7 +405,7 @@ abstract class News {
      * Set public
      *
      * @param boolean $public
-     * @return News
+     * @return Article
      */
     public function setPublic($public)
     {
@@ -431,7 +431,7 @@ abstract class News {
      * Set content
      *
      * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
-     * @return News
+     * @return Article
      */
     public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
     {
@@ -454,7 +454,7 @@ abstract class News {
      * Add picture
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     * @return News
+     * @return Article
      */
     public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
     {

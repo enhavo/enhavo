@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\NewsBundle\Form\Type;
+namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\RouterInterface;
-class NewsType extends AbstractType
+class ArticleType extends AbstractType
 {
     /**
      * @var string
@@ -150,6 +150,6 @@ class NewsType extends AbstractType
 
     public function getName()
     {
-        return 'enhavo_news_news';
+        return 'enhavo_article_article';
     }
 }

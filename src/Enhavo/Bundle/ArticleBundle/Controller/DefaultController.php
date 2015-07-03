@@ -1,24 +1,24 @@
 <?php
 
-namespace Enhavo\Bundle\NewsBundle\Controller;
+namespace Enhavo\Bundle\ArticleBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Enhavo\Bundle\NewsBundle\Entity\News;
-use Enhavo\Bundle\NewsBundle\Form\NewsType;
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
+use Enhavo\Bundle\ArticleBundle\Form\ArticleType;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('enhavoNewsBundle:Default:index.html.twig');
+        return $this->render('EnhavoArticleBundle:Default:index.html.twig');
     }
 
     public function dialogAddAction()
     {
-        $news = $this->get('enhavo_news.repository.news')->createNew();
-        $form = $this->createForm(new NewsType, $news);
+        $news = $this->get('enhavo_article.repository.news')->createNew();
+        $form = $this->createForm(new ArticleType, $news);
 
-        return $this->render('enhavoNewsBundle:Default:dialogAdd.html.twig', array(
+        return $this->render('EnhavoArticleBundle:Default:dialogAdd.html.twig', array(
             "news" => $news,
             "form" => $form->createView()
         ));
@@ -26,7 +26,7 @@ class DefaultController extends Controller
 
     public function tableAction()
     {
-        $news = $this->get('enhavo_news.repository.news')
+        $news = $this->get('enhavo_article.repository.news')
             ->findAll();
         return $this->render('enhavoRecipeBundle:Default:table.html.twig', array(
             "news" => $news
@@ -35,8 +35,8 @@ class DefaultController extends Controller
 
     public function saveAction(Request $request)
     {
-        $news = $this->get('enhavo_news.repository.news')->createNew();
-        $form = $this->createForm(new NewsType, $news);
+        $news = $this->get('enhavo_article.repository.news')->createNew();
+        $form = $this->createForm(new ArticleType, $news);
 
 
         $form->handleRequest($request);
@@ -50,9 +50,9 @@ class DefaultController extends Controller
         $em->persist($news);
         $em->flush();
 
-        $news = $this->get('enhavo_news.repository.news')->findAll();
+        $news = $this->get('enhavo_article.repository.news')->findAll();
 
-        return $this->render('enhavoNewsBundle:Default:index.html.twig', array(
+        return $this->render('EnhavoArticleBundle:Default:index.html.twig', array(
             "recipes" => $news
         ));
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\NewsBundle;
+namespace Enhavo\Bundle\ArticleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class EnhavoNewsBundle extends Bundle
+class EnhavoArticleBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\NewsBundle\DependencyInjection;
+namespace Enhavo\Bundle\ArticleBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_news');
+        $rootNode = $treeBuilder->root('enhavo_article');
 
         $rootNode
             // Driver used by the resource bundle
@@ -34,10 +34,10 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('news')
                         ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\NewsBundle\Entity\News')->end()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\ArticleBundle\Entity\Article')->end()
                                 ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsBundle\Repository\NewsRepository')->end()
-                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsBundle\Form\Type\NewsType')->end()
+                                ->scalarNode('repository')->defaultValue('Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType')->end()
                                 ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()

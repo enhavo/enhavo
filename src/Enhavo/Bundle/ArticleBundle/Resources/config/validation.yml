@@ -1,4 +1,4 @@
-Enhavo\Bundle\NewsBundle\Entity\News:
+Enhavo\Bundle\ArticleBundle\Entity\Article:
     properties:
         title:
             - NotBlank: ~

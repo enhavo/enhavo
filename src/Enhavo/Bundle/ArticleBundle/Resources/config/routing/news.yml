@@ -1,74 +1,74 @@
-enhavo_news_news_index:
+enhavo_article_article_index:
     options:
         expose: true
     path: /admin/enhavo/news/news/index
     methods: [GET]
     defaults:
-        _controller: enhavo_news.controller.news:indexAction
+        _controller: enhavo_article.controller.news:indexAction
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
-enhavo_news_news_create:
+enhavo_article_article_create:
     options:
         expose: true
     path: /admin/enhavo/news/news/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_news.controller.news:createAction
+        _controller: enhavo_article.controller.news:createAction
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             tabs:
                 news:
-                    label: News
-                    template: enhavoNewsBundle:Tab:news.html.twig
+                    label: Article
+                    template: EnhavoArticleBundle:Tab:news.html.twig
                 content:
                     label: Content
-                    template: enhavoNewsBundle:Tab:content.html.twig
+                    template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: enhavoNewsBundle:Tab:seo.html.twig
+                    template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_news_preview
+                    route: enhavo_article_article_preview
                     label: label.preview
                     icon: eye
 
-enhavo_news_news_update:
+enhavo_article_article_update:
     options:
         expose: true
     path: /admin/enhavo/news/news/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_news.controller.news:updateAction
+        _controller: enhavo_article.controller.news:updateAction
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             tabs:
                 news:
-                    label: News
-                    template: enhavoNewsBundle:Tab:news.html.twig
+                    label: Article
+                    template: EnhavoArticleBundle:Tab:news.html.twig
                 content:
                     label: Content
-                    template: enhavoNewsBundle:Tab:content.html.twig
+                    template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: enhavoNewsBundle:Tab:seo.html.twig
+                    template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_news_preview
+                    route: enhavo_article_article_preview
                     label: label.preview
                     icon: eye
 
-enhavo_news_news_table:
+enhavo_article_article_table:
     options:
         expose: true
     path: /admin/enhavo/news/news/table/{page}
     methods: [GET]
     defaults:
         page: 1
-        _controller: enhavo_news.controller.news:tableAction
+        _controller: enhavo_article.controller.news:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
@@ -81,18 +81,18 @@ enhavo_news_news_table:
                         label: title
                         property: title
 
-enhavo_news_news_delete:
+enhavo_article_article_delete:
     options:
         expose: true
     path: /admin/enhavo/news/news/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_news.controller.news:deleteAction
+        _controller: enhavo_article.controller.news:deleteAction
 
-enhavo_news_news_preview:
+enhavo_article_article_preview:
     options:
         expose: true
     path: /admin/enhavo/news/news/preview
     methods: [POST]
     defaults:
-        _controller: enhavo_news.controller.news:previewAction
+        _controller: enhavo_article.controller.news:previewAction
