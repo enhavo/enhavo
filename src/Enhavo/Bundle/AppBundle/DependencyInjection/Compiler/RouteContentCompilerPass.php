@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\DependencyInjection\Compiler;
+namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -11,12 +11,12 @@ class RouteContentCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('enhavo_admin.route_content_collector')) {
+        if (!$container->hasDefinition('enhavo_app.route_content_collector')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'enhavo_admin.route_content_collector'
+            'enhavo_app.route_content_collector'
         );
 
         $taggedServices = $container->findTaggedServiceIds(

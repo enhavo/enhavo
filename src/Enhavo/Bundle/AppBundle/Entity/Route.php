@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Entity;
+namespace Enhavo\Bundle\AppBundle\Entity;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 

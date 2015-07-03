@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('controller')->defaultValue('Enhavo\Bundle\SettingBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SettingBundle\Repository\SettingRepository')->end()
                                 ->scalarNode('form')->defaultValue('Enhavo\Bundle\SettingBundle\Form\Type\SettingType')->end()
-                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AdminBundle\Admin\BaseAdmin')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()
                     ->end()

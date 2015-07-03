@@ -6,7 +6,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_create:
@@ -17,7 +17,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_update:
@@ -28,7 +28,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_table:
@@ -40,7 +40,7 @@
         page: 1
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
 
 {{ app }}_{{ resource }}_delete:

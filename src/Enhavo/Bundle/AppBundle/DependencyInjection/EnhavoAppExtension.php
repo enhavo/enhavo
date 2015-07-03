@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\DependencyInjection;
+namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -22,11 +22,11 @@ class enhavoAdminExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_admin.permission_check', $config[ 'permission_check' ]);
-        $container->setParameter('enhavo_admin.stylesheets', $config[ 'stylesheets' ]);
-        $container->setParameter('enhavo_admin.javascripts', $config[ 'javascripts' ]);
-        $container->setParameter('enhavo_admin.menu', $config[ 'menu' ]);
-        $container->setParameter('enhavo_admin.viewer', $config[ 'viewer' ]);
+        $container->setParameter('enhavo_app.permission_check', $config[ 'permission_check' ]);
+        $container->setParameter('enhavo_app.stylesheets', $config[ 'stylesheets' ]);
+        $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
+        $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
+        $container->setParameter('enhavo_app.viewer', $config[ 'viewer' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

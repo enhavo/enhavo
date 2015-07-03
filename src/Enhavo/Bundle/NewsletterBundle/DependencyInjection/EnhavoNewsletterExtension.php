@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
-use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use Enhavo\Bundle\AppBundle\DependencyInjection\SyliusResourceExtension;
 
 
 /**

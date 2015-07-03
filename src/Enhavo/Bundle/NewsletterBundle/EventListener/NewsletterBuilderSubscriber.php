@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Loader;
-use Enhavo\Bundle\AdminBundle\Event\RouteBuilderEvent;
+use Enhavo\Bundle\AppBundle\Event\RouteBuilderEvent;
 
 
 class NewsletterBuilderSubscriber extends Controller implements EventSubscriberInterface

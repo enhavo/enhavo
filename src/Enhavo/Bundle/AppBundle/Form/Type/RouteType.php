@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\AdminBundle\Form\Type;
+namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AdminBundle\Entity\Route;
-use Enhavo\Bundle\AdminBundle\Validator\Constraints\Route as RouteConstraint;
+use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\AppBundle\Validator\Constraints\Route as RouteConstraint;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +42,7 @@ class RouteType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label' => 'label.url',
-            'data_class' => 'Enhavo\Bundle\AdminBundle\Entity\Route',
+            'data_class' => 'Enhavo\Bundle\AppBundle\Entity\Route',
             'constraints' => array(
                 new RouteConstraint,
             )

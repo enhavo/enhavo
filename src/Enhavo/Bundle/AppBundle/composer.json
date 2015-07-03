@@ -1,7 +1,7 @@
 {
   "name": "enhavo/admin-bundle",
   "type": "library",
-  "description": "enhavoAdminBundle",
+  "description": "EnhavoAppBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",
@@ -18,6 +18,6 @@
     "symfony-cmf/routing-bundle": "1.3.4"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\AdminBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\AppBundle\\": "" }
   }
 }

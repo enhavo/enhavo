@@ -6,11 +6,11 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Route;
+namespace Enhavo\Bundle\AppBundle\Route;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Enhavo\Bundle\AdminBundle\Route\RouteContentLoader;
+use Enhavo\Bundle\AppBundle\Route\RouteContentLoader;
 
 class RouteContentCollector
 {

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Block;
+namespace Enhavo\Bundle\AppBundle\Block;
 
 use Symfony\Component\Templating\EngineInterface;
 
@@ -21,6 +21,6 @@ class TableBlock implements BlockInterface
 
     public function render($parameters)
     {
-        return $this->engine->render('enhavoAdminBundle:Block:table.html.twig', $parameters);
+        return $this->engine->render('EnhavoAppBundle:Block:table.html.twig', $parameters);
     }
 }

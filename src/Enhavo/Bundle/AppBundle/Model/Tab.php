@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\Model;
+namespace Enhavo\Bundle\AppBundle\Model;
 
 class Tab
 {

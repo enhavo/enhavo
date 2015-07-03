@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -32,7 +32,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
     private $form;
 
     /**
-     * @var \Enhavo\Bundle\AdminBundle\Config\ConfigParser
+     * @var \Enhavo\Bundle\AppBundle\Config\ConfigParser
      */
     private $config;
 
@@ -144,7 +144,7 @@ abstract class AbstractViewer implements ContainerAwareInterface
 
     public function getTemplate()
     {
-        return 'enhavoAdminBundle:App:index.html.twig';
+        return 'EnhavoAppBundle:App:index.html.twig';
     }
 
     public function setBundlePrefix($bundlePrefix)

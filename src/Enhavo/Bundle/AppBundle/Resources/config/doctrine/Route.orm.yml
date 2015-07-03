@@ -1,4 +1,4 @@
-Enhavo\Bundle\AdminBundle\Entity\Route:
+Enhavo\Bundle\AppBundle\Entity\Route:
     type: entity
     table: admin_route
     indexes:

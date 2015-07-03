@@ -31,7 +31,7 @@ class AppKernel extends Kernel
 
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
-            new Enhavo\Bundle\AdminBundle\enhavoAdminBundle(),
+            new Enhavo\Bundle\AppBundle\EnhavoAppBundle(),
             new Enhavo\Bundle\UserBundle\enhavoUserBundle(),
             new Enhavo\Bundle\MediaBundle\enhavoMediaBundle(),
             new Enhavo\Bundle\NewsBundle\enhavoNewsBundle(),

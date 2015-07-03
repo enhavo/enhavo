@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\AdminBundle\Controller;
+namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AdminBundle\Exception\BadMethodCallException;
-use Enhavo\Bundle\AdminBundle\Exception\PreviewException;
+use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
+use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

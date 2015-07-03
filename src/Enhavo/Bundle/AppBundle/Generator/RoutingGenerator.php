@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Generator;
+namespace Enhavo\Bundle\AppBundle\Generator;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
@@ -21,7 +21,7 @@ class RoutingGenerator
 
     public function generate($appName, $resourceName)
     {
-        return $this->templateEngine->render('enhavoAdminBundle:Generator:routing.yml.twig',
+        return $this->templateEngine->render('EnhavoAppBundle:Generator:routing.yml.twig',
             array(
                 'app' => $appName,
                 'resource' => $resourceName,

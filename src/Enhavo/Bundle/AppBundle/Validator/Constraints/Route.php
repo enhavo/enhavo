@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Validator\Constraints;
+namespace Enhavo\Bundle\AppBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

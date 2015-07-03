@@ -1,19 +1,19 @@
 parameters:
-    enhavo_admin.form.wysiwyg.class: Enhavo\Bundle\AdminBundle\Form\Type\WysiwygType
-    security.roles.provider.class: Enhavo\Bundle\AdminBundle\Security\Roles\AdminRolesProvider
-    enhavo_admin.form.config.wysiwyg.class: Enhavo\Bundle\AdminBundle\Form\Config\WysiwygConfig
-    enhavo_admin.menu_loader.class: Enhavo\Bundle\AdminBundle\Menu\MenuLoader
+    enhavo_app.form.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Type\WysiwygType
+    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
+    enhavo_app.form.config.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig
+    enhavo_app.menu_loader.class: Enhavo\Bundle\AppBundle\Menu\MenuLoader
 
 services:
-    enhavo_admin.form.wysiwyg:
-        class: %enhavo_admin.form.wysiwyg.class%
+    enhavo_app.form.wysiwyg:
+        class: %enhavo_app.form.wysiwyg.class%
         arguments:
-            - @enhavo_admin.form.config.wysiwyg
+            - @enhavo_app.form.config.wysiwyg
         tags:
             - { name: form.type, alias: 'wysiwyg' }
 
-    enhavo_admin.form.config.wysiwyg:
-        class: %enhavo_admin.form.config.wysiwyg.class%
+    enhavo_app.form.config.wysiwyg:
+        class: %enhavo_app.form.config.wysiwyg.class%
         arguments:
             - %kernel.root_dir%/config/wysiwyg.yml
 
@@ -26,31 +26,31 @@ services:
         arguments:
             - %security.role_hierarchy.roles%
 
-    enhavo_admin.menu_event_listener:
-        class: Enhavo\Bundle\AdminBundle\EventListener\MenuEventListener
+    enhavo_app.menu_event_listener:
+        class: Enhavo\Bundle\AppBundle\EventListener\MenuEventListener
         arguments:
-            - %enhavo_admin.permission_check%
+            - %enhavo_app.permission_check%
             - @security.context
             - @knp_menu.factory
-            - %enhavo_admin.menu%
+            - %enhavo_app.menu%
             - @request_stack
         tags:
-          - { name: kernel.event_listener, event: enhavo_admin.menu, method: onMenu  }
+          - { name: kernel.event_listener, event: enhavo_app.menu, method: onMenu  }
 
-    enhavo_admin.controller.app:
-        class: Enhavo\Bundle\AdminBundle\Controller\AppController
+    enhavo_app.controller.app:
+        class: Enhavo\Bundle\AppBundle\Controller\AppController
         calls:
             - [setContainer, [@service_container]]
 
-    enhavo_admin.menu_loader:
-        class: %enhavo_admin.menu_loader.class%
+    enhavo_app.menu_loader:
+        class: %enhavo_app.menu_loader.class%
         arguments:
-            - 'enhavo_admin.menu'
-            - %enhavo_admin.menu%
+            - 'enhavo_app.menu'
+            - %enhavo_app.menu%
             - @knp_menu.factory
             - @event_dispatcher
 
-    enhavo_admin.generator.route_generator:
-        class: Enhavo\Bundle\AdminBundle\Generator\RoutingGenerator
+    enhavo_app.generator.route_generator:
+        class: Enhavo\Bundle\AppBundle\Generator\RoutingGenerator
         arguments:
             - @templating

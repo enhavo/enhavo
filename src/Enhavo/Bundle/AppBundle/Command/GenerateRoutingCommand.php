@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Command;
+namespace Enhavo\Bundle\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -39,7 +39,7 @@ class GenerateRoutingCommand extends ContainerAwareCommand
         $app = $input->getArgument('app');
         $resource = $input->getArgument('resource');
 
-        $generator = $this->getContainer()->get('enhavo_admin.generator.route_generator');
+        $generator = $this->getContainer()->get('enhavo_app.generator.route_generator');
         $outputCode = $generator->generate($app, $resource);
 
         $output->writeln($outputCode);

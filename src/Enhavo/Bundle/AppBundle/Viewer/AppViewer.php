@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
 class AppViewer extends AbstractViewer

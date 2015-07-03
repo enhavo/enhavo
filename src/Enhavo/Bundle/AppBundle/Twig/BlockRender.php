@@ -1,8 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\Twig;
+namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AdminBundle\Block\BlockFactory;
+use Enhavo\Bundle\AppBundle\Block\BlockFactory;
 
 class BlockRender extends \Twig_Extension
 {

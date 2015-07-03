@@ -4,7 +4,7 @@ enhavo_page_page_index:
     defaults:
         _controller: enhavo_page.controller.page:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
             type: index
 
@@ -16,7 +16,7 @@ enhavo_page_page_create:
     defaults:
         _controller: enhavo_page.controller.page:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             type: create
             tabs:
@@ -51,7 +51,7 @@ enhavo_page_page_update:
     defaults:
         _controller: enhavo_page.controller.page:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             type: edit
             tabs:
@@ -79,7 +79,7 @@ enhavo_page_page_table:
         page: 1
         _controller: enhavo_page.controller.page:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             type: table
             table:
@@ -93,7 +93,7 @@ enhavo_page_page_table:
                     public:
                         label: public
                         property: public
-                        widget: enhavoAdminBundle:Widget:boolean.html.twig
+                        widget: EnhavoAppBundle:Widget:boolean.html.twig
 
 enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}

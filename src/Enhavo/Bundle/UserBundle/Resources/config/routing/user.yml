@@ -6,7 +6,7 @@ enhavo_user_user_index:
     defaults:
         _controller: enhavo_user.controller.user:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 enhavo_user_user_create:
@@ -17,7 +17,7 @@ enhavo_user_user_create:
     defaults:
         _controller: enhavo_user.controller.user:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
 
 enhavo_user_user_update:
@@ -28,7 +28,7 @@ enhavo_user_user_update:
     defaults:
         _controller: enhavo_user.controller.user:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
 
 enhavo_user_user_table:
@@ -40,7 +40,7 @@ enhavo_user_user_table:
         page: 1
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:

@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Enhavo\Bundle\AdminBundle\Viewer;
+namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 
-use Enhavo\Bundle\AdminBundle\Config\ConfigParser;
-use Enhavo\Bundle\AdminBundle\spec\EntityMock;
+use Enhavo\Bundle\AppBundle\Config\ConfigParser;
+use Enhavo\Bundle\AppBundle\spec\EntityMock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\Container;
@@ -13,7 +13,7 @@ class TableViewerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Viewer\TableViewer');
+        $this->shouldHaveType('Enhavo\Bundle\AppBundle\Viewer\TableViewer');
     }
 
     function it_should_return_value_by_property_on_object()
@@ -22,7 +22,7 @@ class TableViewerSpec extends ObjectBehavior
         $object->setName('my name is route');
         $this->getProperty($object, 'name')->shouldReturn('my name is route');
 
-        $this->shouldThrow('Enhavo\Bundle\AdminBundle\Exception\PropertyNotExistsException')->during(
+        $this->shouldThrow('Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException')->during(
             'getProperty',
             array(
                 $object,
@@ -92,7 +92,7 @@ class TableViewerSpec extends ObjectBehavior
         $columns = array(
             'id' => array(
                 'property' => 'id',
-                'widget' => 'enhavoAdminBundle:Widget:id.html.twig'
+                'widget' => 'EnhavoAppBundle:Widget:id.html.twig'
             ),
         );
         $object = new EntityMock();
@@ -101,7 +101,7 @@ class TableViewerSpec extends ObjectBehavior
             'data' => $object,
             'value' => 'something'
         );
-        $template = 'enhavoAdminBundle:Widget:id.html.twig';
+        $template = 'EnhavoAppBundle:Widget:id.html.twig';
 
         $engine->render($template, $parameters)->willReturn('hello');
         $container->get('templating')->willReturn($engine);
@@ -113,6 +113,6 @@ class TableViewerSpec extends ObjectBehavior
         $this->setConfig($configParser);
         $this->setContainer($container);
 
-        $this->renderWidget('enhavoAdminBundle:Widget:id.html.twig', 'name', $object)->shouldBe('hello');
+        $this->renderWidget('EnhavoAppBundle:Widget:id.html.twig', 'name', $object)->shouldBe('hello');
     }
 }

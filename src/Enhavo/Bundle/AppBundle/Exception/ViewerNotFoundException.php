@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Exception;
+namespace Enhavo\Bundle\AppBundle\Exception;
 
 class ViewerNotFoundException extends \Exception {
 

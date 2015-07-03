@@ -12,8 +12,8 @@ enhavo_admin:
     javascripts:
 
     viewer:
-#        layout: 'enhavoAdminBundle::base.html.twig'
-        app: Enhavo\Bundle\AdminBundle\Viewer\AppViewer
+#        layout: 'EnhavoAppBundle::base.html.twig'
+        app: Enhavo\Bundle\AppBundle\Viewer\AppViewer
     menu:
         dashboard:
             label: label.dashboard

@@ -2,12 +2,12 @@
 
 services:
     viewer.factory:
-        class: Enhavo\Bundle\AdminBundle\Viewer\ViewerFactory
+        class: Enhavo\Bundle\AppBundle\Viewer\ViewerFactory
         arguments:
             - @service_container
             - @request_stack
-            - %enhavo_admin.viewer%
+            - %enhavo_app.viewer%
 
     viewer.config:
-        class: Enhavo\Bundle\AdminBundle\Config\ConfigParser
+        class: Enhavo\Bundle\AppBundle\Config\ConfigParser
         scope: prototype

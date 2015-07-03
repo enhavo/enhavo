@@ -1,38 +1,38 @@
 parameters:
-    enhavo_admin.twig.admin_menu_render.class: Enhavo\Bundle\AdminBundle\Twig\AdminMenuRender
-    enhavo_admin.twig.admin_menu_render.template: 'enhavoAdminBundle:View:menu.html.twig'
+    enhavo_app.twig.admin_menu_render.class: Enhavo\Bundle\AppBundle\Twig\AdminMenuRender
+    enhavo_app.twig.admin_menu_render.template: 'EnhavoAppBundle:View:menu.html.twig'
 
-    enhavo_admin.twig.block_render.class: Enhavo\Bundle\AdminBundle\Twig\BlockRender
+    enhavo_app.twig.block_render.class: Enhavo\Bundle\AppBundle\Twig\BlockRender
 
-    enhavo_admin.twig.pagination_render.class: Enhavo\Bundle\AdminBundle\Twig\PaginationRender
-    enhavo_admin.twig.pagination_render.template: 'enhavoAdminBundle:View:pagination.html.twig'
+    enhavo_app.twig.pagination_render.class: Enhavo\Bundle\AppBundle\Twig\PaginationRender
+    enhavo_app.twig.pagination_render.template: 'EnhavoAppBundle:View:pagination.html.twig'
 
-    enhavo_admin.twig.admin_asset.class: Enhavo\Bundle\AdminBundle\Twig\AdminAsset
+    enhavo_app.twig.admin_asset.class: Enhavo\Bundle\AppBundle\Twig\AdminAsset
 
 services:
-    enhavo_admin.twig.admin_menu_render:
-        class: %enhavo_admin.twig.admin_menu_render.class%
+    enhavo_app.twig.admin_menu_render:
+        class: %enhavo_app.twig.admin_menu_render.class%
         arguments:
             - '@service_container'
-            - '%enhavo_admin.twig.admin_menu_render.template%'
+            - '%enhavo_app.twig.admin_menu_render.template%'
         tags:
             - { name: twig.extension }
 
-    enhavo_admin.twig.block_render:
-        class: %enhavo_admin.twig.block_render.class%
+    enhavo_app.twig.block_render:
+        class: %enhavo_app.twig.block_render.class%
         arguments:
-            - @enhavo_admin.block.factory
+            - @enhavo_app.block.factory
         tags:
             - { name: twig.extension }
 
-    enhavo_admin.twig.pagination_render:
-        class: %enhavo_admin.twig.pagination_render.class%
+    enhavo_app.twig.pagination_render:
+        class: %enhavo_app.twig.pagination_render.class%
         arguments:
-            - %enhavo_admin.twig.pagination_render.template%
+            - %enhavo_app.twig.pagination_render.template%
         tags:
             - { name: twig.extension }
 
-    enhavo_admin.twig.admin_asset:
-        class: %enhavo_admin.twig.admin_asset.class%
+    enhavo_app.twig.admin_asset:
+        class: %enhavo_app.twig.admin_asset.class%
         tags:
             - { name: twig.extension }

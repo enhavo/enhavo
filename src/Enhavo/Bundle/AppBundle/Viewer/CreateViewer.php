@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
 class CreateViewer extends AbstractViewer
@@ -31,7 +31,7 @@ class CreateViewer extends AbstractViewer
                 )
             ),
             'form' => array(
-                'template' => 'enhavoAdminBundle:View:tab.html.twig',
+                'template' => 'EnhavoAppBundle:View:tab.html.twig',
                 'theme' => '',
                 'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName())
             )
@@ -45,7 +45,7 @@ class CreateViewer extends AbstractViewer
             return array(
                 $this->getResourceName() => array(
                     'label' => $this->getResourceName(),
-                    'template' => 'enhavoAdminBundle:Tab:default.html.twig'
+                    'template' => 'EnhavoAppBundle:Tab:default.html.twig'
                 )
             );
         }

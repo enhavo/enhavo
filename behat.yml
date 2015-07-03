@@ -11,6 +11,6 @@ default:
     suites:
         admin:
             paths:
-                - %paths.base%/src/enhavo/AdminBundle/Resources/features
+                - %paths.base%/src/enhavo/AppBundle/Resources/features
             contexts:
-                - Enhavo\Bundle\AdminBundle\Behat\AdminContext
+                - Enhavo\Bundle\AppBundle\Behat\AdminContext

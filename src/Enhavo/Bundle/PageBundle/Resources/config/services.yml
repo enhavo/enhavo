@@ -1,6 +1,6 @@
 parameters:
     enhavo_page.page_resolver.class: Enhavo\Bundle\PageBundle\Service\PageResolver
-    enhavo_page.page.route_content_loader.class: Enhavo\Bundle\AdminBundle\Route\RouteContentLoader
+    enhavo_page.page.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
 
 services:
     enhavo_page_page:

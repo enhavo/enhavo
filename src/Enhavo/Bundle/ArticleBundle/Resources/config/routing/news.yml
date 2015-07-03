@@ -6,7 +6,7 @@ enhavo_news_news_index:
     defaults:
         _controller: enhavo_news.controller.news:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 enhavo_news_news_create:
@@ -17,7 +17,7 @@ enhavo_news_news_create:
     defaults:
         _controller: enhavo_news.controller.news:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             tabs:
                 news:
@@ -43,7 +43,7 @@ enhavo_news_news_update:
     defaults:
         _controller: enhavo_news.controller.news:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             tabs:
                 news:
@@ -70,7 +70,7 @@ enhavo_news_news_table:
         page: 1
         _controller: enhavo_news.controller.news:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:

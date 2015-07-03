@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\CategoryBundle\Controller;
 
-use Enhavo\Bundle\AdminBundle\Controller\ResourceController as BaseController;
+use Enhavo\Bundle\AppBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Enhavo\Bundle\AdminBundle\Admin\BaseAdmin;
+use Enhavo\Bundle\AppBundle\Admin\BaseAdmin;
 
 class ResourceController extends BaseController
 {

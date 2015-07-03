@@ -84,7 +84,7 @@ abstract class News {
     private $picture;
 
     /**
-     * @var \Enhavo\Bundle\AdminBundle\Entity\Route
+     * @var \Enhavo\Bundle\AppBundle\Entity\Route
      */
     private $route;
 
@@ -484,7 +484,7 @@ abstract class News {
     }
 
     /**
-     * @return \Enhavo\Bundle\AdminBundle\Entity\Route
+     * @return \Enhavo\Bundle\AppBundle\Entity\Route
      */
     public function getRoute()
     {
@@ -492,7 +492,7 @@ abstract class News {
     }
 
     /**
-     * @param \Enhavo\Bundle\AdminBundle\Entity\Route $route
+     * @param \Enhavo\Bundle\AppBundle\Entity\Route $route
      */
     public function setRoute($route)
     {

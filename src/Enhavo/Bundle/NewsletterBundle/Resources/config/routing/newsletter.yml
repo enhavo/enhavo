@@ -6,7 +6,7 @@ enhavo_newsletter_newsletter_index:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 enhavo_newsletter_newsletter_create:
@@ -17,7 +17,7 @@ enhavo_newsletter_newsletter_create:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
 
 enhavo_newsletter_newsletter_update:
@@ -28,7 +28,7 @@ enhavo_newsletter_newsletter_update:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
 
 enhavo_newsletter_newsletter_table:
@@ -40,7 +40,7 @@ enhavo_newsletter_newsletter_table:
         page: 1
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:

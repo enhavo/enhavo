@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
-use Enhavo\Bundle\AdminBundle\DependencyInjection\SyliusResourceExtension;
+use Enhavo\Bundle\AppBundle\DependencyInjection\SyliusResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;

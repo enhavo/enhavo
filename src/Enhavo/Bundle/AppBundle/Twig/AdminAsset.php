@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Twig;
+namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AdminBundle\Util\Assetic;
+use Enhavo\Bundle\AppBundle\Util\Assetic;
 
 class AdminAsset extends \Twig_Extension
 {

@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\EventListener;
+namespace Enhavo\Bundle\AppBundle\EventListener;
 
-use Enhavo\Bundle\AdminBundle\Menu\MenuEvent;
+use Enhavo\Bundle\AppBundle\Menu\MenuEvent;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Knp\Menu\ItemInterface;

@@ -5,11 +5,11 @@ suites:
     #    spec_path: src/enhavo/AssetsBundle
     #    src_path: src/enhavo/AssetsBundle
 
-    AdminBundle:
-        namespace: Enhavo\Bundle\AdminBundle
-        psr4_prefix: Enhavo\Bundle\AdminBundle
-        spec_path: src/enhavo/AdminBundle
-        src_path: src/enhavo/AdminBundle
+    AppBundle:
+        namespace: Enhavo\Bundle\AppBundle
+        psr4_prefix: Enhavo\Bundle\AppBundle
+        spec_path: src/enhavo/AppBundle
+        src_path: src/enhavo/AppBundle
 
 #extensions:
 #    - PhpSpec\Extension\CodeCoverageExtension

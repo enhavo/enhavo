@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\AdminBundle\Security\Roles;
+namespace Enhavo\Bundle\AppBundle\Security\Roles;
 
 class AdminRolesProvider implements RolesProvider
 {

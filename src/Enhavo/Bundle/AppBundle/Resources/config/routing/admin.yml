@@ -1,15 +1,15 @@
-enhavo_admin_index:
+enhavo_app_index:
     pattern:  /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /admin/dashboard
         permanent: true
 
-enhavo_admin_dashboard:
+enhavo_app_dashboard:
     pattern:  /dashboard
     methods: [GET]
     defaults:
-        _controller: enhavo_admin.controller.app:indexAction
+        _controller: enhavo_app.controller.app:indexAction
         _viewer:
             type: app
             parameters:
@@ -17,9 +17,9 @@ enhavo_admin_dashboard:
                 param2: value2
             stylesheets:
                 enhavo_app_style:
-                    resource: '@enhavoAppBundle/Resource/public/css/style.css'
+                    resource: '@EnhavoAppBundle/Resource/public/css/style.css'
                     depends: ~
             javascripts:
                 enhavo_app_bootstrap:
-                    resource: '@enhavoAppBundle/Resource/public/js/bootstrap.css'
+                    resource: '@EnhavoAppBundle/Resource/public/js/bootstrap.css'
                     depends: jquery

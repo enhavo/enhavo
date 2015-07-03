@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
-use Enhavo\Bundle\AdminBundle\Security\Roles\RolesProvider;
+use Enhavo\Bundle\AppBundle\Security\Roles\RolesProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

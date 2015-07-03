@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Util;
+namespace Enhavo\Bundle\AppBundle\Util;
 
 class Assetic
 {

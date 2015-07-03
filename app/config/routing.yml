@@ -8,7 +8,7 @@ enhavo_user_security:
     resource: "@enhavoUserBundle/Resources/config/routing/security.yml"
 
 enhavo_admin:
-    resource: "@enhavoAdminBundle/Resources/config/routing/admin.yml"
+    resource: "@EnhavoAppBundle/Resources/config/routing/admin.yml"
     prefix: /admin
 
 enhavo_news:

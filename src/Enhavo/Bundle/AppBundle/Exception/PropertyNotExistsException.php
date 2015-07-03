@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\Exception;
+namespace Enhavo\Bundle\AppBundle\Exception;
 
 class PropertyNotExistsException extends \Exception {
 

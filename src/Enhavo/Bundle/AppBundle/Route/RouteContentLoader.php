@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Route;
+namespace Enhavo\Bundle\AppBundle\Route;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 

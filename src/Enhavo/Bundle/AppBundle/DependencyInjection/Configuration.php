@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\DependencyInjection;
+namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_admin');
+        $rootNode = $treeBuilder->root('enhavo_app');
 
         $rootNode
             ->children()
@@ -57,11 +57,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('viewer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('app')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\AppViewer')->end()
-                        ->scalarNode('create')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\CreateViewer')->end()
-                        ->scalarNode('table')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\TableViewer')->end()
-                        ->scalarNode('edit')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\EditViewer')->end()
-                        ->scalarNode('index')->defaultValue('Enhavo\Bundle\AdminBundle\Viewer\IndexViewer')->end()
+                        ->scalarNode('app')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\AppViewer')->end()
+                        ->scalarNode('create')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\CreateViewer')->end()
+                        ->scalarNode('table')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\TableViewer')->end()
+                        ->scalarNode('edit')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\EditViewer')->end()
+                        ->scalarNode('index')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\IndexViewer')->end()
                     ->end()
                 ->end()
             ->end()

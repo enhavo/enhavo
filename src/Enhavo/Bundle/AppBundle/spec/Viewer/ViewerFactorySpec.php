@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Enhavo\Bundle\AdminBundle\Viewer;
+namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 
 
 use PhpSpec\ObjectBehavior;
@@ -14,22 +14,22 @@ class ViewerFactorySpec extends ObjectBehavior
     function it_is_initializable(Container $container, RequestStack $requestStack)
     {
         $this->beConstructedWith($container, $requestStack, array());
-        $this->shouldHaveType('Enhavo\Bundle\AdminBundle\Viewer\ViewerFactory');
+        $this->shouldHaveType('Enhavo\Bundle\AppBundle\Viewer\ViewerFactory');
     }
 
     function it_should_create_a_viewer(Container $container, RequestStack $requestStack, Request $request)
     {
         $viewerList = array(
-            'table' => 'Enhavo\Bundle\AdminBundle\Viewer\TableViewer',
-            'create' => 'Enhavo\Bundle\AdminBundle\Viewer\CreateViewer',
-            'app' => 'Enhavo\Bundle\AdminBundle\Viewer\AppViewer',
-            'edit' => 'Enhavo\Bundle\AdminBundle\Viewer\EditViewer'
+            'table' => 'Enhavo\Bundle\AppBundle\Viewer\TableViewer',
+            'create' => 'Enhavo\Bundle\AppBundle\Viewer\CreateViewer',
+            'app' => 'Enhavo\Bundle\AppBundle\Viewer\AppViewer',
+            'edit' => 'Enhavo\Bundle\AppBundle\Viewer\EditViewer'
         );
 
         $this->beConstructedWith($container, $requestStack, $viewerList);
         $request->get('_route')->willReturn('current_route');
         $requestStack->getMasterRequest()->willReturn($request);
-        $this->create('table')->shouldReturnAnInstanceOf('Enhavo\Bundle\AdminBundle\Viewer\TableViewer');
-        $this->shouldThrow('Enhavo\Bundle\AdminBundle\Exception\ViewerNotFoundException')->during('create', array('this_viewer_is_not_known'));
+        $this->create('table')->shouldReturnAnInstanceOf('Enhavo\Bundle\AppBundle\Viewer\TableViewer');
+        $this->shouldThrow('Enhavo\Bundle\AppBundle\Exception\ViewerNotFoundException')->during('create', array('this_viewer_is_not_known'));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\Entity;
+namespace Enhavo\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

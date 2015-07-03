@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AdminBundle\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer;
 
-use Enhavo\Bundle\AdminBundle\Exception\PropertyNotExistsException;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 
 class TableViewer extends AbstractViewer
 {

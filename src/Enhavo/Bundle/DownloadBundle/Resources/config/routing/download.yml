@@ -6,7 +6,7 @@ enhavo_download_download_index:
     defaults:
         _controller: enhavo_download.controller.download:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 enhavo_download_download_create:
@@ -17,7 +17,7 @@ enhavo_download_download_create:
     defaults:
         _controller: enhavo_download.controller.download:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
 
 enhavo_download_download_update:
@@ -28,7 +28,7 @@ enhavo_download_download_update:
     defaults:
         _controller: enhavo_download.controller.download:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
 
 enhavo_download_download_table:
@@ -40,7 +40,7 @@ enhavo_download_download_table:
         page: 1
         _controller: enhavo_download.controller.download:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:

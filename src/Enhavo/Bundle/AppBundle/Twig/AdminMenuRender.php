@@ -1,14 +1,14 @@
 <?php
 
-namespace Enhavo\Bundle\AdminBundle\Twig;
+namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AdminBundle\Admin\AdminRegister;
+use Enhavo\Bundle\AppBundle\Admin\AdminRegister;
 use Knp\Menu\MenuItem;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Enhavo\Bundle\AdminBundle\Admin\Admin;
+use Enhavo\Bundle\AppBundle\Admin\Admin;
 
 class AdminMenuRender extends \Twig_Extension
 {
@@ -65,7 +65,7 @@ class AdminMenuRender extends \Twig_Extension
             $this->templateEngine = $this->container->get('templating');
         }
 
-        $menus = $this->container->get('enhavo_admin.menu_loader')->getMenu();
+        $menus = $this->container->get('enhavo_app.menu_loader')->getMenu();
 
         return $this->templateEngine->render($this->template, array(
             'menus' => $menus

@@ -6,7 +6,7 @@ enhavo_slider_slide_index:
     defaults:
         _controller: enhavo_slider.controller.slide:indexAction
         _sylius:
-            template: enhavoAdminBundle:Resource:index.html.twig
+            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
 
 enhavo_slider_slide_create:
@@ -17,7 +17,7 @@ enhavo_slider_slide_create:
     defaults:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
-            template: enhavoAdminBundle:Resource:create.html.twig
+            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
 
 enhavo_slider_slide_update:
@@ -28,7 +28,7 @@ enhavo_slider_slide_update:
     defaults:
         _controller: enhavo_slider.controller.slide:updateAction
         _sylius:
-            template: enhavoAdminBundle:Resource:update.html.twig
+            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
 
 enhavo_slider_slide_table:
@@ -40,7 +40,7 @@ enhavo_slider_slide_table:
         page: 1
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
-            template: enhavoAdminBundle:Resource:table.html.twig
+            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
                 columns:
