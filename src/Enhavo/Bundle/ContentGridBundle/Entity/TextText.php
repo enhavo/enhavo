@@ -1,8 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentGridBundle\Entity;
 
-use Enhavo\Bundle\ContentBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
 
 /**
  * TextText

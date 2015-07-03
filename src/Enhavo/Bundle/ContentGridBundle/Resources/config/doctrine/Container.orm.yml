@@ -1,4 +1,4 @@
-Enhavo\Bundle\ContentBundle\Entity\Container:
+Enhavo\Bundle\ContentGridBundle\Entity\Container:
     type: entity
     table: content_container
     id:

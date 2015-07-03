@@ -74,7 +74,7 @@ abstract class Article {
     private $public;
 
     /**
-     * @var \Enhavo\Bundle\ContentBundle\Entity\Content
+     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Content
      */
     private $content;
 
@@ -430,10 +430,10 @@ abstract class Article {
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Content $content
      * @return Article
      */
-    public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\ContentGridBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -443,7 +443,7 @@ abstract class Article {
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\ContentBundle\Entity\Content
+     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Content
      */
     public function getContent()
     {

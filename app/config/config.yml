@@ -34,7 +34,7 @@ twig:
     form:
         resources:
             - 'EnhavoAppBundle:Form:fields.html.twig'
-            - 'enhavoContentBundle:Form:fields.html.twig'
+            - 'EnhavoContentGridBundle:Form:fields.html.twig'
             - 'enhavoCategoryBundle:Form:fields.html.twig'
             - 'enhavoMediaBundle:Form:fields.html.twig'
 

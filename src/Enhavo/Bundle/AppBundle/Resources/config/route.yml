@@ -2,7 +2,7 @@ parameters:
     cmf_routing.route_entity.class: Enhavo\Bundle\AppBundle\Entity\Route
     cmf_routing.orm_candidates.class: Symfony\Cmf\Component\Routing\Candidates\Candidates
     cmf_routing.route_entity_provider: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
-    enhavo_content.doctrine_route_content_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteContentSubscriber
+    enhavo_content_grid_grid.doctrine_route_content_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteContentSubscriber
     enhavo_app.form.route.class: Enhavo\Bundle\AppBundle\Form\Type\RouteType
 
 services:
@@ -31,7 +31,7 @@ services:
             - @service_container
 
     enhavo_app.doctrine_route_content_subscriber:
-        class: %enhavo_content.doctrine_route_content_subscriber.class%
+        class: %enhavo_content_grid_grid.doctrine_route_content_subscriber.class%
         arguments:
             - @enhavo_app.route_content_resolver
         tags:

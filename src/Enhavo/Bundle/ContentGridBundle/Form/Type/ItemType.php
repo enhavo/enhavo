@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentGridBundle\Form\Type;
 
-use Enhavo\Bundle\ContentBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Enhavo\Bundle\ContentBundle\Entity\Item;
+use Enhavo\Bundle\ContentGridBundle\Entity\Item;
 
 class ItemType extends AbstractType
 {
@@ -73,12 +73,12 @@ class ItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\ContentBundle\Entity\Item'
+            'data_class' => 'Enhavo\Bundle\ContentGridBundle\Entity\Item'
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_content_item';
+        return 'enhavo_content_grid_item';
     }
 } 

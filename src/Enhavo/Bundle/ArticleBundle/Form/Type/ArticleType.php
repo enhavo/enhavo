@@ -138,7 +138,7 @@ class ArticleType extends AbstractType
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'enhavo_content');
+        $builder->add('content', 'enhavo_content_grid_grid');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -38,7 +38,7 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\PageBundle\enhavoPageBundle(),
             new Enhavo\Bundle\CategoryBundle\enhavoCategoryBundle(),
             new Enhavo\Bundle\AssetsBundle\enhavoAssetsBundle(),
-            new Enhavo\Bundle\ContentBundle\enhavoContentBundle(),
+            new Enhavo\Bundle\ContentGridBundle\EnhavoContentGridBundle(),
             new Enhavo\Bundle\ReferenceBundle\enhavoReferenceBundle(),
             new Enhavo\Bundle\SliderBundle\enhavoSliderBundle(),
             new Enhavo\Bundle\SettingBundle\enhavoSettingBundle(),

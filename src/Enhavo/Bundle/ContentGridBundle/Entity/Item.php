@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentGridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\ContentBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
 
 /**
  * Item
@@ -21,7 +21,7 @@ class Item
     private $order;
 
     /**
-     * @var \Enhavo\Bundle\ContentBundle\Entity\Content
+     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Content
      */
     private $content;
 
@@ -31,7 +31,7 @@ class Item
     private $configuration;
 
     /**
-     * @var \Enhavo\Bundle\ContentBundle\Entity\Column
+     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Column
      */
     private $column;
 
@@ -108,10 +108,10 @@ class Item
     /**
      * Set column
      *
-     * @param \Enhavo\Bundle\ContentBundle\Entity\Column $column
+     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Column $column
      * @return Item
      */
-    public function setColumn(\Enhavo\Bundle\ContentBundle\Entity\Column $column = null)
+    public function setColumn(\Enhavo\Bundle\ContentGridBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -121,7 +121,7 @@ class Item
     /**
      * Get column
      *
-     * @return \Enhavo\Bundle\ContentBundle\Entity\Column
+     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Column
      */
     public function getColumn()
     {
@@ -131,10 +131,10 @@ class Item
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\ContentBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Content $content
      * @return Item
      */
-    public function setContent(\Enhavo\Bundle\ContentBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\ContentGridBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -144,7 +144,7 @@ class Item
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\ContentBundle\Entity\Content
+     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Content
      */
     public function getContent()
     {

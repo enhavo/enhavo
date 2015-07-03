@@ -6,16 +6,16 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentGridBundle\Form\Type;
 
-use Enhavo\Bundle\ContentBundle\Entity\Configuration;
+use Enhavo\Bundle\ContentGridBundle\Entity\Configuration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Enhavo\Bundle\ContentBundle\Item\Type\Video;
+use Enhavo\Bundle\ContentGridBundle\Item\Type\Video;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
@@ -71,12 +71,12 @@ class VideoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\ContentBundle\Item\Type\Video'
+            'data_class' => 'Enhavo\Bundle\ContentGridBundle\Item\Type\Video'
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_content_item_video';
+        return 'enhavo_content_grid_item_video';
     }
 }

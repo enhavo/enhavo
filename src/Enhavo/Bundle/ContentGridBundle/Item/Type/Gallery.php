@@ -1,5 +1,5 @@
 <?php
-namespace Enhavo\Bundle\ContentBundle\Item\Type;
+namespace Enhavo\Bundle\ContentGridBundle\Item\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

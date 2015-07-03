@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentBundle\Entity;
+namespace Enhavo\Bundle\ContentGridBundle\Entity;
 
 
 class Configuration

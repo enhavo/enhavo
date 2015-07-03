@@ -1,6 +1,6 @@
-enhavo_content_item:
+enhavo_content_grid_item:
     pattern: /item/{type}
     defaults:
-        _controller: enhavoContentBundle:Content:item
+        _controller: EnhavoContentGridBundle:Content:item
     options:
             expose: true

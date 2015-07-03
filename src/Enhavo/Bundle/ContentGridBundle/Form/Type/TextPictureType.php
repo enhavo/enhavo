@@ -4,12 +4,12 @@
  *
  */
 
-namespace Enhavo\Bundle\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\ContentGridBundle\Form\Type;
 
-use Enhavo\Bundle\ContentBundle\Item\ItemFormType;
+use Enhavo\Bundle\ContentGridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\ContentBundle\Item\Type\Text;
+use Enhavo\Bundle\ContentGridBundle\Item\Type\Text;
 
 class TextPictureType extends ItemFormType
 {
@@ -51,12 +51,12 @@ class TextPictureType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\ContentBundle\Entity\TextPicture'
+            'data_class' => 'Enhavo\Bundle\ContentGridBundle\Entity\TextPicture'
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_content_item_text_picture';
+        return 'enhavo_content_grid_item_text_picture';
     }
 } 

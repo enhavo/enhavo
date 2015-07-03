@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle;
+namespace Enhavo\Bundle\ContentGridBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoContentBundle extends Bundle
+class EnhavoContentGridBundle extends Bundle
 {
 }

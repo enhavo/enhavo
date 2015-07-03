@@ -6,11 +6,11 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentBundle\Item;
+namespace Enhavo\Bundle\ContentGridBundle\Item;
 
-use Enhavo\Bundle\ContentBundle\Exception\NoRenderSetFoundException;
+use Enhavo\Bundle\ContentGridBundle\Exception\NoRenderSetFoundException;
 use Symfony\Component\DependencyInjection\Container;
-use Enhavo\Bundle\ContentBundle\Exception\NoTypeFoundException;
+use Enhavo\Bundle\ContentGridBundle\Exception\NoTypeFoundException;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class ItemTypeResolver

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle\DependencyInjection;
+namespace Enhavo\Bundle\ContentGridBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_content');
+        $rootNode = $treeBuilder->root('enhavo_content_grid_grid');
 
         $rootNode
             ->children()

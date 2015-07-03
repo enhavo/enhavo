@@ -6,11 +6,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentBundle\Controller;
+namespace Enhavo\Bundle\ContentGridBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Enhavo\Bundle\ContentBundle\Item\ItemFormType;
+use Enhavo\Bundle\ContentGridBundle\Item\ItemFormType;
 
 class ContentController extends Controller
 {
@@ -21,7 +21,7 @@ class ContentController extends Controller
 
         $formFactory = $this->container->get('form.factory');
 
-        $resolver = $this->container->get('enhavo_content.item_type_resolver');
+        $resolver = $this->container->get('enhavo_content_grid_grid.item_type_resolver');
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $formType->setFormName($formName);
@@ -30,7 +30,7 @@ class ContentController extends Controller
         ));
         $label = $resolver->getLabel($type);
 
-        return $this->render('enhavoContentBundle:Form:form.html.twig', array(
+        return $this->render('EnhavoContentGridBundle:Form:form.html.twig', array(
             'formItem' => $form->createView(),
             'formName' => $formName,
             'formOrder' => 0,

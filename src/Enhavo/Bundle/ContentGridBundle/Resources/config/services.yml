@@ -1,44 +1,44 @@
 parameters:
-    enhavo_content.form.content.class: Enhavo\Bundle\ContentBundle\Form\Type\ContentType
-    enhavo_content.form.item.class: Enhavo\Bundle\ContentBundle\Form\Type\ItemType
-    enhavo_content.twig.content_render.class: Enhavo\Bundle\ContentBundle\Twig\ContentRender
-    enhavo_content.doctrine_subscriber.class: Enhavo\Bundle\ContentBundle\EventListener\DoctrineSubscriber
-    enhavo_content.item_type_resolver.class: Enhavo\Bundle\ContentBundle\Item\ItemTypeResolver
+    enhavo_content_grid.form.content.class: Enhavo\Bundle\ContentGridBundle\Form\Type\ContentType
+    enhavo_content_grid.form.item.class: Enhavo\Bundle\ContentGridBundle\Form\Type\ItemType
+    enhavo_content_grid.twig.content_render.class: Enhavo\Bundle\ContentGridBundle\Twig\ContentRender
+    enhavo_content_grid.doctrine_subscriber.class: Enhavo\Bundle\ContentGridBundle\EventListener\DoctrineSubscriber
+    enhavo_content_grid.item_type_resolver.class: Enhavo\Bundle\ContentGridBundle\Item\ItemTypeResolver
 
 services:
-    enhavo_content:
-        class: %enhavo_content.form.content.class%
+    enhavo_content_grid:
+        class: %enhavo_content_grid.form.content.class%
         arguments:
             - @doctrine.orm.entity_manager
-            - @enhavo_content.item_type_resolver
+            - @enhavo_content_grid.item_type_resolver
         tags:
-            - { name: form.type, alias: enhavo_content }
+            - { name: form.type, alias: enhavo_content_grid }
 
-    enhavo_content_item:
-        class: %enhavo_content.form.item.class%
+    enhavo_content_grid_item:
+        class: %enhavo_content_grid.form.item.class%
         arguments:
-            - @enhavo_content.item_type_resolver
+            - @enhavo_content_grid.item_type_resolver
         tags:
-            - { name: form.type, alias: enhavo_content_item }
+            - { name: form.type, alias: enhavo_content_grid_item }
 
-    enhavo_content.twig.content_render:
-        class: %enhavo_content.twig.content_render.class%
+    enhavo_content_grid.twig.content_render:
+        class: %enhavo_content_grid.twig.content_render.class%
         arguments:
             - @router
             - @service_container
         tags:
             - { name: twig.extension }
 
-    enhavo_content.doctrine_subscriber:
-        class: %enhavo_content.doctrine_subscriber.class%
+    enhavo_content_grid.doctrine_subscriber:
+        class: %enhavo_content_grid.doctrine_subscriber.class%
         arguments:
-            - @enhavo_content.item_type_resolver
+            - @enhavo_content_grid.item_type_resolver
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_content.item_type_resolver:
-        class: %enhavo_content.item_type_resolver.class%
+    enhavo_content_grid.item_type_resolver:
+        class: %enhavo_content_grid.item_type_resolver.class%
         arguments:
-            - %enhavo_content.items%
-            - %enhavo_content.render.sets%
+            - %enhavo_content_grid.items%
+            - %enhavo_content_grid.render.sets%
             - @service_container

@@ -1,7 +1,7 @@
 {
   "name": "enhavo/content-bundle",
   "type": "library",
-  "description": "enhavoContentBundle",
+  "description": "EnhavoContentGridBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\ContentBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\ContentGridBundle\\": "" }
   }
 }

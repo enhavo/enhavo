@@ -39,9 +39,9 @@ enhavo_group:
     resource: "@enhavoUserBundle/Resources/config/routing/group.yml"
     prefix: /admin
 
-enhavo_content_admin:
+enhavo_content_grid_grid_admin:
     prefix:   /admin/content
-    resource: "@enhavoContentBundle/Resources/config/routing/admin.yml"
+    resource: "@EnhavoContentGridBundle/Resources/config/routing/admin.yml"
 
 enhavo_newsletter_newsletter:
     resource: "@enhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
