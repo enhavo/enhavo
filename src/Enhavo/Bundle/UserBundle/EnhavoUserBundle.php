@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoUserBundle extends Bundle
+class EnhavoUserBundle extends Bundle
 {
     public function getParent()
     {

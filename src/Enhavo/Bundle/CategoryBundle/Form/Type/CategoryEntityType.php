@@ -33,7 +33,7 @@ class CategoryEntityType extends AbstractType
         $resolver->setNormalizers(array(
             'query_builder' => function (Options $options, $configs) use ($manager) {
                     return function() use ($manager, $options) {
-                        return $manager->getRepository('enhavoCategoryBundle:Category')->getByCollectionName($options['category_name']);
+                        return $manager->getRepository('EnhavoCategoryBundle:Category')->getByCollectionName($options['category_name']);
                     };
                 },
         ));

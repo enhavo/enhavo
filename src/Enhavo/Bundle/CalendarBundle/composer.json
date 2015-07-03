@@ -1,7 +1,7 @@
 {
   "name": "enhavo/calendar-bundle",
   "type": "library",
-  "description": "enhavoCalendarBundle",
+  "description": "EnhavoCalendarBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

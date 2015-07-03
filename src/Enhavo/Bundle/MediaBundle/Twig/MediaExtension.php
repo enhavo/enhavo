@@ -46,7 +46,7 @@ class MediaExtension extends \Twig_Extension
 
         $path = '';
         if($file) {
-            $entityFile = $this->em->getRepository('enhavoMediaBundle:File')->find($file->getId());
+            $entityFile = $this->em->getRepository('EnhavoMediaBundle:File')->find($file->getId());
             $path .= '/file/'.$file->getId();
         }
         if($width) {
@@ -72,7 +72,7 @@ class MediaExtension extends \Twig_Extension
 
         $title = '';
         if($file) {
-            $entityFile = $this->em->getRepository('enhavoMediaBundle:File')->find($file->getId());
+            $entityFile = $this->em->getRepository('EnhavoMediaBundle:File')->find($file->getId());
             $title = $entityFile->getTitle();
         }
 

@@ -91,7 +91,7 @@ class UploadService
 
     public function getCustomImageSizeResponse($id,$width,$height)
     {
-        $repository = $this->manager->getRepository('enhavoMediaBundle:File');
+        $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
         $file = $repository->find($id);
         if($file === null) {
             throw new NotFoundResourceException;
@@ -120,7 +120,7 @@ class UploadService
 
     public function getResponse($id)
     {
-        $repository = $this->manager->getRepository('enhavoMediaBundle:File');
+        $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
         $file = $repository->find($id);
         if($file === null) {
             throw new NotFoundResourceException;

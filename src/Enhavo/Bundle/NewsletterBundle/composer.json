@@ -1,7 +1,7 @@
 {
   "name": "enhavo/newsletter-bundle",
   "type": "library",
-  "description": "enhavoNewsletterBundle",
+  "description": "EnhavoNewsletterBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

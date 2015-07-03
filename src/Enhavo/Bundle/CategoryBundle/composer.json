@@ -1,7 +1,7 @@
 {
   "name": "enhavo/category-bundle",
   "type": "library",
-  "description": "enhavoCategoryBundle",
+  "description": "EnhavoCategoryBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

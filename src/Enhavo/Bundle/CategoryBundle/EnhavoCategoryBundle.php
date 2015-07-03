@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\CategoryBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoCategoryBundle extends Bundle
+class EnhavoCategoryBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

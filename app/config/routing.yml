@@ -2,10 +2,10 @@
 # enhavo
 #
 enhavo_media:
-    resource: "@enhavoMediaBundle/Resources/config/routing.yml"
+    resource: "@EnhavoMediaBundle/Resources/config/routing.yml"
 
 enhavo_user_security:
-    resource: "@enhavoUserBundle/Resources/config/routing/security.yml"
+    resource: "@EnhavoUserBundle/Resources/config/routing/security.yml"
 
 enhavo_admin:
     resource: "@EnhavoAppBundle/Resources/config/routing/admin.yml"
@@ -16,7 +16,7 @@ enhavo_article:
     prefix: /admin
 
 enhavo_page:
-    resource: "@enhavoPageBundle/Resources/config/routing/page.yml"
+    resource: "@EnhavoPageBundle/Resources/config/routing/page.yml"
     prefix: /admin
 
 enhavo_reference:
@@ -24,19 +24,19 @@ enhavo_reference:
     prefix: /admin
 
 enhavo_download:
-    resource: "@enhavoDownloadBundle/Resources/config/routing/download.yml"
+    resource: "@EnhavoDownloadBundle/Resources/config/routing/download.yml"
     prefix: /admin
 
 enhavo_slide:
-    resource: "@enhavoSliderBundle/Resources/config/routing/slide.yml"
+    resource: "@EnhavoSliderBundle/Resources/config/routing/slide.yml"
     prefix: /admin
 
 enhavo_user:
-    resource: "@enhavoUserBundle/Resources/config/routing/user.yml"
+    resource: "@EnhavoUserBundle/Resources/config/routing/user.yml"
     prefix: /admin
 
 enhavo_group:
-    resource: "@enhavoUserBundle/Resources/config/routing/group.yml"
+    resource: "@EnhavoUserBundle/Resources/config/routing/group.yml"
     prefix: /admin
 
 enhavo_content_grid_grid_admin:
@@ -44,11 +44,11 @@ enhavo_content_grid_grid_admin:
     resource: "@EnhavoContentGridBundle/Resources/config/routing/admin.yml"
 
 enhavo_newsletter_newsletter:
-    resource: "@enhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
     prefix:   /admin
 
 enhavo_newsletter_subscriber:
-    resource: "@enhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
     prefix:   /
 
 

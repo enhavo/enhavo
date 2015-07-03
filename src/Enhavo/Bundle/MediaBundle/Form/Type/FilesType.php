@@ -41,7 +41,7 @@ class FilesType extends AbstractType
                 $data = $event->getData();
                 if($data) {
                     foreach($data as $formFile) {
-                        $file = $manager->getRepository('enhavoMediaBundle:File')->find($formFile['id']);
+                        $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
                         $file->setOrder($formFile['order']);
                         $collection->add($file);
                     }

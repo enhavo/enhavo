@@ -41,7 +41,7 @@ class SettingService
 
     public function getSetting($name)
     {
-        $setting = $this->manager->getRepository('enhavoSettingBundle:Setting')->findOneBy(array('name' => $name));
+        $setting = $this->manager->getRepository('EnhavoSettingBundle:Setting')->findOneBy(array('name' => $name));
         if(!empty($setting)) {
             return $setting->getContainer();
         }

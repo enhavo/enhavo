@@ -8,7 +8,7 @@ cmf_routing:
 enhavo_admin:
     permission_check: false
     stylesheets:
-      - '@enhavoDownloadBundle/Resources/public/css/style.css'
+      - '@EnhavoDownloadBundle/Resources/public/css/style.css'
     javascripts:
 
     viewer:
@@ -104,8 +104,8 @@ enhavo_content_grid_grid:
         download:
             model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem
             form: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
-            repository: enhavoDownloadBundle:DownloadItem
-            template: enhavoDownloadBundle:Item:download.html.twig
+            repository: EnhavoDownloadBundle:DownloadItem
+            template: EnhavoDownloadBundle:Item:download.html.twig
             label: Download
 
 enhavo_page:

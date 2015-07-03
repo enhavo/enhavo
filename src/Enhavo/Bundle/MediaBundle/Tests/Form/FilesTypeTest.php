@@ -29,8 +29,8 @@ class FileTypeTest extends TypeTestCase
     protected function getObjectManagerMock()
     {
         $om = new ObjectMangerMock();
-        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(1));
-        $om->getRepository('enhavoMediaBundle:File')->add($this->generateFileEntityObject(2));
+        $om->getRepository('EnhavoMediaBundle:File')->add($this->generateFileEntityObject(1));
+        $om->getRepository('EnhavoMediaBundle:File')->add($this->generateFileEntityObject(2));
         return $om;
     }
 

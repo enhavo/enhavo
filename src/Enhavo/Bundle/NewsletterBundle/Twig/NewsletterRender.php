@@ -44,7 +44,7 @@ class NewsletterRender extends \Twig_Extension
             $form = $formFactory->create('enhavo_newsletter_subscriber');
             $formView = $form->createView();
 
-            $template = 'enhavoNewsletterBundle:Newsletter:subscriber.html.twig';
+            $template = 'EnhavoNewsletterBundle:Newsletter:subscriber.html.twig';
         } else {
 
             $form = $formFactory->create('enhavo_newsletter_subscriber');

@@ -1,7 +1,7 @@
 {
   "name": "enhavo/search-bundle",
   "type": "library",
-  "description": "enhavoSearchBundle",
+  "description": "EnhavoSearchBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

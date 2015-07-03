@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\DownloadBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoDownloadBundle extends Bundle
+class EnhavoDownloadBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

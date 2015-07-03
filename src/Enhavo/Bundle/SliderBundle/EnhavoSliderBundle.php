@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\SliderBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class enhavoSliderBundle extends Bundle
+class EnhavoSliderBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {

@@ -22,13 +22,13 @@ enhavo_page_page_create:
             tabs:
                 page:
                     label: page
-                    template: enhavoPageBundle:Tab:page.html.twig
+                    template: EnhavoPageBundle:Tab:page.html.twig
                 content:
                     label: Content
-                    template: enhavoPageBundle:Tab:content.html.twig
+                    template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: enhavoPageBundle:Tab:seo.html.twig
+                    template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_news_news_preview
@@ -57,13 +57,13 @@ enhavo_page_page_update:
             tabs:
                 page:
                     label: page
-                    template: enhavoPageBundle:Tab:page.html.twig
+                    template: EnhavoPageBundle:Tab:page.html.twig
                 content:
                     label: Content
-                    template: enhavoPageBundle:Tab:content.html.twig
+                    template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
                     label: Seo
-                    template: enhavoPageBundle:Tab:seo.html.twig
+                    template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_news_news_preview

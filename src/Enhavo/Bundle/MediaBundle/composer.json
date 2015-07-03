@@ -1,7 +1,7 @@
 {
   "name": "enhavo/media-bundle",
   "type": "library",
-  "description": "enhavoMediaBundle",
+  "description": "EnhavoMediaBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

@@ -44,12 +44,12 @@ class SearchManager
 
     public function search($query)
     {
-        return $this->manager->getRepository('enhavoSearchBundle:Index')->search($query, 20);
+        return $this->manager->getRepository('EnhavoSearchBundle:Index')->search($query, 20);
     }
 
     protected function getIndex(SearchIndexInterface $index)
     {
-        $repository = $this->manager->getRepository('enhavoSearchBundle:Index');
+        $repository = $this->manager->getRepository('EnhavoSearchBundle:Index');
         $indexList = $repository->findBy(array('route' => $index->getIndexRoute()));
         if(count($indexList)) {
             foreach($indexList as $item) {

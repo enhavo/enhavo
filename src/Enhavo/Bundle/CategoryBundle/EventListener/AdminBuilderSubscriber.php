@@ -57,7 +57,7 @@ class AdminBuilderSubscriber implements EventSubscriberInterface
             ->setAction('updateAction')
             ->setAdmin('enhavo_category.admin.collection')
             ->setViewBuilder($view)
-            ->setTemplate('enhavoCategoryBundle:Resource:manage.html.twig');
+            ->setTemplate('EnhavoCategoryBundle:Resource:manage.html.twig');
 
         $event->getBuilder()->addRouteBuilder($routeBuilder);
     }

@@ -39,22 +39,22 @@ class NewsletterBuilderSubscriber extends Controller implements EventSubscriberI
 
     public function onBuildIndexRoute(RouteBuilderEvent $event)
     {
-        $event->getBuilder()->setTemplate('enhavoNewsletterBundle:Resource:index.html.twig');
+        $event->getBuilder()->setTemplate('EnhavoNewsletterBundle:Resource:index.html.twig');
     }
 
     public function onBuildCreateRoute(RouteBuilderEvent $event)
     {
-        $event->getBuilder()->setTemplate('enhavoNewsletterBundle:Resource:create.html.twig');
+        $event->getBuilder()->setTemplate('EnhavoNewsletterBundle:Resource:create.html.twig');
     }
 
     public function onBuildEditRoute(RouteBuilderEvent $event)
     {
-        $event->getBuilder()->setTemplate('enhavoNewsletterBundle:Resource:edit.html.twig');
+        $event->getBuilder()->setTemplate('EnhavoNewsletterBundle:Resource:edit.html.twig');
     }
 
     public function onBuildTableRoute(RouteBuilderEvent $event)
     {
-        $event->getBuilder()->setTemplate('enhavoNewsletterBundle:Resource:table.html.twig');
+        $event->getBuilder()->setTemplate('EnhavoNewsletterBundle:Resource:table.html.twig');
     }
 
     public function onPreCreate(GenericEvent $event)

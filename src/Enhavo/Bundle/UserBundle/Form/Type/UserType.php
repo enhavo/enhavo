@@ -40,7 +40,7 @@ class UserType extends AbstractType
         ));
 
         $builder->add('groups', 'entity', array(
-            'class' => 'enhavoUserBundle:Group',
+            'class' => 'EnhavoUserBundle:Group',
             'property' => 'name',
             'multiple' => true,
             'expanded' => true,

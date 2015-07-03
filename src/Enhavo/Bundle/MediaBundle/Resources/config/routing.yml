@@ -1,18 +1,18 @@
 enhavo_media_upload:
     pattern:  /file/add
     defaults:
-        _controller: enhavoMediaBundle:File:upload
+        _controller: EnhavoMediaBundle:File:upload
 
 enhavo_media_show_two_dim:
     pattern:  /file/{id}/{width}/{height}/{filename}
-    defaults: { _controller: enhavoMediaBundle:File:show,filename:'',_method: GET}
+    defaults: { _controller: EnhavoMediaBundle:File:show,filename:'',_method: GET}
     requirements: {width: \d+,height: \d+}
 
 enhavo_media_show_one_dim:
     pattern:  /file/{id}/{width}/{filename}
-    defaults: { _controller: enhavoMediaBundle:File:show,height:'',filename:'',_method: GET}
+    defaults: { _controller: EnhavoMediaBundle:File:show,height:'',filename:'',_method: GET}
     requirements: {width: \d+}
 
 enhavo_media_show:
     pattern:  /file/{id}/{filename}
-    defaults: { _controller: enhavoMediaBundle:File:show,width:'',height:'',filename:'',_method: GET}
+    defaults: { _controller: EnhavoMediaBundle:File:show,width:'',height:'',filename:'',_method: GET}

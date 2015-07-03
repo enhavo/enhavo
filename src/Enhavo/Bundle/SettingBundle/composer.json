@@ -1,7 +1,7 @@
 {
   "name": "enhavo/setting-bundle",
   "type": "library",
-  "description": "enhavoSettingBundle",
+  "description": "EnhavoSettingBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",

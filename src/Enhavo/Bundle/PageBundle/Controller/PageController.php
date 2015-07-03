@@ -12,7 +12,7 @@ class PageController extends Controller
 {
     public function showAction(Page $page)
     {
-        return $this->render('enhavoPageBundle:Frontend:show.html.twig', array(
+        return $this->render('EnhavoPageBundle:Frontend:show.html.twig', array(
             'page' => $page
         ));
     }

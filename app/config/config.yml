@@ -35,8 +35,8 @@ twig:
         resources:
             - 'EnhavoAppBundle:Form:fields.html.twig'
             - 'EnhavoContentGridBundle:Form:fields.html.twig'
-            - 'enhavoCategoryBundle:Form:fields.html.twig'
-            - 'enhavoMediaBundle:Form:fields.html.twig'
+            - 'EnhavoCategoryBundle:Form:fields.html.twig'
+            - 'EnhavoMediaBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -110,7 +110,7 @@ enhavo_newsletter:
     subscriber:
         send_from: 'test@test.com'
         subject: 'TestSubject'
-        template:  'enhavoNewsletterBundle:Default:subscriber-email.html.twig'
+        template:  'EnhavoNewsletterBundle:Default:subscriber-email.html.twig'
 
 parameters:
     pdo.db_options:

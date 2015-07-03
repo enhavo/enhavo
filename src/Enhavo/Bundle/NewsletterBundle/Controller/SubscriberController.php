@@ -22,7 +22,7 @@ class SubscriberController extends Controller
         {
             $newsletter->setActive(true);
             $this->getDoctrine()->getManager()->flush();
-            $response = $this->render('enhavoNewsletterBundle:Default:email-activation.html.twig');
+            $response = $this->render('EnhavoNewsletterBundle:Default:email-activation.html.twig');
             return $response;
         }
     }
@@ -35,7 +35,7 @@ class SubscriberController extends Controller
         $text = $newsletter['text'];
 
         $subscriber = $this->getDoctrine()
-            ->getRepository('enhavoNewsletterBundle:Subscriber')
+            ->getRepository('EnhavoNewsletterBundle:Subscriber')
             ->findBy(array('active' => true));
 
         $container = $this->container;
@@ -53,7 +53,7 @@ class SubscriberController extends Controller
         }
 
         $currentNewsletter = $this->getDoctrine()
-            ->getRepository('enhavoNewsletterBundle:Newsletter')
+            ->getRepository('EnhavoNewsletterBundle:Newsletter')
             ->findBy(array('id' => $id));
 
         $currentNewsletter[0]->setSent(true);
