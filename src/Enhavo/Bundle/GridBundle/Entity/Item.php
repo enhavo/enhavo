@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\ContentGridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
 /**
  * Item
@@ -21,7 +21,7 @@ class Item
     private $order;
 
     /**
-     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Content
      */
     private $content;
 
@@ -31,7 +31,7 @@ class Item
     private $configuration;
 
     /**
-     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Column
+     * @var \Enhavo\Bundle\GridBundle\Entity\Column
      */
     private $column;
 
@@ -108,10 +108,10 @@ class Item
     /**
      * Set column
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Column $column
+     * @param \Enhavo\Bundle\GridBundle\Entity\Column $column
      * @return Item
      */
-    public function setColumn(\Enhavo\Bundle\ContentGridBundle\Entity\Column $column = null)
+    public function setColumn(\Enhavo\Bundle\GridBundle\Entity\Column $column = null)
     {
         $this->column = $column;
 
@@ -121,7 +121,7 @@ class Item
     /**
      * Get column
      *
-     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Column
+     * @return \Enhavo\Bundle\GridBundle\Entity\Column
      */
     public function getColumn()
     {
@@ -131,10 +131,10 @@ class Item
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
      * @return Item
      */
-    public function setContent(\Enhavo\Bundle\ContentGridBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -144,7 +144,7 @@ class Item
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Content
      */
     public function getContent()
     {

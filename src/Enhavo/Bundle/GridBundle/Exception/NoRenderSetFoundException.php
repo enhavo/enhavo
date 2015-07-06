@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Exception;
+namespace Enhavo\Bundle\GridBundle\Exception;
 
 use Exception;
 

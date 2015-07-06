@@ -1,5 +1,5 @@
 <?php
-namespace Enhavo\Bundle\ContentGridBundle\Item\Type;
+namespace Enhavo\Bundle\GridBundle\Item\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Entity\File;

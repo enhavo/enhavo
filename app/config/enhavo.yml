@@ -47,7 +47,7 @@ enhavo_app:
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
 
-enhavo_content_grid:
+enhavo_grid:
     render:
         sets:
             default:
@@ -55,46 +55,46 @@ enhavo_content_grid:
 
     items:
         picture:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\Picture
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\PictureType
-            repository: EnhavoContentGridBundle:Picture
-            template: EnhavoContentGridBundle:Item:picture.html
+            model: Enhavo\Bundle\GridBundle\Entity\Picture
+            form: Enhavo\Bundle\GridBundle\Form\Type\PictureType
+            repository: EnhavoGridBundle:Picture
+            template: EnhavoGridBundle:Item:picture.html
             label: Bild
         picture_picture:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\PicturePicture
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\PicturePictureType
-            repository: EnhavoContentGridBundle:PicturePicture
-            template: EnhavoContentGridBundle:Item:picture_picture.html
+            model: Enhavo\Bundle\GridBundle\Entity\PicturePicture
+            form: Enhavo\Bundle\GridBundle\Form\Type\PicturePictureType
+            repository: EnhavoGridBundle:PicturePicture
+            template: EnhavoGridBundle:Item:picture_picture.html
             label: Bild | Bild
         gallery:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\Gallery
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\GalleryType
-            repository: EnhavoContentGridBundle:Gallery
-            template: EnhavoContentGridBundle:Item:gallery.html
+            model: Enhavo\Bundle\GridBundle\Entity\Gallery
+            form: Enhavo\Bundle\GridBundle\Form\Type\GalleryType
+            repository: EnhavoGridBundle:Gallery
+            template: EnhavoGridBundle:Item:gallery.html
             label: Galerie
         text:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\Text
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\TextType
-            repository: EnhavoContentGridBundle:Text
-            template: EnhavoContentGridBundle:Item:text.html
+            model: Enhavo\Bundle\GridBundle\Entity\Text
+            form: Enhavo\Bundle\GridBundle\Form\Type\TextType
+            repository: EnhavoGridBundle:Text
+            template: EnhavoGridBundle:Item:text.html
             label: Text
         text_picture:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\TextPicture
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\TextPictureType
-            repository: EnhavoContentGridBundle:TextPicture
-            template: EnhavoContentGridBundle:Item:text_picture.html
+            model: Enhavo\Bundle\GridBundle\Entity\TextPicture
+            form: Enhavo\Bundle\GridBundle\Form\Type\TextPictureType
+            repository: EnhavoGridBundle:TextPicture
+            template: EnhavoGridBundle:Item:text_picture.html
             label: Text | Bild
         text_text:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\TextText
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\TextTextType
-            repository: EnhavoContentGridBundle:TextText
-            template: EnhavoContentGridBundle:Item:text_text.html
+            model: Enhavo\Bundle\GridBundle\Entity\TextText
+            form: Enhavo\Bundle\GridBundle\Form\Type\TextTextType
+            repository: EnhavoGridBundle:TextText
+            template: EnhavoGridBundle:Item:text_text.html
             label: Text | Text
         cite_text:
-            model: Enhavo\Bundle\ContentGridBundle\Entity\CiteText
-            form: Enhavo\Bundle\ContentGridBundle\Form\Type\CiteTextType
-            repository: EnhavoContentGridBundle:CiteText
-            template: EnhavoContentGridBundle:Item:cite_text.html
+            model: Enhavo\Bundle\GridBundle\Entity\CiteText
+            form: Enhavo\Bundle\GridBundle\Form\Type\CiteTextType
+            repository: EnhavoGridBundle:CiteText
+            template: EnhavoGridBundle:Item:cite_text.html
             label: Zitat
         download:
             model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem

@@ -133,7 +133,7 @@ class PageType extends AbstractType
             'label' => 'form.label.picture'
         ));
 
-        $builder->add('content', 'enhavo_content_grid', array(
+        $builder->add('content', 'enhavo_grid', array(
         ));
     }
 

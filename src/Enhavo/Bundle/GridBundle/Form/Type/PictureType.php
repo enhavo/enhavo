@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Form\Type;
+namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\ContentGridBundle\Item\ItemFormType;
+use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -32,12 +32,12 @@ class PictureType extends ItemFormType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\ContentGridBundle\Entity\Picture'
+            'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Picture'
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_content_grid_item_picture';
+        return 'enhavo_grid_item_picture';
     }
 } 

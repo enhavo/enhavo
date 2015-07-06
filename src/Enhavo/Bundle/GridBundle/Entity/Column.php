@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Entity;
 
 
 class Column {
@@ -37,7 +37,7 @@ class Column {
     private $items;
 
     /**
-     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Container
+     * @var \Enhavo\Bundle\GridBundle\Entity\Container
      */
     private $overview;
 
@@ -109,10 +109,10 @@ class Column {
     /**
      * Add containers
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
      * @return Column
      */
-    public function addContainer(\Enhavo\Bundle\ContentGridBundle\Entity\Container $containers)
+    public function addContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
     {
         $this->containers[] = $containers;
 
@@ -122,9 +122,9 @@ class Column {
     /**
      * Remove containers
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
      */
-    public function removeContainer(\Enhavo\Bundle\ContentGridBundle\Entity\Container $containers)
+    public function removeContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -142,10 +142,10 @@ class Column {
     /**
      * Add items
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
      * @return Column
      */
-    public function addItem(\Enhavo\Bundle\ContentGridBundle\Entity\Item $items)
+    public function addItem(\Enhavo\Bundle\GridBundle\Entity\Item $items)
     {
         $this->items[] = $items;
 
@@ -155,9 +155,9 @@ class Column {
     /**
      * Remove items
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
      */
-    public function removeItem(\Enhavo\Bundle\ContentGridBundle\Entity\Item $items)
+    public function removeItem(\Enhavo\Bundle\GridBundle\Entity\Item $items)
     {
         $this->items->removeElement($items);
     }
@@ -175,10 +175,10 @@ class Column {
     /**
      * Set overview
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Container $overview
+     * @param \Enhavo\Bundle\GridBundle\Entity\Container $overview
      * @return Column
      */
-    public function setOverview(\Enhavo\Bundle\ContentGridBundle\Entity\Container $overview = null)
+    public function setOverview(\Enhavo\Bundle\GridBundle\Entity\Container $overview = null)
     {
         $this->overview = $overview;
 
@@ -188,7 +188,7 @@ class Column {
     /**
      * Get overview
      *
-     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Container
+     * @return \Enhavo\Bundle\GridBundle\Entity\Container
      */
     public function getOverview()
     {

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Item;
+namespace Enhavo\Bundle\GridBundle\Item;
 
 interface ItemTypeInterface
 {

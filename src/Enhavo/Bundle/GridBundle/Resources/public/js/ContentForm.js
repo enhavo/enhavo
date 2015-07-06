@@ -17,7 +17,7 @@ function ContentForm(router)
 
       var addItem = function(type) {
 
-        var url = router.generate('enhavo_content_grid_item', {
+        var url = router.generate('enhavo_grid_item', {
           type: type
         });
 

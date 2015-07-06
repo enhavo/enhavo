@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\ContentGridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
 /**
  * Text

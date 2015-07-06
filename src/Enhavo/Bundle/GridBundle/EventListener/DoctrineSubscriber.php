@@ -6,13 +6,13 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\EventListener;
+namespace Enhavo\Bundle\GridBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Enhavo\Bundle\ContentGridBundle\Entity\Item;
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeResolver;
-use Enhavo\Bundle\ContentGridBundle\Exception\NoTypeFoundException;
+use Enhavo\Bundle\GridBundle\Entity\Item;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\GridBundle\Exception\NoTypeFoundException;
 
 class DoctrineSubscriber implements EventSubscriber
 {

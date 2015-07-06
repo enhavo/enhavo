@@ -70,7 +70,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\ContentGridBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
 
     manyToMany:
         picture:

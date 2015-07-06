@@ -6,9 +6,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Form\Type;
+namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -37,7 +37,7 @@ class ContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('items', 'collection', array(
-            'type' => 'enhavo_content_grid_item',
+            'type' => 'enhavo_grid_item',
             'allow_delete' => true,
             'allow_add'    => true,
             'by_reference' => false
@@ -68,13 +68,13 @@ class ContentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\ContentGridBundle\Entity\Content',
+            'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Content',
             'items' => array()
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_content_grid';
+        return 'enhavo_grid';
     }
 }

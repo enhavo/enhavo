@@ -1,4 +1,4 @@
-Enhavo\Bundle\ContentGridBundle\Entity\TextText:
+Enhavo\Bundle\GridBundle\Entity\TextText:
     type: entity
     table: content_type_text_text
     id:

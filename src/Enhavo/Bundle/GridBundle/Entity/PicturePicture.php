@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\ContentGridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
 /**
  * PicturePicture

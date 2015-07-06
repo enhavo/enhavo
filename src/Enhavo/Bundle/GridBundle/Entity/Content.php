@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ContentGridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,10 +40,10 @@ class Content
     /**
      * Add containers
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
      * @return Content
      */
-    public function addContainer(\Enhavo\Bundle\ContentGridBundle\Entity\Container $containers)
+    public function addContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
     {
         $this->containers[] = $containers;
 
@@ -53,9 +53,9 @@ class Content
     /**
      * Remove containers
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Container $containers
+     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
      */
-    public function removeContainer(\Enhavo\Bundle\ContentGridBundle\Entity\Container $containers)
+    public function removeContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -78,10 +78,10 @@ class Content
     /**
      * Add items
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
      * @return Content
      */
-    public function addItem(\Enhavo\Bundle\ContentGridBundle\Entity\Item $item)
+    public function addItem(\Enhavo\Bundle\GridBundle\Entity\Item $item)
     {
         $item->setContent($this);
         $this->items[] = $item;
@@ -92,9 +92,9 @@ class Content
     /**
      * Remove items
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Item $items
+     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
      */
-    public function removeItem(\Enhavo\Bundle\ContentGridBundle\Entity\Item $item)
+    public function removeItem(\Enhavo\Bundle\GridBundle\Entity\Item $item)
     {
         $item->setContent(null);
         $this->items->removeElement($item);

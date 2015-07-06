@@ -6,10 +6,10 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Twig;
+namespace Enhavo\Bundle\GridBundle\Twig;
 
-use Enhavo\Bundle\ContentGridBundle\Entity\Content;
-use Enhavo\Bundle\ContentGridBundle\Entity\Item;
+use Enhavo\Bundle\GridBundle\Entity\Content;
+use Enhavo\Bundle\GridBundle\Entity\Item;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
@@ -25,7 +25,7 @@ class ContentRender extends \Twig_Extension
     {
         $this->router = $router;
         $this->container = $container;
-        $this->resolver = $container->get('enhavo_content_grid.item_type_resolver');
+        $this->resolver = $container->get('enhavo_grid.item_type_resolver');
     }
 
     public function getFunctions()

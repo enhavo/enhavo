@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\DownloadBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\ContentGridBundle\Item\ItemFormType;
+use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 
 class DownloadItemType extends ItemFormType
 {

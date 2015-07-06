@@ -71,7 +71,7 @@ class Page
     private $updated;
 
     /**
-     * @var \Enhavo\Bundle\ContentGridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Content
      */
     private $content;
 
@@ -408,10 +408,10 @@ class Page
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\ContentGridBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
      * @return Page
      */
-    public function setContent(\Enhavo\Bundle\ContentGridBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
     {
         $this->content = $content;
 
@@ -421,7 +421,7 @@ class Page
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\ContentGridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Content
      */
     public function getContent()
     {

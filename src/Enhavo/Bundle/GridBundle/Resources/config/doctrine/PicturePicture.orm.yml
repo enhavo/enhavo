@@ -1,4 +1,4 @@
-Enhavo\Bundle\ContentGridBundle\Entity\PicturePicture:
+Enhavo\Bundle\GridBundle\Entity\PicturePicture:
     type: entity
     table: content_type_picture_picture
     id:

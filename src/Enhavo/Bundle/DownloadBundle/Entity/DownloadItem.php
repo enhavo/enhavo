@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use Enhavo\Bundle\ContentGridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
 /**
  * DownloadItem

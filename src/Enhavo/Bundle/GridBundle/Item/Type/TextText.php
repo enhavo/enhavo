@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ContentGridBundle\Item\Type;
+namespace Enhavo\Bundle\GridBundle\Item\Type;
 
 
 class TextText
