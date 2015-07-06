@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\CategoryBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\DashboardBundle\\": "" }
   }
 }
