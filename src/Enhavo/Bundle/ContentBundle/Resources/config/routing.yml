@@ -1,0 +1,3 @@
+enhavo_content_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EnhavoContentBundle:Default:index }
