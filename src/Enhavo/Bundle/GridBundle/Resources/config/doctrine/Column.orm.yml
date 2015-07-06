@@ -1,0 +1,36 @@
+Enhavo\Bundle\ContentGridBundle\Entity\Column:
+    type: entity
+    table: content_column
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        type:
+            type: string
+            length: 255
+            nullable: true
+
+        configuration:
+            type: blob
+            nullable: true
+
+    oneToMany:
+        containers:
+            targetEntity: Container
+            mappedBy: column
+            cascade: ['persist', 'refresh', 'remove']
+
+        items:
+            targetEntity: Item
+            mappedBy: column
+            cascade: ['persist', 'refresh', 'remove']
+
+    manyToOne:
+        overview:
+            targetEntity: Container
+
+    lifecycleCallbacks: {  }

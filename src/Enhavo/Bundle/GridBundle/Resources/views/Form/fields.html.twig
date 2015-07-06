@@ -1,0 +1,38 @@
+{% block enhavo_content_grid_widget %}
+
+    <div class="mb1 contentForm">
+        <div class="menu">
+            <div class="triangle-up"></div>
+            <div class="triangle-down"></div>
+            <ul>
+                {% for item in items %}
+                    <li class="addItem" data-item="{{ item.type }}">{{ item.label }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div>
+            <div>
+                <i class="fa fa-plus btnsmall add-content-button" data-name="{{ full_name }}" data-position="top" ></i>
+            </div>
+            <div class="mt1em">
+              <div class="item-container">
+                {% for child in form.children %}
+                  {% for item in child.children %}
+                    {% set formItem = item.itemType %}
+                    {% set formName = item.vars.full_name %}
+                    {% set formOrder = item.vars.value.order %}
+                    {% set formType = item.vars.value.type %}
+                    {% set label = item.vars.label %}
+                    {% include 'EnhavoContentGridBundle:Form:form.html.twig' %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="mt1em">
+                <i class="fa fa-plus btnsmall add-content-button" data-name="{{ full_name }}" data-position="bottom"></i>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+Enhavo\Bundle\ContentGridBundle\Entity\CiteText:
+    type: entity
+    table: content_type_cite_text
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        cite:
+            type: text
+            nullable: true
+lifecycleCallbacks: {  }
