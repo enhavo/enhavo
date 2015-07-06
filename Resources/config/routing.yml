@@ -1,0 +1,3 @@
+enhavo_dashboard_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EnhavoDashboardBundle:Default:index }
