@@ -1,0 +1,22 @@
+{
+  "name": "enhavo/content-bundle",
+  "type": "library",
+  "description": "EnhavoContentBundle",
+  "keywords": ["framework"],
+  "homepage": "http://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "doctrine/orm": "~2.2,>=2.2.3",
+    "doctrine/doctrine-bundle": "~1.2"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\CategoryBundle\\": "" }
+  }
+}
