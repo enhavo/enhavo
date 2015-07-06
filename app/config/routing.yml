@@ -11,6 +11,10 @@ enhavo_admin:
     resource: "@EnhavoAppBundle/Resources/config/routing/admin.yml"
     prefix: /admin
 
+enhavo_dashboard:
+    resource: "@EnhavoDashboardBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 enhavo_article:
     resource: "@EnhavoArticleBundle/Resources/config/routing/article.yml"
     prefix: /admin

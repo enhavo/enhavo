@@ -46,6 +46,8 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\NewsletterBundle\EnhavoNewsletterBundle(),
             new Enhavo\Bundle\CalendarBundle\EnhavoCalendarBundle(),
             new Enhavo\Bundle\ShopBundle\EnhavoShopBundle(),
+            new Enhavo\Bundle\ContentBundle\EnhavoContentBundle(),
+            new Enhavo\Bundle\DashboardBundle\EnhavoDashboardBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

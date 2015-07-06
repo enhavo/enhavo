@@ -16,7 +16,7 @@ enhavo_app:
     menu:
         dashboard:
             label: label.dashboard
-            route: enhavo_app_dashboard
+            route: enhavo_dashboard_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
             label: label.user
