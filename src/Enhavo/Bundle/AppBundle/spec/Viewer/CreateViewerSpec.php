@@ -30,6 +30,7 @@ class CreateViewerSpec extends ObjectBehavior
         $configParser->get('form.action')->willReturn('form_action_route');
         $configParser->get('buttons')->willReturn($buttons);
         $configParser->get('parameters')->willReturn($parameters);
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
         $router->generate('form_action_route')->willReturn($formActionUrl);
         $container->get('router')->willReturn($router);
 

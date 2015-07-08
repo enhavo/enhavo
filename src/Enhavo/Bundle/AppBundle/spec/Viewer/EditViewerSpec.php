@@ -33,6 +33,7 @@ class EditViewerSpec extends ObjectBehavior
         $configParser->get('form.delete')->willReturn('form_delete_route');
         $configParser->get('buttons')->willReturn($buttons);
         $configParser->get('parameters')->willReturn($parameters);
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
         $router->generate('form_action_route', array('id' => 1))->willReturn($formActionUrl);
         $router->generate('form_delete_route', array('id' => 1))->willReturn($formDeleteUrl);
         $container->get('router')->willReturn($router);

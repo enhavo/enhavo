@@ -54,3 +54,9 @@ services:
         class: Enhavo\Bundle\AppBundle\Generator\RoutingGenerator
         arguments:
             - @templating
+
+    enhavo_app.generator.extend_generator:
+        class: Enhavo\Bundle\AppBundle\Generator\ExtendGenerator
+        arguments:
+            - @templating
+            - @kernel

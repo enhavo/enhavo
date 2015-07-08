@@ -48,6 +48,7 @@ class TableViewerSpec extends ObjectBehavior
         $configParser->get('table.columns')->willReturn($columns);
         $configParser->get('parameters')->willReturn($templateVars);
         $configParser->get('table.width')->willReturn(null);
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
 
         $this->setConfig($configParser);
         $this->getParameters()->shouldHaveKeyWithValue('columns', $columns);
@@ -81,6 +82,7 @@ class TableViewerSpec extends ObjectBehavior
         $configParser->get('table.width')->willReturn(null);
         $configParser->get('table.columns')->willReturn($definedColumns);
         $configParser->get('parameters')->willReturn(array());
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
 
         $this->setConfig($configParser);
 
@@ -108,6 +110,7 @@ class TableViewerSpec extends ObjectBehavior
         $configParser->get('table.width')->willReturn(null);
         $configParser->get('table.columns')->willReturn($columns);
         $configParser->get('parameters')->willReturn(array());
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
 
         $this->setResource($object);
         $this->setConfig($configParser);

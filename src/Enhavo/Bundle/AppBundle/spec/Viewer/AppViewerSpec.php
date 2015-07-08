@@ -22,6 +22,7 @@ class AppViewerSpec extends ObjectBehavior
         $configParser->get('actions')->willReturn($actions);
         $configParser->get('blocks')->willReturn($blocks);
         $configParser->get('parameters')->willReturn($parameters);
+        $configParser->setDefault($this->getDefaultConfig())->willReturn(null);
 
         $this->setConfig($configParser);
 

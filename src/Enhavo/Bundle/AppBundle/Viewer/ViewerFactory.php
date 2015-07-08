@@ -78,6 +78,6 @@ class ViewerFactory
             return $this->list[$default];
         }
 
-        throw new ViewerNotFoundException(sprintf('Trying to match viewer by type "%s" or default "%s" but no viewer found', $type));
+        throw new ViewerNotFoundException(sprintf('Trying to match viewer by type "%s" or default "%s" but no viewer found', $type, $default));
     }
 }
