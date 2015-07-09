@@ -1,6 +1,6 @@
 <?php
 /**
- * GenerateRouting.php
+ * GenerateRoutingCommand.php
  *
  * @since 28/06/15
  * @author gseidel

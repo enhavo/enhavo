@@ -37,7 +37,8 @@
     "massive/search-bundle": "0.2",
     "knplabs/knp-menu-bundle": "~2.0",
     "symfony-cmf/routing-bundle": "1.3.4",
-    "plasmaconduit/dependency-graph" :"0.1.0"
+    "plasmaconduit/dependency-graph" :"0.1.0",
+    "memio/memio": "~1.0"
   },
   "require-dev": {
     "behat/behat": "^3.0",

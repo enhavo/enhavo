@@ -55,8 +55,8 @@ services:
         arguments:
             - @templating
 
-    enhavo_app.generator.extend_generator:
-        class: Enhavo\Bundle\AppBundle\Generator\ExtendGenerator
+    enhavo_app.generator.extend_form_type_generator:
+        class: Enhavo\Bundle\AppBundle\Generator\ExtendFormTypeGenerator
         arguments:
             - @templating
             - @kernel

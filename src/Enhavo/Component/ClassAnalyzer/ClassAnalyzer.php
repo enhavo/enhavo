@@ -54,7 +54,7 @@ class ClassAnalyzer
                 if(!file_exists($this->file)) {
                     throw new NoSourceException(sprintf('The file "%s" was set, but it does not exists', $this->file));
                 }
-                $this->code = file_get_contents($this->file);
+                $this->tokens = token_get_all(file_get_contents($this->file));
             } else {
                 throw new NoSourceException('No file or code was set via setCode or setFile. Please call them first before you analyze the class');
             }
@@ -200,7 +200,11 @@ class ClassAnalyzer
 
             if($parameterSequence) {
                 if($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR || $token[0] === T_VARIABLE) {
-                    $nameBuffer[] = $token[1];
+                    if($token[0] === T_VARIABLE) {
+                        $nameBuffer[] = substr($token[1], 1); //remove $
+                    } else {
+                        $nameBuffer[] = $token[1];
+                    }
                 }
 
                 if($token[0] == T_WHITESPACE || $token[1] == ',' || $token[1] == ')') {

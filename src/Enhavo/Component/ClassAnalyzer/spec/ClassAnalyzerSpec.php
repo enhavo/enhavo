@@ -63,10 +63,10 @@ class ClassAnalyzerSpec extends ObjectBehavior
     {
         $this->setCode($this->getCodeExampleOne());
         $this->getConstructor()->shouldReturn(array(
-            array('\DateTime', '$date'),
-            array('MyClass', '$myClass'),
-            array('AnotherClass', '$anotherClass'),
-            array(null, '$bar')
+            array('\DateTime', 'date'),
+            array('MyClass', 'myClass'),
+            array('AnotherClass', 'anotherClass'),
+            array(null, 'bar')
         ));
     }
 
@@ -74,10 +74,10 @@ class ClassAnalyzerSpec extends ObjectBehavior
     {
         $this->setCode($this->getCodeExampleTwo());
         $this->getConstructor()->shouldReturn(array(
-            array('\DateTime', '$date'),
-            array('MyClass', '$myClass'),
-            array('AnotherClass', '$anotherClass'),
-            array(null, '$bar')
+            array('\DateTime', 'date'),
+            array('MyClass', 'myClass'),
+            array('AnotherClass', 'anotherClass'),
+            array(null, 'bar')
         ));
     }
 
@@ -102,7 +102,7 @@ class ClassAnalyzerSpec extends ObjectBehavior
         $this->setCode($this->getCodeExampleOne());
         $this->getFunctionParameters('bar')->shouldReturn(array());
         $this->getFunctionParameters('hello')->shouldReturn(array(
-            array(null, '$world')
+            array(null, 'world')
         ));
     }
 
@@ -111,7 +111,7 @@ class ClassAnalyzerSpec extends ObjectBehavior
         $this->setCode($this->getCodeExampleTwo());
         $this->getFunctionParameters('bar')->shouldReturn(array());
         $this->getFunctionParameters('hello')->shouldReturn(array(
-            array(null, '$world')
+            array(null, 'world')
         ));
     }
 
