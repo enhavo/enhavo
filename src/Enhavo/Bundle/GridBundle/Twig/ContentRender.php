@@ -46,7 +46,7 @@ class ContentRender extends \Twig_Extension
         return $this->engine;
     }
 
-    public function render(Content $content = null, $set = null)
+    public function render(Content $content = null, $set = null, $selectType = null)
     {
         if($content === null) {
             return '';
@@ -58,9 +58,11 @@ class ContentRender extends \Twig_Extension
             /** @var $item Item */
             foreach($items as $item) {
                 $type = $item->getType();
-                $data = $item->getItemType();
-                $template = $this->resolver->getTemplate($type, $set);
-                $html[] = $this->getEngine()->render($template, array('data' => $data));
+                if($selectType == $type||$selectType == null) {
+                    $data = $item->getItemType();
+                    $template = $this->resolver->getTemplate($type, $set);
+                    $html[] = $this->getEngine()->render($template, array('data' => $data));
+                }
             }
         }
         return join('', $html);
