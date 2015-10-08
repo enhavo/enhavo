@@ -45,7 +45,7 @@ class ContentRender extends \Twig_Extension
         }
         return $this->engine;
     }
-    
+
     public function render(Content $content = null, $set = null, $onlyRenderTypes = null)
     {
         if($content === null) {
