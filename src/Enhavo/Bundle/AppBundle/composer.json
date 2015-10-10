@@ -16,7 +16,8 @@
     "doctrine/orm": "~2.2,>=2.2.3",
     "doctrine/doctrine-bundle": "~1.2",
     "symfony-cmf/routing-bundle": "1.3.4",
-    "memio/memio": "~1.0"
+    "memio/memio": "~1.0",
+    "sylius/resource-bundle": "~0.15.0"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\AppBundle\\": "" }
