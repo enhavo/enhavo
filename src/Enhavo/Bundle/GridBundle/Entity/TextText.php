@@ -12,32 +12,32 @@ class TextText implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $textLeft;
+    protected $textLeft;
 
     /**
      * @var string
      */
-    private $titleLeft;
+    protected $titleLeft;
 
     /**
      * @var string
      */
-    private $textRight;
+    protected $textRight;
 
     /**
      * @var string
      */
-    private $titleRight;
+    protected $titleRight;
 
 
     /**

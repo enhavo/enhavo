@@ -13,42 +13,42 @@ class Item
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Content
      */
-    private $content;
+    protected $content;
 
     /**
      * @var string
      */
-    private $configuration;
+    protected $configuration;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Column
      */
-    private $column;
+    protected $column;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var integer
      */
-    private $itemTypeId;
+    protected $itemTypeId;
 
     /**
      * @var ItemTypeInterface
      */
-    private $itemType;
+    protected $itemType;
 
     /**
      * Get id

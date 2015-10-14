@@ -12,17 +12,17 @@ class Setting
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $container;
+    protected $container;
 
 
     /**

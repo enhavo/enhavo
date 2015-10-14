@@ -15,16 +15,16 @@ class Picture implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
-    private $caption;
+    protected $caption;
 
-    private $files;
+    protected $files;
 
 
     public function __construct()

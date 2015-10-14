@@ -16,22 +16,22 @@ class Download
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
-    private $file;
+    protected $file;
 
     /**
      * Get id

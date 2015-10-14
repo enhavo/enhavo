@@ -12,7 +12,7 @@ class Container
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
 
     /**
@@ -27,27 +27,27 @@ class Container
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $configuration;
+    protected $configuration;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $columns;
+    protected $columns;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Content
      */
-    private $content;
+    protected $content;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Column
      */
-    private $column;
+    protected $column;
 
     /**
      * Constructor

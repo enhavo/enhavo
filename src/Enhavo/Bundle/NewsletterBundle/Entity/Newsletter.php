@@ -10,27 +10,27 @@ class Newsletter
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * @var boolean
      */
-    private $sent;
+    protected $sent;
 
     /**
      * Get id

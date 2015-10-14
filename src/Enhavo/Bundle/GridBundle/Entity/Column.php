@@ -14,32 +14,32 @@ class Column {
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $configuration;
+    protected $configuration;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $containers;
+    protected $containers;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $items;
+    protected $items;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Container
      */
-    private $overview;
+    protected $overview;
 
     /**
      * Constructor

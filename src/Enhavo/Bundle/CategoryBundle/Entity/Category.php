@@ -13,17 +13,17 @@ class Category
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var \Enhavo\Bundle\CategoryBundle\Entity\Collection
      */
-    private $collection;
+    protected $collection;
 
 
     /**
@@ -92,7 +92,7 @@ class Category
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
 
     /**

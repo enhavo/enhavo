@@ -12,32 +12,32 @@ class Index
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $teaser;
+    protected $teaser;
 
     /**
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * @var string
      */
-    private $route;
+    protected $route;
 
     /**
      * @var string
      */
-    private $routeParameter;
+    protected $routeParameter;
 
 
     /**

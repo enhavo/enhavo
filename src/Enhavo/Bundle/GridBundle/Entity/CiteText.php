@@ -12,15 +12,15 @@ class CiteText implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
-    private $text;
+    protected $text;
 
-    private $title;
+    protected $title;
 
-    private $cite;
+    protected $cite;
 
-    private $textLeft;
+    protected $textLeft;
 
     /**
      * Get id

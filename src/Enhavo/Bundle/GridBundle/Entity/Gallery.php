@@ -14,19 +14,19 @@ class Gallery implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
-    private $files;
+    protected $files;
 
 
     public function __construct()

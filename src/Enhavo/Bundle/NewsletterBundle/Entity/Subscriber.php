@@ -10,27 +10,27 @@ class Subscriber
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var boolean
      */
-    private $active;
+    protected $active;
 
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * Get id

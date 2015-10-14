@@ -19,12 +19,12 @@ class User extends BaseUser
     /**
      * @var string
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
