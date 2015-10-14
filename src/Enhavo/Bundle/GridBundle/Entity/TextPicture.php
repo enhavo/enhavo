@@ -14,26 +14,26 @@ class TextPicture implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var boolean
      */
-    private $textLeft;
+    protected $textLeft;
 
-    private $files;
+    protected $files;
 
-    private $frame;
+    protected $frame;
 
     public function __construct()
     {

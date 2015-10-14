@@ -12,32 +12,32 @@ class File
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * @var string
      */
-    private $extension;
+    protected $extension;
 
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
     /**
      * @var string
      */
-    private $filename;
+    protected $filename;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * Get id

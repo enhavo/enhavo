@@ -13,17 +13,17 @@ class Text implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * Get id

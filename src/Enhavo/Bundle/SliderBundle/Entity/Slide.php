@@ -14,47 +14,47 @@ class Slide
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @var string
      */
-    private $link_type;
+    protected $link_type;
 
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
     /**
      * @var integer
      */
-    private $public;
+    protected $public;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $image;
+    protected $image;
 
     /**
      * @var Slider
      */
-    private $slider;
+    protected $slider;
 
 
     /**

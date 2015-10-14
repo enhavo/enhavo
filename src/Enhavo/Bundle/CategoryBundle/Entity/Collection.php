@@ -9,17 +9,17 @@ class Collection
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $categories;
+    protected $categories;
 
     /**
      * Constructor

@@ -12,22 +12,22 @@ class DownloadItem implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Enhavo\Bundle\DownloadBundle\Entity\Download
      */
-    private $download;
+    protected $download;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $file;
+    protected $file;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * Get id

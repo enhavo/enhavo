@@ -14,12 +14,12 @@ class Configuration
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var mixed
      */
-    private $data;
+    protected $data;
 
     /**
      * @param string $type

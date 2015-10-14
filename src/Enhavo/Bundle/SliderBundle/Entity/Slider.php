@@ -12,17 +12,17 @@ class Slider
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $slides;
+    protected $slides;
 
     /**
      * Constructor

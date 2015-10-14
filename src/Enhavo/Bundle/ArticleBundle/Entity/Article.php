@@ -16,77 +16,82 @@ class Article {
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $teaser;
+    protected $teaser;
 
     /**
      * @var \DateTime
      */
-    private $publication_date;
+    protected $publication_date;
 
     /**
      * @var string
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var string
      */
-    private $meta_description;
+    protected $meta_description;
 
     /**
      * @var string
      */
-    private $page_title;
+    protected $page_title;
 
     /**
      * @var float
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @var string
      */
-    private $change_frequency;
+    protected $change_frequency;
 
     /**
      * @var boolean
      */
-    private $public;
+    protected $public;
 
     /**
      * @var \Enhavo\Bundle\GridBundle\Entity\Content
      */
-    private $content;
+    protected $content;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $picture;
+    protected $picture;
 
     /**
      * @var \Enhavo\Bundle\AppBundle\Entity\Route
      */
-    private $route;
+    protected $route;
+
+    /**
+     * @var boolean
+     */
+    protected $social_media;
 
 
     /**
@@ -239,12 +244,6 @@ class Article {
     {
         return $this->publication_date;
     }
-
-    /**
-     * @var boolean
-     */
-    private $social_media;
-
 
     /**
      * Set social_media

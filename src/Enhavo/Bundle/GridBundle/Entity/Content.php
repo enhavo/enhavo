@@ -12,7 +12,7 @@ class Content
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
 
     /**
@@ -27,7 +27,7 @@ class Content
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $containers;
+    protected $containers;
 
     /**
      * Constructor
@@ -72,7 +72,7 @@ class Content
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $items;
+    protected $items;
 
 
     /**

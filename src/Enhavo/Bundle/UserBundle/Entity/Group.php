@@ -18,7 +18,7 @@ class Group extends BaseGroup
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $users;
+    protected $users;
 
     /**
      * Constructor

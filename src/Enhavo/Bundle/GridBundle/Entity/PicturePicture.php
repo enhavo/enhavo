@@ -14,31 +14,31 @@ class PicturePicture implements ItemTypeInterface
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var mixed
      */
-    private $filesLeft;
+    protected $filesLeft;
 
     /**
      * @var mixed
      */
-    private $filesRight;
+    protected $filesRight;
 
     /**
      * @var boolean
      */
-    private $frame;
+    protected $frame;
 
-    private $captionLeft;
+    protected $captionLeft;
 
-    private $captionRight;
+    protected $captionRight;
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * Constructor
