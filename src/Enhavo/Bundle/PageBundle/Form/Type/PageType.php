@@ -17,7 +17,7 @@ class PageType extends AbstractType
     protected $dataClass;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     protected $router;
 
@@ -26,11 +26,17 @@ class PageType extends AbstractType
      */
     protected $route;
 
-    public function __construct($dataClass, $route, RouterInterface $router)
+    /**
+     * @var bool
+     */
+    protected $dynamicRouting;
+
+    public function __construct($dataClass, $dynamicRouting, $route, RouterInterface $router)
     {
         $this->route = $route;
         $this->dataClass = $dataClass;
         $this->router = $router;
+        $this->dynamicRouting = $dynamicRouting;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -54,7 +60,9 @@ class PageType extends AbstractType
             }
         });
 
-        $builder->add('route', 'enhavo_route');
+        if($this->dynamicRouting) {
+            $builder->add('route', 'enhavo_route');
+        }
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'

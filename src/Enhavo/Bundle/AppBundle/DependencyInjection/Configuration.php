@@ -28,6 +28,12 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->booleanNode('dynamic_routing')
+                    ->defaultTrue()
+                ->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
                 ->end()

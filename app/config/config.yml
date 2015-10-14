@@ -97,13 +97,14 @@ liip_imagine:
                 thumbnail: { size: [300, 110], mode: outbound }
 
 cmf_routing:
-    chain:
-        routers_by_id:
-            router.default: 200
-            cmf_routing.dynamic_router: 100
-    dynamic:
-        enabled: true
-        route_provider_service_id: enhavo_app.route_provider
+# Use this settings if you want to provide some dynamic routing features
+#    chain:
+#        routers_by_id:
+#            router.default: 200
+#            cmf_routing.dynamic_router: 100
+#    dynamic:
+#        enabled: true
+#        route_provider_service_id: enhavo_app.route_provider
 
 enhavo_newsletter:
     subscriber:

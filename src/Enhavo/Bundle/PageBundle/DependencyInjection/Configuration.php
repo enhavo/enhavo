@@ -26,6 +26,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
 
+            ->children()
+                ->booleanNode('dynamic_routing')
+                    ->defaultFalse()
+                ->end()
+            ->end()
+
             // The resources
             ->children()
                 ->arrayNode('classes')

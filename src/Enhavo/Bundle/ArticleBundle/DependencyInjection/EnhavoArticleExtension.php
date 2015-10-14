@@ -45,6 +45,7 @@ class EnhavoArticleExtension extends SyliusResourceExtension
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration( $configuration, $config );
         $container->setParameter( 'enhavo_article.article_route', $processedConfig['article_route']);
+        $container->setParameter( 'enhavo_article.dynamic_routing', $processedConfig['dynamic_routing']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
