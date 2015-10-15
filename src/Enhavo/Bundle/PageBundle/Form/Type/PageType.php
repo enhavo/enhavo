@@ -84,25 +84,9 @@ class PageType extends AbstractType
             'label' => 'form.label.teaser'
         ));
 
-        $builder->add('social_media', 'choice', array(
-            'label' => 'form.label.social_media',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('social_media', 'enhavo_boolean');
 
-        $builder->add('public', 'choice', array(
-            'label' => 'form.label.public',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('public', 'enhavo_boolean');
 
         $builder->add('priority', 'choice', array(
             'label' => 'form.label.priority',

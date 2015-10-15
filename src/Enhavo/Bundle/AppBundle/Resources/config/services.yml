@@ -1,8 +1,9 @@
 parameters:
     enhavo_app.form.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Type\WysiwygType
-    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
     enhavo_app.form.config.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig
+    enhavo_app.form.enhavo_boolean.class: Enhavo\Bundle\AppBundle\Form\Type\BooleanType
     enhavo_app.menu_loader.class: Enhavo\Bundle\AppBundle\Menu\MenuLoader
+    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
 
 services:
     enhavo_app.form.wysiwyg:
@@ -16,6 +17,13 @@ services:
         class: %enhavo_app.form.config.wysiwyg.class%
         arguments:
             - %kernel.root_dir%/config/wysiwyg.yml
+
+    enhavo_app.form.enhavo_boolean:
+        class: %enhavo_app.form.enhavo_boolean.class%
+        arguments:
+            - @enhavo_app.form.config.wysiwyg
+        tags:
+            - { name: form.type, alias: 'enhavo_boolean' }
 
     cache:
         class: Doctrine\Common\Cache\PhpFileCache

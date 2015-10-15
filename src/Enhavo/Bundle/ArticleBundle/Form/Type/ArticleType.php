@@ -80,14 +80,8 @@ class ArticleType extends AbstractType
             'label' => 'form.label.slug'
         ));
 
-        $builder->add('public', 'choice', array(
-            'label' => 'form.label.public',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
+        $builder->add('public', 'enhavo_boolean', array(
+            'label' => 'form.label.public'
         ));
 
         $builder->add('priority', 'choice', array(
@@ -133,15 +127,7 @@ class ArticleType extends AbstractType
             'format' => 'dd.MM.yyyy HH:mm',
         ));
 
-        $builder->add('social_media', 'choice', array(
-            'label' => 'form.label.social_media',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('social_media', 'enhavo_boolean');
 
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture'

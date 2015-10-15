@@ -64,4 +64,15 @@
     {{ form_widget(form.staticPrefix) }}
 {% endblock %}
 
+{% block enhavo_boolean_widget %}
+    <span class="choice-input-with-label">
+        <input {{ block('widget_attributes') }} type="radio" id="{{ id }}" name="{{ name }}" value="1" {%  if checked %}checked{% endif %} />
+        <label {% if required -%}class="required"{%- endif %}>{{ label_true }}</label>
+    </span>
+    <span class="choice-input-with-label">
+        <input {{ block('widget_attributes') }} type="radio" id="{{ id }}" name="{{ name }}" value="0" {%  if not checked %}checked{% endif %} />
+        <label {% if required -%}class="required"{%- endif %}>{{ label_false }}</label>
+    </span>
+{% endblock %}
+
 
