@@ -7,7 +7,7 @@
 <div class="row row-container">
     <div class="col-md-{{ viewer.tableWidth }}">
         {% for item in data %}
-            <div class="col-md-{{ viewer.tableWidth }} entry-row" data-id="{{ item.id }}">
+            <div class="row entry-row" data-id="{{ item.id }}">
                 {% for column in columns %}
                     <div class="col-md-{{ column.width }}">
                         {% if column.widget is defined %}
