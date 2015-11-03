@@ -4,3 +4,5 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
     properties:
         email:
             - Email: ~
+            - NotBlank: ~
+            - Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberEmailInUse: ~
