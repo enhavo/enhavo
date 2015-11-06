@@ -250,13 +250,11 @@ var Form = function(router, templating, admin, translator)
   };
 
   this.initInput = function(form) {
-    $(form).find('input').focus(function() {
-      $(this).keypress(function(e) {
-        if(e.which == 13) {
-          event.preventDefault();
-        }
-      });
-    })
+    $('input').keypress(function(e) {
+      if(e.which == 13) {
+        event.preventDefault();
+      }
+    });
   };
 
   var init = function() {
