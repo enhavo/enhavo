@@ -1,8 +1,8 @@
-enhavo_newsletter_activation:
+enhavo_newsletter_subscriber_activation:
     pattern: /newsletter/add/{code}
     defaults: { _controller: EnhavoNewsletterBundle:Subscriber:activation }
 
-enhavo_newsletter_create:
+enhavo_newsletter_subscriber_create:
     path: /newsletter/new
     methods: [GET, POST]
     options:
@@ -10,7 +10,3 @@ enhavo_newsletter_create:
     defaults:
         _controller: enhavo_newsletter.controller.subscriber:createAction
         _admin: enhavo_newsletter.admin.subscriber
-
-enhavo_newsletter_send_email:
-    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
-    defaults: { _controller: EnhavoNewsletterBundle:Subscriber:sendEmail }

@@ -1,13 +1,11 @@
 <div class='subscribe'>
-    <form method="post" action="{{ path('enhavo_newsletter_create') }}" id="addEmailForm">
+    <form method="post" action="{{ path('enhavo_newsletter_subscriber_create') }}" id="addEmailForm">
         <br />
         {{ form_label(form.email) }}
         {{ form_errors(form.email) }}
         {{ form_widget(form.email) }}
 
         {{ form_widget(form._token) }}
-
-
 
         {% for child in form %}
             {{ form_row(child) }}

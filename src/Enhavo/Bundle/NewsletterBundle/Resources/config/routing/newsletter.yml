@@ -66,3 +66,7 @@ enhavo_newsletter_newsletter_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:previewAction
+
+enhavo_newsletter_newsletter_send_email:
+    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
+    defaults: { _controller: EnhavoNewsletterBundle:Newsletter:sendEmail }

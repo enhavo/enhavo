@@ -79,7 +79,7 @@ class NewsletterBuilderSubscriber extends Controller implements EventSubscriberI
         $code = $subscriber->getToken();
 
         $router = $this->container->get('router');
-        $link = $router->generate('enhavo_newsletter_activation', array('code' => $code), true);
+        $link = $router->generate('enhavo_newsletter_subscriber_activation', array('code' => $code), true);
         $text = $this->render($this->subscriber['template'], array(
             "link" => $link
         ));

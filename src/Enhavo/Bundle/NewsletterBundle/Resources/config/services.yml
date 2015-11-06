@@ -28,3 +28,12 @@ services:
             - %enhavo_newsletter.subscriber%
         tags:
             - { name: kernel.event_subscriber }
+
+    validator.unique.email_in_use_validator:
+        class:  Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberEmailInUseValidator
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @service_container
+            - %enhavo_newsletter.subscriber%
+        tags:
+            - { name: validator.constraint_validator, alias: email_in_use }

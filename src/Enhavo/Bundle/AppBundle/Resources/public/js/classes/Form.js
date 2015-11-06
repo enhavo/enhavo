@@ -249,6 +249,13 @@ var Form = function(router, templating, admin, translator)
     setOrder();
   };
 
+  this.initInput = function(form) {
+    $('input').keypress(function(e) {
+      if(e.which == 13) {
+        event.preventDefault();
+      }
+    });
+  };
 
   var init = function() {
     $(document).on('formOpenAfter', function(event, form) {
@@ -260,6 +267,7 @@ var Form = function(router, templating, admin, translator)
       self.initDelete(form);
       self.initSelect(form);
       self.initSorting(form);
+      self.initInput(form);
     });
 
     $(document).on('formSaveAfter', function() {

@@ -47,6 +47,7 @@ img {max-width:100%;}
 
 .btn {display: inline-block;padding: 4px 12px;color:#fff;text-align:center;vertical-align: middle;cursor:pointer;background-color: #4395d1;font-weight:700;border:none;}
 .btn:hover {background-color:#49a4e5;color:#fff;}
+.btn:focus {background-color:#49a4e5;color:#fff;}
 .btn[class*="fa-"] {font-weight:400;}
 .btn i {position:relative;top:-1px;}
 .btnsmall {display: inline-block;padding: 3px 7px;color:#fff;text-align:center;vertical-align: middle;cursor:pointer;background-color:#4395d1;font-weight:700;border:none;}
