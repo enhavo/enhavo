@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SubscriberController extends ResourceController
+class NewsletterController extends ResourceController
 {
     public function sendEmailAction(Request $request) {
         $newsletter = $request->get('enhavo_newsletter_newsletter');
