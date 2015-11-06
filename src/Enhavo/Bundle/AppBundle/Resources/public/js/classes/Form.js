@@ -172,6 +172,14 @@ var Form = function(router, templating, admin, translator)
         }
       });
     });
+
+    $(form).find('input').focus(function() {
+      $(this).keypress(function(e) {
+        if(e.which == 13) {
+            event.preventDefault();
+        }
+      });
+    })
   };
 
   this.initPreviewButton = function(form) {
