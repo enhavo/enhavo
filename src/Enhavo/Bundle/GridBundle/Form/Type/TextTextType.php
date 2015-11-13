@@ -34,6 +34,17 @@ class TextTextType extends ItemFormType
         $builder->add('textRight', 'wysiwyg', array(
             'label' => 'form.label.text_right'
         ));
+
+        $builder->add('textLayout', 'choice', array(
+            'label' => 'form.label.textLayout',
+            'choices'   => array(
+                '0' => 'label.1:2',
+                '1' => 'label.2:1',
+                '2' => 'label.50:50'
+            ),
+            'expanded' => true,
+            'multiple' => false
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

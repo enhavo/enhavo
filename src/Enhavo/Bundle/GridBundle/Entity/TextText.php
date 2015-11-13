@@ -39,6 +39,10 @@ class TextText implements ItemTypeInterface
      */
     protected $titleRight;
 
+    /**
+     * @var integer
+     */
+    protected $textLayout;
 
     /**
      * Get id
@@ -161,4 +165,22 @@ class TextText implements ItemTypeInterface
     {
         $this->title = $title;
     }
+
+    /**
+     * @return int
+     */
+    public function getTextLayout()
+    {
+        return $this->textLayout;
+    }
+
+    /**
+     * @param int $textLayout
+     */
+    public function setTextLayout($textLayout)
+    {
+        $this->textLayout = $textLayout;
+    }
+
+
 }

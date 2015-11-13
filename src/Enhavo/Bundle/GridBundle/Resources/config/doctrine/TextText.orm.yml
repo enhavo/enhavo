@@ -29,4 +29,8 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
             type: string
             length: 255
             nullable: true
+
+        textLayout:
+            type: integer
+            nullable: true
     lifecycleCallbacks: {  }
