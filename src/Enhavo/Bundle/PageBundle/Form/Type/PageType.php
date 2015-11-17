@@ -17,7 +17,7 @@ class PageType extends AbstractType
     protected $dataClass;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     protected $router;
 
@@ -26,11 +26,17 @@ class PageType extends AbstractType
      */
     protected $route;
 
-    public function __construct($dataClass, $route, RouterInterface $router)
+    /**
+     * @var bool
+     */
+    protected $dynamicRouting;
+
+    public function __construct($dataClass, $dynamicRouting, $route, RouterInterface $router)
     {
         $this->route = $route;
         $this->dataClass = $dataClass;
         $this->router = $router;
+        $this->dynamicRouting = $dynamicRouting;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -54,7 +60,9 @@ class PageType extends AbstractType
             }
         });
 
-        $builder->add('route', 'enhavo_route');
+        if($this->dynamicRouting) {
+            $builder->add('route', 'enhavo_route');
+        }
 
         $builder->add('title', 'text', array(
             'label' => 'form.label.title.h1'
@@ -76,25 +84,9 @@ class PageType extends AbstractType
             'label' => 'form.label.teaser'
         ));
 
-        $builder->add('social_media', 'choice', array(
-            'label' => 'form.label.social_media',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('social_media', 'enhavo_boolean');
 
-        $builder->add('public', 'choice', array(
-            'label' => 'form.label.public',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('public', 'enhavo_boolean');
 
         $builder->add('priority', 'choice', array(
             'label' => 'form.label.priority',

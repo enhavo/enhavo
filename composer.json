@@ -28,7 +28,6 @@
     "friendsofsymfony/jsrouting-bundle": "@stable",
     "willdurand/js-translation-bundle" : "@stable",
     "dg/rss-php": "1.1",
-    "rhumsaa/uuid": "~2.7",
     "bacon/bacon-string-utils": "1.0.3",
     "mrclay/minify": "dev-master",
     "natxet/CssMin": "dev-master",

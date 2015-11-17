@@ -1,11 +1,13 @@
 cmf_routing:
-    dynamic:
-        controllers_by_class:
-            Enhavo\Bundle\ArticleBundle\Entity\Article: EnhavoAppBundle:App:show
-            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:App:show
+# Use this settings if you want to provide some dynamic routing features
+#    dynamic:
+#        controllers_by_class:
+#            Enhavo\Bundle\ArticleBundle\Entity\Article: EnhavoAppBundle:App:show
+#            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:App:show
 
 enhavo_app:
     permission_check: false
+    dynamic_routing: false
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
     javascripts:
@@ -104,12 +106,14 @@ enhavo_grid:
             label: Download
 
 enhavo_page:
+    dynamic_routing: false
     classes:
         page:
             model: Enhavo\Bundle\PageBundle\Entity\Page
             form: Enhavo\Bundle\PageBundle\Form\Type\PageType
 
 enhavo_article:
+    dynamic_routing: false
     classes:
          article:
             model: Enhavo\Bundle\ArticleBundle\Entity\Article

@@ -21,6 +21,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('enhavo_article');
 
         $rootNode
+            ->children()
+                ->booleanNode('dynamic_routing')
+                    ->defaultFalse()
+                ->end()
+            ->end()
+
             // Driver used by the resource bundle
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()

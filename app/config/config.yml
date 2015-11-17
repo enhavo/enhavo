@@ -62,6 +62,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
@@ -97,13 +99,14 @@ liip_imagine:
                 thumbnail: { size: [300, 110], mode: outbound }
 
 cmf_routing:
-    chain:
-        routers_by_id:
-            router.default: 200
-            cmf_routing.dynamic_router: 100
-    dynamic:
-        enabled: true
-        route_provider_service_id: enhavo_app.route_provider
+# Use this settings if you want to provide some dynamic routing features
+#    chain:
+#        routers_by_id:
+#            router.default: 200
+#            cmf_routing.dynamic_router: 100
+#    dynamic:
+#        enabled: true
+#        route_provider_service_id: enhavo_app.route_provider
 
 enhavo_newsletter:
     subscriber:
