@@ -30,7 +30,7 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
             length: 255
             nullable: true
 
-        textLayout:
+        layout:
             type: integer
             nullable: true
     lifecycleCallbacks: {  }

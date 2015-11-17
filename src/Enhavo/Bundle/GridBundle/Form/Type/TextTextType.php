@@ -38,9 +38,9 @@ class TextTextType extends ItemFormType
         $builder->add('textLayout', 'choice', array(
             'label' => 'form.label.textLayout',
             'choices'   => array(
-                '0' => 'label.1:2',
-                '1' => 'label.2:1',
-                '2' => 'label.50:50'
+                TextText::LAYOUT_1_1 => 'label.1_1',
+                TextText::LAYOUT_1_2 => 'label.1_2',
+                TextText::LAYOUT_2_1 => 'label.2_1'
             ),
             'expanded' => true,
             'multiple' => false
