@@ -1,0 +1,5 @@
+Enhavo\Bundle\ContactBundle\Model\Contact:
+    properties:
+        email:
+            - Email: ~
+            - NotBlank: ~

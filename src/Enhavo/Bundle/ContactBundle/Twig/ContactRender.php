@@ -33,14 +33,14 @@ class ContactRender extends \Twig_Extension
         );
     }
 
-    public function render($template=null)
+    public function render($type=null)
     {
         if($this->templateEngine === null) {
             $this->templateEngine = $this->container->get('templating');
         }
 
         $formFactory = $this->container->get('form.factory');
-        if($template == null || $template == 'default'){
+        if($type == null || $type == 'default'){
             $form = $formFactory->create('enhavo_contact_contact');
             $formView = $form->createView();
 
@@ -50,10 +50,11 @@ class ContactRender extends \Twig_Extension
             $form = $formFactory->create('enhavo_contact_contact');
             $formView = $form->createView();
 
-            $template = $template;
+            $template =  $this->container->getParameter('enhavo_contact.'.$type.'.template.render');
         }
         return $this->templateEngine->render($template, array(
-            'form' => $formView
+            'form' => $formView,
+            'type' => $type
         ));
     }
 

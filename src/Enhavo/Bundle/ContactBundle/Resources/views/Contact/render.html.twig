@@ -1,2 +1,6 @@
-{{ form_row(form.email) }}
-{{ form_row(form.message) }}
+<form action="{{ path('enhavo_contact_submit', { type: type }) }}" id="contact_form">
+    {{ form_row(form._token) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.message) }}
+    <button type="submit" id="sendMessage">Send</button>
+</form>

@@ -8,5 +8,12 @@ services:
 
     enhavo_contact_contact:
         class: %enhavo_contact.contact.form%
+        arguments:
+            - %enhavo_contact.contact.model%
         tags:
             - { name: form.type }
+
+    errorresolver.formerrorresolver:
+        class: Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver
+        arguments:
+            - @translator

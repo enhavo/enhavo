@@ -21,12 +21,16 @@ class EnhavoContactExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('enhavo_contact.contact.type', 'contact');
         $container->setParameter('enhavo_contact.contact.model', $config['contact']['model']);
         $container->setParameter('enhavo_contact.contact.form', $config['contact']['form']);
         $container->setParameter('enhavo_contact.contact.template.render', $config['contact']['template']['render']);
         $container->setParameter('enhavo_contact.contact.template.recipient', $config['contact']['template']['recipient']);
         $container->setParameter('enhavo_contact.contact.template.sender', $config['contact']['template']['sender']);
         $container->setParameter('enhavo_contact.contact.recipient', $config['contact']['recipient']);
+        $container->setParameter('enhavo_contact.contact.from', $config['contact']['from']);
+        $container->setParameter('enhavo_contact.contact.subject', $config['contact']['subject']);
+        $container->setParameter('enhavo_contact.contact.send_to_sender', $config['contact']['send_to_sender']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
