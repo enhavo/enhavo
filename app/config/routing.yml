@@ -51,6 +51,9 @@ enhavo_newsletter_subscriber:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
     prefix:   /
 
+enhavo_category_category:
+    resource: "@EnhavoCategoryBundle/Resources/config/routing/category.yml"
+    prefix:   /
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"

@@ -36,6 +36,10 @@ enhavo_app:
             label: label.page
             route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
+        category:
+            label: label.category
+            route: enhavo_category_category_index
+            role: ROLE_ESPERANTO_CATEGORY_CATEGORY_INDEX
         download:
             label: label.download
             route: enhavo_download_download_index
@@ -119,3 +123,6 @@ enhavo_article:
             model: Enhavo\Bundle\ArticleBundle\Entity\Article
             form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
             repository: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
+
+enhavo_category:
+    default_collection: default

@@ -42,6 +42,11 @@ class EnhavoCategoryExtension extends SyliusResourceExtension
             self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
         );
 
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $config);
+
+        $container->setParameter('enhavo_category.default_collection', $config['default_collection']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
