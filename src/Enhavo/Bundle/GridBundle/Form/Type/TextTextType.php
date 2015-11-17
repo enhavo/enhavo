@@ -10,6 +10,7 @@ use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Enhavo\Bundle\GridBundle\Item\Type\Text;
+use Enhavo\Bundle\GridBundle\Entity\TextText;
 
 class TextTextType extends ItemFormType
 {
@@ -35,8 +36,8 @@ class TextTextType extends ItemFormType
             'label' => 'form.label.text_right'
         ));
 
-        $builder->add('textLayout', 'choice', array(
-            'label' => 'form.label.textLayout',
+        $builder->add('layout', 'choice', array(
+            'label' => 'form.label.layout',
             'choices'   => array(
                 TextText::LAYOUT_1_1 => 'label.1_1',
                 TextText::LAYOUT_1_2 => 'label.1_2',

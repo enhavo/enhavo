@@ -72,4 +72,16 @@ class ArticleRepository extends EntityRepository
 
         return $dates;
     }
+
+    public function findPublished()
+    {
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->setParameter('currentDate', new \DateTime());
+        $query->orderBy('n.publication_date','desc');
+        $articles = $query->getQuery()->getResult();
+
+        return $articles;
+    }
 }
