@@ -1,24 +1,68 @@
 <div class="row content">
     <div class="content_texttext">
-        <div class="col-xs-6 left6">
-            <div class="content_text">
-                {% if data.titleLeft %}
-                    <h2>{{ data.titleLeft }}</h2>
-                {% endif %}
-                {% if data.textLeft %}
-                    {{ data.textLeft|raw }}
-                {% endif %}
+        {% if data.layout == 0 %}
+            <div class="col-xs-4 left6">
+                <div class="content_text">
+                    {% if data.titleLeft %}
+                        <h2>{{ data.titleLeft }}</h2>
+                    {% endif %}
+                    {% if data.textLeft %}
+                        {{ data.textLeft|raw }}
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6 right6">
-            <div class="content_text">
-                {% if data.titleRight %}
-                    <h2>{{ data.titleRight }}</h2>
-                {% endif %}
-                {% if data.textRight %}
-                    {{ data.textRight|raw }}
-                {% endif %}
+            <div class="col-xs-8 right6">
+                <div class="content_text">
+                    {% if data.titleRight %}
+                        <h2>{{ data.titleRight }}</h2>
+                    {% endif %}
+                    {% if data.textRight %}
+                        {{ data.textRight|raw }}
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        {% elseif data.layout == 1 %}
+            <div class="col-xs-8 left6">
+                <div class="content_text">
+                    {% if data.titleLeft %}
+                        <h2>{{ data.titleLeft }}</h2>
+                    {% endif %}
+                    {% if data.textLeft %}
+                        {{ data.textLeft|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-4 right6">
+                <div class="content_text">
+                    {% if data.titleRight %}
+                        <h2>{{ data.titleRight }}</h2>
+                    {% endif %}
+                    {% if data.textRight %}
+                        {{ data.textRight|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        {% elseif data.layout == 2 %}
+            <div class="col-xs-6 left6">
+                <div class="content_text">
+                    {% if data.titleLeft %}
+                        <h2>{{ data.titleLeft }}</h2>
+                    {% endif %}
+                    {% if data.textLeft %}
+                        {{ data.textLeft|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-6 right6">
+                <div class="content_text">
+                    {% if data.titleRight %}
+                        <h2>{{ data.titleRight }}</h2>
+                    {% endif %}
+                    {% if data.textRight %}
+                        {{ data.textRight|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>

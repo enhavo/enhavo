@@ -9,6 +9,10 @@ use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
  */
 class TextText implements ItemTypeInterface
 {
+    const LAYOUT_1_1 = 0;
+    const LAYOUT_1_2 = 1;
+    const LAYOUT_2_1 = 2;
+
     /**
      * @var integer
      */
@@ -39,6 +43,10 @@ class TextText implements ItemTypeInterface
      */
     protected $titleRight;
 
+    /**
+     * @var integer
+     */
+    protected $layout;
 
     /**
      * Get id
@@ -161,4 +169,22 @@ class TextText implements ItemTypeInterface
     {
         $this->title = $title;
     }
+
+    /**
+     * @return int
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param int $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+    }
+
+
 }
