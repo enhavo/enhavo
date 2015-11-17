@@ -1,0 +1,4 @@
+enhavo_contact_submit:
+    path:     /enhavo/contact/{type}/submit
+    defaults: { _controller: EnhavoContactBundle:Contact:submit }
+    methods: [POST]

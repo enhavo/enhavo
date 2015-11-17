@@ -1,0 +1,12 @@
+services:
+    enhavo_contact_render:
+        class: Enhavo\Bundle\ContactBundle\Twig\ContactRender
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    enhavo_contact_contact:
+        class: %enhavo_contact.contact.form%
+        tags:
+            - { name: form.type }
