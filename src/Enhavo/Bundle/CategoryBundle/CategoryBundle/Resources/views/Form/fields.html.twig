@@ -1,0 +1,35 @@
+{% block enhavo_category_collection_widget %}
+    <div class="category-container" data-prototype="{{ form_widget(form.categories.vars.prototype)|e }}" data-category-item-list>
+        {% for category in form.categories %}
+            {{ form_widget(category) }}
+        {% endfor %}
+    </div>
+    <div class="row mt3">
+        <div class="col-md-5"></div>
+        <div class="col-md-1 pt1">
+            <i class="fa fa-plus btnsmall button-add-category"></i>
+        </div>
+    </div>
+    {% for child in form %}
+        {% if not child.rendered %}
+            {{ form_widget(child) }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
+{% block enhavo_category_category_widget %}
+    <div class="row pt2" data-category-item>
+        <div class="col-md-5">
+            {{ form_widget(form.name) }}
+            {{ form_widget(form.order) }}
+            {% for child in form %}
+                {% if not child.rendered %}
+                    {{ form_widget(child) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-1 pt1"><i class="fa fa-sort btnsmall"></i> <i class="fa fa-trash btnsmall button-delete-category"></i></div>
+    </div>
+{% endblock %}
+

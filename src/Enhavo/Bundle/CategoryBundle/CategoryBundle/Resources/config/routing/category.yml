@@ -1,0 +1,64 @@
+enhavo_category_category_index:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_category.controller.category:indexAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:index.html.twig
+        _viewer:
+
+enhavo_category_category_create:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_category.controller.category:createAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:create.html.twig
+        _viewer:
+            tabs:
+                category:
+                    label: category
+                    template: EnhavoCategoryBundle:Tab:category.html.twig
+
+enhavo_category_category_update:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_category.controller.category:updateAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:update.html.twig
+        _viewer:
+
+enhavo_category_category_table:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_category.controller.category:tableAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:table.html.twig
+        _viewer:
+
+enhavo_category_category_delete:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_category.controller.category:deleteAction
+
+enhavo_category_category_preview:
+    options:
+        expose: true
+    path: /admin/enhavo/category/category/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_category.controller.category:previewAction
