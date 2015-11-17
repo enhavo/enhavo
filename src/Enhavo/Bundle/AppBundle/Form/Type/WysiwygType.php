@@ -13,7 +13,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Rhumsaa\Uuid\Uuid;
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
 
 class WysiwygType extends AbstractType
@@ -33,7 +32,7 @@ class WysiwygType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['id'] = Uuid::uuid4()->toString();
+        $view->vars['id'] = uniqid();
 
         $option = new WysiwygOption();
         $option->setFormats($options['formats']);
