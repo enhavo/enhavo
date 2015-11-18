@@ -46,6 +46,14 @@ enhavo_category_category_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                    name:
+                        label: name
+                        property: name
 
 enhavo_category_category_delete:
     options:
