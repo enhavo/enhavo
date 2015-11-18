@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Slide
 {
-    const LINK_TYPE_EXTERNAL = 'external';
-
     /**
      * @var integer
      */
@@ -30,11 +28,6 @@ class Slide
      * @var string
      */
     protected $url;
-
-    /**
-     * @var string
-     */
-    protected $link_type;
 
     /**
      * @var integer
@@ -63,7 +56,6 @@ class Slide
     public function __construct()
     {
         $this->image = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->link_type = self::LINK_TYPE_EXTERNAL;
     }
 
     /**
@@ -143,29 +135,6 @@ class Slide
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * Set link_type
-     *
-     * @param string $linkType
-     * @return Slider
-     */
-    public function setLinkType($linkType)
-    {
-        $this->link_type = $linkType;
-
-        return $this;
-    }
-
-    /**
-     * Get link_type
-     *
-     * @return string 
-     */
-    public function getLinkType()
-    {
-        return $this->link_type;
     }
 
     /**

@@ -24,11 +24,6 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             length: 255
             nullable: true
 
-        link_type:
-            type: text
-            length: 255
-            nullable: true
-
         public:
             type: boolean
             nullable: true

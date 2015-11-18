@@ -28,7 +28,7 @@ class SlideType extends AbstractType
         ));
 
         $builder->add('url', 'text', array(
-            'label' => ' ',
+            'label' => 'form.label.url',
             'attr' => array('class' => 'link-type-external'),
         ));
 
@@ -36,23 +36,12 @@ class SlideType extends AbstractType
             'label' => 'form.label.text'
         ));
 
-        $builder->add('link_type', 'text', array(
-            'label' => 'form.label.link'
-        ));
-
-        $builder->add('public', 'choice', array(
-            'label' => 'form.label.public',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
+        $builder->add('public', 'enhavo_boolean', array(
+            'label' => 'form.label.public'
         ));
 
         $builder->add('image', 'enhavo_files', array(
-            'label' => 'form.label.image',
-            'information' => array('Bilder in der Größe 640x360 Pixel (oder ein vielfaches davon) hochladen'),
+            'label' => 'form.label.image'
         ));
     }
 

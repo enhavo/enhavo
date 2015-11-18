@@ -47,9 +47,11 @@ enhavo_slider_slide_table:
                     id:
                         label: id
                         property: id
+                        width: 1
                     title:
                         label: title
                         property: title
+                        width: 11
 
 enhavo_slider_slide_delete:
     options:
