@@ -2,18 +2,15 @@
 
 namespace Enhavo\Bundle\PageBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\PageBundle\Entity\Page;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Enhavo\Bundle\PageBundle\Form\Type\PageType;
-use Symfony\Component\HttpFoundation\Request;
 
-class PageController extends Controller
+class PageController extends ResourceController
 {
-    public function showAction(Page $page)
+    public function showResource(Page $page)
     {
-        return $this->render('EnhavoPageBundle:Frontend:show.html.twig', array(
-            'page' => $page
+        return $this->render('EnhavoPageBundle:Page:show.html.twig', array(
+            'data' => $page
         ));
     }
 }

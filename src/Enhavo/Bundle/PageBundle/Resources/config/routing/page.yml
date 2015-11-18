@@ -31,7 +31,7 @@ enhavo_page_page_create:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_news_preview
+                    route: enhavo_news_page_preview
                     label: label.preview
                     icon: eye
 
@@ -42,6 +42,8 @@ enhavo_page_page_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_page.controller.page:previewAction
+        _viewer:
+            service: enhavo_page.controller.page:showResource
 
 enhavo_page_page_update:
     options:
@@ -66,7 +68,7 @@ enhavo_page_page_update:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_news_preview
+                    route: enhavo_page_page_preview
                     label: label.preview
                     icon: eye
 
