@@ -37,14 +37,8 @@ class PicturePictureType extends ItemFormType
             'label' => 'form.label.caption_right'
         ));
 
-        $builder->add('frame', 'choice', array(
-            'label' => 'form.label.frame',
-            'choices'   => array(
-                '1' => 'label.yes',
-                '0' => 'label.no'
-            ),
-            'expanded' => true,
-            'multiple' => false
+        $builder->add('frame', 'enhavo_boolean', array(
+            'label' => 'form.label.frame'
         ));
     }
 

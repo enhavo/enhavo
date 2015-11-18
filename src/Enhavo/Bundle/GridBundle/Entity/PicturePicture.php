@@ -31,8 +31,14 @@ class PicturePicture implements ItemTypeInterface
      */
     protected $frame;
 
+    /**
+     * @var string
+     */
     protected $captionLeft;
 
+    /**
+     * @var string
+     */
     protected $captionRight;
 
     /**
