@@ -7,7 +7,7 @@ function ContentForm(router)
   var self = this;
 
   this.initContentForm = function(form) {
-    $(form).find('.contentForm').each(function() {
+    $(form).find('.enhavo_contentForm').each(function() {
 
       var contentForm = $(this);
       var menu = $(this).find('.menu');
