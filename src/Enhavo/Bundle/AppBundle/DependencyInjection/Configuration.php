@@ -68,6 +68,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('table')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\TableViewer')->end()
                         ->scalarNode('edit')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\EditViewer')->end()
                         ->scalarNode('index')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\IndexViewer')->end()
+                        ->scalarNode('preview')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\PreviewViewer')->end()
                     ->end()
                 ->end()
             ->end()

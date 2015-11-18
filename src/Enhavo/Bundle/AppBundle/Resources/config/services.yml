@@ -68,3 +68,21 @@ services:
         arguments:
             - @templating
             - @kernel
+
+    enhavo_app.preview.default_renderer:
+        class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
+
+    enhavo_app.preview.strategy_resolver:
+        class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
+        arguments:
+            - @service_container
+
+    enhavo_app.preview.strategy.dynamic:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
+        arguments:
+            - @service_container
+
+    enhavo_app.preview.strategy.service:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
+        arguments:
+            - @service_container
