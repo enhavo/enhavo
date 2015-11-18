@@ -223,7 +223,7 @@ class Category
             $this->slug = '';
             if($this->getName()) {
                 $slugifier = new Slugifier;
-                $this->slug = $slugifier->slugify($this->getName()).'.html';
+                $this->slug = $slugifier->slugify($this->getName());
             }
         }
         return $this->slug;
