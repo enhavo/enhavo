@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use BaconStringUtils\Slugifier;
 
 /**
  * Category
@@ -93,6 +94,11 @@ class Category
      * @var integer
      */
     protected $order;
+
+    /**
+     * @var string
+     */
+    protected $slug;
 
 
     /**
@@ -191,5 +197,35 @@ class Category
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        if(empty($this->slug)) {
+            $this->slug = '';
+            if($this->getName()) {
+                $slugifier = new Slugifier;
+                $this->slug = $slugifier->slugify($this->getName()).'.html';
+            }
+        }
+        return $this->slug;
     }
 }

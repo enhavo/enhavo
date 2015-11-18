@@ -26,6 +26,9 @@ class CategoryType extends AbstractType
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture'
         ));
+        $builder->add('slug', 'hidden', array(
+            'label' => 'form.label.slug'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
