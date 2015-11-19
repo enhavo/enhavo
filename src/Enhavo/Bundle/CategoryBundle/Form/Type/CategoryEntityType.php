@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
 class CategoryEntityType extends AbstractType
@@ -22,26 +22,19 @@ class CategoryEntityType extends AbstractType
 
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $manager = $this->manager;
 
-        $resolver->setRequired(array(
-            'category_name'
-        ));
-
-        #$resolver->setNormalizers(array(
-        #    'query_builder' => function (Options $options, $configs) use ($manager) {
-        #            return function() use ($manager, $options) {
-        ##                return $manager->getRepository('EnhavoCategoryBundle:Category')->getByCollectionName($options['category_name']);
-        #            };
-        #        },
-        #));
+        $resolver->setNormalizer('query_builder', function (Options $options, $value) use ($manager) {
+            return $manager->getRepository('EnhavoCategoryBundle:Category')->getByCollectionQuery($options['category_name']);
+        });
 
         $resolver->setDefaults(array(
             'expanded' => true,
             'multiple' => true,
-            'class' => 'Enhavo\Bundle\CategoryBundle\Entity\Category'
+            'class' => 'Enhavo\Bundle\CategoryBundle\Entity\Category',
+            'category_name' => null
         ));
     }
 

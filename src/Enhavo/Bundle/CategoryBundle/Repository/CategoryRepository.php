@@ -12,11 +12,15 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    public function getByCollectionName($name)
+    public function getByCollectionQuery($name)
     {
-        return $this->createQueryBuilder('u')
-            ->leftJoin('u.collection', 'r')
-            ->where('r.name = ?1')
-            ->setParameter(1, $name);
+        if($name) {
+            return $this->createQueryBuilder('u')
+                ->leftJoin('u.collection', 'r')
+                ->where('r.name = ?1')
+                ->setParameter(1, $name);
+        } else {
+            return $this->createQueryBuilder('u');
+        }
     }
 }
