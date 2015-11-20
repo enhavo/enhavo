@@ -31,7 +31,7 @@ class TextPictureType extends ItemFormType
             'label' => 'form.label.position',
             'choices'   => array(
                 '1' => 'label.text_left-picture_right',
-                '0' => 'label.picture_left-text_right'
+                '2' => 'label.picture_left-text_right'
             ),
             'expanded' => true,
             'multiple' => false
