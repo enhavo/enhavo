@@ -1,15 +1,15 @@
 <div class="row head-row">
     {% for column in columns %}
-        <div class="col-md-{{ column.width }}">{{ column.label|trans }}</div>
+        <div class="col-xs-{{ column.width }}">{{ column.label|trans }}</div>
     {% endfor %}
 </div>
 
 <div class="row row-container">
-    <div class="col-md-{{ viewer.tableWidth }}">
+    <div class="col-xs-{{ viewer.tableWidth }}">
         {% for item in data %}
             <div class="row entry-row" data-id="{{ item.id }}">
                 {% for column in columns %}
-                    <div class="col-md-{{ column.width }}">
+                    <div class="col-xs-{{ column.width }}">
                         {% if column.widget is defined %}
                             {{ viewer.renderWidget(column.widget, column.property, item)|raw }}
                         {% else %}

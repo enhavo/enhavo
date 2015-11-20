@@ -306,4 +306,16 @@ function Admin (router, templating, translator)
         })
     });
   };
+
+  this.initNavigation = function()
+  {
+    $(function(){
+      $('[data-mobile-menu]').on('click', function(){
+        $('[data-menu-container]').toggleClass("active");
+        $('[data-content-container]').toggleClass("push");
+        $(this).toggleClass("push");
+      });
+    });
+  }
 }
+

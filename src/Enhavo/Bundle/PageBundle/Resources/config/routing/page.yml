@@ -87,13 +87,16 @@ enhavo_page_page_table:
                     id:
                         label: ID
                         property: id
-                    title:
-                        label: title
-                        property: title
+                        width: 1
                     public:
                         label: public
                         property: public
                         widget: EnhavoAppBundle:Widget:boolean.html.twig
+                        width: 1
+                    title:
+                        label: title
+                        property: title
+                        width: 10
 
 enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}

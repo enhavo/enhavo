@@ -77,9 +77,11 @@ enhavo_article_article_table:
                     id:
                         label: ID
                         property: id
+                        width: 1
                     title:
                         label: title
                         property: title
+                        width: 11
 
 enhavo_article_article_delete:
     options:

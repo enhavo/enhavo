@@ -76,16 +76,14 @@
     <div id="overlay"></div>
     <div id="overlayContent"></div>
     <div id="overlayMessage"></div>
-
     <div id="iframeContainer">
         <div class="close"><i class="fa fa-times"></i></div>
         <iframe src="" id="iframe" name="iframe"></iframe>
     </div>
-
-    <div id="menu-main-background"></div>
     <div class="clearfix">
-        <div id="menu-main-container">{{ admin_menu_render() }}</div>
-        <div id="content-container" class="container">{% block content %}{% endblock %}</div>
+        <a class="responsive-menu-btn" data-mobile-menu></a>
+        <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
+        <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>
     </div>
 {% endblock %}
 </body>
