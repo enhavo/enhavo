@@ -47,14 +47,13 @@ class ContactController extends Controller
                 $this->sendMailToSender($contact);
             }
             $response = new JsonResponse(array(
-
+                'message' => 'Nachricht erfolgreich gesendet!'
             ));
-            $response->setContent('Nachricht erfolgreich gesendet!');
-
         } else {
             $errors = $this->getErrorResolver()->getErrors($form);
-            $response = new Response();
-            $response->setContent($errors[0]);
+            $response = new JsonResponse(array(
+                'message' => $errors[0]
+            ), 400);
         }
         return $response;
     }

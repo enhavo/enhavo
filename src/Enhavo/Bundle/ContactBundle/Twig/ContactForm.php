@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\ContactBundle\Twig;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
-class ContactRender extends \Twig_Extension
+class ContactForm extends \Twig_Extension
 {
     /**
      * @var Container

@@ -28,7 +28,7 @@ function ContactForm() {
                 },
                 error: function(response) {
                     $('#contact_message').remove();
-                    form.append('<div id="contact_message">Fehler!</div>');
+                    form.append('<div id="contact_message">'+response.responseJSON.message+'</div>');
                 }
             });
             return false;

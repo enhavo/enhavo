@@ -1,6 +1,6 @@
 services:
     enhavo_contact_render:
-        class: Enhavo\Bundle\ContactBundle\Twig\ContactRender
+        class: Enhavo\Bundle\ContactBundle\Twig\ContactForm
         arguments:
             - @service_container
         tags:
