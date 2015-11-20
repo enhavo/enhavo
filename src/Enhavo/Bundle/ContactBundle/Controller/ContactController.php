@@ -32,7 +32,7 @@ class ContactController extends Controller
 
             $contact = $form->getData();
 
-            $text = $this->render($this->container->getParameter('enhavo_contact.contact.template.recipient'), array(
+            $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.recipient'), array(
                 'contact' => $contact
             ));
 
@@ -60,13 +60,13 @@ class ContactController extends Controller
 
     protected function sendMailToSender(ContactInterface $contact) {
 
-        $text = $this->render($this->container->getParameter('enhavo_contact.contact.template.sender'), array(
+        $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.sender'), array(
             'contact' => $contact
         ));
 
         $message = \Swift_Message::newInstance()
             ->setSubject($this->container->getParameter('enhavo_contact.contact.subject'))
-            ->setFrom($this->container->getParameter('enhavo_contact.contact.recipient'))
+            ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
             ->setTo($contact->getEmail())
             ->setBody($text);
 
