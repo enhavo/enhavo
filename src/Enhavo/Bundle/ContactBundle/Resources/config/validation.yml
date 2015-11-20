@@ -3,3 +3,5 @@ Enhavo\Bundle\ContactBundle\Model\Contact:
         email:
             - Email: ~
             - NotBlank: ~
+        message:
+            - NotBlank: ~

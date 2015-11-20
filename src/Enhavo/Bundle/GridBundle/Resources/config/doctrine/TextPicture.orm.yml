@@ -21,6 +21,9 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
         frame:
             type: boolean
             nullable: true
+        frame:
+            type: boolean
+            nullable: true
 
     manyToMany:
         files:
