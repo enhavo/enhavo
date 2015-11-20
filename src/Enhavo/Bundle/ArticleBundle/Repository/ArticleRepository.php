@@ -84,4 +84,79 @@ class ArticleRepository extends EntityRepository
 
         return $articles;
     }
+
+    public function findNextInDateOrder(Article $currentArticle)
+    {
+        // Find articles with same date
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date = :articleDate');
+        $query->setParameter('currentDate', new \DateTime());
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $articlesSameDate = $query->getQuery()->getResult();
+        if (!empty($articlesSameDate) && !($articlesSameDate[0]->getId() == $currentArticle->getId())) {
+            // Return previous in list
+            for($i = 0; $i < count($articlesSameDate); $i++) {
+                if ($articlesSameDate[$i]->getId() == $currentArticle->getId()) {
+                    return $articlesSameDate[$i - 1];
+                }
+            }
+        }
+
+        // No next one at current date, search for newer ones
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date > :articleDate');
+        $query->setParameter('currentDate', new \DateTime());
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $query->addOrderBy('n.publication_date','asc');
+        $query->addOrderBy('n.id','desc');
+        $query->setMaxResults(1);
+        $nextArticle = $query->getQuery()->getResult();
+        if (empty($nextArticle)) {
+            // No newer articles
+            return null;
+        } else {
+            return $nextArticle[0];
+        }
+    }
+    public function findPreviousInDateOrder(Article $currentArticle)
+    {
+        // Find articles with same date
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date = :articleDate');
+        $query->setParameter('currentDate', new \DateTime());
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $articlesSameDate = $query->getQuery()->getResult();
+        if (!empty($articlesSameDate) && !($articlesSameDate[count($articlesSameDate) - 1]->getId() == $currentArticle->getId())) {
+            // Return next in list
+            for($i = 0; $i < count($articlesSameDate); $i++) {
+                if ($articlesSameDate[$i]->getId() == $currentArticle->getId()) {
+                    return $articlesSameDate[$i + 1];
+                }
+            }
+        }
+
+        // No next one at current date, search for newer ones
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date < :articleDate');
+        $query->setParameter('currentDate', new \DateTime());
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $query->addOrderBy('n.publication_date','desc');
+        $query->addOrderBy('n.id','asc');
+        $query->setMaxResults(1);
+        $nextArticle = $query->getQuery()->getResult();
+        if (empty($nextArticle)) {
+            // No older articles
+            return null;
+        } else {
+            return $nextArticle[0];
+        }
+    }
 }
