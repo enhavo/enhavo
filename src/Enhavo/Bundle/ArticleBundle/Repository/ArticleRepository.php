@@ -85,6 +85,13 @@ class ArticleRepository extends EntityRepository
         return $articles;
     }
 
+    /**
+     * Returns the next published article in order if sorted by publication date.
+     * Only returns articles that are published and whose publication date does not lie in the future.
+     *
+     * @param Article $currentArticle The current article
+     * @return null|Article The next article after $currentArticle, or null if $currentArticle is the last one.
+     */
     public function findNextInDateOrder(Article $currentArticle)
     {
         // Find articles with same date
@@ -122,6 +129,14 @@ class ArticleRepository extends EntityRepository
             return $nextArticle[0];
         }
     }
+
+    /**
+     * Returns the previous published article in order if sorted by publication date.
+     * Only returns articles that are published and whose publication date does not lie in the future.
+     *
+     * @param Article $currentArticle The current article
+     * @return null|Article The previous article before $currentArticle, or null if $currentArticle is the first one.
+     */
     public function findPreviousInDateOrder(Article $currentArticle)
     {
         // Find articles with same date
