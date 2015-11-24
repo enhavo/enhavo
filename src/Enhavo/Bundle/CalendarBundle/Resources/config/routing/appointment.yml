@@ -1,0 +1,60 @@
+enhavo_calendar_appointment_index:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:indexAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:index.html.twig
+        _viewer:
+
+enhavo_calendar_appointment_create:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:createAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:create.html.twig
+        _viewer:
+
+enhavo_calendar_appointment_update:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:updateAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:update.html.twig
+        _viewer:
+
+enhavo_calendar_appointment_table:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_calendar.controller.appointment:tableAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:table.html.twig
+        _viewer:
+
+enhavo_calendar_appointment_delete:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:deleteAction
+
+enhavo_calendar_appointment_preview:
+    options:
+        expose: true
+    path: /admin/enhavo/calendar/appointment/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:previewAction

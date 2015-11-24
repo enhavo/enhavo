@@ -55,6 +55,10 @@ enhavo_category_category:
     resource: "@EnhavoCategoryBundle/Resources/config/routing/category.yml"
     prefix:   /
 
+enhavo_calendar:
+    resource: "@EnhavoCalendarBundle/Resources/config/routing/appointment.yml"
+    prefix: /admin
+
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 

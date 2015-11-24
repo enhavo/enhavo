@@ -52,6 +52,10 @@ enhavo_app:
             label: label.newsletter
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
+        calendar:
+            label: label.calendar
+            route: enhavo_calendar_appointment_index
+            role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
 
 enhavo_grid:
     render:

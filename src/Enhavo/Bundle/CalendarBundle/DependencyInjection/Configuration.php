@@ -20,9 +20,41 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_calendar');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+         $rootNode
+            ->children()
+                ->booleanNode('dynamic_routing')
+                    ->defaultFalse()
+                ->end()
+            ->end()
+
+            // Driver used by the resource bundle
+            ->children()
+                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+            ->end()
+
+            // The resources
+            ->children()
+                ->arrayNode('classes')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('appointment')
+                        ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\CalendarBundle\Entity\Appointment')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CalendarBundle\Controller\AppointmentController')->end()
+                                ->scalarNode('repository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->scalarNode('calendar_route')->defaultValue(null)->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
