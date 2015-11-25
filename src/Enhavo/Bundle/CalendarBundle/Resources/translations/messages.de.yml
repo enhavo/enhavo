@@ -1,1 +1,3 @@
 label.calendar: 'Kalender'
+form.label.dateFrom: 'Von/Am'
+form.label.dateTo: 'Bis'

@@ -19,6 +19,13 @@ enhavo_calendar_appointment_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            tabs:
+                appointment:
+                    label: Appointment
+                    template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                content:
+                    label: Content
+                    template: EnhavoCalendarBundle:Tab:content.html.twig
 
 enhavo_calendar_appointment_update:
     options:
@@ -30,6 +37,13 @@ enhavo_calendar_appointment_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            tabs:
+                appointment:
+                    label: Appointment
+                    template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                content:
+                    label: Content
+                    template: EnhavoCalendarBundle:Tab:content.html.twig
 
 enhavo_calendar_appointment_table:
     options:
@@ -42,7 +56,21 @@ enhavo_calendar_appointment_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
-
+            table:
+                columns:
+                    id:
+                        label: ID
+                        property: id
+                        width: 1
+                    title:
+                        label: title
+                        property: title
+                        width: 6
+                    date:
+                        label: date
+                        property: dateFrom
+                        widget: EnhavoAppBundle:Widget:date.html.twig
+                        width: 5
 enhavo_calendar_appointment_delete:
     options:
         expose: true
