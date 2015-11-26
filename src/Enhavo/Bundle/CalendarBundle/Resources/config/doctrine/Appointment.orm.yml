@@ -1,0 +1,43 @@
+Enhavo\Bundle\CalendarBundle\Entity\Appointment:
+    type: entity
+    table: calendar_appointment
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        teaser:
+            type: string
+            length: 255
+        dateFrom:
+            type: datetime
+        dateTo:
+            type: datetime
+        slug:
+            type: string
+            length: 255
+            nullable: true
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+
+    manyToMany:
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            joinTable:
+                name: calendar_appointment_picture
+                joinColumns:
+                    appointment_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
+    lifecycleCallbacks: {  }
