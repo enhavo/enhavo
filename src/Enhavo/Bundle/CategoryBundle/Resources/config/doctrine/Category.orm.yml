@@ -29,6 +29,7 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
                 slug:
                     separator: -
                     style: default
+                    updatable: false
                     fields: ['name']
 
     manyToOne:

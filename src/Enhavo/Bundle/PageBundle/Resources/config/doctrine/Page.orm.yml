@@ -28,6 +28,7 @@ Enhavo\Bundle\PageBundle\Entity\Page:
                 slug:
                     separator: -
                     style: default
+                    updatable: false
                     fields: ['title']
 
         priority:

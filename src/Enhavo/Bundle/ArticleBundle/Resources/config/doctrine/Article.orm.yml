@@ -28,6 +28,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
                 slug:
                     separator: -
                     style: default
+                    updatable: false
                     fields: ['title']
 
         meta_description:
