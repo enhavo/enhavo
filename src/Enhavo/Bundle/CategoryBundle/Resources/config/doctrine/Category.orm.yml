@@ -25,6 +25,12 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['name']
 
     manyToOne:
         collection:

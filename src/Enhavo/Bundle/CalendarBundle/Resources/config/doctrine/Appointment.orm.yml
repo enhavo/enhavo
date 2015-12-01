@@ -14,14 +14,22 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
         teaser:
             type: string
             length: 255
+            nullable: true
         dateFrom:
             type: datetime
         dateTo:
             type: datetime
+            nullable: true
         slug:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    updatable: false
+                    style: default
+                    fields: ['title']
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

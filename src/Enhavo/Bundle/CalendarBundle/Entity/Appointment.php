@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use BaconStringUtils\Slugifier;
 
 /**
  * Appointment
@@ -223,33 +222,18 @@ class Appointment
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Calendar
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
      * @return string
      */
     public function getSlug()
     {
-        if(empty($this->slug)) {
-            $this->slug = '';
-            if($this->getTitle()) {
-                $slugifier = new Slugifier;
-                $this->slug = $slugifier->slugify($this->getTitle());
-            }
-        }
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
 }
