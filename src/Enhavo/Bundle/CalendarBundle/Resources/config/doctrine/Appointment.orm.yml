@@ -22,6 +22,11 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    fields: ['title']
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

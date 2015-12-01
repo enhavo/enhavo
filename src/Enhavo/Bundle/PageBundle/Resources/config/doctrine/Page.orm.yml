@@ -24,6 +24,11 @@ Enhavo\Bundle\PageBundle\Entity\Page:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    fields: ['title']
 
         priority:
             type: float

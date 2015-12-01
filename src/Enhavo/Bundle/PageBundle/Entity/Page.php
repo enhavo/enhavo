@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use BaconStringUtils\Slugifier;
 
 /**
  * Page
@@ -185,33 +184,19 @@ class Page
     }
 
     /**
-     * Set slug
-     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * @param string $slug
-     * @return Page
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        if(empty($this->slug)) {
-            $this->slug = '';
-            if($this->getTitle()) {
-                $slugifier = new Slugifier;
-                $this->slug = $slugifier->slugify($this->getTitle());
-            }
-        }
-        return $this->slug;
     }
 
     /**
