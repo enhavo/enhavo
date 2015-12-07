@@ -2,9 +2,7 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use BaconStringUtils\Slugifier;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,7 +1,6 @@
-Enhavo\Bundle\CategoryBundle\Entity\Category:
+Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     type: entity
-    repositoryClass: Enhavo\Bundle\CategoryBundle\Repository\CategoryRepository
-    table: category_category
+    table: calendar_appointment
     id:
         id:
             type: integer
@@ -9,18 +8,18 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             generator:
                 strategy: AUTO
     fields:
-        name:
+        title:
+            type: string
+            length: 255
+        teaser:
             type: string
             length: 255
             nullable: true
-        text:
-            type: text
+        dateFrom:
+            type: datetime
+        dateTo:
+            type: datetime
             nullable: true
-
-        order:
-            type: integer
-            nullable: true
-            column: '`order`'
         slug:
             type: string
             length: 255
@@ -28,26 +27,25 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             gedmo:
                 slug:
                     separator: -
-                    style: default
                     updatable: false
-                    fields: ['name']
-
-    manyToOne:
-        collection:
-            targetEntity: Collection
+                    style: default
+                    fields: ['title']
+    oneToOne:
+        content:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
 
     manyToMany:
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
-                name: category_category_picture
+                name: calendar_appointment_picture
                 joinColumns:
-                    category_id:
+                    appointment_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:
                         referencedColumnName: id
-
 
     lifecycleCallbacks: {  }

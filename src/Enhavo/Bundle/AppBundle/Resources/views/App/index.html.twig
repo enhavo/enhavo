@@ -13,9 +13,9 @@
 {% block content %}
     {% block topButtons %}
         <div class="row action-row" data-action-row>
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 {% for action in actions %}
-                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-md-12"><i class="fa fa-{{ action.icon }}"></i> {{ action.label|trans }}</button>
+                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-sm-12"><i class="fa fa-{{ action.icon }}"></i> {{ action.label|trans }}</button>
                 {% endfor %}
             </div>
         </div>

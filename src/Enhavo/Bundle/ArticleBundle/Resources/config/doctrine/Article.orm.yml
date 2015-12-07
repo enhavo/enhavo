@@ -24,6 +24,12 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['title']
 
         meta_description:
             type: text
