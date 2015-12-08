@@ -5,11 +5,13 @@
         {{ form_errors(form.email) }}
         {{ form_widget(form.email) }}
 
-        {{ form_widget(form._token) }}
-
-        {% for child in form %}
-            {{ form_row(child) }}
+        {% for name,child in form %}
+            {% if name != '_token' %}
+                {{ form_row(child) }}
+            {% endif %}
         {% endfor %}
+
+        {{ form_widget(form._token) }}
 
         <button type="submit" id="addEmail" class="button">Senden</button>
     </form>

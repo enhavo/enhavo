@@ -13,3 +13,7 @@
         </div>
     {% endfor %}
 </div>
+
+{% if not form._token.rendered %}
+    {{ form_row(form._token) }}
+{% endif %}

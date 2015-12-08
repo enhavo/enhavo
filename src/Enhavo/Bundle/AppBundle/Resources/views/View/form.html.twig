@@ -1,0 +1,9 @@
+{% for name,child in form %}
+    {% if name != '_token' %}
+        {{ form_row(child) }}
+    {% endif %}
+{% endfor %}
+
+{% if not form._token.rendered %}
+    {{ form_row(form._token) }}
+{% endif %}
