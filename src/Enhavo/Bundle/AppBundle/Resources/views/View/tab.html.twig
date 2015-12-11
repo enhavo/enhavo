@@ -14,6 +14,8 @@
     {% endfor %}
 </div>
 
-{% if not form._token.rendered %}
-    {{ form_row(form._token) }}
+{% if form._token is defined %}
+    {% if not form._token.rendered %}
+        {{ form_row(form._token) }}
+    {% endif %}
 {% endif %}
