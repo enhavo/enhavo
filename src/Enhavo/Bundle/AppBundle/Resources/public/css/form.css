@@ -28,3 +28,59 @@
 .wysiwyg-container .mce-btn-group .mce-last {border-radius:0;}
 .wysiwyg-container .mce-btn-group .mce-last button {border-right:0;}
 .wysiwyg-container .mce-splitbtn .mce-open {border-left:0;}
+
+#list-fields .button-delete {    position: absolute;  cursor: pointer;  z-index: 1;  top: 0;  text-align: center;  width: 33px;  background: #fff;  right: 28px; height: 100%; padding-top: 5px;}
+#list-fields li {position: relative;}
+#list-fields .button-container {
+    background-color: #ddd;
+    padding-left: 85px;
+    position: relative;
+    line-height: 25px;
+}
+#list-fields .button {
+    position: absolute;
+    cursor: pointer;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    text-align: center;
+    width: 33px;
+    background: #fff;
+}
+
+#list-fields .button:hover {
+    background-color: #4395d1;
+}
+
+#list-fields .row {margin-left: 0px;margin-right: 0px}
+#add-another {width: 26px;}
+#list-fields .button-up {left: 0}
+#list-fields .button-down {left: 34px}
+
+#list-fields.sbd{}
+#list-fields.sbd li{border: 1px solid #ddd;margin-bottom: 10px;}
+#list-fields.sbd .button-delete{right:0;height: 25px; padding-top: 2px;}
+
+#list-fields.sd{}
+#list-fields.sd .button-delete{right:94px; height: 32px; padding-top: 5px;}
+#list-fields.sd .button-up{right: 0; left:inherit;height: 32px;padding-top: 5px;}
+#list-fields.sd .button-down{right: 34px; left:inherit;height: 32px;padding-top: 5px;}
+
+#list-fields.bd{}
+#list-fields.bd li{border: 1px solid #ddd; padding-top: 10px;margin-top: 10px;margin-bottom: 16px;}
+#list-fields.bd .button-delete {height: 32px;margin-top: 10px;}
+
+#list-fields.d{}
+#list-fields.d .button-delete{height: 32px;}
+
+#list-fields.b{}
+#list-fields.b li{border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
+
+#list-fields.s{}
+#list-fields.s .button-up{right: 0; left:inherit;height: 32px;padding-top: 5px;}
+#list-fields.s .button-down{right: 34px; left:inherit;height: 32px;padding-top: 5px;}
+
+#list-fields.sb{}
+#list-fields.sb li{border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
+#list-fields.sb .button-up{right: 10px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}
+#list-fields.sb .button-down{right: 44px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}

@@ -64,4 +64,49 @@
     {{ form_widget(form.staticPrefix) }}
 {% endblock %}
 
+{% block enhavo_list_widget %}
+    {% import _self as forms %}
+    <ul id="list-fields"{% if sortable == true %}data-order="{{ sortable_property }}"{% endif %} data-prototype="{{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(form.vars.prototype))|e }}" class="{% if border == true and sortable == true and allow_delete == true %}sbd{% elseif sortable == true and border == false and allow_delete == true %}sd{% elseif sortable == false and border == true and allow_delete == true%}bd{% elseif sortable == false and border == false and allow_delete == true %}d{% elseif sortable == false and border == true and allow_delete == false %}b{% elseif sortable == true and border == false and allow_delete == false %}s{% elseif sortable == true and border == true and allow_delete == false %}sb{% endif %}">
+        {% for item in form.children %}
+            {{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(item))|raw }}
+        {% endfor %}
+    </ul>
+
+    <div class="row mb1">
+        <div class="col-md-9">
+            <div class="button col-md-1 btnsmall" id="add-another">
+                <i class="fa fa-plus"></i>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
+    <li class="row listElement">
+        {% if sortable == true and border == true and allow_delete == true %}
+            <div class="button-container mb1">
+                <div class="button button-up"><i class="fa fa-angle-up"></i></div>
+                <div class="button button-down"><i class="fa fa-angle-down"></i></div>
+                <div class="label">{% if block_name %}{{ block_name }}{% else %}{{ name }}{% endif %}</div>
+            </div>
+        {% endif %}
+
+        <div {% if sortable == true and border == false and allow_delete == true %} class="col-md-11" {% elseif sortable == true and allow_delete == false %} class="col-bd-12"{% endif %}>
+            {{ form_widget|raw }}
+        </div>
+        {% if allow_delete == true %}
+            <div class="button col-md-1 button-delete">
+                <i class="fa fa-remove"></i>
+            </div>
+            {% if border == false and sortable == true %}
+                <div class="button button-up"><i class="fa fa-angle-up"></i></div>
+                <div class="button button-down"><i class="fa fa-angle-down"></i></div>
+            {% endif %}
+        {% endif %}
+        {% if sortable == true and border == true and allow_delete == false %}
+            <div class="button button-up"><i class="fa fa-angle-up"></i></div>
+            <div class="button button-down"><i class="fa fa-angle-down"></i></div>
+        {% endif %}
+    </li>
+{% endmacro %}
 
