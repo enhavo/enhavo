@@ -258,16 +258,36 @@ var Form = function(router, templating, admin, translator)
   };
 
   this.initList = function(form) {
-    // keep track of how many email fields have been rendered
-    var tagCount = $(form).find('#list-fields').children().length;
 
     var initDeleteButton = function() {
-      if($('#list-fields').length > 0) {
-        $('.button-delete').click(function (e) {
-          e.preventDefault();
-          $(this).parent().remove();
-        });
-      }
+      $(form).find('.enhavo_list').each(function() {
+        if ($(this).length > 0) {
+          $(this).on('click', '.button-delete', function (e) {
+            e.preventDefault();
+            $(this).parent().remove();
+          });
+        }
+      });
+    };
+
+    var initAddButton = function(tagList, tagCount) {
+      console.log(tagList.parent().find('.add-another'));
+      tagList.parent().find('.add-another').click(function(e) {
+        e.preventDefault();
+
+        // grab the prototype template
+        var newWidget = tagList.attr('data-prototype');
+        // replace the "__name__" used in the id and name of the prototype
+        // with a number that's unique to your emails
+        // end name attribute looks like name="contact[emails][2]"
+        newWidget = newWidget.replace(/__name__/g, tagCount);
+        //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
+        tagCount++;
+
+        tagList.append(newWidget);
+        initDeleteButton();
+        setOrderForContainer(tagList);
+      })
     };
 
     var setOrderForContainer = function(list) {
@@ -278,89 +298,78 @@ var Form = function(router, templating, admin, translator)
     };
 
     $(document).ready(function() {
-      if($('#list-fields').length > 0) {
-        if (tagCount == 0) {
-          var tagList = $('#list-fields');
 
-          // grab the prototype template
-          var newWidget = tagList.attr('data-prototype');
-          // replace the "__name__" used in the id and name of the prototype
-          // with a number that's unique to your emails
-          // end name attribute looks like name="contact[emails][2]"
-          newWidget = newWidget.replace(/__name__/g, tagCount);
-          tagCount++;
+      $(form).find('.enhavo_list').each(function() {
+        var tagList = $(this);
 
-          $('#list-fields').append(newWidget);
-          initDeleteButton();
-          setOrderForContainer(tagList);
-        }
+        // keep track of how many email fields have been rendered
+        var tagCount = $(this).children().length;
 
-        $('#add-another').on('click', function(e) {
-          e.preventDefault();
+        if(tagList.length > 0) {
+          if (tagCount == 0) {
+            // grab the prototype template
+            var newWidget = tagList.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, tagCount);
+            tagCount++;
 
-          var tagList = $('#list-fields');
-
-          // grab the prototype template
-          var newWidget = tagList.attr('data-prototype');
-          // replace the "__name__" used in the id and name of the prototype
-          // with a number that's unique to your emails
-          // end name attribute looks like name="contact[emails][2]"
-          newWidget = newWidget.replace(/__name__/g, tagCount);
-          //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
-          tagCount++;
-
-          $('#list-fields').append(newWidget);
-          initDeleteButton();
-          setOrderForContainer(tagList);
-        });
-
-        initDeleteButton();
-
-        $('#list-fields').on('click', '.button-down', function() {
-          var liElement = $(this).parent();
-          while(!liElement.hasClass('listElement')) {
-            liElement = liElement.parent();
-          };
-          var list = liElement.parent();
-          var index = list.children().index(liElement);
-          var size = list.children().size();
-
-          if(index < (size - 1)) { // is not last element
-            if(liElement.find('[data-wysiwyg]').length) {
-              var editorId = liElement.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
-              $(list.children().get(index + 1)).after(liElement); //move element after next
-              tinymce.execCommand('mceAddEditor', false, editorId);
-            } else {
-              $(list.children().get(index + 1)).after(liElement); //move element after next
-            }
+            tagList.append(newWidget);
+            initDeleteButton();
+            setOrderForContainer(tagList);
           }
 
-          setOrderForContainer(list)
-        });
+          initAddButton(tagList, tagCount);
 
-        $('#list-fields').on('click', '.button-up', function() {
-          var liElement = $(this).parent();
-          while(!liElement.hasClass('listElement')) {
-            liElement = liElement.parent();
-          };
-          var list = liElement.parent();
-          var index = list.children().index(liElement);
+          initDeleteButton();
 
-          if(index > 0) { // is not first element
-            if(liElement.find('[data-wysiwyg]').length) {
-              var editorId = liElement.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
-              $(list.children().get(index - 1)).before(liElement); //move element before last
-              tinymce.execCommand('mceAddEditor', false, editorId);
-            } else {
-              $(list.children().get(index - 1)).before(liElement); //move element before last
+          tagList.on('click', '.button-down', function() {
+            var liElement = $(this).parent();
+            while(!liElement.hasClass('listElement')) {
+              liElement = liElement.parent();
+            };
+            var list = liElement.parent();
+            var index = list.children().index(liElement);
+            var size = list.children().size();
+
+            if(index < (size - 1)) { // is not last element
+              if(liElement.find('[data-wysiwyg]').length) {
+                var editorId = liElement.find('[data-wysiwyg]').attr('id');
+                tinymce.execCommand('mceRemoveEditor', false, editorId);
+                $(list.children().get(index + 1)).after(liElement); //move element after next
+                tinymce.execCommand('mceAddEditor', false, editorId);
+              } else {
+                $(list.children().get(index + 1)).after(liElement); //move element after next
+              }
             }
-          }
 
-          setOrderForContainer(list);
-        });
-      };
+            setOrderForContainer(list)
+          });
+
+          tagList.on('click', '.button-up', function() {
+            var liElement = $(this).parent();
+            while(!liElement.hasClass('listElement')) {
+              liElement = liElement.parent();
+            };
+            var list = liElement.parent();
+            var index = list.children().index(liElement);
+
+            if(index > 0) { // is not first element
+              if(liElement.find('[data-wysiwyg]').length) {
+                var editorId = liElement.find('[data-wysiwyg]').attr('id');
+                tinymce.execCommand('mceRemoveEditor', false, editorId);
+                $(list.children().get(index - 1)).before(liElement); //move element before last
+                tinymce.execCommand('mceAddEditor', false, editorId);
+              } else {
+                $(list.children().get(index - 1)).before(liElement); //move element before last
+              }
+            }
+
+            setOrderForContainer(list);
+          });
+        };
+      });
     });
   };
 

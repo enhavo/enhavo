@@ -52,14 +52,16 @@
     background-color: #4395d1;
 }
 
-#list-fields .row {margin-left: 0px;margin-right: 0px}
-#add-another {width: 26px;}
+#list-fields .listElement {margin-left: 0px;margin-right: 0px; }
+#list-fields .listElement .input-container {margin-bottom: 10px;}
+.add-another {width: 26px;}
 #list-fields .button-up {left: 0}
 #list-fields .button-down {left: 34px}
 
 #list-fields.sbd{}
 #list-fields.sbd li{border: 1px solid #ddd;margin-bottom: 10px;}
 #list-fields.sbd .button-delete{right:0;height: 25px; padding-top: 2px;}
+#list-fields.sbd .listElement .input-container {width: 97%;margin-bottom: 10px;margin-left: 10px;}
 
 #list-fields.sd{}
 #list-fields.sd .button-delete{right:94px; height: 32px; padding-top: 5px;}
