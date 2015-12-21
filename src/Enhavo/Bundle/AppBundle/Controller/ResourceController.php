@@ -35,6 +35,7 @@ class ResourceController extends BaseController
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->handleRequest($request)->isValid()) {
                 $this->domainManager->create($resource);
+                $this->dispatchEvent('enhavo_app.create');
                 return new Response();
             }
 
@@ -74,6 +75,7 @@ class ResourceController extends BaseController
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
                 $this->domainManager->update($resource);
+                $this->dispatchEvent('enhavo_app.update');
                 return new Response();
             }
 
@@ -229,5 +231,11 @@ class ResourceController extends BaseController
         $this->isGrantedOr403('delete');
         $this->domainManager->delete($this->findOr404($request));
         return new Response();
+    }
+
+    protected function dispatchEvent($eventName)
+    {
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch($eventName);
     }
 }
