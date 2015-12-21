@@ -46,7 +46,7 @@ class ListType extends AbstractType
     {
         $resolver->setDefaults(array(
             'border' => false,
-            'sortable' => true,
+            'sortable' => false,
             'sortable_property' => 'order',
         ));
     }
