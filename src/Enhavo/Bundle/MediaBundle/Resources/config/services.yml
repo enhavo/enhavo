@@ -2,7 +2,7 @@ parameters:
     enhavo_media.form.files_type.class: Enhavo\Bundle\MediaBundle\Form\Type\FilesType
     enhavo_media.file_service.class: Enhavo\Bundle\MediaBundle\Service\FileService
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
-    enhave_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
+    enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
 
 services:
     enhavo_media_files:
@@ -26,8 +26,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhave_media.lifecycle_listener:
-        class: %enhave_media.lifecycle_listener.class%
+    enhavo_media.lifecycle_listener:
+        class: %enhavo_media.lifecycle_listener.class%
         arguments:
              - @service_container
         tags:
