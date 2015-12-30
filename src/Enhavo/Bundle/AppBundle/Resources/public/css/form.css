@@ -11,13 +11,12 @@
 .formwidget-container .select2-container {width: 100%;}
 .formwidget-container .select2-container .select2-choice {border-radius: 0;}
 
-.input-container {display:inline-block;padding:5px 6px;color: #000;background:#eee;width:100%;}
+.input-container {display:inline-block;padding:5px 6px;color: #000;background:#f3f3f3;width:100%;}
 .input-container.disabled {background:#ddd;}
 .input-container input,
 .input-container textarea {font: 13px/1.6em "Open Sans";margin:0;background:transparent;border:0px;resize:none;width: 100%;}
 .input-container textarea {margin-right: 20px;}
 
-.label-container label {color:#000;}
 
 .wysiwyg-container .mce-panel {background:#eee;border:1px solid #eee;}
 .wysiwyg-container .mce-tinymce {border-radius:0;}
@@ -28,3 +27,9 @@
 .wysiwyg-container .mce-btn-group .mce-last {border-radius:0;}
 .wysiwyg-container .mce-btn-group .mce-last button {border-right:0;}
 .wysiwyg-container .mce-splitbtn .mce-open {border-left:0;}
+
+#overlayContent form > .row:last-of-type{
+    padding: 25px 0;
+    background: #fefefe;
+    border-top: 1px solid #f3f3f3;
+}
