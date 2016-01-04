@@ -1,6 +1,6 @@
 parameters:
     environment: dev
-    debug: true
+    debug: false
     debug_toolbar: false
 
     database_driver:   pdo_mysql
@@ -19,3 +19,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     contact_form_recipient: ~
+    contact_form_sender: ~

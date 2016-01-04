@@ -66,7 +66,24 @@
 
 {% block enhavo_list_widget %}
     {% import _self as forms %}
-    <ul id="list-fields"{% if sortable == true %}data-order="{{ sortable_property }}"{% endif %} data-prototype="{{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(form.vars.prototype))|e }}" class="enhavo_list {% if border == true and sortable == true and allow_delete == true %}sbd{% elseif sortable == true and border == false and allow_delete == true %}sd{% elseif sortable == false and border == true and allow_delete == true%}bd{% elseif sortable == false and border == false and allow_delete == true %}d{% elseif sortable == false and border == true and allow_delete == false %}b{% elseif sortable == true and border == false and allow_delete == false %}s{% elseif sortable == true and border == true and allow_delete == false %}sb{% endif %}">
+    <ul id="list-fields"
+        {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
+        data-prototype="{{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(form.vars.prototype))|e }}"
+        class="enhavo_list  {% if border and sortable and allow_delete %}
+                                sortable-border-delete
+                            {% elseif sortable and allow_delete and not border %}
+                                sortable-delete
+                            {% elseif border and allow_delete and not sortable %}
+                                border-delete
+                            {% elseif allow_delete and not sortable and not border %}
+                                delete
+                            {% elseif border and not allow_delete and not sortable %}
+                                border
+                            {% elseif sortable and not border and not allow_delete %}
+                                sortable
+                            {% elseif sortable and border and not allow_delete %}
+                                sortable-border
+                            {% endif %}">
         {% for item in form.children %}
             {{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(item))|raw }}
         {% endfor %}
@@ -83,7 +100,7 @@
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
     <li class="row listElement">
-        {% if sortable == true and border == true and allow_delete == true %}
+        {% if sortable and border and allow_delete %}
             <div class="button-container mb1">
                 <div class="button button-up"><i class="fa fa-angle-up"></i></div>
                 <div class="button button-down"><i class="fa fa-angle-down"></i></div>
@@ -91,19 +108,19 @@
             </div>
         {% endif %}
 
-        <div {% if sortable == true and border == false and allow_delete == true %} class="col-md-11" {% elseif sortable == true and allow_delete == false %} class="col-bd-12"{% endif %}>
+        <div {% if sortable and allow_delete and not border %} class="col-md-11" {% elseif sortable and not allow_delete %} class="col-bd-12"{% endif %}>
             {{ form_widget|raw }}
         </div>
-        {% if allow_delete == true %}
+        {% if allow_delete %}
             <div class="button col-md-1 button-delete">
                 <i class="fa fa-remove"></i>
             </div>
-            {% if border == false and sortable == true %}
+            {% if sortable and not border %}
                 <div class="button button-up"><i class="fa fa-angle-up"></i></div>
                 <div class="button button-down"><i class="fa fa-angle-down"></i></div>
             {% endif %}
         {% endif %}
-        {% if sortable == true and border == true and allow_delete == false %}
+        {% if sortable and border and not allow_delete %}
             <div class="button button-up"><i class="fa fa-angle-up"></i></div>
             <div class="button button-down"><i class="fa fa-angle-down"></i></div>
         {% endif %}
