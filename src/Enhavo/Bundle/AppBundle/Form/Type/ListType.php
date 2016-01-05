@@ -9,12 +9,45 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class ListType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $data = null;
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use (&$data){
+            $item = $event->getData();
+            if(is_array($data) && is_array($item)) {
+                $itemKeys = array_keys($item);
+                $copyValues = array_values($item);
+                sort($itemKeys);
+                $result = array();
+                for($i = 0; $i < count($itemKeys); $i++) {
+                    $result[$itemKeys[$i]] = $copyValues[$i];
+                }
+
+                $event->setData($result);
+            }
+            return;
+        });
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use (&$data){
+            $item = $event->getData();
+            $form = $event->getForm();
+            $data = $item;
+            return;
+        });
+    }
     /**
      * {@inheritdoc}
      */
@@ -25,6 +58,16 @@ class ListType extends AbstractType
         $view->vars['sortable_property'] = $options['sortable_property'];
         $view->vars['allow_delete'] = $options['allow_delete'];
         $view->vars['block_name'] = $options['block_name'];
+        $lastIndex = null;
+        $array = $form->getData();
+        if($array != null) {
+            end($array);
+            $lastIndex = key($array);
+        } else {
+            $lastIndex = -1;
+        }
+
+        $view->vars['index'] = $lastIndex+1;
     }
 
     public function getName()
@@ -46,7 +89,7 @@ class ListType extends AbstractType
     {
         $resolver->setDefaults(array(
             'border' => false,
-            'sortable' => true,
+            'sortable' => false,
             'sortable_property' => 'order',
         ));
     }

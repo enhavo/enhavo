@@ -19,3 +19,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     contact_form_recipient: ~
+    contact_form_sender: ~
