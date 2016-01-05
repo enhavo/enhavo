@@ -69,21 +69,22 @@
     <ul id="list-fields"
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
         data-prototype="{{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(form.vars.prototype))|e }}"
-        class="enhavo_list  {% if border and sortable and allow_delete %}
-                                sortable-border-delete
-                            {% elseif sortable and allow_delete and not border %}
-                                sortable-delete
-                            {% elseif border and allow_delete and not sortable %}
-                                border-delete
-                            {% elseif allow_delete and not sortable and not border %}
-                                delete
-                            {% elseif border and not allow_delete and not sortable %}
-                                border
-                            {% elseif sortable and not border and not allow_delete %}
-                                sortable
-                            {% elseif sortable and border and not allow_delete %}
-                                sortable-border
-                            {% endif %}">
+        class="enhavo_list
+        {% if border and sortable and allow_delete %}
+            sortable-border-delete
+        {% elseif sortable and allow_delete and not border %}
+            sortable-delete
+        {% elseif border and allow_delete and not sortable %}
+            border-delete
+        {% elseif allow_delete and not sortable and not border %}
+            delete
+        {% elseif border and not allow_delete and not sortable %}
+            border
+        {% elseif sortable and not border and not allow_delete %}
+            sortable
+        {% elseif sortable and border and not allow_delete %}
+            sortable-border
+        {% endif %}">
         {% for item in form.children %}
             {{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(item))|raw }}
         {% endfor %}
