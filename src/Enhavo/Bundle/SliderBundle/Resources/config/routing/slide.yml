@@ -47,14 +47,16 @@ enhavo_slider_slide_table:
                     id:
                         label: id
                         property: id
+                        width: 1
                     title:
                         label: title
                         property: title
+                        width: 11
 
 enhavo_slider_slide_delete:
     options:
         expose: true
     path: /enhavo/slider/slide/delete/{id}
-    methods: [POST]
+    methods: [POST, DELETE]
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction

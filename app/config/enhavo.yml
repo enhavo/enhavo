@@ -36,6 +36,10 @@ enhavo_app:
             label: label.page
             route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
+        category:
+            label: label.category
+            route: enhavo_category_category_index
+            role: ROLE_ESPERANTO_CATEGORY_CATEGORY_INDEX
         download:
             label: label.download
             route: enhavo_download_download_index
@@ -48,6 +52,10 @@ enhavo_app:
             label: label.newsletter
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
+        calendar:
+            label: label.calendar
+            route: enhavo_calendar_appointment_index
+            role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
 
 enhavo_grid:
     render:
@@ -119,3 +127,19 @@ enhavo_article:
             model: Enhavo\Bundle\ArticleBundle\Entity\Article
             form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
             repository: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
+
+enhavo_category:
+    default_collection: default
+
+enhavo_contact:
+    contact:
+        model: Enhavo\Bundle\ContactBundle\Model\Contact
+        form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
+        template:
+            form: EnhavoContactBundle:Contact:form.html.twig
+            recipient: EnhavoContactBundle:Contact:recipient.html.twig
+            sender: EnhavoContactBundle:Contact:sender.html.twig
+        recipient: %contact_form_recipient%
+        from: %contact_form_sender%
+        subject: Kontaktformular
+        send_to_sender: true

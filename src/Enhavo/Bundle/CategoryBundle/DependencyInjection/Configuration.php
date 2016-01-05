@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             // Driver used by the resource bundle
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+                ->scalarNode('default_collection')->defaultValue('default')->end()
             ->end()
 
             // The resources
@@ -35,9 +36,19 @@ class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('model')->defaultValue('Enhavo\Bundle\CategoryBundle\Entity\Collection')->end()
-                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CategoryBundle\Controller\ResourceController')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
                                 ->scalarNode('repository')->end()
                                 ->scalarNode('form')->defaultValue('Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType')->end()
+                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('category')
+                        ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\CategoryBundle\Entity\Category')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
+                                ->scalarNode('repository')->end()
+                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\CategoryBundle\Form\Type\CategoryType')->end()
                                 ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
                             ->end()
                         ->end()

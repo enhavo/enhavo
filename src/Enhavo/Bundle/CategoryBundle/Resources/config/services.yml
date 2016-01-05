@@ -3,6 +3,7 @@ parameters:
     enhavo_category.form.collection.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType
     enhavo_category_manager.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType
     enhavo_category.class: Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType
+    enhavo_category.category.subscriber.class: Enhavo\Bundle\CategoryBundle\EventListener\CategorySubscriber
 
 services:
     enhavo_category.event.collection:
@@ -22,5 +23,19 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_category'}
 
+    enhavo_category_category:
+        class: %enhavo_category.form.type.category.class%
+        arguments:
+            - %enhavo_category.model.category.class%
+        tags:
+            - { name: form.type, alias: 'enhavo_category_category'}
+
     enhavo_category_manager:
         class: %enhavo_category_manager.class%
+
+    enhavo_category.category.subscriber:
+        class: %enhavo_category.category.subscriber.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: kernel.event_subscriber }

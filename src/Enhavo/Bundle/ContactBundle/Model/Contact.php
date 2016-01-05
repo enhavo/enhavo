@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ContactBundle\Model;
 
 
-class Contact
+class Contact implements ContactInterface
 {
     /**
      * @var string

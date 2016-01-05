@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 
-class ArticleController extends Controller
+class ArticleController extends ResourceController
 {
-    public function showAction($article)
+    public function showResource($article)
     {
-        return $this->render('EnhavoAppBundle:Resource:show.html.twig', array(
+        return $this->render('EnhavoArticleBundle:Article:show.html.twig', array(
             'data' => $article
         ));
     }

@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
@@ -109,10 +110,20 @@ class ResourceController extends BaseController
 
     public function previewAction(Request $request)
     {
+        $config = $this->get('viewer.config')->parse($request);
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'preview');
+        $viewer->setBundlePrefix($this->config->getBundlePrefix());
+        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setConfig($config);
+
         $resource = $this->createNew();
         $form = $this->getForm($resource);
         $form->handleRequest($request);
-        return $this->invokePreview($resource);
+
+        $strategyName = $config->get('strategy');
+        $strategy = $this->get('enhavo_app.preview.strategy_resolver')->getStrategy($strategyName);
+        $response = $strategy->getPreviewResponse($resource, $viewer->getConfig());
+        return $response;
     }
 
     /**
@@ -211,49 +222,6 @@ class ResourceController extends BaseController
         ;
 
         return $this->handleView($view);
-    }
-
-    /**
-     * @param $resource
-     * @return Response
-     * @throws PreviewException
-     */
-    protected function invokePreview($resource)
-    {
-        $map = $this->container->getParameter('cmf_routing.controllers_by_class');
-        $controllerDefinition = null;
-        foreach ($map as $class => $value) {
-            if ($resource instanceof $class) {
-                $controllerDefinition = $value;
-                break;
-            }
-        }
-
-        if($controllerDefinition === null) {
-            throw new PreviewException(
-                sprintf(
-                    'No controller found for resource, did you add "%s" to cmf_routing.dynamic.controller_by_class in your configuration?',
-                    get_class($resource)
-                )
-            );
-        }
-
-        try {
-            $request = new Request(array(), array(), array('_controller' => $controllerDefinition));
-            $controller = $this->container->get('debug.controller_resolver')->getController($request);
-            $response = call_user_func_array($controller, array($resource));
-        } catch(\Exception $e) {
-            throw new PreviewException(
-                sprintf(
-                    'Something went wrong while trying to invoke the controller "%s", this "%s" was thrown before with message: %s',
-                    $controllerDefinition,
-                    get_class($e),
-                    $e->getMessage()
-                )
-            );
-        }
-
-        return $response;
     }
 
     public function deleteAction(Request $request)

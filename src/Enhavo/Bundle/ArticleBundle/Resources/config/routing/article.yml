@@ -98,3 +98,5 @@ enhavo_article_article_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:previewAction
+        _viewer:
+            service: enhavo_article.controller.article:showResource

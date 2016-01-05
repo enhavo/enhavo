@@ -17,7 +17,6 @@
                 <img src="/bundles/enhavoapp/img/enhavo_admin_logo.svg" alt="Enhavo CMS"/>
             </div>
             <form action="{{ path("fos_user_security_check") }}" method="post">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 <input type="hidden" id="remember_me" name="_remember_me" value="on">
                 <div class="row">
                     {#<div class="col-md-4 text-right">#}
@@ -66,6 +65,7 @@
                         Created and launched by <a href="http://xq-web.de" target="_blank">xq-web.de</a>
                     </p>
                 </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             </form>
         </div>
     </div>

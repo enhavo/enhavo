@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\ContactBundle\Twig;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
-class ContactRender extends \Twig_Extension
+class ContactForm extends \Twig_Extension
 {
     /**
      * @var Container
@@ -19,7 +19,6 @@ class ContactRender extends \Twig_Extension
 
     /**
      * @param Container $container
-     * @param $template string
      */
     public function __construct(Container $container)
     {
@@ -29,31 +28,22 @@ class ContactRender extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('contact_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('contact_form', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 
-    public function render($type=null)
+    public function render($type = 'contact')
     {
         if($this->templateEngine === null) {
             $this->templateEngine = $this->container->get('templating');
         }
 
         $formFactory = $this->container->get('form.factory');
-        if($type == null || $type == 'default'){
-            $form = $formFactory->create('enhavo_contact_contact');
-            $formView = $form->createView();
+        $form = $formFactory->create('enhavo_contact_contact');
+        $template =  $this->container->getParameter('enhavo_contact.'.$type.'.template.form');
 
-            $template = $this->container->getParameter('enhavo_contact.contact.template.render');
-        } else {
-
-            $form = $formFactory->create('enhavo_contact_contact');
-            $formView = $form->createView();
-
-            $template =  $this->container->getParameter('enhavo_contact.'.$type.'.template.render');
-        }
         return $this->templateEngine->render($template, array(
-            'form' => $formView,
+            'form' => $form->createView(),
             'type' => $type
         ));
     }

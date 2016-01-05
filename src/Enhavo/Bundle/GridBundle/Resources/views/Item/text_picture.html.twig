@@ -1,15 +1,15 @@
-<div class="row content">
-    <div class="content_textpicture">
+<div class="row enhavo_content">
+    <div class="enhavo_content_textpicture">
         {% if data.textLeft == 0 %}
         <div class="col-xs-6 left6">
             {% for file in data.files %}
                 {% if loop.first %}
-                <img class="content_img" src="{{ media_url(file,960) }}">
+                <img class="enhavo_content_img {% if data.frame %}enhavo_content_frame{% endif %}" src="{{ media_url(file,960) }}">
                 {% endif %}
             {% endfor %}
         </div>
         <div class="col-xs-6 right6">
-            <div class="content_text">
+            <div class="enhavo_content_text">
                 {% if data.title %}
                     <h2>{{ data.title }}</h2>
                 {% endif %}
@@ -20,7 +20,7 @@
         </div>
         {% else %}
             <div class="col-xs-6 left6">
-                <div class="content_text">
+                <div class="enhavo_content_text">
                     {% if data.title %}
                         <h2>{{ data.title }}</h2>
                     {% endif %}
@@ -32,7 +32,7 @@
             <div class="col-xs-6 right6">
                 {% for file in data.files %}
                     {% if loop.first %}
-                        <img class="content_img" src="{{ media_url(file,960) }}">
+                        <img class="enhavo_content_img {% if data.frame %}enhavo_content_frame{% endif %}" src="{{ media_url(file,960) }}">
                     {% endif %}
                 {% endfor %}
             </div>

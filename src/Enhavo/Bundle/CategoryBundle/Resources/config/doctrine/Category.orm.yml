@@ -13,13 +13,41 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             type: string
             length: 255
             nullable: true
+        text:
+            type: text
+            nullable: true
+
         order:
             type: integer
             nullable: true
             column: '`order`'
+        slug:
+            type: string
+            length: 255
+            nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['name']
 
     manyToOne:
         collection:
             targetEntity: Collection
+
+    manyToMany:
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            joinTable:
+                name: category_category_picture
+                joinColumns:
+                    category_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+
 
     lifecycleCallbacks: {  }

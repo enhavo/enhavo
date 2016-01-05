@@ -29,7 +29,7 @@ class Category
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,7 +52,7 @@ class Category
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -94,6 +94,11 @@ class Category
      */
     protected $order;
 
+    /**
+     * @var string
+     */
+    protected $slug;
+
 
     /**
      * Set order
@@ -111,10 +116,101 @@ class Category
     /**
      * Get order
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrder()
     {
         return $this->order;
+    }
+    /**
+     * @var string
+     */
+    private $text;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $picture;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return Category
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Add picture
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     *
+     * @return Category
+     */
+    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    {
+        $this->picture[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     */
+    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    {
+        $this->picture->removeElement($picture);
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 }

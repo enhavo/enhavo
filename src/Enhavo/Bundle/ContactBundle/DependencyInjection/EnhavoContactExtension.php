@@ -24,7 +24,7 @@ class EnhavoContactExtension extends Extension
         $container->setParameter('enhavo_contact.contact.type', 'contact');
         $container->setParameter('enhavo_contact.contact.model', $config['contact']['model']);
         $container->setParameter('enhavo_contact.contact.form', $config['contact']['form']);
-        $container->setParameter('enhavo_contact.contact.template.render', $config['contact']['template']['render']);
+        $container->setParameter('enhavo_contact.contact.template.form', $config['contact']['template']['form']);
         $container->setParameter('enhavo_contact.contact.template.recipient', $config['contact']['template']['recipient']);
         $container->setParameter('enhavo_contact.contact.template.sender', $config['contact']['template']['sender']);
         $container->setParameter('enhavo_contact.contact.recipient', $config['contact']['recipient']);

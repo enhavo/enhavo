@@ -3,7 +3,9 @@
 namespace Enhavo\Bundle\ContactBundle\Controller;
 
 use Enhavo\Bundle\ContactBundle\Model\Contact;
+use Enhavo\Bundle\ContactBundle\Model\ContactInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +32,7 @@ class ContactController extends Controller
 
             $contact = $form->getData();
 
-            $text = $this->render($this->container->getParameter('enhavo_contact.contact.template.recipient'), array(
+            $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.recipient'), array(
                 'contact' => $contact
             ));
 
@@ -41,35 +43,33 @@ class ContactController extends Controller
                 ->setBody($text);
 
             $this->get('mailer')->send($message);
-            $response = new Response();
-            if($this->container->getParameter('enhavo_contact.contact.send_to_sender') == true) {
-                $response->setContent(1);
-            } else {
-                $response->setContent(0);
+            if($this->container->getParameter('enhavo_contact.contact.send_to_sender')) {
+                $this->sendMailToSender($contact);
             }
+            $response = new JsonResponse(array(
+                'message' => 'Nachricht erfolgreich gesendet!'
+            ));
         } else {
             $errors = $this->getErrorResolver()->getErrors($form);
-            $response = new Response();
-            $response->setContent($errors[0]);
+            $response = new JsonResponse(array(
+                'message' => $errors[0]
+            ), 400);
         }
         return $response;
     }
 
-    public function senderMailAction(Request $request) {
-        $form = $this->get('form.factory')->create('enhavo_contact_'.$this->container->getParameter("enhavo_contact.contact.type"));
-        $form->handleRequest($request);
+    protected function sendMailToSender(ContactInterface $contact) {
 
-        $text = $this->render($this->container->getParameter('enhavo_contact.contact.template.sender'));
+        $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.sender'), array(
+            'contact' => $contact
+        ));
 
         $message = \Swift_Message::newInstance()
             ->setSubject($this->container->getParameter('enhavo_contact.contact.subject'))
-            ->setFrom($this->container->getParameter('enhavo_contact.contact.recipient'))
-            ->setTo($form->getData()->getEmail())
+            ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
+            ->setTo($contact->getEmail())
             ->setBody($text);
 
         $this->get('mailer')->send($message);
-        $response = new Response();
-        $response->setContent("Nachricht gesendet");
-        return $response;
     }
 }

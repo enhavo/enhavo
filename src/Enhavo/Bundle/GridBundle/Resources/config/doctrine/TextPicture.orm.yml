@@ -16,6 +16,12 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
             length: 255
             nullable: true
         textLeft:
+            type: integer
+            nullable: true
+        frame:
+            type: boolean
+            nullable: true
+        frame:
             type: boolean
             nullable: true
 

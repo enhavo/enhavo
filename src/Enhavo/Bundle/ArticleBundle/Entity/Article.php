@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use BaconStringUtils\Slugifier;
 
 class Article {
 
@@ -273,33 +272,19 @@ class Article {
     }
 
     /**
-     * Set slug
-     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * @param string $slug
-     * @return Article
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        if(empty($this->slug)) {
-            $this->slug = '';
-            if($this->getTitle()) {
-                $slugifier = new Slugifier;
-                $this->slug = $slugifier->slugify($this->getTitle()).'.html';
-            }
-        }
-        return $this->slug;
     }
 
     /**

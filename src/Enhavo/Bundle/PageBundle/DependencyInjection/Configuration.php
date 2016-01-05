@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('model')->defaultValue('Enhavo\Bundle\PageBundle\Entity\Page')->end()
-                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
+                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\PageBundle\Controller\PageController')->end()
                                 ->scalarNode('repository')->end()
                                 ->scalarNode('form')->defaultValue('Enhavo\Bundle\PageBundle\Form\Type\PageType')->end()
                                 ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()

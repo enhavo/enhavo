@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('form')->end()
                             ->arrayNode('template')
                                 ->children()
-                                    ->scalarNode('render')->end()
+                                    ->scalarNode('form')->end()
                                     ->scalarNode('recipient')->end()
                                     ->scalarNode('sender')->end()
                                 ->end()
