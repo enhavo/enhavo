@@ -47,11 +47,14 @@ enhavo_category_category_table:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             table:
+                width: 12
                 columns:
                     id:
+                        width: 1
                         label: ID
                         property: id
                     name:
+                        width: 11
                         label: name
                         property: name
 

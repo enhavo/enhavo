@@ -1,7 +1,3 @@
-#menu-main li a.menu-icon-slider {
-    background-image: url(../img/layers.png);
-}
-
 .row-container.sort-container {
     width: 425px;
     margin-left: 20px;
@@ -32,3 +28,5 @@
     right: 5px;
     cursor: move;
 }
+
+.menu-icon-slider:before{ content: '\e86e'; }

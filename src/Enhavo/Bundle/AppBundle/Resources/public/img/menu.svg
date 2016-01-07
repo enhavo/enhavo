@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" id="Ebene_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="37px" height="24.667px"
-	 viewBox="-9.5 -6.333 37 24.667" enable-background="new -9.5 -6.333 37 24.667" xml:space="preserve">
-<title></title>
-<desc></desc>
-<g id="Page-1">
-	<g id="Core" transform="translate(-87.000000, -342.000000)">
-		<g id="menu" transform="translate(87.000000, 342.000000)">
-			<path id="Shape" fill="#0C0C0C" d="M-9.5,18.333h37v-4.11h-37V18.333L-9.5,18.333z M-9.5,8.056h37V3.944h-37V8.056L-9.5,8.056z
-				 M-9.5-6.333v4.111h37v-4.111H-9.5L-9.5-6.333z"/>
-		</g>
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24.5px"
+	 height="20px" viewBox="68.666 31.667 24.5 20" enable-background="new 68.666 31.667 24.5 20" xml:space="preserve">
+<g id="Ebene_1">
+</g>
+<g id="Ebene_3">
+	<g>
+		
+			<line fill="none" stroke="#0090BA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="70.166" y1="33.167" x2="91.666" y2="33.167"/>
+		
+			<line fill="none" stroke="#0090BA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="70.166" y1="41.667" x2="91.666" y2="41.667"/>
+		
+			<line fill="none" stroke="#0090BA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="70.166" y1="50.167" x2="91.666" y2="50.167"/>
 	</g>
 </g>
 </svg>
