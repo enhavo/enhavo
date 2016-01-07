@@ -58,3 +58,11 @@ enhavo_user_user_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:deleteAction
+
+enhavo_user_user_password:
+    options:
+        expose: true
+    path: /enhavo/user/user/password
+    methods: [GET,POST]
+    defaults:
+        _controller: EnhavoUserBundle:ChangePassword:changePassword

@@ -1,4 +1,5 @@
 <ul id="menu-main">
+    <button data-action data-action-type="overlay" data-action-route="enhavo_user_user_password" class="btn passwordChange">Passwort</button>
 {% for menu in menus %}
     {% if menu.isDisplayed %}
         <li class="{% if menu.isCurrent() %}selected{% endif %}">
