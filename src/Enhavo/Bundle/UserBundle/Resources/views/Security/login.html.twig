@@ -11,7 +11,6 @@
         {% endif %}
 
         <form action="{{ path("fos_user_security_check") }}" method="post">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <input type="hidden" id="remember_me" name="_remember_me" value="on">
             <div class="row mb1">
                 <div class="col-md-4 text-right">
@@ -37,6 +36,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="row">
                 <div class="col-md-push-4 col-md-4">
                     <button class="btn col-md-12 loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>

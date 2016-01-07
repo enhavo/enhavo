@@ -72,7 +72,7 @@ class BooleanType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices'   => array(
+            'choices' => array(
                 self::VALUE_TRUE => 'true',
                 self::VALUE_FALSE => 'false'
             ),
@@ -84,7 +84,7 @@ class BooleanType extends AbstractType
         ));
 
         $resolver->setNormalizer('choices', function (Options $options, $value) {
-            return  array(
+            return array(
                 self::VALUE_TRUE => $options['label_true'],
                 self::VALUE_FALSE => $options['label_false']
             );

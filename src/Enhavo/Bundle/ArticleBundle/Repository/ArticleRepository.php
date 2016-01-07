@@ -84,4 +84,106 @@ class ArticleRepository extends EntityRepository
 
         return $articles;
     }
+
+    /**
+     * Returns the next published article in order if sorted by publication date.
+     * Only returns articles that are published and whose publication date does not lie in the future.
+     * The order used is the same as in findPublished().
+     *
+     * @param Article $currentArticle The current article
+     * @param \DateTime $currentDate The date used to determine if a publication date lies in the future. If null or omitted, today is used.
+     * @return null|Article The next article after $currentArticle, or null if $currentArticle is the last one.
+     */
+    public function findNextInDateOrder(Article $currentArticle, \DateTime $currentDate = null)
+    {
+        if (null === $currentDate) {
+            $currentDate = new \DateTime();
+        }
+
+        // Find articles with same date
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date = :articleDate');
+        $query->setParameter('currentDate', $currentDate);
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $articlesSameDate = $query->getQuery()->getResult();
+        if (!empty($articlesSameDate) && !($articlesSameDate[0]->getId() == $currentArticle->getId())) {
+            // Return previous in list
+            for($i = 0; $i < count($articlesSameDate); $i++) {
+                if ($articlesSameDate[$i]->getId() == $currentArticle->getId()) {
+                    return $articlesSameDate[$i - 1];
+                }
+            }
+        }
+
+        // No next one at current date, search for newer ones
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date > :articleDate');
+        $query->setParameter('currentDate', $currentDate);
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $query->addOrderBy('n.publication_date','asc');
+        $query->addOrderBy('n.id','desc');
+        $query->setMaxResults(1);
+        $nextArticle = $query->getQuery()->getResult();
+        if (empty($nextArticle)) {
+            // No newer articles
+            return null;
+        } else {
+            return $nextArticle[0];
+        }
+    }
+
+    /**
+     * Returns the previous published article in order if sorted by publication date.
+     * Only returns articles that are published and whose publication date does not lie in the future.
+     * The order used is the same as in findPublished().
+     *
+     * @param Article $currentArticle The current article
+     * @param \DateTime $currentDate The date used to determine if a publication date lies in the future. If null or omitted, today is used.
+     * @return null|Article The previous article before $currentArticle, or null if $currentArticle is the first one.
+     */
+    public function findPreviousInDateOrder(Article $currentArticle, \DateTime $currentDate = null)
+    {
+        if (null === $currentDate) {
+            $currentDate = new \DateTime();
+        }
+
+        // Find articles with same date
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date = :articleDate');
+        $query->setParameter('currentDate', $currentDate);
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $articlesSameDate = $query->getQuery()->getResult();
+        if (!empty($articlesSameDate) && !($articlesSameDate[count($articlesSameDate) - 1]->getId() == $currentArticle->getId())) {
+            // Return next in list
+            for($i = 0; $i < count($articlesSameDate); $i++) {
+                if ($articlesSameDate[$i]->getId() == $currentArticle->getId()) {
+                    return $articlesSameDate[$i + 1];
+                }
+            }
+        }
+
+        // No next one at current date, search for newer ones
+        $query = $this->createQueryBuilder('n');
+        $query->andWhere('n.public = true');
+        $query->andWhere('n.publication_date <= :currentDate');
+        $query->andWhere('n.publication_date < :articleDate');
+        $query->setParameter('currentDate', $currentDate);
+        $query->setParameter('articleDate', $currentArticle->getPublicationDate());
+        $query->addOrderBy('n.publication_date','desc');
+        $query->addOrderBy('n.id','asc');
+        $query->setMaxResults(1);
+        $nextArticle = $query->getQuery()->getResult();
+        if (empty($nextArticle)) {
+            // No older articles
+            return null;
+        } else {
+            return $nextArticle[0];
+        }
+    }
 }
