@@ -28,3 +28,5 @@
     right: 5px;
     cursor: move;
 }
+
+.menu-icon-slider:before{ content: '\e86e'; }
