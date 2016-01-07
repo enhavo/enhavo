@@ -28,6 +28,7 @@
 .wysiwyg-container .mce-btn-group .mce-last button {border-right:0;}
 .wysiwyg-container .mce-splitbtn .mce-open {border-left:0;}
 
+#list-fields .button-delete {    position: absolute;  cursor: pointer;  z-index: 1;  top: 0;  text-align: center;  width: 33px;  background: #fff;  right: 28px; height: 100%; padding-top: 5px;}
 #list-fields li {position: relative;}
 #list-fields .button-container {
      background-color: #ddd;
