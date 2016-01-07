@@ -14,7 +14,7 @@
                 <p>0.1</p>
             </div>
             <div class="logo">
-                <img src="/bundles/enhavoapp/img/enhavo_admin_logo.svg" alt="Enhavo CMS"/>
+                <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
             </div>
             <form action="{{ path("fos_user_security_check") }}" method="post">
                 <input type="hidden" id="remember_me" name="_remember_me" value="on">
