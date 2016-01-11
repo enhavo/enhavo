@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Service;
 
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,7 @@ class FileService
     {
         if(!file_exists($path)) {
             if(!mkdir($path, 0755, true)) {
-                throw new Exception('could not create directory: "'.$path.'"');
+                throw new FileException('Could not create directory: "'.$path.'"');
             }
         }
     }
@@ -195,11 +196,11 @@ class FileService
      *                      unknown type.
      * @return EnhavoFile   The generated doctrine entity object (already persisted).
      */
-    public function addFileToDatabase($file, $mimeType = null, $fileExtension = null, $title = null, $fileName = null, $order = null, $garbage = false)
+    public function addFile($file, $mimeType = null, $fileExtension = null, $title = null, $fileName = null, $order = null, $garbage = false)
     {
         $fileInfo = $this->getFileInformation($file);
         if (!$fileInfo) {
-            throw new \Exception("EnhavoMediaBundle FileService Error: Invalid format on file parameter");
+            throw new \InvalidArgumentException("Invalid format on file parameter");
         }
 
         $slugifier = new Slugifier;
@@ -255,13 +256,13 @@ class FileService
      *
      * @param string|\SplFileInfo|File|UploadedFile $file
      * @return array|null
-     * @throws \Exception Thrown of the file is not found or not readable for apache user.
+     * @throws FileException Thrown if the file is not found or not readable for apache user.
      */
     protected function getFileInformation($file)
     {
         if (is_string($file)) {
             if (!is_readable($file)) {
-                throw new \Exception("EnhavoMediaBundle FileService Error: Unable to add file \"$file\" to database, file not found or not readable.");
+                throw new FileException("File \"$file\" not found or not readable.");
             }
             $fileInfo = pathinfo($file);
             return array(

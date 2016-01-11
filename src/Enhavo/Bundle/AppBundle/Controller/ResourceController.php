@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,7 +36,7 @@ class ResourceController extends BaseController
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->handleRequest($request)->isValid()) {
                 $this->domainManager->create($resource);
-                $this->dispatchEvent('enhavo_app.create');
+                $this->dispatchEvent('enhavo_app.create', $resource, array('action' => 'create'));
                 return new Response();
             }
 
@@ -75,7 +76,7 @@ class ResourceController extends BaseController
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
                 $this->domainManager->update($resource);
-                $this->dispatchEvent('enhavo_app.update');
+                $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
                 return new Response();
             }
 
@@ -233,9 +234,9 @@ class ResourceController extends BaseController
         return new Response();
     }
 
-    protected function dispatchEvent($eventName)
+    protected function dispatchEvent($eventName, $subject = null, $arguments = array())
     {
         $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch($eventName);
+        $dispatcher->dispatch($eventName, new GenericEvent($subject, $arguments));
     }
 }
