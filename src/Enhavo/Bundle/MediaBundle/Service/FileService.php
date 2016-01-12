@@ -196,11 +196,11 @@ class FileService
      *                      unknown type.
      * @return EnhavoFile   The generated doctrine entity object (already persisted).
      */
-    public function addFile($file, $mimeType = null, $fileExtension = null, $title = null, $fileName = null, $order = null, $garbage = false)
+    public function storeFile($file, $mimeType = null, $fileExtension = null, $title = null, $fileName = null, $order = null, $garbage = false)
     {
         $fileInfo = $this->getFileInformation($file);
         if (!$fileInfo) {
-            throw new \InvalidArgumentException("Invalid format on file parameter");
+            throw new \InvalidArgumentException("Invalid format on file parameter; possible formats: Symfony\\Component\\HttpFoundation\\File\\UploadedFile, Symfony\\Component\\HttpFoundation\\File\\File, \\SplFileInfo or string (absolute path + filename)");
         }
 
         $slugifier = new Slugifier;
