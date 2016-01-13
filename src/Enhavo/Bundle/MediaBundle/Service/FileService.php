@@ -242,7 +242,7 @@ class FileService
     }
 
     /**
-     * Used by addFileToDatabase() to wrap the different possibilities for types of the parameter $file.
+     * Used by storeFile() to wrap the different possibilities for types of the parameter $file.
      * For a list of possible types, see addFileToDatabase().
      *
      * Returns an array containing:
@@ -256,7 +256,7 @@ class FileService
      *
      * @param string|\SplFileInfo|File|UploadedFile $file
      * @return array|null
-     * @throws FileException Thrown if the file is not found or not readable for apache user.
+     * @throws FileException Thrown if $file is a string and the file it points to is not found or not readable for apache user.
      */
     protected function getFileInformation($file)
     {
@@ -288,7 +288,6 @@ class FileService
         if ($file instanceof File)
         {
             /** @var $file File */
-//            $fileInfo = pathinfo($file->);
             return array(
                 'pathname'  => $file->getPathname(),
                 'extension' => $file->guessExtension(),
