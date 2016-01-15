@@ -84,6 +84,8 @@ class ArticleType extends AbstractType
             'label' => 'form.label.public'
         ));
 
+        $builder->add('social_media', 'enhavo_boolean');
+
         $builder->add('priority', 'choice', array(
             'label' => 'form.label.priority',
             'choices'   => array(
@@ -126,8 +128,6 @@ class ArticleType extends AbstractType
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy HH:mm',
         ));
-
-        $builder->add('social_media', 'enhavo_boolean');
 
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',

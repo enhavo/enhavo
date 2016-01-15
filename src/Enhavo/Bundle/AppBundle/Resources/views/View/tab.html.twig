@@ -1,7 +1,7 @@
 <div class="row tabContainer">
     <div class="container-fluid">
         {% for tab in tabs %}
-          <a href="#" tabId="tab{{ loop.index }}">{{ tab.label }}</a>
+          <a href="#" tabId="tab{{ loop.index }}"><span>{{ tab.label }}</span></a>
         {% endfor %}
     </div>
 </div>
@@ -14,6 +14,8 @@
     {% endfor %}
 </div>
 
-{% if not form._token.rendered %}
-    {{ form_row(form._token) }}
+{% if form._token is defined %}
+    {% if not form._token.rendered %}
+        {{ form_row(form._token) }}
+    {% endif %}
 {% endif %}

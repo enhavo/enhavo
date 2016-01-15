@@ -130,3 +130,16 @@ enhavo_article:
 
 enhavo_category:
     default_collection: default
+
+enhavo_contact:
+    contact:
+        model: Enhavo\Bundle\ContactBundle\Model\Contact
+        form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
+        template:
+            form: EnhavoContactBundle:Contact:form.html.twig
+            recipient: EnhavoContactBundle:Contact:recipient.html.twig
+            sender: EnhavoContactBundle:Contact:sender.html.twig
+        recipient: %contact_form_recipient%
+        from: %contact_form_sender%
+        subject: Kontaktformular
+        send_to_sender: true

@@ -86,3 +86,8 @@ services:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
         arguments:
             - @service_container
+
+    enhavo_list:
+        class: Enhavo\Bundle\AppBundle\Form\Type\ListType
+        tags:
+            - { name: form.type }

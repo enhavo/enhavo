@@ -71,9 +71,8 @@ function UploadForm(routing)
         $(element).find('.fileupload').trigger('click');
       });
 
-      $(element).find('.imgdelete').bind('click', function(event)
+      $(element).on('click', '.imgdelete', function(event)
       {
-        console.log('Delete');
         var imageContainer = $(event.target).parents('.imgContainer');
         if(imageContainer != null) {
           var dropZone = imageContainer.parents('.dropzone');
