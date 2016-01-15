@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+
 class OrderViewer extends AbstractViewer
 {
     public function getDefaultConfig()
@@ -20,8 +22,16 @@ class OrderViewer extends AbstractViewer
     protected function getSorting()
     {
         $sorting = $this->getConfig()->get('sorting');
-        $isAsc = $sorting && is_string($sorting) && (strtoupper($sorting) == 'ASC');
-        return $isAsc ? 'ASC' : 'DESC';
+        if (!$sorting) {
+            return 'DESC';
+        }
+        if (strtoupper($sorting) == 'ASC') {
+            return 'ASC';
+        } elseif (strtoupper($sorting) == 'DESC') {
+            return 'DESC';
+        } else {
+            throw new InvalidConfigurationException('Invalid configuration value for _viewer.sorting, expecting "ASC" or "DESC", got "' . $sorting . '"');
+        }
     }
 
     /**

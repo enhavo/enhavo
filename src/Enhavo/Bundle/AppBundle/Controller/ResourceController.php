@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ class ResourceController extends BaseController
         if (isset($parameters['sorting'])) {
             $sortingConfig = $parameters['sorting'];
         } else {
-            $sortingConfig = array('sortable' => false);
+            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route create: expected field "sorting" in viewer->getParameters()');
         }
 
         $resource = $this->createNew();
@@ -260,7 +261,7 @@ class ResourceController extends BaseController
         if (isset($parameters['sorting'])) {
             $sorting = $parameters['sorting'];
         } else {
-            $sorting = 'DESC';
+            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route type move_up/move_down: expected field "sorting" in viewer->getParameters()');
         }
 
         $property = $this->config->getSortablePosition();

@@ -56,6 +56,27 @@ class TableViewer extends AbstractViewer
         return $width;
     }
 
+    protected function getSorting()
+    {
+        $sorting = $this->getConfig()->get('table.sorting');
+
+        if (!$sorting) {
+            $sorting = array();
+        }
+
+        if (!isset($sorting['sortable'])) {
+            $sorting['sortable'] = false;
+        }
+        if (!isset($sorting['move_up_route'])) {
+            $sorting['move_up_route'] = sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName());
+        }
+        if (!isset($sorting['move_down_route'])) {
+            $sorting['move_down_route'] = sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName());
+        }
+
+        return $sorting;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -101,26 +122,20 @@ class TableViewer extends AbstractViewer
 
     public function isSortable()
     {
-        $sortable = $this->getConfig()->get('table.sorting.sortable');
-        return $sortable === true;
+        $sorting = $this->getSorting();
+        return $sorting['sortable'] === true;
     }
 
     public function getMoveUpRoute()
     {
-        $moveUpRoute = $this->getConfig()->get('table.sorting.move_up_route');
-        if (!$moveUpRoute) {
-            return sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName());
-        }
-        return $moveUpRoute;
+        $sorting = $this->getSorting();
+        return $sorting['move_up_route'];
     }
 
     public function getMoveDownRoute()
     {
-        $moveDownRoute = $this->getConfig()->get('table.sorting.move_down_route');
-        if (!$moveDownRoute) {
-            return sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName());
-        }
-        return $moveDownRoute;
+        $sorting = $this->getSorting();
+        return $sorting['move_down_route'];
     }
 
     public function renderWidget($widget, $property, $item)

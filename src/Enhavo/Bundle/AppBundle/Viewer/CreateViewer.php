@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+
 class CreateViewer extends AbstractViewer
 {
     public function getDefaultConfig()
@@ -109,8 +111,10 @@ class CreateViewer extends AbstractViewer
         }
         if (strtoupper($sorting['initial']) == 'MIN') {
             $sorting['initial'] = 'min';
-        } else {
+        } elseif (strtoupper($sorting['initial']) == 'MAX') {
             $sorting['initial'] = 'max';
+        } else {
+            throw new InvalidConfigurationException('Invalid configuration value for _viewer.sorting.initial, expecting "min" or "max", got "' . $sorting['initial'] . '"');
         }
 
         return $sorting;
