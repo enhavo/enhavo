@@ -19,6 +19,7 @@ enhavo_newsletter_newsletter_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -30,7 +31,7 @@ enhavo_newsletter_newsletter_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
-
+            translationDomain: EnhavoNewsletterBundle
 enhavo_newsletter_newsletter_table:
     options:
         expose: true
@@ -42,13 +43,14 @@ enhavo_newsletter_newsletter_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoNewsletterBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: newsletter.label.id
                         property: id
                     title:
-                        label: title
+                        label: newsletter.label.title
                         property: title
 
 enhavo_newsletter_newsletter_delete:

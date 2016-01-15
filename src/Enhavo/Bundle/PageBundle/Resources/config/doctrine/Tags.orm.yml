@@ -1,0 +1,31 @@
+Enhavo\Bundle\PageBundle\Entity\Tags:
+    type: entity
+    table: page_tags
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        order:
+            column: '`order`'
+            type: string
+            length: 255
+        public:
+            type: boolean
+            nullable: true
+
+    manyToOne:
+      page:
+        targetEntity: Page
+        inversedBy: tags
+        joinColumn:
+          name: page_id
+          referencedColumnName: id
+
+    lifecycleCallbacks: {  }

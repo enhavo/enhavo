@@ -15,16 +15,19 @@ class DownloadItemType extends ItemFormType
             'property' => 'title',
             'multiple' => false,
             'expanded' => false,
-            'empty_value' => 'label.download.item.choose',
-            'label' => 'form.label.download'
+            'empty_value' => 'downloadItem.label.download.item.choose',
+            'label' => 'downloadItem.form.label.download',
+            'translation_domain' => 'EnhavoDownloadBundle',
         ));
 
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('file', 'enhavo_files', array(
-            'label' => 'form.label.file'
+            'label' => 'downloadItem.form.label.file',
+            'translation_domain' => 'EnhavoDownloadBundle',
         ));
     }
 

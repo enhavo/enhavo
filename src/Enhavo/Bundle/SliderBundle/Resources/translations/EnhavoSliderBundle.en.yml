@@ -1,0 +1,11 @@
+slide:
+  form:
+    label:
+      url: 'URL'
+  label:
+    public: 'public'
+    id: 'ID'
+    title: 'Title'
+    slide: 'Slide'
+label:
+  slider: 'Slider'

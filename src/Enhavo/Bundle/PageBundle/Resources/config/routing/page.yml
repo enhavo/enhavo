@@ -18,16 +18,17 @@ enhavo_page_page_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: create
             tabs:
                 page:
-                    label: page
+                    label: page.label.page
                     template: EnhavoPageBundle:Tab:page.html.twig
                 content:
-                    label: Content
+                    label: page.label.content
                     template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: page.label.seo
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
@@ -55,16 +56,17 @@ enhavo_page_page_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: edit
             tabs:
                 page:
-                    label: page
+                    label: page.label.page
                     template: EnhavoPageBundle:Tab:page.html.twig
                 content:
-                    label: Content
+                    label: page.label.content
                     template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: page.label.seo
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
@@ -83,20 +85,21 @@ enhavo_page_page_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: table
             table:
                 columns:
                     id:
-                        label: ID
+                        label: page.label.id
                         property: id
                         width: 1
                     public:
-                        label: public
+                        label: page.label.public
                         property: public
                         widget: EnhavoAppBundle:Widget:boolean.html.twig
                         width: 1
                     title:
-                        label: title
+                        label: page.label.title
                         property: title
                         width: 10
 

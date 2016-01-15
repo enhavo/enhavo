@@ -65,31 +65,40 @@ class PageType extends AbstractType
         }
 
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title.h1'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('slug', 'text', array(
-            'label' => 'form.label.slug'
+            'label' => 'form.label.slug',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('meta_description', 'textarea', array(
-            'label' => 'form.label.meta_description'
+            'label' => 'form.label.meta_description',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('page_title', 'text', array(
-            'label' => 'form.label.page_title'
+            'label' => 'page.form.label.page_title',
+            'translation_domain' => 'EnhavoPageBundle'
         ));
 
         $builder->add('teaser', 'textarea', array(
-            'label' => 'form.label.teaser'
+            'label' => 'form.label.teaser',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
-        $builder->add('social_media', 'enhavo_boolean');
+        $builder->add('social_media', 'enhavo_boolean', array(
+        'label' => 'page.form.label.social_media',
+        'translation_domain' => 'EnhavoPageBundle'
+    ));
 
         $builder->add('public', 'enhavo_boolean');
 
         $builder->add('priority', 'choice', array(
-            'label' => 'form.label.priority',
+            'label' => 'page.form.label.priority',
+            'translation_domain' => 'EnhavoPageBundle',
             'choices'   => array(
                 '0.1' => '1',
                 '0.2' => '2',
@@ -107,7 +116,8 @@ class PageType extends AbstractType
         ));
 
         $builder->add('change_frequency', 'choice', array(
-            'label' => 'form.label.change_frequency',
+            'label' => 'page.form.label.change_frequency',
+            'translation_domain' => 'EnhavoPageBundle',
             'choices'   => array(
                 'always' => 'Immer',
                 'hourly' => 'Stündlich',
@@ -122,7 +132,8 @@ class PageType extends AbstractType
         ));
 
         $builder->add('picture', 'enhavo_files', array(
-            'label' => 'form.label.picture'
+            'label' => 'form.label.picture',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('content', 'enhavo_grid', array(

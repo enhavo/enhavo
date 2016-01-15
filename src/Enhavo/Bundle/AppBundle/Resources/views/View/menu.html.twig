@@ -1,10 +1,15 @@
 <ul id="menu-main">
     <button data-action data-action-type="overlay" data-action-route="enhavo_user_user_password" class="btn passwordChange">Passwort</button>
 {% for menu in menus %}
+    {% set translationDomain = null %}
+    {% for item in menu.labelAttributes %}
+        {% set translationDomain = item %}
+    {% endfor %}
+    {% trans_default_domain translationDomain %}
     {% if menu.isDisplayed %}
         <li class="{% if menu.isCurrent() %}selected{% endif %}">
             <a href="{{ menu.uri }}" class="{{ menu.attribute('class') }}">
-              <span>{{ menu.label|trans }}</span>
+              <span>{{ menu.label|trans() }}</span>
             </a>
         </li>
     {% endif %}

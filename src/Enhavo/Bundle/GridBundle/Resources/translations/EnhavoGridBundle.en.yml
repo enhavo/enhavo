@@ -1,0 +1,42 @@
+textText:
+  form:
+    label:
+      title_left: 'Title left'
+      text_left: 'Text left'
+      title_right: 'Title right'
+      text_right: 'Text right'
+      layout: 'Layout'
+      1_1: '1:1'
+      1_2: '1:2'
+      2_1: '2:1'
+textPicture:
+  form:
+    label:
+      position: 'Position'
+      picture_left-text_right: 'Picture | Text'
+      text_left-picture_right: 'Text | Picture'
+      frame: 'Frame for picture'
+picture:
+  form:
+    label:
+      caption: 'Caption'
+picturePicture:
+  form:
+    label:
+      picture_left: 'Picture left'
+      caption_left: 'Picture title left'
+      picture_right: 'Picture right'
+      caption_right: 'Picture title right'
+      frame: 'Frame for picture'
+gallery:
+  form:
+    label:
+      pictures: 'Pictures'
+citeText:
+  form:
+    label:
+      cite: 'Cite'
+
+
+
+

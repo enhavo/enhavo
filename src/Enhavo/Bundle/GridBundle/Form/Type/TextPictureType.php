@@ -16,29 +16,34 @@ class TextPictureType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('text', 'wysiwyg', array(
-            'label' => 'form.label.text'
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('files', 'enhavo_files', array(
-            'label' => 'form.label.picture'
+            'label' => 'form.label.picture',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('textLeft', 'choice', array(
-            'label' => 'form.label.position',
+            'label' => 'textPicture.form.label.position',
+            'translation_domain' => 'EnhavoGridBundle',
             'choices'   => array(
-                '1' => 'label.text_left-picture_right',
-                '2' => 'label.picture_left-text_right'
+                '1' => 'textPicture.form.label.text_left-picture_right',
+                '2' => 'textPicture.form.label.picture_left-text_right'
             ),
             'expanded' => true,
             'multiple' => false
         ));
 
         $builder->add('frame', 'enhavo_boolean', array(
-            'label' => 'form.label.frame'
+            'label' => 'grid.form.label.frame',
+            'translation_domain' => 'EnhavoGridBundle'
         ));
     }
 

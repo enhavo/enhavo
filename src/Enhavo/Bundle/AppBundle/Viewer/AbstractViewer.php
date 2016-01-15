@@ -172,4 +172,10 @@ abstract class AbstractViewer implements ContainerAwareInterface
     {
         return $this->resourceName;
     }
+
+    public function getTranslationDomain()
+    {
+        $translationDomain = $this->getConfig()->get('translationDomain');
+        return $translationDomain;
+    }
 }

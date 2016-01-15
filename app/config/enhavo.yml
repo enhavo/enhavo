@@ -18,42 +18,52 @@ enhavo_app:
     menu:
         dashboard:
             label: label.dashboard
+            translationDomain: EnhavoDashboardBundle
             route: enhavo_dashboard_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
             label: label.user
+            translationDomain: EnhavoUserBundle
             route: enhavo_user_user_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         group:
             label: label.group
+            translationDomain: EnhavoUserBundle
             route: enhavo_user_group_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         article:
             label: label.article
+            translationDomain: EnhavoArticleBundle
             route: enhavo_article_article_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
             label: label.page
+            translationDomain: EnhavoPageBundle
             route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         category:
             label: label.category
+            translationDomain: EnhavoCategoryBundle
             route: enhavo_category_category_index
             role: ROLE_ESPERANTO_CATEGORY_CATEGORY_INDEX
         download:
             label: label.download
+            translationDomain: EnhavoDownloadBundle
             route: enhavo_download_download_index
             role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
         slider:
             label: label.slider
+            translationDomain: EnhavoSliderBundle
             route: enhavo_slider_slide_index
             role: ROLE_ESPERANTO_SLIDER_SLIDER_INDEX
         newsletter:
             label: label.newsletter
+            translationDomain: EnhavoNewsletterBundle
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
         calendar:
             label: label.calendar
+            translationDomain: EnhavoCalendarBundle
             route: enhavo_calendar_appointment_index
             role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
 

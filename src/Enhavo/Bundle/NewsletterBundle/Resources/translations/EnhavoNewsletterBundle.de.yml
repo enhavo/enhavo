@@ -1,0 +1,18 @@
+newsletter:
+  action:
+    send: 'Senden'
+  label:
+    sent: 'gesendet'
+    id: 'ID'
+    title: 'Titel'
+    newsletter: 'Newsletter'
+  form:
+    label:
+      subject: 'Betreff'
+      sent: 'gesendet'
+subscriber:
+  form:
+    label:
+      email: 'E-Mail'
+label:
+  newsletter: 'Newsletter'

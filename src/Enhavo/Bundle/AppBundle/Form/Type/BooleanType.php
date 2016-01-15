@@ -78,6 +78,7 @@ class BooleanType extends AbstractType
             ),
             'label_true' =>  'label.yes',
             'label_false' => 'label.no',
+            'translation_domain' => 'EnhavoAppBundle',
             'expanded' => true,
             'multiple' => false,
             'default' => null

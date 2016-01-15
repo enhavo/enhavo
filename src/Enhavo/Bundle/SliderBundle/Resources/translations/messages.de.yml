@@ -1,8 +1,0 @@
-label.slider: 'Slider'
-label.public: 'Öffentlich'
-button.add_slide: 'Slide hinzufügen'
-button.label.slide_sort: 'Slides Sortierung'
-form:
-  label:
-    image: 'Bild'
-    url: 'URL'

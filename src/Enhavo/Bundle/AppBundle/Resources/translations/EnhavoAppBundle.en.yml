@@ -1,0 +1,33 @@
+error:
+  occurred: 'An error occured'
+  forbidden: 'You have not the rights for this action'
+label:
+  logout: 'Logout'
+  id: 'ID'
+  cancel: 'Cancel'
+  save: 'Save'
+  delete: 'Delete'
+  preview: 'Preview'
+  create: 'Create'
+  yes: 'Yes'
+  no: 'No'
+  title: 'Title'
+  upload: 'Upload data'
+form:
+  delete:
+    question: 'Wollen sie dieses Element wirklich löschen?'
+  label:
+    public: 'Public'
+    meta_description: 'Meta description'
+    link: 'Link'
+    title: 'Title'
+    teaser: 'Teaser'
+    slug: 'Slug'
+    picture: 'Picture'
+    text: 'Text'
+tab:
+  label:
+    content: 'Content'
+    seo: 'SEO'
+table:
+  empty: 'no data'

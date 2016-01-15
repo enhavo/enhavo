@@ -1,0 +1,27 @@
+group:
+  form:
+    label:
+      name: 'Name'
+      roles: 'Rechte'
+  label:
+    name: 'Name'
+    id: 'ID'
+    group: 'Gruppe'
+user:
+  form:
+    label:
+      username: 'Benutzername'
+      email: 'E-Mail'
+      firstName: 'Vorname'
+      lastName: 'Nachname'
+      groups: 'Gruppen'
+      password: 'Passwort'
+  label:
+    username: 'Benutzername'
+    id: 'ID'
+    user: 'Benutzer'
+label:
+  user: 'Benutzer'
+  group: 'Gruppe'
+
+

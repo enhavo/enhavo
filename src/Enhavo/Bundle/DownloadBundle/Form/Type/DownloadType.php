@@ -18,15 +18,18 @@ class DownloadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('text', 'wysiwyg', array(
-            'label' => 'form.label.text'
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('file', 'enhavo_files', array(
-            'label' => 'form.label.file'
+            'label' => 'download.form.label.file',
+            'translation_domain' => 'EnhavoDownloadBundle',
         ));
     }
 

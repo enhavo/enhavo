@@ -1,5 +1,6 @@
 {% block enhavo_files_widget %}
     {% spaceless %}
+        {% trans_default_domain 'EnhavoAppBundle' %}
             <div class="uploadForm">
 
                 <script type="text/html" data-id="files-template">
@@ -50,7 +51,7 @@
                     </div>
                     <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}" multiple>
                     <div class="mt1">
-                        <button class="btn upload-button"><i class="fa fa-arrow-up"></i> Datei hochladen</button>
+                        <button class="btn upload-button"><i class="fa fa-arrow-up"></i>{{ 'label.upload'|trans }}</button>
                     </div>
                 </div>
             </div>

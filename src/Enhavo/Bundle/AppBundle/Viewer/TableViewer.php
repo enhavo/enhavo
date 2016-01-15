@@ -54,7 +54,8 @@ class TableViewer extends AbstractViewer
         $parameters = array(
             'viewer' => $this,
             'data' => $this->getResource(),
-            'columns' => $this->getColumns()
+            'columns' => $this->getColumns(),
+            'translationDomain' => $this->getTranslationDomain()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

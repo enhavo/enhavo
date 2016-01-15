@@ -1,0 +1,19 @@
+download:
+  form:
+    label:
+      file: 'Datei'
+  label:
+    id: 'ID'
+    title: 'Titel'
+    download: 'Download'
+downloadItem:
+  form:
+    label:
+      file: 'Datei'
+      download: 'Download'
+  label:
+    download:
+      item:
+        choose: 'Hochgelade Datei verwenden'
+label:
+  download: 'Download'

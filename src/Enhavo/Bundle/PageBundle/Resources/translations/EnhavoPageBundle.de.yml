@@ -1,0 +1,18 @@
+page:
+  form:
+    label:
+      social_media: 'Social Media'
+      page_title: 'Seitentitel'
+      priority: 'Priorität'
+      change_frequency: 'Änderungsfrequenz'
+  label:
+    id: 'ID'
+    public: 'öffentlich'
+    title: 'Titel'
+    page: 'Seiten'
+    content: 'Inhalt'
+    seo: 'SEO'
+label:
+  page: 'Seiten'
+  yes: 'Ja'
+  no: 'Nein'
