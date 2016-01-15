@@ -11,13 +11,12 @@
 .formwidget-container .select2-container {width: 100%;}
 .formwidget-container .select2-container .select2-choice {border-radius: 0;}
 
-.input-container {display:inline-block;padding:5px 6px;color: #000;background:#eee;width:100%;}
+.input-container {display:inline-block;padding:5px 6px;color: #000;background:#f3f3f3;width:100%;}
 .input-container.disabled {background:#ddd;}
 .input-container input,
 .input-container textarea {font: 13px/1.6em "Open Sans";margin:0;background:transparent;border:0px;resize:none;width: 100%;}
 .input-container textarea {margin-right: 20px;}
 
-.label-container label {color:#000;}
 
 .wysiwyg-container .mce-panel {background:#eee;border:1px solid #eee;}
 .wysiwyg-container .mce-tinymce {border-radius:0;}
@@ -32,26 +31,23 @@
 #list-fields .button-delete {    position: absolute;  cursor: pointer;  z-index: 1;  top: 0;  text-align: center;  width: 33px;  background: #fff;  right: 28px; height: 100%; padding-top: 5px;}
 #list-fields li {position: relative;}
 #list-fields .button-container {
-    background-color: #ddd;
-    padding-left: 85px;
-    position: relative;
-    line-height: 25px;
+     background-color: #ddd;
+     padding-left: 85px;
+     position: relative;
+     line-height: 25px;
 }
 #list-fields .button {
-    position: absolute;
-    cursor: pointer;
-    height: 100%;
-    z-index: 1;
-    top: 0;
-    text-align: center;
-    width: 33px;
-    background: #fff;
+     position: absolute;
+     cursor: pointer;
+     height: 100%;
+     z-index: 1;
+     top: 0;
+     text-align: center;
+     width: 33px;
+     background: #fff;
 }
 
-#list-fields .button:hover {
-    background-color: #4395d1;
-}
-
+#list-fields .button:hover {background-color: #4395d1;}
 #list-fields .listElement {margin-left: 0px;margin-right: 0px; }
 #list-fields .listElement .input-container {margin-bottom: 10px;}
 .add-another {width: 26px;}
@@ -86,3 +82,10 @@
 #list-fields.sortable-border li{border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
 #list-fields.sortable-border .button-up{right: 10px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}
 #list-fields.sortable-border .button-down{right: 44px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}
+
+#overlayContent form > .row:last-of-type{
+    padding: 25px 0;
+    background: #fefefe;
+    border-top: 1px solid #f3f3f3;
+    border-radius: 0 0 2px 2px;
+}

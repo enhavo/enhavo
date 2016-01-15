@@ -43,6 +43,7 @@ class FilesType extends AbstractType
                     foreach($data as $formFile) {
                         $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
                         $file->setOrder($formFile['order']);
+                        $file->setGarbage(false);
                         $collection->add($file);
                     }
                 }
@@ -59,6 +60,8 @@ class FilesType extends AbstractType
                 $event->setData($collection);
             }
         );
+
+        $builder->setAttribute('multiple', $options['multiple']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -68,12 +71,13 @@ class FilesType extends AbstractType
         } else {
             $view->information = array();
         }
+        $view->vars['multiple'] = $options['multiple'];
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-
+            'multiple'  => true
         ));
 
         $resolver->setOptional(array(

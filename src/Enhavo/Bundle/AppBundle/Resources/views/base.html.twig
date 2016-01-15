@@ -5,11 +5,14 @@
 
     <title>{% block title %}enhavo CMS{% endblock %}</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700"  type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/font-awesome.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/enhavo_iconfont.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/jquery_ui/jquery-ui.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/icheck/icheck-esperanto.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/select2/select2.css') }}">
@@ -24,6 +27,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoslider/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavouser/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavomedia/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavonewsletter/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavocalendar/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavocategory/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodownload/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodashboard/css/style.css') }}">
 
     {% if view is defined %}
         {% for stylesheet in view.getParameter('stylesheets') %}

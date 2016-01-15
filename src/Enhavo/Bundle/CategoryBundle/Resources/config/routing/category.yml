@@ -50,11 +50,14 @@ enhavo_category_category_table:
         _viewer:
             translationDomain: EnhavoCategoryBundle
             table:
+                width: 12
                 columns:
                     id:
+                        width: 1
                         label: category.label.id
                         property: id
                     name:
+                        width: 11
                         label: category.label.name
                         property: name
 

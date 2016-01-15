@@ -23,17 +23,17 @@
         <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans('EnhavoAppBundle') }}</button>
     </div>
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans('EnhavoAppBundle') }}</button>
+        <button class="btn col-md-12 save" type="button">{{ 'label.save'|trans('EnhavoAppBundle') }}</button>
     </div>
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 delete" type="button"><i class="fa fa-trash"></i> {{ 'label.delete'|trans('EnhavoAppBundle') }}</button>
+        <button class="btn col-md-12 delete" type="button">{{ 'label.delete'|trans('EnhavoAppBundle') }}</button>
     </div>
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 send" type="button"><i class="fa fa-check"></i> {{ 'newsletter.action.send'|trans }}</button>
+        <button class="btn col-md-12 send" type="button">{{ 'newsletter.action.send'|trans }}</button>
     </div>
     {% if view.getParameter('preview_route') %}
         <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 preview" type="button"><i class="fa fa-eye"></i> {{ 'label.preview'|trans('EnhavoAppBundle') }}</button>
+            <button class="btn col-md-12 preview" type="button">{{ 'label.preview'|trans('EnhavoAppBundle') }}</button>
         </div>
     {% endif %}
 {% endblock %}

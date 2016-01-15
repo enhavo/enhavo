@@ -2,7 +2,7 @@
 <div class="row tabContainer">
     <div class="container-fluid">
         {% for tab in tabs %}
-          <a href="#" tabId="tab{{ loop.index }}">{{ tab.label|trans }}</a>
+          <a href="#" tabId="tab{{ loop.index }}"><span>{{ tab.label|trans }}</span></a>
         {% endfor %}
     </div>
 </div>
