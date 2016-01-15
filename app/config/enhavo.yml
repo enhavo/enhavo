@@ -79,49 +79,57 @@ enhavo_grid:
             form: Enhavo\Bundle\GridBundle\Form\Type\PictureType
             repository: EnhavoGridBundle:Picture
             template: EnhavoGridBundle:Item:picture.html.twig
-            label: Bild
+            label: picture.label.picture
+            translationDomain: EnhavoGridBundle
         picture_picture:
             model: Enhavo\Bundle\GridBundle\Entity\PicturePicture
             form: Enhavo\Bundle\GridBundle\Form\Type\PicturePictureType
             repository: EnhavoGridBundle:PicturePicture
             template: EnhavoGridBundle:Item:picture_picture.html.twig
-            label: Bild | Bild
+            label: picturePicture.label.picturePicture
+            translationDomain: EnhavoGridBundle
         gallery:
             model: Enhavo\Bundle\GridBundle\Entity\Gallery
             form: Enhavo\Bundle\GridBundle\Form\Type\GalleryType
             repository: EnhavoGridBundle:Gallery
             template: EnhavoGridBundle:Item:gallery.html.twig
-            label: Galerie
+            label: gallery.label.gallery
+            translationDomain: EnhavoGridBundle
         text:
             model: Enhavo\Bundle\GridBundle\Entity\Text
             form: Enhavo\Bundle\GridBundle\Form\Type\TextType
             repository: EnhavoGridBundle:Text
             template: EnhavoGridBundle:Item:text.html.twig
-            label: Text
+            label: text.label.text
+            translationDomain: EnhavoGridBundle
         text_picture:
             model: Enhavo\Bundle\GridBundle\Entity\TextPicture
             form: Enhavo\Bundle\GridBundle\Form\Type\TextPictureType
             repository: EnhavoGridBundle:TextPicture
             template: EnhavoGridBundle:Item:text_picture.html.twig
-            label: Text | Bild
+            label: textPicture.label.textPicture
+            translationDomain: EnhavoGridBundle
         text_text:
             model: Enhavo\Bundle\GridBundle\Entity\TextText
             form: Enhavo\Bundle\GridBundle\Form\Type\TextTextType
             repository: EnhavoGridBundle:TextText
             template: EnhavoGridBundle:Item:text_text.html.twig
-            label: Text | Text
+            label: textText.label.textText
+            translationDomain: EnhavoGridBundle
         cite_text:
             model: Enhavo\Bundle\GridBundle\Entity\CiteText
             form: Enhavo\Bundle\GridBundle\Form\Type\CiteTextType
             repository: EnhavoGridBundle:CiteText
             template: EnhavoGridBundle:Item:cite_text.html.twig
-            label: Zitat
+            label: citeText.label.citeText
+            translationDomain: EnhavoGridBundle
         download:
             model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem
             form: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
             repository: EnhavoDownloadBundle:DownloadItem
             template: EnhavoDownloadBundle:Item:download.html.twig
-            label: Download
+            label: download.label.download
+            translationDomain: EnhavoGridBundle
 
 enhavo_page:
     dynamic_routing: false

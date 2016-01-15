@@ -1,3 +1,6 @@
+text:
+  label:
+    text: 'Text'
 textText:
   form:
     label:
@@ -9,6 +12,8 @@ textText:
       1_1: '1:1'
       1_2: '1:2'
       2_1: '2:1'
+  label:
+      textText: 'Text | Text'
 textPicture:
   form:
     label:
@@ -16,10 +21,14 @@ textPicture:
       picture_left-text_right: 'Picture | Text'
       text_left-picture_right: 'Text | Picture'
       frame: 'Frame for picture'
+  label:
+      textPicture: 'Text | Picture'
 picture:
   form:
     label:
       caption: 'Caption'
+  label:
+    picture: 'Picture'
 picturePicture:
   form:
     label:
@@ -28,14 +37,24 @@ picturePicture:
       picture_right: 'Picture right'
       caption_right: 'Picture title right'
       frame: 'Frame for picture'
+  label:
+    picturePicture: 'Picture | Picture'
 gallery:
   form:
     label:
       pictures: 'Pictures'
+  label:
+    gallery: 'Gallery'
 citeText:
   form:
     label:
       cite: 'Cite'
+  label:
+    citeText: 'Cite'
+download:
+  label:
+    download: 'Download'
+
 
 
 

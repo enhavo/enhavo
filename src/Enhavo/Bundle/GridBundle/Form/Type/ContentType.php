@@ -58,7 +58,8 @@ class ContentType extends AbstractType
             foreach($this->resolver->getItems() as $name => $item) {
                 $items[] = array(
                     'type' => $name,
-                    'label' => $this->resolver->getLabel($name)
+                    'label' => $this->resolver->getLabel($name),
+                    'translationDomain' => $item['translationDomain']
                 );
             }
         }
