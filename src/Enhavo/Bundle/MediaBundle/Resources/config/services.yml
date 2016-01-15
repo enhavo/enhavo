@@ -1,7 +1,8 @@
 parameters:
     enhavo_media.form.files_type.class: Enhavo\Bundle\MediaBundle\Form\Type\FilesType
-    enhavo_media.upload.class: Enhavo\Bundle\MediaBundle\Service\UploadService
+    enhavo_media.file_service.class: Enhavo\Bundle\MediaBundle\Service\FileService
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
+    enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
 
 services:
     enhavo_media_files:
@@ -11,12 +12,11 @@ services:
         tags:
             - { name: form.type, alias: enhavo_files }
 
-    enhavo_media.upload:
-        class: %enhavo_media.upload.class%
+    enhavo_media.file_service:
+        class: %enhavo_media.file_service.class%
         arguments:
             - %kernel.root_dir%/media
             - @doctrine.orm.entity_manager
-
 
     enhavo_media.twig_extension:
         class: %enhavo_media.twig_extension.class%
@@ -25,3 +25,12 @@ services:
             - @doctrine.orm.entity_manager
         tags:
             - { name: twig.extension }
+
+    enhavo_media.lifecycle_listener:
+        class: %enhavo_media.lifecycle_listener.class%
+        arguments:
+             - @service_container
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: collectGarbage }

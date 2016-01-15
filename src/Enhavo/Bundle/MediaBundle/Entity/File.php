@@ -40,6 +40,16 @@ class File
     protected $title;
 
     /**
+     * @var bool
+     */
+    protected $garbage;
+
+    /**
+     * @var \DateTime
+     */
+    protected $garbageTimestamp;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -166,10 +176,59 @@ class File
 
     /**
      * @param string $filename
+     *
+     * @return File
      */
     public function setFilename($filename)
     {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isGarbage()
+    {
+        return $this->garbage;
+    }
+
+    /**
+     * @param boolean $garbage
+     * @param \DateTime $garbageTimestamp
+     *
+     * @return File
+     */
+    public function setGarbage($garbage, \DateTime $garbageTimestamp = null)
+    {
+        $this->garbage = $garbage;
+
+        if ($garbageTimestamp == null)
+        {
+            $garbageTimestamp = new \DateTime();
+        }
+        $this->setGarbageTimestamp($garbageTimestamp);
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getGarbageTimestamp()
+    {
+        return $this->garbageTimestamp;
+    }
+
+    /**
+     * @param \DateTime $garbageTimestamp
+     *
+     * @return File
+     */
+    public function setGarbageTimestamp($garbageTimestamp)
+    {
+        $this->garbageTimestamp = $garbageTimestamp;
 
         return $this;
     }
