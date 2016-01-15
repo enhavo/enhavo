@@ -31,6 +31,11 @@ class GenerateRoutingCommand extends ContainerAwareCommand
                 InputArgument::REQUIRED,
                 'What is the name of the resource?'
             )
+            ->addArgument(
+                'sorting',
+                InputArgument::OPTIONAL,
+                'If the resource can be sorted, what is the property name to sort by?'
+            )
         ;
     }
 
@@ -38,9 +43,10 @@ class GenerateRoutingCommand extends ContainerAwareCommand
     {
         $app = $input->getArgument('app');
         $resource = $input->getArgument('resource');
+        $sorting = $input->getArgument('sorting');
 
         $generator = $this->getContainer()->get('enhavo_app.generator.route_generator');
-        $outputCode = $generator->generate($app, $resource);
+        $outputCode = $generator->generate($app, $resource, $sorting);
 
         $output->writeln($outputCode);
     }

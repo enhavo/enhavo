@@ -34,6 +34,11 @@ class CreateViewer extends AbstractViewer
                 'template' => 'EnhavoAppBundle:View:tab.html.twig',
                 'theme' => '',
                 'action' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName())
+            ),
+            'sorting' => array(
+                'sortable' => false,
+                'property' => 'order',
+                'initial' => 'max'
             )
         );
     }
@@ -85,6 +90,32 @@ class CreateViewer extends AbstractViewer
         return $this->container->get('router')->generate($action);
     }
 
+    public function getSorting()
+    {
+        $sorting = $this->getConfig()->get('sorting');
+
+        if (!$sorting or !is_array($sorting)) {
+            $sorting = array();
+        }
+
+        if (!isset($sorting['sortable'])) {
+            $sorting['sortable'] = false;
+        }
+        if (!isset($sorting['property'])) {
+            $sorting['property'] = 'order';
+        }
+        if (!isset($sorting['initial'])) {
+            $sorting['initial'] = 'max';
+        }
+        if (strtoupper($sorting['initial']) == 'MIN') {
+            $sorting['initial'] = 'min';
+        } else {
+            $sorting['initial'] = 'max';
+        }
+
+        return $sorting;
+    }
+
     public function getParameters()
     {
         $parameters = array(
@@ -93,7 +124,8 @@ class CreateViewer extends AbstractViewer
             'viewer' => $this,
             'tabs' => $this->getTabs(),
             'form_template' => $this->getFormTemplate(),
-            'form_action' => $this->getFormAction()
+            'form_action' => $this->getFormAction(),
+            'sorting' => $this->getSorting()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

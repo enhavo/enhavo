@@ -19,6 +19,12 @@
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+{% if not sorting is null %}
+            sorting:
+                sortable: true
+                property: {{ sorting }}
+                initial: max
+{% endif %}
 
 {{ app }}_{{ resource }}_update:
     options:
@@ -41,6 +47,10 @@
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
+{% if not sorting is null %}
+            sorting:
+                {{ sorting }}: desc
+{% endif %}
         _viewer:
 
 {{ app }}_{{ resource }}_delete:
@@ -58,3 +68,29 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:previewAction
+{% if not sorting is null %}
+
+enhavo_slider_slide_move_up:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-up
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveUpAction
+        _sylius:
+            sortable_position: {{ sorting }}
+        _viewer:
+            sorting: desc
+
+enhavo_slider_slide_move_down:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-down
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveDownAction
+        _sylius:
+            sortable_position: {{ sorting }}
+        _viewer:
+            sorting: desc
+{% endif %}

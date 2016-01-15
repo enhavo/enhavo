@@ -19,6 +19,10 @@ enhavo_slider_slide_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            sorting:
+                sortable: true
+                property: order
+                initial: max
 
 enhavo_slider_slide_update:
     options:
@@ -41,8 +45,14 @@ enhavo_slider_slide_table:
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
+            sorting:
+                order: desc
         _viewer:
             table:
+                sorting:
+                    sortable: true
+                    move_up_route: enhavo_slider_slide_move_up
+                    move_down_route: enhavo_slider_slide_move_down
                 columns:
                     id:
                         label: id
@@ -51,7 +61,12 @@ enhavo_slider_slide_table:
                     title:
                         label: title
                         property: title
-                        width: 11
+                        width: 10
+                    order:
+                        label: order
+                        property: order
+                        width: 1
+                        widget: EnhavoAppBundle:Widget:order.html.twig
 
 enhavo_slider_slide_delete:
     options:
@@ -60,3 +75,27 @@ enhavo_slider_slide_delete:
     methods: [POST, DELETE]
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction
+
+enhavo_slider_slide_move_up:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-up
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveUpAction
+        _sylius:
+            sortable_position: order
+        _viewer:
+            sorting: desc
+
+enhavo_slider_slide_move_down:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-down
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveDownAction
+        _sylius:
+            sortable_position: order
+        _viewer:
+            sorting: desc
