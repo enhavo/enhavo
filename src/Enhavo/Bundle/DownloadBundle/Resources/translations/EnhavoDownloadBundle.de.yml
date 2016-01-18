@@ -15,5 +15,3 @@ downloadItem:
     download:
       item:
         choose: 'Hochgelade Datei verwenden'
-label:
-  download: 'Download'

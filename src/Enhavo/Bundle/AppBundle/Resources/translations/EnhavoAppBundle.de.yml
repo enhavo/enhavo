@@ -32,3 +32,5 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
+action:
+  changePassword: 'Passwort ändern'

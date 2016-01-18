@@ -20,8 +20,6 @@ user:
     username: 'Benutzername'
     id: 'ID'
     user: 'Benutzer'
-label:
-  user: 'Benutzer'
-  group: 'Gruppe'
+
 
 

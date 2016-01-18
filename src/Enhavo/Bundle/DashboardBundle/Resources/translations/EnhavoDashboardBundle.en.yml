@@ -1,2 +1,3 @@
-label:
-  dashboard: 'Dashboard'
+dashboard:
+  label:
+    dashboard: 'Dashboard'

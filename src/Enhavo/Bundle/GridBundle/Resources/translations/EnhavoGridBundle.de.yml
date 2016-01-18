@@ -54,7 +54,9 @@ citeText:
 download:
   label:
     download: 'Download'
-
+label:
+  yes: 'Ja'
+  no: 'Nein'
 
 
 

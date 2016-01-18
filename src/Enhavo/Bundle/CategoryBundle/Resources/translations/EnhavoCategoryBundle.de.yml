@@ -3,5 +3,5 @@ category:
     id: 'ID'
     name: 'Name'
     category: 'Kategorie'
-label:
-  category: 'Kategorien'
+    categories: 'Kategorien'
+

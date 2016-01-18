@@ -13,9 +13,10 @@ label:
   no: 'No'
   title: 'Title'
   upload: 'Upload data'
+  changePassword: 'Change password'
 form:
   delete:
-    question: 'Wollen sie dieses Element wirklich löschen?'
+    question: 'Would you like to delete this element?'
   label:
     public: 'Public'
     meta_description: 'Meta description'

@@ -14,8 +14,14 @@ article:
     preview: 'Vorschau'
     id: 'ID'
     title: 'Titel'
+    always: 'Immer'
+    hourly: 'Stündlich'
+    daily: 'Täglich'
+    weekly: 'Wöchentlich'
+    monthly: 'Monatlich'
+    yearly: 'Jährlich'
+    never: 'Nie'
 label:
-  article: 'Artikel'
   yes: 'Ja'
   no: 'Nein'
 

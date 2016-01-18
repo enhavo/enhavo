@@ -30,6 +30,11 @@ class TextPictureType extends ItemFormType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
+        $builder->add('frame', 'enhavo_boolean', array(
+            'label' => 'textPicture.form.label.frame',
+            'translation_domain' => 'EnhavoGridBundle'
+        ));
+
         $builder->add('textLeft', 'choice', array(
             'label' => 'textPicture.form.label.position',
             'translation_domain' => 'EnhavoGridBundle',
@@ -39,11 +44,6 @@ class TextPictureType extends ItemFormType
             ),
             'expanded' => true,
             'multiple' => false
-        ));
-
-        $builder->add('frame', 'enhavo_boolean', array(
-            'label' => 'grid.form.label.frame',
-            'translation_domain' => 'EnhavoGridBundle'
         ));
     }
 

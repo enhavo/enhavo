@@ -7,5 +7,6 @@ slide:
     id: 'ID'
     title: 'Title'
     slide: 'Slide'
-label:
-  slider: 'Slider'
+slider:
+  label:
+    slider: 'Slider'

@@ -15,5 +15,3 @@ downloadItem:
     download:
       item:
         choose: 'Use uploaded file'
-label:
-  download: 'Download'

@@ -14,5 +14,3 @@ subscriber:
   form:
     label:
       email: 'E-Mail'
-label:
-  newsletter: 'Newsletter'
