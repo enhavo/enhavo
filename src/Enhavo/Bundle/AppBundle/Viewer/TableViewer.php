@@ -44,6 +44,14 @@ class TableViewer extends AbstractViewer
                 }
             }
         }
+        if ($this->isSortable() && !isset($columns['order'])) {
+            $columns['order'] = array(
+                'label' => 'order',
+                'property' => 'order',
+                'width' => 1,
+                'widget' => 'EnhavoAppBundle:Widget:order.html.twig'
+            );
+        }
         return $columns;
     }
 
