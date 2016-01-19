@@ -1,5 +1,8 @@
 /* upload Form */
 
+.uploadForm .imagePreview { width: 82px; }
+.uploadForm .imagePreview.multiple { width: 100%; }
+
 .uploadForm .bar {height: 5px;background: #49a4e5;}
 .uploadForm .progress {position:absolute;top:0;left:0;right:0;}
 
@@ -9,6 +12,7 @@
     line-height: 50px;
     text-align: center;
     font-weight: bold;
+    padding-left: 5px;
 }
 
 .uploadForm .dropzone.in {
@@ -31,15 +35,31 @@
     opacity: 1;
 }
 
-.uploadForm .list li {
+.uploadForm .dropzone.fade.empty:after {
+    content: "Drop image here";
+    font-size: 18px;
+    color: #FFF;
+    text-align: center;
+    padding: 40px 0;
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    pointer-events: none;
+    margin-top: -10px;
+}
+
+.uploadForm .list .imgContainer {
     float:left;
     margin:5px 5px 5px 0;
     position:relative;
 }
 
-.uploadForm .list li .imgdelete {z-index: 10;position: absolute;top:-10px;right:-10px;color:#fff;background:#d87676;display:none;cursor:pointer;width:24px;height:24px;text-align:center;line-height:36px; border-radius: 50%}
-.uploadForm .list li .imgdelete i {font-size: 16px;position: relative;top: -6px;text-align: center;}
-.uploadForm .list li:hover .imgdelete {display:block;}
+.uploadForm .list .imgContainer .imgdelete {z-index: 10;position: absolute;top:-10px;right:-10px;color:#fff;background:#d87676;display:none;cursor:pointer;width:24px;height:24px;text-align:center;line-height:36px; border-radius: 50%}
+.uploadForm .list .imgContainer .imgdelete i {font-size: 16px;position: relative;top: -6px;text-align: center;}
+.uploadForm .list .imgContainer:hover .imgdelete {display:block;}
 
 .uploadForm-image-container {
     background: #f3f3f3;width:72px;height:72px;

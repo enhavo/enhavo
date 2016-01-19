@@ -1,6 +1,8 @@
 Enhavo\Bundle\MediaBundle\Entity\File:
     type: entity
     table: media_file
+    repositoryClass: Enhavo\Bundle\MediaBundle\Repository\FileRepository
+
     id:
         id:
             type: integer
@@ -31,6 +33,14 @@ Enhavo\Bundle\MediaBundle\Entity\File:
         title:
             type: string
             length: 255
+            nullable: true
+
+        garbage:
+            type: boolean
+            nullable: false
+
+        garbageTimestamp:
+            type: datetime
             nullable: true
 
     lifecycleCallbacks: {  }

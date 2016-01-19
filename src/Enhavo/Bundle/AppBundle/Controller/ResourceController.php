@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +51,7 @@ class ResourceController extends BaseController
                     $this->generateInitialSortingValue($resource, $sortingConfig);
                 }
                 $this->domainManager->create($resource);
+                $this->dispatchEvent('enhavo_app.create', $resource, array('action' => 'create'));
                 return new Response();
             }
 
@@ -89,6 +91,7 @@ class ResourceController extends BaseController
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
                 $this->domainManager->update($resource);
+                $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
                 return new Response();
             }
 
@@ -372,5 +375,11 @@ class ResourceController extends BaseController
             $property,
             $newValue
         );
+    }
+
+    protected function dispatchEvent($eventName, $subject = null, $arguments = array())
+    {
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch($eventName, new GenericEvent($subject, $arguments));
     }
 }

@@ -454,6 +454,7 @@ class Article {
      */
     public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
     {
+        $picture->setGarbage(true);
         $this->picture->removeElement($picture);
     }
 

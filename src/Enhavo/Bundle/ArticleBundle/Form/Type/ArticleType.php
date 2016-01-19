@@ -130,7 +130,8 @@ class ArticleType extends AbstractType
         ));
 
         $builder->add('picture', 'enhavo_files', array(
-            'label' => 'form.label.picture'
+            'label' => 'form.label.picture',
+            'multiple' => false
         ));
 
         $builder->add('content', 'enhavo_grid');
