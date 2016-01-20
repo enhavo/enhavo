@@ -158,6 +158,6 @@ enhavo_contact:
             recipient: EnhavoContactBundle:Contact:recipient.html.twig
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
-        from: %contact_form_sender%
+        from: %emails_send_from%
         subject: Kontaktformular
         send_to_sender: true

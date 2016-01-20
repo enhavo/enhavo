@@ -66,6 +66,11 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->end()
                     ->end()
                 ->end()
+                ->arrayNode('newsletter')
+                    ->children()
+                        ->scalarNode('send_from')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

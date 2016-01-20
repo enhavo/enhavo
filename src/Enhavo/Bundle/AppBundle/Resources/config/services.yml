@@ -21,7 +21,7 @@ services:
     enhavo_app.form.enhavo_boolean:
         class: %enhavo_app.form.enhavo_boolean.class%
         arguments:
-            - @enhavo_app.form.config.wysiwyg
+            - @translator
         tags:
             - { name: form.type, alias: 'enhavo_boolean' }
 

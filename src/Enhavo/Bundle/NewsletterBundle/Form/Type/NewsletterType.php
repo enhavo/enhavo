@@ -26,12 +26,6 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ) );
 
-        $builder->add('sent', 'checkbox', array(
-            'read_only' => true,
-            'label' => 'newsletter.form.label.sent',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
-
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

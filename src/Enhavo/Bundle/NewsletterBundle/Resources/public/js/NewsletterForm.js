@@ -1,21 +1,49 @@
-
-
-$(function() {
-    newsletter.init()
-});
-
-var newsletter = new Newsletter();
-
-function Newsletter() {
+function Newsletter(router, translator, admin) {
 
     var self = this;
 
-    this.init = function () {
+    this.initSend = function(router) {
+        $(document).on('click', '[data-type=send]', function() {
+            var form = $(this).parents('form');
+            var data = form.serialize();
+            var sent = form.find('[data-newsletter-sent]');
+            var route = $(this).attr('data-route');
+            var id = form.attr('data-id');
+            var url = router.generate(route, { id: id });
+            if(sent.length == 0) {
+               self.sendNewsletter(data, url, form);
+            } else {
+                var text = sent.attr('data-sent-text');
+                console.log(text);
+                var sendAgain = confirm(text);
+                if(sendAgain == true) {
+                    self.sendNewsletter(data, url, form);
+                }
+            }
+        });
+    };
+
+    this.sendNewsletter = function(data, url, form) {
+        $.ajax({
+            type: 'POST',
+            data: data,
+            url: url,
+            success: function() {
+                admin.overlayMessage(translator.trans('newsletter.action.sent.success'), 'info');
+                admin.overlayClose();
+            },
+            error: function() {
+                admin.overlayMessage(translator.trans('newsletter.action.sent.error'), 'error');
+                admin.overlayClose();
+            }
+        });
+    };
+
+    this.initAddEmail = function() {
         $("#addEmail").click(function () {
             var url = $("#addEmailForm").attr('action');
             var email = $('input[name="enhavo_newsletter_subscriber[email]"]').val();
             data = $("#addEmailForm").serialize();
-            console.log(data);
             $.post(url, data, function (response) {
                 $("#addEmailForm").get(0).reset();
 
@@ -59,7 +87,13 @@ function Newsletter() {
                 })
             return false;
         });
-
-
     };
+
+
+    var init = function() {
+        self.initAddEmail();
+        self.initSend(router);
+    };
+
+    init();
 }

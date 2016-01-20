@@ -21,7 +21,4 @@ article:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
-label:
-  yes: 'Yes'
-  no: 'No'
 

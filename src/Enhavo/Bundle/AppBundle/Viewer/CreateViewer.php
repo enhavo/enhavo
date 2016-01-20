@@ -59,7 +59,8 @@ class CreateViewer extends AbstractViewer
             'display' => true,
             'role' => null,
             'label' => 'label.button',
-            'icon' => null
+            'icon' => null,
+            'translationDomain' => 'EnhavoAppBundle'
         );
 
         $buttons = $this->getConfig()->get('buttons');

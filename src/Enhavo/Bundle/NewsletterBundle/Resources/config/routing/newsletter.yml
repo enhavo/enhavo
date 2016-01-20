@@ -20,6 +20,10 @@ enhavo_newsletter_newsletter_create:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             translationDomain: EnhavoNewsletterBundle
+            tabs:
+                newsletter:
+                    label: newsletter.label.newsletter
+                    template: EnhavoNewsletterBundle:Resource:create.html.twig
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -32,6 +36,17 @@ enhavo_newsletter_newsletter_update:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             translationDomain: EnhavoNewsletterBundle
+            tabs:
+                newsletter:
+                    label: newsletter.label.newsletter
+                    template: EnhavoNewsletterBundle:Resource:edit.html.twig
+            buttons:
+                send:
+                    route: enhavo_newsletter_newsletter_send
+                    label: newsletter.action.sendAndSave
+                    icon: eye
+                    translationDomain: EnhavoNewsletterBundle
+
 enhavo_newsletter_newsletter_table:
     options:
         expose: true
@@ -49,9 +64,16 @@ enhavo_newsletter_newsletter_table:
                     id:
                         label: newsletter.label.id
                         property: id
+                        width: 1
                     title:
                         label: newsletter.label.title
                         property: title
+                        width: 10
+                    sent:
+                        label: newsletter.label.sent
+                        property: sent
+                        width: 1
+                        widget: EnhavoAppBundle:Widget:boolean.html.twig
 
 enhavo_newsletter_newsletter_delete:
     options:
@@ -69,6 +91,10 @@ enhavo_newsletter_newsletter_preview:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:previewAction
 
-enhavo_newsletter_newsletter_send_email:
-    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
-    defaults: { _controller: EnhavoNewsletterBundle:Newsletter:sendEmail }
+enhavo_newsletter_newsletter_send:
+    options:
+        expose: true
+    path: /admin/newsletter/newsletter/{id}/edit/send
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:sendEmailAction

@@ -1,6 +1,10 @@
 newsletter:
   action:
-    send: 'Send'
+    sendAndSave: 'Send and Save'
+    sent:
+      success: 'Newsletter successfully sent!'
+      error: 'An error occured!'
+      again: 'Do you really want to sent the newsletter again?'
   label:
     sent: 'sent'
     id: 'ID'

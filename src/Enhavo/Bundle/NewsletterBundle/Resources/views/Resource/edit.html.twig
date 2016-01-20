@@ -1,39 +1,23 @@
-{% extends 'EnhavoAppBundle::dialog.html.twig' %}
-
+{% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
+{% if form.route is defined %}{{ form_row(form.route) }}{% endif %}
+{{ form_row(form.title) }}
+{{ form_row(form.subject) }}
+{{ form_row(form.text) }}
 {% trans_default_domain "EnhavoNewsletterBundle" %}
-{% block content %}
-    <form method="POST"
-          action="{{ path(view.getParameter('edit_route'), { id: data.id }) }}"
-          data-delete-url="{{ path(view.getParameter('delete_route'), { id: data.id }) }}"
-            {% if view.getParameter('preview_route') %}
-                data-preview-url="{{ path(view.getParameter('preview_route'), { id: 'preview' }) }}"
-            {% endif %}
-            >
-        {% block form %}
-            <!--<input id="enhavo_newsletter_newsletter_id" name="enhavo_newsletter_newsletter[id]" required="required" value="{*{ data.id }}" type="hidden">-->
-            {% include view.getParameter('form_template') %}
-        {% endblock %}
-        {{ block('buttonRow') }}
-    </form>
-{% endblock %}
+<div class="row mb1">
+   <label class="col-md-2 text-right label-container">
+        {{ 'newsletter.label.sent'|trans }}
+    </label>
+    <div class="col-md-9 formwidget-container" style="padding-top: 4px;">
+        {% if data.sent %}
+            <i id="sent" class="icon-check"
+               data-newsletter-sent
+               data-sent-text="{{ 'newsletter.action.sent.again'|trans }}"></i>
+        {% else %}
+            <i id="not-sent" class="icon-cross"></i>
+        {% endif %}
+    </div>
+</div>
 
-{% block buttons %}
-    <script type="text/javascript" src="{{ asset('bundles/enhavonewsletter/js/NewsletterForm.js') }}"></script>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 close"><i class="fa fa-times"></i> {{ 'label.cancel'|trans('EnhavoAppBundle') }}</button>
-    </div>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="button">{{ 'label.save'|trans('EnhavoAppBundle') }}</button>
-    </div>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 delete" type="button">{{ 'label.delete'|trans('EnhavoAppBundle') }}</button>
-    </div>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 send" type="button">{{ 'newsletter.action.send'|trans }}</button>
-    </div>
-    {% if view.getParameter('preview_route') %}
-        <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 preview" type="button">{{ 'label.preview'|trans('EnhavoAppBundle') }}</button>
-        </div>
-    {% endif %}
-{% endblock %}
+
+

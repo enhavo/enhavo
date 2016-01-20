@@ -8,4 +8,5 @@ $(function() {
   admin.initNavigation();
   form = new Form(Routing, templating, admin, Translator);
   user = new User(admin);
+  newsletter = new Newsletter(Routing, Translator, admin);
 });
