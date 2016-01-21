@@ -358,7 +358,7 @@ function Admin (router, templating, translator)
         $(otherItem).after('<div class="entry-row" style="visibility: hidden;" data-sortable-animation-dummy>&nbsp;</div>').css('visibility', 'hidden');
 
         function animFrame() {
-          animPosition -= 5;
+          animPosition -= 8;
 
           if (animPosition <= 0) {
             clearInterval(animHandle);
@@ -386,7 +386,7 @@ function Admin (router, templating, translator)
             item.css('top', position);
           }
         }
-        var animHandle = setInterval(animFrame, 10);
+        var animHandle = setInterval(animFrame, 20);
       }
     };
 
