@@ -1,6 +1,6 @@
 <?php
 /**
- * OrderViewer.php
+ * SortingViewer.php
  *
  * @since 12/01/16
  * @author fliebl
@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
-class OrderViewer extends AbstractViewer
+class SortingViewer extends AbstractViewer
 {
     public function getDefaultConfig()
     {

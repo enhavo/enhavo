@@ -70,7 +70,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('edit')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\EditViewer')->end()
                         ->scalarNode('index')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\IndexViewer')->end()
                         ->scalarNode('preview')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\PreviewViewer')->end()
-                        ->scalarNode('order')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\OrderViewer')->end()
+                        ->scalarNode('sorting')->defaultValue('Enhavo\Bundle\AppBundle\Viewer\SortingViewer')->end()
                     ->end()
                 ->end()
             ->end()

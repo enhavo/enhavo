@@ -39,7 +39,7 @@ class CreateViewer extends AbstractViewer
             ),
             'sorting' => array(
                 'sortable' => false,
-                'position' => 'order',
+                'position' => 'position',
                 'initial' => 'max'
             )
         );
@@ -105,7 +105,7 @@ class CreateViewer extends AbstractViewer
             $sorting['sortable'] = false;
         }
         if (!isset($sorting['position'])) {
-            $sorting['position'] = 'order';
+            $sorting['position'] = 'position';
         }
         if (!isset($sorting['initial'])) {
             $sorting['initial'] = 'max';

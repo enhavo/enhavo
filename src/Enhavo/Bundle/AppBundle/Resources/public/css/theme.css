@@ -161,7 +161,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .layer.dark {background:#777;color:#fff;}
 .label-container {;padding:0px 5px 2px 5px;margin-top:5px;}
 
-.col-order {padding: 0;}
+.col-position {padding: 0;}
 .sortable-button {display:block;float:left;margin:-10px 0;padding:10px 0;width:50%;text-align:center;}
 .sortable-button:hover {background-color:#fff;color:#000;}
 

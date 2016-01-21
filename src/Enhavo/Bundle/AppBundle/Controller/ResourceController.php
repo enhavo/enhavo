@@ -255,7 +255,7 @@ class ResourceController extends BaseController
     protected function move(Request $request, $movement)
     {
         $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'order');
+        $viewer = $this->get('viewer.factory')->create($config->getType(), 'sorting');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);

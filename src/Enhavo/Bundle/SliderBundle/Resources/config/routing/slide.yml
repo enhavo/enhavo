@@ -22,7 +22,7 @@ enhavo_slider_slide_create:
             translationDomain: EnhavoSliderBundle
             sorting:
                 sortable: true
-                position: order
+                position: position
                 initial: max
 
 enhavo_slider_slide_update:
@@ -48,7 +48,7 @@ enhavo_slider_slide_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
             sorting:
-                order: desc
+                position: desc
         _viewer:
             translationDomain: EnhavoSliderBundle
             table:
@@ -65,11 +65,11 @@ enhavo_slider_slide_table:
                         label: slide.label.title
                         property: title
                         width: 10
-                    order:
-                        label: slide.label.order
-                        property: order
+                    position:
+                        label: slide.label.position
+                        property: position
                         width: 1
-                        widget: EnhavoAppBundle:Widget:order.html.twig
+                        widget: EnhavoAppBundle:Widget:position.html.twig
 
 enhavo_slider_slide_delete:
     options:
@@ -87,7 +87,7 @@ enhavo_slider_slide_move_up:
     defaults:
         _controller: enhavo_slider.controller.slide:moveUpAction
         _sylius:
-            sortable_position: order
+            sortable_position: position
         _viewer:
             sorting: desc
 
@@ -99,6 +99,6 @@ enhavo_slider_slide_move_down:
     defaults:
         _controller: enhavo_slider.controller.slide:moveDownAction
         _sylius:
-            sortable_position: order
+            sortable_position: position
         _viewer:
             sorting: desc

@@ -7,7 +7,7 @@ slide:
     id: 'ID'
     title: 'Title'
     slide: 'Slide'
-    order: ''
+    position: ''
 slider:
   label:
     slider: 'Slider'

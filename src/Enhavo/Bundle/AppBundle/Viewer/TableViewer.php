@@ -20,12 +20,6 @@ class TableViewer extends AbstractViewer
                     'sortable' => false,
                     'move_up_route' => sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName()),
                     'move_down_route' => sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName())
-                ),
-                'columns' => array(
-                    'id' => array(
-                        'label' => 'ID',
-                        'property' => 'id'
-                    )
                 )
             )
         );
@@ -34,23 +28,39 @@ class TableViewer extends AbstractViewer
     protected function getColumns()
     {
         $columns = $this->getConfig()->get('table.columns');
+        if (!$columns) {
+            if ($this->isSortable()) {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                        'width' => 1
+                    ),
+                    'position' => array(
+                        'label' => '',
+                        'property' => 'position',
+                        'width' => 1,
+                        'widget' => 'EnhavoAppBundle:Widget:position.html.twig'
+                    )
+                );
+            } else {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                        'width' => 1
+                    )
+                );
+            }
+
+        }
         foreach($columns as $key => &$column) {
             if(!array_key_exists('width', $column)) {
                 $column['width'] = 1;
             }
-            if ($key == 'order') {
-                if (!array_key_exists('widget', $column)) {
-                    $column['widget'] = 'EnhavoAppBundle:Widget:order.html.twig';
-                }
-            }
         }
-        if ($this->isSortable() && !isset($columns['order'])) {
-            $columns['order'] = array(
-                'label' => 'order',
-                'property' => 'order',
-                'width' => 1,
-                'widget' => 'EnhavoAppBundle:Widget:order.html.twig'
-            );
+        if (isset($columns['position']) && !isset($columns['position']['widget'])) {
+            $columns['position']['widget'] = 'EnhavoAppBundle:Widget:position.html.twig';
         }
         return $columns;
     }
