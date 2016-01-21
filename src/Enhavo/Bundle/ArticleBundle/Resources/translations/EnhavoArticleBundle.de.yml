@@ -1,0 +1,24 @@
+article:
+  form:
+    label:
+      page_title: 'Seitentitel'
+      public: 'Öffentlich'
+      social_media: 'Social Media'
+      priority: 'Priorität'
+      change_frequency: 'Änderungsfrequenz'
+      publication_date: 'Erscheinungsdatum'
+  label:
+    article: 'Artikel'
+    content: 'Inhalt'
+    seo: 'SEO'
+    preview: 'Vorschau'
+    id: 'ID'
+    title: 'Titel'
+    always: 'Immer'
+    hourly: 'Stündlich'
+    daily: 'Täglich'
+    weekly: 'Wöchentlich'
+    monthly: 'Monatlich'
+    yearly: 'Jährlich'
+    never: 'Nie'
+

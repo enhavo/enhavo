@@ -19,15 +19,16 @@ enhavo_article_article_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             tabs:
                 article:
-                    label: Article
+                    label: article.label.article
                     template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
-                    label: Content
+                    label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: article.label.seo
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
@@ -45,15 +46,16 @@ enhavo_article_article_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             tabs:
                 article:
-                    label: Article
+                    label: article.label.article
                     template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
-                    label: Content
+                    label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: article.label.seo
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
@@ -72,14 +74,15 @@ enhavo_article_article_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: article.label.id
                         property: id
                         width: 1
                     title:
-                        label: title
+                        label: article.label.title
                         property: title
                         width: 11
 

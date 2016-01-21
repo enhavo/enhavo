@@ -11,15 +11,21 @@ class NewsletterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
+        $builder->add('title', 'text', array(
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
+        ) );
 
-        $builder->add('subject', 'text');
+        $builder->add('subject', 'text', array(
+            'label' => 'newsletter.form.label.subject',
+            'translation_domain' => 'EnhavoNewsletterBundle'
+        ) );
 
-        $builder->add('text', 'wysiwyg');
+        $builder->add('text', 'wysiwyg', array(
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle'
+        ) );
 
-        $builder->add('sent', 'checkbox', array(
-            'read_only' => true
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

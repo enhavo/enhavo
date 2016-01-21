@@ -44,6 +44,7 @@ class EnhavoNewsletterExtension extends SyliusResourceExtension
         );
 
         $container->setParameter('enhavo_newsletter.subscriber', $config[0]['subscriber']);
+        $container->setParameter('enhavo_newsletter.newsletter', $config[0]['newsletter']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

@@ -1,0 +1,13 @@
+appointment:
+  form:
+    label:
+      dateFrom: 'From'
+      dateTo: 'To'
+  label:
+    appointment: 'Appointment'
+    content: 'Content'
+    id: 'ID'
+    title: 'Title'
+    date: 'Date'
+label:
+  calendar: 'Calendar'

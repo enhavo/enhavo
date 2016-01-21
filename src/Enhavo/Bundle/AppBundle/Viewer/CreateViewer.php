@@ -44,7 +44,7 @@ class CreateViewer extends AbstractViewer
         if(empty($tabs)) {
             return array(
                 $this->getResourceName() => array(
-                    'label' => $this->getResourceName(),
+                    'label' => $this->getResourceName().'.label.'.$this->getResourceName(),
                     'template' => 'EnhavoAppBundle:Tab:default.html.twig'
                 )
             );
@@ -59,7 +59,8 @@ class CreateViewer extends AbstractViewer
             'display' => true,
             'role' => null,
             'label' => 'label.button',
-            'icon' => null
+            'icon' => null,
+            'translationDomain' => 'EnhavoAppBundle'
         );
 
         $buttons = $this->getConfig()->get('buttons');
@@ -93,7 +94,8 @@ class CreateViewer extends AbstractViewer
             'viewer' => $this,
             'tabs' => $this->getTabs(),
             'form_template' => $this->getFormTemplate(),
-            'form_action' => $this->getFormAction()
+            'form_action' => $this->getFormAction(),
+            'translationDomain' => $this->getTranslationDomain()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

@@ -19,9 +19,10 @@ enhavo_category_category_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoCategoryBundle
             tabs:
                 category:
-                    label: category
+                    label: category.label.category
                     template: EnhavoCategoryBundle:Tab:category.html.twig
 
 enhavo_category_category_update:
@@ -34,6 +35,7 @@ enhavo_category_category_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoCategoryBundle
 
 enhavo_category_category_table:
     options:
@@ -46,16 +48,17 @@ enhavo_category_category_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoCategoryBundle
             table:
                 width: 12
                 columns:
                     id:
                         width: 1
-                        label: ID
+                        label: category.label.id
                         property: id
                     name:
                         width: 11
-                        label: name
+                        label: category.label.name
                         property: name
 
 enhavo_category_category_delete:

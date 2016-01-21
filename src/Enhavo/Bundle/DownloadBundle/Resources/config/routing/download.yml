@@ -19,6 +19,7 @@ enhavo_download_download_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_update:
     options:
@@ -30,6 +31,7 @@ enhavo_download_download_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_table:
     options:
@@ -42,13 +44,14 @@ enhavo_download_download_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: download.label.id
                         property: id
                     title:
-                        label: title
+                        label: download.label.title
                         property: title
                         width: 8
 

@@ -1,0 +1,17 @@
+download:
+  form:
+    label:
+      file: 'File'
+  label:
+    id: 'ID'
+    title: 'Title'
+    download: 'Download'
+downloadItem:
+  form:
+    label:
+      file: 'File'
+      download: 'Download'
+  label:
+    download:
+      item:
+        choose: 'Use uploaded file'

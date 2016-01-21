@@ -26,5 +26,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
         sent:
             type: boolean
             nullable: true
+            options:
+                default: false
 
     lifecycleCallbacks: {  }
