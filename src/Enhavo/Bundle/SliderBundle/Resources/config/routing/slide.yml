@@ -21,7 +21,7 @@ enhavo_slider_slide_create:
         _viewer:
             sorting:
                 sortable: true
-                property: order
+                position: order
                 initial: max
 
 enhavo_slider_slide_update:

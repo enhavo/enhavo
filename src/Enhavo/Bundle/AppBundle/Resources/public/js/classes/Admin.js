@@ -266,7 +266,6 @@ function Admin (router, templating, translator)
           var page = block.data('block-page');
           var url = router.generate(route, {page: page});
           self.reloadBlock(block);
-          //self.reloadBlock(block, url);
         });
 
         block.on('click', '[data-page]', function() {
@@ -274,7 +273,6 @@ function Admin (router, templating, translator)
           block.data('block-page', page);
           var url = router.generate(route, {page: page});
           self.reloadBlock(block);
-          //self.reloadBlock(block, url);
         });
 
         block.on('click', '[data-id]', function() {
@@ -410,7 +408,7 @@ function Admin (router, templating, translator)
         url: url,
         data: {id: id}
       }).done(function(result) {
-        if (!result['success'] === true) {
+        if (!result['success']) {
           self.overlayMessage(translator.trans('error.occurred'), MessageType.Error);
           // Error saving order, reload block to display current order
           self.reloadBlock(block);

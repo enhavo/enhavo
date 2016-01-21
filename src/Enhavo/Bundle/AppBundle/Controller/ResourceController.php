@@ -332,7 +332,7 @@ class ResourceController extends BaseController
         $accessor = PropertyAccess::createPropertyAccessor();
         /** @var ObjectManager $manager */
         $manager = $this->get($this->config->getServiceName('manager'));
-        $property = $sortingConfig['property'];
+        $property = $sortingConfig['position'];
 
         if ($sortingConfig['initial'] == 'min') {
             // Value is 0, but we need to move all other elements one up
