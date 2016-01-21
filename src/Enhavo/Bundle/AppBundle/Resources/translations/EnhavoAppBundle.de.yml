@@ -1,0 +1,36 @@
+error:
+  occurred: 'Ein Fehler ist aufgetreten'
+  forbidden: 'Sie haben nicht die nötigen Rechte um diese Aktion auszuführen'
+label:
+  logout: 'Logout'
+  id: 'ID'
+  cancel: 'Abbrechen'
+  save: 'Speichern'
+  delete: 'Löschen'
+  preview: 'Vorschau'
+  create: 'Erstellen'
+  yes: 'Ja'
+  no: 'Nein'
+  title: 'Titel'
+  upload: 'Datei hochladen'
+form:
+  delete:
+    question: 'Wollen sie dieses Element wirklich löschen?'
+  label:
+    public: 'Veröffentlichen'
+    meta_description: 'Meta Text'
+    link: 'Link'
+    title: 'Titel'
+    teaser: 'Teaser'
+    slug: 'Slug'
+    picture: 'Bild'
+    text: 'Text'
+tab:
+  label:
+    category: 'Kategorie'
+    content: 'Inhalt'
+    seo: 'SEO'
+table:
+  empty: 'Keine Daten vorhanden'
+action:
+  changePassword: 'Passwort ändern'

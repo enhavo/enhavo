@@ -1,5 +1,6 @@
 {% block enhavo_files_widget %}
     {% spaceless %}
+        {% trans_default_domain 'EnhavoAppBundle' %}
             <div class="uploadForm" data-multiple="{% if multiple %}1{% else %}0{% endif %}">
 
                 <script type="text/html" data-id="files-template">
@@ -87,7 +88,7 @@
                         {% endif %}
                     </div>
                     <div class="mt1">
-                        <button class="btn upload-button"> Datei hochladen</button>
+                        <button class="btn upload-button"> {{ 'label.upload'|trans }}</button>
                     </div>
                 </div>
             </div>

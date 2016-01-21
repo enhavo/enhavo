@@ -73,7 +73,8 @@ class EditViewer extends CreateViewer
             'data' => $this->getResource(),
             'form_template' => $this->getFormTemplate(),
             'form_action' => $this->getFormAction(),
-            'form_delete' => $this->getFormDelete()
+            'form_delete' => $this->getFormDelete(),
+            'translationDomain' => $this->getTranslationDomain()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

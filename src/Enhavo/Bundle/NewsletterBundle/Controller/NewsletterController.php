@@ -10,38 +10,37 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsletterController extends ResourceController
 {
     public function sendEmailAction(Request $request) {
+        $id = $request->get('id');
         $newsletter = $request->get('enhavo_newsletter_newsletter');
-        $id = $request->get('newsletterId');
-        $title = $newsletter['title'];
-        $subject = $newsletter['subject'];
-        $text = $newsletter['text'];
 
         $subscriber = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Subscriber')
             ->findBy(array('active' => true));
 
-        $container = $this->container;
-        $test = $container->getParameter('enhavo_newsletter.subscriber');
+        $newsletter_config = $this->container->getParameter('enhavo_newsletter.newsletter');
 
         for($i = 0; $i < count($subscriber); $i++)
         {
             $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
+                ->setSubject($newsletter['subject'])
                 ->setContentType("text/html")
-                ->setFrom($test['send_from'])
+                ->setFrom($newsletter_config['send_from'])
                 ->setTo($subscriber[$i]->getEmail())
-                ->setBody($text);
+                ->setBody($newsletter['text']);
             $this->get('mailer')->send($message);
         }
 
         $currentNewsletter = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Newsletter')
-            ->findBy(array('id' => $id));
+            ->find($id);
 
-        $currentNewsletter[0]->setSent(true);
+        $currentNewsletter->setTitle($newsletter['title']);
+        $currentNewsletter->setSubject($newsletter['subject']);
+        $currentNewsletter->setText($newsletter['text']);
+        $currentNewsletter->setSent(true);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($currentNewsletter[0]);
+        $em->persist($currentNewsletter);
         $em->flush();
 
         $response = new Response();

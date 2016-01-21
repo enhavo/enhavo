@@ -1,5 +1,6 @@
 {% use 'EnhavoAppBundle::block.html.twig' %}
 
+{% trans_default_domain "EnhavoCategoryBundle" %}
 <div class="container form-container small-dialog ">
     {% block content %}
         <form method="POST" action="{{ path(view.getParameter('manage_route'), { name: data.name }) }}">
@@ -8,8 +9,8 @@
             </div>
 
             <div class="row pl2em">
-                <button class="btn col-md-2 close"><i class="fa fa-remove"></i> {{ 'label.cancel'|trans }}</button>
-                <button class="btn col-md-2 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans }}</button>
+                <button class="btn col-md-2 close"><i class="fa fa-remove"></i> {{ 'label.cancel'|trans("EnhavoAppBundle") }}</button>
+                <button class="btn col-md-2 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans('EnhavoAppBundle') }}</button>
             </div>
         </form>
     {% endblock %}

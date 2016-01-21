@@ -17,11 +17,13 @@ class TextType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('text', 'wysiwyg', array(
-            'label' => 'form.label.text'
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
     }
 

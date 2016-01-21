@@ -14,7 +14,10 @@ class SubscriberType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'text');
+        $builder->add('email', 'text',array(
+            'label' => 'subscriber.form.label.email',
+            'translation_domain' => 'EnhavoNewsletterBundle'
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

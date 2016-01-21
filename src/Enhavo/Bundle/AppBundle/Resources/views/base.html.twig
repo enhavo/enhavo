@@ -27,11 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoslider/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavouser/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavomedia/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavonewsletter/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavocalendar/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavocategory/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodownload/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodashboard/css/style.css') }}">
 
     {% if view is defined %}
         {% for stylesheet in view.getParameter('stylesheets') %}
@@ -67,9 +63,10 @@
 
     <script type="text/javascript" src="{{ asset('bundles/enhavomedia/js/UploadForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavogrid/js/ContentForm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavonewsletter/js/NewsletterForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavocategory/js/CategoryForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoslider/js/SliderForm.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('bundles/enhavouser/js/user.js') }}"></script>
 
     {% if view is defined %}
         {% for javascript in view.getParameter('javascripts') %}
@@ -89,6 +86,7 @@
         <iframe src="" id="iframe" name="iframe"></iframe>
     </div>
     <div class="clearfix">
+        <button data-action data-action-type="overlay" data-action-route="enhavo_user_user_password" class="btn passwordChange" style="position: absolute; right: 15px; top: 15px;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</button>
         <a class="responsive-menu-btn" data-mobile-menu></a>
         <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
         <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>

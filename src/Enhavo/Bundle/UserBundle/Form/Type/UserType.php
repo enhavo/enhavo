@@ -16,7 +16,8 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username', 'text', array(
-            'label' => 'user.form.label.username'
+            'label' => 'user.form.label.username',
+            'translation_domain' => 'EnhavoUserBundle'
         ));
 
         $builder->add('plainPassword', 'repeated', array(
@@ -28,15 +29,18 @@ class UserType extends AbstractType
         ));
 
         $builder->add('email', 'text', array(
-            'label' => 'user.form.label.email'
+            'label' => 'user.form.label.email',
+            'translation_domain' => 'EnhavoUserBundle'
         ));
 
         $builder->add('firstName', 'text', array(
-            'label' => 'user.form.label.firstName'
+            'label' => 'user.form.label.firstName',
+            'translation_domain' => 'EnhavoUserBundle'
         ));
 
         $builder->add('lastName', 'text', array(
-            'label' => 'user.form.label.lastName'
+            'label' => 'user.form.label.lastName',
+            'translation_domain' => 'EnhavoUserBundle'
         ));
 
         $builder->add('groups', 'entity', array(
@@ -45,7 +49,8 @@ class UserType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'attr' => array('class' => 'category-list'),
-            'label' => 'user.form.label.groups'
+            'label' => 'user.form.label.groups',
+            'translation_domain' => 'EnhavoUserBundle'
         ));
     }
 

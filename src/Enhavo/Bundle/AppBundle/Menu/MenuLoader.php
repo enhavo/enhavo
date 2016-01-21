@@ -50,6 +50,9 @@ class MenuLoader
                 'route' => $menuItem['route']
             ));
             $menu->setLabel($menuItem['label']);
+            if(isset($menuItem['translationDomain'])) {
+                $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
+            }
             $menuList->addChild($menu);
         }
 

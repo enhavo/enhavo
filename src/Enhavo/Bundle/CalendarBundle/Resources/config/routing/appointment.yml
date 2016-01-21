@@ -19,12 +19,13 @@ enhavo_calendar_appointment_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoCalendarBundle
             tabs:
                 appointment:
-                    label: Appointment
+                    label: appointment.label.appointment
                     template: EnhavoCalendarBundle:Tab:appointment.html.twig
                 content:
-                    label: Content
+                    label: appointment.label.content
                     template: EnhavoCalendarBundle:Tab:content.html.twig
 
 enhavo_calendar_appointment_update:
@@ -37,12 +38,13 @@ enhavo_calendar_appointment_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoCalendarBundle
             tabs:
                 appointment:
-                    label: Appointment
+                    label: appointment.label.appointment
                     template: EnhavoCalendarBundle:Tab:appointment.html.twig
                 content:
-                    label: Content
+                    label: appointment.label.content
                     template: EnhavoCalendarBundle:Tab:content.html.twig
 
 enhavo_calendar_appointment_table:
@@ -56,18 +58,19 @@ enhavo_calendar_appointment_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoCalendarBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: appointment.label.id
                         property: id
                         width: 1
                     title:
-                        label: title
+                        label: appointment.label.title
                         property: title
                         width: 6
                     date:
-                        label: date
+                        label: appointment.label.date
                         property: dateFrom
                         widget: EnhavoAppBundle:Widget:date.html.twig
                         width: 5

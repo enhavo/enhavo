@@ -1,0 +1,6 @@
+category:
+  label:
+    id: 'ID'
+    name: 'Name'
+    category: 'Category'
+    categories: 'Categories'

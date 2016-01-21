@@ -54,6 +54,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('label')->isRequired()->end()
                             ->scalarNode('route')->isRequired()->end()
                             ->scalarNode('role')->isRequired()->end()
+                            ->scalarNode('translationDomain')->end()
                         ->end()
                     ->end()
                 ->end()

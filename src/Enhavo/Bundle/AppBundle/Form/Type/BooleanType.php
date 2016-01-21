@@ -9,12 +9,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class BooleanType extends AbstractType
 {
     const VALUE_TRUE = 'true';
     const VALUE_FALSE = 'false';
     const VALUE_NULL = 'null';
+
+    protected $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * {@inheritdoc}
@@ -76,8 +84,8 @@ class BooleanType extends AbstractType
                 self::VALUE_TRUE => 'true',
                 self::VALUE_FALSE => 'false'
             ),
-            'label_true' =>  'label.yes',
-            'label_false' => 'label.no',
+            'label_true' =>  $this->translator->trans('label.yes', array(), 'EnhavoAppBundle'),
+            'label_false' => $this->translator->trans('label.no', array(), 'EnhavoAppBundle'),
             'expanded' => true,
             'multiple' => false,
             'default' => null
@@ -86,7 +94,7 @@ class BooleanType extends AbstractType
         $resolver->setNormalizer('choices', function (Options $options, $value) {
             return array(
                 self::VALUE_TRUE => $options['label_true'],
-                self::VALUE_FALSE => $options['label_false']
+                self::VALUE_FALSE =>$options['label_false'],
             );
         });
     }

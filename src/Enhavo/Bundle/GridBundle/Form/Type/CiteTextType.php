@@ -16,7 +16,8 @@ class CiteTextType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('cite', 'textarea', array(
-            'label' => 'form.label.cite'
+            'label' => 'citeText.form.label.cite',
+            'translation_domain' => 'EnhavoGridBundle',
         ));
     }
 

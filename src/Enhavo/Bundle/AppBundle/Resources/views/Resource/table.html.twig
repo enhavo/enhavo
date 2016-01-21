@@ -1,4 +1,5 @@
-<div class="row head-row">
+{% trans_default_domain translationDomain %}
+<div data-test class="row head-row">
     {% for column in columns %}
         <div class="col-xs-{{ column.width }}">{{ column.label|trans }}</div>
     {% endfor %}
@@ -19,7 +20,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            {{ 'table.empty'|trans }}
+            {{ 'table.empty'|trans('EnhavoAppBundle') }}
         {% endfor %}
     </div>
 </div>

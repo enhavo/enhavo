@@ -65,29 +65,34 @@ class AppointmentType extends AbstractType
         }
 
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title.h1'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('slug', 'hidden');
 
         $builder->add('teaser', 'textarea', array(
-            'label' => 'form.label.teaser'
+            'label' => 'form.label.teaser',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('dateFrom', 'datetime', array(
-            'label' => 'form.label.dateFrom',
+            'label' => 'appointment.form.label.dateFrom',
+            'translation_domain' => 'EnhavoCalendarBundle',
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy HH:mm',
         ));
 
         $builder->add('dateTo', 'datetime', array(
-            'label' => 'form.label.dateTo',
+            'label' => 'appointment.form.label.dateTo',
+            'translation_domain' => 'EnhavoCalendarBundle',
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy HH:mm',
         ));
 
         $builder->add('picture', 'enhavo_files', array(
-            'label' => 'form.label.picture'
+            'label' => 'form.label.picture',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('content', 'enhavo_grid');

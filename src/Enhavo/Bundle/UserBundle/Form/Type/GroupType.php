@@ -28,10 +28,13 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text', array(
-            'label' => 'group.form.label.name'
+            'label' => 'group.form.label.name',
+            'translation_domain' => 'EnhavoUserBundle'
+
         ));
         $builder->add('roles', 'choice', array(
             'label' => 'group.form.label.roles',
+            'translation_domain' => 'EnhavoUserBundle',
             'choices' => $this->roles,
             'multiple' => true,
             'expanded' => true,
