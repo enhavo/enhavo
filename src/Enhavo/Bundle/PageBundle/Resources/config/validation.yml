@@ -1,0 +1,4 @@
+Enhavo\Bundle\PageBundle\Entity\Page:
+    properties:
+        content:
+            - Valid: ~

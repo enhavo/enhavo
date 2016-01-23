@@ -130,6 +130,13 @@ enhavo_grid:
             template: EnhavoDownloadBundle:Item:download.html.twig
             label: download.label.download
             translationDomain: EnhavoGridBundle
+        video:
+            model: Enhavo\Bundle\GridBundle\Entity\Video
+            form: Enhavo\Bundle\GridBundle\Form\Type\VideoType
+            repository: EnhavoGridBundle:Video
+            template: EnhavoGridBundle:Item:video.html.twig
+            label: video.label.video
+            translationDomain: EnhavoGridBundle
 
 enhavo_page:
     dynamic_routing: false
