@@ -82,7 +82,7 @@ enhavo_slider_slide_delete:
 enhavo_slider_slide_move_up:
     options:
         expose: true
-    path: /enhavo/slider/slide/move-up
+    path: /enhavo/slider/slide/move-up/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:moveUpAction
@@ -94,7 +94,7 @@ enhavo_slider_slide_move_up:
 enhavo_slider_slide_move_down:
     options:
         expose: true
-    path: /enhavo/slider/slide/move-down
+    path: /enhavo/slider/slide/move-down/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:moveDownAction
