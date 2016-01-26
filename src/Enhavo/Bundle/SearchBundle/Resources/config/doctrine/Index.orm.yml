@@ -9,25 +9,24 @@ Enhavo\Bundle\SearchBundle\Entity\Index:
             generator:
                 strategy: AUTO
     fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-
-        teaser:
-            type: text
-            nullable: true
-
-        content:
-            type: text
-            nullable: true
-
-        route:
+        word:
             type: string
             length: 255
 
-        routeParameter:
+        locale:
             type: string
             length: 255
+
+        type:
+            type: string
+            length: 255
+
+        score:
+            type: integer
+
+    manyToOne:
+        dataset:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\SearchBundle\Entity\Index
 
     lifecycleCallbacks: {  }

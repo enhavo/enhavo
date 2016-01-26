@@ -1,0 +1,12 @@
+Enhavo\Bundle\GridBundle\Entity\Content:
+    properties:
+        items:
+            - Collection
+
+Enhavo\Bundle\GridBundle\Entity\Item:
+    properties:
+        itemType:
+            - Model
+
+Enhavo\Bundle\GridBundle\Entity\CiteText:
+    properties:

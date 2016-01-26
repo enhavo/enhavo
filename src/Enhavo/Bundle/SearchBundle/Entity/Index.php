@@ -17,33 +17,30 @@ class Index
     /**
      * @var string
      */
-    protected $title;
+    protected $word;
 
     /**
      * @var string
      */
-    protected $teaser;
+    protected $locale;
 
     /**
      * @var string
      */
-    protected $content;
+    protected $type;
 
     /**
-     * @var string
+     * @var integer
      */
-    protected $route;
+    protected $score;
 
     /**
-     * @var string
+     * @var \Enhavo\Bundle\SearchBundle\Entity\Index
      */
-    protected $routeParameter;
-
+    private $dataset;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -51,117 +48,98 @@ class Index
     }
 
     /**
-     * Set title
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWord()
+    {
+        return $this->word;
+    }
+
+    /**
+     * @param string $word
+     */
+    public function setWord($word)
+    {
+        $this->word = $word;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param int $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * Set dataset
      *
-     * @param string $title
+     * @param \Enhavo\Bundle\SearchBundle\Entity\Index $dataset
+     *
      * @return Index
      */
-    public function setTitle($title)
+    public function setDataset(\Enhavo\Bundle\SearchBundle\Entity\Index $dataset = null)
     {
-        $this->title = $title;
+        $this->dataset = $dataset;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get dataset
      *
-     * @return string 
+     * @return \Enhavo\Bundle\SearchBundle\Entity\Index
      */
-    public function getTitle()
+    public function getDataset()
     {
-        return $this->title;
-    }
-
-    /**
-     * Set teaser
-     *
-     * @param string $teaser
-     * @return Index
-     */
-    public function setTeaser($teaser)
-    {
-        $this->teaser = $teaser;
-
-        return $this;
-    }
-
-    /**
-     * Get teaser
-     *
-     * @return string 
-     */
-    public function getTeaser()
-    {
-        return $this->teaser;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return Index
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set route
-     *
-     * @param string $route
-     * @return Index
-     */
-    public function setRoute($route)
-    {
-        $this->route = $route;
-
-        return $this;
-    }
-
-    /**
-     * Get route
-     *
-     * @return string 
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
-
-    /**
-     * Set routeParameter
-     *
-     * @param string $routeParameter
-     * @return Index
-     */
-    public function setRouteParameter($routeParameter)
-    {
-        $this->routeParameter = serialize($routeParameter);
-
-        return $this;
-    }
-
-    /**
-     * Get routeParameter
-     *
-     * @return string 
-     */
-    public function getRouteParameter()
-    {
-        return unserialize($this->routeParameter);
+        return $this->dataset;
     }
 }

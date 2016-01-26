@@ -4,22 +4,14 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     properties:
         title:
             - Plain:
-                score: 10
+                weight: 10
                 type: title
 
-        text:
-            - Html:
-                language: true
-                weight:
-                  h1: 10
-                default: 2
-        tags:
-            - Collection:
-                entity: Enhavo\Bundle\ArticleBundle\Entity\Tag
-
-
-Enhavo\Bundle\ArticleBundle\Entity\Tag:
-    properties:
-        text:
+        teaser:
             - Plain:
-                score: 5
+                weight: 8
+                type: teaser
+
+        content:
+            - Collection:
+                entity: Enhavo\Bundle\GridBundle\Entity\Content
