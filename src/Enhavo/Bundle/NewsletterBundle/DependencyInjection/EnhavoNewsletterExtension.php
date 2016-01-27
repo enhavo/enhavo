@@ -2,10 +2,11 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Sylius\Component\Resource\Factory;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader;
-use Enhavo\Bundle\AppBundle\DependencyInjection\SyliusResourceExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 
 /**
@@ -13,40 +14,25 @@ use Enhavo\Bundle\AppBundle\DependencyInjection\SyliusResourceExtension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class EnhavoNewsletterExtension extends SyliusResourceExtension
+class EnhavoNewsletterExtension extends AbstractResourceExtension
 {
-    // You can choose your application name, it will use to prefix the configuration keys in the container (the default value is sylius).
-    protected $applicationName = 'enhavo_newsletter';
-
-    protected $bundleName = 'newsletter';
-
-    protected $companyName = 'enhavo';
-
-    // You can define where yours service definitions are
-    protected $configDirectory = '/../Resources/config';
-
-    // You can define what service definitions you want to load
-    protected $configFiles = array(
-        'services',
-        'forms',
-    );
-
-    // You can define the file formats of the files loaded
-    //protected $configFormat = self::CONFIG_XML;
-
+    /**
+     * {@inheritdoc}
+     */
     public function load(array $config, ContainerBuilder $container)
     {
-        $this->configure(
-            $config,
-            new Configuration(),
-            $container,
-            self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS | self::CONFIGURE_ADMIN
+        $config = $this->processConfiguration(new Configuration(), $config);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
+
+        $container->setParameter('enhavo_newsletter.subscriber', $config['subscriber']);
+        $container->setParameter('enhavo_newsletter.newsletter', $config['newsletter']);
+
+        $configFiles = array(
+            'services.yml',
         );
-
-        $container->setParameter('enhavo_newsletter.subscriber', $config[0]['subscriber']);
-        $container->setParameter('enhavo_newsletter.newsletter', $config[0]['newsletter']);
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        foreach ($configFiles as $configFile) {
+            $loader->load($configFile);
+        }
     }
 }

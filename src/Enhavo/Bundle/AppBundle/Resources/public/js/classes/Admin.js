@@ -303,8 +303,8 @@ function Admin (router, templating, translator)
   this.initSortable = function (block) {
     var animationRunning = false;
     var currentAjaxHandle = null;
-    var moveUpUrl = router.generate(block.find('[data-move-up-route]').data('move-up-route'));
-    var moveDownUrl = router.generate(block.find('[data-move-down-route]').data('move-down-route'));
+    var moveUpRoute = block.find('[data-move-up-route]').data('move-up-route');
+    var moveDownRoute = block.find('[data-move-down-route]').data('move-down-route');
 
     block.on('click', '[data-sortable-up-button]', function(event) {
       event.preventDefault();
@@ -398,15 +398,14 @@ function Admin (router, templating, translator)
       var id = element.parents('[data-sortable-row]').data('id');
       var url;
       if (directionUp) {
-        url = moveUpUrl;
+        url = router.generate(moveUpRoute, {id: id});
       } else {
-        url = moveDownUrl;
+        url = router.generate(moveDownRoute, {id: id});
       }
 
       currentAjaxHandle = $.ajax({
         type: "POST",
-        url: url,
-        data: {id: id}
+        url: url
       }).done(function(result) {
         if (!result['success']) {
           self.overlayMessage(translator.trans('error.occurred'), MessageType.Error);
