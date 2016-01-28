@@ -7,7 +7,7 @@
     "psr-0": { "": "src/" }
   },
   "require": {
-    "php": "^5.5.9",
+    "php": "^5.5.9|^7.0",
     "symfony/symfony": "~2.6",
     "symfony/assetic-bundle": "~2.3",
     "symfony/swiftmailer-bundle": "~2.3",
@@ -39,7 +39,9 @@
   "require-dev": {
     "behat/behat": "^3.0",
     "behat/symfony2-extension": "^2.0",
-    "phpspec/phpspec": "~2.0"
+    "behat/mink": "^1.7",
+    "behat/mink-browserkit-driver": "^1.3",
+    "behat/mink-extension": "^2.1"
   },
   "scripts": {
     "post-install-cmd": [
