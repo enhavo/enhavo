@@ -1,7 +1,7 @@
 enhavo_download_download_index:
     options:
         expose: true
-    path: /admin/enhavo/download/download/index
+    path: /enhavo/download/download/index
     methods: [GET]
     defaults:
         _controller: enhavo_download.controller.download:indexAction
@@ -12,7 +12,7 @@ enhavo_download_download_index:
 enhavo_download_download_create:
     options:
         expose: true
-    path: /admin/enhavo/download/download/create
+    path: /enhavo/download/download/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_download.controller.download:createAction
@@ -24,7 +24,7 @@ enhavo_download_download_create:
 enhavo_download_download_update:
     options:
         expose: true
-    path: /admin/enhavo/download/download/update/{id}
+    path: /enhavo/download/download/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_download.controller.download:updateAction
@@ -36,7 +36,7 @@ enhavo_download_download_update:
 enhavo_download_download_table:
     options:
         expose: true
-    path: /admin/enhavo/download/download/table/{page}
+    path: /enhavo/download/download/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -58,7 +58,7 @@ enhavo_download_download_table:
 enhavo_download_download_delete:
     options:
         expose: true
-    path: /admin/enhavo/download/download/delete/{id}
+    path: /enhavo/download/download/delete/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_download.controller.download:deleteAction
