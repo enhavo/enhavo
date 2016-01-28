@@ -24,7 +24,7 @@
     "sensio/generator-bundle": "~2.3",
     "incenteev/composer-parameter-handler": "~2.0",
     "sylius/resource-bundle": "v0.16.0",
-    "friendsofsymfony/user-bundle": "~2.0@dev",
+    "friendsofsymfony/user-bundle": "v2.0.0-alpha3",
     "friendsofsymfony/jsrouting-bundle": "@stable",
     "willdurand/js-translation-bundle" : "@stable",
     "bacon/bacon-string-utils": "1.0.3",
