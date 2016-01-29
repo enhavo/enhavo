@@ -1,0 +1,8 @@
+Enhavo\Bundle\GridBundle\Entity\Content:
+    properties:
+        items:
+            - Valid: ~
+
+Enhavo\Bundle\GridBundle\Entity\Item:
+   constraints:
+        - Enhavo\Bundle\GridBundle\Validator\Constraints\ItemType: ~
