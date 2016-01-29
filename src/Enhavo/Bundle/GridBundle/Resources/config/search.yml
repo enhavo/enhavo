@@ -10,3 +10,78 @@ Enhavo\Bundle\GridBundle\Entity\Item:
 
 Enhavo\Bundle\GridBundle\Entity\CiteText:
     properties:
+       cite:
+            - Plain:
+                weight: 8
+                type: cite
+
+Enhavo\Bundle\GridBundle\Entity\Picture:
+    properties:
+       title:
+            - Plain:
+                weight: 8
+                type: title
+       caption:
+            - Plain:
+                weight: 8
+                type: caption
+
+Enhavo\Bundle\GridBundle\Entity\PicturePicture:
+    properties:
+       title:
+            - Plain:
+                weight: 8
+                type: title
+       captionLeft:
+            - Plain:
+                weight: 8
+                type: caption
+       captionRight:
+            - Plain:
+                weight: 8
+                type: caption
+
+Enhavo\Bundle\GridBundle\Entity\Text:
+    properties:
+       title:
+            - Plain:
+                weight: 8
+                type: title
+       text:
+            - Html:
+                weight: 8
+                type: text
+
+Enhavo\Bundle\GridBundle\Entity\TextPicture:
+    properties:
+       title:
+            - Plain:
+                weight: 8
+                type: title
+       text:
+            - Html:
+                weight: 8
+                type: text
+
+Enhavo\Bundle\GridBundle\Entity\TextText:
+    properties:
+        title:
+            - Plain:
+                weight: 8
+                type: title
+        titleLeft:
+            - Plain:
+                weight: 8
+                type: title
+        textLeft:
+            - Html:
+                weight: 8
+                type: text
+        titleRight:
+            - Plain:
+                weight: 8
+                type: title
+        textRight:
+            - Html:
+                weight: 8
+                type: text
