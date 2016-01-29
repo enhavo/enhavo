@@ -22,14 +22,14 @@ class CreateViewer extends AbstractViewer
                     'display' => true,
                     'role' => null,
                     'label' => 'label.cancel',
-                    'icon' => 'close'
+                    'icon' => 'icon-cross'
                 ),
                 'save' => array(
                     'route' => null,
                     'display' => true,
                     'role' => null,
                     'label' => 'label.save',
-                    'icon' => 'check'
+                    'icon' => 'icon-save'
                 )
             ),
             'form' => array(
