@@ -34,7 +34,7 @@ enhavo_page_page_create:
                 preview:
                     route: enhavo_news_page_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_page_page_preview:
     options:
@@ -72,7 +72,7 @@ enhavo_page_page_update:
                 preview:
                     route: enhavo_page_page_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_page_page_table:
     options:

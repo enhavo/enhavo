@@ -132,10 +132,13 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     top: 4px;
 }
 
-#overlayContent form > .row:last-of-type .col-md-2:first-child .btn.save:before{content: '\e8f8';}
-#overlayContent form > .row:last-of-type .col-md-2:nth-child(2) .btn.save:before{content: '\e847';}
-#overlayContent form > .row:last-of-type .col-md-2:nth-child(3) .btn.save:before{content: '\e92b';}
-#overlayContent form > .row:last-of-type .col-md-2:nth-child(4) .btn.save:before{content: '\e9b2';}
+.btn .button-icon {
+    font-family: "enhavo_iconfont";
+    font-size: 22px;
+    vertical-align: text-bottom;
+    position: relative;
+    top: 2px;
+}
 
 .btn.upload-button:before{
     content: '\e8cf';
