@@ -20,16 +20,26 @@ class Environment
 
     protected function setEnvironmentInformation()
     {
-        $config = Yaml::parse($this->getParametersYMLFilePath());
-        if(isset($config['parameters']['debug'])) {
-            $this->debug = (bool)$config['parameters']['debug'];
+
+        if(in_array(getenv('ENHAVO_DEBUG'), [self::PROD, self::DEV, self::TEST])) {
+            $this->debug = getenv('ENHAVO_DEBUG');
         } else {
-            $this->debug = true;
+            $config = Yaml::parse($this->getParametersYMLFilePath());
+            if (isset($config['parameters']['debug'])) {
+                $this->debug = (bool)$config['parameters']['debug'];
+            } else {
+                $this->debug = true;
+            }
         }
-        if(isset($config['parameters']['environment'])) {
-            $this->environment = $config['parameters']['environment'];
+
+        if(in_array(getenv('ENHAVO_ENV'), [self::PROD, self::DEV, self::TEST])) {
+            $this->environment = getenv('ENHAVO_ENV');
         } else {
-            $this->environment = 'dev';
+            if(isset($config['parameters']['environment'])) {
+                $this->environment = $config['parameters']['environment'];
+            } else {
+                $this->environment = 'dev';
+            }
         }
     }
 

@@ -32,7 +32,7 @@ class UserData implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        $user = $this->addUser('admin', 'admin', 'admin@esperanto-agentur.com');
+        $user = $this->addUser('admin', 'admin', 'admin@enhavo.com');
 
         $adminGroup = $this->addAdminGroup();
         $user->addGroup($adminGroup);

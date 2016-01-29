@@ -1,6 +1,10 @@
 default:
     extensions:
         Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+          sessions:
+            default:
+              symfony2: ~
 
     formatters:
         pretty:
@@ -9,8 +13,8 @@ default:
             snippets: false
 
     suites:
-        admin:
-            paths:
-                - %paths.base%/src/enhavo/AppBundle/Resources/features
+        user:
             contexts:
-                - Enhavo\Bundle\AppBundle\Behat\AdminContext
+                - Enhavo\Bundle\UserBundle\Behat\UserContext:
+                - Enhavo\Bundle\AppBundle\Behat\EmailContext:
+                - Behat\MinkExtension\Context\MinkContext
