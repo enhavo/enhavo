@@ -13,6 +13,7 @@ label:
   no: 'Nein'
   title: 'Titel'
   upload: 'Datei hochladen'
+  changePassword: 'Passwort ändern'
 form:
   delete:
     question: 'Wollen sie dieses Element wirklich löschen?'

@@ -54,7 +54,12 @@ citeText:
 download:
   label:
     download: 'Download'
-
+video:
+  label:
+    video: 'Video'
+  form:
+    label:
+      url: 'URL'
 
 
 
