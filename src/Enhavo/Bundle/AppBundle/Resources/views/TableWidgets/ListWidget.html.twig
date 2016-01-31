@@ -1,0 +1,3 @@
+{% for entity in entities %}
+    {{ entity }}{% if not loop.last %}{{ separator }}{% endif %}
+{% endfor %}

@@ -1,0 +1,3 @@
+{% for property in properties %}
+    {{ viewer.getProperty(item, property) }}{% if not loop.last %}{{ separator }}{% endif %}
+{% endfor %}
