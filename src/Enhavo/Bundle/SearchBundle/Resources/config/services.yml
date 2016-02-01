@@ -7,6 +7,6 @@ services:
         arguments: [@doctrine.orm.entity_manager]
 
     app.save_listener:
-        class: Enhavo\Bundle\SearchBundle\EnhavoSearchBundle\EventListener\SaveListener
+        class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         tags:
             - { name: kernel.event_listener, event: save }
