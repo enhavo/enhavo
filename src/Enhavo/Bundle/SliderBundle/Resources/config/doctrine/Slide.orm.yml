@@ -28,9 +28,8 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: boolean
             nullable: true
 
-        order:
+        position:
             type: integer
-            column: '`order`'
             nullable: true
 
     manyToMany:

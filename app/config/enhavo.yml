@@ -138,20 +138,6 @@ enhavo_grid:
             label: video.label.video
             translationDomain: EnhavoGridBundle
 
-enhavo_page:
-    dynamic_routing: false
-    classes:
-        page:
-            model: Enhavo\Bundle\PageBundle\Entity\Page
-            form: Enhavo\Bundle\PageBundle\Form\Type\PageType
-
-enhavo_article:
-    dynamic_routing: false
-    classes:
-         article:
-            model: Enhavo\Bundle\ArticleBundle\Entity\Article
-            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
-            repository: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
 enhavo_category:
     default_collection: default

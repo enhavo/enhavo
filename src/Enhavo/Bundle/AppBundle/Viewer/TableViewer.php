@@ -16,12 +16,11 @@ class TableViewer extends AbstractViewer
     {
         return array(
             'table' => array(
-                'columns' => array(
-                    'id' => array(
-                        'label' => 'ID',
-                        'property' => 'id'
-                    )
-                ),
+                'sorting' => array(
+                    'sortable' => false,
+                    'move_up_route' => sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName()),
+                    'move_down_route' => sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName())
+                )
             )
         );
     }
@@ -29,10 +28,39 @@ class TableViewer extends AbstractViewer
     protected function getColumns()
     {
         $columns = $this->getConfig()->get('table.columns');
-        foreach($columns as &$column) {
+        if (!$columns) {
+            if ($this->isSortable()) {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                        'width' => 1
+                    ),
+                    'position' => array(
+                        'label' => '',
+                        'property' => 'position',
+                        'width' => 1,
+                        'widget' => 'EnhavoAppBundle:Widget:position.html.twig'
+                    )
+                );
+            } else {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                        'width' => 1
+                    )
+                );
+            }
+
+        }
+        foreach($columns as $key => &$column) {
             if(!array_key_exists('width', $column)) {
                 $column['width'] = 1;
             }
+        }
+        if (isset($columns['position']) && !isset($columns['position']['widget'])) {
+            $columns['position']['widget'] = 'EnhavoAppBundle:Widget:position.html.twig';
         }
         return $columns;
     }
@@ -44,6 +72,27 @@ class TableViewer extends AbstractViewer
             return 12;
         }
         return $width;
+    }
+
+    protected function getSorting()
+    {
+        $sorting = $this->getConfig()->get('table.sorting');
+
+        if (!$sorting) {
+            $sorting = array();
+        }
+
+        if (!isset($sorting['sortable'])) {
+            $sorting['sortable'] = false;
+        }
+        if (!isset($sorting['move_up_route'])) {
+            $sorting['move_up_route'] = sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName());
+        }
+        if (!isset($sorting['move_down_route'])) {
+            $sorting['move_down_route'] = sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName());
+        }
+
+        return $sorting;
     }
 
     /**
@@ -88,6 +137,24 @@ class TableViewer extends AbstractViewer
     public function getTableWidth()
     {
         return $this->getConfigTableWidth();
+    }
+
+    public function isSortable()
+    {
+        $sorting = $this->getSorting();
+        return $sorting['sortable'] === true;
+    }
+
+    public function getMoveUpRoute()
+    {
+        $sorting = $this->getSorting();
+        return $sorting['move_up_route'];
+    }
+
+    public function getMoveDownRoute()
+    {
+        $sorting = $this->getSorting();
+        return $sorting['move_down_route'];
     }
 
     public function renderWidget($widget, $property, $item)

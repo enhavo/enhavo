@@ -19,12 +19,13 @@ class RoutingGenerator
         $this->templateEngine = $templateEngine;
     }
 
-    public function generate($appName, $resourceName)
+    public function generate($appName, $resourceName, $sorting = null)
     {
         return $this->templateEngine->render('EnhavoAppBundle:Generator:routing.yml.twig',
             array(
                 'app' => $appName,
                 'resource' => $resourceName,
+                'sorting' => $sorting,
                 'app_url' => $this->getUrl($appName),
                 'resource_url' => $this->getUrl($resourceName)
             )

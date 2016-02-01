@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_calendar');
 
-         $rootNode
+        $rootNode
             ->children()
                 ->booleanNode('dynamic_routing')
                     ->defaultFalse()
@@ -32,19 +32,29 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
 
-            // The resources
             ->children()
-                ->arrayNode('classes')
-                ->addDefaultsIfNotSet()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('appointment')
-                        ->addDefaultsIfNotSet()
+                            ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->defaultValue('Enhavo\Bundle\CalendarBundle\Entity\Appointment')->end()
-                                ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CalendarBundle\Controller\AppointmentController')->end()
-                                ->scalarNode('repository')->end()
-                                ->scalarNode('form')->defaultValue('Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType')->end()
-                                ->scalarNode('admin')->defaultValue('Enhavo\Bundle\AppBundle\Admin\BaseAdmin')->end()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\CalendarBundle\Entity\Appointment')->end()
+                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CalendarBundle\Controller\AppointmentController')->end()
+                                        ->scalarNode('repository')->end()
+                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
+                                        ->arrayNode('form')
+                                            ->addDefaultsIfNotSet()
+                                            ->children()
+                                                ->scalarNode('default')->defaultValue('Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType')->cannotBeEmpty()->end()
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

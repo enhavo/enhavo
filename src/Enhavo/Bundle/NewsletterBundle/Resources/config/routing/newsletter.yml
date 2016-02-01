@@ -44,7 +44,7 @@ enhavo_newsletter_newsletter_update:
                 send:
                     route: enhavo_newsletter_newsletter_send
                     label: newsletter.action.sendAndSave
-                    icon: eye
+                    icon: icon-eye
                     translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_table:

@@ -32,7 +32,7 @@ class Slide
     /**
      * @var integer
      */
-    protected $order;
+    protected $position;
 
     /**
      * @var integer
@@ -138,26 +138,26 @@ class Slide
     }
 
     /**
-     * Set order
+     * Set position
      *
-     * @param integer $order
+     * @param integer $position
      * @return Slider
      */
-    public function setOrder($order)
+    public function setPosition($position)
     {
-        $this->order = $order;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get position
      *
-     * @return integer 
+     * @return integer
      */
-    public function getOrder()
+    public function getPosition()
     {
-        return $this->order;
+        return $this->position;
     }
 
     /**

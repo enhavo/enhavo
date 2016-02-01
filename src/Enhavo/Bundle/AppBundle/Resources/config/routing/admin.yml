@@ -2,5 +2,5 @@ enhavo_app_index:
     pattern:  /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /admin/dashboard
+        path: /admin/enhavo/dashboard
         permanent: true
