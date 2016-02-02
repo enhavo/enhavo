@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Enhavo\Bundle\AppBundle\Exception\TableWidgetException;
 
 class TableViewer extends AbstractViewer
 {
@@ -62,6 +63,7 @@ class TableViewer extends AbstractViewer
         if (isset($columns['position']) && !isset($columns['position']['widget'])) {
             $columns['position']['widget'] = 'EnhavoAppBundle:Widget:position.html.twig';
         }
+
         return $columns;
     }
 
@@ -157,12 +159,20 @@ class TableViewer extends AbstractViewer
         return $sorting['move_down_route'];
     }
 
-    public function renderWidget($widget, $property, $item)
+    public function renderWidget($options, $property, $item)
     {
-        $templateEngine = $this->container->get('templating');
-        return $templateEngine->render($widget, array(
-            'data' => $item,
-            'value' => $this->getProperty($item, $property)
+        $collector = $this->container->get('enhavo_app.table_widget_collector');
+        $widgets = array();
+        foreach($collector->getCollection() as $widget) {
+            $widgets[] = $widget->getType();
+            if($widget->getType() == $options['type']) {
+                return $widget->render($options, $property, $item);
+            }
+        }
+        throw new TableWidgetException(sprintf(
+            'TableWidget type "%s" not found. Did you mean one of them "%s".',
+            $options['type'],
+            implode(', ', $widgets)
         ));
     }
 }

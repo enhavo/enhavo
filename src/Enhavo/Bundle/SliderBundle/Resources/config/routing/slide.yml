@@ -69,7 +69,9 @@ enhavo_slider_slide_table:
                         label: slide.label.position
                         property: position
                         width: 1
-                        widget: EnhavoAppBundle:Widget:position.html.twig
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:position.html.twig
 
 enhavo_slider_slide_delete:
     options:

@@ -96,7 +96,9 @@ enhavo_page_page_table:
                     public:
                         label: page.label.public
                         property: public
-                        widget: EnhavoAppBundle:Widget:boolean.html.twig
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:boolean.html.twig
                         width: 1
                     title:
                         label: page.label.title
