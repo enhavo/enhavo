@@ -6,7 +6,12 @@ services:
         class: '%enhavo_search.manager.class%'
         arguments: [@doctrine.orm.entity_manager]
 
-    app.save_listener:
+    enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
+        arguments:
+            - @service_container
+            - %kernel.root_dir%
+            - @request_stack
         tags:
-            - { name: kernel.event_listener, event: save }
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
