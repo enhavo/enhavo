@@ -67,6 +67,14 @@ enhavo_app:
             route: enhavo_calendar_appointment_index
             role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
 
+enhavo_newsletter:
+    subscriber:
+        send_from: %emails_send_from%
+        subject: 'Subject'
+        template:  'EnhavoNewsletterBundle:Default:subscriber-email.html.twig'
+    newsletter:
+        send_from: %emails_send_from%
+
 enhavo_grid:
     render:
         sets:

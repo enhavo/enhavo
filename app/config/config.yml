@@ -106,14 +106,6 @@ cmf_routing:
 #        enabled: true
 #        route_provider_service_id: enhavo_app.route_provider
 
-enhavo_newsletter:
-    subscriber:
-        send_from: %emails_send_from%
-        subject: 'Default_subject'
-        template:  'EnhavoNewsletterBundle:Default:subscriber-email.html.twig'
-    newsletter:
-        send_from: %emails_send_from%
-
 parameters:
     pdo.db_options:
         db_table:    app_session
