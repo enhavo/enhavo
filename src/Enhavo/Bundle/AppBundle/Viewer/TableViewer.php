@@ -41,7 +41,10 @@ class TableViewer extends AbstractViewer
                         'label' => '',
                         'property' => 'position',
                         'width' => 1,
-                        'widget' => 'EnhavoAppBundle:Widget:position.html.twig'
+                        'widget' => array(
+                            'type' => 'template',
+                            'template' => 'EnhavoAppBundle:Widget:position.html.twig',
+                        )
                     )
                 );
             } else {
