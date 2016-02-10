@@ -35,6 +35,7 @@
     "stof/doctrine-extensions-bundle": "^1.2"
   },
   "require-dev": {
+    "phpunit/phpunit": "^4.8",
     "behat/behat": "^3.0",
     "behat/symfony2-extension": "^2.0",
     "behat/mink": "^1.7",

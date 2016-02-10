@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Table;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 
 abstract class AbstractTableWidget implements TableWidgetInterface {
 
