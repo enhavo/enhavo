@@ -6,15 +6,34 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\spec;
+namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
 class EntityMock
 {
+    /**
+     * @var string
+     */
     private $name;
 
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @return int
+     */
     public function getId()
     {
-        return 1;
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

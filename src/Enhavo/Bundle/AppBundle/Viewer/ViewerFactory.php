@@ -8,16 +8,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\AppBundle\Exception\ViewerNotFoundException;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ViewerFactory
 {
     /**
-     * @var Container
+     * @var ContainerInterface
      */
     protected $container;
 
@@ -31,7 +31,7 @@ class ViewerFactory
      */
     protected $list;
 
-    public function __construct(Container $container, RequestStack $requestStack, $viewerList)
+    public function __construct(ContainerInterface $container, RequestStack $requestStack, $viewerList)
     {
         $this->container = $container;
         $this->requestStack = $requestStack;

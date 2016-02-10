@@ -55,6 +55,14 @@ abstract class AbstractViewer implements ContainerAwareInterface
     }
 
     /**
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * @return mixed
      */
     public function getForm()
