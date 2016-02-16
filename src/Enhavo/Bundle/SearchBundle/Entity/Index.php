@@ -122,11 +122,11 @@ class Index
     /**
      * Set dataset
      *
-     * @param \Enhavo\Bundle\SearchBundle\Entity\Index $dataset
+     * @param \Enhavo\Bundle\SearchBundle\Entity\Dataset $dataset
      *
-     * @return Index
+     * @return Dataset
      */
-    public function setDataset(\Enhavo\Bundle\SearchBundle\Entity\Index $dataset = null)
+    public function setDataset(\Enhavo\Bundle\SearchBundle\Entity\Dataset $dataset = null)
     {
         $this->dataset = $dataset;
 
@@ -136,7 +136,7 @@ class Index
     /**
      * Get dataset
      *
-     * @return \Enhavo\Bundle\SearchBundle\Entity\Index
+     * @return \Enhavo\Bundle\SearchBundle\Entity\Dataset
      */
     public function getDataset()
     {

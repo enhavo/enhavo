@@ -26,7 +26,7 @@ Enhavo\Bundle\SearchBundle\Entity\Index:
 
     manyToOne:
         dataset:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\SearchBundle\Entity\Index
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\SearchBundle\Entity\Dataset
 
     lifecycleCallbacks: {  }

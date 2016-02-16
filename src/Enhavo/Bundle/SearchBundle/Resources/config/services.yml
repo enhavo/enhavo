@@ -12,6 +12,7 @@ services:
             - @service_container
             - %kernel.root_dir%
             - @request_stack
+            - @doctrine.orm.entity_manager
         tags:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }

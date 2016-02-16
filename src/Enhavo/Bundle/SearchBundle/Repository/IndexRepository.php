@@ -1,25 +1,19 @@
 <?php
-/**
- * IndexRepository.php
- *
- * @since 04/10/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\SearchBundle\Repository;
 
-use  Doctrine\ORM\EntityRepository;
-
+use Enhavo\Bundle\SearchBundle\Entity\Index;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 class IndexRepository extends EntityRepository
 {
-    public function search($queryString, $maxResult = 10)
+    public function sumScoresOfWord($word)
     {
-        if(empty($queryString)) {
-            return array();
-        }
-        $query = $this->createQueryBuilder('i');
-        $query->where($query->expr()->like('i.content', $query->expr()->literal('%'.$queryString.'%')));
-        $query->setMaxResults($maxResult);
-        return $query->getQuery()->getResult();
+        $query = $this->createQueryBuilder('s');
+        $query->setParameter('word', $word);
+        $query->select('sum(s.score)');
+
+        $query->andWhere('s.word = :word');
+
+        return $query->getQuery()->getSingleResult();
     }
 }

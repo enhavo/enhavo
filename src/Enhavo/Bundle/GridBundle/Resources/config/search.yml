@@ -1,7 +1,7 @@
 Enhavo\Bundle\GridBundle\Entity\Content:
     properties:
         items:
-            - Collection
+            - Enhavo\Bundle\GridBundle\Entity\Item
 
 Enhavo\Bundle\GridBundle\Entity\Item:
     properties:
@@ -49,7 +49,10 @@ Enhavo\Bundle\GridBundle\Entity\Text:
                 type: title
        text:
             - Html:
-                weight: 8
+                weights:
+                  h1: 12
+                  h2: 10
+                  p: 77
                 type: text
 
 Enhavo\Bundle\GridBundle\Entity\TextPicture:
@@ -60,7 +63,6 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
                 type: title
        text:
             - Html:
-                weight: 8
                 type: text
 
 Enhavo\Bundle\GridBundle\Entity\TextText:
@@ -75,7 +77,6 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
                 type: title
         textLeft:
             - Html:
-                weight: 8
                 type: text
         titleRight:
             - Plain:
@@ -83,5 +84,4 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
                 type: title
         textRight:
             - Html:
-                weight: 8
                 type: text
