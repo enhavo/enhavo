@@ -179,4 +179,67 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
 
         return $container;
     }
+
+    public function testDefaultColumns()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $defaultColumn = array(
+            'id' => array(
+                'label' => 'id',
+                'property' => 'id',
+                'width' => 1
+            )
+        );
+
+        $parameters = $viewer->getParameters();
+        $this->assertArrayHasKey('columns', $parameters);
+        $this->assertArraySubset($defaultColumn, $parameters['columns']);
+    }
+
+    public function testDefaultWithSorting()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+        $configParser->method('get')->will($this->returnValueMap([
+            ['table.sorting', ['sortable' => true]],
+        ]));
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $defaultColumn = array(
+            'id' => array(
+                'label' => 'id',
+                'property' => 'id',
+                'width' => 1
+            ),
+            'position' => array(
+                'label' => '',
+                'property' => 'position',
+                'width' => 1,
+                'widget' => array(
+                    'type' => 'template',
+                    'template' => 'EnhavoAppBundle:Widget:position.html.twig',
+                )
+            )
+        );
+
+        $parameters = $viewer->getParameters();
+        $this->assertArrayHasKey('columns', $parameters);
+        $this->assertArraySubset($defaultColumn, $parameters['columns']);
+    }
+
+    public function testGetDefaultTableWidth()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $this->assertEquals(12, $viewer->getTableWidth());
+
+    }
 }
