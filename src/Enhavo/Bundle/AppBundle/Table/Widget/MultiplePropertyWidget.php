@@ -10,20 +10,24 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
-class MultiplePropertyWidget extends AbstractTableWidget {
+class MultiplePropertyWidget extends ListWidget {
 
-    public function render($options, $property, $item) {
-        $templateEngine = $this->container->get('templating');
-        $separator = ',';
-        if(array_key_exists('separator', $options)){
-            $separator = $options['separator'];
+    public function render($options, $property, $item)
+    {
+        $list = [];
+
+        $properties = $this->getProperties($options);
+        foreach($properties as $property) {
+            $list[] = $this->getProperty($item, $property);
         }
-        return $templateEngine->render('EnhavoAppBundle:TableWidgets:MultiplePropertyWidget.html.twig', array(
-            'properties' => $options['properties'],
-            'separator' => $separator,
-            'item' => $item,
-            'viewer' => $this
-        ));
+
+        $separator = $this->getSeparator($options);
+        return implode($separator, $list);
+    }
+
+    protected function getProperties($options)
+    {
+        return $options['properties'];
     }
 
     public function getType()

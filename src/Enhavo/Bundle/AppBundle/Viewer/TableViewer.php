@@ -58,11 +58,21 @@ class TableViewer extends AbstractViewer
             }
 
         }
+
         foreach($columns as $key => &$column) {
             if(!array_key_exists('width', $column)) {
                 $column['width'] = 1;
             }
         }
+
+        foreach($columns as $key => &$column) {
+            if(!array_key_exists('widget', $column)) {
+                $column['widget'] = [
+                    'type' => 'property'
+                ];
+            }
+        }
+
         if (isset($columns['position']) && !isset($columns['position']['widget'])) {
             $columns['position']['widget'] = 'EnhavoAppBundle:Widget:position.html.twig';
         }
@@ -117,28 +127,6 @@ class TableViewer extends AbstractViewer
         return $parameters;
     }
 
-    /**
-     * Return the value the given property and object.
-     *
-     * @param $resource
-     * @param $property
-     * @return mixed
-     * @throws PropertyNotExistsException
-     */
-    public function getProperty($resource, $property)
-    {
-        $method = sprintf('get%s', ucfirst($property));
-        if(method_exists($resource, $method)) {
-            return call_user_func(array($resource, $method));
-        }
-        throw new PropertyNotExistsException(sprintf(
-            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spell it wrong you did\'t add the getter for property "%s"',
-            $method,
-            get_class($resource),
-            $property
-        ));
-    }
-
     public function getTableWidth()
     {
         return $this->getConfigTableWidth();
@@ -162,20 +150,18 @@ class TableViewer extends AbstractViewer
         return $sorting['move_down_route'];
     }
 
+    /**
+     * @param $options
+     * @param $property
+     * @param $item
+     * @return string
+     * @throws TableWidgetException
+     */
     public function renderWidget($options, $property, $item)
     {
         $collector = $this->container->get('enhavo_app.table_widget_collector');
         $widgets = array();
-        foreach($collector->getCollection() as $widget) {
-            $widgets[] = $widget->getType();
-            if($widget->getType() == $options['type']) {
-                return $widget->render($options, $property, $item);
-            }
-        }
-        throw new TableWidgetException(sprintf(
-            'TableWidget type "%s" not found. Did you mean one of them "%s".',
-            $options['type'],
-            implode(', ', $widgets)
-        ));
+        $widget = $collector->getWidget($options['type']);
+        return $widget->render($options, $property, $item);
     }
 }

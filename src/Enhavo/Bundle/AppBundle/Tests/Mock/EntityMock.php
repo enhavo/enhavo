@@ -21,6 +21,11 @@ class EntityMock
     private $id;
 
     /**
+     * @var array
+     */
+    private $entities;
+
+    /**
      * @return int
      */
     public function getId()
@@ -50,5 +55,15 @@ class EntityMock
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function addEntity($entity)
+    {
+        $this->entities[] = $entity;
+    }
+
+    public function getEntities()
+    {
+        return $this->entities;
     }
 }
