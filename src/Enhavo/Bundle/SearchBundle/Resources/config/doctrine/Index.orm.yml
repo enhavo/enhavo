@@ -22,7 +22,7 @@ Enhavo\Bundle\SearchBundle\Entity\Index:
             length: 255
 
         score:
-            type: integer
+            type: float
 
     manyToOne:
         dataset:

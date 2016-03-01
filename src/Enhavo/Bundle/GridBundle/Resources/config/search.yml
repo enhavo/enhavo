@@ -85,3 +85,10 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
         textRight:
             - Html:
                 type: text
+
+Enhavo\Bundle\GridBundle\Entity\Video:
+    properties:
+        title:
+            - Plain:
+                weight: 8
+                type: title
