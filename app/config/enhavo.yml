@@ -147,10 +147,18 @@ enhavo_contact:
         model: Enhavo\Bundle\ContactBundle\Model\Contact
         form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
         template:
-            form: EnhavoContactBundle:Contact:form.html.twig
+            form: EnhavoContactBundle:Contact:render.html.twig
             recipient: EnhavoContactBundle:Contact:recipient.html.twig
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
         subject: Kontaktformular
         send_to_sender: true
+
+enhavo_search:
+    search:
+        template: EnhavoSearchBundle:Search:render.html.twig
+
+
+
+

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\SearchBundle\Repository;
 use Enhavo\Bundle\SearchBundle\Entity\Total;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+
 class TotalRepository extends EntityRepository
 {
     public function getWordsToRemove()

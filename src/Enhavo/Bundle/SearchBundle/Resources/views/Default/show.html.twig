@@ -1,0 +1,9 @@
+<div>
+    {% if data is iterable %}
+        {% for item in data %}
+            {{ item.title }} <br>
+        {% endfor %}
+    {% else %}
+        {{ data }}
+    {% endif %}
+</div>

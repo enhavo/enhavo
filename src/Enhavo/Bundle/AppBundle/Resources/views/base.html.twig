@@ -67,7 +67,7 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavocategory/js/CategoryForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoslider/js/SliderForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavouser/js/user.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('bundles/enhavocontact/js/ContactForm.js') }}"></script>
     {% if view is defined %}
         {% for javascript in view.getParameter('javascripts') %}
             <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
@@ -87,6 +87,7 @@
     </div>
     <div class="clearfix">
         <button data-action data-action-type="overlay" data-action-route="enhavo_user_user_password" class="btn passwordChange" style="position: absolute; right: 15px; top: 15px;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</button>
+        <div>{{ search_form('search') }}</div>
         <a class="responsive-menu-btn" data-mobile-menu></a>
         <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
         <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>
