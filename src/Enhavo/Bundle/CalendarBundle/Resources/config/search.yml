@@ -1,17 +1,27 @@
-Enhavo\Bundle\PageBundle\Entity\Page:
+Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     priority: 5
     index: false
     properties:
         title:
             - Plain:
-                weight: 5
+                weight: 2
                 type: title
 
         teaser:
             - Plain:
-                weight: 3
+                weight: 1
                 type: teaser
 
         content:
             - Collection:
                 entity: Enhavo\Bundle\GridBundle\Entity\Content
+
+        dateFrom:
+            - Plain:
+                weight: 10
+                type: date
+
+        dateTo:
+            - Plain:
+                weight: 10
+                type: date

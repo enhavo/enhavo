@@ -12,10 +12,18 @@ Enhavo\Bundle\SearchBundle\Entity\Dataset:
             type: string
             length: 255
 
+        data:
+            type: text
+            nullable: true
+
         reindex:
             type: integer
 
         reference:
             type: integer
+
+        bundle:
+            type: string
+            length: 255
 
     lifecycleCallbacks: {  }

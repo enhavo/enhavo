@@ -139,6 +139,7 @@ EOD;
         }
         $searchYamlPath = $searchYamlPath.'/Resources/config/search.yml';
         $entityName = $splittedEntityPath[$i+1];
+        $bundleName = $splittedEntityPath[$i-1];
         $yaml = new Parser();
         $currentSearchYaml = $yaml->parse(file_get_contents($searchYamlPath));
 
@@ -147,18 +148,21 @@ EOD;
 
         //1.data_set anlegen wenn nicht schon vorhanden
         $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
-        $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId()));
+        $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $entityName));
         if($dataSet == null) {
             $newDataSet = new Dataset();
             $newDataSet->setType(strtolower($entityName));
+            $newDataSet->setBundle($bundleName);
             $newDataSet->setReindex(0);
             $newDataSet->setReference($event->getSubject()->getId());
+            $newDataSet->setData(null);
             $this->em->persist($newDataSet);
             $this->em->flush();
             $dataSet = $newDataSet;
         } else {
             $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
             $wordsForDataset = $indexRepository->findBy(array('dataset' => $dataSet));
+            $dataSet->removeData();
             foreach($wordsForDataset as $word){
                 $this->em->remove($word);
             }
@@ -227,6 +231,8 @@ EOD;
             $newIndex->setWord($key);
             $newIndex->setLocale($this->container->getParameter('locale'));
             $newIndex->setScore($value);
+            $dataset->addData($key);
+            $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
             $this->search_dirty($key);
@@ -339,6 +345,8 @@ EOD;
             $newIndex->setWord($key);
             $newIndex->setLocale($this->container->getParameter('locale'));
             $newIndex->setScore($value);
+            $dataset->addData($key);
+            $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
             $this->search_dirty($key);

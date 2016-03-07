@@ -109,4 +109,75 @@ class Dataset
     {
         return $this->reference;
     }
+    /**
+     * @var string
+     */
+    private $bundle;
+
+
+    /**
+     * Set bundle
+     *
+     * @param string $bundle
+     *
+     * @return Dataset
+     */
+    public function setBundle($bundle)
+    {
+        $this->bundle = $bundle;
+
+        return $this;
+    }
+
+    /**
+     * Get bundle
+     *
+     * @return string
+     */
+    public function getBundle()
+    {
+        return $this->bundle;
+    }
+    /**
+     * @var string
+     */
+    private $data;
+
+
+    /**
+     * Set data
+     *
+     * @param string $data
+     *
+     * @return Dataset
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    public function addData($data)
+    {
+        $this->data = $this->data.' '.$data;
+
+        return $this;
+    }
+
+    public function removeData()
+    {
+        $this->data = '';
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }
