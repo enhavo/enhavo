@@ -66,6 +66,11 @@ enhavo_app:
             translationDomain: EnhavoCalendarBundle
             route: enhavo_calendar_appointment_index
             role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
+        workflow:
+            label: workflow.label.workflow
+            translationDomain: EnhavoWorkflowBundle
+            route: enhavo_workflow_workflow_index
+            role: ROLE_ESPERANTO_WORKFLOW_WORKFLOW_INDEX
 
 enhavo_grid:
     render:

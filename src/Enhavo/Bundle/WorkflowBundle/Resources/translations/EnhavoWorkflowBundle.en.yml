@@ -1,0 +1,22 @@
+workflow:
+  form:
+    label:
+      workflowName: 'Workflow Name'
+      nodes: 'Nodes'
+      transitions: 'Transitions'
+  label:
+    id: 'ID'
+    workflow: 'Workflow'
+    nodes: 'Nodes'
+    transitions: 'Transitions'
+    workflowName: 'Workflow Name'
+node:
+  form:
+    label:
+      nodeName: 'Node Name'
+transition:
+  form:
+    label:
+      transitionName: 'Transition Name'
+
+

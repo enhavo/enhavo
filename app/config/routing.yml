@@ -59,6 +59,10 @@ enhavo_category_category:
     resource: "@EnhavoCategoryBundle/Resources/config/routing/category.yml"
     prefix:   /
 
+enhavo_workflow:
+    resource: "@EnhavoWorkflowBundle/Resources/config/routing/workflow.yml"
+    prefix:   /
+
 enhavo_calendar:
     resource: "@EnhavoCalendarBundle/Resources/config/routing/appointment.yml"
     prefix: /admin

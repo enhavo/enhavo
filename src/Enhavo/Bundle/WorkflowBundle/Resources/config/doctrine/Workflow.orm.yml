@@ -1,0 +1,25 @@
+Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
+    type: entity
+    table: workflow_workflow
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        workflow_name:
+            type: string
+            length: 255
+
+    oneToMany:
+        nodes:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            mappedBy: workflow
+        transitions:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Transition
+            mappedBy: workflow
+
+    lifecycleCallbacks: {  }

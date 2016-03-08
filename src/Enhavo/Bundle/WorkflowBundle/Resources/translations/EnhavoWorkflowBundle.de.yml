@@ -1,0 +1,22 @@
+workflow:
+  form:
+    label:
+      workflowName: 'Workflow Name'
+      nodes: 'Knoten'
+      transitions: 'Übergänge'
+  label:
+    id: 'ID'
+    workflow: 'Workflow'
+    nodes: 'Knoten'
+    transitions: 'Übergänge'
+    workflowName: 'Workflow Name'
+node:
+  form:
+    label:
+      nodeName: 'Knoten Name'
+transition:
+  form:
+    label:
+      transitionName: 'Übergangsbezeichnung'
+
+

@@ -1,0 +1,15 @@
+services:
+    enhavo_workflow_workflow:
+        class: %enhavo_workflow.form.type.workflow.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_workflow_node:
+        class: %enhavo_workflow.form.type.node.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_workflow_transition:
+        class: %enhavo_workflow.form.type.transition.class%
+        tags:
+            - { name: form.type }

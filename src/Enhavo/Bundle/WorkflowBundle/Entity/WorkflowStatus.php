@@ -1,0 +1,112 @@
+<?php
+
+namespace Enhavo\Bundle\WorkflowBundle\Entity;
+
+/**
+ * WorkflowStatus
+ */
+class WorkflowStatus
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @var string
+     */
+    private $bundle;
+
+    /**
+     * @var integer
+     */
+    private $reference;
+
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    private $node;
+
+
+    /**
+     * Set bundle
+     *
+     * @param string $bundle
+     *
+     * @return WorkflowStatus
+     */
+    public function setBundle($bundle)
+    {
+        $this->bundle = $bundle;
+
+        return $this;
+    }
+
+    /**
+     * Get bundle
+     *
+     * @return string
+     */
+    public function getBundle()
+    {
+        return $this->bundle;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     *
+     * @return WorkflowStatus
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return integer
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * Set node
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $node
+     *
+     * @return WorkflowStatus
+     */
+    public function setNode(\Enhavo\Bundle\WorkflowBundle\Entity\Node $node = null)
+    {
+        $this->node = $node;
+
+        return $this;
+    }
+
+    /**
+     * Get node
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    public function getNode()
+    {
+        return $this->node;
+    }
+}
