@@ -3,9 +3,7 @@
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 
 /**
@@ -220,11 +218,9 @@ EOD;
         }
 
         if ($this->isSearchExecutable() && $normalization != null) {
-            //results suchen und ordnen (hier kriegt man die index id)
             $results = $this->getDoctrine()
                 ->getRepository('EnhavoSearchBundle:Index')
                 ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
-            //Results über Index in der richtigen Reihenfolge holen (index -> dataset -> artikel)
             $data = array();
             foreach($results as $resultIndex) {
                 $currentIndex = $this->getDoctrine()
@@ -245,8 +241,6 @@ EOD;
                     ->findOneBy(array('id' => $resultData['reference']));
                 $finalResults[] = $currentData;
             }
-
-            //Jetzt aus type entity generieren
 
             if ($finalResults) {
                 return $this->render('EnhavoSearchBundle:Default:show.html.twig', array(
@@ -389,20 +383,6 @@ EOD;
         }
         if ($has_and && $has_or) {
             $this->simple = FALSE;
-            /*$first = true;
-            $counter = 0;
-            foreach($this->conditions as $key => $value) {
-                if($first == true) {
-                    if($key == 'AND')
-                    {
-                        $this->conditions['AND'] = array();
-                        $this->conditions['AND'][$counter][] = $value[0];
-                        $this->conditions['AND'][$counter][] = array_pop($this->conditions['OR'][0]);
-                        $counter++;
-                        $first = false;
-                    }
-                }
-            }*/
         }
 
         // Negative matches.
