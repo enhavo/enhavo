@@ -389,7 +389,7 @@ EOD;
         }
         if ($has_and && $has_or) {
             $this->simple = FALSE;
-            $first = true;
+            /*$first = true;
             $counter = 0;
             foreach($this->conditions as $key => $value) {
                 if($first == true) {
@@ -402,7 +402,7 @@ EOD;
                         $first = false;
                     }
                 }
-            }
+            }*/
         }
 
         // Negative matches.
