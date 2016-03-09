@@ -18,5 +18,6 @@ transition:
   form:
     label:
       transitionName: 'Transition Name'
-
+      nodeFrom: 'From'
+      nodeTo: 'To'
 

@@ -23,6 +23,11 @@ class Workflow
     private $nodes;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $transitions;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -97,11 +102,6 @@ class Workflow
     {
         return $this->nodes;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $transitions;
-
 
     /**
      * Add transition
@@ -113,7 +113,7 @@ class Workflow
     public function addTransition(\Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition)
     {
         $this->transitions[] = $transition;
-
+        $transition->setWorkflow($this);
         return $this;
     }
 

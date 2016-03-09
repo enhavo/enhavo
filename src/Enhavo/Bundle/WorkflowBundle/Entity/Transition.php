@@ -7,6 +7,7 @@ namespace Enhavo\Bundle\WorkflowBundle\Entity;
  */
 class Transition
 {
+
     /**
      * @var integer
      */
@@ -15,7 +16,22 @@ class Transition
     /**
      * @var string
      */
-    private $name;
+    private $transition_name;
+
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    private $node_from;
+
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    private $node_to;
+
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     */
+    private $workflow;
 
 
     /**
@@ -27,133 +43,6 @@ class Transition
     {
         return $this->id;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Transition
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $node;
-
-
-    /**
-     * Set node
-     *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $node
-     *
-     * @return Transition
-     */
-    public function setNode(\Enhavo\Bundle\WorkflowBundle\Entity\Node $node = null)
-    {
-        $this->node = $node;
-
-        return $this;
-    }
-
-    /**
-     * Get node
-     *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    public function getNode()
-    {
-        return $this->node;
-    }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $nodeFrom;
-
-
-    /**
-     * Set nodeFrom
-     *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom
-     *
-     * @return Transition
-     */
-    public function setNodeFrom(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom = null)
-    {
-        $this->nodeFrom = $nodeFrom;
-
-        return $this;
-    }
-
-    /**
-     * Get nodeFrom
-     *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    public function getNodeFrom()
-    {
-        return $this->nodeFrom;
-    }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $nodeTo;
-
-
-    /**
-     * Set nodeTo
-     *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo
-     *
-     * @return Transition
-     */
-    public function setNodeTo(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo = null)
-    {
-        $this->nodeTo = $nodeTo;
-
-        return $this;
-    }
-
-    /**
-     * Get nodeTo
-     *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    public function getNodeTo()
-    {
-        return $this->nodeTo;
-    }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $node_from;
-
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $node_to;
-
-
-    /**
-     * @var string
-     */
-    private $transition_name;
-
 
     /**
      * Set transitionName
@@ -178,11 +67,54 @@ class Transition
     {
         return $this->transition_name;
     }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-     */
-    private $workflow;
 
+    /**
+     * Set nodeFrom
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom
+     *
+     * @return Transition
+     */
+    public function setNodeFrom(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom = null)
+    {
+        $this->node_from = $nodeFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get nodeFrom
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    public function getNodeFrom()
+    {
+        return $this->node_from;
+    }
+
+    /**
+     * Set nodeTo
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo
+     *
+     * @return Transition
+     */
+    public function setNodeTo(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo = null)
+    {
+        $this->node_to = $nodeTo;
+
+        return $this;
+    }
+
+    /**
+     * Get nodeTo
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    public function getNodeTo()
+    {
+        return $this->node_to;
+    }
 
     /**
      * Set workflow

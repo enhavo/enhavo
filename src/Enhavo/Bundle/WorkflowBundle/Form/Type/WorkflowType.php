@@ -5,9 +5,16 @@ namespace Enhavo\Bundle\WorkflowBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Enhavo\Bundle\WorkflowBundle\Entity\Workflow;
 
 class WorkflowType extends AbstractType
 {
+    public $workflow;
+
+    public function __construct ($workflow)
+    {
+        $this->workflow = $workflow;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

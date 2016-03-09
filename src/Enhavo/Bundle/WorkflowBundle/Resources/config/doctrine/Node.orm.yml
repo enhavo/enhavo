@@ -19,7 +19,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
     oneToMany:
         transitions:
             targetEntity: Transition
-            mappedBy: node
+            mappedBy: node_from
             orderBy: {'order': 'ASC'}
 
     lifecycleCallbacks: {  }

@@ -18,5 +18,5 @@ transition:
   form:
     label:
       transitionName: 'Übergangsbezeichnung'
-
-
+      nodeFrom: 'Von'
+      nodeTo: 'Nach'

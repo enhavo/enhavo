@@ -15,42 +15,8 @@ class Node
     /**
      * @var string
      */
-    private $name;
+    private $node_name;
 
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Node
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -67,6 +33,40 @@ class Node
     public function __construct()
     {
         $this->transitions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nodeName
+     *
+     * @param string $nodeName
+     *
+     * @return Node
+     */
+    public function setNodeName($nodeName)
+    {
+        $this->node_name = $nodeName;
+
+        return $this;
+    }
+
+    /**
+     * Get nodeName
+     *
+     * @return string
+     */
+    public function getNodeName()
+    {
+        return $this->node_name;
     }
 
     /**
@@ -125,34 +125,5 @@ class Node
     public function getWorkflow()
     {
         return $this->workflow;
-    }
-    /**
-     * @var string
-     */
-    private $node_name;
-
-
-    /**
-     * Set nodeName
-     *
-     * @param string $nodeName
-     *
-     * @return Node
-     */
-    public function setNodeName($nodeName)
-    {
-        $this->node_name = $nodeName;
-
-        return $this;
-    }
-
-    /**
-     * Get nodeName
-     *
-     * @return string
-     */
-    public function getNodeName()
-    {
-        return $this->node_name;
     }
 }
