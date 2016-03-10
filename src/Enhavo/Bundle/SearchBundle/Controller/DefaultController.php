@@ -204,48 +204,51 @@ EOD;
         //normalize berechnen
         $normalize = 0;
         $this->searchExpression =  $request->get('search');
-        $this->parseSearchExpression();
-        $result = $this->getDoctrine()
-            ->getRepository('EnhavoSearchBundle:Index')
-            ->getCalculatedScore($this->conditions, $this->matches, $this->simple);
-        if(!empty($result)){
-            $normalize = (float) $result['calculated_score'];
-        }
-
-        $normalization = null;
-        if($normalize != 0) {
-            $normalization = 1.0 / $normalize;
-        }
-
-        if ($this->isSearchExecutable() && $normalization != null) {
-            $results = $this->getDoctrine()
+        if($this->isSearchExecutable())
+        {
+            $this->parseSearchExpression();
+            $result = $this->getDoctrine()
                 ->getRepository('EnhavoSearchBundle:Index')
-                ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
-            $data = array();
-            foreach($results as $resultIndex) {
-                $currentIndex = $this->getDoctrine()
+                ->getCalculatedScore($this->conditions, $this->matches, $this->simple);
+            if (!empty($result)) {
+                $normalize = (float)$result['calculated_score'];
+            }
+
+            $normalization = null;
+            if ($normalize != 0) {
+                $normalization = 1.0 / $normalize;
+            }
+
+            if ($normalization != null) {
+                $results = $this->getDoctrine()
                     ->getRepository('EnhavoSearchBundle:Index')
-                    ->findOneBy(array('id' => $resultIndex['id']));
-                $currentDataset = $currentIndex->getDataset();
-                $dataForSearchResult = array();
-                $dataForSearchResult['type'] = $currentDataset->getType();
-                $dataForSearchResult['bundle'] = $currentDataset->getBundle();
-                $dataForSearchResult['reference'] = $currentDataset->getReference();
-                $data[] = $dataForSearchResult;
-            }
+                    ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
+                $data = array();
+                foreach ($results as $resultIndex) {
+                    $currentIndex = $this->getDoctrine()
+                        ->getRepository('EnhavoSearchBundle:Index')
+                        ->findOneBy(array('id' => $resultIndex['id']));
+                    $currentDataset = $currentIndex->getDataset();
+                    $dataForSearchResult = array();
+                    $dataForSearchResult['type'] = $currentDataset->getType();
+                    $dataForSearchResult['bundle'] = $currentDataset->getBundle();
+                    $dataForSearchResult['reference'] = $currentDataset->getReference();
+                    $data[] = $dataForSearchResult;
+                }
 
-            $finalResults = array();
-            foreach($data as $resultData) {
-                $currentData = $this->getDoctrine()
-                    ->getRepository('Enhavo'.ucfirst($resultData['bundle']).':'.ucfirst($resultData['type']))
-                    ->findOneBy(array('id' => $resultData['reference']));
-                $finalResults[] = $currentData;
-            }
+                $finalResults = array();
+                foreach ($data as $resultData) {
+                    $currentData = $this->getDoctrine()
+                        ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
+                        ->findOneBy(array('id' => $resultData['reference']));
+                    $finalResults[] = $currentData;
+                }
 
-            if ($finalResults) {
-                return $this->render('EnhavoSearchBundle:Default:show.html.twig', array(
-                    'data' => $finalResults
-                ));
+                if ($finalResults) {
+                    return $this->render('EnhavoSearchBundle:Default:show.html.twig', array(
+                        'data' => $finalResults
+                    ));
+                }
             }
         }
 
@@ -386,10 +389,10 @@ EOD;
         }
 
         // Negative matches.
-        /*foreach ($this->keys['negative'] as $key) {
-            $this->conditions->condition('d.data', "% $key %", 'NOT LIKE');
+        foreach ($this->keys['negative'] as $key) {
+            $this->conditions['NOT'][] = $key;
             $this->simple = FALSE;
-        }*/
+        }
     }
 
     /**
@@ -484,6 +487,6 @@ EOD;
         // At least, we should parse out the parameters and see if there are any
         // keyword matches in that case, rather than just printing out the
         // "Please enter keywords" message.
-        return true;//!empty($this->keywords) || (isset($this->searchParameters['f']) && count($this->searchParameters['f']));
+        return !empty($this->searchExpression); //|| (isset($this->searchParameters['f']) && count($this->searchParameters['f']));
     }
 }

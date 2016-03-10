@@ -25,9 +25,10 @@ class IndexRepository extends EntityRepository
         $query->select('sum(i.score * t.count) AS calculated_score');
         $query->innerJoin('EnhavoSearchBundle:Total', 't', 'WITH', 'i.word = t.word');
         $query->innerJoin('EnhavoSearchBundle:Dataset', 'd', 'WITH', 'i.dataset = d');
-        foreach($conditions as $condition) {
-            if (is_array($condition)){
-                foreach($condition as $currentValue) {
+        foreach($conditions as $key => $value) {
+            if ($key != 'NOT'){
+                foreach($value as $currentValue) {
+                    $currentValue = explode(" ", $currentValue);
                     if(is_array($currentValue)){
                         foreach($currentValue as $currentValue1) {
                             $query->setParameter('word_' . $wordCounter, $currentValue1);
@@ -68,6 +69,19 @@ class IndexRepository extends EntityRepository
                             $query->andWhere($orString);
                         }
                     }
+                } else if ($key = 'NOT') {
+                    $notString = "";
+                    $first = true;
+                    for($i = 0; $i < count($conditions['NOT']); $i++) {
+                        $query->setParameter('word_' . $wordCounter, '%'.$conditions['NOT'][$i].'%');
+                        if(!$first) {
+                            $notString = $notString.' AND ';
+                        }
+                        $first = false;
+                        $notString = $notString.'d.data NOT LIKE :word_' . $wordCounter;
+                        $wordCounter++;
+                    }
+                    $query->andWhere($notString);
                 }
             }
         }
@@ -100,9 +114,10 @@ class IndexRepository extends EntityRepository
         $query->select('i.locale AS language', 'i.type AS type', 'i.id AS id', 'sum(:normalization * i.score * t.count) AS calculated_score');
         $query->innerJoin('EnhavoSearchBundle:Total', 't', 'WITH', 'i.word = t.word');
         $query->innerJoin('EnhavoSearchBundle:Dataset', 'd', 'WITH', 'i.dataset = d');
-        foreach($conditions as $condition) {
-            if (is_array($condition)){
-                foreach($condition as $currentValue) {
+        foreach($conditions as $key => $value) {
+            if ($key != 'NOT'){
+                foreach($value as $currentValue) {
+                    $currentValue = explode(" ", $currentValue);
                     if(is_array($currentValue)){
                         foreach($currentValue as $currentValue1) {
                             $query->setParameter('word_' . $wordCounter, $currentValue1);
@@ -143,6 +158,19 @@ class IndexRepository extends EntityRepository
                             $query->andWhere($orString);
                         }
                     }
+                } else if ($key = 'NOT') {
+                    $notString = "";
+                    $first = true;
+                    for($i = 0; $i < count($conditions['NOT']); $i++) {
+                        $query->setParameter('word_' . $wordCounter, '%'.$conditions['NOT'][$i].'%');
+                        if(!$first) {
+                            $notString = $notString.' AND ';
+                        }
+                        $first = false;
+                        $notString = $notString.'d.data NOT LIKE :word_' . $wordCounter;
+                        $wordCounter++;
+                    }
+                    $query->andWhere($notString);
                 }
             }
         }
@@ -157,6 +185,6 @@ class IndexRepository extends EntityRepository
             $query->having('COUNT(d.id) >= :matches');
         }
         $query->orderBy('calculated_score', 'DESC');
-        return $query->getQuery()->getResult();;
+        return $query->getQuery()->getResult();
     }
 }
