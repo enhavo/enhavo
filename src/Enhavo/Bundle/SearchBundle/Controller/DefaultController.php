@@ -201,7 +201,6 @@ EOD;
 
     public function submitAction(Request $request)
     {
-        //normalize berechnen
         $normalize = 0;
         $this->searchExpression =  $request->get('search');
         if($this->isSearchExecutable())
@@ -487,6 +486,6 @@ EOD;
         // At least, we should parse out the parameters and see if there are any
         // keyword matches in that case, rather than just printing out the
         // "Please enter keywords" message.
-        return !empty($this->searchExpression); //|| (isset($this->searchParameters['f']) && count($this->searchParameters['f']));
+        return !empty($this->searchExpression);
     }
 }

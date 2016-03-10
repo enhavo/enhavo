@@ -127,7 +127,7 @@ EOD;
 
     public function onSave($event)
     {
-        //search.yml der Entity auslesen um die zu indexierenden Felder zu finden
+        //get search.yml
         $mainPath = str_replace('/app', '/src', $this->path);
         $entityPath = get_class($event->getSubject());
         $splittedEntityPath = explode("\\", $entityPath);
@@ -143,10 +143,10 @@ EOD;
         $yaml = new Parser();
         $currentSearchYaml = $yaml->parse(file_get_contents($searchYamlPath));
 
-        //Properties auslesen und diejenigen Felder indexieren
+        //get properties form search.yml
         $properties = $currentSearchYaml[$entityPath]['properties'];
 
-        //1.data_set anlegen wenn nicht schon vorhanden
+        //get or create DataSet
         $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
         $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $entityName));
         if($dataSet == null) {
@@ -169,7 +169,7 @@ EOD;
             $this->em->flush();
         }
 
-        //2.einzelne Wörter indexieren
+        //indexing words
         foreach($properties as $key => $value) {
             $indexingField = $key;
 
@@ -179,15 +179,15 @@ EOD;
             if(array_key_exists($indexingField, $currentRequest)) {
                 $text = $currentRequest[$indexingField];
                 foreach ($value[0] as $key => $value) {
-                    if($key == 'Plain') {
+                    if($key == 'Plain') { //type Plain
                         $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
-                    } else if($key == 'Html'){
+                    } else if($key == 'Html'){ //type Html
                         if(array_key_exists('weights', $value)) {
                             $this->indexingHtml($text, $value['type'], $dataSet, $mainPath, $value['weights']);
                         } else {
                             $this->indexingHtml($text, $value['type'], $dataSet, $mainPath);
                         }
-                    } else if($key == 'Collection') {
+                    } else if($key == 'Collection') { //type Collection
                         $collectionPath = $mainPath;
                         $entityPath = $value['entity'];
                         $splittedEntityPath = explode("\\", $entityPath);
@@ -208,17 +208,15 @@ EOD;
     }
 
     public function indexingPlain($text, $score, $type, $dataset) {
-        //Text auseinander nehmen und in DB speichern (mit Hilfe von Repository(siehe im controller))
+        //indexing plain text and save in DB
         $minimum_word_size = 2;
         $words = $this->search_index_split($text);
         $scored_words = array();
         $focus = 1;
         foreach($words as $word) {
             if (is_numeric($word) || strlen($word) >= $minimum_word_size) {
-                $newWord = false;
                 if (!isset($scored_words[$word])) {
                     $scored_words[$word] = 0;
-                    $newWord = true;
                 }
                 $scored_words[$word] += $score * $focus;
                 $focus = min(1, .01 + 3.5 / (2 + count($scored_words) * .015));
@@ -241,13 +239,14 @@ EOD;
     }
 
     public function indexingHtml($text, $type, $dataset, $mainPath, $weights = null) {
+        //indexing html text and save in DB
         $minimum_word_size = 2;
 
-        //Default Werte der tags holen
+        //get weights of words
         $tagYaml = $mainPath.'/Enhavo/Bundle/SearchBundle/Resources/config/tag_weights.yml';
         $yaml = new Parser();
         $tags = $yaml->parse(file_get_contents($tagYaml));
-        if($weights != null) //Evtl. Weights einsetzen
+        if($weights != null) //set given weights to default weights
         {
             foreach ($weights as $key => $value) {
                 if(array_key_exists($key, $tags)) {
