@@ -97,15 +97,6 @@ class ArticleController extends ResourceController
         $method = $request->getMethod();
 
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
-            $transitionId = $this->getRequest()->request->all()['enhavo_article_article']['workflow_status'];
-            $transition = $this->getDoctrine()
-                   ->getRepository('EnhavoWorkflowBundle:Transition')
-                   ->find($transitionId);
-            $workflowStatus = new WorkflowStatus();
-            $workflowStatus->setNode($transition->getNodeTo());
-            $workflowStatus->setBundle('article');
-            $workflowStatus->setReference($resource->getId());
-            $this->getRequest()->request->all()['enhavo_article_article']['workflow_status'] = $workflowStatus;
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
                 $this->domainManager->update($resource);
                 $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));

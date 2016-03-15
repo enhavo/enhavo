@@ -554,4 +554,5 @@ class Article {
     {
         return $this->workflow;
     }
+
 }
