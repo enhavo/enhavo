@@ -126,4 +126,35 @@ class Node
     {
         return $this->workflow;
     }
+    /**
+     * @var boolean
+     */
+    private $start_node;
+
+
+    /**
+     * Set startNode
+     *
+     * @param boolean $startNode
+     *
+     * @return Node
+     */
+    public function setStartNode($startNode)
+    {
+        $this->start_node = $startNode;
+        if($startNode) {
+            $this->workflow->setStartNode($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Get startNode
+     *
+     * @return boolean
+     */
+    public function getStartNode()
+    {
+        return $this->start_node;
+    }
 }

@@ -28,6 +28,11 @@ class Workflow
     private $transitions;
 
     /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    private $start_node;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -80,6 +85,7 @@ class Workflow
     {
         $this->nodes[] = $node;
         $node->setWorkflow($this);
+
         return $this;
     }
 
@@ -135,5 +141,29 @@ class Workflow
     public function getTransitions()
     {
         return $this->transitions;
+    }
+
+    /**
+     * Set startNode
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $startNode
+     *
+     * @return Workflow
+     */
+    public function setStartNode(\Enhavo\Bundle\WorkflowBundle\Entity\Node $startNode = null)
+    {
+        $this->start_node = $startNode;
+
+        return $this;
+    }
+
+    /**
+     * Get startNode
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    public function getStartNode()
+    {
+        return $this->start_node;
     }
 }

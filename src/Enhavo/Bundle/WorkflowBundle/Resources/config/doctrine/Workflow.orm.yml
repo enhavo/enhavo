@@ -12,6 +12,11 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
             type: string
             length: 255
 
+    oneToOne:
+        start_node:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+
     oneToMany:
         nodes:
             cascade: ['persist']

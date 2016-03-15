@@ -18,7 +18,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
             type: integer
 
 
-    oneToOne:
+    manyToOne:
         node:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node

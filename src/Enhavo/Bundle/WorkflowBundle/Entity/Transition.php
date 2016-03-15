@@ -117,6 +117,16 @@ class Transition
     }
 
     /**
+     * Get nodeNameTo
+     *
+     * @return string
+     */
+    public function getNodeNameTo()
+    {
+        return $this->node_to->getNodeName();
+    }
+
+    /**
      * Set workflow
      *
      * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow

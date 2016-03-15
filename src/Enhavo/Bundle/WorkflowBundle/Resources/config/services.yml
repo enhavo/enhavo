@@ -1,7 +1,6 @@
 services:
     enhavo_workflow_workflow:
         class: %enhavo_workflow.form.type.workflow.class%
-        arguments: [Enhavo\Bundle\WorkflowBundle\Entity\Workflow]
         tags:
             - { name: form.type }
 
@@ -12,6 +11,5 @@ services:
 
     enhavo_workflow_transition:
         class: %enhavo_workflow.form.type.transition.class%
-        arguments: [Enhavo\Bundle\WorkflowBundle\Entity\Workflow]
         tags:
             - { name: form.type }

@@ -27,9 +27,6 @@ enhavo_workflow_workflow_create:
                 node:
                     label: workflow.label.nodes
                     template: EnhavoWorkflowBundle:Tab:nodes.html.twig
-                transition:
-                    label: workflow.label.transitions
-                    template: EnhavoWorkflowBundle:Tab:transitions.html.twig
 
 enhavo_workflow_workflow_update:
     options:

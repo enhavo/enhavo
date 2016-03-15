@@ -6,21 +6,15 @@ use Enhavo\Bundle\WorkflowBundle\Entity\Node;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\WorkflowBundle\Entity\Workflow;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TransitionType extends AbstractType
 {
-    public $workflow;
-
-    public function __construct ($workflow)
-    {
-        $this->workflow = $workflow;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $workflow = $this->workflow;
+        $uri = $_SERVER['REQUEST_URI'];
+        $split = explode('/', $uri);
+        $workflow_id = array_pop($split);
         $builder->add('transition_name', 'text', array(
             'label' => 'transition.form.label.transitionName',
             'translation_domain' => 'EnhavoWorkflowBundle'
@@ -31,9 +25,10 @@ class TransitionType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle',
             'class' => 'EnhavoWorkflowBundle:Node',
             'choice_label'   => 'node_name',
-            'query_builder' => function (EntityRepository $er) use ($workflow) {
+            'query_builder' => function (EntityRepository $er) use ($workflow_id) {
                 return $er->createQueryBuilder('n')
-                    ->join('EnhavoWorkflowBundle:Transition', 't', 'WITH', 't.workflow = :workflow');
+                    ->setParameter('id', $workflow_id)
+                    ->where('n.workflow = :id');
             },
         ));
 
@@ -42,9 +37,10 @@ class TransitionType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle',
             'class' => 'EnhavoWorkflowBundle:Node',
             'choice_label'   => 'node_name',
-            'query_builder' => function (EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) use ($workflow_id) {
                 return $er->createQueryBuilder('n')
-                    ->join('EnhavoWorkflowBundle:Transition', 't', 'WITH', 'n.workflow = t.workflow');
+                    ->setParameter('id', $workflow_id)
+                    ->where('n.workflow = :id');
             },
         ));
     }
@@ -52,7 +48,8 @@ class TransitionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\WorkflowBundle\Entity\Transition'
+            'data_class' => 'Enhavo\Bundle\WorkflowBundle\Entity\Transition'//,
+            //'inherit_data' => true
         ));
     }
 

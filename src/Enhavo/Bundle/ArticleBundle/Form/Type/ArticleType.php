@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\RouterInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ArticleType extends AbstractType
 {
@@ -59,6 +60,7 @@ class ArticleType extends AbstractType
                 ));
             }
         });
+        $articleId = $builder->getData()->getId();
 
         if($this->dynamicRouting) {
             $builder->add('route', 'enhavo_route');
@@ -145,6 +147,30 @@ class ArticleType extends AbstractType
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false
+        ));
+
+        $builder->add('workflow', 'entity', array(
+            'label' => 'article.form.label.workflow',
+            'translation_domain' => 'EnhavoArticleBundle',
+            'class' => 'EnhavoWorkflowBundle:Workflow',
+            'choice_label'   => 'workflow_name',
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('n');
+            },
+        ));
+
+        $builder->add('workflow_status', 'entity', array(
+            'label' => 'article.form.label.next_state',
+            'translation_domain' => 'EnhavoArticleBundle',
+            'class' => 'EnhavoWorkflowBundle:Transition',
+            'choice_label'   => 'node_name_to',
+            'query_builder' => function (EntityRepository $er) use ($articleId) {
+                return $er->createQueryBuilder('t')
+                    ->setParameter('articleId', $articleId)
+                    ->join('EnhavoWorkflowBundle:WorkflowStatus', 's', 'WITH', 's.node = t.node_from')
+                    ->join('EnhavoWorkflowBundle:Node', 'n', 'WITH', 'n = t.node_to')
+                    ->where('s.reference = :articleId');
+            },
         ));
 
         $builder->add('content', 'enhavo_grid');

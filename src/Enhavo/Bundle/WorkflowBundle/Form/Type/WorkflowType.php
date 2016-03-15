@@ -9,13 +9,6 @@ use Enhavo\Bundle\WorkflowBundle\Entity\Workflow;
 
 class WorkflowType extends AbstractType
 {
-    public $workflow;
-
-    public function __construct ($workflow)
-    {
-        $this->workflow = $workflow;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('workflow_name', 'text', array(
