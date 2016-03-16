@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -59,9 +58,6 @@ class BooleanType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['label_true'] = $options['label_true'];
-        $view->vars['label_false'] = $options['label_false'];
-
         $value = $view->vars['value'];
         if($value === self::VALUE_NULL) {
             if(true === $options['default']) {
@@ -81,22 +77,13 @@ class BooleanType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                self::VALUE_TRUE => 'true',
-                self::VALUE_FALSE => 'false'
+                self::VALUE_TRUE => $this->translator->trans('label.yes', array(), 'EnhavoAppBundle'),
+                self::VALUE_FALSE => $this->translator->trans('label.no', array(), 'EnhavoAppBundle')
             ),
-            'label_true' =>  $this->translator->trans('label.yes', array(), 'EnhavoAppBundle'),
-            'label_false' => $this->translator->trans('label.no', array(), 'EnhavoAppBundle'),
             'expanded' => true,
             'multiple' => false,
             'default' => null
         ));
-
-        $resolver->setNormalizer('choices', function (Options $options, $value) {
-            return array(
-                self::VALUE_TRUE => $options['label_true'],
-                self::VALUE_FALSE =>$options['label_false'],
-            );
-        });
     }
 
     public function getName()

@@ -26,6 +26,11 @@ class EntityMock
     private $entities;
 
     /**
+     * @var Route
+     */
+    private $route;
+
+    /**
      * @return int
      */
     public function getId()
@@ -65,5 +70,21 @@ class EntityMock
     public function getEntities()
     {
         return $this->entities;
+    }
+
+    /**
+     * @return Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param Route $route
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
     }
 }

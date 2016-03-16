@@ -43,7 +43,6 @@ class ListType extends AbstractType
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use (&$data){
             $item = $event->getData();
-            $form = $event->getForm();
             $data = $item;
             return;
         });
