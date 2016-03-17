@@ -97,7 +97,7 @@ enhavo_slider_slide_move_to_page:
     options:
         expose: true
     path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
-    methods: [GET,POST]
+    methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:moveToPageAction
         _sylius:
