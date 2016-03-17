@@ -204,6 +204,7 @@ function Admin (router, templating, translator)
       url: url,
       success : function(data) {
         block.html(data);
+        self.initSortable(block);
         if(callback) {
           callback();
         }
@@ -301,140 +302,99 @@ function Admin (router, templating, translator)
   };
 
   this.initSortable = function (block) {
-    var animationRunning = false;
-    var currentAjaxHandle = null;
-    var moveUpRoute = block.find('[data-move-up-route]').data('move-up-route');
-    var moveDownRoute = block.find('[data-move-down-route]').data('move-down-route');
+    var sortable = block.find('[data-sortable-container]');
+    var paginationBlock = block.find('.pagination');
+    var paginationPages = paginationBlock.find('a:not(.selected)');
+    var moveAfterRoute = block.find('[data-move-after-route]').data('move-after-route');
+    var moveToPageRoute = block.find('[data-move-to-page-route]').data('move-to-page-route');
+    var currentPage = block.find(".pagination > .selected");
+    if (currentPage.length > 0) {
+      currentPage = currentPage.data("page");
+    } else {
+      currentPage = 1;
+    }
+    paginationPages.addClass('sortable-droptarget');
 
-    block.on('click', '[data-sortable-up-button]', function(event) {
-      event.preventDefault();
-      event.stopPropagation();
+    var url = "";
+    var switchToPage = -1;
 
-      moveElement($(this), true);
-    });
+    sortable.sortable({
+      items: '[data-sortable-row]',
+      handle: '.sortable-button',
+      //distance: 5,
+      opacity: 0.5,
+      scroll: false,
+      start: function(event, ui) {
+        $('.sortable-droptarget').addClass('drag-active');
+      },
+      stop: function(event, ui) {
+        $('.sortable-droptarget').removeClass('drag-active');
 
-    block.on('click', '[data-sortable-down-button]', function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      moveElement($(this), false);
-    });
-
-    var moveElement = function(element, directionUp) {
-      if (animationRunning) {
-        return;
-      }
-      var item = element.parents('[data-sortable-row]');
-      var container = item.parents('[data-sortable-container]');
-      var index = container.children().index(item);
-      var firstOrLastElement = false;
-      if (directionUp) {
-        firstOrLastElement = index <= 0;
-      } else {
-        firstOrLastElement = index >= (container.children().size() - 1);
-      }
-
-      sendMoveAjax(element, directionUp, firstOrLastElement);
-
-      if(!firstOrLastElement) {
-        // Play animation
-        animationRunning = true;
-        var otherItem;
-        if (directionUp) {
-          otherItem = container.children().get(index - 1);
-        } else {
-          otherItem = container.children().get(index + 1);
-        }
-
-        var targetPosition = $(otherItem).position().top;
-        var animPosition = Math.abs($(otherItem).position().top - item.position().top);
-
-        item.css('left', item.position().left)
-          .css('top', item.position().top)
-          .css('width', item.outerWidth())
-          .css('height', item.outerHeight())
-          .css('position', 'absolute');
-
-        $(otherItem).after('<div class="entry-row" style="visibility: hidden;" data-sortable-animation-dummy>&nbsp;</div>').css('visibility', 'hidden');
-
-        function animFrame() {
-          animPosition -= 8;
-
-          if (animPosition <= 0) {
-            clearInterval(animHandle);
-
-            item.css('left', 0)
-              .css('top', 0)
-              .css('height', 'auto')
-              .css('width', 'auto')
-              .css('position', 'static');
-            $(otherItem).css('visibility', 'visible');
-            if (directionUp) {
-              $(otherItem).before(item);
-            } else {
-              $(otherItem).after(item);
-            }
-            block.find('[data-sortable-animation-dummy]').remove();
-            animationRunning = false;
-          } else {
-            var position;
-            if (directionUp) {
-              position = targetPosition + animPosition;
-            } else {
-              position = targetPosition - animPosition;
-            }
-            item.css('top', position);
-          }
-        }
-        var animHandle = setInterval(animFrame, 20);
-      }
-    };
-
-    var sendMoveAjax = function(element, directionUp, paginateReload) {
-      if (currentAjaxHandle != null) {
-        currentAjaxHandle.abort();
-        currentAjaxHandle = null;
-      }
-      var id = element.parents('[data-sortable-row]').data('id');
-      var url;
-      if (directionUp) {
-        url = router.generate(moveUpRoute, {id: id});
-      } else {
-        url = router.generate(moveDownRoute, {id: id});
-      }
-
-      currentAjaxHandle = $.ajax({
-        type: "POST",
-        url: url
-      }).done(function(result) {
-        if (!result['success']) {
-          self.overlayMessage(translator.trans('error.occurred'), MessageType.Error);
-          // Error saving order, reload block to display current order
-          self.reloadBlock(block);
-        } else {
-          if (paginateReload) {
-            if (!result['firstOrLastElement']) {
-              var page = block.data('block-page');
-              if (directionUp) {
-                page--;
-              } else {
-                page++;
-              }
-              block.data('block-page', page);
+        if (switchToPage > -1) {
+          sortable.sortable("cancel");
+          $.ajax({
+            url: url,
+            method: 'POST',
+            success: function() {
+              block.data('block-page', switchToPage);
               self.reloadBlock(block);
+            },
+            error : function() {
+              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
             }
+          });
+        } else {
+          $.ajax({
+            url: url,
+            method: 'POST',
+            error : function() {
+              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+            }
+          });
+        }
+      },
+      sort: function(event, ui) {
+        paginationPages.each(function() {
+          var $this = $(this);
+          if ((event.pageX >= $this.offset().left)
+            && (event.pageY >= $this.offset().top)
+            && (event.pageX <= $this.offset().left + $this.outerWidth(false))
+            && (event.pageY <= $this.offset().top + $this.outerHeight(false)))
+          {
+            $this.addClass('drag-over');
+          } else {
+            $this.removeClass('drag-over');
+          }
+        });
+
+        var found = false;
+        paginationPages.each(function() {
+          var $this = $(this);
+          if ((event.pageX >= $this.offset().left)
+            && (event.pageY >= $this.offset().top)
+            && (event.pageX <= $this.offset().left + $this.outerWidth(false))
+            && (event.pageY <= $this.offset().top + $this.outerHeight(false)))
+          {
+            url = router.generate(moveToPageRoute, {id: ui.item.data("id"), page: $this.data("page"), top: 1});
+            switchToPage = $this.data("page");
+            found = true;
+          }
+        });
+        if (!found) {
+          var previousElement = ui.placeholder.prev();
+          if (previousElement.length > 0 && previousElement.hasClass('ui-sortable-helper')) {
+            previousElement = previousElement.prev();
+          }
+          if (previousElement.length == 0) {
+            url = router.generate(moveToPageRoute, {id: ui.item.data("id"), page: currentPage, top: 1});
+            switchToPage = -1;
+          } else {
+            url = router.generate(moveAfterRoute, {id: ui.item.data("id"), target: previousElement.data('id')});
+            switchToPage = -1;
           }
         }
-      }).fail(function(status) {
-        if (!(status['statusText'] == 'abort')) {
-          self.overlayMessage(translator.trans('error.occurred'), MessageType.Error);
-          // Error saving order, reload block to display current order
-          self.reloadBlock(block);
-        }
-      }).always(function() {
-        currentAjaxHandle = null;
-      });
-    };
+      }
+    });
   };
 }
 
