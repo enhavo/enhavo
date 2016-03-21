@@ -19,8 +19,8 @@ class TableViewer extends AbstractViewer
             'table' => array(
                 'sorting' => array(
                     'sortable' => false,
-                    'move_up_route' => sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName()),
-                    'move_down_route' => sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName())
+                    'move_after_route' => sprintf('%s_%s_move_after', $this->getBundlePrefix(), $this->getResourceName()),
+                    'move_to_page_route' => sprintf('%s_%s_move_to_page', $this->getBundlePrefix(), $this->getResourceName())
                 )
             )
         );
@@ -90,11 +90,11 @@ class TableViewer extends AbstractViewer
         if (!isset($sorting['sortable'])) {
             $sorting['sortable'] = false;
         }
-        if (!isset($sorting['move_up_route'])) {
-            $sorting['move_up_route'] = sprintf('%s_%s_move_up', $this->getBundlePrefix(), $this->getResourceName());
+        if (!isset($sorting['move_after_route'])) {
+            $sorting['move_after_route'] = sprintf('%s_%s_move_after', $this->getBundlePrefix(), $this->getResourceName());
         }
-        if (!isset($sorting['move_down_route'])) {
-            $sorting['move_down_route'] = sprintf('%s_%s_move_down', $this->getBundlePrefix(), $this->getResourceName());
+        if (!isset($sorting['move_to_page_route'])) {
+            $sorting['move_to_page_route'] = sprintf('%s_%s_move_to_page', $this->getBundlePrefix(), $this->getResourceName());
         }
 
         return $sorting;
@@ -150,16 +150,16 @@ class TableViewer extends AbstractViewer
         return $sorting['sortable'] === true;
     }
 
-    public function getMoveUpRoute()
+    public function getMoveAfterRoute()
     {
         $sorting = $this->getSorting();
-        return $sorting['move_up_route'];
+        return $sorting['move_after_route'];
     }
 
-    public function getMoveDownRoute()
+    public function getMoveToPageRoute()
     {
         $sorting = $this->getSorting();
-        return $sorting['move_down_route'];
+        return $sorting['move_to_page_route'];
     }
 
     public function renderWidget($options, $property, $item)

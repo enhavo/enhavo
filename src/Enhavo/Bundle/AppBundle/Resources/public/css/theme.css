@@ -165,13 +165,18 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .label-container {;padding:0px 5px 2px 5px;margin-top:5px;}
 
 .col-position {padding: 0;}
-.sortable-button {display:block;float:left;margin:-10px 0;padding:10px 0;width:50%;text-align:center;}
+.sortable-button {display:block;margin:-10px 0;padding:10px 0;width:100%;text-align:center;cursor:move;}
 .sortable-button:hover {background-color:#fff;color:#000;}
 
-.pagination{margin-left: -10px;}
+.pagination{margin-left: -10px;margin-right:-10px;}
 .pagination a {display: inline-block;margin: 30px 2px;border-radius: 50%;padding: 3px;width: 25px;height: 25px;line-height: 18px;cursor: pointer;background: #FFF;border: 0;box-shadow: 0;text-align: center;color: #454545;}
 .pagination a:hover,
 .pagination a.selected {color:#fff;background-color:#4395d1;}
+.sortable-droptarget {border: 1px solid transparent;}
+.sortable-droptarget.drag-active {border: 1px dashed #4395d1;}
+.pagination a.drag-active{border-radius: 0;}
+.pagination a.drag-active.drag-over{background: #85cbff;}
+
 .small-dialog {width: 465px;}
 .table-headline {color:#fff;margin-top:20px;margin-bottom:10px;}
 

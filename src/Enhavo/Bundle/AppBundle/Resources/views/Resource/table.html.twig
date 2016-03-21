@@ -5,8 +5,8 @@
     {% endfor %}
 </div>
 
-<div class="row row-container">
-    <div class="col-xs-{{ viewer.tableWidth }}"{% if viewer.sortable %} data-sortable-container data-move-up-route="{{ viewer.moveUpRoute }}" data-move-down-route="{{ viewer.moveDownRoute }}"{% endif %}>
+<div class="row row-container{% if viewer.sortable %} sortable-droptarget{% endif %}">
+    <div class="col-xs-{{ viewer.tableWidth }}"{% if viewer.sortable %} data-sortable-container data-move-after-route="{{ viewer.moveAfterRoute }}" data-move-to-page-route="{{ viewer.moveToPageRoute }}"{% endif %}>
         {% for item in data %}
             <div class="row entry-row" data-id="{{ item.id }}"{% if viewer.sortable %} data-sortable-row{% endif %}>
                 {% for column in columns %}
