@@ -33,9 +33,12 @@ class MenuLoader
      */
     protected $dispatcher;
 
-    public function __construct($name, $menu, MenuFactory $factory, EventDispatcherInterface $dispatcher)
+    protected $securityContext;
+
+    public function __construct($name, $securityContext, $menu, MenuFactory $factory, EventDispatcherInterface $dispatcher)
     {
         $this->name = $name;
+        $this->securityContext = $securityContext;
         $this->menu = $menu;
         $this->factory = $factory;
         $this->dispatcher = $dispatcher;
@@ -44,16 +47,18 @@ class MenuLoader
     public function getMenu()
     {
         $menuList = $this->factory->createItem($this->name);
-
+        $currentUser = $this->securityContext->getToken()->getUser();
         foreach($this->menu as $name => $menuItem) {
-            $menu = $this->factory->createItem($name, array(
-                'route' => $menuItem['route']
-            ));
-            $menu->setLabel($menuItem['label']);
-            if(isset($menuItem['translationDomain'])) {
-                $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
+            if(in_array($menuItem['role'], $currentUser->getRoles())) {
+                $menu = $this->factory->createItem($name, array(
+                    'route' => $menuItem['route']
+                ));
+                $menu->setLabel($menuItem['label']);
+                if(isset($menuItem['translationDomain'])) {
+                    $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
+                }
+                $menuList->addChild($menu);
             }
-            $menuList->addChild($menu);
         }
 
         $event = new MenuEvent();

@@ -54,6 +54,7 @@ services:
         class: %enhavo_app.menu_loader.class%
         arguments:
             - 'enhavo_app.menu'
+            - @security.context
             - %enhavo_app.menu%
             - @knp_menu.factory
             - @event_dispatcher
@@ -89,5 +90,12 @@ services:
 
     enhavo_list:
         class: Enhavo\Bundle\AppBundle\Form\Type\ListType
+        tags:
+            - { name: form.type }
+
+    enhavo_workflow_status:
+        class: Enhavo\Bundle\AppBundle\Form\Type\WorkflowStatusType
+        arguments:
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type }

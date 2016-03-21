@@ -50,9 +50,16 @@ class EditViewer extends CreateViewer
     public function getFormDelete()
     {
         $route = $this->getConfig()->get('form.delete');
-        return $this->container->get('router')->generate($route, array(
-            'id' => $this->getResource()->getId()
-        ));
+        $securityContext = $this->container->get('security.context');
+        $currentUser = $securityContext->getToken()->getUser();
+        if(in_array('ROLE_'.strtoupper($route), $currentUser->getRoles())) {
+            return $this->container->get('router')->generate($route, array(
+                'id' => $this->getResource()->getId()
+            ));
+        }
+        else {
+            return null;
+        }
     }
 
     public function getFormAction()
@@ -65,17 +72,32 @@ class EditViewer extends CreateViewer
 
     public function getParameters()
     {
-        $parameters = array(
-            'buttons' => $this->getButtons(),
-            'form' => $this->getForm(),
-            'viewer' => $this,
-            'tabs' => $this->getTabs(),
-            'data' => $this->getResource(),
-            'form_template' => $this->getFormTemplate(),
-            'form_action' => $this->getFormAction(),
-            'form_delete' => $this->getFormDelete(),
-            'translationDomain' => $this->getTranslationDomain()
-        );
+        if($this->getFormDelete() != null) {
+            $parameters = array(
+                'buttons' => $this->getButtons(),
+                'form' => $this->getForm(),
+                'viewer' => $this,
+                'tabs' => $this->getTabs(),
+                'data' => $this->getResource(),
+                'form_template' => $this->getFormTemplate(),
+                'form_action' => $this->getFormAction(),
+                'form_delete' => $this->getFormDelete(),
+                'translationDomain' => $this->getTranslationDomain()
+            );
+        } else {
+            $parameters = array(
+                'buttons' => $this->getButtons(),
+                'form' => $this->getForm(),
+                'viewer' => $this,
+                'tabs' => $this->getTabs(),
+                'data' => $this->getResource(),
+                'form_template' => $this->getFormTemplate(),
+                'form_action' => $this->getFormAction(),
+                'translationDomain' => $this->getTranslationDomain()
+            );
+            unset($parameters['buttons']['delete']);
+        }
+
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);
 

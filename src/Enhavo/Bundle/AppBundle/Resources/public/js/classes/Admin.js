@@ -278,8 +278,10 @@ function Admin (router, templating, translator)
         block.on('click', '[data-id]', function() {
           var id = $(this).data('id');
           var route = block.data('block-update-route');
-          var url = router.generate(route, {id: id});
-          self.ajaxOverlay(url);
+          if(route != undefined){
+            var url = router.generate(route, {id: id});
+            self.ajaxOverlay(url);
+          }
         });
 
         if (block.find('[data-sortable-container]').length > 0) {

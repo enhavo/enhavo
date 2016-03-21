@@ -8,20 +8,22 @@
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider;
 use Enhavo\Bundle\AppBundle\Security\Roles\RolesProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class GroupType extends AbstractType
 {
     protected $roles;
 
-    public function __construct(RolesProvider $rolesProvider)
+    public function __construct(AdminRolesProvider $rolesProvider)
     {
         $roles = array_keys($rolesProvider->getRoles());
 
         foreach ($roles as $role) {
-            $this->roles[$role] = (sprintf('label.%s', $role));
+            $this->roles[$role] = (sprintf('user.role.label.%s', $role));
         }
     }
 

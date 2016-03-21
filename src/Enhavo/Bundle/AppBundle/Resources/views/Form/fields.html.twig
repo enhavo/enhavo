@@ -128,3 +128,8 @@
     </li>
 {% endmacro %}
 
+{% block enhavo_workflow_status_widget %}
+    {% for child in form %}
+        {{ dump(child) }}
+    {% endfor %}
+{% endblock %}

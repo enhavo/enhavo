@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Symfony\Component\Security\Core\Security;
 
 class IndexViewer extends AbstractViewer
 {
@@ -41,7 +42,16 @@ class IndexViewer extends AbstractViewer
 
     public function getActions()
     {
-        return $this->getConfig()->get('actions');
+        $actions = array();
+        $securityContext = $this->container->get('security.context');
+        $currentUser = $securityContext->getToken()->getUser();
+        foreach($this->getConfig()->get('actions') as $action) {
+            $currentRole = 'ROLE_'.strtoupper($action['route']);
+            if(in_array($currentRole, $currentUser->getRoles())){
+                $actions[] = $action;
+            }
+        }
+        return $actions;
     }
 
     public function getParameters()

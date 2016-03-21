@@ -20,5 +20,55 @@ user:
     username: 'Username'
     id: 'ID'
     user: 'User'
+  role:
+    label:
+      ROLE_ENHAVO_USER_USER_INDEX: 'see users'
+      ROLE_ENHAVO_USER_USER_UPDATE: 'edit users'
+      ROLE_ENHAVO_USER_USER_CREATE: 'create users'
+      ROLE_ENHAVO_USER_USER_DELETE: 'delete users'
 
+      ROLE_ENHAVO_USER_GROUP_INDEX: 'see usergroups'
+      ROLE_ENHAVO_USER_GROUP_UPDATE: 'edit usergroups'
+      ROLE_ENHAVO_USER_GROUP_CREATE: 'create usergroups'
+      ROLE_ENHAVO_USER_GROUP_DELETE: 'delete usergroups'
+
+      ROLE_ENHAVO_PAGE_PAGE_INDEX: 'see pages'
+      ROLE_ENHAVO_PAGE_PAGE_UPDATE: 'edit pages'
+      ROLE_ENHAVO_PAGE_PAGE_CREATE: 'create pages'
+      ROLE_ENHAVO_PAGE_PAGE_DELETE:  'delete pages'
+
+      ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX: 'see categories'
+      ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE: 'edit categories'
+      ROLE_ENHAVO_CATEGORY_CATEGORY_CREATE: 'create categories'
+      ROLE_ENHAVO_CATEGORY_CATEGORY_DELETE:  'delete categories'
+
+      ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX: 'see articles'
+      ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE: 'edit articles'
+      ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE: 'create articles'
+      ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE:  'delete articles'
+
+      ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX: 'see appointments'
+      ROLE_ENHAVO_CALENDAR_APPOINTMENT_UPDATE: 'edit appointments'
+      ROLE_ENHAVO_CALENDAR_APPOINTMENT_CREATE: 'create appointments'
+      ROLE_ENHAVO_CALENDAR_APPOINTMENT_DELETE: 'delete appointments'
+
+      ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX: 'see downloads'
+      ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_UPDATE: 'edit downloads'
+      ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_CREATE: 'create downloads'
+      ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_DELETE: 'delete downloads'
+
+      ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX: 'see newsletters'
+      ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE: 'edit newsletters'
+      ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE: 'create newsletters'
+      ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE: 'delete newsletters'
+
+      ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX: 'see workflows'
+      ROLE_ENHAVO_WORKFLOW_WORKFLOW_UPDATE: 'edit workflows'
+      ROLE_ENHAVO_WORKFLOW_WORKFLOW_CREATE: 'create workflows'
+      ROLE_ENHAVO_WORKFLOW_WORKFLOW_DELETE: 'delete workflows'
+
+      ROLE_ENHAVO_SLIDER_SLIDE_INDEX: 'see slides'
+      ROLE_ENHAVO_SLIDER_SLIDE_UPDATE: 'edit slides'
+      ROLE_ENHAVO_SLIDER_SLIDE_CREATE: 'create slides'
+      ROLE_ENHAVO_SLIDER_SLIDE_DELETE: 'delete slides'
 

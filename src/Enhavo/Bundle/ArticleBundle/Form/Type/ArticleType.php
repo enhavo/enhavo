@@ -159,7 +159,7 @@ class ArticleType extends AbstractType
             },
         ));
 
-        $builder->add('workflow_status', 'entity', array(
+        /*$builder->add('workflow_status', 'entity', array(
             'label' => 'article.form.label.next_state',
             'translation_domain' => 'EnhavoArticleBundle',
             'class' => 'EnhavoWorkflowBundle:Transition',
@@ -171,6 +171,13 @@ class ArticleType extends AbstractType
                     ->join('EnhavoWorkflowBundle:Node', 'n', 'WITH', 'n = t.node_to')
                     ->where('s.reference = :articleId');
             },
+        ));*/
+        $test = array();
+        $test[0] = $articleId;
+
+        $builder->add('workflow_status', 'enhavo_workflow_status', array(
+           'label' => 'article.form.label.next_state',
+            'attr' => $test
         ));
 
         $builder->add('content', 'enhavo_grid');

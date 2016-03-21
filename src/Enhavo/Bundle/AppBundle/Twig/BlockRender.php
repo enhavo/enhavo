@@ -22,6 +22,13 @@ class BlockRender extends \Twig_Extension
 
     public function render($type, $parameters)
     {
+        $container = $this->factory->getContainer();
+        $securityContext = $container->get('security.context');
+        $currentUser = $securityContext->getToken()->getUser();
+        $upperUpdateRoute = 'ROLE_'.strtoupper($parameters['update_route']);
+        if(!in_array($upperUpdateRoute, $currentUser->getRoles())) {
+            unset($parameters['update_route']);
+        }
         $block = $this->factory->create($type);
         return $block->render($parameters);
     }
