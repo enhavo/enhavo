@@ -277,6 +277,7 @@ function Admin (router, templating, translator)
           var page = block.data('block-page');
           var url = router.generate(route, {page: page});
           self.reloadBlock(block);
+          self.closeLoadingOverlay();
         });
 
         block.on('click', '[data-page]', function() {
@@ -344,14 +345,17 @@ function Admin (router, templating, translator)
 
         if (switchToPage > -1) {
           sortable.sortable("cancel");
+          self.openLoadingOverlay();
           $.ajax({
             url: url,
             method: 'POST',
             success: function() {
               block.data('block-page', switchToPage);
               self.reloadBlock(block);
+              self.closeLoadingOverlay();
             },
             error : function() {
+              self.closeLoadingOverlay();
               self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
             }
           });
@@ -416,6 +420,7 @@ function Admin (router, templating, translator)
       $(document.body).append(loadingOverlay);
     }
     loadingOverlayMutex++;
+    console.log('Mutex: ' + loadingOverlayMutex);
     if (loadingOverlayMutex == 1) {
       loadingOverlay.removeClass('hidden');
       loadingOverlay.fadeTo(300, 0.2);
@@ -425,6 +430,7 @@ function Admin (router, templating, translator)
   this.closeLoadingOverlay = function() {
     if (loadingOverlayMutex > 0) {
       loadingOverlayMutex--;
+      console.log('Mutex: ' + loadingOverlayMutex);
     }
     if (loadingOverlay != null && loadingOverlayMutex == 0) {
       loadingOverlay.fadeTo(100, 0, function() {
