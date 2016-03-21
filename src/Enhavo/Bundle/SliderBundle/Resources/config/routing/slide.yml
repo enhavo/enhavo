@@ -54,8 +54,8 @@ enhavo_slider_slide_table:
             table:
                 sorting:
                     sortable: true
-                    move_up_route: enhavo_slider_slide_move_up
-                    move_down_route: enhavo_slider_slide_move_down
+                    move_after_route: enhavo_slider_slide_move_after
+                    move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
                     id:
                         label: slide.label.id
@@ -81,25 +81,25 @@ enhavo_slider_slide_delete:
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction
 
-enhavo_slider_slide_move_up:
+enhavo_slider_slide_move_after:
     options:
         expose: true
-    path: /enhavo/slider/slide/move-up/{id}
+    path: /enhavo/slider/slide/move-after/{id}/{target}
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:moveUpAction
+        _controller: enhavo_slider.controller.slide:moveAfterAction
         _sylius:
             sortable_position: position
         _viewer:
             sorting: desc
 
-enhavo_slider_slide_move_down:
+enhavo_slider_slide_move_to_page:
     options:
         expose: true
-    path: /enhavo/slider/slide/move-down/{id}
+    path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
     methods: [POST]
     defaults:
-        _controller: enhavo_slider.controller.slide:moveDownAction
+        _controller: enhavo_slider.controller.slide:moveToPageAction
         _sylius:
             sortable_position: position
         _viewer:
