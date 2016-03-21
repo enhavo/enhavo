@@ -126,14 +126,17 @@ var Form = function(router, templating, admin, translator)
       form = $(form);
       var data = form.serialize();
       var action = form.attr('action');
+      admin.openLoadingOverlay();
       $.ajax({
         type: 'POST',
         data: data,
         url: action,
         success: function(data) {
+          admin.closeLoadingOverlay();
           $(form).trigger('formSaveAfter', form);
         },
         error: function(jqXHR) {
+          admin.closeLoadingOverlay();
           var data = JSON.parse(jqXHR.responseText);
 
           if(data.code == 400) {
@@ -191,6 +194,7 @@ var Form = function(router, templating, admin, translator)
     $(form).find('[data-button][data-type=delete]').click(function() {
       var url = $(form).data('delete');
       if(confirm(translator.trans('form.delete.question'))) {
+        admin.openLoadingOverlay();
         $.ajax({
           type: 'POST',
           data: {
@@ -198,9 +202,11 @@ var Form = function(router, templating, admin, translator)
           },
           url: url,
           success: function() {
+            admin.closeLoadingOverlay();
             $(form).trigger('formSaveAfter', form);
           },
           error: function() {
+            admin.closeLoadingOverlay();
             alert(translator.trans('error.occurred'));
           }
         });

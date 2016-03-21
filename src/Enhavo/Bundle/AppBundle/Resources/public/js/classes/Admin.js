@@ -5,6 +5,8 @@ function Admin (router, templating, translator)
   var overlayContent = $("#overlayContent");
   var overlayMessage = $("#overlayMessage");
   var ajaxOverlaySynchronized = true;
+  var loadingOverlay = null;
+  var loadingOverlayMutex = 0;
 
   var MessageType = {
     Info: 'info',
@@ -102,13 +104,16 @@ function Admin (router, templating, translator)
   {
     if(ajaxOverlaySynchronized) {
       ajaxOverlaySynchronized = false;
+      self.openLoadingOverlay();
       $.ajax({
         url: url,
         success : function(data) {
+          self.closeLoadingOverlay();
           self.overlay(data, options);
           ajaxOverlaySynchronized = true;
         },
         error : function(data) {
+          self.closeLoadingOverlay();
           var message = 'error.occurred';
           if(data.status == 403) {
             message = 'error.forbidden';
@@ -200,15 +205,18 @@ function Admin (router, templating, translator)
   {
     var page = block.data('block-page');
     var url = router.generate(block.data('block-table-route'), {page: page});
+    self.openLoadingOverlay();
     $.ajax({
       url: url,
       success : function(data) {
+        self.closeLoadingOverlay();
         block.html(data);
         if(callback) {
           callback();
         }
       },
       error : function() {
+        self.closeLoadingOverlay();
         self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
       }
     })
@@ -259,7 +267,9 @@ function Admin (router, templating, translator)
       var route = $(element).data('block-table-route');
       var url = router.generate(route);
       var block = $(this);
+      self.openLoadingOverlay();
       $.get(url, function (data) {
+        self.closeLoadingOverlay();
         block.html(data);
 
         $(document).on('formSaveAfter', function() {
@@ -285,6 +295,8 @@ function Admin (router, templating, translator)
         if (block.find('[data-sortable-container]').length > 0) {
           self.initSortable(block);
         }
+      }).fail(function() {
+        self.closeLoadingOverlay();
       });
     });
   };
@@ -435,6 +447,34 @@ function Admin (router, templating, translator)
         currentAjaxHandle = null;
       });
     };
+  };
+
+  this.openLoadingOverlay = function() {
+    if (loadingOverlay == null) {
+      // Init
+      loadingOverlay = $('<div class="loading-overlay hidden"><i class="loading-icon icon-spinner icon-spin"></i></div>');
+      $(document.body).append(loadingOverlay);
+    }
+    loadingOverlayMutex++;
+    if (loadingOverlayMutex == 1) {
+      loadingOverlay.removeClass('hidden');
+      loadingOverlay.fadeTo(300, 0.2);
+    }
+  };
+
+  this.closeLoadingOverlay = function() {
+    if (loadingOverlayMutex > 0) {
+      loadingOverlayMutex--;
+    }
+    if (loadingOverlay != null && loadingOverlayMutex == 0) {
+      loadingOverlay.fadeTo(100, 0, function() {
+        // If the overlay gets closed and opened immediately afterwards, it could be open again when the fadeout animation finishes.
+        // So only assign the hidden class if it really is closed.
+        if (loadingOverlayMutex == 0) {
+          loadingOverlay.addClass('hidden');
+        }
+      });
+    }
   };
 }
 
