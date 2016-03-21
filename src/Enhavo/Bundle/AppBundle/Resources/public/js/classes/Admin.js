@@ -420,7 +420,6 @@ function Admin (router, templating, translator)
       $(document.body).append(loadingOverlay);
     }
     loadingOverlayMutex++;
-    console.log('Mutex: ' + loadingOverlayMutex);
     if (loadingOverlayMutex == 1) {
       loadingOverlay.removeClass('hidden');
       loadingOverlay.fadeTo(300, 0.2);
@@ -430,7 +429,6 @@ function Admin (router, templating, translator)
   this.closeLoadingOverlay = function() {
     if (loadingOverlayMutex > 0) {
       loadingOverlayMutex--;
-      console.log('Mutex: ' + loadingOverlayMutex);
     }
     if (loadingOverlay != null && loadingOverlayMutex == 0) {
       loadingOverlay.fadeTo(100, 0, function() {
