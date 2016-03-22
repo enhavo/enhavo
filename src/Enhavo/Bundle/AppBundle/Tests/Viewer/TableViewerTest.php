@@ -2,6 +2,7 @@
 
 namespace spec\Enhavo\Bundle\AppBundle\Tests\Viewer;
 
+use Enhavo\Bundle\AppBundle\Table\TableWidgetCollector;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\TableViewer;
 
@@ -11,32 +12,6 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
     {
         $viewer = new TableViewer();
         $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Viewer\TableViewer', $viewer);
-    }
-
-    /**
-     * Test if the function getProperty works well
-     */
-    function testPropertyAccessCorrectly()
-    {
-        $object = new EntityMock();
-        $object->setName('my name is route');
-
-        $viewer = new TableViewer();
-        $this->assertEquals('my name is route', $viewer->getProperty($object, 'name'));
-    }
-
-    /**
-     * Test if you try to access an not existing property, will throw an exception
-     *
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException
-     */
-    function testPropertyAccessIfNotExists()
-    {
-        $object = new EntityMock();
-        $object->setName('my name is route');
-
-        $viewer = new TableViewer();
-        $viewer->getProperty($object, 'somePropertyWhichDoesNotExist');
     }
 
     /**
@@ -91,11 +66,10 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
 
         $resultColumns = array(
             'id' => array(
-                'property' => 'id',
-                'width' => 1
+                'width' => 1,
+
             ),
             'name' => array(
-                'property' => 'name',
                 'width' => 5
             )
         );
@@ -171,12 +145,83 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getContainerWithWidgetCollectorMock($widgets)
     {
-        $collector = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Table\TableWidgetCollector')->getMock();
-        $collector->method('getCollection')->willReturn($widgets);
+        $collector = new TableWidgetCollector;
+        foreach($widgets as $widget) {
+            $collector->add($widget);
+        }
 
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->method('get')->willReturn($collector);
 
         return $container;
+    }
+
+    public function testDefaultColumns()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $defaultColumn = array(
+            'id' => array(
+                'label' => 'id',
+                'property' => 'id',
+                'width' => 1,
+                'widget' => [
+                    'type' => 'property'
+                ]
+            )
+        );
+
+        $parameters = $viewer->getParameters();
+        $this->assertArrayHasKey('columns', $parameters);
+        $this->assertArraySubset($defaultColumn, $parameters['columns']);
+    }
+
+    public function testDefaultWithSorting()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+        $configParser->method('get')->will($this->returnValueMap([
+            ['table.sorting', ['sortable' => true]],
+        ]));
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $defaultColumn = array(
+            'id' => array(
+                'label' => 'id',
+                'property' => 'id',
+                'width' => 1,
+                'widget' => [
+                    'type' => 'property'
+                ]
+            ),
+            'position' => array(
+                'label' => '',
+                'property' => 'position',
+                'width' => 1,
+                'widget' => array(
+                    'type' => 'template',
+                    'template' => 'EnhavoAppBundle:Widget:position.html.twig',
+                )
+            )
+        );
+
+        $parameters = $viewer->getParameters();
+        $this->assertArrayHasKey('columns', $parameters);
+        $this->assertArraySubset($defaultColumn, $parameters['columns']);
+    }
+
+    public function testGetDefaultTableWidth()
+    {
+        $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
+
+        $viewer = new TableViewer();
+        $viewer->setConfig($configParser);
+
+        $this->assertEquals(12, $viewer->getTableWidth());
+
     }
 }

@@ -13,8 +13,6 @@
                     <div class="col-xs-{{ column.width }} col-{{ column.property }}">
                         {% if column.widget is defined %}
                             {{ viewer.renderWidget(column.widget, column.property, item)|raw }}
-                        {% else %}
-                            {{ viewer.getProperty(item, column.property) }}
                         {% endif %}
                     </div>
                 {% endfor %}

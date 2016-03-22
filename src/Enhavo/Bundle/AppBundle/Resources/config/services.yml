@@ -97,21 +97,28 @@ services:
 
     enhavo_app.table.list_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\ListWidget
-        arguments:
-            - @service_container
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
 
     enhavo_app.table.template_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget
-        arguments:
-            - @service_container
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
 
     enhavo_app.table.multiple_property_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\MultiplePropertyWidget
-        arguments:
-            - @service_container
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.property_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }

@@ -12,7 +12,8 @@ use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
 class TemplateWidget extends AbstractTableWidget {
 
-    public function render($options, $property, $item) {
+    public function render($options, $property, $item)
+    {
         $templateEngine = $this->container->get('templating');
         return $templateEngine->render($options['template'], array(
             'data' => $item,

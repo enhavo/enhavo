@@ -10,25 +10,28 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
-class ListWidget extends AbstractTableWidget {
+class ListWidget extends AbstractTableWidget
+{
+    public function render($options, $property, $item)
+    {
+        $list = [];
 
-    public function render($options, $property, $item) {
-        $entity = 'get'.$property;
-        $widgetProperty = 'get'.$options['property'];
-        $entities = array();
-        foreach($item->$entity() as $current) {
-            $currentEntity = $current->$widgetProperty();
-            $entities[] = $currentEntity;
+        $itemProperty = $this->getProperty($item, $property);
+        foreach($itemProperty as $child) {
+            $list[] = $this->getProperty($child, $options['property']);
         }
+
+        $separator = $this->getSeparator($options);
+        return implode($separator, $list);
+    }
+
+    protected function getSeparator($options)
+    {
         $separator = ',';
-        if(array_key_exists('separator', $options)){
+        if(array_key_exists('separator', $options)) {
             $separator = $options['separator'];
         }
-        $templateEngine = $this->container->get('templating');
-        return $templateEngine->render('EnhavoAppBundle:TableWidgets:ListWidget.html.twig', array(
-            'entities' => $entities,
-            'separator' => $separator
-        ));
+        return $separator;
     }
 
     public function getType()
