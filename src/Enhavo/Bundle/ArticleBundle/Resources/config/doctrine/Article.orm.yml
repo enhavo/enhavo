@@ -72,9 +72,6 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         route:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
-        workflow:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
 
     oneToOne:
         content:

@@ -95,11 +95,6 @@ class Article {
     protected $social_media;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-     */
-    private $workflow;
-
-    /**
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
      */
     private $workflow_status;
@@ -518,41 +513,4 @@ class Article {
     {
         return $this->workflow_status;
     }
-
-    /**
-     * Set workflow
-     *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow
-     *
-     * @return Article
-     */
-    public function setWorkflow(\Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow = null)
-    {
-        $this->workflow = $workflow;
-        //Workflowstatus setzen
-       /* $workflow_status = new WorkflowStatus();
-        $workflow_status->setBundle('article');
-        $workflow_status->setReference($workflow->getId());
-        $workflow_status->setNode($workflow->getStartNode());
-
-        $em = $this->get('doctrine')->getManager();
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($workflow_status);
-        $em->flush();
-
-        $this->setWorkflowStatus($workflow_status);*/
-
-        return $this;
-    }
-
-    /**
-     * Get workflow
-     *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-     */
-    public function getWorkflow()
-    {
-        return $this->workflow;
-    }
-
 }

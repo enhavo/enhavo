@@ -109,4 +109,33 @@ class WorkflowStatus
     {
         return $this->node;
     }
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     */
+    private $workflow;
+
+
+    /**
+     * Set workflow
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow
+     *
+     * @return WorkflowStatus
+     */
+    public function setWorkflow(\Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow = null)
+    {
+        $this->workflow = $workflow;
+
+        return $this;
+    }
+
+    /**
+     * Get workflow
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     */
+    public function getWorkflow()
+    {
+        return $this->workflow;
+    }
 }

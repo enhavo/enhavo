@@ -190,20 +190,38 @@ var Form = function(router, templating, admin, translator)
   {
     $(form).find('[data-button][data-type=delete]').click(function() {
       var url = $(form).data('delete');
-      if(confirm(translator.trans('form.delete.question'))) {
-        $.ajax({
-          type: 'POST',
-          data: {
-            _method: 'DELETE'
-          },
-          url: url,
-          success: function() {
-            $(form).trigger('formSaveAfter', form);
-          },
-          error: function() {
-            alert(translator.trans('error.occurred'));
-          }
-        });
+      if(url.indexOf('/admin/enhavo/user/group/delete') >= 0) {
+        if(confirm(translator.trans('form.delete.group.question'))) {
+          $.ajax({
+            type: 'POST',
+            data: {
+              _method: 'DELETE'
+            },
+            url: url,
+            success: function() {
+              $(form).trigger('formSaveAfter', form);
+            },
+            error: function() {
+              alert(translator.trans('error.occurred'));
+            }
+          });
+        }
+      } else {
+        if(confirm(translator.trans('form.delete.question'))) {
+          $.ajax({
+            type: 'POST',
+            data: {
+              _method: 'DELETE'
+            },
+            url: url,
+            success: function() {
+              $(form).trigger('formSaveAfter', form);
+            },
+            error: function() {
+              alert(translator.trans('error.occurred'));
+            }
+          });
+        }
       }
     });
   };

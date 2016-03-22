@@ -129,7 +129,12 @@
 {% endmacro %}
 
 {% block enhavo_workflow_status_widget %}
-    {% for child in form %}
-        {{ dump(child) }}
-    {% endfor %}
+    {{ form_widget(form) }}
+    <!--{+% for child in form %}
+        <!--{+{ dump(child.vars.data.nodeName) }}
+        {+% for var in child.vars %}
+            {+{ dump(var) }}
+            ---------------
+        {+% endfor %}
+    {+% endfor %}-->
 {% endblock %}

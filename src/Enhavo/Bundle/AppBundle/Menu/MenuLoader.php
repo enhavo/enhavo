@@ -49,15 +49,17 @@ class MenuLoader
         $menuList = $this->factory->createItem($this->name);
         $currentUser = $this->securityContext->getToken()->getUser();
         foreach($this->menu as $name => $menuItem) {
-            if(in_array($menuItem['role'], $currentUser->getRoles())) {
-                $menu = $this->factory->createItem($name, array(
-                    'route' => $menuItem['route']
-                ));
-                $menu->setLabel($menuItem['label']);
-                if(isset($menuItem['translationDomain'])) {
-                    $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
+            if(gettype($currentUser) == 'object') {
+                if(in_array($menuItem['role'], $currentUser->getRoles())) {
+                    $menu = $this->factory->createItem($name, array(
+                        'route' => $menuItem['route']
+                    ));
+                    $menu->setLabel($menuItem['label']);
+                    if(isset($menuItem['translationDomain'])) {
+                        $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
+                    }
+                    $menuList->addChild($menu);
                 }
-                $menuList->addChild($menu);
             }
         }
 

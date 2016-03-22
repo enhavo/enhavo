@@ -149,29 +149,6 @@ class ArticleType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('workflow', 'entity', array(
-            'label' => 'article.form.label.workflow',
-            'translation_domain' => 'EnhavoArticleBundle',
-            'class' => 'EnhavoWorkflowBundle:Workflow',
-            'choice_label'   => 'workflow_name',
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('n');
-            },
-        ));
-
-        /*$builder->add('workflow_status', 'entity', array(
-            'label' => 'article.form.label.next_state',
-            'translation_domain' => 'EnhavoArticleBundle',
-            'class' => 'EnhavoWorkflowBundle:Transition',
-            'choice_label'   => 'node_name_to',
-            'query_builder' => function (EntityRepository $er) use ($articleId) {
-                return $er->createQueryBuilder('t')
-                    ->setParameter('articleId', $articleId)
-                    ->join('EnhavoWorkflowBundle:WorkflowStatus', 's', 'WITH', 's.node = t.node_from')
-                    ->join('EnhavoWorkflowBundle:Node', 'n', 'WITH', 'n = t.node_to')
-                    ->where('s.reference = :articleId');
-            },
-        ));*/
         $test = array();
         $test[0] = $articleId;
 

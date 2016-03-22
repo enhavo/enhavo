@@ -20,7 +20,7 @@ class ArticleController extends ResourceController
     /**
      * {@inheritdoc}
      */
-    public function createAction(Request $request)
+   /* public function createAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
@@ -79,7 +79,7 @@ class ArticleController extends ResourceController
         ;
 
         return $this->handleView($view);
-    }
+    }*/
 
     /**
      * {@inheritdoc}

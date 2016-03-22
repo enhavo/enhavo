@@ -23,7 +23,7 @@ enhavo_article_article_create:
             tabs:
                 article:
                     label: article.label.article
-                    template: EnhavoArticleBundle:Tab:createArticle.html.twig
+                    template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
                     label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
@@ -50,7 +50,7 @@ enhavo_article_article_update:
             tabs:
                 article:
                     label: article.label.article
-                    template: EnhavoArticleBundle:Tab:updateArticle.html.twig
+                    template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
                     label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
