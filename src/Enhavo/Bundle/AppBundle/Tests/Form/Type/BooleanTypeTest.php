@@ -48,20 +48,20 @@ class BooleanTypeTest extends TypeTestCase
     {
         $form = $this->createForm(['default' => true]);
         $view = $form->createView();
-        $this->assertTrue($view->vars['value'] === BooleanType::VALUE_TRUE);
+        $this->assertEquals(BooleanType::VALUE_TRUE, $view->vars['value']);
     }
 
     public function testDefaultOptionValueWithFalse()
     {
         $form = $this->createForm(['default' => false]);
         $view = $form->createView();
-        $this->assertTrue($view->vars['value'] === BooleanType::VALUE_FALSE);
+        $this->assertEquals(BooleanType::VALUE_FALSE, $view->vars['value']);
     }
 
     public function testDefaultOptionValueWithNull()
     {
         $form = $this->createForm(['default' => null]);
         $view = $form->createView();
-        $this->assertTrue($view->vars['value'] === BooleanType::VALUE_NULL);
+        $this->assertEquals(BooleanType::VALUE_NULL, $view->vars['value']);
     }
 }
