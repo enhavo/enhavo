@@ -22,10 +22,6 @@ class WorkflowStatus
     {
         return $this->id;
     }
-    /**
-     * @var string
-     */
-    private $bundle;
 
     /**
      * @var integer
@@ -36,31 +32,6 @@ class WorkflowStatus
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
      */
     private $node;
-
-
-    /**
-     * Set bundle
-     *
-     * @param string $bundle
-     *
-     * @return WorkflowStatus
-     */
-    public function setBundle($bundle)
-    {
-        $this->bundle = $bundle;
-
-        return $this;
-    }
-
-    /**
-     * Get bundle
-     *
-     * @return string
-     */
-    public function getBundle()
-    {
-        return $this->bundle;
-    }
 
     /**
      * Set reference

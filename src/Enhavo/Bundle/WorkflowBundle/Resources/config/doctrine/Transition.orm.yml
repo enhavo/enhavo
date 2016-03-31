@@ -20,4 +20,17 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
         workflow:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
 
+
+    manyToMany:
+        groups:
+          targetEntity: Enhavo\Bundle\UserBundle\Entity\Group
+          joinTable:
+            name: transitions_groups
+            joinColumns:
+              transition_id:
+                referencedColumnName: id
+            inverseJoinColumns:
+              group_id:
+                referencedColumnName: id
+
     lifecycleCallbacks: {  }

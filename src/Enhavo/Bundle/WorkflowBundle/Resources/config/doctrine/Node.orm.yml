@@ -12,9 +12,6 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
             type: string
             length: 255
 
-        start_node:
-            type: boolean
-
     manyToOne:
         workflow:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow

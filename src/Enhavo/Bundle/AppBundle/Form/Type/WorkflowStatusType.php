@@ -30,44 +30,46 @@ class WorkflowStatusType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $articleId = $builder->getOptions()['attr'][0];
+        $type = $builder->getOptions()['attr'][0];
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($articleId) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($type) {
             $form = $event->getForm();
             $data = $event->getData();
+
+            $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
+                'entity' => $type,
+            ));
+            $currentNode = null;
             if($data != null) {
                 $currentNode = $data->getNode();
-                $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                    'node_from' => $currentNode
-                ));
-                $nodes = array();
-                foreach($transitions as $transition) {
-                    $nodes[] = $transition->getNodeTo();
-                }
-                $form->add('node', 'entity', array(
-                    'class' => 'EnhavoWorkflowBundle:Node',
-                    'placeholder' => '',
-                    'choice_label' => 'node_name',
-                    'choices' => $nodes
-                ));
             } else {
-                $workflows = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findAll();
-                $form->add('workflow', 'entity', array(
-                    'class' => 'EnhavoWorkflowBundle:Workflow',
-                    'placeholder' => '',
-                    'choice_label' => 'workflow_name',
-                    'choices' => $workflows
+                $currentNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findOneBy(array(
+                    'workflow' => $workflow,
+                    'node_name' => 'creation'
                 ));
             }
+
+            $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
+                'node_from' => $currentNode,
+            ));
+            $nodes = array();
+            foreach($transitions as $transition) {
+                $nodes[] = $transition->getNodeTo();
+            }
+            $form->add('node', 'entity', array(
+                'class' => 'EnhavoWorkflowBundle:Node',
+                'placeholder' => '',
+                'choice_label' => 'node_name',
+                'choices' => $nodes
+            ));
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($articleId) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($type) {
             $item = $event->getData();
-            $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->find($item['workflow']);
+            $newStatusNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->find(intval($item['node']));
             $workflowStatus = new WorkflowStatus();
-            $workflowStatus->setBundle('article');
-            $workflowStatus->setWorkflow($workflow);
-            $workflowStatus->setNode($workflow->getStartNode());
+            $workflowStatus->setWorkflow($newStatusNode->getWorkflow());
+            $workflowStatus->setNode($newStatusNode);
             $this->manager->persist($workflowStatus);
             $this->manager->flush();
             $event->setData($workflowStatus);

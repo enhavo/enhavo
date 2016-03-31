@@ -60,7 +60,6 @@ class ArticleType extends AbstractType
                 ));
             }
         });
-        $articleId = $builder->getData()->getId();
 
         if($this->dynamicRouting) {
             $builder->add('route', 'enhavo_route');
@@ -149,12 +148,12 @@ class ArticleType extends AbstractType
             'multiple' => false
         ));
 
-        $test = array();
-        $test[0] = $articleId;
+        $entityName = array();
+        $entityName[0] = 'article';
 
         $builder->add('workflow_status', 'enhavo_workflow_status', array(
            'label' => 'article.form.label.next_state',
-            'attr' => $test
+            'attr' => $entityName
         ));
 
         $builder->add('content', 'enhavo_grid');

@@ -99,3 +99,10 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type }
+
+    enhavo_table:
+        class: Enhavo\Bundle\AppBundle\Form\Type\TableType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }

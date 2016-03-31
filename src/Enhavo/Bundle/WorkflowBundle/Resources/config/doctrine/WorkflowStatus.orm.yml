@@ -10,10 +10,6 @@ Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
                 strategy: AUTO
 
     fields:
-        bundle:
-            type: string
-            length: 255
-
         reference:
             type: integer
             nullable: true

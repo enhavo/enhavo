@@ -149,4 +149,50 @@ class Transition
     {
         return $this->workflow;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add group
+     *
+     * @param \Enhavo\Bundle\UserBundle\Entity\Group $group
+     *
+     * @return Transition
+     */
+    public function addGroup(\Enhavo\Bundle\UserBundle\Entity\Group $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \Enhavo\Bundle\UserBundle\Entity\Group $group
+     */
+    public function removeGroup(\Enhavo\Bundle\UserBundle\Entity\Group $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
 }

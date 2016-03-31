@@ -48,8 +48,7 @@ class TransitionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\WorkflowBundle\Entity\Transition'//,
-            //'inherit_data' => true
+            'data_class' => 'Enhavo\Bundle\WorkflowBundle\Entity\Transition'
         ));
     }
 

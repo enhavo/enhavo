@@ -16,6 +16,17 @@ class WorkflowType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
 
+        $builder->add('entity', 'choice', array(
+            'label' => 'workflow.form.label.type',
+            'translation_domain' => 'EnhavoWorkflowBundle',
+            'choices'   => array(
+                'article' => 'workflow.label.article',
+                'page' => 'workflow.label.page',
+            ),
+            'expanded' => false,
+            'multiple' => false
+        ));
+
         $builder->add('nodes', 'enhavo_list', array(
             'type' => 'enhavo_workflow_node',
             'label' => 'workflow.form.label.nodes',
@@ -26,7 +37,27 @@ class WorkflowType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle'
         ));
 
-        $builder->add('transitions', 'enhavo_list', array(
+        $wfId = array();
+        $wfId[0] = $builder->getData()->getId();
+
+        $builder->add('transitions', 'enhavo_table', array(
+            'label' => 'workflow.form.label.transitions',
+            'attr' => $wfId
+        ));
+        /*$builder->add('transitions', 'collection', array(
+            'entry_type'   => 'entity',
+            'entry_options'  => array(
+                'class' => 'EnhavoUserBundle:Group',
+                'expanded' => true,
+                'multiple' => true,
+                'choices'  => array(
+                    'Test1' => 'TEST1',
+                    'Test2' => 'TEST2'
+                )
+            ),
+        ));*/
+
+       /* $builder->add('transitions', 'enhavo_list', array(
             'type' => 'enhavo_workflow_transition',
             'label' => 'workflow.form.label.transitions',
             'prototype' => true,
@@ -34,7 +65,7 @@ class WorkflowType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
             'translation_domain' => 'EnhavoWorkflowBundle'
-        ));
+        ));*/
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
