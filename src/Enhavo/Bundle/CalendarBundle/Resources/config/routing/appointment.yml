@@ -84,6 +84,14 @@ enhavo_calendar_appointment_delete:
     defaults:
         _controller: enhavo_calendar.controller.appointment:deleteAction
 
+enhavo_calendar_appointment_batch:
+    options:
+        expose: true
+    path: /enhavo/calendar/appointment/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:batchAction
+
 enhavo_calendar_appointment_preview:
     options:
         expose: true

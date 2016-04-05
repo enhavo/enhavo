@@ -33,5 +33,18 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
+  batch:
+    submit: 'Ausführen'
+    confirmMessageGeneric: 'Wollen sie wirklich das Kommando %command% für alle ausgewählten Elemente ausführen?'
+    confirmMessageYes: 'Ja'
+    confirmMessageNo: 'Nein'
+    errorNoneSelected: 'Keine Elemente ausgewählt'
+    errorNoActionSelected: 'Keine Aktion ausgewählt'
+    errorNoneSelectedClose: 'Schließen'
+    noneSelected:
+      label: 'Aktion auswählen'
+    delete:
+      label: 'Löschen'
+      confirmMessage: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
 action:
   changePassword: 'Passwort ändern'

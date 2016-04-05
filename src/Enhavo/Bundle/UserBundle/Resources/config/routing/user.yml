@@ -61,6 +61,14 @@ enhavo_user_user_delete:
     defaults:
         _controller: enhavo_user.controller.user:deleteAction
 
+enhavo_user_user_batch:
+    options:
+        expose: true
+    path: /enhavo/user/user/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_user.controller.user:batchAction
+
 enhavo_user_user_password:
     options:
         expose: true

@@ -81,6 +81,14 @@ enhavo_slider_slide_delete:
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction
 
+enhavo_slider_slide_batch:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:batchAction
+
 enhavo_slider_slide_move_after:
     options:
         expose: true

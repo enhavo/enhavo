@@ -32,3 +32,18 @@ tab:
     seo: 'SEO'
 table:
   empty: 'no data'
+  batch:
+    submit: 'Execute'
+    confirmMessageGeneric: 'Do you really want to run the command %command% for all selected items?'
+    confirmMessageYes: 'Yes'
+    confirmMessageNo: 'No'
+    errorNoneSelected: 'No elements selected'
+    errorNoActionSelected: 'No action selected'
+    errorNoneSelectedClose: 'Close'
+    noneSelected:
+      label: 'Choose action'
+    delete:
+      label: 'Delete'
+      confirmMessage: 'Do you really want to delete all selected items?'
+action:
+  changePassword: 'Change password'

@@ -109,3 +109,11 @@ enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
+
+enhavo_page_page_batch:
+    options:
+        expose: true
+    path: /enhavo/page/page/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_page.controller.page:batchAction

@@ -85,6 +85,14 @@ enhavo_newsletter_newsletter_delete:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
 
+enhavo_newsletter_newsletter_batch:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:batchAction
+
 enhavo_newsletter_newsletter_preview:
     options:
         expose: true
