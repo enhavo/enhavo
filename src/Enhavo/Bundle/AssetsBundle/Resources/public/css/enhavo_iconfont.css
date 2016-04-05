@@ -902,3 +902,7 @@
 .icon-youtube-play:before { content: '\eb4d'; } /* '' */
 .icon-blank:before { content: '\eb4e'; } /* '' */
 .icon-lemon:before { content: '\eb4f'; } /* '' */
+
+@-webkit-keyframes anim-spin { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(359deg); transform: rotate(359deg); } }
+@keyframes anim-spin { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(359deg); transform: rotate(359deg); } }
+.icon-spin:before { -webkit-animation:fa-spin 2s infinite linear; animation: anim-spin 2s infinite linear; }

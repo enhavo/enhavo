@@ -222,6 +222,9 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 
 .posrel {position:relative;}
 
+.loading-overlay {background-color:#000;opacity:0;position:fixed;left:0;top:0;width:100%;height:100%;z-index:9001;text-align:center;}
+.loading-overlay .loading-icon {font-size:60px;position:relative;top:40%;color:#fff;}
+
 /* general */
 
 .cwhite {color:#fff;}

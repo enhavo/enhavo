@@ -18,11 +18,8 @@ class PreviewViewer extends AbstractViewer
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParameters()
+    public function getStrategyName()
     {
-        return $this->getTemplateVars();
+        return $this->getConfig()->get('strategy');
     }
 }

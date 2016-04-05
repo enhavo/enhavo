@@ -9,11 +9,12 @@
 namespace Enhavo\Bundle\AppBundle\Table;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\AppBundle\Exception\TableWidgetException;
 
 class TableWidgetCollector {
 
     /**
-     * @var ArrayCollection
+     * @var TableWidgetInterface[]
      */
     private $collection;
 
@@ -22,9 +23,9 @@ class TableWidgetCollector {
         $this->collection = array();
     }
 
-    public function add($widget)
+    public function add(TableWidgetInterface $widget)
     {
-        $this->collection[] = $widget;
+        $this->collection[$widget->getType()] = $widget;
     }
 
     /**
@@ -32,6 +33,28 @@ class TableWidgetCollector {
      */
     public function getCollection()
     {
-        return $this->collection;
+        $collection = [];
+        foreach($this->collection as $widget) {
+            $collection[] = $widget;
+        }
+        return $collection;
+    }
+
+    public function getWidget($typeName)
+    {
+        if(isset($this->collection[$typeName])) {
+            return $this->collection[$typeName];
+        }
+
+        throw new TableWidgetException(sprintf(
+            'TableWidget type "%s" not found. Did you mean one of them "%s".',
+            $typeName,
+            implode(', ', $this->getWidgetNames())
+        ));
+    }
+
+    protected function getWidgetNames()
+    {
+        return array_keys($this->collection);
     }
 }

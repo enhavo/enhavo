@@ -8,20 +8,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Table;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class AbstractTableWidget implements TableWidgetInterface {
+abstract class AbstractTableWidget implements TableWidgetInterface, ContainerAwareInterface {
 
     /**
      * @var ContainerInterface
      */
     protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
 
     /**
      * Return the value the given property and object.
@@ -31,7 +27,7 @@ abstract class AbstractTableWidget implements TableWidgetInterface {
      * @return mixed
      * @throws PropertyNotExistsException
      */
-    public function getProperty($resource, $property)
+    protected function getProperty($resource, $property)
     {
         $method = sprintf('get%s', ucfirst($property));
         if(method_exists($resource, $method)) {
@@ -43,5 +39,10 @@ abstract class AbstractTableWidget implements TableWidgetInterface {
             get_class($resource),
             $property
         ));
+    }
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

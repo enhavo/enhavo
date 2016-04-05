@@ -139,7 +139,7 @@ class ResourceController extends BaseController
         $form = $this->getForm($resource);
         $form->handleRequest($request);
 
-        $strategyName = $config->get('strategy');
+        $strategyName = $viewer->getStrategyName();
         $strategy = $this->get('enhavo_app.preview.strategy_resolver')->getStrategy($strategyName);
         $response = $strategy->getPreviewResponse($resource, $viewer->getConfig());
         return $response;
