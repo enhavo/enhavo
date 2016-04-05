@@ -585,13 +585,13 @@ function Admin (router, templating, translator)
         self.overlayClose();
         var url = router.generate(submit.data('batch-action-route'));
         var formData = block.find('[data-batch-action-form]').serialize();
-        //TODO: loading feedback
+        self.openLoadingOverlay();
         $.ajax({
           url: url,
           data: formData,
           method: 'POST',
           success: function(result) {
-            // TODO: close loading feedback
+            self.closeLoadingOverlay();
             if ((typeof result.success != 'undefined') && (result.success == true)) {
               self.reloadBlock(block);
             } else {
@@ -599,7 +599,7 @@ function Admin (router, templating, translator)
             }
           },
           error : function() {
-            // TODO: close loading feedback
+            self.closeLoadingOverlay();
             self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
           }
         });
