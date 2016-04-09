@@ -43,6 +43,11 @@ class TransitionType extends AbstractType
                     ->where('n.workflow = :id');
             },
         ));
+        $builder->add('groups', 'entity', array(
+            'class' => 'EnhavoUserBundle:Group',
+            'choice_label' => 'name',
+            'multiple' => true
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

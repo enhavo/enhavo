@@ -15,14 +15,17 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\WorkflowBundle\Entity\Node;
 use Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\Container;
 
 class WorkflowStatusType extends AbstractType
 {
     protected $manager;
+    //protected $container;
 
-    public function __construct(ObjectManager $manager)
+    public function __construct(ObjectManager $manager/*, Container $container*/)
     {
         $this->manager = $manager;
+        //$this->container = $container;
     }
 
     /**
@@ -39,6 +42,7 @@ class WorkflowStatusType extends AbstractType
             $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
                 'entity' => $type,
             ));
+           // $this->container->setParameter('workflow.'.$type, 'true');
             $currentNode = null;
             if($data != null) {
                 $currentNode = $data->getNode();
@@ -64,17 +68,6 @@ class WorkflowStatusType extends AbstractType
             ));
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($type) {
-            $item = $event->getData();
-            $newStatusNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->find(intval($item['node']));
-            $workflowStatus = new WorkflowStatus();
-            $workflowStatus->setWorkflow($newStatusNode->getWorkflow());
-            $workflowStatus->setNode($newStatusNode);
-            $this->manager->persist($workflowStatus);
-            $this->manager->flush();
-            $event->setData($workflowStatus);
-            return;
-        });
     }
 
     /**

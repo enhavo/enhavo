@@ -9,17 +9,9 @@ Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
             generator:
                 strategy: AUTO
 
-    fields:
-        reference:
-            type: integer
-            nullable: true
-
     manyToOne:
         node:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
-        workflow:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
 
     lifecycleCallbacks: {  }

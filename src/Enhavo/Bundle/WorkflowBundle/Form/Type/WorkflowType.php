@@ -37,13 +37,13 @@ class WorkflowType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle'
         ));
 
-        $wfId = array();
+        /*$wfId = array();
         $wfId[0] = $builder->getData()->getId();
 
         $builder->add('transitions', 'enhavo_table', array(
             'label' => 'workflow.form.label.transitions',
             'attr' => $wfId
-        ));
+        ));*/
         /*$builder->add('transitions', 'collection', array(
             'entry_type'   => 'entity',
             'entry_options'  => array(
@@ -57,7 +57,7 @@ class WorkflowType extends AbstractType
             ),
         ));*/
 
-       /* $builder->add('transitions', 'enhavo_list', array(
+        $builder->add('transitions', 'enhavo_list', array(
             'type' => 'enhavo_workflow_transition',
             'label' => 'workflow.form.label.transitions',
             'prototype' => true,
@@ -65,7 +65,7 @@ class WorkflowType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
             'translation_domain' => 'EnhavoWorkflowBundle'
-        ));*/
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -12,6 +12,10 @@ class WorkflowStatus
      */
     private $id;
 
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     */
+    private $node;
 
     /**
      * Get id
@@ -21,40 +25,6 @@ class WorkflowStatus
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @var integer
-     */
-    private $reference;
-
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
-     */
-    private $node;
-
-    /**
-     * Set reference
-     *
-     * @param integer $reference
-     *
-     * @return WorkflowStatus
-     */
-    public function setReference($reference)
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    /**
-     * Get reference
-     *
-     * @return integer
-     */
-    public function getReference()
-    {
-        return $this->reference;
     }
 
     /**
@@ -80,33 +50,5 @@ class WorkflowStatus
     {
         return $this->node;
     }
-    /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-     */
-    private $workflow;
 
-
-    /**
-     * Set workflow
-     *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow
-     *
-     * @return WorkflowStatus
-     */
-    public function setWorkflow(\Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow = null)
-    {
-        $this->workflow = $workflow;
-
-        return $this;
-    }
-
-    /**
-     * Get workflow
-     *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-     */
-    public function getWorkflow()
-    {
-        return $this->workflow;
-    }
 }

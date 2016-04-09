@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
 
+use Enhavo\Bundle\UserBundle\Entity\Group;
 /**
  * Transition
  */
@@ -32,7 +33,6 @@ class Transition
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
      */
     private $workflow;
-
 
     /**
      * Get id
