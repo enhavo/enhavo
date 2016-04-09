@@ -28,7 +28,6 @@ class IndexRepository extends EntityRepository
         foreach($conditions as $key => $value) {
             if ($key != 'NOT'){
                 foreach($value as $currentValue) {
-                    $currentValue = explode(" ", $currentValue);
                     if(is_array($currentValue)){
                         foreach($currentValue as $currentValue1) {
                             $query->setParameter('word_' . $wordCounter, $currentValue1);
@@ -36,6 +35,7 @@ class IndexRepository extends EntityRepository
                             $wordCounter++;
                         }
                     } else {
+                        $currentValue = explode(" ", $currentValue);
                         $query->setParameter('word_' . $wordCounter, $currentValue);
                         $query->orWhere('i.word = :word_' . $wordCounter);
                         $wordCounter++;
@@ -117,7 +117,6 @@ class IndexRepository extends EntityRepository
         foreach($conditions as $key => $value) {
             if ($key != 'NOT'){
                 foreach($value as $currentValue) {
-                    $currentValue = explode(" ", $currentValue);
                     if(is_array($currentValue)){
                         foreach($currentValue as $currentValue1) {
                             $query->setParameter('word_' . $wordCounter, $currentValue1);
@@ -125,6 +124,7 @@ class IndexRepository extends EntityRepository
                             $wordCounter++;
                         }
                     } else {
+                        $currentValue = explode(" ", $currentValue);
                         $query->setParameter('word_' . $wordCounter, $currentValue);
                         $query->orWhere('i.word = :word_' . $wordCounter);
                         $wordCounter++;
