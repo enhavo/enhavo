@@ -13,3 +13,11 @@ services:
         class: %enhavo_workflow.form.type.transition.class%
         tags:
             - { name: form.type }
+
+    security.authentication.voter.workflow_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: security.voter }

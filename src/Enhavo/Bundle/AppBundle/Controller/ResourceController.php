@@ -85,6 +85,10 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
+        $user = $this->getUser();
+        if(!$this->isGranted($resource)) {
+            return new JsonResponse(null, 403);
+        }
         $form = $this->getForm($resource);
         $method = $request->getMethod();
 
