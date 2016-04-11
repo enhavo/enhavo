@@ -43,7 +43,7 @@ class IndexRepository extends EntityRepository
                 }
             }
         }
-        if(!$simple) {
+        //if(!$simple) {
             foreach($conditions as $key => $value) {
                 if ($key == 'AND') {
                     foreach($value as $currentValue) {
@@ -84,7 +84,7 @@ class IndexRepository extends EntityRepository
                     $query->andWhere($notString);
                 }
             }
-        }
+        //}
 
         $query->groupBy('d.id');
         // If the query is simple, we should have calculated the number of
@@ -101,7 +101,8 @@ class IndexRepository extends EntityRepository
         if(!empty($checkQuery)) {
             $query->setMaxResults(1);
             $query->setFirstResult(0);
-            return $query->getQuery()->getSingleResult();
+            $test = $query->getQuery()->getSingleResult();
+            return $test;
         }
         return $checkQuery;
     }
@@ -132,7 +133,7 @@ class IndexRepository extends EntityRepository
                 }
             }
         }
-        if(!$simple) {
+        //if(!$simple) {
             foreach($conditions as $key => $value) {
                 if ($key == 'AND') {
                     foreach($value as $currentValue) {
@@ -173,7 +174,7 @@ class IndexRepository extends EntityRepository
                     $query->andWhere($notString);
                 }
             }
-        }
+       // }
 
         $query->groupBy('d.id');
         // If the query is simple, we should have calculated the number of
@@ -185,6 +186,7 @@ class IndexRepository extends EntityRepository
             $query->having('COUNT(d.id) >= :matches');
         }
         $query->orderBy('calculated_score', 'DESC');
-        return $query->getQuery()->getResult();
+        $test = $query->getQuery()->getResult();
+        return $test;
     }
 }
