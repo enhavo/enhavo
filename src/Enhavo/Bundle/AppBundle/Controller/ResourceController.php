@@ -86,7 +86,7 @@ class ResourceController extends BaseController
 
         $resource = $this->findOr404($request);
         $user = $this->getUser();
-        if(!$this->isGranted($resource)) {
+        if(!$this->isGranted('WORKFLOW', $resource)) {
             return new JsonResponse(null, 403);
         }
         $form = $this->getForm($resource);

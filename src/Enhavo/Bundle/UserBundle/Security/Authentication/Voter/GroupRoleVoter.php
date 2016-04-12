@@ -30,8 +30,12 @@ class GroupRoleVoter  implements VoterInterface
         if($user instanceof User) {
             if($user->getGroups()) {
                 foreach($user->getGroups() as $group) {
-                    if($group->hasRole($attributes[0])) {
-                        return VoterInterface::ACCESS_GRANTED;
+                    if(is_string($attributes[0]) && $attributes[0] != 'WORKFLOW') {
+                        if ($group->hasRole($attributes[0])) {
+                            return VoterInterface::ACCESS_GRANTED;
+                        }
+                    } else {
+                        return VoterInterface::ACCESS_ABSTAIN;
                     }
                 }
             }

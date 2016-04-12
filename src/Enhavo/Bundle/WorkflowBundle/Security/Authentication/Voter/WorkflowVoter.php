@@ -29,40 +29,35 @@ class WorkflowVoter  implements VoterInterface
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         $user = $token->getUser();
-        if($user instanceof User && is_object($attributes[0])) {
-            $array = explode('\\',get_class($attributes[0]));
-            $entity = array_pop($array);
-            $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
-                'entity' => $entity,
-            ));
-            if($workflow != null){
-                $nodes = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findBy(array(
-                    'workflow' => $workflow
+        if($attributes[0] == 'WORKFLOW'){
+            if($user instanceof User) {
+                $array = explode('\\',get_class($object));
+                $entity = array_pop($array);
+                $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
+                    'entity' => $entity,
                 ));
-                $allWorkflowStatus = $this->manager->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
-                $workflowStatus = null;
-                foreach($allWorkflowStatus as $currentWorkflowStatus){
-                    foreach($nodes as $node) {
-                        if($currentWorkflowStatus->getNode() == $node) {
-                            $workflowStatus = $currentWorkflowStatus;
-                        }
-                    }
-                }
-                $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                   'node_from' => $workflowStatus->getNode()
-                ));
-                if($user->getGroups()) {
-                    foreach($transitions as $transition) {
-                        $transGroups = $transition->getGroups();
-                        foreach($transGroups as $transGroup){
-                            if($user->hasGroup($transGroup->getName())){
-                                return VoterInterface::ACCESS_GRANTED;
+                if($workflow != null){
+                    $nodes = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findBy(array(
+                        'workflow' => $workflow
+                    ));
+                    $workflowStatus = $object->getWorkflowStatus();
+                    $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
+                       'node_from' => $workflowStatus->getNode()
+                    ));
+                    if($user->getGroups()) {
+                        foreach($transitions as $transition) {
+                            $transGroups = $transition->getGroups();
+                            foreach($transGroups as $transGroup){
+                                if($user->hasGroup($transGroup->getName())){
+                                    return VoterInterface::ACCESS_GRANTED;
+                                }
                             }
                         }
                     }
+                    return VoterInterface::ACCESS_DENIED;
                 }
             }
         }
-        return VoterInterface::ACCESS_DENIED;
+        return VoterInterface::ACCESS_GRANTED;
     }
 }
