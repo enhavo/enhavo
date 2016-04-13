@@ -47,7 +47,9 @@ class IndexViewer extends AbstractViewer
         $currentUser = $securityContext->getToken()->getUser();
         foreach($this->getConfig()->get('actions') as $action) {
             $currentRole = 'ROLE_'.strtoupper($action['route']);
-            if(in_array($currentRole, $currentUser->getRoles())){
+            $resource = array();
+            $resource['entity'] = $this->getResourceName();
+            if(in_array($currentRole, $currentUser->getRoles()) && $securityContext->isGranted('WORKFLOW', $resource)){
                 $actions[] = $action;
             }
         }

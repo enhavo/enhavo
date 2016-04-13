@@ -60,7 +60,10 @@ class WorkflowStatusType extends AbstractType
             foreach($transitions as $transition) {
                 $nodes[] = $transition->getNodeTo();
             }
+
             $form->add('node', 'entity', array(
+                'label' => 'workflow.next.nodes',
+                /*'translationDomain' => 'EnhavoWorkflowBundle',*/
                 'class' => 'EnhavoWorkflowBundle:Node',
                 'placeholder' => '',
                 'choice_label' => 'node_name',

@@ -85,7 +85,6 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
-        $user = $this->getUser();
         if(!$this->isGranted('WORKFLOW', $resource)) {
             return new JsonResponse(null, 403);
         }
