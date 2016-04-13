@@ -28,3 +28,11 @@ services:
             - @doctrine.orm.entity_manager
         tags:
             - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
+
+    validator.no_nodes_created_validator:
+        class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @service_container
+        tags:
+            - { name: validator.constraint_validator, alias: no_nodes_created }

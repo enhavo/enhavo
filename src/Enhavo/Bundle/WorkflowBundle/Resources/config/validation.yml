@@ -1,0 +1,4 @@
+Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
+    properties:
+        nodes:
+            - Enhavo\Bundle\WorkflowBundle\Validator\Constraints\Workflow: ~
