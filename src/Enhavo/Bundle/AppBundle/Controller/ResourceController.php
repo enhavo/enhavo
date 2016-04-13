@@ -248,6 +248,8 @@ class ResourceController extends BaseController
     public function deleteAction(Request $request)
     {
         $this->isGrantedOr403('delete');
+        $resource = $this->findOr404($request);
+        $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
         $this->domainManager->delete($this->findOr404($request));
         return new Response();
     }

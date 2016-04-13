@@ -24,5 +24,7 @@ services:
 
     enhavo_workflow.delete_listener:
         class: Enhavo\Bundle\WorkflowBundle\EventListener\DeleteListener
+        arguments:
+            - @doctrine.orm.entity_manager
         tags:
-            - { name: kernel.event_listener, event: sylius.workflow.pre_delete, method: onDelete }
+            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }

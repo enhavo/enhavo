@@ -131,6 +131,7 @@ class Workflow
      */
     public function removeTransition(\Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition)
     {
+        $transition->setWorkflow(null);
         $this->transitions->removeElement($transition);
     }
 
