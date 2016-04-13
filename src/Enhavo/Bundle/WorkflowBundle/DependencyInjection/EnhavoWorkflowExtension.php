@@ -20,6 +20,11 @@ class EnhavoWorkflowExtension extends AbstractResourceExtension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
+        $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('enhavo_workflow.entities', $config['entities']);
+
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_workflow', $config['driver'], $config['resources'], $container);
 

@@ -1,6 +1,9 @@
 services:
     enhavo_workflow_workflow:
         class: %enhavo_workflow.form.type.workflow.class%
+        arguments:
+            - @service_container
+            - @doctrine.orm.default_entity_manager
         tags:
             - { name: form.type }
 
@@ -32,7 +35,6 @@ services:
     validator.no_nodes_created_validator:
         class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator
         arguments:
-            - @doctrine.orm.default_entity_manager
             - @service_container
         tags:
             - { name: validator.constraint_validator, alias: no_nodes_created }

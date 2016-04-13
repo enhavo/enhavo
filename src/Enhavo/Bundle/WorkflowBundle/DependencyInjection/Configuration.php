@@ -37,6 +37,13 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('entities')
+                    ->addDefaultChildrenIfNoneSet()
+                    ->prototype('scalar')->defaultValue('Enhavo\Bundle\ArticleBundle\Entity\Article')->end()
+                ->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()

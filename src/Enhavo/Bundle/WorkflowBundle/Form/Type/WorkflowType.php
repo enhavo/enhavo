@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\WorkflowBundle\Form\Type;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -9,6 +10,15 @@ use Enhavo\Bundle\WorkflowBundle\Entity\Workflow;
 
 class WorkflowType extends AbstractType
 {
+    protected $container;
+    protected $em;
+
+    public function __construct($container, EntityManager $entityManager)
+    {
+        $this->container = $container;
+        $this->em = $entityManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('workflow_name', 'text', array(
@@ -16,13 +26,12 @@ class WorkflowType extends AbstractType
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
 
+        $entities = $this->getWorkflowEntities($this->container->getParameter('enhavo_workflow.entities'));
+
         $builder->add('entity', 'choice', array(
             'label' => 'workflow.form.label.type',
             'translation_domain' => 'EnhavoWorkflowBundle',
-            'choices'   => array(
-                'article' => 'workflow.label.article',
-                'page' => 'workflow.label.page',
-            ),
+            'choices'   => $entities,
             'expanded' => false,
             'multiple' => false
         ));
@@ -58,5 +67,26 @@ class WorkflowType extends AbstractType
     public function getName()
     {
         return 'enhavo_workflow_workflow';
+    }
+
+    public function getWorkflowEntities($entityArray)
+    {
+        $finalEntities = array();
+        $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
+        $workflows = $workflowRepository->findAll();
+        foreach($entityArray as $entity) {
+            $array = explode('\\', $entity);
+            $entityName = strtolower(array_pop($array));
+            $entityHasNoWF = true;
+            foreach($workflows as $workflow){
+                if($workflow->getEntity() == $entityName){
+                    $entityHasNoWF = false;
+                }
+            }
+            if($entityHasNoWF == true){
+                $finalEntities[] = $entityName;
+            }
+        }
+        return $finalEntities;
     }
 }

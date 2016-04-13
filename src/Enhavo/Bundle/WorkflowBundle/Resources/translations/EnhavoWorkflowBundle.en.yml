@@ -10,6 +10,7 @@ workflow:
     nodes: 'Nodes'
     transitions: 'Transitions'
     workflowName: 'Workflow Name'
+    entity: 'entity'
 node:
   form:
     label:
