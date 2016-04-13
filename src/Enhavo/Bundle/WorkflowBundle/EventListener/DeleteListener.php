@@ -9,6 +9,6 @@ class DeleteListener
 {
     public function onDelete($event)
     {
-
+        $test = $event;
     }
 }

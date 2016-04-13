@@ -21,3 +21,8 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: security.voter }
+
+    enhavo_workflow.delete_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\DeleteListener
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
