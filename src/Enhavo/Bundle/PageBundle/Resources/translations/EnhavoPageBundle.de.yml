@@ -19,3 +19,8 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
+  table:
+    label:
+      batch:
+        publish: 'Veröffentlichen'
+        publish_confirm: 'Wollen sie wirklich alle ausgewählten Elemente veröffentlichen?'

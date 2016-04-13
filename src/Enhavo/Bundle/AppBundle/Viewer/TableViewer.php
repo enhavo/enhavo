@@ -9,12 +9,13 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use BaconStringUtils\Slugifier;
-use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Exception\TableWidgetException;
 
 class TableViewer extends AbstractViewer
 {
     const BATCH_ACTION_NONE_SELECTED = 'none_selected';
+
+    protected $batch_actions = null;
 
     public function getDefaultConfig()
     {
@@ -30,6 +31,7 @@ class TableViewer extends AbstractViewer
                         'label'                 => 'table.batch.delete.label',
                         'confirm_message'       => 'table.batch.delete.confirmMessage',
                         'translation_domain'    => 'EnhavoAppBundle',
+                        'permission'            => sprintf('ROLE_%s_%s_DELETE', strtoupper($this->getBundlePrefix()), strtoupper($this->getResourceName())),
                         'position'              => 0
                     )
                 ),
@@ -164,20 +166,30 @@ class TableViewer extends AbstractViewer
 
     public function getHasBatchActions()
     {
-        $batch_actions = $this->getConfig()->get('table.batch_actions');
+        $batch_actions = $this->getBatchActions();
         $route = $this->getConfig()->get('table.batch_action_route');
         if (!$this->container->get('router')->getRouteCollection()->get($route)) {
             return false;
         }
 
-        return $batch_actions && (count($batch_actions) > 0);
+        return $batch_actions && (count($batch_actions) > 1);
     }
 
     public function getBatchActions()
     {
+        if (!$this->batch_actions) {
+            $this->batch_actions = $this->parseBatchActions();
+        }
+        return $this->batch_actions;
+    }
+
+    protected function parseBatchActions()
+    {
+        $authorizationChecker = $this->container->get('security.authorization_checker');
+
         $batch_actions = $this->getConfig()->get('table.batch_actions');
         if (!$batch_actions) {
-            $batch_actions = array();
+            return array();
         }
 
         if (count($batch_actions) > 0) {
@@ -194,6 +206,12 @@ class TableViewer extends AbstractViewer
             $pos = 100;
             $batch_actions_parsed = array();
             foreach($batch_actions as $command => $value) {
+                if (isset($value['permission']) && $value['permission']) {
+                    if (!$authorizationChecker->isGranted($value['permission'])) {
+                        continue;
+                    }
+                }
+
                 $command_parsed = $slugifier->slugify($command);
                 $action_parsed = array();
 
@@ -250,7 +268,6 @@ class TableViewer extends AbstractViewer
     public function renderWidget($options, $property, $item)
     {
         $collector = $this->container->get('enhavo_app.table_widget_collector');
-        $widgets = array();
         $widget = $collector->getWidget($options['type']);
         return $widget->render($options, $property, $item);
     }

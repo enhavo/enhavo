@@ -19,3 +19,8 @@ page:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
+  table:
+    label:
+      batch:
+        publish: 'Publish'
+        publish_confirm: 'Do you really want to publish all selected items?'

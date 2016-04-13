@@ -68,6 +68,14 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:deleteAction
 
+{{ app }}_{{ resource }}_batch:
+    options:
+        expose: true
+    path: /{{ app_url }}/{{ resource_url }}/batch
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:batchAction
+
 {{ app }}_{{ resource }}_preview:
     options:
         expose: true
