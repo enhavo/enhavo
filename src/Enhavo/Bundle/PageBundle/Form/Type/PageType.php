@@ -136,6 +136,15 @@ class PageType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
+        $entityName = array();
+        $entityName[0] = 'page';
+
+        $builder->add('workflow_status', 'enhavo_workflow_status', array(
+            'label' => 'workflow.form.label.next_state',
+            'translation_domain' => 'EnhavoWorkflowBundle',
+            'attr' => $entityName
+        ));
+
         $builder->add('content', 'enhavo_grid', array(
         ));
     }

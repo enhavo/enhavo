@@ -15,6 +15,8 @@ class NodeType extends AbstractType
             'label' => 'node.form.label.nodeName',
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
+
+        $builder->add('end', 'enhavo_boolean');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -510,7 +510,6 @@ class Article {
      * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
      */
     public function getWorkflowStatus()
-    {
-        return $this->workflow_status;
+    {return $this->workflow_status;
     }
 }

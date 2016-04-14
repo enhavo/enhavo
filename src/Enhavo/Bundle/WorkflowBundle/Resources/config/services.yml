@@ -22,6 +22,7 @@ services:
         public:     false
         arguments:
             - '@doctrine.orm.entity_manager'
+            - @service_container
         tags:
             - { name: security.voter }
 
@@ -32,9 +33,17 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
 
+    enhavo_workflow.save_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\SaveListener
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+
     validator.no_nodes_created_validator:
         class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator
         arguments:
             - @service_container
         tags:
-            - { name: validator.constraint_validator, alias: no_nodes_created }
+            - { name: validator.constraint_validator, alias: valid_workflow }

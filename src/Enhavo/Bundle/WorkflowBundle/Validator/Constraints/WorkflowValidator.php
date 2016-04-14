@@ -18,17 +18,26 @@ class WorkflowValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        $no_nodes = true;
-        foreach($value as $currentValue) {
-            if($currentValue->getNodeName() == 'creation' || $currentValue->getNodeName() == null){
-                continue;
-            } else {
-                $no_nodes = false;
+        if(is_object($value)){
+            //Nodes
+            $no_nodes = true;
+            foreach($value as $currentValue) {
+                if($currentValue->getNodeName() == 'creation' || $currentValue->getNodeName() == null){
+                    continue;
+                } else {
+                    $no_nodes = false;
+                }
             }
-        }
-        if($no_nodes) {
-            $this->context->buildViolation($constraint->noNodesCreated)
-                ->addViolation();
+            if($no_nodes) {
+                $this->context->buildViolation($constraint->noNodesCreated)
+                    ->addViolation();
+            }
+        } else {
+            //Name
+            if($value == null) {
+                $this->context->buildViolation($constraint->noWorkflowName)
+                    ->addViolation();
+            }
         }
     }
 }

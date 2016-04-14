@@ -126,4 +126,33 @@ class Node
     {
         return $this->workflow;
     }
+    /**
+     * @var boolean
+     */
+    private $end;
+
+
+    /**
+     * Set end
+     *
+     * @param boolean $end
+     *
+     * @return Node
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return boolean
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
 }

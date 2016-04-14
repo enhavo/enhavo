@@ -81,6 +81,7 @@ class Workflow
         if(count($this->getNodes()) == 0) {
             $creationNode = new Node();
             $creationNode->setNodeName('creation');
+            $creationNode->setEnd(false);
             $creationNode->setWorkflow($this);
             $this->nodes[] = $creationNode;
         }
@@ -160,6 +161,9 @@ class Workflow
      */
     public function setEntity($entity)
     {
+        if($entity == null) {
+            $entity = $this->getEntity();
+        }
         $this->entity = $entity;
 
         return $this;

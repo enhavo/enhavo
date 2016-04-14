@@ -61,11 +61,19 @@ class WorkflowStatusType extends AbstractType
                 $nodes[] = $transition->getNodeTo();
             }
 
+            $placeholder = null;
+            if($event->getData() != null)
+            {
+                $placeholder = $event->getData()->getNode()->getNodeName();
+            } else {
+                $placeholder = 'creation';
+            }
+
             $form->add('node', 'entity', array(
                 'label' => 'workflow.next.nodes',
                 /*'translationDomain' => 'EnhavoWorkflowBundle',*/
                 'class' => 'EnhavoWorkflowBundle:Node',
-                'placeholder' => '',
+                'placeholder' => $placeholder,
                 'choice_label' => 'node_name',
                 'choices' => $nodes
             ));
@@ -78,7 +86,11 @@ class WorkflowStatusType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['workflow_status'] = $view->vars['value']->getNode()->getNodeName();
+        if(is_object($view->vars['value'])) {
+            $view->vars['workflow_status'] = $view->vars['value']->getNode()->getNodeName();
+        } else {
+            $view->vars['workflow_status'] = 'creation';
+        }
     }
 
     public function getName()

@@ -4,6 +4,10 @@ workflow:
       workflowName: 'Workflow Name'
       nodes: 'Knoten'
       transitions: 'Übergänge'
+      page: 'Seiten'
+      appointment: 'Kalender'
+      newsletter: 'Newsletter'
+      next_state: 'Nächster Zustand'
   label:
     id: 'ID'
     workflow: 'Workflow'

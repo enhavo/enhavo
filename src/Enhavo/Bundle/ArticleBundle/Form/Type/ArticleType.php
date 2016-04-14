@@ -152,7 +152,8 @@ class ArticleType extends AbstractType
         $entityName[0] = 'article';
 
         $builder->add('workflow_status', 'enhavo_workflow_status', array(
-           'label' => 'article.form.label.next_state',
+            'label' => 'workflow.form.label.next_state',
+            'translation_domain' => 'EnhavoWorkflowBundle',
             'attr' => $entityName
         ));
 

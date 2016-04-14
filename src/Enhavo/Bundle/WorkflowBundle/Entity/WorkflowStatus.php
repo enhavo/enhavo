@@ -36,9 +36,11 @@ class WorkflowStatus
      */
     public function setNode(\Enhavo\Bundle\WorkflowBundle\Entity\Node $node = null)
     {
-        $this->node = $node;
+        if($node != null){
+            $this->node = $node;
 
-        return $this;
+            return $this;
+        }
     }
 
     /**

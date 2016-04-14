@@ -9,9 +9,10 @@ use Symfony\Component\Validator\Constraint;
 class Workflow extends Constraint
 {
     public $noNodesCreated = 'You have not created any nodes.';
+    public $noWorkflowName = 'Please set a name for the workflow.';
 
     public function validatedBy()
     {
-        return 'no_nodes_created';
+        return 'valid_workflow';
     }
 }

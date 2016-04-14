@@ -84,7 +84,7 @@ class WorkflowType extends AbstractType
                 }
             }
             if($entityHasNoWF == true){
-                $finalEntities[] = $entityName;
+                $finalEntities[$entityName] = 'workflow.form.label.'.$entityName;
             }
         }
         return $finalEntities;
