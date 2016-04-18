@@ -130,7 +130,9 @@
 
 {% block enhavo_workflow_status_widget %}
     <br>
-    Aktueller Workflow-Status: {{ form.vars['workflow_status'] }}
+    {% if form|length > 0 %}
+        Aktueller Workflow-Status: {{ form.vars['workflow_status'] }}
+    {% endif %}
     <br>
     {{ form_widget(form) }}
 

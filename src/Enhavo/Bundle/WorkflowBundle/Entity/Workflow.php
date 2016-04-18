@@ -27,6 +27,8 @@ class Workflow
      */
     private $transitions;
 
+    private $formNodes;
+
     /**
      * Constructor
      */
@@ -177,5 +179,45 @@ class Workflow
     public function getEntity()
     {
         return $this->entity;
+    }
+    /**
+     * @var boolean
+     */
+    private $active;
+
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Workflow
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setFormNodes($formNode)
+    {
+        $this->formNodes[] = $formNode;
+        return $this;
+    }
+
+    public function getFormNodes()
+    {
+        return $this->formNodes;
     }
 }

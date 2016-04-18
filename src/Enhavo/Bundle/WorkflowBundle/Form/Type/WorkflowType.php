@@ -36,7 +36,9 @@ class WorkflowType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('nodes', 'enhavo_list', array(
+        $builder->add('active', 'enhavo_boolean');
+
+        $builder->add('formNodes', 'enhavo_list', array(
             'type' => 'enhavo_workflow_node',
             'label' => 'workflow.form.label.nodes',
             'prototype' => true,

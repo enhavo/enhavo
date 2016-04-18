@@ -56,7 +56,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\WorkflowBundle\Entity\Workflow')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\WorkflowBundle\Controller\WorkflowController')->end()
-                                        ->scalarNode('repository')->end()
+                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\WorkflowBundle\Repository\WorkflowRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()

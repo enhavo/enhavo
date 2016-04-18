@@ -39,10 +39,7 @@ class WorkflowVoter  implements VoterInterface
                     $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
                         'entity' => $entity,
                     ));
-                    if ($workflow != null) {
-                        $nodes = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findBy(array(
-                            'workflow' => $workflow
-                        ));
+                    if ($workflow != null && $workflow->getActive()) {
                         $workflowStatus = $object->getWorkflowStatus();
                         $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
                             'node_from' => $workflowStatus->getNode()
@@ -59,58 +56,74 @@ class WorkflowVoter  implements VoterInterface
                         }
                         return VoterInterface::ACCESS_DENIED;
                     }
-                } else if(array_key_exists('entity', $object)){
-                    //check if user is allowed to create a ... for this workflow
-                    $entity = $object['entity'];
-                    if($entity != 'workflow'){
+                } else if(is_array($object)){
+                    if(array_key_exists('entity', $object)) {
+                        //check if user is allowed to create a ... for this workflow
+                        $entity = $object['entity'];
+                        if ($entity != 'workflow') {
+                            $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
+                                'entity' => $entity,
+                            ));
+                            if ($workflow != null && $workflow->getActive() == true) {
+                                $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
+                                    'workflow' => $workflow,
+                                ));
+                                $creationGroups = array();
+                                foreach ($transitions as $transition) {
+                                    $nodeFrom = $transition->getNodeFrom();
+                                    if ($nodeFrom->getNodeName() == 'creation') {
+                                        foreach ($transition->getGroups() as $group) {
+                                            $creationGroups[] = $group;
+                                        }
+                                    }
+                                }
+                                foreach ($creationGroups as $creationGroup) {
+                                    if ($user->hasGroup($creationGroup->getName())) {
+                                        return VoterInterface::ACCESS_GRANTED;
+                                    }
+                                }
+                                return VoterInterface::ACCESS_DENIED;
+                            }
+                        } else {
+                            //check if there are still possible entities without workflows
+                            $workflowRepository = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow');
+                            $workflows = $workflowRepository->findAll();
+                            $possibleEntities = $this->container->getParameter('enhavo_workflow.entities');
+                            $entities = array();
+                            foreach ($possibleEntities as $possibleEntity) {
+                                $array = explode('\\', $possibleEntity);
+                                $entityName = strtolower(array_pop($array));
+                                $entityHasNoWF = true;
+                                foreach ($workflows as $workflow) {
+                                    if ($workflow->getEntity() == $entityName) {
+                                        $entityHasNoWF = false;
+                                    }
+                                }
+                                if ($entityHasNoWF == true) {
+                                    $entities[] = $entityName;
+                                }
+                            }
+                            if (empty($entities)) {
+                                return VoterInterface::ACCESS_DENIED;
+                            }
+                            return VoterInterface::ACCESS_GRANTED;
+                        }
+                    }
+                } else if(is_string($object)){
+                    if(strpos($object, '\Entity') !== false) {
+                        $array = explode('\\', $object);
+                        $entity = array_pop($array);
                         $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
                             'entity' => $entity,
                         ));
-                        if($workflow != null) {
-                            $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                                'workflow' => $workflow,
-                            ));
-                            $creationGroups = array();
-                            foreach($transitions as $transition) {
-                                $nodeFrom = $transition->getNodeFrom();
-                                if($nodeFrom->getNodeName() == 'creation') {
-                                    foreach($transition->getGroups() as $group){
-                                        $creationGroups[] = $group;
-                                    }
-                                }
-                            }
-                            foreach($creationGroups as $creationGroup) {
-                                if($user->hasGroup($creationGroup->getName())) {
-                                    return VoterInterface::ACCESS_GRANTED;
-                                }
-                            }
-                            return VoterInterface::ACCESS_DENIED;
+                        if ($workflow != null) {
+                           if($workflow->getActive() == true) {
+                               return VoterInterface::ACCESS_GRANTED;
+                           } else {
+                               return VoterInterface::ACCESS_DENIED;
+                           }
                         }
-                    } else {
-                        //check if there are still possible entities without workflows
-                        $workflowRepository = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow');
-                        $workflows = $workflowRepository->findAll();
-                        $possibleEntities = $this->container->getParameter('enhavo_workflow.entities');
-                        $entities = array();
-                        foreach($possibleEntities as $possibleEntity) {
-                            $array = explode('\\', $possibleEntity);
-                            $entityName = strtolower(array_pop($array));
-                            $entityHasNoWF = true;
-                            foreach($workflows as $workflow){
-                                if($workflow->getEntity() == $entityName){
-                                    $entityHasNoWF = false;
-                                }
-                            }
-                            if($entityHasNoWF == true){
-                                $entities[] = $entityName;
-                            }
-                        }
-                        if(empty($entities)){
-                            return VoterInterface::ACCESS_DENIED;
-                        }
-                        return VoterInterface::ACCESS_GRANTED;
                     }
-
                 }
             }
         }

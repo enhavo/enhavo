@@ -10,6 +10,7 @@ services:
             - %enhavo_page.dynamic_routing%
             - %enhavo_page.page_route%
             - @router
+            - @security.context
         tags:
             - { name: form.type }
 

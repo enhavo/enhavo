@@ -85,6 +85,7 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
+        //$this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
         if(!$this->isGranted('WORKFLOW', $resource)) {
             return new JsonResponse(null, 403);
         }
@@ -93,6 +94,7 @@ class ResourceController extends BaseController
 
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+                $this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
                 $this->domainManager->update($resource);
                 $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
                 return new Response();

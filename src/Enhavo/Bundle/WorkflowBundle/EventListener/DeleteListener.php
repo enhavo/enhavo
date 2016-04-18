@@ -38,6 +38,21 @@ class DeleteListener
             $nodes = $nodeRepository->findBy(array(
                 'workflow' => $workflow
             ));
+            $allWorkflowStatus = $this->em->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
+            foreach($allWorkflowStatus as $workflowStatus) {
+                foreach($nodes as $node) {
+                    if($workflowStatus->getNode() == $node){
+                        $currentObject = $this->em->getRepository('Enhavo'.ucfirst($workflow->getEntity()).'Bundle:'.ucfirst($workflow->getEntity()))->findOneBy(array(
+                            'workflow_status' => $workflowStatus
+                        ));
+                        if($currentObject != null) {
+                            $currentObject->setWorkflowStatus(null);
+                        }
+                        $this->em->remove($workflowStatus);
+                        $this->em->flush();
+                    }
+                }
+            }
             //remove these nodes
             foreach($nodes as $node) {
                 $this->em->remove($node);

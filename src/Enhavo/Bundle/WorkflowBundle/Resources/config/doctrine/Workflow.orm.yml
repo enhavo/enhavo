@@ -1,6 +1,8 @@
 Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
     type: entity
     table: workflow_workflow
+    repositoryClass: Enhavo\Bundle\WorkflowBundle\Repository\WorkflowRepository
+
     id:
         id:
             type: integer
@@ -15,6 +17,10 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
         entity:
             type: string
             length: 255
+            nullable: true
+
+        active:
+            type: boolean
             nullable: true
 
     oneToMany:

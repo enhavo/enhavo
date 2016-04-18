@@ -41,6 +41,13 @@ services:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
 
+    enhavo_workflow.update_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\UpdateListener
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.pre_update, method: onPreUpdate}
+
     validator.no_nodes_created_validator:
         class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator
         arguments:

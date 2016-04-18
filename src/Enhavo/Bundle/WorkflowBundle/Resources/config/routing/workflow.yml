@@ -36,6 +36,9 @@ enhavo_workflow_workflow_update:
     defaults:
         _controller: enhavo_workflow.controller.workflow:updateAction
         _sylius:
+            repository:
+                method: findFormNodes
+                arguments: [$id]
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             translationDomain: EnhavoWorkflowBundle
