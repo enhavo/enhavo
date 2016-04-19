@@ -122,6 +122,19 @@ class WorkflowVoter  implements VoterInterface
                            } else {
                                return VoterInterface::ACCESS_DENIED;
                            }
+                        } else {
+                            $possible = false;
+                            $possibleEntities = $this->container->getParameter('enhavo_workflow.entities');
+                            foreach($possibleEntities as $possibleEntity){
+                                $splittedEntityPath = explode('\\', $possibleEntity);
+                                $pEntity = array_pop($splittedEntityPath);
+                                if($entity == $pEntity){
+                                    $possible = true;
+                                }
+                            }
+                            if($possible == true) {
+                                return VoterInterface::ACCESS_DENIED;
+                            }
                         }
                     }
                 }

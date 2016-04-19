@@ -191,8 +191,7 @@ class ArticleRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('n');
         $query->where('n.workflow_status IS NULL');
-        $test = $query->getQuery()->getResult();
-        return $test;
+        return $query->getQuery()->getResult();
     }
 
 }

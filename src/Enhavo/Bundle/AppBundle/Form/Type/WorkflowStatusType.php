@@ -42,41 +42,43 @@ class WorkflowStatusType extends AbstractType
             $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
                 'entity' => $type,
             ));
-            if ($workflow->getActive() == true)
-            {
-                $currentNode = null;
-                if ($data != null) {
-                    $currentNode = $data->getNode();
-                } else {
-                    $currentNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findOneBy(array(
-                        'workflow' => $workflow,
-                        'node_name' => 'creation'
+            if($workflow != null) {
+                if ($workflow->getActive() == true)
+                {
+                    $currentNode = null;
+                    if ($data != null) {
+                        $currentNode = $data->getNode();
+                    } else {
+                        $currentNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findOneBy(array(
+                            'workflow' => $workflow,
+                            'node_name' => 'creation'
+                        ));
+                    }
+
+                    $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
+                        'node_from' => $currentNode,
+                    ));
+                    $nodes = array();
+                    foreach ($transitions as $transition) {
+                        $nodes[] = $transition->getNodeTo();
+                    }
+
+                    $placeholder = null;
+                    if ($event->getData() != null) {
+                        $placeholder = $event->getData()->getNode()->getNodeName();
+                    } else {
+                        $placeholder = 'creation';
+                    }
+
+                    $form->add('node', 'entity', array(
+                        'label' => 'workflow.next.nodes',
+                        /*'translationDomain' => 'EnhavoWorkflowBundle',*/
+                        'class' => 'EnhavoWorkflowBundle:Node',
+                        'placeholder' => $placeholder,
+                        'choice_label' => 'node_name',
+                        'choices' => $nodes
                     ));
                 }
-
-                $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                    'node_from' => $currentNode,
-                ));
-                $nodes = array();
-                foreach ($transitions as $transition) {
-                    $nodes[] = $transition->getNodeTo();
-                }
-
-                $placeholder = null;
-                if ($event->getData() != null) {
-                    $placeholder = $event->getData()->getNode()->getNodeName();
-                } else {
-                    $placeholder = 'creation';
-                }
-
-                $form->add('node', 'entity', array(
-                    'label' => 'workflow.next.nodes',
-                    /*'translationDomain' => 'EnhavoWorkflowBundle',*/
-                    'class' => 'EnhavoWorkflowBundle:Node',
-                    'placeholder' => $placeholder,
-                    'choice_label' => 'node_name',
-                    'choices' => $nodes
-                ));
             }
         });
 

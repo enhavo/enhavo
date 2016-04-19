@@ -164,3 +164,4 @@ enhavo_workflow:
     entities:
         - 'Enhavo\Bundle\ArticleBundle\Entity\Article'
         - 'Enhavo\Bundle\PageBundle\Entity\Page'
+        - 'Enhavo\Bundle\NewsletterBundle\Entity\Newsletter'
