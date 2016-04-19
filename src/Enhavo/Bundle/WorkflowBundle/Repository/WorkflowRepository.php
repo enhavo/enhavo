@@ -16,7 +16,7 @@ class WorkflowRepository extends EntityRepository
 
         //alle Nodes außer creation in FormNodes speichern
         foreach ($nodes as $node) {
-            if($node->getNodeName() != 'creation'){
+            if($node->getStart() != true){
                 $wf->setFormNodes($node);
             }
         }

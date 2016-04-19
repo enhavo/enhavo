@@ -71,7 +71,7 @@ class WorkflowVoter  implements VoterInterface
                                 $creationGroups = array();
                                 foreach ($transitions as $transition) {
                                     $nodeFrom = $transition->getNodeFrom();
-                                    if ($nodeFrom->getNodeName() == 'creation') {
+                                    if ($nodeFrom->getStart() == true) {
                                         foreach ($transition->getGroups() as $group) {
                                             $creationGroups[] = $group;
                                         }

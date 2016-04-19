@@ -18,11 +18,11 @@ class WorkflowValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if(is_object($value)){
+        if(is_array($value)){
             //Nodes
             $no_nodes = true;
-            foreach($value as $currentValue) {
-                if($currentValue->getNodeName() == 'creation' || $currentValue->getNodeName() == null){
+            foreach($value[0] as $currentValue) {
+                if($currentValue->getStart() == true || $currentValue->getNodeName() == null){
                     continue;
                 } else {
                     $no_nodes = false;

@@ -84,6 +84,7 @@ class Workflow
             $creationNode = new Node();
             $creationNode->setNodeName('creation');
             $creationNode->setEnd(false);
+            $creationNode->setStart(true);
             $creationNode->setWorkflow($this);
             $this->nodes[] = $creationNode;
         }

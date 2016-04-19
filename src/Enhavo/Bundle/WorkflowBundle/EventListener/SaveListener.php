@@ -32,7 +32,7 @@ class SaveListener
                     //set creationNode
                     $nodes = $workflow->getNodes();
                     foreach($nodes as $node) {
-                        if($node->getNodeName() == 'creation') {
+                        if($node->getStart() == true) {
                             $currentWorkflowStatus->setNode($node);
                             $currentNode = $currentWorkflowStatus->getNode();
                             break;
@@ -70,7 +70,7 @@ class SaveListener
                 $startNode = null;
                 $endNode = null;
                 foreach ($nodes as $node) {
-                    if($node->getNodeName() == 'creation') {
+                    if($node->getStart() == true) {
                         $startNode = $node;
                     } else if($node->getEnd() == true) {
                         $endNode = $node;
@@ -114,7 +114,7 @@ class SaveListener
             if (is_array($lastFormNode)) {
                 $oldNodes = array();
                 foreach($event->getSubject()->getNodes() as $oldNode){
-                    if($oldNode->getNodeName() != 'creation'){
+                    if($oldNode->getStart() != true){
                         $oldNodes[] = $oldNode;
                     }
                 }
@@ -125,7 +125,7 @@ class SaveListener
                         'workflow' => $currentWF
                     ));
                     foreach ($currentWF->getNodes() as $node) {
-                        if($node->getNodeName() == 'creation'){
+                        if($node->getStart() == true){
                             continue;
                         } else {
                             if(array_key_exists($newNodesCounter, $lastFormNode)) {

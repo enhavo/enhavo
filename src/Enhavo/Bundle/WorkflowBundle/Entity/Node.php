@@ -155,4 +155,33 @@ class Node
     {
         return $this->end;
     }
+    /**
+     * @var boolean
+     */
+    private $start;
+
+
+    /**
+     * Set start
+     *
+     * @param boolean $start
+     *
+     * @return Node
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * Get start
+     *
+     * @return boolean
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
 }
