@@ -1,0 +1,10 @@
+services:
+    enhavo_migration.database_modifier:
+        class: Enhavo\Bundle\MigrationBundle\Service\DatabaseModifier
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    enhavo_migration.db_media_connections_converter:
+        class: Enhavo\Bundle\MigrationBundle\Service\DbMediaConnectionsConverter
+        arguments:
+            - @enhavo_migration.database_modifier

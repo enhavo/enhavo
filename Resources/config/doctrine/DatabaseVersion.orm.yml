@@ -1,0 +1,19 @@
+Enhavo\Bundle\MigrationBundle\Entity\DatabaseVersion:
+    type: entity
+    table: migration_database_version
+    repositoryClass: Enhavo\Bundle\MigrationBundle\Repository\DatabaseVersionRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        version:
+            type: string
+            length: 255
+            nullable: false
+
+    lifecycleCallbacks:  {  }
