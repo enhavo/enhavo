@@ -35,6 +35,19 @@ class Transition
     private $workflow;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -148,18 +161,6 @@ class Transition
     public function getWorkflow()
     {
         return $this->workflow;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $groups;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -30,6 +30,16 @@ class Workflow
     private $formNodes;
 
     /**
+     * @var string
+     */
+    private $entity;
+
+    /**
+     * @var boolean
+     */
+    private $active;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -80,6 +90,7 @@ class Workflow
      */
     public function addNode(\Enhavo\Bundle\WorkflowBundle\Entity\node $node)
     {
+        //add a 'creation-node' to every workflow
         if(count($this->getNodes()) == 0) {
             $creationNode = new Node();
             $creationNode->setNodeName('creation');
@@ -150,12 +161,6 @@ class Workflow
     }
 
     /**
-     * @var string
-     */
-    private $entity;
-
-
-    /**
      * Set entity
      *
      * @param string $entity
@@ -181,11 +186,6 @@ class Workflow
     {
         return $this->entity;
     }
-    /**
-     * @var boolean
-     */
-    private $active;
-
 
     /**
      * Set active

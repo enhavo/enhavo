@@ -8,13 +8,13 @@ class WorkflowRepository extends EntityRepository
 {
     public function findFormNodes($id)
     {
-        //Workflow mit Id holen
+        //get the current workflow with the given ID
         $wf = $this->find($id);
 
-        //Nodes vom WF holen
+        //get nodes
         $nodes = $wf->getNodes();
 
-        //alle Nodes außer creation in FormNodes speichern
+        //set all nodes but the start-node to the formNodes
         foreach ($nodes as $node) {
             if($node->getStart() != true){
                 $wf->setFormNodes($node);

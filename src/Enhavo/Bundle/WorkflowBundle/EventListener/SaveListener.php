@@ -19,17 +19,26 @@ class SaveListener
     {
         $array = explode('\\', get_class($event->getSubject()));
         $entity = array_pop($array);
-        //get workflow of entity
+
+        //get workflow of current entity
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
         $workflow = $workflowRepository->findOneBy(array(
             'entity' => strtolower($entity)
         ));
+
+        //if there is a workflow created for the current entity then check the things below
+        //if workflow is null, there is no workflow created for this entity
         if($workflow != null){
+
+            //get the current workflow-status of the event
             $currentWorkflowStatus = $event->getSubject()->getWorkflowStatus();
             if($currentWorkflowStatus != null){
+
+                //get the node of the current workflow-status
                 $currentNode = $currentWorkflowStatus->getNode();
                 if($currentNode == null) {
-                    //set creationNode
+
+                    //set creationNode  if the current workflow-status has no node yet
                     $nodes = $workflow->getNodes();
                     foreach($nodes as $node) {
                         if($node->getStart() == true) {
@@ -39,18 +48,25 @@ class SaveListener
                         }
                     }
                 }
+
+                //check if the node is a end node, if it is set the public field (if it exists) to true
                 if($currentNode->getEnd() == true){
+
+                    //is end-node
                     $current = $event->getSubject();
-                    //if public feld exists dann auf true setzen
+
+                    //check if public field exist end set true if it does
                     if(property_exists($current, 'public')){
                         $current->setPublic(true);
                         $this->em->persist($current);
                         $this->em->flush();
                     }
-                }
-                else {
+                } else {
+
+                    //is no end-node
                     $current = $event->getSubject();
-                    //if public feld exists dann auf true setzen
+
+                    //check if public field exists and set to false if it does
                     if(property_exists($current, 'public')){
                         $current->setPublic(false);
                         $this->em->persist($current);
@@ -58,15 +74,22 @@ class SaveListener
                     }
                 }
             }
-        } else if($entity == 'Workflow') {
-            //check if there are elements with workflowstatus null if the workflow is active
+        } else if($entity == 'Workflow') //if it is a 'save' of the workflow entity check the workflow-status of the belonging types and save the formNodes to the real nodes
+        {
+            //check if there are elements of the type with workflow-status null
             $repository = $this->em->getRepository('Enhavo'.ucfirst($event->getSubject()->getEntity()).'Bundle:'.ucfirst($event->getSubject()->getEntity()));
             $wfnull = $repository->getWorkflowStatusNull();
+
             if($wfnull != null) {
-                //if there are set the workflow_status
+
+                //there are elements of the type with workflow-status null
+
+                //get all nodes of the current workflow
                 $nodes = $this->em->getRepository('EnhavoWorkflowBundle:Node')->findBy(array(
                     'workflow' => $event->getSubject()
                 ));
+
+                //get start and end node
                 $startNode = null;
                 $endNode = null;
                 foreach ($nodes as $node) {
@@ -78,7 +101,11 @@ class SaveListener
                 }
 
                 foreach($wfnull as $element) {
+
+                    //check if there is a public field in the type
                     if(property_exists($element, 'public')){
+
+                        // if there is a public field, check if it is set true and set the end-node to the workflow-status; if it is false set the start-node to the workflow-status
                         if($element->getPublic() == true){
                             $workflowStatus = new WorkflowStatus();
                             $workflowStatus->setNode($endNode);
@@ -97,6 +124,8 @@ class SaveListener
                             $this->em->flush();
                         }
                     } else {
+
+                        //if there is no public field, just set all entries to the start-node
                         $workflowStatus = new WorkflowStatus();
                         $workflowStatus->setNode($startNode);
                         $this->em->persist($workflowStatus);
@@ -107,23 +136,34 @@ class SaveListener
                     }
                 }
             }
-            //write displayed FormNodes in real nodes
+
+            //write displayed FormNodes into the real nodes
             $formNodes = $event->getSubject()->getFormNodes();
-            $lastFormNode = array_pop($formNodes);
+            $lastFormNode = array_pop($formNodes); //the last formNode is an array and keeps all the important information
             $newNodesCounter = 0;
             if (is_array($lastFormNode)) {
+
+                //get all the old nodes
                 $oldNodes = array();
                 foreach($event->getSubject()->getNodes() as $oldNode){
                     if($oldNode->getStart() != true){
                         $oldNodes[] = $oldNode;
                     }
                 }
+
+                //check if there are differences between the formNodes and the old nodes
                 if($lastFormNode != $oldNodes) {
+
+                    //there are differences
+
+                    //get the belonging workflow
                     $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
                     $currentWF = $workflowRepository->find($event->getSubject()->getId());
                     $transitions = $this->em->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
                         'workflow' => $currentWF
                     ));
+
+                    //write the now information from the formNodes to the real nodes
                     foreach ($currentWF->getNodes() as $node) {
                         if($node->getStart() == true){
                             continue;

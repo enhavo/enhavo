@@ -3,9 +3,7 @@ namespace Enhavo\Bundle\WorkflowBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class WorkflowValidator extends ConstraintValidator
 {
@@ -18,6 +16,7 @@ class WorkflowValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
+        //check if there are any nodes and the name of the workflow is not null
         if(is_array($value)){
             //Nodes
             $no_nodes = true;

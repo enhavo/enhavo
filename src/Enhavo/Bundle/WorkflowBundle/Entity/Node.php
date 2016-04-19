@@ -28,6 +28,16 @@ class Node
     private $workflow;
 
     /**
+     * @var boolean
+     */
+    private $end;
+
+    /**
+     * @var boolean
+     */
+    private $start;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -126,11 +136,6 @@ class Node
     {
         return $this->workflow;
     }
-    /**
-     * @var boolean
-     */
-    private $end;
-
 
     /**
      * Set end
@@ -155,11 +160,6 @@ class Node
     {
         return $this->end;
     }
-    /**
-     * @var boolean
-     */
-    private $start;
-
 
     /**
      * Set start
