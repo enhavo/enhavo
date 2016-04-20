@@ -20,7 +20,7 @@ class DownloadItem implements ItemTypeInterface
     protected $download;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     protected $file;
 
@@ -64,41 +64,19 @@ class DownloadItem implements ItemTypeInterface
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
      * @return DownloadItem
      */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function setFile($file)
     {
-        $this->file[] = $file;
-
+        $this->file = $file;
         return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->file->removeElement($file);
     }
 
     /**
      * Get file
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getFile()
     {

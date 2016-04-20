@@ -25,9 +25,10 @@ class TextPictureType extends ItemFormType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        $builder->add('files', 'enhavo_files', array(
+        $builder->add('file', 'enhavo_files', array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
 
         $builder->add('frame', 'enhavo_boolean', array(

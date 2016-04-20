@@ -32,19 +32,9 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: integer
             nullable: true
 
-    manyToMany:
-        image:
-            cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: slider_slide_image
-                joinColumns:
-                    slider_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
-
     manyToOne:
+        image:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
         slider:
             targetEntity: Slider
