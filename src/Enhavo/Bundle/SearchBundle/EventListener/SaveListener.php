@@ -54,6 +54,10 @@ class SaveListener
     protected $requestStack;
     protected $em;
     protected $dirty = array();
+    protected $entityPath;
+    protected $entityName;
+    protected $bundleName;
+    protected $mainPath;
 
     /**
      * Matches Unicode characters that are word boundaries.
@@ -127,32 +131,22 @@ EOD;
 
     public function onSave($event)
     {
-        //get search.yml
-        $mainPath = str_replace('/app', '/src', $this->path);
-        $entityPath = get_class($event->getSubject());
-        $splittedEntityPath = explode("\\", $entityPath);
-        $searchYamlPath = $mainPath;
-        $i = 0;
-        while($splittedEntityPath[$i] != 'Entity') {
-            $searchYamlPath = $searchYamlPath.'/'.$splittedEntityPath[$i];
-            $i++;
-        }
-        $searchYamlPath = $searchYamlPath.'/Resources/config/search.yml';
-        $entityName = $splittedEntityPath[$i+1];
-        $bundleName = $splittedEntityPath[$i-1];
-        $yaml = new Parser();
-        $currentSearchYaml = $yaml->parse(file_get_contents($searchYamlPath));
+        //here the indexing happens when somewone clicked save
+        //get the current search.yml for the entity
+        $currentSearchYaml = $this->getCurrentSearchYaml($event);
 
         //get properties form search.yml
-        $properties = $currentSearchYaml[$entityPath]['properties'];
+        $properties = $currentSearchYaml[$this->entityPath]['properties'];
 
         //get or create DataSet
         $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
-        $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $entityName));
+        $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $this->entityName));
         if($dataSet == null) {
+
+            //create a new dataset
             $newDataSet = new Dataset();
-            $newDataSet->setType(strtolower($entityName));
-            $newDataSet->setBundle($bundleName);
+            $newDataSet->setType(strtolower($this->entityName));
+            $newDataSet->setBundle($this->bundleName);
             $newDataSet->setReindex(0);
             $newDataSet->setReference($event->getSubject()->getId());
             $newDataSet->setData(null);
@@ -160,6 +154,8 @@ EOD;
             $this->em->flush();
             $dataSet = $newDataSet;
         } else {
+
+            //a dataset already exist
             $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
             $wordsForDataset = $indexRepository->findBy(array('dataset' => $dataSet));
             $dataSet->removeData();
@@ -169,26 +165,38 @@ EOD;
             $this->em->flush();
         }
 
-        //indexing words
+        //indexing words (go through all the fields that can be indexed according to the search yml)
         foreach($properties as $key => $value) {
+
+            //look if there is a field (indexingField) in the request (currentRequest) that can get indexed
             $indexingField = $key;
 
+            //get data of the current request
             $currentRequestName = $this->requestStack->getCurrentRequest()->request->keys();
             $currentRequest = $this->requestStack->getCurrentRequest()->request->get($currentRequestName[0]);
 
             if(array_key_exists($indexingField, $currentRequest)) {
                 $text = $currentRequest[$indexingField];
+
+                //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
                 foreach ($value[0] as $key => $value) {
-                    if($key == 'Plain') { //type Plain
+                    if($key == 'Plain') {
+
+                        //type Plain
                         $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
-                    } else if($key == 'Html'){ //type Html
+                    } else if($key == 'Html'){
+
+                        //type Html
                         if(array_key_exists('weights', $value)) {
-                            $this->indexingHtml($text, $value['type'], $dataSet, $mainPath, $value['weights']);
+                            $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath, $value['weights']);
                         } else {
-                            $this->indexingHtml($text, $value['type'], $dataSet, $mainPath);
+                            $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath);
                         }
-                    } else if($key == 'Collection') { //type Collection
-                        $collectionPath = $mainPath;
+                    } else if($key == 'Collection') {
+
+                        //type Collection
+                        //get the right yaml file for collection
+                        $collectionPath = $this->mainPath;
                         $entityPath = $value['entity'];
                         $splittedEntityPath = explode("\\", $entityPath);
                         $i = 0;
@@ -199,29 +207,46 @@ EOD;
                         $collectionPath = $collectionPath.'/Resources/config/search.yml';
                         $yaml = new Parser();
                         $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
-                        $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $mainPath, $dataSet);
+
+                        $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $this->mainPath, $dataSet);
                     }
                 }
             }
         }
+        //update the total scores
         $this->search_update_totals();
     }
 
     public function indexingPlain($text, $score, $type, $dataset) {
+
         //indexing plain text and save in DB
         $minimum_word_size = 2;
+
+        //get seperated words
         $words = $this->search_index_split($text);
         $scored_words = array();
+
+        //set focus to 1 at the beginning
         $focus = 1;
+
+        //get the right score for every word
         foreach($words as $word) {
             if (is_numeric($word) || strlen($word) >= $minimum_word_size) {
+
+                //check if the word is already in the list of scored words
                 if (!isset($scored_words[$word])) {
                     $scored_words[$word] = 0;
                 }
+
+                //add score (this means if a word is already in the list of scores_words we just add the score multiplied with the focus)
                 $scored_words[$word] += $score * $focus;
+
+                //the focus is getting less if a word is at the end of a long text and so the next score gets less
                 $focus = min(1, .01 + 3.5 / (2 + count($scored_words) * .015));
             }
         }
+
+        //add the scored words to search_index
         foreach ($scored_words as $key => $value) {
             $newIndex = new Index();
             $newIndex->setDataset($dataset);
@@ -239,6 +264,7 @@ EOD;
     }
 
     public function indexingHtml($text, $type, $dataset, $mainPath, $weights = null) {
+
         //indexing html text and save in DB
         $minimum_word_size = 2;
 
@@ -257,8 +283,7 @@ EOD;
             }
         }
 
-        // Strip off all ignored tags to speed up processing, but insert space before
-        // and after them to keep word boundaries.
+        // Strip off all ignored tags, insert space before and after them to keep word boundaries.
         $text = str_replace(array('<', '>'), array(' <', '> '), $text);
         $text = strip_tags($text, '<' . implode('><', array_keys($tags)) . '>');
 
@@ -272,7 +297,10 @@ EOD;
         $tagwords = 0; // Counter for consecutive words
         $focus = 1; // Focus state
 
+        //go trough the array of text and tags
         foreach ($split as $value) {
+
+            //if tag is true we are handling the tags in the array, if tag is false we are handling text between the tags
             if ($tag) {
                 // Increase or decrease score per word based on tag
                 list($tagname) = explode(' ', $value, 2);
@@ -337,6 +365,7 @@ EOD;
             $tag = !$tag;
         }
 
+        //add the scored words to search_index
         foreach ($scored_words as $key => $value) {
             $newIndex = new Index();
             $newIndex->setDataset($dataset);
@@ -353,6 +382,9 @@ EOD;
     }
 
     public function indexingCollection($text, $find, $yamlFile, $mainPath, $dataSet) {
+
+        //indexing a collection
+        //get seperated content types
         $colProperties = $yamlFile[$find]['properties'];
         $textContent = null;
         $colTypeYml = null;
@@ -363,6 +395,8 @@ EOD;
             }
         }
         if($textContent != null){
+
+            //go trough the yaml structure until we find types and wights of the items
             $splittedFindPath = explode("\\", $find);
             $colItemPath = null;
             $i = 1;
@@ -380,6 +414,8 @@ EOD;
                         if (array_key_exists($indexingField, $current[$key1])) {
                             $currentText = $current[$key1][$indexingField];
                         }
+
+                        //check what kind of indexing should happen (Plain, html, collection)
                         foreach ($value2[0] as $key3 => $value3) {
                             if ($key3 == 'Plain') {
                                 $this->indexingPlain($currentText, $value3['weight'], $value3['type'], $dataSet);
@@ -427,26 +463,26 @@ EOD;
     }
 
     /**
-     * Updates the {search_total} database table.
-     *
-     * This function is called on shutdown to ensure that {search_total} is always
-     * up to date (even if cron times out or otherwise fails).
+     * Updates the score column in the search_total table
      */
     function search_update_totals() {
-        // Update word IDF (Inverse Document Frequency) counts for new/changed words.
+
+        //get all of the saved words from seach_dirty
         foreach ($this->search_dirty() as $word => $dummy) {
-            // Get total count
+
+            // Get total count for the word
             $searchIndexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
             $total = $searchIndexRepository->sumScoresOfWord($word);
-            //$total = db_query("SELECT SUM(score) FROM {search_index} WHERE word = :word", array(':word' => $word), array('target' => 'replica'))->fetchField();
-            // Apply Zipf's law to equalize the probability distribution.
+
+            //get the total count with Zipf's law
             $total = log10(1 + 1/(max(1, current($total))));
 
+            //save new score
             $searchTotalRepository =  $this->em->getRepository('EnhavoSearchBundle:Total');
             $currentWord = $searchTotalRepository->findOneBy(array('word' => $word));
 
             if($currentWord != null) {
-                //Wort schon in search_total vorhanden
+                //if the word is already stored in search_total -> remove it and store it with the new score
                 $this->em->remove($currentWord);
                 $this->em->flush();
             }
@@ -456,9 +492,8 @@ EOD;
             $this->em->persist($newTotal);
             $this->em->flush();
         }
-        // Find words that were deleted from search_index, but are still in
-        // search_total. We use a LEFT JOIN between the two tables and keep only the
-        // rows which fail to join.
+
+        //remove words that are removed vom search_index but are still in search_total
         $searchTotalRepository = $this->em->getRepository('EnhavoSearchBundle:Total');
         $wordsToRemove = $searchTotalRepository->getWordsToRemove();
         foreach ($wordsToRemove as $word) {
@@ -496,7 +531,7 @@ EOD;
      * @see hook_search_preprocess()
      */
     function search_simplify($text) {
-        $text = $this->decode_entities($text);
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
         // Lowercase
         $text = strtolower($text);
 
@@ -524,29 +559,29 @@ EOD;
         return $text;
     }
 
-    function decode_entities($text) {
-        return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-    }
-
     /**
-     * Simplifies and splits a string into words for indexing.
-     *
-     * @param string $text
-     *   Text to process.
-     * @param string|null $langcode
-     *   Language code for the language of $text, if known.
-     *
-     * @return array
-     *   Array of words in the simplified, preprocessed text.
-     *
-     * @see search_simplify()
+     * Simplifies and splits a string into words for indexing
      */
     function search_index_split($text) {
-        // Process words
         $text = $this->search_simplify($text);
         $words = explode(' ', $text);
-
         return $words;
     }
 
+    function getCurrentSearchYaml($event) {
+        $this->mainPath = str_replace('/app', '/src', $this->path);
+        $this->entityPath = get_class($event->getSubject());
+        $splittedEntityPath = explode("\\", $this->entityPath);
+        $searchYamlPath = $this->mainPath;
+        $i = 0;
+        while($splittedEntityPath[$i] != 'Entity') {
+            $searchYamlPath = $searchYamlPath.'/'.$splittedEntityPath[$i];
+            $i++;
+        }
+        $searchYamlPath = $searchYamlPath.'/Resources/config/search.yml';
+        $this->entityName = $splittedEntityPath[$i+1];
+        $this->bundleName = $splittedEntityPath[$i-1];
+        $yaml = new Parser();
+        return $yaml->parse(file_get_contents($searchYamlPath));
+    }
 }

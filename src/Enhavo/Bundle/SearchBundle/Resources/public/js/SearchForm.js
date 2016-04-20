@@ -23,12 +23,11 @@ function SearchForm() {
                 type: 'POST',
                 data: data,
                 success: function(response) {
-                   console.log("Test1");
-                    console.log(response);
+                    $('#search-results').remove();
+                    $(response).insertAfter(form);
                 },
                 error: function(response) {
-                    console.log("Test2");
-                    console.log(response);
+
                 }
             });
             return false;

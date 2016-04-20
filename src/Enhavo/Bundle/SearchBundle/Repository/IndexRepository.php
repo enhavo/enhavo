@@ -36,9 +36,17 @@ class IndexRepository extends EntityRepository
                         }
                     } else {
                         $currentValue = explode(" ", $currentValue);
-                        $query->setParameter('word_' . $wordCounter, $currentValue);
-                        $query->orWhere('i.word = :word_' . $wordCounter);
-                        $wordCounter++;
+                        if(is_array($currentValue)){
+                            foreach($currentValue as $currentValue1) {
+                                $query->setParameter('word_' . $wordCounter, $currentValue1);
+                                $query->orWhere('i.word = :word_' . $wordCounter);
+                                $wordCounter++;
+                            }
+                        } else {
+                            $query->setParameter('word_' . $wordCounter, $currentValue);
+                            $query->orWhere('i.word = :word_' . $wordCounter);
+                            $wordCounter++;
+                        }
                     }
                 }
             }
@@ -126,9 +134,17 @@ class IndexRepository extends EntityRepository
                         }
                     } else {
                         $currentValue = explode(" ", $currentValue);
-                        $query->setParameter('word_' . $wordCounter, $currentValue);
-                        $query->orWhere('i.word = :word_' . $wordCounter);
-                        $wordCounter++;
+                        if(is_array($currentValue)){
+                            foreach($currentValue as $currentValue1) {
+                                $query->setParameter('word_' . $wordCounter, $currentValue1);
+                                $query->orWhere('i.word = :word_' . $wordCounter);
+                                $wordCounter++;
+                            }
+                        } else {
+                            $query->setParameter('word_' . $wordCounter, $currentValue);
+                            $query->orWhere('i.word = :word_' . $wordCounter);
+                            $wordCounter++;
+                        }
                     }
                 }
             }

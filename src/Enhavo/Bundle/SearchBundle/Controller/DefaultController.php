@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\SearchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Matches all 'N' Unicode character classes (numbers)
@@ -105,38 +106,25 @@ class DefaultController extends Controller
 EOD;
 
     /**
-     * Indicates whether the preparation step has been executed.
-     *
-     * @var bool
-     */
-    protected $executedPrepare = FALSE;
-
-    /**
-     * The keywords and advanced search options that are entered by the user.
+     * Entered search keywords.
      *
      * @var string
      */
     protected $searchExpression;
 
     /**
-     * Array of positive search words.
-     *
-     * These words have to match against {search_index}.word.
+     * Array of search words.
      *
      * @var array
      */
     protected $words = array();
 
-    protected $and_or_limit = 8;
-
     /**
-     * A bitmap of status conditions, described in getStatus().
+     * Limit of AND and OR.
      *
-     * @var int
-     *
-     * @see SearchQuery::getStatus()
+     * @var integer
      */
-    protected $status = 0;
+    protected $and_or_limit = 8;
 
     /**
      * Indicates that part of the search expression was ignored.
@@ -148,21 +136,21 @@ EOD;
      *
      * @see SearchQuery::getStatus()
      */
-    const EXPRESSIONS_IGNORED = 2;
+    const EXPRESSIONS_IGNORED = 2; //!!!
 
     /**
-     * Indicates whether the query conditions are simple or complex (LIKE).
+     * Indicates whether the query conditions are simple or complex (LIKE,OR,AND).
      *
      * @var bool
      */
-    protected $simple = TRUE;
+    protected $simple = TRUE;//!!!
 
     /**
      * Parsed-out positive and negative search keys.
      *
      * @var array
      */
-    protected $keys = array('positive' => array(), 'negative' => array());
+    protected $keys = array('positive' => array(), 'negative' => array());//!!!
 
     /**
      * Indicates that lower-case "or" was in the search expression.
@@ -176,12 +164,7 @@ EOD;
     const LOWER_CASE_OR = 4;
 
     /**
-     * Conditions that are used for exact searches.
-     *
-     * This is always used for the second step in the query, but is not part of
-     * the preparation step unless $this->simple is FALSE.
-     *
-     * @var DatabaseCondition
+     * Conditions (AND, OR, ..) which are used in the search expression.
      */
     protected $conditions;
 
@@ -192,66 +175,109 @@ EOD;
      */
     protected $matches = 0;
 
+    /**
+     * Only words with more than 3 letters get indexed.
+     *
+     * @var int
+     */
     protected $minimum_word_size = 3;
 
-    public function indexAction($name)
-    {
-        return $this->render('EnhavoSearchBundle:Default:index.html.twig', array('name' => $name));
-    }
+    /**
+     * Is true if there are to many AND/OR expressions
+     *
+     * @var bool
+     */
+    protected $toManyExpressions = false;
 
+    //Happens when someone pressed the submit button of the search field.
     public function submitAction(Request $request)
     {
+        //at the beginning the normalize is always 0
         $normalize = 0;
-        $this->searchExpression =  $request->get('search');
-        if($this->isSearchExecutable())
-        {
+
+        //set the current entry to searchEspression
+        $this->searchExpression = $request->get('search');
+
+        // check if there are any keywords entered
+        if(!empty($this->searchExpression)) {
+
+            //if there are keywords
             $this->parseSearchExpression();
-            $result = $this->getDoctrine()
-                ->getRepository('EnhavoSearchBundle:Index')
-                ->getCalculatedScore($this->conditions, $this->matches, $this->simple);
-            if (!empty($result)) {
-                $normalize = (float)$result['calculated_score'];
-            }
 
-            $normalization = null;
-            if ($normalize != 0) {
-                $normalization = 1.0 / $normalize;
-            }
+            //go on if there are not to many AND/OR expressions
+            if (!$this->toManyExpressions) {
 
-            if ($normalization != null) {
-                $results = $this->getDoctrine()
+                //get the calculated score (we need this to get the calculated_score later)
+                $result = $this->getDoctrine()
                     ->getRepository('EnhavoSearchBundle:Index')
-                    ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
-                $data = array();
-                foreach ($results as $resultIndex) {
-                    $currentIndex = $this->getDoctrine()
+                    ->getCalculatedScore($this->conditions, $this->matches, $this->simple);
+
+                //check if there are some results
+                if (!empty($result)) {
+
+                    //set normalize with calculated score
+                    $normalize = (float)$result['calculated_score'];
+                }
+
+                //set normalization
+                $normalization = null;
+                if ($normalize != 0) {
+                    $normalization = 1.0 / $normalize;
+                }
+
+                if ($normalization != null) {
+
+                    //get the search results (language, type, id, calculated_score)
+                    $results = $this->getDoctrine()
                         ->getRepository('EnhavoSearchBundle:Index')
-                        ->findOneBy(array('id' => $resultIndex['id']));
-                    $currentDataset = $currentIndex->getDataset();
-                    $dataForSearchResult = array();
-                    $dataForSearchResult['type'] = $currentDataset->getType();
-                    $dataForSearchResult['bundle'] = $currentDataset->getBundle();
-                    $dataForSearchResult['reference'] = $currentDataset->getReference();
-                    $data[] = $dataForSearchResult;
-                }
+                        ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
 
-                $finalResults = array();
-                foreach ($data as $resultData) {
-                    $currentData = $this->getDoctrine()
-                        ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
-                        ->findOneBy(array('id' => $resultData['reference']));
-                    $finalResults[] = $currentData;
-                }
+                    //prepare data with found results
+                    $data = array();
+                    foreach ($results as $resultIndex) {
+                        $currentIndex = $this->getDoctrine()
+                            ->getRepository('EnhavoSearchBundle:Index')
+                            ->findOneBy(array('id' => $resultIndex['id']));
+                        $currentDataset = $currentIndex->getDataset();
+                        $dataForSearchResult = array();
+                        $dataForSearchResult['type'] = $currentDataset->getType();
+                        $dataForSearchResult['bundle'] = $currentDataset->getBundle();
+                        $dataForSearchResult['reference'] = $currentDataset->getReference();
+                        $data[] = $dataForSearchResult;
+                    }
 
-                if ($finalResults) {
-                    return $this->render('EnhavoSearchBundle:Default:show.html.twig', array(
-                        'data' => $finalResults
-                    ));
+                    $finalResults = array();
+                    foreach ($data as $resultData) {
+
+                        //get Element from the entity
+                        $currentData = $this->getDoctrine()
+                            ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
+                            ->findOneBy(array('id' => $resultData['reference']));
+                        $finalResults[] = $currentData;
+                    }
+
+                    if ($finalResults) {
+
+                        //return results
+                        return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                            'data' => $finalResults
+                        ));
+                    }
                 }
+            } else {
+                //To many AND/OR expressions
+                return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                    'data' => 'There are to many AND/OR expressions!'
+                ));
             }
+        } else {
+            //there were no keywords entered
+            return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                'data' => 'Please enter some keywords!'
+            ));
         }
 
-        return $this->render('EnhavoSearchBundle:Default:show.html.twig', array(
+        return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
             'data' => 'No results'
         ));
     }
@@ -282,15 +308,18 @@ EOD;
         // The first search expression does not count as AND.
         $and_count = -1;
         $or_count = 0;
+
+        //Sort keywords in positive and negative
         foreach ($keywords as $match) {
+
+            //check if there are not to many AND/OR expressions
             if ($or_count && $and_count + $or_count >= $limit_combinations) {
-                // Ignore all further search expressions to prevent Denial-of-Service
-                // attacks using a high number of AND/OR combinations.
-                $this->status |= DefaultController::EXPRESSIONS_IGNORED;
+                //To many AND/OR expressions
+                $this->toManyExpressions = true;
                 break;
             }
 
-            // Strip off phrase quotes.
+            //Checking for quotes
             $phrase = FALSE;
             if ($match[2]{0} == '"') {
                 $match[2] = substr($match[2], 1, -1);
@@ -298,19 +327,17 @@ EOD;
                 $this->simple = FALSE;
             }
 
-            // Simplify keyword according to indexing rules and external
-            // preprocessors. Use same process as during search indexing, so it
-            // will match search index.
+            //Symplify match
             $words = $this->search_simplify($match[2]);
             // Re-explode in case simplification added more words, except when
             // matching a phrase.
-            $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
-            // Negative matches.
+            $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);//!!!
+
+            // NOT
             if ($match[1] == '-') {
                 $this->keys['negative'] = array_merge($this->keys['negative'], $words);
             }
-            // OR operator: instead of a single keyword, we store an array of all
-            // OR'd keywords.
+            // OR
             elseif ($match[2] == 'OR' && count($this->keys['positive'])) {
                 $last = array_pop($this->keys['positive']);
                 // Starting a new OR?
@@ -328,11 +355,7 @@ EOD;
             }
 
             // Plain keyword.
-            else {
-                if ($match[2] == 'or') {
-                    // Lower-case "or" instead of "OR" is a warning condition.
-                    $this->status |= DefaultController::LOWER_CASE_OR;
-                }
+            else {//!!!
                 if ($in_or) {
                     // Add to last element (which is an array).
                     $this->keys['positive'][count($this->keys['positive']) - 1] = array_merge($this->keys['positive'][count($this->keys['positive']) - 1], $words);
@@ -345,11 +368,12 @@ EOD;
             $in_or = FALSE;
         }
 
-        // Convert keywords into SQL statements.
+
         $has_and = FALSE;
         $has_or = FALSE;
-        // Positive matches.
+        //Prepare AND/OR conditions (Positive matches)
         foreach ($this->keys['positive'] as $key) {
+
             // Group of ORed terms.
             if (is_array($key) && count($key)) {
                 // If we had already found one OR, this is another one AND-ed with the
@@ -361,8 +385,8 @@ EOD;
                 $has_new_scores = FALSE;
                 $queryor = array();
                 foreach ($key as $or) {
-                    list($num_new_scores) = $this->parseWord($or);
-                    $has_new_scores |= $num_new_scores;
+                    list($num_new_scores) = $this->parseWord($or);//!!!
+                    $has_new_scores |= $num_new_scores;//!!!
                     $queryor[] = $or;
                 }
                 if (count($queryor)) {
@@ -401,7 +425,7 @@ EOD;
      * already there. Returns a list containing the number of new words found,
      * and the total number of words in the phrase.
      */
-    protected function parseWord($word) {
+    protected function parseWord($word) {//!!!
         $num_new_scores = 0;
         $num_valid_words = 0;
 
@@ -446,7 +470,8 @@ EOD;
      * @see hook_search_preprocess()
      */
     function search_simplify($text) {
-        $text = $this->decode_entities($text);
+        //UTF-8
+        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
         // Lowercase
         $text = strtolower($text);
 
@@ -472,20 +497,5 @@ EOD;
         $text = preg_replace('/[' . self::PREG_CLASS_WORD_BOUNDARY . ']+/u', ' ', $text);
 
         return $text;
-    }
-
-    function decode_entities($text) {
-        return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isSearchExecutable() {
-        // Node search is executable if we have keywords or an advanced parameter.
-        // At least, we should parse out the parameters and see if there are any
-        // keyword matches in that case, rather than just printing out the
-        // "Please enter keywords" message.
-        return !empty($this->searchExpression);
     }
 }

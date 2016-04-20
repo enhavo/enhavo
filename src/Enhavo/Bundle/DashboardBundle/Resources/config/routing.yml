@@ -16,3 +16,9 @@ enhavo_dashboard_index:
                 enhavo_app_bootstrap:
                     resource: '@EnhavoAppBundle/Resource/public/js/bootstrap.css'
                     depends: jquery
+            blocks:
+                search:
+                    type: enhavo_search
+                    parameters:
+                        table_route: enhavo_page_page_table
+                        update_route: enhavo_page_page_update

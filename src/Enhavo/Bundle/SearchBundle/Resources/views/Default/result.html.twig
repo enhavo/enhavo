@@ -1,0 +1,19 @@
+<div id="search-results">
+    {% if data is iterable %}
+        {% for item in data %}
+             </br>
+            <div style="border-bottom: 1px solid darkslategray;">
+                <h1><b> {{ item.title }} </b></h1>
+                {% if item.teaser|length >= 100 %}
+                    <p>{{ item.teaser|slice(0, 100) }} ...</p>
+                {% else %}
+                    <p>{{ item.teaser|slice(0, 100) }}</p>
+                {% endif %}
+                </br>
+            </div>
+        {% endfor %}
+    {% else %}
+        </br>
+        {{ data }}
+    {% endif %}
+</div>

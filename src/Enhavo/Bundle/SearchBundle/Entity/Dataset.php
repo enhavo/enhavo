@@ -27,6 +27,10 @@ class Dataset
      */
     private $reference;
 
+    /**
+     * @var string
+     */
+    private $data;
 
     /**
      * Get id
@@ -138,11 +142,6 @@ class Dataset
     {
         return $this->bundle;
     }
-    /**
-     * @var string
-     */
-    private $data;
-
 
     /**
      * Set data
