@@ -27,7 +27,7 @@ function SearchForm() {
                     $(response).insertAfter(form);
                 },
                 error: function(response) {
-
+                    console.log("Search error.")
                 }
             });
             return false;

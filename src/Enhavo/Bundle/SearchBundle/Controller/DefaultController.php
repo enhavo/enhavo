@@ -165,6 +165,8 @@ EOD;
      */
     protected $toManyExpressions = false;
 
+    protected $normalizeResults = false;
+
     //Happens when someone pressed the submit button of the search field.
     public function submitAction(Request $request)
     {
@@ -183,62 +185,41 @@ EOD;
             //go on if there are not to many AND/OR expressions
             if (!$this->toManyExpressions) {
 
-                //get the calculated score (we need this to get the calculated_score later)
-                $result = $this->getDoctrine()
+                //get the search results (language, type, id, calculated_score)
+                $results = $this->getDoctrine()
                     ->getRepository('EnhavoSearchBundle:Index')
-                    ->getCalculatedScore($this->conditions, $this->matches, $this->simple);
+                    ->getSearchResults($this->conditions, $this->matches, $this->simple);
 
-                //check if there are some results
-                if (!empty($result)) {
-
-                    //set normalize with calculated score
-                    $normalize = (float)$result['calculated_score'];
-                }
-
-                //set normalization
-                $normalization = null;
-                if ($normalize != 0) {
-                    $normalization = 1.0 / $normalize;
-                }
-
-                if ($normalization != null) {
-
-                    //get the search results (language, type, id, calculated_score)
-                    $results = $this->getDoctrine()
+                //prepare data with found results
+                $data = array();
+                foreach ($results as $resultIndex) {
+                    $currentIndex = $this->getDoctrine()
                         ->getRepository('EnhavoSearchBundle:Index')
-                        ->getSearchResults($this->conditions, $normalization, $this->matches, $this->simple);
+                        ->findOneBy(array('id' => $resultIndex['id']));
+                    $currentDataset = $currentIndex->getDataset();
+                    $dataForSearchResult = array();
+                    $dataForSearchResult['type'] = $currentDataset->getType();
+                    $dataForSearchResult['bundle'] = $currentDataset->getBundle();
+                    $dataForSearchResult['reference'] = $currentDataset->getReference();
+                    $data[] = $dataForSearchResult;
+                }
 
-                    //prepare data with found results
-                    $data = array();
-                    foreach ($results as $resultIndex) {
-                        $currentIndex = $this->getDoctrine()
-                            ->getRepository('EnhavoSearchBundle:Index')
-                            ->findOneBy(array('id' => $resultIndex['id']));
-                        $currentDataset = $currentIndex->getDataset();
-                        $dataForSearchResult = array();
-                        $dataForSearchResult['type'] = $currentDataset->getType();
-                        $dataForSearchResult['bundle'] = $currentDataset->getBundle();
-                        $dataForSearchResult['reference'] = $currentDataset->getReference();
-                        $data[] = $dataForSearchResult;
-                    }
+                $finalResults = array();
+                foreach ($data as $resultData) {
 
-                    $finalResults = array();
-                    foreach ($data as $resultData) {
+                    //get Element from the entity
+                    $currentData = $this->getDoctrine()
+                        ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
+                        ->findOneBy(array('id' => $resultData['reference']));
+                    $finalResults[] = $currentData;
+                }
 
-                        //get Element from the entity
-                        $currentData = $this->getDoctrine()
-                            ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
-                            ->findOneBy(array('id' => $resultData['reference']));
-                        $finalResults[] = $currentData;
-                    }
+                if ($finalResults) {
 
-                    if ($finalResults) {
-
-                        //return results
-                        return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                            'data' => $finalResults
-                        ));
-                    }
+                    //return results
+                    return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                        'data' => $finalResults
+                    ));
                 }
             } else {
                 //To many AND/OR expressions
