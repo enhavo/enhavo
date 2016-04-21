@@ -17,6 +17,15 @@ services:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
 
+    
+    enhavo_search.delete_listener:
+        class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
+
+
     enhavo_search_render:
         class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
         arguments:

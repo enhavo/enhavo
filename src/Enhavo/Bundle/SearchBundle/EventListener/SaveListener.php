@@ -135,86 +135,88 @@ EOD;
         //get the current search.yml for the entity
         $currentSearchYaml = $this->getCurrentSearchYaml($event);
 
-        //get properties form search.yml
-        $properties = $currentSearchYaml[$this->entityPath]['properties'];
+        if($currentSearchYaml != null) {
+            //get properties form search.yml
+            $properties = $currentSearchYaml[$this->entityPath]['properties'];
 
-        //get or create DataSet
-        $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
-        $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $this->entityName));
-        if($dataSet == null) {
+            //get or create DataSet
+            $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
+            $dataSet = $dataSetRepository->findOneBy(array('reference' => $event->getSubject()->getId(), 'type' => $this->entityName));
+            if($dataSet == null) {
 
-            //create a new dataset
-            $newDataSet = new Dataset();
-            $newDataSet->setType(strtolower($this->entityName));
-            $newDataSet->setBundle($this->bundleName);
-            $newDataSet->setReindex(0);
-            $newDataSet->setReference($event->getSubject()->getId());
-            $newDataSet->setData(null);
-            $this->em->persist($newDataSet);
-            $this->em->flush();
-            $dataSet = $newDataSet;
-        } else {
+                //create a new dataset
+                $newDataSet = new Dataset();
+                $newDataSet->setType(strtolower($this->entityName));
+                $newDataSet->setBundle($this->bundleName);
+                $newDataSet->setReindex(0);
+                $newDataSet->setReference($event->getSubject()->getId());
+                $newDataSet->setData(null);
+                $this->em->persist($newDataSet);
+                $this->em->flush();
+                $dataSet = $newDataSet;
+            } else {
 
-            //a dataset already exist
-            $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
-            $wordsForDataset = $indexRepository->findBy(array('dataset' => $dataSet));
-            $dataSet->removeData();
-            foreach($wordsForDataset as $word){
-                $this->em->remove($word);
+                //a dataset already exist
+                $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
+                $wordsForDataset = $indexRepository->findBy(array('dataset' => $dataSet));
+                $dataSet->removeData();
+                foreach($wordsForDataset as $word){
+                    $this->em->remove($word);
+                }
+                $this->em->flush();
             }
-            $this->em->flush();
-        }
 
-        //indexing words (go through all the fields that can be indexed according to the search yml)
-        foreach($properties as $key => $value) {
+            //indexing words (go through all the fields that can be indexed according to the search yml)
+            foreach($properties as $key => $value) {
 
-            //look if there is a field (indexingField) in the request (currentRequest) that can get indexed
-            $indexingField = $key;
+                //look if there is a field (indexingField) in the request (currentRequest) that can get indexed
+                $indexingField = $key;
 
-            //get data of the current request
-            $currentRequestName = $this->requestStack->getCurrentRequest()->request->keys();
-            $currentRequest = $this->requestStack->getCurrentRequest()->request->get($currentRequestName[0]);
+                //get data of the current request
+                $currentRequestName = $this->requestStack->getCurrentRequest()->request->keys();
+                $currentRequest = $this->requestStack->getCurrentRequest()->request->get($currentRequestName[0]);
 
-            if(array_key_exists($indexingField, $currentRequest)) {
-                $text = $currentRequest[$indexingField];
+                if(array_key_exists($indexingField, $currentRequest)) {
+                    $text = $currentRequest[$indexingField];
 
-                //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
-                foreach ($value[0] as $key => $value) {
-                    if($key == 'Plain') {
+                    //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
+                    foreach ($value[0] as $key => $value) {
+                        if($key == 'Plain') {
 
-                        //type Plain
-                        $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
-                    } else if($key == 'Html'){
+                            //type Plain
+                            $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
+                        } else if($key == 'Html'){
 
-                        //type Html
-                        if(array_key_exists('weights', $value)) {
-                            $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath, $value['weights']);
-                        } else {
-                            $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath);
+                            //type Html
+                            if(array_key_exists('weights', $value)) {
+                                $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath, $value['weights']);
+                            } else {
+                                $this->indexingHtml($text, $value['type'], $dataSet, $this->mainPath);
+                            }
+                        } else if($key == 'Collection') {
+
+                            //type Collection
+                            //get the right yaml file for collection
+                            $collectionPath = $this->mainPath;
+                            $entityPath = $value['entity'];
+                            $splittedEntityPath = explode("\\", $entityPath);
+                            $i = 0;
+                            while($splittedEntityPath[$i] != 'Entity') {
+                                $collectionPath = $collectionPath.'/'.$splittedEntityPath[$i];
+                                $i++;
+                            }
+                            $collectionPath = $collectionPath.'/Resources/config/search.yml';
+                            $yaml = new Parser();
+                            $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
+
+                            $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $this->mainPath, $dataSet);
                         }
-                    } else if($key == 'Collection') {
-
-                        //type Collection
-                        //get the right yaml file for collection
-                        $collectionPath = $this->mainPath;
-                        $entityPath = $value['entity'];
-                        $splittedEntityPath = explode("\\", $entityPath);
-                        $i = 0;
-                        while($splittedEntityPath[$i] != 'Entity') {
-                            $collectionPath = $collectionPath.'/'.$splittedEntityPath[$i];
-                            $i++;
-                        }
-                        $collectionPath = $collectionPath.'/Resources/config/search.yml';
-                        $yaml = new Parser();
-                        $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
-
-                        $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $this->mainPath, $dataSet);
                     }
                 }
             }
+            //update the total scores
+            $this->search_update_totals();
         }
-        //update the total scores
-        $this->search_update_totals();
     }
 
     public function indexingPlain($text, $score, $type, $dataset) {
@@ -579,9 +581,13 @@ EOD;
             $i++;
         }
         $searchYamlPath = $searchYamlPath.'/Resources/config/search.yml';
-        $this->entityName = $splittedEntityPath[$i+1];
-        $this->bundleName = $splittedEntityPath[$i-1];
-        $yaml = new Parser();
-        return $yaml->parse(file_get_contents($searchYamlPath));
+        if(file_exists($searchYamlPath)){
+            $this->entityName = $splittedEntityPath[$i+1];
+            $this->bundleName = $splittedEntityPath[$i-1];
+            $yaml = new Parser();
+            return $yaml->parse(file_get_contents($searchYamlPath));
+        } else {
+            return null;
+        }
     }
 }

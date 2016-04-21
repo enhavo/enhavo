@@ -314,7 +314,7 @@ EOD;
             }
 
             // Plain keyword.
-            else {//!!!
+            else {
                 if ($in_or) {
                     // Add to last element (which is an array).
                     $this->keys['positive'][count($this->keys['positive']) - 1] = array_merge($this->keys['positive'][count($this->keys['positive']) - 1], $words);
