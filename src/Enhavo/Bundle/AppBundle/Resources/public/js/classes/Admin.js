@@ -317,5 +317,22 @@ function Admin (router, templating, translator)
       });
     });
   }
+
+  this.initDescriptionTextPosition = function()
+  {
+    $(window).on("load resize",function() {
+      var desc = $("[data-description-text]");
+      var wh = $(window).height()
+      var menuHeight = $("#menu-main").height() + 240;
+
+      if(menuHeight > wh) {
+        $(desc).css({"position" : "relative", "bottom" : "15px"})
+      } else
+      {
+        $(desc).css({"position" : "absolute", "bottom" : "25px"})
+      }
+    });
+  }
+
 }
 
