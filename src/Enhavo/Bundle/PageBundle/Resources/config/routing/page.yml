@@ -93,13 +93,13 @@ enhavo_page_page_table:
                         label: table.batch.delete.label
                         confirm_message: table.batch.delete.confirmMessage
                         translation_domain: EnhavoAppBundle
-                        permission: ROLE_ESPERANTO_PAGE_PAGE_DELETE
+                        permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
                         position: 0
                     publish:
                         label: page.table.label.batch.publish
                         confirm_message: page.table.label.batch.publish_confirm
                         translation_domain: EnhavoPageBundle
-                        permission: ROLE_ESPERANTO_PAGE_PAGE_EDIT
+                        permission: ROLE_ENHAVO_PAGE_PAGE_EDIT
                         position: 1
                 columns:
                     id:

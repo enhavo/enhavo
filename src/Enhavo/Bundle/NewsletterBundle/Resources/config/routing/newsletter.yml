@@ -60,6 +60,18 @@ enhavo_newsletter_newsletter_table:
         _viewer:
             translationDomain: EnhavoNewsletterBundle
             table:
+                batch_actions:
+                    delete:
+                        label: table.batch.delete.label
+                        confirm_message: table.batch.delete.confirmMessage
+                        translation_domain: EnhavoAppBundle
+                        permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
+                        position: 0
+                    send:
+                        label: newsletter.table.label.batch.send
+                        confirm_message: newsletter.table.label.batch.send_confirm
+                        translation_domain: EnhavoNewsletterBundle
+                        permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_EDIT
                 columns:
                     id:
                         label: newsletter.label.id
