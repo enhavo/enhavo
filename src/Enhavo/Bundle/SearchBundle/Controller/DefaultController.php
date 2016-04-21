@@ -263,7 +263,8 @@ EOD;
         // Classify tokens.
         $in_or = FALSE;
         $limit_combinations = $this->and_or_limit;
-        // The first search expression does not count as AND.
+        //and_count is set to -1 because in the loop of the first word die and_count gets increased (and there was no AND yet) and in the lop of the second word the and_count gets increased also.
+        //So the count after two words would be 2 even if there was just 1 AND --> so we start with -1
         $and_count = -1;
         $or_count = 0;
 
@@ -377,13 +378,12 @@ EOD;
     }
 
     /**
-     * Parses a word or phrase for parseQuery().
-     *
-     * Splits a phrase into words. Adds its words to $this->words, if it is not
-     * already there. Returns a list containing the number of new words found,
-     * and the total number of words in the phrase.
+     * Sets the entered words to $this->words, if it is not already in there.
+     * Increases the 'new-scores' variable if there was addad a new word to §this->words and checks if the word is valid, that means if the minimum wordsize is reached.
+     * Splits also phrase entires into words.
+     * num_new_scores is important for the matches in SQL later.
      */
-    protected function parseWord($word) {//!!!
+    protected function parseWord($word) {
         $num_new_scores = 0;
         $num_valid_words = 0;
 
