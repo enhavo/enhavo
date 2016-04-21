@@ -474,7 +474,7 @@ EOD;
             $searchIndexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
             $total = $searchIndexRepository->sumScoresOfWord($word);
 
-            //get the total count with Zipf's law
+            //get the total count: Normalization according Zipf's law --> the word's value to the search index is inversely proportionate to its overall frequency therein
             $total = log10(1 + 1/(max(1, current($total))));
 
             //save new score

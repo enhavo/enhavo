@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\SearchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Matches all 'N' Unicode character classes (numbers)
@@ -127,41 +126,18 @@ EOD;
     protected $and_or_limit = 8;
 
     /**
-     * Indicates that part of the search expression was ignored.
-     *
-     * To prevent Denial of Service attacks, only
-     * \Drupal::config('search.settings')->get('and_or_limit') expressions
-     * (positive keywords, phrases, negative keywords) are allowed; this flag
-     * indicates that expressions existed past that limit and they were removed.
-     *
-     * @see SearchQuery::getStatus()
-     */
-    const EXPRESSIONS_IGNORED = 2; //!!!
-
-    /**
      * Indicates whether the query conditions are simple or complex (LIKE,OR,AND).
      *
      * @var bool
      */
-    protected $simple = TRUE;//!!!
+    protected $simple = TRUE;
 
     /**
      * Parsed-out positive and negative search keys.
      *
      * @var array
      */
-    protected $keys = array('positive' => array(), 'negative' => array());//!!!
-
-    /**
-     * Indicates that lower-case "or" was in the search expression.
-     *
-     * The word "or" in lower case was found in the search expression. This
-     * probably means someone was trying to do an OR search but used lower-case
-     * instead of upper-case.
-     *
-     * @see SearchQuery::getStatus()
-     */
-    const LOWER_CASE_OR = 4;
+    protected $keys = array('positive' => array(), 'negative' => array());
 
     /**
      * Conditions (AND, OR, ..) which are used in the search expression.
@@ -294,8 +270,9 @@ EOD;
      * - $this->matches
      */
     protected function parseSearchExpression() {
-        // Matches words optionally prefixed by a - sign. A word in this case is
-        // something between two spaces, optionally quoted.
+
+        //separates the searchExpression: each word becomes an array -> the first value is the original word with a space added, the second is the optional - sign, and the third is the word without the extra space
+        //if it is a quoted string it takes all in between the quotes as "one word"
         preg_match_all('/ (-?)("[^"]+"|[^" ]+)/i', ' ' .  $this->searchExpression , $keywords, PREG_SET_ORDER);
 
         if (count($keywords) ==  0) {
@@ -452,22 +429,8 @@ EOD;
      * Processing steps:
      * - Entities are decoded.
      * - Text is lower-cased and diacritics (accents) are removed.
-     * - hook_search_preprocess() is invoked.
-     * - CJK (Chinese, Japanese, Korean) characters are processed, depending on
-     *   the search settings.
      * - Punctuation is processed (removed or replaced with spaces, depending on
      *   where it is; see code for details).
-     * - Words are truncated to 50 characters maximum.
-     *
-     * @param string $text
-     *   Text to simplify.
-     * @param string|null $langcode
-     *   Language code for the language of $text, if known.
-     *
-     * @return string
-     *   Simplified and processed text.
-     *
-     * @see hook_search_preprocess()
      */
     function search_simplify($text) {
         //UTF-8
