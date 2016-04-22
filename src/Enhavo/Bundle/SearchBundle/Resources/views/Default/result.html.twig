@@ -2,12 +2,14 @@
     {% if data is iterable %}
         {% for item in data %}
              </br>
-            <div style="border-bottom: 1px solid darkslategray;">
-                <h1><b> {{ item.title }} </b></h1>
-                {% if item.teaser|length >= 100 %}
-                    <p>{{ item.teaser|slice(0, 100) }} ...</p>
-                {% else %}
-                    <p>{{ item.teaser|slice(0, 100) }}</p>
+            <div data-id={{ item.object.id }} data-update-route="enhavo_{{ item.bundleName }}_{{ item.entityName }}_update" style="border-bottom: 1px solid darkslategray;" class="entry-row">
+                <h1><b> {{ item.object.title|raw }} </b></h1>
+                {% if item.object.teaser is defined %}
+                    {% if item.object.teaser|length >= 100 %}
+                        <p>{{ item.object.teaser|slice(0, 100)|raw }} ...</p>
+                    {% else %}
+                        <p>{{ item.object.teaser|slice(0, 100)|raw }}</p>
+                    {% endif %}
                 {% endif %}
                 </br>
             </div>

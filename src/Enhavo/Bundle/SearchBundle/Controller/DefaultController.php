@@ -208,9 +208,54 @@ EOD;
                 foreach ($data as $resultData) {
 
                     //get Element from the entity
-                    $currentData = $this->getDoctrine()
+                    $currentData = array();
+                    $currentObject = $this->getDoctrine()
                         ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
                         ->findOneBy(array('id' => $resultData['reference']));
+
+                    //highlight title
+                    $title = $currentObject->getTitle();
+                    $allTitelsWords = explode(" ", $title);
+                    $wordsToHighlightTitle = array();
+                    foreach($allTitelsWords as $allTitelsWord) {
+                        $simplifiedWord = $this->search_simplify($allTitelsWord);
+                        foreach($this->words as $searchWord){
+                            if($searchWord == $simplifiedWord) {
+                                $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+                            }
+                        }
+                    }
+                    $newTitle = $title;
+                    foreach($wordsToHighlightTitle as $key => $value){
+                        $newTitle = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTitle);
+                    }
+                    if($newTitle != null) {
+                        $currentObject->setTitle($newTitle);
+                    }
+
+                    //highlight teaser
+                    $teaser = $currentObject->getTeaser();
+                    $allTeasersWords = explode(" ", $teaser);
+                    $wordsToHighlightTeaser = array();
+                    foreach($allTeasersWords as $allTeasersWord) {
+                        $simplifiedWord = $this->search_simplify($allTeasersWord);
+                        foreach($this->words as $searchWord){
+                            if($searchWord == $simplifiedWord) {
+                                $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+                            }
+                        }
+                    }
+                    $newTeaser = $teaser;
+                    foreach($wordsToHighlightTeaser as $key => $value){
+                        $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
+                    }
+                    if($newTeaser != null) {
+                        $currentObject->setTeaser($newTeaser);
+                    }
+
+                    $currentData['entityName'] = strtolower($resultData['type']);
+                    $currentData['bundleName'] = strtolower(str_replace('Bundle', '', $resultData['bundle']));
+                    $currentData['object'] = $currentObject;
                     $finalResults[] = $currentData;
                 }
 

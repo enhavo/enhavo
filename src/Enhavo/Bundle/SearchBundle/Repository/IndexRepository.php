@@ -51,11 +51,11 @@ class IndexRepository extends EntityRepository
                 }
             }
         }
-        //if(!$simple) {
+        //if($conditionCounter > 1) {
             foreach($conditions as $key => $value) {
                 if ($key == 'AND') {
                     foreach($value as $currentValue) {
-                        $query->setParameter('word_' . $wordCounter, '%'.$currentValue.'%');
+                        $query->setParameter('word_' . $wordCounter, '% '.$currentValue.' %');
                         $query->andWhere('d.data LIKE :word_' . $wordCounter);
                         $wordCounter++;
                     }
@@ -66,7 +66,7 @@ class IndexRepository extends EntityRepository
                             $orString = "";
                             $first = true;
                             for($i = 0; $i < count($currentValue); $i++) {
-                                $query->setParameter('word_' . $wordCounter, '%'.$currentValue[$i].'%');
+                                $query->setParameter('word_' . $wordCounter, '% '.$currentValue[$i].' %');
                                 if(!$first) {
                                     $orString = $orString.' OR ';
                                 }
@@ -81,7 +81,7 @@ class IndexRepository extends EntityRepository
                     $notString = "";
                     $first = true;
                     for($i = 0; $i < count($conditions['NOT']); $i++) {
-                        $query->setParameter('word_' . $wordCounter, '%'.$conditions['NOT'][$i].'%');
+                        $query->setParameter('word_' . $wordCounter, '% '.$conditions['NOT'][$i].' %');
                         if(!$first) {
                             $notString = $notString.' AND ';
                         }
@@ -92,7 +92,7 @@ class IndexRepository extends EntityRepository
                     $query->andWhere($notString);
                 }
             }
-       // }
+        //}
 
         $query->groupBy('d.id');
         // If the query is simple, we should have calculated the number of

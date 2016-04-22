@@ -159,7 +159,11 @@ class Dataset
 
     public function addData($data)
     {
-        $this->data = $this->data.' '.$data;
+        if($this->data == ""){
+            $this->data = $this->data.' '.$data.' ';
+        } else {
+            $this->data = $this->data.$data.' ';
+        }
 
         return $this;
     }

@@ -7,7 +7,7 @@ $(function() {
 
 var search = new SearchForm();
 
-function SearchForm() {
+function SearchForm(router, admin) {
 
     var self = this;
 
@@ -25,6 +25,7 @@ function SearchForm() {
                 success: function(response) {
                     $('#search-results').remove();
                     $(response).insertAfter(form);
+                    self.initResults();
                 },
                 error: function(response) {
                     console.log("Search error.")
@@ -33,4 +34,13 @@ function SearchForm() {
             return false;
         });
     };
+
+    this.initResults = function() {
+        $('#search-results').on('click', '[data-id]', function() {
+            var id = $(this).data('id');
+            var route = $(this).data('update-route');
+            var url = router.generate(route, {id: id});
+            admin.ajaxOverlay(url);
+        });
+    }
 }
