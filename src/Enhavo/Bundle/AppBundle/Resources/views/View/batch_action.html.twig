@@ -15,10 +15,10 @@
             <button data-batch-actions-submit class="btn disabled"
                     data-confirm-dialog-template="{{ dialogTemplates.confirmDialog()|e }}"
                     data-error-dialog-template="{{ dialogTemplates.errorDialog()|e }}"
-                    data-message-none-selected="{{ 'table.batch.errorNoneSelected'|trans({}, 'EnhavoAppBundle') }}"
-                    data-message-no-action-selected="{{ 'table.batch.errorNoActionSelected'|trans({}, 'EnhavoAppBundle') }}"
+                    data-message-none-selected="{{ 'error.batch.noneSelected'|trans({}, 'EnhavoAppBundle') }}"
+                    data-message-no-action-selected="{{ 'error.batch.noActionSelected'|trans({}, 'EnhavoAppBundle') }}"
                     data-batch-action-route="{{ viewer.batchActionRoute }}">
-                    <i class="icon-check-1"></i> {{ 'table.batch.submit'|trans({}, 'EnhavoAppBundle') }}
+                    <i class="icon-check-1"></i> {{ 'action.batch.submit'|trans({}, 'EnhavoAppBundle') }}
             </button>
         </div>
     </div>
@@ -31,8 +31,8 @@
             <span>__confirm_message__</span>
         </div>
         <div class="batch-actions-dialog-buttons">
-            <button class="btn close"><i class="icon-cancel"></i> {{ 'table.batch.confirmMessageNo'|trans({}, 'EnhavoAppBundle') }}</button>
-            <button class="btn" data-batch-action-confirm><i class="icon-ok"></i> {{ 'table.batch.confirmMessageYes'|trans({}, 'EnhavoAppBundle') }}</button>
+            <button class="btn close"><i class="icon-cancel"></i> {{ 'message.confirm.batch.no'|trans({}, 'EnhavoAppBundle') }}</button>
+            <button class="btn" data-batch-action-confirm><i class="icon-ok"></i> {{ 'message.confirm.batch.yes'|trans({}, 'EnhavoAppBundle') }}</button>
         </div>
     </div>
 {% endmacro %}
@@ -44,7 +44,7 @@
             <span>__message__</span>
         </div>
         <div class="batch-actions-dialog-buttons">
-            <button class="btn close"><i class="icon-cancel"></i> {{ 'table.batch.errorNoneSelectedClose'|trans({}, 'EnhavoAppBundle') }}</button>
+            <button class="btn close"><i class="icon-cancel"></i> {{ 'error.batch.close'|trans({}, 'EnhavoAppBundle') }}</button>
         </div>
     </div>
 {% endmacro %}

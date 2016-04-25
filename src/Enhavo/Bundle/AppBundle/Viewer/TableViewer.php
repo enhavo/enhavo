@@ -26,16 +26,18 @@ class TableViewer extends AbstractViewer
                     'move_after_route' => sprintf('%s_%s_move_after', $this->getBundlePrefix(), $this->getResourceName()),
                     'move_to_page_route' => sprintf('%s_%s_move_to_page', $this->getBundlePrefix(), $this->getResourceName())
                 ),
-                'batch_actions' => array(
-                    'delete' => array(
-                        'label'                 => 'table.batch.delete.label',
-                        'confirm_message'       => 'table.batch.delete.confirmMessage',
-                        'translation_domain'    => 'EnhavoAppBundle',
-                        'permission'            => sprintf('ROLE_%s_%s_DELETE', strtoupper($this->getBundlePrefix()), strtoupper($this->getResourceName())),
-                        'position'              => 0
-                    )
-                ),
-                'batch_action_route' => sprintf('%s_%s_batch', $this->getBundlePrefix(), $this->getResourceName())
+                'batch' => array(
+                    'actions' => array(
+                        'delete' => array(
+                            'label'                 => 'action.batch.delete',
+                            'confirm_message'       => 'message.confirm.batch.delete',
+                            'translation_domain'    => 'EnhavoAppBundle',
+                            'permission'            => sprintf('ROLE_%s_%s_DELETE', strtoupper($this->getBundlePrefix()), strtoupper($this->getResourceName())),
+                            'position'              => 0
+                        )
+                    ),
+                    'route' => sprintf('%s_%s_batch', $this->getBundlePrefix(), $this->getResourceName())
+                )
             )
         );
     }
@@ -167,7 +169,7 @@ class TableViewer extends AbstractViewer
     public function getHasBatchActions()
     {
         $batch_actions = $this->getBatchActions();
-        $route = $this->getConfig()->get('table.batch_action_route');
+        $route = $this->getConfig()->get('table.batch.route');
         if (!$this->container->get('router')->getRouteCollection()->get($route)) {
             return false;
         }
@@ -187,7 +189,7 @@ class TableViewer extends AbstractViewer
     {
         $authorizationChecker = $this->container->get('security.authorization_checker');
 
-        $batch_actions = $this->getConfig()->get('table.batch_actions');
+        $batch_actions = $this->getConfig()->get('table.batch.actions');
         if (!$batch_actions) {
             return array();
         }
@@ -195,7 +197,7 @@ class TableViewer extends AbstractViewer
         if (count($batch_actions) > 0) {
             if (!isset($batch_actions[self::BATCH_ACTION_NONE_SELECTED])) {
                 $batch_actions[self::BATCH_ACTION_NONE_SELECTED] = array(
-                    'label'                 => 'table.batch.noneSelected.label',
+                    'label'                 => 'label.batch.selectAction',
                     'confirm_message'       => '',
                     'translation_domain'    => 'EnhavoAppBundle'
                 );
@@ -230,7 +232,7 @@ class TableViewer extends AbstractViewer
                 if (isset($value['confirm_message']) && $value['confirm_message']) {
                     $action_parsed['confirm_message'] = $translator->trans($value['confirm_message'], array(), $domain);
                 } else {
-                    $action_parsed['confirm_message'] = $translator->trans('table.batch.confirmMessageGeneric', array('%command%' => $command), 'EnhavoAppBundle');
+                    $action_parsed['confirm_message'] = $translator->trans('message.confirm.batch.generic', array('%command%' => $command), 'EnhavoAppBundle');
                 }
 
                 if (isset($value['position']) && is_int($value['position']) && ($value['position'] >= 0)) {
@@ -245,7 +247,14 @@ class TableViewer extends AbstractViewer
                 $batch_actions_parsed[$command_parsed] = $action_parsed;
             }
 
-            uasort($batch_actions_parsed, array($this, 'cmp'));
+            uasort($batch_actions_parsed,
+                function($a, $b) {
+                    if ($a['position'] == $b['position']) {
+                        return 0;
+                    }
+                    return $a['position'] < $b['position'] ? -1 : 1;
+                }
+            );
 
             return $batch_actions_parsed;
         }
@@ -255,7 +264,7 @@ class TableViewer extends AbstractViewer
 
     public function getBatchActionRoute()
     {
-        return $this->getConfig()->get('table.batch_action_route');
+        return $this->getConfig()->get('table.batch.route');
     }
 
     /**
@@ -270,13 +279,5 @@ class TableViewer extends AbstractViewer
         $collector = $this->container->get('enhavo_app.table_widget_collector');
         $widget = $collector->getWidget($options['type']);
         return $widget->render($options, $property, $item);
-    }
-
-    private function cmp($a, $b)
-    {
-        if ($a['position'] == $b['position']) {
-            return 0;
-        }
-        return $a['position'] < $b['position'] ? -1 : 1;
     }
 }

@@ -1,4 +1,7 @@
 page:
+  action:
+    batch:
+      publish: 'Publish'
   form:
     label:
       social_media: 'Social Media'
@@ -19,8 +22,7 @@ page:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
-  table:
-    label:
+  message:
+    confirm:
       batch:
-        publish: 'Publish'
-        publish_confirm: 'Do you really want to publish all selected items?'
+        publish: 'Do you really want to publish all selected items?'

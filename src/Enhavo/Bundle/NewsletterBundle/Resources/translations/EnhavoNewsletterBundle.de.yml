@@ -5,6 +5,8 @@ newsletter:
       success: 'Newsletter erfolgreich gesendet!'
       error: 'Newsletter konnte nicht gesendet werden!'
       again: 'Möchten Sie den Newsletter wirklich erneut senden?'
+    batch:
+      send: 'Senden'
   label:
     sent: 'gesendet'
     id: 'ID'
@@ -14,11 +16,10 @@ newsletter:
     label:
       subject: 'Betreff'
       sent: 'gesendet'
-  table:
-    label:
+  message:
+    confirm:
       batch:
-        send: 'Senden'
-        send_confirm: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
+        send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
 subscriber:
   form:
     label:

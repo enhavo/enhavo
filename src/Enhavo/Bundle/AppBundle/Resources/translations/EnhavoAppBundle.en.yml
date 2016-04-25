@@ -1,6 +1,27 @@
+action:
+  changePassword: 'Change password'
+  batch:
+    submit: 'Execute'
+    delete: 'Delete'
 error:
   occurred: 'An error occured'
   forbidden: 'You have not the rights for this action'
+  batch:
+    noneSelected: 'No elements selected'
+    noActionSelected: 'No action selected'
+    close: 'Close'
+form:
+  delete:
+    question: 'Would you like to delete this element?'
+  label:
+    public: 'Public'
+    meta_description: 'Meta description'
+    link: 'Link'
+    title: 'Title'
+    teaser: 'Teaser'
+    slug: 'Slug'
+    picture: 'Picture'
+    text: 'Text'
 label:
   logout: 'Logout'
   id: 'ID'
@@ -14,36 +35,19 @@ label:
   title: 'Title'
   upload: 'Upload data'
   changePassword: 'Change password'
-form:
-  delete:
-    question: 'Would you like to delete this element?'
-  label:
-    public: 'Public'
-    meta_description: 'Meta description'
-    link: 'Link'
-    title: 'Title'
-    teaser: 'Teaser'
-    slug: 'Slug'
-    picture: 'Picture'
-    text: 'Text'
+  batch:
+    selectAction: 'Choose action'
+message:
+  confirm:
+    batch:
+      generic: 'Do you really want to run the command %command% for all selected items?'
+      delete: 'Do you really want to delete all selected items?'
+      yes: 'Yes'
+      no: 'No'
 tab:
   label:
+    category: 'Category'
     content: 'Content'
     seo: 'SEO'
 table:
   empty: 'no data'
-  batch:
-    submit: 'Execute'
-    confirmMessageGeneric: 'Do you really want to run the command %command% for all selected items?'
-    confirmMessageYes: 'Yes'
-    confirmMessageNo: 'No'
-    errorNoneSelected: 'No elements selected'
-    errorNoActionSelected: 'No action selected'
-    errorNoneSelectedClose: 'Close'
-    noneSelected:
-      label: 'Choose action'
-    delete:
-      label: 'Delete'
-      confirmMessage: 'Do you really want to delete all selected items?'
-action:
-  changePassword: 'Change password'

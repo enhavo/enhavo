@@ -1,6 +1,27 @@
+action:
+  changePassword: 'Passwort ändern'
+  batch:
+    submit: 'Ausführen'
+    delete: 'Löschen'
 error:
   occurred: 'Ein Fehler ist aufgetreten'
   forbidden: 'Sie haben nicht die nötigen Rechte um diese Aktion auszuführen'
+  batch:
+    noneSelected: 'Keine Elemente ausgewählt'
+    noActionSelected: 'Keine Aktion ausgewählt'
+    close: 'Schließen'
+form:
+  delete:
+    question: 'Wollen sie dieses Element wirklich löschen?'
+  label:
+    public: 'Veröffentlichen'
+    meta_description: 'Meta Text'
+    link: 'Link'
+    title: 'Titel'
+    teaser: 'Teaser'
+    slug: 'Slug'
+    picture: 'Bild'
+    text: 'Text'
 label:
   logout: 'Logout'
   id: 'ID'
@@ -14,18 +35,15 @@ label:
   title: 'Titel'
   upload: 'Datei hochladen'
   changePassword: 'Passwort ändern'
-form:
-  delete:
-    question: 'Wollen sie dieses Element wirklich löschen?'
-  label:
-    public: 'Veröffentlichen'
-    meta_description: 'Meta Text'
-    link: 'Link'
-    title: 'Titel'
-    teaser: 'Teaser'
-    slug: 'Slug'
-    picture: 'Bild'
-    text: 'Text'
+  batch:
+    selectAction: 'Aktion auswählen'
+message:
+  confirm:
+    batch:
+      generic: 'Wollen sie wirklich das Kommando %command% für alle ausgewählten Elemente ausführen?'
+      delete: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
+      yes: 'Ja'
+      no: 'Nein'
 tab:
   label:
     category: 'Kategorie'
@@ -33,18 +51,3 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
-  batch:
-    submit: 'Ausführen'
-    confirmMessageGeneric: 'Wollen sie wirklich das Kommando %command% für alle ausgewählten Elemente ausführen?'
-    confirmMessageYes: 'Ja'
-    confirmMessageNo: 'Nein'
-    errorNoneSelected: 'Keine Elemente ausgewählt'
-    errorNoActionSelected: 'Keine Aktion ausgewählt'
-    errorNoneSelectedClose: 'Schließen'
-    noneSelected:
-      label: 'Aktion auswählen'
-    delete:
-      label: 'Löschen'
-      confirmMessage: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
-action:
-  changePassword: 'Passwort ändern'

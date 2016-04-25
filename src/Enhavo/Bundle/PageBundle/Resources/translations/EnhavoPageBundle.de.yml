@@ -1,4 +1,7 @@
 page:
+  action:
+    batch:
+      publish: 'Veröffentlichen'
   form:
     label:
       social_media: 'Social Media'
@@ -19,8 +22,7 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
-  table:
-    label:
+  message:
+    confirm:
       batch:
-        publish: 'Veröffentlichen'
-        publish_confirm: 'Wollen sie wirklich alle ausgewählten Elemente veröffentlichen?'
+        publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
