@@ -29,8 +29,8 @@ class TableViewer extends AbstractViewer
                 'batch' => array(
                     'actions' => array(
                         'delete' => array(
-                            'label'                 => 'action.batch.delete',
-                            'confirm_message'       => 'message.confirm.batch.delete',
+                            'label'                 => 'table.batch.action.delete',
+                            'confirm_message'       => 'table.batch.message.confirm.delete',
                             'translation_domain'    => 'EnhavoAppBundle',
                             'permission'            => sprintf('ROLE_%s_%s_DELETE', strtoupper($this->getBundlePrefix()), strtoupper($this->getResourceName())),
                             'position'              => 0
@@ -197,7 +197,7 @@ class TableViewer extends AbstractViewer
         if (count($batch_actions) > 0) {
             if (!isset($batch_actions[self::BATCH_ACTION_NONE_SELECTED])) {
                 $batch_actions[self::BATCH_ACTION_NONE_SELECTED] = array(
-                    'label'                 => 'label.batch.selectAction',
+                    'label'                 => 'table.batch.label.selectAction',
                     'confirm_message'       => '',
                     'translation_domain'    => 'EnhavoAppBundle'
                 );
@@ -232,7 +232,7 @@ class TableViewer extends AbstractViewer
                 if (isset($value['confirm_message']) && $value['confirm_message']) {
                     $action_parsed['confirm_message'] = $translator->trans($value['confirm_message'], array(), $domain);
                 } else {
-                    $action_parsed['confirm_message'] = $translator->trans('message.confirm.batch.generic', array('%command%' => $command), 'EnhavoAppBundle');
+                    $action_parsed['confirm_message'] = $translator->trans('table.batch.message.confirm.generic', array('%command%' => $command), 'EnhavoAppBundle');
                 }
 
                 if (isset($value['position']) && is_int($value['position']) && ($value['position'] >= 0)) {

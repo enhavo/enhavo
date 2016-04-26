@@ -1,7 +1,4 @@
 page:
-  action:
-    batch:
-      publish: 'Veröffentlichen'
   form:
     label:
       social_media: 'Social Media'
@@ -22,7 +19,9 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
-  message:
-    confirm:
-      batch:
+  batch:
+    action:
+      publish: 'Veröffentlichen'
+    message:
+      confirm:
         publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'

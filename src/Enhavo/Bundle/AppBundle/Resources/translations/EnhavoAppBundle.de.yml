@@ -51,3 +51,19 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
+  batch:
+    action:
+      submit: 'Ausführen'
+      delete: 'Löschen'
+    error:
+      noneSelected: 'Keine Elemente ausgewählt'
+      noActionSelected: 'Keine Aktion ausgewählt'
+      close: 'Schließen'
+    label:
+      selectAction: 'Aktion auswählen'
+    message:
+      confirm:
+        generic: 'Wollen sie wirklich das Kommando %command% für alle ausgewählten Elemente ausführen?'
+        delete: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
+        yes: 'Ja'
+        no: 'Nein'

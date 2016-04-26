@@ -1,15 +1,8 @@
 action:
   changePassword: 'Change password'
-  batch:
-    submit: 'Execute'
-    delete: 'Delete'
 error:
   occurred: 'An error occured'
   forbidden: 'You have not the rights for this action'
-  batch:
-    noneSelected: 'No elements selected'
-    noActionSelected: 'No action selected'
-    close: 'Close'
 form:
   delete:
     question: 'Would you like to delete this element?'
@@ -35,15 +28,6 @@ label:
   title: 'Title'
   upload: 'Upload data'
   changePassword: 'Change password'
-  batch:
-    selectAction: 'Choose action'
-message:
-  confirm:
-    batch:
-      generic: 'Do you really want to run the command %command% for all selected items?'
-      delete: 'Do you really want to delete all selected items?'
-      yes: 'Yes'
-      no: 'No'
 tab:
   label:
     category: 'Category'
@@ -51,3 +35,19 @@ tab:
     seo: 'SEO'
 table:
   empty: 'no data'
+  batch:
+    action:
+      submit: 'Execute'
+      delete: 'Delete'
+    error:
+      noneSelected: 'No items selected'
+      noActionSelected: 'No action selected'
+      close: 'Close'
+    label:
+      selectAction: 'Choose action'
+    message:
+      confirm:
+        generic: 'Do you really want to run the command %command% for all selected items?'
+        delete: 'Do you really want to delete all selected items?'
+        yes: 'Yes'
+        no: 'No'
