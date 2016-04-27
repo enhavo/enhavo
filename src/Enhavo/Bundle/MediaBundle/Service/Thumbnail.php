@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\Service;
 class Thumbnail
 {
 
-    static public function make($input, $output, $width, $height, $quality = 75)
+    static public function make($input, $output, $width, $height, $quality = 80)
     {
         $size = getimagesize( $input );
         $oldWidth = $size[ 0 ];

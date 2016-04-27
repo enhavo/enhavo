@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\Service;
 class Resize
 {
 
-    static public function make($inputFile, $outputFile, $maxWidth, $maxHeight, $quality = 75)
+    static public function make($inputFile, $outputFile, $maxWidth, $maxHeight, $quality = 80)
     {
         $size = getimagesize( $inputFile );
         $oldWidth = $size[ 0 ];
