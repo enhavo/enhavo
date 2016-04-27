@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\Service;
 class Resize
 {
 
-    static public function make($inputFile, $outputFile, $maxWidth, $maxHeight)
+    static public function make($inputFile, $outputFile, $maxWidth, $maxHeight, $quality = 75)
     {
         $size = getimagesize( $inputFile );
         $oldWidth = $size[ 0 ];
@@ -79,7 +79,7 @@ class Resize
                 $src_image = imageCreateFromJPEG( $inputFile );
                 $dst_image = imageCreateTrueColor( $dst_w, $dst_h );
                 imagecopyresampled ($dst_image, $src_image , $dst_x , $dst_y , $src_x , $src_y , $dst_w , $dst_h , $src_w , $src_h);
-                imageJPEG( $dst_image, $outputFile, 95);
+                imageJPEG( $dst_image, $outputFile, $quality);
                 unset($dst_image);
                 unset($src_image);
                 return true;
