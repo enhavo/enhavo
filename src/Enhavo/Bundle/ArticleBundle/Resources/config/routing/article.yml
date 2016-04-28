@@ -94,6 +94,14 @@ enhavo_article_article_delete:
     defaults:
         _controller: enhavo_article.controller.article:deleteAction
 
+enhavo_article_article_batch:
+    options:
+        expose: true
+    path: /enhavo/article/article/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_article.controller.article:batchAction
+
 enhavo_article_article_preview:
     options:
         expose: true

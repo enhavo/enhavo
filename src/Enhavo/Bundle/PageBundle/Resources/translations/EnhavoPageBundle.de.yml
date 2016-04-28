@@ -19,3 +19,9 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
+  batch:
+    action:
+      publish: 'Veröffentlichen'
+    message:
+      confirm:
+        publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
