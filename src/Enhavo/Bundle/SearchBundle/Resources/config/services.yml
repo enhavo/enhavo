@@ -9,10 +9,8 @@ services:
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         arguments:
-            - @service_container
-            - %kernel.root_dir%
-            - @request_stack
             - @doctrine.orm.entity_manager
+            - @kernel
         tags:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
@@ -32,3 +30,10 @@ services:
             - @service_container
         tags:
             - { name: twig.extension }
+
+    enhavo_search_engine:
+        class: Enhavo\Bundle\SearchBundle\Index\IndexEngine
+        arguments:
+            - @service_container
+            - @kernel
+            - @doctrine.orm.entity_manager

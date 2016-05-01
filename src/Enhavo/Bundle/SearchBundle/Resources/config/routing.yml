@@ -1,3 +1,7 @@
 enhavo_search_submit:
     path:     /enhavo/search/{type}/submit
     defaults: { _controller: EnhavoSearchBundle:Default:submit }
+
+enhavo_search_crontasks:
+    path:     /enhavo/search/cron
+    defaults: { _controller: EnhavoSearchBundle:CronTask:indexing }
