@@ -104,7 +104,6 @@ class IndexRepository extends EntityRepository
             $query->having('COUNT(d.id) >= :matches');
         }
         $query->orderBy('calculated_score', 'DESC');
-        $test = $query->getQuery()->getResult();
-        return $test;
+        return $query->getQuery()->getResult();;
     }
 }
