@@ -318,6 +318,26 @@ function Admin (router, templating, translator)
     });
   }
 
+  this.initUserMenu = function()
+  {
+      var userMenuActive = false;
+      $("[data-open-usermenu]").on("click", function(){
+        $(this).find("button").toggleClass("clicked");
+        $("[data-usermenu-link]").fadeToggle(100);
+        $("#user-menu").toggleClass("background");
+
+        var menuWidth = $("[data-user-menu]").innerWidth();
+
+        if (userMenuActive) {
+          userMenuActive = false;
+          $(this).css('transform', 'translateX(0)');
+        } else {
+          userMenuActive = true;
+          $(this).css('transform', 'translateX(-' + menuWidth + 'px');
+        }
+      });
+  }
+
   this.initDescriptionTextPosition = function()
   {
     $(window).on("load resize",function() {
@@ -333,6 +353,7 @@ function Admin (router, templating, translator)
       }
     });
   }
+
 
 }
 

@@ -84,33 +84,12 @@
 <nav id="user-menu">
     <ul class="clearfix" data-user-menu>
         <li class="menu-btn" data-open-usermenu><button class="btn dropdown">Hallo Admin!</button></li>
-        <li data-usermenu-link><a href="#">Nutzerverwaltung</a></li>
-        <li data-usermenu-link><a href="#">Seite ansehen</a></li>
-        <li data-usermenu-link><a href="#">Log out</a></li>
+        <li data-usermenu-link><a href="#">Konto</a></li>
+        <li data-usermenu-link><a href="/">Seite ansehen</a></li>
+        <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
     </ul>
 </nav>
 
-<script>
-
-    var userMenuActive = false;
-
-    $("[data-open-usermenu]").on("click", function(){
-        $(this).find("button").toggleClass("clicked");
-        $("[data-usermenu-link]").fadeToggle(100);
-        $("#user-menu").toggleClass("background");
-
-        var menuWidth = $("[data-user-menu]").innerWidth();
-
-        if (userMenuActive) {
-            userMenuActive = false;
-            $(this).css('transform', 'translateX(0)');
-        } else {
-            userMenuActive = true;
-            $(this).css('transform', 'translateX(-' + menuWidth + 'px');
-        }
-
-    });
-</script>
 
 {% block body %}
     <div id="overlay"></div>
