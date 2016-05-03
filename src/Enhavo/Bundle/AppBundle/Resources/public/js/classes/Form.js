@@ -289,7 +289,6 @@ var Form = function(router, templating, admin, translator)
     };
 
     var initAddButton = function(tagList, tagCount) {
-      console.log(tagList.parent().find('.add-another'));
       tagList.parent().find('.add-another').click(function(e) {
         e.preventDefault();
 
@@ -302,6 +301,8 @@ var Form = function(router, templating, admin, translator)
         //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
         tagCount++;
 
+        newWidget = $.parseHTML(newWidget);
+        self.initSelect(newWidget);
         tagList.append(newWidget);
         initDeleteButton();
         setOrderForContainer(tagList);
