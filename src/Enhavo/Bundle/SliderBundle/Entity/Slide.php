@@ -40,7 +40,7 @@ class Slide
     protected $public;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     protected $image;
 
@@ -48,15 +48,6 @@ class Slide
      * @var Slider
      */
     protected $slider;
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -211,32 +202,22 @@ class Slide
     }
 
     /**
-     * Add image
+     * Set image
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     * @return Slider
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $image
+     * @return Slide
      */
-    public function addImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
+    public function setImage($image)
     {
-        $this->image[] = $image;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Remove image
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     */
-    public function removeImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
-    {
-        $this->image->removeElement($image);
-    }
-
-    /**
      * Get image
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getImage()
     {

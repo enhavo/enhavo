@@ -22,9 +22,10 @@ class PicturePictureType extends ItemFormType
             'translation_domain' => 'EnhavoAppBundle'
         ));
 
-        $builder->add('filesLeft', 'enhavo_files', array(
+        $builder->add('fileLeft', 'enhavo_files', array(
             'label' => 'picturePicture.form.label.picture_left',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'multiple' => false
         ));
 
         $builder->add('captionLeft', 'text', array(
@@ -32,9 +33,10 @@ class PicturePictureType extends ItemFormType
             'translation_domain' => 'EnhavoGridBundle'
         ));
 
-        $builder->add('filesRight', 'enhavo_files', array(
+        $builder->add('fileRight', 'enhavo_files', array(
             'label' => 'picturePicture.form.label.picture_right',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'multiple' => false
         ));
 
         $builder->add('captionRight', 'text', array(

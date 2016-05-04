@@ -33,16 +33,23 @@ class FilesType extends AbstractType
         $collection = new ArrayCollection();
 
         //convert view data into concrete file objects
-        //save it to collection var cause the normalization
+        //save it to collection var because the normalization
         //will overwrite the model data immediately
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($manager, &$collection) {
+            function (FormEvent $event) use ($manager, &$collection, $options) {
                 $data = $event->getData();
                 if($data) {
-                    foreach($data as $formFile) {
-                        $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
-                        $file->setOrder($formFile['order']);
+                    if ($options['multiple']) {
+                        foreach($data as $formFile) {
+                            $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
+                            $file->setOrder($formFile['order']);
+                            $file->setGarbage(false);
+                            $collection->add($file);
+                        }
+                    } else {
+                        $file = $manager->getRepository('EnhavoMediaBundle:File')->find($data['id']);
+                        $file->setOrder($data['order']);
                         $file->setGarbage(false);
                         $collection->add($file);
                     }
@@ -56,8 +63,12 @@ class FilesType extends AbstractType
         //after normalization write back to model data
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) use ($collection) {
-                $event->setData($collection);
+            function (FormEvent $event) use ($collection, $options) {
+                if ($options['multiple']) {
+                    $event->setData($collection);
+                } else {
+                    $event->setData($collection->get(0));
+                }
             }
         );
 
