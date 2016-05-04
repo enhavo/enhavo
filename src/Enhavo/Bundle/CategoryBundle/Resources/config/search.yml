@@ -18,4 +18,3 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         tag:
             - Collection:
                 type: text
-                weight: 3

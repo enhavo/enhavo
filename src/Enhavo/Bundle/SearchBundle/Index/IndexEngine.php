@@ -164,34 +164,48 @@ EOD;
             $accessor = PropertyAccess::createPropertyAccessor();
             if(property_exists($item, $indexingField)) {
                 $text = $accessor->getValue($item, $indexingField);
+                $this->switchToIndexingType($text, $value, $dataSet);
+            }
+        }
+        //update the total scores
+        $this->search_update_totals();
+    }
 
-                //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
-                foreach ($value[0] as $key => $value) {
-                    if($key == 'Plain') {
+    public function switchToIndexingType($text, $type, $dataSet)
+    {
+        //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
+        if (is_array($type[0])) {
+            foreach ($type[0] as $key => $value) {
+                if ($key == 'Plain') {
 
-                        //type Plain
-                        $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
-                    } else if($key == 'Html'){
+                    //type Plain
+                    $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
+                } else if ($key == 'Html') {
 
-                        //type Html
-                        if(array_key_exists('weights', $value)) {
+                    //type Html
+                    if (array_key_exists('weights', $value)) {
+                        if($text != null){
                             $this->indexingHtml($text, $value['type'], $dataSet, $value['weights']);
-                        } else {
+                        }
+                    } else {
+                        if($text != null) {
                             $this->indexingHtml($text, $value['type'], $dataSet);
                         }
-                    } else if($key == 'Collection') {
+                    }
+                } else if ($key == 'Collection') {
 
-                        //type Collection
-                        //get the right yaml file for collection
+                    //type Collection
+                    //get the right yaml file for collection
+                    if (array_key_exists('entity', $value)) {
                         $bundlePath = null;
                         $splittedBundlePath = explode('\\', $value['entity']);
-                        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+                        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
                             array_pop($splittedBundlePath);
                         }
                         $bundlePath = implode('/', $splittedBundlePath);
                         $collectionPath = null;
-                        foreach($this->searchYamlPaths as $path){
-                            if(strpos($path, $bundlePath)){
+                        foreach ($this->searchYamlPaths as $path) {
+                            if (strpos($path, $bundlePath)) {
                                 $collectionPath = $path;
                                 break;
                             }
@@ -199,13 +213,45 @@ EOD;
                         $yaml = new Parser();
                         $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
 
-                        $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                        if($text != null) {
+                            $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                        }
+                    } else if (array_key_exists('type', $value)) {
+                        foreach($text as $currentText){
+                            $this->indexingPlain($currentText, $value['weight'],$value['type'], $dataSet);
+                        }
                     }
+
                 }
             }
+        } else {
+            //Model
+            $model = get_class($text);
+            $splittedModelPath = explode('\\', $model);
+            if($splittedModelPath[0] == 'Proxies')
+            {
+                array_shift($splittedModelPath);
+                array_shift($splittedModelPath);
+            }
+            $model = implode('\\',$splittedModelPath);
+            while (strpos(end($splittedModelPath), 'Bundle') != true) {
+                array_pop($splittedModelPath);
+            }
+
+            $bundlePath = implode('/', $splittedModelPath);
+            $modelPath = null;
+            foreach ($this->searchYamlPaths as $path) {
+                if (strpos($path, $bundlePath)) {
+                    $modelPath = $path;
+                    break;
+                }
+            }
+            $yaml = new Parser();
+            $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
+            if($text != null) {
+                $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+            }
         }
-        //update the total scores
-        $this->search_update_totals();
     }
 
     public function indexingPlain($text, $score, $type, $dataset) {
@@ -369,16 +415,26 @@ EOD;
         }
     }
 
-    public function indexingCollection($text, $find, $yamlFile, $dataSet) {
+    public function indexingCollection($text, $model, $yamlFile, $dataSet) {
 
+        if(array_key_exists($model, $yamlFile)){
+            $colProperties = $yamlFile[$model]['properties'];
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach($text as $singleText){
+                foreach($colProperties as $key => $value){
+
+                    $this->switchToIndexingType($accessor->getValue($singleText, $key), $value, $dataSet);
+                }
+            }
+        }
         //indexing a collection
         //get seperated content types
-        $colProperties = $yamlFile[$find]['properties'];
-        $textContent = null;
-        $colTypeYml = null;
-        $accessor = PropertyAccess::createPropertyAccessor();
-        foreach($colProperties as $key => $value) {
-            if(is_array($text)) {
+        //$colProperties = $yamlFile[$find]['properties'];
+        //$textContent = null;
+        //$colTypeYml = null;
+        //$accessor = PropertyAccess::createPropertyAccessor();
+        //foreach($colProperties as $key => $value) {
+            /*if(is_array($text)) {
                 if(array_key_exists($key, $text)) {
                     $textContent = $text[$key];
                     $colTypeYml = $yamlFile[$value[0]];
@@ -393,7 +449,7 @@ EOD;
                 }
             }
         }
-        if($textContent != null){
+       /* if($textContent != null){
 
             //go trough the yaml structure until we find types and wights of the items
             $splittedFindPath = explode("\\", $find);
@@ -442,6 +498,17 @@ EOD;
                         }
                     }
                 }
+            }
+        }*/
+    }
+
+    public function indexingModel($model, $yamlFile, $dataset, $text) {
+        if(array_key_exists($model, $yamlFile)){
+            $colProperties = $yamlFile[$model]['properties'];
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach($colProperties as $key => $value){
+                $currentText = $accessor->getValue($text, $key);
+                $this->switchToIndexingType($currentText, $value, $dataset);
             }
         }
     }

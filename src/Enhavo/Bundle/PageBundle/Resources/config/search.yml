@@ -13,5 +13,8 @@ Enhavo\Bundle\PageBundle\Entity\Page:
                 type: teaser
 
         content:
+            - Model
+
+        tags:
             - Collection:
-                entity: Enhavo\Bundle\GridBundle\Entity\Content
+                entity: Enhavo\Bundle\CategoryBundle\Entity\Category

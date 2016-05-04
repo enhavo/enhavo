@@ -1,7 +1,8 @@
 Enhavo\Bundle\GridBundle\Entity\Content:
     properties:
         items:
-            - Enhavo\Bundle\GridBundle\Entity\Item
+            - Collection:
+                entity: Enhavo\Bundle\GridBundle\Entity\Item
 
 Enhavo\Bundle\GridBundle\Entity\Item:
     properties:
