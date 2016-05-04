@@ -1,9 +1,12 @@
 [![License](https://img.shields.io/packagist/l/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 [![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg)](https://travis-ci.org/enhavo/enhavo)
 [![Scrutinizer](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
+[![Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 [![Dependency Status](https://www.versioneye.com/user/projects/56aa8a297e03c7003db68c92/badge.svg)](https://www.versioneye.com/user/projects/56aa8a297e03c7003db68c92)
 [![Documentation Status](https://readthedocs.org/projects/enhavo/badge/?version=latest)](http://enhavo.readthedocs.org/en/latest/?badge=latest)
+
+
 
 enhavo
 ------
