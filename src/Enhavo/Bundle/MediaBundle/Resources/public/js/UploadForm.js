@@ -53,8 +53,8 @@ function UploadForm(routing)
               });
               $(uploadForm).find('[data-file-list]').append(html);
             });
-            self.setFileOrder(uploadForm);
           }
+          self.setFileOrder(uploadForm);
           $(uploadForm).find('.progress .bar').css('width', '0%');
           $(uploadForm).find('.dropzone').removeClass('empty');
         },
