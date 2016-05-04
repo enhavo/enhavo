@@ -376,10 +376,21 @@ EOD;
         $colProperties = $yamlFile[$find]['properties'];
         $textContent = null;
         $colTypeYml = null;
+        $accessor = PropertyAccess::createPropertyAccessor();
         foreach($colProperties as $key => $value) {
-            if(array_key_exists($key, $text)) {
-                $textContent = $text[$key];
+            if(is_array($text)) {
+                if(array_key_exists($key, $text)) {
+                    $textContent = $text[$key];
+                    $colTypeYml = $yamlFile[$value[0]];
+                    break;
+                }
+            } elseif(is_object($text)) {
                 $colTypeYml = $yamlFile[$value[0]];
+                $value = $accessor->getValue($text, $key);
+                if(!empty($value)) {
+                    $textContent = $value;
+                    break;
+                }
             }
         }
         if($textContent != null){
@@ -394,13 +405,14 @@ EOD;
                 $i++;
             }
             foreach($textContent as $current) {
-                $currentColItemPath = $colItemPath . '\\Entity\\' . ucfirst($current['type']);
+                $currentColItemPath = $colItemPath . '\\Entity\\' . str_replace('_', '',ucwords($accessor->getValue($current, 'type'), '_'));
                 $currentItem = $yamlFile[$currentColItemPath]['properties'];
                 foreach ($colTypeYml['properties'] as $key1 => $value1) {
                     foreach ($currentItem as $key2 => $value2) {
                         $indexingField = $key2;
-                        if (array_key_exists($indexingField, $current[$key1])) {
-                            $currentText = $current[$key1][$indexingField];
+                        $currentItemType = $accessor->getValue($current, $key1);
+                        if ($accessor->getValue($currentItemType,$indexingField)) {
+                            $currentText = $accessor->getValue($currentItemType,$indexingField);
                         }
 
                         //check what kind of indexing should happen (Plain, html, collection)
