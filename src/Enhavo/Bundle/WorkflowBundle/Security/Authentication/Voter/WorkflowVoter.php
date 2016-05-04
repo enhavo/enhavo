@@ -34,7 +34,7 @@ class WorkflowVoter  implements VoterInterface
         if($attributes[0] == 'WORKFLOW'){
             if($user instanceof User) {
 
-                //check if the object variable is an object --> this means someone clicked on an element to update it
+                //check if the object variable is an object --> this means someone clicked on an element to UPDATE it
                 if (is_object($object)){
                     $array = explode('\\', get_class($object));
                     $entity = array_pop($array);
@@ -67,7 +67,7 @@ class WorkflowVoter  implements VoterInterface
                         //the user is not allowed ot edit
                         return VoterInterface::ACCESS_DENIED;
                     }
-                } else if(is_array($object)){ //if the given object is an array, check if the create-button should be displayed (it should only be displayed if the current user has the permission)
+                } else if(is_array($object)){ //if the given object is an array, check if the CREATE-BUTTON should be displayed (it should only be displayed if the current user has the permission)
                     if(array_key_exists('entity', $object)) {
 
                         //check if user is allowed to create things for this entity

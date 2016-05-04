@@ -7,7 +7,9 @@ workflow:
       page: 'Seiten'
       appointment: 'Kalender'
       newsletter: 'Newsletter'
+      article: 'Artikel'
       next_state: 'Nächster Zustand'
+      type: 'Typ (Entity)'
   label:
     id: 'ID'
     workflow: 'Workflow'
@@ -23,6 +25,6 @@ node:
 transition:
   form:
     label:
-      transitionName: 'Übergangsbezeichnung'
+      transitionName: 'Bezeichnung'
       nodeFrom: 'Von'
       nodeTo: 'Nach'

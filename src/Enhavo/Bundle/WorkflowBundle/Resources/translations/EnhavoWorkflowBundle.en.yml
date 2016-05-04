@@ -8,6 +8,8 @@ workflow:
       appointment: 'Calendar'
       newsletter: 'Newsletter'
       next_state: 'Next State'
+      type: 'Type (Entity)'
+      article: 'Article'
   label:
     id: 'ID'
     workflow: 'Workflow'
