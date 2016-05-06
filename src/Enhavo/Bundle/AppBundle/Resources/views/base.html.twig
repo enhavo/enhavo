@@ -78,19 +78,18 @@
 </head>
 <body>
 
-<nav id="user-menu">
-    <ul class="clearfix" data-user-menu>
-        <li class="menu-btn" data-open-usermenu><button class="btn dropdown">{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }} </button></li>
-        <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle') }}</a></li>
-        <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
-            <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</a>
-        </li>
-        <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
-    </ul>
-</nav>
-
-
 {% block body %}
+    <nav id="user-menu">
+        <ul class="clearfix" data-user-menu>
+            <li class="menu-btn" data-open-usermenu><button class="btn dropdown">{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }} </button></li>
+            <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle') }}</a></li>
+            <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
+                <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</a>
+            </li>
+            <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+        </ul>
+    </nav>
+
     <div id="overlay"></div>
     <div id="overlayContent"></div>
     <div id="overlayMessage"></div>

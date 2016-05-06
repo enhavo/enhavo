@@ -206,7 +206,6 @@ class InstallCommand extends ContainerAwareCommand
                 '--bundle-name'  => 'ProjectBundle',
                 '--dir'  => realpath($srcDir),
                 '--format'  => 'yml',
-                '--no-interaction'  => true,
                 '--structure' => 'no',
             );
 
