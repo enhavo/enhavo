@@ -28,6 +28,10 @@ label:
   title: 'Title'
   upload: 'Upload data'
   changePassword: 'Change password'
+  goToPage: 'Go to Page'
+  greeting: 'Hello username'
+  batch:
+    selectAction: 'Choose action'
 tab:
   label:
     category: 'Category'
