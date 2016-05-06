@@ -1,0 +1,5 @@
+enhavo_installer_index:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: EnhavoInstallerBundle:Installer:index

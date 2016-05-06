@@ -35,6 +35,8 @@ label:
   title: 'Titel'
   upload: 'Datei hochladen'
   changePassword: 'Passwort ändern'
+  goToPage: 'Zur Seite'
+  greeting: 'Hallo username'
   batch:
     selectAction: 'Aktion auswählen'
 message:
