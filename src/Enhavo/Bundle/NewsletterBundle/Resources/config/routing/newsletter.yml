@@ -8,6 +8,8 @@ enhavo_newsletter_newsletter_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: newsletter.label.newsletter
+            translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_create:
     options:

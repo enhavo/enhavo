@@ -6,7 +6,8 @@ enhavo_page_page_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
-            type: index
+            title: page.label.page
+            translationDomain: EnhavoPageBundle
 
 enhavo_page_page_create:
     path: /enhavo/page/page/create

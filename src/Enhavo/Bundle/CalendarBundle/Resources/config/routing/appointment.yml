@@ -8,6 +8,8 @@ enhavo_calendar_appointment_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: label.calendar
+            translationDomain: EnhavoCalendarBundle
 
 enhavo_calendar_appointment_create:
     options:

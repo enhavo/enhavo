@@ -8,6 +8,8 @@ enhavo_category_category_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: category.label.category
+            translationDomain: EnhavoCategoryBundle
 
 enhavo_category_category_create:
     options:

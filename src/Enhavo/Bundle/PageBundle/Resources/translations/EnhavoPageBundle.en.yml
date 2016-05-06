@@ -9,7 +9,7 @@ page:
     id: 'ID'
     public: 'public'
     title: 'Title'
-    page: 'Pages'
+    page: 'Page'
     content: 'Content'
     seo: 'SEO'
     always: 'Always'

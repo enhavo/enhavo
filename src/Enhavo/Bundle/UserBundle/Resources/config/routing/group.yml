@@ -8,6 +8,8 @@ enhavo_user_group_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: group.label.group
+            translationDomain: EnhavoUserBundle
 
 enhavo_user_group_create:
     options:

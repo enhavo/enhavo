@@ -20,22 +20,16 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/base.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/theme.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/form.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavogrid/css/style.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavopage/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoarticle/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoslider/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavouser/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavomedia/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodownload/css/style.css') }}">
 
-    {% if view is defined %}
-        {% for stylesheet in view.getParameter('stylesheets') %}
-            <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
-        {% endfor %}
-    {% endif %}
-
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        <!-- additional stylesheets -->
+        {% if viewer is defined %}
+            {% for stylesheet in viewer.stylesheets %}
+                <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
 
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -68,13 +62,19 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavoslider/js/SliderForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavouser/js/user.js') }}"></script>
 
-    {% if view is defined %}
-        {% for javascript in view.getParameter('javascripts') %}
-            <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
-        {% endfor %}
-    {% endif %}
+    {% block javascripts %}
+        <!-- additional javascripts -->
+        {% if viewer is defined %}
+            {% for javascript in viewer.javascripts %}
+                <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
+            {% endfor %}
+        {% endif %}
 
-    {% block javascripts %}{% endblock %}
+        <script type="text/javascript">
+            admin.initDescriptionTextPosition();
+        </script>
+    {% endblock %}
+
 </head>
 <body>
 
