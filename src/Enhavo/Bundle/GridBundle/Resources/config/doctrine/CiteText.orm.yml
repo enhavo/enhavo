@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\CiteText:
     type: entity
-    table: content_type_cite_text
+    table: grid_type_cite_text
     id:
         id:
             type: integer
