@@ -18,22 +18,23 @@ enhavo_page_page_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: create
             tabs:
                 page:
-                    label: page
+                    label: page.label.page
                     template: EnhavoPageBundle:Tab:page.html.twig
                 content:
-                    label: Content
+                    label: page.label.content
                     template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: page.label.seo
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_news_page_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_page_page_preview:
     options:
@@ -55,22 +56,23 @@ enhavo_page_page_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: edit
             tabs:
                 page:
-                    label: page
+                    label: page.label.page
                     template: EnhavoPageBundle:Tab:page.html.twig
                 content:
-                    label: Content
+                    label: page.label.content
                     template: EnhavoPageBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: page.label.seo
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_page_page_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_page_page_table:
     options:
@@ -83,20 +85,37 @@ enhavo_page_page_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoPageBundle
             type: table
             table:
+                batch:
+                    actions:
+                        delete:
+                            label: table.batch.action.delete
+                            confirm_message: table.batch.message.confirm.delete
+                            translation_domain: EnhavoAppBundle
+                            permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
+                            position: 0
+                        publish:
+                            label: page.batch.action.publish
+                            confirm_message: page.batch.message.confirm.publish
+                            translation_domain: EnhavoPageBundle
+                            permission: ROLE_ENHAVO_PAGE_PAGE_EDIT
+                            position: 1
                 columns:
                     id:
-                        label: ID
+                        label: page.label.id
                         property: id
                         width: 1
                     public:
-                        label: public
+                        label: page.label.public
                         property: public
-                        widget: EnhavoAppBundle:Widget:boolean.html.twig
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:boolean.html.twig
                         width: 1
                     title:
-                        label: title
+                        label: page.label.title
                         property: title
                         width: 10
 
@@ -104,3 +123,11 @@ enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
+
+enhavo_page_page_batch:
+    options:
+        expose: true
+    path: /enhavo/page/page/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_page.controller.page:batchAction

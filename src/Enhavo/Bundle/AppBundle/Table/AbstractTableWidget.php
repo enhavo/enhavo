@@ -1,0 +1,48 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: jhelbing
+ * Date: 02.02.16
+ * Time: 13:48
+ */
+
+namespace Enhavo\Bundle\AppBundle\Table;
+
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+abstract class AbstractTableWidget implements TableWidgetInterface, ContainerAwareInterface {
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Return the value the given property and object.
+     *
+     * @param $resource
+     * @param $property
+     * @return mixed
+     * @throws PropertyNotExistsException
+     */
+    protected function getProperty($resource, $property)
+    {
+        $method = sprintf('get%s', ucfirst($property));
+        if(method_exists($resource, $method)) {
+            return call_user_func(array($resource, $method));
+        }
+        throw new PropertyNotExistsException(sprintf(
+            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spell it wrong you did\'t add the getter for property "%s"',
+            $method,
+            get_class($resource),
+            $property
+        ));
+    }
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+}

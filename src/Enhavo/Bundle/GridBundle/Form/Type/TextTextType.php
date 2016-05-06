@@ -17,31 +17,37 @@ class TextTextType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('titleLeft', 'text', array(
-            'label' => 'form.label.title_left'
+            'label' => 'textText.form.label.title_left',
+            'translation_domain' => 'EnhavoGridBundle',
         ));
 
         $builder->add('textLeft', 'wysiwyg', array(
-            'label' => 'form.label.text_left'
+            'label' => 'textText.form.label.text_left',
+            'translation_domain' => 'EnhavoGridBundle',
         ));
 
         $builder->add('titleRight', 'text', array(
-            'label' => 'form.label.title_right'
+            'label' => 'textText.form.label.title_right',
+            'translation_domain' => 'EnhavoGridBundle',
         ));
 
         $builder->add('textRight', 'wysiwyg', array(
-            'label' => 'form.label.text_right'
+            'label' => 'textText.form.label.text_right',
+            'translation_domain' => 'EnhavoGridBundle'
         ));
 
         $builder->add('layout', 'choice', array(
-            'label' => 'form.label.layout',
+            'label' => 'textText.form.label.layout',
+            'translation_domain' => 'EnhavoGridBundle',
             'choices'   => array(
-                TextText::LAYOUT_1_1 => 'label.1_1',
-                TextText::LAYOUT_1_2 => 'label.1_2',
-                TextText::LAYOUT_2_1 => 'label.2_1'
+                TextText::LAYOUT_1_1 => 'textText.form.label.1_1',
+                TextText::LAYOUT_1_2 => 'textText.form.label.1_2',
+                TextText::LAYOUT_2_1 => 'textText.form.label.2_1'
             ),
             'expanded' => true,
             'multiple' => false

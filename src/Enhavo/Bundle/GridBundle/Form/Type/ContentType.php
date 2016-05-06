@@ -51,14 +51,16 @@ class ContentType extends AbstractType
             foreach($options['items'] as $item) {
                 $items[] = array(
                     'type' => $item['type'],
-                    'label' => isset($item['label']) ? $item['label'] : $this->resolver->getLabel($item['type'])
+                    'label' => isset($item['label']) ? $item['label'] : $this->resolver->getLabel($item['type']),
+                    'translationDomain' => isset($item['translationDomain']) ? $item['translationDomain'] : 'EnhavoGridBundle'
                 );
             }
         } else {
             foreach($this->resolver->getItems() as $name => $item) {
                 $items[] = array(
                     'type' => $name,
-                    'label' => $this->resolver->getLabel($name)
+                    'label' => $this->resolver->getLabel($name),
+                    'translationDomain' => $item['translationDomain']
                 );
             }
         }

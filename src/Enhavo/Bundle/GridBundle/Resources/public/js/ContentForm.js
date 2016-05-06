@@ -24,6 +24,7 @@ function ContentForm(router)
         var formName = addButton.attr('data-name') + '[items]['+index+']';
         index++;
 
+        admin.openLoadingOverlay();
         $.ajax({
           type: 'POST',
           data: {
@@ -31,6 +32,7 @@ function ContentForm(router)
           },
           url: url,
           success: function(data) {
+            admin.closeLoadingOverlay();
             var position = addButton.attr('data-position');
             data = $.parseHTML(data);
 
@@ -44,6 +46,9 @@ function ContentForm(router)
             $(document).trigger('contentAddAfter', [data]);
 
             setOrderForContainer(container);
+          },
+          error: function() {
+            admin.closeLoadingOverlay();
           }
         });
       };

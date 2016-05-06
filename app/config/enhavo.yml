@@ -17,45 +17,63 @@ enhavo_app:
         app: Enhavo\Bundle\AppBundle\Viewer\AppViewer
     menu:
         dashboard:
-            label: label.dashboard
+            label: dashboard.label.dashboard
+            translationDomain: EnhavoDashboardBundle
             route: enhavo_dashboard_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         user:
-            label: label.user
+            label: user.label.user
+            translationDomain: EnhavoUserBundle
             route: enhavo_user_user_index
             role: ROLE_ESPERANTO_USER_USER_INDEX
         group:
-            label: label.group
+            label: group.label.group
+            translationDomain: EnhavoUserBundle
             route: enhavo_user_group_index
             role: ROLE_ESPERANTO_USER_GROUP_INDEX
         article:
-            label: label.article
+            label: article.label.article
+            translationDomain: EnhavoArticleBundle
             route: enhavo_article_article_index
             role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
         page:
-            label: label.page
+            label: page.label.page
+            translationDomain: EnhavoPageBundle
             route: enhavo_page_page_index
             role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
         category:
-            label: label.category
+            label: category.label.categories
+            translationDomain: EnhavoCategoryBundle
             route: enhavo_category_category_index
             role: ROLE_ESPERANTO_CATEGORY_CATEGORY_INDEX
         download:
-            label: label.download
+            label: download.label.download
+            translationDomain: EnhavoDownloadBundle
             route: enhavo_download_download_index
             role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
         slider:
-            label: label.slider
+            label: slider.label.slider
+            translationDomain: EnhavoSliderBundle
             route: enhavo_slider_slide_index
             role: ROLE_ESPERANTO_SLIDER_SLIDER_INDEX
         newsletter:
-            label: label.newsletter
+            label: newsletter.label.newsletter
+            translationDomain: EnhavoNewsletterBundle
             route: enhavo_newsletter_newsletter_index
             role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
         calendar:
             label: label.calendar
+            translationDomain: EnhavoCalendarBundle
             route: enhavo_calendar_appointment_index
             role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
+
+enhavo_newsletter:
+    subscriber:
+        send_from: %emails_send_from%
+        subject: 'Subject'
+        template:  'EnhavoNewsletterBundle:Default:subscriber-email.html.twig'
+    newsletter:
+        send_from: %emails_send_from%
 
 enhavo_grid:
     render:
@@ -69,64 +87,65 @@ enhavo_grid:
             form: Enhavo\Bundle\GridBundle\Form\Type\PictureType
             repository: EnhavoGridBundle:Picture
             template: EnhavoGridBundle:Item:picture.html.twig
-            label: Bild
+            label: picture.label.picture
+            translationDomain: EnhavoGridBundle
         picture_picture:
             model: Enhavo\Bundle\GridBundle\Entity\PicturePicture
             form: Enhavo\Bundle\GridBundle\Form\Type\PicturePictureType
             repository: EnhavoGridBundle:PicturePicture
             template: EnhavoGridBundle:Item:picture_picture.html.twig
-            label: Bild | Bild
+            label: picturePicture.label.picturePicture
+            translationDomain: EnhavoGridBundle
         gallery:
             model: Enhavo\Bundle\GridBundle\Entity\Gallery
             form: Enhavo\Bundle\GridBundle\Form\Type\GalleryType
             repository: EnhavoGridBundle:Gallery
             template: EnhavoGridBundle:Item:gallery.html.twig
-            label: Galerie
+            label: gallery.label.gallery
+            translationDomain: EnhavoGridBundle
         text:
             model: Enhavo\Bundle\GridBundle\Entity\Text
             form: Enhavo\Bundle\GridBundle\Form\Type\TextType
             repository: EnhavoGridBundle:Text
             template: EnhavoGridBundle:Item:text.html.twig
-            label: Text
+            label: text.label.text
+            translationDomain: EnhavoGridBundle
         text_picture:
             model: Enhavo\Bundle\GridBundle\Entity\TextPicture
             form: Enhavo\Bundle\GridBundle\Form\Type\TextPictureType
             repository: EnhavoGridBundle:TextPicture
             template: EnhavoGridBundle:Item:text_picture.html.twig
-            label: Text | Bild
+            label: textPicture.label.textPicture
+            translationDomain: EnhavoGridBundle
         text_text:
             model: Enhavo\Bundle\GridBundle\Entity\TextText
             form: Enhavo\Bundle\GridBundle\Form\Type\TextTextType
             repository: EnhavoGridBundle:TextText
             template: EnhavoGridBundle:Item:text_text.html.twig
-            label: Text | Text
+            label: textText.label.textText
+            translationDomain: EnhavoGridBundle
         cite_text:
             model: Enhavo\Bundle\GridBundle\Entity\CiteText
             form: Enhavo\Bundle\GridBundle\Form\Type\CiteTextType
             repository: EnhavoGridBundle:CiteText
             template: EnhavoGridBundle:Item:cite_text.html.twig
-            label: Zitat
+            label: citeText.label.citeText
+            translationDomain: EnhavoGridBundle
         download:
             model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem
             form: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
             repository: EnhavoDownloadBundle:DownloadItem
             template: EnhavoDownloadBundle:Item:download.html.twig
-            label: Download
+            label: download.label.download
+            translationDomain: EnhavoGridBundle
+        video:
+            model: Enhavo\Bundle\GridBundle\Entity\Video
+            form: Enhavo\Bundle\GridBundle\Form\Type\VideoType
+            repository: EnhavoGridBundle:Video
+            template: EnhavoGridBundle:Item:video.html.twig
+            label: video.label.video
+            translationDomain: EnhavoGridBundle
 
-enhavo_page:
-    dynamic_routing: false
-    classes:
-        page:
-            model: Enhavo\Bundle\PageBundle\Entity\Page
-            form: Enhavo\Bundle\PageBundle\Form\Type\PageType
-
-enhavo_article:
-    dynamic_routing: false
-    classes:
-         article:
-            model: Enhavo\Bundle\ArticleBundle\Entity\Article
-            form: Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType
-            repository: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
 enhavo_category:
     default_collection: default
@@ -140,6 +159,6 @@ enhavo_contact:
             recipient: EnhavoContactBundle:Contact:recipient.html.twig
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
-        from: %contact_form_sender%
+        from: %emails_send_from%
         subject: Kontaktformular
         send_to_sender: true

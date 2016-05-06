@@ -17,16 +17,9 @@ Enhavo\Bundle\GridBundle\Entity\Picture:
             length: 255
             nullable: true
 
-    manyToMany:
-        files:
+    manyToOne:
+        file:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: content_picture_files
-                joinColumns:
-                    picture_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
+
     lifecycleCallbacks: {  }

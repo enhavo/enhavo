@@ -90,7 +90,7 @@ class Download
     /**
      * Set date
      *
-     * @param \file $file
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
      * @return Download
      */
     public function setFile($file)
@@ -101,36 +101,9 @@ class Download
     }
 
     /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File file
-     * @return Page
-     */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        if($this->file === null) {
-            $this->file = new ArrayCollection();
-        }
-
-        $this->file[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->file->removeElement($file);
-    }
-
-    /**
      * Get file
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getFile()
     {

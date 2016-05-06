@@ -20,21 +20,21 @@ class EditViewer extends CreateViewer
                     'display' => true,
                     'role' => null,
                     'label' => 'label.cancel',
-                    'icon' => 'close'
+                    'icon' => 'icon-cross'
                 ),
                 'save' => array(
                     'route' => null,
                     'display' => true,
                     'role' => null,
                     'label' => 'label.save',
-                    'icon' => 'check'
+                    'icon' => 'icon-save'
                 ),
                 'delete' => array(
                     'route' => null,
                     'display' => true,
                     'role' => null,
                     'label' => 'label.delete',
-                    'icon' => 'trash'
+                    'icon' => 'icon-trash-1'
                 )
 
             ),
@@ -73,7 +73,8 @@ class EditViewer extends CreateViewer
             'data' => $this->getResource(),
             'form_template' => $this->getFormTemplate(),
             'form_action' => $this->getFormAction(),
-            'form_delete' => $this->getFormDelete()
+            'form_delete' => $this->getFormDelete(),
+            'translationDomain' => $this->getTranslationDomain()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

@@ -1,18 +1,32 @@
 {% block enhavo_files_widget %}
     {% spaceless %}
-            <div class="uploadForm">
+        {% trans_default_domain 'EnhavoAppBundle' %}
+            <div class="uploadForm" data-multiple="{% if multiple %}1{% else %}0{% endif %}">
 
                 <script type="text/html" data-id="files-template">
-                    <li class="imgContainer" data-file-element>
-                        <div class="imgdelete">
-                            <i class="fa fa-times fa-2x"></i>
+                    {% if multiple %}
+                        <li class="imgContainer" data-file-element>
+                            <div class="imgdelete">
+                                <i class="fa fa-times fa-2x"></i>
+                            </div>
+                            <div class="uploadForm-image-container">
+                                <img src="/file/{file_id}/100/100">
+                            </div>
+                            <input type="hidden" name="{full_name}[{file_index}][id]" value="{file_id}" />
+                            <input type="hidden" name="{full_name}[{file_index}][order]" data-file-element-order value="" />
+                        </li>
+                    {% else %}
+                        <div class="imgContainer singleImage" data-file-element>
+                            <div class="imgdelete">
+                                <i class="fa fa-times fa-2x"></i>
+                            </div>
+                            <div class="uploadForm-image-container">
+                                <img src="/file/{file_id}/100/100">
+                            </div>
+                            <input type="hidden" name="{full_name}[id]" value="{file_id}" />
+                            <input type="hidden" name="{full_name}[order]" data-file-element-order value="" />
                         </div>
-                        <div class="uploadForm-image-container">
-                            <img src="/file/{file_id}/100/100">
-                        </div>
-                        <input type="hidden" name="{full_name}[{file_index}][id]" value="{file_id}" />
-                        <input type="hidden" name="{full_name}[{file_index}][order]" data-file-element-order value="" />
-                    </li>
+                    {% endif %}
                 </script>
 
                 <div class="layer posrel">
@@ -26,31 +40,53 @@
                         </div>
                     {% endif %}
 
-                    <div class="progress">
-                        <div class="bar" style="width: 0%;"></div>
-                    </div>
+                    <div class="imagePreview posrel{% if multiple %} multiple{% endif %}">
+                        <div class="progress">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
 
-                    <div class="dropzone fade well">
-                        <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
-                            {% for file in form.vars.value %}
-                               {% if file %}
-                                  <li class="imgContainer" data-file-element>
-                                      <div class="imgdelete">
-                                          <i class="fa fa-times fa-2x"></i>
-                                      </div>
-                                      <div class="uploadForm-image-container">
-                                          <img src="/file/{{ file.id }}/100/100">
-                                      </div>
-                                      <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][id]" value="{{ file.id }}" />
-                                      <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][order]" data-file-element-order value="{{ file.order }}" />
-                                  </li>
-                               {% endif %}
-                            {% endfor %}
-                        </ul>
+                        {% if multiple %}
+                            <div class="dropzone fade well{% if form.vars.value|length < 1 %} empty{% endif %}">
+                                <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
+                                    {% for file in form.vars.value %}
+                                       {% if file %}
+                                          <li class="imgContainer" data-file-element>
+                                              <div class="imgdelete">
+                                                  <i class="fa fa-times fa-2x"></i>
+                                              </div>
+                                              <div class="uploadForm-image-container">
+                                                  <img src="/file/{{ file.id }}/100/100">
+                                              </div>
+                                              <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][id]" value="{{ file.id }}" />
+                                              <input type="hidden" name="{{ full_name }}[{{ loop.index0 }}][order]" data-file-element-order value="{{ file.order }}" />
+                                          </li>
+                                       {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}" multiple>
+                        {% else %}
+                            <div class="dropzone fade well{% if form.vars.value|length < 1 %} empty{% endif %}">
+                                <div class="list clearfix" data-name="{{ full_name }}" data-file-list>
+                                    {% if form.vars.value %}
+                                        <div class="imgContainer singleImage" data-file-element>
+                                            <div class="imgdelete">
+                                                <i class="fa fa-times fa-2x"></i>
+                                            </div>
+                                            <div class="uploadForm-image-container">
+                                                <img src="/file/{{ form.vars.value.id }}/100/100">
+                                            </div>
+                                            <input type="hidden" name="{{ full_name }}[id]" value="{{ form.vars.value.id }}" />
+                                            <input type="hidden" name="{{ full_name }}[order]" data-file-element-order value="{{ form.vars.value.order }}" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}">
+                        {% endif %}
                     </div>
-                    <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}" multiple>
                     <div class="mt1">
-                        <button class="btn upload-button"> Datei hochladen</button>
+                        <button class="btn upload-button"> {{ 'label.upload'|trans }}</button>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
+{% trans_default_domain "EnhavoNewsletterBundle" %}
 <div class="row p1 head-row">
-    <div class="col-md-5">{{ 'label.title'|trans }}</div>
-    <div class="col-md-2">{{ 'label.sent'|trans }}</div>
+    <div class="col-md-2">{{ 'label.id'|trans('EnhavoAppBundle') }}</div>
+    <div class="col-md-5">{{ 'label.title'|trans({}, 'EnhavoAppBundle') }}</div>
+    <div class="col-md-2">{{ 'newsletter.label.sent'|trans }}</div>
 </div>
 
 <div class="row row-container">
@@ -11,7 +13,7 @@
                 <div class="col-md-2">{% if item.sent == 1 %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</div>
             </div>
         {% else %}
-            {{ 'table.empty'|trans }}
+            {{ 'table.empty'|trans('EnhavoAppBundle') }}
         {% endfor %}
     </div>
 </div>

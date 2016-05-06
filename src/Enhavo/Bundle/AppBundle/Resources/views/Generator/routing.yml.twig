@@ -1,7 +1,7 @@
 {{ app }}_{{ resource }}_index:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/index
+    path: /{{ app_url }}/{{ resource_url }}/index
     methods: [GET]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:indexAction
@@ -12,18 +12,24 @@
 {{ app }}_{{ resource }}_create:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/create
+    path: /{{ app_url }}/{{ resource_url }}/create
     methods: [GET,POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:createAction
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+{% if not sorting is null %}
+            sorting:
+                sortable: true
+                property: {{ sorting }}
+                initial: max
+{% endif %}
 
 {{ app }}_{{ resource }}_update:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/update/{id}
+    path: /{{ app_url }}/{{ resource_url }}/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:updateAction
@@ -34,27 +40,72 @@
 {{ app }}_{{ resource }}_table:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/table/{page}
+    path: /{{ app_url }}/{{ resource_url }}/table/{page}
     methods: [GET]
     defaults:
         page: 1
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
+{% if not sorting is null %}
+            sorting:
+                {{ sorting }}: desc
+{% endif %}
         _viewer:
+{% if not sorting is null %}
+            table:
+                sorting:
+                    sortable: true
+                    move_after_route: {{ app }}_{{ resource }}_move_after
+                    move_to_page_route: {{ app }}_{{ resource }}_move_to_page
+{% endif %}
 
 {{ app }}_{{ resource }}_delete:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/delete/{id}
+    path: /{{ app_url }}/{{ resource_url }}/delete/{id}
     methods: [DELETE]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:deleteAction
 
+{{ app }}_{{ resource }}_batch:
+    options:
+        expose: true
+    path: /{{ app_url }}/{{ resource_url }}/batch
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:batchAction
+
 {{ app }}_{{ resource }}_preview:
     options:
         expose: true
-    path: /admin/{{ app_url }}/{{ resource_url }}/preview
+    path: /{{ app_url }}/{{ resource_url }}/preview
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:previewAction
+{% if not sorting is null %}
+
+{{ app }}_{{ resource }}_move_after:
+    options:
+        expose: true
+    path: /{{ app_url }}/{{ resource_url }}/move-after/{id}/{target}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
+        _sylius:
+            sortable_position: {{ sorting }}
+        _viewer:
+            sorting: desc
+
+{{ app }}_{{ resource }}_move_to_page:
+    options:
+        expose: true
+    path: /{{ app_url }}/{{ resource_url }}/move-to-page/{id}/{page}/{top}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:moveDownAction
+        _sylius:
+            sortable_position: {{ sorting }}
+        _viewer:
+            sorting: desc
+{% endif %}

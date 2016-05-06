@@ -35,17 +35,9 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
 
-    manyToMany:
+    manyToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: calendar_appointment_picture
-                joinColumns:
-                    appointment_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
 
     lifecycleCallbacks: {  }

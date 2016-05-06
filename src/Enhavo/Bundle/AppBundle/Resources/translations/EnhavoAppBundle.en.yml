@@ -1,0 +1,53 @@
+action:
+  changePassword: 'Change password'
+error:
+  occurred: 'An error occured'
+  forbidden: 'You have not the rights for this action'
+form:
+  delete:
+    question: 'Would you like to delete this element?'
+  label:
+    public: 'Public'
+    meta_description: 'Meta description'
+    link: 'Link'
+    title: 'Title'
+    teaser: 'Teaser'
+    slug: 'Slug'
+    picture: 'Picture'
+    text: 'Text'
+label:
+  logout: 'Logout'
+  id: 'ID'
+  cancel: 'Cancel'
+  save: 'Save'
+  delete: 'Delete'
+  preview: 'Preview'
+  create: 'Create'
+  yes: 'Yes'
+  no: 'No'
+  title: 'Title'
+  upload: 'Upload data'
+  changePassword: 'Change password'
+tab:
+  label:
+    category: 'Category'
+    content: 'Content'
+    seo: 'SEO'
+table:
+  empty: 'no data'
+  batch:
+    action:
+      submit: 'Execute'
+      delete: 'Delete'
+    error:
+      noneSelected: 'No items selected'
+      noActionSelected: 'No action selected'
+      close: 'Close'
+    label:
+      selectAction: 'Choose action'
+    message:
+      confirm:
+        generic: 'Do you really want to run the command %command% for all selected items?'
+        delete: 'Do you really want to delete all selected items?'
+        yes: 'Yes'
+        no: 'No'

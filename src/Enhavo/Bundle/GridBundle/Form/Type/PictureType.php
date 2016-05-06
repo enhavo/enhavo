@@ -17,15 +17,19 @@ class PictureType extends ItemFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
-        $builder->add('files', 'enhavo_files', array(
-            'label' => 'form.label.picture'
+        $builder->add('file', 'enhavo_files', array(
+            'label' => 'form.label.picture',
+            'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
 
         $builder->add('caption', 'text', array(
-            'label' => 'form.label.caption'
+            'label' => 'picture.form.label.caption',
+            'translation_domain' => 'EnhavoGridBundle'
         ));
     }
 

@@ -55,6 +55,14 @@ abstract class AbstractViewer implements ContainerAwareInterface
     }
 
     /**
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * @return mixed
      */
     public function getForm()
@@ -125,8 +133,11 @@ abstract class AbstractViewer implements ContainerAwareInterface
     {
         return array();
     }
-    
-    abstract function getParameters();
+
+    public function getParameters()
+    {
+        return $this->getTemplateVars();
+    }
 
     public function getTheme()
     {
@@ -171,5 +182,11 @@ abstract class AbstractViewer implements ContainerAwareInterface
     public function getResourceName()
     {
         return $this->resourceName;
+    }
+
+    public function getTranslationDomain()
+    {
+        $translationDomain = $this->getConfig()->get('translationDomain');
+        return $translationDomain;
     }
 }

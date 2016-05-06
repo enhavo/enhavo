@@ -1,0 +1,26 @@
+newsletter:
+  action:
+    sendAndSave: 'Send and Save'
+    sent:
+      success: 'Newsletter successfully sent!'
+      error: 'An error occured!'
+      again: 'Do you really want to sent the newsletter again?'
+  label:
+    sent: 'sent'
+    id: 'ID'
+    title: 'Title'
+    newsletter: 'Newsletter'
+  form:
+    label:
+      subject: 'Subject'
+      sent: 'sent'
+  batch:
+    action:
+      send: 'Send'
+    message:
+      confirm:
+        send: 'Do you really want to send all selected newsletters?'
+subscriber:
+  form:
+    label:
+      email: 'E-Mail'

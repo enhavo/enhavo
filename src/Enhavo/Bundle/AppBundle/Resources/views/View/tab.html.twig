@@ -1,7 +1,8 @@
+{% trans_default_domain translationDomain %}
 <div class="row tabContainer">
     <div class="container-fluid">
         {% for tab in tabs %}
-          <a href="#" tabId="tab{{ loop.index }}"><span>{{ tab.label }}</span></a>
+          <a href="#" tabId="tab{{ loop.index }}"><span>{{ tab.label|trans }}</span></a>
         {% endfor %}
     </div>
 </div>

@@ -1,0 +1,27 @@
+page:
+  form:
+    label:
+      social_media: 'Social Media'
+      page_title: 'Seitentitel'
+      priority: 'Priorität'
+      change_frequency: 'Änderungsfrequenz'
+  label:
+    id: 'ID'
+    public: 'öffentlich'
+    title: 'Titel'
+    page: 'Seiten'
+    content: 'Inhalt'
+    seo: 'SEO'
+    always: 'Immer'
+    hourly: 'Stündlich'
+    daily: 'Täglich'
+    weekly: 'Wöchentlich'
+    monthly: 'Monatlich'
+    yearly: 'Jährlich'
+    never: 'Nie'
+  batch:
+    action:
+      publish: 'Veröffentlichen'
+    message:
+      confirm:
+        publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'

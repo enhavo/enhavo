@@ -1,7 +1,7 @@
 enhavo_download_download_index:
     options:
         expose: true
-    path: /admin/enhavo/download/download/index
+    path: /enhavo/download/download/index
     methods: [GET]
     defaults:
         _controller: enhavo_download.controller.download:indexAction
@@ -12,29 +12,31 @@ enhavo_download_download_index:
 enhavo_download_download_create:
     options:
         expose: true
-    path: /admin/enhavo/download/download/create
+    path: /enhavo/download/download/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_download.controller.download:createAction
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_update:
     options:
         expose: true
-    path: /admin/enhavo/download/download/update/{id}
+    path: /enhavo/download/download/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_download.controller.download:updateAction
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_table:
     options:
         expose: true
-    path: /admin/enhavo/download/download/table/{page}
+    path: /enhavo/download/download/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -42,20 +44,29 @@ enhavo_download_download_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoDownloadBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: download.label.id
                         property: id
                     title:
-                        label: title
+                        label: download.label.title
                         property: title
                         width: 8
 
 enhavo_download_download_delete:
     options:
         expose: true
-    path: /admin/enhavo/download/download/delete/{id}
+    path: /enhavo/download/download/delete/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_download.controller.download:deleteAction
+
+enhavo_download_download_batch:
+    options:
+        expose: true
+    path: /enhavo/download/download/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_download.controller.download:batchAction

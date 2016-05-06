@@ -1,5 +1,8 @@
-{% extends 'EnhavoAppBundle:Resource:create.html.twig' %}
+{% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
+{% if form.route is defined %}{{ form_row(form.route) }}{% endif %}
+{{ form_row(form.title) }}
+{{ form_row(form.subject) }}
+{{ form_row(form.text) }}
 
-{% block form %}
-    {% include 'EnhavoNewsletterBundle:Resource:form.html.twig' %}
-{% endblock %}
+
+

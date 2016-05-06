@@ -72,26 +72,15 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         route:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
 
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
 
-    manyToMany:
-        picture:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: article_article_picture
-                joinColumns:
-                    article_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
-            orderBy: { 'order': 'ASC' }
-            
     lifecycleCallbacks:
         prePersist: [ prePersist ]
         preUpdate: [ preUpdate ]

@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('repository')->isRequired()->end()
                             ->scalarNode('template')->isRequired()->end()
                             ->scalarNode('label')->end()
+                            ->scalarNode('translationDomain')->end()
                         ->end()
                     ->end()
                  ->end()

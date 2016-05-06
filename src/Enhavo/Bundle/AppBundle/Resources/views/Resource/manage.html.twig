@@ -1,5 +1,6 @@
 {% use 'EnhavoAppBundle::block.html.twig' %}
 
+{% trans_default_domain "EnhavoAppBundle" %}
 <div class="container form-container small-dialog ">
     {% block content %}
         <form method="POST" action="{% block form_action %}{{ path(view.getParameter('manage_route'), { id: data.id }) }}{% endblock %}">

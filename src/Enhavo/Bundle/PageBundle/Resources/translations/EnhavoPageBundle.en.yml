@@ -1,0 +1,27 @@
+page:
+  form:
+    label:
+      social_media: 'Social Media'
+      page_title: 'Pagetitle'
+      priority: 'Priority'
+      change_frequency: 'Change frequency'
+  label:
+    id: 'ID'
+    public: 'public'
+    title: 'Title'
+    page: 'Pages'
+    content: 'Content'
+    seo: 'SEO'
+    always: 'Always'
+    hourly: 'Hourly'
+    daily: 'Daily'
+    weekly: 'Weekly'
+    monthly: 'Monthly'
+    yearly: 'Yearly'
+    never: 'Never'
+  batch:
+    action:
+      publish: 'Publish'
+    message:
+      confirm:
+        publish: 'Do you really want to publish all selected items?'

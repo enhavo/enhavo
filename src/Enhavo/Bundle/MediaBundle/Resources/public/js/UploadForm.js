@@ -9,12 +9,18 @@ function UploadForm(routing)
 
   this.initUploadForm = function(form) {
     var currentIndexes = [];
+    var isMultiple = [];
     $(form).find('.uploadForm').each(function(formIndex, element) {
-      $(this).find('[data-file-list]').sortable({
-        update: function() {
-          self.setFileOrder(element);
-        }
-      });
+      isMultiple[formIndex] = $(this).data('multiple') == '1';
+
+      if (isMultiple[formIndex]) {
+        $(this).find('[data-file-list]').sortable({
+          update: function() {
+            self.setFileOrder(element);
+          }
+        });
+      }
+
       currentIndexes[formIndex] = $(this).find('[data-file-element]').length-1;
       $(element).find('.fileupload').fileupload({
         dataType: 'json',
@@ -22,18 +28,29 @@ function UploadForm(routing)
         done: function (event, data) {
           var list = $(element).find('.list');
           var inputName = list.attr('data-name');
-          $.each(data.result.files, function (index, file) {
-
-            var html = templating.render($(element).find('script[data-id=files-template]'), {
-              file_id: file.id,
-              full_name: inputName,
-              file_index: ++currentIndexes[formIndex]
+          if (!isMultiple[formIndex]) {
+            $(element).find('[data-file-list]').empty();
+            if (data.result.files.length > 0) {
+              var html = templating.render($(element).find('script[data-id=files-template]'), {
+                file_id: data.result.files[0].id,
+                full_name: inputName,
+                file_index: 0
+              });
+              $(element).find('[data-file-list]').append(html);
+            }
+          } else {
+            $.each(data.result.files, function (index, file) {
+              var html = templating.render($(element).find('script[data-id=files-template]'), {
+                file_id: file.id,
+                full_name: inputName,
+                file_index: ++currentIndexes[formIndex]
+              });
+              $(element).find('[data-file-list]').append(html);
             });
-
-            $(element).find('[data-file-list]').append(html);
-          });
+            self.setFileOrder(element);
+          }
           $(element).find('.progress .bar').css('width', '0%');
-          self.setFileOrder(element);
+          $(element).find('.dropzone').removeClass('empty');
         },
 
         add: function (event, data) {
@@ -54,11 +71,15 @@ function UploadForm(routing)
         $(element).find('.fileupload').trigger('click');
       });
 
-      $(element).bind('click', '.imgdelete', function(event)
+      $(element).on('click', '.imgdelete', function(event)
       {
         var imageContainer = $(event.target).parents('.imgContainer');
         if(imageContainer != null) {
+          var dropZone = imageContainer.parents('.dropzone');
           imageContainer.remove();
+          if (dropZone.find('[data-file-element]').length == 0) {
+            dropZone.addClass('empty');
+          }
         }
       });
     });

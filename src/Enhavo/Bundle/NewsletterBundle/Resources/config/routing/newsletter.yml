@@ -19,6 +19,11 @@ enhavo_newsletter_newsletter_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoNewsletterBundle
+            tabs:
+                newsletter:
+                    label: newsletter.label.newsletter
+                    template: EnhavoNewsletterBundle:Resource:create.html.twig
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -30,6 +35,17 @@ enhavo_newsletter_newsletter_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoNewsletterBundle
+            tabs:
+                newsletter:
+                    label: newsletter.label.newsletter
+                    template: EnhavoNewsletterBundle:Resource:edit.html.twig
+            buttons:
+                send:
+                    route: enhavo_newsletter_newsletter_send
+                    label: newsletter.action.sendAndSave
+                    icon: icon-eye
+                    translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -42,14 +58,37 @@ enhavo_newsletter_newsletter_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoNewsletterBundle
             table:
+                batch:
+                    actions:
+                        delete:
+                            label: table.batch.action.delete
+                            confirm_message: table.batch.message.confirm.delete
+                            translation_domain: EnhavoAppBundle
+                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
+                            position: 0
+                        send:
+                            label: newsletter.batch.action.send
+                            confirm_message: newsletter.batch.message.confirm.send
+                            translation_domain: EnhavoNewsletterBundle
+                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_EDIT
                 columns:
                     id:
-                        label: ID
+                        label: newsletter.label.id
                         property: id
+                        width: 1
                     title:
-                        label: title
+                        label: newsletter.label.title
                         property: title
+                        width: 10
+                    sent:
+                        label: newsletter.label.sent
+                        property: sent
+                        width: 1
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:boolean.html.twig
 
 enhavo_newsletter_newsletter_delete:
     options:
@@ -59,6 +98,14 @@ enhavo_newsletter_newsletter_delete:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
 
+enhavo_newsletter_newsletter_batch:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:batchAction
+
 enhavo_newsletter_newsletter_preview:
     options:
         expose: true
@@ -67,6 +114,10 @@ enhavo_newsletter_newsletter_preview:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:previewAction
 
-enhavo_newsletter_newsletter_send_email:
-    pattern: /admin/newsletter/newsletter/{newsletterId}/edit/send
-    defaults: { _controller: EnhavoNewsletterBundle:Newsletter:sendEmail }
+enhavo_newsletter_newsletter_send:
+    options:
+        expose: true
+    path: /admin/newsletter/newsletter/{id}/edit/send
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:sendEmailAction

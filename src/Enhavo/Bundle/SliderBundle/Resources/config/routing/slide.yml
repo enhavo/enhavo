@@ -19,6 +19,11 @@ enhavo_slider_slide_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoSliderBundle
+            sorting:
+                sortable: true
+                position: position
+                initial: max
 
 enhavo_slider_slide_update:
     options:
@@ -30,6 +35,7 @@ enhavo_slider_slide_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoSliderBundle
 
 enhavo_slider_slide_table:
     options:
@@ -41,17 +47,31 @@ enhavo_slider_slide_table:
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
+            sorting:
+                position: desc
         _viewer:
+            translationDomain: EnhavoSliderBundle
             table:
+                sorting:
+                    sortable: true
+                    move_after_route: enhavo_slider_slide_move_after
+                    move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
                     id:
-                        label: id
+                        label: slide.label.id
                         property: id
                         width: 1
                     title:
-                        label: title
+                        label: slide.label.title
                         property: title
-                        width: 11
+                        width: 10
+                    position:
+                        label: slide.label.position
+                        property: position
+                        width: 1
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:position.html.twig
 
 enhavo_slider_slide_delete:
     options:
@@ -60,3 +80,35 @@ enhavo_slider_slide_delete:
     methods: [POST, DELETE]
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction
+
+enhavo_slider_slide_batch:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:batchAction
+
+enhavo_slider_slide_move_after:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-after/{id}/{target}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveAfterAction
+        _sylius:
+            sortable_position: position
+        _viewer:
+            sorting: desc
+
+enhavo_slider_slide_move_to_page:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_slider.controller.slide:moveToPageAction
+        _sylius:
+            sortable_position: position
+        _viewer:
+            sorting: desc

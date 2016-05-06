@@ -23,15 +23,19 @@ class WysiwygOption
     private $contentCss;
 
     /**
+     * Return all formats. If formats parameter is passed, only this formats will be returned.
+     * The format parameter should be an array with titles.
+     *
+     * @param array $formats Filter formats
      * @return mixed
      */
-    public function getFormats($formats = null)
+    public function getFormats($formats = [])
     {
         if(is_array($formats) && count($formats) && is_array($this->formats) && count($this->formats)) {
             $data = array();
-            foreach($formats as $format) {
-                foreach($this->formats as $searchFormat) {
-                    if(isset($format['title']) && $format['title'] == $searchFormat) {
+            foreach($formats as $filterFormat) {
+                foreach($this->formats as $format) {
+                    if($filterFormat == $format['title']) {
                         $data[] = $format;
                         break;
                     }
@@ -39,7 +43,7 @@ class WysiwygOption
             }
             return $data;
         }
-        return $formats;
+        return $this->formats;
     }
 
     /**
@@ -51,6 +55,8 @@ class WysiwygOption
     }
 
     /**
+     *
+     * @param int $height Set default height if its not set before
      * @return mixed
      */
     public function getHeight($height = null)
@@ -70,6 +76,7 @@ class WysiwygOption
     }
 
     /**
+     * @param int $toolbar1 Set default toolbar1 if its not set before
      * @return mixed
      */
     public function getToolbar1($toolbar1 = null)
@@ -89,6 +96,7 @@ class WysiwygOption
     }
 
     /**
+     * @param int $toolbar2 Set default toolbar2 if its not set before
      * @return mixed
      */
     public function getToolbar2($toolbar2 = null)
@@ -108,9 +116,10 @@ class WysiwygOption
     }
 
     /**
+     * @param int $contentCss Set default contentCss if its not set before
      * @return mixed
      */
-    public function getContentCss($contentCss)
+    public function getContentCss($contentCss = null)
     {
         if(is_string($this->contentCss) || is_array($this->contentCss)) {
             $css = $this->contentCss;
@@ -119,7 +128,7 @@ class WysiwygOption
         }
 
         if(empty($css)) {
-            return $css;
+            return null;
         }
 
         if(is_array($css)) {

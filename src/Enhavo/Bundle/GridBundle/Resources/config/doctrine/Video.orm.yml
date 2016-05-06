@@ -1,0 +1,17 @@
+Enhavo\Bundle\GridBundle\Entity\Video:
+    type: entity
+    table: content_type_video
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        url:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

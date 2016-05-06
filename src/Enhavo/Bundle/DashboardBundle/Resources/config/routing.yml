@@ -1,5 +1,5 @@
 enhavo_dashboard_index:
-    pattern:  /dashboard
+    pattern:  /enhavo/dashboard
     methods: [GET]
     defaults:
         _controller: enhavo_app.controller.app:indexAction

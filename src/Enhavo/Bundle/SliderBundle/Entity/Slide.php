@@ -32,7 +32,7 @@ class Slide
     /**
      * @var integer
      */
-    protected $order;
+    protected $position;
 
     /**
      * @var integer
@@ -40,7 +40,7 @@ class Slide
     protected $public;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     protected $image;
 
@@ -48,15 +48,6 @@ class Slide
      * @var Slider
      */
     protected $slider;
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -138,26 +129,26 @@ class Slide
     }
 
     /**
-     * Set order
+     * Set position
      *
-     * @param integer $order
+     * @param integer $position
      * @return Slider
      */
-    public function setOrder($order)
+    public function setPosition($position)
     {
-        $this->order = $order;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get position
      *
-     * @return integer 
+     * @return integer
      */
-    public function getOrder()
+    public function getPosition()
     {
-        return $this->order;
+        return $this->position;
     }
 
     /**
@@ -211,32 +202,22 @@ class Slide
     }
 
     /**
-     * Add image
+     * Set image
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     * @return Slider
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $image
+     * @return Slide
      */
-    public function addImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
+    public function setImage($image)
     {
-        $this->image[] = $image;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Remove image
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     */
-    public function removeImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
-    {
-        $this->image->removeElement($image);
-    }
-
-    /**
      * Get image
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getImage()
     {

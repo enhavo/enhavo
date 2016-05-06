@@ -78,7 +78,7 @@ class Article {
     protected $content;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     protected $picture;
 
@@ -91,15 +91,6 @@ class Article {
      * @var boolean
      */
     protected $social_media;
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -435,32 +426,22 @@ class Article {
     }
 
     /**
-     * Add picture
+     * Set picture
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     * @param $picture \Enhavo\Bundle\MediaBundle\Entity\File|null
      * @return Article
      */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    public function setPicture($picture)
     {
-        $this->picture[] = $picture;
+        $this->picture = $picture;
 
         return $this;
     }
 
     /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
      * Get picture
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getPicture()
     {

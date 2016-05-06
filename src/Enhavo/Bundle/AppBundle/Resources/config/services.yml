@@ -21,7 +21,7 @@ services:
     enhavo_app.form.enhavo_boolean:
         class: %enhavo_app.form.enhavo_boolean.class%
         arguments:
-            - @enhavo_app.form.config.wysiwyg
+            - @translator
         tags:
             - { name: form.type, alias: 'enhavo_boolean' }
 
@@ -91,3 +91,34 @@ services:
         class: Enhavo\Bundle\AppBundle\Form\Type\ListType
         tags:
             - { name: form.type }
+
+    enhavo_app.table_widget_collector:
+        class: Enhavo\Bundle\AppBundle\Table\TableWidgetCollector
+
+    enhavo_app.table.list_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\ListWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.template_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.multiple_property_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\MultiplePropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.property_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

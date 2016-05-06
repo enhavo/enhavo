@@ -24,24 +24,30 @@ class SlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'textarea', array(
-            'label' => 'form.label.title'
+            'label' => 'form.label.title',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('url', 'text', array(
-            'label' => 'form.label.url',
+            'label' => 'slide.form.label.url',
+            'translation_domain' => 'EnhavoSliderBundle',
             'attr' => array('class' => 'link-type-external'),
         ));
 
         $builder->add('text', 'textarea', array(
-            'label' => 'form.label.text'
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('public', 'enhavo_boolean', array(
-            'label' => 'form.label.public'
+            'label' => 'form.label.public',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('image', 'enhavo_files', array(
-            'label' => 'form.label.image'
+            'label' => 'form.label.picture',
+            'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
     }
 

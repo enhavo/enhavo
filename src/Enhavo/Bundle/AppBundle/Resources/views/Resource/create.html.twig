@@ -1,5 +1,6 @@
 {% extends 'EnhavoAppBundle::dialog.html.twig' %}
 
+{% trans_default_domain "EnhavoAppBundle" %}
 {% block content %}
     <form method="POST" action="{{ form_action }}">
         {% block form %}
@@ -13,7 +14,7 @@
     {% for name, button in buttons %}
         {% if button.display %}
             <div class="col-sm-push-2 col-sm-2">
-                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-sm-12 save" type="button"><i class="{% if button.icon %}fa fa-{{ button.icon }}{% endif %}"></i> {{ button.label|trans }}</button>
+                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-sm-12" type="button"><i class="button-icon {{ button.icon }}"></i> {{ button.label|trans }}</button>
             </div>
         {% endif %}
     {% endfor %}

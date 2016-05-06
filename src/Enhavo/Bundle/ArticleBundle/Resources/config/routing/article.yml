@@ -19,21 +19,22 @@ enhavo_article_article_create:
         _sylius:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             tabs:
                 article:
-                    label: Article
+                    label: article.label.article
                     template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
-                    label: Content
+                    label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: article.label.seo
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_article_article_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_article_article_update:
     options:
@@ -45,21 +46,22 @@ enhavo_article_article_update:
         _sylius:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             tabs:
                 article:
-                    label: Article
+                    label: article.label.article
                     template: EnhavoArticleBundle:Tab:article.html.twig
                 content:
-                    label: Content
+                    label: article.label.content
                     template: EnhavoArticleBundle:Tab:content.html.twig
                 seo:
-                    label: Seo
+                    label: article.label.seo
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
                     route: enhavo_article_article_preview
                     label: label.preview
-                    icon: eye
+                    icon: icon-eye
 
 enhavo_article_article_table:
     options:
@@ -72,14 +74,15 @@ enhavo_article_article_table:
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
+            translationDomain: EnhavoArticleBundle
             table:
                 columns:
                     id:
-                        label: ID
+                        label: article.label.id
                         property: id
                         width: 1
                     title:
-                        label: title
+                        label: article.label.title
                         property: title
                         width: 11
 
@@ -90,6 +93,14 @@ enhavo_article_article_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_article.controller.article:deleteAction
+
+enhavo_article_article_batch:
+    options:
+        expose: true
+    path: /enhavo/article/article/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_article.controller.article:batchAction
 
 enhavo_article_article_preview:
     options:

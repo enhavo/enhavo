@@ -1,0 +1,65 @@
+text:
+  label:
+    text: 'Text'
+textText:
+  form:
+    label:
+      title_left: 'Titel links'
+      text_left: 'Text links'
+      title_right: 'Titel rechts'
+      text_right: 'Text rechts'
+      layout: 'Layout'
+      1_1: '1:1'
+      1_2: '1:2'
+      2_1: '2:1'
+  label:
+    textText: 'Text | Text'
+textPicture:
+  form:
+    label:
+      position: 'Positionierung'
+      picture_left-text_right: 'Bild | Text'
+      text_left-picture_right: 'Text | Bild'
+      frame: 'Rahmen für Bild'
+  label:
+    textPicture: 'Text | Bild'
+picture:
+  form:
+    label:
+      caption: 'Bild Titel'
+  label:
+    picture: 'Bild'
+picturePicture:
+  form:
+    label:
+      picture_left: 'Bild links'
+      caption_left: 'Bild Titel links'
+      picture_right: 'Bild rechts'
+      caption_right: 'Bild Titel rechts'
+      frame: 'Rahmen für Bild'
+  label:
+      picturePicture: 'Bild | Bild'
+gallery:
+  form:
+    label:
+      pictures: 'Bilder'
+  label:
+    gallery: 'Gallerie'
+citeText:
+  form:
+    label:
+      cite: 'Zitat'
+  label:
+    citeText: 'Zitat'
+download:
+  label:
+    download: 'Download'
+
+video:
+  label:
+    video: 'Video'
+  form:
+    label:
+      url: 'URL'
+
+

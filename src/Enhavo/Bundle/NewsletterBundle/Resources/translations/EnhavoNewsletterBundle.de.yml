@@ -1,0 +1,26 @@
+newsletter:
+  action:
+    sendAndSave: 'Senden und Speichern'
+    sent:
+      success: 'Newsletter erfolgreich gesendet!'
+      error: 'Newsletter konnte nicht gesendet werden!'
+      again: 'Möchten Sie den Newsletter wirklich erneut senden?'
+  label:
+    sent: 'gesendet'
+    id: 'ID'
+    title: 'Titel'
+    newsletter: 'Newsletter'
+  form:
+    label:
+      subject: 'Betreff'
+      sent: 'gesendet'
+  batch:
+    action:
+      send: 'Senden'
+    message:
+      confirm:
+        send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
+subscriber:
+  form:
+    label:
+      email: 'E-Mail'
