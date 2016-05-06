@@ -36,6 +36,7 @@ class InstallCommand extends ContainerAwareCommand
     {
         $this->installDatabase($input, $output);
         $this->insertUser($input, $output);
+        $this->createBundle($input, $output);
     }
 
     /**
@@ -69,7 +70,7 @@ class InstallCommand extends ContainerAwareCommand
         $email = $this->askForEmail($input, $output);
         $password = $this->askForPassword($input, $output);
 
-        $question = new ConfirmationQuestion('Are this information correct?', true);
+        $question = new ConfirmationQuestion('<info>Are this information correct</info> [<comment>yes</comment>]?', true);
 
         if ($helper->ask($input, $output, $question)) {
             $this->createUser($username, $email, $password);
@@ -182,5 +183,50 @@ class InstallCommand extends ContainerAwareCommand
         $manager->updatePassword($user);
         $em->persist($user);
         $em->flush();
+    }
+
+    protected function createBundle(InputInterface $input, OutputInterface $output)
+    {
+        $srcDir = sprintf('%s/../src', $this->getContainer()->getParameter('kernel.root_dir'));
+        $projectBundleDir = sprintf('%s/ProjectBundle', $srcDir);
+
+        if(file_exists($projectBundleDir)) {
+            $output->writeln('Project Bundle already exists, nothing to do here');
+            return;
+        }
+
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('<info>Do you want to add a ProjectBundle</info> [<comment>yes</comment>]?', true);
+
+        if ($helper->ask($input, $output, $question)) {
+            $command = $this->getApplication()->find('generate:bundle');
+
+            $arguments = array(
+                '--namespace'  => 'ProjectBundle',
+                '--bundle-name'  => 'ProjectBundle',
+                '--dir'  => realpath($srcDir),
+                '--format'  => 'yml',
+                '--no-interaction'  => true,
+                '--structure' => 'no',
+            );
+
+            $argumentInputs = new ArrayInput($arguments);
+            $command->run($argumentInputs, $output);
+            $this->overwriteProjectBundle(realpath($projectBundleDir));
+        }
+    }
+
+    protected function overwriteProjectBundle($projectBundleDir)
+    {
+        $templateEngine = $this->getContainer()->get('templating');
+
+        $defaultControllerContent = $templateEngine->render('EnhavoInstallerBundle:generate:DefaultController.php.twig');
+        file_put_contents(sprintf('%s/Controller/DefaultController.php', $projectBundleDir), $defaultControllerContent);
+
+        $routingContent = $templateEngine->render('EnhavoInstallerBundle:generate:routing.yml.twig');
+        file_put_contents(sprintf('%s/Resources/config/routing.yml', $projectBundleDir), $routingContent);
+
+        $indexContent = $templateEngine->render('EnhavoInstallerBundle:generate:index.html.twig');
+        file_put_contents(sprintf('%s/Resources/views/Default/index.html.twig', $projectBundleDir), $indexContent);
     }
 }
