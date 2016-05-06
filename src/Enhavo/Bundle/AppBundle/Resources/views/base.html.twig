@@ -77,6 +77,17 @@
     {% block javascripts %}{% endblock %}
 </head>
 <body>
+
+<nav id="user-menu">
+    <ul class="clearfix" data-user-menu>
+        <li class="menu-btn" data-open-usermenu><button class="btn dropdown">Hallo Admin!</button></li>
+        <li data-usermenu-link><a href="#">Konto</a></li>
+        <li data-usermenu-link><a href="/">Seite ansehen</a></li>
+        <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+    </ul>
+</nav>
+
+
 {% block body %}
     <div id="overlay"></div>
     <div id="overlayContent"></div>
