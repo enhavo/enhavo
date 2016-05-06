@@ -1,0 +1,20 @@
+{
+  "name": "enhavo/installer-bundle",
+  "type": "library",
+  "description": "EnhavoInstallerBundle",
+  "keywords": ["framework"],
+  "homepage": "http://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\InstallerBundle\\": "" }
+  }
+}
