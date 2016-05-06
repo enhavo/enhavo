@@ -8,6 +8,8 @@ enhavo_user_user_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: user.label.user
+            translationDomain: EnhavoUserBundle
 
 enhavo_user_user_create:
     options:

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
-class IndexViewer extends AbstractViewer
+class IndexViewer extends AppViewer
 {
     public function getDefaultConfig()
     {

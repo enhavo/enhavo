@@ -8,6 +8,8 @@ enhavo_article_article_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: article.label.article
+            translationDomain: EnhavoArticleBundle
 
 enhavo_article_article_create:
     options:

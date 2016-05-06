@@ -47,11 +47,27 @@ abstract class AbstractViewer implements ContainerAwareInterface
     private $resourceName;
 
     /**
+     * @var string[]
+     */
+    private $stylesheets;
+
+    /**
+     * @var string[]
+     */
+    private $javascripts;
+
+    /**
      * @param mixed $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+
+        $stylesheets = $this->container->getParameter('enhavo_app.stylesheets');
+        $this->setStylesheets($stylesheets);
+
+        $javascripts = $this->container->getParameter('enhavo_app.javascripts');
+        $this->setJavascripts($javascripts);
     }
 
     /**
@@ -188,5 +204,37 @@ abstract class AbstractViewer implements ContainerAwareInterface
     {
         $translationDomain = $this->getConfig()->get('translationDomain');
         return $translationDomain;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStylesheets()
+    {
+        return $this->stylesheets;
+    }
+
+    /**
+     * @param string[] $stylesheets
+     */
+    public function setStylesheets($stylesheets)
+    {
+        $this->stylesheets = $stylesheets;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getJavascripts()
+    {
+        return $this->javascripts;
+    }
+
+    /**
+     * @param string[] $javascripts
+     */
+    public function setJavascripts($javascripts)
+    {
+        $this->javascripts = $javascripts;
     }
 }
