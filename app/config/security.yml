@@ -66,7 +66,7 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        secured_area:
+        dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
@@ -88,15 +88,6 @@ security:
             anonymous:    true
 
     access_control:
-        #- { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/admin/, role: ROLE_USER }
-        - { path: ^/admin/enhavo/page, roles: ROLE_ENHAVO_PAGE_PAGE_INDEX }
-        - { path: ^/admin/enhavo/article, roles: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX }
-        - { path: ^/admin/enhavo/newsletter, roles: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX }
-        - { path: ^/admin/enhavo/user/user, roles: ROLE_ENHAVO_USER_USER_INDEX }
-        - { path: ^/admin/enhavo/user/group, roles: ROLE_ENHAVO_USER_GROUP_INDEX }
-        - { path: ^/admin/enhavo/category, roles: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX }
-        - { path: ^/admin/enhavo/calendar, roles: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX }
-        - { path: ^/admin/enhavo/slider, roles: ROLE_ENHAVO_SLIDER_SLIDE_INDEX }
-        - { path: ^/admin/enhavo/workflow, roles: ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_USER }

@@ -13,7 +13,7 @@ class EditViewer extends CreateViewer
 {
     public function getDefaultConfig()
     {
-        return array(
+        $config =  array(
             'buttons' => array(
                 'cancel' => array(
                     'route' => null,
@@ -29,14 +29,6 @@ class EditViewer extends CreateViewer
                     'label' => 'label.save',
                     'icon' => 'icon-save'
                 ),
-                'delete' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.delete',
-                    'icon' => 'icon-trash-1'
-                )
-
             ),
             'form' => array(
                 'template' => 'EnhavoAppBundle:View:tab.html.twig',
@@ -45,21 +37,32 @@ class EditViewer extends CreateViewer
                 'delete' => sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName())
             )
         );
+
+        $securityContext = $this->container->get('security.context');
+        $route = sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName());
+        if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
+            $config['buttons']['delete'] = array(
+                'route' => null,
+                'display' => true,
+                'role' => null,
+                'label' => 'label.delete',
+                'icon' => 'icon-trash-1'
+            );
+        }
+
+        return $config;
     }
 
     public function getFormDelete()
     {
         $route = $this->getConfig()->get('form.delete');
         $securityContext = $this->container->get('security.context');
-        $currentUser = $securityContext->getToken()->getUser();
-        if(in_array('ROLE_'.strtoupper($route), $currentUser->getRoles())) {
+        if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
             return $this->container->get('router')->generate($route, array(
                 'id' => $this->getResource()->getId()
             ));
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
     public function getFormAction()
@@ -72,32 +75,17 @@ class EditViewer extends CreateViewer
 
     public function getParameters()
     {
-        if($this->getFormDelete() != null) {
-            $parameters = array(
-                'buttons' => $this->getButtons(),
-                'form' => $this->getForm(),
-                'viewer' => $this,
-                'tabs' => $this->getTabs(),
-                'data' => $this->getResource(),
-                'form_template' => $this->getFormTemplate(),
-                'form_action' => $this->getFormAction(),
-                'form_delete' => $this->getFormDelete(),
-                'translationDomain' => $this->getTranslationDomain()
-            );
-        } else {
-            $parameters = array(
-                'buttons' => $this->getButtons(),
-                'form' => $this->getForm(),
-                'viewer' => $this,
-                'tabs' => $this->getTabs(),
-                'data' => $this->getResource(),
-                'form_template' => $this->getFormTemplate(),
-                'form_action' => $this->getFormAction(),
-                'translationDomain' => $this->getTranslationDomain()
-            );
-            unset($parameters['buttons']['delete']);
-        }
-
+        $parameters = array(
+            'buttons' => $this->getButtons(),
+            'form' => $this->getForm(),
+            'viewer' => $this,
+            'tabs' => $this->getTabs(),
+            'data' => $this->getResource(),
+            'form_template' => $this->getFormTemplate(),
+            'form_action' => $this->getFormAction(),
+            'form_delete' => $this->getFormDelete(),
+            'translationDomain' => $this->getTranslationDomain()
+        );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);
 

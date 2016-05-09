@@ -9,8 +9,6 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus;
-use Enhavo\Bundle\WorkflowBundle\Entity\Transition;
 
 class Article {
 
@@ -491,6 +489,7 @@ class Article {
      * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
      */
     public function getWorkflowStatus()
-    {return $this->workflow_status;
+    {
+        return $this->workflow_status;
     }
 }

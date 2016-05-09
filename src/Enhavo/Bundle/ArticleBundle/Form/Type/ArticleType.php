@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\RouterInterface;
-use Doctrine\ORM\EntityRepository;
 
 class ArticleType extends AbstractType
 {

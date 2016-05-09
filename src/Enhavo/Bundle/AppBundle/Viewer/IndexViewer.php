@@ -44,12 +44,12 @@ class IndexViewer extends AppViewer
     {
         $actions = array();
         $securityContext = $this->container->get('security.context');
-        $currentUser = $securityContext->getToken()->getUser();
         foreach($this->getConfig()->get('actions') as $action) {
             $currentRole = 'ROLE_'.strtoupper($action['route']);
             $resource = array();
             $resource['entity'] = $this->getResourceName();
-            if(in_array($currentRole, $currentUser->getRoles()) && $securityContext->isGranted('WORKFLOW', $resource)){
+            //ToDo: move Workflow check to hook
+            if($securityContext->isGranted($currentRole) && $securityContext->isGranted('WORKFLOW', $resource)){
                 $actions[] = $action;
             }
         }

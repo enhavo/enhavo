@@ -193,6 +193,7 @@ var Form = function(router, templating, admin, translator)
     $(form).find('[data-button][data-type=delete]').click(function() {
       var url = $(form).data('delete');
       if(confirm(translator.trans('form.delete.question'))) {
+        admin.openLoadingOverlay();
         $.ajax({
           type: 'POST',
           data: {
@@ -200,9 +201,11 @@ var Form = function(router, templating, admin, translator)
           },
           url: url,
           success: function() {
+            admin.openLoadingOverlay();
             $(form).trigger('formSaveAfter', form);
           },
           error: function() {
+            admin.openLoadingOverlay();
             alert(translator.trans('error.occurred'));
           }
         });

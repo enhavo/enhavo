@@ -87,7 +87,7 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
-        //$this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
+        //ToDo: Move granted check to hook
         if(!$this->isGranted('WORKFLOW', $resource)) {
             return new JsonResponse(null, 403);
         }

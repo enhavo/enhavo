@@ -47,19 +47,16 @@ class MenuLoader
     public function getMenu()
     {
         $menuList = $this->factory->createItem($this->name);
-        $currentUser = $this->securityContext->getToken()->getUser();
         foreach($this->menu as $name => $menuItem) {
-            if(gettype($currentUser) == 'object') {
-                if(in_array($menuItem['role'], $currentUser->getRoles())) {
-                    $menu = $this->factory->createItem($name, array(
-                        'route' => $menuItem['route']
-                    ));
-                    $menu->setLabel($menuItem['label']);
-                    if(isset($menuItem['translationDomain'])) {
-                        $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
-                    }
-                    $menuList->addChild($menu);
+            if($this->securityContext->isGranted($menuItem['role'])) {
+                $menu = $this->factory->createItem($name, array(
+                    'route' => $menuItem['route']
+                ));
+                $menu->setLabel($menuItem['label']);
+                if(isset($menuItem['translationDomain'])) {
+                    $menu->setLabelAttribute('translationDomain', $menuItem['translationDomain']);
                 }
+                $menuList->addChild($menu);
             }
         }
 

@@ -12,7 +12,7 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class PageRepository extends EntityRepository
 {
-    public function getWorkflowStatusNull()
+    public function getEmptyWorkflowStatus()
     {
         $query = $this->createQueryBuilder('n');
         $query->where('n.workflow_status IS NULL');

@@ -187,7 +187,7 @@ class ArticleRepository extends EntityRepository
         }
     }
 
-    public function getWorkflowStatusNull()
+    public function getEmptyWorkflowStatus()
     {
         $query = $this->createQueryBuilder('n');
         $query->where('n.workflow_status IS NULL');

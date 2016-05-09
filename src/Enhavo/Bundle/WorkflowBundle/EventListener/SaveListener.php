@@ -9,10 +9,13 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class SaveListener
 {
     protected $em;
+    
+    protected $workflowClass;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $workflowClass)
     {
         $this->em = $em;
+        $this->workflowClass = $workflowClass;
     }
 
     public function onSave(GenericEvent $event)
@@ -74,13 +77,12 @@ class SaveListener
                     }
                 }
             }
-        } else if($entity == 'Workflow') //if it is a 'save' of the workflow entity check the workflow-status of the belonging types and save the formNodes to the real nodes
-        {
+        } else if(get_class($event->getSubject()) == $this->workflowClass) { //if it is a 'save' of the workflow entity check the workflow-status of the belonging types and save the formNodes to the real nodes
             //check if there are elements of the type with workflow-status null
             $repository = $this->em->getRepository('Enhavo'.ucfirst($event->getSubject()->getEntity()).'Bundle:'.ucfirst($event->getSubject()->getEntity()));
-            $wfnull = $repository->getWorkflowStatusNull();
+            $resources = $repository->getEmptyWorkflowStatus();
 
-            if($wfnull != null) {
+            if($resources != null) {
 
                 //there are elements of the type with workflow-status null
 
@@ -100,7 +102,7 @@ class SaveListener
                     }
                 }
 
-                foreach($wfnull as $element) {
+                foreach($resources as $element) {
 
                     //check if there is a public field in the type
                     if(property_exists($element, 'public')){

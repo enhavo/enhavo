@@ -9,17 +9,18 @@ class DeleteListener
 {
     protected $em;
 
-    public function __construct(EntityManager $em)
+    protected $workflowClass;
+
+    public function __construct(EntityManager $em, $workflowClass)
     {
         $this->em = $em;
+        $this->workflowClass = $workflowClass;
     }
 
     //you need to delete all rows which belong to the workflow before you can delete the workflow itself (transitions->nodes->workflow-status)
     public function onDelete(GenericEvent $event)
     {
-        $array = explode('\\', get_class($event->getSubject()));
-        $entity = array_pop($array);
-        if($entity == 'Workflow'){
+        if(get_class($event->getSubject()) == $this->workflowClass){
 
             //get the current workflow
             $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
