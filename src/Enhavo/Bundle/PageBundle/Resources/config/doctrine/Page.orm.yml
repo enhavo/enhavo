@@ -68,6 +68,9 @@ Enhavo\Bundle\PageBundle\Entity\Page:
         route:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
+        picture:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
 
     oneToOne:
         content:
@@ -76,19 +79,6 @@ Enhavo\Bundle\PageBundle\Entity\Page:
         workflow_status:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
-
-    manyToMany:
-        picture:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: page_page_picture
-                joinColumns:
-                    page_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
 
     lifecycleCallbacks:
         prePersist: [ prePersist ]

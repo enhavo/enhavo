@@ -4,7 +4,6 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -60,6 +59,9 @@ class BooleanType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $value = $view->vars['value'];
+        if($value === '') {
+            $value = 'null';
+        }
         if($value === self::VALUE_NULL) {
             if(true === $options['default']) {
                 $value = self::VALUE_TRUE;
@@ -70,6 +72,7 @@ class BooleanType extends AbstractType
             if(null === $options['default']) {
                 $value = self::VALUE_NULL;
             }
+
             $view->vars['value'] = $value;
         }
     }

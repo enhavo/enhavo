@@ -24,15 +24,18 @@ function Newsletter(router, translator, admin) {
     };
 
     this.sendNewsletter = function(data, url, form) {
+        admin.openLoadingOverlay();
         $.ajax({
             type: 'POST',
             data: data,
             url: url,
             success: function() {
+                admin.closeLoadingOverlay();
                 admin.overlayMessage(translator.trans('newsletter.action.sent.success'), 'info');
                 admin.overlayClose();
             },
             error: function() {
+                admin.closeLoadingOverlay();
                 admin.overlayMessage(translator.trans('newsletter.action.sent.error'), 'error');
                 admin.overlayClose();
             }
@@ -44,12 +47,15 @@ function Newsletter(router, translator, admin) {
             var url = $("#addEmailForm").attr('action');
             var email = $('input[name="enhavo_newsletter_subscriber[email]"]').val();
             data = $("#addEmailForm").serialize();
+            admin.openLoadingOverlay();
             $.post(url, data, function (response) {
+                admin.closeLoadingOverlay();
                 $("#addEmailForm").get(0).reset();
 
                 var code = $.now()+email;
             })
                 .fail(function(jqXHR) {
+                    admin.closeLoadingOverlay();
                     var data = JSON.parse(jqXHR.responseText);
 
                     if(data.code == 400) {
@@ -84,7 +90,7 @@ function Newsletter(router, translator, admin) {
                     } else {
                         alert("Error")
                     }
-                })
+                });
             return false;
         });
     };

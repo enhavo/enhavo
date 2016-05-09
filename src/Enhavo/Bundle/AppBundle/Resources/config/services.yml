@@ -106,3 +106,34 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type }
+
+    enhavo_app.table_widget_collector:
+        class: Enhavo\Bundle\AppBundle\Table\TableWidgetCollector
+
+    enhavo_app.table.list_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\ListWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.template_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.multiple_property_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\MultiplePropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.property_widget:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

@@ -8,6 +8,8 @@ enhavo_calendar_appointment_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: label.calendar
+            translationDomain: EnhavoCalendarBundle
 
 enhavo_calendar_appointment_create:
     options:
@@ -72,7 +74,9 @@ enhavo_calendar_appointment_table:
                     date:
                         label: appointment.label.date
                         property: dateFrom
-                        widget: EnhavoAppBundle:Widget:date.html.twig
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:date.html.twig
                         width: 5
 enhavo_calendar_appointment_delete:
     options:
@@ -81,6 +85,14 @@ enhavo_calendar_appointment_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_calendar.controller.appointment:deleteAction
+
+enhavo_calendar_appointment_batch:
+    options:
+        expose: true
+    path: /enhavo/calendar/appointment/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_calendar.controller.appointment:batchAction
 
 enhavo_calendar_appointment_preview:
     options:

@@ -126,6 +126,7 @@ var Form = function(router, templating, admin, translator)
       form = $(form);
       var data = form.serialize();
       var action = form.attr('action');
+      admin.openLoadingOverlay();
       $.ajax({
         type: 'POST',
         data: data,
@@ -134,6 +135,7 @@ var Form = function(router, templating, admin, translator)
           $(form).trigger('formSaveAfter', form);
         },
         error: function(jqXHR) {
+          admin.closeLoadingOverlay();
           var data = JSON.parse(jqXHR.responseText);
 
           if(data.code == 400) {
@@ -190,38 +192,20 @@ var Form = function(router, templating, admin, translator)
   {
     $(form).find('[data-button][data-type=delete]').click(function() {
       var url = $(form).data('delete');
-      if(url.indexOf('/admin/enhavo/user/group/delete') >= 0) {
-        if(confirm(translator.trans('form.delete.group.question'))) {
-          $.ajax({
-            type: 'POST',
-            data: {
-              _method: 'DELETE'
-            },
-            url: url,
-            success: function() {
-              $(form).trigger('formSaveAfter', form);
-            },
-            error: function() {
-              alert(translator.trans('error.occurred'));
-            }
-          });
-        }
-      } else {
-        if(confirm(translator.trans('form.delete.question'))) {
-          $.ajax({
-            type: 'POST',
-            data: {
-              _method: 'DELETE'
-            },
-            url: url,
-            success: function() {
-              $(form).trigger('formSaveAfter', form);
-            },
-            error: function() {
-              alert(translator.trans('error.occurred'));
-            }
-          });
-        }
+      if(confirm(translator.trans('form.delete.question'))) {
+        $.ajax({
+          type: 'POST',
+          data: {
+            _method: 'DELETE'
+          },
+          url: url,
+          success: function() {
+            $(form).trigger('formSaveAfter', form);
+          },
+          error: function() {
+            alert(translator.trans('error.occurred'));
+          }
+        });
       }
     });
   };

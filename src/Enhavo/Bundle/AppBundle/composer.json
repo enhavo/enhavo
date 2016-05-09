@@ -19,7 +19,7 @@
     "memio/memio": "~1.0",
     "sylius/resource-bundle": "v0.16.0"
   },
-  "autoload": {~
+  "autoload": {
     "psr-4": { "Enhavo\\Bundle\\AppBundle\\": "" }
   }
 }

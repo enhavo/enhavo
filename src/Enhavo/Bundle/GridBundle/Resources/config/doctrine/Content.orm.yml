@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Content:
     type: entity
-    table: content_content
+    table: grid_content
     id:
         id:
             type: integer

@@ -5,14 +5,5 @@ enhavo_dashboard_index:
         _controller: enhavo_app.controller.app:indexAction
         _viewer:
             type: app
-            parameters:
-                param1: value1
-                param2: value2
-            stylesheets:
-                enhavo_app_style:
-                    resource: '@EnhavoAppBundle/Resource/public/css/style.css'
-                    depends: ~
-            javascripts:
-                enhavo_app_bootstrap:
-                    resource: '@EnhavoAppBundle/Resource/public/js/bootstrap.css'
-                    depends: jquery
+            title: dashboard.label.dashboard
+            translationDomain: EnhavoDashboardBundle

@@ -137,6 +137,7 @@ class PageType extends AbstractType
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
 
         if($this->securityContext->isGranted('WORKFLOW', $this->dataClass))

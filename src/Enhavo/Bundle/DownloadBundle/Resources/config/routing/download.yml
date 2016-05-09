@@ -8,6 +8,8 @@ enhavo_download_download_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: download.label.download
+            translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_create:
     options:
@@ -62,3 +64,11 @@ enhavo_download_download_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_download.controller.download:deleteAction
+
+enhavo_download_download_batch:
+    options:
+        expose: true
+    path: /enhavo/download/download/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_download.controller.download:batchAction

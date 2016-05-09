@@ -46,7 +46,8 @@ class SlideType extends AbstractType
 
         $builder->add('image', 'enhavo_files', array(
             'label' => 'form.label.picture',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
     }
 

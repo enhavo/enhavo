@@ -14,6 +14,12 @@ newsletter:
     label:
       subject: 'Subject'
       sent: 'sent'
+  batch:
+    action:
+      send: 'Send'
+    message:
+      confirm:
+        send: 'Do you really want to send all selected newsletters?'
 subscriber:
   form:
     label:

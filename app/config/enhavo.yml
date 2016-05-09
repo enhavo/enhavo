@@ -10,6 +10,18 @@ enhavo_app:
     dynamic_routing: false
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
+      - '@EnhavoGridBundle/Resources/public/css/style.css'
+      - '@EnhavoPageBundle/Resources/public/css/style.css'
+      - '@EnhavoArticleBundle/Resources/public/css/style.css'
+      - '@EnhavoSliderBundle/Resources/public/css/style.css'
+      - '@EnhavoUserBundle/Resources/public/css/style.css'
+      - '@EnhavoMediaBundle/Resources/public/css/style.css'
+      - '@EnhavoDownloadBundle/Resources/public/css/style.css'
+      - '@EnhavoCategoryBundle/Resources/public/css/style.css'
+      - '@EnhavoCalendarBundle/Resources/public/css/style.css'
+      - '@EnhavoSliderBundle/Resources/public/css/style.css'
+      - '@EnhavoNewsletterBundle/Resources/public/css/style.css'
+      - '@EnhavoDashboardBundle/Resources/public/css/style.css'
     javascripts:
 
     viewer:
@@ -42,7 +54,7 @@ enhavo_app:
             route: enhavo_page_page_index
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX
         category:
-            label: category.label.categories
+            label: category.label.category
             translationDomain: EnhavoCategoryBundle
             route: enhavo_category_category_index
             role: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX
@@ -71,6 +83,14 @@ enhavo_app:
             translationDomain: EnhavoWorkflowBundle
             route: enhavo_workflow_workflow_index
             role: ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX
+
+enhavo_newsletter:
+    subscriber:
+        send_from: %emails_send_from%
+        subject: 'Subject'
+        template:  'EnhavoNewsletterBundle:Default:subscriber-email.html.twig'
+    newsletter:
+        send_from: %emails_send_from%
 
 enhavo_grid:
     render:

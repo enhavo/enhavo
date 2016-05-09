@@ -8,6 +8,8 @@ enhavo_user_user_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: user.label.user
+            translationDomain: EnhavoUserBundle
 
 enhavo_user_user_create:
     options:
@@ -60,6 +62,14 @@ enhavo_user_user_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:deleteAction
+
+enhavo_user_user_batch:
+    options:
+        expose: true
+    path: /enhavo/user/user/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_user.controller.user:batchAction
 
 enhavo_user_user_password:
     options:

@@ -8,6 +8,8 @@ enhavo_category_category_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: category.label.category
+            translationDomain: EnhavoCategoryBundle
 
 enhavo_category_category_create:
     options:
@@ -68,6 +70,14 @@ enhavo_category_category_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_category.controller.category:deleteAction
+
+enhavo_category_category_batch:
+    options:
+        expose: true
+    path: /enhavo/category/category/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_category.controller.category:batchAction
 
 enhavo_category_category_preview:
     options:

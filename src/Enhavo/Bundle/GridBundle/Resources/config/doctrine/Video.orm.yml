@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Video:
     type: entity
-    table: content_type_video
+    table: grid_type_video
     id:
         id:
             type: integer

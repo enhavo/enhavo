@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Symfony\Component\Security\Core\Security;
 
-class IndexViewer extends AbstractViewer
+class IndexViewer extends AppViewer
 {
     public function getDefaultConfig()
     {
