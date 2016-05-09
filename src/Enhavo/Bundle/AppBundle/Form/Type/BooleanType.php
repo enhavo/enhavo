@@ -28,29 +28,29 @@ class BooleanType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new CallbackTransformer(
-            function ($originalDescription) {
-                if(true === $originalDescription) {
-                    return self::VALUE_TRUE;
-                }
-                if(false === $originalDescription) {
-                    return self::VALUE_FALSE;
-                }
-                if(null === $originalDescription) {
-                    return self::VALUE_NULL;
-                }
-                return $originalDescription;
-            },
-            function ($submittedDescription) {
-                if(self::VALUE_TRUE === $submittedDescription) {
-                    return true;
-                }
-                if(self::VALUE_FALSE === $submittedDescription) {
-                    return false;
-                }
-                return null;
-            }
-        ));
+//        $builder->addModelTransformer(new CallbackTransformer(
+//            function ($originalDescription) {
+//                if(true === $originalDescription) {
+//                    return self::VALUE_TRUE;
+//                }
+//                if(false === $originalDescription) {
+//                    return self::VALUE_FALSE;
+//                }
+//                if(null === $originalDescription) {
+//                    return self::VALUE_NULL;
+//                }
+//                return $originalDescription;
+//            },
+//            function ($submittedDescription) {
+//                if(self::VALUE_TRUE === $submittedDescription) {
+//                    return true;
+//                }
+//                if(self::VALUE_FALSE === $submittedDescription) {
+//                    return false;
+//                }
+//                return null;
+//            }
+//        ));
     }
 
     /**
@@ -86,7 +86,7 @@ class BooleanType extends AbstractType
             ),
             'expanded' => true,
             'multiple' => false,
-            'default' => null
+            'default' => false
         ));
     }
 

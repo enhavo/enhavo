@@ -38,6 +38,7 @@ services:
         class: Enhavo\Bundle\WorkflowBundle\EventListener\SaveListener
         arguments:
             - @doctrine.orm.entity_manager
+            - %enhavo_workflow.model.workflow.class%
         tags:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
