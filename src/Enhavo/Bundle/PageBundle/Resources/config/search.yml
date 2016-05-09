@@ -1,6 +1,5 @@
 Enhavo\Bundle\PageBundle\Entity\Page:
-    priority: 5
-    index: false
+
     properties:
         title:
             - Plain:
@@ -14,7 +13,3 @@ Enhavo\Bundle\PageBundle\Entity\Page:
 
         content:
             - Model
-
-        tags:
-            - Collection:
-                entity: Enhavo\Bundle\CategoryBundle\Entity\Category

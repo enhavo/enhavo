@@ -1,21 +1,13 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
-    priority: 5
-    index: false
     properties:
         title:
             - Plain:
                 weight: 10
                 type: title
 
-        teaser:
-            - Plain:
-                weight: 8
-                type: teaser
+        text:
+            - Html:
+                type: text
 
         content:
             - Model
-
-        tag:
-            - Collection:
-                type: text
-                weight: 3

@@ -214,7 +214,7 @@ EOD;
                         $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
 
                         if($text != null) {
-                            $this->indexingCollection($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                            $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
                         }
                     } else if (array_key_exists('type', $value)) {
                         foreach($text as $currentText){
@@ -415,91 +415,16 @@ EOD;
         }
     }
 
-    public function indexingCollection($text, $model, $yamlFile, $dataSet) {
-
+    public function indexingCollectionEntity($text, $model, $yamlFile, $dataSet) {
         if(array_key_exists($model, $yamlFile)){
             $colProperties = $yamlFile[$model]['properties'];
             $accessor = PropertyAccess::createPropertyAccessor();
             foreach($text as $singleText){
                 foreach($colProperties as $key => $value){
-
                     $this->switchToIndexingType($accessor->getValue($singleText, $key), $value, $dataSet);
                 }
             }
         }
-        //indexing a collection
-        //get seperated content types
-        //$colProperties = $yamlFile[$find]['properties'];
-        //$textContent = null;
-        //$colTypeYml = null;
-        //$accessor = PropertyAccess::createPropertyAccessor();
-        //foreach($colProperties as $key => $value) {
-            /*if(is_array($text)) {
-                if(array_key_exists($key, $text)) {
-                    $textContent = $text[$key];
-                    $colTypeYml = $yamlFile[$value[0]];
-                    break;
-                }
-            } elseif(is_object($text)) {
-                $colTypeYml = $yamlFile[$value[0]];
-                $value = $accessor->getValue($text, $key);
-                if(!empty($value)) {
-                    $textContent = $value;
-                    break;
-                }
-            }
-        }
-       /* if($textContent != null){
-
-            //go trough the yaml structure until we find types and wights of the items
-            $splittedFindPath = explode("\\", $find);
-            $colItemPath = null;
-            $i = 1;
-            $colItemPath = $splittedFindPath[0];
-            while($splittedFindPath[$i] != 'Entity') {
-                $colItemPath = $colItemPath.'\\'.$splittedFindPath[$i];
-                $i++;
-            }
-            foreach($textContent as $current) {
-                $currentColItemPath = $colItemPath . '\\Entity\\' . str_replace('_', '',ucwords($accessor->getValue($current, 'type'), '_'));
-                $currentItem = $yamlFile[$currentColItemPath]['properties'];
-                foreach ($colTypeYml['properties'] as $key1 => $value1) {
-                    foreach ($currentItem as $key2 => $value2) {
-                        $indexingField = $key2;
-                        $currentItemType = $accessor->getValue($current, $key1);
-                        if ($accessor->getValue($currentItemType,$indexingField)) {
-                            $currentText = $accessor->getValue($currentItemType,$indexingField);
-                        }
-
-                        //check what kind of indexing should happen (Plain, html, collection)
-                        foreach ($value2[0] as $key3 => $value3) {
-                            if ($key3 == 'Plain') {
-                                $this->indexingPlain($currentText, $value3['weight'], $value3['type'], $dataSet);
-                            } else if ($key3 == 'Html') {
-                                if (array_key_exists('weights', $value3)) {
-                                    $this->indexingHtml($currentText, $value3['type'], $dataSet, $value3['weights']);
-                                } else {
-                                    $this->indexingHtml($currentText, $value3['type'], $dataSet);
-                                }
-                            } else if ($key3 == 'Collection') {
-                                $collectionPath = $this->mainPath;
-                                $entityPath = $value3['entity'];
-                                $splittedEntityPath = explode("\\", $entityPath);
-                                $i = 0;
-                                while ($splittedEntityPath[$i] != 'Entity') {
-                                    $collectionPath = $collectionPath . '/' . $splittedEntityPath[$i];
-                                    $i++;
-                                }
-                                $collectionPath = $collectionPath . '/Resources/config/search.yml';
-                                $yaml = new Parser();
-                                $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
-                                $this->indexingCollection($currentText, $value3['entity'], $currentCollectionSearchYaml, $dataSet);
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
     }
 
     public function indexingModel($model, $yamlFile, $dataset, $text) {
