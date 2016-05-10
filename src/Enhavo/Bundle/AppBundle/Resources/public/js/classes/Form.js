@@ -201,11 +201,11 @@ var Form = function(router, templating, admin, translator)
           },
           url: url,
           success: function() {
-            admin.openLoadingOverlay();
+            admin.closeLoadingOverlay();
             $(form).trigger('formSaveAfter', form);
           },
           error: function() {
-            admin.openLoadingOverlay();
+            admin.closeLoadingOverlay();
             alert(translator.trans('error.occurred'));
           }
         });
