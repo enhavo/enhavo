@@ -36,6 +36,7 @@ class EditViewerTest extends \PHPUnit_Framework_TestCase
         $router = $this->getMockBuilder('Symfony\Component\Routing\Router')
             ->disableOriginalConstructor()
             ->getMock();
+
         $router->method('generate')->willReturnCallback(function($name) {
             if($name == 'form_action_route') {
                 return 'some_action_url';
@@ -46,16 +47,29 @@ class EditViewerTest extends \PHPUnit_Framework_TestCase
             return null;
         });
 
+        $securityContext = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContext')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $securityContext->method('isGranted')->willReturn(true);
+
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
-        $container->method('get')->with('router')->willReturn($router);
+        $container->method('get')->willReturnCallback(function($id) use ($router, $securityContext) {
+            if('router' == $id) {
+                return $router;
+            }
+            if('security.context' == $id) {
+                return $securityContext;
+            }
+            return null;
+        });
 
         $resource = new EntityMock();
         $resource->setId(1);
 
         $viewer = new EditViewer();
+        $viewer->setContainer($container);
         $viewer->setConfig($configParser);
         $viewer->setForm('form');
-        $viewer->setContainer($container);
         $viewer->setResource($resource);
 
         $parameters = $viewer->getParameters();

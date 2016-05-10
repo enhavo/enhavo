@@ -38,7 +38,7 @@ class EditViewer extends CreateViewer
             )
         );
 
-        $securityContext = $this->container->get('security.context');
+        $securityContext = $this->getContainer()->get('security.context');
         $route = sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName());
         if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
             $config['buttons']['delete'] = array(

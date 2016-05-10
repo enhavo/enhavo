@@ -167,6 +167,6 @@ class WorkflowVoter  implements VoterInterface
                 }
             }
         }
-        return VoterInterface::ACCESS_GRANTED;
+        return VoterInterface::ACCESS_ABSTAIN;
     }
 }

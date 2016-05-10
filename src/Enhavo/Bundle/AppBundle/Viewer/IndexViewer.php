@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
-use Symfony\Component\Security\Core\Security;
-
 class IndexViewer extends AppViewer
 {
     public function getDefaultConfig()
@@ -42,8 +40,12 @@ class IndexViewer extends AppViewer
 
     public function getActions()
     {
-        $actions = array();
+        $actions = [];
         $securityContext = $this->container->get('security.context');
+        $configActions = $this->getConfig()->get('actions');
+        if(!is_array($configActions)) {
+            return [];
+        }
         foreach($this->getConfig()->get('actions') as $action) {
             $currentRole = 'ROLE_'.strtoupper($action['route']);
             $resource = array();
