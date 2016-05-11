@@ -20,6 +20,19 @@ user:
     username: 'Benutzername'
     id: 'ID'
     user: 'Benutzer'
-
-
-
+reset:
+  form:
+    error:
+      non-expired: Ihre Passwort zurücksetzen Email ist noch gültig, wir haben Ihnen aber nochmal eine zugesendet
+      invalid-user: Der Username existiert nicht
+    action:
+      reset-password: Passwort zurücksetzen
+  label:
+    login: Login
+confirm:
+  form:
+    label:
+      password: Passwort
+      password-repeat: Passwort wiederholen
+    action:
+      reset: Zurücksetzen

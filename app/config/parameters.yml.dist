@@ -14,6 +14,7 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    mailer_delivery_address: ~
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
