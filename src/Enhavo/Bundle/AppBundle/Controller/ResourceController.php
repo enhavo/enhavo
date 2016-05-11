@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Enhavo\Bundle\UserBundle\Entity\User;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -87,8 +88,9 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
-        //ToDo: Move granted check to hook
-        if(!$this->isGranted('WORKFLOW', $resource)) {
+        $roleUtil = new RoleUtil();
+        $roleName = $roleUtil->getRoleName($resource, RoleUtil::ACTION_UPDATE);
+        if(!$this->isGranted($roleName, $resource)) {
             return new JsonResponse(null, 403);
         }
         $form = $this->getForm($resource);

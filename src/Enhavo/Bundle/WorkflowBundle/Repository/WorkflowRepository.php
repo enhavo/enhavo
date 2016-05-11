@@ -22,4 +22,15 @@ class WorkflowRepository extends EntityRepository
         }
         return $wf;
     }
+
+    public function hasActiveWorkflow($resource)
+    {
+        $array = explode('\\', get_class($resource));
+        $entity = array_pop($array);
+
+        //get the current workflow of the clicked element
+        $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
+            'entity' => $entity,
+        ));
+    }
 }

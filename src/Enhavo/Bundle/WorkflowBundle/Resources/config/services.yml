@@ -17,6 +17,23 @@ services:
         tags:
             - { name: form.type }
 
+    security.authentication.voter.workflow_active_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowActiveVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: security.voter }
+
+    security.authentication.voter.workflow_create_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowCreateVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - @service_container
+        tags:
+            - { name: security.voter }
+
     security.authentication.voter.workflow_voter:
         class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowVoter
         public:     false

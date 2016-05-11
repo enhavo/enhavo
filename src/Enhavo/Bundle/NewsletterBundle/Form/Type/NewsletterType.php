@@ -38,7 +38,7 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ) );
 
-        if($this->securityContext->isGranted('WORKFLOW', $this->dataClass)){
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
             $entityName = array();
             $entityName[0] = 'newsletter';
 

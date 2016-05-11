@@ -73,20 +73,20 @@ class WorkflowType extends AbstractType
 
     public function getWorkflowEntities($entityArray)
     {
+        $translator = $this->container->get('translator');
         $finalEntities = array();
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
         $workflows = $workflowRepository->findAll();
-        foreach($entityArray as $entity) {
-            $array = explode('\\', $entity);
-            $entityName = strtolower(array_pop($array));
-            $entityHasNoWF = true;
+        foreach($entityArray as $entityData) {
+            $entityName = $entityData['class'];
+            $entityHasWF = false;
             foreach($workflows as $workflow){
                 if($workflow->getEntity() == $entityName){
-                    $entityHasNoWF = false;
+                    $entityHasWF = true;
                 }
             }
-            if($entityHasNoWF == true){
-                $finalEntities[$entityName] = 'workflow.form.label.'.$entityName;
+            if($entityHasWF == false){
+                $finalEntities[$entityName] = $translator->trans($entityData['label'], array(), $entityData['translationDomain']);
             }
         }
         return $finalEntities;

@@ -140,7 +140,7 @@ class PageType extends AbstractType
             'multiple' => false
         ));
 
-        if($this->securityContext->isGranted('WORKFLOW', $this->dataClass))
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass))
         {
             $entityName = array();
             $entityName[0] = 'page';

@@ -183,6 +183,18 @@ enhavo_contact:
 
 enhavo_workflow:
     entities:
-        - 'Enhavo\Bundle\ArticleBundle\Entity\Article'
-        - 'Enhavo\Bundle\PageBundle\Entity\Page'
-        - 'Enhavo\Bundle\NewsletterBundle\Entity\Newsletter'
+        -
+            class: %enhavo_article.model.article.class%
+            label: 'article.label.article'
+            translationDomain: EnhavoArticleBundle
+            repository: EnhavoArticleBundle:Article
+        -
+            class: %enhavo_page.model.page.class%
+            label: 'page.label.page'
+            translationDomain: EnhavoPageBundle
+            repository: enhavo_page.repository.page
+        -
+            class: %enhavo_newsletter.model.newsletter.class%
+            label: 'newsletter.label.newsletter'
+            translationDomain: EnhavoNewsletterBundle
+            repository: enhavo_newsletter.repository.newsletter

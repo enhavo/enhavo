@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+
 class IndexViewer extends AppViewer
 {
     public function getDefaultConfig()
@@ -46,13 +48,11 @@ class IndexViewer extends AppViewer
         if(!is_array($configActions)) {
             return [];
         }
-        foreach($this->getConfig()->get('actions') as $action) {
-            $currentRole = 'ROLE_'.strtoupper($action['route']);
-            $resource = array();
-            $resource['entity'] = $this->getResourceName();
-            //ToDo: move Workflow check to hook
-            if($securityContext->isGranted($currentRole) && $securityContext->isGranted('WORKFLOW', $resource)){
-                $actions[] = $action;
+        foreach($configActions as $action => $value) {
+            $roleUtil = new RoleUtil();
+            $roleName = $roleUtil->getRoleName($this->getResource(), $action);
+            if($securityContext->isGranted($roleName, $this->getResource())){
+                $actions[] = $value;
             }
         }
         return $actions;

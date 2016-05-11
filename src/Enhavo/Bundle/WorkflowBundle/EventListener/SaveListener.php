@@ -20,13 +20,10 @@ class SaveListener
 
     public function onSave(GenericEvent $event)
     {
-        $array = explode('\\', get_class($event->getSubject()));
-        $entity = array_pop($array);
-
         //get workflow of current entity
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
         $workflow = $workflowRepository->findOneBy(array(
-            'entity' => strtolower($entity)
+            'entity' => get_class($event->getSubject())
         ));
 
         //if there is a workflow created for the current entity then check the things below
