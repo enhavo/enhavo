@@ -20,5 +20,19 @@ user:
     username: 'Username'
     id: 'ID'
     user: 'User'
-
-
+reset:
+  form:
+    error:
+      non-expired: Your reset mail isn't expired, but we send an email again
+      invalid-user: Username doesn't exist
+    action:
+      reset-password: Reset Password
+  label:
+    login: Login
+confirm:
+  form:
+    label:
+      password: Password
+      password-repeat: Repeat password
+    action:
+      reset: Reset

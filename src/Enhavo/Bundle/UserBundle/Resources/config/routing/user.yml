@@ -34,6 +34,7 @@ enhavo_user_user_update:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             translationDomain: EnhavoUserBundle
+
 enhavo_user_user_table:
     options:
         expose: true
@@ -70,11 +71,3 @@ enhavo_user_user_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:batchAction
-
-enhavo_user_user_password:
-    options:
-        expose: true
-    path: /enhavo/user/user/password
-    methods: [GET,POST]
-    defaults:
-        _controller: EnhavoUserBundle:ChangePassword:changePassword
