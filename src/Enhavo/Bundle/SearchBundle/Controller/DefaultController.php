@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\SearchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
-
 /**
  * Matches all 'N' Unicode character classes (numbers)
  */
@@ -462,7 +461,7 @@ EOD;
         //UTF-8
         $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
         // Lowercase
-        $text = strtolower($text);
+        $text = mb_strtolower($text, 'UTF-8');
 
         // To improve searching for numerical data such as dates, IP addresses
         // or version numbers, we consider a group of numerical characters
