@@ -17,6 +17,11 @@ workflow:
     transitions: 'Transitions'
     workflowName: 'Workflow Name'
     entity: 'entity'
+    currentWFS: 'Current Workflow-Status'
+  validator:
+    error:
+      nodes: 'You have not created any nodes.'
+      name: 'Please set a name for the workflow.'
 node:
   form:
     label:

@@ -16,6 +16,7 @@ class WorkflowValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
+        $translator = $this->container->get('translator');
         //check if there are any nodes and the name of the workflow is not null
         if(is_array($value)){
             //Nodes
@@ -23,14 +24,14 @@ class WorkflowValidator extends ConstraintValidator
             foreach($value as $currentValue) {
                 if(is_array($currentValue)) {
                     foreach ($currentValue as $val) {
-                        if($val->getStart() == true || $val->getNodeName() == null){
+                        if($val->getStart() || $val->getNodeName() == null){
                             continue;
                         } else {
                             $no_nodes = false;
                         }
                     }
                 } else {
-                    if($currentValue->getStart() == true || $currentValue->getNodeName() == null){
+                    if($currentValue->getStart() || $currentValue->getNodeName() == null){
                         continue;
                     } else {
                         $no_nodes = false;
@@ -38,7 +39,8 @@ class WorkflowValidator extends ConstraintValidator
                 }
             }
             if($no_nodes) {
-                $this->context->buildViolation($constraint->noNodesCreated)
+
+                $this->context->buildViolation($translator->trans($constraint->noNodesCreated))
                     ->addViolation();
             }
         } else {

@@ -40,7 +40,7 @@ class NewsletterType extends AbstractType
 
         if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
             $entityName = array();
-            $entityName[0] = 'newsletter';
+            $entityName[0] = $this->dataClass;
 
             $builder->add('workflow_status', 'enhavo_workflow_status', array(
                 'label' => 'workflow.form.label.next_state',

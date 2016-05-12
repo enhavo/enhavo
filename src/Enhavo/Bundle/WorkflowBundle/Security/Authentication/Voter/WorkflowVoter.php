@@ -38,9 +38,9 @@ class WorkflowVoter  implements VoterInterface
             $repository = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow');
             if ($repository->hasActiveWorkflow($object)) {
                 if ($this->isAllowed($object, $token)) {
-                    self::ACCESS_GRANTED;
+                     return self::ACCESS_GRANTED;
                 } else {
-                    self::ACCESS_DENIED;
+                    return self::ACCESS_DENIED;
                 }
             } else {
                 return self::ACCESS_ABSTAIN;

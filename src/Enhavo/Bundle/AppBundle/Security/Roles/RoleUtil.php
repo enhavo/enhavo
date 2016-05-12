@@ -52,4 +52,10 @@ class RoleUtil
         }
         return null;
     }
+
+    public function getRoleNameByResourceName($bundlePrefix, $resourceName, $action)
+    {
+        $roleName = strtoupper(sprintf('ROLE_%s_%s_%s', $bundlePrefix, $resourceName, $action));
+        return $roleName;
+    }
 }

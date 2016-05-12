@@ -50,8 +50,8 @@ class IndexViewer extends AppViewer
         }
         foreach($configActions as $action => $value) {
             $roleUtil = new RoleUtil();
-            $roleName = $roleUtil->getRoleName($this->getResource(), $action);
-            if($securityContext->isGranted($roleName, $this->getResource())){
+            $roleName = $roleUtil->getRoleNameByResourceName($this->getBundlePrefix(), $this->getResourceName(), $action);
+            if($securityContext->isGranted($roleName)){
                 $actions[] = $value;
             }
         }

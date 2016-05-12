@@ -17,6 +17,11 @@ workflow:
     transitions: 'Übergänge'
     workflowName: 'Workflow Name'
     entity: 'Entity'
+    currentWFS: 'Aktueller Workflow-Status'
+  validator:
+    error:
+      nodes: 'Es wurden noch keine Knoten erstellt.'
+      name: 'Bitte wählen Sie einen Namen für den Workflow.'
 node:
   form:
     label:

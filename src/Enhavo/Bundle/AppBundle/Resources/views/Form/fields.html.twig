@@ -131,7 +131,7 @@
 {% block enhavo_workflow_status_widget %}
     <br>
     {% if form|length > 0 %}
-        Aktueller Workflow-Status: {{ form.vars['workflow_status'] }}
+        {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle') }}: {{ form.vars['workflow_status'] }}
     {% endif %}
     <br>
     {{ form_widget(form) }}

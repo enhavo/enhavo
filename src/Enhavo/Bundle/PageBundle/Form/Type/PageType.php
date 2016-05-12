@@ -143,7 +143,7 @@ class PageType extends AbstractType
         if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass))
         {
             $entityName = array();
-            $entityName[0] = 'page';
+            $entityName[0] = $this->dataClass;
 
 
             $builder->add('workflow_status', 'enhavo_workflow_status', array(

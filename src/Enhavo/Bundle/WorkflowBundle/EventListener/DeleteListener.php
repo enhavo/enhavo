@@ -11,10 +11,13 @@ class DeleteListener
 
     protected $workflowClass;
 
-    public function __construct(EntityManager $em, $workflowClass)
+    protected $container;
+
+    public function __construct(EntityManager $em, $workflowClass, $container)
     {
         $this->em = $em;
         $this->workflowClass = $workflowClass;
+        $this->container = $container;
     }
 
     //you need to delete all rows which belong to the workflow before you can delete the workflow itself (transitions->nodes->workflow-status)
@@ -25,6 +28,23 @@ class DeleteListener
             //get the current workflow
             $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
             $workflow = $workflowRepository->find($event->getSubject()->getId());
+
+            //find the current entity repository
+            $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
+            $currentEntityRepository = null;
+            foreach($possibleWFEntities as $possibleEntity){
+                if($possibleEntity['class'] == $workflow->getEntity()) {
+                    $currentEntityRepository = $possibleEntity['repository'];
+                    break;
+                }
+            }
+            $repository = null;
+            if(strpos($currentEntityRepository, ':')){
+                $repository = $this->em->getRepository($currentEntityRepository);
+            } else {
+                $repository = $this->container->get($currentEntityRepository);
+
+            }
 
             //get the transitions of the current workflow
             $transitionRepository = $this->em->getRepository('EnhavoWorkflowBundle:Transition');
@@ -50,7 +70,8 @@ class DeleteListener
                 foreach($nodes as $node) {
                     if($workflowStatus->getNode() == $node){
                         //get types with workflow-status
-                        $currentObject = $this->em->getRepository('Enhavo'.ucfirst($workflow->getEntity()).'Bundle:'.ucfirst($workflow->getEntity()))->findOneBy(array(
+
+                        $currentObject = $repository->findOneBy(array(
                             'workflow_status' => $workflowStatus
                         ));
                         if($currentObject != null) {

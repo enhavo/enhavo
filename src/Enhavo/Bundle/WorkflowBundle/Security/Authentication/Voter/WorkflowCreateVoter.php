@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter;
 
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class WorkflowCreateVoter implements VoterInterface {
 

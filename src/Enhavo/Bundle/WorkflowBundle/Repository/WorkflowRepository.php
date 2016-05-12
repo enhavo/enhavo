@@ -25,12 +25,21 @@ class WorkflowRepository extends EntityRepository
 
     public function hasActiveWorkflow($resource)
     {
-        $array = explode('\\', get_class($resource));
-        $entity = array_pop($array);
-
-        //get the current workflow of the clicked element
-        $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
-            'entity' => $entity,
+        $resourcePath = null;
+        if(is_object($resource)){
+            $resourcePath = get_class($resource);
+        } else {
+            $resourcePath = $resource;
+        }
+        $workflow = $this->findOneBy(array(
+            'entity' => $resourcePath,
         ));
+
+        if($workflow != null){
+            if($workflow->getActive()){
+                return true;
+            }
+        }
+        return false;
     }
 }
