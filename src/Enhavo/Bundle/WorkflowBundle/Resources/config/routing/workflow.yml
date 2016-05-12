@@ -72,10 +72,17 @@ enhavo_workflow_workflow_table:
                         label: workflow.label.id
                         property: id
                         width: 1
+                    active:
+                        label: workflow.label.active
+                        property: active
+                        width: 1
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:boolean.html.twig
                     workflow_name:
                         label: workflow.label.workflowName
                         property: workflowName
-                        width: 7
+                        width: 6
                     entity:
                         label: workflow.label.entity
                         property: entity

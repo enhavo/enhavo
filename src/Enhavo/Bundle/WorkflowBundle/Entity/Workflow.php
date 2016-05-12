@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Workflow
@@ -45,6 +46,7 @@ class Workflow
     public function __construct()
     {
         $this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formNodes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -211,12 +213,45 @@ class Workflow
         return $this->active;
     }
 
-    public function setFormNodes($formNode)
+
+    /**
+     * Add form node
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\node $node
+     *
+     * @return Workflow
+     */
+    public function addFormNode(\Enhavo\Bundle\WorkflowBundle\Entity\node $node)
     {
-        $this->formNodes[] = $formNode;
+        $this->formNodes[] = $node;
         return $this;
     }
 
+    /**
+     * Remove form node
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\node $node
+     */
+    public function removeFormNode(\Enhavo\Bundle\WorkflowBundle\Entity\node $node)
+    {
+        if(is_array($this->formNodes)) {
+            foreach ($this->formNodes as $key => $formNode) {
+                if($formNode == $node){
+                    unset($this->formNodes[$key]);
+                    return;
+                }
+            }
+
+        } else {
+            $this->formNodes->removeElement($node);
+        }
+    }
+
+    /**
+     * Get form nodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
     public function getFormNodes()
     {
         return $this->formNodes;

@@ -1,6 +1,6 @@
 Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
     properties:
-        formNodes:
-            - Enhavo\Bundle\WorkflowBundle\Validator\Constraints\Workflow: ~
         workflow_name:
-            - Enhavo\Bundle\WorkflowBundle\Validator\Constraints\Workflow: ~
+            - NotBlank: ~
+    constraints:
+        - Enhavo\Bundle\WorkflowBundle\Validator\Constraints\Workflow: ~

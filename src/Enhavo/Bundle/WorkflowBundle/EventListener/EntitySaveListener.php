@@ -27,7 +27,7 @@ class EntitySaveListener
 
         //if there is a workflow created for the current entity then check the things below
         //if workflow is null, there is no workflow created for this entity
-        if($workflow != null){
+        if(!empty($workflow)){
 
             //get the current workflow-status of the event
             $currentWorkflowStatus = $event->getSubject()->getWorkflowStatus();
@@ -48,29 +48,15 @@ class EntitySaveListener
                     }
                 }
 
-                //check if the node is a end node, if it is set the public field (if it exists) to true
-                if($currentNode->getEnd()){
-
-                    //is end-node
-                    $current = $event->getSubject();
-
-                    //check if public field exist end set true if it does
-                    if(method_exists($current, 'getPublic')){
+                $current = $event->getSubject();
+                if(method_exists($current, 'getPublic')) { //check if public field exist
+                    //check if the node is a end node, if it is set the public field (if it exists) to true
+                    if($currentNode->getEnd()) {
                         $current->setPublic(true);
-                        $this->em->persist($current);
-                        $this->em->flush();
-                    }
-                } else {
-
-                    //is no end-node
-                    $current = $event->getSubject();
-
-                    //check if public field exists and set to false if it does
-                    if(method_exists($current, 'getPublic')){
+                    } else {
                         $current->setPublic(false);
-                        $this->em->persist($current);
-                        $this->em->flush();
                     }
+                    $this->em->flush();
                 }
             }
         }

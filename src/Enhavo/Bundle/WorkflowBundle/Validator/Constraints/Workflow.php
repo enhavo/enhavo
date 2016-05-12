@@ -10,9 +10,15 @@ class Workflow extends Constraint
 {
     public $noNodesCreated = 'workflow.validator.error.nodes';
     public $noWorkflowName = 'workflow.validator.error.name';
+    public $doNotDeleteWhenActive = 'workflow.validator.error.delete';
 
     public function validatedBy()
     {
         return 'valid_workflow';
+    }
+
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
     }
 }

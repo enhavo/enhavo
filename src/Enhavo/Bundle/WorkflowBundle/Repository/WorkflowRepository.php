@@ -17,7 +17,7 @@ class WorkflowRepository extends EntityRepository
         //set all nodes but the start-node to the formNodes
         foreach ($nodes as $node) {
             if($node->getStart() != true){
-                $wf->setFormNodes($node);
+                $wf->addFormNode($node);
             }
         }
         return $wf;

@@ -31,116 +31,81 @@ class WorkflowSaveListener {
     {
        if(get_class($event->getSubject()) == $this->workflowClass) { //if it is a 'save' of the workflow entity check the workflow-status of the belonging types and save the formNodes to the real nodes
 
-            //check if there are elements of the type with workflow-status null
+            $workflow = $event->getSubject();
 
             //get the repository for the changed workflow
-            $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
-            $currentRepository = null;
-            foreach($possibleWFEntities as $possibleEntity) {
-                if($possibleEntity['class'] == $event->getSubject()->getEntity()){
-                    $currentRepository = $possibleEntity['repository'];
-                    break;
-                }
-            }
-            $repository = null;
-            if(strpos($currentRepository, ':')){
-                $repository = $this->em->getRepository($currentRepository);
-            } else {
-                $repository = $this->container->get($currentRepository);
+            $repository = $this->getEntityRepository($workflow);
 
-            }
-
-            //get all entires of the workflows entity with workflow-status null
+            //get all entries with workflow-status null
             $resources = $repository->getEmptyWorkflowStatus();
 
             //check if there are some entries with workflow-status null
             if($resources != null) {
-
                 //set a workflow-status if the current workflow is active
-                if($event->getSubject()->getActive()){
-                    $this->setWorkflowStatus($event, $resources);
+                if($workflow->getActive()){
+                    $this->setWorkflowStatus($workflow, $resources);
                 }
             }
+            $this->writeNodes($workflow, $repository);
 
-            //write displayed FormNodes into the real nodes
-            $formNodes = $event->getSubject()->getFormNodes();
-            $lastFormNode = array_pop($formNodes); //the last formNode is an array and keeps all the important information
-            $newNodesCounter = 0;
-            if (is_array($lastFormNode)) {
+            $this->em->flush();
+        }
+    }
 
-                //get all the old nodes
-                $oldNodes = array();
-                foreach($event->getSubject()->getNodes() as $oldNode){
-                    if($oldNode->getStart() != true){
-                        $oldNodes[] = $oldNode;
+    protected function writeNodes($workflow, $repository)
+    {
+        //write displayed FormNodes into the real nodes
+        $formNodes = $workflow->getFormNodes();
+        $nodesCollection = $workflow->getNodes();
+        $realNodes = array();
+        foreach ($nodesCollection as $node) {
+            $realNodes[] = $node;
+        }
+
+        //workflow transitions
+        $transitions = $this->em->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
+            'workflow' => $workflow
+        ));
+
+        //get all workflow-status in case a node got removed
+        $allWFS = $this->em->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
+
+        //remove nodes (if some nodes have been removed from formNodes)
+        foreach($realNodes as $realNode){
+            if(!in_array($realNode,$formNodes) && !$realNode->getStart()){
+                $workflow->removeNode($realNode);
+                foreach($transitions as $transition){
+                    if($transition->getNodeFrom() == $realNode || $transition->getNodeTo() == $realNode) {
+                        $this->em->remove($transition);
                     }
                 }
-
-                //check if there are differences between the formNodes and the old nodes
-                if($lastFormNode != $oldNodes) {
-
-                    //there are differences
-
-                    //get the belonging workflow
-                    $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
-                    $currentWF = $workflowRepository->find($event->getSubject()->getId());
-                    $transitions = $this->em->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                        'workflow' => $currentWF
-                    ));
-
-                    //write the now information from the formNodes to the real nodes
-                    foreach ($currentWF->getNodes() as $node) {
-                        if($node->getStart()){
-                            continue;
-                        } else {
-                            if(array_key_exists($newNodesCounter, $lastFormNode)) {
-                                if ($node == $lastFormNode[$newNodesCounter]) {
-                                    $newNodesCounter++;
-                                    continue;
-                                } else {
-                                    $currentWF->removeNode($node);
-                                    $currentWF->addNode($lastFormNode[$newNodesCounter]);
-                                    foreach($transitions as $transition) {
-                                        if($transition->getNodeFrom() == $node || $transition->getNodeTo() == $node) {
-                                            $this->em->remove($transition);
-                                            $this->em->flush();
-                                        }
-                                    }
-                                    $this->em->persist($currentWF);
-                                    $this->em->remove($node);
-                                    $this->em->flush();
-                                    $newNodesCounter++;
-                                }
-                            } else {
-                                $currentWF->removeNode($node);
-                                foreach($transitions as $transition) {
-                                    if($transition->getNodeFrom() == $node || $transition->getNodeTo() == $node) {
-                                        $this->em->remove($transition);
-                                        $this->em->flush();
-                                    }
-                                }
-                                $this->em->persist($currentWF);
-                                $this->em->remove($node);
-                                $this->em->flush();
-                                $newNodesCounter++;
-                            }
-                        }
-                    }
-                    for ($i = $newNodesCounter; $i < count($lastFormNode); $i++) {
-                        $currentWF->addNode($lastFormNode[$i]);
-                        $this->em->persist($currentWF);
-                        $this->em->flush();
+                //check if the removed node had a wfs
+                foreach($allWFS as $wfs){
+                    if($wfs->getNode() == $realNode){
+                        $currentResource = $repository->findOneBy(array(
+                            'workflow_status' => $wfs
+                        ));
+                        $currentResource->setWorkflowStatus(null);
+                        $this->em->remove($wfs);
                     }
                 }
+                $this->em->remove($realNode);
+            }
+        }
+
+        //create realNodes
+        foreach ($formNodes as $key => $formNode) {
+            if(!in_array($formNode,$realNodes) ){
+                $workflow->addNode($formNode);
             }
         }
     }
 
-    protected function setWorkflowStatus($event, $resources)
+    protected function setWorkflowStatus($workflow, $resources)
     {
         //get all nodes of the current workflow
         $nodes = $this->em->getRepository('EnhavoWorkflowBundle:Node')->findBy(array(
-            'workflow' => $event->getSubject()
+            'workflow' => $workflow
         ));
 
         //get start and end node
@@ -171,11 +136,27 @@ class WorkflowSaveListener {
                 //if there is no public field, just set all entries to the start-node
                 $workflowStatus->setNode($startNode);
             }
-            $this->em->persist($workflowStatus);
-            $this->em->flush();
             $element->setWorkflowStatus($workflowStatus);
-            $this->em->persist($element);
-            $this->em->flush();
         }
+    }
+
+    protected function getEntityRepository($workflow)
+    {
+        $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
+        $currentRepository = null;
+        foreach($possibleWFEntities as $possibleEntity) {
+            if($possibleEntity['class'] == $workflow->getEntity()){
+                $currentRepository = $possibleEntity['repository'];
+                break;
+            }
+        }
+        $repository = null;
+        if(strpos($currentRepository, ':')){
+            $repository = $this->em->getRepository($currentRepository);
+        } else {
+            $repository = $this->container->get($currentRepository);
+
+        }
+        return $repository;
     }
 }
