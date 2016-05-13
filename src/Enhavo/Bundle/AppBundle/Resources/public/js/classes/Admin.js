@@ -1,9 +1,11 @@
 function Admin (router, templating, translator)
 {
   var self = this;
-  var overlay = $("#overlay");
-  var overlayContent = $("#overlayContent");
-  var overlayMessage = $("#overlayMessage");
+  var overlay = null;
+  var overlayContent = null;
+  var overlayMessage = null;
+  var overlayIsDialog = false;
+  var overlayIsOpen = false;
   var ajaxOverlaySynchronized = true;
   var loadingOverlay = null;
   var loadingOverlayMutex = 0;
@@ -14,6 +16,29 @@ function Admin (router, templating, translator)
     Success: 'success'
   };
 
+  this.initOverlay = function() {
+    overlay = $("#overlay");
+    overlayContent = $("#overlayContent");
+    overlayMessage = $("#overlayMessage");
+
+    $(document).on('keyup',function(event) {
+      if(event.keyCode == 27) {
+        if (overlayIsOpen) {
+          event.stopPropagation();
+          event.preventDefault();
+          self.overlayClose();
+        }
+      }
+    });
+    $(document).on('click', '#overlayContent .close', function(event) {
+      if (overlayIsOpen) {
+        event.stopPropagation();
+        event.preventDefault();
+        self.overlayClose();
+      }
+    });
+  };
+
   /**
    * overlay
    *
@@ -21,7 +46,8 @@ function Admin (router, templating, translator)
    *
    * option have this keys
    * options = {
-  *   init: function
+  *   init: function,
+  *   dialog: bool
   * };
    *
    * @param html
@@ -34,38 +60,33 @@ function Admin (router, templating, translator)
       options = {};
     }
 
-    var init = function() {
-
-      $(document).one('keyup',function(event) {
-        if(event.keyCode == 27) {
-          event.stopPropagation();
-          event.preventDefault();
-          self.overlayClose();
-        }
-      });
-
-      overlayContent.find('.close').click(function(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        self.overlayClose();
-      });
-
-      self.initTabs('#overlayContent');
-    };
+    if(overlay == null) {
+      self.initOverlay();
+    }
 
     var overlayStart = function() {
-      overlayContent.trigger('formOpenBefore');
+      overlayIsDialog = options.dialog;
+      overlayIsOpen = true;
+
+      if (!overlayIsDialog) {
+        overlayContent.trigger('formOpenBefore');
+      }
 
       overlay.fadeIn(50);
       overlayContent.append($.parseHTML(html));
       overlayContent.fadeIn(100, function() {
-        overlayContent.trigger('formOpenAfter', [ overlayContent.find('form').get(0) ]);
+        if (!overlayIsDialog) {
+          overlayContent.trigger('formOpenAfter', [overlayContent.find('form').get(0)]);
+        }
       });
       overlayContent.animate({
         scrollTop: 0
       }, 100);
 
-      init();
+      if (!overlayIsDialog) {
+        self.initTabs('#overlayContent');
+      }
+
       if(options.init) {
         options.init();
       }
@@ -76,12 +97,21 @@ function Admin (router, templating, translator)
 
   this.overlayClose = function()
   {
+    if (!overlayIsOpen) {
+      return;
+    }
+
     var overlayStop = function() {
-      overlayContent.trigger('formCloseBefore', [overlayContent]);
+      if (!overlayIsDialog) {
+        overlayContent.trigger('formCloseBefore', [overlayContent]);
+      }
       overlayContent.html('');
       overlay.fadeOut(100);
       overlayContent.fadeOut(50);
-      overlayContent.trigger('formCloseAfter', [overlayContent]);
+      if (!overlayIsDialog) {
+        overlayContent.trigger('formCloseAfter', [overlayContent]);
+      }
+      overlayIsOpen = false;
     };
     overlayStop();
   };
@@ -212,6 +242,7 @@ function Admin (router, templating, translator)
         self.closeLoadingOverlay();
         block.html(data);
         self.initSortable(block);
+        self.initBatchActions(block);
         if(callback) {
           callback();
         }
@@ -294,9 +325,8 @@ function Admin (router, templating, translator)
           self.ajaxOverlay(url);
         });
 
-        if (block.find('[data-sortable-container]').length > 0) {
-          self.initSortable(block);
-        }
+        self.initSortable(block);
+        self.initBatchActions(block);
       }).fail(function() {
         self.closeLoadingOverlay();
       });
@@ -314,7 +344,46 @@ function Admin (router, templating, translator)
     });
   };
 
+  this.initUserMenu = function()
+  {
+    var userMenuActive = false;
+    $("[data-open-usermenu]").on("click", function(){
+      $(this).find("button").toggleClass("clicked");
+      $("[data-usermenu-link]").fadeToggle(100);
+      $("#user-menu").toggleClass("background");
+
+      var menuWidth = $("[data-user-menu]").innerWidth();
+
+      if (userMenuActive) {
+        userMenuActive = false;
+        $(this).css('transform', 'translateX(0)');
+      } else {
+        userMenuActive = true;
+        $(this).css('transform', 'translateX(-' + menuWidth + 'px');
+      }
+    });
+  };
+
+  this.initDescriptionTextPosition = function()
+  {
+    $(window).on("load resize",function() {
+      var desc = $("[data-description-text]");
+      var wh = $(window).height()
+      var menuHeight = $("#menu-main").height() + 240;
+
+      if(menuHeight > wh) {
+        $(desc).css({"position" : "relative", "bottom" : "15px"})
+      } else
+      {
+        $(desc).css({"position" : "absolute", "bottom" : "25px"})
+      }
+    });
+  };
+  
   this.initSortable = function (block) {
+    if (block.find('[data-sortable-container]').length == 0) {
+      return;
+    }
     var sortable = block.find('[data-sortable-container]');
     var paginationBlock = block.find('.pagination');
     var paginationPages = paginationBlock.find('a:not(.selected)');
@@ -327,6 +396,11 @@ function Admin (router, templating, translator)
       currentPage = 1;
     }
     paginationPages.addClass('sortable-droptarget');
+
+    $('.sortable-button').click(function(event) {
+      // Prevent row onclick for sort button
+      event.stopPropagation();
+    });
 
     var url = "";
     var switchToPage = -1;
@@ -440,5 +514,145 @@ function Admin (router, templating, translator)
       });
     }
   };
-}
 
+  this.initBatchActions = function(block) {
+    if (block.find('.has-batch-actions').length == 0) {
+      return;
+    }
+
+    var selectAll = block.find('.batch-select-all input');
+    var selectRows = block.find('.entry-row .batch-checkbox-wrapper input');
+    var actionSelect = block.find('[data-batch-actions-select]');
+    var submit = block.find('[data-batch-actions-submit]');
+    var preventCircular = false;
+
+    if (selectRows.length == 0) {
+      return;
+    }
+
+    selectRows.iCheck({
+      checkboxClass: 'icheckbox-esperanto'
+    }).on('ifChecked', function() {
+      $(this).parents('.entry-row').addClass('marked');
+      if (!selectAll.is(':checked')) {
+        var allChecked = true;
+        selectRows.each(function() {
+          if (!$(this).is(':checked')) {
+            allChecked = false;
+          }
+        });
+        if (allChecked) {
+          preventCircular = true;
+          selectAll.iCheck('check');
+        }
+      }
+    }).on('ifUnchecked', function() {
+      $(this).parents('.entry-row').removeClass('marked');
+      if (selectAll.is(':checked')) {
+        preventCircular = true;
+        selectAll.iCheck('uncheck');
+      }
+    });
+
+    selectAll.iCheck({
+      checkboxClass: 'icheckbox-esperanto'
+    }).on('ifChecked', function() {
+      if (preventCircular) {
+        preventCircular = false;
+      } else {
+        selectRows.iCheck('check')
+      }
+    }).on('ifUnchecked', function() {
+      if (preventCircular) {
+        preventCircular = false;
+      } else {
+        selectRows.iCheck('uncheck')
+      }
+    });
+
+    block.find('.batch-checkbox-wrapper').click(function(event) {
+      event.stopPropagation();
+      $(this).find('input').iCheck('toggle');
+    });
+
+    actionSelect.select2();
+    // Calculate size of biggest element in select
+    var styleReference = block.find('.batch-actions-select-wrapper .select2-chosen');
+    var sizeTester = $('<div style="position:absolute;visibility:hidden;width:auto;height:auto;white-space:nowrap;'
+      + 'font-family:' + styleReference.css('font-family')
+      + 'font-size:' + styleReference.css('font-size')
+      + 'font-weight' + styleReference.css('font-weight')
+      + '"></div>');
+    var sizeTesterHtml = '';
+    actionSelect.children('option').each(function() {
+      sizeTesterHtml += $(this).html() + '<br />';
+    });
+    sizeTester.html(sizeTesterHtml);
+    $(document.body).append(sizeTester);
+    block.find('.batch-actions-select-wrapper .select2-container').css('width', sizeTester.width() + 60);
+    $(sizeTester).remove();
+
+    var dialogHtml = '';
+    submit.on('click', function(event) {
+      event.preventDefault();
+      if (actionSelect.prop('selectedIndex') == 0) {
+        dialogHtml = submit.data('error-dialog-template').replace('__message__', submit.data('message-no-action-selected'));
+        self.overlay(dialogHtml, {dialog:true});
+      } else {
+        var allUnChecked = true;
+        selectRows.each(function() {
+          if ($(this).is(':checked')) {
+            allUnChecked = false;
+          }
+        });
+        if (allUnChecked) {
+          dialogHtml = submit.data('error-dialog-template').replace('__message__', submit.data('message-none-selected'));
+          self.overlay(dialogHtml, {dialog:true});
+        } else {
+          var confirmMessage = block.find('[data-batch-actions-select] option:selected').data('confirm-message');
+          dialogHtml = submit.data('confirm-dialog-template').replace('__confirm_message__', confirmMessage);
+          self.overlay(dialogHtml, {dialog:true});
+        }
+      }
+    });
+
+    $(document).on('click', '[data-batch-action-confirm]', function(event) {
+      if (overlayIsOpen && overlayIsDialog) {
+        self.overlayClose();
+        var url = router.generate(submit.data('batch-action-route'));
+        var formData = block.find('[data-batch-action-form]').serialize();
+        self.openLoadingOverlay();
+        $.ajax({
+          url: url,
+          data: formData,
+          method: 'POST',
+          success: function(result) {
+            self.closeLoadingOverlay();
+            if ((typeof result.success != 'undefined') && (result.success == true)) {
+              self.reloadBlock(block);
+            } else {
+              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+            }
+          },
+          error : function() {
+            self.closeLoadingOverlay();
+            self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+          }
+        });
+      }
+    });
+    $(document).on('click', '#overlayContent', function(event) {
+      if (overlayIsOpen && overlayIsDialog) {
+        event.stopPropagation();
+        event.preventDefault();
+        self.overlayClose();
+      }
+    });
+    $(document).on('click', '.batch-actions-dialog', function(event) {
+      if (overlayIsOpen && overlayIsDialog) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    });
+  };
+}

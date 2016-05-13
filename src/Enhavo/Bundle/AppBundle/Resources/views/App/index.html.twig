@@ -3,6 +3,7 @@
 {% trans_default_domain "EnhavoAppBundle" %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript">
         $(function() {
             admin.initBlocks();
@@ -13,7 +14,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="cat">Seitentitel</h1>
+    {% if viewer.title|trans({}, viewer.translationDomain) %}
+        <h1 class="cat">{{ viewer.title|trans({}, viewer.translationDomain) }}</h1>
+    {% endif %}
     {% block topButtons %}
         <div class="row action-row" data-action-row>
             <div class="col-sm-3">

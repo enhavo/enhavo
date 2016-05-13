@@ -75,7 +75,7 @@ class Page
     protected $content;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     protected $picture;
 
@@ -83,14 +83,6 @@ class Page
      * @var \Enhavo\Bundle\AppBundle\Entity\Route
      */
     protected $route;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -414,26 +406,14 @@ class Page
     }
 
     /**
-     * Add picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $picture
      * @return Page
      */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    public function setPicture($picture)
     {
-        $this->picture[] = $picture;
+        $this->picture = $picture;
 
         return $this;
-    }
-
-    /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
     }
 
     /**

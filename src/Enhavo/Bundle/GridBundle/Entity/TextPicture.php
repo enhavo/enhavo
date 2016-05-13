@@ -31,14 +31,12 @@ class TextPicture implements ItemTypeInterface
      */
     protected $textLeft;
 
-    protected $files;
+    /**
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     */
+    protected $file;
 
     protected $frame;
-
-    public function __construct()
-    {
-        $this->files = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -123,53 +121,26 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Set files
-     *
-     * @param \files $files
-     * @return Content
-     */
-    public function setFiles($files)
-    {
-        $this->files = $files;
-
-        return $this;
-    }
-
-    /**
-     * Add files
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File files
-     * @return Content
-     */
-    public function addFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
-    {
-        if ($this->files === null) {
-            $this->files = new ArrayCollection();
-        }
-
-        $this->files[] = $files;
-
-        return $this;
-    }
-
-    /**
-     * Remove files
+     * Set file
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File $files
+     * @return Content
      */
-    public function removeFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
+    public function setFile($file)
     {
-        $this->files->removeElement($files);
+        $this->file = $file;
+
+        return $this;
     }
 
     /**
-     * Get files
+     * Get file
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File
      */
-    public function getFiles()
+    public function getFile()
     {
-        return $this->files;
+        return $this->file;
     }
 
     /**
@@ -186,29 +157,5 @@ class TextPicture implements ItemTypeInterface
     public function setFrame($frame)
     {
         $this->frame = $frame;
-    }
-
-    /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
-     * @return TextPicture
-     */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->files[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->files->removeElement($file);
     }
 }

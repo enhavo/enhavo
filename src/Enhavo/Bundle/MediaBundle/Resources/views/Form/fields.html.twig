@@ -23,8 +23,8 @@
                             <div class="uploadForm-image-container">
                                 <img src="/file/{file_id}/100/100">
                             </div>
-                            <input type="hidden" name="{full_name}[0][id]" value="{file_id}" />
-                            <input type="hidden" name="{full_name}[0][order]" data-file-element-order value="" />
+                            <input type="hidden" name="{full_name}[id]" value="{file_id}" />
+                            <input type="hidden" name="{full_name}[order]" data-file-element-order value="" />
                         </div>
                     {% endif %}
                 </script>
@@ -68,19 +68,17 @@
                         {% else %}
                             <div class="dropzone fade well{% if form.vars.value|length < 1 %} empty{% endif %}">
                                 <div class="list clearfix" data-name="{{ full_name }}" data-file-list>
-                                    {% if form.vars.value|length > 0 %}
-                                        {% if form.vars.value[0] %}
-                                            <div class="imgContainer singleImage" data-file-element>
-                                                <div class="imgdelete">
-                                                    <i class="fa fa-times fa-2x"></i>
-                                                </div>
-                                                <div class="uploadForm-image-container">
-                                                    <img src="/file/{{ form.vars.value[0].id }}/100/100">
-                                                </div>
-                                                <input type="hidden" name="{{ full_name }}[0][id]" value="{{ form.vars.value[0].id }}" />
-                                                <input type="hidden" name="{{ full_name }}[0][order]" data-file-element-order value="{{ form.vars.value[0].order }}" />
+                                    {% if form.vars.value %}
+                                        <div class="imgContainer singleImage" data-file-element>
+                                            <div class="imgdelete">
+                                                <i class="fa fa-times fa-2x"></i>
                                             </div>
-                                        {% endif %}
+                                            <div class="uploadForm-image-container">
+                                                <img src="/file/{{ form.vars.value.id }}/100/100">
+                                            </div>
+                                            <input type="hidden" name="{{ full_name }}[id]" value="{{ form.vars.value.id }}" />
+                                            <input type="hidden" name="{{ full_name }}[order]" data-file-element-order value="{{ form.vars.value.order }}" />
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

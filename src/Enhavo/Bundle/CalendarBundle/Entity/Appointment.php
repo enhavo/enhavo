@@ -40,7 +40,7 @@ class Appointment
     private $content;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     private $picture;
 
@@ -156,14 +156,6 @@ class Appointment
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Set content
      *
      * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
@@ -188,33 +180,20 @@ class Appointment
     }
 
     /**
-     * Add picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $picture
      * @return Appointment
      */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    public function setPicture($picture)
     {
-        $this->picture[] = $picture;
+        $this->picture = $picture;
 
         return $this;
     }
 
     /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
      * Get picture
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getPicture()
     {

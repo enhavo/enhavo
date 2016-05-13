@@ -8,6 +8,8 @@ enhavo_article_article_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: article.label.article
+            translationDomain: EnhavoArticleBundle
 
 enhavo_article_article_create:
     options:
@@ -93,6 +95,14 @@ enhavo_article_article_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_article.controller.article:deleteAction
+
+enhavo_article_article_batch:
+    options:
+        expose: true
+    path: /enhavo/article/article/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_article.controller.article:batchAction
 
 enhavo_article_article_preview:
     options:

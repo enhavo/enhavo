@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Gallery:
     type: entity
-    table: content_type_gallery
+    table: grid_type_gallery
     id:
         id:
             type: integer
@@ -28,4 +28,5 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
                 inverseJoinColumns:
                     file_id:
                         referencedColumnName: id
+
     lifecycleCallbacks: {  }

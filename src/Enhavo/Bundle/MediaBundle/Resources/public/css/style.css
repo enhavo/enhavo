@@ -1,6 +1,6 @@
 /* upload Form */
 
-.uploadForm .imagePreview { width: 82px; }
+.uploadForm .imagePreview { width: 82px; overflow: hidden; }
 .uploadForm .imagePreview.multiple { width: 100%; }
 
 .uploadForm .bar {height: 5px;background: #49a4e5;}

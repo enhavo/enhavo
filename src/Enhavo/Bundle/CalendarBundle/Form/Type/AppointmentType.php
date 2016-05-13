@@ -93,6 +93,7 @@ class AppointmentType extends AbstractType
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
 
         $builder->add('content', 'enhavo_grid');

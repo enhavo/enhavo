@@ -25,7 +25,6 @@ class Category
      */
     protected $collection;
 
-
     /**
      * Get id
      *
@@ -99,6 +98,15 @@ class Category
      */
     protected $slug;
 
+    /**
+     * @var string
+     */
+    private $text;
+
+    /**
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     */
+    private $picture;
 
     /**
      * Set order
@@ -121,23 +129,6 @@ class Category
     public function getOrder()
     {
         return $this->order;
-    }
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $picture;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,33 +156,21 @@ class Category
     }
 
     /**
-     * Add picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $picture
      *
      * @return Category
      */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    public function setPicture($picture)
     {
-        $this->picture[] = $picture;
+        $this->picture = $picture;
 
         return $this;
     }
 
     /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
      * Get picture
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
     public function getPicture()
     {
