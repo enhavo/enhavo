@@ -3,9 +3,17 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResourceControllerTest extends \PHPUnit_Framework_TestCase
 {
+    protected function getEntityMock()
+    {
+        return new EntityMock();
+    }
+
     protected function getRouterMock()
     {
         $mock = $this->getMockBuilder('Symfony\Component\Routing\RouterInterface')->getMock();
@@ -89,19 +97,112 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         if($service === 'viewer.factory') {
             return $this->getViewerFactoryMock();
         }
+        if($service === 'factory') {
+            return $this->getFactoryMock();
+        }
+        if($service === 'form.registry') {
+            return $this->getFormRegistryMock();
+        }
+        if($service === 'form.factory') {
+            return $this->getFormFactoryMock();
+        }
+        if($service === 'fos_rest.view_handler') {
+            return $this->getViewHandlerMock();
+        }
+        if($service === 'repository') {
+            return $this->getRepositoryMock();
+        }
 
         return null;
     }
 
-    public function testIndexAction()
+    protected function getRepositoryMock()
     {
-        $config = $this->getMockBuilder('Sylius\Bundle\ResourceBundle\Controller\Configuration')
+        $mock = $this->getMockBuilder('Sylius\Component\Resource\Repository\RepositoryInterface')->getMock();
+        $mock->method('findOneBy')->willReturn($this->getEntityMock());
+        return $mock;
+    }
+
+    protected function getViewHandlerMock()
+    {
+        $mock = $this->getMockBuilder('FOS\RestBundle\View\ViewHandler')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $config->method('getServiceName')->willReturn('manager');
-        $config->method('isApiRequest')->willReturn(false);
+        $mock->method('handle')->willReturn(new Response());
+        return $mock;
+    }
 
+    protected function getFormFactoryMock()
+    {
+        $mock = $this->getMockBuilder('Symfony\Component\Form\FormFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mock->method('create')->willReturn($this->getFormMock());
+        return $mock;
+    }
+
+    protected function getFormMock()
+    {
+        $mock = $this->getMockBuilder('Symfony\Component\Form\Form')
+            ->disableOriginalConstructor()
+            ->getMock();
+        return $mock;
+    }
+
+    protected function getFormRegistryMock()
+    {
+        $mock = $this->getMockBuilder('Symfony\Component\Form\FormRegistry')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->method('hasType')->willReturn(true);
+        return $mock;
+    }
+
+    protected function getConfigMock()
+    {
+        $mock = $this->getMockBuilder('Sylius\Bundle\ResourceBundle\Controller\Configuration')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->method('getServiceName')->willReturnCallback(function($service) {
+            return $service;
+        });
+        $mock->method('isApiRequest')->willReturn(false);
+        $mock->method('getFactoryMethod')->willReturnCallback(function($defaultMethod) {
+            return $defaultMethod;
+        });
+        $mock->method('getFactoryArguments')->willReturnCallback(function($defaultArguments) {
+            return $defaultArguments;
+        });
+        $mock->method('getTemplate')->willReturnCallback(function($path) {
+            return $path;
+        });
+        $mock->method('getRepositoryMethod')->willReturnCallback(function($defaultMethod) {
+            return $defaultMethod;
+        });
+        $mock->method('getRepositoryArguments')->willReturnCallback(function($defaultArguments) {
+            return $defaultArguments;
+        });
+        $mock->method('getCriteria')->willReturnCallback(function($criteria) {
+            return $criteria;
+        });
+
+        return $mock;
+    }
+
+    protected function getFactoryMock()
+    {
+        $mock = $this->getMockBuilder('Sylius\Component\Resource\Factory\FactoryInterface')->getMock();
+        $mock->method('createNew')->willReturn($this->getEntityMock());
+        return $mock;
+    }
+
+
+    public function testIndexAction()
+    {
+        $config = $this->getConfigMock();
         $controller = new ResourceController($config);
         $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Controller\ResourceController', $controller);
 
@@ -112,6 +213,20 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $response = $controller->createAction($request);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+    }
+
+    public function testUpdateAction()
+    {
+        $config = $this->getConfigMock();
+        $controller = new ResourceController($config);
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Controller\ResourceController', $controller);
+
+        $controller->setContainer($this->getContainerMock());
+
+        $request = new Request();
+
+        $response = $controller->updateAction($request);
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
     }
 }
