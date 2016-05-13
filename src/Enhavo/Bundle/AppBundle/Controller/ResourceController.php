@@ -121,7 +121,13 @@ class ResourceController extends BaseController
 
         $viewer->dispatchEvent('');
 
-        return $this->render($viewer->getTemplate(), $viewer->getParameters());
+        $view = $this
+            ->view()
+            ->setTemplate($viewer->getTemplate())
+            ->setData($viewer->getParameters())
+        ;
+
+        return $this->handleView($view);
     }
 
     public function previewAction(Request $request)

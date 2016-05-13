@@ -64,13 +64,50 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\ViewerFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $mock->method('create')->willReturn($this->getCreateViewerMock());
+        $mock->method('create')->willReturnCallback(function($type, $default) {
+            if($default == 'create') {
+                return  $this->getCreateViewerMock();
+            }
+            if($default == 'preview') {
+                return  $this->getPreviewViewerMock();
+            }
+            if($default == 'edit') {
+                return  $this->getEditViewerMock();
+            }
+            if($default == 'index') {
+                return  $this->getIndexViewerMock();
+            }
+        });
         return $mock;
     }
 
     protected function getCreateViewerMock()
     {
         $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\CreateViewer')->getMock();
+        $mock->method('getTemplate')->willReturn('template');
+        return $mock;
+    }
+
+    protected function getPreviewViewerMock()
+    {
+        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\PreviewViewer')->getMock();
+        $mock->method('getTemplate')->willReturn('template');
+        $mock->method('getStrategyName')->willReturn('strategy');
+        $mock->method('getConfig')->willReturn($this->getViewerConfigMock());
+        return $mock;
+    }
+
+    protected function getEditViewerMock()
+    {
+        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\EditViewer')->getMock();
+        $mock->method('getTemplate')->willReturn('template');
+        return $mock;
+    }
+
+    protected function getIndexViewerMock()
+    {
+        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\IndexViewer')->getMock();
+        $mock->method('getTemplate')->willReturn('template');
         return $mock;
     }
 
@@ -112,8 +149,27 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         if($service === 'repository') {
             return $this->getRepositoryMock();
         }
+        if($service === 'enhavo_app.preview.strategy_resolver') {
+            return $this->getStrategyResolverMock();
+        }
 
         return null;
+    }
+
+    protected function getStrategyResolverMock()
+    {
+        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Preview\StrategyResolver')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mock->method('getStrategy')->willReturn($this->getStrategyMock());
+        return $mock;
+    }
+
+    protected function getStrategyMock()
+    {
+        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Preview\StrategyInterface')->getMock();
+        $mock->method('getPreviewResponse')->willReturn(new Response());
+        return $mock;
     }
 
     protected function getRepositoryMock()
@@ -200,7 +256,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testIndexAction()
+    public function testCreateAction()
     {
         $config = $this->getConfigMock();
         $controller = new ResourceController($config);
@@ -227,6 +283,34 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
 
         $response = $controller->updateAction($request);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+    }
+
+    public function testIndexAction()
+    {
+        $config = $this->getConfigMock();
+        $controller = new ResourceController($config);
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Controller\ResourceController', $controller);
+
+        $controller->setContainer($this->getContainerMock());
+
+        $request = new Request();
+
+        $response = $controller->indexAction($request);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+    }
+
+    public function testPreviewAction()
+    {
+        $config = $this->getConfigMock();
+        $controller = new ResourceController($config);
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Controller\ResourceController', $controller);
+
+        $controller->setContainer($this->getContainerMock());
+
+        $request = new Request();
+
+        $response = $controller->previewAction($request);
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
     }
 }
