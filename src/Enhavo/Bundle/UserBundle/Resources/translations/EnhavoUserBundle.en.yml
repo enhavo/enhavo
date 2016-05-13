@@ -29,6 +29,8 @@ reset:
       reset-password: Reset Password
   label:
     login: Login
+  message:
+      email: An email was sent.
 confirm:
   form:
     label:

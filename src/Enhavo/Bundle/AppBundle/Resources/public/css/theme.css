@@ -59,7 +59,8 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #overlayMessage.error {background:#dd6666;}
 
 /* LogIn Screen - New Design */
-#background{background: url(https://source.unsplash.com/category/nature/1200x900) no-repeat;-webkit-background-size: cover;background-size: cover;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+/*#background{background: url(https://source.unsplash.com/category/nature/1200x900) no-repeat;-webkit-background-size: cover;background-size: cover;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}*/
+#background{background: url(../img/enhavo_forest_bg.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
 #loginBox {background-color: #072129;width: 650px;position: absolute;left: 50%;margin-left: -325px;top: 50%;border-radius: 2px;-webkit-box-shadow: 0 1px 18px rgba(0,0,0,0.47);-moz-box-shadow: 0 1px 18px rgba(0,0,0,0.47);box-shadow: 0 1px 18px rgba(0,0,0,0.47);-webkit-transform: translateY(-50%);-moz-transform: translateY(-50%);-ms-transform: translateY(-50%);-o-transform: translateY(-50%);transform: translateY(-50%);}
 #loginBox .logo{width: 245px;margin: 0 auto;padding: 50px 0;}
 #loginBox p{color: #82888b;padding: 40px 40px 20px 40px;line-height: 1.45em;font-size: 11px;}
@@ -69,15 +70,20 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #loginBox a{color: #82888b;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 #loginBox .input-container{padding: 17px 20px;background: #FFF;border-radius: 2px;}
 #loginBox .col-md-7 {float: none;margin: 3px auto;}
-#loginBox .btn {background: #0090ba;text-align: center;color:#FFF;border-radius: 2px;padding: 17px 10px;margin-top: 35px;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
+#loginBox .btn { display:block; width:100%;background: #0090ba;text-align: center;color:#FFF;border-radius: 2px;padding: 17px 10px;margin-top: 35px;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 #loginBox .btn:hover {-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
-.reset{padding: 0;}
-.reset a{float: right;margin-top: 8px;}
-#loginBox .ribbon {position: absolute;right: 43px;width: 37px;height: 52px;top: 0;z-index: 5;background: url(../img/ribbon.png) no-repeat center center;-webkit-background-size: 100%;background-size: 100%;}
-#loginBox .ribbon p{position: absolute;left: -30px;top: -22px;color: #FFF;}
+.reset{padding-left: 0;}
+.reset a{float: right;margin-top: 8px; text-align:right;}
+#loginBox .ribbon {position: absolute;right: 43px;width: 48px;height: 55px;top: -1px;z-index: 5;background: url(../img/ribbon.png) no-repeat center center;-webkit-background-size: 100%;background-size: 100%;}
+#loginBox .ribbon p{position: absolute;left: -28px;top: -22px;color: #FFF;}
+.loginContainer {width: 58.33333333%; margin:0 auto;}
+#loginBox .resetButton { background:#82888b;margin-top: 15px;}
+#loginBox .resetButton a{ float:none;text-align:center;color:#FFF; font-weight:800;}
+#loginBox .confirmation { padding-top:0;font-size:16px;color:#FFF; text-align:center;}
+#loginBox .confirmation i{ color:#40cf19; padding-right:10px;}
 
 input[type="checkbox"]{
-    display: none;
+    opacity:0;
     padding: 30px;
     cursor: pointer;
     -webkit-transform: scale(2);
@@ -91,7 +97,7 @@ input[type="checkbox"] + span{
     display: inline-block;
     width: 23px;
     height: 23px;
-    margin-left: -25px;
+    margin-left: -15px;
     position: relative;
     top: 5px;
     border-radius: 2px;
