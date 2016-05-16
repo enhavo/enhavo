@@ -7,7 +7,7 @@ services:
         class: %enhavo_page.form.type.page.class%
         arguments:
             - %enhavo_page.model.page.class%
-            - 'slug'
+            - 'route'
             - ~
         tags:
             - { name: form.type }
