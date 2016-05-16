@@ -56,3 +56,6 @@ services:
           - @router
         tags:
             - { name: validator.constraint_validator, alias: route }
+
+    enhavo_app.route_guesser:
+        class: Enhavo\Bundle\AppBundle\Route\RouteGuesser

@@ -129,3 +129,4 @@ services:
             - { name: form.type }
         arguments:
             - @router
+            - @enhavo_app.route_guesser
