@@ -11,8 +11,3 @@ services:
             - %enhavo_page.routing.page.route%
         tags:
             - { name: form.type }
-
-    enhavo_page.page_resolver:
-        class: %enhavo_page.page_resolver.class%
-        arguments:
-            - @service_container

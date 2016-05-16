@@ -11,8 +11,3 @@ services:
             - %enhavo_article.routing.article.route%
         tags:
             - { name: form.type }
-
-    enhavo_article.article_resolver:
-        class: %enhavo_article.article_resolver.class%
-        arguments:
-            - @service_container
