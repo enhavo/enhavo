@@ -122,3 +122,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_routing:
+        class: Enhavo\Bundle\AppBundle\Form\Type\RoutingType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @router

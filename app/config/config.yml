@@ -133,4 +133,5 @@ stof_doctrine_extensions:
     orm:
         default:
             tree: true
-            sluggable: true # not needed: listeners are not enabled by default
+            sluggable: true
+            timestampable: true

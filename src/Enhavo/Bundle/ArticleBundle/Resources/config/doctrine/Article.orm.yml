@@ -3,75 +3,12 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     table: article_article
     repositoryClass: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
-
     fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-
         teaser:
             type: text
             nullable: true
 
-        slug:
-            type: string
-            length: 255
-            nullable: true
-            gedmo:
-                slug:
-                    separator: -
-                    style: default
-                    updatable: false
-                    fields: ['title']
-
-        meta_description:
-            type: text
-            nullable: true
-
-        page_title:
-            type: text
-            nullable: true
-
-        publication_date:
-            type: datetime
-            nullable: true
-
-        priority:
-            type: float
-            nullable: true
-
-        change_frequency:
-            type: string
-            length: 255
-            nullable: true
-
-        public:
-            type: boolean
-            nullable: true
-
-        created:
-            type: datetime
-            nullable: true
-
-        updated:
-            type: datetime
-            nullable: true
-
-        social_media:
-            type: boolean
-            nullable: true
-
     manyToOne:
-        route:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
@@ -80,7 +17,3 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
-
-    lifecycleCallbacks:
-        prePersist: [ prePersist ]
-        preUpdate: [ preUpdate ]

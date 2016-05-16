@@ -1,5 +1,5 @@
 {{ form_row(form.page_title) }}
-{{ form_row(form.slug) }}
+{% if form.slug is defined %}{{ form_row(form.slug) }}{% endif %}
 {{ form_row(form.meta_description) }}
 {{ form_row(form.priority) }}
 {{ form_row(form.change_frequency) }}

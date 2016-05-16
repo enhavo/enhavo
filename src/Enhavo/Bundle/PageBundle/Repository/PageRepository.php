@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\PageBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
 
-class PageRepository extends EntityRepository
+class PageRepository extends ContentRepository
 {
 
 }
