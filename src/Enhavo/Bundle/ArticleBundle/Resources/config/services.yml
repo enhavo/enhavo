@@ -7,8 +7,8 @@ services:
         class: %enhavo_article.form.type.article.class%
         arguments:
             - %enhavo_article.model.article.class%
-            - 'slug'
-            - ~
+            - %enhavo_article.routing.article.strategy%
+            - %enhavo_article.routing.article.route%
         tags:
             - { name: form.type }
 

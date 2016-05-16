@@ -26,12 +26,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
 
-            ->children()
-                ->booleanNode('dynamic_routing')
-                    ->defaultFalse()
-                ->end()
-            ->end()
-
             // The resources
             ->children()
                 ->arrayNode('classes')
@@ -59,6 +53,13 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
+                                ->arrayNode('routing')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('strategy')->defaultValue('route')->end()
+                                        ->scalarNode('route')->defaultValue(null)->end()
+                                    ->end()
+                                ->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
@@ -78,10 +79,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-
-            ->children()
-                ->scalarNode('page_route')->defaultValue(null)->end()
             ->end()
         ;
 

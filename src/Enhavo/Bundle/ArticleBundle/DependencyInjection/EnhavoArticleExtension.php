@@ -24,8 +24,8 @@ class EnhavoArticleExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_article', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter( 'enhavo_article.article_route', $config['article_route']);
-        $container->setParameter( 'enhavo_article.dynamic_routing', $config['dynamic_routing']);
+        $container->setParameter('enhavo_article.routing.article.strategy', $config['resources']['article']['routing']['strategy']);
+        $container->setParameter('enhavo_article.routing.article.route', $config['resources']['article']['routing']['route']);
 
         $configFiles = array(
             'services.yml',
