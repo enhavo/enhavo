@@ -91,7 +91,6 @@ enhavo_grid:
     render:
         sets:
             default:
-#                picture: enhavoProjectBundle:ItemType:picture.html.twig
 
     items:
         picture:
@@ -172,5 +171,5 @@ enhavo_contact:
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
-        subject: Kontaktformular
+        subject: Contactform
         send_to_sender: true

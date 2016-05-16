@@ -90,11 +90,14 @@ class PageType extends AbstractType
         ));
 
         $builder->add('social_media', 'enhavo_boolean', array(
-        'label' => 'page.form.label.social_media',
-        'translation_domain' => 'EnhavoPageBundle'
-    ));
+            'label' => 'page.form.label.social_media',
+            'translation_domain' => 'EnhavoPageBundle'
+        ));
 
-        $builder->add('public', 'enhavo_boolean');
+        $builder->add('public', 'enhavo_boolean', array(
+            'label' => 'form.label.public',
+            'translation_domain' => 'EnhavoAppBundle'
+        ));
 
         $builder->add('priority', 'choice', array(
             'label' => 'page.form.label.priority',

@@ -26,8 +26,10 @@ class Gallery implements ItemTypeInterface
      */
     protected $text;
 
+    /**
+     * @var ArrayCollection
+     */
     protected $files;
-
 
     public function __construct()
     {

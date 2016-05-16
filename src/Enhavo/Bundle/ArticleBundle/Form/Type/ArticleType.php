@@ -85,7 +85,7 @@ class ArticleType extends AbstractType
         ));
 
         $builder->add('public', 'enhavo_boolean', array(
-            'label' => 'form.label.picture',
+            'label' => 'form.label.public',
             'translation_domain' => 'EnhavoAppBundle'
         ));
 
