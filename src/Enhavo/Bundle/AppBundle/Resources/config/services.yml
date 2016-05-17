@@ -97,6 +97,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Form\Type\WorkflowStatusType
         arguments:
             - '@doctrine.orm.entity_manager'
+            - @security.context
         tags:
             - { name: form.type }
 

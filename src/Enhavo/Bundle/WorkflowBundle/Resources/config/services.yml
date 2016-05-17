@@ -25,6 +25,12 @@ services:
         tags:
             - { name: security.voter }
 
+    security.authentication.voter.transition_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\TransitionVoter
+        public:     false
+        tags:
+            - { name: security.voter }
+
     security.authentication.voter.workflow_create_voter:
         class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowCreateVoter
         public:     false
@@ -77,3 +83,11 @@ services:
             - @service_container
         tags:
             - { name: validator.constraint_validator, alias: valid_workflow }
+
+    enhavo_workflow.twig_extension:
+        class:  Enhavo\Bundle\WorkflowBundle\Twig\Label
+        public: false
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }

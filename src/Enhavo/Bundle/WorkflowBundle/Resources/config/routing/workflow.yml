@@ -87,6 +87,9 @@ enhavo_workflow_workflow_table:
                         label: workflow.label.entity
                         property: entity
                         width: 4
+                        widget:
+                            type: template
+                            template: EnhavoWorkflowBundle:Widget:entity.html.twig
 
 enhavo_workflow_workflow_delete:
     options:

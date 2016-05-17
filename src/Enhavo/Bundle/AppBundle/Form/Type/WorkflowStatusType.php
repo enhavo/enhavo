@@ -20,12 +20,12 @@ use Symfony\Component\DependencyInjection\Container;
 class WorkflowStatusType extends AbstractType
 {
     protected $manager;
-    //protected $container;
+    protected $securityContext;
 
-    public function __construct(ObjectManager $manager/*, Container $container*/)
+    public function __construct(ObjectManager $manager, $securityContext)
     {
         $this->manager = $manager;
-        //$this->container = $container;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -60,7 +60,10 @@ class WorkflowStatusType extends AbstractType
                     ));
                     $nodes = array();
                     foreach ($transitions as $transition) {
-                        $nodes[] = $transition->getNodeTo();
+                        if($this->securityContext->isGranted('WORKFLOW_TRANSITION', $transition))
+                        {
+                            $nodes[] = $transition->getNodeTo();
+                        }
                     }
 
                     $placeholder = null;
@@ -71,7 +74,7 @@ class WorkflowStatusType extends AbstractType
                     }
 
                     $form->add('node', 'entity', array(
-                        'label' => 'workflow.next.nodes',
+                        'label' => 'workflow.form.label.next_state',
                         /*'translationDomain' => 'EnhavoWorkflowBundle',*/
                         'class' => 'EnhavoWorkflowBundle:Node',
                         'placeholder' => $placeholder,
@@ -81,7 +84,6 @@ class WorkflowStatusType extends AbstractType
                 }
             }
         });
-
     }
 
     /**
