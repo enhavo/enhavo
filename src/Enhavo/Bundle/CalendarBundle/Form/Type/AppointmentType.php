@@ -96,7 +96,7 @@ class AppointmentType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('content', 'enhavo_grid');
+        $builder->add('grid', 'enhavo_grid');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

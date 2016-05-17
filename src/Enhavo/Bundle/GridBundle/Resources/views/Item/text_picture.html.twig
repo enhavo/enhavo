@@ -1,13 +1,13 @@
-<div class="row enhavo_content">
-    <div class="enhavo_content_textpicture">
+<div class="row enhavo_grid">
+    <div class="enhavo_grid_textpicture">
         {% if data.textLeft == 0 %}
         <div class="col-xs-6 left6">
             {% if data.file %}
-                <img class="enhavo_content_img {% if data.frame %}enhavo_content_frame{% endif %}" src="{{ media_url(data.file,960) }}">
+                <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
             {% endif %}
         </div>
         <div class="col-xs-6 right6">
-            <div class="enhavo_content_text">
+            <div class="enhavo_grid_text">
                 {% if data.title %}
                     <h2>{{ data.title }}</h2>
                 {% endif %}
@@ -18,7 +18,7 @@
         </div>
         {% else %}
             <div class="col-xs-6 left6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.title %}
                         <h2>{{ data.title }}</h2>
                     {% endif %}
@@ -29,7 +29,7 @@
             </div>
             <div class="col-xs-6 right6">
                 {% if data.file %}
-                    <img class="enhavo_content_img {% if data.frame %}enhavo_content_frame{% endif %}" src="{{ media_url(data.file,960) }}">
+                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
                 {% endif %}
             </div>
         {% endif %}

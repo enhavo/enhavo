@@ -14,6 +14,6 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
 
     oneToOne:
-        content:
+        grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid

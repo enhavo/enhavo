@@ -29,7 +29,7 @@ Enhavo\Bundle\GridBundle\Entity\Item:
         column:
             targetEntity: Column
 
-        content:
-            targetEntity: Content
+        grid:
+            targetEntity: Grid
 
     lifecycleCallbacks: {  }

@@ -5,29 +5,24 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Content
+ * Grid
  */
-class Content
+class Grid
 {
     /**
      * @var integer
      */
     protected $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $containers;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $items;
 
     /**
      * Constructor
@@ -38,12 +33,22 @@ class Content
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Add containers
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
-     * @return Content
+     * @param Container $containers
+     * @return Grid
      */
-    public function addContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
+    public function addContainer(Container $containers)
     {
         $this->containers[] = $containers;
 
@@ -53,9 +58,9 @@ class Content
     /**
      * Remove containers
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
+     * @param Container $containers
      */
-    public function removeContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
+    public function removeContainer(Container $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -69,21 +74,16 @@ class Content
     {
         return $this->containers;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $items;
-
 
     /**
      * Add items
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
-     * @return Content
+     * @param Item $items
+     * @return Grid
      */
-    public function addItem(\Enhavo\Bundle\GridBundle\Entity\Item $item)
+    public function addItem(Item $item)
     {
-        $item->setContent($this);
+        $item->setGrid($this);
         $this->items[] = $item;
 
         return $this;
@@ -92,11 +92,11 @@ class Content
     /**
      * Remove items
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
+     * @param Item $items
      */
-    public function removeItem(\Enhavo\Bundle\GridBundle\Entity\Item $item)
+    public function removeItem(Item $item)
     {
-        $item->setContent(null);
+        $item->setGrid(null);
         $this->items->removeElement($item);
     }
 

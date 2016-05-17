@@ -20,6 +20,10 @@ class RouteGuesser
             $guesses[] = $model->getTitle();
         }
 
+        if(method_exists($model, 'getName')) {
+            $guesses[] = $model->getName();
+        }
+
         if(method_exists($model, 'getSlug')) {
             $guesses[] = $model->getSlug();
         }

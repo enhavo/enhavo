@@ -43,7 +43,10 @@ class ArticleType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('content', 'enhavo_grid');
+        $builder->add('grid', 'enhavo_grid', array(
+            'label' => 'form.label.content',
+            'translation_domain' => 'EnhavoAppBundle',
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

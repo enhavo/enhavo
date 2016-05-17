@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('routing')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('strategy')->defaultValue('id')->end()
+                                        ->scalarNode('strategy')->defaultValue('slug')->end()
                                         ->scalarNode('route')->defaultValue(null)->end()
                                     ->end()
                                 ->end()

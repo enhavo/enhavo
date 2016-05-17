@@ -98,7 +98,7 @@ class Gallery implements ItemTypeInterface
      * Set files
      *
      * @param \files $files
-     * @return Content
+     * @return Grid
      */
     public function setFiles($files)
     {
@@ -111,7 +111,7 @@ class Gallery implements ItemTypeInterface
      * Add files
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File files
-     * @return Content
+     * @return Grid
      */
     public function addFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
     {

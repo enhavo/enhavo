@@ -4,6 +4,6 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     repositoryClass: Enhavo\Bundle\PageBundle\Repository\PageRepository
 
     oneToOne:
-        content:
+        grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid

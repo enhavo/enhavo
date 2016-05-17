@@ -1,6 +1,6 @@
-Enhavo\Bundle\GridBundle\Entity\Content:
+Enhavo\Bundle\GridBundle\Entity\Grid:
     type: entity
-    table: grid_content
+    table: grid_grid
     id:
         id:
             type: integer
@@ -11,12 +11,12 @@ Enhavo\Bundle\GridBundle\Entity\Content:
     oneToMany:
         containers:
             targetEntity: Container
-            mappedBy: content
+            mappedBy: grid
             cascade: ['persist', 'refresh', 'remove']
 
         items:
             targetEntity: Item
-            mappedBy: content
+            mappedBy: grid
             cascade: ['persist', 'refresh', 'remove']
             orderBy:
                 order: ASC

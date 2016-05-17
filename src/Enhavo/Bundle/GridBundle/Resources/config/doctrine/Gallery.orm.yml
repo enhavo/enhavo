@@ -21,7 +21,7 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
             joinTable:
-                name: content_gallery_files
+                name: grid_gallery_files
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id

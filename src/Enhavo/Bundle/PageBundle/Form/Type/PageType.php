@@ -35,7 +35,10 @@ class PageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'enhavo_grid');
+        $builder->add('grid', 'enhavo_grid', array(
+            'label' => 'form.label.content',
+            'translation_domain' => 'EnhavoAppBundle',
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

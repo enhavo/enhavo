@@ -24,9 +24,9 @@ class Article extends Content
     protected $teaser;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    protected $content;
+    protected $grid;
 
     /**
      * Set picture
@@ -77,12 +77,12 @@ class Article extends Content
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
      * @return Content
      */
-    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
+    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
     {
-        $this->content = $content;
+        $this->grid = $grid;
 
         return $this;
     }
@@ -90,10 +90,10 @@ class Article extends Content
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    public function getContent()
+    public function getGrid()
     {
-        return $this->content;
+        return $this->grid;
     }
 }

@@ -1,12 +1,12 @@
-<div class="row enhavo_content">
-    <div class="enhavo_content_contact">
+<div class="row enhavo_grid">
+    <div class="enhavo_grid_contact">
         <div class="contact_left">
             {% for file in data.files %}
-                <img class="enhavo_content_img" src="{{ media_url(file,960) }}">
+                <img class="enhavo_grid_img" src="{{ media_url(file,960) }}">
             {% endfor %}
         </div>
         <div class="contact_right">
-            <div class="enhavo_content_text">
+            <div class="enhavo_grid_text">
                 {% if data.title %}
                     <h2>{{ data.title }}</h2>
                 {% endif %}

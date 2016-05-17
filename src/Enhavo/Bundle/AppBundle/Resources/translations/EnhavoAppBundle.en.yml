@@ -15,6 +15,7 @@ form:
     slug: 'Slug'
     picture: 'Picture'
     text: 'Text'
+    content: 'Content'
 label:
   logout: 'Logout'
   id: 'ID'

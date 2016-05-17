@@ -31,9 +31,9 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
                     style: default
                     fields: ['title']
     oneToOne:
-        content:
+        grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
 
     manyToOne:
         picture:

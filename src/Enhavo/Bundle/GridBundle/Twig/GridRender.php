@@ -1,6 +1,6 @@
 <?php
 /**
- * ContentRender.php
+ * GridRender.php
  *
  * @since 24/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\GridBundle\Twig;
 
-use Enhavo\Bundle\GridBundle\Entity\Content;
+use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 
-class ContentRender extends \Twig_Extension
+class GridRender extends \Twig_Extension
 {
     protected $router;
     protected $engine;
@@ -31,7 +31,7 @@ class ContentRender extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('content_render', array($this, 'render'), array('is_safe' => array('html')))
+            new \Twig_SimpleFunction('grid_render', array($this, 'render'), array('is_safe' => array('html')))
         );
     }
 
@@ -46,14 +46,14 @@ class ContentRender extends \Twig_Extension
         return $this->engine;
     }
 
-    public function render(Content $content = null, $set = null, $onlyRenderTypes = null)
+    public function render(Grid $grid = null, $set = null, $onlyRenderTypes = null)
     {
-        if($content === null) {
+        if($grid === null) {
             return '';
         }
 
         $html = array();
-        $items = $content->getItems();
+        $items = $grid->getItems();
         if($items) {
             /** @var $item Item */
             foreach($items as $item) {
@@ -80,6 +80,6 @@ class ContentRender extends \Twig_Extension
 
     public function getName()
     {
-        return 'content_render';
+        return 'grid_render';
     }
 }

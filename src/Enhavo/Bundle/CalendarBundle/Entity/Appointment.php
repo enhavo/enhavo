@@ -35,9 +35,9 @@ class Appointment
     private $dateTo;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    private $content;
+    private $grid;
 
     /**
      * @var \Enhavo\Bundle\MediaBundle\Entity\File
@@ -158,13 +158,12 @@ class Appointment
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
-     *
+     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
      * @return Appointment
      */
-    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
+    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
     {
-        $this->content = $content;
+        $this->grid = $grid;
 
         return $this;
     }
@@ -172,18 +171,18 @@ class Appointment
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    public function getContent()
+    public function getGrid()
     {
-        return $this->content;
+        return $this->grid;
     }
 
     /**
      * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $picture
      * @return Appointment
      */
-    public function setPicture($picture)
+    public function setGrid($picture)
     {
         $this->picture = $picture;
 
