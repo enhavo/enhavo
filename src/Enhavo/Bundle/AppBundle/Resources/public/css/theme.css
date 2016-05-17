@@ -141,7 +141,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .btnsmall[class*="fa-"] {font-weight:normal;}
 .btn i {position:relative;top:-1px;}
 .btn.create{background: none;color: #0090ba;text-align: left;font-size: 14px;}
-.btn.create:before{position: relative;border-radius: 50%;background: #0090ba;width: 23px;height: 23px;top: 4px;margin-right: 5px;content: "+";display: inline-block;font-size: 26px;font-weight: 700;text-align: center;color: #f3f3f3;}
+.btn.create:before{content: '\e834';font-family: "enhavo_iconfont";font-size:28px;display:inline-block;margin: 0 6px 0 0;position: relative;top: 4px;}
 .btn.dropdown{background: none;color: #a7b1b3;text-align: left;font-size: 14px;}
 .btn.dropdown:before{font-family: "enhavo_iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e82b';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
 .btn.dropdown.clicked:before{font-family: "enhavo_iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d9';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
@@ -179,16 +179,13 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 .btn.upload-button:before{
-    content: '\e8cf';
-    border-radius: 50%;
-    border: 0.2em solid #0090ba;
+    content: '\e817';
     font-family: "enhavo_iconfont";
-    font-size: 13px;
-    vertical-align: text-bottom;
+    font-size: 26px;
     position: relative;
-    top: 2px;
-    width: 25px;
-    height: 25px;
+    top: 4px;
+    display:inline-block;
+    margin-right:5px;
 }
 
 .bullList {list-style:disc;padding-left:20px;}
