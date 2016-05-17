@@ -56,8 +56,8 @@ class EntitySaveListener
                     } else {
                         $current->setPublic(false);
                     }
-                    $this->em->flush();
                 }
+                $this->em->flush();
             }
         }
     }

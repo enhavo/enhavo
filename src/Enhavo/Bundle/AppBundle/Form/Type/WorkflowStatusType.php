@@ -21,11 +21,14 @@ class WorkflowStatusType extends AbstractType
 {
     protected $manager;
     protected $securityContext;
+    protected $container;
+    protected $noTransitions;
 
-    public function __construct(ObjectManager $manager, $securityContext)
+    public function __construct(ObjectManager $manager, $securityContext, $container)
     {
         $this->manager = $manager;
         $this->securityContext = $securityContext;
+        $this->container = $container;
     }
 
     /**
@@ -73,14 +76,19 @@ class WorkflowStatusType extends AbstractType
                         $placeholder = 'creation';
                     }
 
-                    $form->add('node', 'entity', array(
-                        'label' => 'workflow.form.label.next_state',
-                        /*'translationDomain' => 'EnhavoWorkflowBundle',*/
-                        'class' => 'EnhavoWorkflowBundle:Node',
-                        'placeholder' => $placeholder,
-                        'choice_label' => 'node_name',
-                        'choices' => $nodes
-                    ));
+                    $this->noTransitions = false;
+                    if(!empty($nodes)){
+                        $form->add('node', 'entity', array(
+                            'label' => 'workflow.form.label.next_state',
+                            /*'translationDomain' => 'EnhavoWorkflowBundle',*/
+                            'class' => 'EnhavoWorkflowBundle:Node',
+                            'placeholder' => $placeholder,
+                            'choice_label' => 'node_name',
+                            'choices' => $nodes
+                        ));
+                    } else {
+                        $this->noTransitions = true;
+                    }
                 }
             }
         });
@@ -95,6 +103,11 @@ class WorkflowStatusType extends AbstractType
             $view->vars['workflow_status'] = $view->vars['value']->getNode()->getNodeName();
         } else {
             $view->vars['workflow_status'] = 'creation';
+        }
+
+        if($this->noTransitions == true){
+            $translator = $this->container->get('translator');
+            $view->vars['no_transitions'] = $translator->trans('workflow.label.noTransitions', array(), 'EnhavoWorkflowBundle');
         }
     }
 

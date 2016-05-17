@@ -19,6 +19,7 @@ workflow:
     entity: 'Entity'
     currentWFS: 'Aktueller Workflow-Status'
     active: 'Aktiv'
+    noTransitions: '(keine Übergänge möglich)'
   validator:
     error:
       nodes: 'Es wurden noch keine Knoten erstellt.'

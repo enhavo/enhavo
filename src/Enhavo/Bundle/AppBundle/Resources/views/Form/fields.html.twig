@@ -130,8 +130,10 @@
 
 {% block enhavo_workflow_status_widget %}
     <br>
-    {% if form|length > 0 %}
-        {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle') }}: {{ form.vars['workflow_status'] }}
+    {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle') }}: {{ form.vars['workflow_status'] }}
+    <br>
+    {% if form.vars['no_transitions'] is defined %}
+        {{ form.vars['no_transitions'] }}
     {% endif %}
     <br>
     {{ form_widget(form) }}

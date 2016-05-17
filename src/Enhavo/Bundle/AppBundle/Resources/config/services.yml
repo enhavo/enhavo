@@ -98,6 +98,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - @security.context
+            - @service_container
         tags:
             - { name: form.type }
 

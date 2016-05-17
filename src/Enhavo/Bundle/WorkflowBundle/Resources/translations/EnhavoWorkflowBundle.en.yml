@@ -19,6 +19,7 @@ workflow:
     entity: 'entity'
     currentWFS: 'Current Workflow-Status'
     active: 'Active'
+    noTransitions: '(No transitions possible)'
   validator:
     error:
       nodes: 'You have not created any nodes.'
