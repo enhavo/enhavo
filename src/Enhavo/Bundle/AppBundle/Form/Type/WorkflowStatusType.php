@@ -22,7 +22,7 @@ class WorkflowStatusType extends AbstractType
     protected $manager;
     protected $securityContext;
     protected $container;
-    protected $noTransitions;
+    protected $hasTransitions;
 
     public function __construct(ObjectManager $manager, $securityContext, $container)
     {
@@ -76,7 +76,7 @@ class WorkflowStatusType extends AbstractType
                         $placeholder = 'creation';
                     }
 
-                    $this->noTransitions = false;
+                    $this->hasTransitions = true;
                     if(!empty($nodes)){
                         $form->add('node', 'entity', array(
                             'label' => 'workflow.form.label.next_state',
@@ -87,7 +87,7 @@ class WorkflowStatusType extends AbstractType
                             'choices' => $nodes
                         ));
                     } else {
-                        $this->noTransitions = true;
+                        $this->hasTransitions = false;
                     }
                 }
             }
@@ -105,7 +105,7 @@ class WorkflowStatusType extends AbstractType
             $view->vars['workflow_status'] = 'creation';
         }
 
-        if($this->noTransitions == true){
+        if($this->hasTransitions == false){
             $translator = $this->container->get('translator');
             $view->vars['no_transitions'] = $translator->trans('workflow.label.noTransitions', array(), 'EnhavoWorkflowBundle');
         }

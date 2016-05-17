@@ -18,7 +18,7 @@ class WorkflowAssignedWidget extends AbstractTableWidget {
             $isGranted = true;
         }
         return $templateEngine->render('EnhavoWorkflowBundle:Widget:workflowAssigned.html.twig', array(
-            'userIsGranted' => $isGranted
+            'isGranted' => $isGranted
         ));
     }
 

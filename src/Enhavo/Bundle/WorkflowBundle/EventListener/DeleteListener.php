@@ -30,8 +30,8 @@ class DeleteListener
             $workflow = $workflowRepository->find($event->getSubject()->getId());
 
             $this->removeTransitions($workflow);
-
             $this->removeNodesAndWorkflowStatus($workflow);
+
             $this->em->flush();
         }
     }
