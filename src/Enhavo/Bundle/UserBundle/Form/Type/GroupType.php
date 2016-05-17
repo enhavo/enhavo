@@ -23,7 +23,7 @@ class GroupType extends AbstractType
         $roles = array_keys($rolesProvider->getRoles());
 
         foreach ($roles as $role) {
-            $this->roles[$role] = (sprintf('user.role.label.%s', $role));
+            $this->roles[$role] = (sprintf('role.label.%s', $role));
         }
     }
 
