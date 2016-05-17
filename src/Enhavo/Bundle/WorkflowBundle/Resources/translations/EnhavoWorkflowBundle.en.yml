@@ -20,6 +20,7 @@ workflow:
     currentWFS: 'Current Workflow-Status'
     active: 'Active'
     noTransitions: '(No transitions possible)'
+    assigned: 'Assigned'
   validator:
     error:
       nodes: 'You have not created any nodes.'

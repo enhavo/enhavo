@@ -20,6 +20,7 @@ workflow:
     currentWFS: 'Aktueller Workflow-Status'
     active: 'Aktiv'
     noTransitions: '(keine Übergänge möglich)'
+    assigned: 'Zugeordnet'
   validator:
     error:
       nodes: 'Es wurden noch keine Knoten erstellt.'

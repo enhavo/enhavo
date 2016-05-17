@@ -84,10 +84,25 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: valid_workflow }
 
-    enhavo_workflow.twig_extension:
+    enhavo_workflow.entity.twig_extension:
         class:  Enhavo\Bundle\WorkflowBundle\Twig\Label
         public: false
         arguments:
             - @service_container
         tags:
             - { name: twig.extension }
+
+    enhavo_workflow.to_do.twig_extension:
+        class:  Enhavo\Bundle\WorkflowBundle\Twig\ToDo
+        public: false
+        arguments:
+            - @security.context
+        tags:
+            - { name: twig.extension }
+
+    enhavo_workflow.table.workflow_assigned_widget:
+        class: Enhavo\Bundle\WorkflowBundle\Table\Widget\WorkflowAssignedWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
