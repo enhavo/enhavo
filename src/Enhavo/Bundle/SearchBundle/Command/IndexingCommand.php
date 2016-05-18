@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class IndexingCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -20,8 +19,6 @@ class IndexingCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //Index engine über container holen
-        //get all datasets to update
         $indexEngine = $this->getContainer()->get('enhavo_search_engine');
         $indexEngine->indexAll();
 

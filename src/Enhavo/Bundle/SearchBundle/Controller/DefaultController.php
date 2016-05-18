@@ -169,9 +169,6 @@ EOD;
     //Happens when someone pressed the submit button of the search field.
     public function submitAction(Request $request)
     {
-        //at the beginning the normalize is always 0
-        $normalize = 0;
-
         //set the current entry to searchEspression
         $this->searchExpression = $request->get('search');
 
@@ -184,85 +181,12 @@ EOD;
             //go on if there are not to many AND/OR expressions
             if (!$this->toManyExpressions) {
 
-                //get the search results (language, type, id, calculated_score)
-                $results = $this->getDoctrine()
-                    ->getRepository('EnhavoSearchBundle:Index')
-                    ->getSearchResults($this->conditions, $this->matches, $this->simple);
-
-                //prepare data with found results
-                $data = array();
-                foreach ($results as $resultIndex) {
-                    $currentIndex = $this->getDoctrine()
-                        ->getRepository('EnhavoSearchBundle:Index')
-                        ->findOneBy(array('id' => $resultIndex['id']));
-                    $currentDataset = $currentIndex->getDataset();
-                    $dataForSearchResult = array();
-                    $dataForSearchResult['type'] = $currentDataset->getType();
-                    $dataForSearchResult['bundle'] = $currentDataset->getBundle();
-                    $dataForSearchResult['reference'] = $currentDataset->getReference();
-                    $data[] = $dataForSearchResult;
-                }
-
-                $finalResults = array();
-                foreach ($data as $resultData) {
-
-                    //get Element from the entity
-                    $currentData = array();
-                    $currentObject = $this->getDoctrine()
-                        ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
-                        ->findOneBy(array('id' => $resultData['reference']));
-
-                    //highlight title
-                    $title = $currentObject->getTitle();
-                    $allTitelsWords = explode(" ", $title);
-                    $wordsToHighlightTitle = array();
-                    foreach($allTitelsWords as $allTitelsWord) {
-                        $simplifiedWord = $this->search_simplify($allTitelsWord);
-                        foreach($this->words as $searchWord){
-                            if($searchWord == $simplifiedWord) {
-                                $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
-                            }
-                        }
-                    }
-                    $newTitle = $title;
-                    foreach($wordsToHighlightTitle as $key => $value){
-                        $newTitle = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTitle);
-                    }
-                    if($newTitle != null) {
-                        $currentObject->setTitle($newTitle);
-                    }
-
-                    //highlight teaser
-                    $teaser = $currentObject->getTeaser();
-                    $allTeasersWords = explode(" ", $teaser);
-                    $wordsToHighlightTeaser = array();
-                    foreach($allTeasersWords as $allTeasersWord) {
-                        $simplifiedWord = $this->search_simplify($allTeasersWord);
-                        foreach($this->words as $searchWord){
-                            if($searchWord == $simplifiedWord) {
-                                $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
-                            }
-                        }
-                    }
-                    $newTeaser = $teaser;
-                    foreach($wordsToHighlightTeaser as $key => $value){
-                        $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
-                    }
-                    if($newTeaser != null) {
-                        $currentObject->setTeaser($newTeaser);
-                    }
-
-                    $currentData['entityName'] = strtolower($resultData['type']);
-                    $currentData['bundleName'] = strtolower(str_replace('Bundle', '', $resultData['bundle']));
-                    $currentData['object'] = $currentObject;
-                    $finalResults[] = $currentData;
-                }
-
-                if ($finalResults) {
+                $results = $this->search();
+                if ($results) {
 
                     //return results
                     return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                        'data' => $finalResults
+                        'data' => $results
                     ));
                 }
             } else {
@@ -281,6 +205,92 @@ EOD;
         return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
             'data' => 'No results'
         ));
+    }
+
+    protected function search()
+    {
+        //get the search results (language, type, id, calculated_score)
+        $results = $this->getDoctrine()
+            ->getRepository('EnhavoSearchBundle:Index')
+            ->getSearchResults($this->conditions, $this->matches, $this->simple);
+
+        //prepare data with found results -> get Index from id -> get Dataset from Index
+        $data = array();
+        foreach ($results as $resultIndex) {
+            $currentIndex = $this->getDoctrine()
+                ->getRepository('EnhavoSearchBundle:Index')
+                ->findOneBy(array('id' => $resultIndex['id']));
+            $currentDataset = $currentIndex->getDataset();
+            $dataForSearchResult = array();
+            $dataForSearchResult['type'] = $currentDataset->getType();
+            $dataForSearchResult['bundle'] = $currentDataset->getBundle();
+            $dataForSearchResult['reference'] = $currentDataset->getReference();
+            $data[] = $dataForSearchResult;
+        }
+
+        $finalResults = array();
+        foreach ($data as $resultData) {
+
+            //get Element from the entity
+            $currentData = array();
+            $currentObject = $this->getDoctrine()
+                ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
+                ->findOneBy(array('id' => $resultData['reference']));
+
+            $currentObject = $this->highlightText($currentObject);
+
+            $currentData['entityName'] = strtolower($resultData['type']);
+            $currentData['bundleName'] = strtolower(str_replace('Bundle', '', $resultData['bundle']));
+            $currentData['object'] = $currentObject;
+            $finalResults[] = $currentData;
+        }
+
+        return $finalResults;
+    }
+
+    protected function highlightText($object)
+    {
+        //highlight title
+        $title = $object->getTitle();
+        $allTitelsWords = explode(" ", $title);
+        $wordsToHighlightTitle = array();
+        foreach($allTitelsWords as $allTitelsWord) {
+            $simplifiedWord = $this->search_simplify($allTitelsWord);
+            foreach($this->words as $searchWord){
+                if($searchWord == $simplifiedWord) {
+                    $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+                }
+            }
+        }
+        $newTitle = $title;
+        foreach($wordsToHighlightTitle as $key => $value){
+            $newTitle = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTitle);
+        }
+        if($newTitle != null) {
+            $object->setTitle($newTitle);
+        }
+
+        //highlight teaser
+        $teaser = $object->getTeaser();
+        $allTeasersWords = explode(" ", $teaser);
+        $wordsToHighlightTeaser = array();
+        foreach($allTeasersWords as $allTeasersWord) {
+            $simplifiedWord = $this->search_simplify($allTeasersWord);
+            foreach($this->words as $searchWord){
+                if($searchWord == $simplifiedWord) {
+                    $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+                }
+            }
+        }
+        $newTeaser = $teaser;
+        foreach($wordsToHighlightTeaser as $key => $value){
+            $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
+        }
+        if($newTeaser != null) {
+            $object->setTeaser($newTeaser);
+        }
+
+        return $object;
     }
 
 
