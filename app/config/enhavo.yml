@@ -187,7 +187,7 @@ enhavo_workflow:
             class: %enhavo_article.model.article.class%
             label: 'article.label.article'
             translationDomain: EnhavoArticleBundle
-            repository: EnhavoArticleBundle:Article
+            repository: enhavo_article.repository.article
         -
             class: %enhavo_page.model.page.class%
             label: 'page.label.page'
