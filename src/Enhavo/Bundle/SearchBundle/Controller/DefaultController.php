@@ -234,13 +234,16 @@ EOD;
             //get Element from the entity
             $currentData = array();
             $currentObject = $this->getDoctrine()
-                ->getRepository('Enhavo' . ucfirst($resultData['bundle']) . ':' . ucfirst($resultData['type']))
+                ->getRepository($resultData['bundle'].':'.ucfirst($resultData['type']))
                 ->findOneBy(array('id' => $resultData['reference']));
 
             $currentObject = $this->highlightText($currentObject);
 
             $currentData['entityName'] = strtolower($resultData['type']);
-            $currentData['bundleName'] = strtolower(str_replace('Bundle', '', $resultData['bundle']));
+            $formatedBundleName = str_replace('Bundle', '', $resultData['bundle']); //EnhavoArticle
+            $splittedBundleName = preg_split('/(?=[A-Z])/', $formatedBundleName, -1, PREG_SPLIT_NO_EMPTY); // Enhavo Article
+            $formatedBundleName = implode('_', $splittedBundleName); //Enhavo_Article
+            $currentData['bundleName'] = strtolower($formatedBundleName); //enhavo_article
             $currentData['object'] = $currentObject;
             $finalResults[] = $currentData;
         }

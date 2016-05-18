@@ -4,9 +4,6 @@ namespace Enhavo\Bundle\SearchBundle\EventListener;
 
 use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
-use Enhavo\Bundle\SearchBundle\Entity\Total;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Yaml\Parser;
 use Doctrine\ORM\EntityManager;
 
@@ -27,14 +24,10 @@ class SaveListener
 
     public function onSave($event)
     {
-        //!!nur reindex auf 1 setzen und neues dataset anlegen wenn es ein neuer eintrag ist aber mit data null und reindex 1
-        //here the indexing happens when somewone clicked save
         //get the current search.yml for the entity
-        $currentSearchYaml = $this->getCurrentSearchYaml($event);
+        $currentSearchYaml = $this->getCurrentSearchYaml(get_class($event->getSubject()));
 
         if($currentSearchYaml != null) {
-            //get properties form search.yml
-            $properties = $currentSearchYaml[$this->entityPath]['properties'];
 
             //get or create DataSet
             $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
@@ -50,7 +43,6 @@ class SaveListener
                 $newDataSet->setData(null);
                 $this->em->persist($newDataSet);
                 $this->em->flush();
-                $dataSet = $newDataSet;
             } else {
 
                 //a dataset already exist
@@ -67,7 +59,7 @@ class SaveListener
         }
     }
 
-    function getCurrentSearchYaml($event) {
+    function getCurrentSearchYaml($class) {
         //get all bundles
         $bundles = $this->kernel->getBundles();
         //get all search.pml paths
@@ -87,13 +79,13 @@ class SaveListener
         }
 
 
-        $this->entityPath = get_class($event->getSubject());
+        $this->entityPath = $class;
         $splittedBundlePath = explode('\\', $this->entityPath);
         while(strpos(end($splittedBundlePath), 'Bundle') != true){
             array_pop($splittedBundlePath);
         }
-        $this->bundleName = end($splittedBundlePath);
-        $entityName = str_replace('Bundle', '', $this->bundleName);
+        $this->bundleName = $splittedBundlePath[0].end($splittedBundlePath);
+        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
         $this->entityName = strtolower($entityName);
         $bundlePath = implode('/', $splittedBundlePath);
         $currentPath = null;

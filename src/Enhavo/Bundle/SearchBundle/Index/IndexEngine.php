@@ -131,30 +131,9 @@ EOD;
         $this->em = $em;
     }
 
-    public function index($model)
-    {
-
-    }
-
     public function indexAll()
     {
-        //get all bundles
-        $bundles = $this->kernel->getBundles();
-        //get all search.pml paths
-        $this->searchYamlPaths = array();
-        foreach($bundles as $bundle){
-            if(file_exists($bundle->getPath().'/Resources/config/search.yml')){
-                $this->searchYamlPaths[] = $this->kernel->locateResource('@'.$bundle->getName().'/Resources/config/search.yml');
-
-            } else if($bundle->getName() == 'EnhavoSearchBundle'){
-                $searchBundlePath = $bundle->getPath();
-                $splittedPath = explode('/', $searchBundlePath);
-                while(end($splittedPath) != 'src'){
-                    array_pop($splittedPath);
-                }
-                $this->mainPath = implode('/', $splittedPath);
-            }
-        }
+        $this->getSearchYamls();
 
         //get all datasets to reindex -> this means new datasets and updated datasets
         $changedOrNewDatasets = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findBy(array(
@@ -166,9 +145,16 @@ EOD;
 
             //get current search yaml for dataset
             $currentBundle = $changedOrNewDataset->getBundle();
+            $splittedBundleName = preg_split('/(?=[A-Z])/', $currentBundle, -1, PREG_SPLIT_NO_EMPTY);
             $currentSearchYaml = null;
             foreach($this->searchYamlPaths as $path){
-                if(strpos($path, $currentBundle)){
+                $allPartsOfBundleNameInPath = true;
+                foreach($splittedBundleName as $partOfBundleName){
+                    if(!strpos($path, $partOfBundleName)){
+                        $allPartsOfBundleNameInPath = false;
+                    }
+                }
+                if($allPartsOfBundleNameInPath == true){
                     $yaml = new Parser();
                     $currentSearchYaml = $yaml->parse(file_get_contents($path));
                     break;
@@ -189,7 +175,7 @@ EOD;
     protected function indexingData($properties, $dataSet, $entityName)
     {
         //get the belonging element like an article or page
-        $item = $this->em->getRepository('Enhavo'.$dataSet->getBundle().':'.$entityName)->find($dataSet->getReference());
+        $item = $this->em->getRepository($dataSet->getBundle().':'.$entityName)->find($dataSet->getReference());
 
         //indexing words (go through all the fields that can be indexed according to the search yml)
         foreach($properties as $key => $value) {
@@ -597,6 +583,27 @@ EOD;
         }
         else {
             return $dirty;
+        }
+    }
+
+    protected function getSearchYamls()
+    {
+        //get all bundles
+        $bundles = $this->kernel->getBundles();
+        //get all search.pml paths
+        $this->searchYamlPaths = array();
+        foreach($bundles as $bundle){
+            if(file_exists($bundle->getPath().'/Resources/config/search.yml')){
+                $this->searchYamlPaths[] = $this->kernel->locateResource('@'.$bundle->getName().'/Resources/config/search.yml');
+
+            } else if($bundle->getName() == 'EnhavoSearchBundle'){
+                $searchBundlePath = $bundle->getPath();
+                $splittedPath = explode('/', $searchBundlePath);
+                while(end($splittedPath) != 'src'){
+                    array_pop($splittedPath);
+                }
+                $this->mainPath = implode('/', $splittedPath);
+            }
         }
     }
 }

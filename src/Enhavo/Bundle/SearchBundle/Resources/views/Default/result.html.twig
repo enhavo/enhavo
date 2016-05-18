@@ -2,7 +2,7 @@
     {% if data is iterable %}
         {% for item in data %}
              </br>
-            <div data-id={{ item.object.id }} data-update-route="enhavo_{{ item.bundleName }}_{{ item.entityName }}_update" style="border-bottom: 1px solid darkslategray;" class="entry-row">
+            <div data-id={{ item.object.id }} data-update-route="{{ item.bundleName }}_{{ item.entityName }}_update" style="border-bottom: 1px solid darkslategray;" class="entry-row">
                 <h1><b> {{ item.object.title|raw }} </b></h1>
                 {% if item.object.teaser is defined %}
                     {% if item.object.teaser|length >= 100 %}

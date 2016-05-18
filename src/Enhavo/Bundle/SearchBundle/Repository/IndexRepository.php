@@ -51,48 +51,46 @@ class IndexRepository extends EntityRepository
                 }
             }
         }
-        //if($conditionCounter > 1) {
-            foreach($conditions as $key => $value) {
-                if ($key == 'AND') {
-                    foreach($value as $currentValue) {
-                        $query->setParameter('word_' . $wordCounter, '% '.$currentValue.' %');
-                        $query->andWhere('d.data LIKE :word_' . $wordCounter);
-                        $wordCounter++;
-                    }
-                } else if ($key == 'OR') {
-                    foreach ($value as $currentValue)
-                    {
-                        if(is_array($currentValue)){
-                            $orString = "";
-                            $first = true;
-                            for($i = 0; $i < count($currentValue); $i++) {
-                                $query->setParameter('word_' . $wordCounter, '% '.$currentValue[$i].' %');
-                                if(!$first) {
-                                    $orString = $orString.' OR ';
-                                }
-                                $first = false;
-                                $orString = $orString.'d.data LIKE :word_' . $wordCounter;
-                                $wordCounter++;
-                            }
-                            $query->andWhere($orString);
-                        }
-                    }
-                } else if ($key = 'NOT') {
-                    $notString = "";
-                    $first = true;
-                    for($i = 0; $i < count($conditions['NOT']); $i++) {
-                        $query->setParameter('word_' . $wordCounter, '% '.$conditions['NOT'][$i].' %');
-                        if(!$first) {
-                            $notString = $notString.' AND ';
-                        }
-                        $first = false;
-                        $notString = $notString.'d.data NOT LIKE :word_' . $wordCounter;
-                        $wordCounter++;
-                    }
-                    $query->andWhere($notString);
+        foreach($conditions as $key => $value) {
+            if ($key == 'AND') {
+                foreach($value as $currentValue) {
+                    $query->setParameter('word_' . $wordCounter, '% '.$currentValue.' %');
+                    $query->andWhere('d.data LIKE :word_' . $wordCounter);
+                    $wordCounter++;
                 }
+            } else if ($key == 'OR') {
+                foreach ($value as $currentValue)
+                {
+                    if(is_array($currentValue)){
+                        $orString = "";
+                        $first = true;
+                        for($i = 0; $i < count($currentValue); $i++) {
+                            $query->setParameter('word_' . $wordCounter, '% '.$currentValue[$i].' %');
+                            if(!$first) {
+                                $orString = $orString.' OR ';
+                            }
+                            $first = false;
+                            $orString = $orString.'d.data LIKE :word_' . $wordCounter;
+                            $wordCounter++;
+                        }
+                        $query->andWhere($orString);
+                    }
+                }
+            } else if ($key = 'NOT') {
+                $notString = "";
+                $first = true;
+                for($i = 0; $i < count($conditions['NOT']); $i++) {
+                    $query->setParameter('word_' . $wordCounter, '% '.$conditions['NOT'][$i].' %');
+                    if(!$first) {
+                        $notString = $notString.' AND ';
+                    }
+                    $first = false;
+                    $notString = $notString.'d.data NOT LIKE :word_' . $wordCounter;
+                    $wordCounter++;
+                }
+                $query->andWhere($notString);
             }
-        //}
+        }
 
         $query->groupBy('d.id');
         // If the query is simple, we should have calculated the number of
@@ -104,6 +102,7 @@ class IndexRepository extends EntityRepository
             $query->having('COUNT(d.id) >= :matches');
         }
         $query->orderBy('calculated_score', 'DESC');
-        return $query->getQuery()->getResult();;
+
+        return $query->getQuery()->getResult();
     }
 }

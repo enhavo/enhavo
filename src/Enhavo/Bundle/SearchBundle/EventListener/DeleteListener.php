@@ -22,9 +22,9 @@ class DeleteListener
         //get the BundleName
         $array = explode('\\', get_class($event->getSubject()));
         $bundle = null;
-        foreach($array as $part) {
-            if(strpos($part, 'Bundle', 1)){
-                $bundle = $part;
+        foreach($array as $key => $value) {
+            if(strpos($value, 'Bundle', 1)){
+                $bundle = $array[$key-2].$value;
                 break;
             }
         }
@@ -46,7 +46,6 @@ class DeleteListener
         foreach($index as $currentIndexToDelete) {
             $word = $currentIndexToDelete->getWord();
             $this->em->remove($currentIndexToDelete);
-            $this->em->flush();
             $this->search_dirty($word);
         }
 
