@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index;
 
-use Enhavo\Bundle\SearchBundle\Controller\DefaultController;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\DependencyInjection\Container;

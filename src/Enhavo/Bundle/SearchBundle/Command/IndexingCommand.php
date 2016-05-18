@@ -19,7 +19,7 @@ class IndexingCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $indexEngine = $this->getContainer()->get('enhavo_search_engine');
+        $indexEngine = $this->getContainer()->get('enhavo_search_index_engine');
         $indexEngine->indexAll();
 
         $output->writeln('Indexing finished');
