@@ -92,14 +92,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_workflow.to_do.twig_extension:
-        class:  Enhavo\Bundle\WorkflowBundle\Twig\ToDo
-        public: false
-        arguments:
-            - @security.context
-        tags:
-            - { name: twig.extension }
-
     enhavo_workflow.table.workflow_assigned_widget:
         class: Enhavo\Bundle\WorkflowBundle\Table\Widget\WorkflowAssignedWidget
         calls:
