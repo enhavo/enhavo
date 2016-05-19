@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraint;
 class Workflow extends Constraint
 {
     public $noNodesCreated = 'workflow.validator.error.nodes';
-    public $noWorkflowName = 'workflow.validator.error.name';
     public $doNotDeleteWhenActive = 'workflow.validator.error.delete';
 
     public function validatedBy()
