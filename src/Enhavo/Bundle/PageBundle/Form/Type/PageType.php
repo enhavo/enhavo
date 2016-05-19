@@ -5,9 +5,7 @@ namespace Enhavo\Bundle\PageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class PageType extends AbstractType
 {
@@ -26,11 +24,17 @@ class PageType extends AbstractType
      */
     protected $routingStrategy;
 
-    public function __construct($dataClass, $routingStrategy, $route)
+    /**
+     * @var SecurityContext
+     */
+    protected $securityContext;
+
+    public function __construct($dataClass, $routingStrategy, $route, $securityContext)
     {
         $this->dataClass = $dataClass;
         $this->route = $route;
         $this->routingStrategy = $routingStrategy;
+        $this->securityContext = $securityContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,6 +43,18 @@ class PageType extends AbstractType
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));
+
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass))
+        {
+            $entityName = array();
+            $entityName[0] = $this->dataClass;
+
+            $builder->add('workflow_status', 'enhavo_workflow_status', array(
+                'label' => 'workflow.form.label.next_state',
+                'translation_domain' => 'EnhavoWorkflowBundle',
+                'attr' => $entityName
+            ));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

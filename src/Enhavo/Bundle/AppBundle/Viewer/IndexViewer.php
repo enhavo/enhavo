@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 
 class IndexViewer extends AppViewer
 {
@@ -41,7 +42,20 @@ class IndexViewer extends AppViewer
 
     public function getActions()
     {
-        return $this->getConfig()->get('actions');
+        $actions = [];
+        $securityContext = $this->container->get('security.context');
+        $configActions = $this->getConfig()->get('actions');
+        if(!is_array($configActions)) {
+            return [];
+        }
+        foreach($configActions as $action => $value) {
+            $roleUtil = new RoleUtil();
+            $roleName = $roleUtil->getRoleNameByResourceName($this->getBundlePrefix(), $this->getResourceName(), $action);
+            if($securityContext->isGranted($roleName)){
+                $actions[] = $value;
+            }
+        }
+        return $actions;
     }
 
     public function getParameters()

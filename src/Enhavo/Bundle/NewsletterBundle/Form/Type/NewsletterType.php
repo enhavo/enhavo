@@ -8,6 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class NewsletterType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    protected $securityContext;
+
+    public function __construct($securityContext, $dataClass)
+    {
+        $this->securityContext = $securityContext;
+        $this->dataClass = $dataClass;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,6 +38,16 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ) );
 
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
+            $entityName = array();
+            $entityName[0] = $this->dataClass;
+
+            $builder->add('workflow_status', 'enhavo_workflow_status', array(
+                'label' => 'workflow.form.label.next_state',
+                'translation_domain' => 'EnhavoWorkflowBundle',
+                'attr' => $entityName
+            ));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -50,6 +50,7 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\ContentBundle\EnhavoContentBundle(),
             new Enhavo\Bundle\DashboardBundle\EnhavoDashboardBundle(),
             new Enhavo\Bundle\ContactBundle\EnhavoContactBundle(),
+            new Enhavo\Bundle\WorkflowBundle\EnhavoWorkflowBundle(),
             new Enhavo\Bundle\MigrationBundle\EnhavoMigrationBundle(),
             new Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle()
         );

@@ -13,7 +13,9 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\AppBundle\Viewer\CreateViewer;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -31,17 +33,13 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
+        /** @var CreateViewer $viewer */
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
 
-        $parameters = $viewer->getParameters();
-        if (isset($parameters['sorting'])) {
-            $sortingConfig = $parameters['sorting'];
-        } else {
-            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route create: expected field "sorting" in viewer->getParameters()');
-        }
+        $sortingConfig = $viewer->getSorting();
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -87,11 +85,17 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
+        $roleUtil = new RoleUtil();
+        $roleName = $roleUtil->getRoleName($resource, RoleUtil::ACTION_UPDATE);
+        if(!$this->isGranted($roleName, $resource)) {
+            return new JsonResponse(null, 403);
+        }
         $form = $this->getForm($resource);
         $method = $request->getMethod();
 
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+                $this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
                 $this->domainManager->update($resource);
                 $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
                 return new Response();
@@ -125,7 +129,13 @@ class ResourceController extends BaseController
 
         $viewer->dispatchEvent('');
 
-        return $this->render($viewer->getTemplate(), $viewer->getParameters());
+        $view = $this
+            ->view()
+            ->setTemplate($viewer->getTemplate())
+            ->setData($viewer->getParameters())
+        ;
+
+        return $this->handleView($view);
     }
 
     public function previewAction(Request $request)
@@ -226,6 +236,8 @@ class ResourceController extends BaseController
     public function deleteAction(Request $request)
     {
         $this->isGrantedOr403('delete');
+        $resource = $this->findOr404($request);
+        $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
         $this->domainManager->delete($this->findOr404($request));
         return new Response();
     }

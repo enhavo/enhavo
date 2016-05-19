@@ -7,3 +7,7 @@ Enhavo\Bundle\PageBundle\Entity\Page:
         grid:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
+
+        workflow_status:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus

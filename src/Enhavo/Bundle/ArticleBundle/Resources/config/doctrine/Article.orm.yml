@@ -17,3 +17,11 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         grid:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
+
+        workflow_status:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]

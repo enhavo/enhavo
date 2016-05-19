@@ -29,6 +29,11 @@ class Article extends Content
     protected $grid;
 
     /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    private $workflow_status;
+
+    /**
      * Set picture
      *
      * @param $picture \Enhavo\Bundle\MediaBundle\Entity\File|null
@@ -95,5 +100,29 @@ class Article extends Content
     public function getGrid()
     {
         return $this->grid;
+    }
+
+    /**
+     * Set workflowStatus
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     *
+     * @return Article
+     */
+    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    {
+        $this->workflow_status = $workflowStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get workflowStatus
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    public function getWorkflowStatus()
+    {
+        return $this->workflow_status;
     }
 }

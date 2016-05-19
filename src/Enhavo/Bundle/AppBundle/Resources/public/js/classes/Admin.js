@@ -201,18 +201,21 @@ function Admin (router, templating, translator)
     });
   };
 
-  this.overlayMessage = function(content, type)
-  {
+  this.overlayMessage = function(content, type) {
     var overlayTimeout = null;
     clearTimeout(overlayTimeout);
-    if(!type) {
+    if (!type) {
       type = MessageType.Info;
     }
 
+    if(overlayMessage == null) {
+      overlayMessage = $("#overlayMessage");
+    }
     overlayMessage.removeClass(MessageType.Info);
     overlayMessage.removeClass(MessageType.Error);
     overlayMessage.removeClass(MessageType.Success);
     overlayMessage.addClass(type);
+
 
     overlayMessage.html(content).stop().fadeIn(150,function() {
       overlayTimeout = setTimeout(function() {
@@ -321,8 +324,10 @@ function Admin (router, templating, translator)
         block.on('click', '[data-id]', function() {
           var id = $(this).data('id');
           var route = block.data('block-update-route');
-          var url = router.generate(route, {id: id});
-          self.ajaxOverlay(url);
+          if(route != undefined){
+            var url = router.generate(route, {id: id});
+            self.ajaxOverlay(url);
+          }
         });
 
         self.initSortable(block);

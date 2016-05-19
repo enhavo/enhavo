@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class ArticleType extends AbstractType
 {
@@ -23,11 +24,17 @@ class ArticleType extends AbstractType
      */
     protected $routingStrategy;
 
-    public function __construct($dataClass, $routingStrategy, $route)
+    /**
+     * @var SecurityContext
+     */
+    protected $securityContext;
+
+    public function __construct($dataClass, $routingStrategy, $route, $securityContext)
     {
         $this->dataClass = $dataClass;
         $this->route = $route;
         $this->routingStrategy = $routingStrategy;
+        $this->securityContext = $securityContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -47,6 +54,19 @@ class ArticleType extends AbstractType
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));
+
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
+            $entityName = array();
+            $entityName[0] = $this->dataClass;
+
+            $builder->add('workflow_status', 'enhavo_workflow_status', array(
+                'label' => 'workflow.form.label.next_state',
+                'translation_domain' => 'EnhavoWorkflowBundle',
+                'attr' => $entityName
+            ));
+        }
+
+        $builder->add('content', 'enhavo_grid');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
