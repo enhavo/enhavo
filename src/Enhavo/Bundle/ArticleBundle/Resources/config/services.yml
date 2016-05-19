@@ -1,7 +1,3 @@
-parameters:
-    enhavo_article.article_resolver.class: Enhavo\Bundle\ArticleBundle\Service\ArticleResolver
-    enhavo_article.article.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
-
 services:
     enhavo_article_article:
         class: %enhavo_article.form.type.article.class%

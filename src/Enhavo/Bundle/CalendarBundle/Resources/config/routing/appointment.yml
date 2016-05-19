@@ -1,7 +1,7 @@
 enhavo_calendar_appointment_index:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/index
+    path: /enhavo/calendar/appointment/index
     methods: [GET]
     defaults:
         _controller: enhavo_calendar.controller.appointment:indexAction
@@ -14,7 +14,7 @@ enhavo_calendar_appointment_index:
 enhavo_calendar_appointment_create:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/create
+    path: /enhavo/calendar/appointment/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_calendar.controller.appointment:createAction
@@ -29,11 +29,14 @@ enhavo_calendar_appointment_create:
                 content:
                     label: appointment.label.content
                     template: EnhavoCalendarBundle:Tab:content.html.twig
+                seo:
+                    label: appointment.label.seo
+                    template: EnhavoCalendarBundle:Tab:seo.html.twig
 
 enhavo_calendar_appointment_update:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/update/{id}
+    path: /enhavo/calendar/appointment/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_calendar.controller.appointment:updateAction
@@ -48,11 +51,14 @@ enhavo_calendar_appointment_update:
                 content:
                     label: appointment.label.content
                     template: EnhavoCalendarBundle:Tab:content.html.twig
+                seo:
+                    label: appointment.label.seo
+                    template: EnhavoCalendarBundle:Tab:seo.html.twig
 
 enhavo_calendar_appointment_table:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/table/{page}
+    path: /enhavo/calendar/appointment/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -78,10 +84,11 @@ enhavo_calendar_appointment_table:
                             type: template
                             template: EnhavoAppBundle:Widget:date.html.twig
                         width: 5
+
 enhavo_calendar_appointment_delete:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/delete/{id}
+    path: /enhavo/calendar/appointment/delete/{id}
     methods: [DELETE]
     defaults:
         _controller: enhavo_calendar.controller.appointment:deleteAction
@@ -97,7 +104,7 @@ enhavo_calendar_appointment_batch:
 enhavo_calendar_appointment_preview:
     options:
         expose: true
-    path: /admin/enhavo/calendar/appointment/preview
+    path: /enhavo/calendar/appointment/preview
     methods: [POST]
     defaults:
         _controller: enhavo_calendar.controller.appointment:previewAction

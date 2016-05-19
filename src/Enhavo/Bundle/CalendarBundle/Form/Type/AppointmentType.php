@@ -17,11 +17,6 @@ class AppointmentType extends AbstractType
     protected $dataClass;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
      * @var string
      */
     protected $route;
@@ -29,48 +24,17 @@ class AppointmentType extends AbstractType
     /**
      * @var bool
      */
-    protected $dynamicRouting;
+    protected $routingStrategy;
 
-    public function __construct($dataClass, $dynamicRouting, $route, RouterInterface $router)
+    public function __construct($dataClass, $routingStrategy, $route)
     {
-        $this->route = $route;
         $this->dataClass = $dataClass;
-        $this->router = $router;
-        $this->dynamicRouting = $dynamicRouting;
+        $this->route = $route;
+        $this->routingStrategy = $routingStrategy;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $router = $this->router;
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($router) {
-            $article = $event->getData();
-            $form = $event->getForm();
-
-            if (!empty($article) && $article->getId() && !empty($route)) {
-                $url = $router->generate($this->route, array(
-                    'id' => $article->getId(),
-                    'slug' => $article->getSlug(),
-                ), true);
-
-                $form->add('link', 'text', array(
-                    'mapped' => false,
-                    'data' => $url,
-                    'disabled' => true
-                ));
-            }
-        });
-
-        if($this->dynamicRouting) {
-            $builder->add('route', 'enhavo_route');
-        }
-
-        $builder->add('title', 'text', array(
-            'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
-        ));
-
-        $builder->add('slug', 'hidden');
-
         $builder->add('teaser', 'textarea', array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle'
@@ -96,14 +60,24 @@ class AppointmentType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('grid', 'enhavo_grid');
+        $builder->add('grid', 'enhavo_grid', array(
+            'label' => 'form.label.content',
+            'translation_domain' => 'EnhavoAppBundle',
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
-            'data_class' => $this->dataClass
+            'data_class' => $this->dataClass,
+            'routing_strategy' => $this->routingStrategy,
+            'routing_route' => $this->route
         ));
+    }
+
+    public function getParent()
+    {
+        return 'enhavo_content_content';
     }
 
     public function getName()

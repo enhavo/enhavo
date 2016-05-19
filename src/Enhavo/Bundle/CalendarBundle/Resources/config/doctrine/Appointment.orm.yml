@@ -1,35 +1,17 @@
 Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     type: entity
     table: calendar_appointment
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
     fields:
-        title:
-            type: string
-            length: 255
         teaser:
             type: string
             length: 255
             nullable: true
         dateFrom:
             type: datetime
+            nullable: true
         dateTo:
             type: datetime
             nullable: true
-        slug:
-            type: string
-            length: 255
-            nullable: true
-            gedmo:
-                slug:
-                    separator: -
-                    updatable: false
-                    style: default
-                    fields: ['title']
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
