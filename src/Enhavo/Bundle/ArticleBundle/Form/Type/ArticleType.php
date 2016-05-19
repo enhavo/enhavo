@@ -65,8 +65,6 @@ class ArticleType extends AbstractType
                 'attr' => $entityName
             ));
         }
-
-        $builder->add('content', 'enhavo_grid');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

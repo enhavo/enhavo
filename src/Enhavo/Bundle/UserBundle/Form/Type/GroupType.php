@@ -34,13 +34,13 @@ class GroupType extends AbstractType
             'translation_domain' => 'EnhavoUserBundle'
 
         ));
+
         $builder->add('roles', 'choice', array(
             'label' => 'group.form.label.roles',
             'translation_domain' => 'EnhavoUserBundle',
             'choices' => $this->roles,
             'multiple' => true,
-            'expanded' => true,
-            'attr' => array('class' => 'category-list')
+            'expanded' => true
         ));
     }
 

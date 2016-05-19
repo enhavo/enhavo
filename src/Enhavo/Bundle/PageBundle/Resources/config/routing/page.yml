@@ -33,7 +33,7 @@ enhavo_page_page_create:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_page_preview
+                    route: enhavo_page_page_preview
                     label: label.preview
                     icon: icon-eye
 
@@ -90,19 +90,19 @@ enhavo_page_page_table:
             type: table
             table:
                 batch:
-                    actions:
-                        delete:
-                            label: table.batch.action.delete
-                            confirm_message: table.batch.message.confirm.delete
-                            translation_domain: EnhavoAppBundle
-                            permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
-                            position: 0
-                        publish:
-                            label: page.batch.action.publish
-                            confirm_message: page.batch.message.confirm.publish
-                            translation_domain: EnhavoPageBundle
-                            permission: ROLE_ENHAVO_PAGE_PAGE_EDIT
-                            position: 1
+#                    actions:
+#                        delete:
+#                            label: table.batch.action.delete
+#                            confirm_message: table.batch.message.confirm.delete
+#                            translation_domain: EnhavoAppBundle
+#                            permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
+#                            position: 0
+#                        publish:
+#                            label: page.batch.action.publish
+#                            confirm_message: page.batch.message.confirm.publish
+#                            translation_domain: EnhavoPageBundle
+#                            permission: ROLE_ENHAVO_PAGE_PAGE_EDIT
+#                            position: 1
                 columns:
                     id:
                         label: page.label.id
