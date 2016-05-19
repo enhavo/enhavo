@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\WorkflowBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class Label extends \Twig_Extension {
     /**

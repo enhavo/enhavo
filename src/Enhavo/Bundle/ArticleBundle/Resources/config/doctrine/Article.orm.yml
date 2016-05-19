@@ -21,7 +21,3 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         workflow_status:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
-
-    lifecycleCallbacks:
-        prePersist: [ prePersist ]
-        preUpdate: [ preUpdate ]

@@ -28,6 +28,7 @@ class TableViewer extends AbstractViewer
                 ),
                 'batch' => array(
                     'actions' => array(
+                        /*
                         'delete' => array(
                             'label'                 => 'table.batch.action.delete',
                             'confirm_message'       => 'table.batch.message.confirm.delete',
@@ -35,6 +36,7 @@ class TableViewer extends AbstractViewer
                             'permission'            => sprintf('ROLE_%s_%s_DELETE', strtoupper($this->getBundlePrefix()), strtoupper($this->getResourceName())),
                             'position'              => 0
                         )
+                        */
                     ),
                     'route' => sprintf('%s_%s_batch', $this->getBundlePrefix(), $this->getResourceName())
                 )

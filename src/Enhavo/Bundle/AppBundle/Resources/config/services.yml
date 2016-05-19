@@ -140,3 +140,8 @@ services:
         arguments:
             - @router
             - @enhavo_app.route_guesser
+
+    security.authentication.voter.super_admin:
+        class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
+        tags:
+            - { name: security.voter }
