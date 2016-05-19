@@ -2,14 +2,14 @@
  * Created by gseidel on 30/08/14.
  */
 
-function ContentForm(router)
+function GridForm(router)
 {
   var self = this;
 
-  this.initContentForm = function(form) {
-    $(form).find('.enhavo_contentForm').each(function() {
+  this.initGridForm = function(form) {
+    $(form).find('.enhavo_gridForm').each(function() {
 
-      var contentForm = $(this);
+      var gridForm = $(this);
       var menu = $(this).find('.menu');
       var container = $(this).find('.item-container');
       var addButton = null;
@@ -37,13 +37,13 @@ function ContentForm(router)
             data = $.parseHTML(data);
 
             if(position == 'top') {
-              contentForm.find('.item-container').prepend(data);
+              gridForm.find('.item-container').prepend(data);
             }
             if (position == 'bottom') {
               container.append(data);
             }
 
-            $(document).trigger('contentAddAfter', [data]);
+            $(document).trigger('gridAddAfter', [data]);
 
             setOrderForContainer(container);
           },
@@ -63,7 +63,7 @@ function ContentForm(router)
         setOrderForContainer(container);
       };
 
-      contentForm.on('click', '.add-content-button', function() {
+      gridForm.on('click', '.add-grid-button', function() {
 
         if(!menu.is(':visible')) {
           var position = $(this).position();
@@ -71,7 +71,7 @@ function ContentForm(router)
           var data = $.parseHTML(data);
 
           if(position == 'top') {
-            contentForm.find('.item-container').prepend(data);
+            gridForm.find('.item-container').prepend(data);
           }
           if (position == 'bottom') {
             container.append(data);
@@ -100,13 +100,13 @@ function ContentForm(router)
 
       });
 
-      contentForm.on('click', '.addItem', function() {
+      gridForm.on('click', '.addItem', function() {
         var itemName = $(this).attr('data-item');
         menu.hide();
         addItem(itemName);
       });
 
-      contentForm.on('click', '.button-up', function() {
+      gridForm.on('click', '.button-up', function() {
         var item = $(this).parent().parent();
         var container = item.parent();
         var index = container.children().index(item);
@@ -125,7 +125,7 @@ function ContentForm(router)
         setOrderForContainer(container);
       });
 
-      contentForm.on('click', '.button-down', function() {
+      gridForm.on('click', '.button-down', function() {
         var item = $(this).parent().parent();
         var container = item.parent();
         var index = container.children().index(item);
@@ -145,7 +145,7 @@ function ContentForm(router)
         setOrderForContainer(container)
       });
 
-      contentForm.on('click', '.button-delete', function() {
+      gridForm.on('click', '.button-delete', function() {
         var item = $(this).parent().parent();
         var container = item.parent();
         item.remove();
@@ -158,17 +158,17 @@ function ContentForm(router)
 
   var init = function() {
     $(document).on('formOpenAfter', function(event, form) {
-      self.initContentForm(form);
+      self.initGridForm(form);
     });
   };
 
   init();
 }
 
-var contentForm = new ContentForm(Routing);
+var gridForm = new GridForm(Routing);
 
 $(function() {
-  $(document).on('contentAddAfter', function(event, data) {
+  $(document).on('gridAddAfter', function(event, data) {
     uploadForm.initUploadForm(data);
     form.initWysiwyg(data);
     form.initRadioAndCheckbox(data);

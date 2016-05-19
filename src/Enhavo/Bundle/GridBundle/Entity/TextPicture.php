@@ -124,7 +124,7 @@ class TextPicture implements ItemTypeInterface
      * Set file
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File $files
-     * @return Content
+     * @return Grid
      */
     public function setFile($file)
     {

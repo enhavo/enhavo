@@ -1,6 +1,6 @@
 <?php
 /**
- * ContentController.php
+ * GridController.php
  *
  * @since 23/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 
-class ContentController extends Controller
+class GridController extends Controller
 {
     public function itemAction(Request $request)
     {

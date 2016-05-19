@@ -1,20 +1,10 @@
-parameters:
-    enhavo_article.article_resolver.class: Enhavo\Bundle\ArticleBundle\Service\ArticleResolver
-    enhavo_article.article.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
-
 services:
     enhavo_article_article:
         class: %enhavo_article.form.type.article.class%
         arguments:
             - %enhavo_article.model.article.class%
-            - %enhavo_article.dynamic_routing%
-            - %enhavo_article.article_route%
-            - @router
+            - %enhavo_article.routing.article.strategy%
+            - %enhavo_article.routing.article.route%
             - @security.context
         tags:
             - { name: form.type }
-
-    enhavo_article.article_resolver:
-        class: %enhavo_article.article_resolver.class%
-        arguments:
-            - @service_container

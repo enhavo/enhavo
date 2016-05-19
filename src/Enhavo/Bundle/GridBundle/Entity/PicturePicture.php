@@ -60,7 +60,7 @@ class PicturePicture implements ItemTypeInterface
      * Set fileLeft
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $fileLeft
-     * @return Content
+     * @return Grid
      */
     public function setFileLeft($fileLeft)
     {
@@ -83,7 +83,7 @@ class PicturePicture implements ItemTypeInterface
      * Set fileRight
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File $fileRight
-     * @return Content
+     * @return Grid
      */
     public function setFileRight($fileRight)
     {

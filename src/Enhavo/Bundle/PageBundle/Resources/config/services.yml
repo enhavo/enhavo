@@ -7,23 +7,8 @@ services:
         class: %enhavo_page.form.type.page.class%
         arguments:
             - %enhavo_page.model.page.class%
-            - %enhavo_page.dynamic_routing%
-            - %enhavo_page.page_route%
-            - @router
+            - %enhavo_page.routing.page.strategy%
+            - %enhavo_page.routing.page.route%
             - @security.context
         tags:
             - { name: form.type }
-
-    enhavo_page.page_resolver:
-        class: %enhavo_page.page_resolver.class%
-        arguments:
-            - @service_container
-
-    enhavo_page.page.route_content_loader:
-        class: %enhavo_page.page.route_content_loader.class%
-        arguments:
-            - 'enhavo_page.page'
-            - %enhavo_page.model.page.class%
-            - 'enhavo_page.repository.page'
-        tags:
-            - { name: enhavo_route_content_loader }

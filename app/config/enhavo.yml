@@ -1,13 +1,11 @@
 cmf_routing:
-# Use this settings if you want to provide some dynamic routing features
-#    dynamic:
-#        controllers_by_class:
-#            Enhavo\Bundle\ArticleBundle\Entity\Article: EnhavoAppBundle:App:show
-#            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:App:show
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:Routing:show
 
 enhavo_app:
     permission_check: false
-    dynamic_routing: false
+    dynamic_routing: true
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
       - '@EnhavoGridBundle/Resources/public/css/style.css'
@@ -97,7 +95,6 @@ enhavo_grid:
     render:
         sets:
             default:
-#                picture: enhavoProjectBundle:ItemType:picture.html.twig
 
     items:
         picture:
@@ -178,7 +175,7 @@ enhavo_contact:
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
-        subject: Kontaktformular
+        subject: Contactform
         send_to_sender: true
 
 enhavo_workflow:

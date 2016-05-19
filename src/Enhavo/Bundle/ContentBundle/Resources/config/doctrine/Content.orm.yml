@@ -1,0 +1,71 @@
+Enhavo\Bundle\ContentBundle\Entity\Content:
+    type: mappedSuperclass
+    repositoryClass: Enhavo\Bundle\ContentBundle\Repository\ContentRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        slug:
+            type: string
+            length: 255
+            nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['title']
+
+        metaDescription:
+            type: text
+            nullable: true
+
+        pageTitle:
+            type: text
+            nullable: true
+
+        publicationDate:
+            type: datetime
+            nullable: true
+
+        priority:
+            type: float
+            nullable: true
+
+        changeFrequency:
+            type: string
+            length: 255
+            nullable: true
+
+        public:
+            type: boolean
+            nullable: true
+
+        created:
+            type: datetime
+            nullable: false
+            gedmo:
+                timestampable:
+                    on: create
+
+        updated:
+            type: datetime
+            nullable: false
+            gedmo:
+                timestampable:
+                    on: update
+
+    manyToOne:
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\AppBundle\Entity\Route

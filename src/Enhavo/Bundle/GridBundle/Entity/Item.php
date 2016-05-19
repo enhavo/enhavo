@@ -21,9 +21,9 @@ class Item
     protected $order;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    protected $content;
+    protected $grid;
 
     /**
      * @var string
@@ -129,26 +129,26 @@ class Item
     }
 
     /**
-     * Set content
+     * Set grid
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
+     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
      * @return Item
      */
-    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
+    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
     {
-        $this->content = $content;
+        $this->grid = $grid;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get grid
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    public function getContent()
+    public function getGrid()
     {
-        return $this->content;
+        return $this->grid;
     }
 
     /**

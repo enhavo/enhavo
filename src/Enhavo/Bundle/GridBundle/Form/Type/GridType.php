@@ -1,6 +1,6 @@
 <?php
 /**
- * ContentType.php
+ * GridType.php
  *
  * @since 23/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
@@ -16,7 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-class ContentType extends AbstractType
+class GridType extends AbstractType
 {
     /**
      * @var ObjectManager
@@ -70,7 +70,7 @@ class ContentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Content',
+            'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Grid',
             'items' => array()
         ));
     }

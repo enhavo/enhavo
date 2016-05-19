@@ -97,14 +97,13 @@ liip_imagine:
                 thumbnail: { size: [300, 110], mode: outbound }
 
 cmf_routing:
-# Use this settings if you want to provide some dynamic routing features
-#    chain:
-#        routers_by_id:
-#            router.default: 200
-#            cmf_routing.dynamic_router: 100
-#    dynamic:
-#        enabled: true
-#        route_provider_service_id: enhavo_app.route_provider
+    chain:
+        routers_by_id:
+            router.default: 200
+            cmf_routing.dynamic_router: 100
+    dynamic:
+        enabled: true
+        route_provider_service_id: enhavo_app.route_provider
 
 parameters:
     pdo.db_options:
@@ -133,4 +132,5 @@ stof_doctrine_extensions:
     orm:
         default:
             tree: true
-            sluggable: true # not needed: listeners are not enabled by default
+            sluggable: true
+            timestampable: true

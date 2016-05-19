@@ -88,7 +88,7 @@ class Picture implements ItemTypeInterface
      * Set file
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
-     * @return Content
+     * @return Grid
      */
     public function setFile($file)
     {

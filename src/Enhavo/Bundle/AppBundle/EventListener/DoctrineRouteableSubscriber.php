@@ -10,10 +10,11 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\RouteContentResolver;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 
-class DoctrineRouteContentSubscriber implements EventSubscriber
+class DoctrineRouteableSubscriber implements EventSubscriber
 {
     /**
      * @var RouteContentResolver
@@ -39,8 +40,7 @@ class DoctrineRouteContentSubscriber implements EventSubscriber
     {
         return array(
             'postPersist',
-            'preUpdate',
-            'postLoad'
+            'postUpdate'
         );
     }
 
@@ -48,28 +48,19 @@ class DoctrineRouteContentSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        /**
-         * We temporary save the content object and
-         * route to wait until the content is persist
-         * and have an id. Then we can save the id
-         * inside the route
-         */
-        if ($entity instanceof Route) {
-            $this->route = $entity;
-            $this->content = $entity->getContent();
-        }
-
-        if($this->content === $entity) {
-            $this->updateRoute($this->route);
+        if ($entity instanceof Routeable && $entity->getRoute() != null) {
+            $this->updateRoute($entity->getRoute());
             $args->getEntityManager()->flush();
         }
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if ($entity instanceof Route) {
-            $this->updateRoute($entity);
+
+        if ($entity instanceof Routeable && $entity->getRoute() != null) {
+            $this->updateRoute($entity->getRoute());
+            $args->getEntityManager()->flush();
         }
     }
 
@@ -79,17 +70,5 @@ class DoctrineRouteContentSubscriber implements EventSubscriber
         $route->setTypeId($content->getId());
         $route->setType($this->resolver->getType($content));
         $route->setName(sprintf('dynamic_route_%s', $route->getId()));
-    }
-
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        if ($entity instanceof Route) {
-            $repository = $this->resolver->getRepository($entity->getType());
-            if(!empty($repository)) {
-                $content = $repository->find($entity->getTypeId());
-                $entity->setContent($content);
-            }
-        }
     }
 }

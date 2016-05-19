@@ -24,8 +24,8 @@ class EnhavoPageExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_page', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter( 'enhavo_page.page_route', $config['page_route']);
-        $container->setParameter( 'enhavo_page.dynamic_routing', $config['dynamic_routing']);
+        $container->setParameter('enhavo_page.routing.page.strategy', $config['resources']['page']['routing']['strategy']);
+        $container->setParameter('enhavo_page.routing.page.route', $config['resources']['page']['routing']['route']);
 
         $configFiles = array(
             'services.yml',

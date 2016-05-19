@@ -1,6 +1,7 @@
 security:
-    access_decision_manager:
-        strategy: unanimous
+#    access_decision_manager:
+#        strategy: unanimous
+
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
         FOS\UserBundle\Model\UserInterface: sha512

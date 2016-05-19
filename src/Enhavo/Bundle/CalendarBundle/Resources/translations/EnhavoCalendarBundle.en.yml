@@ -9,5 +9,6 @@ appointment:
     id: 'ID'
     title: 'Title'
     date: 'Date'
+    seo: 'Seo'
 label:
   calendar: 'Calendar'

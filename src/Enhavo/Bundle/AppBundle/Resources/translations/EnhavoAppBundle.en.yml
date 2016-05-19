@@ -15,6 +15,7 @@ form:
     slug: 'Slug'
     picture: 'Picture'
     text: 'Text'
+    content: 'Content'
 label:
   logout: 'Logout'
   id: 'ID'
@@ -26,6 +27,7 @@ label:
   yes: 'Yes'
   no: 'No'
   title: 'Title'
+  url: 'URL'
   upload: 'Upload data'
   changePassword: 'Change password'
   goToPage: 'Go to Page'
