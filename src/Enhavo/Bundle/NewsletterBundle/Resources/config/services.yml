@@ -17,6 +17,9 @@ services:
 
     enhavo_newsletter_newsletter:
         class: %enhavo_newsletter.form.type.newsletter.class%
+        arguments:
+            - @security.context
+            - %enhavo_newsletter.model.newsletter.class%
         tags:
             - { name: form.type }
 

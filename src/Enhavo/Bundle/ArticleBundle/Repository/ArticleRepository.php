@@ -186,4 +186,12 @@ class ArticleRepository extends EntityRepository
             return $nextArticle[0];
         }
     }
+
+    public function getEmptyWorkflowStatus()
+    {
+        $query = $this->createQueryBuilder('n');
+        $query->where('n.workflow_status IS NULL');
+        return $query->getQuery()->getResult();
+    }
+
 }

@@ -93,6 +93,11 @@ class Article {
     protected $social_media;
 
     /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    private $workflow_status;
+
+    /**
      * Get id
      *
      * @return integer
@@ -462,5 +467,29 @@ class Article {
     public function setRoute($route)
     {
         $this->route = $route;
+    }
+
+    /**
+     * Set workflowStatus
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     *
+     * @return Article
+     */
+    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    {
+        $this->workflow_status = $workflowStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get workflowStatus
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    public function getWorkflowStatus()
+    {
+        return $this->workflow_status;
     }
 }

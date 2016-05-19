@@ -86,7 +86,13 @@ enhavo_article_article_table:
                     title:
                         label: article.label.title
                         property: title
-                        width: 11
+                        width: 9
+                    workflow_status:
+                        label: article.label.assigned
+                        property: workflowStatus
+                        width: 2
+                        widget:
+                            type: workflow_assigned
 
 enhavo_article_article_delete:
     options:

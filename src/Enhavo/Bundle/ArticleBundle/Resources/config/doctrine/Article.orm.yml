@@ -80,6 +80,9 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+        workflow_status:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
 
     lifecycleCallbacks:
         prePersist: [ prePersist ]

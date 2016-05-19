@@ -31,12 +31,15 @@ class ArticleType extends AbstractType
      */
     protected $dynamicRouting;
 
-    public function __construct($dataClass, $dynamicRouting, $route, RouterInterface $router)
+    protected $securityContext;
+
+    public function __construct($dataClass, $dynamicRouting, $route, RouterInterface $router, $securityContext)
     {
         $this->route = $route;
         $this->dataClass = $dataClass;
         $this->router = $router;
         $this->dynamicRouting = $dynamicRouting;
+        $this->securityContext = $securityContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -146,6 +149,19 @@ class ArticleType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false
         ));
+
+
+
+        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
+            $entityName = array();
+            $entityName[0] = $this->dataClass;
+
+            $builder->add('workflow_status', 'enhavo_workflow_status', array(
+                'label' => 'workflow.form.label.next_state',
+                'translation_domain' => 'EnhavoWorkflowBundle',
+                'attr' => $entityName
+            ));
+        }
 
         $builder->add('content', 'enhavo_grid');
     }

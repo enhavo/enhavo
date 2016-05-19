@@ -1,0 +1,6 @@
+Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
+    properties:
+        workflow_name:
+            - NotBlank: ~
+    constraints:
+        - Enhavo\Bundle\WorkflowBundle\Validator\Constraints\Workflow: ~

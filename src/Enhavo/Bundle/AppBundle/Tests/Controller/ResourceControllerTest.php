@@ -48,6 +48,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $mock->method('get')->will($this->returnCallback([$this, 'getContainerCallback']));
+        $mock->method('has')->willReturn(true);
         return $mock;
     }
 
@@ -111,6 +112,16 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         return $mock;
     }
 
+    protected function getAuthorizationCheckerMock()
+    {
+        $mock = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->method('isGranted')->willReturn(true);
+        return $mock;
+    }
+
     public function getContainerCallback($service)
     {
         if($service === 'router') {
@@ -151,6 +162,9 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         }
         if($service === 'enhavo_app.preview.strategy_resolver') {
             return $this->getStrategyResolverMock();
+        }
+        if($service === 'security.authorization_checker') {
+            return $this->getAuthorizationCheckerMock();
         }
 
         return null;

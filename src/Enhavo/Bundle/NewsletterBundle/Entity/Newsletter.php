@@ -137,4 +137,33 @@ class Newsletter
     {
         return $this->sent;
     }
+    /**
+     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    private $workflow_status;
+
+
+    /**
+     * Set workflowStatus
+     *
+     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     *
+     * @return Newsletter
+     */
+    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    {
+        $this->workflow_status = $workflowStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get workflowStatus
+     *
+     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     */
+    public function getWorkflowStatus()
+    {
+        return $this->workflow_status;
+    }
 }

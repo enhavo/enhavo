@@ -61,7 +61,7 @@ enhavo_user_group_delete:
     options:
         expose: true
     path: /enhavo/user/group/delete/{id}
-    methods: [POST]
+    methods: [POST, DELETE]
     defaults:
         _controller: enhavo_user.controller.group:deleteAction
 

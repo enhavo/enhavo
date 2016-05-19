@@ -3,7 +3,7 @@
 {% trans_default_domain "EnhavoAppBundle" %}
 
 {% block content %}
-    <form method="POST" action="{{ form_action }}" data-delete="{{ form_delete }}" data-id="{{ data.id }}">
+    <form method="POST" action="{{ form_action }}" {% if form_delete %}data-delete="{{ form_delete }}"{% endif %} data-id="{{ data.id }}">
         {% block form %}
             {% include form_template %}
         {% endblock %}
