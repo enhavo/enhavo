@@ -19,7 +19,6 @@ function User(admin)
                 url: action,
                 success: function (response) {
                     admin.closeLoadingOverlay();
-                    console.log(response);
                     admin.overlayClose();
                 },
                 error: function (jqXHR) {
