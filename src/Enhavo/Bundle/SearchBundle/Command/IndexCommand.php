@@ -7,12 +7,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class IndexingCommand extends ContainerAwareCommand
+class IndexCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('indexing:run')
+            ->setName('enhavo:search:index')
             ->setDescription('Runs search indexing')
         ;
     }
@@ -20,7 +20,7 @@ class IndexingCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $indexEngine = $this->getContainer()->get('enhavo_search_index_engine');
-        $indexEngine->indexAll();
+        $indexEngine->reindex();
 
         $output->writeln('Indexing finished');
     }

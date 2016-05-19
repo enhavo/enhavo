@@ -2,10 +2,11 @@
 
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
+use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class SearchController extends Controller
 {
     //Happens when someone pressed the submit button of the search field.
     public function submitAction(Request $request)
@@ -16,25 +17,22 @@ class DefaultController extends Controller
         // check if there are any keywords entered
         if(!empty($searchExpression)) {
 
-            $searchEngine = $this->get('enhavo_search_search_engine');
-            //if there are keywords
-            $searchEngine->parseSearchExpression($searchExpression);
-
-            //go on if there are not to many AND/OR expressions
-            if (!$searchEngine->toManyExpressions) {
-
-                $results = $searchEngine->search();
-                if ($results) {
-
-                    //return results
+            try {
+                $searchEngine = $this->get('enhavo_search_search_engine');
+                $result = $searchEngine->search($searchExpression);
+                if(empty($result)) {
                     return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                        'data' => $results
+                        'data' => 'No results'
                     ));
                 }
-            } else {
-                //To many AND/OR expressions
+
                 return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                    'data' => 'There are to many AND/OR expressions!'
+                    'data' => $result
+                ));
+
+            } catch(SearchEngineException $e) {
+                return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                    'data' => $e->getMessage()
                 ));
             }
         } else {
@@ -44,8 +42,6 @@ class DefaultController extends Controller
             ));
         }
 
-        return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-            'data' => 'No results'
-        ));
+
     }
 }

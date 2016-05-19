@@ -4,7 +4,10 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             - Plain:
                 weight: 10
                 type: title
-
+        teaser:
+            - Plain:
+                weight: 8
+                type: teaser
         text:
             - Html:
                 type: text

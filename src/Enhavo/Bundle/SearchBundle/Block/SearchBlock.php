@@ -16,6 +16,10 @@ class SearchBlock implements BlockInterface
 
     public function render($parameters)
     {
+        if(!is_array($parameters))
+        {
+            $parameters = array();
+        }
         return $this->engine->render('EnhavoSearchBundle:Block:search.html.twig', $parameters);
     }
 }

@@ -13,7 +13,13 @@ class AppViewer extends AbstractViewer
 {
     public function getBlocks()
     {
-        return $this->getConfig()->get('blocks');
+        $blocks = $this->getConfig()->get('blocks');
+        foreach($blocks as &$block) {
+            if(!array_key_exists('parameters', $block)) {
+                $block['parameters'] = null;
+            }
+        }
+        return $blocks;
     }
 
     public function getActions()

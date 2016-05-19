@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('search')
                     ->children()
                         ->scalarNode('template')->end()
+                        ->scalarNode('strategy')->end()
                     ->end()
                 ->end()
             ->end()
