@@ -34,6 +34,12 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->booleanNode('show_version')
+                    ->defaultTrue()
+                ->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
                 ->end()
