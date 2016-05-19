@@ -47,7 +47,7 @@ class WorkflowValidator extends ConstraintValidator
         }
         if($no_nodes) {
 
-            $this->context->buildViolation($translator->trans($constraint->noNodesCreated))
+            $this->context->buildViolation($translator->trans($constraint->noNodesCreated, array(), 'EnhavoWorkflowBundle'))
                 ->addViolation();
         }
     }
@@ -63,7 +63,7 @@ class WorkflowValidator extends ConstraintValidator
         if(count($nodesArray) == count($formNodes)){
             for($i = 0; $i < count($nodesArray); $i++){
                 if($nodesArray[$i] != $formNodes[$i]){
-                    $this->context->buildViolation($translator->trans($constraint->doNotDeleteWhenActive))
+                    $this->context->buildViolation($translator->trans($constraint->doNotDeleteWhenActive, array(), 'EnhavoWorkflowBundle'))
                         ->addViolation();
                     return;
                 }

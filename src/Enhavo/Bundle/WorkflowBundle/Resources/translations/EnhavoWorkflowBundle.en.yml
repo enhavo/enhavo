@@ -24,7 +24,6 @@ workflow:
   validator:
     error:
       nodes: 'You have not created any nodes.'
-      name: 'Please set a name for the workflow.'
       delete: 'Please set the workflow inactive before you change it.'
 node:
   form:

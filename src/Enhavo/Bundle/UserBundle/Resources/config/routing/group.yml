@@ -22,6 +22,10 @@ enhavo_user_group_create:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
+             tabs:
+                group:
+                  template: EnhavoUserBundle:Group:form.html.twig
+                  label: group.label.group
 
 enhavo_user_group_update:
     options:
@@ -34,6 +38,10 @@ enhavo_user_group_update:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
+             tabs:
+                group:
+                  template: EnhavoUserBundle:Group:form.html.twig
+                  label: group.label.group
 
 enhavo_user_group_table:
     options:

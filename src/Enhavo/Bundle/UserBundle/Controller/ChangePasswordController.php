@@ -47,21 +47,26 @@ class ChangePasswordController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-            $userManager = $this->get('fos_user.user_manager');
+        if($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+                $userManager = $this->get('fos_user.user_manager');
 
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
+                $event = new FormEvent($form, $request);
+                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
 
-            $userManager->updateUser($user);
+                $userManager->updateUser($user);
 
-            if (null === $response = $event->getResponse()) {
-                $response = new JsonResponse();
+                if (null === $response = $event->getResponse()) {
+                    $response = new JsonResponse();
+                }
+
+                return $response;
+            } else {
+                return new JsonResponse();
             }
-
-            return $response;
         }
+
 
         return $this->render('EnhavoUserBundle:User:password.html.twig', array(
             'form' => $form->createView()

@@ -24,7 +24,6 @@ workflow:
   validator:
     error:
       nodes: 'Es wurden noch keine Knoten erstellt.'
-      name: 'Bitte wählen Sie einen Namen für den Workflow.'
       delete: 'Bitte deaktiviered Sie den Workflow bevor Sie Änderungen vornehmen.'
 node:
   form:
