@@ -23,6 +23,11 @@ class WorkflowActiveVoter implements VoterInterface {
 
     public function supportsAttribute($attribute)
     {
+        // if the attribute isn't one we support, return false
+        if ($attribute != 'WORKFLOW_ACTIVE') {
+            return false;
+        }
+
         return true;
     }
 

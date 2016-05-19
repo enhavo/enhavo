@@ -22,8 +22,10 @@ class SuperAdminVoter  implements VoterInterface
 
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if($token->getUser() instanceof User && in_array('ROLE_SUPER_ADMIN', $token->getUser()->getRoles())) {
-            return self::ACCESS_GRANTED;
+        if(0 === strpos($attributes[0], 'ROLE_')){
+            if($token->getUser() instanceof User && in_array('ROLE_SUPER_ADMIN', $token->getUser()->getRoles())) {
+                return self::ACCESS_GRANTED;
+            }
         }
         return self::ACCESS_ABSTAIN;
     }
