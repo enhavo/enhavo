@@ -43,10 +43,10 @@ class ResetPasswordController extends ResettingController
             return $translator->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle');
         }
 
-        if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
-            return $translator->trans('reset.form.error.non-expired', [], 'EnhavoUserBundle');
-        }
+//        if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+//            $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
+//            return $translator->trans('reset.form.error.non-expired', [], 'EnhavoUserBundle');
+//        }
 
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());

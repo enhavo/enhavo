@@ -28,7 +28,9 @@ reset:
     action:
       reset-password: Passwort zurücksetzen
   label:
-    login: Login
+    login: Zur Anmeldung
+  message:
+    email: Die Email wurde vesendet.
 confirm:
   form:
     label:

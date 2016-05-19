@@ -53,13 +53,31 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #overlay {position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.8;z-index:99;display:none;}
 #overlayContent {position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:100;display:none;}
 #overlayContent .container {margin: 50px auto 0 auto;padding-top:10px;padding-bottom:10px;border-radius: 2px;}
-#overlayMessage {position:fixed;top:0;left:50%;width:30%;margin-left:-15%;padding:10px;color:#fff;opacity:0.9;z-index:1001;display:none;box-shadow:0px 0px 6px #333;}
+#overlayMessage {position: absolute;bottom: -42px;height: 42px;left: 0;width: 100%;margin-left: 0;border-radius: 0 0 2px 2px;padding: 10px;color: #fff;opacity: 1;z-index: 1001;display: none;text-align:center;box-shadow: 0px 0px 6px #333;}
+#overlayMessage div:before{content: '\e832';padding-right:7px;font-family: "enhavo_iconfont";display:inline-block;color:#FFF;}
 #overlayMessage.info {background:#0099dd;}
 #overlayMessage.success {background:#90dd66;}
 #overlayMessage.error {background:#dd6666;}
 
 /* LogIn Screen - New Design */
-#background{background: url(https://source.unsplash.com/category/nature/1200x900) no-repeat;-webkit-background-size: cover;background-size: cover;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+/*#background{background: url(https://source.unsplash.com/category/nature/1200x900) no-repeat;-webkit-background-size: cover;background-size: cover;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}*/
+/*@media all and(min-width: 1451px) {*/
+    /*#background{ opacity:0;background: url(../img/enhavo_forest_bg_low.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}*/
+/*}*/
+
+
+
+#background{width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+
+@media all and (min-width: 1351px) {
+    #background{ background: url(../img/enhavo_forest_bg_low.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}
+}
+
+@media all and (max-width: 1350px) {
+    #background{ background: url(../img/enhavo_forest_bg_high.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}
+}
+
+
 #loginBox {background-color: #072129;width: 650px;position: absolute;left: 50%;margin-left: -325px;top: 50%;border-radius: 2px;-webkit-box-shadow: 0 1px 18px rgba(0,0,0,0.47);-moz-box-shadow: 0 1px 18px rgba(0,0,0,0.47);box-shadow: 0 1px 18px rgba(0,0,0,0.47);-webkit-transform: translateY(-50%);-moz-transform: translateY(-50%);-ms-transform: translateY(-50%);-o-transform: translateY(-50%);transform: translateY(-50%);}
 #loginBox .logo{width: 245px;margin: 0 auto;padding: 50px 0;}
 #loginBox p{color: #82888b;padding: 40px 40px 20px 40px;line-height: 1.45em;font-size: 11px;}
@@ -69,15 +87,20 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #loginBox a{color: #82888b;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 #loginBox .input-container{padding: 17px 20px;background: #FFF;border-radius: 2px;}
 #loginBox .col-md-7 {float: none;margin: 3px auto;}
-#loginBox .btn {background: #0090ba;text-align: center;color:#FFF;border-radius: 2px;padding: 17px 10px;margin-top: 35px;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
+#loginBox .btn { display:block; width:100%;background: #0090ba;text-align: center;color:#FFF;border-radius: 2px;padding: 17px 10px;margin-top: 35px;font-size: 14px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 #loginBox .btn:hover {-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
-.reset{padding: 0;}
-.reset a{float: right;margin-top: 8px;}
-#loginBox .ribbon {position: absolute;right: 43px;width: 37px;height: 52px;top: 0;z-index: 5;background: url(../img/ribbon.png) no-repeat center center;-webkit-background-size: 100%;background-size: 100%;}
-#loginBox .ribbon p{position: absolute;left: -30px;top: -22px;color: #FFF;}
+.reset{padding-left: 0;}
+.reset a{float: right;margin-top: 8px; text-align:right;}
+#loginBox .ribbon {position: absolute;right: 43px;width: 48px;height: 55px;top: -1px;z-index: 5;background: url(../img/ribbon.png) no-repeat center center;-webkit-background-size: 100%;background-size: 100%;}
+#loginBox .ribbon p{position: absolute;left: -28px;top: -22px;color: #FFF;}
+.loginContainer {width: 58.33333333%; margin:0 auto;}
+#loginBox .resetButton { background:#82888b;margin-top: 15px;}
+#loginBox .resetButton a{ float:none;text-align:center;color:#FFF; font-weight:800;}
+#loginBox .confirmation { padding-top:0;font-size:16px;color:#FFF; text-align:center;}
+#loginBox .confirmation i{ color:#40cf19; padding-right:10px;}
 
 input[type="checkbox"]{
-    display: none;
+    opacity:0;
     padding: 30px;
     cursor: pointer;
     -webkit-transform: scale(2);
@@ -91,7 +114,7 @@ input[type="checkbox"] + span{
     display: inline-block;
     width: 23px;
     height: 23px;
-    margin-left: -25px;
+    margin-left: -15px;
     position: relative;
     top: 5px;
     border-radius: 2px;
@@ -118,7 +141,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .btnsmall[class*="fa-"] {font-weight:normal;}
 .btn i {position:relative;top:-1px;}
 .btn.create{background: none;color: #0090ba;text-align: left;font-size: 14px;}
-.btn.create:before{position: relative;border-radius: 50%;background: #0090ba;width: 23px;height: 23px;top: 4px;margin-right: 5px;content: "+";display: inline-block;font-size: 26px;font-weight: 700;text-align: center;color: #f3f3f3;}
+.btn.create:before{content: '\e834';font-family: "enhavo_iconfont";font-size:28px;display:inline-block;margin: 0 6px 0 0;position: relative;top: 4px;}
 .btn.dropdown{background: none;color: #a7b1b3;text-align: left;font-size: 14px;}
 .btn.dropdown:before{font-family: "enhavo_iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e82b';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
 .btn.dropdown.clicked:before{font-family: "enhavo_iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d9';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
@@ -156,16 +179,13 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 .btn.upload-button:before{
-    content: '\e8cf';
-    border-radius: 50%;
-    border: 0.2em solid #0090ba;
+    content: '\e817';
     font-family: "enhavo_iconfont";
-    font-size: 13px;
-    vertical-align: text-bottom;
+    font-size: 26px;
     position: relative;
-    top: 2px;
-    width: 25px;
-    height: 25px;
+    top: 4px;
+    display:inline-block;
+    margin-right:5px;
 }
 
 .bullList {list-style:disc;padding-left:20px;}
