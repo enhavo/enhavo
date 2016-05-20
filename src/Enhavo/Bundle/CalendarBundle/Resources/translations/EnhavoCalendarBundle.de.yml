@@ -10,5 +10,8 @@ appointment:
     title: 'Titel'
     date: 'Datum'
     seo: 'Seo'
+  validator:
+    error:
+      dates: 'Die Datum Felder stimmen nicht überein.'
 label:
   calendar: 'Kalender'
