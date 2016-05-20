@@ -1,4 +1,4 @@
-Enhavo\Bundle\GridBundle\Entity\Content:
+Enhavo\Bundle\GridBundle\Entity\Grid:
     properties:
         items:
             - Valid: ~

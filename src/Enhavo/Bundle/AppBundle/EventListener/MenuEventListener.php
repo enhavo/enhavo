@@ -64,7 +64,6 @@ class MenuEventListener
             $this->addClass($child);
             $this->addCurrent($child);
         }
-        $this->addLogout($menu);
     }
 
     public function addClass(ItemInterface $menu)
@@ -79,16 +78,5 @@ class MenuEventListener
         if($currentRoute == $route) {
             $menu->setCurrent(true);
         }
-    }
-
-    public function addLogout(ItemInterface $menu)
-    {
-        $logout = $this->factory->createItem('logout', array(
-            'route' => 'fos_user_security_logout'
-        ));
-        $logout->setLabel('label.logout');
-        $logout->setLabelAttribute('translationDomain', 'EnhavoAppBundle');
-        $logout->setAttribute('class', 'menu-icon-logout');
-        $menu->addChild($logout);
     }
 }

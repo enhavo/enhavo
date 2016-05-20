@@ -56,8 +56,8 @@
             table:
                 sorting:
                     sortable: true
-                    move_up_route: {{ app }}_{{ resource }}_move_up
-                    move_down_route: {{ app }}_{{ resource }}_move_down
+                    move_after_route: {{ app }}_{{ resource }}_move_after
+                    move_to_page_route: {{ app }}_{{ resource }}_move_to_page
 {% endif %}
 
 {{ app }}_{{ resource }}_delete:
@@ -68,6 +68,14 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:deleteAction
 
+{{ app }}_{{ resource }}_batch:
+    options:
+        expose: true
+    path: /{{ app_url }}/{{ resource_url }}/batch
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:batchAction
+
 {{ app }}_{{ resource }}_preview:
     options:
         expose: true
@@ -77,22 +85,22 @@
         _controller: {{ app }}.controller.{{ resource }}:previewAction
 {% if not sorting is null %}
 
-{{ app }}_{{ resource }}_move_up:
+{{ app }}_{{ resource }}_move_after:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/move-up/{id}
+    path: /{{ app_url }}/{{ resource_url }}/move-after/{id}/{target}
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveUpAction
+        _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
         _sylius:
             sortable_position: {{ sorting }}
         _viewer:
             sorting: desc
 
-{{ app }}_{{ resource }}_move_down:
+{{ app }}_{{ resource }}_move_to_page:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/move-down/{id}
+    path: /{{ app_url }}/{{ resource_url }}/move-to-page/{id}/{page}/{top}
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:moveDownAction

@@ -25,7 +25,8 @@ class CategoryType extends AbstractType
         $builder->add('text', 'wysiwyg', array());
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'multiple' => false
         ));
         $builder->add('slug', 'hidden', array(
             'label' => 'form.label.slug'

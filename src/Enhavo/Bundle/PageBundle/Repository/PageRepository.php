@@ -8,9 +8,15 @@
 
 namespace Enhavo\Bundle\PageBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
 
-class PageRepository extends EntityRepository
+class PageRepository extends ContentRepository
 {
-
+    public function getEmptyWorkflowStatus()
+    {
+        $query = $this->createQueryBuilder('n');
+        $query->where('n.workflow_status IS NULL');
+        $test = $query->getQuery()->getResult();
+        return $test;
+    }
 }

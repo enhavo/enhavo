@@ -1,0 +1,39 @@
+workflow:
+  form:
+    label:
+      workflowName: 'Workflow Name'
+      nodes: 'Nodes'
+      transitions: 'Transitions'
+      page: 'Pages'
+      appointment: 'Calendar'
+      newsletter: 'Newsletter'
+      next_state: 'Next State'
+      type: 'Type (Entity)'
+      article: 'Article'
+  label:
+    id: 'ID'
+    workflow: 'Workflow'
+    nodes: 'Nodes'
+    transitions: 'Transitions'
+    workflowName: 'Workflow Name'
+    entity: 'entity'
+    currentWFS: 'Current Workflow-Status'
+    active: 'Active'
+    noTransitions: '(No transitions possible)'
+    assigned: 'Assigned'
+  validator:
+    error:
+      nodes: 'You have not created any nodes.'
+      delete: 'Please set the workflow inactive before you change it.'
+node:
+  form:
+    label:
+      nodeName: 'Node Name'
+      startNode: 'Start Node'
+transition:
+  form:
+    label:
+      transitionName: 'Transition Name'
+      nodeFrom: 'From'
+      nodeTo: 'To'
+

@@ -1,39 +1,39 @@
-.enhavo_content {padding-top: 10px; padding-bottom: 10px;}
-.enhavo_content_img {width: 100%;}
-.enhavo_contentForm {position: relative;}
+.enhavo_grid {padding-top: 10px; padding-bottom: 10px;}
+.enhavo_grid_img {width: 100%;}
+.enhavo_gridForm {position: relative;}
 
-.enhavo_contentForm .add-enhavo_content-button {font-size:14px;line-height:19px;}
+.enhavo_gridForm .add-enhavo_grid-button {font-size:14px;line-height:19px;}
 
-.enhavo_contentForm .menu {display: none;position: absolute;background-color: #eee;color: #000;z-index: 1000;padding: 1px;}
-.enhavo_contentForm .menu.bottomTriangle .triangle-up {display: none;}
-.enhavo_contentForm .menu.topTriangle .triangle-down {display: none;}
-.enhavo_contentForm .menu .triangle-up {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 10px solid #eee;position: absolute;top: -10px;left:0;}
-.enhavo_contentForm .menu .triangle-down {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-top: 10px solid #eee;position: absolute;bottom: -10px;left: 0;}
-.enhavo_contentForm .menu li:first-child {margin-top: 0;}
-.enhavo_contentForm .menu li {margin-top: 1px;background-color: #fff;padding: 2px 5px;min-width: 100px;}
-.enhavo_contentForm .menu li:hover {background-color: #4395d1;color:#fff;}
+.enhavo_gridForm .menu {display: none;position: absolute;background-color: #eee;color: #000;z-index: 1000;padding: 1px;}
+.enhavo_gridForm .menu.bottomTriangle .triangle-up {display: none;}
+.enhavo_gridForm .menu.topTriangle .triangle-down {display: none;}
+.enhavo_gridForm .menu .triangle-up {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 10px solid #eee;position: absolute;top: -10px;left:0;}
+.enhavo_gridForm .menu .triangle-down {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-top: 10px solid #eee;position: absolute;bottom: -10px;left: 0;}
+.enhavo_gridForm .menu li:first-child {margin-top: 0;}
+.enhavo_gridForm .menu li {margin-top: 1px;background-color: #fff;padding: 2px 5px;min-width: 100px;}
+.enhavo_gridForm .menu li:hover {background-color: #4395d1;color:#fff;}
 
-.enhavo_contentForm .addItem {cursor: pointer;}
+.enhavo_gridForm .addItem {cursor: pointer;}
 
-.enhavo_contentForm .item {margin-bottom:15px;border:1px solid #ddd;}
-.enhavo_contentForm .item .button-container {background-color: #ddd;padding-left:85px;position: relative;line-height:25px;}
-.enhavo_contentForm .item .button-container .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;}
-.enhavo_contentForm .item .button-container .button:hover {color:#fff;background:#4395d1;}
+.enhavo_gridForm .item {margin-bottom:15px;border:1px solid #ddd;}
+.enhavo_gridForm .item .button-container {background-color: #ddd;padding-left:85px;position: relative;line-height:25px;}
+.enhavo_gridForm .item .button-container .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;}
+.enhavo_gridForm .item .button-container .button:hover {color:#fff;background:#4395d1;}
 
-.enhavo_contentForm .item .button-container .button-up {left:0;}
-.enhavo_contentForm .item .button-container .button-down {left:34px;}
-.enhavo_contentForm .item .button-container .button-delete {right:0;}
+.enhavo_gridForm .item .button-container .button-up {left:0;}
+.enhavo_gridForm .item .button-container .button-down {left:34px;}
+.enhavo_gridForm .item .button-container .button-delete {right:0;}
 
-.enhavo_contentForm .item .button-container .label {font-weight: 700;}
+.enhavo_gridForm .item .button-container .label {font-weight: 700;}
 
 .picture_caption{font-size: 13px;margin-top: 5px}
-.enhavo_content_picturepicture {margin-left: 0px;margin-right: 0px;}
-.enhavo_content_picturepicture .left6{padding-left: 0px;}
-.enhavo_content_picturepicture .right6 {padding-right: 0px;}
+.enhavo_grid_picturepicture {margin-left: 0px;margin-right: 0px;}
+.enhavo_grid_picturepicture .left6{padding-left: 0px;}
+.enhavo_grid_picturepicture .right6 {padding-right: 0px;}
 
 .textleft label {
     color: black !important;
 }
-.enhavo_content_frame{border: black;border-style: solid;}
+.enhavo_grid_frame{border: black;border-style: solid;}
 
 .darkbg {background-color:#777;}

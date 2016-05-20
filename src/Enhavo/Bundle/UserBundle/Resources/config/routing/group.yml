@@ -8,6 +8,8 @@ enhavo_user_group_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: group.label.group
+            translationDomain: EnhavoUserBundle
 
 enhavo_user_group_create:
     options:
@@ -20,6 +22,10 @@ enhavo_user_group_create:
             template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
+             tabs:
+                group:
+                  template: EnhavoUserBundle:Group:form.html.twig
+                  label: group.label.group
 
 enhavo_user_group_update:
     options:
@@ -32,6 +38,10 @@ enhavo_user_group_update:
             template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
+             tabs:
+                group:
+                  template: EnhavoUserBundle:Group:form.html.twig
+                  label: group.label.group
 
 enhavo_user_group_table:
     options:
@@ -59,6 +69,14 @@ enhavo_user_group_delete:
     options:
         expose: true
     path: /enhavo/user/group/delete/{id}
-    methods: [POST]
+    methods: [POST, DELETE]
     defaults:
         _controller: enhavo_user.controller.group:deleteAction
+
+enhavo_user_group_batch:
+    options:
+        expose: true
+    path: /enhavo/user/group/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_user.controller.group:batchAction

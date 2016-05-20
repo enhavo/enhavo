@@ -9,7 +9,7 @@ page:
     id: 'ID'
     public: 'öffentlich'
     title: 'Titel'
-    page: 'Seiten'
+    page: 'Seite'
     content: 'Inhalt'
     seo: 'SEO'
     always: 'Immer'
@@ -19,3 +19,9 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
+  batch:
+    action:
+      publish: 'Veröffentlichen'
+    message:
+      confirm:
+        publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'

@@ -17,14 +17,14 @@ class PicturePicture implements ItemTypeInterface
     protected $id;
 
     /**
-     * @var mixed
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
-    protected $filesLeft;
+    protected $fileLeft;
 
     /**
-     * @var mixed
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
-    protected $filesRight;
+    protected $fileRight;
 
     /**
      * @var boolean
@@ -47,15 +47,6 @@ class PicturePicture implements ItemTypeInterface
     protected $title;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->filesLeft = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->filesRight = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -66,103 +57,49 @@ class PicturePicture implements ItemTypeInterface
     }
 
     /**
-     * Set filesLeft
+     * Set fileLeft
      *
-     * @param \files $filesLeft
-     * @return Content
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $fileLeft
+     * @return Grid
      */
-    public function setFilesLeft($filesLeft)
+    public function setFileLeft($fileLeft)
     {
-        $this->filesLeft = $filesLeft;
+        $this->fileLeft = $fileLeft;
 
         return $this;
     }
 
     /**
-     * Add filesLeft
+     * Get fileLeft
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File filesLeft
-     * @return Content
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
      */
-    public function addFilesLeft(\Enhavo\Bundle\MediaBundle\Entity\File $filesLeft)
+    public function getFileLeft()
     {
-        if ($this->filesLeft === null) {
-            $this->filesLeft = new ArrayCollection();
-        }
+        return $this->fileLeft;
+    }
 
-        $this->filesLeft[] = $filesLeft;
+    /**
+     * Set fileRight
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $fileRight
+     * @return Grid
+     */
+    public function setFileRight($fileRight)
+    {
+        $this->fileRight = $fileRight;
 
         return $this;
     }
 
     /**
-     * Remove filesLeft
+     * Get fileRight
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $filesLeft
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File
      */
-    public function removeFilesLeft(\Enhavo\Bundle\MediaBundle\Entity\File $filesLeft)
+    public function getFileRight()
     {
-        $this->filesLeft->removeElement($filesLeft);
-    }
-
-    /**
-     * Get filesLeft
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFilesLeft()
-    {
-        return $this->filesLeft;
-    }
-
-    /**
-     * Set filesRight
-     *
-     * @param \files $filesRight
-     * @return Content
-     */
-    public function setFilesRight($filesRight)
-    {
-        $this->filesRight = $filesRight;
-
-        return $this;
-    }
-
-    /**
-     * Add filesRight
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File filesRight
-     * @return Content
-     */
-    public function addFilesRight(\Enhavo\Bundle\MediaBundle\Entity\File $filesRight)
-    {
-        if ($this->filesRight === null) {
-            $this->filesRight = new ArrayCollection();
-        }
-
-        $this->filesRight[] = $filesRight;
-
-        return $this;
-    }
-
-    /**
-     * Remove filesRight
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $filesRight
-     */
-    public function removeFilesRight(\Enhavo\Bundle\MediaBundle\Entity\File $filesRight)
-    {
-        $this->filesRight->removeElement($filesRight);
-    }
-
-    /**
-     * Get filesRight
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFilesRight()
-    {
-        return $this->filesRight;
+        return $this->fileRight;
     }
 
     /**

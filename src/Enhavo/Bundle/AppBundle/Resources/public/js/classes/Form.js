@@ -126,6 +126,7 @@ var Form = function(router, templating, admin, translator)
       form = $(form);
       var data = form.serialize();
       var action = form.attr('action');
+      admin.openLoadingOverlay();
       $.ajax({
         type: 'POST',
         data: data,
@@ -134,6 +135,7 @@ var Form = function(router, templating, admin, translator)
           $(form).trigger('formSaveAfter', form);
         },
         error: function(jqXHR) {
+          admin.closeLoadingOverlay();
           var data = JSON.parse(jqXHR.responseText);
 
           if(data.code == 400) {
@@ -191,6 +193,7 @@ var Form = function(router, templating, admin, translator)
     $(form).find('[data-button][data-type=delete]').click(function() {
       var url = $(form).data('delete');
       if(confirm(translator.trans('form.delete.question'))) {
+        admin.openLoadingOverlay();
         $.ajax({
           type: 'POST',
           data: {
@@ -198,9 +201,11 @@ var Form = function(router, templating, admin, translator)
           },
           url: url,
           success: function() {
+            admin.closeLoadingOverlay();
             $(form).trigger('formSaveAfter', form);
           },
           error: function() {
+            admin.closeLoadingOverlay();
             alert(translator.trans('error.occurred'));
           }
         });
@@ -271,7 +276,6 @@ var Form = function(router, templating, admin, translator)
     };
 
     var initAddButton = function(tagList, tagCount) {
-      console.log(tagList.parent().find('.add-another'));
       tagList.parent().find('.add-another').click(function(e) {
         e.preventDefault();
 
@@ -284,6 +288,8 @@ var Form = function(router, templating, admin, translator)
         //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
         tagCount++;
 
+        newWidget = $.parseHTML(newWidget);
+        self.initSelect(newWidget);
         tagList.append(newWidget);
         initDeleteButton();
         setOrderForContainer(tagList);

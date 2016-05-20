@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer;
 
 class AppViewer extends AbstractViewer
 {
+
     public function getBlocks()
     {
         $blocks = $this->getConfig()->get('blocks');
@@ -25,6 +26,11 @@ class AppViewer extends AbstractViewer
     public function getActions()
     {
         return $this->getConfig()->get('actions');
+    }
+
+    public function getTitle()
+    {
+        return $this->getConfig()->get('title');
     }
 
     public function getParameters()

@@ -23,11 +23,4 @@ class AppController extends Controller
 
         return $this->render($viewer->getTemplate(), $viewer->getParameters());
     }
-
-    public function showAction($data)
-    {
-        return $this->render('EnhavoAppBundle:Resource:show.html.twig', array(
-            'data' => $data
-        ));
-    }
 }

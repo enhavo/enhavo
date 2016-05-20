@@ -3,22 +3,13 @@
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\ContentBundle\Entity\Content;
 
 /**
  * Appointment
  */
-class Appointment
+class Appointment extends Content
 {
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $title;
-
     /**
      * @var string
      */
@@ -35,53 +26,14 @@ class Appointment
     private $dateTo;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Content
+     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    private $content;
+    private $grid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
      */
     private $picture;
-
-    /**
-     * @var string
-     */
-    private $slug;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Appointment
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * Set teaser
@@ -156,23 +108,14 @@ class Appointment
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Content $content
-     *
+     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
      * @return Appointment
      */
-    public function setContent(\Enhavo\Bundle\GridBundle\Entity\Content $content = null)
+    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
     {
-        $this->content = $content;
+        $this->grid = $grid;
 
         return $this;
     }
@@ -180,41 +123,15 @@ class Appointment
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Content
+     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
      */
-    public function getContent()
+    public function getGrid()
     {
-        return $this->content;
+        return $this->grid;
     }
 
     /**
-     * Add picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     *
-     * @return Appointment
-     */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture[] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
-     * Get picture
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File
      */
     public function getPicture()
     {
@@ -222,18 +139,10 @@ class Appointment
     }
 
     /**
-     * @return string
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
      */
-    public function getSlug()
+    public function setPicture($picture)
     {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
+        $this->picture = $picture;
     }
 }

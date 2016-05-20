@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Container:
     type: entity
-    table: content_container
+    table: grid_container
     id:
         id:
             type: integer
@@ -25,8 +25,8 @@ Enhavo\Bundle\GridBundle\Entity\Container:
             cascade: ['persist', 'refresh', 'remove']
 
     manyToOne:
-        content:
-            targetEntity: Content
+        grid:
+            targetEntity: Grid
 
         column:
             targetEntity: Column

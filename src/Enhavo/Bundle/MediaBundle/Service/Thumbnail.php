@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\MediaBundle\Service;
 class Thumbnail
 {
 
-    static public function make($input, $output, $width, $height)
+    static public function make($input, $output, $width, $height, $quality = 80)
     {
         $size = getimagesize( $input );
         $oldWidth = $size[ 0 ];
@@ -78,7 +78,7 @@ class Thumbnail
                 $src_image = imageCreateFromJPEG( $input );
                 $dst_image = imageCreateTrueColor( $width, $height );
                 imagecopyresampled ($dst_image, $src_image , $dst_x , $dst_y , $src_x , $src_y , $dst_w , $dst_h , $src_w , $src_h);
-                imageJPEG( $dst_image, $output, 80);
+                imageJPEG( $dst_image, $output, $quality);
                 unset($dst_image);
                 unset($src_image);
                 return true;

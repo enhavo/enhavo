@@ -3,90 +3,11 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     table: page_page
     repositoryClass: Enhavo\Bundle\PageBundle\Repository\PageRepository
 
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
-    fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-
-        teaser:
-            type: string
-            length: 255
-            nullable: true
-
-        slug:
-            type: string
-            length: 255
-            nullable: true
-            gedmo:
-                slug:
-                    separator: -
-                    style: default
-                    updatable: false
-                    fields: ['title']
-
-        priority:
-            type: float
-            nullable: true
-
-        change_frequency:
-            type: string
-            length: 255
-            nullable: true
-
-        public:
-            type: boolean
-            nullable: true
-
-        meta_description:
-            type: text
-            nullable: true
-
-        page_title:
-            type: text
-            nullable: true
-
-        social_media:
-            type: boolean
-            nullable: true
-
-        created:
-            type: datetime
-            nullable: true
-
-        updated:
-            type: datetime
-            nullable: true
-
-    manyToOne:
-        route:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
-
     oneToOne:
-        content:
+        grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Content
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
 
-    manyToMany:
-        picture:
+        workflow_status:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: page_page_picture
-                joinColumns:
-                    page_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
-
-    lifecycleCallbacks:
-        prePersist: [ prePersist ]
-        preUpdate: [ preUpdate ]
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus

@@ -5,58 +5,48 @@
 {% block body %}
     <div id="background">
         <div id="loginBox">
-            {% if error %}
-                <div class="col-md-push-2 col-md-4 error" id="overlayMessage" style="display: block;">
-                    <div>{{ 'error.login'|trans }}</div>
+            <div class="loginContainer">
+                {% if error %}
+                    <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
+                        <div>{{ 'error.login'|trans }}</div>
+                    </div>
+                {% endif %}
+                <div class="ribbon">
+                    <p>0.1.0</p>
                 </div>
-            {% endif %}
-            <div class="ribbon">
-                <p>0.1</p>
-            </div>
-            <div class="logo">
-                <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
-            </div>
-            <form action="{{ path("fos_user_security_check") }}" method="post">
-                <input type="hidden" id="remember_me" name="_remember_me" value="on">
-                <div class="row">
-                    <div class="col-md-7">
+                <div class="logo">
+                    <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
+                </div>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" id="remember_me" name="_remember_me" value="on">
+                    <div class="mb1">
                         <div class="input-container">
                             <input placeholder="{{ 'security.login.username'|trans }}" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
                         </div>
                     </div>
-                </div>
-                <div class="row mb1">
-                    <div class="col-md-7">
+                    <div class="mb1">
                         <div class="input-container">
                            <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-7">
+                    <div class="row">
                         <div class="col-md-6">
                             <input type="checkbox" id="_remember" name="_remember">
                             <span></span>
                             <label for="_remember">{{ 'security.login.remember_me'|trans }}</label>
                         </div>
                         <div class="col-md-6 reset">
-                            <a>{{ 'resetting.request.submit'|trans }}</a>
+                            <a href="{{ path('enhavo_user_user_reset_password') }}">{{ 'resetting.request.submit'|trans }}</a>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-7">
-                        <button class="btn col-md-12 loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <p class="col-md-12">
-                        enhavo is an open source content-management-system based on symfony 2 and sylius. <br/>
-                        Created and launched by <a href="http://xq-web.de" target="_blank">xq-web.de</a>
-                    </p>
-                </div>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-            </form>
+                    <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                </form>
+            </div>
+            <p>
+                enhavo is an open source content-management-system based on symfony 2 and sylius. <br/>
+                Created and launched by <a href="http://xq-web.de" target="_blank">xq-web.de</a>
+            </p>
         </div>
     </div>
 {% endblock body %}

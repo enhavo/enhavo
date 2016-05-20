@@ -1,0 +1,33 @@
+Enhavo\Bundle\WorkflowBundle\Entity\Node:
+    type: entity
+    table: workflow_node
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        node_name:
+            type: string
+            length: 255
+
+        start:
+            type: boolean
+            nullable: true
+
+        end:
+            type: boolean
+            nullable: true
+
+    manyToOne:
+        workflow:
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+
+    oneToMany:
+        transitions:
+            targetEntity: Transition
+            mappedBy: node_from
+            orderBy: {'order': 'ASC'}
+
+    lifecycleCallbacks: {  }

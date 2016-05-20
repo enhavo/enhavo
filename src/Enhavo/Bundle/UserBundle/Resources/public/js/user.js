@@ -12,16 +12,17 @@ function User(admin)
             form = $(form);
             var data = form.serialize();
             var action = form.attr('action');
+            admin.openLoadingOverlay();
             $.ajax({
                 type: 'POST',
                 data: data,
                 url: action,
                 success: function (response) {
-                    console.log(response);
+                    admin.closeLoadingOverlay();
                     admin.overlayClose();
                 },
                 error: function (jqXHR) {
-
+                    admin.closeLoadingOverlay();
                 }
             });
         });

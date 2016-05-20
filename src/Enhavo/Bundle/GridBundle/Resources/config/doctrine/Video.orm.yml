@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Video:
     type: entity
-    table: content_type_video
+    table: grid_type_video
     id:
         id:
             type: integer
@@ -11,7 +11,9 @@ Enhavo\Bundle\GridBundle\Entity\Video:
         title:
             type: string
             length: 255
+            nullable: true
         url:
             type: string
             length: 255
+            nullable: true
     lifecycleCallbacks: {  }

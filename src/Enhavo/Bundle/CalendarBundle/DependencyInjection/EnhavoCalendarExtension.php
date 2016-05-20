@@ -24,9 +24,8 @@ class EnhavoCalendarExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_calendar', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter( 'enhavo_calendar.calendar_route', $config['calendar_route']);
-        $container->setParameter( 'enhavo_calendar.dynamic_routing', $config['dynamic_routing']);
-
+        $container->setParameter('enhavo_calendar.routing.appointment.strategy', $config['resources']['appointment']['routing']['strategy']);
+        $container->setParameter('enhavo_calendar.routing.appointment.route', $config['resources']['appointment']['routing']['route']);
 
         $configFiles = array(
             'services.yml',

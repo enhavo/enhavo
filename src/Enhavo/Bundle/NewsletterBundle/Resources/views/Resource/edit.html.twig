@@ -3,6 +3,9 @@
 {{ form_row(form.title) }}
 {{ form_row(form.subject) }}
 {{ form_row(form.text) }}
+{% if form.workflow_status is defined %}
+    {{ form_row(form.workflow_status) }}
+{% endif %}
 {% trans_default_domain "EnhavoNewsletterBundle" %}
 <div class="row mb1">
    <label class="col-md-2 text-right label-container">
@@ -18,6 +21,7 @@
         {% endif %}
     </div>
 </div>
+
 
 
 

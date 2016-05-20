@@ -1,11 +1,11 @@
-<div class="enhavo_content">
-    <div class="row enhavo_content_texttext">
+<div class="enhavo_grid">
+    <div class="row enhavo_grid_texttext">
         {% if data.title %}
             <h2 class="title col-md-12">{{ data.title }}</h2>
         {% endif %}
         {% if data.layout == 1 %}
             <div class="col-md-4 left6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleLeft %}
                         <h2>{{ data.titleLeft }}</h2>
                     {% endif %}
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-md-8 right6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleRight %}
                         <h2>{{ data.titleRight }}</h2>
                     {% endif %}
@@ -26,7 +26,7 @@
             </div>
         {% elseif data.layout == 2 %}
             <div class="col-md-8 left6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleLeft %}
                         <h2>{{ data.titleLeft }}</h2>
                     {% endif %}
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col-md-4 right6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleRight %}
                         <h2>{{ data.titleRight }}</h2>
                     {% endif %}
@@ -47,7 +47,7 @@
             </div>
         {% elseif data.layout == 0 %}
             <div class="col-md-6 left6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleLeft %}
                         <h2>{{ data.titleLeft }}</h2>
                     {% endif %}
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="col-md-6 right6">
-                <div class="enhavo_content_text">
+                <div class="enhavo_grid_text">
                     {% if data.titleRight %}
                         <h2>{{ data.titleRight }}</h2>
                     {% endif %}

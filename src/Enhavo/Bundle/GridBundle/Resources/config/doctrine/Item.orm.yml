@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Item:
     type: entity
-    table: content_item
+    table: grid_item
     id:
         id:
             type: integer
@@ -29,7 +29,7 @@ Enhavo\Bundle\GridBundle\Entity\Item:
         column:
             targetEntity: Column
 
-        content:
-            targetEntity: Content
+        grid:
+            targetEntity: Grid
 
     lifecycleCallbacks: {  }

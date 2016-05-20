@@ -9,7 +9,7 @@ page:
     id: 'ID'
     public: 'public'
     title: 'Title'
-    page: 'Pages'
+    page: 'Page'
     content: 'Content'
     seo: 'SEO'
     always: 'Always'
@@ -19,3 +19,9 @@ page:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
+  batch:
+    action:
+      publish: 'Publish'
+    message:
+      confirm:
+        publish: 'Do you really want to publish all selected items?'

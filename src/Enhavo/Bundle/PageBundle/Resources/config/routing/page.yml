@@ -6,7 +6,8 @@ enhavo_page_page_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
-            type: index
+            title: page.label.page
+            translationDomain: EnhavoPageBundle
 
 enhavo_page_page_create:
     path: /enhavo/page/page/create
@@ -32,7 +33,7 @@ enhavo_page_page_create:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_page_preview
+                    route: enhavo_page_page_preview
                     label: label.preview
                     icon: icon-eye
 
@@ -88,6 +89,20 @@ enhavo_page_page_table:
             translationDomain: EnhavoPageBundle
             type: table
             table:
+                batch:
+#                    actions:
+#                        delete:
+#                            label: table.batch.action.delete
+#                            confirm_message: table.batch.message.confirm.delete
+#                            translation_domain: EnhavoAppBundle
+#                            permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
+#                            position: 0
+#                        publish:
+#                            label: page.batch.action.publish
+#                            confirm_message: page.batch.message.confirm.publish
+#                            translation_domain: EnhavoPageBundle
+#                            permission: ROLE_ENHAVO_PAGE_PAGE_EDIT
+#                            position: 1
                 columns:
                     id:
                         label: page.label.id
@@ -96,7 +111,9 @@ enhavo_page_page_table:
                     public:
                         label: page.label.public
                         property: public
-                        widget: EnhavoAppBundle:Widget:boolean.html.twig
+                        widget:
+                            type: template
+                            template: EnhavoAppBundle:Widget:boolean.html.twig
                         width: 1
                     title:
                         label: page.label.title
@@ -107,3 +124,11 @@ enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
+
+enhavo_page_page_batch:
+    options:
+        expose: true
+    path: /enhavo/page/page/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_page.controller.page:batchAction

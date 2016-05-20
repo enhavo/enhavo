@@ -29,4 +29,9 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             options:
                 default: false
 
+    oneToOne:
+        workflow_status:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+
     lifecycleCallbacks: {  }
