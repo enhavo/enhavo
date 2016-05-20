@@ -21,6 +21,8 @@ workflow:
     active: 'Active'
     noTransitions: '(No transitions possible)'
     assigned: 'Assigned'
+    warning: 'Warning'
+    deleteWarning: 'When you delete nodes all belonging transitions will be deleted too!'
   validator:
     error:
       nodes: 'You have not created any nodes.'
