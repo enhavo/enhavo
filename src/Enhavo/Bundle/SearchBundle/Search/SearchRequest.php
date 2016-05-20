@@ -27,14 +27,14 @@ class SearchRequest {
      *
      * @var integer
      */
-    protected $and_or_limit = 8;
+    protected $andOrLimit = 8;
 
     /**
      * Indicates whether the query conditions are simple or complex (LIKE,OR,AND).
      *
      * @var bool
      */
-    protected $simple = TRUE;
+    protected $simple = true;
 
     /**
      * Parsed-out positive and negative search keys.
@@ -60,7 +60,7 @@ class SearchRequest {
      *
      * @var int
      */
-    protected $minimum_word_size = 3;
+    protected $minimumWordSize = 3;
 
     /**
      * Is true if there are to many AND/OR expressions
@@ -151,36 +151,41 @@ class SearchRequest {
         }
 
         // Classify tokens.
-        $in_or = FALSE;
-        $limit_combinations = $this->and_or_limit;
+        $inOR = false;
+        $limitCombinations = $this->andOrLimit;
         //and_count is set to -1 because in the loop of the first word die and_count gets increased (and there was no AND yet) and in the lop of the second word the and_count gets increased also.
         //So the count after two words would be 2 even if there was just 1 AND --> so we start with -1
-        $and_count = -1;
-        $or_count = 0;
+        $andCount = -1;
+        $orCount = 0;
 
         //Sort keywords in positive and negative
         foreach ($keywords as $match) {
 
             //check if there are not to many AND/OR expressions
-            if ($or_count && $and_count + $or_count >= $limit_combinations) {
+            if ($orCount && $andCount + $orCount >= $limitCombinations) {
                 //To many AND/OR expressions
                 $this->toManyExpressions = true;
                 break;
             }
 
             //Checking for quotes
-            $phrase = FALSE;
+            $phrase = false;
             if ($match[2]{0} == '"') {
                 $match[2] = substr($match[2], 1, -1);
-                $phrase = TRUE;
-                $this->simple = FALSE;
+                $phrase = true;
+                $this->simple = false;
             }
 
             //Symplify match
             $words = $this->util->searchSimplify($match[2]);
+
             // Re-explode in case simplification added more words, except when
             // matching a phrase.
-            $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);//!!!
+            if($phrase){
+                $words = array($words);
+            } else {
+                $words = preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
+            }
 
             // NOT
             if ($match[1] == '-') {
@@ -194,32 +199,29 @@ class SearchRequest {
                     $last = array($last);
                 }
                 $this->keys['positive'][] = $last;
-                $in_or = TRUE;
-                $or_count++;
+                $inOR = true;
+                $orCount++;
                 continue;
             }
             // AND operator: implied, so just ignore it.
             elseif ($match[2] == 'AND' || $match[2] == 'and') {
                 continue;
-            }
-
-            // Plain keyword.
-            else {
-                if ($in_or) {
+            } else { // Plain keyword.
+                if ($inOR) {
                     // Add to last element (which is an array).
                     $this->keys['positive'][count($this->keys['positive']) - 1] = array_merge($this->keys['positive'][count($this->keys['positive']) - 1], $words);
                 }
                 else {
                     $this->keys['positive'] = array_merge($this->keys['positive'], $words);
-                    $and_count++;
+                    $andCount++;
                 }
             }
-            $in_or = FALSE;
+            $inOR = false;
         }
 
+        $hasAnd = false;
+        $hasOr = false;
 
-        $has_and = FALSE;
-        $has_or = FALSE;
         //Prepare AND/OR conditions (Positive matches)
         foreach ($this->keys['positive'] as $key) {
 
@@ -227,43 +229,41 @@ class SearchRequest {
             if (is_array($key) && count($key)) {
                 // If we had already found one OR, this is another one AND-ed with the
                 // first, meaning it is not a simple query.
-                if ($has_or) {
-                    $this->simple = FALSE;
+                if ($hasOr) {
+                    $this->simple = false;
                 }
-                $has_or = TRUE;
-                $has_new_scores = FALSE;
-                $queryor = array();
+                $hasOr = true;
+                $hasNewScores = false;
+                $queryOr = array();
                 foreach ($key as $or) {
-                    list($num_new_scores) = $this->parseWord($or);//!!!
-                    $has_new_scores |= $num_new_scores;//!!!
-                    $queryor[] = $or;
+                    list($numNewScores) = $this->parseWord($or);
+                    $hasNewScores |= $numNewScores;
+                    $queryOr[] = $or;
                 }
-                if (count($queryor)) {
-                    $this->conditions['OR'][] = $queryor;
+                if (count($queryOr)) {
+                    $this->conditions['OR'][] = $queryOr;
                     // A group of OR keywords only needs to match once.
-                    $this->matches += ($has_new_scores > 0);
+                    $this->matches += ($hasNewScores > 0);
                 }
-            }
-            // Single ANDed term.
-            else {
-                $has_and = TRUE;
-                list($num_new_scores, $num_valid_words) = $this->parseWord($key);
+            } else { // Single ANDed term.
+                $hasAnd = true;
+                list($numNewScores, $numValidWords) = $this->parseWord($key);
                 $this->conditions['AND'][] = $key;
-                if (!$num_valid_words) {
-                    $this->simple = FALSE;
+                if (!$numValidWords) {
+                    $this->simple = false;
                 }
                 // Each AND keyword needs to match at least once.
-                $this->matches += $num_new_scores;
+                $this->matches += $numNewScores;
             }
         }
-        if ($has_and && $has_or) {
-            $this->simple = FALSE;
+        if ($hasAnd && $hasOr) {
+            $this->simple = false;
         }
 
         // Negative matches.
         foreach ($this->keys['negative'] as $key) {
             $this->conditions['NOT'][] = $key;
-            $this->simple = FALSE;
+            $this->simple = false;
         }
     }
 
@@ -274,24 +274,24 @@ class SearchRequest {
      * num_new_scores is important for the matches in SQL later.
      */
     protected function parseWord($word) {
-        $num_new_scores = 0;
-        $num_valid_words = 0;
+        $numNewScores = 0;
+        $numValidWords = 0;
 
         // Determine the scorewords of this word/phrase.
         $split = explode(' ', $word);
         foreach ($split as $s) {
             $num = is_numeric($s);
-            if ($num || strlen($s) >= $this->minimum_word_size) {
+            if ($num || strlen($s) >= $this->minimumWordSize) {
                 if (!isset($this->words[$s])) {
                     $this->words[$s] = $s;
-                    $num_new_scores++;
+                    $numNewScores++;
                 }
-                $num_valid_words++;
+                $numValidWords++;
             }
         }
 
         // Return matching snippet and number of added words.
-        return array($num_new_scores, $num_valid_words);
+        return array($numNewScores, $numValidWords);
     }
 
     protected function highlightText($object)

@@ -89,31 +89,19 @@ class IndexEngine implements IndexEngineInterface {
                 $this->em->flush();
             }
 
-            $currentSearchYaml = $this->util->getSearchYaml($resource);
-
-            $this->searchYamlPaths = $this->util->getSearchYamls();
-
-            foreach($currentSearchYaml as $searchYaml){
-                $this->indexingData($searchYaml['properties'], $dataSet, $entityName);
-            }
-
+            $this->indexingData($resource, $dataSet);
         } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW){
 
             //indexing the first time otherwise set reindex
             if($newDataset){
 
                 //indexing
-                $currentSearchYaml = $this->util->getSearchYaml($resource);
-                $this->searchYamlPaths = $this->util->getSearchYamls();
-                foreach($currentSearchYaml as $searchYaml){
-                    $this->indexingData($searchYaml['properties'], $dataSet, $entityName);
-                }
+                $this->indexingData($resource, $dataSet);
             } else {
 
                 //set reindex
                 $dataSet->setReindex(1);
                 $this->em->persist($dataSet);
-                $this->em->flush();
             }
 
 
@@ -122,8 +110,8 @@ class IndexEngine implements IndexEngineInterface {
             //set reindex
             $dataSet->setReindex(1);
             $this->em->persist($dataSet);
-            $this->em->flush();
         }
+        $this->em->flush();
     }
 
     public function reindex()
@@ -172,7 +160,9 @@ class IndexEngine implements IndexEngineInterface {
                     $array = explode('\\', $key);
                     $entityName = array_pop($array);
                     $properties = $value['properties'];
-                    $this->indexingData($properties, $currentDataset, $entityName);
+                    $resource = $this->em->getRepository($currentDataset->getBundle().':'.$entityName)->find($currentDataset->getReference());
+
+                    $this->indexingData($resource, $currentDataset);
                 }
             }
         }
@@ -209,34 +199,39 @@ class IndexEngine implements IndexEngineInterface {
         foreach($index as $currentIndexToDelete) {
             $word = $currentIndexToDelete->getWord();
             $this->em->remove($currentIndexToDelete);
-            $this->search_dirty($word);
+            $this->searchDirty($word);
         }
 
         //remove dataset
         $this->em->remove($dataset);
         $this->em->flush();
-        $this->search_update_totals();
+        $this->searchUpdateTotals();
     }
 
-    protected function indexingData($properties, $dataSet, $entityName)
+    protected function indexingData($resource, $dataSet)
     {
-        //get the belonging element like an article or page
-        $item = $this->em->getRepository($dataSet->getBundle().':'.$entityName)->find($dataSet->getReference());
+        $properties = $this->getProperties($resource);
 
         //indexing words (go through all the fields that can be indexed according to the search yml)
-        foreach($properties as $key => $value) {
+        foreach($properties as $indexingField => $value) {
 
             //look if there is a field (indexingField) in the request (currentRequest) that can get indexed
-            $indexingField = $key;
-
             $accessor = PropertyAccess::createPropertyAccessor();
-            if(property_exists($item, $indexingField)) {
-                $text = $accessor->getValue($item, $indexingField);
+            if(property_exists($resource, $indexingField)) {
+                $text = $accessor->getValue($resource, $indexingField);
                 $this->switchToIndexingType($text, $value, $dataSet);
             }
         }
         //update the total scores
-        $this->search_update_totals();
+        $this->searchUpdateTotals();
+    }
+
+    protected function getProperties($resource)
+    {
+        $currentSearchYaml = $this->util->getSearchYaml($resource);
+        $this->searchYamlPaths = $this->util->getSearchYamls();
+
+        return $currentSearchYaml[get_class($resource)]['properties'];
     }
 
     public function switchToIndexingType($text, $type, $dataSet)
@@ -326,7 +321,7 @@ class IndexEngine implements IndexEngineInterface {
 
         //indexing plain text and save in DB
         //get seperated words
-        $words = $this->search_index_split($text);
+        $words = $this->searchIndexSplit($text);
         $scored_words = array();
 
         //set focus to 1 at the beginning
@@ -362,7 +357,7 @@ class IndexEngine implements IndexEngineInterface {
             $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
-            $this->search_dirty($key);
+            $this->searchDirty($key);
         }
     }
 
@@ -439,7 +434,7 @@ class IndexEngine implements IndexEngineInterface {
             else {
                 // Note: use of PREG_SPLIT_DELIM_CAPTURE above will introduce empty values
                 if ($value != '') {
-                    $words = $this->search_index_split($value);
+                    $words = $this->searchIndexSplit($value);
                     foreach ($words as $word) {
                         if($word != "") {
                             // Add word to accumulator
@@ -480,7 +475,7 @@ class IndexEngine implements IndexEngineInterface {
             $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
-            $this->search_dirty($key);
+            $this->searchDirty($key);
         }
     }
 
@@ -510,10 +505,10 @@ class IndexEngine implements IndexEngineInterface {
     /**
      * Updates the score column in the search_total table
      */
-    function search_update_totals() {
+    function searchUpdateTotals() {
 
         //get all of the saved words from seach_dirty
-        foreach ($this->search_dirty() as $word => $dummy) {
+        foreach ($this->searchDirty() as $word => $dummy) {
 
             // Get total count for the word
             $searchIndexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
@@ -529,7 +524,6 @@ class IndexEngine implements IndexEngineInterface {
             foreach ($currentWord as $cWord) {
                 //if the word is already stored in search_total -> remove it and store it with the new score
                 $this->em->remove($cWord);
-                $this->em->flush();
             }
 
             $newTotal = new Total();
@@ -556,7 +550,7 @@ class IndexEngine implements IndexEngineInterface {
     /**
      * Simplifies and splits a string into words for indexing
      */
-    function search_index_split($text) {
+    function searchIndexSplit($text) {
         $text = $this->util->searchSimplify($text);
         $words = explode(' ', $text);
         return $words;
@@ -568,7 +562,7 @@ class IndexEngine implements IndexEngineInterface {
      * This is used during indexing (cron). Words that are dirty have outdated
      * total counts in the search_total table, and need to be recounted.
      */
-    function search_dirty($word = NULL) {
+    function searchDirty($word = NULL) {
         global $dirty;
         if ($word !== NULL) {
             $dirty[$word] = TRUE;

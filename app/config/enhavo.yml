@@ -158,7 +158,7 @@ enhavo_contact:
 enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: index
+        strategy: reindex
 
 
 
