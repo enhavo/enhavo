@@ -85,9 +85,7 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
-        $roleUtil = new RoleUtil();
-        $roleName = $roleUtil->getRoleName($resource, RoleUtil::ACTION_UPDATE);
-        if(!$this->isGranted($roleName, $resource)) {
+        if(!$this->isGranted('WORKFLOW_UPDATE', $resource)) {
             return new JsonResponse(null, 403);
         }
         $form = $this->getForm($resource);
