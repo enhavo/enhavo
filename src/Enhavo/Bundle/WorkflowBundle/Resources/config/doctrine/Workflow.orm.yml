@@ -13,6 +13,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
         workflow_name:
             type: string
             length: 255
+            nullable: true
 
         entity:
             type: string

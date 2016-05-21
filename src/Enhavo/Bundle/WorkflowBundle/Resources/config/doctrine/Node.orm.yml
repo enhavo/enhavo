@@ -11,6 +11,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
         node_name:
             type: string
             length: 255
+            nullable: true
 
         start:
             type: boolean

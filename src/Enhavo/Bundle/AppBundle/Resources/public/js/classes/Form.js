@@ -265,43 +265,86 @@ var Form = function(router, templating, admin, translator)
 
   this.initList = function(form) {
 
-    var initDeleteButton = function() {
-      $(form).find('.enhavo_list').each(function() {
-        if ($(this).length > 0) {
-          $(this).on('click', '.button-delete', function (e) {
-            e.preventDefault();
-            $(this).parent().remove();
-          });
-        }
-      });
+    var initDeleteButton = function(item) {
+        item.on('click', '.button-delete', function (e) {
+          e.preventDefault();
+          $(this).parents('.listElement').remove();
+        });
     };
 
-    var initAddButton = function(tagList, tagCount) {
-      tagList.parent().find('.add-another').click(function(e) {
+    var initAddButton = function(list, count) {
+      list.parent().find('.add-another').click(function(e) {
         e.preventDefault();
 
         // grab the prototype template
-        var newWidget = tagList.attr('data-prototype');
+        var item = list.attr('data-prototype');
         // replace the "__name__" used in the id and name of the prototype
         // with a number that's unique to your emails
         // end name attribute looks like name="contact[emails][2]"
-        newWidget = newWidget.replace(/__name__/g, tagCount);
-        //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
-        tagCount++;
+        item = item.replace(/__name__/g, count);
+        count++;
 
-
-        newWidget = $.parseHTML(newWidget);
-
-        self.initSelect(newWidget);
-        self.initRadioAndCheckbox(newWidget);
-        self.initDataPicker(form);
-        self.initInput(form);
-        self.initWysiwyg(form);
-
-        tagList.append(newWidget);
-        initDeleteButton();
-        setOrderForContainer(tagList);
+        item = $.parseHTML(item.trim());
+        initItem($(item));
+        list.append(item);
+        setOrderForContainer(list);
       })
+    };
+
+    var initItem = function(item) {
+      $(document).trigger('formListItemInit', item);
+      initButtonUp(item);
+      initButtonDown(item);
+      initDeleteButton(item);
+    };
+
+    var initButtonUp = function(item) {
+      item.on('click', '.button-up', function() {
+        var liElement = $(this).parent();
+        while(!liElement.hasClass('listElement')) {
+          liElement = liElement.parent();
+        }
+        var list = liElement.parent();
+        var index = list.children().index(liElement);
+
+        if(index > 0) { // is not first element
+          if(liElement.find('[data-wysiwyg]').length) {
+            var editorId = liElement.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
+            $(list.children().get(index - 1)).before(liElement); //move element before last
+            tinymce.execCommand('mceAddEditor', false, editorId);
+          } else {
+            $(list.children().get(index - 1)).before(liElement); //move element before last
+          }
+        }
+
+        setOrderForContainer(list);
+      });
+    };
+
+    var initButtonDown = function(item) {
+      item.on('click', '.button-down', function() {
+        var liElement = $(this).parent();
+        while(!liElement.hasClass('listElement')) {
+          liElement = liElement.parent();
+        }
+        var list = liElement.parent();
+        var index = list.children().index(liElement);
+        var size = list.children().size();
+
+        if(index < (size - 1)) { // is not last element
+          if(liElement.find('[data-wysiwyg]').length) {
+            var editorId = liElement.find('[data-wysiwyg]').attr('id');
+            tinymce.execCommand('mceRemoveEditor', false, editorId);
+            $(list.children().get(index + 1)).after(liElement); //move element after next
+            tinymce.execCommand('mceAddEditor', false, editorId);
+          } else {
+            $(list.children().get(index + 1)).after(liElement); //move element after next
+          }
+        }
+
+        setOrderForContainer(list)
+      });
     };
 
     var setOrderForContainer = function(list) {
@@ -311,91 +354,29 @@ var Form = function(router, templating, admin, translator)
       });
     };
 
-    $(document).ready(function() {
-
+    (function(form) {
       $(form).find('.enhavo_list').each(function() {
-        var tagList = $(this);
+        var list = $(this);
 
-        // keep track of how many email fields have been rendered
-        var tagCount = $(this).children().length;
+        $.each(list.children(), function(index, item) {
+          initItem($(item));
+        });
 
-        if(tagList.length > 0) {
-          if (tagCount == 0) {
-            // grab the prototype template
-            var newWidget = tagList.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, tagCount);
-            tagCount++;
+        setOrderForContainer(list);
 
-            newWidget = $.parseHTML(newWidget);
-
-            self.initSelect(newWidget);
-            self.initRadioAndCheckbox(newWidget);
-            self.initDataPicker(form);
-            self.initInput(form);
-            self.initWysiwyg(form);
-
-            tagList.append(newWidget);
-
-
-
-            initDeleteButton();
-            setOrderForContainer(tagList);
-          }
-
-          initAddButton(tagList, tagCount);
-
-          initDeleteButton();
-
-          tagList.on('click', '.button-down', function() {
-            var liElement = $(this).parent();
-            while(!liElement.hasClass('listElement')) {
-              liElement = liElement.parent();
-            };
-            var list = liElement.parent();
-            var index = list.children().index(liElement);
-            var size = list.children().size();
-
-            if(index < (size - 1)) { // is not last element
-              if(liElement.find('[data-wysiwyg]').length) {
-                var editorId = liElement.find('[data-wysiwyg]').attr('id');
-                tinymce.execCommand('mceRemoveEditor', false, editorId);
-                $(list.children().get(index + 1)).after(liElement); //move element after next
-                tinymce.execCommand('mceAddEditor', false, editorId);
-              } else {
-                $(list.children().get(index + 1)).after(liElement); //move element after next
-              }
-            }
-
-            setOrderForContainer(list)
-          });
-
-          tagList.on('click', '.button-up', function() {
-            var liElement = $(this).parent();
-            while(!liElement.hasClass('listElement')) {
-              liElement = liElement.parent();
-            };
-            var list = liElement.parent();
-            var index = list.children().index(liElement);
-
-            if(index > 0) { // is not first element
-              if(liElement.find('[data-wysiwyg]').length) {
-                var editorId = liElement.find('[data-wysiwyg]').attr('id');
-                tinymce.execCommand('mceRemoveEditor', false, editorId);
-                $(list.children().get(index - 1)).before(liElement); //move element before last
-                tinymce.execCommand('mceAddEditor', false, editorId);
-              } else {
-                $(list.children().get(index - 1)).before(liElement); //move element before last
-              }
-            }
-
-            setOrderForContainer(list);
-          });
-        };
+        var count = $(this).children().length;
+        initAddButton(list, count);
       });
-    });
+
+      $(document).on('formListItemInit', function(event, item) {
+        self.initSelect($(item));
+        self.initRadioAndCheckbox($(item));
+        self.initDataPicker($(item));
+        self.initInput($(item));
+        self.initWysiwyg($(item));
+      });
+
+    })(form);
   };
 
   var init = function() {
@@ -418,6 +399,7 @@ var Form = function(router, templating, admin, translator)
 
     $(document).on('formCloseAfter', function(event, content) {
       self.destroyWysiwyg(content);
+      admin.closeLoadingOverlay();
     });
   };
 
