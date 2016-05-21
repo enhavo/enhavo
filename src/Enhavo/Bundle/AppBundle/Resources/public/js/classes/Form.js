@@ -120,7 +120,8 @@ var Form = function(router, templating, admin, translator)
   };
 
   this.initSave = function (form) {
-    $(form).find('[data-button][data-type=save]').click(function() {
+    $(form).find('[data-button][data-type=save]').click(function(event) {
+      event.preventDefault();
       $(this).trigger('formSaveBefore', form);
 
       form = $(form);
@@ -288,8 +289,15 @@ var Form = function(router, templating, admin, translator)
         //newWidget = $(newWidget).find('.row').append('<div class="button col-md-1 button-delete"><i class="fa fa-remove"></i></div>');
         tagCount++;
 
+
         newWidget = $.parseHTML(newWidget);
+
         self.initSelect(newWidget);
+        self.initRadioAndCheckbox(newWidget);
+        self.initDataPicker(form);
+        self.initInput(form);
+        self.initWysiwyg(form);
+
         tagList.append(newWidget);
         initDeleteButton();
         setOrderForContainer(tagList);
@@ -321,7 +329,18 @@ var Form = function(router, templating, admin, translator)
             newWidget = newWidget.replace(/__name__/g, tagCount);
             tagCount++;
 
+            newWidget = $.parseHTML(newWidget);
+
+            self.initSelect(newWidget);
+            self.initRadioAndCheckbox(newWidget);
+            self.initDataPicker(form);
+            self.initInput(form);
+            self.initWysiwyg(form);
+
             tagList.append(newWidget);
+
+
+
             initDeleteButton();
             setOrderForContainer(tagList);
           }
