@@ -266,7 +266,7 @@ var Form = function(router, templating, admin, translator)
   this.initList = function(form) {
 
     var initDeleteButton = function(item) {
-        item.on('click', '.button-delete', function (e) {
+      $(item).on('click', '.button-delete', function (e) {
           e.preventDefault();
           $(this).parents('.listElement').remove();
         });
@@ -285,21 +285,21 @@ var Form = function(router, templating, admin, translator)
         count++;
 
         item = $.parseHTML(item.trim());
-        initItem($(item));
+        initItem(item);
+        $(document).trigger('formListAddItem', item);
         list.append(item);
         setOrderForContainer(list);
       })
     };
 
     var initItem = function(item) {
-      $(document).trigger('formListItemInit', item);
       initButtonUp(item);
       initButtonDown(item);
       initDeleteButton(item);
     };
 
     var initButtonUp = function(item) {
-      item.on('click', '.button-up', function() {
+      $(item).on('click', '.button-up', function() {
         var liElement = $(this).parent();
         while(!liElement.hasClass('listElement')) {
           liElement = liElement.parent();
@@ -323,7 +323,7 @@ var Form = function(router, templating, admin, translator)
     };
 
     var initButtonDown = function(item) {
-      item.on('click', '.button-down', function() {
+      $(item).on('click', '.button-down', function() {
         var liElement = $(this).parent();
         while(!liElement.hasClass('listElement')) {
           liElement = liElement.parent();
@@ -367,15 +367,6 @@ var Form = function(router, templating, admin, translator)
         var count = $(this).children().length;
         initAddButton(list, count);
       });
-
-      $(document).on('formListItemInit', function(event, item) {
-        self.initSelect($(item));
-        self.initRadioAndCheckbox($(item));
-        self.initDataPicker($(item));
-        self.initInput($(item));
-        self.initWysiwyg($(item));
-      });
-
     })(form);
   };
 
@@ -391,6 +382,14 @@ var Form = function(router, templating, admin, translator)
       self.initSorting(form);
       self.initInput(form);
       self.initList(form);
+    });
+
+    $(document).on('formListAddItem', function(event, item) {
+      self.initSelect(item);
+      self.initRadioAndCheckbox(item);
+      self.initDataPicker(item);
+      self.initInput(item);
+      self.initWysiwyg(item);
     });
 
     $(document).on('formSaveAfter', function() {
