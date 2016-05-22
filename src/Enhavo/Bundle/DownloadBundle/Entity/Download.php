@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
 
 /**
  * Download
  */
-class Download
+class Download implements DownloadInterface
 {
     /**
      * @var integer
@@ -27,7 +27,7 @@ class Download
     protected $text;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $file;
 
@@ -67,7 +67,7 @@ class Download
     /**
      * Set teaser
      *
-     * @param string $teaser
+     * @param string $text
      * @return Download
      */
     public function setText($text)
@@ -90,10 +90,10 @@ class Download
     /**
      * Set date
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
+     * @param FileInterface|null $file
      * @return Download
      */
-    public function setFile($file)
+    public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
 
@@ -103,7 +103,7 @@ class Download
     /**
      * Get file
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getFile()
     {

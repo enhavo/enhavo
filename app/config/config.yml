@@ -71,12 +71,28 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
             Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
+
             Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+            Enhavo\Bundle\WorkflowBundle\Model\NodeInterface: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface: Enhavo\Bundle\WorkflowBundle\Entity\Transition
+            Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+
+            Enhavo\Bundle\DownloadBundle\Model\DownloadInterface: Enhavo\Bundle\DownloadBundle\Entity\Download
+
             Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
+            Enhavo\Bundle\GridBundle\Model\ItemInterface: Enhavo\Bundle\GridBundle\Entity\Item
+            Enhavo\Bundle\GridBundle\Model\ContainerInterface: Enhavo\Bundle\GridBundle\Entity\Container
+            Enhavo\Bundle\GridBundle\Model\ColumnInterface: Enhavo\Bundle\GridBundle\Entity\Column
+
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
+
             Enhavo\Bundle\AppBundle\Model\RouteInterface: Enhavo\Bundle\AppBundle\Entity\Route
+
             Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
             Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
+
+            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
+            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
 
 
 # Swiftmailer Configuration

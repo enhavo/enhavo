@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\TextText:
     type: entity
-    table: grid_type_text_text
+    table: grid_item_text_text
     id:
         id:
             type: integer

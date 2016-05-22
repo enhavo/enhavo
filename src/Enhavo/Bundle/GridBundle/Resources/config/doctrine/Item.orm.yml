@@ -27,9 +27,9 @@ Enhavo\Bundle\GridBundle\Entity\Item:
 
     manyToOne:
         column:
-            targetEntity: Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\ColumnInterface
 
         grid:
-            targetEntity: Grid
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
     lifecycleCallbacks: {  }

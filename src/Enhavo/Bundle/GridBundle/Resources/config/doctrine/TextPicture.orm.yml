@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\TextPicture:
     type: entity
-    table: grid_type_text_picture
+    table: grid_item_text_picture
     id:
         id:
             type: integer

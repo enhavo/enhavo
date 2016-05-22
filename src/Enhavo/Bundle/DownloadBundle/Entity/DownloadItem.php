@@ -2,7 +2,9 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
+use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * DownloadItem
@@ -15,12 +17,12 @@ class DownloadItem implements ItemTypeInterface
     protected $id;
 
     /**
-     * @var \Enhavo\Bundle\DownloadBundle\Entity\Download
+     * @var DownloadInterface
      */
     protected $download;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $file;
 
@@ -42,11 +44,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Set download
      *
-     * @param \Enhavo\Bundle\DownloadBundle\Entity\Download $download
+     * @param DownloadInterface $download
      *
      * @return DownloadItem
      */
-    public function setDownload(\Enhavo\Bundle\DownloadBundle\Entity\Download $download = null)
+    public function setDownload(DownloadInterface $download = null)
     {
         $this->download = $download;
 
@@ -56,7 +58,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Get download
      *
-     * @return \Enhavo\Bundle\DownloadBundle\Entity\Download
+     * @return DownloadInterface
      */
     public function getDownload()
     {
@@ -64,10 +66,10 @@ class DownloadItem implements ItemTypeInterface
     }
 
     /**
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
+     * @param FileInterface|null $file
      * @return DownloadItem
      */
-    public function setFile($file)
+    public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
         return $this;
@@ -76,7 +78,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Get file
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getFile()
     {

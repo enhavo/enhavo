@@ -185,6 +185,4 @@ class TextText implements ItemTypeInterface
     {
         $this->layout = $layout;
     }
-
-
 }

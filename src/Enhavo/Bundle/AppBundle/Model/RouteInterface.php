@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Model;
 
+use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
-interface RouteInterface
+interface RouteInterface extends RouteObjectInterface
 {
 
 }

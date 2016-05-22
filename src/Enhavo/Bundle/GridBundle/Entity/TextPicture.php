@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * TextPicture
@@ -32,10 +33,13 @@ class TextPicture implements ItemTypeInterface
     protected $textLeft;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $file;
 
+    /**
+     * @var boolean
+     */
     protected $frame;
 
     /**
@@ -97,7 +101,7 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Set textleft
+     * Set if text is displayed left, otherwise it will be right
      *
      * @param boolean $textLeft
      *
@@ -111,7 +115,7 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Get textleft
+     * Get if text is left
      *
      * @return boolean
      */
@@ -123,10 +127,10 @@ class TextPicture implements ItemTypeInterface
     /**
      * Set file
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $files
+     * @param FileInterface $file
      * @return Grid
      */
-    public function setFile($file)
+    public function setFile(FileInterface $file)
     {
         $this->file = $file;
 
@@ -136,7 +140,7 @@ class TextPicture implements ItemTypeInterface
     /**
      * Get file
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     * @return FileInterface
      */
     public function getFile()
     {

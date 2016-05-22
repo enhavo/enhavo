@@ -4,13 +4,14 @@ namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
+use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Category
  */
 class Category implements CategoryInterface
 {
-
     /**
      * @var integer
      */
@@ -22,7 +23,7 @@ class Category implements CategoryInterface
     protected $name;
 
     /**
-     * @var \Enhavo\Bundle\CategoryBundle\Entity\Collection
+     * @var CollectionInterface
      */
     protected $collection;
 
@@ -42,7 +43,7 @@ class Category implements CategoryInterface
     private $text;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     private $picture;
 
@@ -82,10 +83,10 @@ class Category implements CategoryInterface
     /**
      * Set collection
      *
-     * @param \Enhavo\Bundle\CategoryBundle\Entity\Collection $collection
+     * @param CollectionInterface $collection
      * @return Category
      */
-    public function setCollection(\Enhavo\Bundle\CategoryBundle\Entity\Collection $collection = null)
+    public function setCollection(CollectionInterface $collection = null)
     {
         $this->collection = $collection;
 
@@ -95,7 +96,7 @@ class Category implements CategoryInterface
     /**
      * Get collection
      *
-     * @return \Enhavo\Bundle\CategoryBundle\Entity\Collection
+     * @return CollectionInterface
      */
     public function getCollection()
     {
@@ -158,11 +159,11 @@ class Category implements CategoryInterface
     }
 
     /**
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $picture
+     * @param FileInterface|null $picture
      *
      * @return Category
      */
-    public function setPicture($picture)
+    public function setPicture(FileInterface $picture = null)
     {
         $this->picture = $picture;
 
@@ -172,7 +173,7 @@ class Category implements CategoryInterface
     /**
      * Get picture
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getPicture()
     {

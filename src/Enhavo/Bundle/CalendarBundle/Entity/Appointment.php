@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Appointment
@@ -26,12 +28,12 @@ class Appointment extends Content
     private $dateTo;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @var GridInterface
      */
     private $grid;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     private $picture;
 
@@ -110,10 +112,10 @@ class Appointment extends Content
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
+     * @param GridInterface $grid
      * @return Appointment
      */
-    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
+    public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
 
@@ -123,7 +125,7 @@ class Appointment extends Content
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @return GridInterface
      */
     public function getGrid()
     {
@@ -131,7 +133,7 @@ class Appointment extends Content
     }
 
     /**
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     * @return FileInterface
      */
     public function getPicture()
     {
@@ -139,9 +141,9 @@ class Appointment extends Content
     }
 
     /**
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     * @param FileInterface|null $picture
      */
-    public function setPicture($picture)
+    public function setPicture(FileInterface $picture = null)
     {
         $this->picture = $picture;
     }

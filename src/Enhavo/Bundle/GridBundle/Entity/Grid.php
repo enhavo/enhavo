@@ -3,7 +3,9 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\GridBundle\Model\ContainerInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
 /**
  * Grid
@@ -46,10 +48,10 @@ class Grid implements GridInterface
     /**
      * Add containers
      *
-     * @param Container $containers
+     * @param ContainerInterface $containers
      * @return Grid
      */
-    public function addContainer(Container $containers)
+    public function addContainer(ContainerInterface $containers)
     {
         $this->containers[] = $containers;
 
@@ -59,9 +61,9 @@ class Grid implements GridInterface
     /**
      * Remove containers
      *
-     * @param Container $containers
+     * @param ContainerInterface $containers
      */
-    public function removeContainer(Container $containers)
+    public function removeContainer(ContainerInterface $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -79,10 +81,10 @@ class Grid implements GridInterface
     /**
      * Add items
      *
-     * @param Item $items
+     * @param ItemInterface $item
      * @return Grid
      */
-    public function addItem(Item $item)
+    public function addItem(ItemInterface $item)
     {
         $item->setGrid($this);
         $this->items[] = $item;
@@ -93,9 +95,9 @@ class Grid implements GridInterface
     /**
      * Remove items
      *
-     * @param Item $items
+     * @param ItemInterface $item
      */
-    public function removeItem(Item $item)
+    public function removeItem(ItemInterface $item)
     {
         $item->setGrid(null);
         $this->items->removeElement($item);

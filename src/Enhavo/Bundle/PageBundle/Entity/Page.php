@@ -4,6 +4,8 @@ namespace Enhavo\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 /**
  * Page
@@ -11,17 +13,17 @@ use Enhavo\Bundle\ContentBundle\Entity\Content;
 class Page extends Content
 {
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @var GridInterface
      */
     protected $grid;
 
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
+     * @param GridInterface $grid
      * @return Content
      */
-    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
+    public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
 
@@ -31,14 +33,14 @@ class Page extends Content
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @return GridInterface
      */
     public function getGrid()
     {
         return $this->grid;
     }
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @var WorkflowStatusInterface
      */
     private $workflow_status;
 
@@ -46,11 +48,11 @@ class Page extends Content
     /**
      * Set workflowStatus
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     * @param WorkflowStatusInterface $workflowStatus
      *
      * @return Page
      */
-    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    public function setWorkflowStatus(WorkflowStatusInterface $workflowStatus = null)
     {
         $this->workflow_status = $workflowStatus;
 
@@ -60,7 +62,7 @@ class Page extends Content
     /**
      * Get workflowStatus
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @return WorkflowStatusInterface
      */
     public function getWorkflowStatus()
     {

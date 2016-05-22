@@ -9,6 +9,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
@@ -72,7 +73,7 @@ abstract class Content implements Publishable, Routeable, Slugable
     protected $public;
 
     /**
-     * @var \Enhavo\Bundle\AppBundle\Entity\Route
+     * @var RouteInterface
      */
     protected $route;
 
@@ -319,7 +320,7 @@ abstract class Content implements Publishable, Routeable, Slugable
     }
 
     /**
-     * @return \Enhavo\Bundle\AppBundle\Entity\Route
+     * @return RouteInterface
      */
     public function getRoute()
     {
@@ -327,7 +328,7 @@ abstract class Content implements Publishable, Routeable, Slugable
     }
 
     /**
-     * @param \Enhavo\Bundle\AppBundle\Entity\Route $route
+     * @param RouteObjectInterface $route
      */
     public function setRoute(RouteObjectInterface $route)
     {

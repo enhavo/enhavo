@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Gallery:
     type: entity
-    table: grid_type_gallery
+    table: grid_item_gallery
     id:
         id:
             type: integer
@@ -21,7 +21,7 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             joinTable:
-                name: grid_type_gallery_files
+                name: grid_item_gallery_files
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id
