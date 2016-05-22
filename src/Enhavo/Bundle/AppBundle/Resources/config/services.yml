@@ -141,6 +141,13 @@ services:
             - @router
             - @enhavo_app.route_guesser
 
+    enhavo_message:
+        class: Enhavo\Bundle\AppBundle\Form\Type\MessageType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @translator
+
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
         tags:
