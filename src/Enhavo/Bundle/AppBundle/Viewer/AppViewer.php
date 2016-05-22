@@ -15,6 +15,9 @@ class AppViewer extends AbstractViewer
     public function getBlocks()
     {
         $blocks = $this->getConfig()->get('blocks');
+        if(!is_array($blocks)) {
+            $blocks = [];
+        }
         foreach($blocks as &$block) {
             if(!array_key_exists('parameters', $block)) {
                 $block['parameters'] = null;
