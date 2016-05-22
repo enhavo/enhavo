@@ -14,7 +14,7 @@ form:
   delete:
     question: 'Wollen sie dieses Element wirklich löschen?'
   label:
-    public: 'Veröffentlichen'
+    public: 'Öffentlich'
     meta_description: 'Meta Text'
     link: 'Link'
     title: 'Titel'

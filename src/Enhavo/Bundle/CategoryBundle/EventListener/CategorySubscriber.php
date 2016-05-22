@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\CategoryBundle\EventListener;
 
 use Enhavo\Bundle\CategoryBundle\Entity\Collection;
+use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Sylius\Component\Resource\Event\ResourceEvent;
@@ -50,6 +51,10 @@ class CategorySubscriber implements EventSubscriberInterface
 
     protected function setCollection(Category $category)
     {
+        if($category->getCollection() instanceof CollectionInterface) {
+            return; //do nothing if collection is already set
+        }
+
         $collectionName = $this->container->getParameter('enhavo_category.default_collection');
         $collection = $this->container->get('enhavo_category.repository.collection')->findOneBy([
             'name' => $collectionName
