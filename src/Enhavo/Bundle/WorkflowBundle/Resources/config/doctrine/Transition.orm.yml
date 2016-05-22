@@ -11,6 +11,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
         transition_name:
             type: string
             length: 255
+            nullable: true
 
     manyToOne:
         node_from:
