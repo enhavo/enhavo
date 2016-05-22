@@ -285,9 +285,9 @@ var Form = function(router, templating, admin, translator)
         count++;
 
         item = $.parseHTML(item.trim());
+        list.append(item);
         initItem(item);
         $(document).trigger('formListAddItem', item);
-        list.append(item);
         setOrderForContainer(list);
       })
     };
