@@ -28,6 +28,6 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
     manyToOne:
         file:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

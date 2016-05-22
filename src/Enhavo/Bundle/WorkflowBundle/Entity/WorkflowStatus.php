@@ -1,11 +1,12 @@
 <?php
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 /**
  * WorkflowStatus
  */
-class WorkflowStatus
+class WorkflowStatus implements WorkflowStatusInterface
 {
     /**
      * @var integer

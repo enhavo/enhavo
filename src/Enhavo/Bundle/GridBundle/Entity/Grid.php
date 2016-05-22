@@ -3,11 +3,12 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
 
 /**
  * Grid
  */
-class Grid
+class Grid implements GridInterface
 {
     /**
      * @var integer

@@ -20,6 +20,6 @@ Enhavo\Bundle\GridBundle\Entity\Picture:
     manyToOne:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

@@ -34,9 +34,10 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
 
     manyToOne:
         collection:
-            targetEntity: Collection
+            targetEntity: Enhavo\Bundle\CategoryBundle\Model\CollectionInterface
+
         picture:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

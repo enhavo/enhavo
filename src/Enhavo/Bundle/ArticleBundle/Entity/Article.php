@@ -34,6 +34,19 @@ class Article extends Content
     private $workflow_status;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Set picture
      *
      * @param $picture \Enhavo\Bundle\MediaBundle\Entity\File|null
@@ -124,5 +137,39 @@ class Article extends Content
     public function getWorkflowStatus()
     {
         return $this->workflow_status;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \Enhavo\Bundle\CategoryBundle\Entity\Category $category
+     *
+     * @return Article
+     */
+    public function addCategory(\Enhavo\Bundle\CategoryBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Enhavo\Bundle\CategoryBundle\Entity\Category $category
+     */
+    public function removeCategory(\Enhavo\Bundle\CategoryBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

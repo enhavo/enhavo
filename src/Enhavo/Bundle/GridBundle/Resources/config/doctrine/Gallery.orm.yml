@@ -19,9 +19,9 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
     manyToMany:
         files:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             joinTable:
-                name: grid_gallery_files
+                name: grid_type_gallery_files
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id

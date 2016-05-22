@@ -65,10 +65,19 @@ doctrine:
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
-
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        resolve_target_entities:
+            Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
+            Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
+            Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+            Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
+            Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
+            Enhavo\Bundle\AppBundle\Model\RouteInterface: Enhavo\Bundle\AppBundle\Entity\Route
+            Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
+            Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
+
 
 # Swiftmailer Configuration
 swiftmailer:

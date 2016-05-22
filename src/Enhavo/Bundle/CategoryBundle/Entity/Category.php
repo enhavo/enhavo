@@ -3,11 +3,12 @@
 namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 
 /**
  * Category
  */
-class Category
+class Category implements CategoryInterface
 {
 
     /**
@@ -24,6 +25,26 @@ class Category
      * @var \Enhavo\Bundle\CategoryBundle\Entity\Collection
      */
     protected $collection;
+
+    /**
+     * @var integer
+     */
+    protected $order;
+
+    /**
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     */
+    private $text;
+
+    /**
+     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     */
+    private $picture;
 
     /**
      * Get id
@@ -88,25 +109,6 @@ class Category
         }
         return '';
     }
-    /**
-     * @var integer
-     */
-    protected $order;
-
-    /**
-     * @var string
-     */
-    protected $slug;
-
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
-     */
-    private $picture;
 
     /**
      * Set order

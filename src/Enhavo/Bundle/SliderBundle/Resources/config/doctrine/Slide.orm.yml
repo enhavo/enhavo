@@ -35,6 +35,7 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
     manyToOne:
         image:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
         slider:
-            targetEntity: Slider
+            targetEntity: Enhavo\Bundle\SliderBundle\Model\SliderInterface
