@@ -15,23 +15,23 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
 
     manyToOne:
         node_from:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
         node_to:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
         workflow:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
 
 
     manyToMany:
         groups:
-          targetEntity: Enhavo\Bundle\UserBundle\Entity\Group
-          joinTable:
-            name: transitions_groups
-            joinColumns:
-              transition_id:
-                referencedColumnName: id
-            inverseJoinColumns:
-              group_id:
-                referencedColumnName: id
+            targetEntity: Enhavo\Bundle\UserBundle\Model\GroupInterface
+            joinTable:
+                name: workflow_transition_group
+                joinColumns:
+                    transition_id:
+                      referencedColumnName: id
+                inverseJoinColumns:
+                    group_id:
+                       referencedColumnName: id
 
     lifecycleCallbacks: {  }

@@ -20,6 +20,8 @@ services:
         class: %enhavo_category.class%
         arguments:
             - '@doctrine.orm.entity_manager'
+            - %enhavo_category.model.category.class%
+            - %enhavo_category.default_collection%
         tags:
             - { name: form.type, alias: 'enhavo_category'}
 

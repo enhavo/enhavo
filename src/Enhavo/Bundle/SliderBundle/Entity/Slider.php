@@ -3,11 +3,13 @@
 namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
+use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 
 /**
  * Slider
  */
-class Slider
+class Slider implements SliderInterface
 {
     /**
      * @var integer
@@ -68,10 +70,10 @@ class Slider
     /**
      * Add slides
      *
-     * @param \Enhavo\Bundle\ProjectBundle\Entity\Slide $slides
+     * @param SlideInterface $slides
      * @return Slider
      */
-    public function addSlide(\Enhavo\Bundle\SliderBundle\Entity\Slide $slides)
+    public function addSlide(SlideInterface $slides)
     {
         $this->slides[] = $slides;
         $slides->setSlider($this);
@@ -81,9 +83,9 @@ class Slider
     /**
      * Remove slides
      *
-     * @param \Enhavo\Bundle\ProjectBundle\Entity\Slide $slides
+     * @param SliderInterface $slides
      */
-    public function removeSlide(\Enhavo\Bundle\SliderBundle\Entity\Slide $slides)
+    public function removeSlide(SlideInterface $slides)
     {
         $this->slides->removeElement($slides);
     }

@@ -4,11 +4,14 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
 /**
  * Item
  */
-class Item
+class Item implements ItemInterface
 {
     /**
      * @var integer
@@ -21,7 +24,7 @@ class Item
     protected $order;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @var GridInterface
      */
     protected $grid;
 
@@ -31,7 +34,7 @@ class Item
     protected $configuration;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Column
+     * @var ColumnInterface
      */
     protected $column;
 
@@ -108,10 +111,10 @@ class Item
     /**
      * Set column
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Column $column
+     * @param ColumnInterface $column
      * @return Item
      */
-    public function setColumn(\Enhavo\Bundle\GridBundle\Entity\Column $column = null)
+    public function setColumn(ColumnInterface $column = null)
     {
         $this->column = $column;
 
@@ -121,7 +124,7 @@ class Item
     /**
      * Get column
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Column
+     * @return ColumnInterface
      */
     public function getColumn()
     {
@@ -131,10 +134,10 @@ class Item
     /**
      * Set grid
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
+     * @param GridInterface $grid
      * @return Item
      */
-    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
+    public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
 
@@ -144,7 +147,7 @@ class Item
     /**
      * Get grid
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @return GridInterface
      */
     public function getGrid()
     {

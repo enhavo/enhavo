@@ -68,4 +68,4 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
     manyToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\AppBundle\Entity\Route
+            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface

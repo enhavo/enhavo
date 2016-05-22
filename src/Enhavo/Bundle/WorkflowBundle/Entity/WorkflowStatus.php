@@ -1,11 +1,13 @@
 <?php
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
+use Enhavo\Bundle\WorkflowBundle\Model\NodeInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 /**
  * WorkflowStatus
  */
-class WorkflowStatus
+class WorkflowStatus implements WorkflowStatusInterface
 {
     /**
      * @var integer
@@ -13,7 +15,7 @@ class WorkflowStatus
     private $id;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @var NodeInterface
      */
     private $node;
 
@@ -30,11 +32,11 @@ class WorkflowStatus
     /**
      * Set node
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $node
+     * @param NodeInterface $node
      *
      * @return WorkflowStatus
      */
-    public function setNode(\Enhavo\Bundle\WorkflowBundle\Entity\Node $node = null)
+    public function setNode(NodeInterface $node = null)
     {
         if($node != null){
             $this->node = $node;
@@ -46,7 +48,7 @@ class WorkflowStatus
     /**
      * Get node
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @return NodeInterface
      */
     public function getNode()
     {

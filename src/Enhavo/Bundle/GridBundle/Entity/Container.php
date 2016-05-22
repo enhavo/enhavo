@@ -3,36 +3,24 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
+use Enhavo\Bundle\GridBundle\Model\ContainerInterface;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
 
 /**
  * Container
  */
-class Container
+class Container implements ContainerInterface
 {
     /**
      * @var integer
      */
     protected $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var string
      */
     protected $type;
-
-    /**
-     * @var string
-     */
-    protected $configuration;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -40,12 +28,12 @@ class Container
     protected $columns;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @var GridInterface
      */
     protected $grid;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Column
+     * @var ColumnInterface
      */
     protected $column;
 
@@ -55,6 +43,16 @@ class Container
     public function __construct()
     {
         $this->columns = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -81,37 +79,14 @@ class Container
     }
 
     /**
-     * Set configuration
-     *
-     * @param string $configuration
-     * @return Container
-     */
-    public function setConfiguration($configuration)
-    {
-        $this->configuration = $configuration;
-
-        return $this;
-    }
-
-    /**
-     * Get configuration
-     *
-     * @return string 
-     */
-    public function getConfiguration()
-    {
-        return $this->configuration;
-    }
-
-    /**
      * Add columns
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Column $columns
+     * @param ColumnInterface $column
      * @return Container
      */
-    public function addColumn(\Enhavo\Bundle\GridBundle\Entity\Column $columns)
+    public function addColumn(ColumnInterface $column)
     {
-        $this->columns[] = $columns;
+        $this->columns[] = $column;
 
         return $this;
     }
@@ -119,11 +94,11 @@ class Container
     /**
      * Remove columns
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Column $columns
+     * @param ColumnInterface $column
      */
-    public function removeColumn(\Enhavo\Bundle\GridBundle\Entity\Column $columns)
+    public function removeColumn(ColumnInterface $column)
     {
-        $this->columns->removeElement($columns);
+        $this->columns->removeElement($column);
     }
 
     /**
@@ -139,10 +114,10 @@ class Container
     /**
      * Set grid
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
+     * @param GridInterface $grid
      * @return Container
      */
-    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
+    public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
 
@@ -152,7 +127,7 @@ class Container
     /**
      * Get grid
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @return GridInterface
      */
     public function getGrid()
     {
@@ -162,10 +137,10 @@ class Container
     /**
      * Set column
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Column $column
+     * @param ColumnInterface $column
      * @return Container
      */
-    public function setColumn(\Enhavo\Bundle\GridBundle\Entity\Column $column = null)
+    public function setColumn(ColumnInterface $column = null)
     {
         $this->column = $column;
 
@@ -175,7 +150,7 @@ class Container
     /**
      * Get column
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Column
+     * @return ColumnInterface
      */
     public function getColumn()
     {

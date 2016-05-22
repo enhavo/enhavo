@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 /**
  * Newsletter
@@ -138,7 +139,7 @@ class Newsletter
         return $this->sent;
     }
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @var WorkflowStatusInterface
      */
     private $workflow_status;
 
@@ -146,11 +147,11 @@ class Newsletter
     /**
      * Set workflowStatus
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     * @param WorkflowStatusInterface $workflowStatus
      *
      * @return Newsletter
      */
-    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    public function setWorkflowStatus(WorkflowStatusInterface $workflowStatus = null)
     {
         $this->workflow_status = $workflowStatus;
 
@@ -160,7 +161,7 @@ class Newsletter
     /**
      * Get workflowStatus
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @return WorkflowStatusInterface
      */
     public function getWorkflowStatus()
     {

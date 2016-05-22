@@ -23,11 +23,11 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
 
     manyToOne:
         workflow:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
 
     oneToMany:
         transitions:
-            targetEntity: Transition
+            targetEntity:  Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface
             mappedBy: node_from
             orderBy: {'order': 'ASC'}
 

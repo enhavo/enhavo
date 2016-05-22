@@ -14,13 +14,10 @@ class CiteText implements ItemTypeInterface
      */
     protected $id;
 
-    protected $text;
-
-    protected $title;
-
+    /**
+     * @var string
+     */
     protected $cite;
-
-    protected $textLeft;
 
     /**
      * Get id
@@ -30,22 +27,6 @@ class CiteText implements ItemTypeInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTextLeft()
-    {
-        return $this->textLeft;
-    }
-
-    /**
-     * @param mixed $textLeft
-     */
-    public function setTextLeft($textLeft)
-    {
-        $this->textLeft = $textLeft;
     }
 
     /**
@@ -62,37 +43,5 @@ class CiteText implements ItemTypeInterface
     public function setCite($cite)
     {
         $this->cite = $cite;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param mixed $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
     }
 }

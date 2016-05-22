@@ -15,11 +15,11 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
     manyToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }
