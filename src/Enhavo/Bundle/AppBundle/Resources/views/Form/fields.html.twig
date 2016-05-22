@@ -139,3 +139,11 @@
     {{ form_widget(form) }}
 
 {% endblock %}
+
+{% block enhavo_message_widget %}
+    <div class="row mb1 form-message-box type-{{ type }}">
+        <div class="col-md-12">
+            {{ message }}
+        </div>
+    </div>
+{% endblock %}

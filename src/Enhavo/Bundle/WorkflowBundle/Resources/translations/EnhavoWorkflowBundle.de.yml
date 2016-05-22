@@ -1,5 +1,7 @@
 workflow:
   form:
+    message:
+      deleteNode: 'Beim löschen eines bestehenden Knotens werden auch alle damit verbundenen Übergänge gelöscht!'
     label:
       workflowName: 'Workflow Name'
       nodes: 'Knoten'
