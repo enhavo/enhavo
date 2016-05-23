@@ -79,9 +79,9 @@ enhavo_workflow_workflow_table:
                         widget:
                             type: template
                             template: EnhavoAppBundle:Widget:boolean.html.twig
-                    workflow_name:
-                        label: workflow.label.workflowName
-                        property: workflowName
+                    name:
+                        label: workflow.label.name
+                        property: name
                         width: 6
                     entity:
                         label: workflow.label.entity

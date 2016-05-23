@@ -17,17 +17,17 @@ class Transition
     /**
      * @var string
      */
-    private $transition_name;
+    private $name;
 
     /**
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
      */
-    private $node_from;
+    private $nodeFrom;
 
     /**
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
      */
-    private $node_to;
+    private $nodeTo;
 
     /**
      * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
@@ -58,27 +58,27 @@ class Transition
     }
 
     /**
-     * Set transitionName
+     * Set name
      *
-     * @param string $transitionName
+     * @param string $name
      *
      * @return Transition
      */
-    public function setTransitionName($transitionName)
+    public function setName($name)
     {
-        $this->transition_name = $transitionName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get transitionName
+     * Get name
      *
      * @return string
      */
-    public function getTransitionName()
+    public function getName()
     {
-        return $this->transition_name;
+        return $this->name;
     }
 
     /**
@@ -90,7 +90,7 @@ class Transition
      */
     public function setNodeFrom(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom = null)
     {
-        $this->node_from = $nodeFrom;
+        $this->nodeFrom = $nodeFrom;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class Transition
      */
     public function getNodeFrom()
     {
-        return $this->node_from;
+        return $this->nodeFrom;
     }
 
     /**
@@ -114,7 +114,7 @@ class Transition
      */
     public function setNodeTo(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo = null)
     {
-        $this->node_to = $nodeTo;
+        $this->nodeTo = $nodeTo;
 
         return $this;
     }
@@ -126,7 +126,7 @@ class Transition
      */
     public function getNodeTo()
     {
-        return $this->node_to;
+        return $this->nodeTo;
     }
 
     /**
@@ -136,7 +136,7 @@ class Transition
      */
     public function getNodeNameTo()
     {
-        return $this->node_to->getNodeName();
+        return $this->nodeTo->getName();
     }
 
     /**

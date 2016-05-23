@@ -67,7 +67,7 @@ class WorkflowVoter  implements VoterInterface
         if($user instanceof User){
             $workflowStatus = $resource->getWorkflowStatus();
             $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                'node_from' => $workflowStatus->getNode()
+                'nodeFrom' => $workflowStatus->getNode()
             ));
             if ($user->getGroups()) {
                 foreach ($transitions as $transition) {

@@ -31,14 +31,14 @@ class WorkflowValidator extends ConstraintValidator
         foreach($nodes as $currentValue) {
             if(is_array($currentValue)) {
                 foreach ($currentValue as $val) {
-                    if($val->getStart() || $val->getNodeName() == null){
+                    if($val->getStart() || $val->getName() == null){
                         continue;
                     } else {
                         $no_nodes = false;
                     }
                 }
             } else {
-                if($currentValue->getStart() || $currentValue->getNodeName() == null){
+                if($currentValue->getStart() || $currentValue->getName() == null){
                     continue;
                 } else {
                     $no_nodes = false;

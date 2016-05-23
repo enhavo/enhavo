@@ -8,7 +8,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
             generator:
                 strategy: AUTO
     fields:
-        node_name:
+        name:
             type: string
             length: 255
 
@@ -27,7 +27,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
     oneToMany:
         transitions:
             targetEntity: Transition
-            mappedBy: node_from
+            mappedBy: nodeFrom
             orderBy: {'order': 'ASC'}
 
     lifecycleCallbacks: {  }

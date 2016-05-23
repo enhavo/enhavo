@@ -1,7 +1,7 @@
 workflow:
   form:
     label:
-      workflowName: 'Workflow Name'
+      name: 'Workflow Name'
       nodes: 'Knoten'
       transitions: 'Übergänge'
       page: 'Seiten'
@@ -15,7 +15,7 @@ workflow:
     workflow: 'Workflow'
     nodes: 'Knoten'
     transitions: 'Übergänge'
-    workflowName: 'Workflow Name'
+    name: 'Workflow Name'
     entity: 'Entity'
     currentWFS: 'Aktueller Workflow-Status'
     active: 'Aktiv'
@@ -30,11 +30,11 @@ workflow:
 node:
   form:
     label:
-      nodeName: 'Knoten Name'
+      name: 'Knoten Name'
       startNode: 'Start Knoten'
 transition:
   form:
     label:
-      transitionName: 'Bezeichnung'
+      name: 'Bezeichnung'
       nodeFrom: 'Von'
       nodeTo: 'Nach'
