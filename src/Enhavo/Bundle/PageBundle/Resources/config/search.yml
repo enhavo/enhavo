@@ -11,5 +11,5 @@ Enhavo\Bundle\PageBundle\Entity\Page:
                 weight: 3
                 type: teaser
 
-        content:
+        grid:
             - Model

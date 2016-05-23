@@ -297,45 +297,48 @@ class SearchRequest {
     protected function highlightText($object)
     {
         //highlight title
-        $title = $object->getTitle();
-        $allTitelsWords = explode(" ", $title);
-        $wordsToHighlightTitle = array();
-        foreach($allTitelsWords as $allTitelsWord) {
-            $simplifiedWord = $this->util->searchSimplify($allTitelsWord);
-            foreach($this->words as $searchWord){
-                if($searchWord == $simplifiedWord) {
-                    $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+        if(property_exists($object, 'teaser')) {
+            $title = $object->getTitle();
+            $allTitelsWords = explode(" ", $title);
+            $wordsToHighlightTitle = array();
+            foreach ($allTitelsWords as $allTitelsWord) {
+                $simplifiedWord = $this->util->searchSimplify($allTitelsWord);
+                foreach ($this->words as $searchWord) {
+                    if ($searchWord == $simplifiedWord) {
+                        $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+                    }
                 }
             }
-        }
-        $newTitle = $title;
-        foreach($wordsToHighlightTitle as $key => $value){
-            $newTitle = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTitle);
-        }
-        if($newTitle != null) {
-            $object->setTitle($newTitle);
+            $newTitle = $title;
+            foreach ($wordsToHighlightTitle as $key => $value) {
+                $newTitle = str_replace($key, '<b style="color:red">' . $key . '</b>', $newTitle);
+            }
+            if ($newTitle != null) {
+                $object->setTitle($newTitle);
+            }
         }
 
         //highlight teaser
-        $teaser = $object->getTeaser();
-        $allTeasersWords = explode(" ", $teaser);
-        $wordsToHighlightTeaser = array();
-        foreach($allTeasersWords as $allTeasersWord) {
-            $simplifiedWord = $this->util->searchSimplify($allTeasersWord);
-            foreach($this->words as $searchWord){
-                if($searchWord == $simplifiedWord) {
-                    $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+        if(property_exists($object, 'teaser')){
+            $teaser = $object->getTeaser();
+            $allTeasersWords = explode(" ", $teaser);
+            $wordsToHighlightTeaser = array();
+            foreach($allTeasersWords as $allTeasersWord) {
+                $simplifiedWord = $this->util->searchSimplify($allTeasersWord);
+                foreach($this->words as $searchWord){
+                    if($searchWord == $simplifiedWord) {
+                        $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+                    }
                 }
             }
+            $newTeaser = $teaser;
+            foreach($wordsToHighlightTeaser as $key => $value){
+                $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
+            }
+            if($newTeaser != null) {
+                $object->setTeaser($newTeaser);
+            }
         }
-        $newTeaser = $teaser;
-        foreach($wordsToHighlightTeaser as $key => $value){
-            $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
-        }
-        if($newTeaser != null) {
-            $object->setTeaser($newTeaser);
-        }
-
         return $object;
     }
 

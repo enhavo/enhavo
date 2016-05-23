@@ -51,10 +51,6 @@ class WorkflowVoter  implements VoterInterface
 
     protected function isAllowed($resource, $token) {
 
-        //check if the object variable is an object --> this means someone clicked on an element to UPDATE it
-        //if the workflow is null it means there is no workflow belonging to this entity
-        //check more if there is a workflow and the workflow is also active
-
         //check if the user is allowed to edit the clicked element
         $user = $token->getUser();
         if($user instanceof User){

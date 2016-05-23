@@ -12,5 +12,5 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             - Html:
                 type: text
 
-        content:
+        grid:
             - Model

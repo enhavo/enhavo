@@ -17,7 +17,6 @@ function SearchForm(router, admin) {
             var form = $(this);
             var url = $(this).attr('action');
             var data = $(this).serialize();
-            console.log('Data: '+data+' URL: '+url+' Form: '+form);
             $.ajax({
                 url: url,
                 type: 'POST',

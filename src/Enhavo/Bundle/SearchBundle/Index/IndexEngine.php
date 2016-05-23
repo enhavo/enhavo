@@ -159,7 +159,6 @@ class IndexEngine implements IndexEngineInterface {
                     //get properties form search.yml
                     $array = explode('\\', $key);
                     $entityName = array_pop($array);
-                    $properties = $value['properties'];
                     $resource = $this->em->getRepository($currentDataset->getBundle().':'.$entityName)->find($currentDataset->getReference());
 
                     $this->indexingData($resource, $currentDataset);
