@@ -21,6 +21,7 @@ class WorkflowValidator extends ConstraintValidator
         if($workflowClass->getActive()){
             $this->validateDeletedNodes($workflowClass->getFormNodes(), $workflowClass->getNodes(), $translator, $constraint);
         }
+        $this->validateTransitions($workflowClass->getTransitions(), $translator, $constraint);
     }
 
     protected function validateCreatedNodes($nodes, $translator, $constraint)
@@ -31,22 +32,41 @@ class WorkflowValidator extends ConstraintValidator
         foreach($nodes as $currentValue) {
             if(is_array($currentValue)) {
                 foreach ($currentValue as $val) {
-                    if($val->getStart() || $val->getName() == null){
+                    if($val->getStart()){
+
+                        //start node can be skipped
                         continue;
+                    } else if($val->getName() == null){
+
+                        //give every node a name
+                        $this->context->buildViolation($translator->trans($constraint->noNodeName, array(), 'EnhavoWorkflowBundle'))
+                            ->addViolation();
                     } else {
+
+                        //there is a node
                         $no_nodes = false;
                     }
                 }
             } else {
-                if($currentValue->getStart() || $currentValue->getName() == null){
+                if($currentValue->getStart()){
+
+                    //start node can be skipped
                     continue;
+                } else if($currentValue->getName() == null){
+
+                    //give every node a name
+                    $this->context->buildViolation($translator->trans($constraint->noNodeName, array(), 'EnhavoWorkflowBundle'))
+                        ->addViolation();
                 } else {
+
+                    //there is a node
                     $no_nodes = false;
                 }
             }
         }
         if($no_nodes) {
 
+            //there are no nodes
             $this->context->buildViolation($translator->trans($constraint->noNodesCreated, array(), 'EnhavoWorkflowBundle'))
                 ->addViolation();
         }
@@ -69,9 +89,29 @@ class WorkflowValidator extends ConstraintValidator
                 }
             }
         } else {
-            $this->context->buildViolation($translator->trans($constraint->doNotDeleteWhenActive))
+            $this->context->buildViolation($translator->trans($constraint->doNotDeleteWhenActive, array(), 'EnhavoWorkflowBundle'))
                 ->addViolation();
             return;
+        }
+
+    }
+
+    protected function validateTransitions($transitions, $translator, $constraint)
+    {
+        foreach ($transitions as $transition) {
+
+            //check if the name is empty
+            if(!$transition->getName()){
+                $this->context->buildViolation($translator->trans($constraint->noTransitionName, array(), 'EnhavoWorkflowBundle'))
+                    ->addViolation();
+            }
+
+            //check if the transition gos from one node to another node
+            if($transition->getNodeFrom() == $transition->getNodeTo()){
+                $this->context->buildViolation($translator->trans($constraint->sameNodes, array(), 'EnhavoWorkflowBundle'))
+                    ->setParameter('%transitionName%', $transition->getName())
+                    ->addViolation();
+            }
         }
 
     }

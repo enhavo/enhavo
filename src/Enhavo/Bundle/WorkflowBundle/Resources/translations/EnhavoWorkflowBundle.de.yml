@@ -27,6 +27,11 @@ workflow:
     error:
       nodes: 'Es wurden noch keine Knoten erstellt.'
       delete: 'Bitte deaktiviered Sie den Workflow bevor Sie Änderungen vornehmen.'
+      node:
+        name: 'Bitte geben Sie allen Knoten Namen.'
+      transition:
+        name: 'Bitte geben Sie allen Übergängen einen Namen.'
+        sameNodes: 'Bitte wählen Sie unterschiedliche Knoten für den Übergang "%transitionName%".'
 node:
   form:
     label:

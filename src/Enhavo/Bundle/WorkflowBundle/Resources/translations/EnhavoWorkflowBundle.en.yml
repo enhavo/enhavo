@@ -27,6 +27,11 @@ workflow:
     error:
       nodes: 'You have not created any nodes.'
       delete: 'Please set the workflow inactive before you change it.'
+      node:
+        name: 'Please enter names for all nodes.'
+      transition:
+        name: 'Please enter names for all transitons.'
+        sameNodes: 'Please select different names for transition "%transitionName%".'
 node:
   form:
     label:
