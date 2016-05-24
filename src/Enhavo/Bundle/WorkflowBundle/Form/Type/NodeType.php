@@ -10,8 +10,8 @@ class NodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('node_name', 'text', array(
-            'label' => 'node.form.label.nodeName',
+        $builder->add('name', 'text', array(
+            'label' => 'node.form.label.name',
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
 

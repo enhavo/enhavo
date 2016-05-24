@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\WorkflowBundle\Model;
 
 interface NodeInterface
 {
-    public function getNodeName();
+    public function getName();
 
     public function setWorkflow(WorkflowInterface $workflow);
 

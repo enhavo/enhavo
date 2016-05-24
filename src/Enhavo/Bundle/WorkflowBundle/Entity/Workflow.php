@@ -19,7 +19,7 @@ class Workflow implements WorkflowInterface
     /**
      * @var string
      */
-    private $workflow_name;
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -63,27 +63,27 @@ class Workflow implements WorkflowInterface
     }
 
     /**
-     * Set workflowName
+     * Set name
      *
-     * @param string $workflowName
+     * @param string $name
      *
      * @return Workflow
      */
-    public function setWorkflowName($workflowName)
+    public function setName($name)
     {
-        $this->workflow_name = $workflowName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get workflowName
+     * Get name
      *
      * @return string
      */
-    public function getWorkflowName()
+    public function getName()
     {
-        return $this->workflow_name;
+        return $this->name;
     }
 
     /**
@@ -98,7 +98,7 @@ class Workflow implements WorkflowInterface
         //add a 'creation-node' to every workflow
         if(count($this->getNodes()) == 0) {
             $creationNode = new Node();
-            $creationNode->setNodeName('creation');
+            $creationNode->setName('creation');
             $creationNode->setEnd(false);
             $creationNode->setStart(true);
             $creationNode->setWorkflow($this);

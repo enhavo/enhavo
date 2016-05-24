@@ -18,7 +18,7 @@ class Node implements NodeInterface
     /**
      * @var string
      */
-    private $node_name;
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -59,27 +59,27 @@ class Node implements NodeInterface
     }
 
     /**
-     * Set nodeName
+     * Set name
      *
-     * @param string $nodeName
+     * @param string $name
      *
      * @return Node
      */
-    public function setNodeName($nodeName)
+    public function setName($name)
     {
-        $this->node_name = $nodeName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nodeName
+     * Get name
      *
      * @return string
      */
-    public function getNodeName()
+    public function getName()
     {
-        return $this->node_name;
+        return $this->name;
     }
 
     /**

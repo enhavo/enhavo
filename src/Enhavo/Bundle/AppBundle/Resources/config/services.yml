@@ -152,3 +152,11 @@ services:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
         tags:
             - { name: security.voter }
+
+    enhavo_app.show_version.twig_extension:
+        class:  Enhavo\Bundle\AppBundle\Twig\ShowVersion
+        public: false
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }

@@ -14,7 +14,7 @@ class WorkflowAssignedWidget extends AbstractTableWidget {
         $roleUtil = new RoleUtil();
         $roleName = $roleUtil->getRoleName($item, RoleUtil::ACTION_UPDATE);
         $isGranted = false;
-        if($securityContext->isGranted($roleName, $item)){
+        if($securityContext->isGranted('WORKFLOW_UPDATE', $item)){
             $isGranted = true;
         }
         return $templateEngine->render('EnhavoWorkflowBundle:Widget:workflowAssigned.html.twig', array(

@@ -54,12 +54,12 @@ class WorkflowStatusType extends AbstractType
                     } else {
                         $currentNode = $this->manager->getRepository('EnhavoWorkflowBundle:Node')->findOneBy(array(
                             'workflow' => $workflow,
-                            'node_name' => 'creation'
+                            'name' => 'creation'
                         ));
                     }
 
                     $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                        'node_from' => $currentNode,
+                        'nodeFrom' => $currentNode,
                     ));
                     $nodes = array();
                     foreach ($transitions as $transition) {
@@ -71,7 +71,7 @@ class WorkflowStatusType extends AbstractType
 
                     $placeholder = null;
                     if ($event->getData() != null) {
-                        $placeholder = $event->getData()->getNode()->getNodeName();
+                        $placeholder = $event->getData()->getNode()->getName();
                     } else {
                         $placeholder = 'creation';
                     }
@@ -83,7 +83,7 @@ class WorkflowStatusType extends AbstractType
                             /*'translationDomain' => 'EnhavoWorkflowBundle',*/
                             'class' => 'EnhavoWorkflowBundle:Node',
                             'placeholder' => $placeholder,
-                            'choice_label' => 'node_name',
+                            'choice_label' => 'name',
                             'choices' => $nodes
                         ));
                     } else {
@@ -100,7 +100,7 @@ class WorkflowStatusType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if(is_object($view->vars['value'])) {
-            $view->vars['workflow_status'] = $view->vars['value']->getNode()->getNodeName();
+            $view->vars['workflow_status'] = $view->vars['value']->getNode()->getName();
         } else {
             $view->vars['workflow_status'] = 'creation';
         }

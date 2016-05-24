@@ -10,7 +10,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
             generator:
                 strategy: AUTO
     fields:
-        workflow_name:
+        name:
             type: string
             length: 255
             nullable: true

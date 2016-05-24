@@ -3,7 +3,7 @@ workflow:
     message:
       deleteNode: 'If you delete a node, all transition to or from this node, will be deleted as well!'
     label:
-      workflowName: 'Workflow Name'
+      name: 'Workflow Name'
       nodes: 'Nodes'
       transitions: 'Transitions'
       page: 'Pages'
@@ -17,7 +17,7 @@ workflow:
     workflow: 'Workflow'
     nodes: 'Nodes'
     transitions: 'Transitions'
-    workflowName: 'Workflow Name'
+    name: 'Workflow Name'
     entity: 'entity'
     currentWFS: 'Current Workflow-Status'
     active: 'Active'
@@ -27,15 +27,20 @@ workflow:
     error:
       nodes: 'You have not created any nodes.'
       delete: 'Please set the workflow inactive before you change it.'
+      node:
+        name: 'Please enter names for all nodes.'
+      transition:
+        name: 'Please enter names for all transitons.'
+        sameNodes: 'Please select different names for transition "%transitionName%".'
 node:
   form:
     label:
-      nodeName: 'Node Name'
+      name: 'Node Name'
       startNode: 'Start Node'
 transition:
   form:
     label:
-      transitionName: 'Transition Name'
+      name: 'Transition Name'
       nodeFrom: 'From'
       nodeTo: 'To'
 

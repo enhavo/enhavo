@@ -22,8 +22,8 @@ class WorkflowType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('workflow_name', 'text', array(
-            'label' => 'workflow.form.label.workflowName',
+        $builder->add('name', 'text', array(
+            'label' => 'workflow.form.label.name',
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
 

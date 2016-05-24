@@ -6,6 +6,7 @@ cmf_routing:
 enhavo_app:
     permission_check: false
     dynamic_routing: true
+    show_version: true
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
       - '@EnhavoGridBundle/Resources/public/css/style.css'

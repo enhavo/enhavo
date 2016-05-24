@@ -8,15 +8,15 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
             generator:
                 strategy: AUTO
     fields:
-        transition_name:
+        name:
             type: string
             length: 255
             nullable: true
 
     manyToOne:
-        node_from:
+        nodeFrom:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
-        node_to:
+        nodeTo:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
         workflow:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
