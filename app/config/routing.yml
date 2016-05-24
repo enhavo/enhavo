@@ -5,6 +5,10 @@ enhavo_contact:
     resource: "@EnhavoContactBundle/Resources/config/routing.yml"
     prefix:   /
 
+enhavo_search:
+    resource: "@EnhavoSearchBundle/Resources/config/routing.yml"
+    prefix:   /
+
 enhavo_media:
     resource: "@EnhavoMediaBundle/Resources/config/routing.yml"
 
@@ -58,6 +62,10 @@ enhavo_newsletter_subscriber:
 enhavo_category_category:
     resource: "@EnhavoCategoryBundle/Resources/config/routing/category.yml"
     prefix:   /
+
+enhavo_workflow:
+    resource: "@EnhavoWorkflowBundle/Resources/config/routing/workflow.yml"
+    prefix:   /admin
 
 enhavo_calendar:
     resource: "@EnhavoCalendarBundle/Resources/config/routing/appointment.yml"

@@ -42,6 +42,7 @@ class RouteType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label' => 'label.url',
+            'translation_domain' => 'EnhavoAppBundle',
             'data_class' => 'Enhavo\Bundle\AppBundle\Entity\Route',
             'constraints' => array(
                 new RouteConstraint,

@@ -30,10 +30,14 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             length: 255
             nullable: true
 
-        title:
+        slug:
             type: string
             length: 255
             nullable: true
+
+        parameters:
+              type: array
+              nullable: true
 
         garbage:
             type: boolean

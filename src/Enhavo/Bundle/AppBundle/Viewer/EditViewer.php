@@ -13,7 +13,7 @@ class EditViewer extends CreateViewer
 {
     public function getDefaultConfig()
     {
-        return array(
+        $config =  array(
             'buttons' => array(
                 'cancel' => array(
                     'route' => null,
@@ -29,14 +29,6 @@ class EditViewer extends CreateViewer
                     'label' => 'label.save',
                     'icon' => 'icon-save'
                 ),
-                'delete' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.delete',
-                    'icon' => 'icon-trash-1'
-                )
-
             ),
             'form' => array(
                 'template' => 'EnhavoAppBundle:View:tab.html.twig',
@@ -45,14 +37,32 @@ class EditViewer extends CreateViewer
                 'delete' => sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName())
             )
         );
+
+        $securityContext = $this->getContainer()->get('security.context');
+        $route = sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName());
+        if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
+            $config['buttons']['delete'] = array(
+                'route' => null,
+                'display' => true,
+                'role' => null,
+                'label' => 'label.delete',
+                'icon' => 'icon-trash-1'
+            );
+        }
+
+        return $config;
     }
 
     public function getFormDelete()
     {
         $route = $this->getConfig()->get('form.delete');
-        return $this->container->get('router')->generate($route, array(
-            'id' => $this->getResource()->getId()
-        ));
+        $securityContext = $this->container->get('security.context');
+        if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
+            return $this->container->get('router')->generate($route, array(
+                'id' => $this->getResource()->getId()
+            ));
+        }
+        return null;
     }
 
     public function getFormAction()

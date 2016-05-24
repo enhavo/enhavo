@@ -1,13 +1,13 @@
 parameters:
-    enhavo_grid.form.content.class: Enhavo\Bundle\GridBundle\Form\Type\ContentType
+    enhavo_grid.form.grid.class: Enhavo\Bundle\GridBundle\Form\Type\GridType
     enhavo_grid.form.item.class: Enhavo\Bundle\GridBundle\Form\Type\ItemType
-    enhavo_grid.twig.content_render.class: Enhavo\Bundle\GridBundle\Twig\ContentRender
+    enhavo_grid.twig.grid_render.class: Enhavo\Bundle\GridBundle\Twig\GridRender
     enhavo_grid.doctrine_subscriber.class: Enhavo\Bundle\GridBundle\EventListener\DoctrineSubscriber
     enhavo_grid.item_type_resolver.class: Enhavo\Bundle\GridBundle\Item\ItemTypeResolver
 
 services:
     enhavo_grid:
-        class: %enhavo_grid.form.content.class%
+        class: %enhavo_grid.form.grid.class%
         arguments:
             - @doctrine.orm.entity_manager
             - @enhavo_grid.item_type_resolver
@@ -21,8 +21,8 @@ services:
         tags:
             - { name: form.type, alias: enhavo_grid_item }
 
-    enhavo_grid.twig.content_render:
-        class: %enhavo_grid.twig.content_render.class%
+    enhavo_grid.twig.grid_render:
+        class: %enhavo_grid.twig.grid_render.class%
         arguments:
             - @router
             - @service_container

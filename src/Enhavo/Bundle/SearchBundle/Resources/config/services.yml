@@ -5,3 +5,50 @@ services:
     enhavo_search.manager:
         class: '%enhavo_search.manager.class%'
         arguments: [@doctrine.orm.entity_manager]
+
+    enhavo_search.save_listener:
+        class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
+        arguments:
+            - @service_container
+            - @enhavo_search_search_util
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+
+    
+    enhavo_search.delete_listener:
+        class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @service_container
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
+
+
+    enhavo_search_render:
+        class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    enhavo_search_index_engine:
+        class: Enhavo\Bundle\SearchBundle\Index\IndexEngine
+        arguments:
+            - @service_container
+            - @kernel
+            - @doctrine.orm.entity_manager
+            - %enhavo_search.search.strategy%
+            - @enhavo_search_search_util
+
+    enhavo_search_search_engine:
+        class: Enhavo\Bundle\SearchBundle\Search\SearchEngine
+        arguments:
+            - @service_container
+            - @doctrine.orm.entity_manager
+            - @enhavo_search_search_util
+
+    enhavo_search_search_util:
+        class: Enhavo\Bundle\SearchBundle\Util\SearchUtil
+        arguments:
+            - @kernel

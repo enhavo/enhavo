@@ -38,6 +38,11 @@ class RouteContentResolver
      */
     public function getRepository($type)
     {
+        $repository = $this->getRepositoryFromSylius($type);
+        if($repository !== null) {
+            return $repository;
+        }
+
         foreach ($this->collector->getCollection() as $item) {
             /** @var $item \Enhavo\Bundle\AppBundle\Route\RouteContentLoader */
             if($item->getType() === $type) {
@@ -50,10 +55,40 @@ class RouteContentResolver
     public function getType($content)
     {
         $className = get_class($content);
+
+        $type = $this->getTypeFromSylius($className);
+        if($type !== null) {
+            return $type;
+        }
+
         foreach ($this->collector->getCollection() as $item) {
             /** @var $item \Enhavo\Bundle\AppBundle\Route\RouteContentLoader */
             if($item->getClassName() === $className) {
                 return $item->getType();
+            }
+        }
+        return null;
+    }
+
+    protected function getRepositoryFromSylius($type)
+    {
+        $resources = $this->container->getParameter('sylius.resources');
+        if(!isset($type, $resources)) {
+            return null;
+        }
+
+        $type = explode('.', $type);
+        $repositoryService = sprintf('%s.repository.%s', $type[0], $type[1]);
+        return $this->container->get($repositoryService);
+    }
+
+
+    protected function getTypeFromSylius($className)
+    {
+        $resources = $this->container->getParameter('sylius.resources');
+        foreach($resources as $type => $resource) {
+            if($resource['classes']['model'] == $className) {
+                return $type;
             }
         }
         return null;

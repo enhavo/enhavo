@@ -33,7 +33,7 @@ enhavo_page_page_create:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
-                    route: enhavo_news_page_preview
+                    route: enhavo_page_page_preview
                     label: label.preview
                     icon: icon-eye
 

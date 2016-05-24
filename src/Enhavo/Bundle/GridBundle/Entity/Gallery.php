@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Gallery
@@ -26,8 +27,10 @@ class Gallery implements ItemTypeInterface
      */
     protected $text;
 
+    /**
+     * @var ArrayCollection
+     */
     protected $files;
-
 
     public function __construct()
     {
@@ -93,31 +96,18 @@ class Gallery implements ItemTypeInterface
     }
 
     /**
-     * Set files
-     *
-     * @param \files $files
-     * @return Content
-     */
-    public function setFiles($files)
-    {
-        $this->files = $files;
-
-        return $this;
-    }
-
-    /**
      * Add files
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File files
-     * @return Content
+     * @param FileInterface $file
+     * @return Gallery
      */
-    public function addFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
+    public function addFiles(FileInterface $file)
     {
         if ($this->files === null) {
             $this->files = new ArrayCollection();
         }
 
-        $this->files[] = $files;
+        $this->files[] = $file;
 
         return $this;
     }
@@ -125,11 +115,11 @@ class Gallery implements ItemTypeInterface
     /**
      * Remove files
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $files
+     * @param FileInterface $file
      */
-    public function removeFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
+    public function removeFiles(FileInterface $file)
     {
-        $this->files->removeElement($files);
+        $this->files->removeElement($file);
     }
 
     /**
@@ -145,11 +135,11 @@ class Gallery implements ItemTypeInterface
     /**
      * Add file
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     * @param FileInterface $file
      *
      * @return Gallery
      */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function addFile(FileInterface $file)
     {
         $this->files[] = $file;
 
@@ -159,9 +149,9 @@ class Gallery implements ItemTypeInterface
     /**
      * Remove file
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     * @param FileInterface $file
      */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function removeFile(FileInterface $file)
     {
         $this->files->removeElement($file);
     }

@@ -1,0 +1,100 @@
+services:
+    enhavo_workflow_workflow:
+        class: %enhavo_workflow.form.type.workflow.class%
+        arguments:
+            - @service_container
+            - @doctrine.orm.default_entity_manager
+        tags:
+            - { name: form.type }
+
+    enhavo_workflow_node:
+        class: %enhavo_workflow.form.type.node.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_workflow_transition:
+        class: %enhavo_workflow.form.type.transition.class%
+        tags:
+            - { name: form.type }
+
+    security.authentication.voter.workflow_active_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowActiveVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: security.voter }
+
+    security.authentication.voter.transition_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\TransitionVoter
+        public:     false
+        tags:
+            - { name: security.voter }
+
+    security.authentication.voter.workflow_create_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowCreateVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - @service_container
+        tags:
+            - { name: security.voter }
+
+    security.authentication.voter.workflow_voter:
+        class:      Enhavo\Bundle\WorkflowBundle\Security\Authentication\Voter\WorkflowVoter
+        public:     false
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - @service_container
+        tags:
+            - { name: security.voter }
+
+    enhavo_workflow.delete_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\DeleteListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %enhavo_workflow.model.workflow.class%
+            - @service_container
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
+
+    enhavo_workflow.entity_save_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\EntitySaveListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %enhavo_workflow.model.workflow.class%
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+
+    enhavo_workflow.workflow_save_listener:
+        class: Enhavo\Bundle\WorkflowBundle\EventListener\WorkflowSaveListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %enhavo_workflow.model.workflow.class%
+            - @service_container
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+
+    validator.no_nodes_created_validator:
+        class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator
+        arguments:
+            - @service_container
+        tags:
+            - { name: validator.constraint_validator, alias: valid_workflow }
+
+    enhavo_workflow.entity.twig_extension:
+        class:  Enhavo\Bundle\WorkflowBundle\Twig\Label
+        public: false
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    enhavo_workflow.table.workflow_assigned_widget:
+        class: Enhavo\Bundle\WorkflowBundle\Table\Widget\WorkflowAssignedWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

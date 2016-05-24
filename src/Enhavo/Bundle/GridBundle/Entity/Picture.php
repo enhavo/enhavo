@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Picture
@@ -22,18 +23,15 @@ class Picture implements ItemTypeInterface
      */
     protected $title;
 
+    /**
+     * @var string
+     */
     protected $caption;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $file;
-
-
-    public function __construct()
-    {
-        $this->files = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -87,10 +85,10 @@ class Picture implements ItemTypeInterface
     /**
      * Set file
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $file
-     * @return Content
+     * @param FileInterface|null $file
+     * @return Grid
      */
-    public function setFile($file)
+    public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
 
@@ -100,7 +98,7 @@ class Picture implements ItemTypeInterface
     /**
      * Get file
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     * @return FileInterface
      */
     public function getFile()
     {

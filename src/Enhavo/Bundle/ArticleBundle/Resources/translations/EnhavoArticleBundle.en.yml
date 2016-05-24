@@ -7,6 +7,7 @@ article:
       priority: 'Priority'
       change_frequency: 'Change frequency'
       publication_date: 'Publication date'
+      workflow: 'Workflow'
   label:
     article: 'Article'
     content: 'Content'
@@ -21,4 +22,10 @@ article:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
-
+    assigned: 'Assigned'
+  batch:
+    action:
+      publish: 'Publish'
+    message:
+      confirm:
+        publish: 'Do you really want to publish all selected articles?'

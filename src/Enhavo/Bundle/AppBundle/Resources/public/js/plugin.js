@@ -39,9 +39,7 @@
 
     var handleDeleteImage = function()
     {
-      console.log('test');
       $(element).find(".imgdelete").off("click").on("click", function() {
-        console.log('test');
         var root = $(this).parents("li");
         var fileId = root.attr("fileid");
         var data = {fileId: fileId};

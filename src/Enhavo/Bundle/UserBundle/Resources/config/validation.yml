@@ -1,0 +1,14 @@
+Enhavo\Bundle\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        email:
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
+            - NotBlank: ~
+
+Enhavo\Bundle\UserBundle\Entity\Group:
+    properties:
+        name:
+            - NotBlank: ~

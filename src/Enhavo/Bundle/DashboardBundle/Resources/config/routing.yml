@@ -7,3 +7,6 @@ enhavo_dashboard_index:
             type: app
             title: dashboard.label.dashboard
             translationDomain: EnhavoDashboardBundle
+            blocks:
+                search:
+                    type: enhavo_search

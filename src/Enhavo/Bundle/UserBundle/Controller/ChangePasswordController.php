@@ -2,22 +2,18 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Controller managing the password change
  */
-class ChangePasswordController extends Controller
+class ChangePasswordController extends FOSRestController
 {
     /**
      * Change user password
@@ -47,24 +43,34 @@ class ChangePasswordController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-            $userManager = $this->get('fos_user.user_manager');
+        if($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+                $userManager = $this->get('fos_user.user_manager');
 
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
+                $event = new FormEvent($form, $request);
+                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
 
-            $userManager->updateUser($user);
+                $userManager->updateUser($user);
 
-            if (null === $response = $event->getResponse()) {
-                $response = new JsonResponse();
+                $view = $this->view([]);
+                $view->setFormat('json');
+                return $this->handleView($view);
+            } else {
+                $view = $this->view($form);
+                $view->setFormat('json');
+                return $this->handleView($view);
             }
-
-            return $response;
         }
 
-        return $this->render('EnhavoUserBundle:User:password.html.twig', array(
-            'form' => $form->createView()
-        ));
+        $view = $this
+            ->view()
+            ->setTemplate('EnhavoUserBundle:User:password.html.twig')
+            ->setData(array(
+                'form' => $form->createView()
+            ))
+        ;
+
+        return $this->handleView($view);
     }
 }

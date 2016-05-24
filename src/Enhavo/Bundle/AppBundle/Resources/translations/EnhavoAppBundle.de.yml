@@ -14,7 +14,7 @@ form:
   delete:
     question: 'Wollen sie dieses Element wirklich löschen?'
   label:
-    public: 'Veröffentlichen'
+    public: 'Öffentlich'
     meta_description: 'Meta Text'
     link: 'Link'
     title: 'Titel'
@@ -22,6 +22,7 @@ form:
     slug: 'Slug'
     picture: 'Bild'
     text: 'Text'
+    content: 'Inhalt'
 label:
   logout: 'Logout'
   id: 'ID'
@@ -33,6 +34,7 @@ label:
   yes: 'Ja'
   no: 'Nein'
   title: 'Titel'
+  url: 'URL'
   upload: 'Datei hochladen'
   changePassword: 'Passwort ändern'
   goToPage: 'Zur Seite'

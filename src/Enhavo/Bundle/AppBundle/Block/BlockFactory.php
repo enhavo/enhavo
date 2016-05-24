@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Block;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Enhavo\Bundle\SearchBundle\Block\SearchBlock;
 
 class BlockFactory implements ContainerAwareInterface
 {
@@ -30,12 +31,22 @@ class BlockFactory implements ContainerAwareInterface
         $this->container = $container;
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     /**
      * @param $type
      * @return BlockInterface
      */
     public function create($type)
     {
-        return new TableBlock($this->container->get('templating'));
+        if($type == 'enhavo_table'){
+            return new TableBlock($this->container->get('templating'));
+        } else {
+            return new SearchBlock($this->container->get('templating'));
+        }
+
     }
 }

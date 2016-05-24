@@ -1,6 +1,6 @@
 Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
     type: entity
-    table: content_item_download
+    table: download_item_download
     id:
         id:
             type: integer
@@ -16,9 +16,10 @@ Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
 
     manyToOne:
         download:
-            targetEntity: Enhavo\Bundle\DownloadBundle\Entity\Download
+            targetEntity: Enhavo\Bundle\DownloadBundle\Model\DownloadInterface
+
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

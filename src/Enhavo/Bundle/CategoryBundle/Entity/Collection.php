@@ -2,8 +2,9 @@
 namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
 
-class Collection
+class Collection implements CollectionInterface
 {
 
     /**

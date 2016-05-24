@@ -9,5 +9,9 @@ appointment:
     id: 'ID'
     title: 'Title'
     date: 'Date'
+    seo: 'Seo'
+  validator:
+    error:
+      dates: 'The Dates do not match.'
 label:
   calendar: 'Calendar'

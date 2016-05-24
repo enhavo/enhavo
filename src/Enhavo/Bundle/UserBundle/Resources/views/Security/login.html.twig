@@ -7,13 +7,15 @@
         <div id="loginBox">
             <div class="loginContainer">
                 {% if error %}
-                    <div class="col-md-push-2 col-md-4 error" id="overlayMessage" style="display: block;">
+                    <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
                         <div>{{ 'error.login'|trans }}</div>
                     </div>
                 {% endif %}
+                {% if showVersion() %}
                 <div class="ribbon">
                     <p>0.1.0</p>
                 </div>
+                {% endif %}
                 <div class="logo">
                     <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
                 </div>

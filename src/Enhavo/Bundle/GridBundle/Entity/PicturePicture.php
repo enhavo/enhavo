@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * PicturePicture
@@ -17,12 +18,12 @@ class PicturePicture implements ItemTypeInterface
     protected $id;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $fileLeft;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $fileRight;
 
@@ -59,12 +60,12 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Set fileLeft
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $fileLeft
-     * @return Content
+     * @param FileInterface|null $file
+     * @return Grid
      */
-    public function setFileLeft($fileLeft)
+    public function setFileLeft(FileInterface $file = null)
     {
-        $this->fileLeft = $fileLeft;
+        $this->fileLeft = $file;
 
         return $this;
     }
@@ -72,7 +73,7 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Get fileLeft
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getFileLeft()
     {
@@ -82,12 +83,12 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Set fileRight
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $fileRight
-     * @return Content
+     * @param FileInterface|null $file
+     * @return Grid
      */
-    public function setFileRight($fileRight)
+    public function setFileRight(FileInterface $file = null)
     {
-        $this->fileRight = $fileRight;
+        $this->fileRight = $file;
 
         return $this;
     }
@@ -95,7 +96,7 @@ class PicturePicture implements ItemTypeInterface
     /**
      * Get fileRight
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     * @return FileInterface
      */
     public function getFileRight()
     {
