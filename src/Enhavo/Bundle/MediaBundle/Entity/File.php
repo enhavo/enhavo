@@ -3,11 +3,12 @@
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * File
  */
-class File
+class File implements FileInterface
 {
     /**
      * @var integer
@@ -37,7 +38,12 @@ class File
     /**
      * @var string
      */
-    protected $title;
+    protected $slug;
+
+    /**
+     * @var array
+     */
+    protected $parameters;
 
     /**
      * @var bool
@@ -144,29 +150,6 @@ class File
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     * @return File
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
      * @return string
      */
     public function getFilename()
@@ -183,6 +166,78 @@ class File
     {
         $this->filename = $filename;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Sets the parameter $key to value $value
+     *
+     * @param string $key
+     * @param string $value
+     * @return File
+     */
+    public function setParameter($key, $value)
+    {
+        if (!$this->parameters) {
+            $this->parameters = array();
+        }
+
+        $this->parameters[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the parameter value for $key.
+     * If no value is set for $key, returns null.
+     *
+     * @param string $key
+     * @return string|null
+     */
+    public function getParameter($key)
+    {
+        if (!$this->parameters) {
+            $this->parameters = array();
+        }
+
+        return isset($this->parameters[$key]) ? $this->parameters[$key] : null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        if (!$this->parameters) {
+            $this->parameters = array();
+        }
+
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     * @return File
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
         return $this;
     }
 

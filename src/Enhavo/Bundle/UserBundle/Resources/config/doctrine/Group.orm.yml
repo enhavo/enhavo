@@ -13,7 +13,7 @@ Enhavo\Bundle\UserBundle\Entity\Group:
 
     manyToMany:
         users:
-            targetEntity: User
+            targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface
             mappedBy: groups
 
     lifecycleCallbacks: {  }

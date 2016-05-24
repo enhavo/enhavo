@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Picture:
     type: entity
-    table: grid_type_picture
+    table: grid_item_picture
     id:
         id:
             type: integer
@@ -20,6 +20,6 @@ Enhavo\Bundle\GridBundle\Entity\Picture:
     manyToOne:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

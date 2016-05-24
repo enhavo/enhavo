@@ -8,11 +8,12 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
+use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SliderType extends AbstractType
+class SliderType extends AbstractType implements SliderInterface
 {
     protected $class;
 

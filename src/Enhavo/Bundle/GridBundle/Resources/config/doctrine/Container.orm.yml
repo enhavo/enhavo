@@ -14,10 +14,6 @@ Enhavo\Bundle\GridBundle\Entity\Container:
             length: 255
             nullable: true
 
-        configuration:
-            type: blob
-            nullable: true
-
     oneToMany:
         columns:
             targetEntity: Column
@@ -26,9 +22,9 @@ Enhavo\Bundle\GridBundle\Entity\Container:
 
     manyToOne:
         grid:
-            targetEntity: Grid
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
         column:
-            targetEntity: Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\ColumnInterface
 
     lifecycleCallbacks: {  }

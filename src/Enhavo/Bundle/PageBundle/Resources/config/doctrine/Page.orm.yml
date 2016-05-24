@@ -6,8 +6,8 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Grid
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
         workflow_status:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface

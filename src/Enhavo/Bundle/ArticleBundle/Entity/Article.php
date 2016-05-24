@@ -9,12 +9,17 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 class Article extends Content
 {
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $picture;
 
@@ -24,22 +29,35 @@ class Article extends Content
     protected $teaser;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @var GridInterface
      */
     protected $grid;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @var WorkflowStatusInterface
      */
     private $workflow_status;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Set picture
      *
-     * @param $picture \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @param $picture FileInterface|null
      * @return Article
      */
-    public function setPicture($picture)
+    public function setPicture(FileInterface $picture = null)
     {
         $this->picture = $picture;
 
@@ -49,7 +67,7 @@ class Article extends Content
     /**
      * Get picture
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getPicture()
     {
@@ -82,10 +100,10 @@ class Article extends Content
     /**
      * Set content
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Grid $grid
+     * @param GridInterface $grid
      * @return Content
      */
-    public function setGrid(\Enhavo\Bundle\GridBundle\Entity\Grid $grid = null)
+    public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
 
@@ -95,7 +113,7 @@ class Article extends Content
     /**
      * Get content
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Grid
+     * @return GridInterface
      */
     public function getGrid()
     {
@@ -105,11 +123,11 @@ class Article extends Content
     /**
      * Set workflowStatus
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus
+     * @param WorkflowStatusInterface $workflowStatus
      *
      * @return Article
      */
-    public function setWorkflowStatus(\Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus $workflowStatus = null)
+    public function setWorkflowStatus(WorkflowStatusInterface $workflowStatus = null)
     {
         $this->workflow_status = $workflowStatus;
 
@@ -119,10 +137,44 @@ class Article extends Content
     /**
      * Get workflowStatus
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+     * @return WorkflowStatusInterface
      */
     public function getWorkflowStatus()
     {
         return $this->workflow_status;
+    }
+
+    /**
+     * Add category
+     *
+     * @param CategoryInterface $category
+     *
+     * @return Article
+     */
+    public function addCategory(CategoryInterface $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param CategoryInterface $category
+     */
+    public function removeCategory(CategoryInterface $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

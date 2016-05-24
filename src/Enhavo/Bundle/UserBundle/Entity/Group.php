@@ -3,12 +3,14 @@
 namespace Enhavo\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\UserBundle\Model\GroupInterface;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\Group as BaseGroup;
 
 /**
  * Group
  */
-class Group extends BaseGroup
+class Group extends BaseGroup implements GroupInterface
 {
     /**
      * @var integer
@@ -42,10 +44,10 @@ class Group extends BaseGroup
     /**
      * Add users
      *
-     * @param \Enhavo\Bundle\UserBundle\Entity\User $users
+     * @param UserInterface $users
      * @return Group
      */
-    public function addUser(\Enhavo\Bundle\UserBundle\Entity\User $users)
+    public function addUser(UserInterface $users)
     {
         $this->users[] = $users;
 
@@ -55,9 +57,9 @@ class Group extends BaseGroup
     /**
      * Remove users
      *
-     * @param \Enhavo\Bundle\UserBundle\Entity\User $users
+     * @param UserInterface $users
      */
-    public function removeUser(\Enhavo\Bundle\UserBundle\Entity\User $users)
+    public function removeUser(UserInterface $users)
     {
         $this->users->removeElement($users);
     }

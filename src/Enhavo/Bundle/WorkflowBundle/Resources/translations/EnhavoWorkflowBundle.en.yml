@@ -1,5 +1,7 @@
 workflow:
   form:
+    message:
+      deleteNode: 'If you delete a node, all transition to or from this node, will be deleted as well!'
     label:
       name: 'Workflow Name'
       nodes: 'Nodes'
@@ -21,8 +23,6 @@ workflow:
     active: 'Active'
     noTransitions: '(No transitions possible)'
     assigned: 'Assigned'
-    warning: 'Warning'
-    deleteWarning: 'When you delete nodes all belonging transitions will be deleted too!'
   validator:
     error:
       nodes: 'You have not created any nodes.'

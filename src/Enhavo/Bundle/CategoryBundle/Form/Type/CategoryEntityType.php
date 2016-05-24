@@ -10,11 +10,26 @@ use Symfony\Component\OptionsResolver\Options;
 
 class CategoryEntityType extends AbstractType
 {
+    /**
+     * @var ObjectManager
+     */
     protected $manager;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    /**
+     * @var string
+     */
+    protected $categoryDefaultCollection;
+
+    public function __construct(ObjectManager $manager, $dataClass, $categoryDefaultCollection)
     {
         $this->manager = $manager;
+        $this->categoryDefaultCollection = $categoryDefaultCollection;
+        $this->dataClass = $dataClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -25,7 +40,6 @@ class CategoryEntityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $manager = $this->manager;
-
         $resolver->setNormalizer('query_builder', function (Options $options, $value) use ($manager) {
             return $manager->getRepository('EnhavoCategoryBundle:Category')->getByCollectionQuery($options['category_name']);
         });
@@ -33,9 +47,17 @@ class CategoryEntityType extends AbstractType
         $resolver->setDefaults(array(
             'expanded' => true,
             'multiple' => true,
-            'class' => 'Enhavo\Bundle\CategoryBundle\Entity\Category',
-            'category_name' => null
+            'class' => $this->dataClass,
+            'category_name' => $this->categoryDefaultCollection,
+            'translation_domain' => 'EnhavoCategoryBundle'
         ));
+
+        $resolver->setNormalizer('label', function(Options $options, $value) {
+            if ($options['multiple']) {
+                return 'category.label.categories';
+            }
+            return 'category.label.category';
+        });
     }
 
     public function getParent()

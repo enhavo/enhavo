@@ -32,6 +32,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
     oneToOne:
         workflow_status:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface
 
     lifecycleCallbacks: {  }

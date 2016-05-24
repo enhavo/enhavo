@@ -22,6 +22,6 @@ Enhavo\Bundle\DownloadBundle\Entity\Download:
     manyToOne:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

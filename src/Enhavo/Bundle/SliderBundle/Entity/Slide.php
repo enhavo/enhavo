@@ -3,11 +3,14 @@
 namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
+use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 
 /**
  * Slider
  */
-class Slide
+class Slide implements SlideInterface
 {
     /**
      * @var integer
@@ -40,7 +43,7 @@ class Slide
     protected $public;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $image;
 
@@ -181,10 +184,10 @@ class Slide
     /**
      * Set slider
      *
-     * @param Slider $slider
+     * @param SliderInterface $slider
      * @return Slide
      */
-    public function setSlider(Slider $slider = null)
+    public function setSlider(SliderInterface $slider = null)
     {
         $this->slider = $slider;
 
@@ -204,10 +207,10 @@ class Slide
     /**
      * Set image
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File|null $image
+     * @param FileInterface|null $image
      * @return Slide
      */
-    public function setImage($image)
+    public function setImage(FileInterface $image = null)
     {
         $this->image = $image;
 
@@ -217,7 +220,7 @@ class Slide
     /**
      * Get image
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File|null
+     * @return FileInterface|null
      */
     public function getImage()
     {

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Enhavo\Bundle\WorkflowBundle\Entity\Workflow;
+use Enhavo\Bundle\AppBundle\Form\Type\MessageType;
 
 class WorkflowType extends AbstractType
 {
@@ -56,6 +57,12 @@ class WorkflowType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
             'translation_domain' => 'EnhavoWorkflowBundle'
+        ));
+
+        $builder->add('warning', 'enhavo_message', array(
+            'type' => MessageType::MESSAGE_TYPE_WARNING,
+            'translation_domain' => 'EnhavoWorkflowBundle',
+            'message' => 'workflow.form.message.deleteNode'
         ));
     }
 

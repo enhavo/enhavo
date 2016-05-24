@@ -2,22 +2,18 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Controller managing the password change
  */
-class ChangePasswordController extends Controller
+class ChangePasswordController extends FOSRestController
 {
     /**
      * Change user password
@@ -57,19 +53,24 @@ class ChangePasswordController extends Controller
 
                 $userManager->updateUser($user);
 
-                if (null === $response = $event->getResponse()) {
-                    $response = new JsonResponse();
-                }
-
-                return $response;
+                $view = $this->view([]);
+                $view->setFormat('json');
+                return $this->handleView($view);
             } else {
-                return new JsonResponse();
+                $view = $this->view($form);
+                $view->setFormat('json');
+                return $this->handleView($view);
             }
         }
 
+        $view = $this
+            ->view()
+            ->setTemplate('EnhavoUserBundle:User:password.html.twig')
+            ->setData(array(
+                'form' => $form->createView()
+            ))
+        ;
 
-        return $this->render('EnhavoUserBundle:User:password.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->handleView($view);
     }
 }

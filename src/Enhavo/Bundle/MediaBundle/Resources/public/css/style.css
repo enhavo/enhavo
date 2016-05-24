@@ -1,18 +1,21 @@
 /* upload Form */
 
-.uploadForm .imagePreview { width: 100%;}
+.uploadForm .imagePreview { width: 82px; }
 .uploadForm .imagePreview.multiple { width: 100%; }
 
 .uploadForm .bar {height: 5px;background: #49a4e5;}
 .uploadForm .progress {position:absolute;top:0;left:0;right:0;}
 
 .uploadForm .dropzone {
-    width: 100%;
+    width: 82px;
     min-height: 82px;
     line-height: 50px;
     text-align: center;
     font-weight: bold;
-    padding-left: 5px;
+}
+
+.uploadForm .multiple .dropzone {
+    width: 100%;
 }
 
 .uploadForm .dropzone.in {
@@ -39,7 +42,6 @@
 }
 
 .uploadForm .dropzone.fade.empty:after {
-    content: "Drop image here";
     font-size: 18px;
     color: #FFF;
     text-align: center;
@@ -56,23 +58,17 @@
 
 .uploadForm .list .imgContainer {
     float:left;
-    margin:5px 5px 5px 0;
+    padding:4px;
     position:relative;
+    border: 1px solid transparent;
 }
 
 .uploadForm .list .imgContainer .imgdelete {z-index: 10;position: absolute;top:-10px;right:-10px;color:#fff;background:#d87676;display:none;cursor:pointer;width:24px;height:24px;text-align:center;line-height:36px; border-radius: 50%}
 .uploadForm .list .imgContainer .imgdelete i {font-size: 16px;position: relative;top: -6px;text-align: center;}
 .uploadForm .list .imgContainer:hover .imgdelete {display:block;}
 
-.uploadForm-image-container {
-    background: #f3f3f3;width:72px;height:72px;
-}
-
-.uploadForm-image-container img {
-    position: relative;
-    z-index: 5;
-}
-
+.uploadForm-image-container { background: #f3f3f3;width:72px;height:72px; position: relative; }
+.uploadForm-image-container img { position: relative; z-index: 5; }
 .uploadForm-image-container:after {
     content: '\e86d';
     font-family: "enhavo_iconfont";
@@ -87,6 +83,16 @@
     margin-top: -23px;
     z-index: 1;
 }
+
+.uploadForm .list .imgContainer .uploadForm-image-overlay { display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(255,255,255,0.8); z-index: 8; cursor: pointer; }
+.uploadForm .list .imgContainer .uploadForm-image-overlay i { font-size: 22px; color: #808080; line-height: 72px; cursor: pointer; }
+.uploadForm .list .imgContainer:hover .uploadForm-image-overlay { display: block; }
+.uploadForm .list .imgContainer.selected { background-color: #ddd; }
+.uploadForm .fileupload-fields { background-color: #ddd; padding: 5px; }
+.uploadForm .fileupload-fields .fileupload-field { padding: 5px; }
+.uploadForm .fileupload-fields .fileupload-field .fileupload-field-label-container { padding-top: 4px; }
+.uploadForm .fileupload-fields.disabled .fileupload-field .fileupload-field-label-container .fileupload-field-label { color: #a9a9a9 }
+.uploadForm .fileupload-fields .fileupload-field .fileupload-field-input-container .fileupload-field-slug { padding: 5px 6px; font: 13px/1.6em "Open Sans"; color: #000; display: block; }
 
 .icheckbox-esperanto, .iradio-esperanto{
     margin: 0 7px 0px 20px;
