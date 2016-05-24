@@ -56,6 +56,8 @@ class FilesType extends AbstractType
                         $file->setSlug($data['slug']);
                         $file->setOrder($data['order']);
                         $file->setParameters($data['parameters']);
+                        $file->setGarbage(false);
+                        $collection->add($file);
                     }
                 }
 

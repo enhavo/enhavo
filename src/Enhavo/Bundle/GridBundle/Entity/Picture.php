@@ -88,7 +88,7 @@ class Picture implements ItemTypeInterface
      * @param FileInterface|null $file
      * @return Grid
      */
-    public function setFile(FileInterface $file)
+    public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
 
