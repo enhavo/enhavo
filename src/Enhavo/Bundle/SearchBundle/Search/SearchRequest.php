@@ -297,7 +297,7 @@ class SearchRequest {
     protected function highlightText($object)
     {
         //highlight title
-        if(property_exists($object, 'teaser')) {
+        if(property_exists($object, 'title')) {
             $title = $object->getTitle();
             $allTitelsWords = explode(" ", $title);
             $wordsToHighlightTitle = array();
