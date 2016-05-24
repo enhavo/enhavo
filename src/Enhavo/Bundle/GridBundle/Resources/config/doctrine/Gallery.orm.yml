@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Gallery:
     type: entity
-    table: content_type_gallery
+    table: grid_item_gallery
     id:
         id:
             type: integer
@@ -19,13 +19,14 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
     manyToMany:
         files:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             joinTable:
-                name: content_gallery_files
+                name: grid_item_gallery_files
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     file_id:
                         referencedColumnName: id
+
     lifecycleCallbacks: {  }

@@ -54,6 +54,7 @@ services:
         class: %enhavo_app.menu_loader.class%
         arguments:
             - 'enhavo_app.menu'
+            - @security.context
             - %enhavo_app.menu%
             - @knp_menu.factory
             - @event_dispatcher
@@ -92,6 +93,15 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_workflow_status:
+        class: Enhavo\Bundle\AppBundle\Form\Type\WorkflowStatusType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - @security.context
+            - @service_container
+        tags:
+            - { name: form.type }
+
     enhavo_app.table_widget_collector:
         class: Enhavo\Bundle\AppBundle\Table\TableWidgetCollector
 
@@ -122,3 +132,23 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_routing:
+        class: Enhavo\Bundle\AppBundle\Form\Type\RoutingType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @router
+            - @enhavo_app.route_guesser
+
+    enhavo_message:
+        class: Enhavo\Bundle\AppBundle\Form\Type\MessageType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @translator
+
+    security.authentication.voter.super_admin:
+        class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
+        tags:
+            - { name: security.voter }

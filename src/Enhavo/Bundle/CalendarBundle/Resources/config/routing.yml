@@ -1,3 +1,0 @@
-enhavo_calendar_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: EnhavoCalendarBundle:Default:index }

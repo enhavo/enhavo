@@ -128,3 +128,22 @@
     </li>
 {% endmacro %}
 
+{% block enhavo_workflow_status_widget %}
+    <br>
+    {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle') }}: {{ form.vars['workflow_status'] }}
+    <br>
+    {% if form.vars['no_transitions'] is defined %}
+        {{ form.vars['no_transitions'] }}
+    {% endif %}
+    <br>
+    {{ form_widget(form) }}
+
+{% endblock %}
+
+{% block enhavo_message_widget %}
+    <div class="row mb1 form-message-box type-{{ type }}">
+        <div class="col-md-12">
+            {{ message }}
+        </div>
+    </div>
+{% endblock %}

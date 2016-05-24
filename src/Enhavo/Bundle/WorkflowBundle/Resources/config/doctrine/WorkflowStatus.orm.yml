@@ -1,0 +1,17 @@
+Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
+    type: entity
+    table: workflow_workflow_status
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        node:
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
+
+    lifecycleCallbacks: {  }

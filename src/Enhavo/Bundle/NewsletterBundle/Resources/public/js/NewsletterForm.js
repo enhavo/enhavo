@@ -14,7 +14,6 @@ function Newsletter(router, translator, admin) {
                self.sendNewsletter(data, url, form);
             } else {
                 var text = sent.attr('data-sent-text');
-                console.log(text);
                 var sendAgain = confirm(text);
                 if(sendAgain == true) {
                     self.sendNewsletter(data, url, form);

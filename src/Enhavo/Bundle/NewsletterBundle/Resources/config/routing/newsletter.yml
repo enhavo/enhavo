@@ -8,6 +8,8 @@ enhavo_newsletter_newsletter_index:
         _sylius:
             template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
+            title: newsletter.label.newsletter
+            translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_create:
     options:
@@ -60,6 +62,19 @@ enhavo_newsletter_newsletter_table:
         _viewer:
             translationDomain: EnhavoNewsletterBundle
             table:
+#                batch:
+#                    actions:
+#                        delete:
+#                            label: table.batch.action.delete
+#                            confirm_message: table.batch.message.confirm.delete
+#                            translation_domain: EnhavoAppBundle
+#                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
+#                            position: 0
+#                        send:
+#                            label: newsletter.batch.action.send
+#                            confirm_message: newsletter.batch.message.confirm.send
+#                            translation_domain: EnhavoNewsletterBundle
+#                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_EDIT
                 columns:
                     id:
                         label: newsletter.label.id
@@ -84,6 +99,14 @@ enhavo_newsletter_newsletter_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
+
+enhavo_newsletter_newsletter_batch:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:batchAction
 
 enhavo_newsletter_newsletter_preview:
     options:

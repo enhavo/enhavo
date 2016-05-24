@@ -3,13 +3,14 @@
 namespace Enhavo\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
 
 /**
  * User
  */
-class User extends BaseUser
+class User extends BaseUser implements UserInterface
 {
     /**
      * @var integer

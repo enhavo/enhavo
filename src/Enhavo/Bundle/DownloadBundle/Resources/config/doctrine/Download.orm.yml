@@ -19,17 +19,9 @@ Enhavo\Bundle\DownloadBundle\Entity\Download:
             type: text
             nullable: true
 
-    manyToMany:
+    manyToOne:
         file:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: download_download_file
-                joinColumns:
-                    download_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

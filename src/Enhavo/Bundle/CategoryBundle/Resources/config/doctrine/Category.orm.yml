@@ -34,20 +34,10 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
 
     manyToOne:
         collection:
-            targetEntity: Collection
+            targetEntity: Enhavo\Bundle\CategoryBundle\Model\CollectionInterface
 
-    manyToMany:
         picture:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: category_category_picture
-                joinColumns:
-                    category_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
-
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

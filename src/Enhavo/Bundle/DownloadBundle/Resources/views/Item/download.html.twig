@@ -1,9 +1,5 @@
-{% if data.download.file.first %}
+{% if data.download %}
     <div class="download">
-        <a href="{{ media_url(data.download.file.first) }}" download>{{ data.download.title }}</a>
-    </div>
-{% elseif data.file.first %}
-    <div class="download">
-        <a href="{{ media_url(data.file.first) }}" download>{{ data.title }}</a>
+        <a href="{{ media_url(data.download) }}" download>{{ data.download.title }}</a>
     </div>
 {% endif %}

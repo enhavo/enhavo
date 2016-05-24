@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\Container:
     type: entity
-    table: content_container
+    table: grid_container
     id:
         id:
             type: integer
@@ -14,10 +14,6 @@ Enhavo\Bundle\GridBundle\Entity\Container:
             length: 255
             nullable: true
 
-        configuration:
-            type: blob
-            nullable: true
-
     oneToMany:
         columns:
             targetEntity: Column
@@ -25,10 +21,10 @@ Enhavo\Bundle\GridBundle\Entity\Container:
             cascade: ['persist', 'refresh', 'remove']
 
     manyToOne:
-        content:
-            targetEntity: Content
+        grid:
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
         column:
-            targetEntity: Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\ColumnInterface
 
     lifecycleCallbacks: {  }

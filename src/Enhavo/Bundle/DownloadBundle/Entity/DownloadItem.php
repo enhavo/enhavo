@@ -2,7 +2,9 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
+use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * DownloadItem
@@ -15,12 +17,12 @@ class DownloadItem implements ItemTypeInterface
     protected $id;
 
     /**
-     * @var \Enhavo\Bundle\DownloadBundle\Entity\Download
+     * @var DownloadInterface
      */
     protected $download;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var FileInterface
      */
     protected $file;
 
@@ -42,11 +44,11 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Set download
      *
-     * @param \Enhavo\Bundle\DownloadBundle\Entity\Download $download
+     * @param DownloadInterface $download
      *
      * @return DownloadItem
      */
-    public function setDownload(\Enhavo\Bundle\DownloadBundle\Entity\Download $download = null)
+    public function setDownload(DownloadInterface $download = null)
     {
         $this->download = $download;
 
@@ -56,7 +58,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * Get download
      *
-     * @return \Enhavo\Bundle\DownloadBundle\Entity\Download
+     * @return DownloadInterface
      */
     public function getDownload()
     {
@@ -64,41 +66,19 @@ class DownloadItem implements ItemTypeInterface
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
+     * @param FileInterface|null $file
      * @return DownloadItem
      */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    public function setFile(FileInterface $file = null)
     {
-        $this->file[] = $file;
-
+        $this->file = $file;
         return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->file->removeElement($file);
     }
 
     /**
      * Get file
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return FileInterface|null
      */
     public function getFile()
     {

@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\TextPicture:
     type: entity
-    table: content_type_text_picture
+    table: grid_item_text_picture
     id:
         id:
             type: integer
@@ -25,16 +25,9 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
             type: boolean
             nullable: true
 
-    manyToMany:
-        files:
-            cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: content_textpicture_files
-                joinColumns:
-                    textpicture_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
+    manyToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
     lifecycleCallbacks: {  }

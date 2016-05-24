@@ -13,6 +13,9 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
+use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Enhavo\Bundle\UserBundle\Entity\User;
+use Enhavo\Bundle\AppBundle\Viewer\CreateViewer;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -30,17 +33,13 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
+        /** @var CreateViewer $viewer */
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
         $viewer->setResourceName($this->config->getResourceName());
         $viewer->setConfig($config);
 
-        $parameters = $viewer->getParameters();
-        if (isset($parameters['sorting'])) {
-            $sortingConfig = $parameters['sorting'];
-        } else {
-            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route create: expected field "sorting" in viewer->getParameters()');
-        }
+        $sortingConfig = $viewer->getSorting();
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -86,11 +85,17 @@ class ResourceController extends BaseController
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
+        $roleUtil = new RoleUtil();
+        $roleName = $roleUtil->getRoleName($resource, RoleUtil::ACTION_UPDATE);
+        if(!$this->isGranted($roleName, $resource)) {
+            return new JsonResponse(null, 403);
+        }
         $form = $this->getForm($resource);
         $method = $request->getMethod();
 
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+                $this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
                 $this->domainManager->update($resource);
                 $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
                 return new Response();
@@ -124,7 +129,13 @@ class ResourceController extends BaseController
 
         $viewer->dispatchEvent('');
 
-        return $this->render($viewer->getTemplate(), $viewer->getParameters());
+        $view = $this
+            ->view()
+            ->setTemplate($viewer->getTemplate())
+            ->setData($viewer->getParameters())
+        ;
+
+        return $this->handleView($view);
     }
 
     public function previewAction(Request $request)
@@ -194,58 +205,39 @@ class ResourceController extends BaseController
      */
     public function batchAction(Request $request)
     {
-        $criteria = $this->config->getCriteria();
-        $sorting = $this->config->getSorting();
-        $form = $this->getBatchUpdateForm();
         $repository = $this->getRepository();
-        $method = $request->getMethod();
 
-        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
-            if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-                $resources = $form->getData();
-                foreach($resources as $resource) {
-                    $this->domainManager->update($resource);
-                }
-                return new Response();
-            }
+        $targetResources = $request->request->get('batchActionTargets');
+        $action = $request->request->get('batchActionCommand');
 
-            $view = $this->view($form);
-            $view->setFormat('json');
-            return $this->handleView($view);
-        } else {
-            if ($this->config->isPaginated()) {
-                $resources = $this->resourceResolver->getResource(
-                    $repository,
-                    'createPaginator',
-                    array($criteria, $sorting)
-                );
-                $resources->setCurrentPage($request->get('page', 1), true, true);
-                $resources->setMaxPerPage($this->config->getPaginationMaxPerPage());
-            } else {
-                $resources = $this->resourceResolver->getResource(
-                    $repository,
-                    'findBy',
-                    array($criteria, $sorting, $this->config->getLimit())
-                );
-            }
+        $resources = array();
+        foreach($targetResources as $resourceId) {
+            $resources []= $repository->find($resourceId);
         }
+        $methodName = "batchAction" . ucfirst($action);
+        if (call_user_func(array($this, $methodName), $resources)) {
+            return new JsonResponse(array('success' => true));
+        } else {
+            return new JsonResponse(array('success' => false));
+        }
+    }
 
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('update.html'))
-            ->setData(array(
-                'form' => $form->createView(),
-                'data' => $resources,
-                'view' => $this->getAdmin()->createView()
-            ))
-        ;
+    public function batchActionDelete($resources)
+    {
+        $this->isGrantedOr403('delete');
+        foreach ($resources as $resource) {
+            $this->domainManager->delete($resource);
+        }
+        $this->get('doctrine.orm.entity_manager')->flush();
 
-        return $this->handleView($view);
+        return true;
     }
 
     public function deleteAction(Request $request)
     {
         $this->isGrantedOr403('delete');
+        $resource = $this->findOr404($request);
+        $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
         $this->domainManager->delete($this->findOr404($request));
         return new Response();
     }

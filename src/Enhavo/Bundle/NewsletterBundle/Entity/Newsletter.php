@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
 
 /**
  * Newsletter
@@ -136,5 +137,34 @@ class Newsletter
     public function getSent()
     {
         return $this->sent;
+    }
+    /**
+     * @var WorkflowStatusInterface
+     */
+    private $workflow_status;
+
+
+    /**
+     * Set workflowStatus
+     *
+     * @param WorkflowStatusInterface $workflowStatus
+     *
+     * @return Newsletter
+     */
+    public function setWorkflowStatus(WorkflowStatusInterface $workflowStatus = null)
+    {
+        $this->workflow_status = $workflowStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get workflowStatus
+     *
+     * @return WorkflowStatusInterface
+     */
+    public function getWorkflowStatus()
+    {
+        return $this->workflow_status;
     }
 }

@@ -7,10 +7,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CollectionType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    protected $dataClass;
+
+    public function __construct($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('categories', 'collection', array(
-            'type' => new CategoryType(),
+            'type' => 'enhavo_category_category',
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
@@ -20,7 +30,7 @@ class CollectionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\CategoryBundle\Entity\Collection',
+            'data_class' => $this->dataClass,
         ));
     }
 

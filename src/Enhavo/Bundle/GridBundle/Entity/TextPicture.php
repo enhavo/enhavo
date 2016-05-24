@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * TextPicture
@@ -31,14 +32,15 @@ class TextPicture implements ItemTypeInterface
      */
     protected $textLeft;
 
-    protected $files;
+    /**
+     * @var FileInterface
+     */
+    protected $file;
 
+    /**
+     * @var boolean
+     */
     protected $frame;
-
-    public function __construct()
-    {
-        $this->files = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -99,7 +101,7 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Set textleft
+     * Set if text is displayed left, otherwise it will be right
      *
      * @param boolean $textLeft
      *
@@ -113,7 +115,7 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Get textleft
+     * Get if text is left
      *
      * @return boolean
      */
@@ -123,53 +125,26 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * Set files
+     * Set file
      *
-     * @param \files $files
-     * @return Content
+     * @param FileInterface $file
+     * @return Grid
      */
-    public function setFiles($files)
+    public function setFile(FileInterface $file)
     {
-        $this->files = $files;
+        $this->file = $file;
 
         return $this;
     }
 
     /**
-     * Add files
+     * Get file
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File files
-     * @return Content
+     * @return FileInterface
      */
-    public function addFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
+    public function getFile()
     {
-        if ($this->files === null) {
-            $this->files = new ArrayCollection();
-        }
-
-        $this->files[] = $files;
-
-        return $this;
-    }
-
-    /**
-     * Remove files
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $files
-     */
-    public function removeFiles(\Enhavo\Bundle\MediaBundle\Entity\File $files)
-    {
-        $this->files->removeElement($files);
-    }
-
-    /**
-     * Get files
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFiles()
-    {
-        return $this->files;
+        return $this->file;
     }
 
     /**
@@ -186,29 +161,5 @@ class TextPicture implements ItemTypeInterface
     public function setFrame($frame)
     {
         $this->frame = $frame;
-    }
-
-    /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     *
-     * @return TextPicture
-     */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->files[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->files->removeElement($file);
     }
 }

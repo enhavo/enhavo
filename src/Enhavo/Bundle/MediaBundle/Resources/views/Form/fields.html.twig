@@ -33,13 +33,13 @@
                                 <img src="/file/{file_id}/100/100">
                                 <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i></div>
                             </div>
-                            <input type="hidden" name="{full_name}[0][id]" value="{file_id}" />
-                            <input type="hidden" name="{full_name}[0][order]" data-file-element-order value="" />
-                            <input type="hidden" name="{full_name}[0][filename]" value="{file_name}" data-field-name="filename" />
-                            <input type="hidden" name="{full_name}[0][slug]" value="{file_slug}" data-field-name="slug" />
+                            <input type="hidden" name="{full_name}[id]" value="{file_id}" />
+                            <input type="hidden" name="{full_name}[order]" data-file-element-order value="" />
+                            <input type="hidden" name="{full_name}[filename]" value="{file_name}" data-field-name="filename" />
+                            <input type="hidden" name="{full_name}[slug]" value="{file_slug}" data-field-name="slug" />
                             {% for field_name, field_options in fields %}
                                 <input type="hidden"
-                                       name="{full_name}[0][parameters][{{ field_name }}]"
+                                       name="{full_name}[parameters][{{ field_name }}]"
                                        value=""
                                        data-field-name="pa_{{ field_name }}" />
                             {% endfor %}
@@ -102,17 +102,17 @@
                                                     <i class="fa fa-times fa-2x"></i>
                                                 </div>
                                                 <div class="uploadForm-image-container">
-                                                    <img src="/file/{{ form.vars.value[0].id }}/100/100">
+                                                    <img src="/file/{{ form.vars.value.id }}/100/100">
                                                     <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i></div>
                                                 </div>
-                                                <input type="hidden" name="{{ full_name }}[0][id]" value="{{ form.vars.value[0].id }}" />
-                                                <input type="hidden" name="{{ full_name }}[0][order]" data-file-element-order value="{{ form.vars.value[0].order }}" />
-                                                <input type="hidden" name="{{ full_name }}[0][filename]" value="{{ form.vars.value[0].filename }}" data-field-name="filename" />
-                                                <input type="hidden" name="{{ full_name }}[0][slug]" value="{{ form.vars.value[0].slug }}" data-field-name="slug" />
+                                                <input type="hidden" name="{{ full_name }}[id]" value="{{ form.vars.value.id }}" />
+                                                <input type="hidden" name="{{ full_name }}[order]" data-file-element-order value="{{ form.vars.value.order }}" />
+                                                <input type="hidden" name="{{ full_name }}[filename]" value="{{ form.vars.value.filename }}" data-field-name="filename" />
+                                                <input type="hidden" name="{{ full_name }}[slug]" value="{{ form.vars.value.slug }}" data-field-name="slug" />
                                                 {% for field_name, field_options in fields %}
                                                     <input type="hidden"
-                                                           name="{{ full_name }}[0][parameters][{{ field_name }}]"
-                                                           value="{% if form.vars.value[0].parameters[field_name] is defined %}{{ form.vars.value[0].parameters[field_name] }}{% endif %}"
+                                                           name="{{ full_name }}[parameters][{{ field_name }}]"
+                                                           value="{% if form.vars.value.parameters[field_name] is defined %}{{ form.vars.value.parameters[field_name] }}{% endif %}"
                                                            data-field-name="pa_{{ field_name }}" />
                                                 {% endfor %}
                                             </div>
@@ -122,38 +122,38 @@
                             </div>
                             <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}">
                         {% endif %}
-                        <div class="fileupload-fields disabled hidden" data-selected="">
+                    </div>
+                    <div class="fileupload-fields disabled hidden" data-selected="">
+                        <div class="fileupload-field row">
+                            <div class="col-md-4 fileupload-field-label-container">
+                                <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle') }}</label>
+                            </div>
+                            <div class="col-md-8 fileupload-field-input-container">
+                                <div class="input-container">
+                                    <input id="fileupload-field-filename" class="fileupload-field-input" type="text" name="" data-field-name="filename" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fileupload-field row">
+                            <div class="col-md-4 fileupload-field-label-container">
+                                <label for="fileupload-field-slug" class="fileupload-field-label">{{ 'media.form.label.slug'|trans({}, 'EnhavoMediaBundle') }}</label>
+                            </div>
+                            <div class="col-md-8 fileupload-field-input-container">
+                                <span id="fileupload-field-slug" class="fileupload-field-slug" data-field-name="slug"> </span>
+                            </div>
+                        </div>
+                        {% for field_name, field_options in fields %}
                             <div class="fileupload-field row">
                                 <div class="col-md-4 fileupload-field-label-container">
-                                    <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle') }}</label>
+                                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_options['label']|trans({}, field_options['translationDomain']) }}</label>
                                 </div>
                                 <div class="col-md-8 fileupload-field-input-container">
                                     <div class="input-container">
-                                        <input id="fileupload-field-filename" class="fileupload-field-input" type="text" name="" data-field-name="filename" disabled />
+                                        <input id="fileupload-field-{{ field_name }}" class="fileupload-field-input" type="text" name="" data-field-name="pa_{{ field_name }}" disabled />
                                     </div>
                                 </div>
                             </div>
-                            <div class="fileupload-field row">
-                                <div class="col-md-4 fileupload-field-label-container">
-                                    <label for="fileupload-field-slug" class="fileupload-field-label">{{ 'media.form.label.slug'|trans({}, 'EnhavoMediaBundle') }}</label>
-                                </div>
-                                <div class="col-md-8 fileupload-field-input-container">
-                                    <span id="fileupload-field-slug" class="fileupload-field-slug" data-field-name="slug"> </span>
-                                </div>
-                            </div>
-                            {% for field_name, field_options in fields %}
-                                <div class="fileupload-field row">
-                                    <div class="col-md-4 fileupload-field-label-container">
-                                        <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_options['label']|trans({}, field_options['translationDomain']) }}</label>
-                                    </div>
-                                    <div class="col-md-8 fileupload-field-input-container">
-                                        <div class="input-container">
-                                            <input id="fileupload-field-{{ field_name }}" class="fileupload-field-input" type="text" name="" data-field-name="pa_{{ field_name }}" disabled />
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="mt1">
                         <button class="btn upload-button"> {{ 'label.upload'|trans }}</button>

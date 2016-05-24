@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
 
 /**
  * Download
  */
-class Download
+class Download implements DownloadInterface
 {
     /**
      * @var integer
@@ -27,7 +27,7 @@ class Download
     protected $text;
 
     /**
-     * @var \Enhavo\Bundle\MediaBundle\Entity\File
+     * @var FileInterface
      */
     protected $file;
 
@@ -67,7 +67,7 @@ class Download
     /**
      * Set teaser
      *
-     * @param string $teaser
+     * @param string $text
      * @return Download
      */
     public function setText($text)
@@ -90,10 +90,10 @@ class Download
     /**
      * Set date
      *
-     * @param \file $file
+     * @param FileInterface|null $file
      * @return Download
      */
-    public function setFile($file)
+    public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
 
@@ -101,36 +101,9 @@ class Download
     }
 
     /**
-     * Add file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File file
-     * @return Page
-     */
-    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        if($this->file === null) {
-            $this->file = new ArrayCollection();
-        }
-
-        $this->file[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
-     */
-    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
-    {
-        $this->file->removeElement($file);
-    }
-
-    /**
      * Get file
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return FileInterface|null
      */
     public function getFile()
     {

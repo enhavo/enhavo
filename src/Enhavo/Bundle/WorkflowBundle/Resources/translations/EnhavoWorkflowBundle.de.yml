@@ -1,0 +1,40 @@
+workflow:
+  form:
+    message:
+      deleteNode: 'Beim löschen eines bestehenden Knotens werden auch alle damit verbundenen Übergänge gelöscht!'
+    label:
+      workflowName: 'Workflow Name'
+      nodes: 'Knoten'
+      transitions: 'Übergänge'
+      page: 'Seiten'
+      appointment: 'Kalender'
+      newsletter: 'Newsletter'
+      article: 'Artikel'
+      next_state: 'Nächster Zustand'
+      type: 'Typ (Entity)'
+  label:
+    id: 'ID'
+    workflow: 'Workflow'
+    nodes: 'Knoten'
+    transitions: 'Übergänge'
+    workflowName: 'Workflow Name'
+    entity: 'Entity'
+    currentWFS: 'Aktueller Workflow-Status'
+    active: 'Aktiv'
+    noTransitions: '(keine Übergänge möglich)'
+    assigned: 'Zugeordnet'
+  validator:
+    error:
+      nodes: 'Es wurden noch keine Knoten erstellt.'
+      delete: 'Bitte deaktiviered Sie den Workflow bevor Sie Änderungen vornehmen.'
+node:
+  form:
+    label:
+      nodeName: 'Knoten Name'
+      startNode: 'Start Knoten'
+transition:
+  form:
+    label:
+      transitionName: 'Bezeichnung'
+      nodeFrom: 'Von'
+      nodeTo: 'Nach'

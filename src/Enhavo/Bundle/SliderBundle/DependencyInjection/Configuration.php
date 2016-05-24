@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\SliderBundle\Entity\Slide')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SliderBundle\Repository\SlideRepository')->end()
+                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()
                                             ->children()

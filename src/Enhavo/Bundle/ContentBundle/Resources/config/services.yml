@@ -1,4 +1,8 @@
+parameters:
+    enhavo_content.form.type.content.class: Enhavo\Bundle\ContentBundle\Form\Type\ContentType
+
 services:
-#    enhavo_content.example:
-#        class: Enhavo\Bundle\ContentBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    enhavo_content_content:
+        class: %enhavo_content.form.type.content.class%
+        tags:
+            - { name: form.type }

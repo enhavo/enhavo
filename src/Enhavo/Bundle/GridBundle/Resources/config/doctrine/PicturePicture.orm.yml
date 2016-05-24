@@ -1,6 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\PicturePicture:
     type: entity
-    table: content_type_picture_picture
+    table: grid_item_picture_picture
     id:
         id:
             type: integer
@@ -29,27 +29,13 @@ Enhavo\Bundle\GridBundle\Entity\PicturePicture:
             length: 255
             nullable: true
 
-    manyToMany:
-        filesLeft:
+    manyToOne:
+        fileLeft:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: content_pictureleft_files
-                joinColumns:
-                    picturepicture_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
-        filesRight:
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+        fileRight:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\MediaBundle\Entity\File
-            joinTable:
-                name: content_pictureright_files
-                joinColumns:
-                    picturepicture_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    file_id:
-                        referencedColumnName: id
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
     lifecycleCallbacks: {  }

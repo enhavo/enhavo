@@ -3,11 +3,12 @@
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * File
  */
-class File
+class File implements FileInterface
 {
     /**
      * @var integer

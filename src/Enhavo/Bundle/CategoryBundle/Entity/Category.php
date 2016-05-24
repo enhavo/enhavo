@@ -3,13 +3,15 @@
 namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
+use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Category
  */
-class Category
+class Category implements CategoryInterface
 {
-
     /**
      * @var integer
      */
@@ -21,10 +23,29 @@ class Category
     protected $name;
 
     /**
-     * @var \Enhavo\Bundle\CategoryBundle\Entity\Collection
+     * @var CollectionInterface
      */
     protected $collection;
 
+    /**
+     * @var integer
+     */
+    protected $order;
+
+    /**
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     */
+    private $text;
+
+    /**
+     * @var FileInterface
+     */
+    private $picture;
 
     /**
      * Get id
@@ -62,10 +83,10 @@ class Category
     /**
      * Set collection
      *
-     * @param \Enhavo\Bundle\CategoryBundle\Entity\Collection $collection
+     * @param CollectionInterface $collection
      * @return Category
      */
-    public function setCollection(\Enhavo\Bundle\CategoryBundle\Entity\Collection $collection = null)
+    public function setCollection(CollectionInterface $collection = null)
     {
         $this->collection = $collection;
 
@@ -75,7 +96,7 @@ class Category
     /**
      * Get collection
      *
-     * @return \Enhavo\Bundle\CategoryBundle\Entity\Collection
+     * @return CollectionInterface
      */
     public function getCollection()
     {
@@ -89,16 +110,6 @@ class Category
         }
         return '';
     }
-    /**
-     * @var integer
-     */
-    protected $order;
-
-    /**
-     * @var string
-     */
-    protected $slug;
-
 
     /**
      * Set order
@@ -121,23 +132,6 @@ class Category
     public function getOrder()
     {
         return $this->order;
-    }
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $picture;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,33 +159,21 @@ class Category
     }
 
     /**
-     * Add picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
+     * @param FileInterface|null $picture
      *
      * @return Category
      */
-    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
+    public function setPicture(FileInterface $picture = null)
     {
-        $this->picture[] = $picture;
+        $this->picture = $picture;
 
         return $this;
     }
 
     /**
-     * Remove picture
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $picture
-     */
-    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $picture)
-    {
-        $this->picture->removeElement($picture);
-    }
-
-    /**
      * Get picture
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return FileInterface|null
      */
     public function getPicture()
     {

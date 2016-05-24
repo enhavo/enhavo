@@ -3,11 +3,14 @@
 namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
+use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 
 /**
  * Slider
  */
-class Slide
+class Slide implements SlideInterface
 {
     /**
      * @var integer
@@ -40,7 +43,7 @@ class Slide
     protected $public;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var FileInterface
      */
     protected $image;
 
@@ -48,15 +51,6 @@ class Slide
      * @var Slider
      */
     protected $slider;
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -190,10 +184,10 @@ class Slide
     /**
      * Set slider
      *
-     * @param Slider $slider
+     * @param SliderInterface $slider
      * @return Slide
      */
-    public function setSlider(Slider $slider = null)
+    public function setSlider(SliderInterface $slider = null)
     {
         $this->slider = $slider;
 
@@ -211,32 +205,22 @@ class Slide
     }
 
     /**
-     * Add image
+     * Set image
      *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     * @return Slider
+     * @param FileInterface|null $image
+     * @return Slide
      */
-    public function addImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
+    public function setImage(FileInterface $image = null)
     {
-        $this->image[] = $image;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Remove image
-     *
-     * @param \Enhavo\Bundle\MediaBundle\Entity\File $image
-     */
-    public function removeImage(\Enhavo\Bundle\MediaBundle\Entity\File $image)
-    {
-        $this->image->removeElement($image);
-    }
-
-    /**
      * Get image
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return FileInterface|null
      */
     public function getImage()
     {

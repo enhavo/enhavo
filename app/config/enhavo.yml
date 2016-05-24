@@ -1,15 +1,26 @@
 cmf_routing:
-# Use this settings if you want to provide some dynamic routing features
-#    dynamic:
-#        controllers_by_class:
-#            Enhavo\Bundle\ArticleBundle\Entity\Article: EnhavoAppBundle:App:show
-#            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:App:show
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:Routing:show
 
 enhavo_app:
     permission_check: false
-    dynamic_routing: false
+    dynamic_routing: true
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
+      - '@EnhavoGridBundle/Resources/public/css/style.css'
+      - '@EnhavoPageBundle/Resources/public/css/style.css'
+      - '@EnhavoArticleBundle/Resources/public/css/style.css'
+      - '@EnhavoSliderBundle/Resources/public/css/style.css'
+      - '@EnhavoUserBundle/Resources/public/css/style.css'
+      - '@EnhavoMediaBundle/Resources/public/css/style.css'
+      - '@EnhavoDownloadBundle/Resources/public/css/style.css'
+      - '@EnhavoCategoryBundle/Resources/public/css/style.css'
+      - '@EnhavoCalendarBundle/Resources/public/css/style.css'
+      - '@EnhavoSliderBundle/Resources/public/css/style.css'
+      - '@EnhavoNewsletterBundle/Resources/public/css/style.css'
+      - '@EnhavoDashboardBundle/Resources/public/css/style.css'
+      - '@EnhavoWorkflowBundle/Resources/public/css/style.css'
     javascripts:
 
     viewer:
@@ -20,52 +31,57 @@ enhavo_app:
             label: dashboard.label.dashboard
             translationDomain: EnhavoDashboardBundle
             route: enhavo_dashboard_index
-            role: ROLE_ESPERANTO_USER_USER_INDEX
+            role: ROLE_ENHAVO_USER_USER_INDEX
         user:
             label: user.label.user
             translationDomain: EnhavoUserBundle
             route: enhavo_user_user_index
-            role: ROLE_ESPERANTO_USER_USER_INDEX
+            role: ROLE_ENHAVO_USER_USER_INDEX
         group:
             label: group.label.group
             translationDomain: EnhavoUserBundle
             route: enhavo_user_group_index
-            role: ROLE_ESPERANTO_USER_GROUP_INDEX
+            role: ROLE_ENHAVO_USER_GROUP_INDEX
         article:
             label: article.label.article
             translationDomain: EnhavoArticleBundle
             route: enhavo_article_article_index
-            role: ROLE_ESPERANTO_NEWS_NEWS_INDEX
+            role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
         page:
             label: page.label.page
             translationDomain: EnhavoPageBundle
             route: enhavo_page_page_index
-            role: ROLE_ESPERANTO_PAGE_PAGE_INDEX
+            role: ROLE_ENHAVO_PAGE_PAGE_INDEX
         category:
-            label: category.label.categories
+            label: category.label.category
             translationDomain: EnhavoCategoryBundle
             route: enhavo_category_category_index
-            role: ROLE_ESPERANTO_CATEGORY_CATEGORY_INDEX
+            role: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX
         download:
             label: download.label.download
             translationDomain: EnhavoDownloadBundle
             route: enhavo_download_download_index
-            role: ROLE_ESPERANTO_DOWNLOAD_DOWNLOAD_INDEX
+            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX
         slider:
             label: slider.label.slider
             translationDomain: EnhavoSliderBundle
             route: enhavo_slider_slide_index
-            role: ROLE_ESPERANTO_SLIDER_SLIDER_INDEX
+            role: ROLE_ENHAVO_SLIDER_SLIDE_INDEX
         newsletter:
             label: newsletter.label.newsletter
             translationDomain: EnhavoNewsletterBundle
             route: enhavo_newsletter_newsletter_index
-            role: ROLE_ESPERANTO_NEWSLETTER_NEWSLETTER_INDEX
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX
         calendar:
             label: label.calendar
             translationDomain: EnhavoCalendarBundle
             route: enhavo_calendar_appointment_index
-            role: ROLE_ESPERANTO_CALENDAR_CALENDAR_INDEX
+            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX
+        workflow:
+            label: workflow.label.workflow
+            translationDomain: EnhavoWorkflowBundle
+            route: enhavo_workflow_workflow_index
+            role: ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX
 
 enhavo_newsletter:
     subscriber:
@@ -79,7 +95,6 @@ enhavo_grid:
     render:
         sets:
             default:
-#                picture: enhavoProjectBundle:ItemType:picture.html.twig
 
     items:
         picture:
@@ -160,5 +175,23 @@ enhavo_contact:
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
-        subject: Kontaktformular
+        subject: Contactform
         send_to_sender: true
+
+enhavo_workflow:
+    entities:
+        -
+            class: %enhavo_article.model.article.class%
+            label: 'article.label.article'
+            translationDomain: EnhavoArticleBundle
+            repository: enhavo_article.repository.article
+        -
+            class: %enhavo_page.model.page.class%
+            label: 'page.label.page'
+            translationDomain: EnhavoPageBundle
+            repository: enhavo_page.repository.page
+        -
+            class: %enhavo_newsletter.model.newsletter.class%
+            label: 'newsletter.label.newsletter'
+            translationDomain: EnhavoNewsletterBundle
+            repository: enhavo_newsletter.repository.newsletter

@@ -30,6 +30,11 @@ class BlockFactory implements ContainerAwareInterface
         $this->container = $container;
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     /**
      * @param $type
      * @return BlockInterface

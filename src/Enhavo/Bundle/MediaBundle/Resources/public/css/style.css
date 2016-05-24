@@ -1,7 +1,7 @@
 /* upload Form */
 
 .uploadForm .imagePreview { width: 82px; }
-.uploadForm .imagePreview { width: 100%; }
+.uploadForm .imagePreview.multiple { width: 100%; }
 
 .uploadForm .bar {height: 5px;background: #49a4e5;}
 .uploadForm .progress {position:absolute;top:0;left:0;right:0;}
@@ -36,21 +36,24 @@
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
     opacity: 1;
+    background: #f3f3f3;
+    width: 100%;
+    display: block;
 }
 
 .uploadForm .dropzone.fade.empty:after {
     font-size: 18px;
     color: #FFF;
     text-align: center;
-    padding: 40px 0;
+    padding: 0;
     display: block;
     left: 0;
     position: absolute;
-    top: 0;
     width: 100%;
-    height: 20px;
+    height: 50px;
     pointer-events: none;
-    margin-top: -10px;
+    top: 50%;
+    margin-top: -25px;
 }
 
 .uploadForm .list .imgContainer {
