@@ -23,3 +23,9 @@ article:
     yearly: 'Yearly'
     never: 'Never'
     assigned: 'Assigned'
+  batch:
+    action:
+      publish: 'Publish'
+    message:
+      confirm:
+        publish: 'Do you really want to publish all selected articles?'
