@@ -356,10 +356,10 @@ function Admin (router, templating, translator)
 
       if (userMenuActive) {
         userMenuActive = false;
-        $(this).css('transform', 'translateX(0)');
+        $(this).css('right', '20px');
       } else {
         userMenuActive = true;
-        $(this).css('transform', 'translateX(-' + menuWidth + 'px');
+        $(this).css('right', menuWidth + 'px');
       }
     });
   };
