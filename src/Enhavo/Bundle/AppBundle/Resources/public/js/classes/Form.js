@@ -133,6 +133,7 @@ var Form = function(router, templating, admin, translator)
         data: data,
         url: action,
         success: function(data) {
+          admin.closeLoadingOverlay();
           $(form).trigger('formSaveAfter', form);
         },
         error: function(jqXHR) {

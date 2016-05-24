@@ -1,0 +1,18 @@
+Enhavo\Bundle\SearchBundle\Entity\Total:
+    type: entity
+    table: search_total
+    repositoryClass: Enhavo\Bundle\SearchBundle\Repository\TotalRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        word:
+            type: string
+            length: 255
+        count:
+            type: float
+    lifecycleCallbacks: {  }

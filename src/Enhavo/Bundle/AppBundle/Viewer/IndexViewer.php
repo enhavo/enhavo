@@ -17,7 +17,7 @@ class IndexViewer extends AppViewer
         return array(
             'blocks' => array(
                 'table' => array(
-                    'type' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
+                    'type' => 'enhavo_table',
                     'parameters' => array(
                         'table_route' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
                         'update_route' => sprintf('%s_%s_update', $this->getBundlePrefix(), $this->getResourceName()),

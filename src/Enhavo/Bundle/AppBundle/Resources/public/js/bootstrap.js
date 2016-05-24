@@ -9,4 +9,5 @@ $(function() {
   admin.initUserMenu();
   form = new Form(Routing, templating, admin, Translator);
   newsletter = new Newsletter(Routing, Translator, admin);
+  search = new SearchForm(Routing, admin)
 });

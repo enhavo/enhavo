@@ -1,0 +1,29 @@
+Enhavo\Bundle\SearchBundle\Entity\Dataset:
+    type: entity
+    table: search_dataset
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: string
+            length: 255
+
+        data:
+            type: text
+            nullable: true
+
+        reindex:
+            type: integer
+
+        reference:
+            type: integer
+
+        bundle:
+            type: string
+            length: 255
+
+    lifecycleCallbacks: {  }

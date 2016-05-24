@@ -21,6 +21,9 @@ class EnhavoSearchExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('enhavo_search.search.type', 'search');
+        $container->setParameter('enhavo_search.search.template', $config['search']['template']);
+        $container->setParameter('enhavo_search.search.strategy', $config['search']['strategy']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

@@ -171,7 +171,7 @@ enhavo_contact:
         model: Enhavo\Bundle\ContactBundle\Model\Contact
         form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
         template:
-            form: EnhavoContactBundle:Contact:form.html.twig
+            form: EnhavoContactBundle:Contact:render.html.twig
             recipient: EnhavoContactBundle:Contact:recipient.html.twig
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
@@ -196,3 +196,8 @@ enhavo_workflow:
             label: 'newsletter.label.newsletter'
             translationDomain: EnhavoNewsletterBundle
             repository: enhavo_newsletter.repository.newsletter
+            
+enhavo_search:
+    search:
+        template: EnhavoSearchBundle:Search:render.html.twig
+        strategy: reindex

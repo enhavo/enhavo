@@ -21,7 +21,9 @@ class WorkflowValidator extends ConstraintValidator
         if($workflowClass->getActive()){
             $this->validateDeletedNodes($workflowClass->getFormNodes(), $workflowClass->getNodes(), $translator, $constraint);
         }
-        $this->validateTransitions($workflowClass->getTransitions(), $translator, $constraint);
+        if($workflowClass->getTransitions() != null){
+            $this->validateTransitions($workflowClass->getTransitions(), $translator, $constraint);
+        }
     }
 
     protected function validateCreatedNodes($nodes, $translator, $constraint)
@@ -98,6 +100,7 @@ class WorkflowValidator extends ConstraintValidator
 
     protected function validateTransitions($transitions, $translator, $constraint)
     {
+
         foreach ($transitions as $transition) {
 
             //check if the name is empty
