@@ -65,13 +65,13 @@ class FileService
         foreach($files as $file) {
 
             $filePathinfo = pathinfo($file->getClientOriginalName());
-            $slugifiedTitle = $slugifier->slugify($filePathinfo['filename']);
+            $slugifiedTitle = $slugifier->slugify($filePathinfo['filename']) . '.' . $filePathinfo['extension'];;
 
             /** @var $file UploadedFile */
             $entityFile = new EnhavoFile();
             $entityFile->setMimeType($file->getMimeType());
             $entityFile->setExtension($file->guessExtension());
-            $entityFile->setTitle($slugifiedTitle);
+            $entityFile->setSlug($slugifiedTitle);
             $entityFile->setFilename($file->getClientOriginalName());
             $entityFile->setGarbage(true);
 
@@ -186,8 +186,8 @@ class FileService
      *                                                              guessed mime type
      * @param string|null                           $fileExtension  [optional] File extension, overrides automatically
      *                                                              determined extension
-     * @param string|null                           $title          [optional] title, overrides automatically determined
-     *                                                              title (from file name), will be slugified
+     * @param string|null                           $slug           [optional] slug, overrides automatically determined
+     *                                                              slug (from file name)
      * @param string|null                           $fileName       [optional] File name, overrides automatically
      *                                                              determined file name
      * @param int|null                              $order          [optional] File order index
@@ -196,7 +196,7 @@ class FileService
      *                      unknown type.
      * @return EnhavoFile   The generated doctrine entity object (already persisted).
      */
-    public function storeFile($file, $mimeType = null, $fileExtension = null, $title = null, $fileName = null, $order = null, $garbage = false)
+    public function storeFile($file, $mimeType = null, $fileExtension = null, $slug = null, $fileName = null, $order = null, $garbage = false)
     {
         $fileInfo = $this->getFileInformation($file);
         if (!$fileInfo) {
@@ -211,10 +211,10 @@ class FileService
         if ($fileExtension == null) {
             $fileExtension = $fileInfo['extension'];
         }
-        if ($title == null) {
-            $title = $fileInfo['filename'];
+        if ($slug == null) {
+            $slug = $fileInfo['filename'];
         }
-        $title = $slugifier->slugify($title);
+        $slug = $slugifier->slugify($slug) . '.' . $fileInfo['extension'];
         if ($fileName == null) {
             $fileName = $fileInfo['basename'];
         }
@@ -222,7 +222,7 @@ class FileService
         $entityFile = new EnhavoFile();
         $entityFile->setMimeType($mimeType);
         $entityFile->setExtension($fileExtension);
-        $entityFile->setTitle($title);
+        $entityFile->setSlug($slug);
         $entityFile->setFilename($fileName);
         $entityFile->setOrder($order);
         $entityFile->setGarbage($garbage);
@@ -352,6 +352,8 @@ class FileService
         $info['id'] = $file->getId();
         $info['mimeType'] = $file->getMimeType();
         $info['extension'] = $file->getExtension();
+        $info['filename'] = $file->getFilename();
+        $info['slug'] = $file->getSlug();
         return $info;
     }
 }

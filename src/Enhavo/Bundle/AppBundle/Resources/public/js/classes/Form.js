@@ -398,7 +398,6 @@ var Form = function(router, templating, admin, translator)
 
     $(document).on('formCloseAfter', function(event, content) {
       self.destroyWysiwyg(content);
-      admin.closeLoadingOverlay();
     });
   };
 

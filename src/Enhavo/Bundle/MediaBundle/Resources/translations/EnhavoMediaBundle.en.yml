@@ -1,0 +1,7 @@
+media:
+  form:
+    label:
+      title: "Title"
+      alt_tag: "Alt-Tag"
+      filename: "Filename"
+      slug: "Slug"
