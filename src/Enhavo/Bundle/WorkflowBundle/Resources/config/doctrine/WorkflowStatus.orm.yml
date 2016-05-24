@@ -12,6 +12,6 @@ Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
     manyToOne:
         node:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
 
     lifecycleCallbacks: {  }

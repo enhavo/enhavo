@@ -31,22 +31,29 @@ class WorkflowVoter  implements VoterInterface
 
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        $roleUtil = new RoleUtil();
-        $action = $roleUtil->getAction($attributes[0]);
+        if(in_array('WORKFLOW_UPDATE', $attributes)) {
 
-        if (is_object($object) && $action == RoleUtil::ACTION_UPDATE) {
-            $repository = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow');
-            if ($repository->hasActiveWorkflow($object)) {
-                if ($this->isAllowed($object, $token)) {
-                     return self::ACCESS_GRANTED;
+            if (is_object($object)) {
+                $repository = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow');
+                if ($repository->hasActiveWorkflow($object)) {
+                    if ($this->isAllowed($object, $token)) {
+                        return self::ACCESS_GRANTED;
+                    } else {
+                        return self::ACCESS_DENIED;
+                    }
                 } else {
-                    return self::ACCESS_DENIED;
+                    $roleUtil = new RoleUtil();
+                    $roleName = $roleUtil->getRoleName($object, RoleUtil::ACTION_UPDATE);
+                    $securityContext = $this->container->get('security.context');
+                    if($securityContext->isGranted($roleName)){
+                        return self::ACCESS_GRANTED;
+                    } else {
+                        return self::ACCESS_DENIED;
+                    }
                 }
-            } else {
-                return self::ACCESS_ABSTAIN;
             }
         }
-       return self::ACCESS_ABSTAIN;
+        return self::ACCESS_ABSTAIN;
     }
 
     protected function isAllowed($resource, $token) {
@@ -56,7 +63,7 @@ class WorkflowVoter  implements VoterInterface
         if($user instanceof User){
             $workflowStatus = $resource->getWorkflowStatus();
             $transitions = $this->manager->getRepository('EnhavoWorkflowBundle:Transition')->findBy(array(
-                'node_from' => $workflowStatus->getNode()
+                'nodeFrom' => $workflowStatus->getNode()
             ));
             if ($user->getGroups()) {
                 foreach ($transitions as $transition) {

@@ -10,9 +10,10 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
             generator:
                 strategy: AUTO
     fields:
-        workflow_name:
+        name:
             type: string
             length: 255
+            nullable: true
 
         entity:
             type: string
@@ -26,11 +27,11 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
     oneToMany:
         nodes:
             cascade: ['persist']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
             mappedBy: workflow
         transitions:
             cascade: ['persist']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Transition
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface
             mappedBy: workflow
 
     lifecycleCallbacks: {  }

@@ -1,0 +1,3 @@
+Enhavo\Bundle\CalendarBundle\Entity\Appointment:
+  constraints:
+        - Enhavo\Bundle\CalendarBundle\Validator\Constraints\AppointmentDate: ~

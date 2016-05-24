@@ -9,8 +9,12 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 
-class Column {
+use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
+use Enhavo\Bundle\GridBundle\Model\ContainerInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
+class Column implements ColumnInterface
+{
     /**
      * @var integer
      */
@@ -21,10 +25,6 @@ class Column {
      */
     protected $type;
 
-    /**
-     * @var string
-     */
-    protected $configuration;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -37,7 +37,7 @@ class Column {
     protected $items;
 
     /**
-     * @var \Enhavo\Bundle\GridBundle\Entity\Container
+     * @var ContainerInterface
      */
     protected $overview;
 
@@ -84,35 +84,12 @@ class Column {
     }
 
     /**
-     * Set configuration
-     *
-     * @param string $configuration
-     * @return Column
-     */
-    public function setConfiguration($configuration)
-    {
-        $this->configuration = $configuration;
-
-        return $this;
-    }
-
-    /**
-     * Get configuration
-     *
-     * @return string 
-     */
-    public function getConfiguration()
-    {
-        return $this->configuration;
-    }
-
-    /**
      * Add containers
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
+     * @param ContainerInterface $containers
      * @return Column
      */
-    public function addContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
+    public function addContainer(ContainerInterface $containers)
     {
         $this->containers[] = $containers;
 
@@ -122,9 +99,9 @@ class Column {
     /**
      * Remove containers
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Container $containers
+     * @param ContainerInterface $containers
      */
-    public function removeContainer(\Enhavo\Bundle\GridBundle\Entity\Container $containers)
+    public function removeContainer(ContainerInterface $containers)
     {
         $this->containers->removeElement($containers);
     }
@@ -142,10 +119,10 @@ class Column {
     /**
      * Add items
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
+     * @param ItemInterface $items
      * @return Column
      */
-    public function addItem(\Enhavo\Bundle\GridBundle\Entity\Item $items)
+    public function addItem(ItemInterface $items)
     {
         $this->items[] = $items;
 
@@ -155,9 +132,9 @@ class Column {
     /**
      * Remove items
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Item $items
+     * @param ItemInterface $items
      */
-    public function removeItem(\Enhavo\Bundle\GridBundle\Entity\Item $items)
+    public function removeItem(ItemInterface $items)
     {
         $this->items->removeElement($items);
     }
@@ -175,10 +152,10 @@ class Column {
     /**
      * Set overview
      *
-     * @param \Enhavo\Bundle\GridBundle\Entity\Container $overview
+     * @param ContainerInterface $overview
      * @return Column
      */
-    public function setOverview(\Enhavo\Bundle\GridBundle\Entity\Container $overview = null)
+    public function setOverview(ContainerInterface $overview = null)
     {
         $this->overview = $overview;
 
@@ -188,7 +165,7 @@ class Column {
     /**
      * Get overview
      *
-     * @return \Enhavo\Bundle\GridBundle\Entity\Container
+     * @return ContainerInterface
      */
     public function getOverview()
     {

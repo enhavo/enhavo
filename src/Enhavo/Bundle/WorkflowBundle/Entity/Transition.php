@@ -2,13 +2,16 @@
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
 
-use Enhavo\Bundle\UserBundle\Entity\Group;
+use Enhavo\Bundle\WorkflowBundle\Model\NodeInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface;
+use FOS\UserBundle\Model\GroupInterface;
+
 /**
  * Transition
  */
-class Transition
+class Transition implements TransitionInterface
 {
-
     /**
      * @var integer
      */
@@ -17,20 +20,20 @@ class Transition
     /**
      * @var string
      */
-    private $transition_name;
+    private $name;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @var NodeInterface
      */
-    private $node_from;
+    private $nodeFrom;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @var NodeInterface
      */
-    private $node_to;
+    private $nodeTo;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     * @var WorkflowInterface
      */
     private $workflow;
 
@@ -58,39 +61,39 @@ class Transition
     }
 
     /**
-     * Set transitionName
+     * Set name
      *
-     * @param string $transitionName
+     * @param string $name
      *
      * @return Transition
      */
-    public function setTransitionName($transitionName)
+    public function setName($name)
     {
-        $this->transition_name = $transitionName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get transitionName
+     * Get name
      *
      * @return string
      */
-    public function getTransitionName()
+    public function getName()
     {
-        return $this->transition_name;
+        return $this->name;
     }
 
     /**
      * Set nodeFrom
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom
+     * @param NodeInterface $nodeFrom
      *
      * @return Transition
      */
-    public function setNodeFrom(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeFrom = null)
+    public function setNodeFrom(NodeInterface $nodeFrom = null)
     {
-        $this->node_from = $nodeFrom;
+        $this->nodeFrom = $nodeFrom;
 
         return $this;
     }
@@ -98,23 +101,23 @@ class Transition
     /**
      * Get nodeFrom
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @return NodeInterface
      */
     public function getNodeFrom()
     {
-        return $this->node_from;
+        return $this->nodeFrom;
     }
 
     /**
      * Set nodeTo
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo
+     * @param NodeInterface $nodeTo
      *
      * @return Transition
      */
-    public function setNodeTo(\Enhavo\Bundle\WorkflowBundle\Entity\Node $nodeTo = null)
+    public function setNodeTo(NodeInterface $nodeTo = null)
     {
-        $this->node_to = $nodeTo;
+        $this->nodeTo = $nodeTo;
 
         return $this;
     }
@@ -122,11 +125,11 @@ class Transition
     /**
      * Get nodeTo
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Node
+     * @return NodeInterface
      */
     public function getNodeTo()
     {
-        return $this->node_to;
+        return $this->nodeTo;
     }
 
     /**
@@ -136,17 +139,17 @@ class Transition
      */
     public function getNodeNameTo()
     {
-        return $this->node_to->getNodeName();
+        return $this->nodeTo->getName();
     }
 
     /**
      * Set workflow
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow
+     * @param WorkflowInterface $workflow
      *
      * @return Transition
      */
-    public function setWorkflow(\Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow = null)
+    public function setWorkflow(WorkflowInterface $workflow = null)
     {
         $this->workflow = $workflow;
 
@@ -156,7 +159,7 @@ class Transition
     /**
      * Get workflow
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     * @return WorkflowInterface
      */
     public function getWorkflow()
     {
@@ -166,11 +169,11 @@ class Transition
     /**
      * Add group
      *
-     * @param \Enhavo\Bundle\UserBundle\Entity\Group $group
+     * @param GroupInterface $group
      *
      * @return Transition
      */
-    public function addGroup(\Enhavo\Bundle\UserBundle\Entity\Group $group)
+    public function addGroup(GroupInterface $group)
     {
         $this->groups[] = $group;
 
@@ -180,9 +183,9 @@ class Transition
     /**
      * Remove group
      *
-     * @param \Enhavo\Bundle\UserBundle\Entity\Group $group
+     * @param GroupInterface $group
      */
-    public function removeGroup(\Enhavo\Bundle\UserBundle\Entity\Group $group)
+    public function removeGroup(GroupInterface $group)
     {
         $this->groups->removeElement($group);
     }

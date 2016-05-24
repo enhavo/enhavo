@@ -89,3 +89,16 @@
     border-top: 1px solid #f3f3f3;
     border-radius: 0 0 2px 2px;
 }
+
+.form-message-box {
+    padding: 10px;
+    color: #fff;
+}
+
+.form-message-box.type-info {
+    background-color: #4ab1ea;
+}
+
+.form-message-box.type-warning {
+    background-color: #da5753;
+}

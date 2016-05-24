@@ -23,4 +23,9 @@ article:
     yearly: 'Jährlich'
     never: 'Nie'
     assigned: 'Zugeordnet'
-
+  batch:
+    action:
+      publish: 'Veröffentlichen'
+    message:
+      confirm:
+        publish: 'Wollen sie wirklich alle ausgewählten Artikel veröffentlichen?'

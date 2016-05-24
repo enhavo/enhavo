@@ -43,13 +43,19 @@ class FilesType extends AbstractType
                     if ($options['multiple']) {
                         foreach($data as $formFile) {
                             $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
+                            $file->setFilename($formFile['filename']);
+                            $file->setSlug($formFile['slug']);
                             $file->setOrder($formFile['order']);
+                            $file->setParameters($formFile['parameters']);
                             $file->setGarbage(false);
                             $collection->add($file);
                         }
                     } else {
                         $file = $manager->getRepository('EnhavoMediaBundle:File')->find($data['id']);
+                        $file->setFilename($data['filename']);
+                        $file->setSlug($data['slug']);
                         $file->setOrder($data['order']);
+                        $file->setParameters($data['parameters']);
                         $file->setGarbage(false);
                         $collection->add($file);
                     }
@@ -71,8 +77,6 @@ class FilesType extends AbstractType
                 }
             }
         );
-
-        $builder->setAttribute('multiple', $options['multiple']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -83,12 +87,30 @@ class FilesType extends AbstractType
             $view->information = array();
         }
         $view->vars['multiple'] = $options['multiple'];
+        $fields = $options['fields'];
+        foreach ($fields as $index => $field) {
+            if (!isset($field['translationDomain'])) {
+                $fields[$index]['translationDomain'] = '';
+            }
+        }
+        $view->vars['fields'] = $fields;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'multiple'  => true
+            'multiple'  => true,
+            'editFilename'  => true,
+            'fields'    => array(
+                'title'     => array(
+                    'label'     => 'media.form.label.title',
+                    'translationDomain' => 'EnhavoMediaBundle'
+                ),
+                'alt_tag'   => array(
+                    'label'     => 'media.form.label.alt_tag',
+                    'translationDomain' => 'EnhavoMediaBundle'
+                )
+            )
         ));
 
         $resolver->setOptional(array(

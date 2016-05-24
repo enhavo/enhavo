@@ -8,29 +8,30 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
             generator:
                 strategy: AUTO
     fields:
-        transition_name:
+        name:
             type: string
             length: 255
+            nullable: true
 
     manyToOne:
-        node_from:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
-        node_to:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Node
+        nodeFrom:
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
+        nodeTo:
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
         workflow:
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
 
 
     manyToMany:
         groups:
-          targetEntity: Enhavo\Bundle\UserBundle\Entity\Group
-          joinTable:
-            name: transitions_groups
-            joinColumns:
-              transition_id:
-                referencedColumnName: id
-            inverseJoinColumns:
-              group_id:
-                referencedColumnName: id
+            targetEntity: Enhavo\Bundle\UserBundle\Model\GroupInterface
+            joinTable:
+                name: workflow_transition_group
+                joinColumns:
+                    transition_id:
+                      referencedColumnName: id
+                inverseJoinColumns:
+                    group_id:
+                       referencedColumnName: id
 
     lifecycleCallbacks: {  }

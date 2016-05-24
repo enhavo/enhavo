@@ -65,6 +65,8 @@ class ArticleType extends AbstractType
                 'attr' => $entityName
             ));
         }
+
+        $builder->add('categories', 'enhavo_category', array());
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

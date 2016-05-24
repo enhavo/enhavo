@@ -8,9 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Entity;
 
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
 
-class Route extends RouteModel
+class Route extends RouteModel implements RouteInterface
 {
     /**
      * @var string

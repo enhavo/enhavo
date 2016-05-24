@@ -1,11 +1,14 @@
 <?php
 
 namespace Enhavo\Bundle\WorkflowBundle\Entity;
+use Enhavo\Bundle\WorkflowBundle\Model\NodeInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface;
+use Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface;
 
 /**
  * Node
  */
-class Node
+class Node implements NodeInterface
 {
     /**
      * @var integer
@@ -15,7 +18,7 @@ class Node
     /**
      * @var string
      */
-    private $node_name;
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -23,7 +26,7 @@ class Node
     private $transitions;
 
     /**
-     * @var \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     * @var WorkflowInterface
      */
     private $workflow;
 
@@ -56,37 +59,37 @@ class Node
     }
 
     /**
-     * Set nodeName
+     * Set name
      *
-     * @param string $nodeName
+     * @param string $name
      *
      * @return Node
      */
-    public function setNodeName($nodeName)
+    public function setName($name)
     {
-        $this->node_name = $nodeName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nodeName
+     * Get name
      *
      * @return string
      */
-    public function getNodeName()
+    public function getName()
     {
-        return $this->node_name;
+        return $this->name;
     }
 
     /**
      * Add transition
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition
+     * @param TransitionInterface $transition
      *
      * @return Node
      */
-    public function addTransition(\Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition)
+    public function addTransition(TransitionInterface $transition)
     {
         $this->transitions[] = $transition;
 
@@ -96,9 +99,9 @@ class Node
     /**
      * Remove transition
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition
+     * @param TransitionInterface $transition
      */
-    public function removeTransition(\Enhavo\Bundle\WorkflowBundle\Entity\Transition $transition)
+    public function removeTransition(TransitionInterface $transition)
     {
         $this->transitions->removeElement($transition);
     }
@@ -116,11 +119,11 @@ class Node
     /**
      * Set workflow
      *
-     * @param \Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow
+     * @param WorkflowInterface $workflow
      *
      * @return Node
      */
-    public function setWorkflow(\Enhavo\Bundle\WorkflowBundle\Entity\Workflow $workflow = null)
+    public function setWorkflow(WorkflowInterface $workflow = null)
     {
         $this->workflow = $workflow;
 
@@ -130,7 +133,7 @@ class Node
     /**
      * Get workflow
      *
-     * @return \Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+     * @return WorkflowInterface
      */
     public function getWorkflow()
     {

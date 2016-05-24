@@ -11,9 +11,11 @@
                         <div>{{ 'error.login'|trans }}</div>
                     </div>
                 {% endif %}
+                {% if showVersion() %}
                 <div class="ribbon">
                     <p>0.1.0</p>
                 </div>
+                {% endif %}
                 <div class="logo">
                     <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
                 </div>

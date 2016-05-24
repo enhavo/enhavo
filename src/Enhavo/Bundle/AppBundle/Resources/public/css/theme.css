@@ -195,7 +195,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 
 .container {width: 980px;}
 
-.entry-row {background:#fff;cursor:pointer;padding-top:10px;padding-bottom:10px;}
+.entry-row {background:#fff;cursor:pointer;padding-top:10px;padding-bottom:10px;position:relative;}
 .entry-row:hover {background-color:#4395d1;color:#fff;}
 .head-row {font-weight:700;margin-bottom:5px;letter-spacing: 0.02em;text-transform: uppercase;font-size: 12px;}
 .layer {background:#fff;color:#333;}

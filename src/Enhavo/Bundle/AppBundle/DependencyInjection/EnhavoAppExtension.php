@@ -28,6 +28,7 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
         $container->setParameter('enhavo_app.viewer', $config[ 'viewer' ]);
         $container->setParameter('enhavo_app.dynamic_routing', $config[ 'dynamic_routing' ]);
+        $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

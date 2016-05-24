@@ -24,4 +24,4 @@ page:
       publish: 'Publish'
     message:
       confirm:
-        publish: 'Do you really want to publish all selected items?'
+        publish: 'Do you really want to publish all selected pages?'

@@ -7,3 +7,10 @@ services:
             - %enhavo_calendar.routing.appointment.route%
         tags:
             - { name: form.type }
+
+    validator.appointment_date:
+        class:  Enhavo\Bundle\CalendarBundle\Validator\Constraints\AppointmentDateValidator
+        arguments:
+            - @service_container
+        tags:
+            - { name: validator.constraint_validator, alias: valid_appointment_date }

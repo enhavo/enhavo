@@ -15,16 +15,16 @@ class TransitionType extends AbstractType
         $uri = $_SERVER['REQUEST_URI'];
         $split = explode('/', $uri);
         $workflow_id = array_pop($split);
-        $builder->add('transition_name', 'text', array(
-            'label' => 'transition.form.label.transitionName',
+        $builder->add('name', 'text', array(
+            'label' => 'transition.form.label.name',
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
 
-        $builder->add('node_from', 'entity', array(
+        $builder->add('nodeFrom', 'entity', array(
             'label' => 'transition.form.label.nodeFrom',
             'translation_domain' => 'EnhavoWorkflowBundle',
             'class' => 'EnhavoWorkflowBundle:Node',
-            'choice_label'   => 'node_name',
+            'choice_label'   => 'name',
             'query_builder' => function (EntityRepository $er) use ($workflow_id) {
                 return $er->createQueryBuilder('n')
                     ->setParameter('id', $workflow_id)
@@ -32,11 +32,11 @@ class TransitionType extends AbstractType
             },
         ));
 
-        $builder->add('node_to', 'entity', array(
+        $builder->add('nodeTo', 'entity', array(
             'label' => 'transition.form.label.nodeTo',
             'translation_domain' => 'EnhavoWorkflowBundle',
             'class' => 'EnhavoWorkflowBundle:Node',
-            'choice_label'   => 'node_name',
+            'choice_label'   => 'name',
             'query_builder' => function (EntityRepository $er) use ($workflow_id) {
                 return $er->createQueryBuilder('n')
                     ->setParameter('id', $workflow_id)
