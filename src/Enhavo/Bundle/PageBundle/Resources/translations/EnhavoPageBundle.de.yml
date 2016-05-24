@@ -24,4 +24,4 @@ page:
       publish: 'Veröffentlichen'
     message:
       confirm:
-        publish: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
+        publish: 'Wollen sie wirklich alle ausgewählten Seiten veröffentlichen?'
