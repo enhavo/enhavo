@@ -109,20 +109,10 @@ class SearchRequest {
         foreach ($data as $resultData) {
 
             //get Element from the entity
-            $currentData = array();
             $currentObject = $this->em
                 ->getRepository($resultData['bundle'].':'.ucfirst($resultData['type']))
                 ->findOneBy(array('id' => $resultData['reference']));
-
-            $currentObject = $this->highlightText($currentObject);
-
-            $currentData['entityName'] = strtolower($resultData['type']);
-            $formatedBundleName = str_replace('Bundle', '', $resultData['bundle']); //EnhavoArticle
-            $splittedBundleName = preg_split('/(?=[A-Z])/', $formatedBundleName, -1, PREG_SPLIT_NO_EMPTY); // Enhavo Article
-            $formatedBundleName = implode('_', $splittedBundleName); //Enhavo_Article
-            $currentData['bundleName'] = strtolower($formatedBundleName); //enhavo_article
-            $currentData['object'] = $currentObject;
-            $finalResults[] = $currentData;
+            $finalResults[] = $currentObject;
         }
 
         return $finalResults;
@@ -294,57 +284,13 @@ class SearchRequest {
         return array($numNewScores, $numValidWords);
     }
 
-    protected function highlightText($object)
-    {
-        //highlight title
-        if(property_exists($object, 'title')) {
-            $title = $object->getTitle();
-            $allTitelsWords = explode(" ", $title);
-            $wordsToHighlightTitle = array();
-            foreach ($allTitelsWords as $allTitelsWord) {
-                $simplifiedWord = $this->util->searchSimplify($allTitelsWord);
-                foreach ($this->words as $searchWord) {
-                    if ($searchWord == $simplifiedWord) {
-                        $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
-                    }
-                }
-            }
-            $newTitle = $title;
-            foreach ($wordsToHighlightTitle as $key => $value) {
-                $newTitle = str_replace($key, '<b style="color:red">' . $key . '</b>', $newTitle);
-            }
-            if ($newTitle != null) {
-                $object->setTitle($newTitle);
-            }
-        }
-
-        //highlight teaser
-        if(property_exists($object, 'teaser')){
-            $teaser = $object->getTeaser();
-            $allTeasersWords = explode(" ", $teaser);
-            $wordsToHighlightTeaser = array();
-            foreach($allTeasersWords as $allTeasersWord) {
-                $simplifiedWord = $this->util->searchSimplify($allTeasersWord);
-                foreach($this->words as $searchWord){
-                    if($searchWord == $simplifiedWord) {
-                        $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
-                    }
-                }
-            }
-            $newTeaser = $teaser;
-            foreach($wordsToHighlightTeaser as $key => $value){
-                $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
-            }
-            if($newTeaser != null) {
-                $object->setTeaser($newTeaser);
-            }
-        }
-        return $object;
-    }
-
     public function hasToManyExpressions()
     {
         return $this->toManyExpressions;
     }
 
+    public function getWords()
+    {
+        return $this->words;
+    }
 }

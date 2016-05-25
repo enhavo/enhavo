@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\SearchBundle\Util;
  * Time: 15:13
  */
 
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Yaml\Parser;
 
 class SearchUtil
@@ -15,10 +16,12 @@ class SearchUtil
     protected $kernel;
 
     protected $mainPath;
+    protected $container;
 
-    public function __construct($kernel)
+    public function __construct($kernel, Container $container)
     {
         $this->kernel = $kernel;
+        $this->container = $container;
     }
 
     /**
@@ -216,5 +219,53 @@ class SearchUtil
     public function getMainPath()
     {
         return $this->mainPath;
+    }
+
+    public function highlightText($resource, $words)
+    {
+        //highlight title
+        if(property_exists($resource, 'title')) {
+            $title = $resource->getTitle();
+            $allTitelsWords = explode(" ", $title);
+            $wordsToHighlightTitle = array();
+            foreach ($allTitelsWords as $allTitelsWord) {
+                $simplifiedWord = $this->searchSimplify($allTitelsWord);
+                foreach ($words as $searchWord) {
+                    if ($searchWord == $simplifiedWord) {
+                        $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+                    }
+                }
+            }
+            $newTitle = $title;
+            foreach ($wordsToHighlightTitle as $key => $value) {
+                $newTitle = str_replace($key, '<b style="color:red">' . $key . '</b>', $newTitle);
+            }
+            if ($newTitle != null) {
+                $resource->setTitle($newTitle);
+            }
+        }
+
+        //highlight teaser
+        if(property_exists($resource, 'teaser')){
+            $teaser = $resource->getTeaser();
+            $allTeasersWords = explode(" ", $teaser);
+            $wordsToHighlightTeaser = array();
+            foreach($allTeasersWords as $allTeasersWord) {
+                $simplifiedWord = $this->searchSimplify($allTeasersWord);
+                foreach($words as $searchWord){
+                    if($searchWord == $simplifiedWord) {
+                        $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+                    }
+                }
+            }
+            $newTeaser = $teaser;
+            foreach($wordsToHighlightTeaser as $key => $value){
+                $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
+            }
+            if($newTeaser != null) {
+                $resource->setTeaser($newTeaser);
+            }
+        }
+        return $resource;
     }
 }

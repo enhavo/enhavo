@@ -14,7 +14,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
-
     
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
@@ -52,3 +51,14 @@ services:
         class: Enhavo\Bundle\SearchBundle\Util\SearchUtil
         arguments:
             - @kernel
+            - @service_container
+
+    enhavo_search_permission_filter:
+        class: Enhavo\Bundle\SearchBundle\Search\PermissionFilter
+        arguments:
+            - @service_container
+
+    enhavo_search_update_route:
+        class: Enhavo\Bundle\SearchBundle\Twig\UpdateRoute
+        tags:
+            - { name: twig.extension }

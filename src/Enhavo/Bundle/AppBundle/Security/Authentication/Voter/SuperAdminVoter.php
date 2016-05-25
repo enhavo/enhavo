@@ -5,8 +5,6 @@ namespace Enhavo\Bundle\AppBundle\Security\Authentication\Voter;
 use Enhavo\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 
 class SuperAdminVoter  implements VoterInterface
 {
