@@ -13,7 +13,7 @@
 {% block buttons %}
     {% for name, button in buttons %}
         {% if button.display %}
-            <div class="col-sm-push-2 col-sm-2">
+            <div class="col-sm-push-2 col-sm-2 col-xs-6">
                 <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-sm-12" type="button"><i class="button-icon {{ button.icon }}"></i> {{ button.label|trans }}</button>
             </div>
         {% endif %}
