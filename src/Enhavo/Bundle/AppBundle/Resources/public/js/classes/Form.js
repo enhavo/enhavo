@@ -2,12 +2,6 @@ var Form = function(router, templating, admin, translator)
 {
   var self = this;
 
-  var MessageType = {
-    Info: 'info',
-    Error: 'error',
-    Success: 'success'
-  };
-
   this.initDataPicker = function(form)
   {
     $(form).find('input.datetimepicker').datetimepicker({

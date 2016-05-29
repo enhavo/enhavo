@@ -16,6 +16,16 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_date:
+        class: Enhavo\Bundle\AppBundle\Form\Type\DateType
+        tags:
+            - { name: form.type }
+
+    enhavo_datetime:
+        class: Enhavo\Bundle\AppBundle\Form\Type\DateTimeType
+        tags:
+            - { name: form.type }
+
     enhavo_app.form.enhavo_boolean:
         class: %enhavo_app.form.enhavo_boolean.class%
         arguments:

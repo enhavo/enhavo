@@ -77,9 +77,9 @@ function Button(admin, router, translator)
 
             var errors = getErrors(data.errors);
             var message = '<b>' + errors.join('<br /><br />') + '</b>';
-            admin.overlayMessage(message, MessageType.Error);
+            admin.overlayMessage(message, admin.MessageType.Error);
           } else {
-            admin.overlayMessage(translator.trans('error.occurred'), MessageType.Error);
+            admin.overlayMessage(translator.trans('error.occurred'), admin.MessageType.Error);
           }
         }
       });

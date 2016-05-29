@@ -12,6 +12,6 @@ appointment:
     seo: 'Seo'
   validator:
     error:
-      dates: 'Die Datum Felder stimmen nicht überein.'
+      dates: 'Das Anfangs- muss vor dem End-Datum sein.'
 label:
   calendar: 'Kalender'
