@@ -16,6 +16,15 @@ function Admin (router, templating, translator)
     Success: 'success'
   };
 
+  this.viewport = function() {
+    var e = window, a = 'inner';
+    if (!('innerWidth' in window )) {
+      a = 'client';
+      e = document.documentElement || document.body;
+    }
+    return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+  };
+
   this.initOverlay = function() {
     overlay = $("#overlay");
     overlayContent = $("#overlayContent");
@@ -340,12 +349,11 @@ function Admin (router, templating, translator)
 
   this.initNavigation = function()
   {
-    $(function(){
-      $('[data-mobile-menu]').on('click', function(){
-        $('[data-menu-container]').toggleClass("active");
-        $('[data-content-container]').toggleClass("push");
-        $(this).toggleClass("push");
-      });
+    $('[data-mobile-menu]').on('click', function(){
+      $('[data-menu-container]').toggleClass("active");
+      $('[data-content-container]').toggleClass("push");
+      $('#user-menu').toggleClass("push");
+      $(this).toggleClass("push");
     });
   };
 
@@ -353,7 +361,7 @@ function Admin (router, templating, translator)
   {
     var userMenuActive = false;
     $("[data-open-usermenu]").on("click", function(){
-      $(this).find("button").toggleClass("clicked");
+      $(this).toggleClass("clicked");
       $("[data-usermenu-link]").fadeToggle(100);
       $("#user-menu").toggleClass("background");
 
@@ -361,10 +369,29 @@ function Admin (router, templating, translator)
 
       if (userMenuActive) {
         userMenuActive = false;
-        $(this).css('transform', 'translateX(0)');
+        $(this).css('right', '20px');
       } else {
         userMenuActive = true;
-        $(this).css('transform', 'translateX(-' + menuWidth + 'px');
+        $(this).css('right', menuWidth + 'px');
+      }
+
+      var dimensions = self.viewport();
+      if (dimensions.width <= 767) {
+        $("#user-menu").toggleClass("push-left");
+
+        if (userMenuActive) {
+          userMenuActive = false;
+          $(this).css('right', '200');
+        } else {
+          userMenuActive = true;
+          $(this).css('right', menuWidth + 'px');
+        }
+
+      }
+      if (dimensions.width <= 600) {
+        $('[data-mobile-menu]').toggle()
+        $('[data-content-container]').toggleClass("push-left");
+
       }
     });
   };

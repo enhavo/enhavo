@@ -13,7 +13,7 @@
                 {% endif %}
                 {% if showVersion() %}
                 <div class="ribbon">
-                    <p>0.1.0</p>
+                    <span>0.1.0</span>
                 </div>
                 {% endif %}
                 <div class="logo">
@@ -32,12 +32,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6 col-xs-12">
                             <input type="checkbox" id="_remember" name="_remember">
                             <span></span>
                             <label for="_remember">{{ 'security.login.remember_me'|trans }}</label>
                         </div>
-                        <div class="col-md-6 reset">
+                        <div class="col-sm-6 col-xs-12 reset">
                             <a href="{{ path('enhavo_user_user_reset_password') }}">{{ 'resetting.request.submit'|trans }}</a>
                         </div>
                     </div>
