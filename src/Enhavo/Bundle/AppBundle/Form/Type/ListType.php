@@ -90,6 +90,10 @@ class ListType extends AbstractType
             'border' => false,
             'sortable' => false,
             'sortable_property' => 'order',
+            'prototype' => true,
+            'allow_add' => true,
+            'by_reference' => false,
+            'allow_delete' => true
         ));
     }
 } 

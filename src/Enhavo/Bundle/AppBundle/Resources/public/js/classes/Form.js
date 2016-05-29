@@ -267,14 +267,14 @@ var Form = function(router, templating, admin, translator)
   this.initList = function(form) {
 
     var initDeleteButton = function(item) {
-      $(item).on('click', '.button-delete', function (e) {
-          e.preventDefault();
-          $(this).parents('.listElement').remove();
-        });
+      $(item).first().find('.button-delete').click(function (e) {
+        e.preventDefault();
+        $(this).closest('.listElement').remove();
+      });
     };
 
     var initAddButton = function(list, count) {
-      list.parent().find('.add-another').click(function(e) {
+      list.next().find('.add-another').click(function(e) {
         e.preventDefault();
 
         // grab the prototype template

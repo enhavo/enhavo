@@ -68,7 +68,7 @@
     {% import _self as forms %}
     <ul id="list-fields"
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
-        data-prototype="{{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(form.vars.prototype))|e }}"
+        data-prototype="{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}"
         class="enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
@@ -86,7 +86,7 @@
             sortable-border
         {% endif %}">
         {% for item in form.children %}
-            {{ forms.input(sortable, border, allow_delete, block_name, name, form_widget(item))|raw }}
+            {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
         {% endfor %}
     </ul>
 

@@ -34,6 +34,10 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->scalarNode('login_redirect')->defaultValue('enhavo_dashboard_index')->end()
+            ->end()
+
+            ->children()
                 ->booleanNode('show_version')
                     ->defaultTrue()
                 ->end()
