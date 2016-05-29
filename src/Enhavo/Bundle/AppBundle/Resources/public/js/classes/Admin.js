@@ -290,9 +290,7 @@ function Admin (router, templating, translator)
 
   this.initAfterSaveHandler = function()
   {
-      $(document).on('click', '[data-button][data-type=cancel]', function() {
-          self.overlayClose();
-      });
+
   };
 
   this.initBlocks = function()

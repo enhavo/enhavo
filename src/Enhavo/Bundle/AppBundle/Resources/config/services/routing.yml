@@ -59,3 +59,11 @@ services:
 
     enhavo_app.route_guesser:
         class: Enhavo\Bundle\AppBundle\Route\RouteGuesser
+
+    enhavo_routing:
+        class: Enhavo\Bundle\AppBundle\Form\Type\RoutingType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @router
+            - @enhavo_app.route_guesser

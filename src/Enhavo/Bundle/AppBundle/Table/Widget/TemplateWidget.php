@@ -8,10 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Table\TableWidgetInterface;
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class TemplateWidget extends AbstractTableWidget {
-
+class TemplateWidget extends AbstractType implements TableWidgetInterface
+{
     public function render($options, $property, $item)
     {
         $templateEngine = $this->container->get('templating');

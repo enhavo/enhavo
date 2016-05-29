@@ -6,13 +6,13 @@
  * Time: 13:48
  */
 
-namespace Enhavo\Bundle\AppBundle\Table;
+namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class AbstractTableWidget implements TableWidgetInterface, ContainerAwareInterface {
+abstract class AbstractType implements ContainerAwareInterface {
 
     /**
      * @var ContainerInterface
@@ -44,5 +44,10 @@ abstract class AbstractTableWidget implements TableWidgetInterface, ContainerAwa
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+    }
+
+    protected function renderTemplate($template, $parameters)
+    {
+        return $this->container->get('templating')->render($template, $parameters);
     }
 }

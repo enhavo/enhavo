@@ -28,12 +28,6 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->booleanNode('dynamic_routing')
-                    ->defaultTrue()
-                ->end()
-            ->end()
-
-            ->children()
                 ->scalarNode('login_redirect')->defaultValue('enhavo_dashboard_index')->end()
             ->end()
 

@@ -34,9 +34,8 @@ enhavo_article_article_create:
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
+                    type: preview
                     route: enhavo_article_article_preview
-                    label: label.preview
-                    icon: icon-eye
 
 enhavo_article_article_update:
     options:
@@ -61,9 +60,8 @@ enhavo_article_article_update:
                     template: EnhavoArticleBundle:Tab:seo.html.twig
             buttons:
                 preview:
+                    type: preview
                     route: enhavo_article_article_preview
-                    label: label.preview
-                    icon: icon-eye
 
 enhavo_article_article_table:
     options:

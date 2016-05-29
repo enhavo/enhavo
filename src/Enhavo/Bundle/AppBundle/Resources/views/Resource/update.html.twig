@@ -12,11 +12,7 @@
 {% endblock %}
 
 {% block buttons %}
-    {% for name, button in buttons %}
-        {% if button.display %}
-            <div class="col-md-push-2 col-md-2">
-                <button data-button data-route="{{ button.route }}" data-type="{{ name }}" class="btn col-md-12" type="button"><i class="button-icon {{ button.icon }}"></i> {% if button.translationDomain != null %}{{ button.label|trans({},  button.translationDomain) }}{% else %}{{ button.label|trans({}, translationDomain) }}{% endif %}</button>
-            </div>
-        {% endif %}
+    {% for button in buttons %}
+        {{ button_render(button.type, button, data) }}
     {% endfor %}
 {% endblock %}

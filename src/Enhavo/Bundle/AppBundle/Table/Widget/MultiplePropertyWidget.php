@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
-
 class MultiplePropertyWidget extends ListWidget {
 
     public function render($options, $property, $item)

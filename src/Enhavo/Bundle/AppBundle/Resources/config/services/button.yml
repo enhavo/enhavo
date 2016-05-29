@@ -1,0 +1,45 @@
+parameters:
+    enhavo_app.twig.button_render.class: Enhavo\Bundle\AppBundle\Button\ButtonRenderer
+    enhavo_app.twig.button_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
+
+services:
+    enhavo_app.button_collector:
+        class: %enhavo_app.twig.button_collector.class%
+        arguments:
+          - 'Button'
+
+    enhavo_app.twig.button_renderer:
+        class: %enhavo_app.twig.button_render.class%
+        arguments:
+            - @enhavo_app.button_collector
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.button.delete:
+        class: Enhavo\Bundle\AppBundle\Button\Button\DeleteButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }
+
+    enhavo_app.button.cancel:
+        class: Enhavo\Bundle\AppBundle\Button\Button\CancelButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }
+
+    enhavo_app.button.preview:
+        class: Enhavo\Bundle\AppBundle\Button\Button\PreviewButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }
+
+    enhavo_app.button.save:
+        class: Enhavo\Bundle\AppBundle\Button\Button\SaveButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }

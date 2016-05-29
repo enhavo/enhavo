@@ -27,18 +27,17 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
         $container->setParameter('enhavo_app.viewer', $config[ 'viewer' ]);
-        $container->setParameter('enhavo_app.dynamic_routing', $config[ 'dynamic_routing' ]);
         $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-        $loader->load('twig.yml');
-        $loader->load('viewer.yml');
-        $loader->load('block.yml');
-
-        if($config[ 'dynamic_routing' ]) {
-            $loader->load('dynamic_routing.yml');
-        }
+        $loader->load('services/services.yml');
+        $loader->load('services/twig.yml');
+        $loader->load('services/viewer.yml');
+        $loader->load('services/block.yml');
+        $loader->load('services/button.yml');
+        $loader->load('services/routing.yml');
+        $loader->load('services/form.yml');
+        $loader->load('services/table.yml');
     }
 }

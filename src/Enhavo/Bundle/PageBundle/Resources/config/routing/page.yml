@@ -33,9 +33,8 @@ enhavo_page_page_create:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
+                    type: preview
                     route: enhavo_page_page_preview
-                    label: label.preview
-                    icon: icon-eye
 
 enhavo_page_page_preview:
     options:
@@ -71,9 +70,8 @@ enhavo_page_page_update:
                     template: EnhavoPageBundle:Tab:seo.html.twig
             buttons:
                 preview:
+                    type: preview
                     route: enhavo_page_page_preview
-                    label: label.preview
-                    icon: icon-eye
 
 enhavo_page_page_table:
     options:

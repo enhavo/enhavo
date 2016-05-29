@@ -8,6 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Exception;
 
-class TableWidgetException extends \Exception {
+class TypeNotFoundException extends \Exception {
 
 }

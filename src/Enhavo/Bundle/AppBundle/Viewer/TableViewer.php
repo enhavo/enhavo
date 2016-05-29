@@ -9,7 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use BaconStringUtils\Slugifier;
-use Enhavo\Bundle\AppBundle\Exception\TableWidgetException;
+use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
+use Enhavo\Bundle\AppBundle\Table\TableWidgetInterface;
 
 class TableViewer extends AbstractViewer
 {
@@ -272,12 +273,13 @@ class TableViewer extends AbstractViewer
      * @param $property
      * @param $item
      * @return string
-     * @throws TableWidgetException
+     * @throws TypeNotFoundException
      */
     public function renderWidget($options, $property, $item)
     {
         $collector = $this->container->get('enhavo_app.table_widget_collector');
-        $widget = $collector->getWidget($options['type']);
+        /** @var TableWidgetInterface $widget */
+        $widget = $collector->getType($options['type']);
         return $widget->render($options, $property, $item);
     }
 }

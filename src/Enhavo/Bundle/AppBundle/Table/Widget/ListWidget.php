@@ -8,9 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\AppBundle\Table\TableWidgetInterface;
 
-class ListWidget extends AbstractTableWidget
+class ListWidget extends AbstractType implements TableWidgetInterface
 {
     public function render($options, $property, $item)
     {

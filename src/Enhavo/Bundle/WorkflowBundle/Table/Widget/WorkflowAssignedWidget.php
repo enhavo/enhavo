@@ -2,10 +2,11 @@
 
 namespace Enhavo\Bundle\WorkflowBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Enhavo\Bundle\AppBundle\Table\TableWidgetInterface;
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class WorkflowAssignedWidget extends AbstractTableWidget {
+class WorkflowAssignedWidget extends AbstractType implements TableWidgetInterface {
 
     public function render($options, $property, $item)
     {

@@ -1,0 +1,12 @@
+{% if display %}
+    <div class="col-md-push-2 col-md-2">
+        <button
+                data-button
+                data-type="{{ type }}"
+                {{ block('button_attributes') }}
+                class="btn col-md-12" type="button">
+            <i class="button-icon icon-{{ icon }}"></i>
+            {{ label|trans({},  translationDomain) }}
+        </button>
+    </div>
+{% endif %}

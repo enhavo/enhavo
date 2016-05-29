@@ -2,7 +2,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Table;
 
-interface TableWidgetInterface
+use Enhavo\Bundle\AppBundle\Type\TypeInterface;
+
+interface TableWidgetInterface extends TypeInterface
 {
     /**
      * Render the widget
@@ -13,11 +15,4 @@ interface TableWidgetInterface
      * @return string
      */
     public function render($options, $property, $item);
-
-    /**
-     * Returns the name of the widget
-     *
-     * @return string
-     */
-    public function getType();
 }

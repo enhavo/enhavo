@@ -1,5 +1,0 @@
-services:
-    enhavo_app.block.factory:
-        class: Enhavo\Bundle\AppBundle\Block\BlockFactory
-        calls:
-            - [setContainer, [@service_container]]
