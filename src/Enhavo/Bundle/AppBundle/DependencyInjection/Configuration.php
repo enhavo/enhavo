@@ -32,6 +32,16 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('template')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('base')->defaultValue('EnhavoAppBundle::base.html.twig')->end()
+                        ->scalarNode('dialog')->defaultValue('EnhavoAppBundle::dialog.html.twig')->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
                 ->booleanNode('show_version')
                     ->defaultTrue()
                 ->end()

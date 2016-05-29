@@ -29,6 +29,7 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.viewer', $config[ 'viewer' ]);
         $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
+        $container->setParameter('enhavo_app.template', $config[ 'template' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yml');

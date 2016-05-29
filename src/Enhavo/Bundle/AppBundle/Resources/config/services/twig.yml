@@ -42,7 +42,13 @@ services:
 
     enhavo_app.show_version.twig_extension:
         class:  Enhavo\Bundle\AppBundle\Twig\ShowVersion
-        public: false
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.twig.template:
+        class:  Enhavo\Bundle\AppBundle\Twig\Template
         arguments:
             - @service_container
         tags:
