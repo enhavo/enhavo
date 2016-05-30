@@ -22,6 +22,7 @@ enhavo_app:
       - '@EnhavoNewsletterBundle/Resources/public/css/style.css'
       - '@EnhavoDashboardBundle/Resources/public/css/style.css'
       - '@EnhavoWorkflowBundle/Resources/public/css/style.css'
+      - '@EnhavoSearchBundle/Resources/public/css/style.css'
     javascripts:
 
     viewer:

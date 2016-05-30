@@ -2,16 +2,11 @@
     {% if data is iterable %}
         {% for item in data %}
              </br>
-            <div data-id={{ item.id }} {% if is_granted('WORKFLOW_UPDATE', item) %}data-update-route="{{ item|updateRoute }}"{% endif %} style="border-bottom: 1px solid darkslategray;" class="entry-row">
-                <h1><b> {{ item.title|raw }} </b></h1>
-                {% if item.teaser is defined %}
-                    {% if item.teaser|length >= 100 %}
-                        <p>{{ item.teaser|slice(0, 100)|raw }} ...</p>
-                    {% else %}
-                        <p>{{ item.teaser|slice(0, 100)|raw }}</p>
-                    {% endif %}
-                {% endif %}
-                </br>
+            <div data-id={{ item.resource.id }} {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 1px solid darkslategray;" class="entry-row">
+                <h1><b> {{ item.resource.title|raw }} </b></h1>
+                {% for piece in item.textPieces %}
+                    {{ piece|raw }} {% if not loop.last %}·{% endif %}
+                {% endfor %}
             </div>
         {% endfor %}
     {% else %}

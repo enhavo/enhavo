@@ -9,7 +9,9 @@ namespace Enhavo\Bundle\SearchBundle\Util;
  */
 
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class SearchUtil
 {
@@ -189,7 +191,12 @@ class SearchUtil
     public function getSearchYaml($resource) {
 
         //get class of given resource
-        $class = get_class($resource);
+        $class = null;
+        if($resource instanceof \Doctrine\Common\Persistence\Proxy){
+            $class = get_parent_class($resource);
+        } else {
+            $class = get_class($resource);
+        }
 
         //get all search.yml paths
         $searchYamlPaths = $this->getSearchYamls();
@@ -199,6 +206,7 @@ class SearchUtil
         while(strpos(end($splittedBundlePath), 'Bundle') != true){
             array_pop($splittedBundlePath);
         }
+
         $bundlePath = implode('/', $splittedBundlePath);
         $currentPath = null;
         foreach($searchYamlPaths as $path){
@@ -216,56 +224,411 @@ class SearchUtil
         }
     }
 
+    public function getFieldsOfSearchYml($searchYaml, $resourceClass)
+    {
+        $fields = array();
+        if(key_exists($resourceClass, $searchYaml)){
+            $properties = $searchYaml[$resourceClass]['properties'];
+            foreach($properties as $field => $value){
+                $fields[] = $field;
+            }
+        }
+        return $fields;
+    }
+
+    public function getValueOfField($field, $searchYaml, $resourceClass){
+        $properties = $searchYaml[$resourceClass]['properties'];
+        $value = $properties[$field];
+        return $value;
+    }
+
+    public function getModelData($model)
+    {
+        $fieldSearchYaml = $this->getSearchYaml($model);
+        $class = null;
+        if($model instanceof \Doctrine\Common\Persistence\Proxy){
+            $class = get_parent_class($model);
+        } else {
+            $class = get_class($model);
+        }
+        $currentField = $this->getFieldsOfSearchYml($fieldSearchYaml, $class);
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $modelData = $accessor->getValue($model, $currentField[0]);
+        return $modelData;
+    }
+
     public function getMainPath()
     {
         return $this->mainPath;
     }
 
+    protected $pieces = array();
+    public function getTextPieces($text, $type,$field = null, $item = null)
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
+        if (is_array($type[0])) {
+            foreach ($type[0] as $key => $value) {
+                if ($key == 'Plain' || $key == 'Html') {
+                    $this->pieces[] = $text;
+                } else if ($key == 'Collection') {
+
+                    //type Collection
+                    //get the right yaml file for collection
+                    if (array_key_exists('entity', $value)) {
+                        $bundlePath = null;
+                        $splittedBundlePath = explode('\\', $value['entity']);
+                        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
+                            array_pop($splittedBundlePath);
+                        }
+                        $bundlePath = implode('/', $splittedBundlePath);
+                        $collectionPath = null;
+                        foreach ($this->getSearchYamls() as $path) {
+                            if (strpos($path, $bundlePath)) {
+                                $collectionPath = $path;
+                                break;
+                            }
+                        }
+                        $yaml = new Parser();
+                        $currentCollectionSearchYamls = $yaml->parse(file_get_contents($collectionPath));
+                        $collectionFields = $this->getFieldsOfSearchYml($currentCollectionSearchYamls, $value['entity']);
+                        if($text != null) {
+                            foreach ($text as $content) {
+                                foreach ($collectionFields as $field) {
+                                    if (property_exists($content, $field)) {
+                                        $newText = $accessor->getValue($content, $field);
+                                        $type = $this->getValueOfField($field, $currentCollectionSearchYamls, $value['entity']);
+                                        $this->getTextPieces($newText, $type);
+                                    }
+                                }
+                            }
+                        }
+                    } else if (array_key_exists('type', $value)) {
+                        foreach($text as $currentText){
+
+                        }
+                    }
+
+                }
+            }
+        } else {
+            //Model
+            $class = null;
+            if($text instanceof \Doctrine\Common\Persistence\Proxy){
+                $class = get_parent_class($text);
+            } else {
+                $class = get_class($text);
+            }
+            $currentModelSearchYaml = $this->getSearchYaml($text);
+            $modelFields = $this->getFieldsOfSearchYml($currentModelSearchYaml, $class);
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach ($modelFields as $field) {
+                if(property_exists($text, $field)){
+                    $newText = $accessor->getValue($text, $field);
+                    $type = $this->getValueOfField($field,$currentModelSearchYaml,$class);
+                    $this->getTextPieces($newText,$type,$field, $text);
+                }
+            }
+        }
+    }
+
     public function highlightText($resource, $words)
     {
-        //highlight title
-        if(property_exists($resource, 'title')) {
-            $title = $resource->getTitle();
-            $allTitelsWords = explode(" ", $title);
-            $wordsToHighlightTitle = array();
-            foreach ($allTitelsWords as $allTitelsWord) {
-                $simplifiedWord = $this->searchSimplify($allTitelsWord);
-                foreach ($words as $searchWord) {
-                    if ($searchWord == $simplifiedWord) {
-                        $wordsToHighlightTitle[$allTitelsWord] = $simplifiedWord;
+        $countCharacters = 0;
+        //get belonging search yml
+        $currentSearchYml = $this->getSearchYaml($resource);
+        //get fields of search yml
+        $fields = $this->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
+        //go over every field and check if one or more words are in it
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $finalPieces = array();
+        foreach ($fields as $field) {
+            if(property_exists($resource, $field)){
+                $text = $accessor->getValue($resource, $field);
+                $pieces = array();
+                $stop = false;
+                $textPieces = true;
+                if(is_string($text)){
+                    $pieces[] = $text;
+                    if($field == 'title'){
+                        $textPieces = false;
+                    }
+                } else if (gettype($text) == 'object') {
+                    $fieldValue = $this->getValueOfField($field, $currentSearchYml, get_class($resource));
+                    $this->pieces = array();
+                    $this->getTextPieces($text, $fieldValue);
+                    $pieces = $this->pieces;
+                    $textPieces = true;
+                } else {
+                    $stop = true;
+                }
+                if(!$stop){
+                    foreach($pieces as $piece){
+                        $allWords = explode(" ", strip_tags($piece));
+                        $wordsToHighlight = array();
+                        foreach ($allWords as $word) {
+                            $simplifiedWord = $this->searchSimplify($word);
+                            foreach ($words as $searchWord) {
+                                if ($searchWord == $simplifiedWord) {
+                                    $wordsToHighlight[rtrim($word, ".")] = $simplifiedWord;
+                                }
+                            }
+                        }
+                        $newWord = $piece;
+                        if(!empty($wordsToHighlight) && $field != 'title'){
+                            list($countCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countCharacters);
+                        }
+                        foreach ($wordsToHighlight as $key => $value) {
+                            $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+                        }
+                        if ($newWord != null && !$textPieces) {
+                            $accessor->setValue($resource,$field,$newWord);
+                        } else if($newWord != null && $textPieces && !empty($wordsToHighlight)){
+                            $finalPieces[] = $newWord;
+                        }
                     }
                 }
             }
-            $newTitle = $title;
-            foreach ($wordsToHighlightTitle as $key => $value) {
-                $newTitle = str_replace($key, '<b style="color:red">' . $key . '</b>', $newTitle);
-            }
-            if ($newTitle != null) {
-                $resource->setTitle($newTitle);
+        }
+        $highlightedResult = array();
+        $highlightedResult['resource'] = $resource;
+        $highlightedResult['textPieces'] = $finalPieces;
+        return $highlightedResult;
+    }
+
+    protected function countCharacters($piece, $words, $charactersLength)
+    {
+        //get sentence
+        $sentences = $this->getSentences($piece);
+        $sentences = array_filter($sentences); // remove keys with value ""
+        $collectedSentencesWithSearchword = null;
+        $first = true;
+        //go through every sentence
+        foreach ($sentences as $sentence) {
+            //check if the current sentence has more than 20 words
+            if(str_word_count($sentence) <= 20 && $sentence != ""){
+                list($charactersLength, $collectedSentencesWithSearchword, $first) = $this->addSentenceIfPossible($sentence, $charactersLength, $words, $first, $collectedSentencesWithSearchword);
+            } else {
+                //yes there are more than 20 words
+                //check if half of the current sentence is still to long
+                list($firstPart, $secondPart) = $this->getDividedSentence($sentence);
+
+                $beforeAddingFirstPart = $collectedSentencesWithSearchword;
+                list($charactersLength, $collectedSentencesWithSearchword, $first) = $this->addSentenceIfPossible($firstPart, $charactersLength, $words, $first, $collectedSentencesWithSearchword);
+                if($collectedSentencesWithSearchword == $beforeAddingFirstPart){
+                    $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.' ... ';
+                }
+
+                $beforeAddingSecondPart = $collectedSentencesWithSearchword;
+                list($charactersLength, $collectedSentencesWithSearchword, $first) = $this->addSentenceIfPossible($secondPart, $charactersLength, $words, $first, $collectedSentencesWithSearchword, false);
+                if($collectedSentencesWithSearchword == $beforeAddingSecondPart){
+                    $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.' ... ';
+                }
             }
         }
 
-        //highlight teaser
-        if(property_exists($resource, 'teaser')){
-            $teaser = $resource->getTeaser();
-            $allTeasersWords = explode(" ", $teaser);
-            $wordsToHighlightTeaser = array();
-            foreach($allTeasersWords as $allTeasersWord) {
-                $simplifiedWord = $this->searchSimplify($allTeasersWord);
-                foreach($words as $searchWord){
-                    if($searchWord == $simplifiedWord) {
-                        $wordsToHighlightTeaser[$allTeasersWord] = $simplifiedWord;
+
+        //get sentence with words
+        /*$sentences = $this->getSentences($piece);
+        $sentences = array_filter($sentences);
+        $newPiece = null;
+        $first = true;
+        foreach($sentences as $sentence){
+            if(/*str_word_count($sentence) <= 20 && $sentence != ""){
+                //sentence with max 20 words
+                $simplifiedSentence = $this->searchSimplify($sentence);
+                $length = strlen($simplifiedSentence);
+                if($charactersLength + $length <= 160){
+                    //piece can be added
+                    $simplifiedSentence = $this->searchSimplify($sentence);
+                    $wordIn = false;
+                    foreach($words as $word){
+                        if(preg_match("/\b".$word."\b/i",$simplifiedSentence)){
+                            $wordIn = true;
+                            break;
+                        }
+                    }
+                    if($wordIn){
+                        $newPiece = $newPiece.$sentence;
+                        if($sentence != end($sentences)){
+                            if(!$first){
+                                $newPiece = ' · '.$newPiece;
+                            } else {
+                                $newPiece = $newPiece;
+                                $first = false;
+                            }
+                        }
+                        $charactersLength += $length;
                     }
                 }
+            } else {
+                //sentence with more than 20 words
+                $countInWords = 0;
+                $simplifiedSentence = $this->searchSimplify($sentence);
+                foreach($words as $word){
+                    if(strpos($simplifiedSentence, $word)){
+                        $countInWords++;
+                    }
+                }
+                $sentence = html_entity_decode($sentence, ENT_QUOTES, 'UTF-8');
+                $numWords = array();
+                foreach($words as $word){
+                    $numWords[] = $word;
+                }
+                $checkWords = $numWords;
+                $modifiedSentence = $sentence;
+                $newSentence = "";
+                $storeNewSentence = "";
+                foreach($checkWords as $word){
+                    $simplifiedNewSentence = $this->searchSimplify($newSentence);
+                    $newSentence = "";
+                    //check if word is already in the found piece of sentence
+                    if(!strpos($simplifiedNewSentence, $word)){
+                        //if not search for it -> whatch out that the pieces do not overlap
+                        $count = 1;
+                            do{
+                                $re = '/((\w* ){0,'.$count.'})('.$word.')(( \w*){0,'.$count.'})/iu';
+                                $str = $modifiedSentence;
+                                preg_match_all($re, $str, $matches);
+                                if(array_key_exists(0, $matches[0])){
+                                    $newSentence = $matches[0][0];
+                                }
+                                $count++;
+                            } while(strlen($storeNewSentence) + $charactersLength <= 160 && $count <= 5);
+                            $modifiedSentence = str_replace($newSentence,'', $modifiedSentence);
+                            //Prüfen ob wir uns immernoch im gleichen Satz befinden und je nachdem vorne oder hinten anhängen
+                            $storeNewSentence = $storeNewSentence.$newSentence;
+                    } /*else {
+                        //check if the found word is at the last position of the sentence;
+                        //if it is put more words to the string
+                        $string = $simplifiedNewSentence;
+                        $newSentencePieces = explode(' ', $string);
+                        //check position of word in pieces
+                        foreach($newSentencePieces as $position => $value){
+                            if($value == $word){
+                                //check how many word should be added
+                                if($position < 5){
+                                    $front = 5 - $position;
+                                }
+                                if(((count($newSentencePieces)-1) -$position) < 5){
+                                    $back = 5 - ((count($newSentencePieces)-1) -$position);
+                                }
+                            }
+                        }
+                        if($front > 0){
+                            //vorne anhängen
+                            //get position of first word in $newSentencePieces in $sentence
+                            //then get get the sentence until that position and explode
+                            //get $front from the new exploded sentence
+                            $pos = strpos($simplifiedSentence, $word);
+                            $sentenceBeforeWord = substr($sentence, 0, $pos);
+                            $sentenceBeforeWord = explode(' ',$sentenceBeforeWord);
+                            do{
+                                $add = array_pop($sentenceBeforeWord);
+                                $storeNewSentence = $add.$storeNewSentence;
+                                $front--;
+                            }while($front);
+                        }
+
+                    }
+                }
+
+                $charactersLength += strlen($storeNewSentence);
+                if($storeNewSentence != ""){
+                    if($this->isBegining($storeNewSentence, $sentence)) {
+                        $newPiece = $newPiece.$storeNewSentence.'... ';
+                    } else {
+                        $newPiece = $newPiece.'...'.$storeNewSentence.'... ';
+                    }
+
+                }
             }
-            $newTeaser = $teaser;
-            foreach($wordsToHighlightTeaser as $key => $value){
-                $newTeaser = str_replace($key, '<b style="color:red">'.$key.'</b>', $newTeaser);
-            }
-            if($newTeaser != null) {
-                $resource->setTeaser($newTeaser);
+        }*/
+        return array($charactersLength, $collectedSentencesWithSearchword);
+    }
+
+    protected function isEnd($sentenceToCheck, $sentence){
+        $sentenceToCheckCount = strlen($sentenceToCheck);
+        $sentenceCount = strlen($sentence);
+        $startPosition = $sentenceCount-$sentenceToCheckCount;
+        $substringSentence = substr($sentence, $startPosition, $sentenceCount);
+        if($sentenceToCheck == $substringSentence){
+            return true;
+        }
+        return false;
+    }
+
+    protected function isBegining($sentenceToCheck, $sentence)
+    {
+        $sentenceToCheckCount = strlen($sentenceToCheck);
+        $substringSentence = substr($sentence, 0, $sentenceToCheckCount);
+        if($sentenceToCheck == $substringSentence){
+            return true;
+        }
+        return false;
+    }
+
+    protected function getDividedSentence($sentence)
+    {
+        $pieces = explode(" ", $sentence);
+        $pieces = array_filter($pieces); // remove keys with value ""
+        $pieces = array_values($pieces);
+        $countWords = count($pieces);
+
+        $firstPart = $pieces;
+        $firstPart = implode(" ", array_splice($firstPart, 0, $countWords/2));
+
+        $otherPart = $pieces;
+        $otherPart = implode(" ", array_splice($otherPart, $countWords/2));
+        return array($firstPart, $otherPart);
+    }
+
+    protected function wordInSentence($sentence, $words)
+    {
+        foreach($words as $word){
+            if(preg_match("/\b".$word."\b/i",$sentence)){
+                //yes there is at least one searchword in the sentence --> add sentence
+                return true;
             }
         }
-        return $resource;
+        return false;
+    }
+
+    protected function getSentences($piece)
+    {
+        //explode by .
+        $sentences = array();
+        if(strpos($piece, '.')){
+            $sentences = explode('.', $piece);
+        } else {
+            $sentences[] = $piece;
+        }
+        return $sentences;
+    }
+
+    protected function addSentenceIfPossible($sentence, $charactersLength, $words, $first, $collectedSentencesWithSearchword, $newSentence = true)
+    {
+        //no there are less than 20 words --> everything is fine
+        $simplifiedSentence = $this->searchSimplify($sentence);
+        $length = strlen($simplifiedSentence); //lenght of the current sentence
+        if($charactersLength + $length <= 160){ //check if there is still enough place to add the current sentence
+            //sentence can be added
+            //Check if a searchword is in the current sentence
+            $wordIn = $this->wordInSentence($simplifiedSentence, $words);
+            // if there is at least one searchword in the current sentence then add the sentence
+            if($wordIn){
+                if(!$first && $newSentence){
+                    $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.' · '.$sentence;
+                } else {
+                    if(!$newSentence){
+                        $sentence = ' '.$sentence;
+                    }
+                    $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.$sentence;
+                    $first = false;
+                }
+                $charactersLength += $length;
+            }
+        }
+        return array($charactersLength, $collectedSentencesWithSearchword, $first);
     }
 }

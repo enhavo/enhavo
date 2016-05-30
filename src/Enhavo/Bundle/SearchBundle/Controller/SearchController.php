@@ -22,22 +22,20 @@ class SearchController extends Controller
                 $searchEngine = $this->get('enhavo_search_search_engine');
                 $filter = new PermissionFilter($this->container);
                 $result = $searchEngine->search($searchExpression, array($filter));
+                if(empty($result)) {
+                    return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                        'data' => 'No results'
+                    ));
+                }
                 $resourcesBefore = $result->getResources();
                 $resourcesAfter = array();
                 foreach ($resourcesBefore as $resource) {
                     $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
                 }
                 $result->setResources($resourcesAfter);
-                if(empty($result)) {
-                    return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                        'data' => 'No results'
-                    ));
-                }
-
                 return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
                     'data' => $result->getResources()
                 ));
-
             } catch(SearchEngineException $e) {
                 return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
                     'data' => $e->getMessage()
