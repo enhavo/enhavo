@@ -25,5 +25,9 @@ class EnhavoAppBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_app.button_collector', 'enhavo.button')
         );
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.action_collector', 'enhavo.action')
+        );
     }
 }

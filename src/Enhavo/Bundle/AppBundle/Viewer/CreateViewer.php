@@ -114,7 +114,8 @@ class CreateViewer extends AbstractViewer
             'form_template' => $this->getFormTemplate(),
             'form_action' => $this->getFormAction(),
             'translationDomain' => $this->getTranslationDomain(),
-            'sorting' => $this->getSorting()
+            'sorting' => $this->getSorting(),
+            'data' => $this->getResource()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);

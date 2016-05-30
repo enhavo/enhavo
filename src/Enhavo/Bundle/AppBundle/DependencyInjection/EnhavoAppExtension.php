@@ -40,5 +40,6 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/routing.yml');
         $loader->load('services/form.yml');
         $loader->load('services/table.yml');
+        $loader->load('services/action.yml');
     }
 }
