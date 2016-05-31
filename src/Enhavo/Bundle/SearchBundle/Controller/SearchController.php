@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
-use Enhavo\Bundle\SearchBundle\Search\PermissionFilter;
+use Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter;
 use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

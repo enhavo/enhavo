@@ -54,7 +54,7 @@ services:
             - @service_container
 
     enhavo_search_permission_filter:
-        class: Enhavo\Bundle\SearchBundle\Search\PermissionFilter
+        class: Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter
         arguments:
             - @service_container
 

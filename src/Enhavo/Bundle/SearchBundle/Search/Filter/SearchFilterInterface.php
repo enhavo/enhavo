@@ -6,7 +6,7 @@
  * Time: 15:27
  */
 
-namespace Enhavo\Bundle\SearchBundle\Search;
+namespace Enhavo\Bundle\SearchBundle\Search\Filter;
 
 
 interface SearchFilterInterface

@@ -6,7 +6,7 @@
  * Time: 15:30
  */
 
-namespace Enhavo\Bundle\SearchBundle\Search;
+namespace Enhavo\Bundle\SearchBundle\Search\Filter;
 
 
 class PublicFilter implements SearchFilterInterface
