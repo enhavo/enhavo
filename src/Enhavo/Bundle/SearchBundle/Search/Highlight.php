@@ -68,7 +68,11 @@ class Highlight {
             $beforeAddingSecondPart = $collectedSentencesWithSearchword;
             list($charactersLength, $collectedSentencesWithSearchword) = $this->addSentenceIfPossible($secondPart, $charactersLength, $words, $collectedSentencesWithSearchword, false, true);
             if($collectedSentencesWithSearchword == $beforeAddingSecondPart){
-                $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.' ... · ';
+                if($collectedSentencesWithSearchword == ' ... '){
+                    $collectedSentencesWithSearchword = rtrim($collectedSentencesWithSearchword, ' ... ');
+                } else {
+                    $collectedSentencesWithSearchword = $collectedSentencesWithSearchword.' ... · ';
+                }
             }
         }
         return array($charactersLength, $collectedSentencesWithSearchword);
