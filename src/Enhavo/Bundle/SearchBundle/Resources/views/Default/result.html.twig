@@ -4,9 +4,7 @@
              </br>
             <div data-id={{ item.resource.id }} {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 1px solid darkslategray;" class="entry-row">
                 <h1><b> {{ item.resource.title|raw }} </b></h1>
-                {% for piece in item.textPieces %}
-                    {{ piece|raw }} {% if not loop.last %}·{% endif %}
-                {% endfor %}
+                {{ item.highlightedText|raw }}
             </div>
         {% endfor %}
     {% else %}
