@@ -192,7 +192,6 @@ class SearchUtil
 
     public function getSearchYaml($resource)
     {
-
         //get class of given resource
         $class = null;
         if ($resource instanceof \Doctrine\Common\Persistence\Proxy) {
@@ -268,7 +267,7 @@ class SearchUtil
 
     protected $pieces = array();
 
-    public function getTextPieces($text, $type, $field = null, $item = null)
+    public function getTextPieces($text, $type)
     {
         $accessor = PropertyAccess::createPropertyAccessor();
         //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
