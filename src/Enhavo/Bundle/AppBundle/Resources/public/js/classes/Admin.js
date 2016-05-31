@@ -528,7 +528,7 @@ function Admin (router, templating, translator)
     loadingOverlayMutex++;
     if (loadingOverlayMutex == 1) {
       loadingOverlay.removeClass('hidden');
-      loadingOverlay.fadeTo(300, 0.2);
+      loadingOverlay.fadeTo(300, 0.75);
     }
   };
 
