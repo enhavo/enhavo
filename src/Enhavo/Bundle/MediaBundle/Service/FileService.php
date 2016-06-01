@@ -121,7 +121,7 @@ class FileService
         return $response;
     }
 
-    public function getResponse($id)
+    public function getResponse($id, $forceDownload = false)
     {
         $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
         $file = $repository->find($id);
@@ -130,7 +130,17 @@ class FileService
         }
 
         $response = new BinaryFileResponse($this->getFilepath($file));
-        $response->headers->set('Content-Type', $file->getMimeType());
+        if ($forceDownload) {
+            $response->headers->set('Content-Type', 'application/octet-stream');
+            $filename = $file->getSlug();
+            if ($filename) {
+                $response->headers->set('Content-Disposition', 'filename="' . $filename . '"');
+            } else {
+                $response->headers->set('Content-Disposition', 'filename="file"');
+            }
+        } else {
+            $response->headers->set('Content-Type', $file->getMimeType());
+        }
         return $response;
     }
 

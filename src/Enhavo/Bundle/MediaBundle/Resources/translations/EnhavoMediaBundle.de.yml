@@ -5,3 +5,4 @@ media:
       alt_tag: "Alt-Tag"
       filename: "Dateiname"
       slug: "Slug"
+      download: "Herunterladen"
