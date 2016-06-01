@@ -46,7 +46,7 @@ abstract class AbstractType implements ContainerAwareInterface {
         $this->container = $container;
     }
 
-    protected function renderTemplate($template, $parameters)
+    protected function renderTemplate($template, $parameters = [])
     {
         return $this->container->get('templating')->render($template, $parameters);
     }

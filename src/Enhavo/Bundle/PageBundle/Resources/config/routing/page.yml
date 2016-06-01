@@ -105,14 +105,10 @@ enhavo_page_page_table:
                     id:
                         label: page.label.id
                         property: id
-                        width: 1
                     public:
+                        type: boolean
                         label: page.label.public
                         property: public
-                        widget:
-                            type: template
-                            template: EnhavoAppBundle:Widget:boolean.html.twig
-                        width: 1
                     title:
                         label: page.label.title
                         property: title

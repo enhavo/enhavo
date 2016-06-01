@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-class MultiplePropertyWidget extends ListWidget {
-
-    public function render($options, $property, $item)
+class MultiplePropertyWidget extends ListWidget
+{
+    public function render($options, $item)
     {
         $list = [];
 
-        $properties = $this->getProperties($options);
+        $properties = $this->getProperties($options['properties']);
         foreach($properties as $property) {
             $list[] = $this->getProperty($item, $property);
         }

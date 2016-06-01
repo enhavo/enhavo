@@ -10,15 +10,18 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
-class PropertyWidget extends AbstractTableWidget
+class BooleanWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
-        return $this->getProperty($item, $options['property']);
+        $property = $this->getProperty($item, $options['property']);
+        return $this->renderTemplate('EnhavoAppBundle:TableWidget:boolean.html.twig', array(
+            'value' => (boolean) $property
+        ));
     }
 
     public function getType()
     {
-        return 'property';
+        return 'boolean';
     }
 }

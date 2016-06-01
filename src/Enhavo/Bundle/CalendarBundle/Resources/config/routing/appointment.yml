@@ -72,17 +72,14 @@ enhavo_calendar_appointment_table:
                     id:
                         label: appointment.label.id
                         property: id
-                        width: 1
                     title:
                         label: appointment.label.title
                         property: title
                         width: 6
                     date:
+                        type: datetime
                         label: appointment.label.date
                         property: dateFrom
-                        widget:
-                            type: template
-                            template: EnhavoAppBundle:Widget:date.html.twig
                         width: 5
 
 enhavo_calendar_appointment_delete:

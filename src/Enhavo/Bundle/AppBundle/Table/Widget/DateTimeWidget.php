@@ -10,15 +10,16 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
-class PropertyWidget extends AbstractTableWidget
+class DateTimeWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
-        return $this->getProperty($item, $options['property']);
+        $property = $this->getProperty($item, $options['property']);
+        return $property->format('d.m.Y H:i');
     }
 
     public function getType()
     {
-        return 'property';
+        return 'datetime';
     }
 }

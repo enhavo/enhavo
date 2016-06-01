@@ -1,8 +1,19 @@
+parameters:
+    enhavo_app.twig.table_widget_render.class: Enhavo\Bundle\AppBundle\Table\TableWidgetRenderer
+    enhavo_app.twig.table_widget_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
 services:
     enhavo_app.table_widget_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        class: %enhavo_app.twig.table_widget_collector.class%
         arguments:
           - 'TableWidget'
+
+    enhavo_app.twig.table_widget_renderer:
+        class: %enhavo_app.twig.table_widget_render.class%
+        arguments:
+            - @enhavo_app.table_widget_collector
+        tags:
+            - { name: twig.extension }
 
     enhavo_app.table.list_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\ListWidget
@@ -27,6 +38,34 @@ services:
 
     enhavo_app.table.property_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.position:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\PositionWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.date:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\DateWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.datetime:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\DateTimeWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
+
+    enhavo_app.table.boolean:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\BooleanWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:

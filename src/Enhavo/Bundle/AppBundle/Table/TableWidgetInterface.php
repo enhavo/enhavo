@@ -10,9 +10,12 @@ interface TableWidgetInterface extends TypeInterface
      * Render the widget
      *
      * @param array $options Options of widget
-     * @param string $property Property of current item
-     * @param mixed $item Current Item
+     * @param mixed $resource Current Resource
      * @return string
      */
-    public function render($options, $property, $item);
+    public function render($options, $resource);
+
+    public function getLabel($options);
+
+    public function getWidth($options);
 }

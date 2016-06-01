@@ -79,18 +79,14 @@ enhavo_newsletter_newsletter_table:
                     id:
                         label: newsletter.label.id
                         property: id
-                        width: 1
                     title:
                         label: newsletter.label.title
                         property: title
                         width: 10
                     sent:
+                        type: boolean
                         label: newsletter.label.sent
                         property: sent
-                        width: 1
-                        widget:
-                            type: template
-                            template: EnhavoAppBundle:Widget:boolean.html.twig
 
 enhavo_newsletter_newsletter_delete:
     options:

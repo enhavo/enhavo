@@ -94,17 +94,14 @@ enhavo_article_article_table:
                     id:
                         label: article.label.id
                         property: id
-                        width: 1
                     title:
                         label: article.label.title
                         property: title
-                        width: 9
+                        width: 10
                     workflow_status:
+                        type: workflow_assigned
                         label: article.label.assigned
                         property: workflowStatus
-                        width: 2
-                        widget:
-                            type: workflow_assigned
 
 enhavo_article_article_delete:
     options:
