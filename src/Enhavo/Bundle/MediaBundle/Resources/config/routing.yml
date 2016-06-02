@@ -3,6 +3,10 @@ enhavo_media_upload:
     defaults:
         _controller: EnhavoMediaBundle:File:upload
 
+enhavo_media_download:
+    pattern:  /file/download/{id}
+    defaults: {_controller: EnhavoMediaBundle:File:download,_method: GET}
+
 enhavo_media_show_two_dim:
     pattern:  /file/{id}/{width}/{height}/{slug}
     defaults: { _controller: EnhavoMediaBundle:File:show,slug:'',_method: GET}

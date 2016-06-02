@@ -1,0 +1,27 @@
+{% macro fileContainer(image_mode, multiple_mode, input_name, parameter_fields, file_index, file_id, file_order, file_filename, file_slug, file_parameters) %}
+    {% spaceless %}
+        <{% if multiple_mode %}li{% else %}div{% endif %} class="imgContainer{% if not multiple_mode %} singleImage{% endif %}" data-file-element data-id="{{ file_id }}" data-download-link="/file/download/{{ file_id }}">
+            <div class="imgdelete">
+                <i class="fa fa-times fa-2x"></i>
+            </div>
+            <div class="uploadForm-image-container{% if image_mode %} image{% endif %}">
+                {% if image_mode %}
+                    <img src="/file/{{ file_id }}/100/100">
+                {% else %}
+                    <i class="file-icon icon-doc-inv"></i>
+                {% endif %}
+                <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i>{% if multiple_mode %} <i class="icon-swap"></i>{% endif %}</div>
+            </div>
+            <input type="hidden" name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[id]" value="{{ file_id }}" />
+            <input type="hidden" name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[order]" data-file-element-order value="{{ file_order }}" />
+            <input type="hidden" name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[filename]" value="{{ file_filename }}" data-field-name="filename" />
+            <input type="hidden" name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[slug]" value="{{ file_slug }}" data-field-name="slug" />
+            {% for field_name, field_options in parameter_fields %}
+                <input type="hidden"
+                       name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[parameters][{{ field_name }}]"
+                       value="{% if file_parameters[field_name] is defined %}{{ file_parameters[field_name] }}{% endif %}"
+                       data-field-name="pa_{{ field_name }}" />
+            {% endfor %}
+        </{% if multiple_mode %}li{% else %}div{% endif %}>
+    {% endspaceless %}
+{% endmacro %}

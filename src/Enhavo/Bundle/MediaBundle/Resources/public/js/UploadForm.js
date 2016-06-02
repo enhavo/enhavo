@@ -177,6 +177,7 @@ function UploadForm(routing)
       source.find('[data-field-name="slug"]').val(slug);
     }
     slugField.html(slug);
+    $(form).find('[data-download-button]').attr("href", source.data('download-link'));
   };
 
   this.slugifyFileName = function(text) {

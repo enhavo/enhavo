@@ -69,7 +69,8 @@
 
 .uploadForm-image-container { background: #f3f3f3;width:72px;height:72px; position: relative; }
 .uploadForm-image-container img { position: relative; z-index: 5; }
-.uploadForm-image-container:after {
+.uploadForm-image-container .file-icon { position: relative; z-index: 5; font-size: 40px; line-height: 70px; color: #0090ba; }
+.uploadForm-image-container.image:after {
     content: '\e86d';
     font-family: "enhavo_iconfont";
     font-size: 45px;
@@ -93,6 +94,9 @@
 .uploadForm .fileupload-fields .fileupload-field .fileupload-field-label-container { padding-top: 4px; }
 .uploadForm .fileupload-fields.disabled .fileupload-field .fileupload-field-label-container .fileupload-field-label { color: #a9a9a9 }
 .uploadForm .fileupload-fields .fileupload-field .fileupload-field-input-container .fileupload-field-slug { padding: 5px 6px; font: 13px/1.6em "Open Sans"; color: #000; display: block; }
+.uploadForm .fileupload-actions { padding: 5px; }
+.uploadForm .fileupload-actions .fileupload-action-download-container {}
+.uploadForm .fileupload-actions .fileupload-action-download-container .fileupload-action-download-button { display: block; background-color: #f3f3f3; text-align: center; padding: 3px 5px; font-weight: 600; }
 
 .icheckbox-esperanto, .iradio-esperanto{
     margin: 0 7px 0px 20px;
