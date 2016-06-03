@@ -23,7 +23,7 @@ class TypeCollector implements CollectorInterface
      */
     private $typeName;
 
-    public function __construct($typeName)
+    public function __construct($typeName = 'Type')
     {
         $this->collection = array();
         $this->typeName = $typeName;

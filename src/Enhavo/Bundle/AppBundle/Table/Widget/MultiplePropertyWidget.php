@@ -14,7 +14,7 @@ class MultiplePropertyWidget extends ListWidget
     {
         $list = [];
 
-        $properties = $this->getProperties($options['properties']);
+        $properties = $this->getProperties($options);
         foreach($properties as $property) {
             $list[] = $this->getProperty($item, $property);
         }

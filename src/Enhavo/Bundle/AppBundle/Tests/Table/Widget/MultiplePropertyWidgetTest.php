@@ -27,7 +27,7 @@ class MultipleWidgetTest extends \PHPUnit_Framework_TestCase
         ];
 
         $widget = new MultiplePropertyWidget();
-        $this->assertEquals('myName,1', $widget->render($options, 'name', $object));
+        $this->assertEquals('myName,1', $widget->render($options, $object));
     }
 
     function testType()

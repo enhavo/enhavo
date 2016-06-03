@@ -2,15 +2,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Table\Widget;
 
+use Enhavo\Bundle\AppBundle\Table\Widget\BooleanWidget;
 use Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 
-class TemplateWidgetTest extends \PHPUnit_Framework_TestCase
+class BooleanWidgetTest extends \PHPUnit_Framework_TestCase
 {
     function testInitialize()
     {
-        $widget = new TemplateWidget();
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget', $widget);
+        $widget = new BooleanWidget();
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Table\Widget\BooleanWidget', $widget);
     }
 
     function testRender()
@@ -21,12 +22,11 @@ class TemplateWidgetTest extends \PHPUnit_Framework_TestCase
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->method('get')->with('templating')->willReturn($twigEngine);
 
-        $widget = new TemplateWidget();
+        $widget = new BooleanWidget();
         $widget->setContainer($container);
 
         $entity = new EntityMock();
         $options = [
-            'template' => 'pathToTemplate',
             'property' => 'name'
         ];
 

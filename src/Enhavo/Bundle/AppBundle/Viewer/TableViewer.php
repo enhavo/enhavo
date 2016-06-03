@@ -255,19 +255,4 @@ class TableViewer extends AbstractViewer
     {
         return $this->getConfig()->get('table.batch.route');
     }
-
-    /**
-     * @param $options
-     * @param $property
-     * @param $item
-     * @return string
-     * @throws TypeNotFoundException
-     */
-    public function renderWidget($options, $property, $item)
-    {
-        $collector = $this->container->get('enhavo_app.table_widget_collector');
-        /** @var TableWidgetInterface $widget */
-        $widget = $collector->getType($options['type']);
-        return $widget->render($options, $property, $item);
-    }
 }
