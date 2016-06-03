@@ -29,6 +29,7 @@ class SearchController extends Controller
                     ));
                 }
                 $resourcesBefore = $result->getResources();
+                $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
                 foreach ($resourcesBefore as $resource) {
                     $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
