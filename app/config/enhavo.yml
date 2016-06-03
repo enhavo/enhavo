@@ -202,3 +202,5 @@ enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
         strategy: reindex
+        search_engine: enhavo_search_elasticsearch_engine
+        index_engine: enhavo_search_index_elasticsearch_engine

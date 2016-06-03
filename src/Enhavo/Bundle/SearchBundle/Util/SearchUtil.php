@@ -343,20 +343,20 @@ class SearchUtil
         $fields = $this->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
         //go over every field and check if one or more words are in it
         $accessor = PropertyAccess::createPropertyAccessor();
+        $this->pieces = array();
         foreach ($fields as $field) {
             if (property_exists($resource, $field) && $field != 'title') {
                 $text = $accessor->getValue($resource, $field);
                 $pieces = array();
                 if (is_string($text)) {
-                    $pieces[] = $text;
+                    $this->pieces[] = $text;
                 } else if (gettype($text) == 'object') {
                     $fieldValue = $this->getValueOfField($field, $currentSearchYml, get_class($resource));
-                    $this->pieces = array();
                     $this->getTextPieces($text, $fieldValue);
-                    $pieces = $this->pieces;
                 }
             }
         }
+        $pieces = $this->pieces;
         foreach ($pieces as &$piece) {
             $piece = strip_tags($piece); // remove html tags
             $lastCharacter = substr($piece, -1, 1);
@@ -373,5 +373,42 @@ class SearchUtil
         $highlightedResult['resource'] = $resource;
         $highlightedResult['highlightedText'] = $highlightedText;
         return $highlightedResult;
+    }
+
+    public function getEntityName($resource)
+    {
+        $entityPath = get_class($resource);
+        $splittedBundlePath = explode('\\', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
+        return strtolower($entityName);
+    }
+
+    public function getBundleName($resource, $lowercase = false)
+    {
+        $entityPath = get_class($resource);
+        $splittedBundlePath = explode('\\', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        if($lowercase){
+            $lowercaseArray = [];
+            $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
+            foreach(array_filter($pieces) as $piece){
+                $lowercaseArray[] = strtolower($piece);
+            }
+            return implode('_', $lowercaseArray);
+        }
+        return $splittedBundlePath[0].end($splittedBundlePath);
+    }
+
+    public function getProperties($resource)
+    {
+        $currentSearchYaml = $this->getSearchYaml($resource);
+
+        return $currentSearchYaml[get_class($resource)]['properties'];
     }
 }

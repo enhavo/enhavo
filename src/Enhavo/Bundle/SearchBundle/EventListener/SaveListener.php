@@ -23,9 +23,9 @@ class SaveListener
         $currentSearchYaml = $this->util->getSearchYaml($resource);
 
         if($currentSearchYaml != null) {
-
             //if searchYaml exists try indexing
-            $indexEngine = $this->container->get('enhavo_search_index_engine');
+            $engine = $this->container->getParameter('enhavo_search.search.index_engine');
+            $indexEngine = $this->container->get($engine);
             $indexEngine->index($resource);
         }
     }

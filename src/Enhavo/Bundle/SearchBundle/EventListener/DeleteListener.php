@@ -18,7 +18,8 @@ class DeleteListener
 
     public function onDelete(GenericEvent $event)
     {
-        $indexEngine = $this->container->get('enhavo_search_index_engine');
+        $engine = $this->container->getParameter('enhavo_search.search.index_engine');
+        $indexEngine = $this->container->get($engine);
         $indexEngine->unindex($event->getSubject());
     }
 }

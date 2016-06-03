@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Elasticsearch;
 
 class IndexCommand extends ContainerAwareCommand
 {
@@ -19,7 +20,9 @@ class IndexCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $indexEngine = $this->getContainer()->get('enhavo_search_index_engine');
+        $container = $this->getApplication()->getKernel()->getContainer();
+        $engine = $container->getParameter('enhavo_search.search.index_engine');
+        $indexEngine = $this->getContainer()->get($engine);
         $indexEngine->reindex();
 
         $output->writeln('Indexing finished');

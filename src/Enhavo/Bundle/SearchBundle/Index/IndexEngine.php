@@ -47,8 +47,8 @@ class IndexEngine implements IndexEngineInterface {
     public function index($resource)
     {
         //get Entity and Bundle names
-        $entityName = $this->getEntityName($resource);
-        $bundleName = $this->getBundleName($resource);
+        $entityName = $this->util->getEntityName($resource);
+        $bundleName = $this->util->getBundleName($resource);
 
         //get DataSet
         $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
@@ -209,7 +209,8 @@ class IndexEngine implements IndexEngineInterface {
 
     protected function indexingData($resource, $dataSet)
     {
-        $properties = $this->getProperties($resource);
+        $properties = $this->util->getProperties($resource);
+        $this->searchYamlPaths = $this->util->getSearchYamls();
 
         //indexing words (go through all the fields that can be indexed according to the search yml)
         foreach($properties as $indexingField => $value) {
@@ -223,14 +224,6 @@ class IndexEngine implements IndexEngineInterface {
         }
         //update the total scores
         $this->searchUpdateTotals();
-    }
-
-    protected function getProperties($resource)
-    {
-        $currentSearchYaml = $this->util->getSearchYaml($resource);
-        $this->searchYamlPaths = $this->util->getSearchYamls();
-
-        return $currentSearchYaml[get_class($resource)]['properties'];
     }
 
     public function switchToIndexingType($text, $type, $dataSet)
@@ -558,26 +551,5 @@ class IndexEngine implements IndexEngineInterface {
         else {
             return $dirty;
         }
-    }
-
-    protected function getEntityName($resource)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
-        }
-        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
-        return strtolower($entityName);
-    }
-
-    protected function getBundleName($resource)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
-        }
-        return $splittedBundlePath[0].end($splittedBundlePath);
     }
 }

@@ -62,3 +62,15 @@ services:
         class: Enhavo\Bundle\SearchBundle\Twig\UpdateRoute
         tags:
             - { name: twig.extension }
+
+    enhavo_search_index_elasticsearch_engine:
+        class: Enhavo\Bundle\SearchBundle\Index\IndexElasticsearchEngine
+        arguments:
+            - @enhavo_search_search_util
+
+
+    enhavo_search_elasticsearch_engine:
+        class: Enhavo\Bundle\SearchBundle\Search\ElasticSearchEngine
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @enhavo_search_search_util
