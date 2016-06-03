@@ -343,21 +343,7 @@ class IndexEngine implements IndexEngineInterface {
             }
         }
 
-        //add the scored words to search_index
-        foreach ($scored_words as $key => $value) {
-            $newIndex = new Index();
-            $newIndex->setDataset($dataset);
-            $newIndex->setType(strtolower($type));
-            $newIndex->setWord($key);
-            $newIndex->setLocale($this->container->getParameter('locale'));
-            $newIndex->setScore($value);
-            $dataset->addData($key);
-            $dataset->setReindex(0);
-            $this->em->persist($dataset);
-            $this->em->persist($newIndex);
-            $this->em->flush();
-            $this->searchDirty($key);
-        }
+        $this->addWordsToSearchIndex($scored_words, $dataset, $type);
     }
 
     public function indexingHtml($text, $type, $dataset, $weights = null) {
@@ -461,21 +447,7 @@ class IndexEngine implements IndexEngineInterface {
             $tag = !$tag;
         }
 
-        //add the scored words to search_index
-        foreach ($scored_words as $key => $value) {
-            $newIndex = new Index();
-            $newIndex->setDataset($dataset);
-            $newIndex->setType(strtolower($type));
-            $newIndex->setWord($key);
-            $newIndex->setLocale($this->container->getParameter('locale'));
-            $newIndex->setScore($value);
-            $dataset->addData($key);
-            $dataset->setReindex(0);
-            $this->em->persist($dataset);
-            $this->em->persist($newIndex);
-            $this->em->flush();
-            $this->searchDirty($key);
-        }
+        $this->addWordsToSearchIndex($scored_words, $dataset, $type);
     }
 
     public function indexingCollectionEntity($text, $model, $yamlFile, $dataSet) {
@@ -490,13 +462,13 @@ class IndexEngine implements IndexEngineInterface {
         }
     }
 
-    public function indexingModel($model, $yamlFile, $dataset, $text) {
+    public function indexingModel($model, $yamlFile, $dataSet, $text) {
         if(array_key_exists($model, $yamlFile)){
             $colProperties = $yamlFile[$model]['properties'];
             $accessor = PropertyAccess::createPropertyAccessor();
             foreach($colProperties as $key => $value){
                 $currentText = $accessor->getValue($text, $key);
-                $this->switchToIndexingType($currentText, $value, $dataset);
+                $this->switchToIndexingType($currentText, $value, $dataSet);
             }
         }
     }
@@ -546,7 +518,24 @@ class IndexEngine implements IndexEngineInterface {
         }
     }
 
-    /**
+    protected function addWordsToSearchIndex($scored_words, $dataset, $type)
+    {
+        //add the scored words to search_index
+        foreach ($scored_words as $key => $value) {
+            $newIndex = new Index();
+            $newIndex->setDataset($dataset);
+            $newIndex->setType(strtolower($type));
+            $newIndex->setWord($key);
+            $newIndex->setLocale($this->container->getParameter('locale'));
+            $newIndex->setScore($value);
+            $dataset->addData($key);
+            $dataset->setReindex(0);
+            $this->em->persist($dataset);
+            $this->em->persist($newIndex);
+            $this->em->flush();
+            $this->searchDirty($key);
+        }
+    }    /**
      * Simplifies and splits a string into words for indexing
      */
     function searchIndexSplit($text) {

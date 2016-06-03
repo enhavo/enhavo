@@ -10,11 +10,6 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Config\ConfigParser;
-use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
-use Enhavo\Bundle\AppBundle\Exception\PreviewException;
-use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
-use Enhavo\Bundle\UserBundle\Entity\User;
 use Enhavo\Bundle\AppBundle\Viewer\CreateViewer;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Symfony\Component\EventDispatcher\GenericEvent;
