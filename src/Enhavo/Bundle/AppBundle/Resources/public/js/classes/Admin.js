@@ -360,6 +360,10 @@ function Admin (router, templating, translator)
   this.initUserMenu = function()
   {
     var userMenuActive = false;
+    var buttonWidth = $("[data-open-usermenu]").width() + 20;
+
+    $("[data-open-usermenu]").css("width", buttonWidth);
+
     $("[data-open-usermenu]").on("click", function(){
       $(this).toggleClass("clicked");
       $("[data-usermenu-link]").fadeToggle(100);
@@ -372,7 +376,7 @@ function Admin (router, templating, translator)
         $(this).css('right', '20px');
       } else {
         userMenuActive = true;
-        $(this).css('right', menuWidth + 'px');
+        $(this).css('right', menuWidth   + 'px');
       }
 
       var dimensions = self.viewport();
