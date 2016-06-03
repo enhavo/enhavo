@@ -92,6 +92,12 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #search:focus input:-moz-placeholder { opacity:0;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-ms-transition:all .2s;-o-transition:all .2s;}
 #search-results h3 { font-size:11px; letter-spacing:4px; text-transform:uppercase; font-weight:700; margin-top:25px;letter-spacing: 0.02em;}
 
+#search-results .entry-row:first-child {border-radius:2px 2px 0 0}
+#search-results .entry-row:last-child {border-radius:0 0 2px 2px}
+.entry-row:nth-child(2) { background-color:#fbfbfd;}
+#search-results .entry-row{padding: 10px 14px;}
+#search-results .entry-row h1{ font-weight:700;}
+.search-result-type { text-align:right;}
 
 @media all and (min-width: 1351px) {
     #background{ background: url(../img/enhavo_forest_bg_low.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}

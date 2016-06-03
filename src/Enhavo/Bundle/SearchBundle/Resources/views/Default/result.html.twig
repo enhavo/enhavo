@@ -1,22 +1,25 @@
 <div id="search-results">
     <h3>Suchergebnisse</h3>
-    {% if data is iterable %}
-        {% for item in data %}
-             </br>
-            <div data-id={{ item.object.id }} {% if item.update %}data-update-route="{{ item.bundleName }}_{{ item.entityName }}_update"{% endif %} style="border-bottom: 1px solid darkslategray;" class="entry-row">
-                <h1><b> {{ item.object.title|raw }} </b></h1>
-                {% if item.object.teaser is defined %}
-                    {% if item.object.teaser|length >= 100 %}
-                        <p>{{ item.object.teaser|slice(0, 100)|raw }} ...</p>
-                    {% else %}
-                        <p>{{ item.object.teaser|slice(0, 100)|raw }}</p>
-                    {% endif %}
-                {% endif %}
-                </br>
+    <div data-id="2" data-update-route="enhavo_article_article_update" class="entry-row">
+        <div class="row">
+            <div class="col-xs-9">
+                <h1>Bla bla</h1>
+                Quandak <b class="search_highlight">Test</b> and Braunbär. · <b class="search_highlight">Test</b> Bild Titel. · <b class="search_highlight">Test</b> Bild Bild Titel. · <b class="search_highlight">Test</b> BildBild Titel. · <b class="search_highlight">Test</b> BildBild Bild Titel links. · <b class="search_highlight">Test</b> BildBild Bild Titel rechts. · <b class="search_highlight">Test</b> Text Titel.
             </div>
-        {% endfor %}
-    {% else %}
-        </br>
-        {{ data }}
-    {% endif %}
+            <div class="col-xs-3 search-result-type">
+                Artikel
+            </div>
+        </div>
+    </div>
+    <div data-id="1" data-update-route="enhavo_article_article_update" style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
+        <div class="row">
+            <div class="col-xs-9">
+                <h1>Test</h1>
+                Teaser <b class="search_highlight">Test</b> <b class="search_highlight">abc</b> Hallo.
+            </div>
+            <div class="col-xs-3 search-result-type">
+                Artikel
+            </div>
+        </div>
+    </div>
 </div>
