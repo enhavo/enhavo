@@ -1,15 +1,12 @@
-{% macro fileContainer(image_mode, multiple_mode, input_name, parameter_fields, file_index, file_id, file_order, file_filename, file_slug, file_parameters) %}
+{% macro fileContainer(multiple_mode, input_name, parameter_fields, file_index, file_id, file_order, file_filename, file_slug, file_mime_type, file_parameters) %}
     {% spaceless %}
         <{% if multiple_mode %}li{% else %}div{% endif %} class="imgContainer{% if not multiple_mode %} singleImage{% endif %}" data-file-element data-id="{{ file_id }}" data-download-link="/file/download/{{ file_id }}">
             <div class="imgdelete">
                 <i class="fa fa-times fa-2x"></i>
             </div>
-            <div class="uploadForm-image-container{% if image_mode %} image{% endif %}">
-                {% if image_mode %}
-                    <img src="/file/{{ file_id }}/100/100">
-                {% else %}
-                    <i class="file-icon icon-doc-inv"></i>
-                {% endif %}
+            <div class="uploadForm-image-container" data-mime-type="{{ file_mime_type }}">
+                <div data-thumb-container></div>
+                <i class="file-icon" data-file-icon></i>
                 <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i>{% if multiple_mode %} <i class="icon-swap"></i>{% endif %}</div>
             </div>
             <input type="hidden" name="{{ input_name }}{% if multiple_mode %}[{{ file_index }}]{% endif %}[id]" value="{{ file_id }}" />

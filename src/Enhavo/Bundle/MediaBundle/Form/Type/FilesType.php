@@ -87,7 +87,6 @@ class FilesType extends AbstractType
             $view->information = array();
         }
         $view->vars['multiple'] = $options['multiple'];
-        $view->vars['images'] = $options['images'];
         $fields = $options['fields'];
         foreach ($fields as $index => $field) {
             if (!isset($field['translationDomain'])) {
