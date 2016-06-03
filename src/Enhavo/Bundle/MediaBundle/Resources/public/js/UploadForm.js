@@ -23,6 +23,10 @@ function UploadForm(routing)
         });
       }
 
+      $(uploadForm).find('[data-file-element]').each(function() {
+        self.setThumbOrIcon($(this), uploadForm);
+      });
+
       currentIndexes[formIndex] = $(this).find('[data-file-element]').length-1;
       $(uploadForm).find('.fileupload').fileupload({
         dataType: 'json',
@@ -38,9 +42,11 @@ function UploadForm(routing)
                 full_name: inputName,
                 file_index: 0,
                 file_name: data.result.files[0].filename,
-                file_slug: data.result.files[0].slug
+                file_slug: data.result.files[0].slug,
+                file_mime_type: data.result.files[0].mimeType
               });
               $(uploadForm).find('[data-file-list]').append(html);
+              self.setThumbOrIcon($('[data-id=' + data.result.files[0].id + ']'), uploadForm);
             }
           } else {
             $.each(data.result.files, function (index, file) {
@@ -49,9 +55,11 @@ function UploadForm(routing)
                 full_name: inputName,
                 file_index: ++currentIndexes[formIndex],
                 file_name: file.filename,
-                file_slug: file.slug
+                file_slug: file.slug,
+                file_mime_type: data.result.files[0].mimeType
               });
               $(uploadForm).find('[data-file-list]').append(html);
+              self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
             });
           }
           self.setFileOrder(uploadForm);
@@ -97,7 +105,7 @@ function UploadForm(routing)
         var fileUploadFields = $(uploadForm).find('.fileupload-fields');
         $(uploadForm).find('.imgContainer').removeClass('selected');
         $(this).addClass('selected');
-        if (typeof selected[formIndex] != 'undefined') {
+        if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
           if (selected[formIndex].data('id') == $(this).data('id')) {
             fileUploadFields.removeClass('disabled');
             fileUploadFields.find('input').prop('disabled', false);
@@ -117,7 +125,7 @@ function UploadForm(routing)
         var fileUploadFields = $(uploadForm).find('.fileupload-fields');
         $(uploadForm).find('.imgContainer').removeClass('selected');
 
-        if (typeof selected[formIndex] != 'undefined') {
+        if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
           selected[formIndex].addClass('selected');
           fileUploadFields.removeClass('disabled');
           fileUploadFields.find('input').prop('disabled', false);
@@ -144,9 +152,10 @@ function UploadForm(routing)
       $(form).on('click', function() {
         $(uploadForm).find('.fileupload-fields').addClass('hidden').addClass('disabled');
         $(uploadForm).find('.imgContainer.selected').removeClass('selected');
+        selected[formIndex] = null;
       });
       $(uploadForm).on('input', '.fileupload-field-input', function(event) {
-        if (typeof selected[formIndex] != 'undefined') {
+        if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
           selected[formIndex].find('[data-field-name="' + $(this).data('field-name') + '"]').val($(this).val());
           if ($(this).data('field-name') == "filename") {
             var slug = self.slugifyFileName($(this).val());
@@ -178,6 +187,75 @@ function UploadForm(routing)
     }
     slugField.html(slug);
     $(form).find('[data-download-button]').attr("href", source.data('download-link'));
+  };
+
+  this.setThumbOrIcon = function($element, uploadForm) {
+    var mimeType = $element.find('[data-mime-type]').data('mime-type');
+    if (mimeType.startsWith('image')) {
+      var thumb = templating.render($(uploadForm).find('script[data-id=thumb-template]'), {
+        file_id: $element.data('id')
+      });
+      $element.find('[data-thumb-container]').html(thumb);
+      $element.find('[data-file-icon]').addClass('icon-image');
+    } else if (mimeType.startsWith('audio')) {
+      $element.find('[data-file-icon]').addClass('icon-file-audio');
+    } else if (mimeType.startsWith('video')) {
+      $element.find('[data-file-icon]').addClass('icon-file-video');
+    } else {
+      switch(mimeType) {
+        case 'application/postscript':
+        case 'application/rtf':
+          $element.find('[data-file-icon]').addClass('icon-doc-text');
+          break;
+        case 'application/pdf':
+          $element.find('[data-file-icon]').addClass('icon-file-pdf');
+          break;
+        case 'application/msword':
+        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document ':
+          $element.find('[data-file-icon]').addClass('icon-file-word');
+          break;
+        case 'application/msexcel':
+        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+          $element.find('[data-file-icon]').addClass('icon-file-excel');
+          break;
+        case 'application/mspowerpoint':
+          $element.find('[data-file-icon]').addClass('icon-file-powerpoint');
+          break;
+        case 'application/gzip':
+        case 'application/x-compress':
+        case 'application/x-compressed':
+        case 'application/x-zip-compressed':
+        case 'application/x-gtar':
+        case 'application/x-shar':
+        case 'application/x-tar':
+        case 'application/x-ustar':
+        case 'application/zip':
+          $element.find('[data-file-icon]').addClass('icon-file-archive');
+          break;
+        case 'text/css':
+        case 'text/html':
+        case 'text/javascript':
+        case 'text/xml':
+        case 'text/x-php':
+        case 'application/json':
+        case 'application/xhtml+xml':
+        case 'application/xml':
+        case 'application/x-httpd-php':
+        case 'application/x-javascript':
+        case 'application/x-latex':
+        case 'application/x-php':
+          $element.find('[data-file-icon]').addClass('icon-file-code');
+          break;
+        default:
+          if (mimeType.startsWith('text/x-script') || mimeType.startsWith('application/x-script')) {
+            $element.find('[data-file-icon]').addClass('icon-file-code');
+          } else if (mimeType.startsWith('text')) {
+            $element.find('[data-file-icon]').addClass('icon-doc-text');
+          } else {
+            $element.find('[data-file-icon]').addClass('icon-doc');
+          }
+      }
+    }
   };
 
   this.slugifyFileName = function(text) {

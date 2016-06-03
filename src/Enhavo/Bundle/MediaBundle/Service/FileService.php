@@ -364,6 +364,7 @@ class FileService
         $info['extension'] = $file->getExtension();
         $info['filename'] = $file->getFilename();
         $info['slug'] = $file->getSlug();
+        $info['mimeType'] = $file->getMimeType();
         return $info;
     }
 }
