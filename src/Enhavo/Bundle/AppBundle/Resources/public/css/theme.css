@@ -305,7 +305,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .tabContainer a.selected:after {background-color:#FFF;}
 .tabContainer a:hover {opacity: 1;color:#4395d1;}
 .tabContainer a:hover:after {opacity: 1;}
-.tabContentContainer {padding-bottom: 80px;padding-top: 50px;background:#fefefe;border-radius:0 2px 0 0}
+.tabContentContainer {padding-bottom: 50px;padding-top: 50px;background:#fefefe;border-radius:0 2px 0 0}
 .tabContentContainer .choice-input-with-label:first-child .icheckbox-esperanto { margin-left:0;}
 .tabContentContainer .choice-input-with-label .icheckbox-esperanto { border-radius:50%;}
 
@@ -368,7 +368,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     #content-container{width: 75%;margin-left: 25%;}
     .container{width: 100%}
     #overlayContent .container {padding: 0 60px 10px 60px;}
-    .tabContentContainer {padding: 50px 20px 80px 20px;}
+    .tabContentContainer {padding: 50px 20px 50px 20px;}
     .batch-actions-wrapper { width:100%;}
     .tabContainer a span{padding: 10px 25px;display: inline-block;}
 }

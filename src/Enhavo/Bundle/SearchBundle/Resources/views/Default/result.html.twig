@@ -1,25 +1,21 @@
 <div id="search-results">
     <h3>Suchergebnisse</h3>
-    <div data-id="2" data-update-route="enhavo_article_article_update" class="entry-row">
-        <div class="row">
-            <div class="col-xs-9">
-                <h1>Bla bla</h1>
-                Quandak <b class="search_highlight">Test</b> and Braunbär. · <b class="search_highlight">Test</b> Bild Titel. · <b class="search_highlight">Test</b> Bild Bild Titel. · <b class="search_highlight">Test</b> BildBild Titel. · <b class="search_highlight">Test</b> BildBild Bild Titel links. · <b class="search_highlight">Test</b> BildBild Bild Titel rechts. · <b class="search_highlight">Test</b> Text Titel.
+    {% if data is iterable %}
+        {% for item in data %}
+            <div data-id="{{ item.resource.id }}" {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <h1>{{ item.resource.title|raw }}</h1>
+                        {{ item.highlightedText|raw }}
+                    </div>
+                    <div class="col-xs-3 search-result-type">
+                        Artikel
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-3 search-result-type">
-                Artikel
-            </div>
-        </div>
-    </div>
-    <div data-id="1" data-update-route="enhavo_article_article_update" style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
-        <div class="row">
-            <div class="col-xs-9">
-                <h1>Test</h1>
-                Teaser <b class="search_highlight">Test</b> <b class="search_highlight">abc</b> Hallo.
-            </div>
-            <div class="col-xs-3 search-result-type">
-                Artikel
-            </div>
-        </div>
-    </div>
+        {% endfor %}
+    {% else %}
+        </br>
+        {{ data }}
+    {% endif %}
 </div>

@@ -1,50 +1,14 @@
 {% block enhavo_files_widget %}
+    {% import '@EnhavoMedia/Form/macro_file_container.html.twig' as fcmacro %}
     {% spaceless %}
         {% trans_default_domain 'EnhavoAppBundle' %}
             <div class="uploadForm" data-multiple="{% if multiple %}1{% else %}0{% endif %}">
 
                 <script type="text/html" data-id="files-template">
-                    {% if multiple %}
-                        <li class="imgContainer" data-file-element data-id="{file_id}">
-                            <div class="imgdelete">
-                                <i class="fa fa-times fa-2x"></i>
-                            </div>
-                            <div class="uploadForm-image-container">
-                                <img src="/file/{file_id}/100/100">
-                                <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i> <i class="icon-swap"></i></div>
-                            </div>
-                            <input type="hidden" name="{full_name}[{file_index}][id]" value="{file_id}" />
-                            <input type="hidden" name="{full_name}[{file_index}][order]" data-file-element-order value="" />
-                            <input type="hidden" name="{full_name}[{file_index}][filename]" value="{file_name}" data-field-name="filename" />
-                            <input type="hidden" name="{full_name}[{file_index}][slug]" value="{file_slug}" data-field-name="slug" />
-                            {% for field_name, field_options in fields %}
-                                <input type="hidden"
-                                       name="{full_name}[{file_index}][parameters][{{ field_name }}]"
-                                       value=""
-                                       data-field-name="pa_{{ field_name }}" />
-                            {% endfor %}
-                        </li>
-                    {% else %}
-                        <div class="imgContainer singleImage" data-file-element data-id="{file_id}">
-                            <div class="imgdelete">
-                                <i class="fa fa-times fa-2x"></i>
-                            </div>
-                            <div class="uploadForm-image-container">
-                                <img src="/file/{file_id}/100/100">
-                                <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i></div>
-                            </div>
-                            <input type="hidden" name="{full_name}[id]" value="{file_id}" />
-                            <input type="hidden" name="{full_name}[order]" data-file-element-order value="" />
-                            <input type="hidden" name="{full_name}[filename]" value="{file_name}" data-field-name="filename" />
-                            <input type="hidden" name="{full_name}[slug]" value="{file_slug}" data-field-name="slug" />
-                            {% for field_name, field_options in fields %}
-                                <input type="hidden"
-                                       name="{full_name}[parameters][{{ field_name }}]"
-                                       value=""
-                                       data-field-name="pa_{{ field_name }}" />
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    {{ fcmacro.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
+                </script>
+                <script type="text/html" data-id="thumb-template">
+                    <img class="file-thumb" src="/file/{file_id}/100/100">
                 </script>
 
                 <div class="layer posrel">
@@ -68,53 +32,17 @@
                                 <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% for index, file in form.vars.value %}
                                         {% if file %}
-                                            <li class="imgContainer" data-file-element data-id="{{ file.id }}">
-                                                <div class="imgdelete">
-                                                    <i class="fa fa-times fa-2x"></i>
-                                                </div>
-                                                <div class="uploadForm-image-container">
-                                                    <img src="/file/{{ file.id }}/100/100">
-                                                    <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i> <i class="icon-swap"></i></div>
-                                                </div>
-                                                <input type="hidden" name="{{ full_name }}[{{ index }}][id]" value="{{ file.id }}" />
-                                                <input type="hidden" name="{{ full_name }}[{{ index }}][order]" data-file-element-order value="{{ file.order }}" />
-                                                <input type="hidden" name="{{ full_name }}[{{ index }}][filename]" value="{{ file.filename }}" data-field-name="filename" />
-                                                <input type="hidden" name="{{ full_name }}[{{ index }}][slug]" value="{{ file.slug }}" data-field-name="slug" />
-                                                {% for field_name, field_options in fields %}
-                                                    <input type="hidden"
-                                                        name="{{ full_name }}[{{ index }}][parameters][{{ field_name }}]"
-                                                        value="{% if file.parameters[field_name] is defined %}{{ file.parameters[field_name] }}{% endif %}"
-                                                        data-field-name="pa_{{ field_name }}" />
-                                                {% endfor %}
-                                          </li>
+                                            {{ fcmacro.fileContainer(multiple, full_name, fields, index, file.id, file.order, file.filename, file.slug, file.mimeType, file.parameters) }}
                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>
                             <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}" multiple>
                         {% else %}
-                            <div class="dropzone fade well{% if form.vars.value|length < 1 %} empty{% endif %}">
+                            <div class="dropzone fade well{% if not form.vars.value %} empty{% endif %}">
                                 <div class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% if form.vars.value %}
-                                        <div class="imgContainer singleImage" data-file-element data-id="{{ form.vars.value.id }}">
-                                            <div class="imgdelete">
-                                                <i class="fa fa-times fa-2x"></i>
-                                            </div>
-                                            <div class="uploadForm-image-container">
-                                                <img src="/file/{{ form.vars.value.id }}/100/100">
-                                                <div class="uploadForm-image-overlay"><i class="icon-edit-1"></i></div>
-                                            </div>
-                                            <input type="hidden" name="{{ full_name }}[id]" value="{{ form.vars.value.id }}" />
-                                            <input type="hidden" name="{{ full_name }}[order]" data-file-element-order value="{{ form.vars.value.order }}" />
-                                            <input type="hidden" name="{{ full_name }}[filename]" value="{{ form.vars.value.filename }}" data-field-name="filename" />
-                                            <input type="hidden" name="{{ full_name }}[slug]" value="{{ form.vars.value.slug }}" data-field-name="slug" />
-                                            {% for field_name, field_options in fields %}
-                                                <input type="hidden"
-                                                       name="{{ full_name }}[parameters][{{ field_name }}]"
-                                                       value="{% if form.vars.value.parameters[field_name] is defined %}{{ form.vars.value.parameters[field_name] }}{% endif %}"
-                                                       data-field-name="pa_{{ field_name }}" />
-                                            {% endfor %}
-                                        </div>
+                                        {{ fcmacro.fileContainer(multiple, full_name, fields, 0, form.vars.value.id, form.vars.value.order, form.vars.value.filename, form.vars.value.slug, form.vars.value.mimeType, form.vars.value.parameters) }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -152,6 +80,12 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        <div class="fileupload-actions row">
+                            <div class="col-md-4 fileupload-action-download-container">
+                                <a class="fileupload-action-download-button" data-download-button href=""><i class="icon-download"></i> {{ 'media.form.label.download'|trans({}, 'EnhavoMediaBundle') }}</a>
+                            </div>
+                            <div class="col-md-8"></div>
+                        </div>
                     </div>
                     <div class="mt1">
                         <button class="btn upload-button"> {{ 'label.upload'|trans }}</button>

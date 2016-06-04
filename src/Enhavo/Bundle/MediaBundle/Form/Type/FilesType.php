@@ -99,15 +99,16 @@ class FilesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'multiple'  => true,
+            'multiple'      => true,
+            'images'        => true,
             'editFilename'  => true,
-            'fields'    => array(
-                'title'     => array(
-                    'label'     => 'media.form.label.title',
+            'fields'        => array(
+                'title'         => array(
+                    'label'             => 'media.form.label.title',
                     'translationDomain' => 'EnhavoMediaBundle'
                 ),
-                'alt_tag'   => array(
-                    'label'     => 'media.form.label.alt_tag',
+                'alt_tag'       => array(
+                    'label'             => 'media.form.label.alt_tag',
                     'translationDomain' => 'EnhavoMediaBundle'
                 )
             )

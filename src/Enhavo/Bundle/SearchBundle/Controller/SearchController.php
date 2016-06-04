@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
+use Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter;
 use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,17 +20,22 @@ class SearchController extends Controller
 
             try {
                 $searchEngine = $this->get('enhavo_search_search_engine');
-                $result = $searchEngine->search($searchExpression);
+                $filter = new PermissionFilter($this->container);
+                $result = $searchEngine->search($searchExpression, array($filter));
                 if(empty($result)) {
                     return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
                         'data' => 'No results'
                     ));
                 }
-
+                $resourcesBefore = $result->getResources();
+                $resourcesAfter = array();
+                foreach ($resourcesBefore as $resource) {
+                    $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
+                }
+                $result->setResources($resourcesAfter);
                 return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                    'data' => $result
+                    'data' => $result->getResources()
                 ));
-
             } catch(SearchEngineException $e) {
                 return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
                     'data' => $e->getMessage()
@@ -41,7 +47,7 @@ class SearchController extends Controller
                 'data' => 'Please enter some keywords!'
             ));
         }
-
-
     }
+
+
 }
