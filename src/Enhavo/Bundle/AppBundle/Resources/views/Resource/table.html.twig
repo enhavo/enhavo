@@ -23,7 +23,9 @@
                     {% endfor %}
                 </div>
             {% else %}
-                {{ 'table.empty'|trans({},'EnhavoAppBundle') }}
+                <div class="no-data">
+                    {{ 'table.empty'|trans({},'EnhavoAppBundle') }}
+                </div>
             {% endfor %}
         </div>
     </div>

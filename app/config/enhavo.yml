@@ -199,4 +199,4 @@ enhavo_workflow:
 enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: reindex
+        strategy: index

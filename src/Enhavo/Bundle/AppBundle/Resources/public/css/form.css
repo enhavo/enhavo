@@ -6,7 +6,7 @@
 /* input container */
 
 .formwidget-container input[type=file] {border:0;background:transparent;}
-.formwidget-container label {margin-top: 8px;padding-left: 5px;color:#000;}
+.formwidget-container label {margin-top: 8px;padding-left: 2px;}
 .formwidget-container .icheckbox-enhavo {margin-top: 0px;}
 .formwidget-container .select2-container {width: 100%;}
 .formwidget-container .select2-container .select2-choice {border-radius: 0;}
@@ -89,6 +89,10 @@
     background: #fefefe;
     border-top: 1px solid #f3f3f3;
     border-radius: 0 0 2px 2px;
+}
+
+@media all and (max-width:991px) {
+    #overlayContent form > .row:last-of-type{padding: 25px 20px;}
 }
 
 .form-message-box {
