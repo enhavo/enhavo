@@ -61,6 +61,6 @@ class WysiwygType extends AbstractType
 
     public function getName()
     {
-        return 'wysiwyg';
+        return 'enhavo_wysiwyg';
     }
 }

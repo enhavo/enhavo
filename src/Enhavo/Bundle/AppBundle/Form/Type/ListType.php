@@ -89,7 +89,7 @@ class ListType extends AbstractType
         $resolver->setDefaults(array(
             'border' => false,
             'sortable' => false,
-            'sortable_property' => 'order',
+            'sortable_property' => 'position',
             'prototype' => true,
             'allow_add' => true,
             'by_reference' => false,
