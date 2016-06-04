@@ -24,8 +24,11 @@ enhavo_user_group_create:
              translationDomain: EnhavoUserBundle
              tabs:
                 group:
-                  template: EnhavoUserBundle:Group:form.html.twig
+                  template: EnhavoUserBundle:Group:group.html.twig
                   label: group.label.group
+                permission:
+                  template: EnhavoUserBundle:Group:permission.html.twig
+                  label: group.label.permission
 
 enhavo_user_group_update:
     options:
@@ -40,8 +43,11 @@ enhavo_user_group_update:
              translationDomain: EnhavoUserBundle
              tabs:
                 group:
-                  template: EnhavoUserBundle:Group:form.html.twig
+                  template: EnhavoUserBundle:Group:group.html.twig
                   label: group.label.group
+                permission:
+                  template: EnhavoUserBundle:Group:permission.html.twig
+                  label: group.label.permission
 
 enhavo_user_group_table:
     options:
