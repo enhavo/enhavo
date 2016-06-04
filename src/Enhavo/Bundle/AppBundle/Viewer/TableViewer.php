@@ -9,7 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use BaconStringUtils\Slugifier;
-use Enhavo\Bundle\AppBundle\Exception\TableWidgetException;
+use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
+use Enhavo\Bundle\AppBundle\Table\TableWidgetInterface;
 
 class TableViewer extends AbstractViewer
 {
@@ -49,26 +50,20 @@ class TableViewer extends AbstractViewer
             if ($this->isSortable()) {
                 $columns = array(
                     'id' => array(
+                        'type' => 'property',
                         'label' => 'id',
                         'property' => 'id',
-                        'width' => 1
                     ),
                     'position' => array(
-                        'label' => '',
-                        'property' => 'position',
-                        'width' => 1,
-                        'widget' => array(
-                            'type' => 'template',
-                            'template' => 'EnhavoAppBundle:Widget:position.html.twig',
-                        )
+                        'type' => 'position'
                     )
                 );
             } else {
                 $columns = array(
                     'id' => array(
+                        'type' => 'property',
                         'label' => 'id',
                         'property' => 'id',
-                        'width' => 1
                     )
                 );
             }
@@ -76,21 +71,15 @@ class TableViewer extends AbstractViewer
         }
 
         foreach($columns as $key => &$column) {
-            if(!array_key_exists('width', $column)) {
-                $column['width'] = 1;
+            if(!array_key_exists('type', $column)) {
+                $column['type'] = 'property';
             }
         }
 
         foreach($columns as $key => &$column) {
-            if(!array_key_exists('widget', $column)) {
-                $column['widget'] = [
-                    'type' => 'property'
-                ];
+            if(!array_key_exists('translationDomain', $column)) {
+                $column['translationDomain'] = $this->getTranslationDomain();
             }
-        }
-
-        if (isset($columns['position']) && !isset($columns['position']['widget'])) {
-            $columns['position']['widget'] = 'EnhavoAppBundle:Widget:position.html.twig';
         }
 
         return $columns;
@@ -265,19 +254,5 @@ class TableViewer extends AbstractViewer
     public function getBatchActionRoute()
     {
         return $this->getConfig()->get('table.batch.route');
-    }
-
-    /**
-     * @param $options
-     * @param $property
-     * @param $item
-     * @return string
-     * @throws TableWidgetException
-     */
-    public function renderWidget($options, $property, $item)
-    {
-        $collector = $this->container->get('enhavo_app.table_widget_collector');
-        $widget = $collector->getWidget($options['type']);
-        return $widget->render($options, $property, $item);
     }
 }

@@ -1,0 +1,73 @@
+parameters:
+    enhavo_app.menu_loader.class: Enhavo\Bundle\AppBundle\Menu\MenuLoader
+    security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
+
+services:
+    cache:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments: [%kernel.cache_dir%]
+
+    security.roles.provider:
+        class: %security.roles.provider.class%
+        arguments:
+            - %security.role_hierarchy.roles%
+
+    enhavo_app.menu_event_listener:
+        class: Enhavo\Bundle\AppBundle\EventListener\MenuEventListener
+        arguments:
+            - %enhavo_app.permission_check%
+            - @security.context
+            - @knp_menu.factory
+            - %enhavo_app.menu%
+            - @request_stack
+        tags:
+          - { name: kernel.event_listener, event: enhavo_app.menu, method: onMenu  }
+
+    enhavo_app.controller.app:
+        class: Enhavo\Bundle\AppBundle\Controller\AppController
+        calls:
+            - [setContainer, [@service_container]]
+
+    enhavo_app.menu_loader:
+        class: %enhavo_app.menu_loader.class%
+        arguments:
+            - 'enhavo_app.menu'
+            - @security.context
+            - %enhavo_app.menu%
+            - @knp_menu.factory
+            - @event_dispatcher
+
+    enhavo_app.generator.route_generator:
+        class: Enhavo\Bundle\AppBundle\Generator\RoutingGenerator
+        arguments:
+            - @templating
+
+    enhavo_app.generator.extend_form_type_generator:
+        class: Enhavo\Bundle\AppBundle\Generator\ExtendFormTypeGenerator
+        arguments:
+            - @templating
+            - @kernel
+
+    enhavo_app.preview.default_renderer:
+        class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
+
+    enhavo_app.preview.strategy_resolver:
+        class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
+        arguments:
+            - @service_container
+
+    enhavo_app.preview.strategy.dynamic:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
+        arguments:
+            - @service_container
+
+    enhavo_app.preview.strategy.service:
+        class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
+        arguments:
+            - @service_container
+
+    security.authentication.voter.super_admin:
+        class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
+        tags:
+            - { name: security.voter }
+

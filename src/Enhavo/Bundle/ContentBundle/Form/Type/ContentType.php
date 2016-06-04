@@ -69,10 +69,8 @@ class ContentType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('publication_date', 'datetime', array(
+        $builder->add('publication_date', 'enhavo_datetime', array(
             'label' => 'article.form.label.publication_date',
-            'widget' => 'single_text',
-            'format' => 'dd.MM.yyyy HH:mm',
             'translation_domain' => 'EnhavoArticleBundle'
         ));
     }

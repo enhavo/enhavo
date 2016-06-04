@@ -2,12 +2,12 @@
 
 namespace Enhavo\Bundle\WorkflowBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
+use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
-class WorkflowAssignedWidget extends AbstractTableWidget {
-
-    public function render($options, $property, $item)
+class WorkflowAssignedWidget extends AbstractTableWidget
+{
+    public function render($options, $item)
     {
         $templateEngine = $this->container->get('templating');
         $securityContext = $this->container->get('security.context');

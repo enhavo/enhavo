@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Block;
 
-interface BlockInterface
+use Enhavo\Bundle\AppBundle\Type\TypeInterface;
+
+interface BlockInterface extends TypeInterface
 {
     /**
      * Feed a block with parameter and you it will

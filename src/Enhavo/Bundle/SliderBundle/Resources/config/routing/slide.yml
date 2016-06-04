@@ -62,18 +62,12 @@ enhavo_slider_slide_table:
                     id:
                         label: slide.label.id
                         property: id
-                        width: 1
                     title:
                         label: slide.label.title
                         property: title
                         width: 10
                     position:
-                        label: slide.label.position
-                        property: position
-                        width: 1
-                        widget:
-                            type: template
-                            template: EnhavoAppBundle:Widget:position.html.twig
+                        type: position
 
 enhavo_slider_slide_delete:
     options:

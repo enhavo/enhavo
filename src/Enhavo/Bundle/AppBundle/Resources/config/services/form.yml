@@ -1,0 +1,52 @@
+parameters:
+    enhavo_app.form.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Type\WysiwygType
+    enhavo_app.form.config.wysiwyg.class: Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig
+    enhavo_app.form.enhavo_boolean.class: Enhavo\Bundle\AppBundle\Form\Type\BooleanType
+    enhavo_app.form.enhavo_position.class: Enhavo\Bundle\AppBundle\Form\Type\PositionType
+
+services:
+    enhavo_message:
+        class: Enhavo\Bundle\AppBundle\Form\Type\MessageType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @translator
+
+    enhavo_list:
+        class: Enhavo\Bundle\AppBundle\Form\Type\ListType
+        tags:
+            - { name: form.type }
+
+    enhavo_date:
+        class: Enhavo\Bundle\AppBundle\Form\Type\DateType
+        tags:
+            - { name: form.type }
+
+    enhavo_datetime:
+        class: Enhavo\Bundle\AppBundle\Form\Type\DateTimeType
+        tags:
+            - { name: form.type }
+
+    enhavo_app.form.enhavo_boolean:
+        class: %enhavo_app.form.enhavo_boolean.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: 'enhavo_boolean' }
+
+    enhavo_app.form.enhavo_position:
+        class: %enhavo_app.form.enhavo_position.class%
+        tags:
+            - { name: form.type, alias: 'enhavo_position' }
+
+    enhavo_app.form.wysiwyg:
+        class: %enhavo_app.form.wysiwyg.class%
+        arguments:
+            - @enhavo_app.form.config.wysiwyg
+        tags:
+            - { name: form.type, alias: 'enhavo_wysiwyg' }
+
+    enhavo_app.form.config.wysiwyg:
+        class: %enhavo_app.form.config.wysiwyg.class%
+        arguments:
+            - %kernel.root_dir%/config/wysiwyg.yml

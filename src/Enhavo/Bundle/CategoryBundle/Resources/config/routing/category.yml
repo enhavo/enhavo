@@ -1,7 +1,7 @@
 enhavo_category_category_index:
     options:
         expose: true
-    path: /admin/enhavo/category/category/index
+    path: /enhavo/category/category/index
     methods: [GET]
     defaults:
         _controller: enhavo_category.controller.category:indexAction
@@ -14,7 +14,7 @@ enhavo_category_category_index:
 enhavo_category_category_create:
     options:
         expose: true
-    path: /admin/enhavo/category/category/create
+    path: /enhavo/category/category/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_category.controller.category:createAction
@@ -30,7 +30,7 @@ enhavo_category_category_create:
 enhavo_category_category_update:
     options:
         expose: true
-    path: /admin/enhavo/category/category/update/{id}
+    path: /enhavo/category/category/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_category.controller.category:updateAction
@@ -42,7 +42,7 @@ enhavo_category_category_update:
 enhavo_category_category_table:
     options:
         expose: true
-    path: /admin/enhavo/category/category/table/{page}
+    path: /enhavo/category/category/table/{page}
     methods: [GET]
     defaults:
         page: 1
@@ -55,7 +55,6 @@ enhavo_category_category_table:
                 width: 12
                 columns:
                     id:
-                        width: 1
                         label: category.label.id
                         property: id
                     name:
@@ -66,7 +65,7 @@ enhavo_category_category_table:
 enhavo_category_category_delete:
     options:
         expose: true
-    path: /admin/enhavo/category/category/delete/{id}
+    path: /enhavo/category/category/delete/{id}
     methods: [DELETE]
     defaults:
         _controller: enhavo_category.controller.category:deleteAction
@@ -82,7 +81,7 @@ enhavo_category_category_batch:
 enhavo_category_category_preview:
     options:
         expose: true
-    path: /admin/enhavo/category/category/preview
+    path: /enhavo/category/category/preview
     methods: [POST]
     defaults:
         _controller: enhavo_category.controller.category:previewAction

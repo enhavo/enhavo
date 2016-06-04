@@ -1,4 +1,4 @@
-{% extends viewer.theme %}
+{% extends template('base') %}
 
 {% trans_default_domain "EnhavoAppBundle" %}
 
@@ -17,17 +17,18 @@
     {% if viewer.title|trans({}, viewer.translationDomain) %}
         <h1 class="cat">{{ viewer.title|trans({}, viewer.translationDomain) }}</h1>
     {% endif %}
+
     {% block topButtons %}
         <div class="row action-row" data-action-row>
             <div class="col-sm-3">
                 {% for action in actions %}
-                    <button data-action data-action-type="{{ action.type }}" data-action-route="{{ action.route }}" class="btn create col-sm-12"> {{ action.label|trans }}</button>
+                    {{ action_render(action.type, action) }}
                 {% endfor %}
             </div>
         </div>
     {% endblock %}
 
     {% for block in blocks %}
-        {{ block_render(block.type, block.parameters) }}
+        {{ block_render(block.type, block) }}
     {% endfor %}
 {% endblock %}

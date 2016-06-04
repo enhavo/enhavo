@@ -18,11 +18,12 @@ class ListWidgetTest extends \PHPUnit_Framework_TestCase
         $entity = $this->getEntityMock();
 
         $options = [
-            'property' => 'name'
+            'property' => 'entities',
+            'item_property' => 'name'
         ];
 
         $widget = new ListWidget();
-        $value = $widget->render($options, 'entities', $entity);
+        $value = $widget->render($options, $entity);
         $this->assertEquals('one,two', $value);
     }
 
@@ -31,12 +32,13 @@ class ListWidgetTest extends \PHPUnit_Framework_TestCase
         $entity = $this->getEntityMock();
 
         $options = [
-            'property' => 'name',
+            'property' => 'entities',
+            'item_property' => 'name',
             'separator' => '-'
         ];
 
         $widget = new ListWidget();
-        $value = $widget->render($options, 'entities', $entity);
+        $value = $widget->render($options, $entity);
         $this->assertEquals('one-two', $value);
     }
 

@@ -98,3 +98,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_workflow_status:
+        class: Enhavo\Bundle\AppBundle\Form\Type\WorkflowStatusType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - @security.context
+            - @service_container
+        tags:
+            - { name: form.type }

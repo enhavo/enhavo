@@ -1,0 +1,69 @@
+parameters:
+    cmf_routing.route_entity.class: Enhavo\Bundle\AppBundle\Entity\Route
+    cmf_routing.orm_candidates.class: Symfony\Cmf\Component\Routing\Candidates\Candidates
+    cmf_routing.route_entity_provider: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
+    enhavo_app.doctrine_route_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteSubscriber
+    enhavo_app.doctrine_routeable_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteableSubscriber
+    enhavo_app.form.route.class: Enhavo\Bundle\AppBundle\Form\Type\RouteType
+
+services:
+    enhavo_app.orm_candidates:
+        class: %cmf_routing.orm_candidates.class%
+        arguments:
+            - %cmf_routing.dynamic.locales%
+            - %cmf_routing.dynamic.limit_candidates%
+
+    enhavo_app.route_provider:
+        class: %cmf_routing.route_entity_provider%
+        arguments:
+            - @doctrine
+            - @enhavo_app.orm_candidates
+            - %cmf_routing.route_entity.class%
+        calls:
+            - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]
+
+    enhavo_app.route_content_collector:
+        class: Enhavo\Bundle\AppBundle\Route\RouteContentCollector
+
+    enhavo_app.route_content_resolver:
+        class: Enhavo\Bundle\AppBundle\Route\RouteContentResolver
+        arguments:
+            - @enhavo_app.route_content_collector
+            - @service_container
+
+    enhavo_app.doctrine_route_subscriber:
+        class: %enhavo_app.doctrine_route_subscriber.class%
+        arguments:
+            - @enhavo_app.route_content_resolver
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_app.doctrine_routeable_subscriber:
+        class: %enhavo_app.doctrine_routeable_subscriber.class%
+        arguments:
+            - @enhavo_app.route_content_resolver
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_app.form.route:
+        class: %enhavo_app.form.route.class%
+        tags:
+            - { name: form.type, alias: 'enhavo_route' }
+
+    enhavo_app.validator.unique_url:
+        class: Enhavo\Bundle\AppBundle\Validator\Constraints\RouteValidator
+        arguments:
+          - @router
+        tags:
+            - { name: validator.constraint_validator, alias: route }
+
+    enhavo_app.route_guesser:
+        class: Enhavo\Bundle\AppBundle\Route\RouteGuesser
+
+    enhavo_routing:
+        class: Enhavo\Bundle\AppBundle\Form\Type\RoutingType
+        tags:
+            - { name: form.type }
+        arguments:
+            - @router
+            - @enhavo_app.route_guesser

@@ -55,6 +55,13 @@ enhavo_user_user_table:
                     username:
                         label: user.label.username
                         property: username
+                        width: 6
+                    groups:
+                        type: list
+                        label: group.label.group
+                        property: groups
+                        item_property: name
+                        width: 5
 
 enhavo_user_user_delete:
     options:

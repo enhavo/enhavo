@@ -16,18 +16,10 @@ class EditViewer extends CreateViewer
         $config =  array(
             'buttons' => array(
                 'cancel' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.cancel',
-                    'icon' => 'icon-cross'
+                    'type' => 'cancel',
                 ),
                 'save' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.save',
-                    'icon' => 'icon-save'
+                    'type' => 'save',
                 ),
             ),
             'form' => array(
@@ -42,11 +34,7 @@ class EditViewer extends CreateViewer
         $route = sprintf('%s_%s_delete', $this->getBundlePrefix(), $this->getResourceName());
         if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
             $config['buttons']['delete'] = array(
-                'route' => null,
-                'display' => true,
-                'role' => null,
-                'label' => 'label.delete',
-                'icon' => 'icon-trash-1'
+                'type' => 'delete',
             );
         }
 
