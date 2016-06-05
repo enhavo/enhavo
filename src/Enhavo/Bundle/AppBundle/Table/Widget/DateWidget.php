@@ -15,7 +15,11 @@ class DateWidget extends AbstractTableWidget
     public function render($options, $item)
     {
         $property = $this->getProperty($item, $options['property']);
-        return $property->format('d.m.Y');
+        if(!$property instanceof \DateTime) {
+            return '';
+        }
+        $format = isset($options['format']) ? $options['format'] : 'd.m.Y';
+        return $property->format($format);
     }
 
     public function getType()

@@ -20,8 +20,8 @@ class CancelButton extends AbstractType implements ButtonInterface
             'type' => 'cancel',
             'icon' => isset($options['icon']) ? $options['icon'] : 'cross',
             'display' =>  isset($options['display']) ? $options['display'] : true,
-            'role' => isset($options['role']) ? $options['role'] : true,
-            'label' => isset($options['role']) ? $options['label'] : 'label.cancel',
+            'role' => isset($options['role']) ? $options['role'] : null,
+            'label' => isset($options['label']) ? $options['label'] : 'label.cancel',
             'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle'
         ]);
     }

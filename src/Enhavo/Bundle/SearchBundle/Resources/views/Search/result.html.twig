@@ -1,21 +1,18 @@
 <div id="search-results">
-    <h3>Suchergebnisse</h3>
+    <h3>{{ 'search.label.result'|trans({}, 'EnhavoSearchBundle') }}</h3>
     {% if data is iterable %}
         {% for item in data %}
             <div data-id="{{ item.resource.id }}" {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
                 <div class="row">
-                    <div class="col-xs-9">
+                    <div class="col-xs-12">
                         <h1>{{ item.resource.title|raw }}</h1>
                         {{ item.highlightedText|raw }}
-                    </div>
-                    <div class="col-xs-3 search-result-type">
-                        Artikel
                     </div>
                 </div>
             </div>
         {% endfor %}
     {% else %}
-        </br>
+        <br />
         {{ data }}
     {% endif %}
 </div>

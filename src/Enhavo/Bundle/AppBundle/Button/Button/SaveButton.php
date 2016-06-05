@@ -22,8 +22,8 @@ class SaveButton extends AbstractType implements ButtonInterface
             'type' => $this->getType(),
             'icon' => isset($options['icon']) ? $options['icon'] : 'save',
             'display' =>  isset($options['display']) ? $options['display'] : true,
-            'role' => isset($options['role']) ? $options['role'] : true,
-            'label' => isset($options['role']) ? $options['label'] : 'label.save',
+            'role' => isset($options['role']) ? $options['role'] : null,
+            'label' => isset($options['label']) ? $options['label'] : 'label.save',
             'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle'
         ]);
     }
