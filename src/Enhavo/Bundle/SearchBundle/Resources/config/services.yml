@@ -1,11 +1,4 @@
-parameters:
-    enhavo_search.manager.class: Enhavo\Bundle\SearchBundle\Search\SearchManager
-
 services:
-    enhavo_search.manager:
-        class: '%enhavo_search.manager.class%'
-        arguments: [@doctrine.orm.entity_manager]
-
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         arguments:

@@ -1,0 +1,7 @@
+search:
+  label:
+    search: Suche
+    result: Suchergebnisse
+  form:
+    error:
+      blank: Keine Suchergebnisse gefunden
