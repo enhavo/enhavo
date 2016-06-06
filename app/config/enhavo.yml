@@ -177,7 +177,8 @@ enhavo_contact:
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
-        subject: Contactform
+        subject: contact.message.email_subject
+        translationDomain: EnhavoContactBundle
         send_to_sender: true
 
 enhavo_workflow:

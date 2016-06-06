@@ -30,6 +30,7 @@ class EnhavoContactExtension extends Extension
         $container->setParameter('enhavo_contact.contact.recipient', $config['contact']['recipient']);
         $container->setParameter('enhavo_contact.contact.from', $config['contact']['from']);
         $container->setParameter('enhavo_contact.contact.subject', $config['contact']['subject']);
+        $container->setParameter('enhavo_contact.contact.translationDomain', $config['contact']['translationDomain']);
         $container->setParameter('enhavo_contact.contact.send_to_sender', $config['contact']['send_to_sender']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

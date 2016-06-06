@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('recipient')->end()
                         ->scalarNode('from')->end()
                         ->scalarNode('subject')->end()
+                        ->scalarNode('translationDomain')->end()
                         ->scalarNode('send_to_sender')->end()
                     ->end()
                 ->end()
