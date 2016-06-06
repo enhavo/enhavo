@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: sylius.yml }
     - { resource: enhavo.yml }
 
 framework:

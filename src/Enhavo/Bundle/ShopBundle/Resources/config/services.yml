@@ -1,4 +1,5 @@
 services:
-#    enhavo_shop.example:
-#        class: Enhavo\Bundle\ShopBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    enhavo.shop.cart_item_resolver:
+        class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
+        arguments:
+            - @doctrine.orm.entity_manager

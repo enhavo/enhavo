@@ -1,6 +1,10 @@
 #
 # enhavo
 #
+enhavo_shop:
+    resource: "@EnhavoShopBundle/Resources/config/routing/shop.yml"
+    prefix:   /
+
 enhavo_contact:
     resource: "@EnhavoContactBundle/Resources/config/routing.yml"
     prefix:   /

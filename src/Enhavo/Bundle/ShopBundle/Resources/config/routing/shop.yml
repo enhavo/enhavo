@@ -1,0 +1,3 @@
+sylius_cart:
+    resource: "@EnhavoShopBundle/Resources/config/routing/cart.yml"
+    prefix: /cart
