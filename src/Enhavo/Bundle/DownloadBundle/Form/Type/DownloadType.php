@@ -22,7 +22,7 @@ class DownloadType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ));
 
-        $builder->add('text', 'wysiwyg', array(
+        $builder->add('text', 'enhavo_wysiwyg', array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle'
         ));
@@ -30,7 +30,8 @@ class DownloadType extends AbstractType
         $builder->add('file', 'enhavo_files', array(
             'label' => 'download.form.label.file',
             'translation_domain' => 'EnhavoDownloadBundle',
-            'multiple' => false
+            'multiple'  => false,
+            'images'    => false
         ));
     }
 

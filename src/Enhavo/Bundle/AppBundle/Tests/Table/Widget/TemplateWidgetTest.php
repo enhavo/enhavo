@@ -26,10 +26,11 @@ class TemplateWidgetTest extends \PHPUnit_Framework_TestCase
 
         $entity = new EntityMock();
         $options = [
-            'template' => 'pathToTemplate'
+            'template' => 'pathToTemplate',
+            'property' => 'name'
         ];
 
-        $value = $widget->render($options, 'name', $entity);
+        $value = $widget->render($options, $entity);
         $this->assertEquals('renderedText', $value);
     }
 

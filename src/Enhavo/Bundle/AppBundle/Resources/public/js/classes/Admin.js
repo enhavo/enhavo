@@ -10,10 +10,19 @@ function Admin (router, templating, translator)
   var loadingOverlay = null;
   var loadingOverlayMutex = 0;
 
-  var MessageType = {
+  this.MessageType = {
     Info: 'info',
     Error: 'error',
     Success: 'success'
+  };
+
+  this.viewport = function() {
+    var e = window, a = 'inner';
+    if (!('innerWidth' in window )) {
+      a = 'client';
+      e = document.documentElement || document.body;
+    }
+    return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
   };
 
   this.initOverlay = function() {
@@ -148,7 +157,7 @@ function Admin (router, templating, translator)
           if(data.status == 403) {
             message = 'error.forbidden';
           }
-          self.overlayMessage(translator.trans(message), MessageType.Error);
+          self.overlayMessage(translator.trans(message), self.MessageType.Error);
           ajaxOverlaySynchronized = true;
         }
       });
@@ -205,15 +214,15 @@ function Admin (router, templating, translator)
     var overlayTimeout = null;
     clearTimeout(overlayTimeout);
     if (!type) {
-      type = MessageType.Info;
+      type = self.MessageType.Info;
     }
 
     if(overlayMessage == null) {
       overlayMessage = $("#overlayMessage");
     }
-    overlayMessage.removeClass(MessageType.Info);
-    overlayMessage.removeClass(MessageType.Error);
-    overlayMessage.removeClass(MessageType.Success);
+    overlayMessage.removeClass(self.MessageType.Info);
+    overlayMessage.removeClass(self.MessageType.Error);
+    overlayMessage.removeClass(self.MessageType.Success);
     overlayMessage.addClass(type);
 
 
@@ -252,7 +261,7 @@ function Admin (router, templating, translator)
       },
       error : function() {
         self.closeLoadingOverlay();
-        self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+        self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
       }
     })
   };
@@ -290,9 +299,7 @@ function Admin (router, templating, translator)
 
   this.initAfterSaveHandler = function()
   {
-      $(document).on('click', '[data-button][data-type=cancel]', function() {
-          self.overlayClose();
-      });
+
   };
 
   this.initBlocks = function()
@@ -340,20 +347,23 @@ function Admin (router, templating, translator)
 
   this.initNavigation = function()
   {
-    $(function(){
-      $('[data-mobile-menu]').on('click', function(){
-        $('[data-menu-container]').toggleClass("active");
-        $('[data-content-container]').toggleClass("push");
-        $(this).toggleClass("push");
-      });
+    $('[data-mobile-menu]').on('click', function(){
+      $('[data-menu-container]').toggleClass("active");
+      $('[data-content-container]').toggleClass("push");
+      $('#user-menu').toggleClass("push");
+      $(this).toggleClass("push");
     });
   };
 
   this.initUserMenu = function()
   {
     var userMenuActive = false;
+    var buttonWidth = $("[data-open-usermenu]").width() + 20;
+
+    $("[data-open-usermenu]").css("width", buttonWidth);
+
     $("[data-open-usermenu]").on("click", function(){
-      $(this).find("button").toggleClass("clicked");
+      $(this).toggleClass("clicked");
       $("[data-usermenu-link]").fadeToggle(100);
       $("#user-menu").toggleClass("background");
 
@@ -361,10 +371,29 @@ function Admin (router, templating, translator)
 
       if (userMenuActive) {
         userMenuActive = false;
-        $(this).css('transform', 'translateX(0)');
+        $(this).css('right', '20px');
       } else {
         userMenuActive = true;
-        $(this).css('transform', 'translateX(-' + menuWidth + 'px');
+        $(this).css('right', menuWidth   + 'px');
+      }
+
+      var dimensions = self.viewport();
+      if (dimensions.width <= 767) {
+        $("#user-menu").toggleClass("push-left");
+
+        if (userMenuActive) {
+          userMenuActive = false;
+          $(this).css('right', '200');
+        } else {
+          userMenuActive = true;
+          $(this).css('right', menuWidth + 'px');
+        }
+
+      }
+      if (dimensions.width <= 600) {
+        $('[data-mobile-menu]').toggle()
+        $('[data-content-container]').toggleClass("push-left");
+
       }
     });
   };
@@ -435,7 +464,7 @@ function Admin (router, templating, translator)
             },
             error : function() {
               self.closeLoadingOverlay();
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           });
         } else {
@@ -443,7 +472,7 @@ function Admin (router, templating, translator)
             url: url,
             method: 'POST',
             error : function() {
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           });
         }
@@ -501,7 +530,7 @@ function Admin (router, templating, translator)
     loadingOverlayMutex++;
     if (loadingOverlayMutex == 1) {
       loadingOverlay.removeClass('hidden');
-      loadingOverlay.fadeTo(300, 0.2);
+      loadingOverlay.fadeTo(300, 0.75);
     }
   };
 
@@ -636,12 +665,12 @@ function Admin (router, templating, translator)
             if ((typeof result.success != 'undefined') && (result.success == true)) {
               self.reloadBlock(block);
             } else {
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           },
           error : function() {
             self.closeLoadingOverlay();
-            self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+            self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
           }
         });
       }

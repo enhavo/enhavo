@@ -33,7 +33,7 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoNewsletterBundle'
         ) );
 
-        $builder->add('text', 'wysiwyg', array(
+        $builder->add('text', 'enhavo_wysiwyg', array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle'
         ) );

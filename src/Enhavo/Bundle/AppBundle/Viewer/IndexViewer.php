@@ -17,19 +17,16 @@ class IndexViewer extends AppViewer
         return array(
             'blocks' => array(
                 'table' => array(
-                    'type' => 'enhavo_table',
-                    'parameters' => array(
-                        'table_route' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
-                        'update_route' => sprintf('%s_%s_update', $this->getBundlePrefix(), $this->getResourceName()),
-                    )
+                    'type' => 'table',
+                    'table_route' => sprintf('%s_%s_table', $this->getBundlePrefix(), $this->getResourceName()),
+                    'update_route' => sprintf('%s_%s_update', $this->getBundlePrefix(), $this->getResourceName()),
+
                 )
             ),
             'actions' => array(
                 'create' => array(
-                    'type' => 'overlay',
+                    'type' => 'create',
                     'route' => sprintf('%s_%s_create', $this->getBundlePrefix(), $this->getResourceName()),
-                    'icon' => 'plus',
-                    'label' => 'label.create'
                 )
             )
         );

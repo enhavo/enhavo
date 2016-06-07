@@ -1,4 +1,4 @@
-{% extends 'EnhavoAppBundle::dialog.html.twig' %}
+{% extends template('dialog') %}
 
 {% block content %}
     <form method="POST" action="{{ path(view.getParameter('manage_route'), { name: data.name }) }}">

@@ -24,7 +24,7 @@ class SearchController extends Controller
                 $filter = new PermissionFilter($this->container);
                 $result = $searchEngine->search($searchExpression, array($filter));
                 if(empty($result)) {
-                    return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                    return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                         'data' => 'No results'
                     ));
                 }
@@ -35,18 +35,18 @@ class SearchController extends Controller
                     $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
                 }
                 $result->setResources($resourcesAfter);
-                return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                     'data' => $result->getResources()
                 ));
             } catch(SearchEngineException $e) {
-                return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
+                return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                     'data' => $e->getMessage()
                 ));
             }
         } else {
             //there were no keywords entered
-            return $this->render('EnhavoSearchBundle:Default:result.html.twig', array(
-                'data' => 'Please enter some keywords!'
+            return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
+                'data' => $this->get('translator')->trans('search.form.error.blank', [], 'EnhavoSearchBundle')
             ));
         }
     }

@@ -1,0 +1,23 @@
+parameters:
+    enhavo_app.twig.action_render.class: Enhavo\Bundle\AppBundle\Action\ActionRenderer
+    enhavo_app.twig.action_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
+services:
+    enhavo_app.action_collector:
+        class: %enhavo_app.twig.action_collector.class%
+        arguments:
+            - 'Action'
+
+    enhavo_app.twig.action_renderer:
+        class: %enhavo_app.twig.action_render.class%
+        arguments:
+            - @enhavo_app.action_collector
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.action.create:
+        class: Enhavo\Bundle\AppBundle\Action\Action\CreateAction
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.action }

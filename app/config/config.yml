@@ -132,11 +132,12 @@ cmf_routing:
 
 parameters:
     pdo.db_options:
-        db_table:    app_session
-        db_id_col:   id
+        db_table: app_session
+        db_id_col: id
         db_data_col: value
         db_time_col: time
         db_lifetime_col: lifetime
+        gc_maxlifetime: 3600
 
 services:
     pdo:
@@ -149,13 +150,12 @@ services:
             - [setAttribute, [3, 2]]
 
     session.handler.pdo:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
         arguments: ["@pdo", "%pdo.db_options%"]
 
 stof_doctrine_extensions:
-    default_locale: en_US
+    default_locale: %locale%
     orm:
         default:
-            tree: true
             sluggable: true
             timestampable: true

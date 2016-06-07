@@ -12,9 +12,9 @@ use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
 class PropertyWidget extends AbstractTableWidget
 {
-    public function render($options, $property, $item)
+    public function render($options, $item)
     {
-        return $this->getProperty($item, $property);
+        return $this->getProperty($item, $options['property']);
     }
 
     public function getType()

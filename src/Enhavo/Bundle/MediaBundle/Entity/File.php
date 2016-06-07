@@ -287,4 +287,14 @@ class File implements FileInterface
 
         return $this;
     }
+
+    /**
+     * Returns if this file is an image based on the mime type
+     *
+     * @return bool
+     */
+    public function isImage()
+    {
+        return strtolower(substr($this->getMimeType(), 0, 5)) == 'image';
+    }
 }

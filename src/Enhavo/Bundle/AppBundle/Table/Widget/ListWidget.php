@@ -12,13 +12,13 @@ use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
 class ListWidget extends AbstractTableWidget
 {
-    public function render($options, $property, $item)
+    public function render($options, $item)
     {
         $list = [];
 
-        $itemProperty = $this->getProperty($item, $property);
+        $itemProperty = $this->getProperty($item, $options['property']);
         foreach($itemProperty as $child) {
-            $list[] = $this->getProperty($child, $options['property']);
+            $list[] = $this->getProperty($child, $options['item_property']);
         }
 
         $separator = $this->getSeparator($options);

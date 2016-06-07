@@ -1,11 +1,4 @@
-parameters:
-    enhavo_search.manager.class: Enhavo\Bundle\SearchBundle\Search\SearchManager
-
 services:
-    enhavo_search.manager:
-        class: '%enhavo_search.manager.class%'
-        arguments: [@doctrine.orm.entity_manager]
-
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         arguments:
@@ -52,6 +45,13 @@ services:
         arguments:
             - @kernel
             - @service_container
+
+    enhavo_search.block.search:
+        class: Enhavo\Bundle\SearchBundle\Block\SearchBlock
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block }
 
     enhavo_search_permission_filter:
         class: Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter

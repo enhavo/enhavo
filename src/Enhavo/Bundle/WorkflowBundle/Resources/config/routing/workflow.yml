@@ -71,25 +71,20 @@ enhavo_workflow_workflow_table:
                     id:
                         label: workflow.label.id
                         property: id
-                        width: 1
                     active:
+                        type: boolean
                         label: workflow.label.active
                         property: active
-                        width: 1
-                        widget:
-                            type: template
-                            template: EnhavoAppBundle:Widget:boolean.html.twig
                     name:
                         label: workflow.label.name
                         property: name
                         width: 6
                     entity:
+                        type: template
                         label: workflow.label.entity
                         property: entity
                         width: 4
-                        widget:
-                            type: template
-                            template: EnhavoWorkflowBundle:Widget:entity.html.twig
+                        template: EnhavoWorkflowBundle:Widget:entity.html.twig
 
 enhavo_workflow_workflow_delete:
     options:

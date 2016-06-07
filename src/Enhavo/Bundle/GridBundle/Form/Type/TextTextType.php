@@ -26,7 +26,7 @@ class TextTextType extends ItemFormType
             'translation_domain' => 'EnhavoGridBundle',
         ));
 
-        $builder->add('textLeft', 'wysiwyg', array(
+        $builder->add('textLeft', 'enhavo_wysiwyg', array(
             'label' => 'textText.form.label.text_left',
             'translation_domain' => 'EnhavoGridBundle',
         ));
@@ -36,7 +36,7 @@ class TextTextType extends ItemFormType
             'translation_domain' => 'EnhavoGridBundle',
         ));
 
-        $builder->add('textRight', 'wysiwyg', array(
+        $builder->add('textRight', 'enhavo_wysiwyg', array(
             'label' => 'textText.form.label.text_right',
             'translation_domain' => 'EnhavoGridBundle'
         ));

@@ -9,4 +9,4 @@ enhavo_dashboard_index:
             translationDomain: EnhavoDashboardBundle
             blocks:
                 search:
-                    type: enhavo_search
+                    type: search

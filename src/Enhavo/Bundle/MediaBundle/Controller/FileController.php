@@ -19,4 +19,9 @@ class FileController extends Controller
     {
         return $this->container->get('enhavo_media.file_service')->upload($request);
     }
+
+    public function downloadAction($id)
+    {
+        return $this->container->get('enhavo_media.file_service')->getResponse($id, true);
+    }
 }

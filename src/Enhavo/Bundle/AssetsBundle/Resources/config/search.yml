@@ -1,0 +1,16 @@
+Enhavo\Bundle\ArticleBundle\Entity\Article:
+    properties:
+        title:
+            - Plain:
+                weight: 10
+                type: title
+        teaser:
+            - Plain:
+                weight: 9
+                type: teaser
+        text:
+            - Html:
+                type: text
+
+        grid:
+            - Model

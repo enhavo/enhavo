@@ -4,6 +4,7 @@ namespace spec\Enhavo\Bundle\AppBundle\Tests\Viewer;
 
 use Enhavo\Bundle\AppBundle\Table\TableWidgetCollector;
 use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Viewer\TableViewer;
 
 class TableViewerTest extends \PHPUnit_Framework_TestCase
@@ -49,10 +50,9 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test if the column width parameters will be added automatically,
-     * if you don't add them via the config.
+     * Test if the column widgets have the default type, if no one is set
      */
-    function testReturnColumnWidth()
+    function testReturnDefaultType()
     {
         $definedColumns = array(
             'id' => array(
@@ -66,17 +66,17 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
 
         $resultColumns = array(
             'id' => array(
-                'width' => 1,
-
+                'property' => 'id',
+                'type' => 'property'
             ),
             'name' => array(
-                'width' => 5
+                'property' => 'name',
+                'type' => 'property'
             )
         );
 
         $configParser = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Config\ConfigParser')->getMock();
         $configParser->method('get')->will($this->returnValueMap([
-            ['table.width', null],
             ['table.columns', $definedColumns],
             ['parameters', array()],
         ]));
@@ -89,63 +89,15 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
         $this->assertArraySubset($resultColumns, $parameters['columns']);
     }
 
-    function testRenderWidget()
-    {
-        $widget = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Table\TableWidgetInterface')->getMock();
-        $widget->method('getType')->willReturn('template');
-        $widget->method('render')->willReturn('hello');
-
-        $container = $this->getContainerWithWidgetCollectorMock([$widget]);
-
-        $options =[
-            'type' => 'template',
-            'template' => 'EnhavoAppBundle:Widget:id.html.twig',
-        ];
-
-        $item = new EntityMock();
-        $item->setName('name');
-
-        $viewer = new TableViewer();
-        $viewer->setContainer($container);
-        $this->assertEquals('hello', $viewer->renderWidget($options, 'name', $item ));
-    }
-
-    /**
-     * Test if you try to access an widget type, that does not exists
-     *
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\TableWidgetException
-     */
-    function testNotFoundRenderWidget()
-    {
-        $widget = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Table\TableWidgetInterface')->getMock();
-        $widget->method('getType')->willReturn('notExists');
-        $widget->method('render')->willReturn('hello');
-
-        $container = $this->getContainerWithWidgetCollectorMock([$widget]);
-
-        $options =[
-            'type' => 'template',
-            'template' => 'EnhavoAppBundle:Widget:id.html.twig',
-        ];
-
-        $item = new EntityMock();
-        $item->setName('name');
-
-        $viewer = new TableViewer();
-        $viewer->setContainer($container);
-
-        $viewer->renderWidget($options, 'name', $item);
-    }
-
     /**
      * Get a container with collector that contains passed widgets
      *
      * @param $widgets
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getContainerWithWidgetCollectorMock($widgets)
+    protected function getContainerWithCollectorMock($widgets)
     {
-        $collector = new TableWidgetCollector;
+        $collector = new TypeCollector();
         foreach($widgets as $widget) {
             $collector->add($widget);
         }
@@ -167,10 +119,7 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
             'id' => array(
                 'label' => 'id',
                 'property' => 'id',
-                'width' => 1,
-                'widget' => [
-                    'type' => 'property'
-                ]
+                'type' => 'property'
             )
         );
 
@@ -193,19 +142,10 @@ class TableViewerTest extends \PHPUnit_Framework_TestCase
             'id' => array(
                 'label' => 'id',
                 'property' => 'id',
-                'width' => 1,
-                'widget' => [
-                    'type' => 'property'
-                ]
+                'type' => 'property'
             ),
             'position' => array(
-                'label' => '',
-                'property' => 'position',
-                'width' => 1,
-                'widget' => array(
-                    'type' => 'template',
-                    'template' => 'EnhavoAppBundle:Widget:position.html.twig',
-                )
+                'type' => 'position'
             )
         );
 

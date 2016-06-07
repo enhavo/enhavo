@@ -1,0 +1,7 @@
+search:
+  label:
+    search: Search
+    result: Search results
+  form:
+    error:
+      blank: No result

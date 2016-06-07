@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
+use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 class CreateViewer extends AbstractViewer
@@ -18,18 +19,10 @@ class CreateViewer extends AbstractViewer
         return array(
             'buttons' => array(
                 'cancel' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.cancel',
-                    'icon' => 'icon-cross'
+                    'type' => 'cancel',
                 ),
                 'save' => array(
-                    'route' => null,
-                    'display' => true,
-                    'role' => null,
-                    'label' => 'label.save',
-                    'icon' => 'icon-save'
+                    'type' => 'save',
                 )
             ),
             'form' => array(
@@ -61,21 +54,11 @@ class CreateViewer extends AbstractViewer
 
     public function getButtons()
     {
-        $defaults = array(
-            'route' => null,
-            'display' => true,
-            'role' => null,
-            'label' => 'label.button',
-            'icon' => null,
-            'translationDomain' => 'EnhavoAppBundle'
-        );
-
         $buttons = $this->getConfig()->get('buttons');
 
-        foreach($buttons as &$button) {
-            foreach($defaults as $key => $value)
-            if(!array_key_exists($key, $button)) {
-                $button[$key] = $value;
+        foreach($buttons as $button) {
+            if(!array_key_exists('type', $button)) {
+                throw new TypeNotFoundException(sprintf('button type is not defined'));
             }
         }
 
@@ -131,7 +114,8 @@ class CreateViewer extends AbstractViewer
             'form_template' => $this->getFormTemplate(),
             'form_action' => $this->getFormAction(),
             'translationDomain' => $this->getTranslationDomain(),
-            'sorting' => $this->getSorting()
+            'sorting' => $this->getSorting(),
+            'data' => $this->getResource()
         );
 
         $parameters = array_merge($this->getTemplateVars(), $parameters);
