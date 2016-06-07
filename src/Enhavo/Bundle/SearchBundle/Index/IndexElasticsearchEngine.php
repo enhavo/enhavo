@@ -80,26 +80,12 @@ class IndexElasticsearchEngine implements IndexEngineInterface
             } else if(property_exists($resource, $indexingField) && array_key_exists('Collection',$value[0])) {
                 //Collection
                 $collection = $accessor->getValue($resource, $indexingField);
-                $content = $this->getCollectionContent($collection, $this->util->getSearchYaml($resource), $value[0]);
-                $params = $this->addToBody($params, $indexingField, $content);
+                if($collection != null){
+                    $content = $this->getCollectionContent($collection, $this->util->getSearchYaml($resource), $value[0]);
+                    $params = $this->addToBody($params, $indexingField, $content);
+                }
             }
         }
-      /*  $array =  [
-            'article' => [
-                '_source' => [
-                    'enabled' => true
-                ],
-                'properties' => [
-                    'title' => [
-                        'boost' => 12
-                    ],
-                    'teaser' => [
-                        'boost' => 9
-                    ]
-                ]
-            ]
-        ];
-        $params = $this->addToBody($params, 'mappings', $array);*/
         $client->index($params);
     }
 
@@ -158,9 +144,11 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                 } else if(property_exists($model, $key)  && key($value[0]) == 'Collection') {
                     //Collection
                     $collection = $accessor->getValue($model, $key);
-                    $indexingValue = $this->getCollectionContent($collection, $modelSearchYml, $value[0]);
-                    if($indexingValue) {
-                        $content[$key] = $indexingValue;
+                    if($collection != null){
+                        $indexingValue = $this->getCollectionContent($collection, $modelSearchYml, $value[0]);
+                        if($indexingValue) {
+                            $content[$key] = $indexingValue;
+                        }
                     }
                 }
             }
@@ -191,12 +179,18 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                     } else if (property_exists($collectionElement, $key) && key($value[0]) == 'Collection') {
                         //Collection
                         $collection = $accessor->getValue($collectionElement, $key);
-                        $indexingValue = $this->getCollectionContent($collection, $searchYml, $value[0]);
-                        if($indexingValue) {
-                            $content[][$key] = $indexingValue;
+                        if($collection != null){
+                            $indexingValue = $this->getCollectionContent($collection, $searchYml, $value[0]);
+                            if($indexingValue) {
+                                $content[][$key] = $indexingValue;
+                            }
                         }
                     }
                 }
+            }
+        } else if(array_key_exists(0,$colType['Collection'])){
+            foreach($collection as $indexingValue){
+                $content[] = $indexingValue;
             }
         }
         return $content;

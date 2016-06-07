@@ -271,9 +271,14 @@ class IndexEngine implements IndexEngineInterface {
                         if($text != null) {
                             $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
                         }
-                    } else if (array_key_exists('type', $value)) {
+                    } else if (array_key_exists(0, $value)) {
                         foreach($text as $currentText){
-                            $this->indexingPlain($currentText, $value['weight'],$value['type'], $dataSet);
+                            if(key($value[0]) == 'Plain'){
+                                $this->indexingPlain($currentText, $value[0]['Plain']['weight'],$value[0]['Plain']['type'], $dataSet);
+
+                            } else if (key($value[0]) == 'Html'){
+                                $this->indexingHtml($currentText, $value[0]['Html']['type'], $dataSet, $value[0]['Html']['weight']);
+                            }
                         }
                     }
 

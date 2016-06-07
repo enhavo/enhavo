@@ -353,6 +353,10 @@ class SearchUtil
                 } else if (gettype($text) == 'object') {
                     $fieldValue = $this->getValueOfField($field, $currentSearchYml, get_class($resource));
                     $this->getTextPieces($text, $fieldValue);
+                } else if(is_array($text)){
+                    foreach($text as $currentText){
+                        $this->pieces[] = $currentText;
+                    }
                 }
             }
         }
