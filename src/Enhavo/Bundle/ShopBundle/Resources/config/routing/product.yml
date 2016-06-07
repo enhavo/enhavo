@@ -1,0 +1,68 @@
+enhavo_shop_product_index:
+    options:
+        expose: true
+    path: /enhavo/shop/product/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_shop.controller.product:indexAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:index.html.twig
+        _viewer:
+
+enhavo_shop_product_create:
+    options:
+        expose: true
+    path: /enhavo/shop/product/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_shop.controller.product:createAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:create.html.twig
+        _viewer:
+
+enhavo_shop_product_update:
+    options:
+        expose: true
+    path: /enhavo/shop/product/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_shop.controller.product:updateAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:update.html.twig
+        _viewer:
+
+enhavo_shop_product_table:
+    options:
+        expose: true
+    path: /enhavo/shop/product/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_shop.controller.product:tableAction
+        _sylius:
+            template: EnhavoAppBundle:Resource:table.html.twig
+        _viewer:
+
+enhavo_shop_product_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/product/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_shop.controller.product:deleteAction
+
+enhavo_shop_product_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/product/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_shop.controller.product:batchAction
+
+enhavo_shop_product_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/product/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_shop.controller.product:previewAction

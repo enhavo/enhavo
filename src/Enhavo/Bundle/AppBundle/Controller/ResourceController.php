@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use FOS\RestBundle\View\View;
 
 class ResourceController extends BaseController
 {
@@ -30,8 +31,8 @@ class ResourceController extends BaseController
         $config = $this->get('viewer.config')->parse($request);
         /** @var CreateViewer $viewer */
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setBundlePrefix($this->metadata->getApplicationName());
+        $viewer->setResourceName($this->metadata->getName());
         $viewer->setConfig($config);
 
         $sortingConfig = $viewer->getSorting();
@@ -75,8 +76,8 @@ class ResourceController extends BaseController
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'edit');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setBundlePrefix($this->metadata->getApplicationName());
+        $viewer->setResourceName($this->metadata->getName());
         $viewer->setConfig($config);
 
         $resource = $this->findOr404($request);
@@ -114,30 +115,32 @@ class ResourceController extends BaseController
 
     public function indexAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'index');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setBundlePrefix($this->metadata->getApplicationName());
+        $viewer->setResourceName($this->metadata->getName());
         $viewer->setConfig($config);
 
-        $viewer->dispatchEvent('');
-
-        $view = $this
-            ->view()
+        $view = View::create();
+        $view
             ->setTemplate($viewer->getTemplate())
             ->setData($viewer->getParameters())
         ;
 
-        return $this->handleView($view);
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     public function previewAction(Request $request)
     {
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'preview');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setBundlePrefix($this->metadata->getApplicationName());
+        $viewer->setResourceName($this->metadata->getName());
         $viewer->setConfig($config);
+
+        $resource = $this->newResourceFactory->create();
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -154,10 +157,15 @@ class ResourceController extends BaseController
      */
     public function tableAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'table');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
+        $viewer->setBundlePrefix($this->metadata->getApplicationName());
+        $viewer->setResourceName($this->metadata->getName());
         $viewer->setConfig($config);
 
         //fire event for permission

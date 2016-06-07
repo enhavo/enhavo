@@ -3,3 +3,10 @@ services:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
             - @doctrine.orm.entity_manager
+
+    enhavo_shop_shop:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
+        arguments:
+            - %enhavo_shop.repository.product.class%
+        tags:
+            - { name: form.type }

@@ -1,5 +1,6 @@
 Enhavo\Bundle\ShopBundle\Entity\Product:
     table: shop_product
+    type: entity
 
     id:
         id:

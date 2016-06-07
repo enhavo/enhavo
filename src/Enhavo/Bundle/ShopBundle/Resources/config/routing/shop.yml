@@ -1,3 +1,7 @@
 sylius_cart:
     resource: "@EnhavoShopBundle/Resources/config/routing/cart.yml"
     prefix: /cart
+
+enhavo_shop_product:
+    resource: "@EnhavoShopBundle/Resources/config/routing/product.yml"
+    prefix: /admin
