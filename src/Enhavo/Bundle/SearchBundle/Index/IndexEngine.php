@@ -27,11 +27,25 @@ class IndexEngine implements IndexEngineInterface {
     protected $minimum_word_size = 2;
     protected $strategy;
 
+    /**
+     * index every time
+     */
     const INDEX_STRATEGY_INDEX = 'index';
 
+    /**
+     * index only if resource is new to index
+     */
     const INDEX_STRATEGY_INDEX_NEW = 'index_new';
 
+    /**
+     * add reference but don't index, just mark it for reindexing
+     */
     const INDEX_STRATEGY_REINDEX = 'reindex';
+
+    /**
+     * never index
+     */
+    const INDEX_STRATEGY_NOINDEX = 'noindex';
 
     protected $util;
 
@@ -46,6 +60,10 @@ class IndexEngine implements IndexEngineInterface {
 
     public function index($resource)
     {
+        if($this->strategy == self::INDEX_STRATEGY_NOINDEX) {
+            return;
+        }
+
         //get Entity and Bundle names
         $entityName = $this->getEntityName($resource);
         $bundleName = $this->getBundleName($resource);
