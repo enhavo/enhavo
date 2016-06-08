@@ -32,10 +32,12 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: integer
             nullable: true
 
-    manyToOne:
+    oneToOne:
         image:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
+    manyToOne:
         slider:
             targetEntity: Enhavo\Bundle\SliderBundle\Model\SliderInterface

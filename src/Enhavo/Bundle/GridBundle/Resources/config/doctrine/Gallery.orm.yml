@@ -18,15 +18,17 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
 
     manyToMany:
         files:
-            cascade: ['persist', 'refresh']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             joinTable:
                 name: grid_item_gallery_files
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id
+                        onDelete: cascade
                 inverseJoinColumns:
                     file_id:
                         referencedColumnName: id
+                        onDelete: cascade
 
     lifecycleCallbacks: {  }
