@@ -16,6 +16,10 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 {
     protected $util;
 
+    protected $index;
+
+    protected $type;
+
     public function __construct(SearchUtil $util)
     {
         $this->util = $util;
@@ -25,39 +29,12 @@ class IndexElasticsearchEngine implements IndexEngineInterface
     {
         $client = Elasticsearch\ClientBuilder::create()->build();
         //get Entity and Bundle names
-        $index = $this->util->getBundleName($resource, true);
-        $type = $this->util->getEntityName($resource);
+        $this->index = $this->util->getBundleName($resource, true);
+        $this->type = $this->util->getEntityName($resource);
 
-        /* $indexParams['index']  =$index;
-        if(!$client->indices()->exists($indexParams)){
-            $params = [
-                'index' => 'enhavo_article_bundle',
-                'body' =>[
-                    'mappings' => [
-                        'article' => [
-                            '_source' => [
-                                'enabled' => true
-                            ],
-                            'properties' => [
-                                'title' => [
-                                    'type' => 'string',
-                                    'boost' => 10
-                                ],
-                                'teaser' => [
-                                    'type' => 'string',
-                                    'boost' => 8
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-
-            $client->indices()->create($params);
-        }*/
         $params = [
-            'index' => $index,
-            'type' => $type,
+            'index' => $this->index,
+            'type' => $this->type,
             'id' => $resource->getID(),
             'body' => []
         ];
@@ -110,7 +87,7 @@ class IndexElasticsearchEngine implements IndexEngineInterface
     protected function addToBody($params, $field, $value)
     {
         if($value){
-            $params['body'][$field] = $value;
+            $params['body'][$this->index.'_'.$this->type.'_'.$field] = $value;
         }
         return $params;
     }
@@ -132,14 +109,16 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                     //Plain and Html
                     $indexingValue = $this->getTextContent($model, $key);
                     if($indexingValue){
-                        $content[$key] = $indexingValue;
+                        $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                        $content[$fieldKey.'_'.$key] = $indexingValue;
                     }
                 } else if(property_exists($model, $key)  && $value[0] == 'Model'){
                     //Model
                     $model = $accessor->getValue($model, $key);
                     $modelContent = $this->getModelContent($model);
                     if($modelContent) {
-                        $content[$key] = $modelContent;
+                        $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                        $content[$fieldKey.'_'.$key] = $modelContent;
                     }
                 } else if(property_exists($model, $key)  && key($value[0]) == 'Collection') {
                     //Collection
@@ -147,7 +126,8 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                     if($collection != null){
                         $indexingValue = $this->getCollectionContent($collection, $modelSearchYml, $value[0]);
                         if($indexingValue) {
-                            $content[$key] = $indexingValue;
+                            $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                            $content[$fieldKey.'_'.$key] = $indexingValue;
                         }
                     }
                 }
@@ -201,4 +181,30 @@ class IndexElasticsearchEngine implements IndexEngineInterface
         $content = $accessor->getValue($resource, $field);
         return $content;
     }
+
+    public function getBundleName($resource)
+    {
+        $entityPath = $resource;
+
+        $splittedBundlePath = explode('\\', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        $lowercaseArray = [];
+        $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
+        foreach(array_filter($pieces) as $piece){
+            $lowercaseArray[] = strtolower($piece);
+        }
+        return implode('_', $lowercaseArray);
+    }
+
+    public function getEntityName($entityPath)
+    {
+        $splittedBundlePath = explode('\\', $entityPath);
+        $entityName = array_pop($splittedBundlePath);
+        return strtolower($entityName);
+    }
+
+
 }

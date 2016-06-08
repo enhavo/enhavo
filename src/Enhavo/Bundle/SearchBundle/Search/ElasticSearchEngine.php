@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\SearchBundle\Search;
 use Elasticsearch;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Symfony\Component\Yaml\Parser;
 
 class ElasticSearchEngine implements SearchEngineInterface
 {
@@ -27,16 +28,49 @@ class ElasticSearchEngine implements SearchEngineInterface
     public function search($query, $filters = []){
         $client = Elasticsearch\ClientBuilder::create()->build();
 
-        $params = [
+       /* $params = [
             'body' => [
                 "query" => [
                     "query_string" => [
                         "query" => $query
                     ]
-                ],
-                "highlight" => [
-                    "fields" => [
-                        "teaser" => []
+                ]
+            ]
+        ];*/
+        /*$params = [
+            'body' => [
+                "query" => [
+                    'bool' => [
+                        "should" => [
+                            [
+                                "match" => [
+                                    "title" => [
+                                        'query' => $query,
+                                        'boost' => 1
+                                    ]
+                                ]
+                            ],
+                            [
+                                "match" => [
+                                    "teaser" => [
+                                        'query' => $query,
+                                        'boost' => 1
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];*/
+        $fields = $this->getFields();
+
+        $params = [
+            'body' => [
+                "query" => [
+                    "query_string" => [
+                        "fields" => $fields,
+                        'query' => $query
                     ]
                 ]
             ]
@@ -67,5 +101,82 @@ class ElasticSearchEngine implements SearchEngineInterface
         $searchResult->setWords($words);
         $searchResult->setResources($resultResources);
         return $searchResult;
+    }
+
+    protected function getFields()
+    {
+        $fields = array();
+        $searchYamls = $this->util->getSearchYamls();
+        foreach($searchYamls as $searchYaml){
+            $bundleName = $this->getBundleName($searchYaml);
+            $yamlContent = $this->getContentOfSearchYaml($searchYaml);
+            foreach ($yamlContent as $entityPath => $val) {
+                $splittedEntityPath = explode('\\', $entityPath);
+                $entityName = array_pop($splittedEntityPath);
+                foreach ($this->getFieldsWithWeights($yamlContent, $entityPath) as $field => $weight) {
+                    $fieldName = $bundleName.'_'.strtolower($entityName).'_'.$field;
+                    if($weight != null){
+                        $fieldName = $fieldName.'^'.$weight;
+                    }
+                    $fields[] = $fieldName;
+                }
+            }
+        }
+        return $fields;
+    }
+
+    public function getBundleName($resource)
+    {
+        $entityPath = $resource;
+
+        $splittedBundlePath = explode('/', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        $lowercaseArray = [];
+        $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
+        foreach(array_filter($pieces) as $piece){
+            $lowercaseArray[] = strtolower($piece);
+        }
+        return implode('_', $lowercaseArray);
+    }
+
+    protected function getContentOfSearchYaml($searchYamlPath)
+    {
+        if (file_exists($searchYamlPath)) {
+            $yaml = new Parser();
+            return $yaml->parse(file_get_contents($searchYamlPath));
+        } else {
+            return null;
+        }
+    }
+
+    public function getFieldsWithWeights($searchYaml, $resourceClass)
+    {
+        $fields = array();
+        if (key_exists($resourceClass, $searchYaml)) {
+            $properties = $searchYaml[$resourceClass]['properties'];
+            foreach ($properties as $field => $value) {
+                if($value[0] =='Model'){
+                    $fields[$field] = null;
+                }else if(key($value[0]) == 'Plain' ){
+                    if(key_exists('weight', $value[0]['Plain'])){
+                        $fields[$field] = $value[0]['Plain']["weight"];
+                    }else{
+                        $fields[$field] = null;
+                    }
+                } else if(key($value[0]) == "Html"){
+                    if(key_exists('weight', $value[0]['Html'])) {
+                        $fields[$field] = $value[0]['Html']["weight"];
+                    }else{
+                        $fields[$field] = null;
+                    }
+                }else {
+                    $fields[$field] = null;
+                }
+            }
+        }
+        return $fields;
     }
 }
