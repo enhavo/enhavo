@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\SearchBundle\Search\Highlight;
+use Doctrine\Common\Persistence\Proxy;
 
 class SearchUtil
 {
@@ -190,40 +191,39 @@ class SearchUtil
         return $searchYamlPaths;
     }
 
-    public function getSearchYaml($resource)
+    protected function getBundleNameOfResource($resource)
     {
-        //get class of given resource
-        $class = null;
-        if ($resource instanceof \Doctrine\Common\Persistence\Proxy) {
-            $class = get_parent_class($resource);
-        } else {
-            $class = get_class($resource);
+        $resourceClassName = get_class($resource);
+        if ($resource instanceof Proxy) {
+            $resourceClassName = get_parent_class($resource);
         }
 
-        //get all search.yml paths
-        $searchYamlPaths = $this->getSearchYamls();
+        $bundles = $this->container->get('kernel')->getBundles();
 
-        $entityPath = $class;
-        $splittedBundlePath = explode('\\', $entityPath);
-        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
-            array_pop($splittedBundlePath);
-        }
-
-        $bundlePath = implode('/', $splittedBundlePath);
-        $currentPath = null;
-        foreach ($searchYamlPaths as $path) {
-            if (strpos($path, $bundlePath)) {
-                $currentPath = $path;
-                break;
+        foreach($bundles as $bundle) {
+            $class = get_class($bundle);
+            $classParts = explode('\\', $class);
+            $bundleName = array_pop($classParts);
+            $bundlePath = implode('\\', $classParts);
+            if(strpos($resourceClassName, $bundlePath) === 0) {
+                return $bundleName;
             }
         }
-        $searchYamlPath = $currentPath;
-        if (file_exists($searchYamlPath)) {
-            $yaml = new Parser();
-            return $yaml->parse(file_get_contents($searchYamlPath));
-        } else {
+        return null;
+    }
+
+    public function getSearchYaml($resource)
+    {
+        $bundleName = $this->getBundleNameOfResource($resource);
+
+        try {
+            $file = $this->container->get('kernel')->locateResource(sprintf('@%s/Resources/config/search.yml', $bundleName));
+        } catch(\Exception $e) {
             return null;
         }
+
+        $parser = new Parser();
+        return $parser->parse(file_get_contents($file));
     }
 
     public function getFieldsOfSearchYml($searchYaml, $resourceClass)
