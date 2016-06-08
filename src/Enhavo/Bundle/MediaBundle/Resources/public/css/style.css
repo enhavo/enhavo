@@ -41,21 +41,6 @@
     display: block;
 }
 
-.uploadForm .dropzone.fade.empty:after {
-    font-size: 18px;
-    color: #FFF;
-    text-align: center;
-    padding: 0;
-    display: block;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    pointer-events: none;
-    top: 50%;
-    margin-top: -25px;
-}
-
 .uploadForm .list .imgContainer {
     float:left;
     padding:4px;
@@ -80,9 +65,24 @@
 .uploadForm .fileupload-fields.disabled .fileupload-field .fileupload-field-label-container .fileupload-field-label { color: #a9a9a9 }
 .uploadForm .fileupload-fields .fileupload-field .fileupload-field-input-container .fileupload-field-slug { padding: 5px 6px; font: 13px/1.6em "Open Sans"; color: #000; display: block; }
 .uploadForm .fileupload-actions { padding: 5px; }
-.uploadForm .fileupload-actions .fileupload-action-download-container {}
-.uploadForm .fileupload-actions .fileupload-action-download-container .fileupload-action-download-button { display: block; background-color: #f3f3f3; text-align: center; padding: 3px 5px; font-weight: 600; }
+.uploadForm .fileupload-actions .fileupload-action-button { display: block; background-color: #f3f3f3; text-align: center; padding: 3px 5px; font-weight: 600; }
 
 .icheckbox-esperanto, .iradio-esperanto{
     margin: 0 7px 0px 20px;
 }
+
+.image-crop-modal-overlay-wrapper { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: transparent; z-index: 200; display: none; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay-background { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; opacity: 0.2; z-index: 201; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay { position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow-y:auto; z-index: 202; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal { width: 900px; margin: 80px auto 0 auto; padding: 20px; background-color: #fff; border-radius: 2px; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background { position: relative; background-color: #eee; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background .image-crop-modal-loading-icon { position: absolute; left: 50%; top: 50%; color: #999; font-size: 64px; margin-left: -45px; margin-top: -32px; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background .image-crop-modal-canvas-wrapper { height: 600px; position: relative; opacity: 1; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background .image-crop-modal-canvas-wrapper.loading { opacity: 0; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background .image-crop-modal-canvas-wrapper .image-crop-canvas { max-width: 100%; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-canvas-row .image-crop-modal-canvas-col .image-crop-modal-canvas-background .image-crop-modal-canvas-wrapper .cropper-container.loading { opacity: 0.5; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-actions-row { margin-top: 20px; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-side-actions .image-cropper-action-button { border: 1px solid #0090ba; border-radius: 3px; background-color: transparent; color: #0090ba; margin: 1px 1px 3px 1px; width: 100%; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-side-actions .image-cropper-action-button:hover { background-color: #eeeeee; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-side-actions .image-cropper-action-button.selected { background-color: #e0e0e0; }
+.image-crop-modal-overlay-wrapper .image-crop-modal-overlay .image-crop-modal .image-crop-modal-side-actions .image-cropper-action-button.bottom-space { margin-bottom: 12px; }

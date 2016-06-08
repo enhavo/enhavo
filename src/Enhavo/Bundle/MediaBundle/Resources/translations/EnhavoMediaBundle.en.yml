@@ -6,3 +6,13 @@ media:
       filename: "Filename"
       slug: "Slug"
       download: "Download"
+  image_cropper:
+    action:
+      open_image_cropper: "Edit image"
+      submit: "Apply"
+    label:
+      tooltip_move: "Move image"
+      tooltip_cropframe: "Draw crop frame"
+      tooltip_zoom_in: "Zoom in"
+      tooltip_zoom_out: "Zoom out"
+      tooltip_reset: "Reset"

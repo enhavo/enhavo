@@ -8,8 +8,57 @@
                     {{ fcmacro.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
                 </script>
                 <script type="text/html" data-id="thumb-template">
-                    <img class="file-thumb" src="/file/{file_id}/100/100">
+                    <img class="file-thumb" src="/file/{file_id}/100/100?v={prevent_caching_number}">
                 </script>
+
+                <div class="image-crop-modal-overlay-wrapper" data-image-crop-overlay data-image-show-route="enhavo_media_show" data-image-upload-route="enhavo_media_upload_data_base64">
+                    <div class="image-crop-modal-overlay-background"></div>
+                    <div class="image-crop-modal-overlay">
+                        <div class="image-crop-modal">
+                            <div class="row image-crop-modal-canvas-row">
+                                <div class="col-md-11 image-crop-modal-canvas-col">
+                                    <div class="image-crop-modal-canvas-background">
+                                        <i class="image-crop-modal-loading-icon icon-spinner icon-spin"></i>
+                                        <div class="image-crop-modal-canvas-wrapper loading" data-image-crop-canvas-wrapper>
+                                            <img class="image-crop-canvas" src="" data-image-crop-canvas />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 image-crop-modal-side-actions">
+                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_move'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="move-mode">
+                                        <i class="icon-move"></i>
+                                    </button>
+                                    <button class="image-cropper-action-button bottom-space selected" title="{{ 'media.image_cropper.label.tooltip_cropframe'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="cropframe-mode">
+                                        <i class="icon-crop"></i>
+                                    </button>
+                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_zoom_in'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="zoom-in">
+                                        <i class="icon-zoom-in"></i>
+                                    </button>
+                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_zoom_out'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="zoom-out">
+                                        <i class="icon-zoom-out"></i>
+                                    </button>
+                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_reset'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="reset">
+                                        <i class="icon-reply-all-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row image-crop-modal-actions-row">
+                                <div class="col-md-push-2 col-md-2">
+                                    <button class="btn col-md-12" data-image-crop-submit>
+                                        <i class="button-icon icon-save"></i>
+                                        {{ 'media.image_cropper.action.submit'|trans({}, 'EnhavoMediaBundle') }}
+                                    </button>
+                                </div>
+                                <div class="col-md-push-6 col-md-2">
+                                    <button class="btn col-md-12" data-image-crop-cancel>
+                                        <i class="button-icon icon-cross"></i>
+                                        {{ 'label.cancel'|trans({}, 'EnhavoAppBundle') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="layer posrel">
                     {% if form.information %}
@@ -49,7 +98,7 @@
                             <input id="{{ id }}" class="fileupload hidden" type="file" data-url="{{ path('enhavo_media_upload') }}">
                         {% endif %}
                     </div>
-                    <div class="fileupload-fields disabled hidden" data-selected="">
+                    <div class="fileupload-fields disabled hidden">
                         <div class="fileupload-field row">
                             <div class="col-md-4 fileupload-field-label-container">
                                 <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle') }}</label>
@@ -81,10 +130,13 @@
                             </div>
                         {% endfor %}
                         <div class="fileupload-actions row">
-                            <div class="col-md-4 fileupload-action-download-container">
-                                <a class="fileupload-action-download-button" data-download-button href=""><i class="icon-download"></i> {{ 'media.form.label.download'|trans({}, 'EnhavoMediaBundle') }}</a>
+                            <div class="col-md-4">
+                                <a class="fileupload-action-button" data-crop-button href=""><i class="icon-crop"></i> {{ 'media.image_cropper.action.open_image_cropper'|trans({}, 'EnhavoMediaBundle') }}</a>
                             </div>
-                            <div class="col-md-8"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <a class="fileupload-action-button" data-download-button href=""><i class="icon-download"></i> {{ 'media.form.label.download'|trans({}, 'EnhavoMediaBundle') }}</a>
+                            </div>
                         </div>
                     </div>
                     <div class="mt1">

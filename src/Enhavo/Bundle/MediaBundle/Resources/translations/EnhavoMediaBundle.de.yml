@@ -6,3 +6,13 @@ media:
       filename: "Dateiname"
       slug: "Slug"
       download: "Herunterladen"
+  image_cropper:
+    action:
+      open_image_cropper: "Bild bearbeiten"
+      submit: "Anwenden"
+    label:
+      tooltip_move: "Bild bewegen"
+      tooltip_cropframe: "Rahmen ziehen"
+      tooltip_zoom_in: "Einzoomen"
+      tooltip_zoom_out: "Auszoomen"
+      tooltip_reset: "Zurücksetzen"

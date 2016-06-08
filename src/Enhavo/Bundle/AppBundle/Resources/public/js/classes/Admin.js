@@ -10,7 +10,7 @@ function Admin (router, templating, translator)
   var loadingOverlay = null;
   var loadingOverlayMutex = 0;
 
-  var MessageType = {
+  this.MessageType = {
     Info: 'info',
     Error: 'error',
     Success: 'success'
@@ -157,7 +157,7 @@ function Admin (router, templating, translator)
           if(data.status == 403) {
             message = 'error.forbidden';
           }
-          self.overlayMessage(translator.trans(message), MessageType.Error);
+          self.overlayMessage(translator.trans(message), self.MessageType.Error);
           ajaxOverlaySynchronized = true;
         }
       });
@@ -214,15 +214,15 @@ function Admin (router, templating, translator)
     var overlayTimeout = null;
     clearTimeout(overlayTimeout);
     if (!type) {
-      type = MessageType.Info;
+      type = self.MessageType.Info;
     }
 
     if(overlayMessage == null) {
       overlayMessage = $("#overlayMessage");
     }
-    overlayMessage.removeClass(MessageType.Info);
-    overlayMessage.removeClass(MessageType.Error);
-    overlayMessage.removeClass(MessageType.Success);
+    overlayMessage.removeClass(self.MessageType.Info);
+    overlayMessage.removeClass(self.MessageType.Error);
+    overlayMessage.removeClass(self.MessageType.Success);
     overlayMessage.addClass(type);
 
 
@@ -261,13 +261,13 @@ function Admin (router, templating, translator)
       },
       error : function() {
         self.closeLoadingOverlay();
-        self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+        self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
       }
     })
   };
 
   this.initActions = function() {
-    $(document).on('click', '[data-action]' , function(event) {
+    $(document).on('click', '[data-action=""]' , function(event) {
       event.stopPropagation();
       event.preventDefault();
       var route = $(this).data('action-route');
@@ -462,7 +462,7 @@ function Admin (router, templating, translator)
             },
             error : function() {
               self.closeLoadingOverlay();
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           });
         } else {
@@ -470,7 +470,7 @@ function Admin (router, templating, translator)
             url: url,
             method: 'POST',
             error : function() {
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           });
         }
@@ -663,12 +663,12 @@ function Admin (router, templating, translator)
             if ((typeof result.success != 'undefined') && (result.success == true)) {
               self.reloadBlock(block);
             } else {
-              self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
             }
           },
           error : function() {
             self.closeLoadingOverlay();
-            self.overlayMessage(translator.trans('error.occurred') , MessageType.Error);
+            self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
           }
         });
       }
