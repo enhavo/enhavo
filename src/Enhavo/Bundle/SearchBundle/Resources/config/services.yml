@@ -13,6 +13,7 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @service_container
+            - @enhavo_search_search_util
         tags:
             - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
 
