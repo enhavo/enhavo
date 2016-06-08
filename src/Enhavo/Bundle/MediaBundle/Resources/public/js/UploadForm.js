@@ -270,11 +270,15 @@ function UploadForm(routing)
   this.start = function() {
     $(document).bind('dragover', function (e)
     {
+      e.preventDefault();
+      e.stopPropagation();
       $('.dropzone').css('background-color', '#49a4e5');
     });
 
     $(document).bind('dragleave drop', function (e)
     {
+      e.preventDefault();
+      e.stopPropagation();
       $('.dropzone').css('background-color', '');
     });
   };

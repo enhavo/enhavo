@@ -17,9 +17,9 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
-    manyToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
     lifecycleCallbacks: {  }

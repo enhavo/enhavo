@@ -19,9 +19,10 @@ Enhavo\Bundle\DownloadBundle\Entity\Download:
             type: text
             nullable: true
 
-    manyToOne:
+    oneToOne:
         file:
-            cascade: ['persist', 'refresh']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
     lifecycleCallbacks: {  }

@@ -32,6 +32,7 @@ class DoctrineSubscriber implements EventSubscriber
             'prePersist',
             'postPersist',
             'postLoad',
+            'preRemove',
         );
     }
 
@@ -72,6 +73,15 @@ class DoctrineSubscriber implements EventSubscriber
             } catch(NoTypeFoundException $e ) {
                 //@TODO: log something
             }
+        }
+    }
+
+    public function preRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        if ($entity instanceof Item) {
+            $itemType = $entity->getItemType();
+            $args->getEntityManager()->remove($itemType);
         }
     }
 }
