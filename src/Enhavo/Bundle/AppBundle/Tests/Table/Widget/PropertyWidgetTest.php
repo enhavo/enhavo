@@ -22,8 +22,12 @@ class PropertyWidgetTest extends \PHPUnit_Framework_TestCase
         $object = new EntityMock();
         $object->setName('my name is route');
 
+        $options = [
+            'property' => 'name'
+        ];
+
         $widget = new PropertyWidget();
-        $this->assertEquals('my name is route', $widget->render([], 'name', $object));
+        $this->assertEquals('my name is route', $widget->render($options, $object));
     }
 
     /**
@@ -36,8 +40,12 @@ class PropertyWidgetTest extends \PHPUnit_Framework_TestCase
         $object = new EntityMock();
         $object->setName('my name is route');
 
+        $options = [
+            'property' => 'propertyNotExists'
+        ];
+
         $widget = new PropertyWidget();
-        $this->assertEquals('my name is route', $widget->render([], 'somePropertyWhichDoesNotExist', $object));
+        $this->assertEquals('my name is route', $widget->render($options, $object));
     }
 
     function testType()

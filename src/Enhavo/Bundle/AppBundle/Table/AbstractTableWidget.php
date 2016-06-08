@@ -1,48 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 13:48
- */
 
 namespace Enhavo\Bundle\AppBundle\Table;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-abstract class AbstractTableWidget implements TableWidgetInterface, ContainerAwareInterface {
+abstract class AbstractTableWidget extends AbstractType implements TableWidgetInterface
+{
+    /**
+     * @inheritdoc
+     */
+    abstract function render($options, $resource);
 
     /**
-     * @var ContainerInterface
+     * @inheritdoc
      */
-    protected $container;
-
-    /**
-     * Return the value the given property and object.
-     *
-     * @param $resource
-     * @param $property
-     * @return mixed
-     * @throws PropertyNotExistsException
-     */
-    protected function getProperty($resource, $property)
+    public function getLabel($options)
     {
-        $method = sprintf('get%s', ucfirst($property));
-        if(method_exists($resource, $method)) {
-            return call_user_func(array($resource, $method));
-        }
-        throw new PropertyNotExistsException(sprintf(
-            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spell it wrong you did\'t add the getter for property "%s"',
-            $method,
-            get_class($resource),
-            $property
-        ));
+        $translator = $this->container->get('translator');
+        $translationDomain = isset($options['translationDomain']) ? $options['translationDomain'] : null;
+        return $translator->trans($options['label'], [], $translationDomain);
     }
 
-    public function setContainer(ContainerInterface $container = null)
+    /**
+     * @inheritdoc
+     */
+    public function getWidth($options)
     {
-        $this->container = $container;
+        return isset($options['width']) ? $options['width'] : 1;
     }
 }

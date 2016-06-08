@@ -53,6 +53,7 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Admin.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Templating.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Button.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/plugin.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/bootstrap.js') }}"></script>
 
@@ -94,7 +95,7 @@
         <div class="menu-section">
             <nav id="user-menu">
                 <ul class="clearfix" data-user-menu>
-                    <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }} </button></li>
+                    <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }}</button></li>
                     <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle') }}</a></li>
                     <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
                         <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</a>

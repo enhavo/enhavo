@@ -21,12 +21,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('enhavo_calendar');
 
         $rootNode
-            ->children()
-                ->booleanNode('dynamic_routing')
-                    ->defaultFalse()
-                ->end()
-            ->end()
-
             // Driver used by the resource bundle
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
@@ -66,10 +60,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-
-            ->children()
-                ->scalarNode('calendar_route')->defaultValue(null)->end()
             ->end()
         ;
 

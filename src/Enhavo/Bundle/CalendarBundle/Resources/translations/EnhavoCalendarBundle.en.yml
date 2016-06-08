@@ -12,6 +12,6 @@ appointment:
     seo: 'Seo'
   validator:
     error:
-      dates: 'The Dates do not match.'
+      dates: 'Startdate must be before Enddate'
 label:
   calendar: 'Calendar'

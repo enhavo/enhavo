@@ -5,7 +5,6 @@ cmf_routing:
 
 enhavo_app:
     permission_check: false
-    dynamic_routing: true
     show_version: true
     stylesheets:
       - '@EnhavoDownloadBundle/Resources/public/css/style.css'
@@ -202,4 +201,4 @@ enhavo_workflow:
 enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: reindex
+        strategy: index

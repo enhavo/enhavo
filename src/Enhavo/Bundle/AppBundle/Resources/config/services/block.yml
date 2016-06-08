@@ -1,0 +1,23 @@
+parameters:
+    enhavo_app.twig.block_render.class: Enhavo\Bundle\AppBundle\Block\BlockRenderer
+    enhavo_app.twig.block_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
+services:
+    enhavo_app.block_collector:
+        class: %enhavo_app.twig.block_collector.class%
+        arguments:
+            - 'Block'
+
+    enhavo_app.twig.block_renderer:
+        class: %enhavo_app.twig.block_render.class%
+        arguments:
+            - @enhavo_app.block_collector
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.block.table:
+        class: Enhavo\Bundle\AppBundle\Block\Block\TableBlock
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block }
