@@ -65,7 +65,8 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
                 timestampable:
                     on: update
 
-    manyToOne:
+    oneToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            orphanRemoval: true
