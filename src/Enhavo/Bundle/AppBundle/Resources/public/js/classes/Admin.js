@@ -81,6 +81,7 @@ function Admin (router, templating, translator)
         overlayContent.trigger('formOpenBefore');
       }
 
+      $("body, html").css("overflow-y", "hidden");
       overlay.fadeIn(50);
       overlayContent.append($.parseHTML(html));
       overlayContent.fadeIn(100, function() {
@@ -114,6 +115,8 @@ function Admin (router, templating, translator)
       if (!overlayIsDialog) {
         overlayContent.trigger('formCloseBefore', [overlayContent]);
       }
+
+      $("body, html").css("overflow-y", "auto");
       overlayContent.html('');
       overlay.fadeOut(100);
       overlayContent.fadeOut(50);
