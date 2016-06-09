@@ -11,5 +11,18 @@ namespace Enhavo\Bundle\CategoryBundle\Model;
 
 interface CollectionInterface
 {
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return CollectionInterface
+     */
+    public function setName($name);
 
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName();
 }

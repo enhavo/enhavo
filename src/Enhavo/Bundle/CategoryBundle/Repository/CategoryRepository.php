@@ -8,10 +8,14 @@
 
 namespace Enhavo\Bundle\CategoryBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
+    /**
+     * @param $name
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function getByCollectionQuery($name)
     {
         if($name) {
@@ -22,5 +26,28 @@ class CategoryRepository extends EntityRepository
         } else {
             return $this->createQueryBuilder('u');
         }
+    }
+
+    /**
+     * @param $criteria
+     * @return array|\Pagerfanta\Pagerfanta
+     */
+    public function findByCollection($criteria)
+    {
+        if(is_string($criteria)) {
+            $collectionName = $criteria;
+        } elseif(!isset($criteria['collection'])) {
+            throw new \InvalidArgumentException(
+                'CategoryRepository called with findByCollection but no collection name was passed. Use an array like [\'collection\' => \'collectionName\'] or pass name directly'
+            );
+        } else {
+            $collectionName = $criteria['collection'];
+        }
+
+        $query = $this->getByCollectionQuery($collectionName);
+        if(isset($criteria['paging']) && $criteria['paging']) {
+            return $this->getPaginator($query);
+        }
+        return $query->getQuery()->getResult();
     }
 }

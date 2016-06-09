@@ -33,3 +33,10 @@ services:
             - @service_container
         tags:
             - { name: kernel.event_subscriber }
+
+    enhavo_category.factory.category:
+        class: %enhavo_category.factory.category.class%
+        arguments:
+            - %enhavo_category.model.category.class%
+        calls:
+            - [setContainer, ['@service_container']]
