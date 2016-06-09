@@ -44,7 +44,9 @@ RUN usermod -u 1000 www-data && \
     chown www-data:www-data -R app/cache && \
     chmod 755 app/cache && \
     chown www-data:www-data -R app/logs && \
-    chmod 755 app/logs
+    chmod 755 app/logs && \
+    chown www-data:www-data -R app/media && \
+    chmod 755 app/media
 
 WORKDIR /var/www
 
