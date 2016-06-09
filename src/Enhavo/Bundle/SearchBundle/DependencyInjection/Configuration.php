@@ -30,6 +30,8 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('template')->end()
                         ->scalarNode('strategy')->end()
+                        ->scalarNode('search_engine')->end()
+                        ->scalarNode('index_engine')->end()
                     ->end()
                 ->end()
             ->end()

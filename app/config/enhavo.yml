@@ -201,4 +201,6 @@ enhavo_workflow:
 enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: index
+        strategy: reindex
+        search_engine: enhavo_search_search_engine
+        index_engine: enhavo_search_index_engine
