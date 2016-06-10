@@ -290,10 +290,12 @@ class IndexEngine implements IndexEngineInterface {
                             }
                         }
                         $yaml = new Parser();
-                        $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
+                        if($collectionPath != null) {
+                            $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
 
-                        if($text != null) {
-                            $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                            if ($text != null) {
+                                $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                            }
                         }
                     } else if (array_key_exists(0, $value)) {
                         foreach($text as $currentText){
@@ -331,9 +333,11 @@ class IndexEngine implements IndexEngineInterface {
                 }
             }
             $yaml = new Parser();
-            $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
-            if($text != null) {
-                $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+            if($modelPath != null){
+                $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
+                if($text != null) {
+                    $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+                }
             }
         }
     }
