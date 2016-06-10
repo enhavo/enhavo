@@ -34,3 +34,10 @@ services:
             - { name: doctrine.event_listener, event: preRemove }
             - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
             - { name: kernel.event_listener, event: enhavo_app.update, method: collectGarbage }
+
+    enhavo_media.table.picture_widget:
+        class: Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
