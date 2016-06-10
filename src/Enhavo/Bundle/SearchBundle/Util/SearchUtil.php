@@ -383,10 +383,10 @@ class SearchUtil
     {
         $entityPath = get_class($resource);
         $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
+        $entityName = '';
+        while(end($splittedBundlePath) != 'Entity'){
+            $entityName = array_pop($splittedBundlePath);
         }
-        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
         return strtolower($entityName);
     }
 
@@ -399,14 +399,20 @@ class SearchUtil
         }
         if($lowercase){
             $lowercaseArray = [];
-            $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            if($splittedBundlePath[0] == 'Enhavo'){
+                $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            }
             $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
             foreach(array_filter($pieces) as $piece){
                 $lowercaseArray[] = strtolower($piece);
             }
             return implode('_', $lowercaseArray);
         }
-        return $splittedBundlePath[0].end($splittedBundlePath);
+        if($splittedBundlePath[0] == 'Enhavo'){
+            return $splittedBundlePath[0].end($splittedBundlePath);
+        } else {
+            return end($splittedBundlePath);
+        }
     }
 
     public function getProperties($resource)

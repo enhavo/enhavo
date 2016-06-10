@@ -28,41 +28,6 @@ class ElasticSearchEngine implements SearchEngineInterface
     public function search($query, $filters = []){
         $client = Elasticsearch\ClientBuilder::create()->build();
 
-       /* $params = [
-            'body' => [
-                "query" => [
-                    "query_string" => [
-                        "query" => $query
-                    ]
-                ]
-            ]
-        ];*/
-        /*$params = [
-            'body' => [
-                "query" => [
-                    'bool' => [
-                        "should" => [
-                            [
-                                "match" => [
-                                    "title" => [
-                                        'query' => $query,
-                                        'boost' => 1
-                                    ]
-                                ]
-                            ],
-                            [
-                                "match" => [
-                                    "teaser" => [
-                                        'query' => $query,
-                                        'boost' => 1
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];*/
         $fields = $this->getFields();
 
         $params = [
@@ -134,7 +99,9 @@ class ElasticSearchEngine implements SearchEngineInterface
             array_pop($splittedBundlePath);
         }
         $lowercaseArray = [];
-        $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        if($splittedBundlePath[count($splittedBundlePath)-3] == 'Enhavo'){
+            $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        }
         $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
         foreach(array_filter($pieces) as $piece){
             $lowercaseArray[] = strtolower($piece);

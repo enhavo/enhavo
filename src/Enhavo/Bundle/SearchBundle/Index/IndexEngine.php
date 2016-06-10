@@ -151,9 +151,12 @@ class IndexEngine implements IndexEngineInterface {
             foreach($this->searchYamlPaths as $path){
                 $allPartsOfBundleNameInPath = true;
                 foreach($splittedBundleName as $partOfBundleName){
-                    if(!strpos($path, $partOfBundleName)){
+                    if(!is_numeric(strpos($path, $partOfBundleName))){
                         $allPartsOfBundleNameInPath = false;
                     }
+                }
+                if($allPartsOfBundleNameInPath == true && is_numeric(strpos($path, 'Enhavo')) && !is_numeric(strpos($currentBundle, 'Enhavo'))){
+                    $allPartsOfBundleNameInPath = false;
                 }
                 if($allPartsOfBundleNameInPath == true){
                     $yaml = new Parser();
@@ -192,7 +195,10 @@ class IndexEngine implements IndexEngineInterface {
         $bundle = null;
         foreach($array as $key => $value) {
             if(strpos($value, 'Bundle', 1)){
-                $bundle = $array[$key-2].$value;
+                $bundle = $value;
+                if($array[$key-2] == 'Enhavo'){
+                    $bundle = $array[$key-2].$bundle;
+                }
                 break;
             }
         }
