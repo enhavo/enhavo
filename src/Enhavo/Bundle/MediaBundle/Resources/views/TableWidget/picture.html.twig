@@ -1,0 +1,5 @@
+<div class="table-widget-picture-wrapper" style="height: {{ pictureHeight }}px">
+    {% if id %}
+    <img class="table-widget-picture" src="{{ path('enhavo_media_show_two_dim', { id: id, width: pictureWidth, height: pictureHeight }) }}">
+    {% endif %}
+</div>

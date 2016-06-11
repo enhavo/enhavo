@@ -86,3 +86,7 @@
 .icheckbox-esperanto, .iradio-esperanto{
     margin: 0 7px 0px 20px;
 }
+
+.table-widget-picture-wrapper { position: relative; }
+.table-widget-picture-wrapper:before { content: '.'; visibility: hidden; }
+.table-widget-picture-wrapper .table-widget-picture { position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); box-shadow: 1px 1px 2px #000; }

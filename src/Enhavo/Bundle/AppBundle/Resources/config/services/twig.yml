@@ -2,8 +2,6 @@ parameters:
     enhavo_app.twig.admin_menu_render.class: Enhavo\Bundle\AppBundle\Twig\AdminMenuRender
     enhavo_app.twig.admin_menu_render.template: 'EnhavoAppBundle:View:menu.html.twig'
 
-    enhavo_app.twig.block_render.class: Enhavo\Bundle\AppBundle\Twig\BlockRender
-
     enhavo_app.twig.pagination_render.class: Enhavo\Bundle\AppBundle\Twig\PaginationRender
     enhavo_app.twig.pagination_render.template: 'EnhavoAppBundle:View:pagination.html.twig'
 

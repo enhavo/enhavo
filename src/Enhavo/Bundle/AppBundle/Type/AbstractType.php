@@ -34,7 +34,7 @@ abstract class AbstractType implements ContainerAwareInterface {
             return call_user_func(array($resource, $method));
         }
         throw new PropertyNotExistsException(sprintf(
-            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spell it wrong you did\'t add the getter for property "%s"',
+            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
             $method,
             get_class($resource),
             $property

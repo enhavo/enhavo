@@ -100,8 +100,6 @@ class FilesType extends AbstractType
     {
         $resolver->setDefaults(array(
             'multiple'      => true,
-            'images'        => true,
-            'editFilename'  => true,
             'fields'        => array(
                 'title'         => array(
                     'label'             => 'media.form.label.title',
