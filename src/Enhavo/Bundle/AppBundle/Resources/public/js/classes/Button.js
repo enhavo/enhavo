@@ -36,9 +36,14 @@ function Button(admin, router, translator)
       var data = form.serialize();
       var url = form.attr('action');
       if($(this).data('route')) {
-        var parameters = {};
-        if($(this).data('id')) {
-          parameters.id = $(this).data('id');
+
+        if($(this).data('route-parameters')) {
+          parameters = $(this).data('route-parameters');
+        } else {
+          var parameters = {};
+          if($(this).data('id')) {
+            parameters.id = $(this).data('id');
+          }
         }
         url = router.generate($(this).data('route'), parameters);
       }

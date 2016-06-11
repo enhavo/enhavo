@@ -22,7 +22,7 @@
     <div class="row pt2" data-category-item>
         <div class="col-md-5">
             {{ form_widget(form.name) }}
-            {{ form_widget(form.order) }}
+            {% if form.order is defined %}{ form_widget(form.order) }}{% endif %}
             {% for child in form %}
                 {% if not child.rendered %}
                     {{ form_widget(child) }}

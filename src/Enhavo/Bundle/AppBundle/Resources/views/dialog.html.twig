@@ -1,6 +1,6 @@
 {% use 'EnhavoAppBundle::block.html.twig' %}
 
-<div class="container form-container">
+<div class="container form-container {% block class %}{% endblock %}">
     {% block content %}{% endblock %}
 </div>
 

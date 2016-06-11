@@ -271,7 +271,11 @@ function Admin (router, templating, translator)
       event.stopPropagation();
       event.preventDefault();
       var route = $(this).data('action-route');
-      var link = router.generate(route);
+      var parameters = $(this).data('action-route-parameters');
+      if(!parameters) {
+        parameters = {};
+      }
+      var link = router.generate(route, parameters);
       self.ajaxOverlay(link);
     });
   };

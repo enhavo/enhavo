@@ -4,6 +4,9 @@
     {% if route %}
         data-route="{{ route }}"
     {% endif %}
+    {% if routeParameters %}
+        data-route-parameters="{{ routeParameters|json_encode }}"
+    {% endif %}
     {% if id %}
         data-id="{{ id }}"
     {% endif %}
