@@ -9,10 +9,10 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class AbstractViewer implements ContainerAwareInterface
+abstract class AbstractViewer extends AbstractType
 {
     private $resource;
 

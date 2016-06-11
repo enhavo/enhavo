@@ -41,6 +41,21 @@ abstract class AbstractType implements ContainerAwareInterface {
         ));
     }
 
+    protected function parseValue($value, $resource = null)
+    {
+        if(preg_match('/\$(.+)/', $value, $matches)) {
+            $key = $matches[1];
+            $request = $this->container->get('request_stack')->getCurrentRequest();
+            if($request->attributes->has($key)) {
+                return $request->attributes->get($key);
+            }
+            if($resource !== null) {
+                return $this->getProperty($resource, $key);
+            }
+        }
+        return $value;
+    }
+
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

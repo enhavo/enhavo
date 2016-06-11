@@ -21,6 +21,7 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             type: integer
             nullable: true
             column: '`order`'
+
         slug:
             type: string
             length: 255

@@ -6,7 +6,6 @@ use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
 
 class Collection implements CollectionInterface
 {
-
     /**
      * @var integer
      */

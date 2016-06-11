@@ -49,6 +49,11 @@ enhavo_category_category_table:
         _controller: enhavo_category.controller.category:tableAction
         _sylius:
             template: EnhavoAppBundle:Resource:table.html.twig
+            repository:
+                method: findByCollection
+            criteria:
+                collection: %enhavo_category.default_collection%
+                paging: true
         _viewer:
             translationDomain: EnhavoCategoryBundle
             table:

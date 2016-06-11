@@ -5,29 +5,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CollectionType extends AbstractType
+class CollectionCategoryType extends AbstractType
 {
     /**
      * @var string
      */
     protected $dataClass;
 
-    /**
-     * @var string
-     */
-    protected $categoryType;
-
-    public function __construct($dataClass, $categoryType = 'enhavo_collection_category')
+    public function __construct($dataClass)
     {
         $this->dataClass = $dataClass;
-        $this->categoryType = $categoryType;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('categories', 'enhavo_list', array(
-            'type' => $this->categoryType
-        ));
+        $builder->add('name', 'text');
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -39,6 +31,6 @@ class CollectionType extends AbstractType
 
     public function getName()
     {
-        return 'enhavo_category_collection';
+        return 'enhavo_collection_category';
     }
 }

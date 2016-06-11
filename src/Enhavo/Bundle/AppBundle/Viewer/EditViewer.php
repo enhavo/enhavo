@@ -9,8 +9,24 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
+
 class EditViewer extends CreateViewer
 {
+    /**
+     * Criteria to identify resource
+     *
+     * @var string
+     */
+    private $identifier = 'id';
+
+    /**
+     * Criteria to identify resource
+     *
+     * @var string
+     */
+    private $identifierProperty = 'id';
+
     public function getDefaultConfig()
     {
         $config =  array(
@@ -45,10 +61,14 @@ class EditViewer extends CreateViewer
     {
         $route = $this->getConfig()->get('form.delete');
         $securityContext = $this->container->get('security.context');
-        if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
-            return $this->container->get('router')->generate($route, array(
-                'id' => $this->getResource()->getId()
-            ));
+        try {
+            if($securityContext->isGranted('ROLE_'.strtoupper($route))) {
+                return $this->container->get('router')->generate($route, array(
+                    'id' => $this->getResource()->getId()
+                ));
+            }
+        } catch(RouteNotFoundException $exception) {
+            return null;
         }
         return null;
     }
@@ -57,7 +77,7 @@ class EditViewer extends CreateViewer
     {
         $route = $this->getConfig()->get('form.action');
         return $this->container->get('router')->generate($route, array(
-            'id' => $this->getResource()->getId()
+            $this->getIdentifier() => $this->getProperty($this->getResource(), $this->getIdentifierProperty())
         ));
     }
 
@@ -78,5 +98,37 @@ class EditViewer extends CreateViewer
         $parameters = array_merge($this->getTemplateVars(), $parameters);
 
         return $parameters;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifierProperty()
+    {
+        return $this->identifierProperty;
+    }
+
+    /**
+     * @param string $identifierProperty
+     */
+    public function setIdentifierProperty($identifierProperty)
+    {
+        $this->identifierProperty = $identifierProperty;
     }
 }
