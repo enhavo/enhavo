@@ -3,7 +3,7 @@ namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CollectionType extends AbstractType
 {
@@ -12,22 +12,25 @@ class CollectionType extends AbstractType
      */
     protected $dataClass;
 
-    public function __construct($dataClass)
+    /**
+     * @var string
+     */
+    protected $categoryType;
+
+    public function __construct($dataClass, $categoryType = 'enhavo_collection_category')
     {
         $this->dataClass = $dataClass;
+        $this->categoryType = $categoryType;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('categories', 'collection', array(
-            'type' => 'enhavo_category_category',
-            'allow_add' => true,
-            'by_reference' => false,
-            'allow_delete' => true,
+        $builder->add('categories', 'enhavo_list', array(
+            'type' => $this->categoryType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->dataClass,

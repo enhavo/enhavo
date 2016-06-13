@@ -19,7 +19,8 @@ class SearchController extends Controller
         if(!empty($searchExpression)) {
 
             try {
-                $searchEngine = $this->get('enhavo_search_search_engine');
+                $engine = $this->container->getParameter('enhavo_search.search.search_engine');
+                $searchEngine = $this->get($engine);
                 $filter = new PermissionFilter($this->container);
                 $result = $searchEngine->search($searchExpression, array($filter));
                 if(empty($result)) {
@@ -28,6 +29,7 @@ class SearchController extends Controller
                     ));
                 }
                 $resourcesBefore = $result->getResources();
+                $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
                 foreach ($resourcesBefore as $resource) {
                     $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
@@ -48,6 +50,4 @@ class SearchController extends Controller
             ));
         }
     }
-
-
 }

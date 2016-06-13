@@ -21,6 +21,7 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             type: integer
             nullable: true
             column: '`order`'
+
         slug:
             type: string
             length: 255
@@ -36,8 +37,10 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
         collection:
             targetEntity: Enhavo\Bundle\CategoryBundle\Model\CollectionInterface
 
+    oneToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
     lifecycleCallbacks: {  }

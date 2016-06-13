@@ -18,13 +18,29 @@ class SaveButton extends AbstractType implements ButtonInterface
 {
     public function render($options, $resource)
     {
-        return $this->renderTemplate('EnhavoAppBundle:Button:default.html.twig', [
+        if(!isset($options['routeParameters'])) {
+            $routeParameters = [
+                'id' => isset($resource) && $this->getProperty($resource, 'id') ? $this->getProperty($resource, 'id') : null,
+            ];
+        } else {
+            $routeParameters = $options['routeParameters'];
+            if(is_array($routeParameters)) {
+                foreach($routeParameters as $key => $parameterValue) {
+                    $routeParameters[$key] = $this->parseValue($parameterValue, $resource);
+                }
+            }
+        }
+
+        return $this->renderTemplate('EnhavoAppBundle:Button:save.html.twig', [
             'type' => $this->getType(),
             'icon' => isset($options['icon']) ? $options['icon'] : 'save',
             'display' =>  isset($options['display']) ? $options['display'] : true,
             'role' => isset($options['role']) ? $options['role'] : null,
             'label' => isset($options['label']) ? $options['label'] : 'label.save',
-            'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle'
+            'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle',
+            'route' => isset($options['route']) ? $options['route'] : null,
+            'routeParameters' => $routeParameters,
+            'id' => isset($resource) && $this->getProperty($resource, 'id') ? $this->getProperty($resource, 'id') : null
         ]);
     }
 

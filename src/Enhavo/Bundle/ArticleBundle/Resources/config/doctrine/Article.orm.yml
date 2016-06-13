@@ -8,12 +8,12 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             type: text
             nullable: true
 
-    manyToOne:
+    oneToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
-    oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
@@ -24,7 +24,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
 
     manyToMany:
         categories:
-            cascade: ['persist', 'refresh', 'remove']
+            cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\CategoryBundle\Model\CategoryInterface
             joinTable:
                 name: article_category

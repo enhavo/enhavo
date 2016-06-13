@@ -61,7 +61,7 @@ enhavo_download_download_delete:
     options:
         expose: true
     path: /enhavo/download/download/delete/{id}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: enhavo_download.controller.download:deleteAction
 

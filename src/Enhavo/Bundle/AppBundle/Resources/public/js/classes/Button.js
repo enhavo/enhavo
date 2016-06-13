@@ -34,12 +34,25 @@ function Button(admin, router, translator)
 
       form = $(form);
       var data = form.serialize();
-      var action = form.attr('action');
+      var url = form.attr('action');
+      if($(this).data('route')) {
+
+        if($(this).data('route-parameters')) {
+          parameters = $(this).data('route-parameters');
+        } else {
+          var parameters = {};
+          if($(this).data('id')) {
+            parameters.id = $(this).data('id');
+          }
+        }
+        url = router.generate($(this).data('route'), parameters);
+      }
+
       admin.openLoadingOverlay();
       $.ajax({
         type: 'POST',
         data: data,
-        url: action,
+        url: url,
         success: function(data) {
           admin.closeLoadingOverlay();
           $(form).trigger('formSaveAfter', form);

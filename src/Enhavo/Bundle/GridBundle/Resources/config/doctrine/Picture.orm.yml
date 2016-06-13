@@ -17,9 +17,10 @@ Enhavo\Bundle\GridBundle\Entity\Picture:
             length: 255
             nullable: true
 
-    manyToOne:
+    oneToOne:
         file:
-            cascade: ['persist', 'refresh']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
     lifecycleCallbacks: {  }

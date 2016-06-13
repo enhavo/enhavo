@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\SearchBundle\Search\Highlight;
+use Doctrine\Common\Persistence\Proxy;
 
 class SearchUtil
 {
@@ -190,40 +191,39 @@ class SearchUtil
         return $searchYamlPaths;
     }
 
-    public function getSearchYaml($resource)
+    protected function getBundleNameOfResource($resource)
     {
-        //get class of given resource
-        $class = null;
-        if ($resource instanceof \Doctrine\Common\Persistence\Proxy) {
-            $class = get_parent_class($resource);
-        } else {
-            $class = get_class($resource);
+        $resourceClassName = get_class($resource);
+        if ($resource instanceof Proxy) {
+            $resourceClassName = get_parent_class($resource);
         }
 
-        //get all search.yml paths
-        $searchYamlPaths = $this->getSearchYamls();
+        $bundles = $this->container->get('kernel')->getBundles();
 
-        $entityPath = $class;
-        $splittedBundlePath = explode('\\', $entityPath);
-        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
-            array_pop($splittedBundlePath);
-        }
-
-        $bundlePath = implode('/', $splittedBundlePath);
-        $currentPath = null;
-        foreach ($searchYamlPaths as $path) {
-            if (strpos($path, $bundlePath)) {
-                $currentPath = $path;
-                break;
+        foreach($bundles as $bundle) {
+            $class = get_class($bundle);
+            $classParts = explode('\\', $class);
+            $bundleName = array_pop($classParts);
+            $bundlePath = implode('\\', $classParts);
+            if(strpos($resourceClassName, $bundlePath) === 0) {
+                return $bundleName;
             }
         }
-        $searchYamlPath = $currentPath;
-        if (file_exists($searchYamlPath)) {
-            $yaml = new Parser();
-            return $yaml->parse(file_get_contents($searchYamlPath));
-        } else {
+        return null;
+    }
+
+    public function getSearchYaml($resource)
+    {
+        $bundleName = $this->getBundleNameOfResource($resource);
+
+        try {
+            $file = $this->container->get('kernel')->locateResource(sprintf('@%s/Resources/config/search.yml', $bundleName));
+        } catch(\Exception $e) {
             return null;
         }
+
+        $parser = new Parser();
+        return $parser->parse(file_get_contents($file));
     }
 
     public function getFieldsOfSearchYml($searchYaml, $resourceClass)
@@ -343,20 +343,24 @@ class SearchUtil
         $fields = $this->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
         //go over every field and check if one or more words are in it
         $accessor = PropertyAccess::createPropertyAccessor();
+        $this->pieces = array();
         foreach ($fields as $field) {
             if (property_exists($resource, $field) && $field != 'title') {
                 $text = $accessor->getValue($resource, $field);
                 $pieces = array();
                 if (is_string($text)) {
-                    $pieces[] = $text;
+                    $this->pieces[] = $text;
                 } else if (gettype($text) == 'object') {
                     $fieldValue = $this->getValueOfField($field, $currentSearchYml, get_class($resource));
-                    $this->pieces = array();
                     $this->getTextPieces($text, $fieldValue);
-                    $pieces = $this->pieces;
+                } else if(is_array($text)){
+                    foreach($text as $currentText){
+                        $this->pieces[] = $currentText;
+                    }
                 }
             }
         }
+        $pieces = $this->pieces;
         foreach ($pieces as &$piece) {
             $piece = strip_tags($piece); // remove html tags
             $lastCharacter = substr($piece, -1, 1);
@@ -373,5 +377,42 @@ class SearchUtil
         $highlightedResult['resource'] = $resource;
         $highlightedResult['highlightedText'] = $highlightedText;
         return $highlightedResult;
+    }
+
+    public function getEntityName($resource)
+    {
+        $entityPath = get_class($resource);
+        $splittedBundlePath = explode('\\', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
+        return strtolower($entityName);
+    }
+
+    public function getBundleName($resource, $lowercase = false)
+    {
+        $entityPath = get_class($resource);
+        $splittedBundlePath = explode('\\', $entityPath);
+        while(strpos(end($splittedBundlePath), 'Bundle') != true){
+            array_pop($splittedBundlePath);
+        }
+        if($lowercase){
+            $lowercaseArray = [];
+            $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
+            foreach(array_filter($pieces) as $piece){
+                $lowercaseArray[] = strtolower($piece);
+            }
+            return implode('_', $lowercaseArray);
+        }
+        return $splittedBundlePath[0].end($splittedBundlePath);
+    }
+
+    public function getProperties($resource)
+    {
+        $currentSearchYaml = $this->getSearchYaml($resource);
+
+        return $currentSearchYaml[get_class($resource)]['properties'];
     }
 }

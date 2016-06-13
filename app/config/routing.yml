@@ -65,6 +65,10 @@ enhavo_category_category:
     resource: "@EnhavoCategoryBundle/Resources/config/routing/category.yml"
     prefix: /admin
 
+enhavo_category_collection:
+    resource: "@EnhavoCategoryBundle/Resources/config/routing/collection.yml"
+    prefix: /admin
+
 enhavo_workflow:
     resource: "@EnhavoWorkflowBundle/Resources/config/routing/workflow.yml"
     prefix: /admin

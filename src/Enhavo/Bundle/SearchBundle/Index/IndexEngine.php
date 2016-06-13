@@ -24,14 +24,28 @@ class IndexEngine implements IndexEngineInterface {
     protected $kernel;
     protected $em;
     protected $searchYamlPaths;
-    protected $minimum_word_size = 2;
+    protected $minimumWordSize = 2;
     protected $strategy;
 
+    /**
+     * index every time
+     */
     const INDEX_STRATEGY_INDEX = 'index';
 
+    /**
+     * index only if resource is new to index
+     */
     const INDEX_STRATEGY_INDEX_NEW = 'index_new';
 
+    /**
+     * add reference but don't index, just mark it for reindexing
+     */
     const INDEX_STRATEGY_REINDEX = 'reindex';
+
+    /**
+     * never index
+     */
+    const INDEX_STRATEGY_NOINDEX = 'noindex';
 
     protected $util;
 
@@ -46,9 +60,13 @@ class IndexEngine implements IndexEngineInterface {
 
     public function index($resource)
     {
+        if($this->strategy == self::INDEX_STRATEGY_NOINDEX) {
+            return;
+        }
+
         //get Entity and Bundle names
-        $entityName = $this->getEntityName($resource);
-        $bundleName = $this->getBundleName($resource);
+        $entityName = $this->util->getEntityName($resource);
+        $bundleName = $this->util->getBundleName($resource);
 
         //get DataSet
         $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
@@ -209,7 +227,8 @@ class IndexEngine implements IndexEngineInterface {
 
     protected function indexingData($resource, $dataSet)
     {
-        $properties = $this->getProperties($resource);
+        $properties = $this->util->getProperties($resource);
+        $this->searchYamlPaths = $this->util->getSearchYamls();
 
         //indexing words (go through all the fields that can be indexed according to the search yml)
         foreach($properties as $indexingField => $value) {
@@ -223,14 +242,6 @@ class IndexEngine implements IndexEngineInterface {
         }
         //update the total scores
         $this->searchUpdateTotals();
-    }
-
-    protected function getProperties($resource)
-    {
-        $currentSearchYaml = $this->util->getSearchYaml($resource);
-        $this->searchYamlPaths = $this->util->getSearchYamls();
-
-        return $currentSearchYaml[get_class($resource)]['properties'];
     }
 
     public function switchToIndexingType($text, $type, $dataSet)
@@ -278,9 +289,14 @@ class IndexEngine implements IndexEngineInterface {
                         if($text != null) {
                             $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
                         }
-                    } else if (array_key_exists('type', $value)) {
+                    } else if (array_key_exists(0, $value)) {
                         foreach($text as $currentText){
-                            $this->indexingPlain($currentText, $value['weight'],$value['type'], $dataSet);
+                            if(key($value[0]) == 'Plain'){
+                                $this->indexingPlain($currentText, $value[0]['Plain']['weight'],$value[0]['Plain']['type'], $dataSet);
+
+                            } else if (key($value[0]) == 'Html'){
+                                $this->indexingHtml($currentText, $value[0]['Html']['type'], $dataSet, $value[0]['Html']['weight']);
+                            }
                         }
                     }
 
@@ -321,29 +337,29 @@ class IndexEngine implements IndexEngineInterface {
         //indexing plain text and save in DB
         //get seperated words
         $words = $this->searchIndexSplit($text);
-        $scored_words = array();
+        $scoredWords = array();
 
         //set focus to 1 at the beginning
         $focus = 1;
 
         //get the right score for every word
         foreach($words as $word) {
-            if (is_numeric($word) || strlen($word) >= $this->minimum_word_size) {
+            if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
 
                 //check if the word is already in the list of scored words
-                if (!isset($scored_words[$word])) {
-                    $scored_words[$word] = 0;
+                if (!isset($scoredWords[$word])) {
+                    $scoredWords[$word] = 0;
                 }
 
-                //add score (this means if a word is already in the list of scores_words we just add the score multiplied with the focus)
-                $scored_words[$word] += $score * $focus;
+                //add score (this means if a word is already in the list of scoresWords we just add the score multiplied with the focus)
+                $scoredWords[$word] += $score * $focus;
 
                 //the focus is getting less if a word is at the end of a long text and so the next score gets less
-                $focus = min(1, .01 + 3.5 / (2 + count($scored_words) * .015));
+                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
             }
         }
 
-        $this->addWordsToSearchIndex($scored_words, $dataset, $type);
+        $this->addWordsToSearchIndex($scoredWords, $dataset, $type);
     }
 
     public function indexingHtml($text, $type, $dataset, $weights = null) {
@@ -377,7 +393,7 @@ class IndexEngine implements IndexEngineInterface {
         $tagstack = array(); // Stack with open tags
         $tagwords = 0; // Counter for consecutive words
         $focus = 1; // Focus state
-        $scored_words = array();
+        $scoredWords = array();
 
         //go trough the array of text and tags
         foreach ($split as $value) {
@@ -425,14 +441,14 @@ class IndexEngine implements IndexEngineInterface {
                             // Add word to accumulator
                             $accum .= $word . ' ';
                             // Check wordlength
-                            if (is_numeric($word) || strlen($word) >= $this->minimum_word_size) {
-                                if (!isset($scored_words[$word])) {
-                                    $scored_words[$word] = 0;
+                            if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
+                                if (!isset($scoredWords[$word])) {
+                                    $scoredWords[$word] = 0;
                                 }
-                                $scored_words[$word] += $score * $focus;
+                                $scoredWords[$word] += $score * $focus;
                                 // Focus is a decaying value in terms of the amount of unique words up to this point.
                                 // From 100 words and more, it decays, to e.g. 0.5 at 500 words and 0.3 at 1000 words.
-                                $focus = min(1, .01 + 3.5 / (2 + count($scored_words) * .015));
+                                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
                             }
                             $tagwords++;
                             // Too many words inside a single tag probably mean a tag was accidentally left open.
@@ -447,7 +463,7 @@ class IndexEngine implements IndexEngineInterface {
             $tag = !$tag;
         }
 
-        $this->addWordsToSearchIndex($scored_words, $dataset, $type);
+        $this->addWordsToSearchIndex($scoredWords, $dataset, $type);
     }
 
     public function indexingCollectionEntity($text, $model, $yamlFile, $dataSet) {
@@ -518,10 +534,10 @@ class IndexEngine implements IndexEngineInterface {
         }
     }
 
-    protected function addWordsToSearchIndex($scored_words, $dataset, $type)
+    protected function addWordsToSearchIndex($scoredWords, $dataset, $type)
     {
         //add the scored words to search_index
-        foreach ($scored_words as $key => $value) {
+        foreach ($scoredWords as $key => $value) {
             $newIndex = new Index();
             $newIndex->setDataset($dataset);
             $newIndex->setType(strtolower($type));
@@ -558,26 +574,5 @@ class IndexEngine implements IndexEngineInterface {
         else {
             return $dirty;
         }
-    }
-
-    protected function getEntityName($resource)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
-        }
-        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
-        return strtolower($entityName);
-    }
-
-    protected function getBundleName($resource)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
-        }
-        return $splittedBundlePath[0].end($splittedBundlePath);
     }
 }

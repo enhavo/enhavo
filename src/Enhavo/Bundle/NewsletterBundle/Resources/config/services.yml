@@ -40,3 +40,10 @@ services:
             - %enhavo_newsletter.subscriber%
         tags:
             - { name: validator.constraint_validator, alias: email_in_use }
+
+    enhavo_newsletter.button.send:
+        class: Enhavo\Bundle\NewsletterBundle\Button\SendButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }

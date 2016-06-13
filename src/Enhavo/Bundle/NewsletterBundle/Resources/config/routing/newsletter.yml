@@ -44,10 +44,7 @@ enhavo_newsletter_newsletter_update:
                     template: EnhavoNewsletterBundle:Resource:edit.html.twig
             buttons:
                 send:
-                    route: enhavo_newsletter_newsletter_send
-                    label: newsletter.action.sendAndSave
-                    icon: icon-eye
-                    translationDomain: EnhavoNewsletterBundle
+                    type: send
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -74,7 +71,7 @@ enhavo_newsletter_newsletter_table:
                             label: newsletter.batch.action.send
                             confirm_message: newsletter.batch.message.confirm.send
                             translation_domain: EnhavoNewsletterBundle
-                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_EDIT
+                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
                     id:
                         label: newsletter.label.id
@@ -92,7 +89,7 @@ enhavo_newsletter_newsletter_delete:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/delete/{id}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
 

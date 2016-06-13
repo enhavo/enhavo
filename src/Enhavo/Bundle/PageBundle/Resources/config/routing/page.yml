@@ -116,6 +116,7 @@ enhavo_page_page_table:
 
 enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
+    methods: [DELETE]
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
 

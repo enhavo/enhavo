@@ -1,0 +1,13 @@
+parameters:
+    enhavo_serializer.form_serializer.class: Enhavo\Bundle\SerializerBundle\Serializer\FormSerializer
+    enhavo_serializer.encoder.class: Enhavo\Bundle\SerializerBundle\Encoder\Encoder
+
+services:
+    enhavo_serializer.encoder:
+        class: %enhavo_serializer.encoder.class%
+
+    enhavo_serializer.form_serializer:
+        class: %enhavo_serializer.form_serializer.class%
+        arguments:
+          - @form.factory
+          - @enhavo_serializer.encoder

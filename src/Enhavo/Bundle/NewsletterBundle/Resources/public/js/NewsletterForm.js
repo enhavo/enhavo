@@ -3,7 +3,10 @@ function Newsletter(router, translator, admin) {
     var self = this;
 
     this.initSend = function(router) {
-        $(document).on('click', '[data-type=send]', function() {
+        $(document).on('formOpenAfter', function(event, form) {
+          $(form).find('[data-button][data-type=send]').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             var form = $(this).parents('form');
             var data = form.serialize();
             var sent = form.find('[data-newsletter-sent]');
@@ -11,14 +14,15 @@ function Newsletter(router, translator, admin) {
             var id = form.attr('data-id');
             var url = router.generate(route, { id: id });
             if(sent.length == 0) {
-               self.sendNewsletter(data, url, form);
+              self.sendNewsletter(data, url, form);
             } else {
-                var text = sent.attr('data-sent-text');
-                var sendAgain = confirm(text);
-                if(sendAgain == true) {
-                    self.sendNewsletter(data, url, form);
-                }
+              var text = sent.attr('data-sent-text');
+              var sendAgain = confirm(text);
+              if(sendAgain == true) {
+                self.sendNewsletter(data, url, form);
+              }
             }
+          });
         });
     };
 

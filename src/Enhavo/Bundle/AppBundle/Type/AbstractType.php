@@ -34,11 +34,26 @@ abstract class AbstractType implements ContainerAwareInterface {
             return call_user_func(array($resource, $method));
         }
         throw new PropertyNotExistsException(sprintf(
-            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spell it wrong you did\'t add the getter for property "%s"',
+            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
             $method,
             get_class($resource),
             $property
         ));
+    }
+
+    protected function parseValue($value, $resource = null)
+    {
+        if(preg_match('/\$(.+)/', $value, $matches)) {
+            $key = $matches[1];
+            $request = $this->container->get('request_stack')->getCurrentRequest();
+            if($request->attributes->has($key)) {
+                return $request->attributes->get($key);
+            }
+            if($resource !== null) {
+                return $this->getProperty($resource, $key);
+            }
+        }
+        return $value;
     }
 
     public function setContainer(ContainerInterface $container = null)

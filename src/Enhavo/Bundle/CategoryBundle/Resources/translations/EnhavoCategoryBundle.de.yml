@@ -4,4 +4,5 @@ category:
     name: 'Name'
     category: 'Kategorie'
     categories: 'Kategorien'
+    manageCategories: 'Kategorien verwalten'
 

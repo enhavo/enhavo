@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\SearchBundle\Search;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
-use Enhavo\Bundle\SearchBundle\Search\SearchResult;
 
 class SearchEngine implements SearchEngineInterface
 {
