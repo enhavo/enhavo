@@ -32,7 +32,7 @@ enhavo_app:
             label: dashboard.label.dashboard
             translationDomain: EnhavoDashboardBundle
             route: enhavo_dashboard_index
-            role: ROLE_ENHAVO_USER_USER_INDEX
+            role: ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX
         user:
             label: user.label.user
             translationDomain: EnhavoUserBundle
