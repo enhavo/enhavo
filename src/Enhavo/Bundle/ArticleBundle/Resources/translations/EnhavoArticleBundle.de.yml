@@ -10,6 +10,7 @@ article:
       workflow: 'Workflow'
   label:
     article: 'Artikel'
+    teaser: 'Teaser'
     content: 'Inhalt'
     seo: 'SEO'
     preview: 'Vorschau'

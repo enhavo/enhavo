@@ -14,7 +14,7 @@ Enhavo\Bundle\GridBundle\Entity\CiteText:
        cite:
             - Plain:
                 weight: 8
-                type: cite
+                type: citeText
 
 Enhavo\Bundle\GridBundle\Entity\Picture:
     properties:

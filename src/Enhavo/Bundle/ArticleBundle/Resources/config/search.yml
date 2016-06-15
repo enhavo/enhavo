@@ -8,9 +8,5 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             - Plain:
                 weight: 8
                 type: teaser
-        text:
-            - Html:
-                type: text
-
         grid:
             - Model

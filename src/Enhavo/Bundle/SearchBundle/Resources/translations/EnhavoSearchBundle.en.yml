@@ -2,6 +2,8 @@ search:
   label:
     search: Search
     result: Search results
+    types: Types
+    fields: Fields
   form:
     error:
       blank: No result

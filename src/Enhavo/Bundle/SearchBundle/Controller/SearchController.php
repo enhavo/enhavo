@@ -14,6 +14,8 @@ class SearchController extends Controller
     {
         //set the current entry to searchEspression
         $searchExpression = $request->get('search');
+        $searchTypes = $request->get('entities');
+        $searchFields = $request->get('fields');
 
         // check if there are any keywords entered
         if(!empty($searchExpression)) {
@@ -22,7 +24,7 @@ class SearchController extends Controller
                 $engine = $this->container->getParameter('enhavo_search.search.search_engine');
                 $searchEngine = $this->get($engine);
                 $filter = new PermissionFilter($this->container);
-                $result = $searchEngine->search($searchExpression, array($filter));
+                $result = $searchEngine->search($searchExpression, array($filter), $searchTypes, $searchFields);
                 if(empty($result)) {
                     return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                         'data' => 'No results'

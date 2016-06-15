@@ -84,12 +84,12 @@ class SearchRequest {
         $this->util = $util;
     }
 
-    public function search()
+    public function search($types, $fields)
     {
         //get the search results (language, type, id, calculated_score)
         $results = $this->em
             ->getRepository('EnhavoSearchBundle:Index')
-            ->getSearchResults($this->conditions, $this->matches, $this->simple);
+            ->getSearchResults($this->conditions, $this->matches, $this->simple, $types, $fields);
 
         //prepare data with found results -> get Index from id -> get Dataset from Index
         $data = array();

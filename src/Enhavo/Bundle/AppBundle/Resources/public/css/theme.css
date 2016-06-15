@@ -80,7 +80,7 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #search_form { position:relative;}
 #search {padding: 10px 50px;width: 100%;border: 1px solid #eee;}
 #search_form:before {content:'\e94b';font-family: "enhavo_iconfont"; display:inline-block;color:#FFF; background:#0090bc;border-radius:50%; width:25px; height:25px; position:absolute;left: 12px;top: 9px;padding: 1px 6px;}
-#submit_search { position: absolute;right: 0;top: 0;height: 100%;background: #fbfbfb;border-width: 1px 1px 1px 0;border-style:solid;border-color:#eee;padding: 10px 19px;}
+#submit_search { position: absolute;right: 0;top: 0;background: #fbfbfb;border-width: 1px 1px 1px 0;border-style:solid;border-color:#eee;padding: 10px 19px;}
 #submit_search:after {content:'\e9f0';font-family: "enhavo_iconfont";color:#3d3d3d}
 #search::-webkit-input-placeholder { color:#d3d3d3;text-transform: none;letter-spacing: 0px;font-size: 14px;font-weight: 600;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-ms-transition:all .2s;-o-transition:all .2s;}
 #search::-moz-placeholder { color:#d3d3d3;text-transform: none;letter-spacing: 0px;font-size: 14px;font-weight: 600;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-ms-transition:all .2s;-o-transition:all .2s;}

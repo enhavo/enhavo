@@ -18,7 +18,7 @@ class IndexRepository extends EntityRepository
         return $query->getQuery()->getSingleResult();
     }
 
-    public function getSearchResults($conditions, $matches, $simple)
+    public function getSearchResults($conditions, $matches, $simple, $types, $fields)
     {
         $query = $this->createQueryBuilder('i');
         $query->select('i.locale AS language', 'i.type AS type', 'i.id AS id', 'sum(i.score * t.count) AS calculated_score');
@@ -92,6 +92,46 @@ class IndexRepository extends EntityRepository
             }
         }
 
+        //Adding type filter
+        if($types != null){
+            $typeCounter = 0;
+            $firstType = true;
+            foreach($types as $type){
+                $query->setParameter('type_'.$typeCounter, $type);
+                $typeCounter++;
+            }
+            $typesOrQuery = '';
+            for($i = 0; $i < $typeCounter; $i++){
+                if($firstType == true){
+                    $typesOrQuery = $typesOrQuery.'d.type = :type_'.$i;
+                    $firstType = false;
+                } else {
+                    $typesOrQuery = $typesOrQuery.' OR d.type = :type_'.$i;
+                }
+            }
+            $query->andWhere($typesOrQuery);
+        }
+
+        //Adding field filter
+        if($fields != null) {
+            $fieldCounter = 0;
+            $firstField = true;
+            foreach ($fields as $field) {
+                $query->setParameter('field_' . $fieldCounter, $field);
+                $fieldCounter++;
+            }
+            $fieldsOrQuery = '';
+            for ($i = 0; $i < $fieldCounter; $i++) {
+                if ($firstField == true) {
+                    $fieldsOrQuery = $fieldsOrQuery . 'i.type = :field_' . $i;
+                    $firstField = false;
+                } else {
+                    $fieldsOrQuery = $fieldsOrQuery . ' OR i.type = :field_' . $i;
+                }
+            }
+            $query->andWhere($fieldsOrQuery);
+        }
+
         $query->groupBy('d.id');
         // If the query is simple, we should have calculated the number of
         // matching words we need to find, so impose that criterion. For non-
@@ -103,6 +143,7 @@ class IndexRepository extends EntityRepository
         }
         $query->orderBy('calculated_score', 'DESC');
 
-        return $query->getQuery()->getResult();
+        $test= $query->getQuery()->getResult();
+        return  $test;
     }
 }

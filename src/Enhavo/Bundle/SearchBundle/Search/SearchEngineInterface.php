@@ -10,5 +10,5 @@ namespace Enhavo\Bundle\SearchBundle\Search;
 
 
 interface SearchEngineInterface {
-    public function search($query, $filters = []);
+    public function search($query, $filters = [], $types = null, $fields = null);
 }
