@@ -51,6 +51,8 @@ services:
         class: Enhavo\Bundle\SearchBundle\Block\SearchBlock
         calls:
             - [setContainer, ['@service_container']]
+        arguments:
+            - @enhavo_search_search_util
         tags:
             - { name: enhavo.block }
 

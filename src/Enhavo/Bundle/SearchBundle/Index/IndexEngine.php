@@ -151,9 +151,12 @@ class IndexEngine implements IndexEngineInterface {
             foreach($this->searchYamlPaths as $path){
                 $allPartsOfBundleNameInPath = true;
                 foreach($splittedBundleName as $partOfBundleName){
-                    if(!strpos($path, $partOfBundleName)){
+                    if(!is_numeric(strpos($path, $partOfBundleName))){
                         $allPartsOfBundleNameInPath = false;
                     }
+                }
+                if($allPartsOfBundleNameInPath == true && is_numeric(strpos($path, 'Enhavo')) && !is_numeric(strpos($currentBundle, 'Enhavo'))){
+                    $allPartsOfBundleNameInPath = false;
                 }
                 if($allPartsOfBundleNameInPath == true){
                     $yaml = new Parser();
@@ -192,7 +195,10 @@ class IndexEngine implements IndexEngineInterface {
         $bundle = null;
         foreach($array as $key => $value) {
             if(strpos($value, 'Bundle', 1)){
-                $bundle = $array[$key-2].$value;
+                $bundle = $value;
+                if($array[$key-2] == 'Enhavo'){
+                    $bundle = $array[$key-2].$bundle;
+                }
                 break;
             }
         }
@@ -284,10 +290,12 @@ class IndexEngine implements IndexEngineInterface {
                             }
                         }
                         $yaml = new Parser();
-                        $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
+                        if($collectionPath != null) {
+                            $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
 
-                        if($text != null) {
-                            $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                            if ($text != null) {
+                                $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                            }
                         }
                     } else if (array_key_exists(0, $value)) {
                         foreach($text as $currentText){
@@ -325,9 +333,11 @@ class IndexEngine implements IndexEngineInterface {
                 }
             }
             $yaml = new Parser();
-            $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
-            if($text != null) {
-                $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+            if($modelPath != null){
+                $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
+                if($text != null) {
+                    $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+                }
             }
         }
     }

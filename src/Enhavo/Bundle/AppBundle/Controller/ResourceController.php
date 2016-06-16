@@ -219,6 +219,7 @@ class ResourceController extends BaseController
     {
         $this->isGrantedOr403('delete');
         foreach ($resources as $resource) {
+            $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
             $this->domainManager->delete($resource);
         }
         $this->get('doctrine.orm.entity_manager')->flush();

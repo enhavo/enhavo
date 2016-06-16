@@ -10,3 +10,20 @@ enhavo_dashboard_index:
             blocks:
                 search:
                     type: search
+                    entities:
+                        page:
+                            label: page.label.page
+                            translationDomain: EnhavoPageBundle
+                        article:
+                            label: article.label.article
+                            translationDomain: EnhavoArticleBundle
+                    fields:
+                        title:
+                            label: article.label.title
+                            translationDomain: EnhavoArticleBundle
+                        teaser:
+                            label: article.label.teaser
+                            translationDomain: EnhavoArticleBundle
+                        text:
+                            label: text.label.text
+                            translationDomain: EnhavoGridBundle

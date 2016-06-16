@@ -383,10 +383,10 @@ class SearchUtil
     {
         $entityPath = get_class($resource);
         $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
+        $entityName = '';
+        while(end($splittedBundlePath) != 'Entity'){
+            $entityName = array_pop($splittedBundlePath);
         }
-        $entityName = str_replace('Bundle', '', end($splittedBundlePath));
         return strtolower($entityName);
     }
 
@@ -399,14 +399,20 @@ class SearchUtil
         }
         if($lowercase){
             $lowercaseArray = [];
-            $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            if($splittedBundlePath[0] == 'Enhavo'){
+                $lowercaseArray[] = strtolower($splittedBundlePath[0]);
+            }
             $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
             foreach(array_filter($pieces) as $piece){
                 $lowercaseArray[] = strtolower($piece);
             }
             return implode('_', $lowercaseArray);
         }
-        return $splittedBundlePath[0].end($splittedBundlePath);
+        if($splittedBundlePath[0] == 'Enhavo'){
+            return $splittedBundlePath[0].end($splittedBundlePath);
+        } else {
+            return end($splittedBundlePath);
+        }
     }
 
     public function getProperties($resource)
@@ -414,5 +420,98 @@ class SearchUtil
         $currentSearchYaml = $this->getSearchYaml($resource);
 
         return $currentSearchYaml[get_class($resource)]['properties'];
+    }
+
+    public function getEntityNamesOfSearchYamlPath($yamlPath)
+    {
+        $yamlContent = $this->getContentOfSearchYaml($yamlPath);
+        $entities = array();
+        foreach($yamlContent as $key => $value){
+            if(!$this->isEntityCollection($value) && !$this->isEntityModel($value)) {
+                $splittedKey = explode('\\', $key);
+                $entities[] = array_pop($splittedKey);
+            }
+        }
+        return $entities;
+    }
+
+    public function getContentOfSearchYaml($searchYamlPath)
+    {
+        if (file_exists($searchYamlPath)) {
+            $yaml = new Parser();
+            return $yaml->parse(file_get_contents($searchYamlPath));
+        } else {
+            return null;
+        }
+    }
+
+    public function isEntityCollection($yamlEntity)
+    {
+        $collection = true;
+        $prop = $yamlEntity['properties'];
+        foreach($prop as $item){
+            if(is_array($item[0])){
+                if(key($item[0]) != 'Collection'){
+                    $collection = false;
+                }
+            } else if($item[0] == 'Model'){
+                $collection = false;
+            }
+        }
+        return $collection;
+    }
+
+    public function isPropertyCollection($property)
+    {
+        $collection = true;
+        if(is_array($property[0])){
+            if(key($property[0]) != 'Collection'){
+                $collection = false;
+            }
+        } else if($property[0] == 'Model'){
+            $collection = false;
+        }
+        return $collection;
+    }
+
+    public function isEntityModel($yamlEntity)
+    {
+        $model = true;
+        $prop = $yamlEntity['properties'];
+        foreach($prop as $item){
+            if(is_array($item[0])){
+                $model = false;
+            }
+        }
+        return $model;
+    }
+
+    public function isPropertyModel($property)
+    {
+        $model = true;
+        if(is_array($property[0])){
+            $model = false;
+        }
+        return $model;
+    }
+
+    public function getTypes($searchYaml, $resourceClass)
+    {
+        $types = array();
+        if (key_exists($resourceClass, $searchYaml)) {
+            $properties = $searchYaml[$resourceClass]['properties'];
+            foreach ($properties as $property) {
+                if(!$this->isPropertyCollection($property) && !$this->isPropertyModel($property)){
+                    foreach ($property[0] as $key => $value) {
+                        if(array_key_exists('type',$value)){
+                            if(!in_array($value['type'], $types)){
+                                $types[] = $value['type'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $types;
     }
 }

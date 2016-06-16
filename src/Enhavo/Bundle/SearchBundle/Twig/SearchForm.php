@@ -32,7 +32,7 @@ class SearchForm extends \Twig_Extension
         );
     }
 
-    public function render($type = 'search')
+    public function render($type = 'search', $entities = null, $fields = null)
     {
         if($this->templateEngine === null) {
             $this->templateEngine = $this->container->get('templating');
@@ -41,7 +41,9 @@ class SearchForm extends \Twig_Extension
         $template =  $this->container->getParameter('enhavo_search.'.$type.'.template');
 
         return $this->templateEngine->render($template, array(
-            'type' => $type
+            'type' => $type,
+            'entities' => $entities,
+            'fields' => $fields
         ));
     }
 

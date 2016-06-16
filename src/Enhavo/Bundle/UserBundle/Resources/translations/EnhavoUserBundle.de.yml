@@ -41,6 +41,8 @@ confirm:
       reset: Zurücksetzen
 role:
   label:
+    ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX: 'Dashboard sehen'
+
     ROLE_ENHAVO_USER_USER_INDEX: 'Benutzer sehen'
     ROLE_ENHAVO_USER_USER_UPDATE: 'Benutzer bearbeiten'
     ROLE_ENHAVO_USER_USER_CREATE: 'Benutzer erstellen'

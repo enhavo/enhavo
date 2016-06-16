@@ -25,45 +25,10 @@ class ElasticSearchEngine implements SearchEngineInterface
         $this->util = $util;
     }
 
-    public function search($query, $filters = []){
+    public function search($query, $filters = [], $entities = null, $fields= null){
         $client = Elasticsearch\ClientBuilder::create()->build();
 
-       /* $params = [
-            'body' => [
-                "query" => [
-                    "query_string" => [
-                        "query" => $query
-                    ]
-                ]
-            ]
-        ];*/
-        /*$params = [
-            'body' => [
-                "query" => [
-                    'bool' => [
-                        "should" => [
-                            [
-                                "match" => [
-                                    "title" => [
-                                        'query' => $query,
-                                        'boost' => 1
-                                    ]
-                                ]
-                            ],
-                            [
-                                "match" => [
-                                    "teaser" => [
-                                        'query' => $query,
-                                        'boost' => 1
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];*/
-        $fields = $this->getFields();
+        $fields = $this->getFields($entities, $fields);
 
         $params = [
             'body' => [
@@ -103,7 +68,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         return $searchResult;
     }
 
-    protected function getFields()
+    protected function getFields($entities, $searchFields)
     {
         $fields = array();
         $searchYamls = $this->util->getSearchYamls();
@@ -113,12 +78,14 @@ class ElasticSearchEngine implements SearchEngineInterface
             foreach ($yamlContent as $entityPath => $val) {
                 $splittedEntityPath = explode('\\', $entityPath);
                 $entityName = array_pop($splittedEntityPath);
-                foreach ($this->getFieldsWithWeights($yamlContent, $entityPath) as $field => $weight) {
-                    $fieldName = $bundleName.'_'.strtolower($entityName).'_'.$field;
-                    if($weight != null){
-                        $fieldName = $fieldName.'^'.$weight;
+                if($entities == null || in_array(lcfirst($entityName), $entities)){
+                    foreach ($this->getFieldsWithWeights($yamlContent, $entityPath, $searchFields) as $field => $weight) {
+                        $fieldName = $bundleName.'_'.strtolower($entityName).'_'.$field;
+                        if($weight != null){
+                            $fieldName = $fieldName.'^'.$weight;
+                        }
+                        $fields[] = $fieldName;
                     }
-                    $fields[] = $fieldName;
                 }
             }
         }
@@ -134,7 +101,9 @@ class ElasticSearchEngine implements SearchEngineInterface
             array_pop($splittedBundlePath);
         }
         $lowercaseArray = [];
-        $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        if($splittedBundlePath[count($splittedBundlePath)-3] == 'Enhavo'){
+            $lowercaseArray[] = strtolower($splittedBundlePath[count($splittedBundlePath)-3]);
+        }
         $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
         foreach(array_filter($pieces) as $piece){
             $lowercaseArray[] = strtolower($piece);
@@ -152,27 +121,31 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
     }
 
-    public function getFieldsWithWeights($searchYaml, $resourceClass)
+    public function getFieldsWithWeights($searchYaml, $resourceClass, $searchFields)
     {
         $fields = array();
         if (key_exists($resourceClass, $searchYaml)) {
             $properties = $searchYaml[$resourceClass]['properties'];
             foreach ($properties as $field => $value) {
-                if($value[0] =='Model'){
+                if ($value[0] == 'Model') {
                     $fields[$field] = null;
-                }else if(key($value[0]) == 'Plain' ){
-                    if(key_exists('weight', $value[0]['Plain'])){
-                        $fields[$field] = $value[0]['Plain']["weight"];
-                    }else{
-                        $fields[$field] = null;
+                } else if (key($value[0]) == 'Plain') {
+                    if ($searchFields == null || (array_key_exists('type', $value[0]['Plain']) && in_array($value[0]['Plain']['type'], $searchFields))) {
+                        if (key_exists('weight', $value[0]['Plain'])) {
+                            $fields[$field] = $value[0]['Plain']["weight"];
+                        } else {
+                            $fields[$field] = null;
+                        }
                     }
-                } else if(key($value[0]) == "Html"){
-                    if(key_exists('weight', $value[0]['Html'])) {
-                        $fields[$field] = $value[0]['Html']["weight"];
-                    }else{
-                        $fields[$field] = null;
+                } else if (key($value[0]) == "Html") {
+                    if ($searchFields == null || (array_key_exists('type', $value[0]['Html']) && in_array($value[0]['Html']['type'], $searchFields))) {
+                        if (key_exists('weight', $value[0]['Html'])) {
+                            $fields[$field] = $value[0]['Html']["weight"];
+                        } else {
+                            $fields[$field] = null;
+                        }
                     }
-                }else {
+                } else {
                     $fields[$field] = null;
                 }
             }
