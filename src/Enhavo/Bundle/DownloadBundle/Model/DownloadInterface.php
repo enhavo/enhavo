@@ -11,5 +11,5 @@ namespace Enhavo\Bundle\DownloadBundle\Model;
 
 interface DownloadInterface
 {
-
+    public function getFile();
 }

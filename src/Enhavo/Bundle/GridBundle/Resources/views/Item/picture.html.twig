@@ -2,12 +2,8 @@
     {% if data.title %}
         <h2>{{ data.title|raw }}</h2>
     {% endif %}
-    {% for file in data.files %}
-        {% if loop.first %}
-        <img class="enhavo_grid_img" src="{{ media_url(file,960) }}">
-        {% endif %}
-        {% if data.caption %}
-            <p class="picture_caption">{{ data.caption }}</p>
-        {% endif %}
-    {% endfor %}
+    <img class="enhavo_grid_img" src="{{ media_url(data.file,960) }}">
+    {% if data.caption %}
+        <p class="picture_caption">{{ data.caption }}</p>
+    {% endif %}
 </div>

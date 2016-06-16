@@ -30,8 +30,7 @@ class DownloadType extends AbstractType
         $builder->add('file', 'enhavo_files', array(
             'label' => 'download.form.label.file',
             'translation_domain' => 'EnhavoDownloadBundle',
-            'multiple'  => false,
-            'images'    => false
+            'multiple'  => false
         ));
     }
 
