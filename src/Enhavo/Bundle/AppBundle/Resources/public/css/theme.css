@@ -309,7 +309,15 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .tabContainer a:hover:after {opacity: 1;}
 .tabContentContainer {padding-bottom: 50px;padding-top: 50px;background:#fefefe;border-radius:0 2px 0 0}
 .tabContentContainer .choice-input-with-label:first-child .icheckbox-esperanto { margin-left:0;}
-.tabContentContainer .choice-input-with-label .icheckbox-esperanto { border-radius:50%;}
+.tabContentContainer .choice-input-with-label .icheckbox-esperanto { border-radius:50%; margin-left:0;}
+
+.tabContentContainer #list-fields .button-container { height:33px;line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;}
+.tabContentContainer #list-fields .button-container .button:hover i { color:#FFF}
+.tabContentContainer #list-fields .button-container .button:hover { background:#4395d1;}
+.tabContentContainer #list-fields.sortable-border-delete .button-delete { height:32px;padding: 5px 2px 5px 5px;}
+.tabContentContainer #list-fields.sortable-border-delete .button-delete:hover {  background:#4395d1;}
+.tabContentContainer #list-fields.sortable-border-delete .button-delete:hover i {color:#FFF}
+.tabContentContainer #list-fields.sortable-border-delete .listElement .input-container { margin-left:0;}
 
 .tabContentContainer #list-fields .button-container { height:33px;line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;}
 .tabContentContainer #list-fields .button-container .button:hover i { color:#FFF}
