@@ -18,6 +18,14 @@ use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
 class WysiwygType extends AbstractType
 {
     /**
+     * Sometimes uniqid() does npt provide a unique id (see enhavo ticket #160)
+     * So we use this number as a prefix and increase it every time to ensure uniqueness
+     *
+     * @var int
+     */
+    private static $uniqueIdPrefix = 0;
+
+    /**
      * @var WysiwygConfig
      */
     protected $config;
@@ -32,7 +40,7 @@ class WysiwygType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['id'] = uniqid();
+        $view->vars['id'] = uniqid(self::$uniqueIdPrefix++);
 
         $option = new WysiwygOption();
         $option->setFormats($options['formats']);
