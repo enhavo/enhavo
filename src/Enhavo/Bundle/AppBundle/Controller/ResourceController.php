@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ResourceController extends BaseController
 {
@@ -27,6 +28,11 @@ class ResourceController extends BaseController
      */
     public function createAction(Request $request)
     {
+        $securityContext = $this->get('security.context');
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        if(!$securityContext->isGranted($role)){
+            throw new AccessDeniedException;
+        }
         $config = $this->get('viewer.config')->parse($request);
         /** @var CreateViewer $viewer */
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
@@ -73,6 +79,11 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request)
     {
+        $securityContext = $this->get('security.context');
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        if(!$securityContext->isGranted($role)){
+            throw new AccessDeniedException;
+        }
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'edit');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
@@ -114,6 +125,11 @@ class ResourceController extends BaseController
 
     public function indexAction(Request $request)
     {
+        $securityContext = $this->get('security.context');
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        if(!$securityContext->isGranted($role)){
+            throw new AccessDeniedException;
+        }
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'index');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
@@ -154,6 +170,11 @@ class ResourceController extends BaseController
      */
     public function tableAction(Request $request)
     {
+        $securityContext = $this->get('security.context');
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        if(!$securityContext->isGranted($role)){
+            throw new AccessDeniedException;
+        }
         $config = $this->get('viewer.config')->parse($request);
         $viewer = $this->get('viewer.factory')->create($config->getType(), 'table');
         $viewer->setBundlePrefix($this->config->getBundlePrefix());
