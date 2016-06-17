@@ -312,6 +312,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .tabContentContainer .choice-input-with-label:first-child .icheckbox-esperanto { margin-left:0;}
 .tabContentContainer .choice-input-with-label .icheckbox-esperanto { border-radius:50%; margin-left:0;}
 
+#list-fields .listElement{ padding-bottom:45px;}
 .tabContentContainer #list-fields .button-container { height:33px;line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;}
 .tabContentContainer #list-fields .button-container .button:hover i { color:#FFF}
 .tabContentContainer #list-fields .button-container .button:hover { background:#4395d1;}
