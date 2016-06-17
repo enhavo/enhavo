@@ -42,8 +42,10 @@ services:
         class: %enhavo_app.doctrine_routeable_subscriber.class%
         arguments:
             - @enhavo_app.route_content_resolver
+            - @doctrine.orm.entity_manager
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: kernel.event_listener, event: enhavo_app.create, method: onCreate }
+            - { name: kernel.event_listener, event: enhavo_app.update, method: onUpdate }
 
     enhavo_app.form.route:
         class: %enhavo_app.form.route.class%
