@@ -6,7 +6,7 @@
                 {{ block('button_attributes') }}
                 class="btn col-md-12" type="button">
             <i class="button-icon icon-{{ icon }}"></i>
-            {{ label|trans({},  translationDomain) }}
+            {{ label|trans({},  translationDomain)|nl2br }}
         </button>
     </div>
 {% endif %}

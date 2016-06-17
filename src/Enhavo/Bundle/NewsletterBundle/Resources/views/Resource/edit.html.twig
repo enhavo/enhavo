@@ -9,7 +9,7 @@
 {% trans_default_domain "EnhavoNewsletterBundle" %}
 <div class="row mb1">
    <label class="col-md-2 text-right label-container">
-        {{ 'newsletter.label.sent'|trans }}
+        {{ 'newsletter.label.sent'|trans|nl2br }}
     </label>
     <div class="col-md-9 formwidget-container" style="padding-top: 4px;">
         {% if data.sent %}
@@ -21,7 +21,3 @@
         {% endif %}
     </div>
 </div>
-
-
-
-

@@ -6,7 +6,7 @@
             <div class="triangle-down"></div>
             <ul>
                 {% for item in items %}
-                    <li class="addItem" data-item="{{ item.type }}">{{ item.label|trans({}, item.translationDomain) }}</li>
+                    <li class="addItem" data-item="{{ item.type }}">{{ item.label|trans({}, item.translationDomain)|nl2br }}</li>
                 {% endfor %}
             </ul>
         </div>
