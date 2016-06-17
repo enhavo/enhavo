@@ -47,7 +47,6 @@ class DoctrineRouteableSubscriber
 
         if ($entity instanceof Routeable && $entity->getRoute() != null) {
             $this->updateRoute($entity->getRoute());
-            $this->entityManager->flush();
         }
     }
 
@@ -56,15 +55,17 @@ class DoctrineRouteableSubscriber
 
         if ($entity instanceof Routeable && $entity->getRoute() != null) {
             $this->updateRoute($entity->getRoute());
-            $this->entityManager->flush();
         }
     }
 
     public function updateRoute(Route $route)
     {
-        $content = $route->getContent();
-        $route->setTypeId($content->getId());
-        $route->setType($this->resolver->getType($content));
-        $route->setName(sprintf('dynamic_route_%s', $route->getId()));
+        if (!$route->getTypeId()) {
+            $content = $route->getContent();
+            $route->setTypeId($content->getId());
+            $route->setType($this->resolver->getType($content));
+            $route->setName(sprintf('dynamic_route_%s', $route->getId()));
+            $this->entityManager->flush();
+        }
     }
 }
