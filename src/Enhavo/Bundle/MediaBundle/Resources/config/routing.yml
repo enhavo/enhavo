@@ -3,11 +3,11 @@ enhavo_media_upload:
     defaults:
         _controller: EnhavoMediaBundle:File:upload
 
-enhavo_media_upload_data_base64:
-    pattern:  /file/upload_base64
+enhavo_media_replace:
+    pattern:  /file/replace/{id}
     methods: [POST]
     defaults:
-        _controller: EnhavoMediaBundle:File:uploadDataBase64
+        _controller: EnhavoMediaBundle:File:replace
     options:
         expose: true
 

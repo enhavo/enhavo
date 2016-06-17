@@ -20,11 +20,9 @@ class FileController extends Controller
         return $this->container->get('enhavo_media.file_service')->upload($request);
     }
 
-    public function uploadDataBase64Action(Request $request)
+    public function replaceAction($id, Request $request)
     {
-        $id = $request->request->get('id');
-        $image = $request->request->get('image');
-        return $this->get('enhavo_media.file_service')->replaceFileDataWithBase64($id, $image);
+        return $this->get('enhavo_media.file_service')->replaceFile($id, $request);
     }
 
     public function downloadAction($id)

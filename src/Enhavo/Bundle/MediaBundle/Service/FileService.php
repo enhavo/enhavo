@@ -92,32 +92,35 @@ class FileService
         return new JsonResponse($data);
     }
 
-    public function replaceFileDataWithBase64($id, $base64)
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function replaceFile($id, Request $request)
     {
         $entityFile = $this->manager->getRepository('EnhavoMediaBundle:File')->find($id);
         if (!$entityFile) {
             throw new NotFoundResourceException;
         }
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        if (!$file) {
+            throw new \Exception('File not in request');
+        }
 
-        $mimeType = substr($base64, 5, strpos($base64, ';') - 5);
-        $base64 = substr($base64, strpos($base64, ',') + 1);    // Cut header
-        $base64 = str_replace(' ','+',$base64);             // Replace spaces with +, see http://php.net/manual/en/function.base64-decode.php
-        $fileData = base64_decode($base64);
-
-        $targetDir = $this->getDirectory($entityFile);
-        $this->createPathIfNotExists($targetDir);
-        $file = fopen($this->getFilepath($entityFile), 'wb');
-        fwrite($file, $fileData);
-        fclose($file);
-
+        $mimeType = $file->getMimeType();
         if ($mimeType != $entityFile->getMimeType()) {
-            // Update mime type
             $entityFile->setMimeType($mimeType);
+            $entityFile->setExtension($file->guessExtension());
             $this->manager->persist($entityFile);
             $this->manager->flush();
         }
 
-        return new JsonResponse(array('files' => array('success' => true)));
+        $this->moveUploadedFile($file, $entityFile);
+
+        return new JsonResponse(array('files' => array($this->getFileInfo($entityFile))));
     }
 
     public function getCustomImageSizeResponse($id,$width,$height)
