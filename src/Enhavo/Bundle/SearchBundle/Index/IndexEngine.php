@@ -49,6 +49,8 @@ class IndexEngine implements IndexEngineInterface {
 
     protected $util;
 
+    protected $accum; //accumulator
+
     public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util)
     {
         $this->container = $container;
@@ -107,6 +109,7 @@ class IndexEngine implements IndexEngineInterface {
                 $this->em->flush();
             }
 
+            $this->accum = " ";
             $this->indexingData($resource, $dataSet);
         } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW){
 
@@ -114,6 +117,7 @@ class IndexEngine implements IndexEngineInterface {
             if($newDataset){
 
                 //indexing
+                $this->accum = " ";
                 $this->indexingData($resource, $dataSet);
             } else {
 
@@ -182,6 +186,7 @@ class IndexEngine implements IndexEngineInterface {
                     $entityName = array_pop($array);
                     $resource = $this->em->getRepository($currentDataset->getBundle().':'.$entityName)->find($currentDataset->getReference());
 
+                    $this->accum = " ";
                     $this->indexingData($resource, $currentDataset);
                 }
             }
@@ -356,6 +361,8 @@ class IndexEngine implements IndexEngineInterface {
         foreach($words as $word) {
             if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
 
+                $this->accum .= $word." ";
+
                 //check if the word is already in the list of scored words
                 if (!isset($scoredWords[$word])) {
                     $scoredWords[$word] = 0;
@@ -399,7 +406,6 @@ class IndexEngine implements IndexEngineInterface {
 
         $tag = FALSE; // Odd/even counter. Tag or no tag.
         $score = 1; // Starting score per word
-        $accum = ' '; // Accumulator for cleaned up data
         $tagstack = array(); // Stack with open tags
         $tagwords = 0; // Counter for consecutive words
         $focus = 1; // Focus state
@@ -449,7 +455,7 @@ class IndexEngine implements IndexEngineInterface {
                     foreach ($words as $word) {
                         if($word != "") {
                             // Add word to accumulator
-                            $accum .= $word . ' ';
+                            $this->accum .= $word . ' ';
                             // Check wordlength
                             if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
                                 if (!isset($scoredWords[$word])) {
@@ -556,13 +562,13 @@ class IndexEngine implements IndexEngineInterface {
             $newIndex->setWord($key);
             $newIndex->setLocale($this->container->getParameter('locale'));
             $newIndex->setScore($value);
-            $dataset->addData($key);
-            $dataset->setReindex(0);
             $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
             $this->searchDirty($key);
         }
+        $dataset->setData($this->accum);
+        $dataset->setReindex(0);
     }    /**
      * Simplifies and splits a string into words for indexing
      */
