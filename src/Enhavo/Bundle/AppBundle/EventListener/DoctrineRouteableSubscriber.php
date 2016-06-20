@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\AppBundle\EventListener;
 
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\RouteContentResolver;
 use Enhavo\Bundle\AppBundle\Entity\Route;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
-class DoctrineRouteableSubscriber implements EventSubscriber
+class DoctrineRouteableSubscriber
 {
     /**
      * @var RouteContentResolver
@@ -31,44 +31,41 @@ class DoctrineRouteableSubscriber implements EventSubscriber
      */
     protected $route;
 
-    public function __construct(RouteContentResolver $resolver)
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    public function __construct(RouteContentResolver $resolver, EntityManager $entityManager)
     {
         $this->resolver = $resolver;
+        $this->entityManager = $entityManager;
     }
 
-    public function getSubscribedEvents()
-    {
-        return array(
-            'postPersist',
-            'postUpdate'
-        );
-    }
-
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
+    public function onCreate(GenericEvent $event) {
+        $entity = $event->getSubject();
 
         if ($entity instanceof Routeable && $entity->getRoute() != null) {
             $this->updateRoute($entity->getRoute());
-            $args->getEntityManager()->flush();
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
+    public function onUpdate(GenericEvent $event) {
+        $entity = $event->getSubject();
 
         if ($entity instanceof Routeable && $entity->getRoute() != null) {
             $this->updateRoute($entity->getRoute());
-            $args->getEntityManager()->flush();
         }
     }
 
     public function updateRoute(Route $route)
     {
-        $content = $route->getContent();
-        $route->setTypeId($content->getId());
-        $route->setType($this->resolver->getType($content));
-        $route->setName(sprintf('dynamic_route_%s', $route->getId()));
+        if (!$route->getTypeId()) {
+            $content = $route->getContent();
+            $route->setTypeId($content->getId());
+            $route->setType($this->resolver->getType($content));
+            $route->setName(sprintf('dynamic_route_%s', $route->getId()));
+            $this->entityManager->flush();
+        }
     }
 }
