@@ -270,7 +270,7 @@ function Admin (router, templating, translator)
   };
 
   this.initActions = function() {
-    $(document).on('click', '[data-action]' , function(event) {
+    $(document).on('click', '[data-action=""]' , function(event) {
       event.stopPropagation();
       event.preventDefault();
       var route = $(this).data('action-route');
