@@ -9,7 +9,7 @@
     {% if menu.isDisplayed %}
         <li class="{% if menu.isCurrent() %}selected{% endif %}">
             <a href="{{ menu.uri }}" class="{{ menu.attribute('class') }}">
-              <span>{{ menu.label|trans() }}</span>
+              <span>{{ menu.label|trans|nl2br }}</span>
             </a>
         </li>
     {% endif %}

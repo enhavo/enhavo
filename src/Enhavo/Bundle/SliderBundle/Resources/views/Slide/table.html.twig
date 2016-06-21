@@ -1,8 +1,8 @@
 {% trans_default_domain "EnhavoSliderBundle" %}
 <div class="row p1 head-row">
-    <div class="col-md-2">{{ 'label.id'|trans('EnhavoAppBundle') }}</div>
-    <div class="col-md-8">{{ 'label.title'|trans('EnhavoAppBundle') }}</div>
-    <div class="col-md-2">{{ 'slide.label.public'|trans }}</div>
+    <div class="col-md-2">{{ 'label.id'|trans('EnhavoAppBundle')|nl2br }}</div>
+    <div class="col-md-8">{{ 'label.title'|trans('EnhavoAppBundle')|nl2br }}</div>
+    <div class="col-md-2">{{ 'slide.label.public'|trans|nl2br }}</div>
 </div>
 
 <div class="row row-container">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         {% else %}
-            {{ 'table.empty'|trans('EnhavoAppBundle') }}
+            {{ 'table.empty'|trans('EnhavoAppBundle')|nl2br }}
         {% endfor %}
     </div>
 </div>

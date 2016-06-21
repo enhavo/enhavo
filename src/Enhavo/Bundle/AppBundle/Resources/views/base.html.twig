@@ -96,10 +96,10 @@
             <div class="menu-section">
                 <nav id="user-menu">
                     <ul class="clearfix" data-user-menu>
-                        <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }}</button></li>
-                        <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle') }}</a></li>
+                        <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle')|nl2br }}</button></li>
+                        <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle')|nl2br }}</a></li>
                         <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
-                            <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</a>
+                            <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle')|nl2br }}</a>
                         </li>
                         <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
                     </ul>

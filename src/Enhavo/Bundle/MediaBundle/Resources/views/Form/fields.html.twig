@@ -25,19 +25,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-1 image-crop-modal-side-actions">
-                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_move'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="move-mode">
+                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_move'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="move-mode">
                                         <i class="icon-move"></i>
                                     </button>
-                                    <button class="image-cropper-action-button bottom-space selected" title="{{ 'media.image_cropper.label.tooltip_cropframe'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="cropframe-mode">
+                                    <button class="image-cropper-action-button bottom-space selected" title="{{ 'media.image_cropper.label.tooltip_cropframe'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="cropframe-mode">
                                         <i class="icon-crop"></i>
                                     </button>
-                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_zoom_in'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="zoom-in">
+                                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_zoom_in'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-in">
                                         <i class="icon-zoom-in"></i>
                                     </button>
-                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_zoom_out'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="zoom-out">
+                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_zoom_out'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-out">
                                         <i class="icon-zoom-out"></i>
                                     </button>
-                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_reset'|trans({}, 'EnhavoMediaBundle') }}" data-image-cropper-action="reset">
+                                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_reset'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="reset">
                                         <i class="icon-reply-all-1"></i>
                                     </button>
                                 </div>
@@ -46,13 +46,13 @@
                                 <div class="col-md-push-2 col-md-2">
                                     <button class="btn col-md-12" data-image-crop-submit>
                                         <i class="button-icon icon-save"></i>
-                                        {{ 'media.image_cropper.action.submit'|trans({}, 'EnhavoMediaBundle') }}
+                                        {{ 'media.image_cropper.action.submit'|trans({}, 'EnhavoMediaBundle')|nl2br }}
                                     </button>
                                 </div>
                                 <div class="col-md-push-6 col-md-2">
                                     <button class="btn col-md-12" data-image-crop-cancel>
                                         <i class="button-icon icon-cross"></i>
-                                        {{ 'label.cancel'|trans({}, 'EnhavoAppBundle') }}
+                                        {{ 'label.cancel'|trans({}, 'EnhavoAppBundle')|nl2br }}
                                     </button>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                         <div class="hintBox mb1">
                             <ul class="bullList">
                                 {% for info in form.information %}
-                                   <li>{{ info|trans }}</li>
+                                   <li>{{ info|trans|nl2br }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -101,7 +101,7 @@
                     <div class="fileupload-fields disabled hidden">
                         <div class="fileupload-field row">
                             <div class="col-md-4 fileupload-field-label-container">
-                                <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle') }}</label>
+                                <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle')|nl2br }}</label>
                             </div>
                             <div class="col-md-8 fileupload-field-input-container">
                                 <div class="input-container">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="fileupload-field row">
                             <div class="col-md-4 fileupload-field-label-container">
-                                <label for="fileupload-field-slug" class="fileupload-field-label">{{ 'media.form.label.slug'|trans({}, 'EnhavoMediaBundle') }}</label>
+                                <label for="fileupload-field-slug" class="fileupload-field-label">{{ 'media.form.label.slug'|trans({}, 'EnhavoMediaBundle')|nl2br }}</label>
                             </div>
                             <div class="col-md-8 fileupload-field-input-container">
                                 <span id="fileupload-field-slug" class="fileupload-field-slug" data-field-name="slug"> </span>
@@ -120,7 +120,7 @@
                         {% for field_name, field_options in fields %}
                             <div class="fileupload-field row">
                                 <div class="col-md-4 fileupload-field-label-container">
-                                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_options['label']|trans({}, field_options['translationDomain']) }}</label>
+                                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_options['label']|trans({}, field_options['translationDomain'])|nl2br }}</label>
                                 </div>
                                 <div class="col-md-8 fileupload-field-input-container">
                                     <div class="input-container">
@@ -131,16 +131,16 @@
                         {% endfor %}
                         <div class="fileupload-actions row">
                             <div class="col-md-4">
-                                <a class="fileupload-action-button" data-crop-button href=""><i class="icon-crop"></i> {{ 'media.image_cropper.action.open_image_cropper'|trans({}, 'EnhavoMediaBundle') }}</a>
+                                <a class="fileupload-action-button" data-crop-button href=""><i class="icon-crop"></i> {{ 'media.image_cropper.action.open_image_cropper'|trans({}, 'EnhavoMediaBundle')|nl2br }}</a>
                             </div>
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <a class="fileupload-action-button" data-download-button href=""><i class="icon-download"></i> {{ 'media.form.label.download'|trans({}, 'EnhavoMediaBundle') }}</a>
+                                <a class="fileupload-action-button" data-download-button href=""><i class="icon-download"></i> {{ 'media.form.label.download'|trans({}, 'EnhavoMediaBundle')|nl2br }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="mt1">
-                        <button class="btn upload-button"> {{ 'label.upload'|trans }}</button>
+                        <button class="btn upload-button"> {{ 'label.upload'|trans|nl2br }}</button>
                     </div>
                 </div>
             </div>

@@ -3,15 +3,15 @@
     <input id="search" name="search" placeholder="{{ 'search.label.search'|trans({}, 'EnhavoSearchBundle') }}">
     <button type="submit" value="search" id="submit_search"></button><br>
     {% if entities %}
-        {{ 'search.label.types'|trans({}, 'EnhavoSearchBundle') }}
+        {{ 'search.label.types'|trans({}, 'EnhavoSearchBundle')|nl2br }}
         <div>
         {% for key, entity in entities %}
-            <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="entities[]" value={{ key }}>{{ entity.label|trans({}, entity.translationDomain) }}</label>
+            <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="entities[]" value={{ key }}>{{ entity.label|trans({}, entity.translationDomain)|nl2br }}</label>
         {% endfor %}
         </div>
     {% endif %}
     {% if fields %}
-        {{ 'search.label.fields'|trans({}, 'EnhavoSearchBundle') }}
+        {{ 'search.label.fields'|trans({}, 'EnhavoSearchBundle')|nl2br }}
         <div>
         {% for key, field in fields %}
             <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="fields[]" value={{ key }}>{{ field.label|trans({}, field.translationDomain) }}</label>
