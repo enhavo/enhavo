@@ -5,7 +5,7 @@
   {% if routeParameters is defined %}
     data-action-route-parameters="{{ routeParameters|json_encode }}"
   {% endif %}
-  class="btn {{ icon }} col-sm-12"
+  class="btn {{ icon }}"
 >
   {{ label|trans({}, translationDomain)|nl2br }}
 </button>

@@ -20,7 +20,7 @@
 
     {% block topButtons %}
         <div class="row action-row" data-action-row>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
                 {% for action in actions %}
                     {{ action_render(action.type, action) }}
                 {% endfor %}

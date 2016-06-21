@@ -166,7 +166,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .btnsmall {display: inline-block;padding: 10px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:#4395d1;font-weight:700;border:none;}
 .btnsmall[class*="fa-"] {font-weight:normal;}
 .btn i {position:relative;top:-1px;}
-.btn.create{background: none;color: #0090ba;text-align: left;font-size: 14px;}
+.btn.create{background: none;color: #0090ba;text-align: left;font-size: 14px; padding-right:15px;}
 .btn.create:before{content: '\e834';font-family: "enhavo_iconfont";font-size:28px;display:inline-block;margin: 0 6px 0 0;position: relative;top: 4px;}
 .btn.dropdown{background: none;color: #a7b1b3;text-align: left;font-size: 14px;}
 .btn.dropdown:before{font-family: "enhavo_iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d8';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
@@ -178,6 +178,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     color: #0090ba;
     padding: 0;
     text-align: left;
+    white-space: nowrap;
     transition:all .2s;
     -webkit-transition:all .2s;
     -moz-transition:all .2s;
@@ -311,6 +312,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .tabContentContainer .choice-input-with-label:first-child .icheckbox-esperanto { margin-left:0;}
 .tabContentContainer .choice-input-with-label .icheckbox-esperanto { border-radius:50%; margin-left:0;}
 
+#list-fields .listElement{ padding-bottom:45px;}
 .tabContentContainer #list-fields .button-container { height:33px;line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;}
 .tabContentContainer #list-fields .button-container .button:hover i { color:#FFF}
 .tabContentContainer #list-fields .button-container .button:hover { background:#4395d1;}
@@ -394,10 +396,11 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 @media all and (max-width:991px) {
     #menu-main li a{padding: 10px 40px 10px 20px;}
     #menu-main-container .menu-logo { left:13px; margin-left:0;}
-    #overlayContent form > .row:last-of-type{padding: 25px 20px;}
+    #overlayContent .form-container form > .row:last-of-type{padding: 25px 20px;}
     .formwidget-container .enhavo_gridForm .menu { margin-left:0;}
     .formwidget-container .enhavo_gridForm .menu .triangle-up { margin-left:0; left:9px;}
     .formwidget-container .enhavo_gridForm .menu .triangle-down { margin-left:0; left:9px;}
+    #overlayContent .btn{ padding:0 0 18px 0;}
 }
 
 @media all and (max-width:767px) {
@@ -428,6 +431,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     .label-container label {margin-left: 5px;display: inline-block;}
     .tabContainer a:after{position: relative;}
     .tabContainer a {padding-left: 17px;}
+    #overlayContent .btn{ padding:12px 0;}
 
     #overlayContent .container { padding:0 30px;}
 
