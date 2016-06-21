@@ -177,10 +177,9 @@ var Form = function(router, templating, admin, translator)
 
         // grab the prototype template
         var item = list.attr('data-prototype');
-        // replace the "__name__" used in the id and name of the prototype
-        // with a number that's unique to your emails
-        // end name attribute looks like name="contact[emails][2]"
-        item = item.replace(/__name__/g, count);
+        var prototype_name = list.attr('data-prototype-name');
+        // replace prototype_name used in id and name with ascending number
+        item = item.replace(new RegExp(prototype_name, 'g'), count);
         count++;
 
         item = $.parseHTML(item.trim());
@@ -198,7 +197,10 @@ var Form = function(router, templating, admin, translator)
     };
 
     var initButtonUp = function(item) {
-      $(item).on('click', '.button-up', function() {
+      $(item).on('click', '.button-up', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
         var liElement = $(this).parent();
         while(!liElement.hasClass('listElement')) {
           liElement = liElement.parent();
@@ -222,7 +224,10 @@ var Form = function(router, templating, admin, translator)
     };
 
     var initButtonDown = function(item) {
-      $(item).on('click', '.button-down', function() {
+      $(item).on('click', '.button-down', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
         var liElement = $(this).parent();
         while(!liElement.hasClass('listElement')) {
           liElement = liElement.parent();
@@ -286,6 +291,7 @@ var Form = function(router, templating, admin, translator)
       self.initDataPicker(item);
       self.initInput(item);
       self.initWysiwyg(item);
+      self.initList(item);
     });
 
     $(document).on('formSaveAfter', function() {
