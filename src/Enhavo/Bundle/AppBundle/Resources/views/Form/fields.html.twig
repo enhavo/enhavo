@@ -69,6 +69,7 @@
     <ul id="list-fields"
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
         data-prototype="{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}"
+        data-prototype-name="{{ prototype_name }}"
         class="enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
