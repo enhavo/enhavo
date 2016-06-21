@@ -3,6 +3,14 @@ enhavo_media_upload:
     defaults:
         _controller: EnhavoMediaBundle:File:upload
 
+enhavo_media_replace:
+    pattern:  /file/replace/{id}
+    methods: [POST]
+    defaults:
+        _controller: EnhavoMediaBundle:File:replace
+    options:
+        expose: true
+
 enhavo_media_download:
     pattern:  /file/download/{id}
     defaults: {_controller: EnhavoMediaBundle:File:download,_method: GET}
@@ -20,3 +28,5 @@ enhavo_media_show_one_dim:
 enhavo_media_show:
     pattern:  /file/{id}/{slug}
     defaults: { _controller: EnhavoMediaBundle:File:show,width:'',height:'',slug:'',_method: GET}
+    options:
+        expose: true
