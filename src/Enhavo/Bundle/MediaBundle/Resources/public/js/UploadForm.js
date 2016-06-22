@@ -36,8 +36,8 @@ $(function() {
             var list = $(uploadForm).find('.list');
             var inputName = list.attr('data-name');
             if (!isMultiple[formIndex]) {
-              $(uploadForm).find('[data-file-list]').empty();
               if (data.result.files.length > 0) {
+                $(uploadForm).find('[data-file-list]').empty();
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
                   file_id: data.result.files[0].id,
                   full_name: inputName,
@@ -64,8 +64,23 @@ $(function() {
               });
             }
             self.setFileOrder(uploadForm);
+            if (!data.result.success) {
+              admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
+            }
+          },
+
+          fail: function(event, data) {
+            admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
+          },
+
+          always: function(event, data) {
             $(uploadForm).find('.progress .bar').css('width', '0%');
-            $(uploadForm).find('.dropzone').removeClass('empty');
+            var dropZone = $(uploadForm).find('.dropzone');
+            if (dropZone.find('[data-file-element]').length > 0) {
+              dropZone.removeClass('empty');
+            } else {
+              dropZone.addClass('empty');
+            }
           },
 
           add: function (event, data) {

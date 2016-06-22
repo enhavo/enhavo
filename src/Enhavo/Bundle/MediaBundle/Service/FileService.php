@@ -60,9 +60,17 @@ class FileService
         $files = $request->files->get('files');
         $slugifier = new Slugifier();
 
-        $data = array();
+        $data = array('success' => false, 'files' => array());
+
+        $error = UPLOAD_ERR_OK;
 
         foreach($files as $file) {
+            /** @var $file UploadedFile */
+
+            if ($file->getError() != UPLOAD_ERR_OK) {
+                $error = $file->getError();
+                continue;
+            }
 
             $filePathinfo = pathinfo($file->getClientOriginalName());
             $slugifiedTitle = $slugifier->slugify($filePathinfo['filename']) . '.' . $filePathinfo['extension'];;
@@ -87,6 +95,12 @@ class FileService
             }
 
             $data['files'][] = $this->getFileInfo($entityFile);
+        }
+
+        if ($error) {
+            $data['success'] = false;
+        } else {
+            $data['success'] = true;
         }
 
         return new JsonResponse($data);
