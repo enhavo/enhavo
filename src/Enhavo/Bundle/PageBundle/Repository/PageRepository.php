@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\PageBundle\Repository;
 
 use Enhavo\Bundle\ContentBundle\Repository\ContentRepository;
+use Enhavo\Bundle\WorkflowBundle;
 
 class PageRepository extends ContentRepository
 {

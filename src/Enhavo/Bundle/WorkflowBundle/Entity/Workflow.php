@@ -34,11 +34,6 @@ class Workflow implements WorkflowInterface
     private $formNodes;
 
     /**
-     * @var string
-     */
-    private $entity;
-
-    /**
      * @var boolean
      */
     private $active;
@@ -166,33 +161,6 @@ class Workflow implements WorkflowInterface
     }
 
     /**
-     * Set entity
-     *
-     * @param string $entity
-     *
-     * @return Workflow
-     */
-    public function setEntity($entity)
-    {
-        if($entity == null) {
-            $entity = $this->getEntity();
-        }
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return string
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
      * Set active
      *
      * @param boolean $active
@@ -258,5 +226,34 @@ class Workflow implements WorkflowInterface
     public function getFormNodes()
     {
         return $this->formNodes;
+    }
+    /**
+     * @var array
+     */
+    private $entity;
+
+
+    /**
+     * Set entity
+     *
+     * @param array $entity
+     *
+     * @return Workflow
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return array
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 }
