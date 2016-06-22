@@ -33,6 +33,7 @@ services:
             - @doctrine.orm.entity_manager
             - %enhavo_search.search.strategy%
             - @enhavo_search_search_util
+            - @enhavo_media.file_service
 
     enhavo_search_search_engine:
         class: Enhavo\Bundle\SearchBundle\Search\SearchEngine

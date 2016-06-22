@@ -10,6 +10,7 @@ use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 use Enhavo\Bundle\SearchBundle\Entity\Total;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Enhavo\Bundle\MediaBundle\Service\FileService;
 
 /**
  * Created by PhpStorm.
@@ -26,6 +27,7 @@ class IndexEngine implements IndexEngineInterface {
     protected $searchYamlPaths;
     protected $minimumWordSize = 2;
     protected $strategy;
+
 
     /**
      * index every time
@@ -48,14 +50,16 @@ class IndexEngine implements IndexEngineInterface {
     const INDEX_STRATEGY_NOINDEX = 'noindex';
 
     protected $util;
+    protected $fileService;
 
-    public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util)
+    public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService)
     {
         $this->container = $container;
         $this->kernel = $kernel;
         $this->em = $em;
         $this->strategy = $strategy;
         $this->util = $util;
+        $this->fileService = $fileService;
     }
 
     public function index($resource)
@@ -307,10 +311,14 @@ class IndexEngine implements IndexEngineInterface {
                             }
                         }
                     }
-
+                } else if($key == 'PDF'){
+                    //get content of PDF
+                    $pdfContent = $this->fileService->getPdfContent($text);
+                    //now we can use the content as plain and add the given weight from the search.yml
+                    $this->indexingPlain($pdfContent, $value['weight'], $value['type'], $dataSet);
                 }
             }
-        } else {
+        } else if($type[0] == 'Model') {
             //Model
             $model = get_class($text);
             $splittedModelPath = explode('\\', $model);

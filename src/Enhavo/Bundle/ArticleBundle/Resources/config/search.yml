@@ -10,3 +10,8 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
                 type: teaser
         grid:
             - Model
+
+        picture:
+            - PDF:
+                weight: 7
+                type: pdf
