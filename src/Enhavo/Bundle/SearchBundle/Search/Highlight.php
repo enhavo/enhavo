@@ -23,16 +23,44 @@ class Highlight {
     {
         $highlightedText = null;
         $countedCharacters = 0;
-        $pieces = explode('. ', $text);
+        $pieces = explode('.', $text);
 
         foreach($pieces as $piece){
             $pieceWords = explode(" ", $piece);
             $wordsToHighlight = array();
-            foreach ($pieceWords as $pieceWord) {
+            foreach ($pieceWords as $key => $pieceWord) {
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
                 foreach ($words as $searchWord) {
-                    if ($searchWord == $simplifiedWord) {
-                        $wordsToHighlight[$pieceWord] = $simplifiedWord;
+                    if (!$this->isPhrase($searchWord)) {
+                        if ($searchWord == $simplifiedWord) {
+                            $wordsToHighlight[$pieceWord] = $simplifiedWord;
+                        }
+                    } else {
+                        $isPhrase = true;
+                        $splittedSearchWord = explode(" ", $searchWord);
+                        if($simplifiedWord == $splittedSearchWord[0]){
+                            //check if next words of phrase also match
+                            $counter = 1;
+                            for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
+                                if(array_key_exists($i, $pieceWords)){
+                                    $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
+                                    if($nextSimplifiedPieceWord != $splittedSearchWord[$counter]){
+                                        $isPhrase = false;
+                                    }
+                                    $counter++;
+                                } else {
+                                    $isPhrase = false;
+                                }
+
+                            }
+                            if($isPhrase){
+                                $phraseToHighlight = "";
+                                for($j = $key; $j < $key + count($splittedSearchWord); $j++){
+                                    $phraseToHighlight .= $pieceWords[$j].' ';
+                                }
+                                $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                            }
+                        }
                     }
                 }
             }
@@ -45,7 +73,88 @@ class Highlight {
             }
         }
 
+
+
+
+       /* foreach($pieces as $piece){
+            $wordsToHighlight = array();
+            foreach ($words as $searchWord) {
+                if ($this->isPhrase($searchWord)){
+                    list($countedCharacters, $highlightedText) = $this->highlightPhrase($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText);
+                } else {
+                    list($countedCharacters, $highlightedText) = $this->highlightWord($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText);
+                }
+            }
+        }*/
         return rtrim($highlightedText, ' · ');
+    }
+
+    protected function isPhrase($word)
+    {
+        if (str_word_count($word) > 1){
+            return true;
+        }
+        return false;
+    }
+
+    protected function highlightPhrase($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText)
+    {
+        $simplifiedPiece = $this->util->searchSimplify($piece);
+        if(strpos($simplifiedPiece, $searchWord) !== false){
+            $isPhrase = true;
+            $splittedPieceWords = explode(" ", $piece); //not simplified words
+            $splittedSearchWord = explode(" ", $searchWord); //simplified word
+
+            foreach($splittedPieceWords as $key => $currentPieceWord){
+                $currentSimplifiedPieceWord = $this->util->searchSimplify(($currentPieceWord));
+                if($currentSimplifiedPieceWord == $splittedSearchWord[0]){
+                    //check if next words of phrase also match
+                    $counter = 1;
+                    for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
+                        $nextSimplifiedPieceWord = $this->util->searchSimplify(($splittedPieceWords[$i]));
+                        if(!$nextSimplifiedPieceWord == $splittedSearchWord[$counter]){
+                            $isPhrase = false;
+                        }
+                        $counter++;
+                    }
+                    if($isPhrase){
+                        $phraseToHighlight = "";
+                        for($j = $key; $j < $key + count($splittedSearchWord); $j++){
+                            $phraseToHighlight .= $splittedPieceWords[$j].' ';
+                        }
+                        $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                    }
+                }
+            }
+        }
+
+        if(!empty($wordsToHighlight)){
+            list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
+            foreach ($wordsToHighlight as $key => $value) {
+                $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+            }
+            $highlightedText = $highlightedText.$newWord;
+        }
+        return array($countedCharacters, $highlightedText);
+    }
+
+    protected function highlightWord($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText)
+    {
+        $pieceWords = explode(" ", $piece);
+        foreach ($pieceWords as $pieceWord) {
+            $simplifiedWord = $this->util->searchSimplify($pieceWord);
+            if ($searchWord == $simplifiedWord) {
+                $wordsToHighlight[$pieceWord] = $simplifiedWord;
+            }
+        }
+        if(!empty($wordsToHighlight)){
+            list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
+            foreach ($wordsToHighlight as $key => $value) {
+                $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+            }
+            $highlightedText = $highlightedText.$newWord;
+        }
+        return array($countedCharacters, $highlightedText);
     }
 
     protected function countCharacters($sentence, $words, $charactersLength)
