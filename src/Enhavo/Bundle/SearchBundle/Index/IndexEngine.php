@@ -3,14 +3,19 @@
 namespace Enhavo\Bundle\SearchBundle\Index;
 
 use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\MediaBundle\Service\FileService;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 use Enhavo\Bundle\SearchBundle\Entity\Total;
+use Enhavo\Bundle\SearchBundle\Index\Type\PlainType;
+use Enhavo\Bundle\SearchBundle\Index\Type\HtmlType;
+use Enhavo\Bundle\SearchBundle\Index\Type\CollectionType;
+use Enhavo\Bundle\SearchBundle\Index\Type\ModelType;
+use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
-use Enhavo\Bundle\MediaBundle\Service\FileService;
 
 /**
  * Created by PhpStorm.
@@ -50,6 +55,8 @@ class IndexEngine implements IndexEngineInterface {
     const INDEX_STRATEGY_NOINDEX = 'noindex';
 
     protected $util;
+    protected $plainType;
+    protected $htmlType;
     protected $fileService;
 
     public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService)
@@ -59,6 +66,8 @@ class IndexEngine implements IndexEngineInterface {
         $this->em = $em;
         $this->strategy = $strategy;
         $this->util = $util;
+        $this->plainType = new PlainType($this->util, $this);
+        $this->htmlType = new HtmlType($this->util, $this);
         $this->fileService = $fileService;
     }
 
@@ -254,6 +263,7 @@ class IndexEngine implements IndexEngineInterface {
         $this->searchUpdateTotals();
     }
 
+
     public function switchToIndexingType($text, $type, $dataSet)
     {
         //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
@@ -262,19 +272,25 @@ class IndexEngine implements IndexEngineInterface {
                 if ($key == 'Plain') {
 
                     //type Plain
-                    $this->indexingPlain($text, $value['weight'], $value['type'], $dataSet);
+                    $options = array(
+                        'weight' => $value['weight'],
+                        'minimumWordSize' => $this->minimumWordSize
+                    );
+                    $scoredWords = $this->plainType->index($text, $options);
+                    $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
                 } else if ($key == 'Html') {
 
                     //type Html
+                    $options = array(
+                        'minimumWordSize' => $this->minimumWordSize
+                    );
                     if (array_key_exists('weights', $value)) {
                         if($text != null){
-                            $this->indexingHtml($text, $value['type'], $dataSet, $value['weights']);
-                        }
-                    } else {
-                        if($text != null) {
-                            $this->indexingHtml($text, $value['type'], $dataSet);
+                            $options['weights'] = $value['weights'];
                         }
                     }
+                    $scoredWords = $this->htmlType->index($text, $options);
+                    $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
                 } else if ($key == 'Collection') {
 
                     //type Collection
@@ -298,24 +314,47 @@ class IndexEngine implements IndexEngineInterface {
                             $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
 
                             if ($text != null) {
-                                $this->indexingCollectionEntity($text, $value['entity'], $currentCollectionSearchYaml, $dataSet);
+                                $collectionType = new CollectionType($this->util, $this);
+                                $options = array(
+                                    'model' => $value['entity'],
+                                    'yaml' => $currentCollectionSearchYaml,
+                                    'dataSet' => $dataSet
+                                );
+                                $collectionType->index($text,$options);
                             }
                         }
                     } else if (array_key_exists(0, $value)) {
                         foreach($text as $currentText){
                             if(key($value[0]) == 'Plain'){
-                                $this->indexingPlain($currentText, $value[0]['Plain']['weight'],$value[0]['Plain']['type'], $dataSet);
+                                $options = array(
+                                    'weight' => $value[0]['Plain']['weight'],
+                                    'minimumWordSize' => $this->minimumWordSize
+                                );
+                                $scoredWords = $this->plainType->index($currentText, $options);
+                                $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Plain']['type']);
 
                             } else if (key($value[0]) == 'Html'){
-                                $this->indexingHtml($currentText, $value[0]['Html']['type'], $dataSet, $value[0]['Html']['weight']);
+                                $options = array(
+                                    'minimumWordSize' => $this->minimumWordSize
+                                );
+                                if (array_key_exists('weights', $value[0]['Html'])) {
+                                    $options['weights'] = $value[0]['Html']['weights'];
+                                }
+                                $scoredWords = $this->htmlType->index($currentText, $options);
+                                $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Html']['type']);
                             }
                         }
                     }
                 } else if($key == 'PDF'){
                     //get content of PDF
-                    $pdfContent = $this->fileService->getPdfContent($text);
-                    //now we can use the content as plain and add the given weight from the search.yml
-                    $this->indexingPlain($pdfContent, $value['weight'], $value['type'], $dataSet);
+                    $pdfType = new PdfType($this->util, $this, $this->fileService);
+                    $options = array(
+                        'weight' => $value['weight'],
+                        'minimumWordSize' => $this->minimumWordSize,
+                        'dataSet' => $dataSet,
+                        'type' => $value['type']
+                    );
+                    $pdfType->index($text, $options);
                 }
             }
         } else if($type[0] == 'Model') {
@@ -344,165 +383,15 @@ class IndexEngine implements IndexEngineInterface {
             if($modelPath != null){
                 $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
                 if($text != null) {
-                    $this->indexingModel($model, $currentModelSearchYaml, $dataSet, $text);
+
+                    $modelType = new ModelType($this->util, $this);
+                    $options = array(
+                        'model' => $model,
+                        'yaml' => $currentModelSearchYaml,
+                        'dataSet' => $dataSet
+                    );
+                    $modelType->index($text,$options);
                 }
-            }
-        }
-    }
-
-    public function indexingPlain($text, $score, $type, $dataset) {
-
-        //indexing plain text and save in DB
-        //get seperated words
-        $words = $this->searchIndexSplit($text);
-        $scoredWords = array();
-
-        //set focus to 1 at the beginning
-        $focus = 1;
-
-        //get the right score for every word
-        foreach($words as $word) {
-            if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
-
-                //check if the word is already in the list of scored words
-                if (!isset($scoredWords[$word])) {
-                    $scoredWords[$word] = 0;
-                }
-
-                //add score (this means if a word is already in the list of scoresWords we just add the score multiplied with the focus)
-                $scoredWords[$word] += $score * $focus;
-
-                //the focus is getting less if a word is at the end of a long text and so the next score gets less
-                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
-            }
-        }
-
-        $this->addWordsToSearchIndex($scoredWords, $dataset, $type);
-    }
-
-    public function indexingHtml($text, $type, $dataset, $weights = null) {
-
-        //indexing html text and save in DB
-        //get weights of words
-        $tagYaml = $this->util->getMainPath().'/Enhavo/Bundle/SearchBundle/Resources/config/tag_weights.yml';
-        $yaml = new Parser();
-        $tags = $yaml->parse(file_get_contents($tagYaml));
-        if($weights != null) //set given weights to default weights
-        {
-            foreach ($weights as $key => $value) {
-                if(array_key_exists($key, $tags)) {
-                    $tags[$key] = $value;
-                } else {
-                    $tags[$key] = $value;
-                }
-            }
-        }
-
-        // Strip off all ignored tags, insert space before and after them to keep word boundaries.
-        $text = str_replace(array('<', '>'), array(' <', '> '), $text);
-        $text = strip_tags($text, '<' . implode('><', array_keys($tags)) . '>');
-
-        // Split HTML tags from plain text.
-        $split = preg_split('/\s*<([^>]+?)>\s*/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-        $tag = FALSE; // Odd/even counter. Tag or no tag.
-        $score = 1; // Starting score per word
-        $accum = ' '; // Accumulator for cleaned up data
-        $tagstack = array(); // Stack with open tags
-        $tagwords = 0; // Counter for consecutive words
-        $focus = 1; // Focus state
-        $scoredWords = array();
-
-        //go trough the array of text and tags
-        foreach ($split as $value) {
-
-            //if tag is true we are handling the tags in the array, if tag is false we are handling text between the tags
-            if ($tag) {
-                // Increase or decrease score per word based on tag
-                list($tagname) = explode(' ', $value, 2);
-                $tagname = strtolower($tagname);
-                // Closing or opening tag?
-                if ($tagname[0] == '/') {
-                    $tagname = substr($tagname, 1);
-                    // If we encounter unexpected tags, reset score to avoid incorrect boosting.
-                    if (!count($tagstack) || $tagstack[0] != $tagname) {
-                        $tagstack = array();
-                        $score = 1;
-                    }
-                    else {
-                        // Remove from tag stack and decrement score
-                        $score = max(1, $score - $tags[array_shift($tagstack)]);
-                    }
-                }
-                else {
-                    if (isset($tagstack[0]) && $tagstack[0] == $tagname) {
-                        // None of the tags we look for make sense when nested identically.
-                        // If they are, it's probably broken HTML.
-                        $tagstack = array();
-                        $score = 1;
-                    }
-                    else {
-                        // Add to open tag stack and increment score
-                        array_unshift($tagstack, $tagname);
-                        $score += $tags[$tagname];
-                    }
-                }
-                // A tag change occurred, reset counter.
-                $tagwords = 0;
-            }
-            else {
-                // Note: use of PREG_SPLIT_DELIM_CAPTURE above will introduce empty values
-                if ($value != '') {
-                    $words = $this->searchIndexSplit($value);
-                    foreach ($words as $word) {
-                        if($word != "") {
-                            // Add word to accumulator
-                            $accum .= $word . ' ';
-                            // Check wordlength
-                            if (is_numeric($word) || strlen($word) >= $this->minimumWordSize) {
-                                if (!isset($scoredWords[$word])) {
-                                    $scoredWords[$word] = 0;
-                                }
-                                $scoredWords[$word] += $score * $focus;
-                                // Focus is a decaying value in terms of the amount of unique words up to this point.
-                                // From 100 words and more, it decays, to e.g. 0.5 at 500 words and 0.3 at 1000 words.
-                                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
-                            }
-                            $tagwords++;
-                            // Too many words inside a single tag probably mean a tag was accidentally left open.
-                            if (count($tagstack) && $tagwords >= 15) {
-                                $tagstack = array();
-                                $score = 1;
-                            }
-                        }
-                    }
-                }
-            }
-            $tag = !$tag;
-        }
-
-        $this->addWordsToSearchIndex($scoredWords, $dataset, $type);
-    }
-
-    public function indexingCollectionEntity($text, $model, $yamlFile, $dataSet) {
-        if(array_key_exists($model, $yamlFile)){
-            $colProperties = $yamlFile[$model]['properties'];
-            $accessor = PropertyAccess::createPropertyAccessor();
-            foreach($text as $singleText){
-                foreach($colProperties as $key => $value){
-                    $this->switchToIndexingType($accessor->getValue($singleText, $key), $value, $dataSet);
-                }
-            }
-        }
-    }
-
-    public function indexingModel($model, $yamlFile, $dataSet, $text) {
-        if(array_key_exists($model, $yamlFile)){
-            $colProperties = $yamlFile[$model]['properties'];
-            $accessor = PropertyAccess::createPropertyAccessor();
-            foreach($colProperties as $key => $value){
-                $currentText = $accessor->getValue($text, $key);
-                $this->switchToIndexingType($currentText, $value, $dataSet);
             }
         }
     }
@@ -571,13 +460,6 @@ class IndexEngine implements IndexEngineInterface {
             $this->em->flush();
             $this->searchDirty($key);
         }
-    }    /**
-     * Simplifies and splits a string into words for indexing
-     */
-    function searchIndexSplit($text) {
-        $text = $this->util->searchSimplify($text);
-        $words = explode(' ', $text);
-        return $words;
     }
 
     /**

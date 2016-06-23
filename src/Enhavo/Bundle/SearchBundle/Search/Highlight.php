@@ -9,14 +9,20 @@
 namespace Enhavo\Bundle\SearchBundle\Search;
 
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Enhavo\Bundle\MediaBundle\Service\FileService;
 
 class Highlight {
 
     protected $util;
 
-    public function __construct(SearchUtil $util)
+    protected $pieces = array();
+
+    protected $fileService;
+
+    public function __construct(SearchUtil $util, FileService $fileService)
     {
         $this->util = $util;
+        $this->fileService = $fileService;
     }
 
     public function highlight($text, $words)
@@ -31,8 +37,11 @@ class Highlight {
             foreach ($pieceWords as $pieceWord) {
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
                 foreach ($words as $searchWord) {
-                    if ($searchWord == $simplifiedWord) {
-                        $wordsToHighlight[$pieceWord] = $simplifiedWord;
+                    $test = explode(' ', $simplifiedWord);
+                    foreach ($test as $word) {
+                        if ($searchWord == $word) {
+                            $wordsToHighlight[$pieceWord] = $simplifiedWord;
+                        }
                     }
                 }
             }
@@ -46,6 +55,49 @@ class Highlight {
         }
 
         return rtrim($highlightedText, ' · ');
+    }
+
+    public function highlightText($resource, $words)
+    {
+        //get belonging search yml
+        $currentSearchYml = $this->getSearchYaml($resource);
+        //get fields of search yml
+        $fields = $this->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
+        //go over every field and check if one or more words are in it
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $this->pieces = array();
+        foreach ($fields as $field) {
+            if (property_exists($resource, $field) && $field != 'title') {
+                $text = $accessor->getValue($resource, $field);
+                $pieces = array();
+                if (is_string($text)) {
+                    $this->pieces[] = $text;
+                } else if (gettype($text) == 'object') {
+                    $fieldValue = $this->getValueOfField($field, $currentSearchYml, get_class($resource));
+                    $this->getTextPieces($text, $fieldValue);
+                } else if(is_array($text)){
+                    foreach($text as $currentText){
+                        $this->pieces[] = $currentText;
+                    }
+                }
+            }
+        }
+        $pieces = $this->pieces;
+        foreach ($pieces as &$piece) {
+            $piece = strip_tags($piece); // remove html tags
+            $lastCharacter = substr($piece, -1, 1);
+            if ($lastCharacter == '.') {
+                $piece = rtrim($piece, '.');
+            }
+        }
+        $pieces = array_filter($pieces); // remove keys with value ""
+        $text = implode(". ", $pieces);
+        $highlightedText = $this->highlight($text, $words);
+
+        $highlightedResult = array();
+        $highlightedResult['resource'] = $resource;
+        $highlightedResult['highlightedText'] = $highlightedText;
+        return $highlightedResult;
     }
 
     protected function countCharacters($sentence, $words, $charactersLength)
@@ -130,5 +182,78 @@ class Highlight {
             }
         }
         return false;
+    }
+
+    public function getTextPieces($text, $type)
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
+        if (is_array($type[0])) {
+            foreach ($type[0] as $key => $value) {
+                if ($key == 'Plain' || $key == 'Html') {
+                    $this->pieces[] = $text;
+                } else if ($key == 'Collection') {
+
+                    //type Collection
+                    //get the right yaml file for collection
+                    if (array_key_exists('entity', $value)) {
+                        $bundlePath = null;
+                        $splittedBundlePath = explode('\\', $value['entity']);
+                        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
+                            array_pop($splittedBundlePath);
+                        }
+                        $bundlePath = implode('/', $splittedBundlePath);
+                        $collectionPath = null;
+                        foreach ($this->util->getSearchYamls() as $path) {
+                            if (strpos($path, $bundlePath)) {
+                                $collectionPath = $path;
+                                break;
+                            }
+                        }
+                        $yaml = new Parser();
+                        $currentCollectionSearchYamls = $yaml->parse(file_get_contents($collectionPath));
+                        $collectionFields = $this->util->getFieldsOfSearchYml($currentCollectionSearchYamls, $value['entity']);
+                        if ($text != null) {
+                            foreach ($text as $content) {
+                                foreach ($collectionFields as $field) {
+                                    if (property_exists($content, $field)) {
+                                        $newText = $accessor->getValue($content, $field);
+                                        $type = $this->util->getValueOfField($field, $currentCollectionSearchYamls, $value['entity']);
+                                        $this->getTextPieces($newText, $type);
+                                    }
+                                }
+                            }
+                        }
+                    } else if (array_key_exists('type', $value)) {
+                        foreach ($text as $currentText) {
+                            $this->getTextPieces($currentText, $value['type']);
+                        }
+                    }
+                } else if($key == 'PDF'){
+                    //get content of PDF
+                    $pdfContent = $this->fileService->getPdfContent($text);
+                    //now we can use the content as plain and add the given weight from the search.yml
+                    $this->pieces[] = $pdfContent;
+                }
+            }
+        } else {
+            //Model
+            $class = null;
+            if ($text instanceof \Doctrine\Common\Persistence\Proxy) {
+                $class = get_parent_class($text);
+            } else {
+                $class = get_class($text);
+            }
+            $currentModelSearchYaml = $this->util->getSearchYaml($text);
+            $modelFields = $this->util->getFieldsOfSearchYml($currentModelSearchYaml, $class);
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach ($modelFields as $field) {
+                if (property_exists($text, $field)) {
+                    $newText = $accessor->getValue($text, $field);
+                    $type = $this->util->getValueOfField($field, $currentModelSearchYaml, $class);
+                    $this->getTextPieces($newText, $type, $field, $text);
+                }
+            }
+        }
     }
 }

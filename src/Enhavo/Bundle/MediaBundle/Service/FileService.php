@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\MediaBundle\Entity\File as EnhavoFile;
 use Doctrine\ORM\EntityManager;
 use BaconStringUtils\Slugifier;
-use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class FileService
@@ -282,30 +281,6 @@ class FileService
         return $entityFile;
     }
 
-    public function getPdfContent($file)
-    {
-        if($file != null) {
-            if (strpos($file->getMimeType(), 'pdf') !== false) {
-                $response = new BinaryFileResponse($this->getFilepath($file));
-                $text = $this->pdfToString($response->getFile());
-                return $text;
-            }
-        }
-        return '';
-    }
-
-    protected function pdfToString($sourcefile)
-    {
-        // Parse pdf file and build necessary objects.
-        $parser = new \Smalot\PdfParser\Parser();
-        $pdf    = $parser->parseFile($sourcefile);
-
-        $text = $pdf->getText();
-        $text = str_replace('&', ' ', $text);
-        return $text;
-    }
-
-
     /**
      * Used by storeFile() to wrap the different possibilities for types of the parameter $file.
      * For a list of possible types, see addFileToDatabase().
@@ -399,7 +374,7 @@ class FileService
         return $file->getId();
     }
 
-    protected function getFilepath(EnhavoFile $file)
+    public function getFilepath(EnhavoFile $file)
     {
         return $this->getDirectory($file).'/'.$this->getFilename($file);
     }
