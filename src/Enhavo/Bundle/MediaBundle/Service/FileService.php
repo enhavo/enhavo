@@ -60,15 +60,15 @@ class FileService
         $files = $request->files->get('files');
         $slugifier = new Slugifier();
 
-        $data = array('success' => false, 'files' => array());
+        $data = array('success' => true, 'files' => array());
 
-        $error = UPLOAD_ERR_OK;
+        $error = false;
 
         foreach($files as $file) {
             /** @var $file UploadedFile */
 
             if ($file->getError() != UPLOAD_ERR_OK) {
-                $error = $file->getError();
+                $error = true;
                 continue;
             }
 
@@ -97,11 +97,7 @@ class FileService
             $data['files'][] = $this->getFileInfo($entityFile);
         }
 
-        if ($error) {
-            $data['success'] = false;
-        } else {
-            $data['success'] = true;
-        }
+        $data['success'] = !$error;
 
         return new JsonResponse($data);
     }
