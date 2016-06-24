@@ -76,6 +76,9 @@ class SearchRequest {
     protected $em;
 
     protected $util;
+    protected $phrase = false;
+    protected $phrases = array();
+    protected $wordsWithoutPhrases = array();
 
     public function __construct(Container $container, EntityManager $em, SearchUtil $util)
     {
@@ -164,6 +167,9 @@ class SearchRequest {
                 $match[2] = substr($match[2], 1, -1);
                 $phrase = true;
                 $this->simple = false;
+                $this->phrase = true;
+                $currentPhrase = $this->util->searchSimplify($match[2]);
+                $this->phrases[] = trim($currentPhrase, '"');
             }
 
             //Symplify match
@@ -226,6 +232,9 @@ class SearchRequest {
                 $hasNewScores = false;
                 $queryOr = array();
                 foreach ($key as $or) {
+                    if(!in_array($or, $this->phrases)){
+                        $this->wordsWithoutPhrases[] = $or;
+                    }
                     list($numNewScores) = $this->parseWord($or);
                     $hasNewScores |= $numNewScores;
                     $queryOr[] = $or;
@@ -237,6 +246,9 @@ class SearchRequest {
                 }
             } else { // Single ANDed term.
                 $hasAnd = true;
+                if(!in_array($key, $this->phrases)){
+                    $this->wordsWithoutPhrases[] = $key;
+                }
                 list($numNewScores, $numValidWords) = $this->parseWord($key);
                 $this->conditions['AND'][] = $key;
                 if (!$numValidWords) {
@@ -289,8 +301,13 @@ class SearchRequest {
         return $this->toManyExpressions;
     }
 
+
     public function getWords()
     {
+        if($this->phrase == true){
+            return array_merge($this->phrases, $this->wordsWithoutPhrases);
+
+        }
         return $this->words;
     }
 }

@@ -29,16 +29,20 @@ class PdfType extends AbstractIndexType
     }
     function index($value, $options)
     {
+        $accum = $options['accum'];
         $minimumWordSize = $this->getMinimumWordSize($options);
+        $dataSet = $options['dataSet'];
+        $type = $options['type'];
         if($value instanceof FileInterface) {
             $pdfContent = $this->getPdfContent($value);
             $options = array(
                 'weight' => $options['weight'],
-                'minimumWordSize' => $minimumWordSize
+                'minimumWordSize' => $minimumWordSize,
+                'accum' => $accum
             );
             $plainType = new PlainType($this->util, $this->indexEngine);
-            $scoredWords = $plainType->index($pdfContent, $options);
-            $this->addWordsToSearchIndex($scoredWords, $options['dataSet'], $options['type']);
+            list($scoredWords, $accum) = $plainType->index($pdfContent, $options);
+            $this->indexEngine->addWordsToSearchIndex($scoredWords, $dataSet, $type, $accum);
         }
     }
 

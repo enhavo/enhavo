@@ -14,6 +14,7 @@ class PlainType extends AbstractIndexType
 {
     function index($value, $options)
     {
+        $accum = $options['accum'];
         $weight = 1;
         if(isset($options['weight'])) {
             $weight = $options['weight'];
@@ -31,21 +32,11 @@ class PlainType extends AbstractIndexType
 
         //get the right score for every word
         foreach($words as $word) {
-            if (is_numeric($word) || strlen($word) >= $minimumWordSize) {
-
-                //check if the word is already in the list of scored words
-                if (!isset($scoredWords[$word])) {
-                    $scoredWords[$word] = 0;
-                }
-
-                //add score (this means if a word is already in the list of scoresWords we just add the score multiplied with the focus)
-                $scoredWords[$word] += $weight * $focus;
-
-                //the focus is getting less if a word is at the end of a long text and so the next score gets less
-                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
-            }
+            // Add word to accumulator
+            $accum .= $word." ";
+            list($scoredWords, $focus) = $this->scoreWord($word, $weight, $minimumWordSize, $scoredWords, $focus);
         }
-        return $scoredWords;
+        return array($scoredWords, $accum);
     }
 
     /**

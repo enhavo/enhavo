@@ -33,7 +33,6 @@ class IndexEngine implements IndexEngineInterface {
     protected $minimumWordSize = 2;
     protected $strategy;
 
-
     /**
      * index every time
      */
@@ -58,6 +57,8 @@ class IndexEngine implements IndexEngineInterface {
     protected $plainType;
     protected $htmlType;
     protected $fileService;
+
+    protected $accum; //accumulator
 
     public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService)
     {
@@ -120,6 +121,7 @@ class IndexEngine implements IndexEngineInterface {
                 $this->em->flush();
             }
 
+            $this->accum = " ";
             $this->indexingData($resource, $dataSet);
         } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW){
 
@@ -127,6 +129,7 @@ class IndexEngine implements IndexEngineInterface {
             if($newDataset){
 
                 //indexing
+                $this->accum = " ";
                 $this->indexingData($resource, $dataSet);
             } else {
 
@@ -195,6 +198,7 @@ class IndexEngine implements IndexEngineInterface {
                     $entityName = array_pop($array);
                     $resource = $this->em->getRepository($currentDataset->getBundle().':'.$entityName)->find($currentDataset->getReference());
 
+                    $this->accum = " ";
                     $this->indexingData($resource, $currentDataset);
                 }
             }
@@ -263,7 +267,6 @@ class IndexEngine implements IndexEngineInterface {
         $this->searchUpdateTotals();
     }
 
-
     public function switchToIndexingType($text, $type, $dataSet)
     {
         //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
@@ -274,22 +277,26 @@ class IndexEngine implements IndexEngineInterface {
                     //type Plain
                     $options = array(
                         'weight' => $value['weight'],
-                        'minimumWordSize' => $this->minimumWordSize
+                        'minimumWordSize' => $this->minimumWordSize,
+                        'accum' => $this->accum
                     );
-                    $scoredWords = $this->plainType->index($text, $options);
+                    list($scoredWords, $newAccum) = $this->plainType->index($text, $options);
+                    $this->accum = $newAccum;
                     $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
                 } else if ($key == 'Html') {
 
                     //type Html
                     $options = array(
-                        'minimumWordSize' => $this->minimumWordSize
+                        'minimumWordSize' => $this->minimumWordSize,
+                        'accum' => $this->accum
                     );
                     if (array_key_exists('weights', $value)) {
                         if($text != null){
                             $options['weights'] = $value['weights'];
                         }
                     }
-                    $scoredWords = $this->htmlType->index($text, $options);
+                    list($scoredWords, $newAccum) = $this->htmlType->index($text, $options);
+                    $this->accum = $newAccum;
                     $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
                 } else if ($key == 'Collection') {
 
@@ -328,19 +335,23 @@ class IndexEngine implements IndexEngineInterface {
                             if(key($value[0]) == 'Plain'){
                                 $options = array(
                                     'weight' => $value[0]['Plain']['weight'],
-                                    'minimumWordSize' => $this->minimumWordSize
+                                    'minimumWordSize' => $this->minimumWordSize,
+                                    'accum' => $this->accum
                                 );
-                                $scoredWords = $this->plainType->index($currentText, $options);
+                                list($scoredWords, $newAccum) = $this->plainType->index($currentText, $options);
+                                $this->accum = $newAccum;
                                 $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Plain']['type']);
 
                             } else if (key($value[0]) == 'Html'){
                                 $options = array(
-                                    'minimumWordSize' => $this->minimumWordSize
+                                    'minimumWordSize' => $this->minimumWordSize,
+                                    'accum' => $this->accum
                                 );
                                 if (array_key_exists('weights', $value[0]['Html'])) {
                                     $options['weights'] = $value[0]['Html']['weights'];
                                 }
-                                $scoredWords = $this->htmlType->index($currentText, $options);
+                                list($scoredWords, $newAccum) = $this->htmlType->index($currentText, $options);
+                                $this->accum = $newAccum;
                                 $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Html']['type']);
                             }
                         }
@@ -352,7 +363,8 @@ class IndexEngine implements IndexEngineInterface {
                         'weight' => $value['weight'],
                         'minimumWordSize' => $this->minimumWordSize,
                         'dataSet' => $dataSet,
-                        'type' => $value['type']
+                        'type' => $value['type'],
+                        'accum' => $this->accum
                     );
                     $pdfType->index($text, $options);
                 }
@@ -443,7 +455,7 @@ class IndexEngine implements IndexEngineInterface {
         }
     }
 
-    protected function addWordsToSearchIndex($scoredWords, $dataset, $type)
+    public function addWordsToSearchIndex($scoredWords, $dataset, $type, $accum = null)
     {
         //add the scored words to search_index
         foreach ($scoredWords as $key => $value) {
@@ -453,14 +465,17 @@ class IndexEngine implements IndexEngineInterface {
             $newIndex->setWord($key);
             $newIndex->setLocale($this->container->getParameter('locale'));
             $newIndex->setScore($value);
-            $dataset->addData($key);
-            $dataset->setReindex(0);
             $this->em->persist($dataset);
             $this->em->persist($newIndex);
             $this->em->flush();
             $this->searchDirty($key);
         }
-    }
+        if(!$accum == null){
+            $this->accum = $accum;
+        }
+        $dataset->setData($this->accum);
+        $dataset->setReindex(0);
+    }    
 
     /**
      * Marks a word as "dirty" (changed), or retrieves the list of dirty words.

@@ -15,6 +15,7 @@ class HtmlType extends AbstractIndexType
 {
     function index($val, $options)
     {
+        $accum = $options['accum'];
         //indexing html text and save in DB
         //get weights of words
         $tagYaml = $this->util->getMainPath().'/Enhavo/Bundle/SearchBundle/Resources/config/tag_weights.yml';
@@ -40,7 +41,6 @@ class HtmlType extends AbstractIndexType
 
         $tag = FALSE; // Odd/even counter. Tag or no tag.
         $score = 1; // Starting score per word
-        $accum = ' '; // Accumulator for cleaned up data
         $tagstack = array(); // Stack with open tags
         $tagwords = 0; // Counter for consecutive words
         $focus = 1; // Focus state
@@ -89,32 +89,22 @@ class HtmlType extends AbstractIndexType
                 if ($value != '') {
                     $words = $this->searchIndexSplit($value);
                     foreach ($words as $word) {
-                        if($word != "") {
-                            // Add word to accumulator
-                            $accum .= $word . ' ';
-                            // Check wordlength
-                            if (is_numeric($word) || strlen($word) >= $minimumWordSize) {
-                                if (!isset($scoredWords[$word])) {
-                                    $scoredWords[$word] = 0;
-                                }
-                                $scoredWords[$word] += $score * $focus;
-                                // Focus is a decaying value in terms of the amount of unique words up to this point.
-                                // From 100 words and more, it decays, to e.g. 0.5 at 500 words and 0.3 at 1000 words.
-                                $focus = min(1, .01 + 3.5 / (2 + count($scoredWords) * .015));
-                            }
-                            $tagwords++;
-                            // Too many words inside a single tag probably mean a tag was accidentally left open.
-                            if (count($tagstack) && $tagwords >= 15) {
-                                $tagstack = array();
-                                $score = 1;
-                            }
+                        // Add word to accumulator
+                        $accum .= $word . ' ';
+                        // Check wordlength
+                        list($scoredWords, $focus) = $this->scoreWord($word, $score, $minimumWordSize, $scoredWords, $focus);
+                        $tagwords++;
+                        // Too many words inside a single tag probably mean a tag was accidentally left open.
+                        if (count($tagstack) && $tagwords >= 15) {
+                            $tagstack = array();
+                            $score = 1;
                         }
                     }
                 }
             }
             $tag = !$tag;
         }
-        return $scoredWords;
+        return array($scoredWords, $accum);
     }
 
     /**

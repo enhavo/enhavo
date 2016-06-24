@@ -96,4 +96,4 @@ services:
         class: Enhavo\Bundle\SearchBundle\Search\Highlight
         arguments:
             - @enhavo_search_search_util
-            - @enhavo_media.file_service
+            - @enhavo_search_pdf_type
