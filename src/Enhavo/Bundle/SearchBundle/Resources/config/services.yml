@@ -71,6 +71,7 @@ services:
         class: Enhavo\Bundle\SearchBundle\Index\IndexElasticsearchEngine
         arguments:
             - @enhavo_search_search_util
+            - @enhavo_search_pdf_type
 
 
     enhavo_search_elasticsearch_engine:
