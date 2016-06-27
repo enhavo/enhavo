@@ -23,13 +23,14 @@ class Highlight {
     {
         $highlightedText = null;
         $countedCharacters = 0;
-        $pieces = explode('.', $text);
+        $pieces = explode('. ', $text);
 
         foreach($pieces as $piece){
             $pieceWords = explode(" ", $piece);
             $wordsToHighlight = array();
             foreach ($pieceWords as $key => $pieceWord) {
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
+                $pieceWord = trim($pieceWord, ",.:;-_!?");
                 foreach ($words as $searchWord) {
                     if (!$this->isPhrase($searchWord)) {
                         if ($searchWord == $simplifiedWord) {
