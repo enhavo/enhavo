@@ -53,7 +53,7 @@ Enhavo\Bundle\GridBundle\Entity\Text:
                 weights:
                   h1: 12
                   h2: 10
-                  p: 77
+                  p: 7
                 type: text
 
 Enhavo\Bundle\GridBundle\Entity\TextPicture:

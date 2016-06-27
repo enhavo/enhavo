@@ -33,10 +33,11 @@ class PdfType extends AbstractIndexType
         $minimumWordSize = $this->getMinimumWordSize($options);
         $dataSet = $options['dataSet'];
         $type = $options['type'];
+        $weight = $options['weight'];
         if($value instanceof FileInterface) {
             $pdfContent = $this->getPdfContent($value);
             $options = array(
-                'weight' => $options['weight'],
+                'weight' => $weight,
                 'minimumWordSize' => $minimumWordSize,
                 'accum' => $accum
             );

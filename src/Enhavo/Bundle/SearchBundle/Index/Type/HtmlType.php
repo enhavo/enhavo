@@ -21,7 +21,7 @@ class HtmlType extends AbstractIndexType
         $tagYaml = $this->util->getMainPath().'/Enhavo/Bundle/SearchBundle/Resources/config/tag_weights.yml';
         $yaml = new Parser();
         $tags = $yaml->parse(file_get_contents($tagYaml));
-        if($options['weights'] != null) //set given weights to default weights
+        if(isset($options['weights'])) //set given weights to default weights
         {
             foreach ($options['weights'] as $key => $value) {
                 if(array_key_exists($key, $tags)) {
@@ -92,7 +92,7 @@ class HtmlType extends AbstractIndexType
                         // Add word to accumulator
                         $accum .= $word . ' ';
                         // Check wordlength
-                        list($scoredWords, $focus) = $this->scoreWord($word, $score, $minimumWordSize, $scoredWords, $focus);
+                         list($scoredWords, $focus) = $this->scoreWord($word, $score, $minimumWordSize, $scoredWords, $focus);
                         $tagwords++;
                         // Too many words inside a single tag probably mean a tag was accidentally left open.
                         if (count($tagstack) && $tagwords >= 15) {
