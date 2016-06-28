@@ -39,6 +39,11 @@ class Workflow implements WorkflowInterface
     private $active;
 
     /**
+     * @var array
+     */
+    private $entity;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -227,11 +232,6 @@ class Workflow implements WorkflowInterface
     {
         return $this->formNodes;
     }
-    /**
-     * @var array
-     */
-    private $entity;
-
 
     /**
      * Set entity
