@@ -1,21 +1,25 @@
 {% trans_default_domain translationDomain %}
-<div data-test class="row head-row{% if viewer.hasBatchActions %} has-batch-actions{% endif %}">
+<div data-test class="row head-row {% if batches %}has-batch-actions{% endif %}">
     {% for column in columns %}
         <div class="col-xs-{{ table_widget_width(column.type, column) }}">{{ table_widget_label(column.type, column) }}</div>
     {% endfor %}
 </div>
 
-{% if viewer.hasBatchActions %}<form data-batch-action-form action="#">{% endif %}
+{% if batches %}<form data-batch-action-form action="#">{% endif %}
 
-    <div class="row row-container{% if viewer.sortable %} sortable-droptarget{% endif %}">
-        <div class="col-xs-{{ viewer.tableWidth }}"
-            {% if viewer.sortable %}
-                data-sortable-container data-move-after-route="{{ viewer.moveAfterRoute }}"
-                data-move-to-page-route="{{ viewer.moveToPageRoute }}"
+    <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
+        <div class="col-xs-{{ width }}"
+            {% if sortable %}
+                data-sortable-container data-move-after-route="{{ move_after_route }}"
+                data-move-to-page-route="{{ move_to_page_route }}"
             {% endif %}>
             {% for item in data %}
-                <div class="row entry-row{% if viewer.hasBatchActions %} has-batch-actions{% endif %}" data-id="{{ item.id }}"{% if viewer.sortable %} data-sortable-row{% endif %}>
-                    {% if viewer.hasBatchActions %}<div class="batch-checkbox-wrapper"><input type="checkbox" name="batchActionTargets[]" value="{{ item.id }}" /></div>{% endif %}
+                <div class="row entry-row{% if batches %} has-batch-actions{% endif %}" data-id="{{ item.id }}"{% if sortable %} data-sortable-row{% endif %}>
+                    {% if batches %}
+                        <div class="batch-checkbox-wrapper">
+                          <input type="checkbox" name="batchActionTargets[]" value="{{ item.id }}" />
+                        </div>
+                    {% endif %}
                     {% for column in columns %}
                         <div class="col-xs-{{ table_widget_width(column.type, column) }}">
                             {{ table_widget_render(column.type, column, item) }}
@@ -29,7 +33,7 @@
             {% endfor %}
         </div>
     </div>
-{% if viewer.hasBatchActions and data|length > 0 %}
+{% if batches and data|length > 0 %}
     {{ batch_action_render(viewer) }}
 </form>
 {% endif %}

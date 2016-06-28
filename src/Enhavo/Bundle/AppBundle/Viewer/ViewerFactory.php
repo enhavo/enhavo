@@ -8,11 +8,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Enhavo\Bundle\AppBundle\Exception\ViewerNotFoundException;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Form\Form;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 
 class ViewerFactory
 {
@@ -22,62 +23,57 @@ class ViewerFactory
     protected $container;
 
     /**
-     * @var RequestStack
+     * @var TypeCollector
      */
-    protected $requestStack;
+    protected $collector;
 
-    /**
-     * @var array
-     */
-    protected $list;
-
-    public function __construct(ContainerInterface $container, RequestStack $requestStack, $viewerList)
+    public function __construct(ContainerInterface $container, TypeCollector $collector)
     {
         $this->container = $container;
-        $this->requestStack = $requestStack;
-        $this->list = $viewerList;
+        $this->collector = $collector;
     }
 
-    public function create($type, $default = null)
+    public function create(
+        RequestConfigurationInterface $configuration,
+        MetadataInterface $metadata = null,
+        $newResource = null,
+        Form $form = null,
+        $defaultType = null)
     {
-        $request = $this->getRequest();
-        try {
-            $class = $this->matchViewer($type, $default);
-        } catch(ViewerNotFoundException $e) {
-            throw new ViewerNotFoundException(sprintf(
-                '%s. Using route "%s"',
-                $e->getMessage(),
-                $request->get('_route'))
-            );
+        $viewerType = $configuration->getViewerType() ? $configuration->getViewerType() : $defaultType;
+
+        /** @var ViewerInterface $viewer */
+        $viewer = $this->collector->getType($viewerType);
+        $viewer = clone $viewer;
+
+        $viewer->setContainer($this->container);
+        $viewer->setConfiguration($configuration);
+
+        if($metadata) {
+            $viewer->setMetadata($metadata);
         }
 
-        /** @var $viewer AbstractViewer */
-        $viewer = new $class;
-        if($viewer instanceof ContainerAwareInterface) {
-            $viewer->setContainer($this->container);
+        if($form) {
+            $viewer->setForm($form);
         }
-        $viewer->setRequest($request);
+
+        if($newResource) {
+            $viewer->setResource($newResource);
+        }
+
+        $optionResolver = new OptionsResolver();
+        $viewer->configureOptions($optionResolver);
+        $options = $optionResolver->resolve($configuration->getViewerOptions());
+
+        $optionAccessor = new OptionAccessor();
+        $optionAccessor->parse($options);
+        $viewer->setOptionAccessor($optionAccessor);
+
         return $viewer;
     }
 
-    /**
-     * @return null|Request
-     */
-    protected function getRequest()
+    public function createType(RequestConfigurationInterface $configuration, $type)
     {
-        return $this->requestStack->getMasterRequest();
-    }
-
-    protected function matchViewer($type, $default = null)
-    {
-        if(isset($this->list[$type])) {
-            return $this->list[$type];
-        }
-
-        if(isset($this->list[$default])) {
-            return $this->list[$default];
-        }
-
-        throw new ViewerNotFoundException(sprintf('Trying to match viewer by type "%s" or default "%s" but no viewer found', $type, $default));
+        return $this->create($configuration, null, null, null, $type);
     }
 }

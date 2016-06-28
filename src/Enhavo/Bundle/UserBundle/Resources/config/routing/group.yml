@@ -5,8 +5,6 @@ enhavo_user_group_index:
     methods: [GET]
     defaults:
         _controller: enhavo_user.controller.group:indexAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
             title: group.label.group
             translationDomain: EnhavoUserBundle
@@ -18,8 +16,6 @@ enhavo_user_group_create:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.group:createAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
              tabs:
@@ -37,8 +33,6 @@ enhavo_user_group_update:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.group:updateAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
              translationDomain: EnhavoUserBundle
              tabs:
@@ -57,8 +51,6 @@ enhavo_user_group_table:
     defaults:
         page: 1
         _controller: enhavo_user.controller.group:tableAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             translationDomain: EnhavoUserBundle
             table:

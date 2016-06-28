@@ -14,8 +14,8 @@
 {% endblock %}
 
 {% block content %}
-    {% if viewer.title|trans({}, viewer.translationDomain) %}
-        <h1 class="cat">{{ viewer.title|trans({}, viewer.translationDomain) }}</h1>
+    {% if title %}
+        <h1 class="cat">{{ title|trans({}, translationDomain) }}</h1>
     {% endif %}
 
     {% block topButtons %}

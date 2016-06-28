@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * User
  */
-class User extends BaseUser implements UserInterface
+class User extends BaseUser implements UserInterface, ResourceInterface
 {
     /**
      * @var integer

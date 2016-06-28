@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +29,14 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_app.action_collector', 'enhavo.action')
+        );
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.viewer_collector', 'enhavo.viewer')
+        );
+
+        $container->addCompilerPass(
+            new SyliusCompilerPass()
         );
     }
 }

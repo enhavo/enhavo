@@ -5,8 +5,6 @@ enhavo_user_user_index:
     methods: [GET]
     defaults:
         _controller: enhavo_user.controller.user:indexAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
             title: user.label.user
             translationDomain: EnhavoUserBundle
@@ -18,8 +16,6 @@ enhavo_user_user_create:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.user:createAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             translationDomain: EnhavoUserBundle
 
@@ -30,8 +26,6 @@ enhavo_user_user_update:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.user:updateAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             translationDomain: EnhavoUserBundle
 
@@ -43,8 +37,6 @@ enhavo_user_user_table:
     defaults:
         page: 1
         _controller: enhavo_user.controller.user:tableAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             translationDomain: EnhavoUserBundle
             table:

@@ -5,8 +5,6 @@ enhavo_article_article_index:
     methods: [GET]
     defaults:
         _controller: enhavo_article.controller.article:indexAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
         _viewer:
             title: article.label.article
             translationDomain: EnhavoArticleBundle
@@ -18,8 +16,6 @@ enhavo_article_article_create:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_article.controller.article:createAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
         _viewer:
             translationDomain: EnhavoArticleBundle
             tabs:
@@ -44,8 +40,6 @@ enhavo_article_article_update:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_article.controller.article:updateAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
         _viewer:
             translationDomain: EnhavoArticleBundle
             tabs:
@@ -71,8 +65,6 @@ enhavo_article_article_table:
     defaults:
         page: 1
         _controller: enhavo_article.controller.article:tableAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
         _viewer:
             translationDomain: EnhavoArticleBundle
             table:
