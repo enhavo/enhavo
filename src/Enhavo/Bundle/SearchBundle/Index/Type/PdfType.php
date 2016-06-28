@@ -66,7 +66,7 @@ class PdfType extends AbstractIndexType
         $pdf    = $parser->parseFile($sourcefile);
 
         $text = $pdf->getText();
-        $text = str_replace(array('&', '%'), ' ', $text);
+        $text = str_replace(array('&', '%', '$'), ' ', $text);
         return $text;
     }
 
