@@ -368,11 +368,13 @@ class SearchUtil
                 $piece = rtrim($piece, '.');
             }
         }
+        $highlightClass = new Highlight($this);
         $pieces = array_filter($pieces); // remove keys with value ""
         $text = implode(". ", $pieces);
-        $highlightClass = new Highlight($this);
-        $highlightedText = $highlightClass->highlight($text, $words);
-
+        $splittedPieces = preg_split('/[.!?:;][\n ]|\n/', $text);
+        $expression = array_shift($words);
+        list($highlightedText, $countedCharacters, $splittedPieces) = $highlightClass->checkWholeExpression($splittedPieces, $expression, $words);
+        $highlightedText = $highlightClass->highlight($splittedPieces, $words, $highlightedText, $countedCharacters);
         $highlightedResult = array();
         $highlightedResult['resource'] = $resource;
         $highlightedResult['highlightedText'] = $highlightedText;
