@@ -40,6 +40,7 @@ class UserContext extends KernelContext
         if($user === null) {
             $group = $this->createAdminGroup();
             $user = $this->createAdminUser($group);
+            $user->addRole('ROLE_SUPER_ADMIN');
             $em = $this->getManager();
             $em->persist($group);
             $em->persist($user);
