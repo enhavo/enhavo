@@ -34,7 +34,7 @@ class SearchController extends Controller
                 $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
                 foreach ($resourcesBefore as $resource) {
-                    $resourcesAfter[] = $this->get('enhavo_search_highlight')->highlightText($resource, $result->getWords());
+                    $resourcesAfter[] = $this->get('enhavo_search_highlight')->highlight($resource, $result->getWords());
                 }
                 $result->setResources($resourcesAfter);
                 return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(

@@ -304,10 +304,13 @@ class SearchRequest {
 
     public function getWords()
     {
+        $wordsResultArray = [];
+        $wordsResultArray[] = $this->searchExpression;
         if($this->phrase == true){
-            return array_merge($this->phrases, $this->wordsWithoutPhrases);
-
+            $wordsResultArray = array_merge($wordsResultArray, $this->phrases, $this->wordsWithoutPhrases);
+            return $wordsResultArray;
         }
-        return $this->words;
+        $wordsResultArray = array_merge($wordsResultArray, $this->words);
+        return $wordsResultArray;
     }
 }

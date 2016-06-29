@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\SearchBundle\Search;
 
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Yaml\Parser;#
+use Symfony\Component\Yaml\Parser;
 use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 
 class Highlight {
@@ -27,77 +27,53 @@ class Highlight {
         $this->pdfType = $pdfType;
     }
 
-    public function highlight($text, $words)
+    public function highlight($resource, $words)
     {
-        $highlightedText = null;
-        $countedCharacters = 0;
-        $pieces = explode('.', $text);
-
-        foreach($pieces as $piece){
-            $pieceWords = explode(" ", $piece);
-            $wordsToHighlight = array();
-            foreach ($pieceWords as $key => $pieceWord) {
-                $simplifiedWord = $this->util->searchSimplify($pieceWord);
-                foreach ($words as $searchWord) {
-                    if (!$this->isPhrase($searchWord)) {
-                        $test = explode(' ', $simplifiedWord);
-                        foreach ($test as $word) {
-                            if ($searchWord == $word) {
-                                $wordsToHighlight[$pieceWord] = $simplifiedWord;
-                            }
-                        }
-                    } else {
-                        $isPhrase = true;
-                        $splittedSearchWord = explode(" ", $searchWord);
-                        if($simplifiedWord == $splittedSearchWord[0]){
-                            //check if next words of phrase also match
-                            $counter = 1;
-                            for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
-                                if(array_key_exists($i, $pieceWords)){
-                                    $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
-                                    if($nextSimplifiedPieceWord != $splittedSearchWord[$counter]){
-                                        $isPhrase = false;
-                                    }
-                                    $counter++;
-                                } else {
-                                    $isPhrase = false;
-                                }
-
-                            }
-                            if($isPhrase){
-                                $phraseToHighlight = "";
-                                for($j = $key; $j < $key + count($splittedSearchWord); $j++){
-                                    $phraseToHighlight .= $pieceWords[$j].' ';
-                                }
-                                $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
-                            }
-                        }
+        //get belonging search yml
+        $currentSearchYml = $this->util->getSearchYaml($resource);
+        //get fields of search yml
+        $fields = $this->util->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
+        //go over every field and check if one or more words are in it
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $this->pieces = array();
+        foreach ($fields as $field) {
+            if (property_exists($resource, $field) && $field != 'title') {
+                $text = $accessor->getValue($resource, $field);
+                $pieces = array();
+                if (is_string($text)) {
+                    $this->pieces[] = $text;
+                } else if (gettype($text) == 'object') {
+                    $fieldValue = $this->util->getValueOfField($field, $currentSearchYml, get_class($resource));
+                    $this->getTextPieces($text, $fieldValue);
+                } else if(is_array($text)){
+                    foreach($text as $currentText){
+                        $this->pieces[] = $currentText;
                     }
                 }
             }
-            if(!empty($wordsToHighlight)){
-                list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
-                foreach ($wordsToHighlight as $key => $value) {
-                    $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
-                }
-                $highlightedText = $highlightedText.$newWord;
+        }
+        $pieces = $this->pieces;
+        foreach ($pieces as &$piece) {
+            $piece = strip_tags($piece); // remove html tags
+            $lastCharacter = substr($piece, -1, 1);
+            if ($lastCharacter == '.') {
+                $piece = rtrim($piece, '.');
             }
         }
 
+        $pieces = array_filter($pieces); // remove keys with value ""
+        $text = implode(". ", $pieces);
 
+        $splittedPieces = preg_split('/[.!?:;][\n ]|\n/', $text);
+        $expression = array_shift($words);
+        list($highlightedText, $countedCharacters, $splittedPieces) = $this->checkWholeExpression($splittedPieces, $expression, $words);
+        list($highlightedText, $countedCharacters) = $this->highlightText($splittedPieces, $words, $countedCharacters, $highlightedText);
+        $highlightedText = rtrim($highlightedText, ' · ');
 
-
-       /* foreach($pieces as $piece){
-            $wordsToHighlight = array();
-            foreach ($words as $searchWord) {
-                if ($this->isPhrase($searchWord)){
-                    list($countedCharacters, $highlightedText) = $this->highlightPhrase($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText);
-                } else {
-                    list($countedCharacters, $highlightedText) = $this->highlightWord($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText);
-                }
-            }
-        }*/
-        return rtrim($highlightedText, ' · ');
+        $highlightedResult = array();
+        $highlightedResult['resource'] = $resource;
+        $highlightedResult['highlightedText'] = $highlightedText;
+        return $highlightedResult;
     }
 
     protected function isPhrase($word)
@@ -106,6 +82,25 @@ class Highlight {
             return true;
         }
         return false;
+    }
+
+    public function checkWholeExpression($pieces, $expr, $words)
+    {
+        $highlightedText = null;
+        $countedCharacters = 0;
+        $leftPieces = array();
+        $simplifiedExpr = $this->util->searchSimplify($expr);
+        foreach($pieces as $piece){
+            $simplifiedPiece = $this->util->searchSimplify($piece);
+            if(strpos($simplifiedPiece, $simplifiedExpr) !== false){
+                //contains whole search expression
+                $currentPiece = array($piece);
+                list($highlightedText, $countedCharacters) = $this->highlightText($currentPiece, $words, $countedCharacters, $highlightedText);
+            } else {
+                $leftPieces[] = $piece;
+            }
+        }
+        return array($highlightedText, $countedCharacters, $leftPieces);
     }
 
     protected function highlightPhrase($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText)
@@ -149,66 +144,56 @@ class Highlight {
         return array($countedCharacters, $highlightedText);
     }
 
-    protected function highlightWord($piece, $searchWord, $wordsToHighlight, $countedCharacters, $words, $highlightedText)
+    protected function highlightText($pieces, $words, $countedCharacters, $highlightedText)
     {
-        $pieceWords = explode(" ", $piece);
-        foreach ($pieceWords as $pieceWord) {
-            $simplifiedWord = $this->util->searchSimplify($pieceWord);
-            if ($searchWord == $simplifiedWord) {
-                $wordsToHighlight[$pieceWord] = $simplifiedWord;
-            }
-        }
-        if(!empty($wordsToHighlight)){
-            list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
-            foreach ($wordsToHighlight as $key => $value) {
-                $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
-            }
-            $highlightedText = $highlightedText.$newWord;
-        }
-        return array($countedCharacters, $highlightedText);
-    }
+        foreach($pieces as $piece){
+            $pieceWords = explode(" ", $piece);
+            foreach ($pieceWords as $key => $pieceWord) {
+                $simplifiedWord = $this->util->searchSimplify($pieceWord);
+                $pieceWord = trim($pieceWord, ",.:;-_!?");
+                foreach ($words as $searchWord) {
+                    if (!$this->isPhrase($searchWord)) {
+                        if ($searchWord == $simplifiedWord) {
+                            $wordsToHighlight[$pieceWord] = $simplifiedWord;
+                        }
+                    } else {
+                        $isPhrase = true;
+                        $splittedSearchWord = explode(" ", $searchWord);
+                        if($simplifiedWord == $splittedSearchWord[0]){
+                            //check if next words of phrase also match
+                            $counter = 1;
+                            for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
+                                if(array_key_exists($i, $pieceWords)){
+                                    $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
+                                    if($nextSimplifiedPieceWord != $splittedSearchWord[$counter]){
+                                        $isPhrase = false;
+                                    }
+                                    $counter++;
+                                } else {
+                                    $isPhrase = false;
+                                }
 
-    public function highlightText($resource, $words)
-    {
-        //get belonging search yml
-        $currentSearchYml = $this->util->getSearchYaml($resource);
-        //get fields of search yml
-        $fields = $this->util->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
-        //go over every field and check if one or more words are in it
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $this->pieces = array();
-        foreach ($fields as $field) {
-            if (property_exists($resource, $field) && $field != 'title') {
-                $text = $accessor->getValue($resource, $field);
-                $pieces = array();
-                if (is_string($text)) {
-                    $this->pieces[] = $text;
-                } else if (gettype($text) == 'object') {
-                    $fieldValue = $this->util->getValueOfField($field, $currentSearchYml, get_class($resource));
-                    $this->getTextPieces($text, $fieldValue);
-                } else if(is_array($text)){
-                    foreach($text as $currentText){
-                        $this->pieces[] = $currentText;
+                            }
+                            if($isPhrase){
+                                $phraseToHighlight = "";
+                                for($j = $key; $j < $key + count($splittedSearchWord); $j++){
+                                    $phraseToHighlight .= $pieceWords[$j].' ';
+                                }
+                                $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                            }
+                        }
                     }
                 }
             }
-        }
-        $pieces = $this->pieces;
-        foreach ($pieces as &$piece) {
-            $piece = strip_tags($piece); // remove html tags
-            $lastCharacter = substr($piece, -1, 1);
-            if ($lastCharacter == '.') {
-                $piece = rtrim($piece, '.');
+            if(!empty($wordsToHighlight)){
+                list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
+                foreach ($wordsToHighlight as $key => $value) {
+                    $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+                }
+                $highlightedText = $highlightedText.$newWord;
             }
         }
-        $pieces = array_filter($pieces); // remove keys with value ""
-        $text = implode(". ", $pieces);
-        $highlightedText = $this->highlight($text, $words);
-
-        $highlightedResult = array();
-        $highlightedResult['resource'] = $resource;
-        $highlightedResult['highlightedText'] = $highlightedText;
-        return $highlightedResult;
+        return array($highlightedText, $countedCharacters);
     }
 
     protected function countCharacters($sentence, $words, $charactersLength)
