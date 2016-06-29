@@ -16,8 +16,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\Workflow:
             nullable: true
 
         entity:
-            type: string
-            length: 255
+            type: array
             nullable: true
 
         active:
