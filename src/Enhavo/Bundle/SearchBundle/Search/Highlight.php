@@ -9,20 +9,71 @@
 namespace Enhavo\Bundle\SearchBundle\Search;
 
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Yaml\Parser;
+use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 
 class Highlight {
 
     protected $util;
 
-    public function __construct(SearchUtil $util)
+    protected $pieces = array();
+
+    protected $pdfType;
+
+    public function __construct(SearchUtil $util, PdfType $pdfType)
     {
         $this->util = $util;
+        $this->pdfType = $pdfType;
     }
 
-    public function highlight($pieces, $words, $highlightedText, $countedCharacters)
+    public function highlight($resource, $words)
     {
-        list($highlightedText, $countedCharacters) = $this->highlightText($pieces, $words, $countedCharacters, $highlightedText);
-        return rtrim($highlightedText, ' · ');
+        //get belonging search yml
+        $currentSearchYml = $this->util->getSearchYaml($resource);
+        //get fields of search yml
+        $fields = $this->util->getFieldsOfSearchYml($currentSearchYml, get_class($resource));
+        //go over every field and check if one or more words are in it
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $this->pieces = array();
+        foreach ($fields as $field) {
+            if (property_exists($resource, $field) && $field != 'title') {
+                $text = $accessor->getValue($resource, $field);
+                $pieces = array();
+                if (is_string($text)) {
+                    $this->pieces[] = $text;
+                } else if (gettype($text) == 'object') {
+                    $fieldValue = $this->util->getValueOfField($field, $currentSearchYml, get_class($resource));
+                    $this->getTextPieces($text, $fieldValue);
+                } else if(is_array($text)){
+                    foreach($text as $currentText){
+                        $this->pieces[] = $currentText;
+                    }
+                }
+            }
+        }
+        $pieces = $this->pieces;
+        foreach ($pieces as &$piece) {
+            $piece = strip_tags($piece); // remove html tags
+            $lastCharacter = substr($piece, -1, 1);
+            if ($lastCharacter == '.') {
+                $piece = rtrim($piece, '.');
+            }
+        }
+
+        $pieces = array_filter($pieces); // remove keys with value ""
+        $text = implode(". ", $pieces);
+
+        $splittedPieces = preg_split('/[.!?:;][\n ]|\n|\r|\r\n|•/', $text);
+        $expression = array_shift($words);
+        list($highlightedText, $countedCharacters, $splittedPieces) = $this->checkWholeExpression($splittedPieces, $expression, $words);
+        list($highlightedText, $countedCharacters) = $this->highlightText($splittedPieces, $words, $countedCharacters, $highlightedText);
+        $highlightedText = rtrim($highlightedText, ' · ');
+
+        $highlightedResult = array();
+        $highlightedResult['resource'] = $resource;
+        $highlightedResult['highlightedText'] = $highlightedText;
+        return $highlightedResult;
     }
 
     protected function isPhrase($word)
@@ -99,36 +150,40 @@ class Highlight {
             $pieceWords = explode(" ", $piece);
             foreach ($pieceWords as $key => $pieceWord) {
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
-                $pieceWord = trim($pieceWord, ",.:;-_!?");
-                foreach ($words as $searchWord) {
-                    if (!$this->isPhrase($searchWord)) {
-                        if ($searchWord == $simplifiedWord) {
-                            $wordsToHighlight[$pieceWord] = $simplifiedWord;
-                        }
-                    } else {
-                        $isPhrase = true;
-                        $splittedSearchWord = explode(" ", $searchWord);
-                        if($simplifiedWord == $splittedSearchWord[0]){
-                            //check if next words of phrase also match
-                            $counter = 1;
-                            for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
-                                if(array_key_exists($i, $pieceWords)){
-                                    $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
-                                    if($nextSimplifiedPieceWord != $splittedSearchWord[$counter]){
+                $splittedSimplifiedWords = explode(" ", $simplifiedWord);
+                foreach ($splittedSimplifiedWords as $splittedSimplifiedWord)
+                {
+                    $pieceWord = trim($pieceWord, ",.:;-_!?");
+                    foreach ($words as $searchWord) {
+                        if (!$this->isPhrase($searchWord)) {
+                            if ($searchWord == $splittedSimplifiedWord) {
+                                $wordsToHighlight[$pieceWord] = $splittedSimplifiedWord;
+                            }
+                        } else {
+                            $isPhrase = true;
+                            $splittedSearchWord = explode(" ", $searchWord);
+                            if ($splittedSimplifiedWord == $splittedSearchWord[0]) {
+                                //check if next words of phrase also match
+                                $counter = 1;
+                                for ($i = $key + 1; $i < $key + count($splittedSearchWord); $i++) {
+                                    if (array_key_exists($i, $pieceWords)) {
+                                        $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
+                                        if ($nextSimplifiedPieceWord != $splittedSearchWord[$counter]) {
+                                            $isPhrase = false;
+                                        }
+                                        $counter++;
+                                    } else {
                                         $isPhrase = false;
                                     }
-                                    $counter++;
-                                } else {
-                                    $isPhrase = false;
-                                }
 
-                            }
-                            if($isPhrase){
-                                $phraseToHighlight = "";
-                                for($j = $key; $j < $key + count($splittedSearchWord); $j++){
-                                    $phraseToHighlight .= $pieceWords[$j].' ';
                                 }
-                                $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                                if ($isPhrase) {
+                                    $phraseToHighlight = "";
+                                    for ($j = $key; $j < $key + count($splittedSearchWord); $j++) {
+                                        $phraseToHighlight .= $pieceWords[$j] . ' ';
+                                    }
+                                    $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                                }
                             }
                         }
                     }
@@ -137,7 +192,7 @@ class Highlight {
             if(!empty($wordsToHighlight)){
                 list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
                 foreach ($wordsToHighlight as $key => $value) {
-                    $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+                    $newWord = preg_replace('/\b'.preg_quote($key, '/').'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
                 }
                 $highlightedText = $highlightedText.$newWord;
             }
@@ -227,5 +282,78 @@ class Highlight {
             }
         }
         return false;
+    }
+
+    public function getTextPieces($text, $type)
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
+        if (is_array($type[0])) {
+            foreach ($type[0] as $key => $value) {
+                if ($key == 'Plain' || $key == 'Html') {
+                    $this->pieces[] = $text;
+                } else if ($key == 'Collection') {
+
+                    //type Collection
+                    //get the right yaml file for collection
+                    if (array_key_exists('entity', $value)) {
+                        $bundlePath = null;
+                        $splittedBundlePath = explode('\\', $value['entity']);
+                        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
+                            array_pop($splittedBundlePath);
+                        }
+                        $bundlePath = implode('/', $splittedBundlePath);
+                        $collectionPath = null;
+                        foreach ($this->util->getSearchYamls() as $path) {
+                            if (strpos($path, $bundlePath)) {
+                                $collectionPath = $path;
+                                break;
+                            }
+                        }
+                        $yaml = new Parser();
+                        $currentCollectionSearchYamls = $yaml->parse(file_get_contents($collectionPath));
+                        $collectionFields = $this->util->getFieldsOfSearchYml($currentCollectionSearchYamls, $value['entity']);
+                        if ($text != null) {
+                            foreach ($text as $content) {
+                                foreach ($collectionFields as $field) {
+                                    if (property_exists($content, $field)) {
+                                        $newText = $accessor->getValue($content, $field);
+                                        $type = $this->util->getValueOfField($field, $currentCollectionSearchYamls, $value['entity']);
+                                        $this->getTextPieces($newText, $type);
+                                    }
+                                }
+                            }
+                        }
+                    } else if (array_key_exists('type', $value)) {
+                        foreach ($text as $currentText) {
+                            $this->getTextPieces($currentText, $value['type']);
+                        }
+                    }
+                } else if($key == 'PDF'){
+                    //get content of PDF
+                    $pdfContent = $this->pdfType->getPdfContent($text);
+                    //now we can use the content as plain and add the given weight from the search.yml
+                    $this->pieces[] = $pdfContent;
+                }
+            }
+        } else {
+            //Model
+            $class = null;
+            if ($text instanceof \Doctrine\Common\Persistence\Proxy) {
+                $class = get_parent_class($text);
+            } else {
+                $class = get_class($text);
+            }
+            $currentModelSearchYaml = $this->util->getSearchYaml($text);
+            $modelFields = $this->util->getFieldsOfSearchYml($currentModelSearchYaml, $class);
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach ($modelFields as $field) {
+                if (property_exists($text, $field)) {
+                    $newText = $accessor->getValue($text, $field);
+                    $type = $this->util->getValueOfField($field, $currentModelSearchYaml, $class);
+                    $this->getTextPieces($newText, $type, $field, $text);
+                }
+            }
+        }
     }
 }

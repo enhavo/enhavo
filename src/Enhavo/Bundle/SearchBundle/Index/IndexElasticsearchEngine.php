@@ -11,6 +11,8 @@ namespace Enhavo\Bundle\SearchBundle\Index;
 use Elasticsearch;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 class IndexElasticsearchEngine implements IndexEngineInterface
 {
@@ -20,9 +22,12 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 
     protected $type;
 
-    public function __construct(SearchUtil $util)
+    protected $pdfType;
+
+    public function __construct(SearchUtil $util, PdfType $pdfType)
     {
         $this->util = $util;
+        $this->pdfType = $pdfType;
     }
 
     public function index($resource)
@@ -53,17 +58,19 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                 //Model
                 $model = $accessor->getValue($resource, $indexingField);
                 $content = $this->getModelContent($model);
-                $params = $this->addToBody($params, $indexingField, $content);
+                $params['body'] = array_merge($content, $params['body']);
             } else if(property_exists($resource, $indexingField) && array_key_exists('Collection',$value[0])) {
                 //Collection
                 $collection = $accessor->getValue($resource, $indexingField);
                 if($collection != null){
                     $content = $this->getCollectionContent($collection, $this->util->getSearchYaml($resource), $value[0]);
-                    $params = $this->addToBody($params, $indexingField, $content);
+                    $params['body'] = array_merge($content, $params['body']);
+                    //$params = $this->addToBody($params, $indexingField, $content);
                 }
             }
         }
-        $client->index($params);
+        $response = $client->index($params);
+        print_r($response);
     }
 
     public function unindex($resource)
@@ -86,6 +93,10 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 
     protected function addToBody($params, $field, $value)
     {
+        if($value instanceof FileInterface) {
+            $value = $this->pdfType->getPdfContent($value);
+        }
+
         if($value){
             $params['body'][$this->index.'_'.$this->type.'_'.$field] = $value;
         }
@@ -106,7 +117,7 @@ class IndexElasticsearchEngine implements IndexEngineInterface
             $modelProperties = $modelSearchYml[$class]['properties'];
             foreach($modelProperties as $key => $value){
                 if(property_exists($model, $key) && $value[0] != 'Model' && !array_key_exists('Collection',$value[0])) {
-                    //Plain and Html
+                    //Plain or Html or PDF
                     $indexingValue = $this->getTextContent($model, $key);
                     if($indexingValue){
                         $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
@@ -116,19 +127,21 @@ class IndexElasticsearchEngine implements IndexEngineInterface
                     //Model
                     $model = $accessor->getValue($model, $key);
                     $modelContent = $this->getModelContent($model);
-                    if($modelContent) {
+                    $content = array_merge($content, $modelContent);
+                    /*if($modelContent) {
                         $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
                         $content[$fieldKey.'_'.$key] = $modelContent;
-                    }
+                    }*/
                 } else if(property_exists($model, $key)  && key($value[0]) == 'Collection') {
                     //Collection
                     $collection = $accessor->getValue($model, $key);
                     if($collection != null){
                         $indexingValue = $this->getCollectionContent($collection, $modelSearchYml, $value[0]);
-                        if($indexingValue) {
+                        $content = array_merge($content, $indexingValue);
+                       /* if($indexingValue) {
                             $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
                             $content[$fieldKey.'_'.$key] = $indexingValue;
-                        }
+                        }*/
                     }
                 }
             }
@@ -142,28 +155,42 @@ class IndexElasticsearchEngine implements IndexEngineInterface
         if(array_key_exists('entity',$colType['Collection'])) {
             $properties = $searchYml[$colType['Collection']['entity']]['properties'];
             foreach ($collection as $collectionElement) {
+                $class = null;
+                if ($collectionElement instanceof \Doctrine\Common\Persistence\Proxy) {
+                    $class = get_parent_class($collectionElement);
+                } else {
+                    $class = get_class($collectionElement);
+                }
                 foreach ($properties as $key => $value) {
                     if (property_exists($collectionElement, $key) && $value[0] != 'Model' && !array_key_exists('Collection', $value[0])) {
                         //Plain and Html
                         $indexingValue = $this->getTextContent($collectionElement, $key);
                         if($indexingValue) {
-                            $content[][$key] = $indexingValue;
+                            $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                            $content[][$fieldKey.'_'.$key] = $indexingValue;
+                            //$content[][$key] = $indexingValue;
                         }
                     } else if (property_exists($collectionElement, $key) && $value[0] == 'Model') {
                         //Model
                         $model = $accessor->getValue($collectionElement, $key);
                         $modelContent = $this->getModelContent($model);
-                        if($modelContent) {
-                            $content[][$key] = $modelContent;
-                        }
+                        $content = array_merge($content, $modelContent);
+                       /* if($modelContent) {
+                            $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                            $content[][$fieldKey.'_'.$key] = $modelContent;
+                           // $content[][$key] = $modelContent;
+                        }*/
                     } else if (property_exists($collectionElement, $key) && key($value[0]) == 'Collection') {
                         //Collection
                         $collection = $accessor->getValue($collectionElement, $key);
                         if($collection != null){
                             $indexingValue = $this->getCollectionContent($collection, $searchYml, $value[0]);
-                            if($indexingValue) {
-                                $content[][$key] = $indexingValue;
-                            }
+                            $content = array_merge($content, $indexingValue);
+                          /*  if($indexingValue) {
+                                $fieldKey = $this->getBundleName($class).'_'.$this->getEntityName($class);
+                                $content[][$fieldKey.'_'.$key] = $indexingValue;
+                                //$content[][$key] = $indexingValue;
+                            }*/
                         }
                     }
                 }

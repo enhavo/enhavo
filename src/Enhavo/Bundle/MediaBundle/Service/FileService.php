@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\MediaBundle\Entity\File as EnhavoFile;
 use Doctrine\ORM\EntityManager;
 use BaconStringUtils\Slugifier;
-use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class FileService
@@ -375,7 +374,7 @@ class FileService
         return $file->getId();
     }
 
-    protected function getFilepath(EnhavoFile $file)
+    public function getFilepath(EnhavoFile $file)
     {
         return $this->getDirectory($file).'/'.$this->getFilename($file);
     }

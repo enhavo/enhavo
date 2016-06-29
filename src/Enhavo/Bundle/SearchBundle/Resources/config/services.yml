@@ -33,6 +33,7 @@ services:
             - @doctrine.orm.entity_manager
             - %enhavo_search.search.strategy%
             - @enhavo_search_search_util
+            - @enhavo_media.file_service
 
     enhavo_search_search_engine:
         class: Enhavo\Bundle\SearchBundle\Search\SearchEngine
@@ -70,6 +71,7 @@ services:
         class: Enhavo\Bundle\SearchBundle\Index\IndexElasticsearchEngine
         arguments:
             - @enhavo_search_search_util
+            - @enhavo_search_pdf_type
 
 
     enhavo_search_elasticsearch_engine:
@@ -77,3 +79,22 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @enhavo_search_search_util
+
+    enhavo_search_type:
+        class: Enhavo\Bundle\SearchBundle\Index\AbstractIndexType
+        arguments:
+            - @enhavo_search_search_util
+            - @enhavo_search_index_engine
+
+    enhavo_search_pdf_type:
+        class: Enhavo\Bundle\SearchBundle\Index\Type\PdfType
+        arguments:
+            - @enhavo_search_search_util
+            - @enhavo_search_index_engine
+            - @enhavo_media.file_service
+
+    enhavo_search_highlight:
+        class: Enhavo\Bundle\SearchBundle\Search\Highlight
+        arguments:
+            - @enhavo_search_search_util
+            - @enhavo_search_pdf_type
