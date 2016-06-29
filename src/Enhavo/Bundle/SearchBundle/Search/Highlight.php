@@ -64,7 +64,7 @@ class Highlight {
         $pieces = array_filter($pieces); // remove keys with value ""
         $text = implode(". ", $pieces);
 
-        $splittedPieces = preg_split('/[.!?:;][\n ]|\n/', $text);
+        $splittedPieces = preg_split('/[.!?:;][\n ]|\n|\r|\r\n|•/', $text);
         $expression = array_shift($words);
         list($highlightedText, $countedCharacters, $splittedPieces) = $this->checkWholeExpression($splittedPieces, $expression, $words);
         list($highlightedText, $countedCharacters) = $this->highlightText($splittedPieces, $words, $countedCharacters, $highlightedText);
@@ -150,36 +150,40 @@ class Highlight {
             $pieceWords = explode(" ", $piece);
             foreach ($pieceWords as $key => $pieceWord) {
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
-                $pieceWord = trim($pieceWord, ",.:;-_!?");
-                foreach ($words as $searchWord) {
-                    if (!$this->isPhrase($searchWord)) {
-                        if ($searchWord == $simplifiedWord) {
-                            $wordsToHighlight[$pieceWord] = $simplifiedWord;
-                        }
-                    } else {
-                        $isPhrase = true;
-                        $splittedSearchWord = explode(" ", $searchWord);
-                        if($simplifiedWord == $splittedSearchWord[0]){
-                            //check if next words of phrase also match
-                            $counter = 1;
-                            for($i = $key+1; $i < $key + count($splittedSearchWord); $i++){
-                                if(array_key_exists($i, $pieceWords)){
-                                    $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
-                                    if($nextSimplifiedPieceWord != $splittedSearchWord[$counter]){
+                $splittedSimplifiedWords = explode(" ", $simplifiedWord);
+                foreach ($splittedSimplifiedWords as $splittedSimplifiedWord)
+                {
+                    $pieceWord = trim($pieceWord, ",.:;-_!?");
+                    foreach ($words as $searchWord) {
+                        if (!$this->isPhrase($searchWord)) {
+                            if ($searchWord == $splittedSimplifiedWord) {
+                                $wordsToHighlight[$pieceWord] = $splittedSimplifiedWord;
+                            }
+                        } else {
+                            $isPhrase = true;
+                            $splittedSearchWord = explode(" ", $searchWord);
+                            if ($splittedSimplifiedWord == $splittedSearchWord[0]) {
+                                //check if next words of phrase also match
+                                $counter = 1;
+                                for ($i = $key + 1; $i < $key + count($splittedSearchWord); $i++) {
+                                    if (array_key_exists($i, $pieceWords)) {
+                                        $nextSimplifiedPieceWord = $this->util->searchSimplify(($pieceWords[$i]));
+                                        if ($nextSimplifiedPieceWord != $splittedSearchWord[$counter]) {
+                                            $isPhrase = false;
+                                        }
+                                        $counter++;
+                                    } else {
                                         $isPhrase = false;
                                     }
-                                    $counter++;
-                                } else {
-                                    $isPhrase = false;
-                                }
 
-                            }
-                            if($isPhrase){
-                                $phraseToHighlight = "";
-                                for($j = $key; $j < $key + count($splittedSearchWord); $j++){
-                                    $phraseToHighlight .= $pieceWords[$j].' ';
                                 }
-                                $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                                if ($isPhrase) {
+                                    $phraseToHighlight = "";
+                                    for ($j = $key; $j < $key + count($splittedSearchWord); $j++) {
+                                        $phraseToHighlight .= $pieceWords[$j] . ' ';
+                                    }
+                                    $wordsToHighlight[trim($phraseToHighlight)] = $this->util->searchSimplify($phraseToHighlight);
+                                }
                             }
                         }
                     }
@@ -188,7 +192,7 @@ class Highlight {
             if(!empty($wordsToHighlight)){
                 list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
                 foreach ($wordsToHighlight as $key => $value) {
-                    $newWord = preg_replace('/\b'.$key.'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+                    $newWord = preg_replace('/\b'.preg_quote($key, '/').'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
                 }
                 $highlightedText = $highlightedText.$newWord;
             }
