@@ -9,7 +9,7 @@
 
 <div class="row tabContentContainer">
     {% for tab in tabs %}
-        <div id="tab{{ loop.index }}" class="col-xs-12">
+        <div id="tab{{ loop.index }}" class="col-xs-12" data-form-tab>
             {% include tab.template  %}
         </div>
     {% endfor %}

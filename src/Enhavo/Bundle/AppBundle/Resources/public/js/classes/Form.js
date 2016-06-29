@@ -1,6 +1,9 @@
 var Form = function(router, templating, admin, translator)
 {
   var self = this;
+  var rootForm = null;
+  var placeholderIndex = 0;
+  var placeholderToIndexMap = {};
 
   this.initDataPicker = function(form)
   {
@@ -168,25 +171,32 @@ var Form = function(router, templating, admin, translator)
       $(item).first().find('.button-delete').click(function (e) {
         e.preventDefault();
         $(this).closest('.listElement').remove();
+        self.reindex();
       });
     };
 
-    var initAddButton = function(list, count) {
+    var initAddButton = function(list) {
       list.next().find('.add-another').click(function(e) {
         e.preventDefault();
 
         // grab the prototype template
         var item = list.attr('data-prototype');
         var prototype_name = list.attr('data-prototype-name');
-        // replace prototype_name used in id and name with ascending number
-        item = item.replace(new RegExp(prototype_name, 'g'), count);
-        count++;
+        var placeholder = '__name' + placeholderIndex + '__';
+        placeholderIndex++;
 
+        // replace prototype_name used in id and name with unique placeholderName
+        item = item.replace(new RegExp(prototype_name, 'g'), placeholder);
         item = $.parseHTML(item.trim());
+
+        $(item).find('[name]').each(function () {
+          $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+        });
         list.append(item);
         initItem(item);
         $(document).trigger('formListAddItem', item);
         setOrderForContainer(list);
+        self.reindex();
       })
     };
 
@@ -220,6 +230,7 @@ var Form = function(router, templating, admin, translator)
         }
 
         setOrderForContainer(list);
+        self.reindex();
       });
     };
 
@@ -247,7 +258,8 @@ var Form = function(router, templating, admin, translator)
           }
         }
 
-        setOrderForContainer(list)
+        setOrderForContainer(list);
+        self.reindex();
       });
     };
 
@@ -262,20 +274,129 @@ var Form = function(router, templating, admin, translator)
       $(form).find('.enhavo_list').each(function() {
         var list = $(this);
 
+        if (typeof list.attr('data-reindexable')  != 'undefined') {
+          // Save initial index
+          list.data('initial-list-index', list.children().length);
+        }
+
         $.each(list.children(), function(index, item) {
           initItem($(item));
         });
 
         setOrderForContainer(list);
-
-        var count = $(this).children().length;
-        initAddButton(list, count);
+        initAddButton(list);
       });
     })(form);
   };
 
+  this.markInvalidFormElements = function(form, errors) {
+    // Get form name prefix
+    var namedElements = $(form).find('[name]');
+    if (namedElements.length > 0) {
+      // Clear previous error state
+      $(form).find('[data-form-row]').removeClass('form-error');
+      $(form).find('[tabid]').removeClass('form-error-tab');
+
+      // Get name prefix from any named element in the form (e.g. enhavo_article_article)
+      var namePrefix = namedElements.first().attr('name');
+      namePrefix = namePrefix.substring(0, namePrefix.indexOf('['));
+
+      for(var i = 0; i < errors.length; i++) {
+        // Transform from format .a.b.c to format [a][b][c]
+        var name = errors[i][0];
+        // Replace first . with opening bracket
+        name = name.replace('.', '[');
+        // Replace all following with closing and opening brackets
+        name = name.replace(/\./g, '][');
+        // Add prefix and last closing bracket
+        name = namePrefix + name + ']';
+
+        var $errorElement = $(form).find('[name="' + name + '"]');
+        if ($errorElement.length > 0) {
+          // Add error class to row
+          $errorElement.parents('[data-form-row]').first().addClass('form-error');
+          // Add error class to containing tab
+          var tabId = $errorElement.parents('[data-form-tab]').attr('id');
+          if (tabId != 'undefined') {
+            $(form).find('[tabid="' + tabId + '"]').addClass('form-error-tab');
+          }
+        }
+      }
+    }
+  };
+
+  this.reindex = function(item, initialize) {
+    if (typeof item == 'undefined') {
+      item = $(rootForm);
+    }
+
+    var currentIndex = 0;
+    if (item.data('initial-list-index')) {
+      currentIndex = item.data('initial-list-index');
+    }
+
+    if (typeof initialize == 'undefined') {
+      // First call, initialize names as prototypes and set reindexed flags to 0
+      item.find('[data-reindexable]').each(function() {
+        $(this).data('reindexed', 0);
+      });
+      item.find('[data-form-name]').each(function () {
+        $(this).attr('name', $(this).attr('data-form-name')).data('reindexed', '0');
+      });
+      placeholderToIndexMap = {};
+    }
+
+    // Recursively call reindex for nested subitems
+    item.find('[data-reindexable]').each(function() {
+      if ($(this).data('reindexed') == '1') {
+        return;
+      }
+      self.reindex($(this), false);
+    });
+
+    // Iterate over all dynamically added elements
+    item.find('[data-form-name]').each(function() {
+      if ($(this).data('reindexed') == '1') {
+        return;
+      }
+      var placeholder = $(this).attr('data-form-placeholder');
+      var index;
+      if (placeholderToIndexMap.hasOwnProperty(placeholder)) {
+        index = placeholderToIndexMap[placeholder];
+      } else {
+        index = currentIndex;
+        placeholderToIndexMap[placeholder] = currentIndex;
+        currentIndex++;
+      }
+      $(this).attr('name', $(this).attr('name').replace(placeholder, index));
+
+      // Also replace placeholder in all elements containing the same placeholder that have been reindexed already
+      $(this).find('[name]').each(function() {
+        $(this).attr('name', $(this).attr('name').replace(placeholder, index));
+      });
+
+      // Set reindexed flag
+      $(this).data('reindexed', '1');
+    });
+
+    if (typeof initialize == 'undefined') {
+      // initial call, every recursive call returned
+      // go over all elements with names and replace remaining placeholders according to placeholder to index map
+      item.find('[name]').each(function() {
+        for (var placeholder in placeholderToIndexMap) {
+          if (placeholderToIndexMap.hasOwnProperty(placeholder)) {
+            if ($(this).attr('name').indexOf(placeholder) > -1) {
+              $(this).attr('name', $(this).attr('name').replace(placeholder, placeholderToIndexMap[placeholder]));
+            }
+          }
+        }
+      });
+    }
+  };
+
   var init = function() {
     $(document).on('formOpenAfter', function(event, form) {
+      rootForm = form;
       self.initDataPicker(form);
       self.initRadioAndCheckbox(form);
       self.initWysiwyg(form);

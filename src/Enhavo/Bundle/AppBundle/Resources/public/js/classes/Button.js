@@ -1,4 +1,4 @@
-function Button(admin, router, translator)
+function Button(admin, formScript, router, translator)
 {
   var self = this;
 
@@ -32,9 +32,9 @@ function Button(admin, router, translator)
       event.preventDefault();
       $(this).trigger('formSaveBefore', form);
 
-      form = $(form);
-      var data = form.serialize();
-      var url = form.attr('action');
+      var $form = $(form);
+      var data = $form.serialize();
+      var url = $form.attr('action');
       if($(this).data('route')) {
 
         if($(this).data('route-parameters')) {
@@ -62,26 +62,30 @@ function Button(admin, router, translator)
           var data = JSON.parse(jqXHR.responseText);
 
           if(data.code == 400) {
-            var getErrors = function(data, errors) {
+            var getErrors = function(data, errors, position) {
               if(typeof errors == 'undefined') {
                 errors = [];
               }
+              if (typeof position == 'undefined') {
+                position = '';
+              }
 
-              for (var key in data) {
-                if(data.hasOwnProperty(key)) {
+              if (data.hasOwnProperty('errors')) {
+                for (var error in data['errors']) {
+                  if (data['errors'].hasOwnProperty(error) && typeof data['errors'][error] == 'string') {
+                    errors.push([position, data['errors'][error]]);
+                  }
+                }
+              }
 
-                  if(key == 'errors') {
-                    for (var error in data[key]) {
-                      if (data[key].hasOwnProperty(error) && typeof data[key][error] == 'string') {
-                        errors.push(data[key][error]);
-                      }
+              if (data.hasOwnProperty('children')) {
+                for (var key in data['children']) {
+                  if(data['children'].hasOwnProperty(key)) {
+                    if (typeof data['children'][key] == 'object') {
+                      getErrors(data['children'][key], errors, position + '.' + key);
                     }
-                  }
 
-                  if (typeof data[key] == 'object') {
-                    getErrors(data[key], errors);
                   }
-
                 }
               }
 
@@ -89,8 +93,23 @@ function Button(admin, router, translator)
             };
 
             var errors = getErrors(data.errors);
-            var message = '<b>' + errors.join('<br /><br />') + '</b>';
+            var message = '';
+            for (var i = 0; i < errors.length; i++) {
+              if (message === '') {
+                message += '<b>';
+              } else {
+                message += '<br /><br />';
+              }
+              if (errors[i][0] == '') {
+                message += errors[i][1];
+              } else {
+                message += errors[i][0].substring(errors[i][0].lastIndexOf('.') + 1) +': ' + errors[i][1];
+              }
+
+            }
+            message += '</b>';
             admin.overlayMessage(message, admin.MessageType.Error);
+            formScript.markInvalidFormElements(form, errors);
           } else {
             admin.overlayMessage(translator.trans('error.occurred'), admin.MessageType.Error);
           }

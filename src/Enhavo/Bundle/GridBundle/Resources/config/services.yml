@@ -47,10 +47,3 @@ services:
         class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
         tags:
             - { name: validator.constraint_validator, alias: video_url }
-
-    validator.unique.item_type_validator:
-        class:  Enhavo\Bundle\GridBundle\Validator\Constraints\ItemTypeValidator
-        arguments:
-            - @service_container
-        tags:
-            - { name: validator.constraint_validator, alias: item_type }
