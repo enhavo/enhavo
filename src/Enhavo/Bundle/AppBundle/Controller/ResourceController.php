@@ -29,7 +29,7 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $securityContext = $this->get('security.context');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_CREATE';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
         }
@@ -80,7 +80,7 @@ class ResourceController extends BaseController
     public function updateAction(Request $request)
     {
         $securityContext = $this->get('security.context');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
+        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_UPDATE';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
         }
