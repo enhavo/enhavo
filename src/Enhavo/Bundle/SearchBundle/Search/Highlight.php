@@ -146,6 +146,7 @@ class Highlight {
 
     protected function highlightText($pieces, $words, $countedCharacters, $highlightedText)
     {
+        $pieces = array_filter($pieces);
         foreach($pieces as $piece){
             $pieceWords = explode(" ", $piece);
             foreach ($pieceWords as $key => $pieceWord) {
@@ -153,7 +154,9 @@ class Highlight {
                 $splittedSimplifiedWords = explode(" ", $simplifiedWord);
                 foreach ($splittedSimplifiedWords as $splittedSimplifiedWord)
                 {
+                    $pieceWord = html_entity_decode($pieceWord);
                     $pieceWord = trim($pieceWord, ",.:;-_!?");
+                    $pieceWord = htmlentities($pieceWord);
                     foreach ($words as $searchWord) {
                         if (!$this->isPhrase($searchWord)) {
                             if ($searchWord == $splittedSimplifiedWord) {
@@ -192,7 +195,11 @@ class Highlight {
             if(!empty($wordsToHighlight)){
                 list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
                 foreach ($wordsToHighlight as $key => $value) {
+                    $newWord = $pieceWord = html_entity_decode($newWord); // html umlaut zu richrigem umlaut
+                    $key = str_replace('&bdquo;', '', $key);
+                    $key = str_replace('&ldquo;', '', $key);
                     $newWord = preg_replace('/\b'.preg_quote($key, '/').'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
+                    //$newWord = htmlentities($newWord); // richtiger umlaut zu html umlaut
                 }
                 $highlightedText = $highlightedText.$newWord;
             }

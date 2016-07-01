@@ -9,18 +9,19 @@
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
 use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
+use Enhavo\Bundle\SearchBundle\Index\IndexItem;
 
 class PlainType extends AbstractIndexType
 {
     function index($value, $options)
     {
-        $accum = $options['accum'];
+        $accum = ' ';
         $weight = 1;
         if(isset($options['weight'])) {
             $weight = $options['weight'];
         }
 
-        $minimumWordSize = $this->getMinimumWordSize($options);
+        $minimumWordSize = $this->getMinimumWordSize();
 
         //indexing plain text and save in DB
         //get seperated words
@@ -36,7 +37,21 @@ class PlainType extends AbstractIndexType
             $accum .= $word." ";
             list($scoredWords, $focus) = $this->scoreWord($word, $weight, $minimumWordSize, $scoredWords, $focus);
         }
-        return array($scoredWords, $accum);
+
+        $indexItemArray = [];
+        $counter = 0;
+        foreach ($scoredWords as $word => $score) {
+            $indexItemArray[$counter]['word'] = $word;
+            $indexItemArray[$counter]['locale'] = $this->container->getParameter('locale');
+            $indexItemArray[$counter]['type'] = $options['type'];
+            $indexItemArray[$counter]['score'] = $score;
+            $counter++;
+        }
+
+        $indexItem = new IndexItem();
+        $indexItem->setData(rtrim($accum));
+        $indexItem->setScoredWords($indexItemArray);
+        return $indexItem;
     }
 
     /**

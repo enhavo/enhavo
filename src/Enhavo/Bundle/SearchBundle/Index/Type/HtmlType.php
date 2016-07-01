@@ -10,12 +10,14 @@ namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
 use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Symfony\Component\Yaml\Parser;
+use Enhavo\Bundle\SearchBundle\Index\IndexItem;
 
 class HtmlType extends AbstractIndexType
 {
     function index($val, $options)
     {
-        $accum = $options['accum'];
+        $accum = ' ';
+
         //indexing html text and save in DB
         //get weights of words
         $tagYaml = $this->util->getMainPath().'/Enhavo/Bundle/SearchBundle/Resources/config/tag_weights.yml';
@@ -89,11 +91,14 @@ class HtmlType extends AbstractIndexType
                 if ($value != '') {
                     $words = $this->searchIndexSplit($value);
                     foreach ($words as $word) {
+
                         // Add word to accumulator
-                        $accum .= $word . ' ';
+                        $accum .= $word." ";
+
                         // Check wordlength
-                         list($scoredWords, $focus) = $this->scoreWord($word, $score, $minimumWordSize, $scoredWords, $focus);
+                        list($scoredWords, $focus) = $this->scoreWord($word, $score, $minimumWordSize, $scoredWords, $focus);
                         $tagwords++;
+
                         // Too many words inside a single tag probably mean a tag was accidentally left open.
                         if (count($tagstack) && $tagwords >= 15) {
                             $tagstack = array();
@@ -104,7 +109,22 @@ class HtmlType extends AbstractIndexType
             }
             $tag = !$tag;
         }
-        return array($scoredWords, $accum);
+
+        $indexItemArray = [];
+        $counter = 0;
+        foreach ($scoredWords as $word => $score) {
+            $indexItemArray[$counter]['word'] = $word;
+            $indexItemArray[$counter]['locale'] = $this->container->getParameter('locale');
+            $indexItemArray[$counter]['type'] = $options['type'];
+            $indexItemArray[$counter]['score'] = $score;
+            $counter++;
+        }
+
+        $indexItem = new IndexItem();
+        $indexItem->setData(rtrim($accum));
+        $indexItem->setScoredWords($indexItemArray);
+        return $indexItem;
+
     }
 
     /**

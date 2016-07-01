@@ -16,6 +16,8 @@ use Enhavo\Bundle\SearchBundle\Index\Type\CollectionType;
 use Enhavo\Bundle\SearchBundle\Index\Type\ModelType;
 use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Enhavo\Bundle\SearchBundle\Index\IndexWalker;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 
 /**
  * Created by PhpStorm.
@@ -59,17 +61,21 @@ class IndexEngine implements IndexEngineInterface {
     protected $fileService;
 
     protected $accum; //accumulator
+    protected $indexWalker;
+    protected $metadataFactory;
 
-    public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService)
+    public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService, IndexWalker $indexWalker, MetadataFactory $metadataFactory)
     {
         $this->container = $container;
         $this->kernel = $kernel;
         $this->em = $em;
         $this->strategy = $strategy;
         $this->util = $util;
-        $this->plainType = new PlainType($this->util, $this);
-        $this->htmlType = new HtmlType($this->util, $this);
+        $this->plainType = new PlainType($this->util, $container);
+        $this->htmlType = new HtmlType($this->util, $container);
         $this->fileService = $fileService;
+        $this->indexWalker = $indexWalker;
+        $this->metadataFactory = $metadataFactory;
     }
 
     public function index($resource)
@@ -260,151 +266,75 @@ class IndexEngine implements IndexEngineInterface {
             $accessor = PropertyAccess::createPropertyAccessor();
             if(property_exists($resource, $indexingField)) {
                 $text = $accessor->getValue($resource, $indexingField);
-                $this->switchToIndexingType($text, $value, $dataSet);
+
             }
         }
+        $metaData = $this->metadataFactory->create($resource);
+
+        $indexItem = $this->indexWalker->getIndexItems($resource, $metaData);
+
+        $this->addWordsToSearchIndex($indexItem, $resource);
         //update the total scores
         $this->searchUpdateTotals();
     }
 
-    public function switchToIndexingType($text, $type, $dataSet)
+    public function addWordsToSearchIndex($indexItem, $resource)//($scoredWords, $dataset, $type, $accum = null)
     {
-        //check what kind of indexing should happen with the text, that means check what type it has (plain, html, ...)
-        if (is_array($type[0])) {
-            foreach ($type[0] as $key => $value) {
-                if ($key == 'Plain') {
+        //dataset über resource -->function schreiben getDataset die dataset holt oder erzeugt
+        $dataSet = $this->getDataset($resource);
+        $dataSet->setData($indexItem->getData());
+        //add the scored words to search_index
+        foreach ($indexItem->getScoredWords() as $scoredWord) {
+            //$wordData = array('word' => ..., 'locale' => ..., 'type' => ..., 'score' => ...)
+            $newIndex = new Index();
+            $newIndex->setDataset($dataSet);
+            $newIndex->setType(strtolower($scoredWord['type']));
+            $newIndex->setWord($scoredWord['word']);
+            $newIndex->setLocale($scoredWord['locale']);
+            $newIndex->setScore($scoredWord['score']);
+            $this->em->persist($newIndex);
+            $this->em->flush();
+            $this->searchDirty($scoredWord['word']);
+        }
+        $dataSet->setReindex(0);
+    }
 
-                    //type Plain
-                    $options = array(
-                        'weight' => $value['weight'],
-                        'minimumWordSize' => $this->minimumWordSize,
-                        'accum' => $this->accum
-                    );
-                    list($scoredWords, $newAccum) = $this->plainType->index($text, $options);
-                    $this->accum = $newAccum;
-                    $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
-                } else if ($key == 'Html') {
+    protected function getDataset($resource)
+    {
+        $metaData = $this->metadataFactory->create($resource);
+        $entity = $metaData->getEntityName();
+        $bundle = $metaData->getBundleName();
+        $id = $resource->getId();
+        $dataSet = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findOneBy(array(
+            'type' => strtolower($entity),
+            'bundle' => $bundle,
+            'reference' => $id
+        ));
+        if($dataSet == null){
+            //create new dataset
+            $dataSet = new Dataset();
+            $dataSet->setType(strtolower($entity));
+            $dataSet->setBundle($bundle);
+            $dataSet->setReference($id);
+            $this->em->persist($dataSet);
+            $this->em->flush();
+        }
+        return $dataSet;
+    }
 
-                    //type Html
-                    $options = array(
-                        'minimumWordSize' => $this->minimumWordSize,
-                        'accum' => $this->accum
-                    );
-                    if (array_key_exists('weights', $value)) {
-                        if($text != null){
-                            $options['weights'] = $value['weights'];
-                        }
-                    }
-                    list($scoredWords, $newAccum) = $this->htmlType->index($text, $options);
-                    $this->accum = $newAccum;
-                    $this->addWordsToSearchIndex($scoredWords, $dataSet, $value['type']);
-                } else if ($key == 'Collection') {
-
-                    //type Collection
-                    //get the right yaml file for collection
-                    if (array_key_exists('entity', $value)) {
-                        $bundlePath = null;
-                        $splittedBundlePath = explode('\\', $value['entity']);
-                        while (strpos(end($splittedBundlePath), 'Bundle') != true) {
-                            array_pop($splittedBundlePath);
-                        }
-                        $bundlePath = implode('/', $splittedBundlePath);
-                        $collectionPath = null;
-                        foreach ($this->searchYamlPaths as $path) {
-                            if (strpos($path, $bundlePath)) {
-                                $collectionPath = $path;
-                                break;
-                            }
-                        }
-                        $yaml = new Parser();
-                        if($collectionPath != null) {
-                            $currentCollectionSearchYaml = $yaml->parse(file_get_contents($collectionPath));
-
-                            if ($text != null) {
-                                $collectionType = new CollectionType($this->util, $this);
-                                $options = array(
-                                    'model' => $value['entity'],
-                                    'yaml' => $currentCollectionSearchYaml,
-                                    'dataSet' => $dataSet
-                                );
-                                $collectionType->index($text,$options);
-                            }
-                        }
-                    } else if (array_key_exists(0, $value)) {
-                        foreach($text as $currentText){
-                            if(key($value[0]) == 'Plain'){
-                                $options = array(
-                                    'weight' => $value[0]['Plain']['weight'],
-                                    'minimumWordSize' => $this->minimumWordSize,
-                                    'accum' => $this->accum
-                                );
-                                list($scoredWords, $newAccum) = $this->plainType->index($currentText, $options);
-                                $this->accum = $newAccum;
-                                $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Plain']['type']);
-
-                            } else if (key($value[0]) == 'Html'){
-                                $options = array(
-                                    'minimumWordSize' => $this->minimumWordSize,
-                                    'accum' => $this->accum
-                                );
-                                if (array_key_exists('weights', $value[0]['Html'])) {
-                                    $options['weights'] = $value[0]['Html']['weights'];
-                                }
-                                list($scoredWords, $newAccum) = $this->htmlType->index($currentText, $options);
-                                $this->accum = $newAccum;
-                                $this->addWordsToSearchIndex($scoredWords, $dataSet, $value[0]['Html']['type']);
-                            }
-                        }
-                    }
-                } else if($key == 'PDF'){
-                    //get content of PDF
-                    $pdfType = new PdfType($this->util, $this, $this->fileService);
-                    $options = array(
-                        'weight' => $value['weight'],
-                        'minimumWordSize' => $this->minimumWordSize,
-                        'dataSet' => $dataSet,
-                        'type' => $value['type'],
-                        'accum' => $this->accum
-                    );
-                    $pdfType->index($text, $options);
-                }
-            }
-        } else if($type[0] == 'Model') {
-            //Model
-            $model = get_class($text);
-            $splittedModelPath = explode('\\', $model);
-            if($splittedModelPath[0] == 'Proxies')
-            {
-                array_shift($splittedModelPath);
-                array_shift($splittedModelPath);
-            }
-            $model = implode('\\',$splittedModelPath);
-            while (strpos(end($splittedModelPath), 'Bundle') != true) {
-                array_pop($splittedModelPath);
-            }
-
-            $bundlePath = implode('/', $splittedModelPath);
-            $modelPath = null;
-            foreach ($this->searchYamlPaths as $path) {
-                if (strpos($path, $bundlePath)) {
-                    $modelPath = $path;
-                    break;
-                }
-            }
-            $yaml = new Parser();
-            if($modelPath != null){
-                $currentModelSearchYaml = $yaml->parse(file_get_contents($modelPath));
-                if($text != null) {
-
-                    $modelType = new ModelType($this->util, $this);
-                    $options = array(
-                        'model' => $model,
-                        'yaml' => $currentModelSearchYaml,
-                        'dataSet' => $dataSet
-                    );
-                    $modelType->index($text,$options);
-                }
-            }
+    /**
+     * Marks a word as "dirty" (changed), or retrieves the list of dirty words.
+     *
+     * This is used during indexing (cron). Words that are dirty have outdated
+     * total counts in the search_total table, and need to be recounted.
+     */
+    function searchDirty($word = NULL) {
+        global $dirty;
+        if ($word !== NULL) {
+            $dirty[$word] = TRUE;
+        }
+        else {
+            return $dirty;
         }
     }
 
@@ -452,44 +382,6 @@ class IndexEngine implements IndexEngineInterface {
                     }
                 }
             }
-        }
-    }
-
-    public function addWordsToSearchIndex($scoredWords, $dataset, $type, $accum = null)
-    {
-        //add the scored words to search_index
-        foreach ($scoredWords as $key => $value) {
-            $newIndex = new Index();
-            $newIndex->setDataset($dataset);
-            $newIndex->setType(strtolower($type));
-            $newIndex->setWord($key);
-            $newIndex->setLocale($this->container->getParameter('locale'));
-            $newIndex->setScore($value);
-            $this->em->persist($dataset);
-            $this->em->persist($newIndex);
-            $this->em->flush();
-            $this->searchDirty($key);
-        }
-        if(!$accum == null){
-            $this->accum = $accum;
-        }
-        $dataset->setData($this->accum);
-        $dataset->setReindex(0);
-    }    
-
-    /**
-     * Marks a word as "dirty" (changed), or retrieves the list of dirty words.
-     *
-     * This is used during indexing (cron). Words that are dirty have outdated
-     * total counts in the search_total table, and need to be recounted.
-     */
-    function searchDirty($word = NULL) {
-        global $dirty;
-        if ($word !== NULL) {
-            $dirty[$word] = TRUE;
-        }
-        else {
-            return $dirty;
         }
     }
 }

@@ -8,23 +8,27 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
+use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 class ModelType extends AbstractIndexType
 {
+    protected $metadataFactory;
+
+    public function __construct(SearchUtil $util, ContainerInterface $container, MetadataFactory $metadataFactory)
+    {
+        parent::__construct($util, $container);
+        $this->metadataFactory = $metadataFactory;
+    }
+
     function index($val, $options)
     {
-        $model = $options['model'];
-        $yamlFile = $options['yaml'];
-        if(array_key_exists($model, $yamlFile)){
-            $colProperties = $yamlFile[$model]['properties'];
-            $accessor = PropertyAccess::createPropertyAccessor();
-            foreach($colProperties as $key => $value){
-                $currentText = $accessor->getValue($val, $key);
-                $this->indexEngine->switchToIndexingType($currentText, $value, $options['dataSet']);
-            }
-        }
+        $metaData = $this->metadataFactory->create($val);
+
+        $indexWalker = $this->getIndexWalker();
+        return $indexWalker->getIndexItems($val, $metaData);
     }
 
     /**

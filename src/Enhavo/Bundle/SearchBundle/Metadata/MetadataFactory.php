@@ -50,11 +50,13 @@ class MetadataFactory
         $configurations = $this->collector->getConfigurations();
         if(isset($configurations[$className])) {
             return $configurations[$className];
+        } else if($className == 'Doctrine\ORM\PersistentCollection'){
+
         }
         return null;
     }
 
-    public function getClassName($resource)
+    protected function getClassName($resource)
     {
         $resourceClassName = get_class($resource);
         if ($resource instanceof Proxy) {
@@ -63,11 +65,29 @@ class MetadataFactory
         return $resourceClassName;
     }
 
+    protected function getEntityName($resource)
+    {
+        $className = null;
+        if(is_string($resource)){
+            $className = $resource;
+        } else {
+            $className = $this->getClassName($resource);
+        }
+        $splittedClassName = preg_split('/\\\\|\//', $className);
+        $entityName = array_pop($splittedClassName);
+        return $entityName;
+    }
+
     public function create($resource)
     {
-        $className = $this->getClassName($resource);
+        $className = null;
+        if(is_string($resource)){
+            $className = $resource;
+        } else {
+            $className = $this->getClassName($resource);// ...Entity/Article
+        }
 
-        $configuration = $this->getConfiguration($className);
+        $configuration = $this->getConfiguration($className);// array(properties => array(title, teaser, ...))
         if($configuration === null) {
             return null;
         }
@@ -75,14 +95,23 @@ class MetadataFactory
         $metadata = new Metadata();
         $metadata->setBundleName($this->getBundleName($className));
         $metadata->setClassName($className);
+        $metadata->setEntityName($this->getEntityName($resource));
 
         if($configuration['properties']) {
             $properties = [];
             foreach($configuration['properties'] as $property => $config) {
-                foreach($config as $type => $options) {
+                if(is_array($config[0])){
+                    foreach($config[0] as $type => $options) {
+                        $propertyNode = new PropertyNode();
+                        $propertyNode->setType($type);// type: Plain
+                        $propertyNode->setOptions($options);// weight, type
+                        $propertyNode->setProperty($property);//property: title
+                        $properties[] = $propertyNode;
+                    }
+                } else {
                     $propertyNode = new PropertyNode();
-                    $propertyNode->setType($type);
-                    $propertyNode->setOptions($options);
+                    $propertyNode->setType($config[0]);
+                    $propertyNode->setOptions(null);
                     $propertyNode->setProperty($property);
                     $properties[] = $propertyNode;
                 }

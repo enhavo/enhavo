@@ -8,28 +8,29 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index;
 
-use Enhavo\Bundle\SearchBundle\Index\IndexEngine;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractIndexType implements IndexTypeInterface
 {
     protected $util;
-    protected $indexEngine;
+    protected $minimumWordSize = 2;
+    protected $container;
 
-    public function __construct(SearchUtil $util, IndexEngine $indexEngine)
+    public function __construct(SearchUtil $util, ContainerInterface $container)
     {
         $this->util = $util;
-        $this->indexEngine = $indexEngine;
+        $this->container = $container;
     }
 
-    public function getMinimumWordSize($options)
+    public function getMinimumWordSize()
     {
-        $minimumWordSize = 2;
-        if(isset($options['minimumWordSize'])) {
-            $minimumWordSize = $options['minimumWordSize'];
-        }
-        return $minimumWordSize;
+        return $this->minimumWordSize;
+    }
+
+    protected function getIndexWalker()
+    {
+        return $this->container->get('enhavo_search_index_walker');
     }
 
     public function scoreWord($word, $weight, $minimumWordSize, $scoredWords, $focus)
@@ -48,7 +49,6 @@ abstract class AbstractIndexType implements IndexTypeInterface
         }
         return array($scoredWords, $focus);
     }
-
 
     /**
      * Simplifies and splits a string into words for indexing

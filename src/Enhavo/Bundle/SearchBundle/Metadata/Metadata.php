@@ -19,6 +19,11 @@ class Metadata
     /**
      * @var string
      */
+    private $entityName;
+
+    /**
+     * @var string
+     */
     private $bundleName;
 
     /**
@@ -40,6 +45,22 @@ class Metadata
     public function setClassName($className)
     {
         $this->className = $className;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * @param string $entityName
+     */
+    public function setEntityName($entityName)
+    {
+        $this->entityName = $entityName;
     }
 
     /**

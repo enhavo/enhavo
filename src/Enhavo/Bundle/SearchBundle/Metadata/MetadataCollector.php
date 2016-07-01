@@ -85,11 +85,16 @@ class MetadataCollector
         $parser = new Parser();
         $finder = $this->finder;
 
-        foreach ($finder->files()->in($file) as $file) {
-            $contents = $file->getContents();
+        if(file_get_contents($file)){
+            $contents = file_get_contents($file);
             $data = $parser->parse($contents);
             return $data;
         }
+        /*foreach ($finder->files()->in($file) as $file) {
+            $contents = $file->getContents();
+            $data = $parser->parse($contents);
+            return $data;
+        }*/
 
         return [];
     }

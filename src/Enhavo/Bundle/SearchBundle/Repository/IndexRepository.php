@@ -143,6 +143,6 @@ class IndexRepository extends EntityRepository
         }
         $query->orderBy('calculated_score', 'DESC');
 
-        return $query->getQuery()->getResult();;
+        return $query->getQuery()->getResult();
     }
 }
