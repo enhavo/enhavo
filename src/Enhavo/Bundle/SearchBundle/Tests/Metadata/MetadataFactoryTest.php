@@ -32,9 +32,11 @@ class MetadataFactoryTest extends \PHPUnit_Framework_TestCase
                 'type' => 'Model',
                 'properties' => [
                     'name' => [
-                        'Type' => [
-                            'option1' => 'value1',
-                            'option2' => 'value2',
+                        0 => [
+                            'Type' => [
+                                'option1' => 'value1',
+                                'option2' => 'value2',
+                            ]
                         ]
                     ]
                 ]

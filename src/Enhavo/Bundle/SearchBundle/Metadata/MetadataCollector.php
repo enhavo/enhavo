@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Metadata;
 
-use Symfony\Component\Finder\Finder;
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Parser;
 
@@ -20,9 +20,9 @@ class MetadataCollector
     protected $kernel;
 
     /**
-     * @var Finder
+     * @var Filesystem
      */
-    protected $finder;
+    protected $filesystem;
 
     /**
      * @var array
@@ -34,10 +34,10 @@ class MetadataCollector
      *
      * @param KernelInterface $kernel
      */
-    public function __construct(KernelInterface $kernel, Finder $finder)
+    public function __construct(KernelInterface $kernel, Filesystem $filesystem)
     {
         $this->kernel = $kernel;
-        $this->finder = $finder;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -83,19 +83,8 @@ class MetadataCollector
     protected function parseFile($file)
     {
         $parser = new Parser();
-        $finder = $this->finder;
-
-        if(file_get_contents($file)){
-            $contents = file_get_contents($file);
-            $data = $parser->parse($contents);
-            return $data;
-        }
-        /*foreach ($finder->files()->in($file) as $file) {
-            $contents = $file->getContents();
-            $data = $parser->parse($contents);
-            return $data;
-        }*/
-
-        return [];
+        $contents = $this->filesystem->readFile($file);
+        $data = $parser->parse($contents);
+        return $data;
     }
 }
