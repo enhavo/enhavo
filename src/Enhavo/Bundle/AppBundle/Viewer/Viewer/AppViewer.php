@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class AppViewer extends BaseViewer
 {
@@ -44,10 +44,10 @@ class AppViewer extends BaseViewer
         return $view;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        parent::configureOptions($optionsAccessor);
+        $optionsAccessor->setDefaults([
             'title' => '',
             'blocks' => [],
             'actions' => []

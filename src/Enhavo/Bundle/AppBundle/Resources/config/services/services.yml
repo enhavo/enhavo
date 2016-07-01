@@ -27,7 +27,7 @@ services:
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController
         arguments:
-            - @enhavo.simple_request_configuration_factory
+            - @sylius.resource_controller.request_configuration_factory
             - @viewer.factory
             - @fos_rest.view_handler
         calls:
@@ -81,10 +81,3 @@ services:
 
     enhavo.batch_manager:
         class: Enhavo\Bundle\AppBundle\Controller\BatchManager
-
-    enhavo.simple_request_configuration_factory:
-        class: Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfigurationFactory
-        arguments:
-           - @sylius.resource_controller.parameters_parser
-           - %enhavo.simple_request_configuration_factory.request_configuration.class%
-           - %sylius.resource.settings%

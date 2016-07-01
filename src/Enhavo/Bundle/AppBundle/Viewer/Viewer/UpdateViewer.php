@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class UpdateViewer extends CreateViewer
 {
@@ -53,10 +53,10 @@ class UpdateViewer extends CreateViewer
         return $view;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        parent::configureOptions($optionsAccessor);
+        $optionsAccessor->setDefaults([
             'buttons' => [
                 'cancel' => [
                     'type' => 'cancel',

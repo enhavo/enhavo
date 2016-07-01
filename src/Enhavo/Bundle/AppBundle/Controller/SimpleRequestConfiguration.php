@@ -35,7 +35,7 @@ class SimpleRequestConfiguration implements RequestConfigurationInterface
 
     public function getViewerOptions()
     {
-        $attributes = $this->request->attributes->get('_viewer');
+        $attributes = $this->parameters->get('viewer', []);
         if(isset($attributes['type'])) {
             unset($attributes['type']);
         }
@@ -44,7 +44,7 @@ class SimpleRequestConfiguration implements RequestConfigurationInterface
 
     public function getViewerType()
     {
-        $attributes = $this->request->attributes->get('_viewer');
+        $attributes = $this->parameters->get('viewer', []);
         if(isset($attributes['type'])) {
             return $attributes['type'];
         }

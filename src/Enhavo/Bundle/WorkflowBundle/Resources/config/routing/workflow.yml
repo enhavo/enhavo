@@ -5,9 +5,6 @@ enhavo_workflow_workflow_index:
     methods: [GET]
     defaults:
         _controller: enhavo_workflow.controller.workflow:indexAction
-        _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
 
 enhavo_workflow_workflow_create:
     options:
@@ -17,16 +14,15 @@ enhavo_workflow_workflow_create:
     defaults:
         _controller: enhavo_workflow.controller.workflow:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoWorkflowBundle
-            tabs:
-                workflow:
-                    label: workflow.label.workflow
-                    template: EnhavoWorkflowBundle:Tab:workflowCreate.html.twig
-                node:
-                    label: workflow.label.nodes
-                    template: EnhavoWorkflowBundle:Tab:nodes.html.twig
+            viewer:
+                translationDomain: EnhavoWorkflowBundle
+                tabs:
+                    workflow:
+                        label: workflow.label.workflow
+                        template: EnhavoWorkflowBundle:Tab:workflowCreate.html.twig
+                    node:
+                        label: workflow.label.nodes
+                        template: EnhavoWorkflowBundle:Tab:nodes.html.twig
 
 enhavo_workflow_workflow_update:
     options:
@@ -39,19 +35,18 @@ enhavo_workflow_workflow_update:
             repository:
                 method: findFormNodes
                 arguments: [$id]
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoWorkflowBundle
-            tabs:
-                workflow:
-                    label: workflow.label.workflow
-                    template: EnhavoWorkflowBundle:Tab:workflowEdit.html.twig
-                node:
-                    label: workflow.label.nodes
-                    template: EnhavoWorkflowBundle:Tab:nodes.html.twig
-                transition:
-                    label: workflow.label.transitions
-                    template: EnhavoWorkflowBundle:Tab:transitions.html.twig
+            viewer:
+                translationDomain: EnhavoWorkflowBundle
+                tabs:
+                    workflow:
+                        label: workflow.label.workflow
+                        template: EnhavoWorkflowBundle:Tab:workflowEdit.html.twig
+                    node:
+                        label: workflow.label.nodes
+                        template: EnhavoWorkflowBundle:Tab:nodes.html.twig
+                    transition:
+                        label: workflow.label.transitions
+                        template: EnhavoWorkflowBundle:Tab:transitions.html.twig
 
 
 enhavo_workflow_workflow_table:
@@ -63,10 +58,8 @@ enhavo_workflow_workflow_table:
         page: 1
         _controller: enhavo_workflow.controller.workflow:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoWorkflowBundle
-            table:
+            viewer:
+                translationDomain: EnhavoWorkflowBundle
                 columns:
                     id:
                         label: workflow.label.id

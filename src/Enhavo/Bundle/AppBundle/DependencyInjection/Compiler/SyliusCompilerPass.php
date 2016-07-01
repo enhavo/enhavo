@@ -23,7 +23,9 @@ class SyliusCompilerPass implements CompilerPassInterface
     protected function overwriteRequestConfigurationFactory(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('sylius.resource_controller.request_configuration_factory');
+        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\RequestConfigurationFactory');
         $definition->replaceArgument(1, 'Enhavo\Bundle\AppBundle\Controller\RequestConfiguration');
+        $definition->addArgument('Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfiguration');
     }
 
     protected function overwriteController(ContainerBuilder $container)

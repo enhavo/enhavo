@@ -6,10 +6,9 @@ enhavo_calendar_appointment_index:
     defaults:
         _controller: enhavo_calendar.controller.appointment:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: label.calendar
-            translationDomain: EnhavoCalendarBundle
+            viewer:
+                title: label.calendar
+                translationDomain: EnhavoCalendarBundle
 
 enhavo_calendar_appointment_create:
     options:
@@ -19,19 +18,18 @@ enhavo_calendar_appointment_create:
     defaults:
         _controller: enhavo_calendar.controller.appointment:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoCalendarBundle
-            tabs:
-                appointment:
-                    label: appointment.label.appointment
-                    template: EnhavoCalendarBundle:Tab:appointment.html.twig
-                content:
-                    label: appointment.label.content
-                    template: EnhavoCalendarBundle:Tab:content.html.twig
-                seo:
-                    label: appointment.label.seo
-                    template: EnhavoCalendarBundle:Tab:seo.html.twig
+            viewer:
+                translationDomain: EnhavoCalendarBundle
+                tabs:
+                    appointment:
+                        label: appointment.label.appointment
+                        template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                    content:
+                        label: appointment.label.content
+                        template: EnhavoCalendarBundle:Tab:content.html.twig
+                    seo:
+                        label: appointment.label.seo
+                        template: EnhavoCalendarBundle:Tab:seo.html.twig
 
 enhavo_calendar_appointment_update:
     options:
@@ -41,33 +39,29 @@ enhavo_calendar_appointment_update:
     defaults:
         _controller: enhavo_calendar.controller.appointment:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoCalendarBundle
-            tabs:
-                appointment:
-                    label: appointment.label.appointment
-                    template: EnhavoCalendarBundle:Tab:appointment.html.twig
-                content:
-                    label: appointment.label.content
-                    template: EnhavoCalendarBundle:Tab:content.html.twig
-                seo:
-                    label: appointment.label.seo
-                    template: EnhavoCalendarBundle:Tab:seo.html.twig
+            viewer:
+                translationDomain: EnhavoCalendarBundle
+                tabs:
+                    appointment:
+                        label: appointment.label.appointment
+                        template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                    content:
+                        label: appointment.label.content
+                        template: EnhavoCalendarBundle:Tab:content.html.twig
+                    seo:
+                        label: appointment.label.seo
+                        template: EnhavoCalendarBundle:Tab:seo.html.twig
 
 enhavo_calendar_appointment_table:
     options:
         expose: true
-    path: /enhavo/calendar/appointment/table/{page}
+    path: /enhavo/calendar/appointment/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_calendar.controller.appointment:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoCalendarBundle
-            table:
+            viewer:
+                translationDomain: EnhavoCalendarBundle
                 columns:
                     id:
                         label: appointment.label.id

@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class TableViewer extends AbstractViewer
 {
@@ -43,7 +43,7 @@ class TableViewer extends AbstractViewer
 
     protected function getColumns()
     {
-        $columns = $this->optionAccessor->get('table.columns');
+        $columns = $this->optionAccessor->get('columns');
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('type', $column)) {
@@ -102,37 +102,33 @@ class TableViewer extends AbstractViewer
             'sortable' => $configuration->isSortable(),
             'columns' => $this->getColumns(),
             'batches' => $this->getBatches(),
-            'width' => $this->optionAccessor->get('table.width'),
+            'width' => $this->optionAccessor->get('width'),
             'move_after_route' => $this->optionAccessor->get('table.sorting.move_after_route'),
             'move_to_page_route' => $this->optionAccessor->get('table.sorting.move_to_page_route'),
         ]));
         return $view;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
-            'table' => [
-                'width' => 12,
-                'sorting' => [
-                    'move_after_route' => $this->getDefaultMoveAfterRoute(),
-                    'move_to_page_route' => $this->getDefaultMoveToPageRoute()
-                ],
-                'batch' => [
-                    'actions' => array(
-                        'delete' => array(
-                            'label'                 => 'table.batch.action.delete',
-                            'confirm_message'       => 'table.batch.message.confirm.delete',
-                            'translation_domain'    => 'EnhavoAppBundle',
-                            'permission'            => $this->getPermissionRole(),
-                            'position'              => 0
-                        )
-                    ),
-                    'route' => $this->getBatchRoute()
-                ],
-                'columns' => $this->getDefaultColumns()
-            ]
+        parent::configureOptions($optionsAccessor);
+        $optionsAccessor->setDefaults([
+            'width' => 12,
+            'sorting' => [
+                'move_after_route' => $this->getDefaultMoveAfterRoute(),
+                'move_to_page_route' => $this->getDefaultMoveToPageRoute()
+            ],
+            'batch_route' => $this->getBatchRoute(),
+            'batches' => [
+                'delete' => array(
+                    'label'                 => 'table.batch.action.delete',
+                    'confirm_message'       => 'table.batch.message.confirm.delete',
+                    'translation_domain'    => 'EnhavoAppBundle',
+                    'permission'            => $this->getPermissionRole(),
+                    'position'              => 0
+                )
+            ],
+            'columns' => $this->getDefaultColumns()
         ]);
     }
 }

@@ -14,8 +14,9 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Sylius\Bundle\ResourceBundle\Controller\ParametersParser;
 use Sylius\Bundle\ResourceBundle\Controller\Parameters;
 use Symfony\Component\HttpFoundation\Request;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory as SyliusRequestConfigurationFactory;
 
-class SimpleRequestConfigurationFactory implements SimpleRequestConfigurationFactoryInterface
+class RequestConfigurationFactory extends SyliusRequestConfigurationFactory implements SimpleRequestConfigurationFactoryInterface
 {
     /**
      * @var ParametersParser
@@ -33,23 +34,32 @@ class SimpleRequestConfigurationFactory implements SimpleRequestConfigurationFac
     private $defaultParameters;
 
     /**
+     * @var string
+     */
+    private $simpleConfigurationClass;
+
+    /**
      * @param ParametersParser $parametersParser
      * @param string $configurationClass
      * @param array $defaultParameters
+     * @param string $simpleConfigurationClass
      */
-    public function __construct(ParametersParser $parametersParser, $configurationClass, array $defaultParameters = [])
+    public function __construct(ParametersParser $parametersParser, $configurationClass, array $defaultParameters, $simpleConfigurationClass)
     {
+        parent::__construct($parametersParser, $configurationClass, $defaultParameters);
         $this->parametersParser = $parametersParser;
         $this->configurationClass = $configurationClass;
         $this->defaultParameters = $defaultParameters;
+        $this->simpleConfigurationClass = $simpleConfigurationClass;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function create(Request $request)
+    public function createSimple(Request $request)
     {
-        $parameters = $this->parametersParser->parseRequestValues($this->defaultParameters, $request);
-        return new $this->configurationClass($request, new Parameters($parameters));
+        $parameters = array_merge($this->defaultParameters, $request->attributes->get('_sylius', []));
+        $parameters = $this->parametersParser->parseRequestValues($parameters, $request);
+        return new $this->simpleConfigurationClass($request, new Parameters($parameters));
     }
 }

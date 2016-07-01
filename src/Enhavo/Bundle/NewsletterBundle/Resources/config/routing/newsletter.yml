@@ -6,10 +6,9 @@ enhavo_newsletter_newsletter_index:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: newsletter.label.newsletter
-            translationDomain: EnhavoNewsletterBundle
+            viewer:
+                title: newsletter.label.newsletter
+                translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_create:
     options:
@@ -19,13 +18,12 @@ enhavo_newsletter_newsletter_create:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoNewsletterBundle
-            tabs:
-                newsletter:
-                    label: newsletter.label.newsletter
-                    template: EnhavoNewsletterBundle:Resource:create.html.twig
+            viewer:
+                translationDomain: EnhavoNewsletterBundle
+                tabs:
+                    newsletter:
+                        label: newsletter.label.newsletter
+                        template: EnhavoNewsletterBundle:Resource:create.html.twig
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -35,34 +33,30 @@ enhavo_newsletter_newsletter_update:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoNewsletterBundle
-            tabs:
-                newsletter:
-                    label: newsletter.label.newsletter
-                    template: EnhavoNewsletterBundle:Resource:edit.html.twig
-            buttons:
-                send:
-                    route: enhavo_newsletter_newsletter_send
-                    label: newsletter.action.sendAndSave
-                    icon: icon-eye
-                    translationDomain: EnhavoNewsletterBundle
+            viewer:
+                translationDomain: EnhavoNewsletterBundle
+                tabs:
+                    newsletter:
+                        label: newsletter.label.newsletter
+                        template: EnhavoNewsletterBundle:Resource:edit.html.twig
+                buttons:
+                    send:
+                        route: enhavo_newsletter_newsletter_send
+                        label: newsletter.action.sendAndSave
+                        icon: icon-eye
+                        translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_newsletter_table:
     options:
         expose: true
-    path: /enhavo/newsletter/newsletter/table/{page}
+    path: /enhavo/newsletter/newsletter/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoNewsletterBundle
-            table:
-                batch:
+            viewer:
+                translationDomain: EnhavoNewsletterBundle
+                batches:
                     actions:
                         delete:
                             label: table.batch.action.delete

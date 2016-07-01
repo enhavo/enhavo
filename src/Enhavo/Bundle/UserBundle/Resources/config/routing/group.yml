@@ -5,9 +5,10 @@ enhavo_user_group_index:
     methods: [GET]
     defaults:
         _controller: enhavo_user.controller.group:indexAction
-        _viewer:
-            title: group.label.group
-            translationDomain: EnhavoUserBundle
+        _sylius:
+            viewer:
+                title: group.label.group
+                translationDomain: EnhavoUserBundle
 
 enhavo_user_group_create:
     options:
@@ -16,15 +17,16 @@ enhavo_user_group_create:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.group:createAction
-        _viewer:
-             translationDomain: EnhavoUserBundle
-             tabs:
-                group:
-                  template: EnhavoUserBundle:Group:group.html.twig
-                  label: group.label.group
-                permission:
-                  template: EnhavoUserBundle:Group:permission.html.twig
-                  label: group.label.permission
+        _sylius:
+            viewer:
+                translationDomain: EnhavoUserBundle
+                tabs:
+                    group:
+                      template: EnhavoUserBundle:Group:group.html.twig
+                      label: group.label.group
+                    permission:
+                      template: EnhavoUserBundle:Group:permission.html.twig
+                      label: group.label.permission
 
 enhavo_user_group_update:
     options:
@@ -33,27 +35,27 @@ enhavo_user_group_update:
     methods: [GET,POST]
     defaults:
         _controller: enhavo_user.controller.group:updateAction
-        _viewer:
-             translationDomain: EnhavoUserBundle
-             tabs:
-                group:
-                  template: EnhavoUserBundle:Group:group.html.twig
-                  label: group.label.group
-                permission:
-                  template: EnhavoUserBundle:Group:permission.html.twig
-                  label: group.label.permission
+        _sylius:
+            viewer:
+                translationDomain: EnhavoUserBundle
+                tabs:
+                   group:
+                       template: EnhavoUserBundle:Group:group.html.twig
+                       label: group.label.group
+                   permission:
+                        template: EnhavoUserBundle:Group:permission.html.twig
+                        label: group.label.permission
 
 enhavo_user_group_table:
     options:
         expose: true
-    path: /enhavo/user/group/table/{page}
+    path: /enhavo/user/group/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_user.controller.group:tableAction
-        _viewer:
-            translationDomain: EnhavoUserBundle
-            table:
+        _sylius:
+            viewer:
+                translationDomain: EnhavoUserBundle
                 columns:
                     id:
                         label: group.label.id

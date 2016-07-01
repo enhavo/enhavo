@@ -13,38 +13,27 @@ class OptionAccessor
     /**
      * @var array
      */
-    protected $config;
+    protected $options = array();
 
     /**
      * @var array
      */
-    protected $defaultConfig = array();
+    protected $defaultOptions = array();
 
-    /**
-     * @var array|null
-     */
-    protected $mergedConfig = null;
-
-    public function parse($config)
+    public function setDefaults($options)
     {
-        $this->config = $config;
-        return $this;
+        $this->defaultOptions = $this->merge($this->defaultOptions, $options);
     }
 
-    public function setDefault($defaultConfig)
+    public function resolve($options)
     {
-        $this->defaultConfig = $defaultConfig;
+        $this->options = $this->merge($this->defaultOptions, $options);
     }
 
     public function get($key)
     {
         $keyArray = preg_split('/\./', $key);
-
-        if($this->mergedConfig === null) {
-            $this->mergedConfig = $this->merge($this->defaultConfig, $this->config);
-        }
-
-        $value = $this->getByKeyArray($this->mergedConfig, $keyArray);
+        $value = $this->getByKeyArray($this->options, $keyArray);
         return $value;
     }
 
@@ -93,6 +82,6 @@ class OptionAccessor
 
     public function toArray()
     {
-        return $this->mergedConfig;
+        return $this->options;
     }
 }

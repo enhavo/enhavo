@@ -61,12 +61,9 @@ class ViewerFactory
             $viewer->setResource($newResource);
         }
 
-        $optionResolver = new OptionsResolver();
-        $viewer->configureOptions($optionResolver);
-        $options = $optionResolver->resolve($configuration->getViewerOptions());
-
         $optionAccessor = new OptionAccessor();
-        $optionAccessor->parse($options);
+        $viewer->configureOptions($optionAccessor);
+        $optionAccessor->resolve($configuration->getViewerOptions());
         $viewer->setOptionAccessor($optionAccessor);
 
         return $viewer;

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 use FOS\RestBundle\View\View;
 
 class PreviewViewer extends AbstractViewer
@@ -29,9 +29,9 @@ class PreviewViewer extends AbstractViewer
         return $view;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        $optionsResolver->setDefaults([
+        $optionsAccessor->setDefaults([
             'strategy' => 'service',
             'service' => 'enhavo_app.preview.default_renderer:renderTest'
         ]);

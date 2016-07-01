@@ -6,8 +6,6 @@ enhavo_shop_product_index:
     defaults:
         _controller: enhavo_shop.controller.product:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
 
 enhavo_shop_product_create:
     options:
@@ -17,8 +15,6 @@ enhavo_shop_product_create:
     defaults:
         _controller: enhavo_shop.controller.product:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
 
 enhavo_shop_product_update:
     options:
@@ -28,20 +24,15 @@ enhavo_shop_product_update:
     defaults:
         _controller: enhavo_shop.controller.product:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
 
 enhavo_shop_product_table:
     options:
         expose: true
-    path: /enhavo/shop/product/table/{page}
+    path: /enhavo/shop/product/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_shop.controller.product:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
 
 enhavo_shop_product_delete:
     options:

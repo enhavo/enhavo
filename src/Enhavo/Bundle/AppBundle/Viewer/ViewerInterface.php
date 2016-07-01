@@ -13,13 +13,12 @@ use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface ViewerInterface extends TypeInterface
 {
     public function createView();
 
-    public function configureOptions(OptionsResolver $resolver);
+    public function configureOptions(OptionAccessor $resolver);
 
     public function setMetadata(MetadataInterface $metadata);
 

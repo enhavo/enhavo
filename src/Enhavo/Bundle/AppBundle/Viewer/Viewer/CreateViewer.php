@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class CreateViewer extends AbstractViewer
 {
@@ -89,10 +89,10 @@ class CreateViewer extends AbstractViewer
     }
 
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        parent::configureOptions($optionsAccessor);
+        $optionsAccessor->setDefaults([
             'buttons' => [
                 'cancel' => [
                     'type' => 'cancel',

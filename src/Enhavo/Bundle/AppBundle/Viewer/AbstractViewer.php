@@ -116,9 +116,9 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
         return $view;
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        $optionsResolver->setDefaults([
+        $optionsAccessor->setDefaults([
             'translationDomain' => null
         ]);
     }

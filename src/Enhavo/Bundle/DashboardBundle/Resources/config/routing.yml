@@ -3,10 +3,11 @@ enhavo_dashboard_index:
     methods: [GET]
     defaults:
         _controller: enhavo_app.controller.app:indexAction
-        _viewer:
-            type: app
-            title: dashboard.label.dashboard
-            translationDomain: EnhavoDashboardBundle
-            blocks:
-                search:
-                    type: search
+        _sylius:
+            viewer:
+                type: app
+                title: dashboard.label.dashboard
+                translationDomain: EnhavoDashboardBundle
+                blocks:
+                    search:
+                        type: search

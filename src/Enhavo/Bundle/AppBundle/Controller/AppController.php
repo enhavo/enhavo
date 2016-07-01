@@ -16,7 +16,7 @@ use FOS\RestBundle\View\ViewHandler;
 class AppController extends Controller
 {
     /**
-     * @var SimpleRequestConfigurationFactory
+     * @var SimpleRequestConfigurationFactoryInterface
      */
     protected $requestConfigurationFactory;
 
@@ -31,7 +31,7 @@ class AppController extends Controller
     protected $viewHandler;
 
     public function __construct(
-        SimpleRequestConfigurationFactory $requestConfigurationFactory,
+        SimpleRequestConfigurationFactoryInterface $requestConfigurationFactory,
         ViewerFactory $viewerFactory,
         ViewHandler $viewHandler
     ) {
@@ -42,7 +42,7 @@ class AppController extends Controller
 
     public function indexAction(Request $request)
     {
-        $configuration = $this->requestConfigurationFactory->create($request);
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
         $viewerFactory = $this->get('viewer.factory');
         $viewer = $viewerFactory->createType($configuration, 'app');
         return $this->viewHandler->handle($viewer->createView());
@@ -50,7 +50,7 @@ class AppController extends Controller
 
     public function showAction($contentDocument, Request $request)
     {
-        $configuration = $this->requestConfigurationFactory->create($request);
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
         $viewerFactory = $this->get('viewer.factory');
         $viewer = $viewerFactory->create(
             $configuration,

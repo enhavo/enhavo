@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class IndexViewer extends AppViewer
 {
@@ -44,10 +44,10 @@ class IndexViewer extends AppViewer
         );
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        parent::configureOptions($optionsResolver);
-        $optionsResolver->setDefaults([
+        parent::configureOptions($optionsAccessor);
+        $optionsAccessor->setDefaults([
             'blocks' => [
                 'table' => [
                     'type' => 'table',
