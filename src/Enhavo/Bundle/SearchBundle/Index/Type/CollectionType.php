@@ -15,6 +15,13 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 class CollectionType extends AbstractIndexType
 {
+    protected $metadataFactory;
+
+    public function __construct(SearchUtil $util, ContainerInterface $container, MetadataFactory $metadataFactory)
+    {
+        parent::__construct($util, $container);
+        $this->metadataFactory = $metadataFactory;
+    }
 
     function index($val, $options)
     {
@@ -28,6 +35,7 @@ class CollectionType extends AbstractIndexType
                 if(empty($indexItem)){
                     $indexItem = $newIndexItem;
                 } else {
+                    $indexItem->setRawData($indexItem->getRawData().'\n '.$newIndexItem->getRawData());
                     $indexItem->setData($indexItem->getData().$newIndexItem->getData());
                     $indexItem->setScoredWords((array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords())));
                 }

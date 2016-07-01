@@ -33,6 +33,11 @@ class Dataset
     private $data;
 
     /**
+     * @var string
+     */
+    private $rawdata;
+
+    /**
      * Get id
      *
      * @return integer
@@ -182,5 +187,29 @@ class Dataset
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Set rawdata
+     *
+     * @param string $rawdata
+     *
+     * @return Dataset
+     */
+    public function setRawdata($rawdata)
+    {
+        $this->rawdata = $rawdata;
+
+        return $this;
+    }
+
+    /**
+     * Get rawdata
+     *
+     * @return string
+     */
+    public function getRawdata()
+    {
+        return $this->rawdata;
     }
 }

@@ -49,6 +49,7 @@ class PlainType extends AbstractIndexType
         }
 
         $indexItem = new IndexItem();
+        $indexItem->setRawData($value);
         $indexItem->setData(rtrim($accum));
         $indexItem->setScoredWords($indexItemArray);
         return $indexItem;

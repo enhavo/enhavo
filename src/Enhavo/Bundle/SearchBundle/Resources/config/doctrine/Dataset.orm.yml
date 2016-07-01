@@ -16,6 +16,10 @@ Enhavo\Bundle\SearchBundle\Entity\Dataset:
             type: text
             nullable: true
 
+        rawdata:
+            type: text
+            nullable: true
+
         reindex:
             type: integer
 

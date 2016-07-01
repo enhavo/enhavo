@@ -8,10 +8,11 @@ namespace Enhavo\Bundle\SearchBundle\Util;
  * Time: 15:13
  */
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Doctrine\Common\Persistence\Proxy;
 
 class SearchUtil
@@ -22,10 +23,16 @@ class SearchUtil
 
     protected $container;
 
-    public function __construct($kernel, Container $container)
+    protected $metadataFactory;
+
+    protected $em;
+
+    public function __construct($kernel, Container $container, MetadataFactory $metadataFactory, EntityManager $em)
     {
         $this->kernel = $kernel;
         $this->container = $container;
+        $this->metadataFactory = $metadataFactory;
+        $this->em = $em;
     }
 
     public function searchSimplify($text)
@@ -250,5 +257,29 @@ class SearchUtil
             }
         }
         return $types;
+    }
+
+    public function getDataset($resource)
+    {
+        $metaData = $this->metadataFactory->create($resource);
+        $entity = $metaData->getEntityName();
+        $bundle = $metaData->getBundleName();
+        $id = $resource->getId();
+        $dataSet = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findOneBy(array(
+            'type' => strtolower($entity),
+            'bundle' => $bundle,
+            'reference' => $id
+        ));
+        if($dataSet == null){
+            //create new dataset
+            $dataSet = new Dataset();
+            $dataSet->setType(strtolower($entity));
+            $dataSet->setBundle($bundle);
+            $dataSet->setReference($id);
+            $dataSet->setReindex(1);
+            $this->em->persist($dataSet);
+            $this->em->flush();
+        }
+        return $dataSet;
     }
 }

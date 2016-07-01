@@ -41,6 +41,7 @@ class IndexWalker
                 if(empty($indexItem)){
                     $indexItem = $newIndexItem;
                 } else {
+                    $indexItem->setRawData($indexItem->getRawData()."\n ".$newIndexItem->getRawData());
                     $indexItem->setData($indexItem->getData().$newIndexItem->getData());
                     $indexItem->setScoredWords(array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords()));
                 }

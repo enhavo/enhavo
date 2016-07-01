@@ -39,6 +39,7 @@ services:
             - %enhavo_search.search.strategy%
             - @enhavo_search_index_walker
             - @enhavo_search_metadata_factory
+            - @enhavo_search_search_util
 
     enhavo_search_search_engine:
         class: Enhavo\Bundle\SearchBundle\Search\SearchEngine
@@ -52,6 +53,8 @@ services:
         arguments:
             - @kernel
             - @service_container
+            - @enhavo_search_metadata_factory
+            - @doctrine.orm.entity_manager
 
     enhavo_search.block.search:
         class: Enhavo\Bundle\SearchBundle\Block\SearchBlock
@@ -136,18 +139,16 @@ services:
     enhavo_search_highlight:
         class: Enhavo\Bundle\SearchBundle\Search\Highlight
         arguments:
+            - @doctrine.orm.entity_manager
             - @enhavo_search_search_util
             - @enhavo_search_pdf_type
-
-    std.symfony_finder:
-        class: Symfony\Component\Finder\Finder
-        public: false
+            - @enhavo_search_metadata_factory
 
     enhavo_search_metadata_collector:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector
         arguments:
             - @kernel
-            - @std.symfony_finder
+            - @finder=
 
     enhavo_search_metadata_factory:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory

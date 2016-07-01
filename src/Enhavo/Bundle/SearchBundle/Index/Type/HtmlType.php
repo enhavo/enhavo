@@ -121,6 +121,7 @@ class HtmlType extends AbstractIndexType
         }
 
         $indexItem = new IndexItem();
+        $indexItem->setRawData($val);
         $indexItem->setData(rtrim($accum));
         $indexItem->setScoredWords($indexItemArray);
         return $indexItem;

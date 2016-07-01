@@ -7,6 +7,7 @@ use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 use Enhavo\Bundle\SearchBundle\Entity\Total;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
+use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 /**
  * Created by PhpStorm.
@@ -41,13 +42,15 @@ class IndexEngine implements IndexEngineInterface
     protected $metadataFactory;
     protected $em;
     protected $strategy;
+    protected $util;
 
-    public function __construct(EntityManager $em, $strategy, IndexWalker $indexWalker, MetadataFactory $metadataFactory)
+    public function __construct(EntityManager $em, $strategy, IndexWalker $indexWalker, MetadataFactory $metadataFactory, SearchUtil $util)
     {
         $this->em = $em;
         $this->strategy = $strategy;
         $this->indexWalker = $indexWalker;
         $this->metadataFactory = $metadataFactory;
+        $this->util = $util;
     }
 
     public function index($resource)
@@ -57,7 +60,7 @@ class IndexEngine implements IndexEngineInterface
         }
 
         //get DataSet
-        $dataSet = $this->getDataset($resource);
+        $dataSet = $this->util->getDataset($resource);
 
         //get words in search_index of dataset
         $wordsForDataset = $this->getIndexedWords($dataSet);
@@ -128,7 +131,7 @@ class IndexEngine implements IndexEngineInterface
     public function unindex($resource)
     {
         //find the right dataset
-        $dataset = $this->getDataset($resource);
+        $dataset = $this->util->getDataset($resource);
 
         if($dataset){
             //find the belonging indexes
@@ -165,7 +168,8 @@ class IndexEngine implements IndexEngineInterface
 
     public function addWordsToSearchIndex($indexItem, $resource)//($scoredWords, $dataset, $type, $accum = null)
     {
-        $dataSet = $this->getDataset($resource);
+        $dataSet = $this->util->getDataset($resource);
+        $dataSet->setRawdata($indexItem->getRawData());
         $dataSet->setData($indexItem->getData());
 
         //add the scored words to search_index
@@ -184,29 +188,7 @@ class IndexEngine implements IndexEngineInterface
         $dataSet->setReindex(0);
     }
 
-    protected function getDataset($resource)
-    {
-        $metaData = $this->metadataFactory->create($resource);
-        $entity = $metaData->getEntityName();
-        $bundle = $metaData->getBundleName();
-        $id = $resource->getId();
-        $dataSet = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findOneBy(array(
-            'type' => strtolower($entity),
-            'bundle' => $bundle,
-            'reference' => $id
-        ));
-        if($dataSet == null){
-            //create new dataset
-            $dataSet = new Dataset();
-            $dataSet->setType(strtolower($entity));
-            $dataSet->setBundle($bundle);
-            $dataSet->setReference($id);
-            $dataSet->setReindex(1);
-            $this->em->persist($dataSet);
-            $this->em->flush();
-        }
-        return $dataSet;
-    }
+
 
     protected function getResource(Dataset $dataset)
     {
