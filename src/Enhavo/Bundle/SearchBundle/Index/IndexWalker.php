@@ -30,7 +30,11 @@ class IndexWalker
     {
         $indexItem = [];
         $accessor = PropertyAccess::createPropertyAccessor();
+
+        //walk over each field of the property that should get indexed
         foreach($metadata->getProperties() as $propertyNode) {
+
+            //get the right indexType
             $type = $this->collector->getType($propertyNode->getType());
             $newIndexItem = $type->index($accessor->getValue($resource, $propertyNode->getProperty()), $propertyNode->getOptions());
             if($newIndexItem){

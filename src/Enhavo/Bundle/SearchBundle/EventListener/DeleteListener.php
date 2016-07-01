@@ -1,28 +1,25 @@
 <?php
 namespace Enhavo\Bundle\SearchBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\DependencyInjection\Container;
-use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 
 class DeleteListener
 {
-    protected $em;
     protected $container;
-    protected $util;
+    protected $metadataFactory;
 
-    public function __construct(EntityManager $em, Container $container, SearchUtil $util)
+    public function __construct(Container $container, MetadataFactory $metadataFactory)
     {
-        $this->em = $em;
         $this->container = $container;
-        $this->util = $util;
+        $this->metadataFactory = $metadataFactory;
     }
 
     public function onDelete(GenericEvent $event)
     {
-        $searchYaml = $this->util->getSearchYaml($event->getSubject());
-        if($searchYaml){
+        $metadata = $this->metadataFactory->create($event->getSubject());
+        if($metadata){
             $engine = $this->container->getParameter('enhavo_search.search.index_engine');
             $indexEngine = $this->container->get($engine);
             $indexEngine->unindex($event->getSubject());

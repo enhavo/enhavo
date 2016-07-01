@@ -110,27 +110,11 @@ class SearchUtil
         return $value;
     }
 
-    public function getModelData($model)
-    {
-        $fieldSearchYaml = $this->getSearchYaml($model);
-        $class = null;
-        if ($model instanceof \Doctrine\Common\Persistence\Proxy) {
-            $class = get_parent_class($model);
-        } else {
-            $class = get_class($model);
-        }
-        $currentField = $this->getFieldsOfSearchYml($fieldSearchYaml, $class);
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $modelData = $accessor->getValue($model, $currentField[0]);
-        return $modelData;
-    }
-
     public function getMainPath()
     {
-        return $this->mainPath;
+        $this->getSearchYamls();
+        return $this->mainPath; //Users/jhelbing/workspace/enhavo/src/
     }
-
-
 
     public function getEntityName($resource)
     {

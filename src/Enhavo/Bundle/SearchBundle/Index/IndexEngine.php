@@ -3,20 +3,9 @@
 namespace Enhavo\Bundle\SearchBundle\Index;
 
 use Doctrine\ORM\EntityManager;
-use Enhavo\Bundle\MediaBundle\Service\FileService;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 use Enhavo\Bundle\SearchBundle\Entity\Index;
 use Enhavo\Bundle\SearchBundle\Entity\Total;
-use Enhavo\Bundle\SearchBundle\Index\Type\PlainType;
-use Enhavo\Bundle\SearchBundle\Index\Type\HtmlType;
-use Enhavo\Bundle\SearchBundle\Index\Type\CollectionType;
-use Enhavo\Bundle\SearchBundle\Index\Type\ModelType;
-use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
-use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
-use Enhavo\Bundle\SearchBundle\Index\IndexWalker;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 
 /**
@@ -26,15 +15,8 @@ use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
  * Time: 16:00
  */
 
-class IndexEngine implements IndexEngineInterface {
-
-    protected $container;
-    protected $kernel;
-    protected $em;
-    protected $searchYamlPaths;
-    protected $minimumWordSize = 2;
-    protected $strategy;
-
+class IndexEngine implements IndexEngineInterface
+{
     /**
      * index every time
      */
@@ -55,25 +37,15 @@ class IndexEngine implements IndexEngineInterface {
      */
     const INDEX_STRATEGY_NOINDEX = 'noindex';
 
-    protected $util;
-    protected $plainType;
-    protected $htmlType;
-    protected $fileService;
-
-    protected $accum; //accumulator
     protected $indexWalker;
     protected $metadataFactory;
+    protected $em;
+    protected $strategy;
 
-    public function __construct(Container $container, $kernel, EntityManager $em, $strategy, SearchUtil $util, FileService $fileService, IndexWalker $indexWalker, MetadataFactory $metadataFactory)
+    public function __construct(EntityManager $em, $strategy, IndexWalker $indexWalker, MetadataFactory $metadataFactory)
     {
-        $this->container = $container;
-        $this->kernel = $kernel;
         $this->em = $em;
         $this->strategy = $strategy;
-        $this->util = $util;
-        $this->plainType = new PlainType($this->util, $container);
-        $this->htmlType = new HtmlType($this->util, $container);
-        $this->fileService = $fileService;
         $this->indexWalker = $indexWalker;
         $this->metadataFactory = $metadataFactory;
     }
@@ -84,39 +56,21 @@ class IndexEngine implements IndexEngineInterface {
             return;
         }
 
-        //get Entity and Bundle names
-        $entityName = $this->util->getEntityName($resource);
-        $bundleName = $this->util->getBundleName($resource);
-
         //get DataSet
-        $dataSetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
-        $dataSet = $dataSetRepository->findOneBy(array('reference' => $resource->getId(), 'type' => $entityName, 'bundle' => $bundleName));
-        $newDataset = false;
-        if($dataSet == null){
+        $dataSet = $this->getDataset($resource);
 
-            //create a new dataset
-            $dataSet = new Dataset();
-            $dataSet->setType(strtolower($entityName));
-            $dataSet->setBundle($bundleName);
-            $dataSet->setReference($resource->getId());
-            $dataSet->setData(null);
-            $dataSet->setReindex(1);
-            $this->em->persist($dataSet);
-            $this->em->flush();
-            $newDataset = true;
-        }
+        //get words in search_index of dataset
+        $wordsForDataset = $this->getIndexedWords($dataSet);
 
         //check stategy
         if($this->strategy == self::INDEX_STRATEGY_INDEX){
 
             //indexing always
             //check if update or new indexing
-            if(!$newDataset){
+            if($wordsForDataset){
 
                 //update indexing
                 //remove old content of dataset
-                $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
-                $wordsForDataset = $indexRepository->findBy(array('dataset' => $dataSet));
                 $dataSet->removeData();
                 foreach($wordsForDataset as $word){
                     $this->em->remove($word);
@@ -126,26 +80,21 @@ class IndexEngine implements IndexEngineInterface {
                 $this->em->persist($dataSet);
                 $this->em->flush();
             }
-
-            $this->accum = " ";
-            $this->indexingData($resource, $dataSet);
+            $this->indexingData($resource);
         } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW){
 
             //indexing the first time otherwise set reindex
-            if($newDataset){
+            if(!$wordsForDataset){
 
                 //indexing
-                $this->accum = " ";
-                $this->indexingData($resource, $dataSet);
+                $this->indexingData($resource);
             } else {
 
                 //set reindex
                 $dataSet->setReindex(1);
                 $this->em->persist($dataSet);
             }
-
-
-        } else if($this->strategy == self::INDEX_STRATEGY_REINDEX && !$newDataset){
+        } else if($this->strategy == self::INDEX_STRATEGY_REINDEX && $wordsForDataset){
 
             //set reindex
             $dataSet->setReindex(1);
@@ -156,8 +105,6 @@ class IndexEngine implements IndexEngineInterface {
 
     public function reindex()
     {
-        $this->searchYamlPaths = $this->util->getSearchYamls();
-
         //get all datasets to reindex -> this means new datasets and updated datasets
         $changedOrNewDatasets = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findBy(array(
             'reindex' => 1
@@ -165,124 +112,62 @@ class IndexEngine implements IndexEngineInterface {
 
         //update all entries in search_index of these changed datasets
         foreach($changedOrNewDatasets as $currentDataset) {
+            $resource = $this->getResource($currentDataset);
 
-            //get current search yaml for dataset
-            $currentBundle = $currentDataset->getBundle();
-            $splittedBundleName = preg_split('/(?=[A-Z])/', $currentBundle, -1, PREG_SPLIT_NO_EMPTY);
-            $currentSearchYaml = null;
-            foreach($this->searchYamlPaths as $path){
-                $allPartsOfBundleNameInPath = true;
-                foreach($splittedBundleName as $partOfBundleName){
-                    if(!is_numeric(strpos($path, $partOfBundleName))){
-                        $allPartsOfBundleNameInPath = false;
-                    }
-                }
-                if($allPartsOfBundleNameInPath == true && is_numeric(strpos($path, 'Enhavo')) && !is_numeric(strpos($currentBundle, 'Enhavo'))){
-                    $allPartsOfBundleNameInPath = false;
-                }
-                if($allPartsOfBundleNameInPath == true){
-                    $yaml = new Parser();
-                    $currentSearchYaml = $yaml->parse(file_get_contents($path));
-                    break;
-                }
+            //remove old content of dataset
+            $wordsForDataset = $this->getIndexedWords($currentDataset);
+            $currentDataset->removeData();
+            foreach($wordsForDataset as $word){
+                $this->em->remove($word);
             }
-            if($currentSearchYaml != null) {
-
-                //remove old content of dataset
-                $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
-                $wordsForDataset = $indexRepository->findBy(array('dataset' => $currentDataset));
-                $currentDataset->removeData();
-                foreach($wordsForDataset as $word){
-                    $this->em->remove($word);
-                }
-                $this->em->flush();
-
-                foreach($currentSearchYaml as $key => $value){
-
-                    //get properties form search.yml
-                    $array = explode('\\', $key);
-                    $entityName = array_pop($array);
-                    $resource = $this->em->getRepository($currentDataset->getBundle().':'.$entityName)->find($currentDataset->getReference());
-
-                    $this->accum = " ";
-                    $this->indexingData($resource, $currentDataset);
-                }
-            }
+            $this->em->flush();
+            $this->indexingData($resource);
         }
     }
 
     public function unindex($resource)
     {
-        //get the BundleName
-        $array = explode('\\', get_class($resource));
-        $bundle = null;
-        foreach($array as $key => $value) {
-            if(strpos($value, 'Bundle', 1)){
-                $bundle = $value;
-                if($array[$key-2] == 'Enhavo'){
-                    $bundle = $array[$key-2].$bundle;
-                }
-                break;
-            }
-        }
-        $entity = array_pop($array);
-
         //find the right dataset
-        $datasetRepository = $this->em->getRepository('EnhavoSearchBundle:Dataset');
-        $dataset = $datasetRepository->findOneBy(array(
-            'bundle' => $bundle,
-            'reference' => $resource->getId(),
-            'type' => strtolower($entity)
-        ));
+        $dataset = $this->getDataset($resource);
 
-        //find the belonging indexes
-        $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
-        $index = $indexRepository->findBy(array(
-            'dataset' => $dataset
-        ));
+        if($dataset){
+            //find the belonging indexes
+            $index = $this->getIndexedWords($dataset);
 
-        //remove indexed
-        foreach($index as $currentIndexToDelete) {
-            $word = $currentIndexToDelete->getWord();
-            $this->em->remove($currentIndexToDelete);
-            $this->searchDirty($word);
+            //remove indexed
+            foreach($index as $currentIndexToDelete) {
+                $word = $currentIndexToDelete->getWord();
+                $this->em->remove($currentIndexToDelete);
+                $this->searchDirty($word);
+            }
+
+            //remove dataset
+            $this->em->remove($dataset);
+            $this->em->flush();
+            $this->searchUpdateTotals();
         }
-
-        //remove dataset
-        $this->em->remove($dataset);
-        $this->em->flush();
-        $this->searchUpdateTotals();
     }
 
-    protected function indexingData($resource, $dataSet)
+    protected function indexingData($resource)
     {
-        $properties = $this->util->getProperties($resource);
-        $this->searchYamlPaths = $this->util->getSearchYamls();
-
-        //indexing words (go through all the fields that can be indexed according to the search yml)
-        foreach($properties as $indexingField => $value) {
-
-            //look if there is a field (indexingField) in the request (currentRequest) that can get indexed
-            $accessor = PropertyAccess::createPropertyAccessor();
-            if(property_exists($resource, $indexingField)) {
-                $text = $accessor->getValue($resource, $indexingField);
-
-            }
-        }
+        //get metadata
         $metaData = $this->metadataFactory->create($resource);
 
+        //get items to index
         $indexItem = $this->indexWalker->getIndexItems($resource, $metaData);
 
+        //index words
         $this->addWordsToSearchIndex($indexItem, $resource);
+
         //update the total scores
         $this->searchUpdateTotals();
     }
 
     public function addWordsToSearchIndex($indexItem, $resource)//($scoredWords, $dataset, $type, $accum = null)
     {
-        //dataset über resource -->function schreiben getDataset die dataset holt oder erzeugt
         $dataSet = $this->getDataset($resource);
         $dataSet->setData($indexItem->getData());
+
         //add the scored words to search_index
         foreach ($indexItem->getScoredWords() as $scoredWord) {
             //$wordData = array('word' => ..., 'locale' => ..., 'type' => ..., 'score' => ...)
@@ -316,10 +201,24 @@ class IndexEngine implements IndexEngineInterface {
             $dataSet->setType(strtolower($entity));
             $dataSet->setBundle($bundle);
             $dataSet->setReference($id);
+            $dataSet->setReindex(1);
             $this->em->persist($dataSet);
             $this->em->flush();
         }
         return $dataSet;
+    }
+
+    protected function getResource(Dataset $dataset)
+    {
+        return $this->em->getRepository($dataset->getBundle().':'.ucfirst($dataset->getType()))->find($dataset->getReference());
+    }
+
+    protected function getIndexedWords($dataset)
+    {
+        $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
+        return $indexRepository->findBy(array(
+            'dataset' => $dataset
+        ));
     }
 
     /**

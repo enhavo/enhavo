@@ -15,27 +15,22 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 class CollectionType extends AbstractIndexType
 {
-    protected $metadataFactory;
-
-    public function __construct(SearchUtil $util, ContainerInterface $container, MetadataFactory $metadataFactory)
-    {
-        parent::__construct($util, $container);
-        $this->metadataFactory = $metadataFactory;
-    }
 
     function index($val, $options)
     {
         $indexItem = [];
-        foreach ($val as $model) {
-            $metaData = $this->metadataFactory->create($model);
+        if($val != null){
+            foreach ($val as $model) {
+                $metaData = $this->metadataFactory->create($model);
 
-            $indexWalker = $this->getIndexWalker();
-            $newIndexItem = $indexWalker->getIndexItems($model, $metaData);
-            if(empty($indexItem)){
-                $indexItem = $newIndexItem;
-            } else {
-                $indexItem->setData($indexItem->getData().$newIndexItem->getData());
-                $indexItem->setScoredWords((array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords())));
+                $indexWalker = $this->getIndexWalker();
+                $newIndexItem = $indexWalker->getIndexItems($model, $metaData);
+                if(empty($indexItem)){
+                    $indexItem = $newIndexItem;
+                } else {
+                    $indexItem->setData($indexItem->getData().$newIndexItem->getData());
+                    $indexItem->setScoredWords((array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords())));
+                }
             }
         }
         return $indexItem;

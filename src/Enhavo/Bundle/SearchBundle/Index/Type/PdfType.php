@@ -23,6 +23,7 @@ class PdfType extends PlainType
         parent::__construct($util, $container);
         $this->fileService = $fileService;
     }
+
     function index($value, $options)
     {
         if($value instanceof FileInterface) {
