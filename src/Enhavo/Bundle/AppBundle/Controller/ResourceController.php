@@ -28,7 +28,7 @@ class ResourceController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
         $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_CREATE';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
@@ -79,7 +79,7 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
         $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_UPDATE';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
@@ -125,7 +125,7 @@ class ResourceController extends BaseController
 
     public function indexAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
         $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
@@ -170,7 +170,7 @@ class ResourceController extends BaseController
      */
     public function tableAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
         $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
         if(!$securityContext->isGranted($role)){
             throw new AccessDeniedException;
