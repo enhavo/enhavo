@@ -2,11 +2,12 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Newsletter
  */
-class Newsletter
+class Newsletter implements ResourceInterface
 {
     /**
      * @var integer

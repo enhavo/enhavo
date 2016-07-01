@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Category
  */
-class Category implements CategoryInterface
+class Category implements CategoryInterface, ResourceInterface
 {
     /**
      * @var integer

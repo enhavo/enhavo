@@ -12,6 +12,15 @@ use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class UpdateViewer extends CreateViewer
 {
+    public function getActionRoute()
+    {
+        return sprintf(
+            '%s_%s_update',
+            $this->metadata->getApplicationName(),
+            $this->metadata->getHumanizedName()
+        );
+    }
+
     public function getFormDelete()
     {
         $route = $this->optionAccessor->get('form.delete');
@@ -44,6 +53,9 @@ class UpdateViewer extends CreateViewer
 
     public function createView()
     {
+        if($this->isValidationError() && $this->configuration->isAjaxRequest()) {
+            return parent::createView();
+        }
         $view = parent::createView();
         $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:update.html.twig'));
         $view->setTemplateData(array_merge($view->getTemplateData(), [

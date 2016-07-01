@@ -44,4 +44,9 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
 
         return sprintf('%s/%s.%s', $templatesNamespace, $name, 'twig');
     }
+
+    public function isAjaxRequest()
+    {
+        return $this->request->isXmlHttpRequest();
+    }
 }

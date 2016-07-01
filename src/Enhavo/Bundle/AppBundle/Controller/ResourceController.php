@@ -105,10 +105,6 @@ class ResourceController extends BaseController
                 $this->repository->add($newResource);
                 $this->sortingManger->update($configuration, $this->metadata, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
-            } else {
-                if (!$configuration->isHtmlRequest()) {
-                    return $this->viewHandler->handle($configuration, View::create($form, 400));
-                }
             }
         }
 
@@ -141,16 +137,11 @@ class ResourceController extends BaseController
         $form = $this->resourceFormFactory->create($configuration, $resource);
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
-
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
                 $resource = $form->getData();
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->manager->flush();
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
-            } else {
-                if (!$configuration->isHtmlRequest()) {
-                    return $this->viewHandler->handle($configuration, View::create($form, 400));
-                }
             }
         }
 

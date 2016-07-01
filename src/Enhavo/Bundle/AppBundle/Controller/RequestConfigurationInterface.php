@@ -15,4 +15,6 @@ interface RequestConfigurationInterface
     public function getViewerType();
 
     public function getTemplate($default);
+
+    public function isAjaxRequest();
 }

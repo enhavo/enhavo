@@ -55,7 +55,6 @@ enhavo_page_page_update:
         _sylius:
             viewer:
                 translationDomain: EnhavoPageBundle
-                type: edit
                 tabs:
                     page:
                         label: page.label.page

@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use FOS\RestBundle\View\View;
 
 class CreateViewer extends AbstractViewer
 {
@@ -73,8 +74,26 @@ class CreateViewer extends AbstractViewer
         return 'create';
     }
 
+    protected function isValidationError()
+    {
+        if($this->form->isSubmitted()) {
+            return !$this->form->isValid();
+        }
+        return false;
+    }
+
+    protected function createValidationView()
+    {
+        $view = View::create($this->form, 400);
+        $view->setFormat('json');
+        return $view;
+    }
+
     public function createView()
     {
+        if($this->isValidationError() && $this->configuration->isAjaxRequest()) {
+            return $this->createValidationView();
+        }
         $view = parent::createView();
         $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:create.html.twig'));
         $view->setTemplateData(array_merge($view->getTemplateData(), [

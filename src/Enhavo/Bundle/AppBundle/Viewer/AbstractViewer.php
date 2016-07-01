@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
@@ -39,7 +40,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
     protected $metadata;
 
     /**
-     * @var RequestConfigurationInterface
+     * @var RequestConfiguration
      */
     protected $configuration;
 

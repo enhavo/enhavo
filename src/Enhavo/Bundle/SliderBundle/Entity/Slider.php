@@ -5,11 +5,12 @@ namespace Enhavo\Bundle\SliderBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Slider
  */
-class Slider implements SliderInterface
+class Slider implements SliderInterface, ResourceInterface
 {
     /**
      * @var integer

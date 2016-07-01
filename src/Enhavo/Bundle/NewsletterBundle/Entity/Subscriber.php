@@ -1,11 +1,12 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Subscriber
  */
-class Subscriber
+class Subscriber implements ResourceInterface
 {
     /**
      * @var integer

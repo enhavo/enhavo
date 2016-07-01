@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Slider
  */
-class Slide implements SlideInterface
+class Slide implements SlideInterface, ResourceInterface
 {
     /**
      * @var integer
