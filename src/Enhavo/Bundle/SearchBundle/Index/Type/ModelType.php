@@ -23,12 +23,12 @@ class ModelType extends AbstractIndexType
         $this->metadataFactory = $metadataFactory;
     }
 
-    function index($val, $options)
+    function index($val, $options, $properties = null)
     {
         $metaData = $this->metadataFactory->create($val);
 
         $indexWalker = $this->getIndexWalker();
-        return $indexWalker->getIndexItems($val, $metaData);
+        return $indexWalker->getIndexItems($val, $metaData, $properties);
     }
 
     /**

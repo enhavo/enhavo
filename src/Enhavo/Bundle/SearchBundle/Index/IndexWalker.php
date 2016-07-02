@@ -26,9 +26,9 @@ class IndexWalker
         $this->collector = $collector;
     }
 
-    public function getIndexItems($resource, Metadata $metadata)
+    public function getIndexItems($resource, Metadata $metadata, $properties = null)
     {
-        $indexItem = [];
+        $indexItems = [];
         $accessor = PropertyAccess::createPropertyAccessor();
 
         //walk over each field of the property that should get indexed
@@ -36,17 +36,19 @@ class IndexWalker
 
             //get the right indexType
             $type = $this->collector->getType($propertyNode->getType());
-            $newIndexItem = $type->index($accessor->getValue($resource, $propertyNode->getProperty()), $propertyNode->getOptions());
-            if($newIndexItem){
-                if(empty($indexItem)){
-                    $indexItem = $newIndexItem;
-                } else {
-                    $indexItem->setRawData($indexItem->getRawData()."\n ".$newIndexItem->getRawData());
-                    $indexItem->setData($indexItem->getData().$newIndexItem->getData());
-                    $indexItem->setScoredWords(array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords()));
+            $newIndexItems = $type->index($accessor->getValue($resource, $propertyNode->getProperty()), $propertyNode->getOptions(), $properties);
+            if($newIndexItems){
+                foreach($newIndexItems as $indexItem){
+                    if((empty($properties) || in_array('fieldName', $properties)) && $indexItem->getFieldName() == null){
+                        $indexItem->setFieldName($metadata->getHumanizedBundleName().'_'.strtolower($metadata->getEntityName().'_'.strtolower($propertyNode->getProperty())));
+                    }
+                    $indexItems[] = $indexItem;
                 }
+                //$indexItem->setRawData($indexItem->getRawData()."\n ".$newIndexItem->getRawData());
+                //$indexItem->setData($indexItem->getData().$newIndexItem->getData());
+                //$indexItem->setScoredWords(array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords()));
             }
         }
-        return $indexItem;
+        return $indexItems;
     }
 }

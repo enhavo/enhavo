@@ -23,25 +23,18 @@ class CollectionType extends AbstractIndexType
         $this->metadataFactory = $metadataFactory;
     }
 
-    function index($val, $options)
+    function index($val, $options, $properties = null)
     {
-        $indexItem = [];
+        $indexItems = [];
         if($val != null){
             foreach ($val as $model) {
                 $metaData = $this->metadataFactory->create($model);
-
                 $indexWalker = $this->getIndexWalker();
-                $newIndexItem = $indexWalker->getIndexItems($model, $metaData);
-                if(empty($indexItem)){
-                    $indexItem = $newIndexItem;
-                } else {
-                    $indexItem->setRawData($indexItem->getRawData().'\n '.$newIndexItem->getRawData());
-                    $indexItem->setData($indexItem->getData().$newIndexItem->getData());
-                    $indexItem->setScoredWords((array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords())));
-                }
+                $newIndexItems = $indexWalker->getIndexItems($model, $metaData, $properties);
+                $indexItems = array_merge($indexItems, $newIndexItems);
             }
         }
-        return $indexItem;
+        return $indexItems;
     }
 
     /**

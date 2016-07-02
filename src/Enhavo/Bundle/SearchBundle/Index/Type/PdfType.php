@@ -24,11 +24,11 @@ class PdfType extends PlainType
         $this->fileService = $fileService;
     }
 
-    function index($value, $options)
+    function index($value, $options, $properties = null)
     {
         if($value instanceof FileInterface) {
             $pdfContent = $this->getPdfContent($value);
-            return parent::index($pdfContent, $options);
+            return parent::index($pdfContent, $options, $properties);
         }
         return [];
     }

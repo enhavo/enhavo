@@ -45,6 +45,13 @@ class MetadataFactory
         return null;
     }
 
+    protected function getHumanizedBundleName($className)
+    {
+        $bundleName = $this->getBundleName($className);
+        $splittedBundleName = preg_split('/([[:upper:]][[:lower:]]+)/', $bundleName, null, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+        return strtolower(implode('_', $splittedBundleName));
+    }
+
     protected function getConfiguration($className)
     {
         $configurations = $this->collector->getConfigurations();
@@ -94,6 +101,7 @@ class MetadataFactory
 
         $metadata = new Metadata();
         $metadata->setBundleName($this->getBundleName($className));
+        $metadata->setHumanizedBundleName($this->getHumanizedBundleName($className));
         $metadata->setClassName($className);
         $metadata->setEntityName($this->getEntityName($resource));
 

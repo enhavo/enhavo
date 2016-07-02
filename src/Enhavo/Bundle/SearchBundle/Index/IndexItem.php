@@ -19,6 +19,16 @@ class IndexItem {
     /**
      * @var string
      */
+    private $fieldName;
+
+    /**
+     * @var string
+     */
+    private $weight;
+
+    /**
+     * @var string
+     */
     private $data;
 
     /**
@@ -40,6 +50,38 @@ class IndexItem {
     public function setRawData($rawData)
     {
         $this->rawData = $rawData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return $this->fieldName;
+    }
+
+    /**
+     * @param string $fieldName
+     */
+    public function setFieldName($fieldName)
+    {
+        $this->fieldName = $fieldName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param string $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
     }
 
     /**

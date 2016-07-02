@@ -27,6 +27,11 @@ class Metadata
     private $bundleName;
 
     /**
+     * @var string
+     */
+    private $humanizedBundleName;
+
+    /**
      * @var PropertyNode[]
      */
     private $properties = [];
@@ -77,6 +82,22 @@ class Metadata
     public function setBundleName($bundleName)
     {
         $this->bundleName = $bundleName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHumanizedBundleName()
+    {
+        return $this->humanizedBundleName;
+    }
+
+    /**
+     * @param string $humanizedBundleName
+     */
+    public function setHumanizedBundleName($humanizedBundleName)
+    {
+        $this->humanizedBundleName = $humanizedBundleName;
     }
 
     /**

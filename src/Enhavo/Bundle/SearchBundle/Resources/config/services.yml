@@ -80,7 +80,8 @@ services:
         arguments:
             - @enhavo_search_search_util
             - @enhavo_search_pdf_type
-
+            - @enhavo_search_metadata_factory
+            - @enhavo_search_index_walker
 
     enhavo_search_elasticsearch_engine:
         class: Enhavo\Bundle\SearchBundle\Search\ElasticSearchEngine
@@ -143,12 +144,14 @@ services:
             - @enhavo_search_search_util
             - @enhavo_search_pdf_type
             - @enhavo_search_metadata_factory
+            - @service_container
+            - @enhavo_search_index_walker
 
     enhavo_search_metadata_collector:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector
         arguments:
             - @kernel
-            - @finder=
+            - @filesystem
 
     enhavo_search_metadata_factory:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory

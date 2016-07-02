@@ -18,7 +18,7 @@ class Filesystem extends SymfonyFileSystem
     public function readFile($path)
     {
         if($this->exists($path)) {
-            return readfile($path);
+            return file_get_contents($path);
         }
 
         throw new IOException(sprintf('Failed to read file "%s", because can\'t find it', $path));

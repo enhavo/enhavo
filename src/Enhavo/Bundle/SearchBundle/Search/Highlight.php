@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Enhavo\Bundle\SearchBundle\Index\IndexWalker;
 
 class Highlight {
 
@@ -25,19 +27,23 @@ class Highlight {
 
     protected $em;
 
-    public function __construct(EntityManager $em, SearchUtil $util, PdfType $pdfType, MetadataFactory $metadataFactory)
+    protected $container;
+
+    protected $indexWalker;
+
+    public function __construct(EntityManager $em, SearchUtil $util, PdfType $pdfType, MetadataFactory $metadataFactory, ContainerInterface $container, IndexWalker $indexWalker)
     {
         $this->em = $em;
         $this->util = $util;
         $this->pdfType = $pdfType;
         $this->metadataFactory = $metadataFactory;
+        $this->container = $container;
+        $this->indexWalker = $indexWalker;
     }
 
     public function highlight($resource, $words)
     {
-        $resourceDataset = $this->util->getDataset($resource);
-
-        $text = $resourceDataset->getRawdata();
+        $text = $this->getRawData($resource);
 
         $splittedPieces = preg_split('/[.!?:;][\n ]|\n|\r|\r\n|\t|•/', $text);
         $splittedPieces = array_filter($splittedPieces);
@@ -50,6 +56,22 @@ class Highlight {
         $highlightedResult['resource'] = $resource;
         $highlightedResult['highlightedText'] = $highlightedText;
         return $highlightedResult;
+    }
+
+    protected function getRawData($resource)
+    {
+        if($this->container->getParameter('enhavo_search.search.search_engine') == 'enhavo_search_search_engine'){
+            $resourceDataset = $this->util->getDataset($resource);
+            return $resourceDataset->getRawdata();
+        } else {
+            $metadate = $this->metadataFactory->create($resource);
+            $indexItems = $this->indexWalker->getIndexItems($resource, $metadate, array('rawData'));
+            $text = '';
+            foreach ($indexItems as $indexItem) {
+                $text .= "\n ".$indexItem->getRawData();
+            }
+            return trim($text, "\n");
+        }
     }
 
     protected function isPhrase($word)
@@ -126,6 +148,7 @@ class Highlight {
         foreach($pieces as $piece){
             $pieceWords = explode(" ", $piece);
             foreach ($pieceWords as $key => $pieceWord) {
+                $pieceWord = strip_tags($pieceWord);
                 $simplifiedWord = $this->util->searchSimplify($pieceWord);
                 $splittedSimplifiedWords = explode(" ", $simplifiedWord);
                 foreach ($splittedSimplifiedWords as $splittedSimplifiedWord)
@@ -171,11 +194,10 @@ class Highlight {
             if(!empty($wordsToHighlight)){
                 list($countedCharacters, $newWord) = $this->countCharacters(strip_tags($piece), $words, $countedCharacters);
                 foreach ($wordsToHighlight as $key => $value) {
-                    $newWord = $pieceWord = html_entity_decode($newWord); // html umlaut zu richrigem umlaut
+                    $newWord = $pieceWord = html_entity_decode($newWord);
                     $key = str_replace('&bdquo;', '', $key);
                     $key = str_replace('&ldquo;', '', $key);
                     $newWord = preg_replace('/\b'.preg_quote($key, '/').'\b/u', '<b class="search_highlight">' . $key . '</b>', $newWord);
-                    //$newWord = htmlentities($newWord); // richtiger umlaut zu html umlaut
                 }
                 $highlightedText = $highlightedText.$newWord;
             }
@@ -186,6 +208,7 @@ class Highlight {
     protected function countCharacters($sentence, $words, $charactersLength)
     {
         $collectedSentencesWithSearchword = "";
+
         //check if the current sentence has more than 20 words
         if(str_word_count($sentence) <= 20 && $sentence != ""){
             list($charactersLength, $collectedSentencesWithSearchword) = $this->addSentenceIfPossible($sentence, $charactersLength, $words, $collectedSentencesWithSearchword);

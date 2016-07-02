@@ -157,34 +157,50 @@ class IndexEngine implements IndexEngineInterface
         $metaData = $this->metadataFactory->create($resource);
 
         //get items to index
-        $indexItem = $this->indexWalker->getIndexItems($resource, $metaData);
+        $indexItems = $this->indexWalker->getIndexItems($resource, $metaData);
 
         //index words
-        $this->addWordsToSearchIndex($indexItem, $resource);
+        $this->addWordsToSearchIndex($indexItems, $resource);
 
         //update the total scores
         $this->searchUpdateTotals();
     }
 
-    public function addWordsToSearchIndex($indexItem, $resource)//($scoredWords, $dataset, $type, $accum = null)
+    public function addWordsToSearchIndex($indexItems, $resource)
     {
+        //get dataset of resource
         $dataSet = $this->util->getDataset($resource);
-        $dataSet->setRawdata($indexItem->getRawData());
-        $dataSet->setData($indexItem->getData());
+        $dataSet->setRawdata('');
 
-        //add the scored words to search_index
-        foreach ($indexItem->getScoredWords() as $scoredWord) {
-            //$wordData = array('word' => ..., 'locale' => ..., 'type' => ..., 'score' => ...)
-            $newIndex = new Index();
-            $newIndex->setDataset($dataSet);
-            $newIndex->setType(strtolower($scoredWord['type']));
-            $newIndex->setWord($scoredWord['word']);
-            $newIndex->setLocale($scoredWord['locale']);
-            $newIndex->setScore($scoredWord['score']);
-            $this->em->persist($newIndex);
-            $this->em->flush();
-            $this->searchDirty($scoredWord['word']);
+        //set rawData, data and scoredWords
+        foreach($indexItems as $indexItem){
+            if($dataSet->getRawdata() == '' || $dataSet->getRawdata() == null){
+                $dataSet->setRawdata($indexItem->getRawData());
+            } else {
+                $dataSet->setRawData($dataSet->getRawData()."\n ".$indexItem->getRawData());
+                $this->em->flush();
+            }
+
+            if($dataSet->getData() == '' || $dataSet->getData() == null){
+                $dataSet->setData($indexItem->getData());
+            } else {
+                $dataSet->setData($dataSet->getData().$indexItem->getData());
+                $this->em->flush();
+            }
+
+            foreach ($indexItem->getScoredWords() as $scoredWord) {
+                $newIndex = new Index();
+                $newIndex->setDataset($dataSet);
+                $newIndex->setType(strtolower($scoredWord['type']));
+                $newIndex->setWord($scoredWord['word']);
+                $newIndex->setLocale($scoredWord['locale']);
+                $newIndex->setScore($scoredWord['score']);
+                $this->em->persist($newIndex);
+                $this->em->flush();
+                $this->searchDirty($scoredWord['word']);
+            }
         }
+        $dataSet->setData($dataSet->getData().' ');
         $dataSet->setReindex(0);
     }
 
