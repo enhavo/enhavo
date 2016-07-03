@@ -19,12 +19,14 @@ class EntitySaveListener
 
     public function onSave(GenericEvent $event)
     {
-        //get workflow of current entity
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
-        $workflow = $workflowRepository->findOneBy(array(
-            'entity' => get_class($event->getSubject())
-        ));
-
+        $allWF = $workflowRepository->findAll();
+        $workflow = null;
+        foreach($allWF as $currentWorkflow){
+            if(in_array(get_class($event->getSubject()), $currentWorkflow->getEntity())){
+                $workflow = $currentWorkflow;
+            }
+        }
         //if there is a workflow created for the current entity then check the things below
         //if workflow is null, there is no workflow created for this entity
         if(!empty($workflow)){
