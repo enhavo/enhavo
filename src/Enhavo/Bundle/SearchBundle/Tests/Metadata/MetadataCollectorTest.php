@@ -22,16 +22,12 @@ class MetadataCollectorTest extends \PHPUnit_Framework_TestCase
             new EnhavoSearchBundle()
         ]);
 
-        $fileMock = new SplFileInfoMock();
-        $fileMock->setContents(
+        $filesystemMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Filesystem\Filesystem')->getMock();
+        $filesystemMock->method('readFile')->willReturn(
             "ResourceEntity1:\n    type: myType\n    option: Option\nResourceEntity2:\n    type: myType\n"
         );
 
-        $finderMock = $this->getMockBuilder('Symfony\Component\Finder\Finder')->getMock();
-        $finderMock->method('files')->willReturn($finderMock);
-        $finderMock->method('in')->willReturn([$fileMock]);
-
-        $metadataCollector = new MetadataCollector($kernelMock, $finderMock);
+        $metadataCollector = new MetadataCollector($kernelMock, $filesystemMock);
 
         $configuration = $metadataCollector->getConfigurations();
 
@@ -58,14 +54,12 @@ class MetadataCollectorTest extends \PHPUnit_Framework_TestCase
             new EnhavoSearchBundle()
         ]);
 
-        $fileMock = new SplFileInfoMock();
-        $fileMock->setContents('');
+        $filesystemMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Filesystem\Filesystem')->getMock();
+        $filesystemMock->expects($this->once())->method('readFile')->willReturn(
+            "ResourceEntity1:\n    type: myType\n    option: Option\nResourceEntity2:\n    type: myType\n"
+        );
 
-        $finderMock = $this->getMockBuilder('Symfony\Component\Finder\Finder')->getMock();
-        $finderMock->method('files')->willReturn($finderMock);
-        $finderMock->method('in')->willReturn([$fileMock]);
-
-        $metadataCollector = new MetadataCollector($kernelMock, $finderMock);
+        $metadataCollector = new MetadataCollector($kernelMock, $filesystemMock);
 
         $metadataCollector->getConfigurations();
         $metadataCollector->getConfigurations();

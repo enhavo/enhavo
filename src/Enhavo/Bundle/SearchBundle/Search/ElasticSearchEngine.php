@@ -62,6 +62,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $words = preg_replace('(AND|OR)', '', $query);
         $words = $this->util->searchSimplify($words);
         $words = explode(' ', $words);
+        array_unshift($words, $query);
         $searchResult = new SearchResult();
         $searchResult->setWords($words);
         $searchResult->setResources($resultResources);

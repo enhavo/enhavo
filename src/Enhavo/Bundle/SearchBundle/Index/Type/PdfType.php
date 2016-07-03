@@ -1,9 +1,8 @@
 <?php
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
-use Enhavo\Bundle\SearchBundle\Index\IndexEngine;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Enhavo\Bundle\MediaBundle\Service\FileService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
@@ -15,39 +14,26 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
  * Time: 10:16
  */
 
-class PdfType extends AbstractIndexType
+class PdfType extends PlainType
 {
-    protected $util;
-    protected $indexEngine;
     protected $fileService;
 
-    public function __construct(SearchUtil $util, IndexEngine $indexEngine, FileService $fileService)
+    public function __construct(SearchUtil $util, ContainerInterface $container, FileService $fileService)
     {
-        $this->util = $util;
-        $this->indexEngine = $indexEngine;
+        parent::__construct($util, $container);
         $this->fileService = $fileService;
     }
-    function index($value, $options)
+
+    function index($value, $options, $properties = null)
     {
-        $accum = $options['accum'];
-        $minimumWordSize = $this->getMinimumWordSize($options);
-        $dataSet = $options['dataSet'];
-        $type = $options['type'];
-        $weight = $options['weight'];
         if($value instanceof FileInterface) {
             $pdfContent = $this->getPdfContent($value);
-            $options = array(
-                'weight' => $weight,
-                'minimumWordSize' => $minimumWordSize,
-                'accum' => $accum
-            );
-            $plainType = new PlainType($this->util, $this->indexEngine);
-            list($scoredWords, $accum) = $plainType->index($pdfContent, $options);
-            $this->indexEngine->addWordsToSearchIndex($scoredWords, $dataSet, $type, $accum);
+            return parent::index($pdfContent, $options, $properties);
         }
+        return [];
     }
 
-    public function getPdfContent($file)
+    public function getPdfContent(FileInterface $file)
     {
         if($file != null) {
             if (strpos($file->getMimeType(), 'pdf') !== false) {

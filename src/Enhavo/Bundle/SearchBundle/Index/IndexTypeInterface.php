@@ -13,5 +13,5 @@ use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 
 interface IndexTypeInterface extends TypeInterface
 {
-    function index($value, $options);
+    function index($value, $options, $properties = null);
 }

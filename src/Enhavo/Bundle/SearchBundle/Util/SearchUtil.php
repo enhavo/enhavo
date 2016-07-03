@@ -8,10 +8,11 @@ namespace Enhavo\Bundle\SearchBundle\Util;
  * Time: 15:13
  */
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Doctrine\Common\Persistence\Proxy;
 
 class SearchUtil
@@ -22,10 +23,16 @@ class SearchUtil
 
     protected $container;
 
-    public function __construct($kernel, Container $container)
+    protected $metadataFactory;
+
+    protected $em;
+
+    public function __construct($kernel, Container $container, MetadataFactory $metadataFactory, EntityManager $em)
     {
         $this->kernel = $kernel;
         $this->container = $container;
+        $this->metadataFactory = $metadataFactory;
+        $this->em = $em;
     }
 
     public function searchSimplify($text)
@@ -56,123 +63,10 @@ class SearchUtil
         return $searchYamlPaths;
     }
 
-    protected function getBundleNameOfResource($resource)
-    {
-        $resourceClassName = get_class($resource);
-        if ($resource instanceof Proxy) {
-            $resourceClassName = get_parent_class($resource);
-        }
-
-        $bundles = $this->container->get('kernel')->getBundles();
-
-        foreach($bundles as $bundle) {
-            $class = get_class($bundle);
-            $classParts = explode('\\', $class);
-            $bundleName = array_pop($classParts);
-            $bundlePath = implode('\\', $classParts);
-            if(strpos($resourceClassName, $bundlePath) === 0) {
-                return $bundleName;
-            }
-        }
-        return null;
-    }
-
-    public function getSearchYaml($resource)
-    {
-        $bundleName = $this->getBundleNameOfResource($resource);
-
-        try {
-            $file = $this->container->get('kernel')->locateResource(sprintf('@%s/Resources/config/search.yml', $bundleName));
-        } catch(\Exception $e) {
-            return null;
-        }
-
-        $parser = new Parser();
-        return $parser->parse(file_get_contents($file));
-    }
-
-    public function getFieldsOfSearchYml($searchYaml, $resourceClass)
-    {
-        $fields = array();
-        if (key_exists($resourceClass, $searchYaml)) {
-            $properties = $searchYaml[$resourceClass]['properties'];
-            foreach ($properties as $field => $value) {
-                $fields[] = $field;
-            }
-        }
-        return $fields;
-    }
-
-    public function getValueOfField($field, $searchYaml, $resourceClass)
-    {
-        $properties = $searchYaml[$resourceClass]['properties'];
-        $value = $properties[$field];
-        return $value;
-    }
-
-    public function getModelData($model)
-    {
-        $fieldSearchYaml = $this->getSearchYaml($model);
-        $class = null;
-        if ($model instanceof \Doctrine\Common\Persistence\Proxy) {
-            $class = get_parent_class($model);
-        } else {
-            $class = get_class($model);
-        }
-        $currentField = $this->getFieldsOfSearchYml($fieldSearchYaml, $class);
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $modelData = $accessor->getValue($model, $currentField[0]);
-        return $modelData;
-    }
-
     public function getMainPath()
     {
-        return $this->mainPath;
-    }
-
-
-
-    public function getEntityName($resource)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        $entityName = '';
-        while(end($splittedBundlePath) != 'Entity'){
-            $entityName = array_pop($splittedBundlePath);
-        }
-        return strtolower($entityName);
-    }
-
-    public function getBundleName($resource, $lowercase = false)
-    {
-        $entityPath = get_class($resource);
-        $splittedBundlePath = explode('\\', $entityPath);
-        while(strpos(end($splittedBundlePath), 'Bundle') != true){
-            array_pop($splittedBundlePath);
-        }
-        if($lowercase){
-            $lowercaseArray = [];
-            if($splittedBundlePath[0] == 'Enhavo'){
-                $lowercaseArray[] = strtolower($splittedBundlePath[0]);
-            }
-            $pieces = preg_split('/(?=[A-Z])/',end($splittedBundlePath));
-            foreach(array_filter($pieces) as $piece){
-                $lowercaseArray[] = strtolower($piece);
-            }
-            return implode('_', $lowercaseArray);
-        }
-        if($splittedBundlePath[0] == 'Enhavo'){
-            return $splittedBundlePath[0].end($splittedBundlePath);
-        } else {
-            return end($splittedBundlePath);
-        }
-    }
-
-    public function getProperties($resource)
-    {
-        $currentSearchYaml = $this->getSearchYaml($resource);
-
-        return $currentSearchYaml[get_class($resource)]['properties'];
+        $this->getSearchYamls();
+        return $this->mainPath; //Users/jhelbing/workspace/enhavo/src/
     }
 
     public function getEntityNamesOfSearchYamlPath($yamlPath)
@@ -266,5 +160,29 @@ class SearchUtil
             }
         }
         return $types;
+    }
+
+    public function getDataset($resource)
+    {
+        $metaData = $this->metadataFactory->create($resource);
+        $entity = $metaData->getEntityName();
+        $bundle = $metaData->getBundleName();
+        $id = $resource->getId();
+        $dataSet = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findOneBy(array(
+            'type' => strtolower($entity),
+            'bundle' => $bundle,
+            'reference' => $id
+        ));
+        if($dataSet == null){
+            //create new dataset
+            $dataSet = new Dataset();
+            $dataSet->setType(strtolower($entity));
+            $dataSet->setBundle($bundle);
+            $dataSet->setReference($id);
+            $dataSet->setReindex(1);
+            $this->em->persist($dataSet);
+            $this->em->flush();
+        }
+        return $dataSet;
     }
 }

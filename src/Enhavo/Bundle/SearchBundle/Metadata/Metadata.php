@@ -19,7 +19,17 @@ class Metadata
     /**
      * @var string
      */
+    private $entityName;
+
+    /**
+     * @var string
+     */
     private $bundleName;
+
+    /**
+     * @var string
+     */
+    private $humanizedBundleName;
 
     /**
      * @var PropertyNode[]
@@ -45,6 +55,22 @@ class Metadata
     /**
      * @return string
      */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * @param string $entityName
+     */
+    public function setEntityName($entityName)
+    {
+        $this->entityName = $entityName;
+    }
+
+    /**
+     * @return string
+     */
     public function getBundleName()
     {
         return $this->bundleName;
@@ -56,6 +82,22 @@ class Metadata
     public function setBundleName($bundleName)
     {
         $this->bundleName = $bundleName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHumanizedBundleName()
+    {
+        return $this->humanizedBundleName;
+    }
+
+    /**
+     * @param string $humanizedBundleName
+     */
+    public function setHumanizedBundleName($humanizedBundleName)
+    {
+        $this->humanizedBundleName = $humanizedBundleName;
     }
 
     /**
