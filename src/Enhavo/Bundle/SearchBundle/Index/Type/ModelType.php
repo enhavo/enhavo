@@ -26,7 +26,6 @@ class ModelType extends AbstractIndexType
     function index($val, $options, $properties = null)
     {
         $metaData = $this->metadataFactory->create($val);
-
         $indexWalker = $this->getIndexWalker();
         return $indexWalker->getIndexItems($val, $metaData, $properties);
     }

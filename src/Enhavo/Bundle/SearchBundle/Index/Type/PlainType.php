@@ -19,7 +19,7 @@ class PlainType extends AbstractIndexType
         $indexItem = new IndexItem();
 
         //if rawData is set in properties or properties is empty -> set rawData in the IndexItem
-        if(empty($properties) ||in_array('rawData', $properties)){
+        if(empty($properties) || in_array('rawData', $properties)){
             $indexItem->setRawData($value);
         }
 

@@ -44,9 +44,6 @@ class IndexWalker
                     }
                     $indexItems[] = $indexItem;
                 }
-                //$indexItem->setRawData($indexItem->getRawData()."\n ".$newIndexItem->getRawData());
-                //$indexItem->setData($indexItem->getData().$newIndexItem->getData());
-                //$indexItem->setScoredWords(array_merge($indexItem->getScoredWords(), $newIndexItem->getScoredWords()));
             }
         }
         return $indexItems;
