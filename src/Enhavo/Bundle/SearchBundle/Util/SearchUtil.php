@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Yaml\Parser;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
-use Doctrine\Common\Persistence\Proxy;
+use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 
 class SearchUtil
 {
