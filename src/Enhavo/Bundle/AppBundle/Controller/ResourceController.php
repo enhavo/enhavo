@@ -103,7 +103,7 @@ class ResourceController extends BaseController
                 $newResource = $form->getData();
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
-                $this->sortingManger->update($configuration, $this->metadata, $newResource);
+                $this->sortingManger->update($configuration, $this->metadata, $newResource, $this->repository);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
             }
         }
@@ -243,12 +243,21 @@ class ResourceController extends BaseController
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $result = $this->sortingManger->move($configuration, $this->metadata);
+        $this->sortingManger->moveAfter($configuration, $this->metadata, $this->repository, $request->get('targetId'));
 
-        if ($result) {
-            return new JsonResponse(array('success' => true));
-        }
+        return new JsonResponse();
+    }
 
-        return new JsonResponse(array('success' => false));
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function moveToPageAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $this->sortingManger->moveToPage($configuration, $this->metadata, $this->repository, $request->get('page'), $request->get('top'));
+
+        return new JsonResponse();
     }
 }

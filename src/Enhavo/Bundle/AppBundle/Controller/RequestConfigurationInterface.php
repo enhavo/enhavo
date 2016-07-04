@@ -17,4 +17,6 @@ interface RequestConfigurationInterface
     public function getTemplate($default);
 
     public function isAjaxRequest();
+
+    public function getSortingStrategy();
 }

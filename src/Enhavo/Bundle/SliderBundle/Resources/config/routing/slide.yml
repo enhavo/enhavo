@@ -18,12 +18,9 @@ enhavo_slider_slide_create:
     defaults:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
+            sorting_strategy: desc_first
             viewer:
                 translationDomain: EnhavoSliderBundle
-                sorting:
-                    sortable: true
-                    position: position
-                    initial: max
 
 enhavo_slider_slide_update:
     options:

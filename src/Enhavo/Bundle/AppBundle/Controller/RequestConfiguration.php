@@ -49,4 +49,9 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
     {
         return $this->request->isXmlHttpRequest();
     }
+
+    public function getSortingStrategy()
+    {
+        return $this->parameters->get('sorting_strategy', 'asc_first');
+    }
 }
