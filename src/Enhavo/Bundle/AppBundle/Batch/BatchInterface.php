@@ -19,4 +19,6 @@ interface BatchInterface extends TypeInterface
     public function getConfirmMessage();
 
     public function getLabel();
+
+    public function isGranted();
 }

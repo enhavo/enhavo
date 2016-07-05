@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
@@ -62,7 +63,15 @@ class TableViewer extends AbstractViewer
 
     protected function getBatches()
     {
-        return $this->optionAccessor->get('batches');
+        $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');
+        $router = $this->container->get('router');
+        /** @var RequestConfigurationInterface $configuration */
+        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $this->metadata, $router);
+        if($configuration === null) {
+            return [];
+        }
+        $batches = $configuration->getBatches();
+        return $batches;
     }
 
     protected function getDefaultMoveAfterRoute()
@@ -120,12 +129,6 @@ class TableViewer extends AbstractViewer
                 'move_to_page_route' => $this->getDefaultMoveToPageRoute()
             ],
             'batch_route' => $this->getBatchRoute(),
-            'batches' => [
-                'delete' => array(
-                    'type' => 'delete',
-                    'permission' => $this->getPermissionRole(),
-                )
-            ],
             'columns' => $this->getDefaultColumns()
         ]);
     }

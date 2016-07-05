@@ -21,4 +21,8 @@ interface RequestConfigurationInterface
     public function getSortingStrategy();
 
     public function getBatchType();
+
+    public function getBatches();
+
+    public function getBatchOptions($type);
 }

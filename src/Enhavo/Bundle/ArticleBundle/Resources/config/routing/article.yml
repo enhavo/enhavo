@@ -70,11 +70,6 @@ enhavo_article_article_table:
         _sylius:
             viewer:
                 translationDomain: EnhavoArticleBundle
-                batches:
-                    delete:
-                        type: delete
-                    publish:
-                        type: publish
                 columns:
                     id:
                         label: article.label.id
@@ -107,7 +102,11 @@ enhavo_article_article_batch:
             paginate: false
             criteria:
                 id: $ids
-
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish
 
 enhavo_article_article_preview:
     options:

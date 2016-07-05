@@ -29,7 +29,9 @@ class BatchesRenderer extends AbstractRenderer implements ContainerAwareInterfac
             $batch = $this->getType($batchOption['type']);
             $batch = clone $batch;
             $batch->setOptions($batchOption);
-            $batches[] = $batch;
+            if($batch->isGranted()) {
+                $batches[] = $batch;
+            }
         }
 
         return $this->container->get('templating')->render('EnhavoAppBundle:Batch:batches.html.twig', [

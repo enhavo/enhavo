@@ -44,4 +44,13 @@ abstract class AbstractBatch extends AbstractType implements BatchInterface
             $this->options['translationDomain']
         );
     }
+
+    public function isGranted()
+    {
+        $permission = $this->options['permission'];
+        if($permission === null) {
+            return true;
+        }
+        return $this->container->get('security.authorization_checker')->isGranted($permission);
+    }
 }
