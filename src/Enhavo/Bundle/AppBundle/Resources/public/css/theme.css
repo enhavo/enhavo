@@ -269,14 +269,17 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .batch-actions-submit-wrapper i { font-size:26px;top: 4px;}
 .batch-actions-submit-wrapper .btn {line-height: 0;}
 
-#overlayContent .batch-actions-dialog {margin:200px auto 0 auto;padding:10px;border-radius:2px;width:360px;background-color:#fff;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-content {text-align: center;padding-left:50px;position:relative;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-content .batch-actions-dialog-icon {position:absolute;left:0;top:0;font-size:40px;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-content .batch-actions-dialog-icon.batch-actions-dialog-icon-warning {color:#d87676;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-content .batch-actions-dialog-icon.batch-actions-dialog-icon-error {color:#d87676;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-buttons::after {clear:both;content:" ";display:table;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-buttons {margin-top:10px;}
-#overlayContent .batch-actions-dialog .batch-actions-dialog-buttons .btn {float:right;margin-left:30px;width:auto;}
+#overlayContent .dialog {margin:200px auto 0 auto;padding:10px;border-radius:2px;width:360px;background-color:#fff;}
+#overlayContent .dialog .dialog-content {text-align: center;padding-left:50px;position:relative;}
+#overlayContent .dialog .dialog-content .dialog-icon {position:absolute;left:0;top:0;font-size:40px;}
+#overlayContent .dialog .dialog-content .dialog-icon.dialog-icon-warning {color:#d87676;}
+#overlayContent .dialog .dialog-content .dialog-icon.dialog-icon-error {color:#d87676;}
+#overlayContent .dialog .dialog-buttons::after {clear:both;content:" ";display:table;}
+#overlayContent .dialog .dialog-buttons {margin-top:10px;}
+#overlayContent .dialog .dialog-buttons .btn {float:right;margin-left:30px;width:auto;}
+
+#confirmDialog {display: none}
+#alertDialog {display: none}
 
 .col-position {padding: 0;}
 .sortable-button {display:block;margin:-10px 0;padding:10px 0;width:100%;text-align:center;cursor:move;}

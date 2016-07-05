@@ -72,17 +72,9 @@ enhavo_article_article_table:
                 translationDomain: EnhavoArticleBundle
                 batches:
                     delete:
-                        label: table.batch.action.delete
-                        confirm_message: table.batch.message.confirm.delete
-                        translation_domain: EnhavoAppBundle
-                        permission: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
-                        position: 0
+                        type: delete
                     publish:
-                        label: article.batch.action.publish
-                        confirm_message: article.batch.message.confirm.publish
-                        translation_domain: EnhavoArticleBundle
-                        permission: ROLE_ENHAVO_ARTICLE_ARTICLE_EDIT
-                        position: 1
+                        type: publish
                 columns:
                     id:
                         label: article.label.id
@@ -111,6 +103,11 @@ enhavo_article_article_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+
 
 enhavo_article_article_preview:
     options:

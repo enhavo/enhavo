@@ -6,3 +6,10 @@ services:
         class: %enhavo_content.form.type.content.class%
         tags:
             - { name: form.type }
+
+    enhavo_content_content.batch.publish:
+        class: Enhavo\Bundle\ContentBundle\Batch\PublishBatch
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch }

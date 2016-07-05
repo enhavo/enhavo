@@ -71,4 +71,9 @@ class SimpleRequestConfiguration implements RequestConfigurationInterface
     {
         return $this->parameters->get('sorting_strategy', 'asc_first');
     }
+
+    public function getBatchType()
+    {
+        return $this->request->get('type');
+    }
 }

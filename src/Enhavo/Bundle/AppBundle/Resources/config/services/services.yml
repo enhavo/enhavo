@@ -80,6 +80,3 @@ services:
         class: Enhavo\Bundle\AppBundle\Controller\SortingManager
         arguments:
             - @doctrine.orm.entity_manager
-
-    enhavo.batch_manager:
-        class: Enhavo\Bundle\AppBundle\Controller\BatchManager

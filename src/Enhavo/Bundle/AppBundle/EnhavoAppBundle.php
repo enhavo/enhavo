@@ -36,6 +36,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.batch_collector', 'enhavo.batch')
+        );
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
     }

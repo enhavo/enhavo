@@ -74,31 +74,24 @@ function Admin (router, templating, translator)
     }
 
     var overlayStart = function() {
-      overlayIsDialog = options.dialog;
       overlayIsOpen = true;
 
-      if (!overlayIsDialog) {
-        overlayContent.trigger('formOpenBefore');
-      }
+      overlayContent.trigger('formOpenBefore');
 
+      var dom = $.parseHTML(html);
       overlay.fadeIn(50);
-      overlayContent.append($.parseHTML(html));
+      overlayContent.append(dom);
       overlayContent.fadeIn(100, function() {
-        if (!overlayIsDialog) {
-          overlayContent.trigger('formOpenAfter', [overlayContent.find('form').get(0)]);
+        overlayContent.trigger('formOpenAfter', [overlayContent.find('form').get(0)]);
+        if(options.init) {
+          options.init(dom);
         }
       });
       overlayContent.animate({
         scrollTop: 0
       }, 100);
 
-      if (!overlayIsDialog) {
-        self.initTabs('#overlayContent');
-      }
-
-      if(options.init) {
-        options.init();
-      }
+      self.initTabs('#overlayContent');
     };
 
     overlayStart();
@@ -521,6 +514,26 @@ function Admin (router, templating, translator)
     });
   };
 
+  this.confirm = function(message, callback) {
+    var html = $('#confirmDialog').html();
+    html = html.replace('__message__', message);
+    self.overlay(html, {
+      init: function(html) {
+        $(html).find('[data-dialog-confirm]').click(function(event) {
+          event.preventDefault();
+          self.overlayClose();
+          callback();
+        });
+      }
+    });
+  };
+
+  this.alert = function(message) {
+    var html = $('#alertDialog').html();
+    html = html.replace('__message__', message);
+    self.overlay(html);
+  };
+
   this.openLoadingOverlay = function() {
     if (loadingOverlay == null) {
       // Init
@@ -558,50 +571,39 @@ function Admin (router, templating, translator)
     var selectRows = block.find('.entry-row .batch-checkbox-wrapper input');
     var actionSelect = block.find('[data-batch-actions-select]');
     var submit = block.find('[data-batch-actions-submit]');
-    var preventCircular = false;
+    var form = block.find('[data-batch-action-form ]');
 
     if (selectRows.length == 0) {
       return;
     }
 
+
+    var getBatchIds = function() {
+      var ids = [];
+      form.parent().find('[data-batch-selection]:checked').each(function() {
+        ids.push($(this).val());
+      });
+      return ids;
+    };
+
+    var getBatchType = function() {
+      return actionSelect.val();
+    };
+
+    var getBatchConfirmMessage = function() {
+      return actionSelect.find('option:selected').data('confirm-message');
+    };
+
     selectRows.iCheck({
       checkboxClass: 'icheckbox-esperanto'
-    }).on('ifChecked', function() {
-      $(this).parents('.entry-row').addClass('marked');
-      if (!selectAll.is(':checked')) {
-        var allChecked = true;
-        selectRows.each(function() {
-          if (!$(this).is(':checked')) {
-            allChecked = false;
-          }
-        });
-        if (allChecked) {
-          preventCircular = true;
-          selectAll.iCheck('check');
-        }
-      }
-    }).on('ifUnchecked', function() {
-      $(this).parents('.entry-row').removeClass('marked');
-      if (selectAll.is(':checked')) {
-        preventCircular = true;
-        selectAll.iCheck('uncheck');
-      }
     });
 
     selectAll.iCheck({
       checkboxClass: 'icheckbox-esperanto'
     }).on('ifChecked', function() {
-      if (preventCircular) {
-        preventCircular = false;
-      } else {
-        selectRows.iCheck('check')
-      }
+      selectRows.iCheck('check')
     }).on('ifUnchecked', function() {
-      if (preventCircular) {
-        preventCircular = false;
-      } else {
-        selectRows.iCheck('uncheck')
-      }
+      selectRows.iCheck('uncheck')
     });
 
     block.find('.batch-checkbox-wrapper').click(function(event) {
@@ -610,83 +612,64 @@ function Admin (router, templating, translator)
     });
 
     actionSelect.select2();
-    // Calculate size of biggest element in select
-    var styleReference = block.find('.batch-actions-select-wrapper .select2-chosen');
-    var sizeTester = $('<div style="position:absolute;visibility:hidden;width:auto;height:auto;white-space:nowrap;'
-      + 'font-family:' + styleReference.css('font-family')
-      + 'font-size:' + styleReference.css('font-size')
-      + 'font-weight' + styleReference.css('font-weight')
-      + '"></div>');
-    var sizeTesterHtml = '';
-    actionSelect.children('option').each(function() {
-      sizeTesterHtml += $(this).html() + '<br />';
-    });
-    sizeTester.html(sizeTesterHtml);
-    $(document.body).append(sizeTester);
-    block.find('.batch-actions-select-wrapper .select2-container').css('width', sizeTester.width() + 60);
-    $(sizeTester).remove();
 
-    var dialogHtml = '';
+    var optimitzeSelectSize = function() {
+      //Calculate size of biggest element in select
+      var styleReference = block.find('.batch-actions-select-wrapper .select2-chosen');
+      var sizeTester = $('<div style="position:absolute;visibility:hidden;width:auto;height:auto;white-space:nowrap;'
+        + 'font-family:' + styleReference.css('font-family')
+        + 'font-size:' + styleReference.css('font-size')
+        + 'font-weight' + styleReference.css('font-weight')
+        + '"></div>');
+      var sizeTesterHtml = '';
+      actionSelect.children('option').each(function() {
+        sizeTesterHtml += $(this).html() + '<br />';
+      });
+      sizeTester.html(sizeTesterHtml);
+      $(document.body).append(sizeTester);
+      block.find('.batch-actions-select-wrapper .select2-container').css('width', sizeTester.width() + 60);
+      $(sizeTester).remove();
+    };
+
+    optimitzeSelectSize();
+
     submit.on('click', function(event) {
       event.preventDefault();
-      if (actionSelect.prop('selectedIndex') == 0) {
-        dialogHtml = submit.data('error-dialog-template').replace('__message__', submit.data('message-no-action-selected'));
-        self.overlay(dialogHtml, {dialog:true});
-      } else {
-        var allUnChecked = true;
-        selectRows.each(function() {
-          if ($(this).is(':checked')) {
-            allUnChecked = false;
-          }
-        });
-        if (allUnChecked) {
-          dialogHtml = submit.data('error-dialog-template').replace('__message__', submit.data('message-none-selected'));
-          self.overlay(dialogHtml, {dialog:true});
-        } else {
-          var confirmMessage = block.find('[data-batch-actions-select] option:selected').data('confirm-message');
-          dialogHtml = submit.data('confirm-dialog-template').replace('__confirm_message__', confirmMessage);
-          self.overlay(dialogHtml, {dialog:true});
-        }
-      }
-    });
 
-    $(document).on('click', '[data-batch-action-confirm]', function(event) {
-      if (overlayIsOpen && overlayIsDialog) {
-        self.overlayClose();
-        var url = router.generate(submit.data('batch-action-route'));
-        var formData = block.find('[data-batch-action-form]').serialize();
+      var type = getBatchType();
+      if (type == 0) {
+        self.alert(submit.data('message-no-action-selected'));
+        return;
+      }
+
+      var ids = getBatchIds();
+      if (ids.length == 0) {
+        self.alert(submit.data('message-none-selected'));
+        return;
+      }
+
+      self.confirm(getBatchConfirmMessage(), function() {
         self.openLoadingOverlay();
+        var url = form.attr('action');
+        var data = {
+          ids: ids,
+          type: type
+        };
+
         $.ajax({
           url: url,
-          data: formData,
+          data: data,
           method: 'POST',
-          success: function(result) {
+          success: function() {
             self.closeLoadingOverlay();
-            if ((typeof result.success != 'undefined') && (result.success == true)) {
-              self.reloadBlock(block);
-            } else {
-              self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
-            }
+            self.reloadBlock(block);
           },
           error : function() {
             self.closeLoadingOverlay();
             self.overlayMessage(translator.trans('error.occurred') , self.MessageType.Error);
           }
         });
-      }
-    });
-    $(document).on('click', '#overlayContent', function(event) {
-      if (overlayIsOpen && overlayIsDialog) {
-        event.stopPropagation();
-        event.preventDefault();
-        self.overlayClose();
-      }
-    });
-    $(document).on('click', '.batch-actions-dialog', function(event) {
-      if (overlayIsOpen && overlayIsDialog) {
-        event.stopPropagation();
-        event.preventDefault();
-      }
+      })
     });
   };
 }

@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
@@ -25,7 +26,6 @@ use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
 use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
-use FOS\RestBundle\View\View;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 
@@ -62,7 +62,8 @@ class ResourceController extends BaseController
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         ViewerFactory $viewerFactory,
-        SortingManager $sortingManager
+        SortingManager $sortingManager,
+        BatchManager $batchManager
     )
     {
         parent::__construct(
@@ -84,6 +85,7 @@ class ResourceController extends BaseController
 
         $this->viewerFactory = $viewerFactory;
         $this->sortingManger = $sortingManager;
+        $this->batchManager = $batchManager;
     }
 
     /**
@@ -225,14 +227,9 @@ class ResourceController extends BaseController
     public function batchAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $result = $this->batchManager->executeBatch($configuration, $this->metadata);
-
-        if ($result) {
-            return new JsonResponse(array('success' => true));
-        }
-
-        return new JsonResponse(array('success' => false));
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+        $this->batchManager->executeBatch($resources, $configuration);
+        return new JsonResponse();
     }
 
     /**

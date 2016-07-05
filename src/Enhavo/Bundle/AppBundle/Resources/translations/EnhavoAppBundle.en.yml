@@ -20,6 +20,7 @@ label:
   logout: 'Logout'
   id: 'ID'
   cancel: 'Cancel'
+  close: 'Close'
   save: 'Save'
   delete: 'Delete'
   preview: 'Preview'
@@ -32,8 +33,6 @@ label:
   changePassword: 'Change password'
   goToPage: 'Go to Page'
   greeting: 'Hello username'
-  batch:
-    selectAction: 'Choose action'
 tab:
   label:
     category: 'Category'
@@ -41,19 +40,16 @@ tab:
     seo: 'SEO'
 table:
   empty: 'no data'
-  batch:
+batch:
+  form:
     action:
       submit: 'Execute'
-      delete: 'Delete'
     error:
       noneSelected: 'No items selected'
       noActionSelected: 'No action selected'
-      close: 'Close'
     label:
-      selectAction: 'Choose action'
+      action: 'Choose action'
+  delete:
+    label: 'Delete'
     message:
-      confirm:
-        generic: 'Do you really want to run the command %command% for all selected items?'
-        delete: 'Do you really want to delete all selected items?'
-        yes: 'Yes'
-        no: 'No'
+      confirm: 'Do you really want to delete all selected items?'

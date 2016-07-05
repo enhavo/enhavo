@@ -24,9 +24,7 @@ enhavo_app:
       - '@EnhavoSearchBundle/Resources/public/css/style.css'
     javascripts:
 
-    viewer:
 #        layout: 'EnhavoAppBundle::base.html.twig'
-        app: Enhavo\Bundle\AppBundle\Viewer\AppViewer
     menu:
         dashboard:
             label: dashboard.label.dashboard

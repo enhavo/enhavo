@@ -19,4 +19,6 @@ interface RequestConfigurationInterface
     public function isAjaxRequest();
 
     public function getSortingStrategy();
+
+    public function getBatchType();
 }

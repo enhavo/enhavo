@@ -62,7 +62,7 @@ class TableViewer extends AbstractViewer
 
     protected function getBatches()
     {
-        return [];
+        return $this->optionAccessor->get('batches');
     }
 
     protected function getDefaultMoveAfterRoute()
@@ -96,12 +96,13 @@ class TableViewer extends AbstractViewer
         $configuration = $this->configuration;
 
         $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:table.html.twig'));
+        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:table.html.twig'));
         $view->setTemplateData(array_merge($view->getTemplateData(), [
             'data' => $this->resource,
             'sortable' => $configuration->isSortable(),
             'columns' => $this->getColumns(),
             'batches' => $this->getBatches(),
+            'batch_route' => $this->getBatchRoute(),
             'width' => $this->optionAccessor->get('width'),
             'move_after_route' => $this->optionAccessor->get('table.sorting.move_after_route'),
             'move_to_page_route' => $this->optionAccessor->get('table.sorting.move_to_page_route'),
@@ -121,11 +122,8 @@ class TableViewer extends AbstractViewer
             'batch_route' => $this->getBatchRoute(),
             'batches' => [
                 'delete' => array(
-                    'label'                 => 'table.batch.action.delete',
-                    'confirm_message'       => 'table.batch.message.confirm.delete',
-                    'translation_domain'    => 'EnhavoAppBundle',
-                    'permission'            => $this->getPermissionRole(),
-                    'position'              => 0
+                    'type' => 'delete',
+                    'permission' => $this->getPermissionRole(),
                 )
             ],
             'columns' => $this->getDefaultColumns()
