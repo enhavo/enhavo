@@ -75,6 +75,15 @@ enhavo_slider_slide_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish
 
 enhavo_slider_slide_move_after:
     options:

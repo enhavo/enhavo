@@ -1,12 +1,6 @@
 Enhavo\Bundle\ShopBundle\Entity\CartItem:
     table: shop_cart_item
-
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+    type: entity
 
     fields:
         title:
@@ -14,7 +8,5 @@ Enhavo\Bundle\ShopBundle\Entity\CartItem:
             length: 255
             nullable: true
 
-    manyToOne:
-        targetEntity: Product
 
     lifecycleCallbacks: {  }

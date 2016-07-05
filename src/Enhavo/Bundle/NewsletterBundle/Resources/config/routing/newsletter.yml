@@ -94,6 +94,16 @@ enhavo_newsletter_newsletter_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                newsletter_send:
+                    type: newsletter_send
+
 
 enhavo_newsletter_newsletter_preview:
     options:

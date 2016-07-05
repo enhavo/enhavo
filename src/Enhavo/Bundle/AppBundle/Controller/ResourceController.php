@@ -28,6 +28,7 @@ use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ResourceController extends BaseController
 {
@@ -94,6 +95,10 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
 
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
@@ -163,6 +168,10 @@ class ResourceController extends BaseController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
+
         $viewer = $this->viewerFactory->create(
             $configuration,
             $this->metadata,
@@ -180,6 +189,10 @@ class ResourceController extends BaseController
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
 
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
         $form = $this->resourceFormFactory->create($configuration, $newResource);
@@ -205,6 +218,10 @@ class ResourceController extends BaseController
     public function tableAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
 
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
@@ -256,5 +273,10 @@ class ResourceController extends BaseController
         $this->sortingManger->moveToPage($configuration, $this->metadata, $this->repository, $request->get('page'), $request->get('top'));
 
         return new JsonResponse();
+    }
+
+    protected function getPermissionRole($type, MetadataInterface $metadata)
+    {
+        return strtoupper(sprintf('ROLE_%s_%s_%s', $metadata->getApplicationName(), $metadata->getHumanizedName(), $type));
     }
 }

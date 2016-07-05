@@ -47,3 +47,17 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button }
+
+    enhavo_newsletter.manager:
+        class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
+        arguments:
+          - @doctrine.orm.entity_manager
+          - @mailer
+          - %enhavo_newsletter.newsletter%
+
+    enhavo_newsletter.batch.newsletter_send:
+        class: Enhavo\Bundle\NewsletterBundle\Batch\SendBatch
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch }

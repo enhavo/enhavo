@@ -72,3 +72,12 @@ enhavo_user_user_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish

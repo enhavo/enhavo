@@ -91,6 +91,13 @@ enhavo_calendar_appointment_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_calendar.controller.appointment:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
 
 enhavo_calendar_appointment_preview:
     options:
