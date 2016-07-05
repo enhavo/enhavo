@@ -1,0 +1,19 @@
+{% extends template('base') %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {% for javascript in javascripts %}
+        <script type="text/javascript" src="{{ asset(admin_asset(javascript)) }}"></script>
+    {% endfor %}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset(admin_asset(stylesheet)) }}">
+    {% endfor %}
+{% endblock %}
+
+

@@ -23,14 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/form.css') }}">
 
 
-    {% block stylesheets %}
-        <!-- additional stylesheets -->
-        {% if viewer is defined %}
-            {% for stylesheet in viewer.stylesheets %}
-                <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
+    {% block stylesheets %}<!-- additional stylesheets -->{% endblock %}
 
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -66,18 +59,12 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavosearch/js/SearchForm.js') }}"></script>
 
     {% block javascripts %}
-        <!-- additional javascripts -->
-        {% if viewer is defined %}
-            {% for javascript in viewer.javascripts %}
-                <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
-            {% endfor %}
-        {% endif %}
-
         <script type="text/javascript">
             $(function() {
                 admin.initDescriptionTextPosition();
             });
         </script>
+        <!-- additional javascripts -->
     {% endblock %}
 
 </head>
