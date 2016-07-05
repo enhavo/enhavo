@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\MediaBundle\Entity\File as EnhavoFile;
 use Doctrine\ORM\EntityManager;
 use BaconStringUtils\Slugifier;
-use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class FileService
@@ -92,6 +91,37 @@ class FileService
         return new JsonResponse($data);
     }
 
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function replaceFile($id, Request $request)
+    {
+        $entityFile = $this->manager->getRepository('EnhavoMediaBundle:File')->find($id);
+        if (!$entityFile) {
+            throw new NotFoundResourceException;
+        }
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        if (!$file) {
+            throw new \Exception('File not in request');
+        }
+
+        $mimeType = $file->getMimeType();
+        if ($mimeType != $entityFile->getMimeType()) {
+            $entityFile->setMimeType($mimeType);
+            $entityFile->setExtension($file->guessExtension());
+            $this->manager->persist($entityFile);
+            $this->manager->flush();
+        }
+
+        $this->moveUploadedFile($file, $entityFile);
+
+        return new JsonResponse(array('files' => array($this->getFileInfo($entityFile))));
+    }
+
     public function getCustomImageSizeResponse($id,$width,$height)
     {
         $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
@@ -104,14 +134,14 @@ class FileService
             $path = $this->path.'/custom/'.$width;
             $this->createPathIfNotExists($path);
             $filepath = $path.'/'.$id;
-            if(!file_exists($filepath)) {
+            if(!file_exists($filepath) || (filemtime($filepath) < filemtime($this->getFilepath($file)))) {
                 Resize::make($this->getFilepath($file),$filepath,$width,99999);
             }
         } else {
             $path = $this->path.'/custom/'.$width.'x'.$height;
             $this->createPathIfNotExists($path);
             $filepath = $path.'/'.$id;
-            if(!file_exists($filepath)) {
+            if(!file_exists($filepath) || (filemtime($filepath) < filemtime($this->getFilepath($file)))) {
                 Thumbnail::make($this->getFilepath($file),$filepath,$width,$height);
             }
         }
@@ -344,7 +374,7 @@ class FileService
         return $file->getId();
     }
 
-    protected function getFilepath(EnhavoFile $file)
+    public function getFilepath(EnhavoFile $file)
     {
         return $this->getDirectory($file).'/'.$this->getFilename($file);
     }
@@ -364,7 +394,6 @@ class FileService
         $info['extension'] = $file->getExtension();
         $info['filename'] = $file->getFilename();
         $info['slug'] = $file->getSlug();
-        $info['mimeType'] = $file->getMimeType();
         return $info;
     }
 }

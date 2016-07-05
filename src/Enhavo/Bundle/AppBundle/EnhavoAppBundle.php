@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle;
 
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
@@ -41,6 +42,10 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new SyliusCompilerPass()
+        );
+
+        $container->addCompilerPass(
+            new FilesystemCompilerPass()
         );
     }
 }

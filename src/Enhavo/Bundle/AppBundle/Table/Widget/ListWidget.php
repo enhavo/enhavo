@@ -18,7 +18,12 @@ class ListWidget extends AbstractTableWidget
 
         $itemProperty = $this->getProperty($item, $options['property']);
         foreach($itemProperty as $child) {
-            $list[] = $this->getProperty($child, $options['item_property']);
+            if(isset($options['item_property'])) {
+                $list[] = $this->getProperty($child, $options['item_property']);
+            } else {
+                $list[] = $child;
+            }
+
         }
 
         $separator = $this->getSeparator($options);

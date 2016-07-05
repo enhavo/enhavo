@@ -2,7 +2,10 @@
   data-action
   data-action-type="{{ type }}"
   data-action-route="{{ route }}"
-  class="btn {{ icon }} col-sm-12"
+  {% if routeParameters is defined %}
+    data-action-route-parameters="{{ routeParameters|json_encode }}"
+  {% endif %}
+  class="btn {{ icon }}"
 >
-  {{ label|trans({}, translationDomain) }}
+  {{ label|trans({}, translationDomain)|nl2br }}
 </button>

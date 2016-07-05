@@ -15,12 +15,12 @@
 
 {% block content %}
     {% if title %}
-        <h1 class="cat">{{ title|trans({}, translationDomain) }}</h1>
+        <h1 class="cat">{{ title|trans({}, translationDomain)|nl2br }}</h1>
     {% endif %}
 
     {% block topButtons %}
         <div class="row action-row" data-action-row>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
                 {% for action in actions %}
                     {{ action_render(action.type, action) }}
                 {% endfor %}

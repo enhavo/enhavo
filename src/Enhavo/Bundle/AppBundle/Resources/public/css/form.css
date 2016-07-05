@@ -47,11 +47,8 @@
      background: #fff;
 }
 
-#list-fields .button:hover {background-color: #4395d1;}
 #list-fields .listElement {margin-left: 0px;margin-right: 0px; }
 #list-fields .listElement .input-container {margin-bottom: 10px;}
-.add-another { width: 26px !important; height: 26px !important; background-color: #0090ba !important;}
-.add-another:hover { background-color: #4395d1 !important;}
 #list-fields .button-up {left: 0}
 #list-fields .button-down {left: 34px}
 

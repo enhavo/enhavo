@@ -23,7 +23,7 @@ class SlideType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'textarea', array(
+        $builder->add('title', 'text', array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle'
         ));

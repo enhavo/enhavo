@@ -105,10 +105,15 @@ enhavo_page_page_table:
                     title:
                         label: page.label.title
                         property: title
-                        width: 10
+                        width: 9
+                    workflow_status:
+                        type: workflow_assigned
+                        label: page.label.assigned
+                        property: workflowStatus
 
 enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}
+    methods: [DELETE]
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
 

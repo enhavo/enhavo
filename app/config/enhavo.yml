@@ -30,7 +30,7 @@ enhavo_app:
             label: dashboard.label.dashboard
             translationDomain: EnhavoDashboardBundle
             route: enhavo_dashboard_index
-            role: ROLE_ENHAVO_USER_USER_INDEX
+            role: ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX
         user:
             label: user.label.user
             translationDomain: EnhavoUserBundle
@@ -179,7 +179,8 @@ enhavo_contact:
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%
         from: %emails_send_from%
-        subject: Contactform
+        subject: contact.message.email_subject
+        translationDomain: EnhavoContactBundle
         send_to_sender: true
 
 enhavo_workflow:
@@ -203,4 +204,6 @@ enhavo_workflow:
 enhavo_search:
     search:
         template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: index
+        strategy: reindex
+        search_engine: enhavo_search_search_engine
+        index_engine: enhavo_search_index_engine

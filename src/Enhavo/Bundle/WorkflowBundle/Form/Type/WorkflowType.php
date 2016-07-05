@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\WorkflowBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\WorkflowBundle\EnhavoWorkflowBundle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,15 +27,16 @@ class WorkflowType extends AbstractType
             'label' => 'workflow.form.label.name',
             'translation_domain' => 'EnhavoWorkflowBundle'
         ) );
-
-        $entities = $this->getWorkflowEntities($this->container->getParameter('enhavo_workflow.entities'));
+        $currentId = $GLOBALS['request']->attributes->get('id');
+        $entities = $this->getWorkflowEntities($this->container->getParameter('enhavo_workflow.entities'), $currentId);
 
         $builder->add('entity', 'choice', array(
             'label' => 'workflow.form.label.type',
             'translation_domain' => 'EnhavoWorkflowBundle',
             'choices'   => $entities,
             'expanded' => false,
-            'multiple' => false
+            'multiple' => true,
+            'placeholder' => '---'
         ));
 
         $builder->add('active', 'enhavo_boolean');
@@ -78,8 +80,11 @@ class WorkflowType extends AbstractType
         return 'enhavo_workflow_workflow';
     }
 
-    public function getWorkflowEntities($entityArray)
+    public function getWorkflowEntities($entityArray, $currentId)
     {
+        if($currentId != null){
+            $currentId = intval($currentId);
+        }
         $translator = $this->container->get('translator');
         $finalEntities = array();
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
@@ -88,9 +93,16 @@ class WorkflowType extends AbstractType
             $entityName = $entityData['class'];
             $entityHasWF = false;
             foreach($workflows as $workflow){
-                if($workflow->getEntity() == $entityName){
-                    $entityHasWF = true;
+                if($currentId != null){
+                    if(in_array($entityName, $workflow->getEntity()) && $workflow->getId() != $currentId){
+                        $entityHasWF = true;
+                    }
+                } else {
+                    if(in_array($entityName, $workflow->getEntity())){
+                        $entityHasWF = true;
+                    }
                 }
+
             }
             if($entityHasWF == false){
                 $finalEntities[$entityName] = $translator->trans($entityData['label'], array(), $entityData['translationDomain']);

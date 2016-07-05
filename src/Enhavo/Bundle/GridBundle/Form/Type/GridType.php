@@ -60,7 +60,7 @@ class GridType extends AbstractType
                 $items[] = array(
                     'type' => $name,
                     'label' => $this->resolver->getLabel($name),
-                    'translationDomain' => $item['translationDomain']
+                    'translationDomain' => isset($item['translationDomain']) ? $item['translationDomain'] : 'EnhavoGridBundle'
                 );
             }
         }

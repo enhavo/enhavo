@@ -36,8 +36,12 @@ class ContactController extends Controller
                 'contact' => $contact
             ));
 
+            $subject = $this->container->getParameter('enhavo_contact.contact.subject');
+            $td = $this->container->getParameter('enhavo_contact.contact.translationDomain');
+            $subject = $this->get('translator')->trans($subject, array(), $td);
+
             $message = \Swift_Message::newInstance()
-                ->setSubject($this->container->getParameter('enhavo_contact.contact.subject'))
+                ->setSubject($subject)
                 ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
                 ->setTo($emailTo)
                 ->setBody($text);
@@ -65,7 +69,7 @@ class ContactController extends Controller
         ));
 
         $message = \Swift_Message::newInstance()
-            ->setSubject($this->container->getParameter('enhavo_contact.contact.subject'))
+            ->setSubject($this->get('translator')->trans($this->container->getParameter('enhavo_contact.contact.subject'), array(), $this->container->getParameter('enhavo_contact.contact.translationDomain')))
             ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
             ->setTo($contact->getEmail())
             ->setBody($text);

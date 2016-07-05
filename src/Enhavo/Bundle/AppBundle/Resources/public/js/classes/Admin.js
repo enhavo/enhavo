@@ -79,6 +79,7 @@ function Admin (router, templating, translator)
       overlayContent.trigger('formOpenBefore');
 
       var dom = $.parseHTML(html);
+      $("body, html").css("overflow-y", "hidden");
       overlay.fadeIn(50);
       overlayContent.append(dom);
       overlayContent.fadeIn(100, function() {
@@ -107,6 +108,8 @@ function Admin (router, templating, translator)
       if (!overlayIsDialog) {
         overlayContent.trigger('formCloseBefore', [overlayContent]);
       }
+
+      $("body, html").css("overflow-y", "auto");
       overlayContent.html('');
       overlay.fadeOut(100);
       overlayContent.fadeOut(50);
@@ -260,11 +263,15 @@ function Admin (router, templating, translator)
   };
 
   this.initActions = function() {
-    $(document).on('click', '[data-action]' , function(event) {
+    $(document).on('click', '[data-action=""]' , function(event) {
       event.stopPropagation();
       event.preventDefault();
       var route = $(this).data('action-route');
-      var link = router.generate(route);
+      var parameters = $(this).data('action-route-parameters');
+      if(!parameters) {
+        parameters = {};
+      }
+      var link = router.generate(route, parameters);
       self.ajaxOverlay(link);
     });
   };

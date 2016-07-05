@@ -42,9 +42,14 @@ class WorkflowStatusType extends AbstractType
             $form = $event->getForm();
             $data = $event->getData();
 
-            $workflow = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findOneBy(array(
-                'entity' => $type,
-            ));
+            $workflows = $this->manager->getRepository('EnhavoWorkflowBundle:Workflow')->findAll();
+            foreach ($workflows as $wf) {
+                $wfEntities = $wf->getEntity();
+                if(in_array($type, $wfEntities)){
+                    $workflow = $wf;
+                    break;
+                }
+            }
             if($workflow != null) {
                 if ($workflow->getActive() == true)
                 {

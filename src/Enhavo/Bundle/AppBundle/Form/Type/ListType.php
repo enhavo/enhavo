@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
@@ -67,6 +68,7 @@ class ListType extends AbstractType
         }
 
         $view->vars['index'] = $lastIndex+1;
+        $view->vars['prototype_name'] = $options['prototype_name'];
     }
 
     public function getName()
@@ -95,5 +97,9 @@ class ListType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true
         ));
+
+        $resolver->setNormalizer('prototype_name', function(Options $options, $value) {
+            return '__' . $options['type'] . '__';
+        });
     }
 } 

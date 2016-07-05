@@ -19,6 +19,7 @@ page:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
+    assigned: 'zugeordnet'
   batch:
     action:
       publish: 'Veröffentlichen'

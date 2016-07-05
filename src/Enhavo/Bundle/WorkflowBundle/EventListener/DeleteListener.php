@@ -61,38 +61,42 @@ class DeleteListener
         //find the current entity repository
         $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
         $currentEntityRepository = null;
-        foreach($possibleWFEntities as $possibleEntity){
-            if($possibleEntity['class'] == $workflow->getEntity()) {
-                $currentEntityRepository = $possibleEntity['repository'];
-                break;
-            }
-        }
         $repository = null;
-        if(strpos($currentEntityRepository, ':')){
-            $repository = $this->em->getRepository($currentEntityRepository);
-        } else {
-            $repository = $this->container->get($currentEntityRepository);
-        }
+        if($workflow->getEntity() != null){
+            foreach($possibleWFEntities as $possibleEntity){
+                if($possibleEntity['class'] == $workflow->getEntity()) {
+                    $currentEntityRepository = $possibleEntity['repository'];
+                    break;
+                }
+            }
 
-        //get workflow-status which belongs to the current workflow
-        $allWorkflowStatus = $this->em->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
-        foreach($allWorkflowStatus as $workflowStatus) {
-            foreach($nodes as $node) {
-                if($workflowStatus->getNode() == $node){
-                    //get types with workflow-status
+            if(strpos($currentEntityRepository, ':')){
+                $repository = $this->em->getRepository($currentEntityRepository);
+            } else {
+                $repository = $this->container->get($currentEntityRepository);
+            }
 
-                    $currentObject = $repository->findOneBy(array(
-                        'workflow_status' => $workflowStatus
-                    ));
-                    if($currentObject != null) {
-                        //set workflow-status null in types
-                        $currentObject->setWorkflowStatus(null);
+            //get workflow-status which belongs to the current workflow
+            $allWorkflowStatus = $this->em->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
+            foreach($allWorkflowStatus as $workflowStatus) {
+                foreach($nodes as $node) {
+                    if($workflowStatus->getNode() == $node){
+                        //get types with workflow-status
+
+                        $currentObject = $repository->findOneBy(array(
+                            'workflow_status' => $workflowStatus
+                        ));
+                        if($currentObject != null) {
+                            //set workflow-status null in types
+                            $currentObject->setWorkflowStatus(null);
+                        }
+                        //remove workflow-status
+                        $this->em->remove($workflowStatus);
                     }
-                    //remove workflow-status
-                    $this->em->remove($workflowStatus);
                 }
             }
         }
+
         //remove these nodes
         foreach($nodes as $node) {
             $this->em->remove($node);

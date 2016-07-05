@@ -19,6 +19,7 @@ page:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
+    assigned: 'assigned'
   batch:
     action:
       publish: 'Publish'

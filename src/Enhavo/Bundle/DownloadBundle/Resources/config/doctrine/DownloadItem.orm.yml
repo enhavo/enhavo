@@ -16,10 +16,13 @@ Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
 
     manyToOne:
         download:
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\DownloadBundle\Model\DownloadInterface
 
+    oneToOne:
         file:
-            cascade: ['persist', 'refresh']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
 
     lifecycleCallbacks: {  }

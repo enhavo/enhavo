@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SliderType extends AbstractType implements SliderInterface
+class SliderType extends AbstractType
 {
     protected $class;
 

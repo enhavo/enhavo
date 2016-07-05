@@ -1,0 +1,13 @@
+{% extends 'EnhavoAppBundle:Button:default.html.twig' %}
+
+{% block button_attributes %}
+    {% if route %}
+        data-route="{{ route }}"
+    {% endif %}
+    {% if routeParameters %}
+        data-route-parameters="{{ routeParameters|json_encode }}"
+    {% endif %}
+    {% if id %}
+        data-id="{{ id }}"
+    {% endif %}
+{% endblock %}

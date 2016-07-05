@@ -1,4 +1,4 @@
-<form action="{{ path('enhavo_contact_submit', { type: type }) }}" id="contact_form">
+<form action="{{ path('enhavo_contact_submit', { type: type }) }}" method="post" id="contact_form">
     {{ form_row(form.email) }}
     {{ form_row(form.message) }}
     {{ form_row(form._token) }}

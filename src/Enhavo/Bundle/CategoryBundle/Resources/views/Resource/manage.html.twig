@@ -9,8 +9,8 @@
             </div>
 
             <div class="row pl2em">
-                <button class="btn col-md-2 close"><i class="fa fa-remove"></i> {{ 'label.cancel'|trans("EnhavoAppBundle") }}</button>
-                <button class="btn col-md-2 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans('EnhavoAppBundle') }}</button>
+                <button class="btn col-md-2 close"><i class="fa fa-remove"></i> {{ 'label.cancel'|trans({}, 'EnhavoAppBundle')|nl2br }}</button>
+                <button class="btn col-md-2 save" type="button"><i class="fa fa-check"></i> {{ 'label.save'|trans({}, 'EnhavoAppBundle')|nl2br }}</button>
             </div>
         </form>
     {% endblock %}

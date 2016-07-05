@@ -31,9 +31,15 @@ class WorkflowRepository extends EntityRepository
         } else {
             $resourcePath = $resource;
         }
-        $workflow = $this->findOneBy(array(
-            'entity' => $resourcePath,
-        ));
+        $workflow = null;
+        $workflows = $this->findAll();
+        foreach ($workflows as $wf) {
+            $wfEntities = $wf->getEntity();
+            if(in_array($resourcePath, $wfEntities)){
+                $workflow = $wf;
+                break;
+            }
+        }
 
         if($workflow != null){
             if($workflow->getActive()){

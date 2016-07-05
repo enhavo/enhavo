@@ -41,6 +41,8 @@ confirm:
       reset: Zurücksetzen
 role:
   label:
+    ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX: 'Dashboard sehen'
+
     ROLE_ENHAVO_USER_USER_INDEX: 'Benutzer sehen'
     ROLE_ENHAVO_USER_USER_UPDATE: 'Benutzer bearbeiten'
     ROLE_ENHAVO_USER_USER_CREATE: 'Benutzer erstellen'
@@ -80,6 +82,7 @@ role:
     ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE: 'Newsletter bearebeiten'
     ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE: 'Newsletter erstellen'
     ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE: 'Newsletter löschen'
+    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND: 'Newsletter verschicken'
 
     ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX: 'Workflow sehen'
     ROLE_ENHAVO_WORKFLOW_WORKFLOW_UPDATE: 'Workflow bearebeiten'

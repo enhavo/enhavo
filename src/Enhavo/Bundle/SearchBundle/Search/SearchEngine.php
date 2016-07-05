@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\SearchBundle\Search;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
-use Enhavo\Bundle\SearchBundle\Search\SearchResult;
 
 class SearchEngine implements SearchEngineInterface
 {
@@ -26,14 +25,14 @@ class SearchEngine implements SearchEngineInterface
      * @param $query
      * @return array
      */
-    public function search($query, $filters = [])
+    public function search($query, $filters = [], $types = null, $fields = null)
     {
         $request = new SearchRequest($this->container, $this->em, $this->util);
 
         $request->parseSearchExpression($query);
 
         if (!$request->hasToManyExpressions()) {
-            $results = $request->search();
+            $results = $request->search($types, $fields);
             $words = $request->getWords();
             $resultResources = array();
             foreach ($results as $result) {

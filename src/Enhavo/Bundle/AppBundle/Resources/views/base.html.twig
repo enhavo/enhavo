@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/jquery_ui/jquery-ui.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/icheck/icheck-esperanto.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/select2/select2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/fengyuanchen_cropper/cropper.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/base.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/theme.css') }}">
@@ -41,6 +42,7 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/tinymce/jquery.tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoassets/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/fengyuanchen_cropper/cropper.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
@@ -55,6 +57,7 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/plugin.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/bootstrap.js') }}"></script>
 
+    <script type="text/javascript" src="{{ asset('bundles/enhavomedia/js/ImageCropper.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavomedia/js/UploadForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavogrid/js/ContentForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavonewsletter/js/NewsletterForm.js') }}"></script>
@@ -95,21 +98,23 @@
         {% include 'EnhavoAppBundle:Dialog:alert.html.twig' %}
     </div>
     <div class="clearfix">
-        <div class="menu-section">
-            <nav id="user-menu">
-                <ul class="clearfix" data-user-menu>
-                    <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle') }}</button></li>
-                    <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle') }}</a></li>
-                    <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
-                        <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle') }}</a>
-                    </li>
-                    <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
-                </ul>
-            </nav>
-            <a class="responsive-menu-btn" data-mobile-menu></a>
-            <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
+        <div id="page" class="clearfix">
+            <div class="menu-section">
+                <nav id="user-menu">
+                    <ul class="clearfix" data-user-menu>
+                        <li class="menu-btn"><button class="btn dropdown" data-open-usermenu>{{ 'label.greeting'|trans({username: app.user.username}, 'EnhavoAppBundle')|nl2br }}</button></li>
+                        <li data-usermenu-link><a href="/" target="_blank">{{ 'label.goToPage'|trans({}, 'EnhavoAppBundle')|nl2br }}</a></li>
+                        <li data-usermenu-link data-action data-action-type="overlay" data-action-route="enhavo_user_user_password">
+                            <a href="javascript:return false;">{{ 'label.changePassword'|trans({}, 'EnhavoAppBundle')|nl2br }}</a>
+                        </li>
+                        <li data-usermenu-link><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+                    </ul>
+                </nav>
+                <a class="responsive-menu-btn" data-mobile-menu></a>
+                <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
+            </div>
+            <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>
         </div>
-        <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>
     </div>
 {% endblock %}
 </body>

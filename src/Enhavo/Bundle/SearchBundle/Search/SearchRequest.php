@@ -76,6 +76,9 @@ class SearchRequest {
     protected $em;
 
     protected $util;
+    protected $phrase = false;
+    protected $phrases = array();
+    protected $wordsWithoutPhrases = array();
 
     public function __construct(Container $container, EntityManager $em, SearchUtil $util)
     {
@@ -84,12 +87,12 @@ class SearchRequest {
         $this->util = $util;
     }
 
-    public function search()
+    public function search($types, $fields)
     {
         //get the search results (language, type, id, calculated_score)
         $results = $this->em
             ->getRepository('EnhavoSearchBundle:Index')
-            ->getSearchResults($this->conditions, $this->matches, $this->simple);
+            ->getSearchResults($this->conditions, $this->matches, $this->simple, $types, $fields);
 
         //prepare data with found results -> get Index from id -> get Dataset from Index
         $data = array();
@@ -164,6 +167,9 @@ class SearchRequest {
                 $match[2] = substr($match[2], 1, -1);
                 $phrase = true;
                 $this->simple = false;
+                $this->phrase = true;
+                $currentPhrase = $this->util->searchSimplify($match[2]);
+                $this->phrases[] = trim($currentPhrase, '"');
             }
 
             //Symplify match
@@ -226,6 +232,9 @@ class SearchRequest {
                 $hasNewScores = false;
                 $queryOr = array();
                 foreach ($key as $or) {
+                    if(!in_array($or, $this->phrases)){
+                        $this->wordsWithoutPhrases[] = $or;
+                    }
                     list($numNewScores) = $this->parseWord($or);
                     $hasNewScores |= $numNewScores;
                     $queryOr[] = $or;
@@ -237,6 +246,9 @@ class SearchRequest {
                 }
             } else { // Single ANDed term.
                 $hasAnd = true;
+                if(!in_array($key, $this->phrases)){
+                    $this->wordsWithoutPhrases[] = $key;
+                }
                 list($numNewScores, $numValidWords) = $this->parseWord($key);
                 $this->conditions['AND'][] = $key;
                 if (!$numValidWords) {
@@ -289,8 +301,16 @@ class SearchRequest {
         return $this->toManyExpressions;
     }
 
+
     public function getWords()
     {
-        return $this->words;
+        $wordsResultArray = [];
+        $wordsResultArray[] = $this->searchExpression;
+        if($this->phrase == true){
+            $wordsResultArray = array_merge($wordsResultArray, $this->phrases, $this->wordsWithoutPhrases);
+            return $wordsResultArray;
+        }
+        $wordsResultArray = array_merge($wordsResultArray, $this->words);
+        return $wordsResultArray;
     }
 }

@@ -2,7 +2,7 @@
 
 <div class="row head-row {% if batches %}has-batch-actions{% endif %}">
     {% for column in columns %}
-        <div class="col-xs-{{ table_widget_width(column.type, column) }}">{{ table_widget_label(column.type, column) }}</div>
+        <div class="col-xs-{{ table_widget_width(column.type, column) }}">{{ table_widget_label(column.type, column)|nl2br }}</div>
     {% endfor %}
 </div>
 
@@ -27,7 +27,7 @@
             </div>
         {% else %}
             <div class="no-data">
-                {{ 'table.empty'|trans({},'EnhavoAppBundle') }}
+                {{ 'table.empty'|trans({},'EnhavoAppBundle')|nl2br }}
             </div>
         {% endfor %}
     </div>

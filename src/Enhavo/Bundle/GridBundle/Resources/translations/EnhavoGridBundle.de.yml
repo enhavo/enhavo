@@ -14,6 +14,7 @@ textText:
       2_1: '2:1'
   label:
     textText: 'Text | Text'
+    text: 'Text'
 textPicture:
   form:
     label:
@@ -39,6 +40,7 @@ picturePicture:
       frame: 'Rahmen für Bild'
   label:
       picturePicture: 'Bild | Bild'
+      caption: 'Bild Titel'
 gallery:
   form:
     label:
@@ -57,6 +59,7 @@ download:
 
 video:
   label:
+    title: 'Titel'
     video: 'Video'
   form:
     label:

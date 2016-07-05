@@ -14,23 +14,27 @@ class SearchController extends Controller
     {
         //set the current entry to searchEspression
         $searchExpression = $request->get('search');
+        $searchTypes = $request->get('entities');
+        $searchFields = $request->get('fields');
 
         // check if there are any keywords entered
         if(!empty($searchExpression)) {
 
             try {
-                $searchEngine = $this->get('enhavo_search_search_engine');
+                $engine = $this->container->getParameter('enhavo_search.search.search_engine');
+                $searchEngine = $this->get($engine);
                 $filter = new PermissionFilter($this->container);
-                $result = $searchEngine->search($searchExpression, array($filter));
+                $result = $searchEngine->search($searchExpression, array($filter), $searchTypes, $searchFields);
                 if(empty($result)) {
                     return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                         'data' => 'No results'
                     ));
                 }
                 $resourcesBefore = $result->getResources();
+                $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
                 foreach ($resourcesBefore as $resource) {
-                    $resourcesAfter[] = $this->get('enhavo_search_search_util')->highlightText($resource, $result->getWords());
+                    $resourcesAfter[] = $this->get('enhavo_search_highlight')->highlight($resource, $result->getWords());
                 }
                 $result->setResources($resourcesAfter);
                 return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
@@ -48,6 +52,4 @@ class SearchController extends Controller
             ));
         }
     }
-
-
 }

@@ -34,25 +34,33 @@ class WorkflowSaveListener {
             $workflow = $event->getSubject();
 
             //get the repository for the changed workflow
-            $repository = $this->getEntityRepository($workflow);
+            $repositories = $this->getEntityRepository($workflow);
 
-            //get all entries with workflow-status null
-            $resources = $repository->getEmptyWorkflowStatus();
+            if($repositories != null){
+                //get all entries with workflow-status null
+                $resources = array();
+                foreach($repositories as $repository){
+                    $currentResourcesEmpty = $repository->getEmptyWorkflowStatus();
+                    $this->removeOldWorkflowStatus($repository, $workflow);
+                    $resources = array_merge($currentResourcesEmpty,$resources);
+                }
 
-            //check if there are some entries with workflow-status null
-            if($resources != null) {
-                //set a workflow-status if the current workflow is active
-                if($workflow->getActive()){
-                    $this->setWorkflowStatus($workflow, $resources);
+                //check if there are some entries with workflow-status null
+                if($resources != null) {
+                    //set a workflow-status if the current workflow is active
+                    if($workflow->getActive()){
+                        $this->setWorkflowStatus($workflow, $resources);
+                    }
                 }
             }
-            $this->writeNodes($workflow, $repository);
+
+            $this->writeNodes($workflow, $repositories);
 
             $this->em->flush();
         }
     }
 
-    protected function writeNodes($workflow, $repository)
+    protected function writeNodes($workflow, $repositories)
     {
         //write displayed FormNodes into the real nodes
         $formNodes = $workflow->getFormNodes();
@@ -71,7 +79,7 @@ class WorkflowSaveListener {
         $allWFS = $this->em->getRepository('EnhavoWorkflowBundle:WorkflowStatus')->findAll();
 
         //remove nodes (if some nodes have been removed from formNodes)
-        foreach($realNodes as $realNode){
+         foreach($realNodes as $realNode){
             if(!in_array($realNode,$formNodes) && !$realNode->getStart()){
                 $workflow->removeNode($realNode);
                 foreach($transitions as $transition){
@@ -82,11 +90,17 @@ class WorkflowSaveListener {
                 //check if the removed node had a wfs
                 foreach($allWFS as $wfs){
                     if($wfs->getNode() == $realNode){
-                        $currentResource = $repository->findOneBy(array(
-                            'workflow_status' => $wfs
-                        ));
-                        $currentResource->setWorkflowStatus(null);
-                        $this->em->remove($wfs);
+                        foreach($repositories as $repository){
+                            $currentResource = $repository->findOneBy(array(
+                                'workflow_status' => $wfs
+                            ));
+                            if($currentResource != null){
+                                $currentResource->setWorkflowStatus(null);
+                                $this->em->remove($wfs);
+                                break;
+                            }
+                        }
+
                     }
                 }
                 $this->em->remove($realNode);
@@ -142,21 +156,45 @@ class WorkflowSaveListener {
 
     protected function getEntityRepository($workflow)
     {
+        if($workflow->getEntity() == null){
+            return null;
+        }
         $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
-        $currentRepository = null;
+        $currentRepositories = array();
         foreach($possibleWFEntities as $possibleEntity) {
-            if($possibleEntity['class'] == $workflow->getEntity()){
-                $currentRepository = $possibleEntity['repository'];
-                break;
+            foreach($workflow->getEntity() as $workflowEntity){
+                if($possibleEntity['class'] == $workflowEntity){
+                    $currentRepositories[] = $possibleEntity['repository'];
+                }
             }
         }
-        $repository = null;
-        if(strpos($currentRepository, ':')){
-            $repository = $this->em->getRepository($currentRepository);
-        } else {
-            $repository = $this->container->get($currentRepository);
 
+        $repository = array();
+        foreach($currentRepositories as $currentRepository){
+            if(strpos($currentRepository, ':')){
+                $repository[] = $this->em->getRepository($currentRepository);
+            } else {
+                $repository[] = $this->container->get($currentRepository);
+            }
         }
         return $repository;
+    }
+
+    protected function removeOldWorkflowStatus($repository, $newWorkflow){
+        $resources = $repository->findAll();
+        foreach ($resources as $resource) {
+            $currentWFS = $resource->getWorkflowStatus();
+            if($currentWFS != null){
+                //check if workflow status is old
+                $node = $currentWFS->getNode();
+                $oldWorkflow = $node->getWorkflow();
+                if($newWorkflow->getId() != $oldWorkflow->getId()){
+                    //this workflow status is from an old workflow --> renew it
+                    //check if it is public or not and set workflow status
+                    $this->setWorkflowStatus($newWorkflow, array($resource));
+                    $this->em->persist($resource);
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-{% extends 'form_div_layout.html.twig' %}
+{% extends '@EnhavoApp/Form/form_div_layout_multiline_translations.html.twig' %}
 
 {% block enhavo_datetime_widget -%}
     <div class="input-container">
@@ -54,7 +54,7 @@
     </div>
 {% endblock %}
 
-{% block wysiwyg_widget %}
+{% block enhavo_wysiwyg_widget %}
     <div class="wysiwyg-container">
         <textarea data-wysiwyg data-config="{{ config|e }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
     </div>
@@ -69,6 +69,7 @@
     <ul id="list-fields"
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
         data-prototype="{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}"
+        data-prototype-name="{{ prototype_name }}"
         class="enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
@@ -93,7 +94,7 @@
     <div class="row mb1">
         <div class="col-md-9">
             <div class="button col-md-1 btnsmall add-another">
-                <i class="fa fa-plus"></i>
+                <i class="icon-circle-with-plus"></i>
             </div>
         </div>
     </div>
@@ -105,7 +106,7 @@
             <div class="button-container mb1">
                 <div class="button button-up"><i class="fa fa-angle-up"></i></div>
                 <div class="button button-down"><i class="fa fa-angle-down"></i></div>
-                <div class="label">{% if block_name %}{{ block_name }}{% else %}{{ name }}{% endif %}</div>
+                <div class="label">{% if block_name %}{{ block_name|nl2br }}{% else %}{{ name|nl2br }}{% endif %}</div>
             </div>
         {% endif %}
 
@@ -130,10 +131,10 @@
 
 {% block enhavo_workflow_status_widget %}
     <br>
-    {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle') }}: {{ form.vars['workflow_status'] }}
+    {{ 'workflow.label.currentWFS'|trans({}, 'EnhavoWorkflowBundle')|nl2br }}: {{ form.vars['workflow_status'] }}
     <br>
     {% if form.vars['no_transitions'] is defined %}
-        {{ form.vars['no_transitions'] }}
+        {{ form.vars['no_transitions']|nl2br }}
     {% endif %}
     <br>
     {{ form_widget(form) }}
@@ -143,7 +144,7 @@
 {% block enhavo_message_widget %}
     <div class="row mb1 form-message-box type-{{ type }}">
         <div class="col-md-12">
-            {{ message }}
+            {{ message|nl2br }}
         </div>
     </div>
 {% endblock %}
