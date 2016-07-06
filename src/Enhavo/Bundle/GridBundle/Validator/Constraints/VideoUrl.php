@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class VideoUrl extends Constraint
 {
-    public $notValidMessage = 'Please choose a youtube or vimeo video!';
+    public $message = 'Please choose a youtube or vimeo video!';
 
     public function validatedBy()
     {

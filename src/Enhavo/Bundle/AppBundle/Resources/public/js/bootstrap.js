@@ -12,5 +12,5 @@ $(function() {
   form = new Form(Routing, templating, admin, Translator);
   newsletter = new Newsletter(Routing, Translator, admin);
   search = new SearchForm(Routing, admin);
-  button = new Button(admin, Routing, Translator);
+  button = new Button(admin, form, Routing, Translator);
 });

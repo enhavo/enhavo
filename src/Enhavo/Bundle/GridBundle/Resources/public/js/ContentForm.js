@@ -2,7 +2,7 @@
  * Created by gseidel on 30/08/14.
  */
 
-function GridForm(router)
+function GridForm(router, formScript)
 {
   var self = this;
 
@@ -13,7 +13,7 @@ function GridForm(router)
       var menu = $(this).find('.menu');
       var container = $(this).find('.item-container');
       var addButton = null;
-      var index = container.children().length;
+      var placeholderIndex = 0;
 
       var addItem = function(type) {
 
@@ -21,8 +21,9 @@ function GridForm(router)
           type: type
         });
 
-        var formName = addButton.attr('data-name') + '[items]['+index+']';
-        index++;
+        var placeholder = '__grid_name' + placeholderIndex + '__';
+        var formName = addButton.attr('data-name') + '[items][' + placeholder + ']';
+        placeholderIndex++;
 
         admin.openLoadingOverlay();
         $.ajax({
@@ -35,6 +36,9 @@ function GridForm(router)
             admin.closeLoadingOverlay();
             var position = addButton.attr('data-position');
             data = $.parseHTML(data);
+            $(data).find('[name]').each(function() {
+              $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+            });
 
             if(position == 'top') {
               gridForm.find('.item-container').prepend(data);
@@ -46,6 +50,7 @@ function GridForm(router)
             $(document).trigger('gridAddAfter', [data]);
 
             setOrderForContainer(container);
+            formScript.reindex();
           },
           error: function() {
             admin.closeLoadingOverlay();
@@ -60,7 +65,12 @@ function GridForm(router)
       };
 
       var init = function() {
+        if (typeof container.attr('data-reindexable') != 'undefined') {
+          // Save initial index
+          container.data('initial-list-index', container.children().length);
+        }
         setOrderForContainer(container);
+        formScript.reindex();
       };
 
       gridForm.on('click', '.add-grid-button', function() {
@@ -123,6 +133,7 @@ function GridForm(router)
         }
 
         setOrderForContainer(container);
+        formScript.reindex();
       });
 
       gridForm.on('click', '.button-down', function() {
@@ -142,7 +153,8 @@ function GridForm(router)
           }
         }
 
-        setOrderForContainer(container)
+        setOrderForContainer(container);
+        formScript.reindex();
       });
 
       gridForm.on('click', '.button-delete', function() {
@@ -150,6 +162,7 @@ function GridForm(router)
         var container = item.parent();
         item.remove();
         setOrderForContainer(container);
+        formScript.reindex();
       });
 
       init();
@@ -165,14 +178,16 @@ function GridForm(router)
   init();
 }
 
-var gridForm = new GridForm(Routing);
+var gridForm = null;
 
 $(function() {
+  gridForm = new GridForm(Routing, form);
   $(document).on('gridAddAfter', function(event, data) {
     uploadForm.initUploadForm(data);
     form.initWysiwyg(data);
     form.initRadioAndCheckbox(data);
     form.initSelect(data);
     form.initDataPicker(data);
+    form.initList(data);
   });
 });
