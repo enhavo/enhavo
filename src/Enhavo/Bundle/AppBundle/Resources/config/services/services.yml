@@ -76,4 +76,5 @@ services:
         arguments:
           - @router
           - %sylius.resources%
+          - %enhavo_app.route.url_resolver%
 
