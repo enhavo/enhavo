@@ -6,3 +6,29 @@ services:
         class: %enhavo_content.form.type.content.class%
         tags:
             - { name: form.type }
+
+    enhavo_content.sitemap_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - 'SitemapCollector'
+
+    enhavo_content.sitemap.generator:
+        class: Enhavo\Bundle\ContentBundle\Sitemap\SitemapGenerator
+        arguments:
+            - %enhavo_content.sitemap.collectors%
+            - @enhavo_content.sitemap_collector
+
+    enhavo_content.sitemap_collector.repository:
+        class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\RepositoryCollector
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.sitemap_collector }
+
+    enhavo_content.sitemap_collector.publish:
+        class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\PublishCollector
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.sitemap_collector }
+
