@@ -1,0 +1,31 @@
+<div class="row enhavo_grid">
+    <div class="enhavo_grid_textpicture">
+        {% if data.textLeft == 0 %}
+            <div class="col-sm-6 right6 npam-responsive npam">
+                {% if data.file %}
+                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
+                {% endif %}
+            </div>
+            <div class="col-sm-6 left6">
+                <div class="enhavo_grid_text">
+                    {% if data.text %}
+                        {{ data.text|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-sm-6 left6">
+                <div class="enhavo_grid_text">
+                    {% if data.text %}
+                        {{ data.text|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-6 right6 npam-responsive npam">
+                {% if data.file %}
+                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

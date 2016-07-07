@@ -1,0 +1,123 @@
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta charset="utf-8" />
+    <title>{% block pageTitle %}Enhavo Demo{% endblock %}</title>
+    <meta name="description" content="{% block metadescription %}{% endblock %}" />
+    <meta name="og:url" content="{{ app.request.uri }}" />
+    <meta name="og:title" content="{% block ogtitle %}{% endblock %}" />
+    <meta name="og:description" content="{% block ogdescription %}{% endblock %}" />
+    <meta name="og:image" content="{% block ogimage %}/img/logo-share.jpg{% endblock %}" />
+
+    <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/alegreyaSansWebfont.css">
+    <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/enhavo_iconfont.css">
+    <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/style.css?20151217">
+    <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/slick.css">
+
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/ico">
+    <link rel="apple-touch-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon.ico">
+
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+<div id="ipad-overlay">
+    <div class="ipad-view">
+        <div class="close-btn" data-close-tabletview><i class="icon-cross"></i></div>
+        <iframe src="http://demo-enhavo.dev/index-ipad" class="ipad-container" id="tablet" frameborder="0"></iframe>
+    </div>
+</div>
+<header>
+    {% block header %}
+        <div id="hero">
+            <ul class="slider">
+                {% for slide in slides %}
+                    {% if slide.image %}
+                        <li class="slider-img" style="background-image:url({{ media_url(slide.image) }}); background-size:cover; background-attachment: fixed;">
+                            <span class="hero-caption" href="">
+                                <p class="slide-text capitals">{{ slide.text|raw }}</p>
+                                <h1 class="slide-title">{{ slide.title }}</h1>
+                            </span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="container npam">
+                <div id="secondary">
+                    <div class="logo"></div>
+                    <ul class="socialmedia">
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-pinterest"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav class="clearfix">
+            <a class="menu-btn" href="" data-open-menu>
+                <img src="/bundles/enhavotheme/img/menu-btn.svg" alt=""/>
+            </a>
+            <ul data-menu-items>
+                {% for page in pages %}
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/downloads">Downloads</a></li>
+                    <li><a href="{% if page.route %}{{ path(page.route.name) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    {% endblock %}
+</header>
+<main>
+    {% block main %}{% endblock %}
+</main>
+<footer>
+    <div class="row npam">
+        <div class="col-sm-4 approach">
+            <h4>Contact &amp; Approach</h4>
+            <ul>
+                <li>ACME GmbH</li>
+                <li>Liebigstraße 15</li>
+                <li>82256 Fürstenfeldbruck</li>
+                <li><span>P</span>0176 313 998 27</li>
+                <li><span>E</span><a href="mailto:">info@livemag.de</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-4 about">
+            <h4>About us</h4>
+            <p>This is Enhavo's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit.</p>
+        </div>
+        <div class="col-sm-4 socialmedia">
+            <h4>Socialmedia</h4>
+            <ul class="social-icons">
+                <li><a href=""><span class="hover-square"></span><i class="icon-facebook"></i></a></li>
+                <li><a href=""><span class="hover-square"></span><i class="icon-twitter"></i></a></li>
+                <li><a href=""><span class="hover-square"></span><i class="icon-pinterest"></i></a></li>
+                <li><a href=""><span class="hover-square"></span><i class="icon-digg"></i></a></li>
+                <li><a href=""><span class="hover-square"></span><i class="icon-youtube"></i></a></li>
+                <li><a href=""><span class="hover-square"></span><i class="icon-google"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <p>Copyright 2016 xqweb Ug</p>
+        <div class="links">
+            <a href="">Impressum</a>
+            <a href="">AGB</a>
+        </div>
+    </div>
+</footer>
+
+<script src="//maps.googleapis.com/maps/api/js" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/jquery.waypoints.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/slick.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/class/Base.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavotheme/js/main.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/bundles/enhavocontact/js/ContactForm.js') }}" type="text/javascript"></script>
+
+</body>
+</html>

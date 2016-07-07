@@ -1,4 +1,11 @@
 #
+# theme
+#
+enhavo_theme:
+    resource: "@EnhavoThemeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#
 # enhavo
 #
 enhavo_contact:

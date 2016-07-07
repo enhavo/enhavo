@@ -1,0 +1,33 @@
+{% block sidebar %}
+<aside class="clearfix">
+    <div class="search-widget">
+        <div class="input">
+            <input type="text" placeholder="Artikel suchen"/>
+            <a class="submit-input" href="#">
+                <i class="icon-search"></i>
+            </a>
+        </div>
+    </div>
+    <div class="category-widget">
+        <h3>Categories</h3>
+        <ul class="columns">
+        {% for category in categories %}
+            <li><a href="{{ path('project_default_category', {slug: category.slug}) }}">{{ category }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="newsletter-widget">
+        <h3>Newsletter</h3>
+        <p>
+            Get the latest news <br/>
+            and sign up to our newsletter
+        </p>
+        <div class="input">
+            <input type="text" placeholder="email address"/>
+            <a class="submit-input" href="#">
+                <i class="icon-add-user"></i>
+            </a>
+        </div>
+    </div>
+</aside>
+{% endblock %}

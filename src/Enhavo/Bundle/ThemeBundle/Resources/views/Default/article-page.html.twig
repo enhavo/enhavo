@@ -1,0 +1,77 @@
+{% extends 'EnhavoThemeBundle::base.html.twig' %}
+{% block bodyclass %}light{% endblock %}
+{% block main %}
+<div class="clearfix page-wrap">
+    <section>
+        <div class="articles">
+            <a class="back-btn" href="/"><i class="icon-arrow-long-left"></i></a>
+            <div class="container npam">
+                <article class="single">
+                    <p class="date">27 01 16</p>
+                    <h2>Artikel Überschrift</h2>
+                    <p class="capitals spacing category">Kategorie</p>
+                    <p class="article-content">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section id="categories" class="clearfix related">
+        <div class="container">
+            <h3>Weitere Artikel aus dieser Kategorie</h3>
+        </div>
+        <div class="container npam">
+            <div class="row npam">
+                <div class="col-md-4 col-sm-6 col-xs-12 npam category">
+                    <a href="#">
+                        <span class="cat-image">
+                            <span class="over">
+                                <p class="capitals cat-name">Titel</p>
+                            </span>
+                            <img src="/bundles/enhavotheme/img/cat-img-01.jpg" alt=""/>
+                        </span>
+                        <span class="text-bottom">
+                            <p class="article-name">Titel</p>
+                            <p class="article-date">27 06 16</p>
+                            <p class="article-excerpt">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor ae erat ctonsequat auctor eu in elit. Class aptent taciti sociosqu ad litora tormassa nisl quis neque. <span class="readmore-link capitals" href="">...Mehr</span></p>
+                        </span>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 npam category">
+                    <a href="">
+                        <span class="cat-image">
+                            <span class="over">
+                                <p class="capitals cat-name">Titel</p>
+                            </span>
+                            <img src="/bundles/enhavotheme/img/cat-img-02.jpg" alt=""/>
+                        </span>
+                        <span class="text-bottom">
+                            <p class="article-name">Titel</p>
+                            <p class="article-date">27 06 16</p>
+                            <p class="article-excerpt">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor ae erat ctonsequat auctor eu in elit. Class aptent taciti sociosqu ad litora tormassa nisl quis neque. <span class="readmore-link capitals" href="">...Mehr</span></p>
+                        </span>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-12 npam category">
+                    <a href="">
+                        <span class="cat-image">
+                            <span class="over">
+                                <p class="capitals cat-name">Titel</p>
+                            </span>
+                            <img src="/bundles/enhavotheme/img/cat-img-03.jpg" alt=""/>
+                        </span>
+                        <span class="text-bottom">
+                            <p class="article-name">Titel</p>
+                            <p class="article-date">27 06 16</p>
+                            <p class="article-excerpt">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor ae erat ctonsequat auctor eu in elit. Class aptent taciti sociosqu ad litora tormassa nisl quis neque. <span class="readmore-link capitals" href="">...Mehr</span></p>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'EnhavoThemeBundle:Default:sidebar.html.twig' %}
+</div>
+{% endblock %}
