@@ -1,0 +1,43 @@
+// Dimensions
+$containerWidth:100%;
+$columnSpacing:75px;
+$smallerColumnSpacing:40px;
+
+// Font
+$regularFontFamily: 'alegreya_sansregular', sans-serif;
+$lightFontFamily: 'alegreya_sanslight', sans-serif;
+$lightItalicFontFamily: 'alegreya_sanslight_italic', sans-serif;
+$mediumFontFamily: 'alegreya_sansmedium', sans-serif;
+$blackFontFamily: 'alegreya_sansblack', sans-serif;
+$capitalFontBold: 'alegreya_sans_scbold', sans-serif;
+$capitalFontLightItalic: 'alegreya_sans_sclight_italic', sans-serif;
+
+$defaultFontSize: 18px;
+$smallFontSize: 14px;
+$biggerFontSize: 28px;
+$bigFontSize: 20px;
+$firstHeadingFontSize: 95px;
+$secondHeadingFontSize: 50px;
+$thirdHeadingFontSize: 36px;
+$bigLineHeight: 1.45em;
+$defaultLineHeight: 1.35;
+$lines-to-show: 3;
+$less-lines-to-show: 2;
+$smallLineHeight: 1.15em;
+$defaultLetterSpacing: 2px;
+$smallLetterSpacing: 1px;
+
+// Colors
+  // greytones
+  $black: #1d1d1d;
+  $night: #363535;
+  $dark: #464646;
+  $medium: #636363;
+  $mediumlight: #7b7b7d;
+  $light: #e5e6e6;
+  $lighter: #f0f0f0;
+  $softwhite: #f8f8f8;
+  // fresh colors
+  $citrus: #ffec48;
+  $aubergine: #2a465b;
+  $blueberry: #5c91be;

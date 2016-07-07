@@ -1,0 +1,30 @@
+{% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
+
+{% block bodyclass %}light{% endblock %}
+
+{% block main %}
+    <div class="clearfix page-wrap">
+        <section id="downloads">
+            <div class="container npam-responsive">
+                <h2>Downloads</h2>
+                <ul class="download">
+                    {% for download in downloads %}
+                        <li>
+                            {%  if download.file %}
+                            <a href="{{ media_url(download.file)}}" class="clearfix" download>
+                            {% endif %}
+                            <span class="download-btn">
+                                <i class="icon-arrow-long-down hover"></i>
+                                <i class="icon-file-pdf"></i>
+                            </span>
+                            <p class="download-title capitals">{{ download.title }}</p>
+                            <span class="download-desc">{{ download.text|raw }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        {{ theme_box_render('sidebar') }}
+    </div>
+{% endblock %}

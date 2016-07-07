@@ -8,3 +8,10 @@ services:
             - @security.context
         tags:
             - { name: form.type }
+
+    enhavo_article_article.widget.article_category:
+        class: Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget }

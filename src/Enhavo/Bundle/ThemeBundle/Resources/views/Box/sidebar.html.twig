@@ -1,0 +1,9 @@
+<aside class="clearfix">
+    {% block top %}{% endblock %}
+    {% block widget %}
+        {% for widget in widgets %}
+            {{ theme_widget_render(widget.type, widget) }}
+        {% endfor %}
+    {% endblock %}
+    {% block bottom %}{% endblock %}
+</aside>

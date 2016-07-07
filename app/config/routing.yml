@@ -1,4 +1,19 @@
 #
+# theme
+#
+enhavo_theme_hompage:
+    resource: "@EnhavoThemeBundle/Resources/config/routing/homepage.yml"
+    prefix:   /
+
+enhavo_theme_download:
+    resource: "@EnhavoThemeBundle/Resources/config/routing/download.yml"
+    prefix:   /
+
+enhavo_theme_article:
+    resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
+    prefix:   /
+
+#
 # enhavo
 #
 enhavo_contact:
