@@ -1,8 +1,6 @@
 <form id="contact_form" method="post" action="{{ path('enhavo_contact_submit', { type: type }) }}" data-form-container>
     <div class="row npam">
         <div class="col-sm-6 npam">
-            {{ form_widget(form.lastName, {'attr': {'type': 'text','placeholder': 'Last name', 'name': 'name', 'id': 'name'}}) }}
-            {{ form_widget(form.firstName, {'attr': {'type': 'text','placeholder': 'First name', 'name': 'prename', 'id': 'prename'}}) }}
             {{ form_widget(form.email, {'attr': {'type': 'text','placeholder': 'email', 'name': 'email', 'id': 'email'}}) }}
         </div>
         <div class="col-sm-6 npam">

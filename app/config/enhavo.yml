@@ -171,7 +171,7 @@ enhavo_contact:
         model: Enhavo\Bundle\ContactBundle\Model\Contact
         form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
         template:
-            form: EnhavoContactBundle:Contact:render.html.twig
+            form: EnhavoThemeBundle:Theme:Contact/form.html.twig
             recipient: EnhavoContactBundle:Contact:recipient.html.twig
             sender: EnhavoContactBundle:Contact:sender.html.twig
         recipient: %contact_form_recipient%

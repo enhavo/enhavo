@@ -10,17 +10,17 @@
 
         <title>{% block pageTitle %}Enhavo Demo{% endblock %}</title>
 
-        <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/alegreyaSansWebfont.css">
-        <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/enhavo_iconfont.css">
-        <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/style.css?20151217">
-        <link rel="stylesheet" type="text/css" href="/bundles/enhavotheme/css/slick.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavotheme/css/alegreyaSansWebfont.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavotheme/css/enhavo_iconfont.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavotheme/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavotheme/css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavotheme/css/slick.css') }}">
 
-        <link rel="icon" href="favicon.ico" type="image/ico">
-        <link rel="shortcut icon" href="favicon.ico" type="image/ico">
-        <link rel="apple-touch-icon" href="favicon.ico">
-        <link rel="apple-touch-icon" sizes="72x72" href="favicon.ico">
-        <link rel="apple-touch-icon" sizes="114x114" href="favicon.ico">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
+        <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
     </head>
     <body class="{% block bodyclass %}{% endblock %}">
 
