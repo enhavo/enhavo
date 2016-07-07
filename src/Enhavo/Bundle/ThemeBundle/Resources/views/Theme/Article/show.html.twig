@@ -1,9 +1,7 @@
-{% block javascripts %}
-    <script type="text/javascript" src="{{ asset('bundles/xqwebproject/js/lib/enhavo.fullscreen.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/xqwebproject/js/lib/enhavo.slider.js') }}"></script>
-{% endblock %}
+{% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
+
 {% block bodyclass %}view{% endblock %}
-{% extends 'EnhavoThemeBundle::base.html.twig' %}
+
 {% block main %}
     <div class="container article-view">
         <section id="article">

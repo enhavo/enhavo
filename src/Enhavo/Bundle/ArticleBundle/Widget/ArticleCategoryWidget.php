@@ -1,27 +1,20 @@
 <?php
-namespace Enhavo\Bundle\ThemeBundle\Twig;
+/**
+ * ArticleCategoryWidget.php
+ *
+ * @since 07/07/16
+ * @author gseidel
+ */
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+namespace Enhavo\Bundle\ArticleBundle\Widget;
 
-class SidebarExtension extends \Twig_Extension
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+
+class ArticleCategoryWidget extends AbstractType implements WidgetInterface
 {
-    protected $container;
-    public function __construct(ContainerInterface $container)
+    public function render($options)
     {
-        $this->container = $container;
-    }
-
-
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('render_sidebar', array($this, 'renderSidebar'), array('is_safe' => array('html')))
-        );
-    }
-
-    public function renderSidebar()
-    {
-
         $templating = $this->container->get("templating");
         $articles = $this->container->get('enhavo_article.repository.article')->findAll();
 
@@ -43,14 +36,14 @@ class SidebarExtension extends \Twig_Extension
             }
         }
 
-        return $templating->render("EnhavoThemeBundle:Default:sidebar.html.twig", [
-            'categories'=>$setCategories,
-            'articles'=>$articles
+        return $templating->render('EnhavoArticleBundle:Widget:category.html.twig', [
+            'categories' => $setCategories,
+            'articles' => $articles
         ]);
     }
 
-    public function getName()
+    public function getType()
     {
-        return 'sidebar_extension';
+        return 'article_category';
     }
 }

@@ -22,3 +22,10 @@ services:
             - %enhavo_slider.model.slider.class%
         tags:
             - { name: form.type }
+
+    enhavo_slider_slider.widget.slider:
+        class: Enhavo\Bundle\SliderBundle\Widget\SliderWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget }

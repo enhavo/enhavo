@@ -1,8 +1,0 @@
-services:
-    sidebar.twig_extension:
-        class: Enhavo\Bundle\ThemeBundle\Twig\SidebarExtension
-        arguments:
-            - @service_container
-        public: false
-        tags:
-            - { name: twig.extension }

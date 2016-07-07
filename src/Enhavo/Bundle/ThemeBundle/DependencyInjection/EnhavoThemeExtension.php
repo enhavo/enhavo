@@ -22,7 +22,14 @@ class EnhavoThemeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $boxes = [];
+        if(isset($config['boxes'])) {
+            $boxes = $config['boxes'];
+        }
+        $container->setParameter('enhavo_theme.boxes', $boxes);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('service/services.yml');
+        $loader->load('service/widget.yml');
     }
 }

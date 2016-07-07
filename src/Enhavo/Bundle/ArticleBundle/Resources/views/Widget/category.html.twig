@@ -1,0 +1,8 @@
+<div class="category-widget">
+    <h3>Categories</h3>
+    <ul class="columns">
+        {% for category in categories %}
+            <li><a href="{{ path('enhavo_theme_article_category', {slug: category.slug}) }}">{{ category }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

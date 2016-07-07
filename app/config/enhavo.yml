@@ -1,7 +1,7 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoAppBundle:Routing:show
+            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoThemeBundle:Page:show
 
 enhavo_app:
     permission_check: false
@@ -204,3 +204,36 @@ enhavo_search:
         strategy: reindex
         search_engine: enhavo_search_search_engine
         index_engine: enhavo_search_index_engine
+
+enhavo_article:
+    resources:
+        article:
+            routing:
+                strategy: slug
+                route: enhavo_theme_article_show
+
+enhavo_theme:
+    boxes:
+        sidebar:
+            template: 'EnhavoThemeBundle:Box:sidebar.html.twig'
+            widgets:
+                search:
+                    type: template
+                    template: 'EnhavoThemeBundle:Theme:Widget/search.html.twig'
+                category:
+                    type: article_category
+                newsletter:
+                    type: template
+                    template: 'EnhavoThemeBundle:Theme:Widget/newsletter.html.twig'
+        footer:
+            template: 'EnhavoThemeBundle:Theme:Box/footer.html.twig'
+            widgets:
+                contact:
+                    type: template
+                    template: 'EnhavoThemeBundle:Theme:Widget/contact.html.twig'
+                about-us:
+                    type: template
+                    template: 'EnhavoThemeBundle:Theme:Widget/about-us.html.twig'
+                social_media:
+                    type: template
+                    template: 'EnhavoThemeBundle:Theme:Widget/social-media.html.twig'
