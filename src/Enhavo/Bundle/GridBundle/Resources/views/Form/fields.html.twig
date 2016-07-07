@@ -16,7 +16,7 @@
                 <i class="icon-circle-with-plus btnsmall add-grid-button" data-name="{{ full_name }}" data-position="top" ></i>
             </div>
             <div class="mt1em">
-              <div class="item-container">
+              <div class="item-container" data-reindexable>
                 {% for child in form.children %}
                   {% for item in child.children %}
                     {% set formItem = item.itemType %}

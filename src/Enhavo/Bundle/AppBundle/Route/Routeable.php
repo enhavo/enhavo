@@ -9,11 +9,14 @@
 namespace Enhavo\Bundle\AppBundle\Route;
 
 
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 interface Routeable
 {
+    /**
+     * @return RouteInterface
+     */
     public function getRoute();
     public function setRoute(RouteObjectInterface $route);
 }

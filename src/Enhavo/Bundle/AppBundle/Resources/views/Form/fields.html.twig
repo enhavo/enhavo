@@ -25,7 +25,7 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="row mb1">
+        <div class="row mb1" data-form-row>
             <label class="col-md-2 text-right label-container">{{ form_label(form) }}</label>
             <div class="col-md-9 formwidget-container">{{ form_widget(form) }}</div>
         </div>
@@ -85,7 +85,8 @@
             sortable
         {% elseif sortable and border and not allow_delete %}
             sortable-border
-        {% endif %}">
+        {% endif %}"
+        data-reindexable>
         {% for item in form.children %}
             {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
         {% endfor %}

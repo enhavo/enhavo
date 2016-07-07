@@ -2,6 +2,8 @@
  * Created by gseidel on 30/08/14.
  */
 
+var uploadForm = null;
+
 $(function() {
   function UploadForm(routing, admin, translator) {
     var self = this;
@@ -353,5 +355,5 @@ $(function() {
     this.init();
   }
 
-  var uploadForm = new UploadForm(Routing, admin, Translator);
+  uploadForm = new UploadForm(Routing, admin, Translator);
 });

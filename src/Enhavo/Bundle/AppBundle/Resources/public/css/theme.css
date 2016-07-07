@@ -30,6 +30,9 @@ img {max-width:100%;}
 .formwidget-container .uploadForm .list .imgContainer.selected { background-color:#F3F3F3;}
 .icheckbox-esperanto, .iradio-esperanto {background: #f3f3f3;}
 .uploadForm {padding: 10px 0 15px 0;border-bottom: 1px solid #f3f3f3;}
+.form-error {background-color: #ffcccc;}
+.form-error .label-container label:after {content: '*'; color: #ff0000;}
+.form-error-tab span:after {content: '*'; color: #ff0000;}
 
 #iframeContainer {position:fixed;top:0;left:50%;width:1080px;margin-left:-540px;height:100%;z-index:101;display:none;background-color:#fff}
 #iframeContainer .close {box-sizing:border-box;padding-left:6px;font-size: 40px;z-index:102;cursor:pointer;position:absolute;top:0;right:-45px;width:45px;height:45px;background:#333;color:#fff;}

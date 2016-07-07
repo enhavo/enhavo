@@ -4,5 +4,11 @@ Enhavo\Bundle\GridBundle\Entity\Grid:
             - Valid: ~
 
 Enhavo\Bundle\GridBundle\Entity\Item:
-   constraints:
-        - Enhavo\Bundle\GridBundle\Validator\Constraints\ItemType: ~
+    properties:
+        itemType:
+            - Valid: ~
+
+Enhavo\Bundle\GridBundle\Entity\Video:
+    properties:
+        url:
+            - Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrl: ~

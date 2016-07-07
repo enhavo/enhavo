@@ -237,3 +237,17 @@ enhavo_theme:
                 social_media:
                     type: template
                     template: 'EnhavoThemeBundle:Theme:Widget/social-media.html.twig'
+
+
+enhavo_content:
+    sitemap:
+        collectors:
+            page:
+                type: publish
+                repository: enhavo_page.repository.page
+            article:
+                type: publish
+                repository: enhavo_article.repository.article
+            appointment:
+                type: publish
+                repository: enhavo_calendar.repository.appointment
