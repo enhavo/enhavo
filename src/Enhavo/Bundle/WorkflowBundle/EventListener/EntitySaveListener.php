@@ -5,6 +5,9 @@ namespace Enhavo\Bundle\WorkflowBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * checks if the given resource has to get published or unpublished according to the belonging workflowstatus
+ */
 class EntitySaveListener
 {
     protected $em;
@@ -19,14 +22,20 @@ class EntitySaveListener
 
     public function onSave(GenericEvent $event)
     {
+        //find all workflows
         $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
         $allWF = $workflowRepository->findAll();
+
         $workflow = null;
+
+        //check if the class of the subject(entity) is in the array of a workflow entity column
         foreach($allWF as $currentWorkflow){
             if(in_array(get_class($event->getSubject()), $currentWorkflow->getEntity())){
+                //this workflow belongs to the given entity(subject)
                 $workflow = $currentWorkflow;
             }
         }
+
         //if there is a workflow created for the current entity then check the things below
         //if workflow is null, there is no workflow created for this entity
         if(!empty($workflow)){
@@ -50,13 +59,14 @@ class EntitySaveListener
                     }
                 }
 
-                $current = $event->getSubject();
-                if(method_exists($current, 'getPublic')) { //check if public field exist
+                $currentEntity = $event->getSubject();
+                if(method_exists($currentEntity, 'getPublic')) { //check if public field exist
+
                     //check if the node is a end node, if it is set the public field (if it exists) to true
                     if($currentNode->getEnd()) {
-                        $current->setPublic(true);
+                        $currentEntity->setPublic(true);
                     } else {
-                        $current->setPublic(false);
+                        $currentEntity->setPublic(false);
                     }
                 }
                 $this->em->flush();
