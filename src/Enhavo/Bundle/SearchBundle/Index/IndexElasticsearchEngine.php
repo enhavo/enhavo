@@ -15,6 +15,9 @@ use Enhavo\Bundle\SearchBundle\Index\Type\PdfType;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 
+/*
+ * This class does the indexing of the ElasticSearch
+ */
 class IndexElasticsearchEngine implements IndexEngineInterface
 {
     protected $util;
@@ -53,27 +56,33 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 
         //get items to index
         $indexItems = $this->indexWalker->getIndexItems($resource, $metadata, array('rawData', 'fieldName'));
+
+        //set the information of the items to the body
         foreach ($indexItems as $indexItem) {
             $params = $this->addToBody($params, $indexItem->getFieldName(), $indexItem->getRawData());
         }
 
+        //the client does the indexing in elasticsearch
         $client->index($params);
     }
 
     public function unindex($resource)
     {
         $client = Elasticsearch\ClientBuilder::create()->build();
+
         //get Entity and Bundle names
         $metadata = $this->metadataFactory->create($resource);
         $index = $metadata->getHumanizedBundleName();
         $type = strtolower($metadata->getEntityName());
+
+        //get Index to unindex
         $params = [
             'index' => $index,
             'type' => $type,
             'id' => $resource->getID()
         ];
 
-        // Delete doc at /my_index/my_type/my_id
+        //the client deletes the index
         $client->delete($params);
     }
 
@@ -81,10 +90,12 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 
     protected function addToBody($params, $field, $value)
     {
+        //if the value is a pdf, get the content
         if($value instanceof FileInterface) {
             $value = $this->pdfType->getPdfContent($value);
         }
 
+        //adds fields to params body
         if($value){
             $params['body'][$field] = $value;
         }

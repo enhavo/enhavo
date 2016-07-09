@@ -11,6 +11,9 @@ namespace Enhavo\Bundle\SearchBundle\Index\Type;
 use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Enhavo\Bundle\SearchBundle\Index\IndexItem;
 
+/*
+ * Prepares fields of type plain for indexing
+ */
 class PlainType extends AbstractIndexType
 {
     function index($value, $options, $properties = null)
@@ -23,6 +26,7 @@ class PlainType extends AbstractIndexType
             $indexItem->setRawData($value);
         }
 
+        //get weight if it is set in options; otherwise just take 1 as weight
         $weight = 1;
         if (isset($options['weight'])) {
             $weight = $options['weight'];
@@ -64,9 +68,13 @@ class PlainType extends AbstractIndexType
                 $indexItemArray[$counter]['score'] = $score;
                 $counter++;
             }
+
+            //set data and scored words
             $indexItem->setData(rtrim($accum));
             $indexItem->setScoredWords($indexItemArray);
         }
+
+        //return the indexItem
         return array($indexItem);
     }
 

@@ -13,7 +13,9 @@ use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-
+/*
+ * The IndexWalker gets all the IndexItems of a resource
+ */
 class IndexWalker
 {
     /**
@@ -36,9 +38,13 @@ class IndexWalker
 
             //get the right indexType
             $type = $this->collector->getType($propertyNode->getType());
+
+            //get the IndexItems of the right IndexType
             $newIndexItems = $type->index($accessor->getValue($resource, $propertyNode->getProperty()), $propertyNode->getOptions(), $properties);
             if($newIndexItems){
                 foreach($newIndexItems as $indexItem){
+
+                    //set fieldname
                     if((empty($properties) || in_array('fieldName', $properties)) && $indexItem->getFieldName() == null){
                         $indexItem->setFieldName($metadata->getHumanizedBundleName().'_'.strtolower($metadata->getEntityName().'_'.strtolower($propertyNode->getProperty())));
                     }

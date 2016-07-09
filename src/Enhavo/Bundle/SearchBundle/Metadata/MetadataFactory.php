@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @since 23/06/16
  * @author gseidel
+ *
+ * Creates the metadata for a given resource
  */
 class MetadataFactory
 {

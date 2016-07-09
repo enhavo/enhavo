@@ -12,6 +12,9 @@ downloadItem:
       file: 'Datei'
       download: 'Download'
   label:
+    pdf: 'PDF'
+    downloadItem: 'Download'
+    title: 'Titel'
     download:
       item:
         choose: 'Hochgelade Datei verwenden'

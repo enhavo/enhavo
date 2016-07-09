@@ -15,6 +15,9 @@ use Symfony\Component\Yaml\Parser;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Enhavo\Bundle\SearchBundle\Entity\Dataset;
 
+/*
+ * This class has all the helper functions for the search bundle
+ */
 class SearchUtil
 {
     protected $kernel;
@@ -37,6 +40,7 @@ class SearchUtil
 
     public function searchSimplify($text)
     {
+        //simplifies a text
         $textSimplifiy = new TextSimplify();
         return $textSimplifiy->simplify($text);
     }
@@ -69,21 +73,9 @@ class SearchUtil
         return $this->mainPath; //Users/jhelbing/workspace/enhavo/src/
     }
 
-    public function getEntityNamesOfSearchYamlPath($yamlPath)
-    {
-        $yamlContent = $this->getContentOfSearchYaml($yamlPath);
-        $entities = array();
-        foreach($yamlContent as $key => $value){
-            if(!$this->isEntityCollection($value) && !$this->isEntityModel($value)) {
-                $splittedKey = explode('\\', $key);
-                $entities[] = array_pop($splittedKey);
-            }
-        }
-        return $entities;
-    }
-
     public function getContentOfSearchYaml($searchYamlPath)
     {
+        //get the content of a given search yaml
         if (file_exists($searchYamlPath)) {
             $yaml = new Parser();
             return $yaml->parse(file_get_contents($searchYamlPath));
@@ -92,78 +84,9 @@ class SearchUtil
         }
     }
 
-    public function isEntityCollection($yamlEntity)
-    {
-        $collection = true;
-        $prop = $yamlEntity['properties'];
-        foreach($prop as $item){
-            if(is_array($item[0])){
-                if(key($item[0]) != 'Collection'){
-                    $collection = false;
-                }
-            } else if($item[0] == 'Model'){
-                $collection = false;
-            }
-        }
-        return $collection;
-    }
-
-    public function isPropertyCollection($property)
-    {
-        $collection = true;
-        if(is_array($property[0])){
-            if(key($property[0]) != 'Collection'){
-                $collection = false;
-            }
-        } else if($property[0] == 'Model'){
-            $collection = false;
-        }
-        return $collection;
-    }
-
-    public function isEntityModel($yamlEntity)
-    {
-        $model = true;
-        $prop = $yamlEntity['properties'];
-        foreach($prop as $item){
-            if(is_array($item[0])){
-                $model = false;
-            }
-        }
-        return $model;
-    }
-
-    public function isPropertyModel($property)
-    {
-        $model = true;
-        if(is_array($property[0])){
-            $model = false;
-        }
-        return $model;
-    }
-
-    public function getTypes($searchYaml, $resourceClass)
-    {
-        $types = array();
-        if (key_exists($resourceClass, $searchYaml)) {
-            $properties = $searchYaml[$resourceClass]['properties'];
-            foreach ($properties as $property) {
-                if(!$this->isPropertyCollection($property) && !$this->isPropertyModel($property)){
-                    foreach ($property[0] as $key => $value) {
-                        if(array_key_exists('type',$value)){
-                            if(!in_array($value['type'], $types)){
-                                $types[] = $value['type'];
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $types;
-    }
-
     public function getDataset($resource)
     {
+        //get the dataset to a resource
         $metaData = $this->metadataFactory->create($resource);
         $entity = $metaData->getEntityName();
         $bundle = $metaData->getBundleName();
@@ -173,6 +96,8 @@ class SearchUtil
             'bundle' => $bundle,
             'reference' => $id
         ));
+
+        //if there is no dataset create a new one
         if($dataSet == null){
             //create new dataset
             $dataSet = new Dataset();

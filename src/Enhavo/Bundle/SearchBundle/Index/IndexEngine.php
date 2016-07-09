@@ -14,6 +14,7 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
  * User: jhelbing
  * Date: 23.01.16
  * Time: 16:00
+ * Does the indexing
  */
 
 class IndexEngine implements IndexEngineInterface
@@ -55,6 +56,7 @@ class IndexEngine implements IndexEngineInterface
 
     public function index($resource)
     {
+        //just return nothing when indexing is off
         if($this->strategy == self::INDEX_STRATEGY_NOINDEX) {
             return;
         }
@@ -124,6 +126,8 @@ class IndexEngine implements IndexEngineInterface
                 $this->em->remove($word);
             }
             $this->em->flush();
+
+            //index new resource
             $this->indexingData($resource);
         }
     }
@@ -174,6 +178,8 @@ class IndexEngine implements IndexEngineInterface
 
         //set rawData, data and scoredWords
         foreach($indexItems as $indexItem){
+
+            //collect all raw data for the dataset
             if($dataSet->getRawdata() == '' || $dataSet->getRawdata() == null){
                 $dataSet->setRawdata($indexItem->getRawData());
             } else {
@@ -181,6 +187,7 @@ class IndexEngine implements IndexEngineInterface
                 $this->em->flush();
             }
 
+            //collect all data for the dataset
             if($dataSet->getData() == '' || $dataSet->getData() == null){
                 $dataSet->setData($indexItem->getData());
             } else {
@@ -188,6 +195,7 @@ class IndexEngine implements IndexEngineInterface
                 $this->em->flush();
             }
 
+            //write into search_index
             foreach ($indexItem->getScoredWords() as $scoredWord) {
                 $newIndex = new Index();
                 $newIndex->setDataset($dataSet);
@@ -200,19 +208,23 @@ class IndexEngine implements IndexEngineInterface
                 $this->searchDirty($scoredWord['word']);
             }
         }
+
+        //set data in dataset
         $dataSet->setData($dataSet->getData().' ');
+
+        //set reindex ot 0 in dataset
         $dataSet->setReindex(0);
     }
 
-
-
     protected function getResource(Dataset $dataset)
     {
+        //get ressource of dataset
         return $this->em->getRepository($dataset->getBundle().':'.ucfirst($dataset->getType()))->find($dataset->getReference());
     }
 
     protected function getIndexedWords($dataset)
     {
+        //get the indexed words of a given dataset
         $indexRepository = $this->em->getRepository('EnhavoSearchBundle:Index');
         return $indexRepository->findBy(array(
             'dataset' => $dataset
@@ -224,6 +236,8 @@ class IndexEngine implements IndexEngineInterface
      *
      * This is used during indexing (cron). Words that are dirty have outdated
      * total counts in the search_total table, and need to be recounted.
+     *
+     * This is the same as in drupal
      */
     function searchDirty($word = NULL) {
         global $dirty;
@@ -237,6 +251,7 @@ class IndexEngine implements IndexEngineInterface
 
     /**
      * Updates the score column in the search_total table
+     * The functionality is similar to drupal
      */
     function searchUpdateTotals() {
 

@@ -12,6 +12,9 @@ downloadItem:
       file: 'File'
       download: 'Download'
   label:
+    pdf: 'PDF'
+    downloadItem: 'Download'
+    title: 'Title'
     download:
       item:
         choose: 'Use uploaded file'

@@ -62,6 +62,7 @@ services:
             - [setContainer, ['@service_container']]
         arguments:
             - @enhavo_search_search_util
+            - @enhavo_search_metadata_factory
         tags:
             - { name: enhavo.block }
 
@@ -88,6 +89,7 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @enhavo_search_search_util
+            - @enhavo_search_metadata_factory
 
     enhavo_search_collection_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\CollectionType
@@ -146,6 +148,7 @@ services:
             - @enhavo_search_metadata_factory
             - @service_container
             - @enhavo_search_index_walker
+            - @enhavo_search_text_extractor
 
     enhavo_search_metadata_collector:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector
@@ -159,3 +162,10 @@ services:
             - @kernel
             - @enhavo_search_metadata_collector
 
+    enhavo_search_text_extractor:
+        class: Enhavo\Bundle\SearchBundle\Extractor\TextExtractor
+        arguments:
+            - @enhavo_search_search_util
+            - @enhavo_search_metadata_factory
+            - @service_container
+            - @enhavo_search_index_walker
