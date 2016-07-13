@@ -12,6 +12,8 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
  * User: jhelbing
  * Date: 23.06.16
  * Time: 10:16
+ *
+ * Prepares fields of type pdf for indexing
  */
 
 class PdfType extends PlainType
@@ -26,8 +28,13 @@ class PdfType extends PlainType
 
     function index($value, $options, $properties = null)
     {
+        //check if the given value is a file
         if($value instanceof FileInterface) {
+
+            //get content if it it a pdf
             $pdfContent = $this->getPdfContent($value);
+
+            //everything else does the parent of the pdfType
             return parent::index($pdfContent, $options, $properties);
         }
         return [];

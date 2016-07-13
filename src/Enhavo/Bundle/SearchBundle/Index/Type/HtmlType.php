@@ -12,6 +12,9 @@ use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Symfony\Component\Yaml\Parser;
 use Enhavo\Bundle\SearchBundle\Index\IndexItem;
 
+/*
+ * Prepares fields of type html for indexing
+ */
 class HtmlType extends AbstractIndexType
 {
     function index($val, $options, $properties = null)
@@ -64,35 +67,43 @@ class HtmlType extends AbstractIndexType
 
                 //if tag is true we are handling the tags in the array, if tag is false we are handling text between the tags
                 if ($tag) {
+
                     // Increase or decrease score per word based on tag
                     list($tagname) = explode(' ', $value, 2);
                     $tagname = strtolower($tagname);
+
                     // Closing or opening tag?
                     if ($tagname[0] == '/') {
                         $tagname = substr($tagname, 1);
+
                         // If we encounter unexpected tags, reset score to avoid incorrect boosting.
                         if (!count($tagstack) || $tagstack[0] != $tagname) {
                             $tagstack = array();
                             $score = 1;
                         } else {
+
                             // Remove from tag stack and decrement score
                             $score = max(1, $score - $tags[array_shift($tagstack)]);
                         }
                     } else {
                         if (isset($tagstack[0]) && $tagstack[0] == $tagname) {
+
                             // None of the tags we look for make sense when nested identically.
                             // If they are, it's probably broken HTML.
                             $tagstack = array();
                             $score = 1;
                         } else {
+
                             // Add to open tag stack and increment score
                             array_unshift($tagstack, $tagname);
                             $score += $tags[$tagname];
                         }
                     }
+
                     // A tag change occurred, reset counter.
                     $tagwords = 0;
                 } else {
+
                     // Note: use of PREG_SPLIT_DELIM_CAPTURE above will introduce empty values
                     if ($value != '') {
                         $words = $this->searchIndexSplit($value);
@@ -126,9 +137,13 @@ class HtmlType extends AbstractIndexType
                 $indexItemArray[$counter]['score'] = $score;
                 $counter++;
             }
+
+            //set data and scored words
             $indexItem->setData(rtrim($accum));
             $indexItem->setScoredWords($indexItemArray);
         }
+
+        //return the indexItem
         return array($indexItem);
     }
 

@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\SearchBundle\Util;
 
-
+/*
+ * This class simplifies text like in drupal
+ */
 class TextSimplify
 {
     /**

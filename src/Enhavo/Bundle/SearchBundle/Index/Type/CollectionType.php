@@ -13,6 +13,9 @@ use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
+/*
+ * Prepares fields of type collection for indexing
+ */
 class CollectionType extends AbstractIndexType
 {
     protected $metadataFactory;
@@ -26,14 +29,28 @@ class CollectionType extends AbstractIndexType
     function index($val, $options, $properties = null)
     {
         $indexItems = [];
+
+        //check if there are items in the collection
         if($val != null){
+
+            //if there are items walk over each of it
             foreach ($val as $model) {
+                
+                //get the metadata to every item in the collection
                 $metaData = $this->metadataFactory->create($model);
+
+                //get the IndexWalker
                 $indexWalker = $this->getIndexWalker();
+
+                //get IndexItems of indexWalker; put the current Item and the metadata into the funktion of the IndexWalker
                 $newIndexItems = $indexWalker->getIndexItems($model, $metaData, $properties);
+
+                //merge the IndexItems of the collection
                 $indexItems = array_merge($indexItems, $newIndexItems);
             }
         }
+
+        //return the IndexItems
         return $indexItems;
     }
 

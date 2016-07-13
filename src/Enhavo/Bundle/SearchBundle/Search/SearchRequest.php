@@ -6,6 +6,9 @@ use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
+/*
+ * This class does the search process for enhavo
+ */
 class SearchRequest {
 
     /**
@@ -123,12 +126,12 @@ class SearchRequest {
 
     /**
      * Parses the search query into SQL conditions.
-     *
+     * The functionality is similar to drupal
      * Sets up the following variables:
      * - $this->keys
      * - $this->words
      * - $this->conditions
-     * - $this->simple
+     * - $this->simple (it is not simple if the expression contains or, not or a phrase)
      * - $this->matches
      */
     public function parseSearchExpression($searchExpression) {
@@ -274,6 +277,7 @@ class SearchRequest {
      * Increases the 'new-scores' variable if there was addad a new word to §this->words and checks if the word is valid, that means if the minimum wordsize is reached.
      * Splits also phrase entires into words.
      * num_new_scores is important for the matches in SQL later.
+     * This is the same as in drupal
      */
     protected function parseWord($word) {
         $numNewScores = 0;
@@ -305,7 +309,11 @@ class SearchRequest {
     public function getWords()
     {
         $wordsResultArray = [];
+
+        //the first position of the array is the whole searchexpression
         $wordsResultArray[] = $this->searchExpression;
+
+        //check if there is a phrase in the searchexpression
         if($this->phrase == true){
             $wordsResultArray = array_merge($wordsResultArray, $this->phrases, $this->wordsWithoutPhrases);
             return $wordsResultArray;

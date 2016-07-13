@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index;
 
-
+/*
+ * This is a class for storing all the information which we need later for writing into search_index and search_dataset
+ */
 class IndexItem {
 
     /**
