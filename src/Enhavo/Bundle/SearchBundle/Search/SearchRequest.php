@@ -131,7 +131,7 @@ class SearchRequest {
      * - $this->keys
      * - $this->words
      * - $this->conditions
-     * - $this->simple
+     * - $this->simple (it is not simple if the expression contains or, not or a phrase)
      * - $this->matches
      */
     public function parseSearchExpression($searchExpression) {
