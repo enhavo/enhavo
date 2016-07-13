@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             }
           ]
         }
-      },
+      }
     },
     watch: {
       scripts: {
@@ -40,4 +40,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-compass-multiple');
   grunt.loadNpmTasks('grunt-contrib-watch');
+
+  grunt.task.registerTask('compass', ['compassMultiple']);
+  grunt.task.registerTask('default', ['compass']);
 };
