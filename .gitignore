@@ -1,6 +1,7 @@
 .idea
 .settings
 .build
+.sass-cache
 /web/bundles/
 /www/bundles/
 /app/check.php
@@ -21,3 +22,4 @@
 /web/videos
 /web/js
 /web/css
+/node_modules
