@@ -1,0 +1,60 @@
+GIT
+  remote: git://github.com/capistrano/symfony.git
+  revision: af6068b3fdec4554aa1b6ee780822434fe6196da
+  specs:
+    capistrano-symfony (0.4.0)
+      capistrano (~> 3.1)
+      capistrano-composer (~> 0.0.3)
+      capistrano-file-permissions (~> 0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    capistrano (3.4.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-composer (0.0.6)
+      capistrano (>= 3.0.0.pre)
+    capistrano-file-permissions (0.1.1)
+      capistrano (~> 3.1)
+    chunky_png (1.3.5)
+    colorize (0.7.7)
+    compass (1.0.3)
+      chunky_png (~> 1.2)
+      compass-core (~> 1.0.2)
+      compass-import-once (~> 1.0.5)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      sass (>= 3.3.13, < 3.5)
+    compass-core (1.0.3)
+      multi_json (~> 1.0)
+      sass (>= 3.3.0, < 3.5)
+    compass-import-once (1.0.5)
+      sass (>= 3.2, < 3.5)
+    ffi (1.9.10)
+    i18n (0.7.0)
+    multi_json (1.11.2)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.0.1)
+    rake (10.4.2)
+    rb-fsevent (0.9.7)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    sass (3.4.21)
+    sshkit (1.7.1)
+      colorize (>= 0.7.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  capistrano (~> 3.4.0)
+  capistrano-symfony (~> 0.1)!
+  compass (~> 1.0, >= 1.0.3)
+
+BUNDLED WITH
+   1.10.6
