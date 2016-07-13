@@ -12,6 +12,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * checks if the workflow section in the form should be displayed
+ */
 class WorkflowActiveVoter implements VoterInterface {
 
     protected $manager;

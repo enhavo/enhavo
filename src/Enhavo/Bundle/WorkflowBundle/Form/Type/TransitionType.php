@@ -43,7 +43,10 @@ class TransitionType extends AbstractType
                     ->where('n.workflow = :id');
             },
         ));
+
         $builder->add('groups', 'entity', array(
+            'label' => 'transition.form.label.groups',
+            'translation_domain' => 'EnhavoWorkflowBundle',
             'class' => 'EnhavoUserBundle:Group',
             'choice_label' => 'name',
             'multiple' => true

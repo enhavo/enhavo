@@ -43,3 +43,4 @@ transition:
       name: 'Bezeichnung'
       nodeFrom: 'Von'
       nodeTo: 'Nach'
+      groups: 'Gruppen'

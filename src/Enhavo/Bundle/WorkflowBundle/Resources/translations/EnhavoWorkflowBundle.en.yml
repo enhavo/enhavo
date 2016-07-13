@@ -43,4 +43,4 @@ transition:
       name: 'Transition Name'
       nodeFrom: 'From'
       nodeTo: 'To'
-
+      groups: 'Groups'
