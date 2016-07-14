@@ -1,0 +1,14 @@
+{
+  "name": "jqueryui-timepicker-addon",
+  "homepage": "https://github.com/trentrichardson/jQuery-Timepicker-Addon",
+  "version": "0.9.9",
+  "_release": "0.9.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.9",
+    "commit": "d8e8e1395f8c9f62a12254a2e9c3f5944be94ca3"
+  },
+  "_source": "https://github.com/trentrichardson/jQuery-Timepicker-Addon.git",
+  "_target": "~0.9.8",
+  "_originalSource": "jqueryui-timepicker-addon"
+}

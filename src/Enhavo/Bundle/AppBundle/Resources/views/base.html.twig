@@ -10,17 +10,17 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700"  type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/font-awesome.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/enhavo_iconfont.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/jquery_ui/jquery-ui.css') }}" >
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/icheck/icheck-esperanto.css') }}" >
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/select2/select2.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/fengyuanchen_cropper/cropper.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/bootstrap-custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/enhavo-iconfont.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/vendor/jquery-ui/themes/base/jquery-ui.min.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/vendor/cropper/dist/cropper.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/base.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/theme.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/icheck.css') }}">
 
 
     {% block stylesheets %}
@@ -32,17 +32,20 @@
         {% endif %}
     {% endblock %}
 
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/jquery-plugin/jquery.timepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/fileupload/vendor/jquery.ui.widget.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/fileupload/jquery.iframe-transport.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/js/fileupload/jquery.fileupload.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/icheck/icheck.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/tinymce/jquery.tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/select2/select2.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/fengyuanchen_cropper/cropper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jqueryui-timepicker-addon/jquery-ui-timepicker-addon.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/icheck/icheck.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/cropper/dist/cropper.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
