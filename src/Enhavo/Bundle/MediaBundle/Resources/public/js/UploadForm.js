@@ -5,7 +5,7 @@
 var uploadForm = null;
 
 $(function() {
-  function UploadForm(routing, admin, translator) {
+  function UploadForm(routing, admin, formScript, translator) {
     var self = this;
 
     this.initUploadForm = function (form) {
@@ -68,6 +68,7 @@ $(function() {
             self.setFileOrder(uploadForm);
             $(uploadForm).find('.progress .bar').css('width', '0%');
             $(uploadForm).find('.dropzone').removeClass('empty');
+            formScript.reindex();
           },
 
           add: function (event, data) {
@@ -355,5 +356,5 @@ $(function() {
     this.init();
   }
 
-  uploadForm = new UploadForm(Routing, admin, Translator);
+  uploadForm = new UploadForm(Routing, admin, form, Translator);
 });

@@ -36,12 +36,14 @@ function GridForm(router, formScript)
             admin.closeLoadingOverlay();
             var position = addButton.attr('data-position');
             data = $.parseHTML(data);
+
             $(data).find('[name]').each(function() {
+              console.log('Name: ' + $(this).attr('name'));
               $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
             });
 
             if(position == 'top') {
-              gridForm.find('.item-container').prepend(data);
+              container.prepend(data);
             }
             if (position == 'bottom') {
               container.append(data);
@@ -77,17 +79,8 @@ function GridForm(router, formScript)
 
         if(!menu.is(':visible')) {
           var position = $(this).position();
-
-          var data = $.parseHTML(data);
-
-          if(position == 'top') {
-            gridForm.find('.item-container').prepend(data);
-          }
-          if (position == 'bottom') {
-            container.append(data);
-          }
-
           var top = $(this).attr('data-position') == 'top';
+
           menu.removeClass('topTriangle');
           menu.removeClass('bottomTriangle');
           if(top) {
