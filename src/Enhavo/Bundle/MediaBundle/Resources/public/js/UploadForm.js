@@ -36,37 +36,34 @@ $(function() {
             var list = $(uploadForm).find('.list');
             var inputName = list.attr('data-name');
             if (!isMultiple[formIndex]) {
-              if (data.result.files.length > 0) {
+              if (data.result.length > 0) {
                 $(uploadForm).find('[data-file-list]').empty();
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
-                  file_id: data.result.files[0].id,
+                  file_id: data.result[0].id,
                   full_name: inputName,
                   file_index: 0,
-                  file_name: data.result.files[0].filename,
-                  file_slug: data.result.files[0].slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_name: data.result[0].filename,
+                  file_slug: data.result[0].slug,
+                  file_mime_type: data.result[0].mimeType
                 });
                 $(uploadForm).find('[data-file-list]').append(html);
-                self.setThumbOrIcon($('[data-id=' + data.result.files[0].id + ']'), uploadForm);
+                self.setThumbOrIcon($('[data-id=' + data.result[0].id + ']'), uploadForm);
               }
             } else {
-              $.each(data.result.files, function (index, file) {
+              $.each(data.result, function (index, file) {
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
                   file_id: file.id,
                   full_name: inputName,
                   file_index: ++currentIndexes[formIndex],
                   file_name: file.filename,
                   file_slug: file.slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_mime_type: data.result[0].mimeType
                 });
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
               });
             }
             self.setFileOrder(uploadForm);
-            if (!data.result.success) {
-              admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
-            }
           },
 
           fail: function(event, data) {
