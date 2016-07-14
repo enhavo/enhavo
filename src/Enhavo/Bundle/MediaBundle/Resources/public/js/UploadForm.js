@@ -5,7 +5,7 @@
 var uploadForm = null;
 
 $(function() {
-  function UploadForm(routing, admin, translator) {
+  function UploadForm(routing, admin, formScript, translator) {
     var self = this;
 
     this.initUploadForm = function (form) {
@@ -48,6 +48,13 @@ $(function() {
                   file_slug: data.result[0].slug,
                   file_mime_type: data.result[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  $(html).find('[name]').each(function () {
+                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+                  });
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + data.result[0].id + ']'), uploadForm);
               }
@@ -61,6 +68,13 @@ $(function() {
                   file_slug: file.slug,
                   file_mime_type: data.result[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  $(html).find('[name]').each(function () {
+                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+                  });
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
               });
@@ -80,6 +94,7 @@ $(function() {
             } else {
               dropZone.addClass('empty');
             }
+            formScript.reindex();
           },
 
           add: function (event, data) {
@@ -367,5 +382,5 @@ $(function() {
     this.init();
   }
 
-  uploadForm = new UploadForm(Routing, admin, Translator);
+  uploadForm = new UploadForm(Routing, admin, form, Translator);
 });

@@ -142,7 +142,7 @@ class ItemTypeResolver
                 }
             }
         }
-        throw new NoTypeFoundException(sprintf('Cant resolve type [%s] cause no type found with this name', $type));
+        throw new NoTypeFoundException(sprintf('Cant resolve type [%s], no type found with this name', $type));
     }
 
     public function getItems()
