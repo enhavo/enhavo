@@ -38,7 +38,6 @@ function GridForm(router, formScript)
             data = $.parseHTML(data);
 
             $(data).find('[name]').each(function() {
-              console.log('Name: ' + $(this).attr('name'));
               $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
             });
 

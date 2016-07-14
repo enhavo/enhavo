@@ -48,6 +48,13 @@ $(function() {
                   file_slug: data.result.files[0].slug,
                   file_mime_type: data.result.files[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  $(html).find('[name]').each(function () {
+                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+                  });
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + data.result.files[0].id + ']'), uploadForm);
               }
@@ -61,6 +68,13 @@ $(function() {
                   file_slug: file.slug,
                   file_mime_type: data.result.files[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  $(html).find('[name]').each(function () {
+                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+                  });
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
               });
