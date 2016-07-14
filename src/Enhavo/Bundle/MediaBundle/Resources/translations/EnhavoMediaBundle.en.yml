@@ -6,6 +6,8 @@ media:
       filename: "Filename"
       slug: "Slug"
       download: "Download"
+    message:
+      upload_error: "Error with file upload"
   image_cropper:
     action:
       open_image_cropper: "Edit image"

@@ -6,6 +6,8 @@ media:
       filename: "Dateiname"
       slug: "Slug"
       download: "Herunterladen"
+    message:
+      upload_error: "Fehler beim hochladen der Datei"
   image_cropper:
     action:
       open_image_cropper: "Bild bearbeiten"

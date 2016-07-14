@@ -38,15 +38,15 @@ $(function() {
             var list = $(uploadForm).find('.list');
             var inputName = list.attr('data-name');
             if (!isMultiple[formIndex]) {
-              $(uploadForm).find('[data-file-list]').empty();
-              if (data.result.files.length > 0) {
+              if (data.result.length > 0) {
+                $(uploadForm).find('[data-file-list]').empty();
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
-                  file_id: data.result.files[0].id,
+                  file_id: data.result[0].id,
                   full_name: inputName,
                   file_index: 0,
-                  file_name: data.result.files[0].filename,
-                  file_slug: data.result.files[0].slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_name: data.result[0].filename,
+                  file_slug: data.result[0].slug,
+                  file_mime_type: data.result[0].mimeType
                 });
                 html = $.parseHTML(html);
                 if ($(this).parents('[data-reindexable]').length > 0) {
@@ -56,17 +56,17 @@ $(function() {
                   });
                 }
                 $(uploadForm).find('[data-file-list]').append(html);
-                self.setThumbOrIcon($('[data-id=' + data.result.files[0].id + ']'), uploadForm);
+                self.setThumbOrIcon($('[data-id=' + data.result[0].id + ']'), uploadForm);
               }
             } else {
-              $.each(data.result.files, function (index, file) {
+              $.each(data.result, function (index, file) {
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
                   file_id: file.id,
                   full_name: inputName,
                   file_index: ++currentIndexes[formIndex],
                   file_name: file.filename,
                   file_slug: file.slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_mime_type: data.result[0].mimeType
                 });
                 html = $.parseHTML(html);
                 if ($(this).parents('[data-reindexable]').length > 0) {
@@ -80,8 +80,20 @@ $(function() {
               });
             }
             self.setFileOrder(uploadForm);
+          },
+
+          fail: function(event, data) {
+            admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
+          },
+
+          always: function(event, data) {
             $(uploadForm).find('.progress .bar').css('width', '0%');
-            $(uploadForm).find('.dropzone').removeClass('empty');
+            var dropZone = $(uploadForm).find('.dropzone');
+            if (dropZone.find('[data-file-element]').length > 0) {
+              dropZone.removeClass('empty');
+            } else {
+              dropZone.addClass('empty');
+            }
             formScript.reindex();
           },
 
