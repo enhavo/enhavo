@@ -227,7 +227,7 @@ aside {
 :-ms-input-placeholder {color:$light; text-transform:uppercase; letter-spacing:$smallLetterSpacing; font-family:$capitalFontLightItalic;}
 
 #image-text {
-  background:#FFF; padding:40px 0 0 0;
+  background:#FFF; padding:40px 0 0 0;position:relative; z-index:1;
   .image {
     padding-left:0; position:relative;height: 335px; opacity:0;
     &.animate{@include animation(fadeUp 1s ease forwards)}
@@ -241,7 +241,7 @@ aside {
 }
 
 #categories {
-  border-top:6px solid $light;
+  border-top:6px solid $light; position:relative; z-index:2;
   &.related { background:$night; border-top:0;color:#FFF}
   .category {
     position:relative;
@@ -294,9 +294,13 @@ aside {
 }
 
 #contact {
-  background:$night;color:#FFF;
+  background:$night;color:#FFF; position:relative; z-index:1;
   p{
     &:before {content:""; display:block; height:3px; width:40px; background:#FFF; margin-bottom:20px;}
+  }
+  #contact_mes.enhavo_gridsage {
+    position: absolute;bottom: 0px;right:0;opacity:0;padding: 10px 45px 0px 45px;background: $blueberry;color: #FFF;width: 50%;@include transition(all .3s);
+    &.show{opacity:1;@include transition(all .3s);}
   }
   form{ height:282px; position:relative;
     input {
@@ -387,15 +391,6 @@ footer {
   }
 }
 
-// Article single view
-.single {
-  background:#FFF;padding: 120px $columnSpacing;
-  h2{ padding-bottom:0; float:left;}
-  .category { padding:20px 0;color:$light;clear:both;}
-  .article-content {@include column-count(2);@include column-gap(40px);}
-  .date { float:right;}
-}
-
 .back-btn {
   width:80px; height:80px; background:$citrus;
   position:absolute; left:0; top:0; display:block;
@@ -442,36 +437,6 @@ footer {
     padding: 35px 0 150px 0;
     li{ background:#FFF;}
   }
-}
-
-.view .article-view { padding-bottom:0; padding-top:230px; position:relative;}
-#article {
-  .article-head {
-    display:block;
-    h3 { padding-bottom:10px;}
-    .category {
-      padding-bottom:20px; font-size:$smallFontSize; display:inline-block;;
-      &:nth-of-type(n+2) {
-        &:before {margin:0 10px;content:"\2022";height: auto;width: 0;background: none;display: inline;}
-      }
-    }
-  }
-  .enhavo_grid { background:#FFF;clear:both;
-    .enhavo_grid_text { padding-top:45px;padding-bottom: 120px;}
-  }
-  .back-to-blog {
-    width:80px; height:80px; position:absolute; left:0; bottom:0; background:$blueberry;
-    &:hover {
-      background:$citrus;
-      i{color:$night;@include transition(all .3s);}
-    }
-    i {color:#FFF;@include transform(scaleX(-1));display: inline-block;position: absolute;left: 50%;margin-left: -12px;top: 50%;margin-top: -9px;;@include transition(all .3s);}
-  }
-}
-.article-footer {
-  background:$softwhite;
-  .container { padding-top:0; padding-bottom:0;}
-  .pub-date {font-size:$smallFontSize;color:$medium; padding:12px;}
 }
 
 #ipad-overlay {width:100%;min-height:100%;height:auto;background:rgba(0, 0, 0, .7);position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;display:none;overflow-x:auto;}

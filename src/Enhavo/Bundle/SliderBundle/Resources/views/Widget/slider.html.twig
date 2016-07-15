@@ -1,3 +1,4 @@
+{% block slider %}
 <ul class="slider">
     {% for slide in slides %}
         {% if slide.image %}
@@ -10,3 +11,4 @@
         {% endif %}
     {% endfor %}
 </ul>
+{% endblock %}
