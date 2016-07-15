@@ -1,12 +1,13 @@
-// Article single view
-.single {
-  background:#FFF;padding: 120px $columnSpacing;
-  h2{ padding-bottom:0; float:left;}
-  .category { padding:20px 0;color:$light;clear:both;}
-  .article-content {@include column-count(2);@include column-gap(40px);}
-  .date { float:right;}
-}
+//// Article single view
+//.single {
+//  background:#FFF;padding: 120px $columnSpacing;
+//  h2{ padding-bottom:0; float:left;}
+//  .category { padding:20px 0;color:$light;clear:both;}
+//  .article-content {@include column-count(2);@include column-gap(40px);}
+//  .date { float:right;}
+//}
 
+// General styles
 #article {
   position:relative; padding-bottom:100px;
   .article-head {
@@ -40,10 +41,6 @@
   .container { padding-top:0; padding-bottom:0;}
   .pub-date {font-size:$smallFontSize;color:$medium; padding:12px;}
 }
-
-
-// text
-
 
 // text + text
 .enhavo_grid_texttext {

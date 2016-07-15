@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Service;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +62,15 @@ class FileService
 
         $data = array();
 
+        $error = false;
+
         foreach($files as $file) {
+            /** @var $file UploadedFile */
+
+            if ($file->getError() != UPLOAD_ERR_OK) {
+                $error = true;
+                continue;
+            }
 
             $filePathinfo = pathinfo($file->getClientOriginalName());
             $slugifiedTitle = $slugifier->slugify($filePathinfo['filename']) . '.' . $filePathinfo['extension'];;
@@ -85,7 +94,11 @@ class FileService
                 throw $exception;
             }
 
-            $data['files'][] = $this->getFileInfo($entityFile);
+            $data[] = $this->getFileInfo($entityFile);
+        }
+
+        if ($error) {
+            throw new UploadException('Error in file upload');
         }
 
         return new JsonResponse($data);
