@@ -21,6 +21,7 @@ function GridForm(router, formScript)
           type: type
         });
 
+        // Generate unique placeholder for reindexing service
         var placeholder = '__grid_name' + placeholderIndex + '__';
         var formName = addButton.attr('data-name') + '[items][' + placeholder + ']';
         placeholderIndex++;
@@ -37,9 +38,8 @@ function GridForm(router, formScript)
             var position = addButton.attr('data-position');
             data = $.parseHTML(data);
 
-            $(data).find('[name]').each(function() {
-              $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
-            });
+            // Initialize sub-elements for reindexing
+            formScript.initReindexableItem(data, placeholder);
 
             if(position == 'top') {
               container.prepend(data);
