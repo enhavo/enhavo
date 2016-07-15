@@ -1,0 +1,7 @@
+.enhavo_grid_texttext {
+  .specific-column-title { font-family:$capitalFontBold; letter-spacing:$defaultLetterSpacing; text-transform:uppercase;color:$light; padding-bottom:15px;}
+  [class*=col-sm-] {
+    &:first-child {padding-right:$smallerColumnSpacing;}
+    &:nth-child(2) {padding-left:$smallerColumnSpacing;}
+  }
+}

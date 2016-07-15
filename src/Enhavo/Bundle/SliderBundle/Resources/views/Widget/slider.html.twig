@@ -4,7 +4,7 @@
         {% if slide.image %}
             <li class="slider-img" style="background-image:url({{ media_url(slide.image) }}); background-size:cover; background-attachment: fixed;">
                 <span class="hero-caption" href="">
-                    <p class="slide-text capitals">{{ slide.text|raw }}</p>
+                    <p class="slide-text">{{ slide.text|raw }}</p>
                     <h1 class="slide-title">{{ slide.title }}</h1>
                 </span>
             </li>

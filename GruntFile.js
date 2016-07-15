@@ -20,6 +20,12 @@ module.exports = function(grunt) {
               sassDir: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/css'
             },{
+              sassDir: 'src/Enhavo/Bundle/SliderBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/SliderBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/css'
+            },{
               sassDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/css'
             }

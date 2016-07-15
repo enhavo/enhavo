@@ -1,0 +1,23 @@
+@import 'compass';
+
+.slick-dots {
+  padding: 50px 0 100px 0;left: 50%;@include transform(translateX(-50%));position: absolute; background:#FFF;
+  li{
+    float:left; margin-right:8px;background:#5c91be;;border-radius:50%; display:block; width:12px; height:12px;border:0;
+    button{ text-indent:-99999px;background: none;border: 0;}
+    &.slick-active { background:#2a465b;}
+  }
+}
+
+.slick-arrow {
+  width:80px; height:80px; background:#ffec48; position:absolute; top:50%; margin-top:-80px;border:0; z-index:5;@include transition(all .3s);
+  &.slick-prev { left:0;}
+  &.slick-next { right:0;}
+  i{color:#FFF; font-size:24px;}
+  &:hover{ background:#2a465b;@include transition(all .3s);}
+}
+
+.slick-slider {
+  padding-bottom: 170px;
+  .slick-slide { height:auto;}
+}

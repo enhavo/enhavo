@@ -1,0 +1,4 @@
+.enhavo_grid_citetext {
+  font-size:$thirdHeadingFontSize;
+  &:before { margin-right:15px;content:"\201D";background: url(../img/speechbubble.svg) no-repeat center; display:inline-block; width:40px; height:42px;color:#FFF; font-family:monospace; font-size:35px; -webkit-background-size:100%;background-size:100%; padding:0 10px;}
+}

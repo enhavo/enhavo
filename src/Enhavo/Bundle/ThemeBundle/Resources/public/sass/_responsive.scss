@@ -360,13 +360,13 @@
   .enhavo_grid_citetext { font-size:$bigFontSize;}
   .enhavo_grid_picturepicture { padding-bottom:120px;}
   .enhavo_grid .border-left { border-left:0;}
-  .picture_caption { padding-bottom:0;}
+  .picture_caption { padding-bottom:45px;}
   #article .enhavo_grid .enhavo_grid_text { padding-bottom:0;}
   .enhavo_grid_texttext { padding-bottom:120px;}
   .enhavo_grid_picture { padding-bottom:120px;}
   .enhavo_grid {
     .enhavo_grid_textpicture {
-      .enhavo_grid_img { padding:75px 0 0 0;}
+      .enhavo_grid_img { margin:75px 0 0 0;}
     }
   }
 }
