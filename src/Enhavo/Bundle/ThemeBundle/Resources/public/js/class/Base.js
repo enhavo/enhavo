@@ -14,8 +14,40 @@ function Base() {
       this.getCategoryHeight();
       this.setWaypoints();
       this.handleFormMessage();
+      this.createStickyElements();
+      this.fadeOutSidebar();
     };
 
+  this.fadeOutSidebar = function() {
+    var documentHeight = $(document).height();
+    var contentHeight = $("main").height();
+
+    console.log("document"+documentHeight);
+    console.log("content"+contentHeight);
+
+    if ( documentHeight > contentHeight ) {
+      $(".fade-out-widgets").show();
+      console.log("gdsj");
+    }
+  }
+
+  this.createStickyElements = function() {
+    var stickyNavTop = $("header").height();
+
+    var stickyNav = function(){
+      var scrollTop = $(window).scrollTop();
+
+      if (scrollTop > stickyNavTop) {
+        $('.widget-area').addClass('sticky');
+      } else {
+        $('.widget-area').removeClass('sticky');
+      }
+    };
+    stickyNav();
+    $(window).scroll(function() {
+      stickyNav();
+    });
+  }
 
   this.handleFormMessage = function(){
     $("[data-send-message]").on("click", function(){
@@ -101,10 +133,8 @@ function Base() {
         clickCount = 5;
         article.slice(clickCount).fadeOut();
         $('html, body').animate({ scrollTop: ($("#article-feed").offset().top)}, 'slow');
+        $(this).html("Show more articles <br> <i class='icon-circle-with-plus'></i>");
       }
-      //if (clickCount == numberOfArticles) {
-      //
-      //}
     });
 
     // hide elements if articles less than 5

@@ -28,6 +28,9 @@ module.exports = function(grunt) {
             },{
               sassDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/GridBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/GridBundle/Resources/public/css'
             }
           ]
         }
@@ -35,7 +38,7 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: 'src/Enhavo/Bundle/*Bundle/Resources/public/sass/*.scss',
+        files: 'src/Enhavo/Bundle/*Bundle/Resources/public/sass/**/*.scss',
         tasks: ['compassMultiple'],
         options: {
           interrupt: true

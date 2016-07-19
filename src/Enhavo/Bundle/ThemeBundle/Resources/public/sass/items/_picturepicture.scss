@@ -4,3 +4,7 @@
     &:nth-child(2) {padding-left:$smallerColumnSpacing;}
   }
 }
+
+@media all and (max-width:767px) {
+  .enhavo_grid_picturepicture { padding-bottom:120px;}
+}

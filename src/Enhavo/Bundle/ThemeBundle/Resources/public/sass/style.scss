@@ -1,7 +1,10 @@
-@import 'vars';
-@import 'reset';
-@import 'bootstrap.custom';
 @import "compass";
-@import 'general';
-@import 'animation';
-@import 'responsive';
+@import 'partials/vars';
+@import 'partials/reset';
+@import 'partials/bootstrap.custom';
+@import 'partials/animation';
+
+@import 'start';
+@import 'base';
+@import 'theme';
+@import 'responsive/responsive';
