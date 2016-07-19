@@ -1,6 +1,6 @@
-<div class="enhavo_grid enhavo_grid_picture">
+<div class="enhavo_grid enhavo_grid_picture container">
     {% if data.title %}
-        <h2>{{ data.title|raw }}</h2>
+        <h2 class="title">{{ data.title|raw }}</h2>
     {% endif %}
     <img class="enhavo_grid_img" src="{{ media_url(data.file,960) }}">
     {% if data.caption %}

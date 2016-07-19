@@ -1,7 +1,16 @@
 <div class="enhavo_grid">
-    <div class="row enhavo_grid_gallery">
-        {% for file in data.files %}
-            <img src="{{ media_url(file) }}" />
-        {% endfor %}
+    {% if data.text %}
+    <div class="container">
+        <p>{{ data.text|raw }}</p>
+    </div>
+    {% endif %}
+    <div class="enhavo_grid_gallery">
+        <div class="slider">
+            {% for file in data.files %}
+                <div>
+                    <img src="{{ media_url(file) }}" />
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>

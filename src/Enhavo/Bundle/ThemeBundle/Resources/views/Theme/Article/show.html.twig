@@ -1,22 +1,23 @@
 {% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
 
-{% block bodyclass %}view{% endblock %}
+{% block bodyclass %}light{% endblock %}
 
 {% block main %}
-    <div class="container article-view">
-        <section id="article">
+    <section id="article">
             <article>
                 <div class="article-head">
-                    <h3>{{ article.title }}</h3>
-                    {% for category in article.categories %}
-                        <p class="category capitals spacing">{{ category }}</p>
-                    {% endfor %}
+                    <div class="container npb">
+                        <h1 class="article-title">{{ article.title }}</h1>
+                        {% for category in article.categories %}
+                            <p class="category capitals spacing">{{ category }}</p>
+                        {% endfor %}
+                        <a href="/" class="back-to-blog"><i class="icon-forward"></i></a>
+                    </div>
                 </div>
                 {{ grid_render(article.grid) }}
-                <a href="/" class="back-to-blog"><i class="icon-forward"></i></a>
             </article>
-        </section>
-    </div>
+        </div>
+    </section>
     <div class="article-footer">
         <div class="container">
             <p class="pub-date capitals">published on {{ article.publicationDate|date('d.m.Y') }}</p>

@@ -1,0 +1,16 @@
+{% use 'EnhavoSliderBundle:Widget:slider.html.twig' %}
+{% if slides %}
+<div id="hero">
+    {{ block('slider') }}
+    <div class="container npam">
+        <div id="secondary">
+            <div class="logo"></div>
+            <ul class="socialmedia">
+                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                <li><a href="#"><i class="icon-pinterest"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
