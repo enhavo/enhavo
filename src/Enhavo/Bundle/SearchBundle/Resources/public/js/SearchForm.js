@@ -32,6 +32,11 @@ function SearchForm(router, admin) {
             });
             return false;
         });
+
+        $("[data-show-search-options]").on("click", function(){
+          $("[data-search-options]").fadeToggle(300);
+        })
+
     };
 
     this.initResults = function() {
