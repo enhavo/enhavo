@@ -41,6 +41,22 @@ picturePicture:
   label:
     picturePicture: 'Picture | Picture'
     caption: 'Caption'
+treePicture:
+  form:
+    label:
+      title_left: 'Title left'
+      picture_left: 'Picture left'
+      caption_left: 'Caption left'
+
+      title_center: 'Title center'
+      picture_center: 'Picture center'
+      caption_center: 'Caption center'
+
+      title_right: 'Title right'
+      picture_right: 'Picture right'
+      caption_right: 'Caption right'
+  label:
+    threePicture: 'Three Picture'
 gallery:
   form:
     label:
