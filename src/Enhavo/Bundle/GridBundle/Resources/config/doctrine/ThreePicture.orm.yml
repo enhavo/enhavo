@@ -15,7 +15,7 @@ Enhavo\Bundle\GridBundle\Entity\ThreePicture:
             nullable: true
 
         titleRight:
-            type: boolean
+            type: string
             length: 255
             nullable: true
 
@@ -30,7 +30,7 @@ Enhavo\Bundle\GridBundle\Entity\ThreePicture:
             nullable: true
 
         captionRight:
-            type: boolean
+            type: string
             length: 255
             nullable: true
 
