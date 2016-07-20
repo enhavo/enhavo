@@ -2,7 +2,9 @@
     {% if data.title %}
         <h2 class="title">{{ data.title|raw }}</h2>
     {% endif %}
-    <img class="enhavo_grid_img" src="{{ media_url(data.file,960) }}">
+    {% if data.file %}
+        <img class="enhavo_grid_img" src="{{ media_url(data.file,960) }}">
+    {% endif %}
     {% if data.caption %}
         <p class="picture_caption">{{ data.caption }}</p>
     {% endif %}
