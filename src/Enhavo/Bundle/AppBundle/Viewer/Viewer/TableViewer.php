@@ -113,8 +113,8 @@ class TableViewer extends AbstractViewer
             'batches' => $this->getBatches(),
             'batch_route' => $this->getBatchRoute(),
             'width' => $this->optionAccessor->get('width'),
-            'move_after_route' => $this->optionAccessor->get('table.sorting.move_after_route'),
-            'move_to_page_route' => $this->optionAccessor->get('table.sorting.move_to_page_route'),
+            'move_after_route' => $this->optionAccessor->get('sorting.move_after_route'),
+            'move_to_page_route' => $this->optionAccessor->get('sorting.move_to_page_route'),
         ]));
         return $view;
     }

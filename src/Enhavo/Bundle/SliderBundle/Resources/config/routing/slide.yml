@@ -18,6 +18,7 @@ enhavo_slider_slide_create:
     defaults:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
+            sortable_position: position
             sorting_strategy: desc_first
             viewer:
                 translationDomain: EnhavoSliderBundle
@@ -41,12 +42,12 @@ enhavo_slider_slide_table:
     defaults:
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
+            sortable: true
             sorting:
                 position: desc
             viewer:
                 translationDomain: EnhavoSliderBundle
                 sorting:
-                    sortable: true
                     move_after_route: enhavo_slider_slide_move_after
                     move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
@@ -94,8 +95,7 @@ enhavo_slider_slide_move_after:
         _controller: enhavo_slider.controller.slide:moveAfterAction
         _sylius:
             sortable_position: position
-            viewer:
-                sorting: desc
+            sorting_strategy: desc_first
 
 enhavo_slider_slide_move_to_page:
     options:
@@ -106,5 +106,4 @@ enhavo_slider_slide_move_to_page:
         _controller: enhavo_slider.controller.slide:moveToPageAction
         _sylius:
             sortable_position: position
-            viewer:
-                sorting: desc
+            sorting_strategy: desc_first

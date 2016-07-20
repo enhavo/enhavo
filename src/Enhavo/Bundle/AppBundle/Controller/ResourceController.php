@@ -110,7 +110,7 @@ class ResourceController extends BaseController
                 $newResource = $form->getData();
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
-                $this->sortingManger->update($configuration, $this->metadata, $newResource, $this->repository);
+                $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
             }
         }
@@ -256,8 +256,8 @@ class ResourceController extends BaseController
     public function moveAfterAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $this->sortingManger->moveAfter($configuration, $this->metadata, $this->repository, $request->get('targetId'));
+        $resource = $this->findOr404($configuration);
+        $this->sortingManger->moveAfter($configuration, $this->metadata, $resource, $this->repository, $request->get('target'));
 
         return new JsonResponse();
     }
@@ -269,8 +269,8 @@ class ResourceController extends BaseController
     public function moveToPageAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $this->sortingManger->moveToPage($configuration, $this->metadata, $this->repository, $request->get('page'), $request->get('top'));
+        $resource = $this->findOr404($configuration);
+        $this->sortingManger->moveToPage($configuration, $this->metadata, $resource, $this->repository, $request->get('page'), $request->get('top'));
 
         return new JsonResponse();
     }

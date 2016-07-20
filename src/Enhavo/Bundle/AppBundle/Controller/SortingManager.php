@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -30,16 +31,15 @@ class SortingManager
         $this->em = $em;
     }
 
-    public function update(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, RepositoryInterface $repository)
+    public function initialize(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, EntityRepository $repository)
     {
         $accessor = PropertyAccess::createPropertyAccessor();
         $property = $requestConfiguration->getSortablePosition();
         $strategy = $requestConfiguration->getSortingStrategy();
+
         if ($strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_ASC_FIRST) {
-            // Value is 0, but we need to move all other elements one up
-            $existingResources = $repository->findBy([], [
-                $property => $strategy == self::STRATEGY_DESC_LAST ? 'desc' : 'asc'
-            ]);
+            // target value is 0, and we need to move all other elements one up
+            $existingResources = $repository->findAll();
             if ($existingResources) {
                 foreach($existingResources as $existingResource) {
                     if($resource === $existingResource) {
@@ -57,10 +57,10 @@ class SortingManager
                 }
             }
             $newValue = 0;
-        } elseif($strategy == self::STRATEGY_DESC_FIRST || $strategy == self::STRATEGY_ASC_LAST) {
+        } else {
             // Initial value is maximum of other elements + 1
             $maxResource = $repository->createQueryBuilder('r')
-                ->orderBy('r.' . $property, $strategy == self::STRATEGY_DESC_FIRST ? 'desc' : 'asc')
+                ->orderBy('r.' . $property, 'desc')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
@@ -82,6 +82,15 @@ class SortingManager
         $this->em->flush();
     }
 
+    /**
+     * Moves resource directly behind the position of existing object with id $target
+     *
+     * @param RequestConfiguration $requestConfiguration
+     * @param MetadataInterface $metadataInterface
+     * @param $resource
+     * @param RepositoryInterface $repository
+     * @param int $target
+     */
     public function moveAfter(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, RepositoryInterface $repository, $target)
     {
         $property = $requestConfiguration->getSortablePosition();
@@ -93,55 +102,71 @@ class SortingManager
             $resource,
             $property
         );
-
         $targetValue = $accessor->getValue(
             $targetResource,
             $property
         );
 
         if ($resourceValue === null || $targetValue === null || $resourceValue == $targetValue) {
-            $this->recalculateSortingProperty($property, $requestConfiguration->getSortingStrategy(), $repository);
+            // Errors in value consistency: recalculate all position values for this entity
+            $this->recalculateSortingProperty($property, $repository);
 
             $resourceValue = $accessor->getValue(
                 $resource,
                 $property
             );
-
             $targetValue = $accessor->getValue(
                 $targetResource,
                 $property
             );
         }
 
+        // Adjust target position based on the resources position relative to the targets position
         if (($strategy == self::STRATEGY_ASC_LAST || $strategy == self::STRATEGY_ASC_FIRST) && ($resourceValue > $targetValue)) {
+            // Resource is below target
+            // To get to position one below target, we don't need to move target, only get to position one below, which means to position + 1 in asc strategies.
             $targetPosition = $targetValue + 1;
         } elseif (($strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_DESC_FIRST) && ($resourceValue < $targetValue)) {
+            // Resource is below target
+            // To get to position one below target, we don't need to move target, only get to position one below, which means to position - 1 in desc strategies.
             $targetPosition = $targetValue - 1;
         } else {
+            // Resource is above target, we need to move target as well to get to the position one below
             $targetPosition = $targetValue;
         }
 
+        // Execute movement
         $this->moveToPosition($resource, $targetPosition, $property, $strategy, $repository);
     }
 
-
-    public function moveToPage(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, RepositoryInterface $repository, $page, $top)
+    /**
+     * Moves resource to the top or bottom of a pagination page.
+     *
+     * @param RequestConfiguration $requestConfiguration
+     * @param MetadataInterface $metadataInterface
+     * @param $resource
+     * @param EntityRepository $repository
+     * @param int $page
+     * @param bool $top
+     */
+    public function moveToPage(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, $repository, $page, $top)
     {
         $property = $requestConfiguration->getSortablePosition();
         $strategy = $requestConfiguration->getSortingStrategy();
         $paginate = $requestConfiguration->getPaginationMaxPerPage();
-        $sorting = $strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_DESC_FIRST ? 'desc' : 'asc';
-        $pageOffset = ($page - 1) * $paginate + ($top ? 0 : ($paginate -1));
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $sorting = ($strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_DESC_FIRST) ? 'desc' : 'asc';
+        $targetPosition = ($page - 1) * $paginate + ($top ? 0 : ($paginate -1));
 
         $target = $repository->createQueryBuilder('r')
-            ->orderBy('r.' . $property, $property, $sorting)
-            ->setFirstResult($pageOffset)
+            ->orderBy('r.' . $property, $sorting)
+            ->setFirstResult($targetPosition)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
 
         if (!$target) {
-            // Last element
+            // The target position is after the last element, get last element instead
             $target = $repository->createQueryBuilder('r')
                 ->addOrderBy('r.' . $property, $sorting)
                 ->addOrderBy('r.id', 'DESC')
@@ -150,28 +175,37 @@ class SortingManager
                 ->getOneOrNullResult();
         }
 
-        $accessor = PropertyAccess::createPropertyAccessor();
         $resourceValue = $accessor->getValue(
             $resource,
             $property
         );
-
         $targetValue = $accessor->getValue(
             $target,
             $property
         );
 
         if ($resourceValue === null || $targetValue === null || $resourceValue == $targetValue) {
-            $this->recalculateSortingProperty($property, $sorting, $repository);
+            // Errors in value consistency: recalculate all position values for this entity
+            $this->recalculateSortingProperty($property, $repository);
             $targetValue = $accessor->getValue(
                 $target,
                 $property
             );
         }
 
+        // Execute movement
         $this->moveToPosition($resource, $targetValue, $property, $strategy, $repository);
     }
 
+    /**
+     * Moves every object between the resource and its target position 1 up/down and places the resource at its new position
+     *
+     * @param $resource
+     * @param int $position
+     * @param string $property
+     * @param string $strategy
+     * @param EntityRepository $repository
+     */
     protected function moveToPosition($resource, $position, $property, $strategy, $repository)
     {
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -183,6 +217,8 @@ class SortingManager
             $resource,
             $property
         );
+
+        // Get all objects between current position and target position, including both
         $max = max($resourceValue, $position);
         $min = min($resourceValue, $position);
         $movement = ($resourceValue < $position) ? -1 : +1;
@@ -192,10 +228,11 @@ class SortingManager
             ->andWhere('r.' . $property . ' >= :min')
             ->setParameter('max', $max)
             ->setParameter('min', $min)
-            ->orderBy('r.' . $property, $strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_DESC_FIRST ? 'desc' : 'asc')
+            ->orderBy('r.' . $property, ($strategy == self::STRATEGY_DESC_LAST || $strategy == self::STRATEGY_DESC_FIRST) ? 'desc' : 'asc')
             ->getQuery()
             ->getResult();
 
+        // Move all objects between 1 up or down
         foreach($toMove as $object) {
 
             $objectId = $accessor->getValue(
@@ -221,6 +258,7 @@ class SortingManager
             );
         }
 
+        // Move resource to target position
         $accessor->setValue(
             $resource,
             $property,
@@ -230,20 +268,23 @@ class SortingManager
         $this->em->flush();
     }
 
-    protected function recalculateSortingProperty($property, $sorting, $repository)
+    /**
+     * Should be run if there are null values or multiple objects with the same value in the sorting property,
+     * for example after creating a new sorting property on an existing entity.
+     * Gives all objects a distinct sorting position value.
+     *
+     * @param string $property
+     * @param EntityRepository $repository
+     */
+    protected function recalculateSortingProperty($property, $repository)
     {
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        if (!in_array($sorting, array('ASC', 'DESC'))) {
-            $sorting = 'DESC';
-        }
+        // Get all objects, preserve order where possible
+        $allEntities = $repository->findBy(array(), array($property => 'ASC'));
 
-        $allEntities = $repository->findBy(array(), array($property => $sorting));
-        if ($sorting == 'DESC') {
-            $allEntities = array_reverse($allEntities);
-        }
+        // Replace position value with distinct ascending number
         $i = 0;
-
         foreach($allEntities as $resource) {
             $accessor->setValue(
                 $resource,
@@ -251,6 +292,7 @@ class SortingManager
                 $i++
             );
         }
+
         $this->em->flush();
     }
 }
