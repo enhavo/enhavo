@@ -6,28 +6,25 @@ function Base() {
       var pathname = window.location.pathname;
       if (pathname == "/") {
         this.handleArticleFeed();
+        this.setWaypoints();
       }
       this.initMap();
       this.handleMenu();
       this.viewOnTablet();
       this.initSlider();
       this.getCategoryHeight();
-      this.setWaypoints();
       this.handleFormMessage();
       this.createStickyElements();
       this.fadeOutSidebar();
+      this.setTitleHeightOfThreePictureItem();
     };
 
   this.fadeOutSidebar = function() {
     var documentHeight = $(document).height();
     var contentHeight = $("main").height();
 
-    console.log("document"+documentHeight);
-    console.log("content"+contentHeight);
-
     if ( documentHeight > contentHeight ) {
       $(".fade-out-widgets").show();
-      console.log("gdsj");
     }
   }
 
@@ -53,6 +50,18 @@ function Base() {
     $("[data-send-message]").on("click", function(){
       $("#contact_message").addClass("show");
     })
+  }
+
+  this.setTitleHeightOfThreePictureItem = function(){
+    var maxHeight = -1;
+
+    $('[data-image-title]').each(function() {
+      maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+    });
+
+    $('[data-image-title]').each(function() {
+      $(this).height(maxHeight);
+    });
   }
 
   this.initSlider = function () {

@@ -1,34 +1,34 @@
 <div class="enhavo_grid">
-    <div class="enhavo_grid_picturepicture container">
+    <div class="enhavo_grid_threepictures container">
         <div class="row">
-            <div class="col-sm-4 left4">
+            <div class="col-sm-4 left4" data-threepicture-column>
                 {% if data.titleLeft %}
-                    <h3>{{ data.titleLeft }}</h3>
+                    <h3 data-image-title>{{ data.titleLeft }}</h3>
                 {% endif %}
                 {% if data.fileLeft %}
-                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.fileLeft,960) }}">
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileLeft,960) }}" data-grid-image>
                 {% endif %}
                 {% if data.captionLeft %}
                     <p class="picture_caption">{{ data.captionLeft }}</p>
                 {% endif %}
             </div>
-            <div class="col-sm-4 right4">
+            <div class="col-sm-4 right4" data-threepicture-column>
                 {% if data.titleCenter %}
-                    <h3>{{ data.titleCenter }}</h3>
+                    <h3 data-image-title>{{ data.titleCenter }}</h3>
                 {% endif %}
                 {% if data.fileCenter %}
-                    <img class="enhavo_grid_img {% if data.fileCenter %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.fileCenter,960) }}">
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileCenter,960) }}" data-grid-image>
                 {% endif %}
                 {% if data.captionCenter %}
                     <p class="picture_caption">{{ data.captionCenter }}</p>
                 {% endif %}
             </div>
-            <div class="col-sm-4 right4">
+            <div class="col-sm-4 right4" data-threepicture-column>
                 {% if data.titleRight %}
-                    <h3>{{ data.titleRight }}</h3>
+                    <h3 data-image-title>{{ data.titleRight }}</h3>
                 {% endif %}
                 {% if data.fileRight %}
-                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.fileRight,960) }}">
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileRight,960) }}" data-grid-image>
                 {% endif %}
                 {% if data.captionRight %}
                     <p class="picture_caption">{{ data.captionRight }}</p>
