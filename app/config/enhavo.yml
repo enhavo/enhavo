@@ -112,6 +112,13 @@ enhavo_grid:
             template: EnhavoGridBundle:Item:picture_picture.html.twig
             label: picturePicture.label.picturePicture
             translationDomain: EnhavoGridBundle
+        three_picture:
+            model: Enhavo\Bundle\GridBundle\Entity\ThreePicture
+            form: Enhavo\Bundle\GridBundle\Form\Type\ThreePictureType
+            repository: EnhavoGridBundle:ThreePicture
+            template: EnhavoGridBundle:Item:three_picture.html.twig
+            label: threePicture.label.threePicture
+            translationDomain: EnhavoGridBundle
         gallery:
             model: Enhavo\Bundle\GridBundle\Entity\Gallery
             form: Enhavo\Bundle\GridBundle\Form\Type\GalleryType
