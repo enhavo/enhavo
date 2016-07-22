@@ -426,5 +426,5 @@ define(['jquery', 'app/templating', 'app/admin', 'app/translator', 'jquery-ui-ti
     init();
   };
 
-  new Form();
+  return new Form();
 });
