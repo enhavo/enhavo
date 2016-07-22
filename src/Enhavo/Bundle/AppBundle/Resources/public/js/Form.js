@@ -1,4 +1,4 @@
-define(['jquery', 'app/templating', 'app/admin', 'app/translator', 'jquery-ui-timepicker'], function($, templating, admin, translator, timepicker) {
+define(['jquery', 'app/templating', 'app/admin', 'app/translator', 'jquery-ui-timepicker', 'jquery-tinymce'], function($, templating, admin, translator, timepicker, tinyMCE) {
 
   var Form = function () {
     var self = this;
