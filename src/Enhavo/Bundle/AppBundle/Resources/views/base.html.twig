@@ -32,21 +32,11 @@
         {% endif %}
     {% endblock %}
 
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/jqueryui-timepicker-addon/jquery-ui-timepicker-addon.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.iframe-transport.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
+    {{ require_js_configuration() }}
 
 
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/icheck/icheck.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/tinymce/jquery.tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/select2/select2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoassets/vendor/cropper/dist/cropper.min.js') }}"></script>
-
+    <!--
     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
@@ -67,6 +57,7 @@
     <script type="text/javascript" src="{{ asset('bundles/enhavocategory/js/CategoryForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavoslider/js/SliderForm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enhavosearch/js/SearchForm.js') }}"></script>
+    -->
 
     {% block javascripts %}
         <!-- additional javascripts -->
@@ -75,12 +66,6 @@
                 <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
             {% endfor %}
         {% endif %}
-
-        <script type="text/javascript">
-            $(function() {
-                admin.initDescriptionTextPosition();
-            });
-        </script>
     {% endblock %}
 
 </head>

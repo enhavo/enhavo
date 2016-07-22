@@ -1,0 +1,37 @@
+enhavo_assets:
+    require_js:
+        paths:
+            jquery:
+                location: /bundles/enhavoassets/vendor/jquery/dist/jquery.min
+            jquery-ui:
+                location: /bundles/enhavoassets/vendor/jquery/dist/jquery-ui.min
+            jquery-ui-timepicker:
+                location: /bundles/enhavoassets/vendor/jqueryui-timepicker-addon/jquery-ui-timepicker-addon
+            blueimp-file-upload:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.fileupload
+            jquery-ui-widget:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/vendor/jquery.ui.widget
+            jquery-iframe-transport:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.iframe-transport
+            icheck:
+                location: /bundles/enhavoassets/vendor/icheck/icheck.min
+            jquery-tinymce:
+                location: /bundles/enhavoassets/vendor/tinymce/jquery.tinymce.min
+            tinymce:
+                location: /bundles/enhavoassets/vendor/tinymce/tinymce.min
+            select2:
+                location: /bundles/enhavoassets/vendor/select2/select2.min
+            cropper:
+                location: /bundles/enhavoassets/vendor/cropper/dist/cropper
+            app:
+                location: /bundles/enhavoapp/js
+            media:
+                location: /bundles/enhavomedia/js
+            newsletter:
+                location: /bundles/enhavonewsletter/js
+            category:
+                location: /bundles/enhavocategory/js
+            slider:
+                location: /bundles/enhavoslider/js
+            search:
+                location: /bundles/enhavosearch/js
