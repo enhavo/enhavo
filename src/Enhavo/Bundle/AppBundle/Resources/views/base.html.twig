@@ -24,7 +24,6 @@
 
 
     {% block stylesheets %}
-        <!-- additional stylesheets -->
         {% if viewer is defined %}
             {% for stylesheet in viewer.stylesheets %}
                 <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
@@ -32,35 +31,14 @@
         {% endif %}
     {% endblock %}
 
-
-    {{ require_js_configuration() }}
-
-
-    <!--
-    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
-    <script type="text/javascript" src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ path('bazinga_jstranslation_js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Form.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Admin.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Templating.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/classes/Button.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/plugin.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoapp/js/bootstrap.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('bundles/enhavomedia/js/ImageCropper.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavomedia/js/UploadForm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavogrid/js/ContentForm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavonewsletter/js/NewsletterForm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavocategory/js/CategoryForm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavoslider/js/SliderForm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/enhavosearch/js/SearchForm.js') }}"></script>
-    -->
-
     {% block javascripts %}
-        <!-- additional javascripts -->
+
+        {{ require_js_configuration() }}
+
+        <script type="text/javascript">
+            require(['app/main'], function(main) {});
+        </script>
+
         {% if viewer is defined %}
             {% for javascript in viewer.javascripts %}
                 <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>

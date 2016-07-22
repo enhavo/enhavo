@@ -5,11 +5,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        $(function() {
-            admin.initBlocks();
-            admin.initActions();
-            admin.initAfterSaveHandler();
-        });
+        require(['app/index'], function(index) {});
     </script>
 {% endblock %}
 
