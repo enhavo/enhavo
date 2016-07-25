@@ -10,7 +10,6 @@ use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\GridBundle\Item\Type\Text;
 
 class TextPictureType extends ItemFormType
 {
@@ -26,15 +25,15 @@ class TextPictureType extends ItemFormType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
+        $builder->add('caption', 'text', array(
+            'label' => 'textPicture.form.label.caption',
+            'translation_domain' => 'EnhavoGridBundle',
+        ));
+
         $builder->add('file', 'enhavo_files', array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false
-        ));
-
-        $builder->add('frame', 'enhavo_boolean', array(
-            'label' => 'textPicture.form.label.frame',
-            'translation_domain' => 'EnhavoGridBundle'
         ));
 
         $builder->add('textLeft', 'enhavo_boolean', array(
@@ -46,6 +45,11 @@ class TextPictureType extends ItemFormType
             ),
             'expanded' => true,
             'multiple' => false
+        ));
+
+        $builder->add('float', 'enhavo_boolean', array(
+            'label' => 'textPicture.form.label.float',
+            'translation_domain' => 'EnhavoGridBundle'
         ));
     }
 
