@@ -1,7 +1,16 @@
 parameters:
-#    enhavo_assets.example.class: Enhavo\Bundle\AssetsBundle\Example
 
 services:
-#    enhavo_assets.example:
-#        class: %enhavo_assets.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    enhavo_assets.require_js.configuration:
+        class: Enhavo\Bundle\AssetsBundle\RequireJS\Configuration
+        arguments:
+            - %enhavo_assets.require_js%
+            - @templating.helper.assets
+
+    enhavo_assets.require_js.configuration_renderer:
+        class: Enhavo\Bundle\AssetsBundle\RequireJS\ConfigurationRenderer
+        arguments:
+            - @enhavo_assets.require_js.configuration
+            - @service_container
+        tags:
+            - { name: twig.extension }

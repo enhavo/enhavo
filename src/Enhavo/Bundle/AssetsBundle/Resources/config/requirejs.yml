@@ -1,0 +1,87 @@
+enhavo_assets:
+    require_js:
+        paths:
+            jquery:
+                location: /bundles/enhavoassets/vendor/jquery/dist/jquery.min
+                exports: jquery
+
+            jquery-ui:
+                location: /bundles/enhavoassets/vendor/jquery-ui/jquery-ui.min
+                exports: jquery
+                dependencies: [jquery]
+
+            jquery-ui-timepicker:
+                location: /bundles/enhavoassets/vendor/jqueryui-timepicker-addon/jquery-ui-timepicker-addon
+                exports: jquery
+                dependencies: [jquery, jquery-ui]
+
+            jquery.ui.widget:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/vendor/jquery.ui.widget
+                exports: jquery
+                dependencies: [jquery, jquery-ui]
+
+            jquery-iframe-transport:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.iframe-transport
+                exports: jquery
+                dependencies: [jquery]
+
+            blueimp-file-upload:
+                location: /bundles/enhavoassets/vendor/blueimp-file-upload/js/jquery.fileupload
+                exports: jquery
+                dependencies: [jquery, jquery.ui.widget, jquery-iframe-transport]
+
+            icheck:
+                location: /bundles/enhavoassets/vendor/icheck/icheck.min
+                exports: jquery
+                dependencies: [jquery]
+
+            jquery-tinymce:
+                location: /bundles/enhavoassets/vendor/tinymce/jquery.tinymce.min
+                exports: jquery
+                dependencies: [jquery, tinymce]
+
+            tinymce:
+                location: /bundles/enhavoassets/vendor/tinymce/tinymce.min
+
+            select2:
+                location: /bundles/enhavoassets/vendor/select2/select2.min
+                exports: jquery
+                dependencies: [jquery]
+
+            cropper:
+                location: /bundles/enhavoassets/vendor/cropper/dist/cropper
+                exports: jquery
+                dependencies: [jquery]
+
+            fos-routing:
+                location: /bundles/fosjsrouting/js/router
+                exports: Routing
+
+            fos-routing-data:
+                location: /js/routing.json
+
+            app:
+                location: /bundles/enhavoapp/js
+
+            media:
+                location: /bundles/enhavomedia/js
+
+            newsletter:
+                location: /bundles/enhavonewsletter/js
+
+            category:
+                location: /bundles/enhavocategory/js
+
+            slider:
+                location: /bundles/enhavoslider/js
+
+            search:
+                location: /bundles/enhavosearch/js
+
+            assets:
+                location: /bundles/enhavoassets/js
+
+
+
+
+

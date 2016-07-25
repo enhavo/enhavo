@@ -1,10 +1,10 @@
 @font-face {
-  font-family: 'enhavo_iconfont';
-  src: url('../fonts/enhavo_iconfont.eot?53604475');
-  src: url('../fonts/enhavo_iconfont.eot?53604475#iefix') format('embedded-opentype'),
-       url('../fonts/enhavo_iconfont.woff?53604475') format('woff'),
-       url('../fonts/enhavo_iconfont.ttf?53604475') format('truetype'),
-       url('../fonts/enhavo_iconfont.svg?53604475#enhavo_iconfont') format('svg');
+  font-family: 'enhavo-iconfont';
+  src: url('../fonts/enhavo-iconfont.eot?53604475');
+  src: url('../fonts/enhavo-iconfont.eot?53604475#iefix') format('embedded-opentype'),
+       url('../fonts/enhavo-iconfont.woff?53604475') format('woff'),
+       url('../fonts/enhavo-iconfont.ttf?53604475') format('truetype'),
+       url('../fonts/enhavo-iconfont.svg?53604475#enhavo-iconfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -13,14 +13,14 @@
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: 'enhavo_iconfont';
-    src: url('../font/enhavo_iconfont.svg?53604475#enhavo_iconfont') format('svg');
+    font-family: 'enhavo-iconfont';
+    src: url('../font/enhavo-iconfont.svg?53604475#enhavo-iconfont') format('svg');
   }
 }
 */
  
  [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "enhavo_iconfont";
+  font-family: "enhavo-iconfont";
   font-style: normal;
   font-weight: normal;
   speak: none;
