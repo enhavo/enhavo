@@ -21,7 +21,8 @@ textPicture:
       position: 'Positionierung'
       picture_left-text_right: 'Bild | Text'
       text_left-picture_right: 'Text | Bild'
-      frame: 'Rahmen für Bild'
+      float: 'Text umfließen'
+      caption: 'BU'
   label:
     textPicture: 'Text | Bild'
 picture:
@@ -37,7 +38,6 @@ picturePicture:
       caption_left: 'Bildunterschrift links'
       picture_right: 'Bild rechts'
       caption_right: 'Bildunterschrift rechts'
-      frame: 'Rahmen für Bild'
   label:
       picturePicture: 'Bild | Bild'
       caption: 'Bild Titel'

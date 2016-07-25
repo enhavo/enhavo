@@ -21,7 +21,8 @@ textPicture:
       position: 'Position'
       picture_left-text_right: 'Picture | Text'
       text_left-picture_right: 'Text | Picture'
-      frame: 'Frame for picture'
+      float: 'Float text'
+      caption: 'Caption'
   label:
       textPicture: 'Text | Picture'
 picture:
@@ -37,7 +38,6 @@ picturePicture:
       caption_left: 'Picture title left'
       picture_right: 'Picture right'
       caption_right: 'Picture title right'
-      frame: 'Frame for picture'
   label:
     picturePicture: 'Picture | Picture'
     caption: 'Caption'

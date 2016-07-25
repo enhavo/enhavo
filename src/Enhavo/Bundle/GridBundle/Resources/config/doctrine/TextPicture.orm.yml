@@ -15,15 +15,17 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
             type: string
             length: 255
             nullable: true
+        caption:
+            type: string
+            length: 255
+            nullable: true
         textLeft:
-            type: integer
-            nullable: true
-        frame:
             type: boolean
             nullable: true
-        frame:
+        float:
             type: boolean
             nullable: true
+            column: `float`
 
     oneToOne:
         file:
