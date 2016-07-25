@@ -20,8 +20,20 @@ module.exports = function(grunt) {
               sassDir: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/css'
             },{
+              sassDir: 'src/Enhavo/Bundle/SliderBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/SliderBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/css'
+            },{
               sassDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/AppBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/GridBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/GridBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/SearchBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/SearchBundle/Resources/public/css'
             },{
               sassDir: 'src/Enhavo/Bundle/AssetsBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/AssetsBundle/Resources/public/css'
@@ -32,7 +44,7 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: 'src/Enhavo/Bundle/*Bundle/Resources/public/sass/*.scss',
+        files: 'src/Enhavo/Bundle/*Bundle/Resources/public/sass/**/*.scss',
         tasks: ['compassMultiple'],
         options: {
           interrupt: true

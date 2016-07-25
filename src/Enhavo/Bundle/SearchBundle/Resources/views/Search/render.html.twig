@@ -1,21 +1,31 @@
-
 <form action="{{ path('enhavo_search_submit', { type: type }) }}" id="search_form">
     <input id="search" name="search" placeholder="{{ 'search.label.search'|trans({}, 'EnhavoSearchBundle') }}">
     <button type="submit" value="search" id="submit_search"></button><br>
-    {% if entities %}
-        {{ 'search.label.types'|trans({}, 'EnhavoSearchBundle')|nl2br }}
-        <div>
-        {% for key, entity in entities %}
-            <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="entities[]" value={{ key }}>{{ entity.label|trans({}, entity.translationDomain)|nl2br }}</label>
-        {% endfor %}
+    <button class="btn show search-options" data-show-search-options>Suchoptionen einblenden</button>
+    <div class="row search-list-container clearfix" data-search-options>
+        <div class="column">
+            <div class="container-1">
+            {% if entities %}
+                <p class="search-type">{{ 'search.label.types'|trans({}, 'EnhavoSearchBundle')|nl2br }}</p>
+                <div class="search-option-list">
+                {% for key, entity in entities %}
+                    <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="entities[]" value={{ key }}>{{ entity.label|trans({}, entity.translationDomain)|nl2br }}</label>
+                {% endfor %}
+                </div>
+            {% endif %}
+            </div>
         </div>
-    {% endif %}
-    {% if fields %}
-        {{ 'search.label.fields'|trans({}, 'EnhavoSearchBundle')|nl2br }}
-        <div>
-        {% for key, field in fields %}
-            <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="fields[]" value={{ key }}>{{ field.label|trans({}, field.translationDomain) }}</label>
-        {% endfor %}
+        <div class="column">
+            <div class="container-1">
+            {% if fields %}
+                <p class="search-type">{{ 'search.label.fields'|trans({}, 'EnhavoSearchBundle')|nl2br }}</p>
+                <div class="search-option-list">
+                {% for key, field in fields %}
+                    <label><input style="opacity: 1; transform: scale(1); margin-right: 7px; margin-left:10px" type="checkbox" name="fields[]" value={{ key }}>{{ field.label|trans({}, field.translationDomain) }}</label>
+                {% endfor %}
+                </div>
+            {% endif %}
+            </div>
         </div>
-    {% endif %}
+    </div>
 </form>

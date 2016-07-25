@@ -2,6 +2,8 @@
     <div class="row npam">
         <div class="col-sm-6 npam">
             {{ form_widget(form.email, {'attr': {'type': 'text','placeholder': 'email', 'name': 'email', 'id': 'email'}}) }}
+            {{ form_widget(form.firstname, {'attr': {'type': 'text','placeholder': 'firstname', 'name': 'firstname', 'id': 'firstname'}}) }}
+            {{ form_widget(form.lastname, {'attr': {'type': 'text','placeholder': 'lastname', 'name': 'lastname', 'id': 'lastname'}}) }}
         </div>
         <div class="col-sm-6 npam">
             {{ form_widget(form.message, {'attr': {'name': 'message','id': 'message'}}) }}

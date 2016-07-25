@@ -1,29 +1,17 @@
 {% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
 
 {% block hero %}
-    <div id="hero">
-        {{ theme_widget_render('slider') }}
-        <div class="container npam">
-            <div id="secondary">
-                <div class="logo"></div>
-                <ul class="socialmedia">
-                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon-pinterest"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    {{ theme_widget_render('slider', {template:'EnhavoThemeBundle:Theme:Widget/slider.html.twig'}) }}
 {% endblock %}
 
 
 {% block main %}
     <div class="clearfix page-wrap">
         <section id="article-feed">
-            <div class="articles">
+            <div class="articles" data-article-container>
                 <div class="container">
                     <h2>ACME Online</h2>
-                    <p class="capitals spacing cat">recent articles</p>
+                    <p class="capitals spacing cat" data-article-section-subline>recent articles</p>
                 </div>
 
                 <div class="mobile-app">
@@ -40,8 +28,11 @@
                                     <span class="article-photo">
                                         <img src="{{ media_url(article.picture) }}" alt=""/>
                                     </span>
+                                    {% else %}
+                                    <span class="article-photo">
+                                        <img src="/bundles/enhavotheme/img/default-article-picture.jpg" alt=""/>
+                                    </span>
                                 {% endif %}
-
                                 <span class="article-content">
                                     <h3 class="title">{{ article.title }}</h3>
                                     {% for category in article.categories %}
@@ -51,7 +42,6 @@
                                     <span href="" class="capitals readmore-link">...more</span>
                                     <p class="date">{{ article.publicationDate|date('m d Y') }}</p>
                                 </span>
-
                             </a>
                             <span class="readmore-btn" data-tablet-btn></span>
                         </article>
@@ -89,15 +79,17 @@
     <section id="categories" class="clearfix">
         <div class="container npam">
             <div class="row npam">
-                {% for category in categories %}
-                <div class="col-md-4 col-sm-6 col-xs-12 npam category" data-category-item>
+                {% for category in categories|slice(0, 3) %}
+                <div class="{% if categories|length == 2 %}col-md-6{% endif %}{% if categories|length > 2 %}col-md-4{% endif %} col-sm-6 col-xs-12 npam category" data-category-item>
                     <a href="">
                         <span class="cat-image">
                             <span class="over">
                                 <p class="capitals cat-name">{{ category }}</p>
                             </span>
-                            {% if category.picture  %}
+                            {% if category.picture %}
                                 <img src="{{ media_url(category.picture) }}" alt=""/>
+                                {% else %}
+                                <img src="/bundles/enhavotheme/img/default-category-picture.jpg" alt=""/>
                             {% endif %}
                         </span>
                         <span class="text-bottom">

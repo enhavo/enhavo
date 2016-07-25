@@ -1,0 +1,10 @@
+@import 'res-base';
+@import 'res-start';
+
+@media all and (max-width:767px) {
+  #about-us {
+    article { padding-bottom:0;}
+    .site-image {border-left:0}
+  }
+  .picture_caption { padding-bottom:45px;}
+}

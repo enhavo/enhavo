@@ -1,36 +1,40 @@
-<div class="row enhavo_grid">
+<div class="row enhavo_grid container">
     <div class="enhavo_grid_textpicture">
         {% if data.textLeft == 0 %}
-        <div class="col-xs-6 left6">
-            {% if data.file %}
-                <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
-            {% endif %}
-        </div>
-        <div class="col-xs-6 right6">
-            <div class="enhavo_grid_text">
-                {% if data.title %}
-                    <h2>{{ data.title }}</h2>
-                {% endif %}
-                {% if data.text %}
-                    {{ data.text|raw }}
-                {% endif %}
-            </div>
-        </div>
-        {% else %}
-            <div class="col-xs-6 left6">
-                <div class="enhavo_grid_text">
-                    {% if data.title %}
-                        <h2>{{ data.title }}</h2>
-                    {% endif %}
-                    {% if data.text %}
-                        {{ data.text|raw }}
+            <div class="row">
+                <div class="col-sm-6 left6">
+                    {% if data.file %}
+                        <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
                     {% endif %}
                 </div>
+                <div class="col-sm-6 right6">
+                    <div class="enhavo_grid_text">
+                        {% if data.title %}
+                            <h2 class="title">{{ data.title }}</h2>
+                        {% endif %}
+                        {% if data.text %}
+                            {{ data.text|raw }}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-6 right6">
-                {% if data.file %}
-                    <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
-                {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="col-sm-6 left6">
+                    <div class="enhavo_grid_text">
+                        {% if data.title %}
+                            <h2 class="title">{{ data.title }}</h2>
+                        {% endif %}
+                        {% if data.text %}
+                            {{ data.text|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6 right6">
+                    {% if data.file %}
+                        <img class="enhavo_grid_img {% if data.frame %}enhavo_grid_frame{% endif %}" src="{{ media_url(data.file,960) }}">
+                    {% endif %}
+                </div>
             </div>
         {% endif %}
     </div>

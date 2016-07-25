@@ -1,0 +1,35 @@
+@import 'compass';
+
+.download {
+  width:100%; padding-bottom:80px;
+  li{
+    @include transition(all .2s);border-bottom: 1px solid #f3f3f3;
+    &:last-child {border-bottom:0;}
+    a {
+      display:block;
+      .download-btn{
+        overflow:hidden;position:relative;float:left; height:48px; display:block;width:48px;padding: 24px 12px;margin-top: 10px;border-radius: 50%;@include transition(all .2s); background:#CCC;
+        i{
+          @include transition(all .2s);position:absolute; top:50%;@include transform(translateY(-50%));color:#FFF;
+          &.hover{ position:absolute; top:-50px;}
+        }
+      }
+      .download-title { float:left; padding: 22px 0 22px 15px; @include transition(all .2s); width:40%;text-overflow:ellipsis; overflow:hidden;white-space: nowrap;}
+      .download-desc { float:left; padding:22px 75px; @include transition(all .2s);width:calc(60% - 68px); text-align:right;text-overflow:ellipsis; overflow:hidden;white-space: nowrap;}
+    }
+    &:hover {
+      @include transition(all .2s);
+      a {
+        .download-title{@include transition(all .2s);}
+        .download-desc{@include transition(all .2s);}
+        .download-btn{
+          @include transition(all .2s);
+          i{
+            @include transition(all .2s); top:50%;
+            &.hover {top:-50px;@include transform(translateY(0));}
+          }
+        }
+      }
+    }
+  }
+}

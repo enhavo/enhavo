@@ -1,0 +1,9 @@
+.enhavo_grid_threepictures {
+  [class*=col-sm-] {
+    &:first-child {padding-right:$smallerColumnSpacing;}
+    &:nth-child(2) {padding-left:$smallerColumnSpacing;padding-right:$smallerColumnSpacing;}
+    &:last-child {padding-left:$smallerColumnSpacing;}
+  }
+  .enhavo_grid_img {position:relative;}
+  h3 {word-break: break-all;}
+}

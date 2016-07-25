@@ -1,4 +1,5 @@
 <aside class="clearfix">
+    <div class="widget-area">
     {% block top %}{% endblock %}
     {% block widget %}
         {% for widget in widgets %}
@@ -6,4 +7,8 @@
         {% endfor %}
     {% endblock %}
     {% block bottom %}{% endblock %}
+    </div>
+    <div class="fade-out-widgets">
+
+    </div>
 </aside>

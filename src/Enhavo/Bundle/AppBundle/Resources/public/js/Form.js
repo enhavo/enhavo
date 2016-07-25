@@ -181,16 +181,18 @@ define(['jquery', 'app/templating', 'app/admin', 'app/translator', 'jquery-ui-ti
           // grab the prototype template
           var item = list.attr('data-prototype');
           var prototype_name = list.attr('data-prototype-name');
+
+          // Generate unique placeholder for reindexing service
           var placeholder = '__name' + placeholderIndex + '__';
           placeholderIndex++;
 
-          // replace prototype_name used in id and name with unique placeholderName
+          // replace prototype_name used in id and name with placeholder
           item = item.replace(new RegExp(prototype_name, 'g'), placeholder);
           item = $.parseHTML(item.trim());
 
-          $(item).find('[name]').each(function () {
-            $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
-          });
+          // Initialize sub-elements for reindexing
+          self.initReindexableItem(item, placeholder);
+
           list.append(item);
           initItem(item);
           $(document).trigger('formListAddItem', item);
@@ -391,6 +393,12 @@ define(['jquery', 'app/templating', 'app/admin', 'app/translator', 'jquery-ui-ti
           }
         });
       }
+    };
+
+    this.initReindexableItem = function(item, placeholder) {
+      $(item).find('[name]').each(function () {
+        $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
+      });
     };
 
     var init = function () {

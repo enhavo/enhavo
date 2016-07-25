@@ -45,10 +45,10 @@ define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'medi
                 });
                 html = $.parseHTML(html);
                 if ($(this).parents('[data-reindexable]').length > 0) {
+                  // Parent item is reindexable
+                  // Initialize all new input fields with same placeholder used in other fields of this uploadform
                   var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
-                  $(html).find('[name]').each(function () {
-                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
-                  });
+                  formScript.initReindexableItem(html, placeholder);
                 }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + data.result[0].id + ']'), uploadForm);
@@ -65,10 +65,10 @@ define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'medi
                 });
                 html = $.parseHTML(html);
                 if ($(this).parents('[data-reindexable]').length > 0) {
+                  // Parent item is reindexable
+                  // Initialize all new input fields with same placeholder used in other fields of this uploadform
                   var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
-                  $(html).find('[name]').each(function () {
-                    $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
-                  });
+                  formScript.initReindexableItem(html, placeholder);
                 }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
