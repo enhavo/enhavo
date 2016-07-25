@@ -81,6 +81,9 @@ enhavo_assets:
             assets:
                 location: /bundles/enhavoassets/js
 
+            grid:
+                location: /bundles/enhavogrid/js
+
 
 
 

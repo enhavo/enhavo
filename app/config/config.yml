@@ -1,8 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: @EnhavoAssetsBundle/Resources/config/config.yml }
     - { resource: enhavo.yml }
-    - { resource: @EnhavoAssetsBundle/Resources/config/requirejs.yml }
 
 framework:
     #esi:             ~
