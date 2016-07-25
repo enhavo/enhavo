@@ -10,7 +10,7 @@ define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'medi
       var imageCropper = [];
       $(form).find('.uploadForm').each(function (formIndex, uploadForm) {
         isMultiple[formIndex] = $(this).data('multiple') == '1';
-        imageCropper[formIndex] = new ImageCropper(router, uploadForm, admin);
+        imageCropper[formIndex] = new ImageCropper(uploadForm);
 
         if (isMultiple[formIndex]) {
           $(this).find('[data-file-list]').sortable({
@@ -191,6 +191,10 @@ define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'medi
         $(uploadForm).on('click', '[data-crop-button]', function (event) {
           event.stopPropagation();
           event.preventDefault();
+
+          console.log(formIndex);
+          console.log(imageCropper);
+          console.log(imageCropper[formIndex]);
 
           imageCropper[formIndex].startImageCrop(selected[formIndex], function (result) {
             admin.openLoadingOverlay();

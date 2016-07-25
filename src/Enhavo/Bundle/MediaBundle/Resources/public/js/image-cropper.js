@@ -1,15 +1,16 @@
-define(['jquery', 'app/router', 'media/upload-form', 'app/admin', 'cropper'], function($, router, uploadForm, admin, cropper) {
+define(['jquery', 'app/router', 'app/admin', 'cropper'], function($, router, admin, cropper) {
 
-  return function() {
+  return function(uploadForm) {
     var self = this;
-    //this.imageShowRoute = $(uploadForm).find('[data-image-show-route]').data('image-show-route');
-    this.imageShowRoute = 'enhavo_media_show';
+    this.imageShowRoute = $(uploadForm).find('[data-image-show-route]').data('image-show-route');
     this.callbackDone = null;
     this.callbackCanceled = null;
     this.$cropperCanvas = $(uploadForm).find('[data-image-crop-canvas]');
     this.mimeType = null;
 
     this.startImageCrop = function (selected, callbackDone, callbackCanceled) {
+      console.log('start cropper');
+      console.log(this.$cropperCanvas);
       if (typeof selected != 'undefined' && selected != null) {
         self.callbackDone = callbackDone;
         self.callbackCanceled = callbackCanceled;
@@ -21,6 +22,7 @@ define(['jquery', 'app/router', 'media/upload-form', 'app/admin', 'cropper'], fu
         self.$cropperCanvas.attr('src', router.generate(self.imageShowRoute, {id: fileId, v: preventCachingNumber}));
         $(uploadForm).find('[data-image-crop-canvas-wrapper]').addClass('loading');
         $(uploadForm).find('[data-image-crop-overlay]').show();
+        console.log($(uploadForm).find('[data-image-crop-overlay]'));
         self.$cropperCanvas.cropper();
       } else {
         console.log('Image cropper error: No target image selected');
