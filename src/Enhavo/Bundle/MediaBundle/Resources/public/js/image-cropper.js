@@ -9,8 +9,6 @@ define(['jquery', 'app/router', 'app/admin', 'cropper'], function($, router, adm
     this.mimeType = null;
 
     this.startImageCrop = function (selected, callbackDone, callbackCanceled) {
-      console.log('start cropper');
-      console.log(this.$cropperCanvas);
       if (typeof selected != 'undefined' && selected != null) {
         self.callbackDone = callbackDone;
         self.callbackCanceled = callbackCanceled;
@@ -22,7 +20,6 @@ define(['jquery', 'app/router', 'app/admin', 'cropper'], function($, router, adm
         self.$cropperCanvas.attr('src', router.generate(self.imageShowRoute, {id: fileId, v: preventCachingNumber}));
         $(uploadForm).find('[data-image-crop-canvas-wrapper]').addClass('loading');
         $(uploadForm).find('[data-image-crop-overlay]').show();
-        console.log($(uploadForm).find('[data-image-crop-overlay]'));
         self.$cropperCanvas.cropper();
       } else {
         console.log('Image cropper error: No target image selected');

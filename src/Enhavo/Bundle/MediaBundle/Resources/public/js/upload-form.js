@@ -192,10 +192,6 @@ define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'medi
           event.stopPropagation();
           event.preventDefault();
 
-          console.log(formIndex);
-          console.log(imageCropper);
-          console.log(imageCropper[formIndex]);
-
           imageCropper[formIndex].startImageCrop(selected[formIndex], function (result) {
             admin.openLoadingOverlay();
 
