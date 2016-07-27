@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\MigrationBundle\Migration;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\DependencyInjection\EnhavoAppExtension;
-use Enhavo\Bundle\MigrationBundle\Service\VersionAccessor;
+use Enhavo\Bundle\MigrationBundle\Database\VersionAccessor;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -38,7 +38,8 @@ class Migrator
      */
     protected $versionAccessor;
 
-    public function __construct(EntityManagerInterface $em,
+    public function __construct(
+        EntityManagerInterface $em,
         KernelInterface $kernel,
         ContainerInterface $container,
         VersionAccessor $versionAccessor,

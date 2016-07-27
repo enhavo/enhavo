@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\MigrationBundle\Service;
+namespace Enhavo\Bundle\MigrationBundle\Database;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\Tools\SchemaTool;

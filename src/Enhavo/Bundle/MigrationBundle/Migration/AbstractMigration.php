@@ -29,8 +29,17 @@ abstract class AbstractMigration implements Migration, ContainerAwareInterface
         $this->container = $container;
     }
 
-    public function get()
+    /**
+     * @param $id
+     * @return object
+     */
+    public function get($id)
     {
+        return $this->container->get($id);
+    }
 
+    public function executeSql($sql)
+    {
+        $this->get('enhavo_migration.database_modifier')->executeQuery($sql);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\MigrationBundle\Service;
+namespace Enhavo\Bundle\MigrationBundle\Database;
 
 use Doctrine\ORM\EntityManager;
 

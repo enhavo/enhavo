@@ -1,12 +1,13 @@
 services:
     enhavo_migration.database_modifier:
-        class: Enhavo\Bundle\MigrationBundle\Service\DatabaseModifier
+        class: Enhavo\Bundle\MigrationBundle\Database\DatabaseModifier
         arguments:
             - @doctrine.orm.entity_manager
 
-    enhavo_migration.db_media_connections_converter:
-        class: Enhavo\Bundle\MigrationBundle\Service\DbMediaConnectionsConverter
+    enhavo_migration.version_accessor:
+        class: Enhavo\Bundle\MigrationBundle\Database\VersionAccessor
         arguments:
+            - @doctrine.orm.entity_manager
             - @enhavo_migration.database_modifier
 
     enhavo_migration.migrator:
@@ -15,4 +16,5 @@ services:
             - @doctrine.orm.entity_manager
             - @kernel
             - @service_container
+            - @enhavo_migration.version_accessor
             - '@@EnhavoMigrationBundle/Resources/config/migration.yml'
