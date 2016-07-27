@@ -8,3 +8,11 @@ services:
         class: Enhavo\Bundle\MigrationBundle\Service\DbMediaConnectionsConverter
         arguments:
             - @enhavo_migration.database_modifier
+
+    enhavo_migration.migrator:
+        class: Enhavo\Bundle\MigrationBundle\Migration\Migrator
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @kernel
+            - @service_container
+            - '@@EnhavoMigrationBundle/Resources/config/migration.yml'

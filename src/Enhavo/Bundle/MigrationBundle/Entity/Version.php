@@ -1,6 +1,6 @@
 <?php
 /**
- * DatabaseVersion.php
+ * Version.php
  *
  * @since 2016-04-15
  * @author Fabian Liebl <fabian.liebl@xq-web.de>
@@ -10,7 +10,8 @@ namespace Enhavo\Bundle\MigrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-class DatabaseVersion {
+class Version
+{
     /**
      * @var int
      */
