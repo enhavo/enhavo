@@ -1,7 +1,7 @@
-Enhavo\Bundle\MigrationBundle\Entity\DatabaseVersion:
+Enhavo\Bundle\MigrationBundle\Entity\Version:
     type: entity
-    table: migration_database_version
-    repositoryClass: Enhavo\Bundle\MigrationBundle\Repository\DatabaseVersionRepository
+    table: migration_version
+    repositoryClass: Enhavo\Bundle\MigrationBundle\Repository\VersionRepository
 
     id:
         id:

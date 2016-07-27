@@ -1,12 +1,12 @@
 <?php
 
-namespace Enhavo\Bundle\MigrationBundle\Service;
+namespace Enhavo\Bundle\MigrationBundle\Migration\M0M1H0;
 
-use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\MigrationBundle\Exception\DatabaseVersionException;
-use Symfony\Component\Console\Output\OutputInterface;
+use Enhavo\Bundle\MigrationBundle\Migration\AbstractMigration;
+use Enhavo\Bundle\MigrationBundle\Service\DatabaseModifier;
 
-class DbMediaConnectionsConverter
+class DbMediaConnectionsConverter extends AbstractMigration
 {
     /**
      * @var DatabaseModifier
@@ -20,13 +20,8 @@ class DbMediaConnectionsConverter
         $this->databaseModifier = $databaseModifier;
     }
 
-    public function convertDatabase(OutputInterface $output)
+    public function migrate()
     {
-        $dbVersion = $this->databaseModifier->getDatabaseVersion();
-        if ($dbVersion !== null) {
-            throw new DatabaseVersionException(sprintf('This script is not meant to run on the current database version (%s).', $dbVersion));
-        }
-
         $this->nrQueries = 0;
 
         // Add new columns
@@ -66,10 +61,6 @@ class DbMediaConnectionsConverter
         $this->dropJoinTableIfExists('download_download_file');
         $this->dropJoinTableIfExists('slider_slide_image');
         $this->dropJoinTableIfExists('calendar_appointment_picture');
-
-        $this->databaseModifier->setDatabaseVersion("1.0.0");
-
-        $output->writeln("Successfully converted media connection tables. $this->nrQueries SQL queries executed.");
     }
 
     /**
