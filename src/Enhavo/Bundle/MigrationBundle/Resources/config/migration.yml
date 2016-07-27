@@ -3,3 +3,4 @@
 
 0.2.0:
   - Enhavo\Bundle\MigrationBundle\Migration\M0M2H0\GridItemMigration
+  - Enhavo\Bundle\MigrationBundle\Migration\M0M2H0\RemoveMigrationDatabaseVersionMigration
