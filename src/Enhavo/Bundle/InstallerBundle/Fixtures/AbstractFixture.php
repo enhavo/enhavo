@@ -67,6 +67,19 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     }
 
     /**
+     * Save file and return its model.
+     *
+     * @param $path
+     * @return \Enhavo\Bundle\MediaBundle\Model\FileInterface
+     * @throws \Exception
+     */
+    protected function createImage($path)
+    {
+        $path = sprintf('%s/../Resources/images/%s', __DIR__, $path);
+        return $this->container->get('enhavo_media.file_service')->storeFile($path);
+    }
+
+    /**
      * Return DateTime object
      *
      * @param $value
