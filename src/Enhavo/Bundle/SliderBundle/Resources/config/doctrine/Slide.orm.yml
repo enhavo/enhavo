@@ -1,5 +1,5 @@
 Enhavo\Bundle\SliderBundle\Entity\Slide:
-    type: mappedSuperclass
+    type: entity
     table: slider_slide
     repositoryClass: Enhavo\Bundle\SliderBundle\Repository\SlideRepository
 

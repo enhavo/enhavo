@@ -18,6 +18,11 @@ class Page extends Content
     protected $grid;
 
     /**
+     * @var WorkflowStatusInterface
+     */
+    protected $workflow_status;
+
+    /**
      * Set content
      *
      * @param GridInterface $grid
@@ -39,11 +44,6 @@ class Page extends Content
     {
         return $this->grid;
     }
-    /**
-     * @var WorkflowStatusInterface
-     */
-    private $workflow_status;
-
 
     /**
      * Set workflowStatus

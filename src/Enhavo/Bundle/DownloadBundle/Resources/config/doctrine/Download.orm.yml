@@ -1,5 +1,5 @@
 Enhavo\Bundle\DownloadBundle\Entity\Download:
-    type: mappedSuperclass
+    type: entity
     table: download_download
 
     id:
