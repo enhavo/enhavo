@@ -98,3 +98,31 @@ services:
             - @service_container
         tags:
             - { name: form.type }
+
+
+    enhavo_workflow.extend_listener.workflow:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\WorkflowBundle\Entity\Workflow
+            - %enhavo_workflow.model.workflow.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_workflow.extend_listener.node:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\WorkflowBundle\Entity\Node
+            - %enhavo_workflow.model.node.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_workflow.extend_listener.transition:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\WorkflowBundle\Entity\Transition
+            - %enhavo_workflow.model.transition.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

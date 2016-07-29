@@ -55,3 +55,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.action }
+
+    enhavo_category.extend_listener.category:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\CategoryBundle\Entity\Category
+            - %enhavo_category.model.category.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

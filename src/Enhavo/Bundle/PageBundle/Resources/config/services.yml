@@ -17,3 +17,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.theme_widget }
+
+    enhavo_page.extend_listener.page:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\PageBundle\Entity\Download
+            - %enhavo_page.model.page.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

@@ -1,5 +1,5 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
-    type: mappedSuperclass
+    type: entity
     table: article_article
     repositoryClass: Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository
 
