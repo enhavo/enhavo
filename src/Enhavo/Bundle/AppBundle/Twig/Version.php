@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
+use Enhavo\Bundle\AppBundle\DependencyInjection\EnhavoAppExtension;
 use Symfony\Component\DependencyInjection\Container;
 
-class ShowVersion extends \Twig_Extension {
+class Version extends \Twig_Extension
+{
     /**
      * @var Container
      */
@@ -18,7 +20,6 @@ class ShowVersion extends \Twig_Extension {
 
     /**
      * @param Container $container
-     * @param $template string
      */
     public function __construct(Container $container)
     {
@@ -29,6 +30,7 @@ class ShowVersion extends \Twig_Extension {
     {
         return array(
             new \Twig_SimpleFunction('showVersion', array($this, 'showVersion')),
+            new \Twig_SimpleFunction('version', array($this, 'getVersion')),
         );
     }
 
@@ -38,8 +40,13 @@ class ShowVersion extends \Twig_Extension {
         return $showVersion;
     }
 
+    public function getVersion()
+    {
+        return EnhavoAppExtension::VERSION;
+    }
+
     public function getName()
     {
-        return 'show_version';
+        return 'version';
     }
 }
