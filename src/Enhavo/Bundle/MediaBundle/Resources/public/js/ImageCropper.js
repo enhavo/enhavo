@@ -1,4 +1,4 @@
-define(['jquery', 'app/router', 'app/admin', 'cropper'], function($, router, admin, cropper) {
+define(['jquery', 'app/Router', 'app/Admin', 'cropper'], function($, router, admin, cropper) {
 
   return function(uploadForm) {
     var self = this;

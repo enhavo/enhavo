@@ -1,4 +1,4 @@
-define(['jquery', 'app/admin', 'app/form', 'app/button', 'media/upload-form', 'grid/ContentForm'], function($, admin, form, button, uploadForm, contentForm) {
+define(['jquery', 'app/Admin', 'app/Form', 'app/Button', 'media/UploadForm', 'grid/ContentForm'], function($, admin, form, button, uploadForm, contentForm) {
   $(function() {
     admin.initBlocks();
     admin.initActions();

@@ -1,4 +1,4 @@
-define(['jquery', 'app/admin'], function($, admin) {
+define(['jquery', 'app/Admin'], function($, admin) {
   $(function() {
     admin.initDescriptionTextPosition();
   });

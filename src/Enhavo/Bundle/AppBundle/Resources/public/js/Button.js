@@ -1,4 +1,4 @@
-define(['jquery', 'app/admin', 'app/form', 'app/router', 'app/translator'], function($, admin, formScript, router, translator) {
+define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], function($, admin, formScript, router, translator) {
 
   function Button() {
     var self = this;
