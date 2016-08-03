@@ -39,10 +39,29 @@ class IndexEngine implements IndexEngineInterface
      */
     const INDEX_STRATEGY_NOINDEX = 'noindex';
 
+    /**
+     * @var IndexWalker
+     */
     protected $indexWalker;
+
+    /**
+     * @var MetadataFactory
+     */
     protected $metadataFactory;
+
+    /**
+     * @var EntityManager
+     */
     protected $em;
+
+    /**
+     * @var string
+     */
     protected $strategy;
+
+    /**
+     * @var SearchUtil
+     */
     protected $util;
 
     public function __construct(EntityManager $em, $strategy, IndexWalker $indexWalker, MetadataFactory $metadataFactory, SearchUtil $util)
@@ -58,6 +77,11 @@ class IndexEngine implements IndexEngineInterface
     {
         //just return nothing when indexing is off
         if($this->strategy == self::INDEX_STRATEGY_NOINDEX) {
+            return;
+        }
+
+        $metadata = $this->metadataFactory->create($resource);
+        if($metadata == null) {
             return;
         }
 
