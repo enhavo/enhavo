@@ -1,4 +1,4 @@
-define(['jquery', 'app/router', 'app/templating', 'app/translator', 'icheck', 'select2'], function($, router, templating, translator, iCheck, select2) {
+define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 'select2'], function($, router, templating, translator, iCheck, select2) {
 
  var Admin = function() {
     var self = this;

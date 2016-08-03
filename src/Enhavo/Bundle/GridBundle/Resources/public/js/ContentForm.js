@@ -1,4 +1,4 @@
-define(['jquery', 'app/router', 'app/form', 'app/admin', 'media/upload-form'], function($, router, formScript, admin, uploadForm) {
+define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm'], function($, router, formScript, admin, uploadForm) {
 
   function GridForm() {
     var self = this;

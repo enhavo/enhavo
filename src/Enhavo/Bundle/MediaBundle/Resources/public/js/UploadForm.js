@@ -1,4 +1,4 @@
-define(['jquery', 'app/router', 'app/admin', 'app/form', 'app/translator', 'media/image-cropper', 'blueimp-file-upload', 'app/templating'], function($, router, admin, formScript, translator, ImageCropper, fileUpload, templating) {
+define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'media/ImageCropper', 'blueimp-file-upload', 'app/Templating'], function($, router, admin, formScript, translator, ImageCropper, fileUpload, templating) {
 
   function UploadForm() {
     var self = this;
