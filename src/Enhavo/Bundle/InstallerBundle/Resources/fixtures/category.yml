@@ -1,12 +1,12 @@
 -
   name: Lifestyle
   collection: default
--
-  name: Design
-  collection: default
+  picture: category/cat-img-01.jpg
 -
   name: Travel
   collection: default
+  picture: category/cat-img-02.jpg
 -
   name: Food
   collection: default
+  picture: category/cat-img-03.jpg

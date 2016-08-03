@@ -28,6 +28,7 @@ class CategoryFixture extends AbstractFixture
         $category = new Category();
         $category->setName($args['name']);
         $category->setCollection($this->getCollection($args['collection']));
+        $category->setPicture($this->createImage($args['picture']));
         return $category;
     }
 

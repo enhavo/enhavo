@@ -1,30 +1,29 @@
 <?php
 
 /**
- * PageFixture.php
+ * DownloadFixture.php
  *
- * @since 27/07/16
+ * @since 04/08/16
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
 namespace Enhavo\Bundle\InstallerBundle\Fixtures\Fixtures;
 
 use Enhavo\Bundle\InstallerBundle\Fixtures\AbstractFixture;
-use Enhavo\Bundle\PageBundle\Entity\Page;
+use Enhavo\Bundle\DownloadBundle\Entity\Download;
 
-class PageFixture extends AbstractFixture
+class DownloadFixture extends AbstractFixture
 {
     /**
      * @inheritdoc
      */
     function create($args)
     {
-        $page = new Page();
-        $page->setTitle($args['title']);
-        $page->setPublic($args['public']);
-        $page->setGrid($this->createGrid($args['grid']));
-        $page->setRoute($this->createRoute($args['route']));
-        return $page;
+        $download = new Download();
+        $download->setTitle($args['title']);
+        $download->setText($args['text']);
+        $download->setFile($this->createImage($args['file']));
+        return $download;
     }
 
     /**
@@ -32,7 +31,7 @@ class PageFixture extends AbstractFixture
      */
     function getName()
     {
-        return 'Page';
+        return 'Download';
     }
 
     /**
@@ -40,6 +39,6 @@ class PageFixture extends AbstractFixture
      */
     function getOrder()
     {
-        return 20;
+        return 30;
     }
 }
