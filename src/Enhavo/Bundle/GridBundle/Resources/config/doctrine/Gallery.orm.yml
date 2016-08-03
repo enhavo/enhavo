@@ -20,6 +20,7 @@ Enhavo\Bundle\GridBundle\Entity\Gallery:
         files:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orderBy: { 'order': 'ASC' }
             joinTable:
                 name: grid_item_gallery_files
                 joinColumns:
