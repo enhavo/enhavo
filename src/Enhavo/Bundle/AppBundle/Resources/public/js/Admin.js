@@ -347,6 +347,7 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
     };
 
     this.initNavigation = function () {
+
       $('[data-mobile-menu]').on('click', function () {
         $('[data-menu-container]').toggleClass("active");
         $('[data-content-container]').toggleClass("push");
