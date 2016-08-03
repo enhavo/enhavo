@@ -36,8 +36,8 @@ RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
   cd /var/www/ && \
   composer install --no-interaction && \
   app/console doctrine:schema:update --force && \
-  app/console fos:user:create admin info@localhost.com admin --super-admin  && \
-  app/console enhavo:install:fixtures
+  app/console enhavo:install:fixtures && \
+  app/console fos:user:create admin info@localhost.com admin --super-admin
 
 # user rights
 RUN usermod -u 1000 www-data && \
