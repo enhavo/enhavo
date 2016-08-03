@@ -50,12 +50,21 @@ module.exports = function(grunt) {
           interrupt: true
         }
       }
+    },
+    exec: {
+      generate_changelog: {
+        cmd: function() {
+          return 'bundler exec github_changelog_generator enhavo/enhavo';
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-compass-multiple');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.task.registerTask('compass', ['compassMultiple']);
   grunt.task.registerTask('default', ['compass']);
+  grunt.registerTask('generate-changelog', ['exec:generate_changelog']);
 };
