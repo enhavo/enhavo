@@ -59,7 +59,7 @@ class CategoryFixture extends AbstractFixture
      */
     function getName()
     {
-        return 'Category';
+        return 'category';
     }
 
     /**
