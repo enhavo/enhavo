@@ -13,10 +13,11 @@ use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
-abstract class Content implements Publishable, Routeable, Slugable, ResourceInterface
+abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface
 {
     /**
      * @var \DateTime

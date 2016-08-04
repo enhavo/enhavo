@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 
+/**
+ * checks if the current user has access to the given resource
+ */
 class WorkflowVoter  implements VoterInterface
 {
     protected $manager;

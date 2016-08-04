@@ -78,10 +78,8 @@ class ContentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
-            'routing' => [
-                'strategy' => 'id',
-                'route' => null
-            ]
+            'routing_strategy' => 'id',
+            'routing_route' => null
         ));
     }
 

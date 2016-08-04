@@ -22,6 +22,12 @@ class EnhavoContentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $collectors = [];
+        if(isset($config['sitemap']) && isset($config['sitemap']['collectors'])) {
+            $collectors = $config['sitemap']['collectors'];
+        }
+        $container->setParameter('enhavo_content.sitemap.collectors', $collectors);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

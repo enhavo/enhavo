@@ -16,27 +16,27 @@ class Appointment extends Content
     /**
      * @var string
      */
-    private $teaser;
+    protected $teaser;
 
     /**
      * @var \DateTime
      */
-    private $dateFrom;
+    protected $dateFrom;
 
     /**
      * @var \DateTime
      */
-    private $dateTo;
+    protected $dateTo;
 
     /**
      * @var GridInterface
      */
-    private $grid;
+    protected $grid;
 
     /**
      * @var FileInterface
      */
-    private $picture;
+    protected $picture;
 
     /**
      * Set teaser

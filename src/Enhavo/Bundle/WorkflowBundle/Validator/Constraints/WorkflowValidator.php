@@ -45,7 +45,7 @@ class WorkflowValidator extends ConstraintValidator
                             ->addViolation();
                     } else {
 
-                        //there is a node
+                        //there is a node with name
                         $no_nodes = false;
                     }
                 }
@@ -61,7 +61,7 @@ class WorkflowValidator extends ConstraintValidator
                         ->addViolation();
                 } else {
 
-                    //there is a node
+                    //there is a node with name
                     $no_nodes = false;
                 }
             }
@@ -76,12 +76,19 @@ class WorkflowValidator extends ConstraintValidator
 
     protected function validateDeletedNodes($formNodes, $nodes, $translator, $constraint)
     {
+        //unset creation node
         unset($nodes[0]);
+
+        //formNodes as Array
         $formNodes = array_values($formNodes);
+
+        //nodes as Array
         $nodesArray = array();
         foreach ($nodes as $node) {
             $nodesArray[] = $node;
         }
+
+        //check if a node was deleted
         if(count($nodesArray) == count($formNodes)){
             for($i = 0; $i < count($nodesArray); $i++){
                 if($nodesArray[$i] != $formNodes[$i]){

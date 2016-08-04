@@ -21,7 +21,8 @@ textPicture:
       position: 'Positionierung'
       picture_left-text_right: 'Bild | Text'
       text_left-picture_right: 'Text | Bild'
-      frame: 'Rahmen für Bild'
+      float: 'Text umfließen'
+      caption: 'BU'
   label:
     textPicture: 'Text | Bild'
 picture:
@@ -34,13 +35,28 @@ picturePicture:
   form:
     label:
       picture_left: 'Bild links'
-      caption_left: 'Bild Titel links'
+      caption_left: 'Bildunterschrift links'
       picture_right: 'Bild rechts'
-      caption_right: 'Bild Titel rechts'
-      frame: 'Rahmen für Bild'
+      caption_right: 'Bildunterschrift rechts'
   label:
       picturePicture: 'Bild | Bild'
       caption: 'Bild Titel'
+threePicture:
+  form:
+    label:
+      title_left: 'Titel links'
+      picture_left: 'Bild links'
+      caption_left: 'BU links'
+
+      title_center: 'Titel mitte'
+      picture_center: 'Bild mitte'
+      caption_center: 'BU mitte'
+
+      title_right: 'Titel rechts'
+      picture_right: 'Bild rechts'
+      caption_right: 'BU rechts'
+  label:
+    threePicture: 'Drei Bilder'
 gallery:
   form:
     label:

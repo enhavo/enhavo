@@ -12,6 +12,10 @@ use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * handles everything when you edit or save a workflow
+ * this means updating workflowstatus of the belonging entities (for example when you removed a node and there is a workflowstatus that references this node)
+ */
 class WorkflowSaveListener {
 
     protected $em;
@@ -37,10 +41,12 @@ class WorkflowSaveListener {
             $repositories = $this->getEntityRepository($workflow);
 
             if($repositories != null){
-                //get all entries with workflow-status null
+
+                //get all ressources without workflow-status
                 $resources = array();
                 foreach($repositories as $repository){
                     $currentResourcesEmpty = $repository->getEmptyWorkflowStatus();
+                    //replace old workflowstatus with current workflowstatus
                     $this->removeOldWorkflowStatus($repository, $workflow);
                     $resources = array_merge($currentResourcesEmpty,$resources);
                 }
@@ -53,9 +59,7 @@ class WorkflowSaveListener {
                     }
                 }
             }
-
             $this->writeNodes($workflow, $repositories);
-
             $this->em->flush();
         }
     }
@@ -156,10 +160,16 @@ class WorkflowSaveListener {
 
     protected function getEntityRepository($workflow)
     {
+        //compare the workflow entities with the entities in enhavo.yml and get the belonging repositories
+        //which you can get from enhavo.yml
         if($workflow->getEntity() == null){
             return null;
         }
+
+        //entities of enhavo.yml
         $possibleWFEntities = $this->container->getParameter('enhavo_workflow.entities');
+
+        //get the repository-names the the workflow entities of the enhavo.yml
         $currentRepositories = array();
         foreach($possibleWFEntities as $possibleEntity) {
             foreach($workflow->getEntity() as $workflowEntity){
@@ -169,6 +179,7 @@ class WorkflowSaveListener {
             }
         }
 
+        //get the repository-references
         $repository = array();
         foreach($currentRepositories as $currentRepository){
             if(strpos($currentRepository, ':')){
@@ -185,6 +196,7 @@ class WorkflowSaveListener {
         foreach ($resources as $resource) {
             $currentWFS = $resource->getWorkflowStatus();
             if($currentWFS != null){
+
                 //check if workflow status is old
                 $node = $currentWFS->getNode();
                 $oldWorkflow = $node->getWorkflow();

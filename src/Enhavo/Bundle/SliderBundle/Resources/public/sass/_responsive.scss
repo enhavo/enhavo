@@ -1,0 +1,9 @@
+@media all and (max-width:1150px) {
+  .slick-slider .slick-dots {padding: 35px 0 32px 0;}
+  .slick-slider .slick-arrow { bottom:90px;top:initial;}
+  .slick-slider .slick-slider {padding-bottom: 80px;margin-bottom: 80px;}
+}
+
+@media all and (max-width:479px) {
+  .slick-slider .slick-dots { background:transparent; bottom:90px;background: transparent;}
+}

@@ -1,0 +1,17 @@
+.slick-dots {
+  background:#FFF;
+  li{
+    background:$blueberry;
+    &.slick-active { background:$aubergine;}
+  }
+}
+.slick-arrow {
+  background:$citrus;
+  i{font-size:24px;color:#FFF}
+  &:hover{background:$aubergine;}
+}
+
+@media all and (max-width:1150px) {
+  .slick-slider .slick-dots {background:$softwhite;}
+  .slick-slider .slick-slider {background: $softwhite;}
+}

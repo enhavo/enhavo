@@ -1,9 +1,6 @@
-/**
- * Created by gseidel on 30/08/14.
- */
+define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'media/ImageCropper', 'blueimp-file-upload', 'app/Templating'], function($, router, admin, formScript, translator, ImageCropper, fileUpload, templating) {
 
-$(function() {
-  function UploadForm(routing, admin, translator) {
+  function UploadForm() {
     var self = this;
 
     this.initUploadForm = function (form) {
@@ -13,7 +10,7 @@ $(function() {
       var imageCropper = [];
       $(form).find('.uploadForm').each(function (formIndex, uploadForm) {
         isMultiple[formIndex] = $(this).data('multiple') == '1';
-        imageCropper[formIndex] = new ImageCropper(routing, uploadForm, admin);
+        imageCropper[formIndex] = new ImageCropper(uploadForm);
 
         if (isMultiple[formIndex]) {
           $(this).find('[data-file-list]').sortable({
@@ -36,36 +33,63 @@ $(function() {
             var list = $(uploadForm).find('.list');
             var inputName = list.attr('data-name');
             if (!isMultiple[formIndex]) {
-              $(uploadForm).find('[data-file-list]').empty();
-              if (data.result.files.length > 0) {
+              if (data.result.length > 0) {
+                $(uploadForm).find('[data-file-list]').empty();
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
-                  file_id: data.result.files[0].id,
+                  file_id: data.result[0].id,
                   full_name: inputName,
                   file_index: 0,
-                  file_name: data.result.files[0].filename,
-                  file_slug: data.result.files[0].slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_name: data.result[0].filename,
+                  file_slug: data.result[0].slug,
+                  file_mime_type: data.result[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  // Parent item is reindexable
+                  // Initialize all new input fields with same placeholder used in other fields of this uploadform
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  formScript.initReindexableItem(html, placeholder);
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
-                self.setThumbOrIcon($('[data-id=' + data.result.files[0].id + ']'), uploadForm);
+                self.setThumbOrIcon($('[data-id=' + data.result[0].id + ']'), uploadForm);
               }
             } else {
-              $.each(data.result.files, function (index, file) {
+              $.each(data.result, function (index, file) {
                 var html = templating.render($(uploadForm).find('script[data-id=files-template]'), {
                   file_id: file.id,
                   full_name: inputName,
                   file_index: ++currentIndexes[formIndex],
                   file_name: file.filename,
                   file_slug: file.slug,
-                  file_mime_type: data.result.files[0].mimeType
+                  file_mime_type: data.result[0].mimeType
                 });
+                html = $.parseHTML(html);
+                if ($(this).parents('[data-reindexable]').length > 0) {
+                  // Parent item is reindexable
+                  // Initialize all new input fields with same placeholder used in other fields of this uploadform
+                  var placeholder = $(uploadForm).find('[data-form-placeholder]').data('form-placeholder');
+                  formScript.initReindexableItem(html, placeholder);
+                }
                 $(uploadForm).find('[data-file-list]').append(html);
                 self.setThumbOrIcon($('[data-id=' + file.id + ']'), uploadForm);
               });
             }
             self.setFileOrder(uploadForm);
+          },
+
+          fail: function (event, data) {
+            admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
+          },
+
+          always: function (event, data) {
             $(uploadForm).find('.progress .bar').css('width', '0%');
-            $(uploadForm).find('.dropzone').removeClass('empty');
+            var dropZone = $(uploadForm).find('.dropzone');
+            if (dropZone.find('[data-file-element]').length > 0) {
+              dropZone.removeClass('empty');
+            } else {
+              dropZone.addClass('empty');
+            }
+            formScript.reindex();
           },
 
           add: function (event, data) {
@@ -176,7 +200,7 @@ $(function() {
             var data = new FormData();
             data.append('file', self.dataURItoBlob(result));
             $.ajax({
-              url: routing.generate(route, {id: id}),
+              url: router.generate(route, {id: id}),
               type: 'POST',
               data: data,
               processData: false,
@@ -310,7 +334,7 @@ $(function() {
         .replace(/-+$/, '');            // Trim - from end of text
     };
 
-    this.dataURItoBlob = function(dataURI) {
+    this.dataURItoBlob = function (dataURI) {
       // convert base64/URLEncoded data component to raw binary data held in a string
       var byteString;
       if (dataURI.split(',')[0].indexOf('base64') >= 0)
@@ -327,7 +351,7 @@ $(function() {
         ia[i] = byteString.charCodeAt(i);
       }
 
-      return new Blob([ia], {type:mimeString});
+      return new Blob([ia], {type: mimeString});
     };
 
     this.start = function () {
@@ -350,8 +374,10 @@ $(function() {
       });
     };
 
-    this.init();
+    $(function() {
+      self.init();
+    });
   }
 
-  var uploadForm = new UploadForm(Routing, admin, Translator);
+  return new UploadForm();
 });

@@ -10,6 +10,9 @@ namespace Enhavo\Bundle\SearchBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 
+/*
+ * Gets the update route for a given resource
+ */
 class UpdateRoute extends \Twig_Extension
 {
     public function getFilters()

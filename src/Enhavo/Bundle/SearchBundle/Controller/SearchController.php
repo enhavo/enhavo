@@ -24,12 +24,16 @@ class SearchController extends Controller
                 $engine = $this->container->getParameter('enhavo_search.search.search_engine');
                 $searchEngine = $this->get($engine);
                 $filter = new PermissionFilter($this->container);
+
+                //get search results
                 $result = $searchEngine->search($searchExpression, array($filter), $searchTypes, $searchFields);
                 if(empty($result)) {
                     return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                         'data' => 'No results'
                     ));
                 }
+
+                //do the highlighting
                 $resourcesBefore = $result->getResources();
                 $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
@@ -37,15 +41,20 @@ class SearchController extends Controller
                     $resourcesAfter[] = $this->get('enhavo_search_highlight')->highlight($resource, $result->getWords());
                 }
                 $result->setResources($resourcesAfter);
+
+                //get resource to render
                 return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                     'data' => $result->getResources()
                 ));
             } catch(SearchEngineException $e) {
+
+                //exception
                 return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                     'data' => $e->getMessage()
                 ));
             }
         } else {
+
             //there were no keywords entered
             return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
                 'data' => $this->get('translator')->trans('search.form.error.blank', [], 'EnhavoSearchBundle')

@@ -12,24 +12,32 @@ use Elasticsearch;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 use Symfony\Component\Yaml\Parser;
-
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
+/*
+ * This class does the search process of elasticsearch
+ */
 class ElasticSearchEngine implements SearchEngineInterface
 {
     protected $em;
 
     protected $util;
 
-    public function __construct(EntityManager $em, SearchUtil $util)
+    protected $metadataFactory;
+
+    public function __construct(EntityManager $em, SearchUtil $util, MetadataFactory $metadataFactory)
     {
         $this->em = $em;
         $this->util = $util;
+        $this->metadataFactory = $metadataFactory;
     }
 
     public function search($query, $filters = [], $entities = null, $fields= null){
         $client = Elasticsearch\ClientBuilder::create()->build();
 
+        //get fields in which we want to search
         $fields = $this->getFields($entities, $fields);
 
+        //add fields an the query to params body
         $params = [
             'body' => [
                 "query" => [
@@ -41,8 +49,11 @@ class ElasticSearchEngine implements SearchEngineInterface
             ]
         ];
 
+        //the client does the searching
         $results = $client->search($params);
         $resultResources = [];
+
+        //if there are results extract bundle, entity an resourceId to get the real resource we can display
         if(!empty($results['hits']['hits'])){
             foreach($results['hits']['hits'] as $hit){
                 $resId   = $hit['_id'];
@@ -59,6 +70,7 @@ class ElasticSearchEngine implements SearchEngineInterface
             return$resultResources;
         }
 
+        //return results and search words
         $words = preg_replace('(AND|OR)', '', $query);
         $words = $this->util->searchSimplify($words);
         $words = explode(' ', $words);
@@ -71,6 +83,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     protected function getFields($entities, $searchFields)
     {
+        //prepare all fields in the format bundlename_field^weight
         $fields = array();
         $searchYamls = $this->util->getSearchYamls();
         foreach($searchYamls as $searchYaml){
@@ -80,7 +93,7 @@ class ElasticSearchEngine implements SearchEngineInterface
                 $splittedEntityPath = explode('\\', $entityPath);
                 $entityName = array_pop($splittedEntityPath);
                 if($entities == null || in_array(lcfirst($entityName), $entities)){
-                    foreach ($this->getFieldsWithWeights($yamlContent, $entityPath, $searchFields) as $field => $weight) {
+                    foreach ($this->getFieldsWithWeights($entityPath, $searchFields) as $field => $weight) {
                         $fieldName = $bundleName.'_'.strtolower($entityName).'_'.$field;
                         if($weight != null){
                             $fieldName = $fieldName.'^'.$weight;
@@ -95,6 +108,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     public function getBundleName($resource)
     {
+        //get the bundlename of a resource in format "..._..._..."
         $entityPath = $resource;
 
         $splittedBundlePath = explode('/', $entityPath);
@@ -122,32 +136,18 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
     }
 
-    public function getFieldsWithWeights($searchYaml, $resourceClass, $searchFields)
+    public function getFieldsWithWeights($resourceClass, $searchFields)
     {
+        //get fields with weights
         $fields = array();
-        if (key_exists($resourceClass, $searchYaml)) {
-            $properties = $searchYaml[$resourceClass]['properties'];
-            foreach ($properties as $field => $value) {
-                if ($value[0] == 'Model') {
-                    $fields[$field] = null;
-                } else if (key($value[0]) == 'Plain') {
-                    if ($searchFields == null || (array_key_exists('type', $value[0]['Plain']) && in_array($value[0]['Plain']['type'], $searchFields))) {
-                        if (key_exists('weight', $value[0]['Plain'])) {
-                            $fields[$field] = $value[0]['Plain']["weight"];
-                        } else {
-                            $fields[$field] = null;
-                        }
-                    }
-                } else if (key($value[0]) == "Html") {
-                    if ($searchFields == null || (array_key_exists('type', $value[0]['Html']) && in_array($value[0]['Html']['type'], $searchFields))) {
-                        if (key_exists('weight', $value[0]['Html'])) {
-                            $fields[$field] = $value[0]['Html']["weight"];
-                        } else {
-                            $fields[$field] = null;
-                        }
-                    }
+        $metadata = $this->metadataFactory->create($resourceClass);
+
+        foreach ($metadata->getProperties() as $propertyNode) {
+            if($searchFields == null || ($propertyNode->getOptions() != null && array_key_exists('type', $propertyNode->getOptions())&& in_array($propertyNode->getOptions()['type'], $searchFields))) {
+                if ($propertyNode->getOptions() != null && array_key_exists('weight', $propertyNode->getOptions())) {
+                    $fields[$propertyNode->getProperty()] = $propertyNode->getOptions()['weight'];
                 } else {
-                    $fields[$field] = null;
+                    $fields[$propertyNode->getProperty()] = null;
                 }
             }
         }

@@ -13,6 +13,9 @@ use Enhavo\Bundle\SearchBundle\Index\AbstractIndexType;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
+/*
+ * Prepares fields of type model for indexing
+ */
 class ModelType extends AbstractIndexType
 {
     protected $metadataFactory;
@@ -25,9 +28,13 @@ class ModelType extends AbstractIndexType
 
     function index($val, $options, $properties = null)
     {
+        //get the metadata of the given model
         $metaData = $this->metadataFactory->create($val);
 
+        //get the IndexWalker
         $indexWalker = $this->getIndexWalker();
+
+        //return IndexItems of indexWalker; put the model and the metadata into the funktion of the IndexWalker
         return $indexWalker->getIndexItems($val, $metaData, $properties);
     }
 

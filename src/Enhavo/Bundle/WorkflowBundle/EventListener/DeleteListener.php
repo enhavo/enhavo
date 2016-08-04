@@ -4,7 +4,9 @@ namespace Enhavo\Bundle\WorkflowBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\GenericEvent;
-
+/**
+ * Deletes everything belonging to the workflow
+ */
 class DeleteListener
 {
     protected $em;
@@ -29,7 +31,10 @@ class DeleteListener
             $workflowRepository = $this->em->getRepository('EnhavoWorkflowBundle:Workflow');
             $workflow = $workflowRepository->find($event->getSubject()->getId());
 
+            //remove transitions from current workflow
             $this->removeTransitions($workflow);
+
+            //remove nodes and workflowstatus from current workflow
             $this->removeNodesAndWorkflowStatus($workflow);
 
             $this->em->flush();
@@ -81,13 +86,13 @@ class DeleteListener
             foreach($allWorkflowStatus as $workflowStatus) {
                 foreach($nodes as $node) {
                     if($workflowStatus->getNode() == $node){
-                        //get types with workflow-status
 
+                        //get resource with workflow-status
                         $currentObject = $repository->findOneBy(array(
                             'workflow_status' => $workflowStatus
                         ));
                         if($currentObject != null) {
-                            //set workflow-status null in types
+                            //set workflow-status null in resource
                             $currentObject->setWorkflowStatus(null);
                         }
                         //remove workflow-status

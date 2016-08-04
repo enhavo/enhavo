@@ -1,6 +1,4 @@
 parameters:
-    enhavo_page.page_resolver.class: Enhavo\Bundle\PageBundle\Service\PageResolver
-    enhavo_page.page.route_content_loader.class: Enhavo\Bundle\AppBundle\Route\RouteContentLoader
 
 services:
     enhavo_page_page:
@@ -12,3 +10,19 @@ services:
             - @security.context
         tags:
             - { name: form.type }
+
+    enhavo_page.widget.page:
+        class: Enhavo\Bundle\PageBundle\Widget\PageWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget }
+
+    enhavo_page.extend_listener.page:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\PageBundle\Entity\Page
+            - %enhavo_page.model.page.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

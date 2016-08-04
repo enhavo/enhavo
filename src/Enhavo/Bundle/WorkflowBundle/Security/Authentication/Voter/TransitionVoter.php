@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 
+/**
+ * Checks which transitions the current user can use
+ */
 class TransitionVoter  implements VoterInterface
 {
     public function supportsAttribute($attribute)

@@ -58,7 +58,8 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\ContactBundle\EnhavoContactBundle(),
             new Enhavo\Bundle\WorkflowBundle\EnhavoWorkflowBundle(),
             new Enhavo\Bundle\MigrationBundle\EnhavoMigrationBundle(),
-            new Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle()
+            new Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle(),
+            new Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

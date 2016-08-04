@@ -1,0 +1,4 @@
+enhavo_theme_hompage_index:
+    path: /
+    defaults:
+        _controller: EnhavoThemeBundle:Homepage:index

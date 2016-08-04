@@ -1,4 +1,4 @@
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:0.9.15
 
 CMD ["/sbin/my_init"]
 
@@ -6,8 +6,8 @@ CMD ["/sbin/my_init"]
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y apache2
-RUN apt-get install -y php5
 RUN apt-get install -y mysql-server
+RUN apt-get install -y php5
 RUN apt-get install -y php5-mysql
 RUN apt-get install -y php5-gd
 RUN apt-get install -y php5-curl
@@ -36,6 +36,7 @@ RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
   cd /var/www/ && \
   composer install --no-interaction && \
   app/console doctrine:schema:update --force && \
+  app/console enhavo:install:fixtures && \
   app/console fos:user:create admin info@localhost.com admin --super-admin
 
 # user rights

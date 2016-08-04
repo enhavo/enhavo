@@ -4,6 +4,7 @@ parameters:
     enhavo_grid.twig.grid_render.class: Enhavo\Bundle\GridBundle\Twig\GridRender
     enhavo_grid.doctrine_subscriber.class: Enhavo\Bundle\GridBundle\EventListener\DoctrineSubscriber
     enhavo_grid.item_type_resolver.class: Enhavo\Bundle\GridBundle\Item\ItemTypeResolver
+    enhavo_grid.factory.item_type.class: Enhavo\Bundle\GridBundle\Factory\ItemTypeFactory
 
 services:
     enhavo_grid:
@@ -43,14 +44,12 @@ services:
             - %enhavo_grid.render.sets%
             - @service_container
 
+    enhavo_grid.factory.item_type:
+        class: %enhavo_grid.factory.item_type.class%
+        arguments:
+            - %enhavo_grid.items%
+
     validator.unique.video_url_validator:
         class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
         tags:
             - { name: validator.constraint_validator, alias: video_url }
-
-    validator.unique.item_type_validator:
-        class:  Enhavo\Bundle\GridBundle\Validator\Constraints\ItemTypeValidator
-        arguments:
-            - @service_container
-        tags:
-            - { name: validator.constraint_validator, alias: item_type }

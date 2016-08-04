@@ -6,6 +6,9 @@ use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
+/*
+ * This class starts the search process for enhavo
+ */
 class SearchEngine implements SearchEngineInterface
 {
     protected $container;
@@ -29,11 +32,19 @@ class SearchEngine implements SearchEngineInterface
     {
         $request = new SearchRequest($this->container, $this->em, $this->util);
 
+        //prepare for searching
         $request->parseSearchExpression($query);
 
+        //check if there ar not to many conditions
         if (!$request->hasToManyExpressions()) {
+
+            //search
             $results = $request->search($types, $fields);
+
+            //get searchwords of request
             $words = $request->getWords();
+
+            //check filters
             $resultResources = array();
             foreach ($results as $result) {
                 $allFilters = true;
@@ -47,6 +58,8 @@ class SearchEngine implements SearchEngineInterface
                     $resultResources[] = $result;
                 }
             }
+
+            //return searchResult
             if(empty($resultResources)) {
                 return [];
             }

@@ -1,5 +1,5 @@
 Enhavo\Bundle\SettingBundle\Entity\Setting:
-    type: mappedSuperclass
+    type: entity
     table: setting_setting
     repositoryClass: Enhavo\Bundle\SettingBundle\Repository\SettingRepository
 

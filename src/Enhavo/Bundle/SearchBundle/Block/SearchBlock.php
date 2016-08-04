@@ -4,16 +4,22 @@ namespace Enhavo\Bundle\SearchBundle\Block;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\AppBundle\Block\BlockInterface;
-use Symfony\Component\Yaml\Parser;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 
+/*
+ * get fields and entities to filter search
+ */
 class SearchBlock extends AbstractType implements BlockInterface
 {
     protected $util;
 
-    public function __construct(SearchUtil $util)
+    protected $metadataFactory;
+
+    public function __construct(SearchUtil $util, MetadataFactory $metadataFactory)
     {
         $this->util = $util;
+        $this->metadataFactory = $metadataFactory;
     }
 
     public function render($parameters)
@@ -33,31 +39,31 @@ class SearchBlock extends AbstractType implements BlockInterface
 
     protected function getEntitiesAndFields($parameters){
         $searchYamls = $this->util->getSearchYamls();
+
+        //if there ar no entities set in dashboard routing get all possible entities
         if(!array_key_exists('entities', $parameters) || $parameters['entities'] == null){
             $entities = array();
             foreach ($searchYamls as $yamlPath) {
-                $resultEntities = $this->util->getEntityNamesOfSearchYamlPath($yamlPath);
-                foreach($resultEntities as $entity){
+                $resultEntitiesWithTransDom = $this->getEntityNamesWithTransDom($yamlPath);
+                foreach($resultEntitiesWithTransDom as $entity => $transDom){
                     $entities[strtolower($entity)]['label'] = lcfirst($entity).'.label.'.lcfirst($entity);
-                    $entities[strtolower($entity)]['translationDomain'] = $this->getTranslationDomain($yamlPath);
-
+                    $entities[strtolower($entity)]['translationDomain'] = $transDom;
                 }
             }
             $parameters['entities'] = $entities;
         }
 
+        //if there ar no fields set in dashboard routing get all possible fields
         if(!array_key_exists('fields', $parameters) || $parameters['fields'] == null){
             $fields = array();
             foreach($searchYamls as $yamlPath){
                 $yamlContent = $this->util->getContentOfSearchYaml($yamlPath);
                 foreach($yamlContent as $key => $val){
-                    $currentTypes = $this->util->getTypes($yamlContent, $key);
-                    foreach($currentTypes as $type){
-                        if(!in_array($type, $fields)){
-                            $splittedKey = explode('\\', $key);
-                            $entityName = lcfirst(array_pop($splittedKey));
-                            $fields[$type]['label'] = $entityName.'.label.'.$type;
-                            $fields[$type]['translationDomain'] = $this->getTranslationDomain($yamlPath);
+                    $metadata = $this->metadataFactory->create($key);
+                    foreach($metadata->getProperties() as $propertyNode){
+                        if($propertyNode->getOptions() != null && array_key_exists('type', $propertyNode->getOptions()) && !in_array($propertyNode->getOptions()['type'], $fields)){
+                            $fields[$propertyNode->getOptions()['type']]['label'] = lcfirst($metadata->getEntityName()).'.label.'.$propertyNode->getOptions()['type'];
+                            $fields[$propertyNode->getOptions()['type']]['translationDomain'] = $metadata->getBundleName(); //Bundle
                         }
                     }
                 }
@@ -69,6 +75,7 @@ class SearchBlock extends AbstractType implements BlockInterface
 
     protected function getTranslationDomain($yamlPath)
     {
+        //gets
         $splittedYamlPath = explode('/', $yamlPath);
         while(end($splittedYamlPath) != 'Resources'){
             array_pop($splittedYamlPath);
@@ -81,5 +88,22 @@ class SearchBlock extends AbstractType implements BlockInterface
                 return $splittedDom[0];
             }
         }
+    }
+
+    public function getEntityNamesWithTransDom($yamlPath)
+    {
+        //selects all entity names out of the given search yaml
+        $yamlContent = $this->util->getContentOfSearchYaml($yamlPath);
+        $entitiesAndBundle = array();
+        foreach($yamlContent as $key => $value){
+            $metadata = $this->metadataFactory->create($key);
+            foreach ($metadata->getProperties() as $propertyNode) {
+                if($propertyNode->getType() != 'Collection' && $propertyNode->getType() != 'Model')
+                {
+                    $entitiesAndBundle[$metadata->getEntityName()] = $metadata->getBundleName();
+                }
+            }
+        }
+        return $entitiesAndBundle;
     }
 }

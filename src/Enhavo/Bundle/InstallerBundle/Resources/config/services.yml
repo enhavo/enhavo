@@ -1,0 +1,6 @@
+services:
+    enhavo_migration.demo_fixtures:
+        class: Enhavo\Bundle\InstallerBundle\Fixtures\DemoFixtures
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @service_container
