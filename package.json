@@ -3,7 +3,8 @@
   "dependencies": {
     "grunt": "^1.0.1",
     "grunt-compass-multiple": "^0.2.1",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^1.0.0"
   },
   "license": "MIT"
 }

@@ -38,8 +38,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.show_version.twig_extension:
-        class:  Enhavo\Bundle\AppBundle\Twig\ShowVersion
+    enhavo_app.version.twig_extension:
+        class:  Enhavo\Bundle\AppBundle\Twig\Version
         arguments:
             - @service_container
         tags:

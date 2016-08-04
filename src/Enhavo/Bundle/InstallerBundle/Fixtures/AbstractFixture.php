@@ -210,8 +210,22 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
                 $route->setTypeId($item->getId());
                 $route->setName(sprintf('dynamic_route_%s', $route->getId()));
             }
+
+            $this->index($item);
         }
 
+        $this->reindex();
+
         $this->manager->flush();
+    }
+
+    protected function index($item)
+    {
+        $this->container->get('enhavo_search_index_engine')->index($item);
+    }
+
+    protected function reindex()
+    {
+        $this->container->get('enhavo_search_index_engine')->reindex();
     }
 }

@@ -86,7 +86,7 @@
       .readmore-btn {
         width:80px; height:80px; background:$citrus; position:absolute; right:0; top:-80px;@include transition(all .3s cubic-bezier(1, 0, 0, 1)); cursor:pointer;
         &:after {
-          content: '\e8b4'; display:inline-block;color:#FFF;font-family: "enhavo_iconfont"; position:relative;
+          content: '\e8b4'; display:inline-block;color:#FFF;font-family: "enhavo-iconfont"; position:relative;
           left:50%; font-size:20px; margin-left:-10px; margin-top:-12px; top:50%;@include transform(scale(.1));@include transition(all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275));
         }
       }
