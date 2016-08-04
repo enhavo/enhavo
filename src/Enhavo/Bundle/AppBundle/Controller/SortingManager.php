@@ -33,6 +33,10 @@ class SortingManager
 
     public function initialize(RequestConfiguration $requestConfiguration, MetadataInterface $metadataInterface, $resource, EntityRepository $repository)
     {
+        if(!$requestConfiguration->isSortable()) {
+            return;
+        }
+
         $accessor = PropertyAccess::createPropertyAccessor();
         $property = $requestConfiguration->getSortablePosition();
         $strategy = $requestConfiguration->getSortingStrategy();
