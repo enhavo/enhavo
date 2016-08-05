@@ -15,6 +15,11 @@ use Symfony\Component\DependencyInjection\Loader;
 class EnhavoAppExtension extends Extension
 {
     /**
+     * Enhavo Version
+     */
+    const VERSION = '0.2.0';
+
+    /**
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)

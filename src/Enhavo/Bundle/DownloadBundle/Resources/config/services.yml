@@ -7,3 +7,13 @@ services:
             - %enhavo_download.model.download.class%
         tags:
             - { name: form.type }
+
+
+    enhavo_download.extend_listener.download:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\DownloadBundle\Entity\Download
+            - %enhavo_download.model.download.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

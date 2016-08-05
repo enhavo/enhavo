@@ -37,10 +37,16 @@ class TextPicture implements ItemTypeInterface
      */
     protected $file;
 
+
     /**
      * @var boolean
      */
-    protected $frame;
+    private $float;
+
+    /**
+     * @var string
+     */
+    private $caption;
 
     /**
      * Get id
@@ -148,18 +154,50 @@ class TextPicture implements ItemTypeInterface
     }
 
     /**
-     * @return mixed
+     * Set float
+     *
+     * @param boolean $float
+     *
+     * @return TextPicture
      */
-    public function getFrame()
+    public function setFloat($float)
     {
-        return $this->frame;
+        $this->float = $float;
+
+        return $this;
     }
 
     /**
-     * @param mixed $frame
+     * Get float
+     *
+     * @return boolean
      */
-    public function setFrame($frame)
+    public function getFloat()
     {
-        $this->frame = $frame;
+        return $this->float;
+    }
+
+    /**
+     * Set caption
+     *
+     * @param string $caption
+     *
+     * @return TextPicture
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * Get caption
+     *
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 }

@@ -43,11 +43,6 @@ class PicturePictureType extends ItemFormType
             'label' => 'picturePicture.form.label.caption_right',
             'translation_domain' => 'EnhavoGridBundle',
         ));
-
-        $builder->add('frame', 'enhavo_boolean', array(
-            'label' => 'picturePicture.form.label.frame',
-            'translation_domain' => 'EnhavoGridBundle'
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

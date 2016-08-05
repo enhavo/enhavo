@@ -1,11 +1,6 @@
-/**
- * Created by gseidel on 30/08/14.
- */
+define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'media/ImageCropper', 'blueimp-file-upload', 'app/Templating'], function($, router, admin, formScript, translator, ImageCropper, fileUpload, templating) {
 
-var uploadForm = null;
-
-$(function() {
-  function UploadForm(routing, admin, formScript, translator) {
+  function UploadForm() {
     var self = this;
 
     this.initUploadForm = function (form) {
@@ -15,7 +10,7 @@ $(function() {
       var imageCropper = [];
       $(form).find('.uploadForm').each(function (formIndex, uploadForm) {
         isMultiple[formIndex] = $(this).data('multiple') == '1';
-        imageCropper[formIndex] = new ImageCropper(routing, uploadForm, admin);
+        imageCropper[formIndex] = new ImageCropper(uploadForm);
 
         if (isMultiple[formIndex]) {
           $(this).find('[data-file-list]').sortable({
@@ -82,11 +77,11 @@ $(function() {
             self.setFileOrder(uploadForm);
           },
 
-          fail: function(event, data) {
+          fail: function (event, data) {
             admin.overlayMessage(translator.trans('media.form.message.upload_error', {}, 'EnhavoMediaBundle'), admin.MessageType.Error);
           },
 
-          always: function(event, data) {
+          always: function (event, data) {
             $(uploadForm).find('.progress .bar').css('width', '0%');
             var dropZone = $(uploadForm).find('.dropzone');
             if (dropZone.find('[data-file-element]').length > 0) {
@@ -205,7 +200,7 @@ $(function() {
             var data = new FormData();
             data.append('file', self.dataURItoBlob(result));
             $.ajax({
-              url: routing.generate(route, {id: id}),
+              url: router.generate(route, {id: id}),
               type: 'POST',
               data: data,
               processData: false,
@@ -339,7 +334,7 @@ $(function() {
         .replace(/-+$/, '');            // Trim - from end of text
     };
 
-    this.dataURItoBlob = function(dataURI) {
+    this.dataURItoBlob = function (dataURI) {
       // convert base64/URLEncoded data component to raw binary data held in a string
       var byteString;
       if (dataURI.split(',')[0].indexOf('base64') >= 0)
@@ -356,7 +351,7 @@ $(function() {
         ia[i] = byteString.charCodeAt(i);
       }
 
-      return new Blob([ia], {type:mimeString});
+      return new Blob([ia], {type: mimeString});
     };
 
     this.start = function () {
@@ -379,8 +374,10 @@ $(function() {
       });
     };
 
-    this.init();
+    $(function() {
+      self.init();
+    });
   }
 
-  uploadForm = new UploadForm(Routing, admin, form, Translator);
+  return new UploadForm();
 });

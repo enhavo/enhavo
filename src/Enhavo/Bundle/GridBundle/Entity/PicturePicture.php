@@ -28,11 +28,6 @@ class PicturePicture implements ItemTypeInterface
     protected $fileRight;
 
     /**
-     * @var boolean
-     */
-    protected $frame;
-
-    /**
      * @var string
      */
     protected $captionLeft;
@@ -101,22 +96,6 @@ class PicturePicture implements ItemTypeInterface
     public function getFileRight()
     {
         return $this->fileRight;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFrame()
-    {
-        return $this->frame;
-    }
-
-    /**
-     * @param mixed $frame
-     */
-    public function setFrame($frame)
-    {
-        $this->frame = $frame;
     }
 
     /**

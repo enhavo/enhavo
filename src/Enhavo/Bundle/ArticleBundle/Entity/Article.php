@@ -36,12 +36,12 @@ class Article extends Content
     /**
      * @var WorkflowStatusInterface
      */
-    private $workflow_status;
+    protected $workflow_status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $categories;
+    protected $categories;
 
     /**
      * Constructor

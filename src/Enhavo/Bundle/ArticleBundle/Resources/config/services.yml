@@ -15,3 +15,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.theme_widget }
+
+    enhavo_article.extend_listener.article:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\ArticleBundle\Entity\Article
+            - %enhavo_article.model.article.class%
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

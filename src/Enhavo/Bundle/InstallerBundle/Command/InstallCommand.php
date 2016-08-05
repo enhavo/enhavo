@@ -126,6 +126,22 @@ class InstallCommand extends ContainerAwareCommand
     }
 
     /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return mixed
+     */
+    protected function askForDemoData(InputInterface $input, OutputInterface $output)
+    {
+        $helper = $this->getHelper('question');
+        $question = new Question('<question>Add demo data:</question> ');
+        $answer = $helper->ask($input, $output, $question);
+
+        if($answer == 'yes') {
+            $this->getContainer()->get('enhavo_installer.demo_fixtures');
+        }
+    }
+
+    /**
      * Validate single email
      *
      * @param string $email

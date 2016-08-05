@@ -20,9 +20,95 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_assets');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('require_js')
+                    ->children()
+                        ->scalarNode('initialize_template')
+                            ->defaultValue('HearsayRequireJSBundle::initialize.html.twig')
+                        ->end()
+
+                        ->scalarNode('base_dir')
+                            ->defaultValue('HearsayRequireJSBundle::initialize.html.twig')
+                        ->end()
+
+                        ->scalarNode('base_url')
+                            ->defaultValue('HearsayRequireJSBundle::initialize.html.twig')
+                        ->end()
+
+                        ->arrayNode('paths')
+                            ->defaultValue(array())
+                            ->useAttributeAsKey('path')
+                            ->normalizeKeys(false)
+                            ->prototype('array')
+                                ->beforeNormalization()
+                                    ->ifString()
+                                    ->then(function ($v) {
+                                        return array('location' => $v);
+                                    })
+                                ->end()
+                                ->children()
+                                    ->variableNode('location')
+                                        ->isRequired()
+                                        ->cannotBeEmpty()
+                                        ->validate()
+                                            ->always(function ($v) {
+                                                if (!is_string($v) && !is_array($v)) {
+                                                    throw new \InvalidArgumentException();
+                                                }
+                                                $vs = !is_array($v) ? (array) $v : $v;
+                                                $er = preg_grep('~\.js$~', $vs);
+                                                if ($er) {
+                                                    throw new \InvalidArgumentException();
+                                                }
+                                                return $v;
+                                            })
+                                        ->end()
+                                    ->end()
+                                    ->scalarNode('exports')->end()
+                                    ->arrayNode('dependencies')
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+
+                    ->arrayNode('shim')
+                        ->defaultValue(array())
+                        ->useAttributeAsKey('name')
+                        ->normalizeKeys(false)
+                        ->prototype('array')
+                            ->children()
+                                ->arrayNode('deps')
+                                    ->defaultValue(array())
+                                    ->prototype('scalar')
+                                    ->end()
+                                ->end()
+                                ->scalarNode('exports')
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+
+                    ->arrayNode('options')
+                        ->defaultValue(array())
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                            ->beforeNormalization()
+                                ->always(function ($v) {
+                                    return array('value' => $v);
+                                })
+                            ->end()
+                            ->children()
+                                ->variableNode('value')
+                                    ->isRequired()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+
 
         return $treeBuilder;
     }

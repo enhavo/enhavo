@@ -1,5 +1,5 @@
 Enhavo\Bundle\PageBundle\Entity\Page:
-    type: mappedSuperclass
+    type: entity
     table: page_page
     repositoryClass: Enhavo\Bundle\PageBundle\Repository\PageRepository
 

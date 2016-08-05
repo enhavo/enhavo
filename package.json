@@ -4,11 +4,7 @@
     "grunt": "^1.0.1",
     "grunt-compass-multiple": "^0.2.1",
     "grunt-contrib-watch": "^1.0.0",
-    "node-compass": "^0.2.4",
-    "node-sass": "^3.8.0",
-    "tslint": "^3.8.1",
-    "typescript": "^1.8.9",
-    "uglifyjs": "^2.4.10"
+    "grunt-exec": "^1.0.0"
   },
   "license": "MIT"
 }

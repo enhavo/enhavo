@@ -14,9 +14,7 @@ class PageController extends Controller
 {
     public function showAction($contentDocument)
     {
-        $pages = $this->get('enhavo_page.repository.page')->findAll();
         return $this->render('EnhavoThemeBundle:Theme:Page/show.html.twig', [
-            'pages' => $pages,
             'page' => $contentDocument,
         ]);
     }
