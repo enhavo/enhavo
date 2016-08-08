@@ -32,7 +32,8 @@ class CategoryType extends AbstractType
         ));
 
         $builder->add('slug', 'text', array(
-            'label' => 'form.label.slug'
+            'label' => 'form.label.slug',
+            'translation_domain' => 'EnhavoAppBundle'
         ));
     }
 

@@ -28,9 +28,7 @@ class SliderWidget extends AbstractType implements WidgetInterface
         }
 
         $repository = $this->container->get('enhavo_slider.repository.slide');
-        $slides = $repository->findBy([
-            'public' => true,
-        ]);
+        $slides = $repository->findPublished();
 
         return $this->renderTemplate($template, [
             'slides' => $slides,

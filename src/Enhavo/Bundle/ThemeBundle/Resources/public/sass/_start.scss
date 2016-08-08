@@ -23,6 +23,7 @@
       }
       .slide-title { line-height:$smallLineHeight;padding-bottom:25px;}
     }
+    .slide-link{display: block; width: 100%;  height: 100%;}
   }
   #secondary {
     width:400px;float:left;height:100%;position:absolute;left:0;padding:110px 70px;background:rgba(255, 255, 255, .3);
