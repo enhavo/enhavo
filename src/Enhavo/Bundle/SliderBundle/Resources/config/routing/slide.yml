@@ -59,13 +59,15 @@ enhavo_slider_slide_table:
                     move_after_route: enhavo_slider_slide_move_after
                     move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
-                    id:
-                        label: slide.label.id
-                        property: id
+                    picture:
+                        type: picture
+                        property: image
+                        width: 2
+                        label:
                     title:
                         label: slide.label.title
                         property: title
-                        width: 10
+                        width: 9
                     position:
                         type: position
 
