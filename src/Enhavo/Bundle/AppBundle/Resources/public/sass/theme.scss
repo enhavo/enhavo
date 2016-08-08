@@ -469,7 +469,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     #loginBox #overlayMessage.loginMessage {top:0;border-radius:0;bottom:initial;padding: 12px; height:47px;box-shadow:none}
 }
 
-
 .select2-container {
   .select2-choice {
     background-image:none;border:1px solid #eee;border-radius:0;height:30px;color: #333;
@@ -499,11 +498,3 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
   input {box-shadow:none; background:url('/bundles/enhavoassets/vendor/select2/select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #fff 99%) 0 0;border:1px solid #eee;}
 }
 
-.wysiwyg-container{
-  .mce-panel {
-    .mce-btn {
-      background-image:none;text-shadow:none;
-      &:hover{background-color: #FFF;}
-    }
-  }
-}
