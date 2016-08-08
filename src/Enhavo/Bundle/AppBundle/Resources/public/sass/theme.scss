@@ -154,7 +154,6 @@ input[type="checkbox"]:checked  + span{background: url("../img/checkbox.png") -2
 :-ms-input-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 
-
 .action-row {margin-bottom:45px;}
 .action-row [class*=col-]:first-child {padding-left:0;}
 .btnsmall {display: inline-block;padding: 10px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:#4395d1;font-weight:700;border:none;}
@@ -189,7 +188,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     -o-transition:all .2s;
 }
 
-
 .btn:before{
     width: 24px;
     height: 24px;
@@ -213,8 +211,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     position: relative;
     top: 1px;
 }
-
-
 
 .btn.upload-button:before{
     content: '\e817';
