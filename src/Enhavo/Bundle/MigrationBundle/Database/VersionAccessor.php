@@ -44,8 +44,8 @@ class VersionAccessor
             return '0.1.0';
         }
 
-        if ($this->modifier->tableExists('migration_version')) {
-            return null;
+        if (!$this->modifier->tableExists('migration_version')) {
+            return '0.0.0';
         }
 
         $version = $this->entityManager->getRepository('EnhavoMigrationBundle:Version')->getVersion();

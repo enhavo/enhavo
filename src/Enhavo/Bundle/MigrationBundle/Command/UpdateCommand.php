@@ -20,13 +20,25 @@ class UpdateCommand extends ContainerAwareCommand
         $this
             ->setName('enhavo:migration:update')
             ->setDescription('Update to higher enhavo version')
+            ->addOption(
+                'from',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'start migration from version'
+            )
+            ->addOption(
+                'to',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'migrate to version'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Starting migration');
-        $this->getContainer()->get('enhavo_migration.migrator')->run();
+        $this->getContainer()->get('enhavo_migration.migrator')->run($input->getOption('from'), $input->getOption('to'));
         $output->writeln('Finished');
     }
 }

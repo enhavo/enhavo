@@ -11,9 +11,15 @@ class DatabaseModifier
      */
     protected $entityManager;
 
+    /**
+     * @var string
+     */
+    protected $tableSchema;
+
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->tableSchema = $entityManager->getConnection()->getDatabase();
     }
 
     /**
@@ -25,8 +31,9 @@ class DatabaseModifier
      */
     public function tableExists($table)
     {
-        $statement = $this->entityManager->getConnection()->prepare('SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = :table');
+        $statement = $this->entityManager->getConnection()->prepare('SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = :table AND TABLE_SCHEMA = :schema');
         $statement->bindValue('table', $table);
+        $statement->bindValue('schema', $this->tableSchema);
         $statement->execute();
         return count($statement->fetchAll()) > 0;
     }
@@ -71,5 +78,114 @@ class DatabaseModifier
     public function executeQuery($query, array $params = array(), $types = array())
     {
         return $this->entityManager->getConnection()->executeQuery($query, $params, $types, null);
+    }
+
+    public function renameTable($source, $target)
+    {
+        return $this->executeQuery(sprintf('ALTER TABLE `%s` RENAME `%s`', $source, $target));
+    }
+
+    /**
+     * @param string $tableName
+     * @param array $columnNames
+     */
+    public function addColumnsToTableIfExists($tableName, $columnNames, $type = 'INT')
+    {
+        if (!$this->tableExists($tableName)) {
+            return;
+        }
+
+        $sql = sprintf('ALTER TABLE %s ADD %s %s DEFAULT NULL', $tableName, $columnNames[0], $type);
+        if (count($columnNames) > 1) {
+            foreach($columnNames as $key => $columnName) {
+                if ($key > 0) {
+                    $sql .= sprintf(', ADD %s INT DEFAULT NULL', $columnName);
+                }
+            }
+        }
+        $this->executeQuery($sql);
+
+        foreach($columnNames as $columnName) {
+            $this->executeQuery(
+                sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES media_file (id)',
+                    $tableName,
+                    $this->generateDoctrineSchemaIdentifierName($tableName, $columnName, 'fk'),
+                    $columnName
+                )
+            );
+            $this->executeQuery(
+                sprintf('CREATE INDEX %s ON %s (%s)',
+                    $this->generateDoctrineSchemaIdentifierName($tableName, $columnName, 'idx'),
+                    $tableName,
+                    $columnName
+                )
+            );
+        }
+    }
+
+    /**
+     * @param string $targetTable
+     * @param string $targetTableIdColumn
+     * @param string $targetTableTargetColumn
+     * @param string $sourceTable
+     * @param string $sourceTableJoinColumn
+     * @param string $sourceTableSourceColumn
+     */
+    public function copyConnectionsIfTableExists($targetTable, $targetTableIdColumn, $targetTableTargetColumn, $sourceTable, $sourceTableJoinColumn, $sourceTableSourceColumn)
+    {
+        if (!($this->tableExists($targetTable) && $this->tableExists($sourceTable))) {
+            return;
+        }
+
+        $statement = $this->executeQuery(
+            sprintf('SELECT t0.%s, t0.%s FROM %s t0 INNER JOIN %s t1 ON t1.%s = t0.%s',
+                $sourceTableJoinColumn,
+                $sourceTableSourceColumn,
+                $sourceTable,
+                $targetTable,
+                $targetTableIdColumn,
+                $sourceTableJoinColumn
+            )
+        );
+        $values = $statement->fetchAll();
+
+        foreach($values as $value) {
+            $this->executeQuery(
+                sprintf('UPDATE %s SET %s = :value WHERE %s = :id',
+                    $targetTable,
+                    $targetTableTargetColumn,
+                    $targetTableIdColumn
+                ),
+                array(
+                    'value' => $value[$sourceTableSourceColumn],
+                    'id'    => $value[$sourceTableJoinColumn]
+                )
+            );
+        }
+    }
+
+    public function dropTableIfExists($joinTable)
+    {
+        if (!$this->tableExists($joinTable)) {
+            return;
+        }
+
+        $this->executeQuery(
+            sprintf('DROP TABLE %s',
+                $joinTable
+            )
+        );
+    }
+
+    public function renameColumn($table, $from, $to, $type = 'INT')
+    {
+        $this->executeQuery(
+            sprintf('ALTER TABLE `%s` CHANGE `%s` `%s` %s;',
+                $table,
+                $from,
+                $to,
+                $type
+            )
+        );
     }
 }
