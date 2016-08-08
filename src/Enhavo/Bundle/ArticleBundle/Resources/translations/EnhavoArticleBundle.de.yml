@@ -24,6 +24,8 @@ article:
     yearly: 'Jährlich'
     never: 'Nie'
     assigned: 'Zugeordnet'
+    public: 'Öffentlich'
+    publicationDate: 'Erscheinungsdatum'
   batch:
     action:
       publish: 'Veröffentlichen'
