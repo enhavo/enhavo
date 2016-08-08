@@ -24,6 +24,8 @@ article:
     yearly: 'Yearly'
     never: 'Never'
     assigned: 'Assigned'
+    public: 'Public'
+    publicationDate: 'Publication date'
   batch:
     action:
       publish: 'Publish'

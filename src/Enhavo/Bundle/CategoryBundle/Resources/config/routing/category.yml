@@ -59,11 +59,8 @@ enhavo_category_category_table:
             table:
                 width: 12
                 columns:
-                    id:
-                        label: category.label.id
-                        property: id
                     name:
-                        width: 11
+                        width: 12
                         label: category.label.name
                         property: name
 
