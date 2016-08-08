@@ -1,10 +1,10 @@
 {% block slider %}
-<ul class="slider teeeest">
+<ul class="slider">
     {% for slide in slides %}
         {% if slide.image %}
             <li class="slider-img" style="background-image:url({{ media_url(slide.image) }}); background-size:cover; background-attachment: fixed;">
                 {% if slide.url is not null %}
-                    <a href="http://{{ slide.url }}" class="slide-link">
+                    <a href="{{ slide.url|url_beautifier }}" class="slide-link">
                 {% endif %}
                 <span class="hero-caption" href="">
                     <p class="slide-text">{{ slide.text|raw }}</p>
