@@ -474,16 +474,17 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     background-image:none;border:1px solid #eee;border-radius:0;height:30px;color: #333;
     .select2-arrow {
       background-image:none;background: #eee;border:0;border-radius:0;width:28px;
-      b {display:none;}
-      &:after {content:'\e82b';color:#FFF;font-family:"enhavo_iconfont"; display:block;font-size: 18px;padding: 2px 6px;color: #999;}
+      b {background-position:7px 1px;}
     }
   }
-}
-
-.select2-dropdown-open {
-  .select2-choice {
-    background:#FFF;
-    .select2-arrow { background:#FFF;}
+  &.select2-dropdown-open {
+    .select2-choice {
+      background:#FFF;
+      .select2-arrow {
+        background-color:#FFF;
+        b {background-position: -11px 1px;}
+      }
+    }
   }
 }
 
