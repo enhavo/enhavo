@@ -11,7 +11,11 @@
                     <article class="clearfix" data-article-item>
                         <a href="{{ path('enhavo_theme_article_show', {slug: article.slug}) }}">
                             <span class="article-photo">
-                                <img src="{{ media_url(article.picture) }}" alt=""/>
+                                {% if article.picture %}
+                                    <img src="{{ media_url(article.picture) }}" alt=""/>
+                                 {% else %}
+                                    <img src="/bundles/enhavotheme/img/default-article-picture.jpg" alt=""/>
+                                {% endif %}
                             </span>
                             <span class="article-content">
                                 <h3 class="title">{{ article.title }}</h3>

@@ -9,9 +9,7 @@ class HomepageController extends Controller
 {
     public function indexAction()
     {
-        $articles = $this->get('enhavo_article.repository.article')->findBy([
-            'public' => true
-        ]);
+        $articles = $this->get('enhavo_article.repository.article')->findPublished();
 
         $setCategories = [];
 

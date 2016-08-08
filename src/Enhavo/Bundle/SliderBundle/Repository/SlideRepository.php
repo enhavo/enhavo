@@ -16,9 +16,7 @@ class SlideRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
-        $query->andWhere('n.publication_date <= :currentDate');
-        $query->setParameter('currentDate', new \DateTime());
-        $query->orderBy('n.order', 'desc');
+        $query->orderBy('n.position', 'desc');
         return $query->getQuery()->getResult();
     }
 }
