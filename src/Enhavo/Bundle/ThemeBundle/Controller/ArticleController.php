@@ -25,7 +25,7 @@ class ArticleController extends Controller
 
     public function categoryAction($slug)
     {
-        $articles = $this->get('enhavo_article.repository.article')->findAll();
+        $articles = $this->get('enhavo_article.repository.article')->findPublished();
         $category = $this->get('enhavo_category.repository.category')->findOneBy(array(
             'slug' => $slug
         ));

@@ -32,6 +32,10 @@ enhavo_sitemap:
     resource: "@EnhavoContentBundle/Resources/config/routing/sitemap.yml"
     prefix:   /
 
+enhavo_newsletter_subscriber:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
+    prefix: /
+
 enhavo_user_security:
     resource: "@EnhavoUserBundle/Resources/config/routing/security.yml"
     prefix:   /admin
@@ -74,10 +78,6 @@ enhavo_grid:
 
 enhavo_newsletter_newsletter:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
-    prefix: /admin
-
-enhavo_newsletter_subscriber:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
     prefix: /admin
 
 enhavo_category_category:
