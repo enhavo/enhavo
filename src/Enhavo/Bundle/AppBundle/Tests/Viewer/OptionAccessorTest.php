@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Test\Config;
+namespace Enhavo\Bundle\AppBundle\Test\Viewer;
 
-use Enhavo\Bundle\AppBundle\Config\ConfigParser;
+use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
-class ConfigParserTest extends \PHPUnit_Framework_TestCase
+class OptionAccessorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test if ConfigParser can be initialize
@@ -12,8 +12,8 @@ class ConfigParserTest extends \PHPUnit_Framework_TestCase
      */
     function testInitialize()
     {
-        $configParser = new ConfigParser();
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Config\ConfigParser', $configParser);
+        $configParser = new OptionAccessor();
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Viewer\OptionAccessor', $configParser);
     }
 
     /**
@@ -25,22 +25,22 @@ class ConfigParserTest extends \PHPUnit_Framework_TestCase
      */
     function testParsingConfig()
     {
-        $request = $this->createRequestMockWithConfig(
-            [
-                'type' => 'viewer.table',
-                'columns' => array(
-                    'id' => array(
-                        'property' => 'id'
-                    )
+        $config = [
+            'type' => 'viewer.table',
+            'columns' => array(
+                'id' => array(
+                    'property' => 'id'
                 )
-            ]
-        );
+            )
+        ];
 
-        $configParser = new ConfigParser();
-        $configParser->parse($request);
+        $configParser = new OptionAccessor();
+        $configParser->setDefaults([]);
+        $configParser->resolve($config);
+
         $this->assertEquals('viewer.table', $configParser->get('type'));
         $this->assertEquals('id', $configParser->get('columns.id.property'));
-        $this->assertEquals('viewer.table', $configParser->getType());
+        $this->assertEquals('viewer.table', $configParser->get('type'));
     }
 
     /**
@@ -52,16 +52,14 @@ class ConfigParserTest extends \PHPUnit_Framework_TestCase
      */
     function testMergingWithDefaultConfig()
     {
-        $request = $this->createRequestMockWithConfig(
-            [
-                'level1' => [
-                    'level2' => [
-                        'level3' => null,
-                        'other' => 'otherValue'
-                    ]
+        $config = [
+            'level1' => [
+                'level2' => [
+                    'level3' => null,
+                    'other' => 'otherValue'
                 ]
             ]
-        );
+        ];
 
         $default = array(
             'type' => 'defaultType',
@@ -89,26 +87,15 @@ class ConfigParserTest extends \PHPUnit_Framework_TestCase
          *
          */
 
-        $configParser = new ConfigParser();
-        $configParser->parse($request);
-        $configParser->setDefault($default);
-        $this->assertEquals('defaultType', $configParser->get('type'));
+        $configParser = new OptionAccessor();
+        $configParser->setDefaults($default);
+        $configParser->resolve($config);
 
+        $this->assertEquals('defaultType', $configParser->get('type'));
         $this->assertArraySubset(array(
             'level3' => null,
             'other' => 'otherValue',
             'type' => 'defaultLevel2Type'
         ), $configParser->get('level1.level2'));
-    }
-
-    /**
-     * @param $config
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected function createRequestMockWithConfig($config)
-    {
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-        $request->method('get')->with('_viewer')->willReturn($config);
-        return $request;
     }
 }

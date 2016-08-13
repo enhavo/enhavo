@@ -16,7 +16,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface as SyliusRequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
@@ -49,7 +49,7 @@ class ResourceController extends BaseController
 
     public function __construct(
         MetadataInterface $metadata,
-        RequestConfigurationFactoryInterface $requestConfigurationFactory,
+        SyliusRequestConfigurationFactoryInterface $requestConfigurationFactory,
         ViewHandlerInterface $viewHandler,
         RepositoryInterface $repository,
         FactoryInterface $factory,

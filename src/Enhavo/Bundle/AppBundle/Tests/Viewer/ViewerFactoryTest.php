@@ -2,67 +2,42 @@
 
 namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 
 class ViewerFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    function testInitialize()
+    function testCreate()
     {
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
-        $requestStack = $this->getRequestStackMock();
+        $viewerMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\ViewerInterface')->getMock();
 
-        $factory = new ViewerFactory($container, $requestStack, []);
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Viewer\ViewerFactory', $factory);
-    }
+        $typeCollectorMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Type\TypeCollector')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $typeCollectorMock->method('getType')->willReturn($viewerMock);
 
-    /**
-     * Test if create function will create and return the right viewer
-     */
-    function testCreateViewer()
-    {
-        $viewerList = $this->getViewerList();
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
-        $requestStack = $this->getRequestStackMock();
+        $containerMock = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
 
-        $factory = new ViewerFactory($container, $requestStack, $viewerList);
-        $viewer = $factory->create('table');
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Viewer\TableViewer', $viewer);
-        $this->assertEquals($container, $viewer->getContainer());
-    }
+        $factory = new ViewerFactory($containerMock, $typeCollectorMock);
 
-    /**
-     * Test if you try to create from a viewer type, that does not exists
-     *
-     * @expectedException \Enhavo\Bundle\AppBundle\Exception\ViewerNotFoundException
-     */
-    function testCreateViewerWithTypeThatDoesNotExist()
-    {
-        $viewerList = $this->getViewerList();
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
-        $requestStack = $this->getRequestStackMock();
 
-        $factory = new ViewerFactory($container, $requestStack, $viewerList);
-        $factory->create('notExistingType');
-    }
+        $configurationMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface')->getMock();
+        $configurationMock->method('getViewerOptions')->willReturn([]);
 
-    protected function getRequestStackMock()
-    {
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-        $request->method('get')->willReturn('current_route');
+        $metadataMock = $this->getMockBuilder('Sylius\Component\Resource\Metadata\MetadataInterface')->getMock();
+        $formMock = $this->getMockBuilder('Symfony\Component\Form\Form')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $resourceMock = new EntityMock();
 
-        $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->getMock();
-        $requestStack->method('getMasterRequest')->willReturn($request);
-
-        return $requestStack;
-    }
-
-    protected function getViewerList()
-    {
-        return array(
-            'table' => 'Enhavo\Bundle\AppBundle\Viewer\TableViewer',
-            'create' => 'Enhavo\Bundle\AppBundle\Viewer\CreateViewer',
-            'app' => 'Enhavo\Bundle\AppBundle\Viewer\AppViewer',
-            'edit' => 'Enhavo\Bundle\AppBundle\Viewer\EditViewer'
+        $viewer = $factory->create(
+            $configurationMock,
+            $metadataMock,
+            $resourceMock,
+            $formMock,
+            'type'
         );
+
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Viewer\ViewerInterface', $viewer);
     }
 }

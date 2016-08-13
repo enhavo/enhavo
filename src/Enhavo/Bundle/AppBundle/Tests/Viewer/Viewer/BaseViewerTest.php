@@ -18,7 +18,7 @@ class BaseViewerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('base', $viewer->getType());
     }
 
-    function testView()
+    function testCreateView()
     {
         $containerMock = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $containerMock->method('getParameter')->will($this->returnCallback(function($id) {

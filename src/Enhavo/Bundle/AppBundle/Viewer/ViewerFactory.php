@@ -12,7 +12,6 @@ use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 
 class ViewerFactory

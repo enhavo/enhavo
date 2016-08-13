@@ -14,7 +14,6 @@ use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\RestBundle\View\View;
 
 abstract class AbstractViewer extends AbstractType implements ViewerInterface
