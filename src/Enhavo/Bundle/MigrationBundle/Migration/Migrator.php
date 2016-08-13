@@ -52,9 +52,9 @@ class Migrator
         $this->versionAccessor = $versionAccessor;
     }
 
-    public function run()
+    public function run($from = null, $to = null)
     {
-        $migrationsList = $this->getMigrationList();
+        $migrationsList = $this->getMigrationList($from, $to);
         foreach($migrationsList as $migration) {
             $migrationClass = new $migration;
             if($migrationClass instanceof ContainerAwareInterface) {
@@ -66,10 +66,19 @@ class Migrator
         }
     }
 
-    protected function getMigrationList()
+    protected function getMigrationList($from = null, $to = null)
     {
-        $currentVersion = $this->getCurrentVersion();
-        $updatedToVersion = $this->getUpdatedToVersion();
+        if($from) {
+            $currentVersion = $from;
+        } else {
+            $currentVersion = $this->getCurrentVersion();
+        }
+
+        if($to) {
+            $updatedToVersion = $to;
+        } else {
+            $updatedToVersion = $this->getUpdatedToVersion();
+        }
 
         if(version_compare($currentVersion, $updatedToVersion, '=')) {
             return [];

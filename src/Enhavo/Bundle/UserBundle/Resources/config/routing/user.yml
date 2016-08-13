@@ -43,9 +43,6 @@ enhavo_user_user_table:
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:
-                    id:
-                        label: user.label.id
-                        property: id
                     username:
                         label: user.label.username
                         property: username
@@ -55,7 +52,7 @@ enhavo_user_user_table:
                         label: group.label.group
                         property: groups
                         item_property: name
-                        width: 5
+                        width: 6
 
 enhavo_user_user_delete:
     options:

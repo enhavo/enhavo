@@ -43,3 +43,8 @@ services:
             - @service_container
         tags:
             - { name: twig.extension }
+
+    enhavo_app.url_beautifier.twig_extension:
+        class: Enhavo\Bundle\AppBundle\Twig\UrlBeautifier
+        tags:
+            - { name: twig.extension }

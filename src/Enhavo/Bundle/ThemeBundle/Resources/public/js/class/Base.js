@@ -16,6 +16,7 @@ function Base() {
       this.handleFormMessage();
       this.createStickyElements();
       this.fadeOutSidebar();
+      this.setTitleHeightOfThreePictureItem();
     };
 
   this.fadeOutSidebar = function() {
@@ -51,7 +52,17 @@ function Base() {
     })
   }
 
+  this.setTitleHeightOfThreePictureItem = function(){
+    var maxHeight = -1;
 
+    $('[data-image-title]').each(function() {
+      maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+    });
+
+    $('[data-image-title]').each(function() {
+      $(this).height(maxHeight);
+    });
+  }
 
   this.initSlider = function () {
     $('.slider').slick({

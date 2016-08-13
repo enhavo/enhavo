@@ -67,9 +67,6 @@ enhavo_newsletter_newsletter_table:
                             translation_domain: EnhavoNewsletterBundle
                             permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
-                    id:
-                        label: newsletter.label.id
-                        property: id
                     title:
                         label: newsletter.label.title
                         property: title
@@ -78,6 +75,7 @@ enhavo_newsletter_newsletter_table:
                         type: boolean
                         label: newsletter.label.sent
                         property: sent
+                        width: 2
 
 enhavo_newsletter_newsletter_delete:
     options:

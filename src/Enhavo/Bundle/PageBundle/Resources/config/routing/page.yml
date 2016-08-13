@@ -81,21 +81,15 @@ enhavo_page_page_table:
             viewer:
                 translationDomain: EnhavoPageBundle
                 columns:
-                    id:
-                        label: page.label.id
-                        property: id
                     public:
                         type: boolean
                         label: page.label.public
                         property: public
+                        width: 2
                     title:
                         label: page.label.title
                         property: title
-                        width: 9
-                    workflow_status:
-                        type: workflow_assigned
-                        label: page.label.assigned
-                        property: workflowStatus
+                        width: 10
 
 enhavo_page_page_delete:
     path: /enhavo/page/page/delete/{id}

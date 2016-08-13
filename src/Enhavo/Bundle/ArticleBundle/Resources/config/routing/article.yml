@@ -71,17 +71,20 @@ enhavo_article_article_table:
             viewer:
                 translationDomain: EnhavoArticleBundle
                 columns:
-                    id:
-                        label: article.label.id
-                        property: id
+                    public:
+                        label: article.label.public
+                        property: public
+                        width: 2
+                        type: boolean
                     title:
                         label: article.label.title
                         property: title
-                        width: 10
-                    workflow_status:
-                        type: workflow_assigned
-                        label: article.label.assigned
-                        property: workflowStatus
+                        width: 7
+                    publicationDate:
+                        label: article.label.publicationDate
+                        property: publicationDate
+                        type: date
+                        width: 3
 
 enhavo_article_article_delete:
     options:

@@ -57,13 +57,10 @@ enhavo_user_group_table:
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:
-                    id:
-                        label: group.label.id
-                        property: id
                     name:
                         label: group.label.name
                         property: name
-                        width: 11
+                        width: 12
 
 
 enhavo_user_group_delete:

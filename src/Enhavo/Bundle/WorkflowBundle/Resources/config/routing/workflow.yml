@@ -61,9 +61,6 @@ enhavo_workflow_workflow_table:
             viewer:
                 translationDomain: EnhavoWorkflowBundle
                 columns:
-                    id:
-                        label: workflow.label.id
-                        property: id
                     active:
                         type: boolean
                         label: workflow.label.active
@@ -76,7 +73,7 @@ enhavo_workflow_workflow_table:
                         type: template
                         label: workflow.label.entity
                         property: entity
-                        width: 4
+                        width: 5
                         template: EnhavoWorkflowBundle:Widget:entity.html.twig
 
 enhavo_workflow_workflow_delete:

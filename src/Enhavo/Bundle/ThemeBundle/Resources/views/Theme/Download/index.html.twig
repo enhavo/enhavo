@@ -9,10 +9,9 @@
                 <h2>Downloads</h2>
                 <ul class="download">
                     {% for download in downloads %}
+                        {%  if download.file %}
                         <li>
-                            {%  if download.file %}
                             <a href="{{ media_url(download.file)}}" class="clearfix" download>
-                            {% endif %}
                             <span class="download-btn">
                                 <i class="icon-arrow-long-down hover"></i>
                                 <i class="icon-file-pdf"></i>
@@ -21,6 +20,7 @@
                             <span class="download-desc">{{ download.text|raw }}</span>
                             </a>
                         </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

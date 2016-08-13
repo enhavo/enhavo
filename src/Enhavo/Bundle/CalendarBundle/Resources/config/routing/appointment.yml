@@ -63,13 +63,10 @@ enhavo_calendar_appointment_table:
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 columns:
-                    id:
-                        label: appointment.label.id
-                        property: id
                     title:
                         label: appointment.label.title
                         property: title
-                        width: 6
+                        width: 7
                     date:
                         type: datetime
                         label: appointment.label.date

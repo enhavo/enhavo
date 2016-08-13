@@ -43,13 +43,10 @@ enhavo_download_download_table:
             viewer:
                 translationDomain: EnhavoDownloadBundle
                 columns:
-                    id:
-                        label: download.label.id
-                        property: id
                     title:
                         label: download.label.title
                         property: title
-                        width: 8
+                        width: 12
 
 enhavo_download_download_delete:
     options:

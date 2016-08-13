@@ -75,7 +75,7 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #overlayMessage.loginMessage {position: absolute;bottom: -42px;height: 42px;left: 0;width: 100%;margin-left: 0;border-radius: 0 0 2px 2px;padding: 10px;color: #fff;opacity: 1;z-index: 1001;display: none;text-align:center;box-shadow: 0px 0px 6px #333;}
 #loginBox #overlayMessage.loginMessage { top:initial;}
 
-#background{width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+#background{width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: url(../img/enhavo-2-bg.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}
 .no-data {padding: 10px 40px;}
 
 #overlayContent .category-list .choice-input-with-label { margin-bottom:12px;}
@@ -101,15 +101,6 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 #search-results .entry-row{padding: 10px 14px;}
 #search-results .entry-row h1{ font-weight:700;}
 .search-result-type { text-align:right;}
-
-@media all and (min-width: 1351px) {
-    #background{ background: url(../img/enhavo_forest_bg_low.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}
-}
-
-@media all and (max-width: 1350px) {
-    #background{ background: url(../img/enhavo_forest_bg_high.jpg) no-repeat;-webkit-background-size: cover;background-size: cover;}
-}
-
 
 #loginBox {background-color: #072129;width: 650px;position: absolute;left: 50%;margin-left: -325px;top: 50%;border-radius: 2px;-webkit-box-shadow: 0 1px 18px rgba(0,0,0,0.47);-moz-box-shadow: 0 1px 18px rgba(0,0,0,0.47);box-shadow: 0 1px 18px rgba(0,0,0,0.47);-webkit-transform: translateY(-50%);-moz-transform: translateY(-50%);-ms-transform: translateY(-50%);-o-transform: translateY(-50%);transform: translateY(-50%);}
 #loginBox .logo{width: 245px;margin: 0 auto;padding: 50px 0;}
@@ -163,7 +154,6 @@ input[type="checkbox"]:checked  + span{background: url("../img/checkbox.png") -2
 :-ms-input-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 
-
 .action-row {margin-bottom:45px;}
 .action-row [class*=col-]:first-child {padding-left:0;}
 .btnsmall {display: inline-block;padding: 10px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:#4395d1;font-weight:700;border:none;}
@@ -198,7 +188,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     -o-transition:all .2s;
 }
 
-
 .btn:before{
     width: 24px;
     height: 24px;
@@ -222,8 +211,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     position: relative;
     top: 1px;
 }
-
-
 
 .btn.upload-button:before{
     content: '\e817';
@@ -485,3 +472,34 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     .tabContainer .container-fluid { background:#f9f9f9;}
     #loginBox #overlayMessage.loginMessage {top:0;border-radius:0;bottom:initial;padding: 12px; height:47px;box-shadow:none}
 }
+
+.select2-container {
+  .select2-choice {
+    background-image:none;border:1px solid #eee;border-radius:0;height:30px;color: #333;
+    .select2-arrow {
+      background-image:none;background: #eee;border:0;border-radius:0;width:28px;
+      b {background-position:7px 1px;}
+    }
+  }
+  &.select2-dropdown-open {
+    .select2-choice {
+      background:#FFF;
+      .select2-arrow {
+        background-color:#FFF;
+        b {background-position: -11px 1px;}
+      }
+    }
+  }
+}
+
+.select2-drop-active {border-width:1px 1px 0 1px;border-stlye: solid; border-color:#eee;box-shadow:none;}
+.select2-results {
+  margin:10px 0 0 0 !important; padding:0 !important;
+  li{padding: 3px 4px;}
+  .select2-highlighted {background: #4395d1;}
+}
+
+.select2-search{
+  input {box-shadow:none; background:url('/bundles/enhavoassets/vendor/select2/select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #fff 99%) 0 0;border:1px solid #eee;}
+}
+
