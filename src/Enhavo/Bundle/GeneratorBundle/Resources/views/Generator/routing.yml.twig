@@ -6,8 +6,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
+            viewer:
 
 {{ app }}_{{ resource }}_create:
     options:
@@ -17,14 +16,10 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
 {% if not sorting is null %}
-            sorting:
-                sortable: true
-                property: {{ sorting }}
-                initial: max
+            sortable: true
 {% endif %}
+            viewer:
 
 {{ app }}_{{ resource }}_update:
     options:
@@ -34,8 +29,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
+            viewer:
 
 {{ app }}_{{ resource }}_table:
     options:
@@ -46,19 +40,10 @@
         page: 1
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
 {% if not sorting is null %}
-            sorting:
-                {{ sorting }}: desc
+            sortable: true
 {% endif %}
-        _viewer:
-{% if not sorting is null %}
-            table:
-                sorting:
-                    sortable: true
-                    move_after_route: {{ app }}_{{ resource }}_move_after
-                    move_to_page_route: {{ app }}_{{ resource }}_move_to_page
-{% endif %}
+            viewer:
 
 {{ app }}_{{ resource }}_delete:
     options:
@@ -75,6 +60,13 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
 
 {{ app }}_{{ resource }}_preview:
     options:
@@ -83,8 +75,11 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:previewAction
-{% if not sorting is null %}
+        _sylius:
+            viewer:
 
+
+{% if not sorting is null %}
 {{ app }}_{{ resource }}_move_after:
     options:
         expose: true
@@ -92,10 +87,6 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
-        _sylius:
-            sortable_position: {{ sorting }}
-        _viewer:
-            sorting: desc
 
 {{ app }}_{{ resource }}_move_to_page:
     options:
@@ -104,8 +95,4 @@
     methods: [POST]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:moveDownAction
-        _sylius:
-            sortable_position: {{ sorting }}
-        _viewer:
-            sorting: desc
 {% endif %}

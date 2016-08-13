@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Generator;
+namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
 use Enhavo\Component\ClassAnalyzer\ClassAnalyzer;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;

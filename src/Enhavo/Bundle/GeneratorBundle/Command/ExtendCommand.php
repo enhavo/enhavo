@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Command;
+namespace Enhavo\Bundle\GeneratorBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -46,7 +46,7 @@ class ExtendCommand extends ContainerAwareCommand
         $type = $input->getArgument('type');
 
         if($type === 'form') {
-            $formTypeGenerator = $this->getContainer()->get('enhavo_app.generator.extend_form_type_generator');
+            $formTypeGenerator = $this->getContainer()->get('enhavo_generator.generator.extend_form_type_generator');
             $formTypeGenerator->generate($source, $target);
         } else {
             throw new \InvalidArgumentException(sprintf('The type "%s" is not implement yet', $type));
