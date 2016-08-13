@@ -27,6 +27,7 @@ label:
   logout: 'Logout'
   id: 'ID'
   cancel: 'Abbrechen'
+  close: 'Schließen'
   save: 'Speichern'
   delete: 'Löschen'
   preview: 'Vorschau'
@@ -39,8 +40,6 @@ label:
   changePassword: 'Passwort ändern'
   goToPage: 'Zur Seite'
   greeting: 'Hallo username'
-  batch:
-    selectAction: 'Aktion auswählen'
 message:
   confirm:
     batch:
@@ -55,19 +54,16 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
-  batch:
+batch:
+  form:
     action:
       submit: 'Ausführen'
-      delete: 'Löschen'
     error:
       noneSelected: 'Keine Elemente ausgewählt'
       noActionSelected: 'Keine Aktion ausgewählt'
-      close: 'Schließen'
     label:
-      selectAction: 'Aktion auswählen'
+      action: 'Aktion auswählen'
+  delete:
+    label: 'Löschen'
     message:
-      confirm:
-        generic: 'Wollen sie wirklich das Kommando %command% für alle ausgewählten Elemente ausführen?'
-        delete: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
-        yes: 'Ja'
-        no: 'Nein'
+      confirm: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'

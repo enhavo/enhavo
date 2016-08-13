@@ -5,11 +5,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\WorkflowBundle\Model\NodeInterface;
 use Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface;
 use Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Workflow
  */
-class Workflow implements WorkflowInterface
+class Workflow implements WorkflowInterface, ResourceInterface
 {
     /**
      * @var integer

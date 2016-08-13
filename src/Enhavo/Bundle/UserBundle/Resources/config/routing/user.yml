@@ -6,10 +6,9 @@ enhavo_user_user_index:
     defaults:
         _controller: enhavo_user.controller.user:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: user.label.user
-            translationDomain: EnhavoUserBundle
+            viewer:
+                title: user.label.user
+                translationDomain: EnhavoUserBundle
 
 enhavo_user_user_create:
     options:
@@ -19,9 +18,8 @@ enhavo_user_user_create:
     defaults:
         _controller: enhavo_user.controller.user:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoUserBundle
+            viewer:
+                translationDomain: EnhavoUserBundle
 
 enhavo_user_user_update:
     options:
@@ -31,23 +29,19 @@ enhavo_user_user_update:
     defaults:
         _controller: enhavo_user.controller.user:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoUserBundle
+            viewer:
+                translationDomain: EnhavoUserBundle
 
 enhavo_user_user_table:
     options:
         expose: true
-    path: /enhavo/user/user/table/{page}
+    path: /enhavo/user/user/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoUserBundle
-            table:
+            viewer:
+                translationDomain: EnhavoUserBundle
                 columns:
                     username:
                         label: user.label.username
@@ -75,3 +69,12 @@ enhavo_user_user_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish

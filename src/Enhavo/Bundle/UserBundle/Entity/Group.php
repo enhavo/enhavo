@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\UserBundle\Model\GroupInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\Group as BaseGroup;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Group
  */
-class Group extends BaseGroup implements GroupInterface
+class Group extends BaseGroup implements GroupInterface, ResourceInterface
 {
     /**
      * @var integer

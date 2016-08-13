@@ -6,10 +6,9 @@ enhavo_category_category_index:
     defaults:
         _controller: enhavo_category.controller.category:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: category.label.category
-            translationDomain: EnhavoCategoryBundle
+            viewer:
+                title: category.label.category
+                translationDomain: EnhavoCategoryBundle
 
 enhavo_category_category_create:
     options:
@@ -19,13 +18,12 @@ enhavo_category_category_create:
     defaults:
         _controller: enhavo_category.controller.category:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoCategoryBundle
-            tabs:
-                category:
-                    label: category.label.category
-                    template: EnhavoCategoryBundle:Tab:category.html.twig
+            viewer:
+                translationDomain: EnhavoCategoryBundle
+                tabs:
+                    category:
+                        label: category.label.category
+                        template: EnhavoCategoryBundle:Tab:category.html.twig
 
 enhavo_category_category_update:
     options:
@@ -35,28 +33,24 @@ enhavo_category_category_update:
     defaults:
         _controller: enhavo_category.controller.category:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoCategoryBundle
+            viewer:
+                translationDomain: EnhavoCategoryBundle
 
 enhavo_category_category_table:
     options:
         expose: true
-    path: /enhavo/category/category/table/{page}
+    path: /enhavo/category/category/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_category.controller.category:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
             repository:
                 method: findByCollection
             criteria:
                 collection: %enhavo_category.default_collection%
                 paging: true
-        _viewer:
-            translationDomain: EnhavoCategoryBundle
-            table:
+            viewer:
+                translationDomain: EnhavoCategoryBundle
                 width: 12
                 columns:
                     name:
@@ -79,6 +73,13 @@ enhavo_category_category_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_category.controller.category:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
 
 enhavo_category_category_preview:
     options:

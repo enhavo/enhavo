@@ -6,10 +6,9 @@ enhavo_slider_slide_index:
     defaults:
         _controller: enhavo_slider.controller.slide:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: slider.label.slider
-            translationDomain: EnhavoSliderBundle
+            viewer:
+                title: slider.label.slider
+                translationDomain: EnhavoSliderBundle
 
 enhavo_slider_slide_create:
     options:
@@ -19,13 +18,10 @@ enhavo_slider_slide_create:
     defaults:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoSliderBundle
-            sorting:
-                sortable: true
-                position: position
-                initial: max
+            sortable_position: position
+            sorting_strategy: desc_first
+            viewer:
+                translationDomain: EnhavoSliderBundle
 
 enhavo_slider_slide_update:
     options:
@@ -35,27 +31,23 @@ enhavo_slider_slide_update:
     defaults:
         _controller: enhavo_slider.controller.slide:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoSliderBundle
+            viewer:
+                translationDomain: EnhavoSliderBundle
 
 enhavo_slider_slide_table:
     options:
         expose: true
-    path: /enhavo/slider/slide/table/{page}
+    path: /enhavo/slider/slide/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
+            sortable: true
             sorting:
                 position: desc
-        _viewer:
-            translationDomain: EnhavoSliderBundle
-            table:
+            viewer:
+                translationDomain: EnhavoSliderBundle
                 sorting:
-                    sortable: true
                     move_after_route: enhavo_slider_slide_move_after
                     move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
@@ -86,6 +78,15 @@ enhavo_slider_slide_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish
 
 enhavo_slider_slide_move_after:
     options:
@@ -96,8 +97,7 @@ enhavo_slider_slide_move_after:
         _controller: enhavo_slider.controller.slide:moveAfterAction
         _sylius:
             sortable_position: position
-        _viewer:
-            sorting: desc
+            sorting_strategy: desc_first
 
 enhavo_slider_slide_move_to_page:
     options:
@@ -108,5 +108,4 @@ enhavo_slider_slide_move_to_page:
         _controller: enhavo_slider.controller.slide:moveToPageAction
         _sylius:
             sortable_position: position
-        _viewer:
-            sorting: desc
+            sorting_strategy: desc_first

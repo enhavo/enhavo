@@ -1,0 +1,30 @@
+parameters:
+    enhavo_app.twig.batches_renderer.class: Enhavo\Bundle\AppBundle\Batch\BatchesRenderer
+    enhavo_app.twig.batch_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
+services:
+    enhavo_app.batch_collector:
+        class: %enhavo_app.twig.batch_collector.class%
+        arguments:
+            - 'Batch'
+
+    enhavo_app.twig.batches_renderer:
+        class: %enhavo_app.twig.batches_renderer.class%
+        calls:
+            - [setContainer, ['@service_container']]
+        arguments:
+            - @enhavo_app.batch_collector
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.batch.delete:
+        class: Enhavo\Bundle\AppBundle\Batch\Batch\DeleteBatch
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch }
+
+    enhavo_app.batch_manager:
+        class: Enhavo\Bundle\AppBundle\Batch\BatchManager
+        arguments:
+            - @enhavo_app.batch_collector

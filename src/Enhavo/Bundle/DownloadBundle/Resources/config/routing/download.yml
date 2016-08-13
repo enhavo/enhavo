@@ -6,10 +6,9 @@ enhavo_download_download_index:
     defaults:
         _controller: enhavo_download.controller.download:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: download.label.download
-            translationDomain: EnhavoDownloadBundle
+            viewer:
+                title: download.label.download
+                translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_create:
     options:
@@ -19,9 +18,8 @@ enhavo_download_download_create:
     defaults:
         _controller: enhavo_download.controller.download:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoDownloadBundle
+            viewer:
+                translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_update:
     options:
@@ -31,23 +29,19 @@ enhavo_download_download_update:
     defaults:
         _controller: enhavo_download.controller.download:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoDownloadBundle
+            viewer:
+                translationDomain: EnhavoDownloadBundle
 
 enhavo_download_download_table:
     options:
         expose: true
-    path: /enhavo/download/download/table/{page}
+    path: /enhavo/download/download/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_download.controller.download:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoDownloadBundle
-            table:
+            viewer:
+                translationDomain: EnhavoDownloadBundle
                 columns:
                     title:
                         label: download.label.title
@@ -69,3 +63,10 @@ enhavo_download_download_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_download.controller.download:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

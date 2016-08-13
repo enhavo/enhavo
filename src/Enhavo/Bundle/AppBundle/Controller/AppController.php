@@ -8,19 +8,57 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\View\ViewHandler;
 
 class AppController extends Controller
 {
+    /**
+     * @var SimpleRequestConfigurationFactoryInterface
+     */
+    protected $requestConfigurationFactory;
+
+    /**
+     * @var ViewerFactory
+     */
+    protected $viewerFactory;
+
+    /**
+     * @var ViewHandler
+     */
+    protected $viewHandler;
+
+    public function __construct(
+        SimpleRequestConfigurationFactoryInterface $requestConfigurationFactory,
+        ViewerFactory $viewerFactory,
+        ViewHandler $viewHandler
+    ) {
+        $this->viewerFactory = $viewerFactory;
+        $this->viewHandler = $viewHandler;
+        $this->requestConfigurationFactory = $requestConfigurationFactory;
+    }
+
     public function indexAction(Request $request)
     {
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType());
-        $viewer->setConfig($config);
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+        $viewerFactory = $this->get('viewer.factory');
+        $viewer = $viewerFactory->createType($configuration, 'app');
+        return $this->viewHandler->handle($viewer->createView());
+    }
 
-        $viewer->dispatchEvent('');
-
-        return $this->render($viewer->getTemplate(), $viewer->getParameters());
+    public function showAction($contentDocument, Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+        $viewerFactory = $this->get('viewer.factory');
+        $viewer = $viewerFactory->create(
+            $configuration,
+            null,
+            $contentDocument,
+            null,
+            'base'
+        );
+        return $this->viewHandler->handle($viewer->createView());
     }
 }

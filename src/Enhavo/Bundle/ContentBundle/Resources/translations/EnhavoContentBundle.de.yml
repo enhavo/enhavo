@@ -1,0 +1,5 @@
+batch:
+  publish:
+    label: 'Veröffentlichen'
+    message:
+      confirm: 'Wollen sie wirklich alle ausgewählten Elemente veröffentlichen?'

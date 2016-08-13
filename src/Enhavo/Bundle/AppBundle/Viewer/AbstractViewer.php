@@ -8,53 +8,45 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
-
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
+use FOS\RestBundle\View\View;
 
-abstract class AbstractViewer extends AbstractType
+abstract class AbstractViewer extends AbstractType implements ViewerInterface
 {
-    private $resource;
-
     /**
      * @var ContainerInterface
      */
     protected $container;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var mixed
      */
-    private $request;
+    protected $resource;
 
     /**
-     * @var \Symfony\Component\Form\Form
+     * @var Form
      */
-    private $form;
+    protected $form;
 
     /**
-     * @var \Enhavo\Bundle\AppBundle\Config\ConfigParser
+     * @var MetadataInterface
      */
-    private $config;
+    protected $metadata;
 
     /**
-     * @var string
+     * @var RequestConfiguration
      */
-    private $bundlePrefix;
+    protected $configuration;
 
     /**
-     * @var string
+     * @var OptionAccessor
      */
-    private $resourceName;
-
-    /**
-     * @var string[]
-     */
-    private $stylesheets;
-
-    /**
-     * @var string[]
-     */
-    private $javascripts;
+    protected $optionAccessor;
 
     /**
      * @param mixed $container
@@ -62,20 +54,6 @@ abstract class AbstractViewer extends AbstractType
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-
-        $stylesheets = $this->container->getParameter('enhavo_app.stylesheets');
-        $this->setStylesheets($stylesheets);
-
-        $javascripts = $this->container->getParameter('enhavo_app.javascripts');
-        $this->setJavascripts($javascripts);
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->container;
     }
 
     /**
@@ -89,147 +67,59 @@ abstract class AbstractViewer extends AbstractType
     /**
      * @param mixed $form
      */
-    public function setForm($form)
+    public function setForm(Form $form)
     {
         $this->form = $form;
     }
 
-    public function dispatchEvent()
-    {
-
-    }
-
+    /**
+     * @param $resource
+     */
     public function setResource($resource)
     {
         $this->resource = $resource;
     }
 
     /**
-     * @return mixed
+     * @param RequestConfigurationInterface $configuration
      */
-    public function getResource()
+    public function setConfiguration(RequestConfigurationInterface $configuration)
     {
-        return $this->resource;
+        $this->configuration = $configuration;
     }
 
     /**
-     * @return mixed
+     * @param MetadataInterface $metadata
      */
-    public function getRequest()
+    public function setMetadata(MetadataInterface $metadata)
     {
-        return $this->request;
+        $this->metadata = $metadata;
     }
 
     /**
-     * @param mixed $request
+     * @param OptionAccessor $options
      */
-    public function setRequest($request)
+    public function setOptionAccessor(OptionAccessor $optionAccessor)
     {
-        $this->request = $request;
+        $this->optionAccessor = $optionAccessor;
     }
 
     /**
-     * @return mixed
+     * @return View
      */
-    public function getConfig()
+    public function createView()
     {
-        return $this->config;
+        $view = View::create($this->resource, 200);
+        $view->setTemplateData([
+            'translationDomain' => $this->optionAccessor->get('translationDomain')
+        ]);
+        return $view;
     }
 
-    /**
-     * @param mixed $config
-     */
-    public function setConfig($config)
+    public function configureOptions(OptionAccessor $optionsAccessor)
     {
-        $this->config = $config;
-        $this->config->setDefault($this->getDefaultConfig());
-    }
-
-    public function getDefaultConfig()
-    {
-        return array();
-    }
-
-    public function getParameters()
-    {
-        return $this->getTemplateVars();
-    }
-
-    protected function getTemplateVars()
-    {
-        $parameters = $this->getConfig()->get('parameters');
-        if(!is_array($parameters)) {
-            return array();
-        }
-        return $parameters;
-    }
-
-    public function getTemplate()
-    {
-        return 'EnhavoAppBundle:App:index.html.twig';
-    }
-
-    public function setBundlePrefix($bundlePrefix)
-    {
-        $this->bundlePrefix = $bundlePrefix;
-    }
-
-    public function setResourceName($resourceName)
-    {
-        $this->resourceName = $resourceName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBundlePrefix()
-    {
-        return $this->bundlePrefix;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResourceName()
-    {
-        return $this->resourceName;
-    }
-
-    public function getTranslationDomain()
-    {
-        $translationDomain = $this->getConfig()->get('translationDomain');
-        return $translationDomain;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getStylesheets()
-    {
-        return $this->stylesheets;
-    }
-
-    /**
-     * @param string[] $stylesheets
-     */
-    public function setStylesheets($stylesheets)
-    {
-        $this->stylesheets = $stylesheets;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getJavascripts()
-    {
-        return $this->javascripts;
-    }
-
-    /**
-     * @param string[] $javascripts
-     */
-    public function setJavascripts($javascripts)
-    {
-        $this->javascripts = $javascripts;
+        $optionsAccessor->setDefaults([
+            'translationDomain' => null
+        ]);
     }
 }

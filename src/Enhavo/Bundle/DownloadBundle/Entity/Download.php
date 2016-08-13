@@ -5,11 +5,12 @@ namespace Enhavo\Bundle\DownloadBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Download
  */
-class Download implements DownloadInterface
+class Download implements DownloadInterface, ResourceInterface
 {
     /**
      * @var integer

@@ -24,13 +24,7 @@
 
 
 
-    {% block stylesheets %}
-        {% if viewer is defined %}
-            {% for stylesheet in viewer.stylesheets %}
-                <link rel="stylesheet" href="{{ admin_asset(stylesheet) }}" />
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
+    {% block stylesheets %}<!-- additional stylesheets -->{% endblock %}
 
     {% block javascripts %}
 
@@ -57,6 +51,12 @@
     <div id="iframeContainer">
         <div class="close"><i class="fa fa-times"></i></div>
         <iframe src="" id="iframe" name="iframe"></iframe>
+    </div>
+    <div id="confirmDialog">
+        {% include 'EnhavoAppBundle:Dialog:confirm.html.twig' %}
+    </div>
+    <div id="alertDialog">
+        {% include 'EnhavoAppBundle:Dialog:alert.html.twig' %}
     </div>
     <div class="clearfix">
         <div id="page" class="clearfix">

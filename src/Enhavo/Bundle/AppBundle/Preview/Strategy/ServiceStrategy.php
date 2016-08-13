@@ -24,9 +24,9 @@ class ServiceStrategy implements StrategyInterface
         $this->container = $container;
     }
 
-    public function getPreviewResponse($resource, ConfigParser $config)
+    public function getPreviewResponse($resource, $options = array())
     {
-        $service = $config->get('service');
+        $service = $options['service'];
         if($service === null) {
             throw new PreviewException(
                 'You choose the strategy service, but you didn\'t pass any service to call. Please use the service parameter with "service_id:functionName" notation'

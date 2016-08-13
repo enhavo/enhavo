@@ -8,6 +8,12 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
+
+            new Sylius\Bundle\CartBundle\SyliusCartBundle(),
+            new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
+            new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
+            new Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle(),
+
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),

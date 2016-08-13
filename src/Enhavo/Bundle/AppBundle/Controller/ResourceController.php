@@ -8,70 +8,122 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Viewer\CreateViewer;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
+use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Component\Resource\ResourceActions;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface as SyliusRequestConfigurationFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourcesCollectionProviderInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
+use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ResourceController extends BaseController
 {
+    /**
+     * @var ViewerFactory
+     */
+    protected $viewerFactory;
+
+    /**
+     * @var SortingManager
+     */
+    protected $sortingManger;
+
+    /**
+     * @var BatchManager
+     */
+    protected $batchManager;
+
+    public function __construct(
+        MetadataInterface $metadata,
+        SyliusRequestConfigurationFactoryInterface $requestConfigurationFactory,
+        ViewHandlerInterface $viewHandler,
+        RepositoryInterface $repository,
+        FactoryInterface $factory,
+        NewResourceFactoryInterface $newResourceFactory,
+        ObjectManager $manager,
+        SingleResourceProviderInterface $singleResourceProvider,
+        ResourcesCollectionProviderInterface $resourcesFinder,
+        ResourceFormFactoryInterface $resourceFormFactory,
+        RedirectHandlerInterface $redirectHandler,
+        FlashHelperInterface $flashHelper,
+        AuthorizationCheckerInterface $authorizationChecker,
+        EventDispatcherInterface $eventDispatcher,
+        ViewerFactory $viewerFactory,
+        SortingManager $sortingManager,
+        BatchManager $batchManager
+    )
+    {
+        parent::__construct(
+            $metadata,
+            $requestConfigurationFactory,
+            $viewHandler,
+            $repository,
+            $factory,
+            $newResourceFactory,
+            $manager,
+            $singleResourceProvider,
+            $resourcesFinder,
+            $resourceFormFactory,
+            $redirectHandler,
+            $flashHelper,
+            $authorizationChecker,
+            $eventDispatcher
+        );
+
+        $this->viewerFactory = $viewerFactory;
+        $this->sortingManger = $sortingManager;
+        $this->batchManager = $batchManager;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function createAction(Request $request)
     {
-        $securityContext = $this->get('security.authorization_checker');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_CREATE';
-        if(!$securityContext->isGranted($role)){
-            throw new AccessDeniedException;
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
         }
-        $config = $this->get('viewer.config')->parse($request);
-        /** @var CreateViewer $viewer */
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'create');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
 
-        $sortingConfig = $viewer->getSorting();
+        $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+        $newResource = $this->newResourceFactory->create($configuration, $this->factory);
 
-        $resource = $this->createNew();
-        $form = $this->getForm($resource);
+        $form = $this->resourceFormFactory->create($configuration, $newResource);
 
-        $method = $request->getMethod();
-        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
+        if ($request->isMethod('POST')) {
             if($form->handleRequest($request)->isValid()) {
-                if ($sortingConfig['sortable']) {
-                    $this->generateInitialSortingValue($resource, $sortingConfig);
-                }
-                $this->domainManager->create($resource);
-                $this->dispatchEvent('enhavo_app.create', $resource, array('action' => 'create'));
-                return new Response();
+                $newResource = $form->getData();
+                $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
+                $this->repository->add($newResource);
+                $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
+                $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
             }
-
-            $view = $this->view($form);
-            $view->setFormat('json');
-            return $this->handleView($view);
         }
 
-        $viewer->setResource($resource);
-        $viewer->setForm($form);
-        $viewer->dispatchEvent('');
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            $newResource,
+            $form,
+            'create'
+        );
 
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('create.html'))
-            ->setData($viewer->getParameters())
-        ;
-
-        return $this->handleView($view);
+        return $this->viewHandler->handle($configuration, $viewer->createView());
     }
 
     /**
@@ -79,90 +131,85 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request)
     {
-        $securityContext = $this->get('security.authorization_checker');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_UPDATE';
-        if(!$securityContext->isGranted($role)){
-            throw new AccessDeniedException;
-        }
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'edit');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $resource = $this->findOr404($request);
-        if(!$this->isGranted('WORKFLOW_UPDATE', $resource)) {
-            return new JsonResponse(null, 403);
-        }
-        $form = $this->getForm($resource);
-        $method = $request->getMethod();
+        $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
+        //ToDo: Check for workflow update
+        //if(!$this->isGranted('WORKFLOW_UPDATE', $resource)) {
+        //    return new JsonResponse(null, 403);
+        //}
 
-        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
+        $resource = $this->findOr404($configuration);
+
+        $form = $this->resourceFormFactory->create($configuration, $resource);
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-                $this->dispatchEvent('enhavo_app.pre_update', $resource, array('action' => 'pre_update'));
-                $this->domainManager->update($resource);
-                $this->dispatchEvent('enhavo_app.update', $resource, array('action' => 'update'));
-                return new Response();
+                $resource = $form->getData();
+                $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
+                $this->manager->flush();
+                $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
             }
-
-            $view = $this->view($form);
-            $view->setFormat('json');
-            return $this->handleView($view);
         }
 
-        $viewer->setResource($resource);
-        $viewer->setForm($form);
-        $viewer->dispatchEvent('');
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            $resource,
+            $form,
+            'update'
+        );
 
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('update.html'))
-            ->setData($viewer->getParameters())
-        ;
-
-        return $this->handleView($view);
+        return $this->viewHandler->handle($configuration, $viewer->createView());
     }
 
     public function indexAction(Request $request)
     {
-        $securityContext = $this->get('security.authorization_checker');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
-        if(!$securityContext->isGranted($role)){
-            throw new AccessDeniedException;
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
         }
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'index');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
 
-        $viewer->dispatchEvent('');
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            null,
+            null,
+            'index'
+        );
 
-        $view = $this
-            ->view()
-            ->setTemplate($viewer->getTemplate())
-            ->setData($viewer->getParameters())
-        ;
+        $view = $viewer->createView();
 
-        return $this->handleView($view);
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     public function previewAction(Request $request)
     {
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'preview');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        $resource = $this->createNew();
-        $form = $this->getForm($resource);
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
+
+        $newResource = $this->newResourceFactory->create($configuration, $this->factory);
+        $form = $this->resourceFormFactory->create($configuration, $newResource);
+
         $form->handleRequest($request);
 
-        $strategyName = $viewer->getStrategyName();
-        $strategy = $this->get('enhavo_app.preview.strategy_resolver')->getStrategy($strategyName);
-        $response = $strategy->getPreviewResponse($resource, $viewer->getConfig());
-        return $response;
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            $newResource,
+            $form,
+            'preview'
+        );
+
+        $view = $viewer->createView();
+
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     /**
@@ -170,386 +217,66 @@ class ResourceController extends BaseController
      */
     public function tableAction(Request $request)
     {
-        $securityContext = $this->get('security.authorization_checker');
-        $role = 'ROLE_'.$this->config->getBundlePrefix().'_'.$this->config->getResourceName().'_INDEX';
-        if(!$securityContext->isGranted($role)){
-            throw new AccessDeniedException;
-        }
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'table');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        //fire event for permission
-        $criteria = $this->config->getCriteria();
-        $sorting = $this->config->getSorting();
-        $repository = $this->getRepository();
-
-        if ($this->config->isPaginated()) {
-            $resources = $this->resourceResolver->getResource(
-                $repository,
-                'createPaginator',
-                array($criteria, $sorting)
-            );
-            $resources->setCurrentPage($request->get('page', 1), true, true);
-            $resources->setMaxPerPage($this->config->getPaginationMaxPerPage());
-        } else {
-            $resources = $this->resourceResolver->getResource(
-                $repository,
-                'findBy',
-                array($criteria, $sorting, $this->config->getLimit())
-            );
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
         }
 
-        $viewer->setResource($resources);
-        $viewer->dispatchEvent('');
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        $view = $this
-            ->view()
-            ->setTemplate($this->config->getTemplate('index.html'))
-            ->setData($viewer->getParameters())
-        ;
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            $resources,
+            null,
+            'table'
+        );
 
-        return $this->handleView($view);
+        return $this->viewHandler->handle($configuration, $viewer->createView());
     }
 
     /**
-     *
+     * @param Request $request
+     * @return JsonResponse
      */
     public function batchAction(Request $request)
     {
-        $repository = $this->getRepository();
-
-        $targetResources = $request->request->get('batchActionTargets');
-        $action = $request->request->get('batchActionCommand');
-
-        $resources = array();
-        foreach($targetResources as $resourceId) {
-            $resources []= $repository->find($resourceId);
-        }
-        $methodName = "batchAction" . ucfirst($action);
-        if (call_user_func(array($this, $methodName), $resources)) {
-            return new JsonResponse(array('success' => true));
-        } else {
-            return new JsonResponse(array('success' => false));
-        }
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+        $this->batchManager->executeBatch($resources, $configuration);
+        return new JsonResponse();
     }
 
-    public function batchActionDelete($resources)
-    {
-        $this->isGrantedOr403('delete');
-        foreach ($resources as $resource) {
-            $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
-            $this->domainManager->delete($resource);
-        }
-        $this->get('doctrine.orm.entity_manager')->flush();
-
-        return true;
-    }
-
-    public function deleteAction(Request $request)
-    {
-        $this->isGrantedOr403('delete');
-        $resource = $this->findOr404($request);
-        $this->dispatchEvent('enhavo_app.delete', $resource, array('action' => 'delete'));
-        $this->domainManager->delete($this->findOr404($request));
-        return new Response();
-    }
-
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function moveAfterAction(Request $request)
     {
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'sorting');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $resource = $this->findOr404($configuration);
+        $this->sortingManger->moveAfter($configuration, $this->metadata, $resource, $this->repository, $request->get('target'));
 
-        $parameters = $viewer->getParameters();
-        if (isset($parameters['sorting'])) {
-            $sorting = strtoupper($parameters['sorting']);
-        } else {
-            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route type move_after: expected field "sorting" in viewer->getParameters()');
-        }
-        $property = $this->config->getSortablePosition();
-        if (!$property) {
-            return new JsonResponse(array('success' => false));
-        }
-
-        $resource = $this->findOr404($request);
-        $targetId =  $request->get('target');
-        if (!$targetId) {
-            throw new \InvalidArgumentException('Missing parameter "target" for route type move_after');
-        }
-        $targetResource = $this->findOr404ById($targetId);
-
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $resourceValue = $accessor->getValue(
-            $resource,
-            $property
-        );
-        $targetValue = $accessor->getValue(
-            $targetResource,
-            $property
-        );
-        if ($resourceValue === null || $targetValue === null || $resourceValue == $targetValue) {
-            $this->recalculateSortingProperty($property, $sorting);
-            $resourceValue = $accessor->getValue(
-                $resource,
-                $property
-            );
-            $targetValue = $accessor->getValue(
-                $targetResource,
-                $property
-            );
-        }
-
-        if (($sorting == 'ASC') && ($resourceValue > $targetValue)) {
-            $targetPosition = $targetValue + 1;
-        } elseif (($sorting == 'DESC') && ($resourceValue < $targetValue)) {
-            $targetPosition = $targetValue - 1;
-        } else {
-            $targetPosition = $targetValue;
-        }
-
-        $this->moveToPosition($resource, $targetPosition, $property, $sorting);
-
-        return new JsonResponse(array('success' => true));
+        return new JsonResponse();
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function moveToPageAction(Request $request)
     {
-        $config = $this->get('viewer.config')->parse($request);
-        $viewer = $this->get('viewer.factory')->create($config->getType(), 'sorting');
-        $viewer->setBundlePrefix($this->config->getBundlePrefix());
-        $viewer->setResourceName($this->config->getResourceName());
-        $viewer->setConfig($config);
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $resource = $this->findOr404($configuration);
+        $this->sortingManger->moveToPage($configuration, $this->metadata, $resource, $this->repository, $request->get('page'), $request->get('top'));
 
-        $parameters = $viewer->getParameters();
-        if (isset($parameters['sorting'])) {
-            $sorting = strtoupper($parameters['sorting']);
-        } else {
-            throw new InvalidConfigurationException('Incompatible viewer type "' . get_class($viewer) . '" for route type move_to_page: expected field "sorting" in viewer->getParameters()');
-        }
-        $property = $this->config->getSortablePosition();
-        $paginate = $this->config->getPaginationMaxPerPage();
-        if (!$property || !$paginate) {
-            return new JsonResponse(array('success' => false));
-        }
-
-        $resource = $this->findOr404($request);
-        $page = $request->get('page');
-        $top = $request->get('top');
-
-        /** @var EntityRepository $repository */
-        $repository = $this->getRepository();
-
-        $pageOffset = ($page - 1) * $paginate + ($top ? 0 : ($paginate -1));
-
-        $target = $repository->createQueryBuilder('r')
-            ->orderBy('r.' . $property, $sorting)
-            ->setFirstResult($pageOffset)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if (!$target) {
-            // Last element
-            $target = $repository->createQueryBuilder('r')
-                ->addOrderBy('r.' . $property, $sorting == 'ASC' ? 'DESC' : 'ASC')
-                ->addOrderBy('r.id', 'DESC')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-        }
-        if (!$target) {
-            return new JsonResponse(array('success' => false));
-        }
-
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $resourceValue = $accessor->getValue(
-            $resource,
-            $property
-        );
-        $targetValue = $accessor->getValue(
-            $target,
-            $property
-        );
-
-
-        if ($resourceValue === null || $targetValue === null || $resourceValue == $targetValue) {
-            $this->recalculateSortingProperty($property, $sorting);
-            $targetValue = $accessor->getValue(
-                $target,
-                $property
-            );
-        }
-
-        $this->moveToPosition($resource, $targetValue, $property, $sorting);
-
-        return new JsonResponse(array('success' => true));
+        return new JsonResponse();
     }
 
-    protected function moveToPosition($resource, $position, $property, $sorting)
+    protected function getPermissionRole($type, MetadataInterface $metadata)
     {
-        /** @var EntityRepository $repository */
-        $repository = $this->getRepository();
-        $accessor = PropertyAccess::createPropertyAccessor();
-        /** @var ObjectManager $manager */
-        $manager = $this->get($this->config->getServiceName('manager'));
-
-        $resourceId = $accessor->getValue(
-            $resource,
-            'id'
-        );
-        $resourceValue = $accessor->getValue(
-            $resource,
-            $property
-        );
-        $max = max($resourceValue, $position);
-        $min = min($resourceValue, $position);
-        $movement = ($resourceValue < $position) ? -1 : +1;
-
-        $toMove = $repository->createQueryBuilder('r')
-            ->where('r.' . $property . ' <= :max')
-            ->andWhere('r.' . $property . ' >= :min')
-            ->setParameter('max', $max)
-            ->setParameter('min', $min)
-            ->orderBy('r.' . $property, $sorting)
-            ->getQuery()
-            ->getResult();
-
-        foreach($toMove as $object) {
-            $objectId = $accessor->getValue(
-                $object,
-                'id'
-            );
-            if ($objectId == $resourceId) {
-                continue;
-            }
-            $objectValue = $accessor->getValue(
-                $object,
-                $property
-            );
-            $objectValue += $movement;
-            $accessor->setValue(
-                $object,
-                $property,
-                $objectValue
-            );
-            $manager->persist($object);
-        }
-        $accessor->setValue(
-            $resource,
-            $property,
-            $position
-        );
-        $manager->flush();
-    }
-
-    protected function generateInitialSortingValue($resource, $sortingConfig)
-    {
-        /** @var EntityRepository $repository */
-        $repository = $this->getRepository();
-        $accessor = PropertyAccess::createPropertyAccessor();
-        /** @var ObjectManager $manager */
-        $manager = $this->get($this->config->getServiceName('manager'));
-        $property = $sortingConfig['position'];
-
-        if ($sortingConfig['initial'] == 'min') {
-            // Value is 0, but we need to move all other elements one up
-            $existingResources = $repository->findAll();
-            if ($existingResources) {
-                foreach($existingResources as $existingResource) {
-                    $value = $accessor->getValue(
-                        $existingResource,
-                        $property
-                    );
-                    $accessor->setValue(
-                        $existingResource,
-                        $property,
-                        $value + 1
-                    );
-                    $manager->persist($existingResource);
-                }
-                $manager->flush();
-            }
-            $newValue = 0;
-        } else {
-            // Initial value is maximum of other elements + 1
-            $maxResource = $repository->createQueryBuilder('r')
-                ->orderBy('r.' . $property, 'DESC')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-            if (!$maxResource) {
-                $newValue = 0;
-            } else {
-                $maxValue = $accessor->getValue(
-                    $maxResource,
-                    $property
-                );
-                $newValue = $maxValue + 1;
-            }
-        }
-        $accessor->setValue(
-            $resource,
-            $property,
-            $newValue
-        );
-    }
-
-    protected function recalculateSortingProperty($property, $sorting)
-    {
-        /** @var EntityRepository $repository */
-        $repository = $this->getRepository();
-        /** @var ObjectManager $manager */
-        $manager = $this->get($this->config->getServiceName('manager'));
-        $accessor = PropertyAccess::createPropertyAccessor();
-
-        if (!in_array($sorting, array('ASC', 'DESC'))) {
-            $sorting = 'DESC';
-        }
-
-        $allEntities = $repository->findBy(array(), array($property => $sorting));
-        if ($sorting == 'DESC') {
-            $allEntities = array_reverse($allEntities);
-        }
-        $i = 0;
-
-        foreach($allEntities as $resource) {
-            $accessor->setValue(
-                $resource,
-                $property,
-                $i++
-            );
-            $manager->persist($resource);
-        }
-        $manager->flush();
-    }
-
-    protected function findOr404ById($id)
-    {
-        $result = $this->resourceResolver->getResource(
-            $this->getRepository(),
-            'findOneBy',
-            array($this->config->getCriteria(array('id' => $id)))
-        );
-        if (!$result) {
-            throw new NotFoundHttpException(
-                sprintf(
-                    'Requested %s does not exist with these criteria: %s.',
-                    $this->config->getResourceName(),
-                    json_encode(array($this->config->getCriteria(array('id' => $id))))
-                )
-            );
-        }
-        return $result;
-    }
-
-    protected function dispatchEvent($eventName, $subject = null, $arguments = array())
-    {
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch($eventName, new GenericEvent($subject, $arguments));
+        return strtoupper(sprintf('ROLE_%s_%s_%s', $metadata->getApplicationName(), $metadata->getHumanizedName(), $type));
     }
 }

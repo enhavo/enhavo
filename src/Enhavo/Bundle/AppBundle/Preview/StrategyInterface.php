@@ -8,14 +8,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Preview;
 
-use Enhavo\Bundle\AppBundle\Config\ConfigParser;
-
 interface StrategyInterface
 {
     /**
      * @param $resource
-     * @param ConfigParser $config
+     * @param array $options
      * @return mixed
      */
-    public function getPreviewResponse($resource, ConfigParser $config);
+    public function getPreviewResponse($resource, $options = array());
 }

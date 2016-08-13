@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Appointment

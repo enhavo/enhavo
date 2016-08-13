@@ -28,7 +28,7 @@ class DynamicStrategy implements StrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviewResponse($resource, ConfigParser $config)
+    public function getPreviewResponse($resource, $options = array())
     {
         $map = $this->container->getParameter('cmf_routing.controllers_by_class');
         $controllerDefinition = null;

@@ -15,6 +15,7 @@ use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Article extends Content
 {

@@ -1,0 +1,22 @@
+sylius_cart_summary:
+    path: /
+    defaults:
+        _controller: sylius.controller.cart:summaryAction
+        _sylius:
+            template: EnhavoShopBundle:Cart:summary.html.twig
+
+sylius_cart_save:
+    path: /save
+    defaults: { _controller: sylius.controller.cart:saveAction }
+
+sylius_cart_clear:
+    path: /clear
+    defaults: { _controller: sylius.controller.cart:clearAction }
+
+sylius_cart_item_add:
+    path: /add
+    defaults: { _controller: sylius.controller.cart_item:addAction }
+
+sylius_cart_item_remove:
+    path: /{id}/remove
+    defaults: { _controller: sylius.controller.cart_item:removeAction }

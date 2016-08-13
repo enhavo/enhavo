@@ -6,10 +6,9 @@ enhavo_article_article_index:
     defaults:
         _controller: enhavo_article.controller.article:indexAction
         _sylius:
-            template: EnhavoAppBundle:Resource:index.html.twig
-        _viewer:
-            title: article.label.article
-            translationDomain: EnhavoArticleBundle
+            viewer:
+                title: article.label.article
+                translationDomain: EnhavoArticleBundle
 
 enhavo_article_article_create:
     options:
@@ -19,23 +18,22 @@ enhavo_article_article_create:
     defaults:
         _controller: enhavo_article.controller.article:createAction
         _sylius:
-            template: EnhavoAppBundle:Resource:create.html.twig
-        _viewer:
-            translationDomain: EnhavoArticleBundle
-            tabs:
-                article:
-                    label: article.label.article
-                    template: EnhavoArticleBundle:Tab:article.html.twig
-                content:
-                    label: article.label.content
-                    template: EnhavoArticleBundle:Tab:content.html.twig
-                seo:
-                    label: article.label.seo
-                    template: EnhavoArticleBundle:Tab:seo.html.twig
-            buttons:
-                preview:
-                    type: preview
-                    route: enhavo_article_article_preview
+            viewer:
+                translationDomain: EnhavoArticleBundle
+                tabs:
+                    article:
+                        label: article.label.article
+                        template: EnhavoArticleBundle:Tab:article.html.twig
+                    content:
+                        label: article.label.content
+                        template: EnhavoArticleBundle:Tab:content.html.twig
+                    seo:
+                        label: article.label.seo
+                        template: EnhavoArticleBundle:Tab:seo.html.twig
+                buttons:
+                    preview:
+                        type: preview
+                        route: enhavo_article_article_preview
 
 enhavo_article_article_update:
     options:
@@ -45,51 +43,33 @@ enhavo_article_article_update:
     defaults:
         _controller: enhavo_article.controller.article:updateAction
         _sylius:
-            template: EnhavoAppBundle:Resource:update.html.twig
-        _viewer:
-            translationDomain: EnhavoArticleBundle
-            tabs:
-                article:
-                    label: article.label.article
-                    template: EnhavoArticleBundle:Tab:article.html.twig
-                content:
-                    label: article.label.content
-                    template: EnhavoArticleBundle:Tab:content.html.twig
-                seo:
-                    label: article.label.seo
-                    template: EnhavoArticleBundle:Tab:seo.html.twig
-            buttons:
-                preview:
-                    type: preview
-                    route: enhavo_article_article_preview
+            viewer:
+                translationDomain: EnhavoArticleBundle
+                tabs:
+                    article:
+                        label: article.label.article
+                        template: EnhavoArticleBundle:Tab:article.html.twig
+                    content:
+                        label: article.label.content
+                        template: EnhavoArticleBundle:Tab:content.html.twig
+                    seo:
+                        label: article.label.seo
+                        template: EnhavoArticleBundle:Tab:seo.html.twig
+                buttons:
+                    preview:
+                        type: preview
+                        route: enhavo_article_article_preview
 
 enhavo_article_article_table:
     options:
         expose: true
-    path: /enhavo/article/article/table/{page}
+    path: /enhavo/article/article/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: enhavo_article.controller.article:tableAction
         _sylius:
-            template: EnhavoAppBundle:Resource:table.html.twig
-        _viewer:
-            translationDomain: EnhavoArticleBundle
-            table:
-                batch:
-                    actions:
-                        delete:
-                            label: table.batch.action.delete
-                            confirm_message: table.batch.message.confirm.delete
-                            translation_domain: EnhavoAppBundle
-                            permission: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
-                            position: 0
-                        publish:
-                            label: article.batch.action.publish
-                            confirm_message: article.batch.message.confirm.publish
-                            translation_domain: EnhavoArticleBundle
-                            permission: ROLE_ENHAVO_ARTICLE_ARTICLE_EDIT
-                            position: 1
+            viewer:
+                translationDomain: EnhavoArticleBundle
                 columns:
                     public:
                         label: article.label.public
@@ -121,6 +101,15 @@ enhavo_article_article_batch:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+                publish:
+                    type: publish
 
 enhavo_article_article_preview:
     options:
@@ -129,5 +118,6 @@ enhavo_article_article_preview:
     methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:previewAction
-        _viewer:
-            service: enhavo_article.controller.article:showResource
+        _sylius:
+            viewer:
+                service: enhavo_article.controller.article:showResource

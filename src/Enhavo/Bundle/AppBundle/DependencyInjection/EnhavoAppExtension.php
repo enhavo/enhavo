@@ -31,7 +31,6 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.stylesheets', $config[ 'stylesheets' ]);
         $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
-        $container->setParameter('enhavo_app.viewer', $config[ 'viewer' ]);
         $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
         $container->setParameter('enhavo_app.template', $config[ 'template' ]);
@@ -47,5 +46,6 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/form.yml');
         $loader->load('services/table.yml');
         $loader->load('services/action.yml');
+        $loader->load('services/batch.yml');
     }
 }

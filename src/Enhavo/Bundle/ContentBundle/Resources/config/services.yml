@@ -7,6 +7,13 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_content_content.batch.publish:
+        class: Enhavo\Bundle\ContentBundle\Batch\PublishBatch
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch }
+
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:

@@ -1,0 +1,5 @@
+batch:
+  publish:
+    label: 'Publish'
+    message:
+      confirm: 'Do you really want to publish all selected items?'
