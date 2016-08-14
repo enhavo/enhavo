@@ -1,0 +1,6 @@
+{% for product in products %}
+    <div>
+        {{ product.id }} -
+        {{ product.title }} - <a href="{{ path('sylius_cart_item_add', {'productId': product.id}) }}">Add product to cart</a>
+    </div>
+{% endfor %}

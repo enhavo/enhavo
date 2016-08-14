@@ -9,34 +9,14 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Sylius\Component\Cart\Model\CartItem as BaseCartItem;
+use Sylius\Component\Order\Model\OrderItemInterface;
 
 class CartItem extends BaseCartItem
 {
     /**
-     * @var string
-     */
-    private $title;
-
-    /**
      * @var Product
      */
     private $product;
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
 
     /**
      * @return Product
@@ -52,5 +32,16 @@ class CartItem extends BaseCartItem
     public function setProduct($product)
     {
         $this->product = $product;
+    }
+
+    public function equals(OrderItemInterface $item)
+    {
+        /** @var $item CartItem */
+        return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
+    }
+
+    public function increaseQuantity()
+    {
+        $this->quantity++;
     }
 }

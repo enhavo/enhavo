@@ -27,8 +27,8 @@ class ProductType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
-            'label' => 'label.title'
+        $builder->add('price', 'text', array(
+            'label' => 'label.price'
         ));
     }
 
@@ -41,6 +41,11 @@ class ProductType extends AbstractType
 
     public function getName()
     {
-        return 'enhavo_shop_shop';
+        return 'enhavo_shop_product';
+    }
+
+    public function getParent()
+    {
+        return 'enhavo_content_content';
     }
 }

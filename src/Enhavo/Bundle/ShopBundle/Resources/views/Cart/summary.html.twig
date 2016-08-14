@@ -1,3 +1,7 @@
-{{ form(form) }}
+{% for item in cart.items %}
+    <div>
+        {{ item.id }} - {{ item.product.title }} - <a href="{{ path('sylius_cart_item_remove', {'id': item.id}) }}">Remove from cart</a>
+    </div>
+{% endfor %}
 
-
+<a href="{{ path('enhavo_shop_product_list') }}">Products</a>

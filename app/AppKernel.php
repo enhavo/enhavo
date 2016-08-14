@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
 
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 

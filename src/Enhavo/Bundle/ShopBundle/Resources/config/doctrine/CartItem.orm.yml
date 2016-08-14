@@ -1,12 +1,8 @@
 Enhavo\Bundle\ShopBundle\Entity\CartItem:
-    table: shop_cart_item
     type: entity
 
-    fields:
-        title:
-            type: string
-            length: 255
-            nullable: true
-
+    manyToOne:
+        product:
+            targetEntity: Enhavo\Bundle\ShopBundle\Entity\Product
 
     lifecycleCallbacks: {  }

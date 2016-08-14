@@ -26,6 +26,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
 use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
+use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -62,6 +63,7 @@ class ResourceController extends BaseController
         FlashHelperInterface $flashHelper,
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
+        StateMachineInterface $stateMachine,
         ViewerFactory $viewerFactory,
         SortingManager $sortingManager,
         BatchManager $batchManager
@@ -81,7 +83,8 @@ class ResourceController extends BaseController
             $redirectHandler,
             $flashHelper,
             $authorizationChecker,
-            $eventDispatcher
+            $eventDispatcher,
+            $stateMachine
         );
 
         $this->viewerFactory = $viewerFactory;

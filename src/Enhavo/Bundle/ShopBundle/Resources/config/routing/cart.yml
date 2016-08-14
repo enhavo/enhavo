@@ -1,5 +1,5 @@
 sylius_cart_summary:
-    path: /
+    path: /summary
     defaults:
         _controller: sylius.controller.cart:summaryAction
         _sylius:

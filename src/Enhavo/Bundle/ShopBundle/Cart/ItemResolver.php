@@ -8,12 +8,19 @@
  */
 namespace Enhavo\Bundle\ShopBundle\Cart;
 
+use Enhavo\Bundle\ShopBundle\Entity\CartItem;
 use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Cart\Resolver\ItemResolverInterface;
+use Sylius\Component\Cart\Resolver\ItemResolvingException;
+use Sylius\Component\Cart\Context\CartContextInterface;
+use Doctrine\ORM\EntityManager;
 
 class ItemResolver implements ItemResolverInterface
 {
-    private $entityManager;
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     public function __construct(EntityManager $entityManager)
     {
@@ -29,9 +36,10 @@ class ItemResolver implements ItemResolverInterface
             throw new ItemResolvingException('Requested product was not found');
         }
 
-        // Assign the product to the item and define the unit price.
-        $item->setVariant($product);
         $item->setUnitPrice($product->getPrice());
+        /** @var $item CartItem */
+        $item->setProduct($product);
+        $item->increaseQuantity();
 
         // Everything went fine, return the item.
         return $item;

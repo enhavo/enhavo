@@ -8,32 +8,37 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Enhavo\Bundle\ContentBundle\Entity\Content;
 
-class Product
+class Product extends Content
 {
     /**
      * @var integer
      */
-    private $id;
+    private $price;
+
 
     /**
-     * @var string
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return Product
      */
-    private $title;
-
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function setPrice($price)
     {
-        return $this->title;
+        $this->price = $price;
+
+        return $this;
     }
 
     /**
-     * @param string $title
+     * Get price
+     *
+     * @return integer
      */
-    public function setTitle($title)
+    public function getPrice()
     {
-        $this->title = $title;
+        return $this->price;
     }
 }

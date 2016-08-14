@@ -1,9 +1,8 @@
 sylius_cart:
     resolver: enhavo.shop.cart_item_resolver # The id of our newly created service.
-    resources: ~
-
-
-sylius_order:
-    driver: doctrine/orm # Configure the doctrine orm driver used in documentation.
+    resources:
+        cart_item:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\CartItem
 
 sylius_money: ~
