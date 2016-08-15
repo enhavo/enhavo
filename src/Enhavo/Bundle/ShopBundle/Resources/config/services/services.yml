@@ -1,0 +1,17 @@
+services:
+    enhavo.shop.cart_item_resolver:
+        class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    enhavo_shop.listener.doctrine_sylius_meta:
+        class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_shop.table.shop_address_widget:
+        class: Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

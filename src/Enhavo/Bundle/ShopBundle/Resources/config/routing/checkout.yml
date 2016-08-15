@@ -1,0 +1,19 @@
+enhavo_checkout_start:
+    path: /
+    defaults: { _controller: sylius.controller.process:startAction, scenarioAlias: 'enhavo_checkout' }
+
+enhavo_checkout_display:
+    path: /{stepName}
+    defaults: { _controller: sylius.controller.process:displayAction, scenarioAlias: 'enhavo_checkout' }
+
+enhavo_checkout_forward:
+    path: /{stepName}/forward
+    defaults: { _controller: sylius.controller.process:forwardAction, scenarioAlias: 'enhavo_checkout' }
+
+enhavo_checkout_security:
+    path: /addressing
+    defaults: { _controller: sylius.controller.process:displayAction, scenarioAlias: 'enhavo_checkout', 'stepName': 'addressing' }
+
+enhavo_checkout_security_forward:
+    path: /payment
+    defaults: { _controller: sylius.controller.process:forwardAction, scenarioAlias: 'enhavo_checkout', 'stepName': 'payment' }

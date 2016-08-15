@@ -86,6 +86,11 @@ enhavo_app:
             translationDomain: EnhavoWorkflowBundle
             route: enhavo_shop_product_index
             role: ROLE_ENHAVO_SHOP_PRODUCT_INDEX
+        order:
+            label: label.order
+            translationDomain: EnhavoShopBundle
+            route: enhavo_shop_order_index
+            role: ROLE_ENHAVO_SHOP_ORDER_INDEX
 
 enhavo_newsletter:
     subscriber:

@@ -17,7 +17,6 @@ class Product extends Content
      */
     private $price;
 
-
     /**
      * Set price
      *

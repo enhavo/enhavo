@@ -1,0 +1,110 @@
+enhavo_shop_order_index:
+    options:
+        expose: true
+    path: /enhavo/shop/order/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order:indexAction
+        _sylius:
+            viewer:
+                blocks:
+                    table:
+                        type: table
+                        table_route: enhavo_shop_order_table
+                        update_route: enhavo_shop_order_update
+                actions:
+                    create:
+                        route: enhavo_shop_order_create
+
+enhavo_shop_order_create:
+    options:
+        expose: true
+    path: /enhavo/shop/order/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.order:createAction
+        _sylius:
+            form: enhavo_shop_order
+            viewer:
+                form:
+                    action: enhavo_shop_order_create
+
+enhavo_shop_order_update:
+    options:
+        expose: true
+    path: /enhavo/shop/order/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            form: enhavo_shop_order
+            viewer:
+                form:
+                    action: enhavo_shop_order_update
+                    delete: enhavo_shop_order_delete
+                tabs:
+                    order:
+                        label: order.label.order
+                        template: EnhavoShopBundle:Order/Tab:order.html.twig
+                    list:
+                        label: order.label.order
+                        template: EnhavoShopBundle:Order/Tab:list.html.twig
+                    address:
+                        label: order.label.order
+                        template: EnhavoShopBundle:Order/Tab:address.html.twig
+                    payment:
+                        label: order.label.order
+                        template: EnhavoShopBundle:Order/Tab:payment.html.twig
+
+
+enhavo_shop_order_table:
+    options:
+        expose: true
+    path: /enhavo/shop/order/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: sylius.controller.order:tableAction
+        _sylius:
+            viewer:
+                batch_route: enhavo_shop_order_batch
+                columns:
+                    number:
+                        label: order.label.number
+                        property: number
+                        width: 1
+                    date:
+                        label: order.label.ordered_at
+                        type: date
+                        property: orderedAt
+                        width: 1
+                    name:
+                        label: order.label.name
+                        type: shop_address
+                        property: shippingAddress
+                        width: 10
+
+
+
+enhavo_shop_order_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/order/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.order:deleteAction
+
+enhavo_shop_order_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/order/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.order:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

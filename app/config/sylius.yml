@@ -1,8 +1,0 @@
-sylius_cart:
-    resolver: enhavo.shop.cart_item_resolver # The id of our newly created service.
-    resources:
-        cart_item:
-            classes:
-                model: Enhavo\Bundle\ShopBundle\Entity\CartItem
-
-sylius_money: ~

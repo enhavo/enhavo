@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: sylius.yml }
+    - { resource: @EnhavoShopBundle/Resources/config/config.yml }
     - { resource: @EnhavoAssetsBundle/Resources/config/config.yml }
     - { resource: enhavo.yml }
 
@@ -95,6 +95,9 @@ doctrine:
 
             Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
             Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
+
+            Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
+            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Core\Model\Coupon
 
 
 # Swiftmailer Configuration

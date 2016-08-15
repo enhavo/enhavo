@@ -100,6 +100,9 @@ enhavo_calendar:
     resource: "@EnhavoCalendarBundle/Resources/config/routing/appointment.yml"
     prefix: /admin
 
+#
+# 3rd Party
+#
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 
@@ -108,3 +111,7 @@ fos_js_routing:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+sylius_flow:
+    resource: "@SyliusFlowBundle/Resources/config/routing.yml"
+    prefix: /

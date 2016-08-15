@@ -1,0 +1,21 @@
+parameters:
+
+services:
+    enhavo.checkout_scenario:
+        class: Enhavo\Bundle\ShopBundle\Checkout\CheckoutProcessScenario
+        tags:
+            - { name: sylius.process.scenario, alias: enhavo_checkout }
+
+    enhavo.checkout_step.addressing:
+        class: Enhavo\Bundle\ShopBundle\Checkout\Step\AddressingStep
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.step, alias: enhavo_checkout_addressing }
+
+    enhavo.checkout_step.payment:
+        class: Enhavo\Bundle\ShopBundle\Checkout\Step\PaymentStep
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.step, alias: enhavo_checkout_payment }

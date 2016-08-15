@@ -31,6 +31,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+
 class ResourceController extends BaseController
 {
     /**

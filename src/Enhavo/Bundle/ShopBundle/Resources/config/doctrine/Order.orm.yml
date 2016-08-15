@@ -1,0 +1,38 @@
+Enhavo\Bundle\ShopBundle\Entity\Order:
+    type: entity
+    table: shop_order
+
+    fields:
+        checkoutState:
+            type: string
+            nullable: true
+
+        paymentState:
+            type: string
+            nullable: true
+
+        shippingState:
+            type: string
+            nullable: true
+
+        differentBillingAddress:
+            type: boolean
+            nullable: true
+
+        orderedAt:
+            type: datetime
+            nullable: true
+
+    manyToOne:
+        shippingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+
+        billingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+
+        promotionCoupon:
+            targetEntity: Sylius\Component\Promotion\Model\CouponInterface
+
+    lifecycleCallbacks: {  }

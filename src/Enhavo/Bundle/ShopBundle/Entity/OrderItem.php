@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 6/6/16
- * Time: 9:56 AM
- */
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Sylius\Component\Cart\Model\CartItem as BaseCartItem;
+use Sylius\Component\Cart\Model\CartItem;
 use Sylius\Component\Order\Model\OrderItemInterface;
 
-class CartItem extends BaseCartItem
+class OrderItem extends CartItem
 {
     /**
      * @var Product
@@ -36,7 +30,7 @@ class CartItem extends BaseCartItem
 
     public function equals(OrderItemInterface $item)
     {
-        /** @var $item CartItem */
+        /** @var $item OrderItem */
         return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
     }
 
