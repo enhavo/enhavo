@@ -19,3 +19,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: sylius.process.step, alias: enhavo_checkout_payment }
+
+    enhavo.checkout_step.confirm:
+        class: Enhavo\Bundle\ShopBundle\Checkout\Step\ConfirmStep
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.step, alias: enhavo_checkout_confirm }

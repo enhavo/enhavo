@@ -19,3 +19,25 @@ services:
             - %sylius.model.order.class%
         tags:
             - { name: form.type }
+
+    enhavo_shop_order_payment:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\OrderPaymentType
+        arguments:
+            - %sylius.model.order.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_shop_payment:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\PaymentType
+        arguments:
+            - %sylius.model.payment.class%
+            - %sylius.model.payment_method.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_shop_order_confirm:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType
+        arguments:
+            - %sylius.model.order.class%
+        tags:
+            - { name: form.type }

@@ -2,12 +2,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\Checkout\Step;
 
-use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Symfony\Component\Form\FormInterface;
 
-class PaymentStep extends CheckoutStep
+class ConfirmStep extends CheckoutStep
 {
     /**
      * {@inheritdoc}
@@ -15,7 +14,7 @@ class PaymentStep extends CheckoutStep
     public function displayAction(ProcessContextInterface $context)
     {
         $order = $this->getCurrentCart();
-        $form = $this->createForm('enhavo_shop_order_payment', $order);
+        $form = $this->createForm('enhavo_shop_order_confirm', $order);
         return $this->renderStep($order, $form);
     }
 
@@ -25,14 +24,11 @@ class PaymentStep extends CheckoutStep
     public function forwardAction(ProcessContextInterface $context)
     {
         $order = $this->getCurrentCart();
-        $form = $this->createForm('enhavo_shop_order_payment', $order);
+        $form = $this->createForm('enhavo_shop_order_confirm', $order);
 
         $request = $context->getRequest();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            /** @var $order Order */
-            $order->getPayment()->setCurrencyCode('de');
-
             $this->getManager()->flush();
             return $this->complete();
         }
@@ -40,9 +36,9 @@ class PaymentStep extends CheckoutStep
         return $this->renderStep($order, $form);
     }
 
-    protected function renderStep(OrderInterface $order, FormInterface $form)
+    protected function renderStep( OrderInterface $order, FormInterface $form)
     {
-        return $this->render('EnhavoShopBundle:Checkout:payment.html.twig', [
+        return $this->render('EnhavoShopBundle:Checkout:confirm.html.twig', [
             'order' => $order,
             'form' => $form->createView()
         ]);

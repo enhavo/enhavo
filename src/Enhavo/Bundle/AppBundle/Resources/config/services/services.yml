@@ -77,3 +77,9 @@ services:
         class: Enhavo\Bundle\AppBundle\Controller\SortingManager
         arguments:
             - @doctrine.orm.entity_manager
+
+
+    enhavo.translation.locale_provider.contextual:
+        class: Enhavo\Bundle\AppBundle\Provider\TranslationLocaleProvider
+        arguments:
+            - %locale%

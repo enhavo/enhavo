@@ -35,4 +35,9 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
         promotionCoupon:
             targetEntity: Sylius\Component\Promotion\Model\CouponInterface
 
+        payment:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Payment\Model\PaymentInterface
+
+
     lifecycleCallbacks: {  }

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Sylius\Component\Payment\Model\PaymentInterface;
 
 class Order extends Cart implements OrderInterface
 {
@@ -52,6 +53,11 @@ class Order extends Cart implements OrderInterface
      * @var \DateTime
      */
     private $orderedAt;
+
+    /**
+     * @var \Enhavo\Bundle\ShopBundle\Entity\Payment
+     */
+    private $payment;
 
     /**
      * Set checkoutState
@@ -241,5 +247,28 @@ class Order extends Cart implements OrderInterface
     public function getOrderedAt()
     {
         return $this->orderedAt;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param PaymentInterface $payment
+     * @return Order
+     */
+    public function setPayment(PaymentInterface $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return PaymentInterface
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

@@ -38,3 +38,8 @@ sylius_promotion:
         promotion_subject:
             classes:
                 model: "%sylius.model.order.class%"
+
+sylius_payment:
+    gateways:
+        offline: Offline
+        paypal_express_checkout: Paypal Express Checkout
