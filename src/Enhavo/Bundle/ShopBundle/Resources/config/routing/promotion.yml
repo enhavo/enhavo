@@ -1,0 +1,11 @@
+enhavo_promotion_reedem_coupon:
+    path: /redeem/coupon
+    defaults:
+        _controller: EnhavoShopBundle:Promotion:redeemCoupon
+        _methods: [POST]
+
+enhavo_promotion_cancel_coupon:
+    path: /cancel/coupon
+    defaults:
+        _controller: EnhavoShopBundle:Promotion:cancelCoupon
+        _methods: [POST]

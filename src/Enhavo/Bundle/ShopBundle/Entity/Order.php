@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 
 class Order extends Cart implements OrderInterface
@@ -30,17 +32,17 @@ class Order extends Cart implements OrderInterface
     private $shippingState;
 
     /**
-     * @var \Sylius\Component\Promotion\Model\CouponInterface
+     * @var CouponInterface
      */
     private $promotionCoupon;
 
     /**
-     * @var \Sylius\Component\Addressing\Model\Address
+     * @var AddressInterface
      */
     private $shippingAddress;
 
     /**
-     * @var \Sylius\Component\Addressing\Model\Address
+     * @var AddressInterface
      */
     private $billingAddress;
 
@@ -55,7 +57,7 @@ class Order extends Cart implements OrderInterface
     private $orderedAt;
 
     /**
-     * @var \Enhavo\Bundle\ShopBundle\Entity\Payment
+     * @var PaymentInterface
      */
     private $payment;
 
@@ -134,11 +136,11 @@ class Order extends Cart implements OrderInterface
     /**
      * Set promotionCoupon
      *
-     * @param \Sylius\Component\Promotion\Model\CouponInterface $promotionCoupon
+     * @param CouponInterface $promotionCoupon
      *
      * @return Order
      */
-    public function setPromotionCoupon(\Sylius\Component\Promotion\Model\CouponInterface $promotionCoupon = null)
+    public function setPromotionCoupon(CouponInterface $promotionCoupon = null)
     {
         $this->promotionCoupon = $promotionCoupon;
 
@@ -148,7 +150,7 @@ class Order extends Cart implements OrderInterface
     /**
      * Get promotionCoupon
      *
-     * @return \Sylius\Component\Promotion\Model\CouponInterface
+     * @return CouponInterface
      */
     public function getPromotionCoupon()
     {
@@ -158,11 +160,11 @@ class Order extends Cart implements OrderInterface
     /**
      * Set shippingAddress
      *
-     * @param \Sylius\Component\Addressing\Model\Address $shippingAddress
+     * @param AddressInterface $shippingAddress
      *
      * @return Order
      */
-    public function setShippingAddress(\Sylius\Component\Addressing\Model\Address $shippingAddress = null)
+    public function setShippingAddress(AddressInterface $shippingAddress = null)
     {
         $this->shippingAddress = $shippingAddress;
 
@@ -172,7 +174,7 @@ class Order extends Cart implements OrderInterface
     /**
      * Get shippingAddress
      *
-     * @return \Sylius\Component\Addressing\Model\Address
+     * @return AddressInterface
      */
     public function getShippingAddress()
     {
@@ -182,11 +184,11 @@ class Order extends Cart implements OrderInterface
     /**
      * Set billingAddress
      *
-     * @param \Sylius\Component\Addressing\Model\Address $billingAddress
+     * @param AddressInterface $billingAddress
      *
      * @return Order
      */
-    public function setBillingAddress(\Sylius\Component\Addressing\Model\Address $billingAddress = null)
+    public function setBillingAddress(AddressInterface $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
 

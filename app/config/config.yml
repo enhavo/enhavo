@@ -97,8 +97,9 @@ doctrine:
             Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
 
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
-            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Core\Model\Coupon
+            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Promotion\Model\Coupon
             Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
+
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
 
 

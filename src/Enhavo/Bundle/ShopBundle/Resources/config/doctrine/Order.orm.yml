@@ -39,5 +39,4 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             cascade: ['persist']
             targetEntity: Sylius\Component\Payment\Model\PaymentInterface
 
-
     lifecycleCallbacks: {  }

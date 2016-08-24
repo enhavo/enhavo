@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\ShopBundle\Model;
 
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
+use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Promotion\Model\CouponInterface;
 
 /**
  * OrderInterface.php
@@ -63,48 +65,48 @@ interface OrderInterface extends BaseOrderInterface
     /**
      * Set promotionCoupon
      *
-     * @param \Sylius\Component\Promotion\Model\CouponInterface $promotionCoupon
+     * @param CouponInterface $promotionCoupon
      *
      * @return OrderInterface
      */
-    public function setPromotionCoupon(\Sylius\Component\Promotion\Model\CouponInterface $promotionCoupon = null);
+    public function setPromotionCoupon(CouponInterface $promotionCoupon = null);
 
     /**
      * Get promotionCoupon
      *
-     * @return \Sylius\Component\Promotion\Model\CouponInterface
+     * @return CouponInterface
      */
     public function getPromotionCoupon();
 
     /**
      * Set shippingAddress
      *
-     * @param \Sylius\Component\Addressing\Model\Address $shippingAddress
+     * @param AddressInterface $shippingAddress
      *
      * @return OrderInterface
      */
-    public function setShippingAddress(\Sylius\Component\Addressing\Model\Address $shippingAddress = null);
+    public function setShippingAddress(AddressInterface $shippingAddress = null);
 
     /**
      * Get shippingAddress
      *
-     * @return \Sylius\Component\Addressing\Model\Address
+     * @return AddressInterface
      */
     public function getShippingAddress();
 
     /**
      * Set billingAddress
      *
-     * @param \Sylius\Component\Addressing\Model\Address $billingAddress
+     * @param AddressInterface $billingAddress
      *
      * @return OrderInterface
      */
-    public function setBillingAddress(\Sylius\Component\Addressing\Model\Address $billingAddress = null);
+    public function setBillingAddress(AddressInterface $billingAddress = null);
 
     /**
      * Get billingAddress
      *
-     * @return \Sylius\Component\Addressing\Model\Address
+     * @return AddressInterface
      */
     public function getBillingAddress();
 }

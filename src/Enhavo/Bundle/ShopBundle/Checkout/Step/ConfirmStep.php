@@ -30,7 +30,7 @@ class ConfirmStep extends CheckoutStep
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $this->getManager()->flush();
-            return $this->complete();
+            //return $this->complete();
         }
 
         return $this->renderStep($order, $form);
@@ -38,8 +38,10 @@ class ConfirmStep extends CheckoutStep
 
     protected function renderStep( OrderInterface $order, FormInterface $form)
     {
+        $couponForm = $this->createForm('enhavo_shop_order_promotion_coupon', $order);
         return $this->render('EnhavoShopBundle:Checkout:confirm.html.twig', [
             'order' => $order,
+            'couponForm' => $couponForm->createView(),
             'form' => $form->createView()
         ]);
     }

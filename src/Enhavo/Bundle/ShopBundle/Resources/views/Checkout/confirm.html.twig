@@ -1,4 +1,15 @@
 <h1>Confirm</h1>
+
+<div>
+    <form action="{{ path('enhavo_promotion_reedem_coupon') }}" method="POST">
+        {{ form_errors(couponForm) }}
+        {{ form_row(couponForm.promotionCoupon) }}
+        {{ form_row(couponForm._token) }}
+        <button type="submit">Reedeem</button>
+    </form>
+</div>
+
+
 <div>
     <form action="{{ path('sylius_flow_forward', {'scenarioAlias': 'enhavo_checkout', 'stepName': 'confirm'}) }}" method="POST">
         {{ form_errors(form) }}

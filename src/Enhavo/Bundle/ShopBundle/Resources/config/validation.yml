@@ -1,0 +1,4 @@
+Enhavo\Bundle\ShopBundle\Entity\Order:
+    properties:
+        promotionCoupon:
+            - NotNull: { groups: [redeem] }
