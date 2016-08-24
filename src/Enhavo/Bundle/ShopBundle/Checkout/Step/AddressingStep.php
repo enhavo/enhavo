@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle\Checkout\Step;
 
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
-use Sylius\Component\Order\Model\OrderInterface;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\Form\FormInterface;
 
 class AddressingStep extends CheckoutStep
@@ -34,6 +34,9 @@ class AddressingStep extends CheckoutStep
         $request = $context->getRequest();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            $shipmentProcessor = $this->getShipmentProcessor();
+            $shipmentProcessor->processOrderShipment($order);
+
             $this->getManager()->flush();
             return $this->complete();
         }
@@ -41,9 +44,15 @@ class AddressingStep extends CheckoutStep
         return $this->renderStep($order, $form);
     }
 
+    protected function getShipmentProcessor()
+    {
+        return $this->get('enhavo.order_processing.shipment_processor');
+    }
+
     protected function renderStep(OrderInterface $order, FormInterface $form)
     {
         return $this->render('EnhavoShopBundle:Checkout:addressing.html.twig', [
+            'order' => $order,
             'form' => $form->createView()
         ]);
     }

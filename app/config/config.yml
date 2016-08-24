@@ -99,6 +99,8 @@ doctrine:
             Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
             Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Promotion\Model\Coupon
             Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
+            Sylius\Component\Shipping\Model\ShipmentInterface: Sylius\Component\Shipping\Model\Shipment
+            Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
 
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
 

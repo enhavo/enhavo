@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b6bf0d972e1d7fa2d645639205ec4ae2",
-    "content-hash": "083c371077b3e2618d302cc78ecb17ff",
+    "hash": "29d2b15f4f7a6e6454b2da54f58cef97",
+    "content-hash": "52352bda0db3867fc0cb9756cd0e77e9",
     "packages": [
         {
             "name": "bacon/bacon-string-utils",
@@ -6530,6 +6530,75 @@
             "time": "2016-06-21 22:01:13"
         },
         {
+            "name": "sylius/shipping-bundle",
+            "version": "v0.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sylius/SyliusShippingBundle.git",
+                "reference": "869afb33779f6f62305a1d084a992866c9fda66e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sylius/SyliusShippingBundle/zipball/869afb33779f6f62305a1d084a992866c9fda66e",
+                "reference": "869afb33779f6f62305a1d084a992866c9fda66e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0",
+                "stof/doctrine-extensions-bundle": "~1.1",
+                "sylius/money-bundle": "^0.19",
+                "sylius/resource-bundle": "^0.19",
+                "sylius/shipping": "^0.19",
+                "symfony/framework-bundle": "^2.8"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^2.4",
+                "symfony/form": "^2.8",
+                "symfony/validator": "^2.8"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.19-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sylius\\Bundle\\ShippingBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sylius project",
+                    "homepage": "http://sylius.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "http://github.com/Sylius/Sylius/contributors"
+                },
+                {
+                    "name": "Paweł Jędrzejewski",
+                    "homepage": "http://pjedrzejewski.com"
+                }
+            ],
+            "description": "Flexible shipping system for Symfony2 ecommerce applications.",
+            "homepage": "http://sylius.org",
+            "keywords": [
+                "delivery",
+                "ecommerce",
+                "shipments",
+                "shipping",
+                "shop",
+                "sylius",
+                "webshop"
+            ],
+            "time": "2016-07-05 01:41:22"
+        },
+        {
             "name": "sylius/storage",
             "version": "v0.19.0",
             "source": {
@@ -6650,6 +6719,74 @@
                 "vat"
             ],
             "time": "2016-05-23 09:45:39"
+        },
+        {
+            "name": "sylius/taxation-bundle",
+            "version": "v0.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sylius/SyliusTaxationBundle.git",
+                "reference": "1fef4809d5e7593cc9cd8288a41c9757c9f9b7b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sylius/SyliusTaxationBundle/zipball/1fef4809d5e7593cc9cd8288a41c9757c9f9b7b5",
+                "reference": "1fef4809d5e7593cc9cd8288a41c9757c9f9b7b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0",
+                "stof/doctrine-extensions-bundle": "~1.1",
+                "sylius/registry": "^0.19",
+                "sylius/resource-bundle": "^0.19",
+                "sylius/taxation": "^0.19",
+                "symfony/framework-bundle": "^2.8"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.4.8,<2.5",
+                "phpspec/phpspec": "^2.4",
+                "symfony/form": "^2.8"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.19-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sylius\\Bundle\\TaxationBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sylius project",
+                    "homepage": "http://sylius.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "http://github.com/Sylius/Sylius/contributors"
+                },
+                {
+                    "name": "Paweł Jędrzejewski",
+                    "homepage": "http://pjedrzejewski.com"
+                }
+            ],
+            "description": "Flexible taxation system for Symfony2 ecommerce applications.",
+            "homepage": "http://sylius.org",
+            "keywords": [
+                "ecommerce",
+                "shop",
+                "tax",
+                "taxation",
+                "taxes",
+                "webshop"
+            ],
+            "time": "2016-07-05 01:41:22"
         },
         {
             "name": "sylius/taxonomy",

@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\ShopBundle\Checkout\Step;
 
 use Sylius\Bundle\FlowBundle\Process\Step\AbstractControllerStep;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
-use Sylius\Component\Cart\Model\CartInterface;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 abstract class CheckoutStep extends AbstractControllerStep
@@ -18,11 +18,15 @@ abstract class CheckoutStep extends AbstractControllerStep
     }
 
     /**
-     * @return CartInterface
+     * @return OrderInterface
      */
     protected function getCurrentCart()
     {
-        return $this->getCartProvider()->getCart();
+        $cart = $this->getCartProvider()->getCart();
+        if(empty($cart->getId())) {
+            throw $this->createNotFoundException();
+        }
+        return $cart;
     }
 
     /**

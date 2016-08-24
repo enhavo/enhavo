@@ -32,6 +32,8 @@
     "sylius/payment-bundle": "v0.19.*",
     "sylius/promotion-bundle": "v0.19.*",
     "sylius/payum-bundle": "v0.19.*",
+    "sylius/shipping-bundle": "v0.19.*",
+    "sylius/taxation-bundle": "v0.19.*",
     "friendsofsymfony/user-bundle": "v2.0.0-alpha3",
     "friendsofsymfony/jsrouting-bundle": "@stable",
     "willdurand/js-translation-bundle" : "@stable",

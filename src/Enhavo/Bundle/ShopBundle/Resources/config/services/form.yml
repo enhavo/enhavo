@@ -3,6 +3,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
         arguments:
             - %enhavo_shop.model.product.class%
+            - %sylius.model.tax_rate.class%
         tags:
             - { name: form.type }
 
@@ -48,17 +49,4 @@ services:
             - %sylius.model.order.class%
         tags:
             - { name: form.type }
-
-    enhavo_promotion_coupon_to_code:
-        class: Enhavo\Bundle\ShopBundle\Form\Type\CouponToCodeType
-        arguments:
-            - @enhavo_promotion_coupon_to_code_transformer
-        tags:
-            - { name: form.type }
-
-    enhavo_promotion_coupon_to_code_transformer:
-        class: Enhavo\Bundle\ShopBundle\Form\DataTransformer\CouponToCodeTransformer
-        arguments:
-            - @sylius.repository.promotion_coupon
-            - @event_dispatcher
 

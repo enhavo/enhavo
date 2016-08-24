@@ -1,0 +1,8 @@
+parameters:
+
+services:
+    enhavo.order_processing.shipment_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
+        arguments:
+            - @sylius.resolver.default_shipping_method
+            - @sylius.factory.shipment

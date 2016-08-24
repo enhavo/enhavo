@@ -13,6 +13,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 class Order extends Cart implements OrderInterface
 {
@@ -60,6 +61,11 @@ class Order extends Cart implements OrderInterface
      * @var PaymentInterface
      */
     private $payment;
+
+    /**
+     * @var ShipmentInterface
+     */
+    private $shipment;
 
     /**
      * Set checkoutState
@@ -272,5 +278,28 @@ class Order extends Cart implements OrderInterface
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     * Set shipment
+     *
+     * @param ShipmentInterface $shipment
+     * @return Order
+     */
+    public function setShipment(ShipmentInterface $shipment = null)
+    {
+        $this->shipment = $shipment;
+
+        return $this;
+    }
+
+    /**
+     * Get shipment
+     *
+     * @return ShipmentInterface
+     */
+    public function getShipment()
+    {
+        return $this->shipment;
     }
 }

@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ShopBundle\Model;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
+use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 /**
  * OrderInterface.php
@@ -109,4 +110,17 @@ interface OrderInterface extends BaseOrderInterface
      * @return AddressInterface
      */
     public function getBillingAddress();
+
+    /**
+     * Get Shipment
+     *
+     * @return ShipmentInterface
+     */
+    public function getShipment();
+
+    /**
+     * @param ShipmentInterface|null $shipment
+     * @return mixed
+     */
+    public function setShipment(ShipmentInterface $shipment = null);
 }
