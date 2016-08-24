@@ -26,3 +26,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: sylius.process.step, alias: enhavo_checkout_confirm }
+
+    enhavo.checkout_step.finish:
+        class: Enhavo\Bundle\ShopBundle\Checkout\Step\FinishStep
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.step, alias: enhavo_checkout_finish }

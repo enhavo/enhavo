@@ -30,7 +30,7 @@ class ConfirmStep extends CheckoutStep
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $this->getManager()->flush();
-            //return $this->complete();
+            return $this->complete();
         }
 
         return $this->renderStep($order, $form);

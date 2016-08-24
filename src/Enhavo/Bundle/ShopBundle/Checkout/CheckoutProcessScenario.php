@@ -19,6 +19,7 @@ class CheckoutProcessScenario implements ProcessScenarioInterface
             ->add('addressing', 'enhavo_checkout_addressing')
             ->add('payment', 'enhavo_checkout_payment')
             ->add('confirm', 'enhavo_checkout_confirm')
+            ->add('finish', 'enhavo_checkout_finish')
         ;
     }
 }

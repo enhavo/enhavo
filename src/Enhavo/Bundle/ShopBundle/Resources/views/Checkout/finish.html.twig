@@ -1,0 +1,9 @@
+<h1>Finish</h1>
+
+{% if order.payment.method.code == 'paypal' %}
+    Paypal redirect
+{% endif %}
+
+{% if order.payment.method.code == 'offline' %}
+    Lastschrift
+{% endif %}
