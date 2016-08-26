@@ -42,4 +42,14 @@ abstract class AbstractMigration implements Migration, ContainerAwareInterface
     {
         $this->get('enhavo_migration.database_modifier')->executeQuery($sql);
     }
+
+    public function getDatabaseModifier()
+    {
+        return $this->get('enhavo_migration.database_modifier');
+    }
+
+    public function getManager()
+    {
+        return $this->container->get('doctrine.orm.default_entity_manager');
+    }
 }
