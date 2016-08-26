@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\SettingBundle\Entity\Setting')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\SettingBundle\Controller\ResourceController')->end()
+                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\SettingBundle\Controller\SettingController')->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\SettingBundle\Repository\SettingRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
                                         ->arrayNode('form')

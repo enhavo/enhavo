@@ -1,0 +1,79 @@
+enhavo_setting_setting_index:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_setting.controller.setting:indexAction
+        _sylius:
+            viewer:
+
+enhavo_setting_setting_create:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_setting.controller.setting:createAction
+        _sylius:
+            viewer:
+
+enhavo_setting_setting_update:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_setting.controller.setting:updateAction
+        _sylius:
+            viewer:
+
+enhavo_setting_setting_table:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_setting.controller.setting:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    name:
+                        type: property
+                        property: key
+                        label: name
+                        width: 6
+
+enhavo_setting_setting_delete:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_setting.controller.setting:deleteAction
+
+enhavo_setting_setting_batch:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_setting.controller.setting:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_setting_setting_preview:
+    options:
+        expose: true
+    path: /enhavo/setting/setting/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_setting.controller.setting:previewAction
+        _sylius:
+            viewer:

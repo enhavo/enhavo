@@ -11,8 +11,6 @@ services:
 
     enhavo_setting_setting:
         class: %enhavo_setting.form.setting.class%
-        arguments:
-            - @service_container
         tags:
             - { name: form.type }
 

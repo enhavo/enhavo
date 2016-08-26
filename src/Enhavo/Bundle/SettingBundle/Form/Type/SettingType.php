@@ -8,33 +8,39 @@
 
 namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Enhavo\Bundle\SettingBundle\Service\SettingService;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
 
 class SettingType extends AbstractType
 {
-    protected $settingService;
-
-    protected $container;
-
-    public function __construct($container)
-    {
-        $this->settingService = $container->get('enhavo_setting.setting_service');
-        $this->container = $container;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formType = $this->getFormType();
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formType) {
-            $event->getForm()->add('container', $formType);
-        });
+        $builder->add('label', 'text', array(
+            'label' => 'label.label'
+        ));
+        $builder->add('key', 'text', array(
+            'label' => 'label.key'
+        ));
+        $builder->add('type', 'text', array(
+            'label' => 'label.type'
+        ));
+        $builder->add('value', 'text', array(
+            'label' => 'label.value'
+        ));
+        $builder->add('translation_domain', 'text', array(
+            'label' => 'label.translation_domain'
+        ));
+        $builder->add('file', 'enhavo_files', array(
+            'label' => 'label.file',
+            'translation_domain' => 'EnhavoSettingBundle',
+            'multiple' => false
+        ));
+        $builder->add('files', 'enhavo_files', array(
+            'label' => 'label.file',
+            'translation_domain' => 'EnhavoSettingBundle',
+            'multiple' => true
+        ));
     }
 
     /**

@@ -1,34 +1,31 @@
 <?php
 
 namespace Enhavo\Bundle\SettingBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * Setting
- */
-class Setting
+class Setting implements ResourceInterface
 {
-    /**
-     * @var integer
-     */
     protected $id;
-
+    protected $label;
+    protected $key;
+    protected $type;
+    protected $value;
+    protected $translation_domain;
+    protected $file;            // pointing to one file
+    protected $files;           // pointing to a collection of files
     /**
-     * @var string
+     * Constructor
      */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $container;
-
+    public function __construct()
+    {
+        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -36,64 +33,132 @@ class Setting
     }
 
     /**
-     * Set name
+     * Set key
      *
-     * @param string $name
+     * @param string $key
+     *
      * @return Setting
      */
-    public function setName($name)
+    public function setKey($key)
     {
-        $this->name = $name;
+        $this->key = $key;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get key
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getKey()
     {
-        return $this->name;
+        return $this->key;
     }
 
     /**
-     * Set container
+     * Set type
      *
-     * @param string $container
+     * @param string $type
+     *
      * @return Setting
      */
-    public function setContainer($container)
+    public function setType($type)
     {
-        $this->container = serialize($container);
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get container
+     * Get type
      *
-     * @return string 
+     * @return string
      */
-    public function getContainer()
+    public function getType()
     {
-        if(is_resource($this->container)) {
-            $stream = '';
-            while($byte = fgets($this->container, 4096)) {
-                $stream .= $byte;
-            }
-            $this->container = unserialize($stream);
-        }
+        return $this->type;
+    }
 
-        if(is_string($this->container)) {
-            $this->container = unserialize($this->container);
-        }
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return Setting
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
 
-        if(is_null($this->container)) {
-            $this->container = null;
-        }
+        return $this;
+    }
 
-        return $this->container;
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     *
+     * @return Setting
+     */
+    public function setFile(\Enhavo\Bundle\MediaBundle\Entity\File $file = null)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     *
+     * @return Setting
+     */
+    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     */
+    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
