@@ -36,9 +36,7 @@
     "memio/memio": "~1.0",
     "stof/doctrine-extensions-bundle": "^1.2",
     "elasticsearch/elasticsearch": "~2.0",
-    "smalot/pdfparser": "*",
-    "esperanto/content-bundle": "dev-master",
-    "esperanto/media-bundle": "dev-master"
+    "smalot/pdfparser": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8",
