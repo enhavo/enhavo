@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f82c76ac141b9b8d1c74209ba5a90d7c",
-    "content-hash": "99ed2802cc93e2a94f5808d80152e7bd",
+    "hash": "703ab43321056492a78e97f4c1ac6f86",
+    "content-hash": "fb387e5f80450f96a7df0be7a8703c94",
     "packages": [
         {
             "name": "bacon/bacon-string-utils",
@@ -1164,90 +1164,6 @@
                 "search"
             ],
             "time": "2016-07-14 14:13:40"
-        },
-        {
-            "name": "esperanto/content-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/xqweb/esperantoContentBundle.git",
-                "reference": "a463a8c4a2f3d55ef2b5e70b58dc945f88fa67fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/xqweb/esperantoContentBundle/zipball/a463a8c4a2f3d55ef2b5e70b58dc945f88fa67fa",
-                "reference": "a463a8c4a2f3d55ef2b5e70b58dc945f88fa67fa",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-bundle": "~1.2",
-                "doctrine/orm": "~2.2,>=2.2.3",
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "esperanto\\ContentBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gerhard Seidel",
-                    "email": "gseidel.message@googlemail.com"
-                }
-            ],
-            "description": "esperantoContentBundle",
-            "homepage": "http://www.esperanto-agentur.com",
-            "keywords": [
-                "framework"
-            ],
-            "time": "2015-05-25 16:24:28"
-        },
-        {
-            "name": "esperanto/media-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/xqweb/esperantoMediaBundle.git",
-                "reference": "7e606881693ddf310e0444934166be782fb44642"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/xqweb/esperantoMediaBundle/zipball/7e606881693ddf310e0444934166be782fb44642",
-                "reference": "7e606881693ddf310e0444934166be782fb44642",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-bundle": "~1.2",
-                "doctrine/orm": "~2.2,>=2.2.3",
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "esperanto\\MediaBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gerhard Seidel",
-                    "email": "gseidel.message@googlemail.com"
-                }
-            ],
-            "description": "esperantoMediaBundle",
-            "homepage": "http://www.esperanto-agentur.com",
-            "keywords": [
-                "framework"
-            ],
-            "time": "2015-05-12 13:32:44"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -6723,9 +6639,7 @@
         "doctrine/doctrine-fixtures-bundle": 20,
         "friendsofsymfony/user-bundle": 15,
         "friendsofsymfony/jsrouting-bundle": 0,
-        "willdurand/js-translation-bundle": 0,
-        "esperanto/content-bundle": 20,
-        "esperanto/media-bundle": 20
+        "willdurand/js-translation-bundle": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

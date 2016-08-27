@@ -159,10 +159,3 @@ class GridTableStructureMigration extends AbstractMigration
         return $video;
     }
 }
-
-class ArrayCollectionHelper {
-    public $states;
-    public static function __set_state($state) {
-        $this->state = $state;
-    }
-}

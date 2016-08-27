@@ -82,8 +82,8 @@ class UrlResolver implements UrlResolverInterface
 
         if($strategy == Routing::STRATEGY_SLUG_ID && !empty($route) && $resource instanceof Slugable) {
             return $this->router->generate($route, [
-                'slug' => $resource->getId(),
-                'id' => $resource->getSlug()
+                'slug' => $resource->getSlug(),
+                'id' => $resource->getId()
             ]);
         }
 
