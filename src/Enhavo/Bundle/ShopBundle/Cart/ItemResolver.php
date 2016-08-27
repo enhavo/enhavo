@@ -8,11 +8,10 @@
  */
 namespace Enhavo\Bundle\ShopBundle\Cart;
 
-use Enhavo\Bundle\ShopBundle\Entity\CartItem;
+use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Cart\Resolver\ItemResolverInterface;
 use Sylius\Component\Cart\Resolver\ItemResolvingException;
-use Sylius\Component\Cart\Context\CartContextInterface;
 use Doctrine\ORM\EntityManager;
 
 class ItemResolver implements ItemResolverInterface
@@ -29,7 +28,12 @@ class ItemResolver implements ItemResolverInterface
 
     public function resolve(CartItemInterface $item, $request)
     {
-        $productId = $request->query->get('productId');
+        $productId = $request->get('product');
+        $quantity = intval($request->get('quantity'));
+
+        if($quantity < 1) {
+            throw new ItemResolvingException('Quantity must be 1 or higher');
+        }
 
         // If no product id given, or product not found, we throw exception with nice message.
         if (!$productId || !$product = $this->getProductRepository()->find($productId)) {
@@ -37,9 +41,12 @@ class ItemResolver implements ItemResolverInterface
         }
 
         $item->setUnitPrice($product->getPrice());
-        /** @var $item CartItem */
+        /** @var $item OrderItem */
         $item->setProduct($product);
-        $item->increaseQuantity();
+
+        for($i = 0; $i < $quantity; $i++) {
+            $item->increaseQuantity();
+        }
 
         // Everything went fine, return the item.
         return $item;

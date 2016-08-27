@@ -28,6 +28,7 @@ class EnhavoShopExtension extends AbstractResourceExtension
             'services/checkout.yml',
             'services/order.yml',
             'services/form.yml',
+            'services/render.yml'
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

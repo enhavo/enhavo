@@ -1,4 +1,0 @@
-enhavo_shop_product_list:
-    path: /list
-    defaults:
-        _controller: EnhavoShopBundle:Product:list

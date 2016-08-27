@@ -13,6 +13,10 @@ enhavo_theme_article:
     resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
     prefix:   /
 
+enhavo_theme_shop:
+    resource: "@EnhavoThemeBundle/Resources/config/routing/shop.yml"
+    prefix:   /
+
 #
 # enhavo
 #

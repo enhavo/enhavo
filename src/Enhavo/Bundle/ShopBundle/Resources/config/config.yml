@@ -9,6 +9,7 @@ sylius_cart:
         cart_item:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
+                controller: Enhavo\Bundle\ShopBundle\Controller\CartItemController
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\CartItemType
 

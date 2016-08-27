@@ -1,6 +1,8 @@
 {% for product in products %}
-    <div>
-        {{ product.id }} -
-        {{ product.title }} - <a href="{{ path('sylius_cart_item_add', {'productId': product.id}) }}">Add product to cart</a>
-    </div>
+    <form method="POST" action="{{ path('sylius_cart_item_add', {'product': product.id}) }}" data-form-cart-add>
+        <div>
+            {{ product.id }} -
+            {{ product.title }} - <input type="text" name="quantity" value="1" /> <a data-submit-cart-add href="javascript:return false;">Add product to cart</a>
+        </div>
+    </form>
 {% endfor %}
