@@ -24,12 +24,25 @@ class OrderCompositionCalculator
     {
         $orderComposition = new OrderComposition();
 
+        $orderComposition->setTotal($order->getTotal());
+
         foreach($order->getItems() as $orderItem) {
             $orderItemComposition = $this->calculateOrderItem($orderItem);
 
-            $orderComposition->setTotal($orderComposition->getTotal() + $orderItemComposition->getTotal());
+            $orderComposition->setUnitTotal($orderComposition->getUnitTotal() + $orderItemComposition->getTotal());
             $orderComposition->setNetTotal($orderComposition->getNetTotal() + $orderItemComposition->getNetTotal());
             $orderComposition->setTaxTotal($orderComposition->getTaxTotal() + $orderItemComposition->getTaxTotal());
+        }
+
+
+        foreach($order->getAdjustments() as $adjustment) {
+            if($adjustment->getType() == 'shipping') {
+                $orderComposition->setShippingTotal($orderComposition->getShippingTotal() + $adjustment->getAmount());
+            }
+
+            if($adjustment->getType() == 'order_promotion') {
+                $orderComposition->setDiscountTotal($orderComposition->getDiscountTotal() + $adjustment->getAmount());
+            }
         }
 
         return $orderComposition;

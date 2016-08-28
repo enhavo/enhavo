@@ -75,6 +75,7 @@ function Cart()
       $('[data-cart-tax-total]').html(values.order.taxTotal);
       $('[data-cart-discount-total]').html(values.order.discountTotal);
       $('[data-cart-shipping-total]').html(values.order.shippingTotal);
+      $('[data-cart-unit-total]').html(values.order.unitTotal);
     }
   };
 

@@ -34,9 +34,6 @@ class AddressingStep extends CheckoutStep
         $request = $context->getRequest();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $shipmentProcessor = $this->getShipmentProcessor();
-            $shipmentProcessor->processOrderShipment($order);
-
             $this->getManager()->flush();
             return $this->complete();
         }
@@ -53,7 +50,8 @@ class AddressingStep extends CheckoutStep
     {
         return $this->render('EnhavoShopBundle:Checkout:addressing.html.twig', [
             'order' => $order,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'parentTemplate' => ''
         ]);
     }
 }

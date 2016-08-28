@@ -6,6 +6,8 @@ services:
         arguments:
             - @sylius.resolver.default_shipping_method
             - @sylius.factory.shipment
+            - @sylius.shipping_calculator
+            - @sylius.factory.adjustment
 
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
@@ -15,3 +17,10 @@ services:
 
     enhavo_shop.calculator.order_composition_calculator:
         class: Enhavo\Bundle\ShopBundle\Calculator\OrderCompositionCalculator
+
+    enhavo_shop.listener.cart_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\CartSubscriber
+        arguments:
+            - @enhavo.order_processing.shipment_processor
+        tags:
+            - { name: kernel.event_subscriber }

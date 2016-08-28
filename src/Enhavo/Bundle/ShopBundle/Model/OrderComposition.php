@@ -29,6 +29,11 @@ class OrderComposition
     /**
      * @var int
      */
+    private $unitTotal = 0;
+
+    /**
+     * @var int
+     */
     private $shippingTotal = 0;
 
     /**
@@ -116,12 +121,29 @@ class OrderComposition
         $this->discountTotal = $discountTotal;
     }
 
+    /**
+     * @return int
+     */
+    public function getUnitTotal()
+    {
+        return $this->unitTotal;
+    }
+
+    /**
+     * @param int $unitTotal
+     */
+    public function setUnitTotal($unitTotal)
+    {
+        $this->unitTotal = $unitTotal;
+    }
+
     public function toArray()
     {
         return [
             'total' => $this->total,
             'taxTotal' => $this->taxTotal,
             'netTotal' => $this->netTotal,
+            'unitTotal' => $this->unitTotal,
             'shippingTotal' => $this->shippingTotal,
             'discountTotal' => $this->discountTotal
         ];

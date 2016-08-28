@@ -19,7 +19,7 @@ class CartItemController extends SyliusCartItemController
     {
         $response = parent::addAction($request);
         if($request->isXmlHttpRequest()) {
-            $this->createOrderCompositionResponse();
+            return $this->createOrderCompositionResponse();
         }
         return $response;
     }
