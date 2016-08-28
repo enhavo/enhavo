@@ -23,12 +23,18 @@ class ShopExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('shop_product_list_render', array($this, 'renderProductList'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('shop_cart_summary_render', array($this, 'renderCartSummary'), array('is_safe' => array('html'))),
         );
     }
 
     public function renderProductList($options = [])
     {
         return $this->container->get('enhavo_shop.render.product_list_renderer')->render($options);
+    }
+
+    public function renderCartSummary($options = [])
+    {
+        return $this->container->get('enhavo_shop.render.cart_summary_renderer')->render($options);
     }
 
     public function getName()

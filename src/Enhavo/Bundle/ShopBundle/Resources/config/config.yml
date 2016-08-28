@@ -3,6 +3,7 @@ sylius_cart:
     resources:
         cart:
             classes:
+                controller: Enhavo\Bundle\ShopBundle\Controller\CartController
                 model: Enhavo\Bundle\ShopBundle\Entity\Order
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\CartType

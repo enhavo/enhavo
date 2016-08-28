@@ -6,3 +6,12 @@ services:
         arguments:
             - @sylius.resolver.default_shipping_method
             - @sylius.factory.shipment
+
+    enhavo.shop.cart_item_resolver:
+        class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @sylius.order_item_quantity_modifier
+
+    enhavo_shop.calculator.order_composition_calculator:
+        class: Enhavo\Bundle\ShopBundle\Calculator\OrderCompositionCalculator

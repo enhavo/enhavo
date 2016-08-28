@@ -9,11 +9,12 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Shipping\Model\ShippableInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 
-class Product extends Content implements ShippableInterface
+class Product extends Content implements ShippableInterface, ProductInterface
 {
     /**
      * @var integer
@@ -274,5 +275,15 @@ class Product extends Content implements ShippableInterface
     public function getWeight()
     {
         return $this->weight;
+    }
+
+    public function getTax()
+    {
+        return intval($this->getPrice() * $this->getTaxRate()->getAmount());
+    }
+
+    public function getUnitPriceTotal()
+    {
+        return $this->getTax() + $this->getPrice();
     }
 }

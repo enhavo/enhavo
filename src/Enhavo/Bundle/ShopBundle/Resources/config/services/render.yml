@@ -10,3 +10,8 @@ services:
         class: Enhavo\Bundle\ShopBundle\Render\ProductListRenderer
         calls:
             - [setContainer, [@service_container]]
+
+    enhavo_shop.render.cart_summary_renderer:
+        class: Enhavo\Bundle\ShopBundle\Render\CartSummaryRenderer
+        calls:
+            - [setContainer, [@service_container]]

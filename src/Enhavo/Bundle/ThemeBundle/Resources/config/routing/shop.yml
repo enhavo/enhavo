@@ -2,3 +2,8 @@ enhavo_theme_shop_products:
     path: /shop/products
     defaults:
         _controller: EnhavoThemeBundle:Shop:products
+
+enhavo_theme_shop_cart_summary:
+    path: /shop/cart/summary
+    defaults:
+        _controller: EnhavoThemeBundle:Shop:cartSummary

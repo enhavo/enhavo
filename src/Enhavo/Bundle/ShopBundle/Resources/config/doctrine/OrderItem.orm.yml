@@ -6,4 +6,5 @@ Enhavo\Bundle\ShopBundle\Entity\OrderItem:
         product:
             targetEntity: Enhavo\Bundle\ShopBundle\Entity\Product
 
+
     lifecycleCallbacks: {  }

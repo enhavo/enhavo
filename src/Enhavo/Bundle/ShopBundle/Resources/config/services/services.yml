@@ -1,8 +1,5 @@
 services:
-    enhavo.shop.cart_item_resolver:
-        class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
-        arguments:
-            - @doctrine.orm.entity_manager
+
 
     enhavo_shop.listener.doctrine_sylius_meta:
         class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener

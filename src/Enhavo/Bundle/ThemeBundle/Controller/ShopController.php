@@ -17,4 +17,9 @@ class ShopController extends Controller
     {
         return $this->render('EnhavoThemeBundle:Theme/Shop:products.html.twig');
     }
+
+    public function cartSummaryAction()
+    {
+        return $this->render('EnhavoThemeBundle:Theme/Shop:Cart/summary.html.twig');
+    }
 }

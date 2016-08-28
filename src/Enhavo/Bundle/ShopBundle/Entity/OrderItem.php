@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Sylius\Component\Cart\Model\CartItem;
 use Sylius\Component\Order\Model\OrderItemInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 
 class OrderItem extends CartItem
 {
@@ -13,7 +14,7 @@ class OrderItem extends CartItem
     private $product;
 
     /**
-     * @return Product
+     * @return ProductInterface
      */
     public function getProduct()
     {
@@ -21,7 +22,7 @@ class OrderItem extends CartItem
     }
 
     /**
-     * @param Product $product
+     * @param ProductInterface $product
      */
     public function setProduct($product)
     {
@@ -34,8 +35,23 @@ class OrderItem extends CartItem
         return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
     }
 
-    public function increaseQuantity()
+    /**
+     * Set tax
+     *
+     * @return integer
+     */
+    public function getUnitPriceTotal()
     {
-        $this->quantity++;
+        return $this->unitPrice * $this->quantity;
+    }
+
+    /**
+     * Get taxTotal
+     *
+     * @return integer 
+     */
+    public function getTaxTotal()
+    {
+        return $this->product->getTax() * $this->quantity;
     }
 }

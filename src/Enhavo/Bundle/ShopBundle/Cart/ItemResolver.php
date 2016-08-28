@@ -8,22 +8,31 @@
  */
 namespace Enhavo\Bundle\ShopBundle\Cart;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
+use Enhavo\Bundle\ShopBundle\Modifier\OrderItemQuantityModifier;
 use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Cart\Resolver\ItemResolverInterface;
 use Sylius\Component\Cart\Resolver\ItemResolvingException;
-use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 
 class ItemResolver implements ItemResolverInterface
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $entityManager;
 
-    public function __construct(EntityManager $entityManager)
+    /**
+     * @var OrderItemQuantityModifier
+     */
+    protected $modifier;
+
+
+    public function __construct(EntityManagerInterface $entityManager, OrderItemQuantityModifier $modifier)
     {
         $this->entityManager = $entityManager;
+        $this->modifier = $modifier;
     }
 
     public function resolve(CartItemInterface $item, $request)
@@ -39,14 +48,12 @@ class ItemResolver implements ItemResolverInterface
         if (!$productId || !$product = $this->getProductRepository()->find($productId)) {
             throw new ItemResolvingException('Requested product was not found');
         }
-
+        /** @var $product ProductInterface */
         $item->setUnitPrice($product->getPrice());
         /** @var $item OrderItem */
         $item->setProduct($product);
 
-        for($i = 0; $i < $quantity; $i++) {
-            $item->increaseQuantity();
-        }
+        $this->modifier->modify($item, $quantity);
 
         // Everything went fine, return the item.
         return $item;
