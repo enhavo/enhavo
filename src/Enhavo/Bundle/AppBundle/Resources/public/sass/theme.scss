@@ -284,7 +284,13 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .pagination a.drag-active{border-radius: 0;}
 .pagination a.drag-active.drag-over{background: #85cbff;}
 
-.small-dialog {width: 465px;}
+.small-dialog {
+    width: 465px;
+    .button-row{
+        margin-left:0;
+        [class*=col-md-], [class*=col-sm-], [class*=col-xs-] {width:auto;}
+    }
+}
 .table-headline {color:#fff;margin-top:20px;margin-bottom:10px;}
 
 .tabContainer{margin-top: -10px;}
