@@ -131,7 +131,7 @@ aside {
 }
 
 footer {
-  background:$night; width:100%;color:$mediumlight;
+  background:$night; width:100%;color:$mediumlight; position:relative; z-index:1;
   h4{ padding-bottom:50px;}
   .approach {
     border-top:10px solid $citrus; padding-top:90px;
