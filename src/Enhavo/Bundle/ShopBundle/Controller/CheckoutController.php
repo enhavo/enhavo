@@ -135,6 +135,7 @@ class CheckoutController extends Controller
         $context->setNextRoute('enhavo_checkout_payment');
         $context->setFormType('enhavo_shop_order_address');
         $context->setTemplate('checkout_addressing');
+        $context->setProcessor($this->get('enhavo.order_processing.shipment_processor'));
 
         return $this->processCheckoutContext($context);
     }
@@ -156,6 +157,7 @@ class CheckoutController extends Controller
         $context->setNextRoute('enhavo_checkout_finish');
         $context->setFormType('enhavo_shop_order_confirm');
         $context->setTemplate('checkout_confirm');
+        $context->setProcessor($this->get('enhavo.order_processing.confirm_processor'));
 
         $order = $this->getCurrentCart();
         $couponForm = $this->createForm('enhavo_shop_order_promotion_coupon', $order);
@@ -167,7 +169,7 @@ class CheckoutController extends Controller
     public function finishAction()
     {
         $order = $this->getCurrentCart();
-
+        $this->get('enhavo.order_processing.finish_processor')->process($order);
         return $this->render($this->getTemplate('checkout_finish'), [
             'order' => $order,
             'baseTemplate' => $this->getTemplate('base')

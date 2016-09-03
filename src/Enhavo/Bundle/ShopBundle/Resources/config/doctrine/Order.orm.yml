@@ -25,6 +25,7 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
 
         email:
             type: string
+            nullable: true
 
     manyToOne:
         shippingAddress:

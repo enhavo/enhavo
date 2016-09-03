@@ -12,6 +12,14 @@ services:
     enhavo.order_processing.payment_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor
 
+    enhavo.order_processing.confirm_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderConfirmProcessor
+
+    enhavo.order_processing.finish_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderFinishProcessor
+        arguments:
+            - @sylius.cart_provider
+
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
