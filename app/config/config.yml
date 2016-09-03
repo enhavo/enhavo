@@ -101,6 +101,7 @@ doctrine:
             Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
             Sylius\Component\Shipping\Model\ShipmentInterface: Sylius\Component\Shipping\Model\Shipment
             Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
+            Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
 
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
 

@@ -22,5 +22,14 @@ services:
         class: Enhavo\Bundle\ShopBundle\EventListener\CartSubscriber
         arguments:
             - @enhavo.order_processing.shipment_processor
+            - @sylius.promotion_processor
         tags:
             - { name: kernel.event_subscriber }
+
+    enhavo.promotion_action.order_fixed_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderFixedDiscountAction
+        arguments:
+            - @sylius.originator
+            - @sylius.factory.adjustment
+        tags:
+            - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }

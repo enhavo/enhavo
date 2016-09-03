@@ -43,4 +43,17 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             cascade: ['persist']
             targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
 
+    manyToMany:
+        promotions:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Promotion\Model\PromotionInterface
+            joinTable:
+                name: shop_promotion_order
+                joinColumns:
+                    order_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    promotion_id:
+                        referencedColumnName: id
+
     lifecycleCallbacks: {  }

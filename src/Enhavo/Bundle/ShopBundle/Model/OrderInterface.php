@@ -2,10 +2,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
+use Sylius\Component\Cart\Model\CartInterface;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Sylius\Component\Promotion\Model\PromotionCountableSubjectInterface;
+use Sylius\Component\Promotion\Model\PromotionCouponAwareSubjectInterface;
 
 /**
  * OrderInterface.php
@@ -13,7 +16,11 @@ use Sylius\Component\Shipping\Model\ShipmentInterface;
  * @since 15/08/16
  * @author gseidel
  */
-interface OrderInterface extends BaseOrderInterface
+interface OrderInterface extends
+    BaseOrderInterface,
+    PromotionCountableSubjectInterface,
+    PromotionCouponAwareSubjectInterface,
+    CartInterface
 {
     /**
      * Set checkoutState

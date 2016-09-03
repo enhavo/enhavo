@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\EventListener;
 
 use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor;
 use Sylius\Component\Cart\SyliusCartEvents;
+use Sylius\Component\Promotion\Processor\PromotionProcessorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -20,9 +21,15 @@ class CartSubscriber implements EventSubscriberInterface
      */
     private $orderShipmentProcessor;
 
-    public function __construct(OrderShipmentProcessor $orderShipmentProcessor)
+    /**
+     * @var PromotionProcessorInterface
+     */
+    private $promotionProcessor;
+
+    public function __construct(OrderShipmentProcessor $orderShipmentProcessor, PromotionProcessorInterface $promotionProcessor)
     {
         $this->orderShipmentProcessor = $orderShipmentProcessor;
+        $this->promotionProcessor = $promotionProcessor;
     }
 
     /**
@@ -39,5 +46,6 @@ class CartSubscriber implements EventSubscriberInterface
     {
         $cart = $event->getSubject();
         $this->orderShipmentProcessor->processOrderShipment($cart);
+        $this->promotionProcessor->process($cart);
     }
 }

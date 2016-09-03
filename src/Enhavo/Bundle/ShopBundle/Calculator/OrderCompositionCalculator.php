@@ -13,6 +13,7 @@ use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Enhavo\Bundle\ShopBundle\Model\OrderComposition;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemComposition;
+use Sylius\Component\Core\Model\AdjustmentInterface;
 
 class OrderCompositionCalculator
 {
@@ -36,11 +37,11 @@ class OrderCompositionCalculator
 
 
         foreach($order->getAdjustments() as $adjustment) {
-            if($adjustment->getType() == 'shipping') {
+            if($adjustment->getType() == AdjustmentInterface::SHIPPING_ADJUSTMENT) {
                 $orderComposition->setShippingTotal($orderComposition->getShippingTotal() + $adjustment->getAmount());
             }
 
-            if($adjustment->getType() == 'order_promotion') {
+            if($adjustment->getType() == AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT) {
                 $orderComposition->setDiscountTotal($orderComposition->getDiscountTotal() + $adjustment->getAmount());
             }
         }
@@ -63,7 +64,7 @@ class OrderCompositionCalculator
 
         foreach($orderItem->getUnits() as $unit) {
             foreach($unit->getAdjustments() as $adjustment) {
-                if($adjustment->getType() == 'tax') {
+                if($adjustment->getType() == AdjustmentInterface::TAX_ADJUSTMENT) {
                     $orderItemComposition->setUnitTax($adjustment->getAmount());
                     $orderItemComposition->setTaxTotal($orderItemComposition->getTaxTotal() + $adjustment->getAmount());
                 }

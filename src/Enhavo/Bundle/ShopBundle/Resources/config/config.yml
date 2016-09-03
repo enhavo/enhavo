@@ -41,6 +41,10 @@ sylius_promotion:
             classes:
                 model: "%sylius.model.order.class%"
 
+        promotion:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\Promotion
+
 sylius_payment:
     gateways:
         offline: Offline

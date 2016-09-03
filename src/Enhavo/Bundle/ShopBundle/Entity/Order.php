@@ -8,12 +8,15 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface;
 
 class Order extends Cart implements OrderInterface
 {
@@ -66,6 +69,17 @@ class Order extends Cart implements OrderInterface
      * @var ShipmentInterface
      */
     private $shipment;
+
+    /**
+     * @var Collection
+     */
+    private $promotions;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->promotions = new ArrayCollection();
+    }
 
     /**
      * Set checkoutState
@@ -301,5 +315,62 @@ class Order extends Cart implements OrderInterface
     public function getShipment()
     {
         return $this->shipment;
+    }
+
+    /**
+     * Add promotions
+     *
+     * @param PromotionInterface $promotions
+     * @return Order
+     */
+    public function addPromotion(PromotionInterface $promotions)
+    {
+        $this->promotions[] = $promotions;
+
+        return $this;
+    }
+
+    /**
+     * Remove promotions
+     *
+     * @param PromotionInterface $promotions
+     */
+    public function removePromotion(PromotionInterface $promotions)
+    {
+        $this->promotions->removeElement($promotions);
+    }
+
+    /**
+     * Get promotions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPromotionSubjectTotal()
+    {
+        $this->getItemsTotal();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hasPromotion(PromotionInterface $promotion)
+    {
+       return $this->promotions->contains($promotion);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPromotionSubjectCount()
+    {
+        return $this->getTotalQuantity();
     }
 }
