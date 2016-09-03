@@ -1,9 +1,18 @@
-<h1>Finish</h1>
+{% extends baseTemplate %}
 
-{% if order.payment.method.code == 'paypal' %}
-    Paypal redirect
-{% endif %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Checkout.js') }}"></script>
+{% endblock %}
 
-{% if order.payment.method.code == 'offline' %}
-    Lastschrift
-{% endif %}
+{% block main %}
+    <h1>Finish</h1>
+
+    {% if order.payment.method.code == 'paypal' %}
+        Paypal redirect
+    {% endif %}
+
+    {% if order.payment.method.code == 'debit' %}
+        Lastschrift
+    {% endif %}
+{% endblock %}

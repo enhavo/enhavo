@@ -1,0 +1,10 @@
+checkout:
+  addressing:
+    form:
+      label:
+        different_billing_address: Abweichende Rechnungadresse
+  payment:
+    form:
+      label:
+        paypal: Paypal
+        debit: Debit

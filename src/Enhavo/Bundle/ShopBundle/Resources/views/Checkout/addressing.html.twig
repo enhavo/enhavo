@@ -1,11 +1,25 @@
-<h1>Addressing</h1>
-<div>
-    <form action="{{ path('sylius_flow_forward', {'scenarioAlias': 'enhavo_checkout', 'stepName': 'addressing'}) }}" method="POST">
-        {{ form_errors(form) }}
-        {{ form_row(form.billingAddress) }}
-        {{ form_row(form.differentBillingAddress) }}
-        {{ form_row(form.shippingAddress) }}
-        {{ form_row(form._token) }}
-        <button type="submit">Senden</button>
-    </form>
-</div>
+{% extends baseTemplate %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Checkout.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <h1>Addressing</h1>
+    <div>
+        <form action="{{ path('enhavo_checkout_addressing') }}" method="POST" data-checkout-form novalidate>
+            {{ form_errors(form) }}
+            {% if form.email %}
+                {{ form_row(form.email) }}
+            {% endif %}
+            {{ form_widget(form.shippingAddress) }}
+            {{ form_row(form.differentBillingAddress) }}
+            <div {% if not order.differentBillingAddress %}style="display: none"{% endif %} data-checkout-billing-address>
+                {{ form_widget(form.billingAddress) }}
+            </div>
+            {{ form_row(form._token) }}
+            <button type="submit">Senden</button>
+        </form>
+    </div>
+{% endblock %}

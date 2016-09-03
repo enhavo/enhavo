@@ -2,9 +2,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Cart\Model\CartInterface;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Promotion\Model\PromotionCountableSubjectInterface;
@@ -130,4 +132,24 @@ interface OrderInterface extends
      * @return mixed
      */
     public function setShipment(ShipmentInterface $shipment = null);
+
+    /**
+     * @return bool
+     */
+    public function isDifferentBillingAddress();
+
+    /**
+     * @return PaymentInterface
+     */
+    public function getPayment();
+
+    /**
+     * @return UserInterface|null
+     */
+    public function getUser();
+
+    /**
+     * @return string|null
+     */
+    public function getEmail();
 }

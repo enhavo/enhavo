@@ -45,7 +45,7 @@ class CartSubscriber implements EventSubscriberInterface
     public function change(GenericEvent $event)
     {
         $cart = $event->getSubject();
-        $this->orderShipmentProcessor->processOrderShipment($cart);
+        $this->orderShipmentProcessor->process($cart);
         $this->promotionProcessor->process($cart);
     }
 }

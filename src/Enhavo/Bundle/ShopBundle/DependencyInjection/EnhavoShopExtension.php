@@ -22,10 +22,12 @@ class EnhavoShopExtension extends AbstractResourceExtension
     {
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        $container->setParameter('enhavo_shop.templates', $config['templates']);
+
         $this->registerResources('enhavo_shop', $config['driver'], $config['resources'], $container);
         $configFiles = array(
             'services/services.yml',
-            'services/checkout.yml',
             'services/order.yml',
             'services/form.yml',
             'services/render.yml'

@@ -1,19 +1,27 @@
-<h1>Confirm</h1>
+{% extends baseTemplate %}
 
-<div>
-    <form action="{{ path('enhavo_promotion_reedem_coupon') }}" method="POST">
-        {{ form_errors(couponForm) }}
-        {{ form_row(couponForm.promotionCoupon) }}
-        {{ form_row(couponForm._token) }}
-        <button type="submit">Reedeem</button>
-    </form>
-</div>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Checkout.js') }}"></script>
+{% endblock %}
 
+{% block main %}
+    <h1>Confirm</h1>
 
-<div>
-    <form action="{{ path('sylius_flow_forward', {'scenarioAlias': 'enhavo_checkout', 'stepName': 'confirm'}) }}" method="POST">
-        {{ form_errors(form) }}
-        {{ form_row(form._token) }}
-        <button type="submit">Senden</button>
-    </form>
-</div>
+    <div>
+        <form action="{{ path('enhavo_promotion_reedem_coupon') }}" method="POST">
+            {{ form_errors(couponForm) }}
+            {{ form_row(couponForm.promotionCoupon) }}
+            {{ form_row(couponForm._token) }}
+            <button type="submit">Redeem</button>
+        </form>
+    </div>
+
+    <div>
+        <form action="{{ path('enhavo_checkout_confirm') }}" method="POST" data-checkout-form>
+            {{ form_errors(form) }}
+            {{ form_row(form._token) }}
+            <button type="submit">Send</button>
+        </form>
+    </div>
+{% endblock %}

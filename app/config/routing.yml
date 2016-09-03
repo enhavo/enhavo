@@ -22,7 +22,7 @@ enhavo_theme_shop:
 #
 enhavo_shop:
     resource: "@EnhavoShopBundle/Resources/config/routing/shop.yml"
-    prefix:   /
+    prefix:   /shop
 
 enhavo_contact:
     resource: "@EnhavoContactBundle/Resources/config/routing.yml"

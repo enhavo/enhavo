@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Order\Model\AdjustmentInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -16,7 +17,7 @@ use Sylius\Component\Shipping\Resolver\DefaultShippingMethodResolverInterface;
 use Sylius\Component\Shipping\Calculator\DelegatingCalculatorInterface;
 use Doctrine\Common\Proxy\Proxy;
 
-class OrderShipmentProcessor
+class OrderShipmentProcessor implements ProcessorInterface
 {
     /**
      * @var DefaultShippingMethodResolverInterface
@@ -60,7 +61,7 @@ class OrderShipmentProcessor
     /**
      * {@inheritdoc}
      */
-    public function processOrderShipment(OrderInterface $order)
+    public function process(OrderInterface $order)
     {
         $shipment = $this->getOrderShipment($order);
         $this->calculate($shipment, $order);

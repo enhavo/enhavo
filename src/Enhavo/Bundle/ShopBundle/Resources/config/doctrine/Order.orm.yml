@@ -23,6 +23,9 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             type: datetime
             nullable: true
 
+        email:
+            type: string
+
     manyToOne:
         shippingAddress:
             cascade: ['persist']
@@ -42,6 +45,9 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
         shipment:
             cascade: ['persist']
             targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
+
+        user:
+            targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface
 
     manyToMany:
         promotions:

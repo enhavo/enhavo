@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
@@ -74,6 +75,16 @@ class Order extends Cart implements OrderInterface
      * @var Collection
      */
     private $promotions;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var UserInterface
+     */
+    private $user;
 
     public function __construct()
     {
@@ -249,6 +260,14 @@ class Order extends Cart implements OrderInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isDifferentBillingAddress()
+    {
+        return !!$this->getDifferentBillingAddress();
+    }
+
+    /**
      * Set orderedAt
      *
      * @param \DateTime $orderedAt
@@ -372,5 +391,51 @@ class Order extends Cart implements OrderInterface
     public function getPromotionSubjectCount()
     {
         return $this->getTotalQuantity();
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Order
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set user
+     *
+     * @param UserInterface $user
+     * @return Order
+     */
+    public function setUser(UserInterface $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return UserInterface
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

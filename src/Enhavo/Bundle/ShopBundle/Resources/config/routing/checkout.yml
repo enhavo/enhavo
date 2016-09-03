@@ -1,19 +1,19 @@
-enhavo_checkout_start:
+enhavo_checkout:
     path: /
-    defaults: { _controller: sylius.controller.process:startAction, scenarioAlias: 'enhavo_checkout' }
+    defaults: { _controller: enhavo_shop.controller.checkout:checkoutAction }
 
-enhavo_checkout_display:
-    path: /{stepName}
-    defaults: { _controller: sylius.controller.process:displayAction, scenarioAlias: 'enhavo_checkout' }
-
-enhavo_checkout_forward:
-    path: /{stepName}/forward
-    defaults: { _controller: sylius.controller.process:forwardAction, scenarioAlias: 'enhavo_checkout' }
-
-enhavo_checkout_security:
+enhavo_checkout_addressing:
     path: /addressing
-    defaults: { _controller: sylius.controller.process:displayAction, scenarioAlias: 'enhavo_checkout', 'stepName': 'addressing' }
+    defaults: { _controller: enhavo_shop.controller.checkout:addressingAction }
 
-enhavo_checkout_security_forward:
+enhavo_checkout_payment:
     path: /payment
-    defaults: { _controller: sylius.controller.process:forwardAction, scenarioAlias: 'enhavo_checkout', 'stepName': 'payment' }
+    defaults: { _controller: enhavo_shop.controller.checkout:paymentAction }
+
+enhavo_checkout_confirm:
+    path: /confirm
+    defaults: { _controller: enhavo_shop.controller.checkout:confirmAction }
+
+enhavo_checkout_finish:
+    path: /finish
+    defaults: { _controller: enhavo_shop.controller.checkout:finishAction }

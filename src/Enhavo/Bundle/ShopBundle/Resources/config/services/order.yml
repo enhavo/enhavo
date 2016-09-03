@@ -9,6 +9,9 @@ services:
             - @sylius.shipping_calculator
             - @sylius.factory.adjustment
 
+    enhavo.order_processing.payment_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor
+
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
@@ -33,3 +36,17 @@ services:
             - @sylius.factory.adjustment
         tags:
             - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }
+
+    enhavo_shop.validator.order_addressing:
+        class:  Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressingValidator
+        arguments:
+            - @validator
+        tags:
+            - { name: validator.constraint_validator, alias: order_addressing }
+
+    enhavo_shop.controller.checkout:
+        class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.scenario, alias: enhavo_checkout }

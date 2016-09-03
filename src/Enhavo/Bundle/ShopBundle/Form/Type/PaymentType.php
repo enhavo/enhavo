@@ -38,8 +38,8 @@ class PaymentType extends AbstractType
             ->add('method', 'entity',[
                 'class' => $this->paymentClass,
                 'choice_label' => 'code',
+                'expanded' => true
             ])
-
         ;
     }
 
