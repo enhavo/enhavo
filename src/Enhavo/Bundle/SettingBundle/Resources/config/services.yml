@@ -19,3 +19,15 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @event_dispatcher
+
+    enhavo_setting.provider.database_provider:
+        class: Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider
+        arguments:
+            - @kernel
+            - @doctrine.orm.entity_manager
+            - @enhavo_setting.factory.setting
+
+    enhavo_setting.provider.parameter_provider:
+        class: Enhavo\Bundle\SettingBundle\Provider\ParameterProvider
+        arguments:
+            - @service_container

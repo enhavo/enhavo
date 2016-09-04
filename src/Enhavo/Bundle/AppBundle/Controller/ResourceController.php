@@ -1,6 +1,6 @@
 <?php
 /**
- * ResourceController.php
+ * SettingController.php
  *
  * @since 01/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>

@@ -22,7 +22,7 @@ Enhavo\Bundle\SettingBundle\Entity\Setting:
         value:
             type: text
             nullable: true
-        translation_domain:
+        translationDomain:
             type: text
             nullable: true
     oneToOne:

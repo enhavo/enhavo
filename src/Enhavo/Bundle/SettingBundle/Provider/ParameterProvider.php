@@ -7,8 +7,20 @@
  */
 
 namespace Enhavo\Bundle\SettingBundle\Provider;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class ParameterProvider
+class ParameterProvider implements ProviderInterface
 {
+    protected $container;
 
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function getSetting($key)
+    {
+        return $this->container->get('service_container')->getParameter($key);
+    }
 }

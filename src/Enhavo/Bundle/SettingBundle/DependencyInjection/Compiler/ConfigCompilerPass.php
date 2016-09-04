@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider;
 
 class ConfigCompilerPass implements CompilerPassInterface
 {
@@ -43,21 +44,21 @@ class ConfigCompilerPass implements CompilerPassInterface
             $settingPath = sprintf('%sResources/config/setting.yml', $pathToBundle);
             if(file_exists($settingPath)) {
                 try {
-                    $setting = Yaml::parse(file_get_contents($settingPath));
+                    $settings = Yaml::parse(file_get_contents($settingPath));
                 } catch (ParseException $e) {
                     printf("Unable to parse the YAML string: %s", $e->getMessage());
                 }
-                $setting_array[] = $setting;
+                foreach($settings as $key => $setting) {
+                    $setting_array[$key] = $setting;
+                }
             }
 
         }
-        var_dump($setting_array);
+        //var_dump($setting_array);
 
         $setting_array_json = json_encode($setting_array);
-        $cacheFilePath = sprintf('%s/setting_array.json', $kernel->getCacheDir());
+        $cacheFilePath = sprintf('%s/%s', $kernel->getCacheDir(), DatabaseProvider::cacheFileName);
         $filesystem = new Filesystem();
         $filesystem->dumpFile($cacheFilePath, $setting_array_json);
-
-//        var_dump(json_decode(file_get_contents($cacheFilePath), $assoc=true)); //use to decode
     }
 }

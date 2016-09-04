@@ -11,7 +11,7 @@ class Setting implements ResourceInterface
     protected $key;
     protected $type;
     protected $value;
-    protected $translation_domain;
+    protected $translationDomain;
     protected $file;            // pointing to one file
     protected $files;           // pointing to a collection of files
     /**
@@ -30,6 +30,30 @@ class Setting implements ResourceInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     *
+     * @return Setting
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
@@ -160,5 +184,30 @@ class Setting implements ResourceInterface
     public function getFiles()
     {
         return $this->files;
+    }
+
+
+    /**
+     * Set translationDomain
+     *
+     * @param string $translationDomain
+     *
+     * @return Setting
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->translationDomain = $translationDomain;
+
+        return $this;
+    }
+
+    /**
+     * Get translationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain()
+    {
+        return $this->translationDomain;
     }
 }

@@ -38,11 +38,17 @@ enhavo_setting_setting_table:
         _controller: enhavo_setting.controller.setting:tableAction
         _sylius:
             viewer:
+                translationDomain: EnhavoSettingBundle
                 columns:
-                    name:
+                    label:
+                        type: label
+                        property: label
+                        label: setting.label.label
+                        width: 6
+                    value:
                         type: property
-                        property: key
-                        label: name
+                        property: value
+                        label: value
                         width: 6
 
 enhavo_setting_setting_delete:
