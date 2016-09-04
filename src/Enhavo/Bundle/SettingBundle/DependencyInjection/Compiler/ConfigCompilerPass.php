@@ -30,18 +30,13 @@ class ConfigCompilerPass implements CompilerPassInterface
         $this->compile();
     }
 
-    public function compile(){
-        $kernel = $this->kernel;
-        $bundles = $kernel->getBundles();
+    public function compile()
+    {
+        $bundles = $this->kernel->getBundles();
 
-        $setting_array = [];
+        $settingArray = [];
         foreach($bundles as $bundle) {
-            $className = get_class($bundle);
-            $classParts = explode('\\', $className);
-            $bundleName = array_pop($classParts);
-            $resource = sprintf('@%s', $bundleName);
-            $pathToBundle = $kernel->locateResource($resource);
-            $settingPath = sprintf('%sResources/config/setting.yml', $pathToBundle);
+            $settingPath = $this->composeSettingPathFor($bundle);
             if(file_exists($settingPath)) {
                 try {
                     $settings = Yaml::parse(file_get_contents($settingPath));
@@ -49,16 +44,29 @@ class ConfigCompilerPass implements CompilerPassInterface
                     printf("Unable to parse the YAML string: %s", $e->getMessage());
                 }
                 foreach($settings as $key => $setting) {
-                    $setting_array[$key] = $setting;
+                    $settingArray[$key] = $setting;
                 }
             }
-
         }
-        //var_dump($setting_array);
-
-        $setting_array_json = json_encode($setting_array);
-        $cacheFilePath = sprintf('%s/%s', $kernel->getCacheDir(), DatabaseProvider::cacheFileName);
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile($cacheFilePath, $setting_array_json);
+        $SettingArrayJson = json_encode($settingArray);
+        $this->writeToCache($SettingArrayJson);
     }
+
+    protected function composeSettingPathFor($bundle)
+    {
+        $className = get_class($bundle);
+        $classNameParts = explode('\\', $className);
+        $bundleName = array_pop($classNameParts);
+        $resource = sprintf('@%s', $bundleName);
+        $pathToBundle = $this->kernel->locateResource($resource);
+        return sprintf('%sResources/config/setting.yml', $pathToBundle);
+    }
+
+    protected function writeToCache($file)
+    {
+        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), DatabaseProvider::cacheFileName);
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($cacheFilePath, $file);
+    }
+
 }
