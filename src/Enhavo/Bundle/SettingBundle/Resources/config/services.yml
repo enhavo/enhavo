@@ -31,3 +31,10 @@ services:
         class: Enhavo\Bundle\SettingBundle\Provider\ParameterProvider
         arguments:
             - @service_container
+
+    enhavo_setting.table.setting:
+        class: Enhavo\Bundle\SettingBundle\Table\Widget\SettingWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

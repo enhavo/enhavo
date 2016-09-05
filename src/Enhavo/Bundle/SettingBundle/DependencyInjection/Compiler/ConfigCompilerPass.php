@@ -64,7 +64,7 @@ class ConfigCompilerPass implements CompilerPassInterface
 
     protected function writeToCache($file)
     {
-        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), DatabaseProvider::cacheFileName);
+        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), DatabaseProvider::CACHE_FILE_NAME);
         $filesystem = new Filesystem();
         $filesystem->dumpFile($cacheFilePath, $file);
     }

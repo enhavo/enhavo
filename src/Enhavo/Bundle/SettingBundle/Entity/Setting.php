@@ -6,6 +6,13 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Setting implements ResourceInterface
 {
+
+    const SETTING_TYPE_TEXT = 'text';
+    const SETTING_TYPE_BOOLEAN = 'boolean';
+    const SETTING_TYPE_FILE = 'file';
+    const SETTING_TYPE_FILES = 'files';
+    const SETTING_TYPE_WYSIWYG = 'wysiwyg';
+
     protected $id;
     protected $label;
     protected $key;

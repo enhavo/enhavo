@@ -1,9 +1,12 @@
 label:
     setting: 'Settings'
-#
-#setting:
-#    label:
-#        label: 'labelE'
-#    setting:
-#        setting1: 'setting1E'
-#        setting2: 'setting2E'
+
+setting:
+    label:
+        key: 'Key'
+        type: 'Type'
+        label: 'Label'
+        value: 'Value'
+        file: 'File'
+        files: 'Files'
+        setting: 'Setting'

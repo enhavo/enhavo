@@ -15,7 +15,7 @@ use Enhavo\Bundle\SettingBundle\Entity\Setting;
 
 class DatabaseProvider implements ProviderInterface
 {
-    const cacheFileName = 'setting_array.json';
+    const CACHE_FILE_NAME = 'setting_array.json';
 
     /**
      * @var KernelInterface
@@ -70,7 +70,7 @@ class DatabaseProvider implements ProviderInterface
 
     protected function getSettingArrayFromCache()
     {
-        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), self::cacheFileName);
+        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), self::CACHE_FILE_NAME);
         $settingArray = json_decode(file_get_contents($cacheFilePath), $assoc=true);
         return array_filter($settingArray);
     }
