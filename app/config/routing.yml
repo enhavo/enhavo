@@ -100,6 +100,10 @@ enhavo_calendar:
     resource: "@EnhavoCalendarBundle/Resources/config/routing/appointment.yml"
     prefix: /admin
 
+enhavo_setting:
+    resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
+    prefix: /admin
+
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 

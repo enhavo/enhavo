@@ -1,8 +1,6 @@
 Enhavo\Bundle\SettingBundle\Entity\Setting:
     type: entity
     table: setting_setting
-    repositoryClass: Enhavo\Bundle\SettingBundle\Repository\SettingRepository
-
     id:
         id:
             type: integer
@@ -10,12 +8,44 @@ Enhavo\Bundle\SettingBundle\Entity\Setting:
             generator:
                 strategy: AUTO
     fields:
-        name:
+        label:
+            type: text
+            nullable: true
+        key:
             type: string
             length: 255
-
-        container:
-            type: blob
+            column: `key`
             nullable: true
+        type:
+            type: text
+            nullable: true
+        value:
+            type: text
+            nullable: true
+        translationDomain:
+            type: text
+            nullable: true
+    oneToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
+
+    manyToMany:
+        files:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orderBy: { 'order': 'ASC' }
+            joinTable:
+                name: setting_setting_files
+                joinColumns:
+                    setting_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+
 
     lifecycleCallbacks: {  }

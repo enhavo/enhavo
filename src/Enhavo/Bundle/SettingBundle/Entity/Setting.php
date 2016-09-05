@@ -1,34 +1,38 @@
 <?php
 
 namespace Enhavo\Bundle\SettingBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * Setting
- */
-class Setting
+class Setting implements ResourceInterface
 {
-    /**
-     * @var integer
-     */
+
+    const SETTING_TYPE_TEXT = 'text';
+    const SETTING_TYPE_BOOLEAN = 'boolean';
+    const SETTING_TYPE_FILE = 'file';
+    const SETTING_TYPE_FILES = 'files';
+    const SETTING_TYPE_WYSIWYG = 'wysiwyg';
+
     protected $id;
-
+    protected $label;
+    protected $key;
+    protected $type;
+    protected $value;
+    protected $translationDomain;
+    protected $file;            // pointing to one file
+    protected $files;           // pointing to a collection of files
     /**
-     * @var string
+     * Constructor
      */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $container;
-
+    public function __construct()
+    {
+        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -36,64 +40,181 @@ class Setting
     }
 
     /**
-     * Set name
+     * Set label
      *
-     * @param string $name
+     * @param string $label
+     *
      * @return Setting
      */
-    public function setName($name)
+    public function setLabel($label)
     {
-        $this->name = $name;
+        $this->label = $label;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get label
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getLabel()
     {
-        return $this->name;
+        return $this->label;
     }
 
     /**
-     * Set container
+     * Set key
      *
-     * @param string $container
+     * @param string $key
+     *
      * @return Setting
      */
-    public function setContainer($container)
+    public function setKey($key)
     {
-        $this->container = serialize($container);
+        $this->key = $key;
 
         return $this;
     }
 
     /**
-     * Get container
+     * Get key
      *
-     * @return string 
+     * @return string
      */
-    public function getContainer()
+    public function getKey()
     {
-        if(is_resource($this->container)) {
-            $stream = '';
-            while($byte = fgets($this->container, 4096)) {
-                $stream .= $byte;
-            }
-            $this->container = unserialize($stream);
-        }
+        return $this->key;
+    }
 
-        if(is_string($this->container)) {
-            $this->container = unserialize($this->container);
-        }
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Setting
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
-        if(is_null($this->container)) {
-            $this->container = null;
-        }
+        return $this;
+    }
 
-        return $this->container;
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return Setting
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     *
+     * @return Setting
+     */
+    public function setFile(\Enhavo\Bundle\MediaBundle\Model\FileInterface $file = null)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     *
+     * @return Setting
+     */
+    public function addFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $file
+     */
+    public function removeFile(\Enhavo\Bundle\MediaBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+
+    /**
+     * Set translationDomain
+     *
+     * @param string $translationDomain
+     *
+     * @return Setting
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->translationDomain = $translationDomain;
+
+        return $this;
+    }
+
+    /**
+     * Get translationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain()
+    {
+        return $this->translationDomain;
     }
 }

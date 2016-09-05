@@ -11,8 +11,6 @@ services:
 
     enhavo_setting_setting:
         class: %enhavo_setting.form.setting.class%
-        arguments:
-            - @service_container
         tags:
             - { name: form.type }
 
@@ -21,3 +19,22 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @event_dispatcher
+
+    enhavo_setting.provider.database_provider:
+        class: Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider
+        arguments:
+            - @kernel
+            - @doctrine.orm.entity_manager
+            - @enhavo_setting.factory.setting
+
+    enhavo_setting.provider.parameter_provider:
+        class: Enhavo\Bundle\SettingBundle\Provider\ParameterProvider
+        arguments:
+            - @service_container
+
+    enhavo_setting.table.setting:
+        class: Enhavo\Bundle\SettingBundle\Table\Widget\SettingWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }

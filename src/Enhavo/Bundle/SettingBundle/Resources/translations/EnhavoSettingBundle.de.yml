@@ -1,0 +1,12 @@
+label:
+    setting: 'Einstellungen'
+
+setting:
+    label:
+        key: 'Schlüssel'
+        type: 'Typ'
+        label: 'Label'
+        value: 'Wert'
+        file: 'Datei'
+        files: 'Dateien'
+        setting: 'Einstellung'
