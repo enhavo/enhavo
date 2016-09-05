@@ -29,11 +29,6 @@ class SettingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $form = $formFactory->create('enhavo_setting_setting', $setting);
-//        $form->setData($settingFactory->create());
-//        $form->submit($request);
-//        $setting= $form->getData();
-
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
@@ -82,69 +77,5 @@ class SettingType extends AbstractType
     public function getName()
     {
         return 'enhavo_setting_setting';
-    }
-
-    public function getFormType() // TODO why?
-    {
-        $name = $this->container->get('request')->get('name');
-        return $this->settingService->resolve($name)->getFormType();
-    }
-
-    protected function composeCreateForm($builder){
-        $builder->add('label', 'text', array(
-            'label' => 'setting.label.label',
-            'translation_domain' => 'EnhavoSettingBundle',
-        ));
-        $builder->add('key', 'text', array(
-            'label' => 'setting.label.key',
-            'translation_domain' => 'EnhavoSettingBundle',
-        ));
-        $builder->add('type', 'enhavo_list', array(
-            'label' => 'setting.label.type',
-            'translation_domain' => 'EnhavoSettingBundle',
-        ));
-        $builder->add('value', 'text', array(
-            'label' => 'setting.label.value',
-            'translation_domain' => 'EnhavoSettingBundle',
-        ));
-        $builder->add('file', 'enhavo_files', array(
-            'label' => 'setting.label.file',
-            'translation_domain' => 'EnhavoSettingBundle',
-            'multiple' => false
-        ));
-        $builder->add('files', 'enhavo_files', array(
-            'label' => 'setting.label.files',
-            'translation_domain' => 'EnhavoSettingBundle',
-            'multiple' => true
-        ));
-    }
-
-    protected function composeUpdateForm($builder, $settingType){
-        if ($settingType === 'text') {
-            $builder->add('value', 'text', array(
-                'label' => 'setting.label.value',
-                'translation_domain' => 'EnhavoSettingBundle',
-            ));
-        }
-        if ($settingType === 'boolean') {
-            $builder->add('value', 'enhavo_boolean', array(
-                'label' => 'setting.label.value',
-                'translation_domain' => 'EnhavoSettingBundle',
-            ));
-        }
-        if ($settingType === 'file') {
-            $builder->add('file', 'enhavo_files', array(
-                'label' => 'setting.label.file',
-                'translation_domain' => 'EnhavoSettingBundle',
-                'multiple' => false
-            ));
-        }
-        if ($settingType === 'files') {
-            $builder->add('files', 'enhavo_files', array(
-                'label' => 'setting.label.file',
-                'translation_domain' => 'EnhavoSettingBundle',
-                'multiple' => true
-            ));
-        }
     }
 }

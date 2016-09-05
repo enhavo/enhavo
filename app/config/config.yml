@@ -162,8 +162,3 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
-
-#enhavo_setting:
-#    providers:
-#        - enhavo_setting.provider.database_provider
-#        - enhavo_setting.provider.parameter_provider

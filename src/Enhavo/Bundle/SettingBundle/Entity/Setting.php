@@ -142,7 +142,7 @@ class Setting implements ResourceInterface
      *
      * @return Setting
      */
-    public function setFile(\Enhavo\Bundle\MediaBundle\Entity\File $file = null)
+    public function setFile(\Enhavo\Bundle\MediaBundle\Entity\FileInterface $file = null)
     {
         $this->file = $file;
 

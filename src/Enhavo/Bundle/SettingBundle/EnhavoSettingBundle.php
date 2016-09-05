@@ -6,7 +6,6 @@ use Enhavo\Bundle\SettingBundle\DependencyInjection\Compiler\ConfigCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-//use Enhavo\Bundle\SettingBundle\DependencyInjection\Compiler\ConfigCompilerPass;
 
 
 
