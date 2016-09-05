@@ -1,9 +1,13 @@
 {% for item in cart.items %}
     <div>
-        <form action="{{ path('sylius_cart_save_quantity', {id: item.id}) }}" method="POST" data-form-cart-quantity>
+        {% if not immutable %}<form action="{{ path('sylius_cart_save_quantity', {id: item.id}) }}" method="POST" data-form-cart-quantity>{% endif %}
             <h2>{{ item.product.title }}</h2>
 
-            <div><input type="text" name="quantity" value="{{ item.quantity }}" /></div><button type="submit">Save</button>
+            {% if immutable %}
+                <div>Quantity: {{ item.quantity }}</div>
+            {% else %}
+                <div><input type="text" name="quantity" value="{{ item.quantity }}" /></div><button type="submit">Save</button>
+            {% endif %}
 
             <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>
             <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.product.tax }}</span></div>
@@ -13,8 +17,13 @@
             <div>Net Total: <span data-cart-item-net-total>{{ item.unitPriceTotal }}</span></div>
             <div>Total: <span data-cart-item-total>{{ item.total }}</span></div>
 
-            <a data-cart-item-remove href="{{ path('sylius_cart_item_remove', {id: item.id}) }}">Delete</a>
-        </form>
+            {% if not immutable %}
+                <a data-cart-item-remove href="{{ path('sylius_cart_item_remove', {id: item.id}) }}">Delete</a>
+
+
+
+            {% endif %}
+        {% if not immutable %}</form>{% endif %}
     </div>
 {% endfor %}
 <hr />

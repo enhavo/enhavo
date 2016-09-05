@@ -8,3 +8,10 @@ checkout:
       label:
         paypal: Paypal
         debit: Debit
+promotion:
+  coupon:
+    form:
+      label:
+        code: Code
+      action:
+        redeem: Redeem

@@ -1,4 +1,4 @@
-function Cart()
+function Shop()
 {
   var self = this;
 
@@ -7,6 +7,9 @@ function Cart()
     self.initCartAddSubmit();
     self.initCartQuantityForm();
     self.initCartItemRemoveLink();
+    self.initCheckoutForm();
+    self.initDifferentBillingAddressCheckbox();
+    self.initCouponForm();
   };
 
   this.initCartAddForm = function() {
@@ -85,9 +88,60 @@ function Cart()
       $(this).parents('[data-form-cart-add]').submit();
     })
   };
+
+  this.initCheckoutForm = function()
+  {
+    var form = $('[data-checkout-form]');
+    form.on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: 'post',
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(data) {
+          window.location.href = data.redirect_url;
+        },
+        error: function(data) {
+          console.log(data.responseJSON[0]);
+        }
+      })
+    });
+  };
+
+  this.initDifferentBillingAddressCheckbox = function()
+  {
+    var form = $('[data-checkout-form]');
+    form.find('[data-checkout-addressing-different-billing-address]').click(function() {
+      var differentBillingAddress = $(this).is(':checked');
+      if(!differentBillingAddress) {
+        form.find('[data-checkout-billing-address]').hide();
+      } else {
+        form.find('[data-checkout-billing-address]').show();
+      }
+    });
+  };
+
+  this.initCouponForm = function()
+  {
+    var form = $('[data-coupon-form]');
+    form.on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: 'post',
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      })
+    });
+  };
 }
 
-var cart = new Cart();
+var shop = new Shop();
 $(function() {
-  cart.init();
+  shop.init();
 });

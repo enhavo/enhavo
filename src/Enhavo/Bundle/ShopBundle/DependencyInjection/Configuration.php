@@ -33,6 +33,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('checkout_confirm')->defaultValue('EnhavoShopBundle:Checkout:confirm.html.twig')->end()
                         ->scalarNode('checkout_finish')->defaultValue('EnhavoShopBundle:Checkout:finish.html.twig')->end()
                         ->scalarNode('checkout_payment')->defaultValue('EnhavoShopBundle:Checkout:payment.html.twig')->end()
+                        ->scalarNode('checkout_summary')->defaultValue('EnhavoShopBundle:Checkout:summary.html.twig')->end()
                     ->end()
                 ->end()
             ->end()

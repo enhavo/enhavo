@@ -29,7 +29,12 @@ class OrderPromotionCouponType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('promotionCoupon', 'sylius_promotion_coupon_to_code');
+        $builder->add('promotionCoupon', 'sylius_promotion_coupon_to_code', [
+            'label' => 'promotion.coupon.form.label.code',
+            'translation_domain' => 'EnhavoShopBundle'
+        ]);
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

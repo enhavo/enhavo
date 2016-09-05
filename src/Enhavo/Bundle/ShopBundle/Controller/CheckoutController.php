@@ -122,6 +122,12 @@ class CheckoutController extends Controller
      */
     public function checkoutAction()
     {
+        $order = $this->getCurrentCart();
+
+        if($order->isEmpty()) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->redirectToRoute('enhavo_checkout_addressing');
     }
 
@@ -142,6 +148,11 @@ class CheckoutController extends Controller
 
     public function paymentAction(Request $request)
     {
+        $order = $this->getCurrentCart();
+        if(empty($order->getShippingAddress())) {
+            throw $this->createNotFoundException();
+        }
+
         $context = $this->createCheckoutContext($request);
         $context->setNextRoute('enhavo_checkout_confirm');
         $context->setFormType('enhavo_shop_order_payment');
@@ -153,6 +164,11 @@ class CheckoutController extends Controller
 
     public function confirmAction(Request $request)
     {
+        $order = $this->getCurrentCart();
+        if(empty($order->getPayment())) {
+            throw $this->createNotFoundException();
+        }
+
         $context = $this->createCheckoutContext($request);
         $context->setNextRoute('enhavo_checkout_finish');
         $context->setFormType('enhavo_shop_order_confirm');
@@ -163,12 +179,19 @@ class CheckoutController extends Controller
         $couponForm = $this->createForm('enhavo_shop_order_promotion_coupon', $order);
         $context->addData('couponForm', $couponForm->createView());
 
+        $context->addData('summaryTemplate', $this->getTemplate('checkout_summary'));
+
         return $this->processCheckoutContext($context);
     }
 
     public function finishAction()
     {
         $order = $this->getCurrentCart();
+
+        if($order->getState() != \Sylius\Component\Order\Model\OrderInterface::STATE_CONFIRMED) {
+            throw $this->createNotFoundException();
+        }
+
         $this->get('enhavo.order_processing.finish_processor')->process($order);
         return $this->render($this->getTemplate('checkout_finish'), [
             'order' => $order,
