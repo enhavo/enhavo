@@ -2,23 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: jungch
- * Date: 26/08/16
- * Time: 12:12
+ * Date: 05/09/16
+ * Time: 16:28
  */
 
-namespace Enhavo\Bundle\SettingBundle\DependencyInjection\Compiler;
+namespace Enhavo\Bundle\SearchBundle\DependencyInjection\Compiler;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector;
+use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\Exception\ParseException;
-use Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider;
 
 class ConfigCompilerPass implements CompilerPassInterface
 {
     protected $kernel;
+    protected $filesystem;
 
     public function __construct(KernelInterface $kernel)
     {
@@ -34,21 +36,23 @@ class ConfigCompilerPass implements CompilerPassInterface
     {
         $bundles = $this->kernel->getBundles();
 
-        $settingArray = [];
+        $configuration = [];
         foreach($bundles as $bundle) {
-            $settingPath = $this->composeSettingPathFor($bundle);
-            if(file_exists($settingPath)) {
-                try {
-                    $settings = Yaml::parse(file_get_contents($settingPath));
-                } catch (ParseException $e) {
-                    printf("Unable to parse the YAML string: %s", $e->getMessage());
-                }
-                foreach($settings as $key => $setting) {
-                    $settingArray[$key] = $setting;
+            $absolutePath = $this->composeSettingPathFor($bundle);
+
+            try {
+                $data = Yaml::parse(file_get_contents($absolutePath));
+            } catch(\Exception $e) {
+                continue;
+            }
+
+            if (is_array($data)) {
+                foreach ($data as $class => $config) {
+                    $configuration[$class] = $config;
                 }
             }
         }
-        $settingArrayJson = json_encode($settingArray);
+        $settingArrayJson = json_encode($configuration);
         $this->writeToCache($settingArrayJson);
     }
 
@@ -59,14 +63,13 @@ class ConfigCompilerPass implements CompilerPassInterface
         $bundleName = array_pop($classNameParts);
         $resource = sprintf('@%s', $bundleName);
         $pathToBundle = $this->kernel->locateResource($resource);
-        return sprintf('%sResources/config/setting.yml', $pathToBundle);
+        return sprintf('%sResources/config/search.yml', $pathToBundle);
     }
 
     protected function writeToCache($file)
     {
-        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), DatabaseProvider::CACHE_FILE_NAME);
+        $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), MetadataCollector::CACHE_FILE_NAME);
         $filesystem = new Filesystem();
         $filesystem->dumpFile($cacheFilePath, $file);
     }
-
 }
