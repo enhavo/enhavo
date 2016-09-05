@@ -20,7 +20,7 @@ class MetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $kernelMock = $this->getMockBuilder('Symfony\Component\HttpKernel\KernelInterface')->getMock();
 
         $kernelMock->method('getBundles')->willReturn([
-            new EnhavoSearchBundle()
+            new EnhavoSearchBundle($kernelMock)
         ]);
 
         $collectorMock = $this->getMockBuilder('Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector')

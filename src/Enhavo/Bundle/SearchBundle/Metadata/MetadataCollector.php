@@ -47,9 +47,13 @@ class MetadataCollector
      */
     public function getConfigurations()
     {
+        if($this->configuration !== null) {
+            return $this->configuration;
+        }
+
         $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), self::CACHE_FILE_NAME);
-        $settingArray = json_decode(file_get_contents($cacheFilePath), $assoc=true);
-        $this->configuration = $settingArray;
-        return $settingArray;
+        $configuration = json_decode($this->filesystem->readFile($cacheFilePath), true);
+        $this->configuration = $configuration;
+        return $configuration;
     }
 }
