@@ -1,37 +1,36 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 6/6/16
- * Time: 10:06 AM
- */
 namespace Enhavo\Bundle\ShopBundle\Cart;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Enhavo\Bundle\ShopBundle\Modifier\OrderItemQuantityModifier;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Cart\Resolver\ItemResolverInterface;
 use Sylius\Component\Cart\Resolver\ItemResolvingException;
-use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class ItemResolver implements ItemResolverInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var RepositoryInterface
      */
-    protected $entityManager;
+    protected $productRepository;
 
     /**
      * @var OrderItemQuantityModifier
      */
     protected $modifier;
 
-
-    public function __construct(EntityManagerInterface $entityManager, OrderItemQuantityModifier $modifier)
+    /**
+     * ItemResolver constructor.
+     *
+     * @param RepositoryInterface $productRepository
+     * @param OrderItemQuantityModifier $modifier
+     */
+    public function __construct(RepositoryInterface $productRepository, OrderItemQuantityModifier $modifier)
     {
-        $this->entityManager = $entityManager;
+        $this->productRepository = $productRepository;
         $this->modifier = $modifier;
     }
 
@@ -45,7 +44,7 @@ class ItemResolver implements ItemResolverInterface
         }
 
         // If no product id given, or product not found, we throw exception with nice message.
-        if (!$productId || !$product = $this->getProductRepository()->find($productId)) {
+        if (!$productId || !$product = $this->productRepository->find($productId)) {
             throw new ItemResolvingException('Requested product was not found');
         }
         /** @var $product ProductInterface */
@@ -57,10 +56,5 @@ class ItemResolver implements ItemResolverInterface
 
         // Everything went fine, return the item.
         return $item;
-    }
-
-    private function getProductRepository()
-    {
-        return $this->entityManager->getRepository('EnhavoShopBundle:Product');
     }
 }

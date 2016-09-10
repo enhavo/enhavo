@@ -23,7 +23,7 @@ services:
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
-            - @doctrine.orm.entity_manager
+            - @enhavo_shop.repository.product
             - @sylius.order_item_quantity_modifier
 
     enhavo_shop.calculator.order_composition_calculator:
