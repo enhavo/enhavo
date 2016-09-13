@@ -1,0 +1,12 @@
+label:
+    setting: 'Settings'
+
+setting:
+    label:
+        key: 'Key'
+        type: 'Type'
+        label: 'Label'
+        value: 'Value'
+        file: 'File'
+        files: 'Files'
+        setting: 'Setting'

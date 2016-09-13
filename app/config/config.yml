@@ -165,6 +165,7 @@ services:
         class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
         arguments: ["@pdo", "%pdo.db_options%"]
 
+
 stof_doctrine_extensions:
     default_locale: %locale%
     orm:

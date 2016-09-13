@@ -19,12 +19,20 @@ class MetadataCollectorTest extends \PHPUnit_Framework_TestCase
         $kernelMock = $this->getMockBuilder('Symfony\Component\HttpKernel\KernelInterface')->getMock();
 
         $kernelMock->method('getBundles')->willReturn([
-            new EnhavoSearchBundle()
+            new EnhavoSearchBundle($kernelMock)
         ]);
 
         $filesystemMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Filesystem\Filesystem')->getMock();
         $filesystemMock->method('readFile')->willReturn(
-            "ResourceEntity1:\n    type: myType\n    option: Option\nResourceEntity2:\n    type: myType\n"
+            json_encode([
+                'ResourceEntity1' => [
+                    'type' => 'myType',
+                    'option' => 'Option'
+                ],
+                'ResourceEntity2' => [
+                    'type' => 'myType'
+                ]
+            ])
         );
 
         $metadataCollector = new MetadataCollector($kernelMock, $filesystemMock);
@@ -51,12 +59,20 @@ class MetadataCollectorTest extends \PHPUnit_Framework_TestCase
         $kernelMock = $this->getMockBuilder('Symfony\Component\HttpKernel\KernelInterface')->getMock();
 
         $kernelMock->method('getBundles')->willReturn([
-            new EnhavoSearchBundle()
+            new EnhavoSearchBundle($kernelMock)
         ]);
 
         $filesystemMock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Filesystem\Filesystem')->getMock();
         $filesystemMock->expects($this->once())->method('readFile')->willReturn(
-            "ResourceEntity1:\n    type: myType\n    option: Option\nResourceEntity2:\n    type: myType\n"
+            json_encode([
+                'ResourceEntity1' => [
+                    'type' => 'myType',
+                    'option' => 'Option'
+                ],
+                'ResourceEntity2' => [
+                    'type' => 'myType'
+                ]
+            ])
         );
 
         $metadataCollector = new MetadataCollector($kernelMock, $filesystemMock);

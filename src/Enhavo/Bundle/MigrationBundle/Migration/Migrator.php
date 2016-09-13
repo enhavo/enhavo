@@ -64,6 +64,14 @@ class Migrator
                 $migrationClass->migrate();
             }
         }
+
+        if($to) {
+            $updatedToVersion = $to;
+        } else {
+            $updatedToVersion = $this->getUpdatedToVersion();
+        }
+
+        $this->updateVersion($updatedToVersion);
     }
 
     protected function getMigrationList($from = null, $to = null)
@@ -92,8 +100,6 @@ class Migrator
                 }
             }
         }
-
-        $this->updateVersion($updatedToVersion);
 
         return $list;
     }

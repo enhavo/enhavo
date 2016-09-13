@@ -1,3 +1,0 @@
-enhavo_setting_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: EnhavoSettingBundle:Default:index }

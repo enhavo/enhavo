@@ -91,6 +91,11 @@ enhavo_app:
             translationDomain: EnhavoShopBundle
             route: enhavo_shop_order_index
             role: ROLE_ENHAVO_SHOP_ORDER_INDEX
+        setting:
+            label: label.setting
+            translationDomain: EnhavoSettingBundle
+            route: enhavo_setting_setting_index
+            role: ROLE_ENHAVO_SETTING_INDEX
 
 enhavo_newsletter:
     subscriber:

@@ -70,3 +70,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_app.table.label:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\LabelWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget }
