@@ -45,6 +45,14 @@ services:
         tags:
             - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }
 
+    enhavo.promotion_action.free_shipping_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\FreeShippingDiscountAction
+        arguments:
+            - @sylius.originator
+            - @sylius.factory.adjustment
+        tags:
+            - { name: sylius.promotion_action, type: free_shipping_discount, label: "Free shipping discount" }
+
     enhavo_shop.validator.order_addressing:
         class:  Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressingValidator
         arguments:
@@ -58,3 +66,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: sylius.process.scenario, alias: enhavo_checkout }
+
+    enhavo_shop.promotion_rule_checker.shipping_country:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Checker\ShippingCountryRuleChecker
+        arguments:
+            - @enhavo_shop.locale.country_resolver
+        tags:
+            - { name: sylius.promotion_rule_checker, type: 'shipping_country', label: "Shipping country" }

@@ -3,10 +3,12 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Sylius\Component\Cart\Model\CartItem;
-use Sylius\Component\Order\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
+use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 
-class OrderItem extends CartItem
+class OrderItem extends CartItem implements OrderItemInterface
 {
     /**
      * @var Product
@@ -29,16 +31,14 @@ class OrderItem extends CartItem
         $this->product = $product;
     }
 
-    public function equals(OrderItemInterface $item)
+    public function equals(SyliusOrderItemInterface $item)
     {
         /** @var $item OrderItem */
         return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
     }
 
     /**
-     * Set tax
-     *
-     * @return integer
+     * {@inheritdoc}
      */
     public function getUnitPriceTotal()
     {
@@ -46,12 +46,40 @@ class OrderItem extends CartItem
     }
 
     /**
-     * Get taxTotal
-     *
-     * @return integer 
+     * {@inheritdoc}
      */
     public function getTaxTotal()
     {
-        return $this->product->getTax() * $this->quantity;
+        $total = 0;
+        foreach($this->getUnits() as $unit) {
+            $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
+            foreach($adjustments as $adjustment) {
+                $total += $adjustment->getAmount();
+            }
+        }
+        return $total;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnitTotal()
+    {
+        return $this->getUnitPrice() + $this->getUnitTax();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnitTax()
+    {
+        $total = 0;
+        $unit = $this->getUnits()->first();
+        $adjustments = $unit->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
+        /** @var AdjustmentInterface $adjustment */
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+        return $total;
     }
 }

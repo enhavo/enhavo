@@ -10,12 +10,12 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
+use Sylius\Component\Shipping\Exception\UnresolvedDefaultShippingMethodException;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Order\Model\AdjustmentInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Shipping\Resolver\DefaultShippingMethodResolverInterface;
 use Sylius\Component\Shipping\Calculator\DelegatingCalculatorInterface;
-use Doctrine\Common\Proxy\Proxy;
 
 class OrderShipmentProcessor implements ProcessorInterface
 {
@@ -70,6 +70,7 @@ class OrderShipmentProcessor implements ProcessorInterface
     /**
      * @param OrderInterface $order
      *
+     * @throws UnresolvedDefaultShippingMethodException
      * @return ShipmentInterface
      */
     private function getOrderShipment(OrderInterface $order)
@@ -97,13 +98,13 @@ class OrderShipmentProcessor implements ProcessorInterface
     {
         /** @var AdjustmentInterface $adjustment */
         foreach($order->getAdjustments() as $adjustment) {
-            if($adjustment->getType() == 'shipping') {
+            if($adjustment->getType() === \Sylius\Component\Core\Model\AdjustmentInterface::SHIPPING_ADJUSTMENT) {
                 return $adjustment;
             }
         }
 
         $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType('shipping');
+        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::SHIPPING_ADJUSTMENT);
         $order->addAdjustment($adjustment);
         return $adjustment;
     }

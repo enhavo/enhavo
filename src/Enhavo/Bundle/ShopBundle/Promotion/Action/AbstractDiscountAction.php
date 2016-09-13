@@ -47,18 +47,21 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
 
         /** @var AdjustmentInterface $adjustment */
         $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+        $adjustment->setType($this->getAdjustmentType());
         $adjustment->setOriginId($promotion->getOriginId());
         $adjustment->setOriginType($promotion->getOriginType());
 
         $this->configureAdjustmentAmount($adjustment, $subject, $configuration);
 
         $subject->addAdjustment($adjustment);
-
-        return;
     }
 
     abstract protected function configureAdjustmentAmount(AdjustmentInterface $adjustment, OrderInterface $subject, array $configuration);
+
+    protected function getAdjustmentType()
+    {
+        return \Sylius\Component\Core\Model\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT;
+    }
 
     public function revert(PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion)
     {
@@ -73,9 +76,9 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
         /** @var AdjustmentInterface $adjustment */
         foreach($subject->getAdjustments() as $adjustment) {
             if(
-                $adjustment->getOriginId() == $promotion->getOriginId() &&
-                $adjustment->getOriginType() ==  $promotion->getOriginType() &&
-                $adjustment->getType() == \Sylius\Component\Core\Model\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT
+                $adjustment->getOriginId() === $promotion->getOriginId() &&
+                $adjustment->getOriginType() ===  $promotion->getOriginType() &&
+                $adjustment->getType() === $this->getAdjustmentType()
             ) {
                 $subject->removeAdjustment($adjustment);
                 break;
@@ -85,6 +88,6 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
 
     public function getConfigurationFormType()
     {
-        return;
+        return null;
     }
 }

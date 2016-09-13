@@ -152,4 +152,39 @@ interface OrderInterface extends
      * @return string|null
      */
     public function getEmail();
+
+    /**
+     * Returns the amount of the shipping costs including shipping promotions
+     *
+     * @return integer
+     */
+    public function getShippingTotal();
+
+    /**
+     * Return the total amount of all promotion discounts on that order excluding items and shipping promotions
+     *
+     * @return integer
+     */
+    public function getDiscountTotal();
+
+    /**
+     * Return the total amount of all taxes including the items
+     *
+     * @return integer
+     */
+    public function getTaxTotal();
+
+    /**
+     * Returns the total amount of all units including taxes but including promotion
+     *
+     * @return integer
+     */
+    public function getUnitTotal();
+
+    /**
+     *  Returns the total amount of all units excluding taxes but including promotion
+     *
+     * @return integer
+     */
+    public function getUnitPriceTotal();
 }

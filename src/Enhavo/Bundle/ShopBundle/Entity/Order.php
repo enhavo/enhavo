@@ -14,6 +14,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
@@ -437,5 +438,60 @@ class Order extends Cart implements OrderInterface
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function getShippingTotal()
+    {
+        $total = 0;
+
+        $shippingAdjustments = $this->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT);
+        $shippingPromotionAdjustments = $this->getAdjustments(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
+
+        foreach($shippingAdjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        foreach($shippingPromotionAdjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        return $total;
+    }
+
+    public function getDiscountTotal()
+    {
+        $total = 0;
+        $adjustments = $this->getAdjustments(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT);
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+        return $total;
+    }
+
+    public function getUnitTotal()
+    {
+        $total = 0;
+        foreach($this->getItems() as $items) {
+            $total += $items->getTotal();
+        }
+        return $total;
+    }
+
+    public function getUnitPriceTotal()
+    {
+        $total = 0;
+        foreach($this->getItems() as $items) {
+            $total += $items->getUnitPriceTotal();
+        }
+        return $total;
+    }
+
+    public function getTaxTotal()
+    {
+        $total = 0;
+        foreach($this->getItems() as $items) {
+            $total += $items->getTaxTotal();
+        }
+        return $total;
     }
 }

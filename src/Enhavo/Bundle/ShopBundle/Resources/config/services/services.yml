@@ -1,6 +1,4 @@
 services:
-
-
     enhavo_shop.listener.doctrine_sylius_meta:
         class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
         tags:
@@ -12,3 +10,8 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_shop.locale.country_resolver:
+        class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
+        arguments:
+            - @sylius.repository.country
