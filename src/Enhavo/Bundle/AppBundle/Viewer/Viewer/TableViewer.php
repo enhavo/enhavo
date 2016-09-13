@@ -15,36 +15,33 @@ use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 
 class TableViewer extends AbstractViewer
 {
-    protected function getDefaultColumns()
-    {
-        /** @var RequestConfiguration $configuration */
-        $configuration = $this->configuration;
-
-        if ($configuration->isSortable()) {
-            $columns = array(
-                'id' => array(
-                    'label' => 'id',
-                    'property' => 'id',
-                ),
-                'position' => array(
-                    'type' => 'position'
-                )
-            );
-        } else {
-            $columns = array(
-                'id' => array(
-                    'label' => 'id',
-                    'property' => 'id',
-                )
-            );
-        }
-
-        return $columns;
-    }
-
     protected function getColumns()
     {
         $columns = $this->optionAccessor->get('columns');
+
+        if(empty($columns)) {
+            /** @var RequestConfiguration $configuration */
+            $configuration = $this->configuration;
+
+            if ($configuration->isSortable()) {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                    ),
+                    'position' => array(
+                        'type' => 'position'
+                    )
+                );
+            } else {
+                $columns = array(
+                    'id' => array(
+                        'label' => 'id',
+                        'property' => 'id',
+                    )
+                );
+            }
+        }
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('type', $column)) {
@@ -129,7 +126,7 @@ class TableViewer extends AbstractViewer
                 'move_to_page_route' => $this->getDefaultMoveToPageRoute()
             ],
             'batch_route' => $this->getBatchRoute(),
-            'columns' => $this->getDefaultColumns()
+            'columns' => []
         ]);
     }
 }

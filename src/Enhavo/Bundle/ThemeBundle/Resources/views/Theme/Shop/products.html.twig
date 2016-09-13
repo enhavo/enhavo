@@ -1,0 +1,12 @@
+{% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
+
+{% block javascripts %}
+  <script src="{{ asset('/bundles/enhavoshop/js/Shop.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block main %}
+  <section>
+      {{ shop_product_list_render() }}
+  </section>
+  <a href="{{ path('enhavo_theme_shop_cart_summary') }}">Cart</a>
+{% endblock %}

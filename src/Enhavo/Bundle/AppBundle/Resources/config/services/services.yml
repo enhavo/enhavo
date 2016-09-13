@@ -42,17 +42,6 @@ services:
             - @knp_menu.factory
             - @event_dispatcher
 
-    enhavo_app.generator.route_generator:
-        class: Enhavo\Bundle\AppBundle\Generator\RoutingGenerator
-        arguments:
-            - @templating
-
-    enhavo_app.generator.extend_form_type_generator:
-        class: Enhavo\Bundle\AppBundle\Generator\ExtendFormTypeGenerator
-        arguments:
-            - @templating
-            - @kernel
-
     enhavo_app.preview.default_renderer:
         class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
 
@@ -88,3 +77,9 @@ services:
         class: Enhavo\Bundle\AppBundle\Controller\SortingManager
         arguments:
             - @doctrine.orm.entity_manager
+
+
+    enhavo.translation.locale_provider.contextual:
+        class: Enhavo\Bundle\AppBundle\Provider\TranslationLocaleProvider
+        arguments:
+            - %locale%

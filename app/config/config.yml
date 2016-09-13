@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: sylius.yml }
+    - { resource: @EnhavoShopBundle/Resources/config/config.yml }
     - { resource: @EnhavoAssetsBundle/Resources/config/config.yml }
     - { resource: enhavo.yml }
 
@@ -39,6 +39,7 @@ twig:
             - 'EnhavoGridBundle:Form:fields.html.twig'
             - 'EnhavoCategoryBundle:Form:fields.html.twig'
             - 'EnhavoMediaBundle:Form:fields.html.twig'
+            - 'EnhavoShopBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -95,6 +96,15 @@ doctrine:
 
             Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
             Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
+
+            Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
+            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Promotion\Model\Coupon
+            Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
+            Sylius\Component\Shipping\Model\ShipmentInterface: Sylius\Component\Shipping\Model\Shipment
+            Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
+            Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
+
+            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
 
 
 # Swiftmailer Configuration
@@ -162,3 +172,8 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+
+sylius_resource:
+    translation:
+        default_locale: "%locale%"
+        locale_provider: enhavo.translation.locale_provider.contextual

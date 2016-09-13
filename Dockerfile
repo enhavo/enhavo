@@ -1,19 +1,22 @@
-FROM phusion/baseimage:0.9.15
+FROM phusion/baseimage
 
 CMD ["/sbin/my_init"]
 
 # install server tools
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y apache2
-RUN apt-get install -y mysql-server
-RUN apt-get install -y php5
-RUN apt-get install -y php5-mysql
-RUN apt-get install -y php5-gd
-RUN apt-get install -y php5-curl
-RUN apt-get install -y git
-RUN a2enmod rewrite
-RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+RUN add-apt-repository -y ppa:ondrej/php && \
+    apt-get update -y --force-yes && \
+    apt-get upgrade -y --force-yes && \
+    apt-get install -y --force-yes apache2 && \
+    apt-get install -y --force-yes mysql-server && \
+    apt-get install -y --force-yes php7.0 && \
+    apt-get install -y --force-yes php7.0-mysql && \
+    apt-get install -y --force-yes php7.0-gd && \
+    apt-get install -y --force-yes php7.0-curl && \
+    apt-get install -y --force-yes php7.0-mbstring && \
+    apt-get install -y --force-yes php7.0-dom && \
+    apt-get install -y --force-yes git && \
+    a2enmod rewrite && \
+    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 # server setting and start up scripts
 COPY docker/etc/my_init.d/01_apache2.bash /etc/my_init.d/01_apache2.bash

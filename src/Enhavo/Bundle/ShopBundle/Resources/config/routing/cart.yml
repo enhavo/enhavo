@@ -1,13 +1,16 @@
 sylius_cart_summary:
-    path: /
+    path: /summary.json
     defaults:
         _controller: sylius.controller.cart:summaryAction
-        _sylius:
-            template: EnhavoShopBundle:Cart:summary.html.twig
+        _format: json
 
 sylius_cart_save:
     path: /save
     defaults: { _controller: sylius.controller.cart:saveAction }
+
+sylius_cart_save_quantity:
+    path: /save/{id}/quantity
+    defaults: { _controller: sylius.controller.cart:saveQuantityAction }
 
 sylius_cart_clear:
     path: /clear

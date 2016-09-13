@@ -1,0 +1,18 @@
+{% extends baseTemplate %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <h1>Finish</h1>
+
+    {% if order.payment.method.code == 'paypal' %}
+        Paypal redirect
+    {% endif %}
+
+    {% if order.payment.method.code == 'debit' %}
+        Lastschrift
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+sylius_cart:
+    resolver: enhavo.shop.cart_item_resolver
+    resources:
+        cart:
+            classes:
+                controller: Enhavo\Bundle\ShopBundle\Controller\CartController
+                model: Enhavo\Bundle\ShopBundle\Entity\Order
+                form:
+                    default: Enhavo\Bundle\ShopBundle\Form\Type\CartType
+        cart_item:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
+                controller: Enhavo\Bundle\ShopBundle\Controller\CartItemController
+                form:
+                    default: Enhavo\Bundle\ShopBundle\Form\Type\CartItemType
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\Order
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form:
+                    default: Enhavo\Bundle\ShopBundle\Form\Type\OrderType
+
+        order_item:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
+                form:
+                    default: Enhavo\Bundle\ShopBundle\Form\Type\OrderItemType
+
+sylius_money: ~
+
+sylius_addressing:
+    driver: doctrine/orm
+
+sylius_promotion:
+    driver: doctrine/orm
+    resources:
+        promotion_subject:
+            classes:
+                model: "%sylius.model.order.class%"
+
+        promotion:
+            classes:
+                model: Enhavo\Bundle\ShopBundle\Entity\Promotion
+
+sylius_payment:
+    gateways:
+        offline: Offline
+        paypal_express_checkout: Paypal Express Checkout

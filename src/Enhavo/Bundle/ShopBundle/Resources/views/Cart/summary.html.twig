@@ -1,3 +1,47 @@
-{{ form(form) }}
+{% for item in cart.items %}
+    <div>
+        {% if not immutable %}<form action="{{ path('sylius_cart_save_quantity', {id: item.id}) }}" method="POST" data-form-cart-quantity>{% endif %}
+            <h2>{{ item.product.title }}</h2>
+
+            {% if immutable %}
+                <div>Quantity: {{ item.quantity }}</div>
+            {% else %}
+                <div><input type="text" name="quantity" value="{{ item.quantity }}" /></div><button type="submit">Save</button>
+            {% endif %}
+
+            <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>
+            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.product.tax }}</span></div>
+            <div>Unit Total: <span data-cart-item-unit-total>{{ item.product.unitPriceTotal }}</span></div>
+
+            <div>Tax Total: <span data-cart-item-tax-total>{{ item.taxTotal }}</span></div>
+            <div>Net Total: <span data-cart-item-net-total>{{ item.unitPriceTotal }}</span></div>
+            <div>Total: <span data-cart-item-total>{{ item.total }}</span></div>
+
+            {% if not immutable %}
+                <a data-cart-item-remove href="{{ path('sylius_cart_item_remove', {id: item.id}) }}">Delete</a>
 
 
+
+            {% endif %}
+        {% if not immutable %}</form>{% endif %}
+    </div>
+{% endfor %}
+<hr />
+<div>
+    Total: <span data-cart-total>{{ total.total }}</span>
+</div>
+<div>
+    Netto: <span data-cart-net-total>{{ total.netTotal }}</span>
+</div>
+<div>
+    Unit Total: <span data-cart-unit-total>{{ total.unitTotal }}</span>
+</div>
+<div>
+    Shipping: <span data-cart-shipping-total>{{ total.shippingTotal }}</span>
+</div>
+<div>
+    Discount: <span data-cart-discount-total>{{ total.discountTotal }}</span>
+</div>
+<div>
+    Tax: <span data-cart-tax-total>{{ total.taxTotal }}</span>
+</div>

@@ -1,0 +1,66 @@
+Enhavo\Bundle\ShopBundle\Entity\Order:
+    type: entity
+    table: shop_order
+
+    fields:
+        checkoutState:
+            type: string
+            nullable: true
+
+        paymentState:
+            type: string
+            nullable: true
+
+        shippingState:
+            type: string
+            nullable: true
+
+        differentBillingAddress:
+            type: boolean
+            nullable: true
+
+        orderedAt:
+            type: datetime
+            nullable: true
+
+        email:
+            type: string
+            nullable: true
+
+    manyToOne:
+        shippingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+
+        billingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+
+        promotionCoupon:
+            targetEntity: Sylius\Component\Promotion\Model\CouponInterface
+
+        payment:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Payment\Model\PaymentInterface
+
+        shipment:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
+
+        user:
+            targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface
+
+    manyToMany:
+        promotions:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Promotion\Model\PromotionInterface
+            joinTable:
+                name: shop_promotion_order
+                joinColumns:
+                    order_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    promotion_id:
+                        referencedColumnName: id
+
+    lifecycleCallbacks: {  }

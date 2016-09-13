@@ -1,0 +1,28 @@
+Enhavo\Bundle\ShopBundle\Entity\Order:
+    properties:
+        promotionCoupon:
+            - NotNull: { groups: [redeem] }
+        shippingAddress:
+            - Valid: ~
+        billingAddress:
+            - Valid: ~
+
+    constraints:
+        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
+            groups: [shipping]
+
+
+Sylius\Component\Addressing\Model\Address:
+    properties:
+        firstName:
+            - NotBlank: ~
+        lastName:
+            - NotBlank: ~
+        street:
+            - NotBlank: ~
+        city:
+            - NotBlank: ~
+        postcode:
+            - NotBlank: ~
+        countryCode:
+            - NotBlank: ~

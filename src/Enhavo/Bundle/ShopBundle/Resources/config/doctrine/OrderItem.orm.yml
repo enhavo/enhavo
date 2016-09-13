@@ -1,0 +1,10 @@
+Enhavo\Bundle\ShopBundle\Entity\OrderItem:
+    type: entity
+    table: shop_order_item
+
+    manyToOne:
+        product:
+            targetEntity: Enhavo\Bundle\ShopBundle\Entity\Product
+
+
+    lifecycleCallbacks: {  }

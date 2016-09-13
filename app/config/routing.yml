@@ -13,12 +13,16 @@ enhavo_theme_article:
     resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
     prefix:   /
 
+enhavo_theme_shop:
+    resource: "@EnhavoThemeBundle/Resources/config/routing/shop.yml"
+    prefix:   /
+
 #
 # enhavo
 #
 enhavo_shop:
     resource: "@EnhavoShopBundle/Resources/config/routing/shop.yml"
-    prefix:   /
+    prefix:   /shop
 
 enhavo_contact:
     resource: "@EnhavoContactBundle/Resources/config/routing.yml"
@@ -104,6 +108,9 @@ enhavo_setting:
     resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
     prefix: /admin
 
+#
+# 3rd Party
+#
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 

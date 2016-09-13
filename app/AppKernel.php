@@ -13,6 +13,12 @@ class AppKernel extends Kernel
             new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
             new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
             new Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle(),
+            new Sylius\Bundle\FlowBundle\SyliusFlowBundle(),
+            new Sylius\Bundle\AddressingBundle\SyliusAddressingBundle(),
+            new Sylius\Bundle\PromotionBundle\SyliusPromotionBundle(),
+            new Sylius\Bundle\PaymentBundle\SyliusPaymentBundle(),
+            new Sylius\Bundle\ShippingBundle\SyliusShippingBundle(),
+            new Sylius\Bundle\TaxationBundle\SyliusTaxationBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -35,6 +41,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
 
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
@@ -59,7 +66,8 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\WorkflowBundle\EnhavoWorkflowBundle(),
             new Enhavo\Bundle\MigrationBundle\EnhavoMigrationBundle(),
             new Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle(),
-            new Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle()
+            new Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle(),
+            new Enhavo\Bundle\GeneratorBundle\EnhavoGeneratorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

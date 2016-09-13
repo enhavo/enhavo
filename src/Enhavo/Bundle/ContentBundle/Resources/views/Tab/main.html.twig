@@ -1,0 +1,10 @@
+{% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
+{{ form_row(form.title) }}
+
+{% block custom %}{% endblock %}
+
+{{ form_row(form.publication_date) }}
+{{ form_row(form.public) }}
+{% if form.workflow_status is defined %}
+    {{ form_row(form.workflow_status) }}
+{% endif %}

@@ -1,0 +1,17 @@
+checkout:
+  addressing:
+    form:
+      label:
+        different_billing_address: Abweichende Rechnungadresse
+  payment:
+    form:
+      label:
+        paypal: Paypal
+        debit: Lastschrift
+promotion:
+  coupon:
+    form:
+      label:
+        code: Code
+      action:
+        redeem: Einlösen

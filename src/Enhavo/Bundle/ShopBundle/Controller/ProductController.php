@@ -7,10 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
-    public function showAction(Request $request)
+    public function listAction(Request $request)
     {
 
+        return $this->render('EnhavoShopBundle:Product:list.html.twig', [
 
-        return $this->render('');
+        ]);
     }
 }

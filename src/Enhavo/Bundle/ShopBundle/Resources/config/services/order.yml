@@ -1,0 +1,75 @@
+parameters:
+
+services:
+    enhavo.order_processing.shipment_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor
+        arguments:
+            - @sylius.resolver.default_shipping_method
+            - @sylius.factory.shipment
+            - @sylius.shipping_calculator
+            - @sylius.factory.adjustment
+
+    enhavo.order_processing.payment_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor
+
+    enhavo.order_processing.confirm_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderConfirmProcessor
+
+    enhavo.order_processing.finish_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderFinishProcessor
+        arguments:
+            - @sylius.cart_provider
+
+    enhavo.shop.cart_item_resolver:
+        class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
+        arguments:
+            - @enhavo_shop.repository.product
+            - @sylius.order_item_quantity_modifier
+
+    enhavo_shop.calculator.order_composition_calculator:
+        class: Enhavo\Bundle\ShopBundle\Calculator\OrderCompositionCalculator
+
+    enhavo_shop.listener.cart_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\CartSubscriber
+        arguments:
+            - @enhavo.order_processing.shipment_processor
+            - @sylius.promotion_processor
+        tags:
+            - { name: kernel.event_subscriber }
+
+    enhavo.promotion_action.order_fixed_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderFixedDiscountAction
+        arguments:
+            - @sylius.originator
+            - @sylius.factory.adjustment
+        tags:
+            - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }
+
+    enhavo.promotion_action.free_shipping_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\FreeShippingDiscountAction
+        arguments:
+            - @sylius.originator
+            - @sylius.factory.adjustment
+        tags:
+            - { name: sylius.promotion_action, type: free_shipping_discount, label: "Free shipping discount" }
+
+    enhavo_shop.validator.order_addressing:
+        class:  Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressingValidator
+        arguments:
+            - @validator
+        tags:
+            - { name: validator.constraint_validator, alias: order_addressing }
+
+    enhavo_shop.controller.checkout:
+        class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.process.scenario, alias: enhavo_checkout }
+
+    enhavo_shop.promotion_rule_checker.shipping_country:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Checker\ShippingCountryRuleChecker
+        arguments:
+            - @enhavo_shop.locale.country_resolver
+        tags:
+            - { name: sylius.promotion_rule_checker, type: 'shipping_country', label: "Shipping country" }

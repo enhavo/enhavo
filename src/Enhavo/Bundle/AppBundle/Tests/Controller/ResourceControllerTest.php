@@ -174,6 +174,12 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         return $mock;
     }
 
+    private function getStateMachineMock()
+    {
+        $mock = $this->getMockBuilder('Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface')->getMock();
+        return $mock;
+    }
+
     protected function createResourceController()
     {
         $metadata = $this->getMetadataMock();
@@ -190,6 +196,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $flashHelper = $this->getFlashHelperMock();
         $authorizationChecker = $this->getAuthorizationCheckerMock();
         $eventDispatcher = $this->getEventDispatcherMock();
+        $stateMachine = $this->getStateMachineMock();
         $viewerFactory = $this->getViewerFactoryMock();
         $sortingManager = $this->getSortingManagerMock();
         $batchManager = $this->getBatchManagerMock();
@@ -209,6 +216,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
             $flashHelper,
             $authorizationChecker,
             $eventDispatcher,
+            $stateMachine,
             $viewerFactory,
             $sortingManager,
             $batchManager
