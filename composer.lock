@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c7bc5849a145a5ccd50a5fe12f1576e",
-    "content-hash": "2a5e5d5a0e5f5cf00a65b021ab1ea5e4",
+    "hash": "88283412201d12535bd4fc77d9697819",
+    "content-hash": "b3bda24d0f2440daba53214058f62105",
     "packages": [
         {
             "name": "bacon/bacon-string-utils",
@@ -3642,122 +3642,6 @@
                 "type"
             ],
             "time": "2015-07-25 16:39:46"
-        },
-        {
-            "name": "plasmaconduit/dependency-graph",
-            "version": "v0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JosephMoniz/php-dependency-graph.git",
-                "reference": "5c7f1959bb2336e627663ea02b4a616dd20d30d9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JosephMoniz/php-dependency-graph/zipball/5c7f1959bb2336e627663ea02b4a616dd20d30d9",
-                "reference": "5c7f1959bb2336e627663ea02b4a616dd20d30d9",
-                "shasum": ""
-            },
-            "require": {
-                "plasmaconduit/either": "0.2.*",
-                "plasmaconduit/map": "0.1.*",
-                "plasmaconduit/option": "0.2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-03-26 05:52:34"
-        },
-        {
-            "name": "plasmaconduit/either",
-            "version": "0.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JosephMoniz/php-either.git",
-                "reference": "8cf8f82f4486bc9c17372f535a41db110fcb4772"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JosephMoniz/php-either/zipball/8cf8f82f4486bc9c17372f535a41db110fcb4772",
-                "reference": "8cf8f82f4486bc9c17372f535a41db110fcb4772",
-                "shasum": ""
-            },
-            "require": {
-                "plasmaconduit/map": "0.1.*",
-                "plasmaconduit/option": "0.2.*"
-            },
-            "require-dev": {
-                "phpspec/phpspec2": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-07-13 18:27:16"
-        },
-        {
-            "name": "plasmaconduit/map",
-            "version": "0.1.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JosephMoniz/php-map.git",
-                "reference": "e8f5aa43009b7addac7343e1ff0ce96032211680"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JosephMoniz/php-map/zipball/e8f5aa43009b7addac7343e1ff0ce96032211680",
-                "reference": "e8f5aa43009b7addac7343e1ff0ce96032211680",
-                "shasum": ""
-            },
-            "require": {
-                "plasmaconduit/option": "0.2.*"
-            },
-            "require-dev": {
-                "phpspec/phpspec2": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-07-13 17:54:31"
-        },
-        {
-            "name": "plasmaconduit/option",
-            "version": "0.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JosephMoniz/php-option.git",
-                "reference": "c40d9bd6b5dcf8bf3edb99294858ad4f123703de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JosephMoniz/php-option/zipball/c40d9bd6b5dcf8bf3edb99294858ad4f123703de",
-                "reference": "c40d9bd6b5dcf8bf3edb99294858ad4f123703de",
-                "shasum": ""
-            },
-            "require": {
-                "plasmaconduit/either": "0.2.*"
-            },
-            "require-dev": {
-                "phpspec/phpspec2": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-07-13 18:18:56"
         },
         {
             "name": "psr/http-message",
