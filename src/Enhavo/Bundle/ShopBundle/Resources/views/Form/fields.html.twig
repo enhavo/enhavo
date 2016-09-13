@@ -7,3 +7,12 @@
         </div>
     {% endfor %}
 {% endblock %}
+
+{% block sylius_promotion_coupon_to_code_widget %}
+    <div data-coupon-redeem-input {% if form.vars.data %}style="display: none"{% endif %}>
+        {{ form_widget(form) }}
+    </div>
+    <div data-coupon-redeem-value {% if not form.vars.data %}style="display: none"{% endif %}>
+        <span data-coupon-redeem-value-field>{{ form.vars.data }}</span> <a data-coupon-cancel>x</a>
+    </div>
+{% endblock %}

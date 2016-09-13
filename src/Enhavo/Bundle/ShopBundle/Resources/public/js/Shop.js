@@ -131,13 +131,44 @@ function Shop()
         url: form.attr('action'),
         data: form.serialize(),
         success: function(data) {
-          console.log(data);
+          if(data.coupon) {
+            var $input = form.find('[data-coupon-redeem-input]');
+            var $value = form.find('[data-coupon-redeem-value]');
+            $value.find('[data-coupon-redeem-value-field]').html($input.find('input').val());
+            $value.show();
+            $input.hide();
+          }
         },
         error: function(data) {
           console.log(data);
         }
       })
     });
+
+    form.on('click', '[data-coupon-cancel]', function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: 'post',
+        url: form.data('cancel-action'),
+        data: form.serialize(),
+        success: function(data) {
+          if(!data.coupon) {
+            var $input = form.find('[data-coupon-redeem-input]');
+            var $value = form.find('[data-coupon-redeem-value]');
+            $input.find('input').val('');
+            $value.hide();
+            $input.show();
+          } else {
+            console.log('code not valid');
+          }
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      })
+    });
+
+
   };
 }
 

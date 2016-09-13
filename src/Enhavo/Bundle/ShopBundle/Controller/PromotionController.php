@@ -41,7 +41,8 @@ class PromotionController extends Controller
             $calculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
             $orderComposition = $calculator->calculateOrder($order);
             return new JsonResponse([
-                'order' => $orderComposition->toArray()
+                'order' => $orderComposition->toArray(),
+                'coupon' => $order->getPromotionCoupon() ? $order->getPromotionCoupon()->getCode() : null
             ]);
         }
 
@@ -69,7 +70,12 @@ class PromotionController extends Controller
         $this->getManager()->flush();
 
         if($request->isXmlHttpRequest()) {
-            return new JsonResponse();
+            $calculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
+            $orderComposition = $calculator->calculateOrder($order);
+            return new JsonResponse([
+                'order' => $orderComposition->toArray(),
+                'coupon' => $order->getPromotionCoupon() ? $order->getPromotionCoupon()->getCode() : null
+            ]);
         }
 
         $redirectUrl = $request->get('redirectUrl');

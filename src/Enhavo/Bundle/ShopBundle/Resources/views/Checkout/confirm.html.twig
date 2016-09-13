@@ -12,7 +12,7 @@
     <h1>Confirm</h1>
 
     <div>
-        <form action="{{ path('enhavo_promotion_reedem_coupon') }}" method="POST" data-coupon-form>
+        <form action="{{ path('enhavo_promotion_reedem_coupon') }}" data-cancel-action="{{ path('enhavo_promotion_cancel_coupon') }}" method="POST" data-coupon-form>
             {{ form_errors(couponForm) }}
             {{ form_row(couponForm.promotionCoupon) }}
             {{ form_row(couponForm._token) }}
@@ -23,7 +23,6 @@
     <div>
         {{ shop_cart_summary_render({template: summaryTemplate, immutable: true, cart: order}) }}
     </div>
-
 
     <div>
         <form action="{{ path('enhavo_checkout_confirm') }}" method="POST" data-checkout-form>
