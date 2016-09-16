@@ -3,6 +3,11 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     table: page_page
     repositoryClass: Enhavo\Bundle\PageBundle\Repository\PageRepository
 
+    fields:
+        code:
+            type: string
+            nullable: true
+
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
