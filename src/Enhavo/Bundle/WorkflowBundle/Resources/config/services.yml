@@ -55,8 +55,8 @@ services:
             - @doctrine.orm.entity_manager
             - %enhavo_workflow.model.workflow.class%
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
 
     enhavo_workflow.workflow_save_listener:
         class: Enhavo\Bundle\WorkflowBundle\EventListener\WorkflowSaveListener
@@ -65,8 +65,8 @@ services:
             - %enhavo_workflow.model.workflow.class%
             - @service_container
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
 
     validator.no_nodes_created_validator:
         class:  Enhavo\Bundle\WorkflowBundle\Validator\Constraints\WorkflowValidator

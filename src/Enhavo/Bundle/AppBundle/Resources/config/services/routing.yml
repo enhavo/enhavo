@@ -44,8 +44,8 @@ services:
             - @enhavo_app.route_content_resolver
             - @doctrine.orm.entity_manager
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.create, method: onCreate }
-            - { name: kernel.event_listener, event: enhavo_app.update, method: onUpdate }
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onCreate }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onUpdate }
 
     enhavo_app.form.route:
         class: %enhavo_app.form.route.class%
