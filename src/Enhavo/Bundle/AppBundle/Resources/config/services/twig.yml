@@ -1,29 +1,16 @@
 parameters:
-    enhavo_app.twig.admin_menu_render.class: Enhavo\Bundle\AppBundle\Twig\AdminMenuRender
-    enhavo_app.twig.admin_menu_render.template: 'EnhavoAppBundle:View:menu.html.twig'
-
     enhavo_app.twig.pagination_render.class: Enhavo\Bundle\AppBundle\Twig\PaginationRender
     enhavo_app.twig.pagination_render.template: 'EnhavoAppBundle:View:pagination.html.twig'
 
     enhavo_app.twig.admin_asset.class: Enhavo\Bundle\AppBundle\Twig\AdminAsset
 
 services:
-    enhavo_app.twig.admin_menu_render:
-        class: %enhavo_app.twig.admin_menu_render.class%
-        arguments:
-            - '@service_container'
-            - '%enhavo_app.twig.admin_menu_render.template%'
-        tags:
-            - { name: twig.extension }
-
     enhavo_app.twig.pagination_render:
         class: %enhavo_app.twig.pagination_render.class%
         arguments:
             - %enhavo_app.twig.pagination_render.template%
         tags:
             - { name: twig.extension }
-
-
 
     enhavo_app.twig.admin_asset:
         class: %enhavo_app.twig.admin_asset.class%

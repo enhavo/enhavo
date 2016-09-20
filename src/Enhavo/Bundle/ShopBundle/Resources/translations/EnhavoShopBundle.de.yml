@@ -15,3 +15,7 @@ promotion:
         code: Code
       action:
         redeem: Einlösen
+
+label:
+  product: Produkt
+  order: Bestellung
