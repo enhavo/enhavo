@@ -23,6 +23,11 @@ class Page extends Content
     protected $workflow_status;
 
     /**
+     * @var string
+     */
+    private $code;
+
+    /**
      * Set content
      *
      * @param GridInterface $grid
@@ -67,5 +72,28 @@ class Page extends Content
     public function getWorkflowStatus()
     {
         return $this->workflow_status;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Page
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

@@ -26,3 +26,11 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_page.twig.page_path_extension:
+        class: Enhavo\Bundle\PageBundle\Twig\PagePathExtension
+        arguments:
+            - '@enhavo_page.repository.page'
+            - '@router'
+        tags:
+            - { name: twig.extension }
