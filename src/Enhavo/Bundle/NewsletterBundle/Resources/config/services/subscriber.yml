@@ -51,3 +51,13 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.newsletter_strategy }
+
+    enhavo_newsletter.strategy.accept:
+        class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
+        arguments:
+            - '%enhavo_newsletter.subscriber.strategy_options%'
+            - '@enhavo_newsletter.storage.local'
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.newsletter_strategy }

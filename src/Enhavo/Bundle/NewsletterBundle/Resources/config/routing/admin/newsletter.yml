@@ -102,7 +102,6 @@ enhavo_newsletter_newsletter_batch:
                 newsletter_send:
                     type: newsletter_send
 
-
 enhavo_newsletter_newsletter_preview:
     options:
         expose: true

@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,7 +35,34 @@ class SubscriberController extends ResourceController
 
         $strategy->activateSubscriber($subscriber);
 
-        return $this->render('EnhavoNewsletterBundle:Subscriber:activate.html.twig', [
+        return $this->render($strategy->getActivationTemplate(), [
+            'subscriber' => $subscriber
+        ]);
+    }
+
+    public function acceptAction(Request $request)
+    {
+        $subscriberManager = $this->getSubscriberManager();
+        $strategy = $subscriberManager->getStrategy();
+
+        if(!$strategy instanceof AcceptStrategy) {
+            throw $this->createNotFoundException();
+        }
+
+        $token = $request->get('token');
+
+        $subscriber = $this->repository->findOneBy([
+            'token' => $token,
+            'active' => false
+        ]);
+
+        if(!$subscriber instanceof SubscriberInterface) {
+            throw $this->createNotFoundException();
+        }
+
+        $strategy->activateSubscriber($subscriber);
+
+        return $this->render($strategy->getActivationTemplate(), [
             'subscriber' => $subscriber
         ]);
     }

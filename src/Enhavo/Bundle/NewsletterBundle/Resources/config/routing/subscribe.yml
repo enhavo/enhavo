@@ -5,6 +5,13 @@ enhavo_newsletter_subscribe_activate:
     defaults:
         _controller: enhavo_newsletter.controller.subscriber:activateAction
 
+enhavo_newsletter_subscribe_accept:
+    pattern: /newsletter/accept/{token}
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:acceptAction
+
 enhavo_newsletter_subscribe_add:
     path: /newsletter/add
     options:
