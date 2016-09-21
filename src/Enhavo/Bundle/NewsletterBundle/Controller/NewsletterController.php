@@ -30,7 +30,7 @@ class NewsletterController extends ResourceController
         $em->persist($currentNewsletter);
         $em->flush();
 
-        $newsletterManager = $this->getNewsletterManager()
+        $newsletterManager = $this->getNewsletterManager();
         $newsletterManager->send($currentNewsletter);
 
         return new JsonResponse();

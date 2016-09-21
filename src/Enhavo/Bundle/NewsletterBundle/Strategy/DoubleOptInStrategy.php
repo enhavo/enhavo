@@ -26,49 +26,79 @@ class DoubleOptInStrategy extends AbstractStrategy
 
     public function addSubscriber(SubscriberInterface $subscriber)
     {
+        $subscriber->setCreatedAt(new \DateTime());
+        $subscriber->setActive(false);
+        $this->setToken($subscriber);
+        $this->localStorage->saveSubscriber($subscriber);
+        $this->notifySubscriber($subscriber);
+    }
+
+    public function activateSubscriber(SubscriberInterface $subscriber)
+    {
+        $subscriber->setActive(true);
+        $subscriber->setToken(null);
+        $this->localStorage->saveSubscriber($subscriber);
         $this->getSubscriberManager()->saveSubscriber($subscriber);
+        $this->notifyAdmin($subscriber);
+
+    }
+
+    private function notifySubscriber(SubscriberInterface $subscriber)
+    {
+        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', array('token' => $subscriber->getToken()), true);
+        $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->getSubject())
+            ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'))
+            ->setTo($subscriber->getEmail())
+            ->setBody($this->renderTemplate($template, [
+                'subscriber' => $subscriber,
+                'link' => $link
+            ]));
+        $this->sendMessage($message);
+    }
+
+    private function notifyAdmin(SubscriberInterface $subscriber)
+    {
+        if($this->getOption('admin_notify', $this->options, false)) {
+            $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->getAdminSubject())
+                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'))
+                ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
+                ->setBody($this->renderTemplate($template, [
+                    'subscriber' => $subscriber
+                ]));
+            $this->sendMessage($message);
+        }
+    }
+
+    private function getAdminSubject()
+    {
+        $subject = $this->getOption('admin_subject', $this->options, 'Newsletter Subscription');
+        $translationDomain = $this->getOption('admin_translation_domain', $this->options, null);
+        return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber)
     {
-        return $this->localStorage->exists($subscriber);
+        return $this->localStorage->exists($subscriber) || $this->getSubscriberManager()->getStorage()->exists($subscriber);
     }
 
     public function handleExists(SubscriberInterface $subscriber)
     {
-        // TODO: Implement handleExists() method.
+        $subscriber = $this->localStorage->getSubscriber($subscriber);
+        if(!$subscriber->isActive()) {
+            $this->setToken($subscriber);
+            $this->notifySubscriber($subscriber);
+            return 'registration not finished, an email was sent again';
+        }
+        return 'already exits';
     }
 
-    public function sendNotification()
+    private function getRouter()
     {
-        $em = $this->em;
-        $subscriberRepository = $em->getRepository('EnhavoNewsletterBundle:Subscriber');
-        $subscriber = $subscriberRepository->findOneBy(array('email' => $value));
-        if($subscriber != null) {
-            if($subscriber->getActive() == true) {
-                $this->context->buildViolation($constraint->messageEmailInUse)
-                    ->addViolation();
-            } else {
-                $email = $subscriber->getEmail();
-                $code = $subscriber->getToken();
-
-                $router = $this->container->get('router');
-                $link = $router->generate('enhavo_newsletter_subscriber_activation', array('code' => $code), true);
-                $text = $this->container->get('templating')->render($this->subscriber['template'], array(
-                    "link" => $link
-                ));
-
-                $message = \Swift_Message::newInstance()
-                    ->setSubject($this->subscriber['subject'])
-                    ->setFrom($this->subscriber['send_from'])
-                    ->setTo($email)
-                    ->setBody($text);
-
-                $this->container->get('mailer')->send($message);
-                $this->context->buildViolation($constraint->messageMailAgain)
-                    ->addViolation();
-            }
-        }
+        return $this->container->get('router');
     }
 
     public function getType()

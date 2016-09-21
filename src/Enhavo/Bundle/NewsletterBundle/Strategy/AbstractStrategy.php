@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
 
 abstract class AbstractStrategy extends AbstractType implements StrategyInterface
@@ -38,5 +39,11 @@ abstract class AbstractStrategy extends AbstractType implements StrategyInterfac
         $subject = $this->getOption('subject', $this->options, 'Newsletter Subscription');
         $translationDomain = $this->getOption('translation_domain', $this->options, null);
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
+    }
+
+    protected function setToken(SubscriberInterface $subscriber)
+    {
+        $token = $this->container->get('fos_user.util.token_generator')->generateToken();
+        $subscriber->setToken($token);
     }
 }

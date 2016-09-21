@@ -1,5 +1,5 @@
 enhavo_newsletter_subscribe_activate:
-    pattern: /newsletter/activate/{code}
+    pattern: /newsletter/activate/{token}
     options:
         expose: true
     defaults:

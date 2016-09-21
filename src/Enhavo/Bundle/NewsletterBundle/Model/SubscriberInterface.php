@@ -83,4 +83,9 @@ interface SubscriberInterface
      * @param \DateTime $createdAt
      */
     public function setCreatedAt($createdAt);
+
+    /**
+     * @return boolean
+     */
+    public function isActive();
 }

@@ -106,6 +106,11 @@ class Subscriber implements ResourceInterface, SubscriberInterface
         return $this->active;
     }
 
+    public function isActive()
+    {
+        return (boolean)$this->getActive();
+    }
+
     /**
      * Set token
      *

@@ -42,6 +42,10 @@ class LocalStorage implements StorageInterface
         return $this->getSubscriber($subscriber->getEmail()) !== null;
     }
 
+    /**
+     * @param $email
+     * @return SubscriberInterface|null
+     */
     public function getSubscriber($email)
     {
         return $this->repository->findOneBy([
