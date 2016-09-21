@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Tests\Mock;
+namespace Enhavo\Bundle\AppBundle\Mock;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 

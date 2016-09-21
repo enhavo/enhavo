@@ -6,10 +6,10 @@
  * Time: 2:39 AM
  */
 
-namespace Enhavo\Bundle\AppBundle\Tests\Table\Widget;
+namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\DateWidget;
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 
 class DateWidgetTest extends \PHPUnit_Framework_TestCase
 {

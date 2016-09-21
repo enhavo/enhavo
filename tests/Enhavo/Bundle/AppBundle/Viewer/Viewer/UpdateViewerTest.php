@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Enhavo\Bundle\AppBundle\Tests\Viewer\Viewer;
+namespace spec\Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 

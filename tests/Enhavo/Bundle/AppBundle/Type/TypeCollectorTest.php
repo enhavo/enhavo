@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Type;
+namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 

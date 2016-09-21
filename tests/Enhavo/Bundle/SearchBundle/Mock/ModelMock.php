@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SearchBundle\Tests\Mock;
+namespace Enhavo\Bundle\SearchBundle\Mock;
 
 
 class ModelMock

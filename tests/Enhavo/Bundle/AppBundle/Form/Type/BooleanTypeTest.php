@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\Test\TypeTestCase;

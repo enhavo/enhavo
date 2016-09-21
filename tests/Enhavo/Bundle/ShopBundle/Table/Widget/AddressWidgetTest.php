@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Table\Widget;
+namespace Enhavo\Bundle\ShopBundle\Table\Widget;
 
 use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget;

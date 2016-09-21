@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Controller;
+namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

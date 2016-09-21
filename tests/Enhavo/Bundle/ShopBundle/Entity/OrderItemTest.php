@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Entity;
+namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;

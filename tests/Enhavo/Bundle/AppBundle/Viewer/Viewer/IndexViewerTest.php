@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Viewer\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer;

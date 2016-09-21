@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Cart;
+namespace Enhavo\Bundle\ShopBundle\Cart;
 
 use Enhavo\Bundle\ShopBundle\Cart\ItemResolver;
 use Sylius\Component\Resource\Repository\RepositoryInterface;

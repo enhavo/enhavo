@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SearchBundle\Tests\Metadata;
+namespace Enhavo\Bundle\SearchBundle\Metadata;
 
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Enhavo\Bundle\SearchBundle\Metadata\PropertyNode;

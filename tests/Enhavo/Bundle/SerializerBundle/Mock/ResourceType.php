@@ -7,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Tests\Mock;
+namespace Enhavo\Bundle\SerializerBundle\Mock;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ class ResourceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
-            'data_class' => 'Enhavo\Bundle\SerializerBundle\Tests\Mock\Resource',
+            'data_class' => 'Enhavo\Bundle\SerializerBundle\Mock\Resource',
         ));
     }
 

@@ -2,7 +2,7 @@
 
 namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
 
 class ViewerFactoryTest extends \PHPUnit_Framework_TestCase

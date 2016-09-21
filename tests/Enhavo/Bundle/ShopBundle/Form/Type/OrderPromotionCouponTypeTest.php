@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType;

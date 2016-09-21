@@ -6,11 +6,11 @@
  * Time: 2:39 AM
  */
 
-namespace Enhavo\Bundle\AppBundle\Tests\Table\Widget;
+namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 
 use Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget;
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 
 class PropertyWidgetTest extends \PHPUnit_Framework_TestCase
 {

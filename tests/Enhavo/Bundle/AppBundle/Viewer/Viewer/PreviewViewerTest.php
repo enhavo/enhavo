@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Viewer;
+namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
-use Enhavo\Bundle\ShopBundle\Tests\Mock\EventSubscriberMock;
+use Enhavo\Bundle\ShopBundle\Mock\EventSubscriberMock;
 use Sylius\Bundle\AddressingBundle\Form\Type\CountryCodeChoiceType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;

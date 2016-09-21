@@ -7,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ArticleBundle\Tests\Entity;
+namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 

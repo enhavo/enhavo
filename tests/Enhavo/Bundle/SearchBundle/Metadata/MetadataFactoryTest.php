@@ -1,11 +1,11 @@
 <?php
 
-namespace Enhavo\Bundle\SearchBundle\Tests\Metadata;
+namespace Enhavo\Bundle\SearchBundle\Metadata;
 
 use Enhavo\Bundle\SearchBundle\EnhavoSearchBundle;
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use Enhavo\Bundle\SearchBundle\Metadata\PropertyNode;
-use Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock;
+use Enhavo\Bundle\SearchBundle\Mock\ModelMock;
 
 /**
  * MetadataFactory.php
@@ -28,7 +28,7 @@ class MetadataFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $collectorMock->expects($this->once())->method('getConfigurations')->willReturn([
-            'Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock' => [
+            'Enhavo\Bundle\SearchBundle\Mock\ModelMock' => [
                 'type' => 'Model',
                 'properties' => [
                     'name' => [
@@ -49,7 +49,7 @@ class MetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Enhavo\Bundle\SearchBundle\Metadata\Metadata', $metadata);
 
         $this->assertEquals('EnhavoSearchBundle', $metadata->getBundleName());
-        $this->assertEquals('Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock', $metadata->getClassName());
+        $this->assertEquals('Enhavo\Bundle\SearchBundle\Mock\ModelMock', $metadata->getClassName());
 
         $properties = $metadata->getProperties();
         $this->assertCount(1, $properties);

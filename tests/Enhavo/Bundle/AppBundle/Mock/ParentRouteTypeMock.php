@@ -6,7 +6,7 @@
  * Time: 10:29 PM
  */
 
-namespace Enhavo\Bundle\AppBundle\Tests\Mock;
+namespace Enhavo\Bundle\AppBundle\Mock;
 
 use Enhavo\Bundle\AppBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +26,7 @@ class ParentRouteTypeMock extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock',
+            'data_class' => 'Enhavo\Bundle\AppBundle\Mock\EntityMock',
         ));
     }
 

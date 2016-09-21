@@ -7,12 +7,12 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Tests\Serializer;
+namespace Enhavo\Bundle\SerializerBundle\Serializer;
 
 use Enhavo\Bundle\SerializerBundle\Encoder\Encoder;
 use Enhavo\Bundle\SerializerBundle\Serializer\FormSerializer;
-use Enhavo\Bundle\SerializerBundle\Tests\Mock\Resource;
-use Enhavo\Bundle\SerializerBundle\Tests\Mock\ResourceType;
+use Enhavo\Bundle\SerializerBundle\Mock\Resource;
+use Enhavo\Bundle\SerializerBundle\Mock\ResourceType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class FormSerializerTest extends TypeTestCase

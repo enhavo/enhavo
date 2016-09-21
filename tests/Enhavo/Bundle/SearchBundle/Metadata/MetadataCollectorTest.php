@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\SearchBundle\Tests\Metadata;
+namespace Enhavo\Bundle\SearchBundle\Metadata;
 
 use Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector;
-use Enhavo\Bundle\SearchBundle\Tests\Mock\SplFileInfoMock;
+use Enhavo\Bundle\SearchBundle\Mock\SplFileInfoMock;
 use Enhavo\Bundle\SearchBundle\EnhavoSearchBundle;
 
 /**

@@ -6,7 +6,7 @@
  * Time: 1:09 PM
  */
 
-namespace Enhavo\Bundle\ShopBundle\Tests\Mock;
+namespace Enhavo\Bundle\ShopBundle\Mock;
 
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

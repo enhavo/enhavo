@@ -1,10 +1,10 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Form\Type;
+namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\RouteType;
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
-use Enhavo\Bundle\AppBundle\Tests\Mock\ParentRouteTypeMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\ParentRouteTypeMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 
@@ -40,7 +40,7 @@ class RouteTypeTest extends TypeTestCase
         $route = $data->getRoute();
 
         $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Entity\Route', $route);
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock', $route->getContent());
+        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Mock\EntityMock', $route->getContent());
         $this->assertTrue($data === $route->getContent());
         $this->assertEquals('/hello', $route->getStaticPrefix());
     }

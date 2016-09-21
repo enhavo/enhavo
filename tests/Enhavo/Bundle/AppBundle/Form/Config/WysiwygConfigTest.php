@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Config;
+namespace Enhavo\Bundle\AppBundle\Config;
 
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption;

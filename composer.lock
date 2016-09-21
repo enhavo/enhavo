@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "88283412201d12535bd4fc77d9697819",
+    "hash": "12028c3ed0f23f85d05a7c1f60ea4f35",
     "content-hash": "b3bda24d0f2440daba53214058f62105",
     "packages": [
         {
@@ -3022,16 +3022,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3"
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4dd659edadffdc2143e4753df655d866dbfeedf0",
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0",
                 "shasum": ""
             },
             "require": {
@@ -3069,7 +3069,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-04-19 13:41:41"
+            "time": "2016-09-16 12:04:44"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -3695,22 +3695,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/5277094ed527a1c4477177d102fe4c53551953e0",
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3724,12 +3732,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-09-19 16:02:08"
         },
         {
             "name": "react/promise",
@@ -8331,17 +8340,17 @@
         },
         {
             "name": "willdurand/js-translation-bundle",
-            "version": "v2.6.0",
+            "version": "2.6.1",
             "target-dir": "Bazinga/Bundle/JsTranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
-                "reference": "26d37937a5b074b410eee18e82ebd4ec95cdb569"
+                "reference": "3d17193ada2938d6b00958bec7beb1f0362d4210"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/26d37937a5b074b410eee18e82ebd4ec95cdb569",
-                "reference": "26d37937a5b074b410eee18e82ebd4ec95cdb569",
+                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/3d17193ada2938d6b00958bec7beb1f0362d4210",
+                "reference": "3d17193ada2938d6b00958bec7beb1f0362d4210",
                 "shasum": ""
             },
             "require": {
@@ -8386,7 +8395,7 @@
                 "symfony",
                 "translation"
             ],
-            "time": "2016-09-01 16:58:52"
+            "time": "2016-09-19 12:54:35"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -8685,31 +8694,31 @@
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "3.0.1",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "8bafa58574204bdff03c275d1d618aaa601588ae"
+                "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/8bafa58574204bdff03c275d1d618aaa601588ae",
-                "reference": "8bafa58574204bdff03c275d1d618aaa601588ae",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/debedcfc373a293f9250cc9aa03cf121428c8e78",
+                "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "^2.6.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev",
-                    "dev-develop": "3.1-dev"
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
                 }
             },
             "autoload": {
@@ -8726,40 +8735,41 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2016-04-12 21:19:36"
+            "time": "2016-09-13 14:38:50"
         }
     ],
     "packages-dev": [
         {
             "name": "behat/behat",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Behat.git",
-                "reference": "359d987b3064d78f2d3a6ba3a355277f3b09b47f"
+                "reference": "73b433326c87bbd8bc528ce57c29722405ffff5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/359d987b3064d78f2d3a6ba3a355277f3b09b47f",
-                "reference": "359d987b3064d78f2d3a6ba3a355277f3b09b47f",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/73b433326c87bbd8bc528ce57c29722405ffff5e",
+                "reference": "73b433326c87bbd8bc528ce57c29722405ffff5e",
                 "shasum": ""
             },
             "require": {
-                "behat/gherkin": "~4.4",
+                "behat/gherkin": "^4.4.4",
                 "behat/transliterator": "~1.0",
                 "ext-mbstring": "*",
                 "php": ">=5.3.3",
-                "symfony/class-loader": "~2.1|~3.0",
-                "symfony/config": "~2.3|~3.0",
-                "symfony/console": "~2.1|~3.0",
-                "symfony/dependency-injection": "~2.1|~3.0",
-                "symfony/event-dispatcher": "~2.1|~3.0",
-                "symfony/translation": "~2.3|~3.0",
-                "symfony/yaml": "~2.1|~3.0"
+                "symfony/class-loader": "~2.1||~3.0",
+                "symfony/config": "~2.3||~3.0",
+                "symfony/console": "~2.5||~3.0",
+                "symfony/dependency-injection": "~2.1||~3.0",
+                "symfony/event-dispatcher": "~2.1||~3.0",
+                "symfony/translation": "~2.3||~3.0",
+                "symfony/yaml": "~2.1||~3.0"
             },
             "require-dev": {
+                "herrera-io/box": "~1.6.1",
                 "phpunit/phpunit": "~4.5",
-                "symfony/process": "~2.1|~3.0"
+                "symfony/process": "~2.5|~3.0"
             },
             "suggest": {
                 "behat/mink-extension": "for integration with Mink testing framework",
@@ -8772,7 +8782,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "3.2.x-dev"
                 }
             },
             "autoload": {
@@ -8808,20 +8818,20 @@
                 "symfony",
                 "testing"
             ],
-            "time": "2016-03-28 07:04:45"
+            "time": "2016-09-20 07:23:29"
         },
         {
             "name": "behat/gherkin",
-            "version": "v4.4.2",
+            "version": "v4.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "d26757dc970e67b50ed0ee47b95273daeb84fea6"
+                "reference": "cf8cc94647101e02a33d690245896d83d880aea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/d26757dc970e67b50ed0ee47b95273daeb84fea6",
-                "reference": "d26757dc970e67b50ed0ee47b95273daeb84fea6",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/cf8cc94647101e02a33d690245896d83d880aea1",
+                "reference": "cf8cc94647101e02a33d690245896d83d880aea1",
                 "shasum": ""
             },
             "require": {
@@ -8867,7 +8877,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-09-03 07:28:57"
+            "time": "2016-09-18 12:16:14"
         },
         {
             "name": "behat/mink",

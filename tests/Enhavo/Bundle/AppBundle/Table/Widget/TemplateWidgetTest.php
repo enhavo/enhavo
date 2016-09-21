@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Table\Widget;
+namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget;
-use Enhavo\Bundle\AppBundle\Tests\Mock\EntityMock;
+use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 
 class TemplateWidgetTest extends \PHPUnit_Framework_TestCase
 {
