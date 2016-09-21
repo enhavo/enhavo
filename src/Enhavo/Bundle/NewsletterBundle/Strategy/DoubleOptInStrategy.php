@@ -31,6 +31,7 @@ class DoubleOptInStrategy extends AbstractStrategy
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber);
+        return 'subscriber.form.message.double_opt_in';
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber)
@@ -40,7 +41,6 @@ class DoubleOptInStrategy extends AbstractStrategy
         $this->localStorage->saveSubscriber($subscriber);
         $this->getSubscriberManager()->saveSubscriber($subscriber);
         $this->notifyAdmin($subscriber);
-
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber)
@@ -91,9 +91,9 @@ class DoubleOptInStrategy extends AbstractStrategy
         if(!$subscriber->isActive()) {
             $this->setToken($subscriber);
             $this->notifySubscriber($subscriber);
-            return 'registration not finished, an email was sent again';
+            return 'subscriber.form.error.sent_again';
         }
-        return 'already exits';
+        return 'subscriber.form.error.exists';
     }
 
     public function getActivationTemplate()

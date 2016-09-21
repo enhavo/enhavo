@@ -69,7 +69,7 @@ class SubscriberManager
     public function addSubscriber(SubscriberInterface $subscriber)
     {
         $strategy = $this->getStrategy();
-        $strategy->addSubscriber($subscriber);
+        return $strategy->addSubscriber($subscriber);
     }
 
     public function saveSubscriber(SubscriberInterface $subscriber)

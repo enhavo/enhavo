@@ -31,6 +31,7 @@ class AcceptStrategy extends AbstractStrategy
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
         $this->notifyAdmin($subscriber);
+        return 'subscriber.form.message.accept';
     }
 
     public function activateSubscriber(SubscriberInterface $subscriber)
@@ -86,7 +87,7 @@ class AcceptStrategy extends AbstractStrategy
 
     public function handleExists(SubscriberInterface $subscriber)
     {
-        return 'already exits';
+        return 'subscriber.form.error.exists';
     }
 
     public function getActivationTemplate()

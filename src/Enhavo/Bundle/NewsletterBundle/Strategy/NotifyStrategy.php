@@ -21,6 +21,7 @@ class NotifyStrategy extends AbstractStrategy
         $this->getSubscriberManager()->saveSubscriber($subscriber);
         $this->notifySubscriber($subscriber);
         $this->notifyAdmin($subscriber);
+        return 'subscriber.form.message.notify';
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber)
@@ -67,7 +68,7 @@ class NotifyStrategy extends AbstractStrategy
 
     public function handleExists(SubscriberInterface $subscriber)
     {
-        return 'already exists';
+        return 'subscriber.form.error.exists';
     }
 
     public function getType()

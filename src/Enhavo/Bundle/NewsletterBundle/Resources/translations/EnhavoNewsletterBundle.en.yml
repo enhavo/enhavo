@@ -26,6 +26,14 @@ subscriber:
     active: 'Active'
     email: 'E-Mail'
   form:
+    message:
+      notify: 'Your E-Mail address was registered successfully'
+      double_opt_in: 'You received an E-Mail to confirm your registration'
+      accept: 'Your E-Mail address was registered and need to be confirmed by an admin'
     label:
       email: 'E-Mail'
       active: 'Active'
+    error:
+      valid: 'E-Mail not valid'
+      exists: 'E-Mail address already exists'
+      sent_again: 'Please confirm your registration'

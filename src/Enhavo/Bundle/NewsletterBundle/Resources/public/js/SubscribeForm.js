@@ -9,16 +9,24 @@ function SubscribeForm($) {
   this.initSubscribeForm = function() {
     $('[data-newsletter-subscribe-form]').submit(function(event) {
       event.preventDefault();
+      $(document).trigger('newsletter_subscribe_submit');
       var form = $(this);
       $.ajax({
         type: 'POST',
         url: form.attr('action'),
         data: form.serialize(),
-        success: function() {
-          console.log('success');
+        success: function(data) {
+          $(document).trigger('newsletter_subscribe_complete', {
+            success: true,
+            message: data.message,
+            subscriber: data.subscriber
+          });
         },
-        error: function() {
-          console.log('error');
+        error: function(data) {
+          $(document).trigger('newsletter_subscribe_complete', {
+            success: true,
+            message: data.responseJSON.message
+          });
         }
       });
     });

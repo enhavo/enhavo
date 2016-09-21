@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface SubscriberInterface
+interface SubscriberInterface extends ResourceInterface
 {
     /**
      * Set email

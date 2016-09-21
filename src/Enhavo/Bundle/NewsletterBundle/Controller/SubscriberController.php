@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,25 +70,32 @@ class SubscriberController extends ResourceController
 
     public function addAction(Request $request)
     {
+        $translator = $this->get('translator');
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $newResource = $this->newResourceFactory->create($configuration, $this->factory);
-        $form = $this->resourceFormFactory->create($configuration, $newResource);
+        /** @var SubscriberInterface $subscriber */
+        $subscriber = $this->newResourceFactory->create($configuration, $this->factory);
+        $form = $this->resourceFormFactory->create($configuration, $subscriber);
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if($form->isValid()) {
-                if(!$this->getSubscriberManager()->exists($newResource)) {
-                    $newResource = $form->getData();
-                    $this->getSubscriberManager()->addSubscriber($newResource);
-                } else {
-                    $message = $this->getSubscriberManager()->handleExists($newResource);
-                    return new JsonResponse($message, 400);
-                }
+        $form->handleRequest($request);
+        if($form->isValid()) {
+            if(!$this->getSubscriberManager()->exists($subscriber)) {
+                $subscriber = $form->getData();
+                $message = $this->getSubscriberManager()->addSubscriber($subscriber);
+                return new JsonResponse([
+                    'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle'),
+                    'subscriber' => $subscriber
+                ]);
             } else {
-                return new JsonResponse('valid error', 400);
+                $message = $this->getSubscriberManager()->handleExists($subscriber);
+                return new JsonResponse([
+                    'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle')
+                ], 400);
             }
+        } else {
+            return new JsonResponse([
+                'message' => $translator->trans('subscriber.form.error.valid', [], 'EnhavoNewsletterBundle')
+            ], 400);
         }
-        return new JsonResponse('success');
     }
 
     protected function getSubscriberManager()

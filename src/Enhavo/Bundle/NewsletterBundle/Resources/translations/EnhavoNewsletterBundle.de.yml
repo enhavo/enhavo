@@ -26,6 +26,14 @@ subscriber:
     active: 'Aktiviert'
     email: 'Email'
   form:
+    message:
+      notify: 'Ihre E-Mail Addrese wurde erfolgreich hinzugefügt'
+      double_opt_in: 'Sie haben eine E-Mail erhalten mit der Sie die Registrierung abschließen können'
+      accept: 'Ihre E-Mail Addrese wurde hinzugefügt und muss vom Admin freigeschaltet werden'
     label:
       email: 'E-Mail'
       active: 'Aktiviert'
+    error:
+      valid: 'E-Mail nicht gültig'
+      exists: 'E-Mail ist bereits registriert'
+      sent_again: 'Bitte bestätigen Sie ihre Registrierung'
