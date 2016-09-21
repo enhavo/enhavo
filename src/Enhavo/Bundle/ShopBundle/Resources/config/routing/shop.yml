@@ -13,11 +13,3 @@ enhavo_shop_product:
 enhavo_shop_promotion:
     resource: "@EnhavoShopBundle/Resources/config/routing/promotion.yml"
     prefix: /promotion
-
-enhavo_shop_product_admin:
-    resource: "@EnhavoShopBundle/Resources/config/routing/admin/product.yml"
-    prefix: /admin
-
-enhavo_shop_order_admin:
-    resource: "@EnhavoShopBundle/Resources/config/routing/admin/order.yml"
-    prefix: /admin

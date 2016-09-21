@@ -24,6 +24,6 @@ class NewsletterMenuBuilder extends BaseMenuBuilder
 
     public function getType()
     {
-        return 'newsletter';
+        return 'newsletter_newsletter';
     }
 }

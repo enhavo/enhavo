@@ -1,0 +1,14 @@
+services:
+    enhavo_newsletter.storage_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - 'NewsletterStorage'
+
+    enhavo_newsletter.storage.local:
+        class: Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage
+        arguments:
+            - []
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_newsletter.repository.subscriber'
+        tags:
+            - { name: enhavo.newsletter_storage }

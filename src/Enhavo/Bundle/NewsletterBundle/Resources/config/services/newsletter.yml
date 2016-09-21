@@ -1,0 +1,30 @@
+services:
+    enhavo_newsletter.button.send:
+        class: Enhavo\Bundle\NewsletterBundle\Button\SendButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button }
+
+    enhavo_newsletter.newsletter.manager:
+        class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@mailer'
+          - '%enhavo_newsletter.newsletter.mail%'
+
+    enhavo_newsletter_newsletter:
+        class: '%enhavo_newsletter.form.type.newsletter.class%'
+        arguments:
+            - '@security.context'
+            - '%enhavo_newsletter.model.newsletter.class%'
+        tags:
+            - { name: form.type }
+
+    enhavo_newsletter.menu_builder.newsletter:
+        class: Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
+

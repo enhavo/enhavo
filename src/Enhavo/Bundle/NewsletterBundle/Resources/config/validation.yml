@@ -1,8 +1,5 @@
 Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
-    constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
     properties:
         email:
             - Email: ~
             - NotBlank: ~
-            - Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberEmailInUse: ~

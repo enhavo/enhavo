@@ -4,9 +4,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NewsletterController extends ResourceController
 {
@@ -31,10 +30,14 @@ class NewsletterController extends ResourceController
         $em->persist($currentNewsletter);
         $em->flush();
 
-        $newsletterManager = $this->get('enhavo_newsletter.manager');
+        $newsletterManager = $this->getNewsletterManager();
         $newsletterManager->send($currentNewsletter);
 
-        $response = new Response();
-        return $response;
+        return new JsonResponse();
+    }
+
+    protected function getNewsletterManager()
+    {
+        return $this->get('enhavo_newsletter.newsletter.manager');
     }
 }

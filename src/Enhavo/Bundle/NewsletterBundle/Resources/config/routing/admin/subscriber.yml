@@ -1,0 +1,84 @@
+enhavo_newsletter_subscriber_index:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:indexAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_subscriber_create:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:createAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_subscriber_update:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:updateAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_subscriber_table:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/table/{page}
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_newsletter.controller.subscriber:tableAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoNewsletterBundle
+                columns:
+                    email:
+                        label: subscriber.label.email
+                        property: email
+                        width: 10
+                    active:
+                        type: boolean
+                        label: subscriber.label.active
+                        property: active
+                        width: 2
+
+enhavo_newsletter_subscriber_delete:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:deleteAction
+
+enhavo_newsletter_subscriber_batch:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_newsletter_subscriber_preview:
+    options:
+        expose: true
+    path: /enhavo/newsletter/subscriber/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:previewAction
+        _sylius:
+            viewer:
