@@ -34,3 +34,10 @@ services:
             - '@router'
         tags:
             - { name: twig.extension }
+
+    enhavo_page.menu_builder.page:
+        class: Enhavo\Bundle\PageBundle\Menu\PageMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

@@ -1,0 +1,34 @@
+parameters:
+    enhavo_app.twig.menu_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+    enhavo_app.main_menu_renderer.template: 'EnhavoAppBundle:Menu:main.html.twig'
+
+services:
+    enhavo_app.menu_collector:
+        class: %enhavo_app.twig.menu_collector.class%
+        arguments:
+            - 'Menu'
+
+    enhavo_app.menu_builder.enhavo_main:
+        class: Enhavo\Bundle\AppBundle\Menu\Builder\MainMenuBuilder
+        arguments:
+          - "@enhavo_app.menu_collector"
+          - "%enhavo_app.menu%"
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMenu, alias: enhavo_main }
+
+    enhavo_app.menu_builder.base:
+        class: Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
+
+    enhavo_app.main_menu_renderer:
+        class: Enhavo\Bundle\AppBundle\Menu\MainMenuRenderer
+        arguments:
+          - "%enhavo_app.main_menu_renderer.template%"
+          - '@templating'
+        tags:
+            - { name: knp_menu.renderer, alias: main_menu }

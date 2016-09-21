@@ -13,17 +13,6 @@ services:
         arguments:
             - %security.role_hierarchy.roles%
 
-    enhavo_app.menu_event_listener:
-        class: Enhavo\Bundle\AppBundle\EventListener\MenuEventListener
-        arguments:
-            - %enhavo_app.permission_check%
-            - @security.context
-            - @knp_menu.factory
-            - %enhavo_app.menu%
-            - @request_stack
-        tags:
-          - { name: kernel.event_listener, event: enhavo_app.menu, method: onMenu  }
-
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController
         arguments:

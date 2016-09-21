@@ -37,7 +37,7 @@ class EventDispatcher extends SyliusEventDispatcher
     {
         parent::dispatchPreEvent($eventName, $requestConfiguration, $resource);
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
-        $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%', $eventName), new ResourceControllerEvent($resource));
+        $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%s', $eventName), new ResourceControllerEvent($resource));
     }
 
     /**
@@ -47,6 +47,6 @@ class EventDispatcher extends SyliusEventDispatcher
     {
         parent::dispatchPostEvent($eventName, $requestConfiguration, $resource);
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
-        $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%', $eventName), new ResourceControllerEvent($resource));
+        $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%s', $eventName), new ResourceControllerEvent($resource));
     }
 }

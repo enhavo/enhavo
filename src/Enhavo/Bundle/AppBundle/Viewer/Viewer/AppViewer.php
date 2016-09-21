@@ -50,7 +50,8 @@ class AppViewer extends BaseViewer
         $optionsAccessor->setDefaults([
             'title' => '',
             'blocks' => [],
-            'actions' => []
+            'actions' => [],
+            'app' => 'app/Index'
         ]);
     }
 }

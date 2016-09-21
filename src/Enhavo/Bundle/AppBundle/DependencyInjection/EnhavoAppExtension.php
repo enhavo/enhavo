@@ -47,5 +47,6 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/table.yml');
         $loader->load('services/action.yml');
         $loader->load('services/batch.yml');
+        $loader->load('services/menu.yml');
     }
 }

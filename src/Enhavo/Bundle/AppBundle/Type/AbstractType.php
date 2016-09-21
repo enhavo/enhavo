@@ -10,14 +10,11 @@ namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-abstract class AbstractType implements ContainerAwareInterface {
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+abstract class AbstractType implements ContainerAwareInterface
+{
+    use ContainerAwareTrait;
 
     /**
      * Return the value the given property and object.
@@ -54,11 +51,6 @@ abstract class AbstractType implements ContainerAwareInterface {
             }
         }
         return $value;
-    }
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 
     protected function renderTemplate($template, $parameters = [])

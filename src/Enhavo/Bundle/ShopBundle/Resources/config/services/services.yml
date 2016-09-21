@@ -15,3 +15,17 @@ services:
         class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
         arguments:
             - @sylius.repository.country
+
+    enhavo_shop.menu_builder.product:
+        class: Enhavo\Bundle\ShopBundle\Menu\ProductMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
+
+    enhavo_shop.menu_builder.order:
+        class: Enhavo\Bundle\ShopBundle\Menu\OrderMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

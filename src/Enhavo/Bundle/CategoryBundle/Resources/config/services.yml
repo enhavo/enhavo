@@ -64,3 +64,10 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_category.menu_builder.category:
+        class: Enhavo\Bundle\CategoryBundle\Menu\CategoryMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

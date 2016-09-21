@@ -72,7 +72,7 @@
                     </ul>
                 </nav>
                 <a class="responsive-menu-btn" data-mobile-menu></a>
-                <div id="menu-main-container" data-menu-container>{{ admin_menu_render() }}</div>
+                <div id="menu-main-container" data-menu-container>{{ knp_menu_render('enhavo_main', {}, 'main_menu') }}</div>
             </div>
             <div id="content-container" class="container" data-content-container>{% block content %}{% endblock %}</div>
         </div>

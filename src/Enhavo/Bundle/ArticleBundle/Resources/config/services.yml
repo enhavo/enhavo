@@ -24,3 +24,10 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_article.menu_builder.article:
+        class: Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

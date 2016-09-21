@@ -61,3 +61,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.batch }
+
+    enhavo_newsletter.menu_builder.newsletter:
+        class: Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
