@@ -1,10 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\UserBundle\Behat;
+namespace Enhavo\Behat\Context;
 
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;
-use Enhavo\Bundle\AppBundle\Behat\KernelContext;
 use Enhavo\Bundle\UserBundle\Entity\User;
 use Enhavo\Bundle\UserBundle\Entity\Group;
 

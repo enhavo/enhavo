@@ -1,7 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Behat;
-
+namespace Enhavo\Behat\Context;
 
 /**
  * Defines application features from the specific context.
