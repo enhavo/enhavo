@@ -7,6 +7,7 @@ enhavo_shop_order_index:
         _controller: sylius.controller.order:indexAction
         _sylius:
             viewer:
+                app: shop/OrderApp
                 blocks:
                     table:
                         type: table

@@ -36,6 +36,11 @@ class BaseViewer extends AbstractViewer
         return array_merge($javascripts, $this->optionAccessor->get('javascripts'));
     }
 
+    public function getApp()
+    {
+        return $this->optionAccessor->get('app');
+    }
+
     public function createView()
     {
         $view = parent::createView();
@@ -43,6 +48,7 @@ class BaseViewer extends AbstractViewer
         $view->setTemplateData(array_merge($view->getTemplateData(), [
             'javascripts' => $this->getJavascripts(),
             'stylesheets' => $this->getStylesheets(),
+            'requireJsApp' => $this->getApp()
         ]));
         return $view;
     }
@@ -52,7 +58,8 @@ class BaseViewer extends AbstractViewer
         parent::configureOptions($optionsAccessor);
         $optionsAccessor->setDefaults([
             'javascripts' => [],
-            'stylesheets' => []
+            'stylesheets' => [],
+            'app' => null
         ]);
     }
 }

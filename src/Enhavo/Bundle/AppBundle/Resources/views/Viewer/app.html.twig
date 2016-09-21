@@ -2,13 +2,6 @@
 
 {% trans_default_domain "EnhavoAppBundle" %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        require(['app/Index'], function(index) {});
-    </script>
-{% endblock %}
-
 {% block content %}
     {% if title %}
         <h1 class="cat">{{ title|trans({}, translationDomain)|nl2br }}</h1>
