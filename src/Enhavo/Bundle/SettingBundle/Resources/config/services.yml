@@ -38,3 +38,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget }
+
+    enhavo_setting.menu_builder.setting:
+        class: Enhavo\Bundle\SettingBundle\Menu\SettingMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

@@ -46,3 +46,17 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_user.menu_builder.user:
+        class: Enhavo\Bundle\UserBundle\Menu\UserMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
+
+    enhavo_user.menu_builder.group:
+        class: Enhavo\Bundle\UserBundle\Menu\GroupMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

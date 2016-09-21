@@ -1,4 +1,7 @@
 services:
-#    enhavo_dashboard.example:
-#        class: Enhavo\Bundle\DashboardBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    enhavo_dashvoard.menu_builder.dashboard:
+        class: Enhavo\Bundle\DashboardBundle\Menu\DashboardMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

@@ -15,103 +15,33 @@ enhavo_app:
 
     menu:
         dashboard:
-            type: base
-            icon: stopwatch
-            label: dashboard.label.dashboard
-            translationDomain: EnhavoDashboardBundle
-            route: enhavo_dashboard_index
-            role: ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX
+            type: dashboard
         user:
-            type: base
-            icon: user
-            label: user.label.user
-            translationDomain: EnhavoUserBundle
-            route: enhavo_user_user_index
-            role: ROLE_ENHAVO_USER_USER_INDEX
+            type: user_user
         group:
-            type: base
-            icon: users
-            label: group.label.group
-            translationDomain: EnhavoUserBundle
-            route: enhavo_user_group_index
-            role: ROLE_ENHAVO_USER_GROUP_INDEX
+            type: user_group
         article:
-            type: base
-            icon: open-book
-            label: article.label.article
-            translationDomain: EnhavoArticleBundle
-            route: enhavo_article_article_index
-            role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
+            type: article
         page:
-            type: base
-            icon: news
-            label: page.label.page
-            translationDomain: EnhavoPageBundle
-            route: enhavo_page_page_index
-            role: ROLE_ENHAVO_PAGE_PAGE_INDEX
+            type: page
         category:
-            type: base
-            icon: th
-            label: category.label.category
-            translationDomain: EnhavoCategoryBundle
-            route: enhavo_category_category_index
-            role: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX
+            type: category
         download:
-            type: base
-            icon: download-1
-            label: download.label.download
-            translationDomain: EnhavoDownloadBundle
-            route: enhavo_download_download_index
-            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX
+            type: download
         slider:
-            type: base
-            icon: images
-            label: slider.label.slider
-            translationDomain: EnhavoSliderBundle
-            route: enhavo_slider_slide_index
-            role: ROLE_ENHAVO_SLIDER_SLIDE_INDEX
+            type: slider
         newsletter:
-            type: base
-            icon: newsletter
-            label: newsletter.label.newsletter
-            translationDomain: EnhavoNewsletterBundle
-            route: enhavo_newsletter_newsletter_index
-            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX
+            type: newsletter
         calendar:
-            type: base
-            icon: calendar-1
-            label: label.calendar
-            translationDomain: EnhavoCalendarBundle
-            route: enhavo_calendar_appointment_index
-            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX
+            type: calendar
         workflow:
-            type: base
-            icon: cycle
-            label: workflow.label.workflow
-            translationDomain: EnhavoWorkflowBundle
-            route: enhavo_workflow_workflow_index
-            role: ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX
+            type: workflow
         product:
-            type: base
-            icon: box
-            label: label.product
-            translationDomain: EnhavoShopBundle
-            route: enhavo_shop_product_index
-            role: ROLE_ENHAVO_SHOP_PRODUCT_INDEX
+            type: shop_product
         order:
-            type: base
-            icon: shopping-cart
-            label: label.order
-            translationDomain: EnhavoShopBundle
-            route: enhavo_shop_order_index
-            role: ROLE_ENHAVO_SHOP_ORDER_INDEX
+            type: shop_order
         setting:
-            type: base
-            icon: cog
-            label: label.setting
-            translationDomain: EnhavoSettingBundle
-            route: enhavo_setting_setting_index
-            role: ROLE_ENHAVO_SETTING_INDEX
+            type: setting
 
 enhavo_newsletter:
     subscriber:

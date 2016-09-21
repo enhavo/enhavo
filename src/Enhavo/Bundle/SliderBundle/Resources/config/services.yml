@@ -48,3 +48,10 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_slider.menu_builder.slider:
+        class: Enhavo\Bundle\SliderBundle\Menu\SliderMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }

@@ -126,3 +126,10 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_workflow.menu_builder.workflow:
+        class: Enhavo\Bundle\WorkflowBundle\Menu\WorkflowMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
