@@ -10,6 +10,14 @@ services:
         tags:
             - { name: twig.extension }
 
+    enhavo_newsletter.menu_builder.subscriber:
+        class: Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu }
+
+
     enhavo_newsletter_subscriber:
         class: %enhavo_newsletter.form.type.subscriber.class%
         tags:

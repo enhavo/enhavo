@@ -21,6 +21,11 @@ newsletter:
       confirm:
         send: 'Do you really want to send all selected newsletters?'
 subscriber:
+  label:
+    subscriber: Subscriber
+    active: 'Active'
+    email: 'E-Mail'
   form:
     label:
       email: 'E-Mail'
+      active: 'Active'

@@ -14,6 +14,11 @@ class SubscriberType extends AbstractType
             'label' => 'subscriber.form.label.email',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
+
+        $builder->add('active', 'enhavo_boolean', array(
+            'label' => 'subscriber.form.label.active',
+            'translation_domain' => 'EnhavoNewsletterBundle'
+        ));
     }
 
     public function resolveOptions(OptionsResolver $resolver)

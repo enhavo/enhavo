@@ -31,7 +31,9 @@ enhavo_app:
         slider:
             type: slider
         newsletter:
-            type: newsletter
+            type: newsletter_newsletter
+        subscriber:
+            type: newsletter_subscriber
         calendar:
             type: calendar
         workflow:
