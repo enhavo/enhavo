@@ -1,0 +1,53 @@
+
+
+services:
+    enhavo_newsletter.twig.subscribe_renderer:
+        class: Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer
+        arguments:
+            - '%enhavo_newsletter.subscriber.form%'
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: twig.extension }
+
+    enhavo_newsletter_subscriber:
+        class: %enhavo_newsletter.form.type.subscriber.class%
+        tags:
+            - { name: form.type }
+
+    enhavo_newsletter_subscribe:
+        class: Enhavo\Bundle\NewsletterBundle\Form\Type\SubscribeType
+        tags:
+            - { name: form.type }
+
+    enhavo_newsletter.subscriber.manager:
+        class: Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager
+        arguments:
+            - '@enhavo_newsletter.strategy_collector'
+            - '%enhavo_newsletter.subscriber.strategy%'
+            - '@enhavo_newsletter.storage_collector'
+            - '%enhavo_newsletter.storage%'
+
+    enhavo_newsletter.strategy_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - 'NewsletterStrategy'
+
+    enhavo_newsletter.strategy.notify:
+        class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
+        arguments:
+            - '%enhavo_newsletter.subscriber.strategy_options%'
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.newsletter_strategy }
+
+    enhavo_newsletter.strategy.double_opt_in:
+        class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
+        arguments:
+            - '%enhavo_newsletter.subscriber.strategy_options%'
+            - '@enhavo_newsletter.storage.local'
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.newsletter_strategy }

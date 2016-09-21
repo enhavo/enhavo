@@ -1,12 +1,14 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Subscriber
  */
-class Subscriber implements ResourceInterface
+class Subscriber implements ResourceInterface, SubscriberInterface
 {
     /**
      * @var integer
@@ -19,19 +21,24 @@ class Subscriber implements ResourceInterface
     protected $email;
 
     /**
-     * @var boolean
-     */
-    protected $active;
-
-    /**
      * @var \DateTime
      */
-    protected $created;
+    protected $createdAt;
 
     /**
      * @var string
      */
     protected $token;
+
+    /**
+     * @var bool
+     */
+    private $active;
+
+    /**
+     * @var \DateTime
+     */
+    private $activatedAt;
 
     /**
      * Get id
@@ -78,6 +85,14 @@ class Subscriber implements ResourceInterface
     {
         $this->active = $active;
 
+        if($active && $this->activatedAt === null) {
+            $this->activatedAt = new \DateTime();
+        }
+
+        if(!$active) {
+            $this->activatedAt = null;
+        }
+
         return $this;
     }
 
@@ -89,30 +104,6 @@ class Subscriber implements ResourceInterface
     public function getActive()
     {
         return $this->active;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return Subscriber
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
     }
 
     /**
@@ -137,5 +128,44 @@ class Subscriber implements ResourceInterface
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Set activatedAt
+     *
+     * @param \DateTime $activatedAt
+     * @return Subscriber
+     */
+    public function setActivatedAt($activatedAt)
+    {
+        $this->activatedAt = $activatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get activatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getActivatedAt()
+    {
+        return $this->activatedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 }

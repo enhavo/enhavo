@@ -57,4 +57,19 @@ abstract class AbstractType implements ContainerAwareInterface
     {
         return $this->container->get('templating')->render($template, $parameters);
     }
+
+    protected function setOption($key, &$options, $default = null)
+    {
+        if(!array_key_exists($key, $options)) {
+            $options[$key] = $default;
+        }
+    }
+
+    protected function getOption($key, $options, $default = null)
+    {
+        if(array_key_exists($key, $options)) {
+            return $options[$key];
+        }
+        return $default;
+    }
 }

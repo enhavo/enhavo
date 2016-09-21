@@ -40,8 +40,8 @@ enhavo_sitemap:
     resource: "@EnhavoContentBundle/Resources/config/routing/sitemap.yml"
     prefix:   /
 
-enhavo_newsletter_subscriber:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscriber.yml"
+enhavo_newsletter_subscribe:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
     prefix: /
 
 enhavo_user_security:
@@ -85,7 +85,11 @@ enhavo_grid:
     prefix: /admin
 
 enhavo_newsletter_newsletter:
-    resource: "@EnhavoNewsletterBundle/Resources/config/routing/newsletter.yml"
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/newsletter.yml"
+    prefix: /admin
+
+enhavo_newsletter_subscriber:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/admin/subscriber.yml"
     prefix: /admin
 
 enhavo_category_category:
@@ -107,6 +111,11 @@ enhavo_calendar:
 enhavo_setting:
     resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
     prefix: /admin
+
+enhavo_shop_admin:
+    resource: "@EnhavoShopBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin
+
 
 #
 # 3rd Party

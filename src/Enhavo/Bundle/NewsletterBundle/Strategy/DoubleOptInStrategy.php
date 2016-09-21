@@ -1,28 +1,45 @@
 <?php
-namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
+/**
+ * DoubleOptInStrategy.php
+ *
+ * @since 21/09/16
+ * @author gseidel
+ */
 
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
-use Doctrine\ORM\EntityManager;
-use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
-class SubscriberEmailInUseValidator extends ConstraintValidator
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage;
+
+class DoubleOptInStrategy extends AbstractStrategy
 {
+    /**
+     * @var LocalStorage
+     */
+    private $localStorage;
 
-    protected $em;
-    protected $container;
-    private $subscriber;
-
-    public function __construct(EntityManager $entityManager,Container $container, $subscriber)
+    public function __construct($options, LocalStorage $localStorage)
     {
-        $this->em = $entityManager;
-        $this->container = $container;
-        $this->subscriber = $subscriber;
+        parent::__construct($options);
+        $this->localStorage = $localStorage;
     }
 
-    public function validate($value, Constraint $constraint)
+    public function addSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->getSubscriberManager()->saveSubscriber($subscriber);
+    }
+
+    public function exists(SubscriberInterface $subscriber)
+    {
+        return $this->localStorage->exists($subscriber);
+    }
+
+    public function handleExists(SubscriberInterface $subscriber)
+    {
+        // TODO: Implement handleExists() method.
+    }
+
+    public function sendNotification()
     {
         $em = $this->em;
         $subscriberRepository = $em->getRepository('EnhavoNewsletterBundle:Subscriber');
@@ -52,5 +69,10 @@ class SubscriberEmailInUseValidator extends ConstraintValidator
                     ->addViolation();
             }
         }
+    }
+
+    public function getType()
+    {
+        return 'double_opt_in';
     }
 }

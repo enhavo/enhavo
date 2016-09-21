@@ -29,13 +29,6 @@ abstract class AbstractMenuBuilder extends AbstractType implements MenuBuilderIn
         }
     }
 
-    protected function setOption($key, &$options, $default)
-    {
-        if(!array_key_exists($key, $options)) {
-            $options[$key] = $default;
-        }
-    }
-
     /**
      * {@inheritdoc}
      */

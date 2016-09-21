@@ -1,0 +1,16 @@
+enhavo_newsletter_subscribe_activate:
+    pattern: /newsletter/activate/{code}
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:activateAction
+
+enhavo_newsletter_subscribe_add:
+    path: /newsletter/add
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_newsletter.controller.subscriber:addAction
+        _sylius:
+            form: enhavo_newsletter_subscribe
+    methods: [POST]

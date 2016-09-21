@@ -25,12 +25,20 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_newsletter.subscriber', $config['subscriber']);
-        $container->setParameter('enhavo_newsletter.newsletter', $config['newsletter']);
+        $container->setParameter('enhavo_newsletter.subscriber.strategy', $config['subscriber']['strategy']);
+        $container->setParameter('enhavo_newsletter.subscriber.strategy_options', $config['subscriber']['strategy_options']);
+        $container->setParameter('enhavo_newsletter.subscriber.form', $config['subscriber']['form']);
+
+        $container->setParameter('enhavo_newsletter.newsletter.mail', $config['newsletter']['mail']);
+
+        $container->setParameter('enhavo_newsletter.storage', $config['storage']);
 
         $configFiles = array(
-            'services.yml',
+            'services/services.yml',
+            'services/newsletter.yml',
+            'services/subscriber.yml',
         );
+
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
         }

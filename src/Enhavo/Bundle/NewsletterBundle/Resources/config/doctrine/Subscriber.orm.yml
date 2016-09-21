@@ -18,7 +18,11 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
             type: boolean
             nullable: true
 
-        created:
+        activatedAt:
+            type: datetime
+            nullable: true
+
+        createdAt:
             type: datetime
             nullable: true
 
