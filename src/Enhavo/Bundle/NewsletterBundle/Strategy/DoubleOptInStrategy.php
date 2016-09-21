@@ -54,7 +54,7 @@ class DoubleOptInStrategy extends AbstractStrategy
             ->setBody($this->renderTemplate($template, [
                 'subscriber' => $subscriber,
                 'link' => $link
-            ]));
+            ]), 'text/html');
         $this->sendMessage($message);
     }
 
@@ -68,7 +68,7 @@ class DoubleOptInStrategy extends AbstractStrategy
                 ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
-                ]));
+                ]), 'text/html');
             $this->sendMessage($message);
         }
     }

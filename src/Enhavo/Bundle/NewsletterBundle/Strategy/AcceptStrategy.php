@@ -52,7 +52,7 @@ class AcceptStrategy extends AbstractStrategy
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
-                ]));
+                ]), 'text/html');
             $this->sendMessage($message);
         }
     }
@@ -68,7 +68,7 @@ class AcceptStrategy extends AbstractStrategy
             ->setBody($this->renderTemplate($template, [
                 'subscriber' => $subscriber,
                 'link' => $link
-            ]));
+            ]), 'text/html');
         $this->sendMessage($message);
     }
 

@@ -33,7 +33,7 @@ class NotifyStrategy extends AbstractStrategy
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
-                ]));
+                ]), 'text/html');
             $this->sendMessage($message);
         }
     }
@@ -48,7 +48,7 @@ class NotifyStrategy extends AbstractStrategy
                 ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
-                ]));
+                ]), 'text/html');
             $this->sendMessage($message);
         }
     }
