@@ -26,6 +26,13 @@ class UserContext extends KernelContext
                 $user->setPlainPassword($data['password']);
                 $this->getContainer()->get('fos_user.user_manager')->updatePassword($user);
             }
+            if(array_key_exists('roles', $data)) {
+                $roles = explode(',', $data['roles']);
+                $roles = array_map(function($data) {
+                    return trim($data);
+                }, $roles);
+                $user->setRoles($roles);
+            }
         }
         $this->getManager()->flush();
     }
@@ -36,15 +43,28 @@ class UserContext extends KernelContext
     public function adminUser()
     {
         $user = $this->findUser('admin');
+        $em = $this->getManager();
         if($user === null) {
             $group = $this->createAdminGroup();
             $user = $this->createAdminUser($group);
-            $user->addRole('ROLE_SUPER_ADMIN');
-            $em = $this->getManager();
             $em->persist($group);
-            $em->persist($user);
-            $em->flush();
         }
+        $user->setRoles(['ROLE_SUPER_ADMIN']);
+        $em->persist($user);
+        $em->flush();
+    }
+
+    /**
+     * @Given no active session
+     */
+    public function clearSessions()
+    {
+        $em = $this->getManager();
+        $sessions = $em->getRepository('EnhavoAppBundle:Session')->findAll();
+        foreach($sessions as $session) {
+            $em->remove($session);
+        }
+        $em->flush();
     }
 
     /**

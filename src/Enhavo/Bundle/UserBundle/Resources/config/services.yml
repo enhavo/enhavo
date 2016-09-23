@@ -1,6 +1,5 @@
 parameters:
     security.authentication.voter.group_role_voter.class: Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter
-    security.authentication.success_handler.class: Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationSuccessHandler
     enhavo_user.event.save_user.class: Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber
 
 services:
@@ -77,15 +76,6 @@ services:
 
     enhavo_user.controller.security:
         class: Enhavo\Bundle\UserBundle\Controller\SecurityController
-        arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
-            - '@fos_rest.view_handler'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    enhavo_user.controller.reset_password:
-        class: Enhavo\Bundle\UserBundle\Controller\ResetPasswordController
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@viewer.factory'

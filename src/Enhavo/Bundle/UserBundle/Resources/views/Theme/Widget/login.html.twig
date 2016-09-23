@@ -1,6 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
 <div id="loginBox">
     <div class="loginContainer">
         <form action="{{ path("enhavo_user_theme_security_login_check") }}" method="post">
+
+            {% if error %}
+                <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
+                    <div>{{ 'error.login'|trans|nl2br }}</div>
+                </div>
+            {% endif %}
+
             <input type="hidden" id="remember_me" name="_remember_me" value="on">
             <div class="mb1">
                 <div class="input-container">

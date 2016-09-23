@@ -79,12 +79,12 @@ security:
                 csrf_provider:  form.csrf_provider
                 login_path:     /admin/login
                 use_forward:    false
-                check_path:     /admin/login_check
-                failure_path:   null
-                default_target_path: /admin
+                check_path:     /admin/login/check
+                failure_path:   /admin/login
+                default_target_path: /admin/enhavo/dashboard/enhavo
             logout:
                 path:   /admin/logout
-                target: /admin
+                target: /admin/login
             anonymous:  true
 
         user:
@@ -96,7 +96,7 @@ security:
                 login_path:     /user/login
                 use_forward:    false
                 check_path:     /user/login/check
-                failure_path:   null
+                failure_path:   /user/login
                 default_target_path: /user/profile
             logout:
                 path:   /user/logout
@@ -123,9 +123,9 @@ security:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }

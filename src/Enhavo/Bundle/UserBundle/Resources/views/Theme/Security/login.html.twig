@@ -1,5 +1,9 @@
 {% extends theme_template('base') %}
 
 {% block main %}
-    {{ theme_widget_render('login') }}
+    {{ theme_widget_render('login', {
+        error: error,
+        csrf_token: csrf_token,
+        last_username: last_username
+    }) }}
 {% endblock main %}
