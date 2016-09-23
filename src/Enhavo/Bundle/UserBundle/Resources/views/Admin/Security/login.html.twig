@@ -12,14 +12,14 @@
                     </div>
                 {% endif %}
                 {% if showVersion() %}
-                <div class="ribbon">
-                    <span>{{ version() }}</span>
-                </div>
+                    <div class="ribbon">
+                        <span>{{ version() }}</span>
+                    </div>
                 {% endif %}
                 <div class="logo">
                     <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
                 </div>
-                <form action="{{ path("fos_user_security_check") }}" method="post">
+                <form action="{{ path("enhavo_user_security_login_check") }}" method="post">
                     <input type="hidden" id="remember_me" name="_remember_me" value="on">
                     <div class="mb1">
                         <div class="input-container">
@@ -28,7 +28,7 @@
                     </div>
                     <div class="mb1">
                         <div class="input-container">
-                           <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
+                            <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
                         </div>
                     </div>
                     <div class="row">

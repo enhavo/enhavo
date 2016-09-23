@@ -26,10 +26,14 @@ class EnhavoThemeExtension extends Extension
         if(isset($config['boxes'])) {
             $boxes = $config['boxes'];
         }
+
         $container->setParameter('enhavo_theme.boxes', $boxes);
+        $container->setParameter('enhavo_theme.template', $config[ 'template' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('service/services.yml');
-        $loader->load('service/widget.yml');
+        
+        $loader->load('services/services.yml');
+        $loader->load('services/widget.yml');
+        $loader->load('services/twig.yml');
     }
 }
