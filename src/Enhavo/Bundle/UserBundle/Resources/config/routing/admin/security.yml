@@ -12,14 +12,14 @@ enhavo_user_security_login_check:
     options:
         expose: true
     path: /login/check
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: enhavo_user.controller.security:checkAction
 
 enhavo_user_security_logout:
     options:
         expose: true
-    path: /login
+    path: /logout
     methods: [GET, POST]
     defaults:
         _controller: enhavo_user.controller.security:logoutAction

@@ -123,4 +123,36 @@ class UserController extends ResourceController
 
         return $this->viewHandler->handle($configuration, $view);
     }
+
+    public function profileAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw $this->createAccessDeniedException('This user does not have access to this section.');
+        }
+
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $form = $this->resourceFormFactory->create($configuration, $user);
+
+        $valid = true;
+        $form->handleRequest($request);
+        if (in_array($request->getMethod(), ['POST'])) {
+            if($form->isValid()) {
+                $this->manager->flush();
+            } else {
+                $valid = false;
+            }
+        }
+
+        $view = View::create($form)
+            ->setData([
+                'form' => $form->createView(),
+            ])
+            ->setStatusCode($valid ? 200 : 400)
+            ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Theme:User/profile.html.twig')))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
 }

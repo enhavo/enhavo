@@ -16,6 +16,13 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_user_profile:
+        class: Enhavo\Bundle\UserBundle\Form\Type\ProfileType
+        arguments:
+            - %enhavo_user.model.user.class%
+        tags:
+            - { name: form.type }
+
     enhavo_user_group:
         class: %enhavo_user.form.type.group.class%
         tags:

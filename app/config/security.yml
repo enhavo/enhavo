@@ -95,12 +95,12 @@ security:
                 csrf_provider:  form.csrf_provider
                 login_path:     /user/login
                 use_forward:    false
-                check_path:     /user/login_check
+                check_path:     /user/login/check
                 failure_path:   null
                 default_target_path: /user/profile
             logout:
                 path:   /user/logout
-                target: /
+                target: /user/login
             anonymous:  true
 
         main:
