@@ -24,6 +24,10 @@ enhavo_shop:
     resource: "@EnhavoShopBundle/Resources/config/routing/shop.yml"
     prefix:   /shop
 
+enhavo_user_theme:
+    resource: "@EnhavoUserBundle/Resources/config/routing/theme.yml"
+    prefix:   /
+
 enhavo_contact:
     resource: "@EnhavoContactBundle/Resources/config/routing.yml"
     prefix:   /
@@ -43,10 +47,6 @@ enhavo_sitemap:
 enhavo_newsletter_subscribe:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
     prefix: /
-
-enhavo_user_security:
-    resource: "@EnhavoUserBundle/Resources/config/routing/security.yml"
-    prefix:   /admin
 
 enhavo_admin:
     resource: "@EnhavoAppBundle/Resources/config/routing/admin.yml"
@@ -72,12 +72,12 @@ enhavo_slide:
     resource: "@EnhavoSliderBundle/Resources/config/routing/slide.yml"
     prefix: /admin
 
-enhavo_user:
-    resource: "@EnhavoUserBundle/Resources/config/routing/user.yml"
+enhavo_user_admin:
+    resource: "@EnhavoUserBundle/Resources/config/routing/admin.yml"
     prefix: /admin
 
-enhavo_group:
-    resource: "@EnhavoUserBundle/Resources/config/routing/group.yml"
+enhavo_group_admin_group:
+    resource: "@EnhavoUserBundle/Resources/config/routing/admin/group.yml"
     prefix: /admin
 
 enhavo_grid:

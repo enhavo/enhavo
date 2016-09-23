@@ -30,6 +30,14 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+
+                ->arrayNode('template')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('base')->defaultValue('EnhavoThemeBundle:Theme:base.html.twig')->end()
+                    ->end()
+                ->end()
+
             ->end();
 
         return $treeBuilder;

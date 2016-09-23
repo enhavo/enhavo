@@ -71,8 +71,8 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            pattern:  .*
+        admin:
+            pattern:  ^/admin/.*
             context: user
             form_login:
                 provider:       fos_userbundle
@@ -82,14 +82,50 @@ security:
                 check_path:     /admin/login_check
                 failure_path:   null
                 default_target_path: /admin
-
             logout:
                 path:   /admin/logout
                 target: /admin
-            anonymous:    true
+            anonymous:  true
+
+        user:
+            pattern: ^/user/.*
+            context: user
+            form_login:
+                provider:       fos_userbundle
+                csrf_provider:  form.csrf_provider
+                login_path:     /user/login
+                use_forward:    false
+                check_path:     /user/login_check
+                failure_path:   null
+                default_target_path: /user/profile
+            logout:
+                path:   /user/logout
+                target: /
+            anonymous:  true
+
+        main:
+            pattern: .*
+            context: user
+            form_login:
+                provider:       fos_userbundle
+                csrf_provider:  form.csrf_provider
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                default_target_path: /user/profile
+            logout:
+                path:   /logout
+                target: /
+            anonymous:  true
 
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_USER }
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+
+        - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/, role: ROLE_USER }

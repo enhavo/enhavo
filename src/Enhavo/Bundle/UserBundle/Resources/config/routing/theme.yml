@@ -1,0 +1,7 @@
+enhavo_user_theme_security:
+    resource: "@EnhavoUserBundle/Resources/config/routing/theme/security.yml"
+    prefix: /user
+
+enhavo_user_theme_user:
+    resource: "@EnhavoUserBundle/Resources/config/routing/theme/user.yml"
+    prefix: /user

@@ -60,3 +60,35 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu }
+
+    enhavo_user.widget.login:
+        class: Enhavo\Bundle\UserBundle\Widget\LoginWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget }
+
+    enhavo_user.controller.security:
+        class: Enhavo\Bundle\UserBundle\Controller\SecurityController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.reset_password:
+        class: Enhavo\Bundle\UserBundle\Controller\ResetPasswordController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.viewer.reset_password:
+        class: Enhavo\Bundle\UserBundle\Viewer\ResetPasswordViewer
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.viewer }

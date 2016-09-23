@@ -12,5 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface SimpleRequestConfigurationFactoryInterface
 {
+    /**
+     * @param Request $request
+     *
+     * @return SimpleRequestConfiguration
+     */
     public function createSimple(Request $request);
 }
