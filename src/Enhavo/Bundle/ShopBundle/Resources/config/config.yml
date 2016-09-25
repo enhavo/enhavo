@@ -19,7 +19,7 @@ sylius_order:
         order:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Order
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                controller: Enhavo\Bundle\ShopBundle\Controller\OrderController
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\OrderType
 

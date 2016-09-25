@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class OrderAddressType extends AbstractType
 {
@@ -23,13 +23,21 @@ class OrderAddressType extends AbstractType
      */
     private $dataClass;
 
-    public function __construct($dataClass)
+    /**
+     * @var OrderAddressProvider
+     */
+    private $orderAddressProvider;
+
+    public function __construct($dataClass, OrderAddressProvider $orderAddressProvider)
     {
         $this->dataClass = $dataClass;
-    }
+        $this->orderAddressProvider = $orderAddressProvider;
+     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $orderAddressProvider = $this->orderAddressProvider;
+
         $builder
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
@@ -48,6 +56,12 @@ class OrderAddressType extends AbstractType
                     if($user === null) {
                         $form->add('email', 'email');
                     }
+                }
+            })
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($orderAddressProvider) {
+                $data = $event->getData();
+                if($data instanceof OrderInterface) {
+                    $orderAddressProvider->provide($data);
                 }
             })
             ->add('shippingAddress', 'sylius_address', [

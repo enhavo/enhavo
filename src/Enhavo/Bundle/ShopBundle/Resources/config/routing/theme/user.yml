@@ -1,0 +1,18 @@
+enhavo_shop_theme_user_order_list:
+    path: /order/list
+    defaults:
+        _controller: sylius.controller.order:listOrderAction
+
+enhavo_shop_theme_user_order_detail:
+    path: /order/{id}/detail
+    defaults:
+        _controller: sylius.controller.order:detailOrderAction
+
+enhavo_shop_theme_user_order_transfer:
+    path: /order/{id}/transfer
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.order:transferOrderAction
+        _sylius:
+            redirect: 'enhavo_shop_theme_cart_summary'
+

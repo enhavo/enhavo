@@ -149,6 +149,12 @@ interface OrderInterface extends
     public function getUser();
 
     /**
+     * @param UserInterface|null $user
+     * @return mixed
+     */
+    public function setUser(UserInterface $user = null);
+
+    /**
      * @return string|null
      */
     public function getEmail();

@@ -1,0 +1,19 @@
+{% extends baseTemplate %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <h1>Payment</h1>
+    <div>
+        <form action="{{ path('enhavo_shop_theme_checkout_payment') }}" method="POST" data-checkout-form>
+            {{ form_errors(form) }}
+            {{ form_widget(form.payment) }}
+            {{ form_row(form._token) }}
+            <button type="submit">Senden</button>
+        </form>
+    </div>
+{% endblock %}
+

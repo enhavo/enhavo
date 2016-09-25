@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Type;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractType implements ContainerAwareInterface
 {
@@ -71,5 +72,12 @@ abstract class AbstractType implements ContainerAwareInterface
             return $options[$key];
         }
         return $default;
+    }
+
+    protected function resolveOptions($defaultOptions, $options)
+    {
+        $optionResolver = new OptionsResolver();
+        $optionResolver->setDefaults($defaultOptions);
+        return $optionResolver->resolve($options);
     }
 }

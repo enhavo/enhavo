@@ -128,7 +128,7 @@ class CheckoutController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->redirectToRoute('enhavo_checkout_addressing');
+        return $this->redirectToRoute('enhavo_shop_theme_checkout_addressing');
     }
 
     /**
@@ -138,7 +138,7 @@ class CheckoutController extends Controller
     public function addressingAction(Request $request)
     {
         $context = $this->createCheckoutContext($request);
-        $context->setNextRoute('enhavo_checkout_payment');
+        $context->setNextRoute('enhavo_shop_theme_checkout_payment');
         $context->setFormType('enhavo_shop_order_address');
         $context->setTemplate('checkout_addressing');
         $context->setProcessor($this->get('enhavo.order_processing.shipment_processor'));
@@ -154,7 +154,7 @@ class CheckoutController extends Controller
         }
 
         $context = $this->createCheckoutContext($request);
-        $context->setNextRoute('enhavo_checkout_confirm');
+        $context->setNextRoute('enhavo_shop_theme_checkout_confirm');
         $context->setFormType('enhavo_shop_order_payment');
         $context->setTemplate('checkout_payment');
         $context->setProcessor($this->get('enhavo.order_processing.payment_processor'));
@@ -170,16 +170,10 @@ class CheckoutController extends Controller
         }
 
         $context = $this->createCheckoutContext($request);
-        $context->setNextRoute('enhavo_checkout_finish');
+        $context->setNextRoute('enhavo_shop_theme_checkout_finish');
         $context->setFormType('enhavo_shop_order_confirm');
         $context->setTemplate('checkout_confirm');
         $context->setProcessor($this->get('enhavo.order_processing.confirm_processor'));
-
-        $order = $this->getCurrentCart();
-        $couponForm = $this->createForm('enhavo_shop_order_promotion_coupon', $order);
-        $context->addData('couponForm', $couponForm->createView());
-
-        $context->addData('summaryTemplate', $this->getTemplate('checkout_summary'));
 
         return $this->processCheckoutContext($context);
     }

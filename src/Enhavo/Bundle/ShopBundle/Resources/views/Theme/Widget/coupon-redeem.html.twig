@@ -1,0 +1,8 @@
+{% trans_default_domain 'EnhavoShopBundle' %}
+
+<form action="{{ path('enhavo_shop_theme_promotion_redeem_coupon') }}" data-cancel-action="{{ path('enhavo_shop_theme_promotion_cancel_coupon') }}" method="POST" data-coupon-form>
+    {{ form_errors(form) }}
+    {{ form_row(form.promotionCoupon) }}
+    {{ form_row(form._token) }}
+    <button type="submit">{{ 'promotion.coupon.form.action.redeem'|trans }}</button>
+</form>

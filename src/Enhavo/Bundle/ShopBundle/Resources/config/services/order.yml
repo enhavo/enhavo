@@ -34,8 +34,31 @@ services:
         arguments:
             - @enhavo.order_processing.shipment_processor
             - @sylius.promotion_processor
+            - @doctrine.orm.entity_manager
         tags:
             - { name: kernel.event_subscriber }
+
+    enhavo_shop.listener.user_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\UserSubscriber
+        arguments:
+            - '@enhavo_shop.cart.user_cart_merger'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    enhavo_shop.cart.user_cart_merger:
+        class: Enhavo\Bundle\ShopBundle\Cart\UserCartMerger
+        arguments:
+            - '@enhavo_shop.cart.user_cart_provider'
+            - '@sylius.cart_provider'
+            - '@sylius.context.cart'
+            - '@doctrine.orm.default_entity_manager'
+
+    enhavo_shop.cart.user_cart_provider:
+        class: Enhavo\Bundle\ShopBundle\Cart\UserCartProvider
+        arguments:
+            - '@security.token_storage'
+            - '@sylius.repository.cart'
+            - '@event_dispatcher'
 
     enhavo.promotion_action.order_fixed_discount:
         class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderFixedDiscountAction
@@ -73,3 +96,42 @@ services:
             - @enhavo_shop.locale.country_resolver
         tags:
             - { name: sylius.promotion_rule_checker, type: 'shipping_country', label: "Shipping country" }
+
+    enhavo_shop.order.order_address_provider:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider
+        arguments:
+            - '@sylius.factory.address'
+            - '@enhavo_shop.order.order_provider'
+
+    enhavo_shop.order.order_provider:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderProvider
+        arguments:
+            - '@sylius.repository.order'
+
+    enhavo_shop.cart.cart_transfer:
+        class: Enhavo\Bundle\ShopBundle\Cart\CartTransfer
+        arguments:
+            - '@sylius.order_item_quantity_modifier'
+            - '@sylius.factory.order_item'
+            - '@event_dispatcher'
+
+    enhavo_shop.widget.product_list:
+        class: Enhavo\Bundle\ShopBundle\Widget\ProductListWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'shop_product_list' }
+
+    enhavo_shop.widget.cart_summary:
+        class: Enhavo\Bundle\ShopBundle\Widget\CartSummaryWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_cart_summary' }
+
+    enhavo_shop.widget.coupon_redeem:
+        class: Enhavo\Bundle\ShopBundle\Widget\CouponRedeemWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_coupon_redeem' }
