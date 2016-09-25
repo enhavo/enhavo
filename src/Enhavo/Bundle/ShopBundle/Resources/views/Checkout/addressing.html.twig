@@ -10,7 +10,7 @@
     <div>
         <form action="{{ path('enhavo_checkout_addressing') }}" method="POST" data-checkout-form novalidate>
             {{ form_errors(form) }}
-            {% if form.email %}
+            {% if form.email is defined %}
                 {{ form_row(form.email) }}
             {% endif %}
             {{ form_widget(form.shippingAddress) }}

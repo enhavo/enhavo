@@ -96,3 +96,15 @@ services:
             - @enhavo_shop.locale.country_resolver
         tags:
             - { name: sylius.promotion_rule_checker, type: 'shipping_country', label: "Shipping country" }
+
+    enhavo_shop.order.order_address_provider:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider
+        arguments:
+            - '@sylius.factory.address'
+            - '@enhavo_shop.order.order_provider'
+
+    enhavo_shop.order.order_provider:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderProvider
+        arguments:
+            - '@sylius.repository.order'
+
