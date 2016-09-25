@@ -1,6 +1,9 @@
 Enhavo\Bundle\ShopBundle\Entity\Order:
     type: entity
     table: shop_order
+    attributeOverride:
+        expiresAt:
+            nullable: true
 
     fields:
         checkoutState:

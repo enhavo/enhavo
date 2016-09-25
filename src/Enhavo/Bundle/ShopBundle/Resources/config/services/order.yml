@@ -34,8 +34,31 @@ services:
         arguments:
             - @enhavo.order_processing.shipment_processor
             - @sylius.promotion_processor
+            - @doctrine.orm.entity_manager
         tags:
             - { name: kernel.event_subscriber }
+
+    enhavo_shop.listener.user_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\UserSubscriber
+        arguments:
+            - '@enhavo_shop.cart.user_cart_merger'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    enhavo_shop.cart.user_cart_merger:
+        class: Enhavo\Bundle\ShopBundle\Cart\UserCartMerger
+        arguments:
+            - '@enhavo_shop.cart.user_cart_provider'
+            - '@sylius.cart_provider'
+            - '@sylius.context.cart'
+            - '@doctrine.orm.default_entity_manager'
+
+    enhavo_shop.cart.user_cart_provider:
+        class: Enhavo\Bundle\ShopBundle\Cart\UserCartProvider
+        arguments:
+            - '@security.token_storage'
+            - '@sylius.repository.cart'
+            - '@event_dispatcher'
 
     enhavo.promotion_action.order_fixed_discount:
         class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderFixedDiscountAction

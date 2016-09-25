@@ -8,15 +8,32 @@
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
+use Enhavo\Bundle\UserBundle\Event\UserEvents;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
+    use ContainerAwareTrait;
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $url = $this->httpUtils->generateUri($request, 'enhavo_app_index');
-        return $this->httpUtils->createRedirectResponse($request, $url);
+        $response = parent::onAuthenticationSuccess($request, $token);
+        $this->dispatch($token);
+        return $response;
+    }
+
+    public function getEventDispatcher()
+    {
+        return $this->container->get('event_dispatcher');
+    }
+
+    private function dispatch(TokenInterface $token)
+    {
+        $user = $token->getUser();
+        $this->getEventDispatcher()->dispatch(UserEvents::LOGIN, new GenericEvent($user));
     }
 }

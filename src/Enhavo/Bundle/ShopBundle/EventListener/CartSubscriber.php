@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\EventListener;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor;
 use Sylius\Component\Cart\SyliusCartEvents;
 use Sylius\Component\Promotion\Processor\PromotionProcessorInterface;
@@ -27,13 +29,20 @@ class CartSubscriber implements EventSubscriberInterface
      */
     private $promotionProcessor;
 
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
         OrderShipmentProcessor $orderShipmentProcessor,
-        PromotionProcessorInterface $promotionProcessor
+        PromotionProcessorInterface $promotionProcessor,
+        EntityManagerInterface $em
     )
     {
         $this->orderShipmentProcessor = $orderShipmentProcessor;
         $this->promotionProcessor = $promotionProcessor;
+        $this->em = $em;
     }
 
     /**
@@ -43,6 +52,7 @@ class CartSubscriber implements EventSubscriberInterface
     {
         return [
             SyliusCartEvents::CART_CHANGE => 'change',
+            SyliusCartEvents::CART_ABANDON => 'abandon',
         ];
     }
 
@@ -51,5 +61,14 @@ class CartSubscriber implements EventSubscriberInterface
         $cart = $event->getSubject();
         $this->orderShipmentProcessor->process($cart);
         $this->promotionProcessor->process($cart);
+    }
+
+    public function abandon(GenericEvent $event)
+    {
+        $cart = $event->getSubject();
+        if($cart instanceof OrderInterface) {
+            $cart->setExpiresAt(new \DateTime());
+        }
+        $this->em->flush();
     }
 }
