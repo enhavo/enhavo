@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\ShopBundle\Mock\EventSubscriberMock;
+use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
 use Sylius\Bundle\AddressingBundle\Form\Type\CountryCodeChoiceType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
@@ -14,8 +15,10 @@ class OrderAddressTypeTest extends TypeTestCase
 {
     public function testSubmitWithDifferentBillingAddress()
     {
+        $orderAddressProvider = $this->getMockBuilder(OrderAddressProvider::class)->disableOriginalConstructor()->getMock();
+        $orderAddressProvider->method('provide')->willReturn(null);
         $order = new Order();
-        $formType = new OrderAddressType('Enhavo\Bundle\ShopBundle\Entity\Order');
+        $formType = new OrderAddressType('Enhavo\Bundle\ShopBundle\Entity\Order', $orderAddressProvider);
         $form = $this->factory->create($formType, $order);
         $form->submit([
             'shippingAddress' => [
@@ -38,8 +41,10 @@ class OrderAddressTypeTest extends TypeTestCase
 
     public function testSubmitWithSameBillingAddress()
     {
+        $orderAddressProvider = $this->getMockBuilder(OrderAddressProvider::class)->disableOriginalConstructor()->getMock();
+        $orderAddressProvider->method('provide')->willReturn(null);
         $order = new Order();
-        $formType = new OrderAddressType('Enhavo\Bundle\ShopBundle\Entity\Order');
+        $formType = new OrderAddressType('Enhavo\Bundle\ShopBundle\Entity\Order', $orderAddressProvider);
         $form = $this->factory->create($formType, $order);
         $form->submit([
             'shippingAddress' => [
