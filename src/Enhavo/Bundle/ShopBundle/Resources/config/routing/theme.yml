@@ -1,10 +1,10 @@
 enhavo_shop_theme_cart:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/cart.yml"
-    prefix: /cart
+    prefix: /shop/cart
 
 enhavo_shop_theme_checkout:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/checkout.yml"
-    prefix: /checkout
+    prefix: /shop/checkout
 
 enhavo_shop_theme_product:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/product.yml"
@@ -12,4 +12,8 @@ enhavo_shop_theme_product:
 
 enhavo_shop_theme_promotion:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/promotion.yml"
-    prefix: /promotion
+    prefix: /shop/promotion
+
+enhavo_shop_theme_user:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/user.yml"
+    prefix: /user

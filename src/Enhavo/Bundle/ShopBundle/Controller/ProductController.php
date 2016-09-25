@@ -9,9 +9,8 @@ class ProductController extends ResourceController
 {
     public function listAction(Request $request)
     {
-
         return $this->render('EnhavoShopBundle:Theme:Product/list.html.twig', [
-
+            
         ]);
     }
 }

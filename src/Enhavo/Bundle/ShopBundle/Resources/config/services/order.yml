@@ -108,6 +108,12 @@ services:
         arguments:
             - '@sylius.repository.order'
 
+    enhavo_shop.cart.cart_transfer:
+        class: Enhavo\Bundle\ShopBundle\Cart\CartTransfer
+        arguments:
+            - '@sylius.order_item_quantity_modifier'
+            - '@sylius.factory.order_item'
+            - '@event_dispatcher'
 
     enhavo_shop.widget.product_list:
         class: Enhavo\Bundle\ShopBundle\Widget\ProductListWidget

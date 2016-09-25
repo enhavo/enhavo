@@ -8,31 +8,80 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends ResourceController
 {
-    public function listOrdersAction(Request $request)
+    public function listOrderAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/list.html.twig');
-        return $this->render($template, [
 
+        $orders = $this->getOrderProvider()->getOrders($this->getUser());
+
+        return $this->render($template, [
+            'orders' => $orders
         ]);
     }
 
-    public function showOrderAction(Request $request)
+    public function detailOrderAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/show.html.twig');
-        return $this->render($template, [
 
+        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/detail.html.twig');
+        $order = $this->getOrder($configuration);
+
+        return $this->render($template, [
+            'order' => $order
         ]);
     }
 
-    public function transferOrderAction()
+    public function transferOrderAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        $order = $this->getOrder($configuration);
+        $this->getCartTransfer()->transfer($order, $this->getCart());
+
+        $route = $configuration->getRedirectRoute('enhavo_shop_theme_cart_summary');
+        return $this->redirectToRoute($route);
+    }
+
+    private function getOrder(RequestConfiguration $configuration)
+    {
+        /** @var OrderInterface $order */
+        $order = $this->singleResourceProvider->get($configuration, $this->repository);
+        
+        if($order === null) {
+            throw $this->createNotFoundException();
+        }
+
+        if($order->getState() === 'cart') {
+            throw $this->createNotFoundException();
+        }
+
+        if($order->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $order;
+    }
+
+    private function getOrderProvider()
+    {
+        return $this->get('enhavo_shop.order.order_provider');
+    }
+
+    private function getCartTransfer()
+    {
+        return $this->get('enhavo_shop.cart.cart_transfer');
+    }
+
+    private function getCart()
+    {
+        return $this->get('sylius.cart_provider')->getCart();
     }
 }

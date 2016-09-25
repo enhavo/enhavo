@@ -41,4 +41,14 @@ class OrderProvider
         }
         return null;
     }
+
+    public function getOrders(UserInterface $user)
+    {
+        return $this->orderRepository->findBy([
+            'user' => $user,
+            'state' => 'confirmed'
+        ], [
+            'updatedAt' => 'DESC'
+        ]);
+    }
 }

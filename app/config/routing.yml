@@ -19,7 +19,7 @@ enhavo_theme_article:
 #
 enhavo_shop_theme:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme.yml"
-    prefix:   /shop
+    prefix:   /
 
 enhavo_shop_admin:
     resource: "@EnhavoShopBundle/Resources/config/routing/admin.yml"
