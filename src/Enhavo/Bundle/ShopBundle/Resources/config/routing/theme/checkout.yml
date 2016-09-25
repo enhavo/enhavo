@@ -1,0 +1,24 @@
+enhavo_shop_theme_checkout:
+    path: /
+    defaults:
+        _controller: enhavo_shop.controller.checkout:checkoutAction
+
+enhavo_shop_theme_checkout_addressing:
+    path: /addressing
+    defaults:
+        _controller: enhavo_shop.controller.checkout:addressingAction
+
+enhavo_shop_theme_checkout_payment:
+    path: /payment
+    defaults:
+        _controller: enhavo_shop.controller.checkout:paymentAction
+
+enhavo_shop_theme_checkout_confirm:
+    path: /confirm
+    defaults:
+        _controller: enhavo_shop.controller.checkout:confirmAction
+
+enhavo_shop_theme_checkout_finish:
+    path: /finish
+    defaults:
+        _controller: enhavo_shop.controller.checkout:finishAction

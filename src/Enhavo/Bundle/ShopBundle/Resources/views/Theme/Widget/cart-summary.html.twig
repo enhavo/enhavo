@@ -1,6 +1,6 @@
 {% for item in cart.items %}
     <div>
-        {% if not immutable %}<form action="{{ path('sylius_cart_save_quantity', {id: item.id}) }}" method="POST" data-form-cart-quantity>{% endif %}
+        {% if not immutable %}<form action="{{ path('enhavo_shop_theme_cart_save_quantity', {id: item.id}) }}" method="POST" data-form-cart-quantity>{% endif %}
             <h2>{{ item.product.title }}</h2>
 
             {% if immutable %}
@@ -18,10 +18,7 @@
             <div>Total: <span data-cart-item-total>{{ item.total }}</span></div>
 
             {% if not immutable %}
-                <a data-cart-item-remove href="{{ path('sylius_cart_item_remove', {id: item.id}) }}">Delete</a>
-
-
-
+                <a data-cart-item-remove href="{{ path('enhavo_shop_theme_cart_item_remove', {id: item.id}) }}">Delete</a>
             {% endif %}
         {% if not immutable %}</form>{% endif %}
     </div>

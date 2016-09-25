@@ -6,7 +6,7 @@
 
 {% block main %}
     <section>
-        {{ shop_cart_summary_render() }}
+        {{ theme_widget_render('shop_cart_summary') }}
     </section>
-    <a href="{{ path('enhavo_checkout') }}">Checkout</a>
+    <a href="{{ path('enhavo_shop_theme_checkout') }}">Checkout</a>
 {% endblock %}

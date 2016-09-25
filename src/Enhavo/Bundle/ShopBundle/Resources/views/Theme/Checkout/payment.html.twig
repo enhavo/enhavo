@@ -8,7 +8,7 @@
 {% block main %}
     <h1>Payment</h1>
     <div>
-        <form action="{{ path('enhavo_checkout_payment') }}" method="POST" data-checkout-form>
+        <form action="{{ path('enhavo_shop_theme_checkout_payment') }}" method="POST" data-checkout-form>
             {{ form_errors(form) }}
             {{ form_widget(form.payment) }}
             {{ form_row(form._token) }}

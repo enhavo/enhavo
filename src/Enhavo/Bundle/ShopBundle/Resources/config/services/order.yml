@@ -108,3 +108,24 @@ services:
         arguments:
             - '@sylius.repository.order'
 
+
+    enhavo_shop.widget.product_list:
+        class: Enhavo\Bundle\ShopBundle\Widget\ProductListWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'shop_product_list' }
+
+    enhavo_shop.widget.cart_summary:
+        class: Enhavo\Bundle\ShopBundle\Widget\CartSummaryWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_cart_summary' }
+
+    enhavo_shop.widget.coupon_redeem:
+        class: Enhavo\Bundle\ShopBundle\Widget\CouponRedeemWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_coupon_redeem' }

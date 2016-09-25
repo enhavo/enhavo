@@ -1,0 +1,4 @@
+enhavo_shop_theme_products:
+    path: /products
+    defaults:
+        _controller: enhavo_shop.controller.product:listAction

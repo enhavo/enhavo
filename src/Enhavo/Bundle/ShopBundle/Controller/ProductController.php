@@ -2,15 +2,15 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProductController extends Controller
+class ProductController extends ResourceController
 {
     public function listAction(Request $request)
     {
 
-        return $this->render('EnhavoShopBundle:Product:list.html.twig', [
+        return $this->render('EnhavoShopBundle:Theme:Product/list.html.twig', [
 
         ]);
     }

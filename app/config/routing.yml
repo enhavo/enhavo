@@ -13,16 +13,17 @@ enhavo_theme_article:
     resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
     prefix:   /
 
-enhavo_theme_shop:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/shop.yml"
-    prefix:   /
 
 #
 # enhavo
 #
-enhavo_shop:
-    resource: "@EnhavoShopBundle/Resources/config/routing/shop.yml"
+enhavo_shop_theme:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme.yml"
     prefix:   /shop
+
+enhavo_shop_admin:
+    resource: "@EnhavoShopBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin
 
 enhavo_user_theme:
     resource: "@EnhavoUserBundle/Resources/config/routing/theme.yml"
@@ -111,11 +112,6 @@ enhavo_calendar:
 enhavo_setting:
     resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
     prefix: /admin
-
-enhavo_shop_admin:
-    resource: "@EnhavoShopBundle/Resources/config/routing/admin.yml"
-    prefix:   /admin
-
 
 #
 # 3rd Party

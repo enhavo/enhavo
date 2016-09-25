@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sylius\Component\Cart\Event\CartEvent;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
+use FOS\RestBundle\View\View;
 
 class CartController extends SyliusCartController
 {
@@ -56,4 +57,21 @@ class CartController extends SyliusCartController
             'orderItem' => $orderItemComposition->toArray()
         ]);
     }
+
+    public function summaryAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $cart = $this->getCurrentCart();
+
+        $view = View::create()
+            ->setTemplate($configuration->getTemplate('EnhavoShopBundle:Theme:Cart/summary.html.twig'))
+            ->setData([
+                'cart' => $cart,
+            ])
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
+
 }

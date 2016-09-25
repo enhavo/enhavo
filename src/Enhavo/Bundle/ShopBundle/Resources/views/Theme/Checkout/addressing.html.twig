@@ -8,7 +8,7 @@
 {% block main %}
     <h1>Addressing</h1>
     <div>
-        <form action="{{ path('enhavo_checkout_addressing') }}" method="POST" data-checkout-form novalidate>
+        <form action="{{ path('enhavo_shop_theme_checkout_addressing') }}" method="POST" data-checkout-form novalidate>
             {{ form_errors(form) }}
             {% if form.email is defined %}
                 {{ form_row(form.email) }}
