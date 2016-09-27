@@ -43,6 +43,11 @@ class CheckoutContext
     private $processor;
 
     /**
+     * @var array
+     */
+    private $routeParameters = [];
+
+    /**
      * @return Request
      */
     public function getRequest()
@@ -145,5 +150,21 @@ class CheckoutContext
     public function setProcessor($processor)
     {
         $this->processor = $processor;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRouteParameters()
+    {
+        return $this->routeParameters;
+    }
+
+    /**
+     * @param array $routeParameters
+     */
+    public function setRouteParameters($routeParameters)
+    {
+        $this->routeParameters = $routeParameters;
     }
 }

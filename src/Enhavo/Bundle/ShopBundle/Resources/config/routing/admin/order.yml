@@ -109,3 +109,11 @@ enhavo_shop_order_batch:
             batches:
                 delete:
                     type: delete
+
+enhavo_shop_order_billing:
+    options:
+        expose: true
+    path: /enhavo/shop/order/{id}/billing.pdf
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order:billingAction

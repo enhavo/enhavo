@@ -19,3 +19,7 @@ promotion:
 label:
   product: Produkt
   order: Bestellung
+
+mailer:
+  confirm:
+    subject: Bestellung

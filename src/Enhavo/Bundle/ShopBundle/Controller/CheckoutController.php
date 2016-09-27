@@ -67,9 +67,9 @@ class CheckoutController extends Controller
         return $messages;
     }
 
-    protected function getUrl($routeName)
+    protected function getUrl($routeName, $routeParameters)
     {
-        return $this->get('router')->generate($routeName);
+        return $this->get('router')->generate($routeName, $routeParameters);
     }
 
     protected function processCheckoutContext(CheckoutContext $context)
@@ -86,7 +86,7 @@ class CheckoutController extends Controller
                     $context->getProcessor()->process($order);
                 }
                 $this->getManager()->flush();
-                $url = $this->getUrl($context->getNextRoute());
+                $url = $this->getUrl($context->getNextRoute(), $context->getRouteParameters());
                 if($context->getRequest()->isXmlHttpRequest()) {
                     return new JsonResponse(['redirect_url' => $url], 200);
                 }
@@ -164,6 +164,7 @@ class CheckoutController extends Controller
 
     public function confirmAction(Request $request)
     {
+        /** @var OrderInterface $order */
         $order = $this->getCurrentCart();
         if(empty($order->getPayment())) {
             throw $this->createNotFoundException();
@@ -174,19 +175,28 @@ class CheckoutController extends Controller
         $context->setFormType('enhavo_shop_order_confirm');
         $context->setTemplate('checkout_confirm');
         $context->setProcessor($this->get('enhavo.order_processing.confirm_processor'));
+        $context->setRouteParameters([
+            'token' => $order->getToken()
+        ]);
 
         return $this->processCheckoutContext($context);
     }
 
-    public function finishAction()
+    public function finishAction(Request $request)
     {
-        $order = $this->getCurrentCart();
-
-        if($order->getState() != \Sylius\Component\Order\Model\OrderInterface::STATE_CONFIRMED) {
+        $token = $request->get('token');
+        if($token === null) {
             throw $this->createNotFoundException();
         }
 
-        $this->get('enhavo.order_processing.finish_processor')->process($order);
+        $order = $this->get('sylius.repository.order')->findOneBy([
+            'token' => $token
+        ]);
+
+        if($order === null) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render($this->getTemplate('checkout_finish'), [
             'order' => $order,
             'baseTemplate' => $this->getTemplate('base')
