@@ -210,4 +210,17 @@ interface OrderInterface extends
      * @param string $token
      */
     public function setToken($token);
+
+    /**
+     * @param $orderedAt
+     * @return mixed
+     */
+    public function setOrderedAt($orderedAt);
+
+    /**
+     * Get orderedAt
+     *
+     * @return \DateTime
+     */
+    public function getOrderedAt();
 }

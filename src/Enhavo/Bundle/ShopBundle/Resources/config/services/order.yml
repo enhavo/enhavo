@@ -12,6 +12,11 @@ services:
     enhavo.order_processing.payment_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor
 
+    enhavo.order_processing.addressing_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderAddressingProcessor
+        arguments:
+            - '@enhavo.order_processing.shipment_processor'
+
     enhavo.order_processing.confirm_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderConfirmProcessor
         arguments:
@@ -23,6 +28,7 @@ services:
         arguments:
             - '@sylius.repository.order'
             - '@enhavo.token_generator'
+            - '@security.token_storage'
 
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver

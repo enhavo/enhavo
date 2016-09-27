@@ -13,6 +13,7 @@ use Enhavo\Bundle\ShopBundle\Mailer\MailerInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
+use Sylius\Component\Core\OrderCheckoutStates;
 
 class OrderConfirmProcessor implements ProcessorInterface
 {
@@ -34,8 +35,9 @@ class OrderConfirmProcessor implements ProcessorInterface
 
     public function process(OrderInterface $order)
     {
-        $order->setCheckoutState(\Sylius\Component\Order\Model\OrderInterface::STATE_CONFIRMED);
-        $order->setState('confirmed');
+        $order->setCheckoutState(OrderCheckoutStates::STATE_COMPLETED);
+        $order->setState(OrderInterface::STATE_CONFIRMED);
+        $order->setOrderedAt(new \DateTime);
         $this->confirmMailer->sendMail($order);
         $this->cartProvider->abandonCart();
     }

@@ -23,3 +23,13 @@ label:
 mailer:
   confirm:
     subject: Bestellung
+
+order:
+  label:
+    number: Bestellnummer
+    ordered_at: Aufgegben am
+    name: Name
+    order: Bestellung
+    items: Posten
+    address: Adresse
+    payment: Bezahlung

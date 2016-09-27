@@ -23,3 +23,13 @@ label:
 mailer:
   confirm:
     subject: Order
+
+order:
+  label:
+    number: Ordernumber
+    ordered_at: Ordered At
+    name: Name
+    order: Order
+    items: Items
+    address: Address
+    payment: Payment

@@ -141,7 +141,7 @@ class CheckoutController extends Controller
         $context->setNextRoute('enhavo_shop_theme_checkout_payment');
         $context->setFormType('enhavo_shop_order_address');
         $context->setTemplate('checkout_addressing');
-        $context->setProcessor($this->get('enhavo.order_processing.shipment_processor'));
+        $context->setProcessor($this->get('enhavo.order_processing.addressing_processor'));
 
         return $this->processCheckoutContext($context);
     }
