@@ -33,3 +33,26 @@ order:
     items: Posten
     address: Adresse
     payment: Bezahlung
+
+  form:
+    label:
+      state:
+        label: Status
+        cancelled: Storniert
+        confirmed: Bestellt
+        returned: Retoure
+      payment:
+        label: Bezahlung
+        completed: Bezahlt
+        pending: Offen
+      shipping:
+        label: Versand
+        pending: Offen
+        ready: Versandfertig
+        shipped: Versendet
+
+order_item:
+  form:
+    label:
+      quantity: Anzahl
+      product: Produkt

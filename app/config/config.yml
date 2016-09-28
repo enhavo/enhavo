@@ -39,7 +39,6 @@ twig:
             - 'EnhavoGridBundle:Form:fields.html.twig'
             - 'EnhavoCategoryBundle:Form:fields.html.twig'
             - 'EnhavoMediaBundle:Form:fields.html.twig'
-            - 'EnhavoShopBundle:Theme/Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:

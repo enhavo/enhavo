@@ -33,3 +33,26 @@ order:
     items: Items
     address: Address
     payment: Payment
+
+  form:
+    label:
+      state:
+        label: State
+        cancelled: Cancelled
+        confirmed: Confirmed
+        returned: Returned
+      payment:
+        label: Payment
+        completed: Completed
+        pending: Pending
+      shipping:
+        label: Shipping
+        pending: Pending
+        ready: Ready
+        shipped: Shipped
+
+order_item:
+  form:
+    label:
+      quantity: Quantity
+      product: Product
