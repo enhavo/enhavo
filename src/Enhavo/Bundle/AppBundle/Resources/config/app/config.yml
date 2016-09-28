@@ -1,7 +1,7 @@
 framework:
+    translator: { fallback: "%locale%" }
     validation:
         enabled: true
-        enable_annotations: true
     session:
         cookie_lifetime: 25920000
         handler_id: session.handler.pdo
@@ -10,7 +10,6 @@ twig:
     form:
         resources:
             - 'EnhavoAppBundle:Form:fields.html.twig'
-
 
 doctrine:
     orm:
