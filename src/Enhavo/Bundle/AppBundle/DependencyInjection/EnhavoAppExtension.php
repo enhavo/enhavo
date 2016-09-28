@@ -26,8 +26,7 @@ class EnhavoAppExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('enhavo_app.permission_check', $config[ 'permission_check' ]);
+        
         $container->setParameter('enhavo_app.stylesheets', $config[ 'stylesheets' ]);
         $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);

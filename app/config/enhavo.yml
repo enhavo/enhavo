@@ -4,15 +4,6 @@ cmf_routing:
             Enhavo\Bundle\PageBundle\Entity\Page: EnhavoThemeBundle:Page:show
 
 enhavo_app:
-    permission_check: false
-    show_version: true
-    stylesheets:
-      - '@EnhavoGridBundle/Resources/public/css/style.css'
-      - '@EnhavoMediaBundle/Resources/public/css/style.css'
-      - '@EnhavoWorkflowBundle/Resources/public/css/style.css'
-      - '@EnhavoSearchBundle/Resources/public/css/style.css'
-    javascripts:
-
     menu:
         dashboard:
             type: dashboard
@@ -46,10 +37,6 @@ enhavo_app:
             type: setting
 
 enhavo_grid:
-    render:
-        sets:
-            default:
-
     items:
         picture:
             model: Enhavo\Bundle\GridBundle\Entity\Picture
@@ -122,49 +109,6 @@ enhavo_grid:
             label: video.label.video
             translationDomain: EnhavoGridBundle
 
-
-enhavo_category:
-    default_collection: default
-
-enhavo_contact:
-    contact:
-        model: Enhavo\Bundle\ContactBundle\Model\Contact
-        form: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
-        template:
-            form: EnhavoContactBundle:Contact:form.html.twig
-            recipient: EnhavoContactBundle:Contact:recipient.html.twig
-            sender: EnhavoContactBundle:Contact:sender.html.twig
-        recipient: %contact_form_recipient%
-        from: %emails_send_from%
-        subject: contact.message.email_subject
-        translationDomain: EnhavoContactBundle
-        send_to_sender: true
-
-enhavo_workflow:
-    entities:
-        -
-            class: %enhavo_article.model.article.class%
-            label: 'article.label.article'
-            translationDomain: EnhavoArticleBundle
-            repository: enhavo_article.repository.article
-        -
-            class: %enhavo_page.model.page.class%
-            label: 'page.label.page'
-            translationDomain: EnhavoPageBundle
-            repository: enhavo_page.repository.page
-        -
-            class: %enhavo_newsletter.model.newsletter.class%
-            label: 'newsletter.label.newsletter'
-            translationDomain: EnhavoNewsletterBundle
-            repository: enhavo_newsletter.repository.newsletter
-            
-enhavo_search:
-    search:
-        template: EnhavoSearchBundle:Search:render.html.twig
-        strategy: reindex
-        search_engine: enhavo_search_search_engine
-        index_engine: enhavo_search_index_engine
-
 enhavo_article:
     resources:
         article:
@@ -197,20 +141,6 @@ enhavo_theme:
                 social_media:
                     type: template
                     template: 'EnhavoThemeBundle:Theme:Widget/social-media.html.twig'
-
-
-enhavo_content:
-    sitemap:
-        collectors:
-            page:
-                type: publish
-                repository: enhavo_page.repository.page
-            article:
-                type: publish
-                repository: enhavo_article.repository.article
-            appointment:
-                type: publish
-                repository: enhavo_calendar.repository.appointment
 
 
 enhavo_shop:

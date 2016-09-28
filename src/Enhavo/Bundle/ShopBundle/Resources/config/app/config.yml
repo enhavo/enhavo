@@ -48,3 +48,20 @@ sylius_payment:
     gateways:
         offline: Offline
         paypal_express_checkout: Paypal Express Checkout
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
+            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Promotion\Model\Coupon
+            Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
+            Sylius\Component\Shipping\Model\ShipmentInterface: Sylius\Component\Shipping\Model\Shipment
+            Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
+            Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
+            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
+
+enhavo_assets:
+    require_js:
+        paths:
+            shop:
+                location: /bundles/enhavoshop/js

@@ -1,8 +1,31 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: @EnhavoAppBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoArticleBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoAssetsBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoCalendarBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoCategoryBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoContactBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoContentBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoDashboardBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoDownloadBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoGeneratorBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoGridBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoInstallerBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoMediaBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoMigrationBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoNewsletterBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoPageBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoSearchBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoSerializerBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoSettingBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoShopBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoSliderBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoShopBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoThemeBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoUserBundle/Resources/config/app/config.yml }
+    - { resource: @EnhavoWorkflowBundle/Resources/config/app/config.yml }
     - { resource: security.yml }
-    - { resource: @EnhavoShopBundle/Resources/config/config.yml }
-    - { resource: @EnhavoAssetsBundle/Resources/config/config.yml }
     - { resource: enhavo.yml }
 
 framework:
@@ -23,9 +46,6 @@ framework:
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
-    session:
-        cookie_lifetime: 25920000
-        handler_id: session.handler.pdo
     fragments:       ~
     http_method_override: true
 
@@ -33,12 +53,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-            - 'EnhavoAppBundle:Form:fields.html.twig'
-            - 'EnhavoGridBundle:Form:fields.html.twig'
-            - 'EnhavoCategoryBundle:Form:fields.html.twig'
-            - 'EnhavoMediaBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -70,40 +84,6 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-        resolve_target_entities:
-            Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
-            Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
-
-            Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface: Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus
-            Enhavo\Bundle\WorkflowBundle\Model\NodeInterface: Enhavo\Bundle\WorkflowBundle\Entity\Node
-            Enhavo\Bundle\WorkflowBundle\Model\TransitionInterface: Enhavo\Bundle\WorkflowBundle\Entity\Transition
-            Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface: Enhavo\Bundle\WorkflowBundle\Entity\Workflow
-
-            Enhavo\Bundle\DownloadBundle\Model\DownloadInterface: Enhavo\Bundle\DownloadBundle\Entity\Download
-
-            Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
-            Enhavo\Bundle\GridBundle\Model\ItemInterface: Enhavo\Bundle\GridBundle\Entity\Item
-            Enhavo\Bundle\GridBundle\Model\ContainerInterface: Enhavo\Bundle\GridBundle\Entity\Container
-            Enhavo\Bundle\GridBundle\Model\ColumnInterface: Enhavo\Bundle\GridBundle\Entity\Column
-
-            Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
-
-            Enhavo\Bundle\AppBundle\Model\RouteInterface: Enhavo\Bundle\AppBundle\Entity\Route
-
-            Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
-            Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
-
-            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
-            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
-
-            Sylius\Component\Addressing\Model\AddressInterface: Sylius\Component\Addressing\Model\Address
-            Sylius\Component\Promotion\Model\CouponInterface: Sylius\Component\Promotion\Model\Coupon
-            Sylius\Component\Payment\Model\PaymentInterface: Sylius\Component\Payment\Model\Payment
-            Sylius\Component\Shipping\Model\ShipmentInterface: Sylius\Component\Shipping\Model\Shipment
-            Sylius\Component\Taxation\Model\TaxRateInterface: Sylius\Component\Taxation\Model\TaxRate
-            Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
-
-            Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
 
 
 # Swiftmailer Configuration
@@ -113,66 +93,13 @@ swiftmailer:
     username: %mailer_user%
     password: %mailer_password%
 
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Enhavo\Bundle\UserBundle\Entity\User
-    group:
-        group_class: Enhavo\Bundle\UserBundle\Entity\Group
-
-liip_imagine:
-    resolvers:
-       default:
-          web_path: ~
-
-    filter_sets:
-        cache: ~
-        news_thumb:
-            quality: 75
-            filters:
-                thumbnail: { size: [300, 110], mode: outbound }
-
-cmf_routing:
-    chain:
-        routers_by_id:
-            router.default: 200
-            cmf_routing.dynamic_router: 100
-    dynamic:
-        enabled: true
-        route_provider_service_id: enhavo_app.route_provider
-
-parameters:
-    pdo.db_options:
-        db_table: app_session
-        db_id_col: id
-        db_data_col: value
-        db_time_col: time
-        db_lifetime_col: lifetime
-        gc_maxlifetime: 3600
-
-services:
-    pdo:
-        class: PDO
-        arguments:
-            - "mysql:host=%database_host%;dbname=%database_name%"
-            - "%database_user%"
-            - "%database_password%"
-        calls:
-            - [setAttribute, [3, 2]]
-
-    session.handler.pdo:
-        class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
-        arguments: ["@pdo", "%pdo.db_options%"]
 
 
-stof_doctrine_extensions:
-    default_locale: %locale%
-    orm:
-        default:
-            sluggable: true
-            timestampable: true
 
-sylius_resource:
-    translation:
-        default_locale: "%locale%"
-        locale_provider: enhavo.translation.locale_provider.contextual
+
+
+
+
+
+
+

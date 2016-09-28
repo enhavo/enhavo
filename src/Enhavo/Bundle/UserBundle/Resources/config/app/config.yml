@@ -1,0 +1,12 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\UserBundle\Model\UserInterface: Enhavo\Bundle\UserBundle\Entity\User
+            Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Enhavo\Bundle\UserBundle\Entity\User
+    group:
+        group_class: Enhavo\Bundle\UserBundle\Entity\Group

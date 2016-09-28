@@ -1,0 +1,68 @@
+framework:
+    validation:
+        enabled: true
+        enable_annotations: true
+    session:
+        cookie_lifetime: 25920000
+        handler_id: session.handler.pdo
+
+twig:
+    form:
+        resources:
+            - 'EnhavoAppBundle:Form:fields.html.twig'
+
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\AppBundle\Model\RouteInterface: Enhavo\Bundle\AppBundle\Entity\Route
+
+cmf_routing:
+    chain:
+        routers_by_id:
+            router.default: 200
+            cmf_routing.dynamic_router: 100
+    dynamic:
+        enabled: true
+        route_provider_service_id: enhavo_app.route_provider
+
+parameters:
+    pdo.db_options:
+        db_table: app_session
+        db_id_col: id
+        db_data_col: value
+        db_time_col: time
+        db_lifetime_col: lifetime
+        gc_maxlifetime: 3600
+
+services:
+    pdo:
+        class: PDO
+        arguments:
+            - "mysql:host=%database_host%;dbname=%database_name%"
+            - "%database_user%"
+            - "%database_password%"
+        calls:
+            - [setAttribute, [3, 2]]
+
+    session.handler.pdo:
+        class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
+        arguments: ["@pdo", "%pdo.db_options%"]
+
+stof_doctrine_extensions:
+    default_locale: %locale%
+    orm:
+        default:
+            sluggable: true
+            timestampable: true
+
+sylius_resource:
+    translation:
+        default_locale: "%locale%"
+        locale_provider: enhavo.translation.locale_provider.contextual
+
+enhavo_assets:
+    require_js:
+        paths:
+            app:
+                location: /bundles/enhavoapp/js
