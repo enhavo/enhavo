@@ -286,4 +286,12 @@ class Product extends Content implements ShippableInterface, ProductInterface
     {
         return $this->getTax() + $this->getPrice();
     }
+
+    public function __toString()
+    {
+        if($this->title === null) {
+            return '';
+        }
+        return $this->title;
+    }
 }

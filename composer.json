@@ -39,7 +39,6 @@
     "sylius/cart-bundle": "v0.19.*",
     "sylius/currency-bundle": "v0.19.*",
     "sylius/order-bundle": "v0.19.*",
-    "sylius/flow-bundle": "v0.19.*",
     "sylius/addressing-bundle": "v0.19.*",
     "sylius/payment-bundle": "v0.19.*",
     "sylius/promotion-bundle": "v0.19.*",

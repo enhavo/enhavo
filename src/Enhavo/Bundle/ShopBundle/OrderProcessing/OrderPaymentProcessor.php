@@ -11,11 +11,13 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
+use Sylius\Component\Core\OrderCheckoutStates;
 
 class OrderPaymentProcessor implements ProcessorInterface
 {
     public function process(OrderInterface $order)
     {
+        $order->setCheckoutState(OrderCheckoutStates::STATE_PAYMENT_SELECTED);
         $order->getPayment()->setCurrencyCode('EUR');
         $order->getPayment()->setAmount($order->getTotal());
     }

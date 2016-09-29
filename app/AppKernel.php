@@ -8,12 +8,10 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-
             new Sylius\Bundle\CartBundle\SyliusCartBundle(),
             new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
             new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
             new Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle(),
-            new Sylius\Bundle\FlowBundle\SyliusFlowBundle(),
             new Sylius\Bundle\AddressingBundle\SyliusAddressingBundle(),
             new Sylius\Bundle\PromotionBundle\SyliusPromotionBundle(),
             new Sylius\Bundle\PaymentBundle\SyliusPaymentBundle(),
@@ -56,6 +54,7 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\SliderBundle\EnhavoSliderBundle(),
             new Enhavo\Bundle\SettingBundle\EnhavoSettingBundle($this),
             new Enhavo\Bundle\SearchBundle\EnhavoSearchBundle($this),
+            new Enhavo\Bundle\SerializerBundle\EnhavoSerializerBundle(),
             new Enhavo\Bundle\DownloadBundle\EnhavoDownloadBundle(),
             new Enhavo\Bundle\NewsletterBundle\EnhavoNewsletterBundle(),
             new Enhavo\Bundle\CalendarBundle\EnhavoCalendarBundle(),

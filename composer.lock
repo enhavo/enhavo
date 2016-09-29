@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "57cfc28da63020382645ee4408bea744",
-    "content-hash": "c597b6fcd99068e48477edf5ba71b892",
+    "hash": "74c5c140336d1c0f2c884301daa24374",
+    "content-hash": "2521b798bf27844198ff5eb17de1a245",
     "packages": [
         {
             "name": "bacon/bacon-string-utils",
@@ -4967,67 +4967,6 @@
                 "money"
             ],
             "time": "2016-07-05 01:41:22"
-        },
-        {
-            "name": "sylius/flow-bundle",
-            "version": "v0.19.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Sylius/SyliusFlowBundle.git",
-                "reference": "aa055fc0dbb2f16487365dde669d1679fb7c7384"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Sylius/SyliusFlowBundle/zipball/aa055fc0dbb2f16487365dde669d1679fb7c7384",
-                "reference": "aa055fc0dbb2f16487365dde669d1679fb7c7384",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6|^7.0",
-                "symfony/framework-bundle": "^2.8"
-            },
-            "require-dev": {
-                "phpspec/phpspec": "^2.4",
-                "symfony/yaml": "~2.1"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.19-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Sylius\\Bundle\\FlowBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sylius project",
-                    "homepage": "http://sylius.org"
-                },
-                {
-                    "name": "Community contributions",
-                    "homepage": "http://github.com/Sylius/Sylius/contributors"
-                },
-                {
-                    "name": "Paweł Jędrzejewski",
-                    "homepage": "http://pjedrzejewski.com"
-                }
-            ],
-            "description": "Multiple action setups for Symfony2, build your checkouts/installers or whatever needs more than one step to complete.",
-            "homepage": "http://sylius.org",
-            "keywords": [
-                "checkout",
-                "flow",
-                "installation",
-                "steps"
-            ],
-            "time": "2016-05-24 12:26:59"
         },
         {
             "name": "sylius/inventory",

@@ -1,0 +1,16 @@
+twig:
+    form:
+        resources:
+            - 'EnhavoCategoryBundle:Form:fields.html.twig'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
+            Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
+
+enhavo_assets:
+    require_js:
+        paths:
+            category:
+                location: /bundles/enhavocategory/js

@@ -1,0 +1,14 @@
+enhavo_content:
+    sitemap:
+        collectors:
+            article:
+                type: publish
+                repository: enhavo_article.repository.article
+
+enhavo_workflow:
+    entities:
+        -
+            class: %enhavo_article.model.article.class%
+            label: 'article.label.article'
+            translationDomain: EnhavoArticleBundle
+            repository: enhavo_article.repository.article

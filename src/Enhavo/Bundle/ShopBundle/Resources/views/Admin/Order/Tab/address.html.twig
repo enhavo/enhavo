@@ -1,8 +1,12 @@
 Shipping Address
 {{ form_widget(form.shippingAddress) }}
-{{ form_row(form.differentBillingAddress) }}
-Billing Address
-{{ form_widget(form.billingAddress) }}
+{{ form_row(form.differentBillingAddress, {
+    attr: {
+        'data-different-billing-address': ''
+    }
+}) }}
 
-
-
+<div data-billing-address {% if not data.differentBillingAddress %}style="display: none"{% endif %}>
+    Billing Address
+    {{ form_widget(form.billingAddress) }}
+</div>

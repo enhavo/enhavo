@@ -1,0 +1,85 @@
+{{ form_row(form.state) }}
+{{ form_row(form.paymentState) }}
+{{ form_row(form.shippingState) }}
+
+<div>
+    <hr />
+    {% for item in data.items %}
+        <div>
+            <h2>{{ item.product.title }}</h2>
+
+            <div>Quantity: {{ item.quantity }}</div>
+
+            <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>
+            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.product.tax }}</span></div>
+            <div>Unit Total: <span data-cart-item-unit-total>{{ item.product.unitPriceTotal }}</span></div>
+
+            <div>Tax Total: <span data-cart-item-tax-total>{{ item.taxTotal }}</span></div>
+            <div>Net Total: <span data-cart-item-net-total>{{ item.unitPriceTotal }}</span></div>
+            <div>Total: <span data-cart-item-total>{{ item.total }}</span></div>
+
+        </div>
+        <hr />
+    {% endfor %}
+
+    <div>
+        Total: <span data-cart-total>{{ data.total }}</span>
+    </div>
+    <div>
+        Netto: <span data-cart-net-total>{{ data.unitPriceTotal }}</span>
+    </div>
+    <div>
+        Unit Total: <span data-cart-unit-total>{{ data.unitTotal }}</span>
+    </div>
+    <div>
+        Shipping: <span data-cart-shipping-total>{{ data.shippingTotal }}</span>
+    </div>
+    <div>
+        Discount: <span data-cart-discount-total>{{ data.discountTotal }}</span>
+    </div>
+    <div>
+        Tax: <span data-cart-tax-total>{{ data.taxTotal }}</span>
+    </div>
+</div>
+
+<div>
+    <div>Rechnungsnummer: {{ data.number }}</div>
+    <div>Bestelldatum: {{ data.orderedAt|date }}</div>
+    <div>E-Mail: {{ data.customerEmail }}</div>
+    <div>Bezahlart: {{ data.payment.method.code }}</div>
+    {% if data.differentBillingAddress %}
+        <div>Lieferanschrift</div>
+        <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
+        {% if data.shippingAddress.company %}
+            <div>{{ data.shippingAddress.company }}</div>
+        {% endif %}
+        <div>{{ data.shippingAddress.street }}</div>
+        <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
+        <div>{{ data.shippingAddress.countryCode }}</div>
+        {% if data.shippingAddress.phoneNumber %}
+            <div>{{ data.shippingAddress.phoneNumber }}</div>
+        {% endif %}
+        <div>Rechnungsanschrift</div>
+        <div>{{ data.billingAddress.firstName }} {{ data.billingAddress.lastName }}</div>
+        {% if data.billingAddress.company %}
+            <div>{{ data.billingAddress.company }}</div>
+        {% endif %}
+        <div>{{ data.billingAddress.street }}</div>
+        <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
+        <div>{{ data.billingAddress.countryCode }}</div>
+        {% if data.billingAddress.phoneNumber %}
+            <div>{{ data.shippingAddress.phoneNumber }}</div>
+        {% endif %}
+    {% else %}
+        <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
+        {% if data.shippingAddress.company %}
+            <div>{{ data.shippingAddress.company }}</div>
+        {% endif %}
+        <div>{{ data.shippingAddress.street }}</div>
+        <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
+        <div>{{ data.shippingAddress.countryCode }}</div>
+        {% if data.shippingAddress.phoneNumber %}
+            <div>{{ data.shippingAddress.phoneNumber }}</div>
+        {% endif %}
+    {% endif %}
+</div>

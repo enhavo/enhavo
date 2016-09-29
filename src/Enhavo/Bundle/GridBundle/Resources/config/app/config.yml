@@ -1,0 +1,22 @@
+twig:
+    form:
+        resources:
+            - 'EnhavoGridBundle:Form:fields.html.twig'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
+            Enhavo\Bundle\GridBundle\Model\ItemInterface: Enhavo\Bundle\GridBundle\Entity\Item
+            Enhavo\Bundle\GridBundle\Model\ContainerInterface: Enhavo\Bundle\GridBundle\Entity\Container
+            Enhavo\Bundle\GridBundle\Model\ColumnInterface: Enhavo\Bundle\GridBundle\Entity\Column
+
+enhavo_app:
+    stylesheets:
+      - '@EnhavoGridBundle/Resources/public/css/style.css'
+
+enhavo_assets:
+    require_js:
+        paths:
+            grid:
+                location: /bundles/enhavogrid/js
