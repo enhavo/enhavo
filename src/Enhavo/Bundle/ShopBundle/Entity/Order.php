@@ -92,6 +92,11 @@ class Order extends Cart implements OrderInterface
      */
     private $token;
 
+    /**
+     * @var boolean
+     */
+    private $trackingMail;
+
     public function __construct()
     {
         parent::__construct();
@@ -522,5 +527,21 @@ class Order extends Cart implements OrderInterface
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTrackingMail()
+    {
+        return $this->trackingMail;
+    }
+
+    /**
+     * @param boolean $trackingMail
+     */
+    public function setTrackingMail($trackingMail)
+    {
+        $this->trackingMail = $trackingMail;
     }
 }

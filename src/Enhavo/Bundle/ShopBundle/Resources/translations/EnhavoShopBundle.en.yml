@@ -23,6 +23,8 @@ label:
 mailer:
   confirm:
     subject: Order
+  tracking:
+    subject: Order has been shipped
 
 order:
   label:

@@ -53,13 +53,6 @@ class OrderType extends AbstractType
             'label' => 'order.form.label.shipping.label'
         ]);
 
-        $builder->add('items', 'enhavo_list', [
-            'type' => 'enhavo_shop_order_item',
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false
-        ]);
-
         $builder->add('billingAddress', 'sylius_address');
         $builder->add('shippingAddress', 'sylius_address');
         $builder->add('differentBillingAddress', 'enhavo_boolean');

@@ -35,6 +35,10 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             type: string
             nullable: true
 
+        trackingMail:
+            type: boolean
+            nullable: true
+
     manyToOne:
         shippingAddress:
             cascade: ['persist']

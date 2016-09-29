@@ -65,3 +65,11 @@ enhavo_assets:
         paths:
             shop:
                 location: /bundles/enhavoshop/js
+
+
+enhavo_shop:
+    mailer:
+        confirm:
+            from: %mailer_from%
+        tracking:
+            from: %mailer_from%

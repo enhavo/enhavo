@@ -52,9 +52,6 @@ enhavo_shop_order_update:
                     order:
                         label: order.label.order
                         template: EnhavoShopBundle:Admin:Order/Tab/order.html.twig
-                    items:
-                        label: order.label.items
-                        template: EnhavoShopBundle:Admin:Order/Tab/items.html.twig
                     address:
                         label: order.label.address
                         template: EnhavoShopBundle:Admin:Order/Tab/address.html.twig

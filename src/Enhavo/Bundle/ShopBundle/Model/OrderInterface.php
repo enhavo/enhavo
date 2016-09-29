@@ -223,4 +223,14 @@ interface OrderInterface extends
      * @return \DateTime
      */
     public function getOrderedAt();
+
+    /**
+     * @return mixed
+     */
+    public function isTrackingMail();
+
+    /**
+     * @param boolean $trackingMail
+     */
+    public function setTrackingMail($trackingMail);
 }
