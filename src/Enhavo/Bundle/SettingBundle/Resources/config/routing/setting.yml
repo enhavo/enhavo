@@ -31,7 +31,7 @@ enhavo_setting_setting_update:
 enhavo_setting_setting_table:
     options:
         expose: true
-    path: /enhavo/setting/setting/table/{page}
+    path: /enhavo/setting/setting/table
     methods: [GET]
     defaults:
         page: 1

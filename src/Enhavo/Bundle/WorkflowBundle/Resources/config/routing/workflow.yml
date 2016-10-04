@@ -52,7 +52,7 @@ enhavo_workflow_workflow_update:
 enhavo_workflow_workflow_table:
     options:
         expose: true
-    path: /enhavo/workflow/workflow/table/{page}
+    path: /enhavo/workflow/workflow/table
     methods: [GET]
     defaults:
         page: 1

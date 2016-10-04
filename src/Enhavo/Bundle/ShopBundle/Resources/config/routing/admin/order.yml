@@ -63,7 +63,7 @@ enhavo_shop_order_update:
 enhavo_shop_order_table:
     options:
         expose: true
-    path: /enhavo/shop/order/table/{page}
+    path: /enhavo/shop/order/table
     methods: [GET]
     defaults:
         page: 1
