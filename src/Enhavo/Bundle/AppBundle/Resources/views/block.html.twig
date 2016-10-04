@@ -4,12 +4,12 @@
         <button class="btn col-md-12 close"> {{ 'label.cancel'|trans|nl2br }}</button>
     </div>
     <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="button"> {{ 'label.save'|trans|nl2br }}</button>
+        <button class="btn col-md-12 save" type="submit"> {{ 'label.save'|trans|nl2br }}</button>
     </div>
 
     {% if showDeleteButton is defined %}
         <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 delete" type="button"> {{ 'label.delete'|trans|nl2br }}</button>
+            <button class="btn col-md-12 delete"> {{ 'label.delete'|trans|nl2br }}</button>
         </div>
     {% endif %}
 {%- endblock -%}

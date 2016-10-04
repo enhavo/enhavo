@@ -52,6 +52,9 @@ class CreateViewer extends AbstractViewer
     public function getFormAction()
     {
         $action = $this->optionAccessor->get('form.action');
+        if($action == null) {
+            return null;
+        }
         return $this->container->get('router')->generate($action);
     }
 

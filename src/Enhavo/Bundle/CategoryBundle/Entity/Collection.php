@@ -3,8 +3,9 @@ namespace Enhavo\Bundle\CategoryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Collection implements CollectionInterface
+class Collection implements CollectionInterface, ResourceInterface
 {
     /**
      * @var integer
@@ -95,5 +96,13 @@ class Collection implements CollectionInterface
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    public function __toString()
+    {
+        if($this->name === null) {
+            return '';
+        }
+        return $this->name;
     }
 }
