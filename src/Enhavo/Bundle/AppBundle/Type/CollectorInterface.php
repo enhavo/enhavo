@@ -12,9 +12,7 @@ namespace Enhavo\Bundle\AppBundle\Type;
 
 interface CollectorInterface
 {
-    public function add(TypeInterface $type);
-
-    public function getCollection();
+    public function add($alias, $id);
 
     public function getType($name);
 }

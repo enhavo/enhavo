@@ -4,4 +4,4 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: dashboard }

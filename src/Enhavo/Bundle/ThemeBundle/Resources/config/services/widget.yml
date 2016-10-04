@@ -20,4 +20,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget }
+            - { name: enhavo.theme_widget, alias: template}

@@ -16,7 +16,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget }
+            - { name: enhavo.theme_widget, alias: page }
 
     enhavo_page.extend_listener.page:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -40,4 +40,4 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: page }

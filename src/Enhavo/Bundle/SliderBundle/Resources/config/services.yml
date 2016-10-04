@@ -28,7 +28,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget }
+            - { name: enhavo.theme_widget, alias: slider }
 
 
     enhavo_slider.extend_listener.slider:
@@ -54,4 +54,4 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: slider }

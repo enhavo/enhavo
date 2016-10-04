@@ -23,7 +23,7 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: base }
 
     enhavo_app.main_menu_renderer:
         class: Enhavo\Bundle\AppBundle\Menu\MainMenuRenderer

@@ -20,4 +20,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block }
+            - { name: enhavo.block, alias: table }

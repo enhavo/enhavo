@@ -20,4 +20,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo.action, alias: create }

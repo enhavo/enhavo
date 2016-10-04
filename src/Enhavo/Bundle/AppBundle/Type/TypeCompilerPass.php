@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class TypeCompilerPass implements CompilerPassInterface
 {
@@ -41,7 +40,7 @@ class TypeCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition($this->collectorServiceId)) {
-            return;
+            return null;
         }
 
         $definition = $container->getDefinition(
@@ -54,10 +53,14 @@ class TypeCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
-                $definition->addMethodCall(
-                    'add',
-                    array(new Reference($id))
-                );
+                if(isset($attributes['alias'])) {
+                    $definition->addMethodCall(
+                        'add',
+                        array($attributes['alias'], $id)
+                    );
+                } else {
+                    throw new \Exception(sprintf('alias required for %s', $id));
+                }
             }
         }
     }

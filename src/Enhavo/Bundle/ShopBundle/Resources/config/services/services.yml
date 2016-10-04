@@ -9,7 +9,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: shop_address }
 
     enhavo_shop.locale.country_resolver:
         class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
@@ -21,11 +21,11 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: product }
 
     enhavo_shop.menu_builder.order:
         class: Enhavo\Bundle\ShopBundle\Menu\OrderMenuBuilder
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: order }

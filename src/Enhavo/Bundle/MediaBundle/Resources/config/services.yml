@@ -40,4 +40,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: picture }

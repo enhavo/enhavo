@@ -10,6 +10,7 @@
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TypeCollector implements CollectorInterface
 {
@@ -18,44 +19,36 @@ class TypeCollector implements CollectorInterface
      */
     private $collection;
 
+    private $container;
+
     /**
      * @var string
      */
     private $typeName;
 
-    public function __construct($typeName = 'Type')
+    public function __construct(ContainerInterface $container, $typeName = 'Type')
     {
         $this->collection = array();
+        $this->container = $container;
         $this->typeName = $typeName;
     }
 
-    public function add(TypeInterface $type)
+    public function add($alias, $id)
     {
-        $this->collection[$type->getType()] = $type;
+        $this->collection[$alias] = $id;
     }
 
-    /**
-     * @return TypeInterface[]
-     */
-    public function getCollection()
+    public function getType($alias)
     {
-        $collection = [];
-        foreach($this->collection as $type) {
-            $collection[] = $type;
-        }
-        return $collection;
-    }
-
-    public function getType($name)
-    {
-        if(isset($this->collection[$name])) {
-            return $this->collection[$name];
+        if(isset($this->collection[$alias])) {
+            $serviceId = $this->collection[$alias];
+            return $this->container->get($serviceId);
         }
 
         throw new TypeNotFoundException(sprintf(
             '%s type "%s" not found. Did you mean one of them "%s".',
             $this->typeName,
-            $name,
+            $alias,
             implode(', ', $this->getNames())
         ));
     }

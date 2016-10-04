@@ -54,7 +54,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.action }
+            - { name: enhavo.action, alias: category }
 
     enhavo_category.extend_listener.category:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -70,4 +70,4 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: category }

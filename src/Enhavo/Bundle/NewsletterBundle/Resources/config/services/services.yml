@@ -11,4 +11,4 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_newsletter.repository.subscriber'
         tags:
-            - { name: enhavo.newsletter_storage }
+            - { name: enhavo.newsletter_storage, alias: local }

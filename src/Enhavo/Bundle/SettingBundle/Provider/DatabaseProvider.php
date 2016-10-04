@@ -12,6 +12,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 
 class DatabaseProvider implements ProviderInterface
 {
@@ -32,11 +33,17 @@ class DatabaseProvider implements ProviderInterface
      */
     protected $settingFactory;
 
-    public function __construct(KernelInterface $kernel, EntityManagerInterface $em, FactoryInterface $settingFactory)
+    /**
+     * @var Filesystem
+     */
+    protected $fileSystem;
+
+    public function __construct(KernelInterface $kernel, EntityManagerInterface $em, FactoryInterface $settingFactory, Filesystem $fileSystem)
     {
         $this->kernel = $kernel;
         $this->em = $em;
         $this->settingFactory = $settingFactory;
+        $this->fileSystem = $fileSystem;
     }
 
     public function init()
@@ -71,7 +78,7 @@ class DatabaseProvider implements ProviderInterface
     protected function getSettingArrayFromCache()
     {
         $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), self::CACHE_FILE_NAME);
-        $settingArray = json_decode(file_get_contents($cacheFilePath), $assoc=true);
+        $settingArray = json_decode($this->fileSystem->readFile($cacheFilePath), $assoc=true);
         return array_filter($settingArray);
     }
 
@@ -81,7 +88,8 @@ class DatabaseProvider implements ProviderInterface
 
         if (array_key_exists($key, $settingArray)){
             return $this->convertToObject($key, $settingArray[$key]);
-        } else return null;
+        }
+        return null;
     }
 
     protected function persistToDatabase($object){
@@ -117,10 +125,18 @@ class DatabaseProvider implements ProviderInterface
     {
         $object = $this->settingFactory->createNew();
         $object->setKey($key);
-        $object->setType($array['type']);
-        $object->setValue($array['value']);
-        $object->setLabel($array['label']);
-        $object->setTranslationDomain($array['translationDomain']);
+        if(array_key_exists('type', $array)) {
+            $object->setType($array['type']);
+        }
+        if(array_key_exists('label', $array)) {
+            $object->setLabel($array['label']);
+        }
+        if(array_key_exists('value', $array)) {
+            $object->setValue($array['value']);
+        }
+        if(array_key_exists('translationDomain', $array)) {
+            $object->setTranslationDomain($array['translationDomain']);
+        }
         return $object;
     }
 }

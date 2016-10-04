@@ -58,21 +58,21 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: user_user }
 
     enhavo_user.menu_builder.group:
         class: Enhavo\Bundle\UserBundle\Menu\GroupMenuBuilder
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: user_group }
 
     enhavo_user.widget.login:
         class: Enhavo\Bundle\UserBundle\Widget\LoginWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget }
+            - { name: enhavo.theme_widget, alias: login }
 
     enhavo_user.controller.security:
         class: Enhavo\Bundle\UserBundle\Controller\SecurityController
@@ -88,4 +88,4 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: reset_password }

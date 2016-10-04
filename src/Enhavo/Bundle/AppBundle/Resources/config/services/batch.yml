@@ -22,7 +22,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.batch }
+            - { name: enhavo.batch, alias: delete }
 
     enhavo_app.batch_manager:
         class: Enhavo\Bundle\AppBundle\Batch\BatchManager
