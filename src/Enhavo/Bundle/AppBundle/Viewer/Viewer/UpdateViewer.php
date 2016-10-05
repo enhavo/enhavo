@@ -17,7 +17,7 @@ class UpdateViewer extends CreateViewer
         return sprintf(
             '%s_%s_update',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 
@@ -48,7 +48,7 @@ class UpdateViewer extends CreateViewer
         return sprintf(
             '%s_%s_delete',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 
