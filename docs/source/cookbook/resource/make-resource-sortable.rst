@@ -71,32 +71,21 @@ as well (defaults: _sylius: paginate: x)
 
 .. code-block:: yaml
 
-    enhavo_slider_slide_move_after:
-        options:
-            expose: true
-        path: /enhavo/slider/slide/move-after/{id}/{target}
-        methods: [POST]
-        defaults:
-            _controller: enhavo_slider.controller.slide:moveAfterAction
-            _sylius:
-                sortable_position: position # Property name
-            _viewer:
-                sorting: desc               # "desc" means higher values first
+enhavo_slider_slide_move_after:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-after/{id}/{target}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
 
-
-.. code-block:: yaml
-
-    enhavo_slider_slide_move_to_page:
-        options:
-            expose: true
-        path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
-        methods: [POST]
-        defaults:
-            _controller: enhavo_slider.controller.slide:moveToPageAction
-            _sylius:
-                sortable_position: position # property name
-            _viewer:
-                sorting: desc               # "desc" means higher values first
+enhavo_slider_slide_move_to_page:
+    options:
+        expose: true
+    path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
+    methods: [POST]
+    defaults:
+        _controller: {{ app }}.controller.{{ resource }}:moveDownAction
 
 2. Modify table route
 ---------------------
@@ -110,31 +99,18 @@ drag/drop button for moving the item.
     enhavo_slider_slide_table:
         options:
             expose: true
-        path: /enhavo/slider/slide/table/{page}
+        path: /enhavo/slider/slide/table
         methods: [GET]
         defaults:
-            page: 1
             _controller: enhavo_slider.controller.slide:tableAction
             _sylius:
-                template: EnhavoAppBundle:Resource:table.html.twig
-                sorting:                    #
+                sortable: true              # add sortable
+                sorting:                    # add sorting
                     position: desc          # [property name]:[sort order], can be "desc" or "asc"
-            _viewer:
-                table:
-                    sorting:                                                    #
-                        sortable: true                                          # true to activate
-                        move_after_route: enhavo_slider_slide_move_after        # route defined above
-                        move_to_page_route: enhavo_slider_slide_move_to_page    # route defined above
+                viewer:
                     columns:
-                        id:
-                            label: id
-                            property: id
-                            width: 1
-                        title:
-                            label: title
-                            property: title
-                            width: 10
-                        position:                                                   # column
+                        # ... other columns
+                        position:                                                  # add this column
                             type: position                                         #
 
 Commented lines are new.
@@ -155,12 +131,8 @@ need to modify the create route.
         defaults:
             _controller: enhavo_slider.controller.slide:createAction
             _sylius:
-                template: EnhavoAppBundle:Resource:create.html.twig
-            _viewer:
-                sorting:                #
-                    sortable: true      # true to activate sorting
-                    position: position  # property name
-                    initial: max        # initial value, can be "max" or "min"
+                sortable: true  # add sortable
+
 
 Commented lines are new.
 
