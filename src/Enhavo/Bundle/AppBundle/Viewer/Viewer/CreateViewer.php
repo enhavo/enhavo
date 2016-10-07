@@ -24,8 +24,8 @@ class CreateViewer extends AbstractViewer
     public function getDefaultTab()
     {
         return [
-            $this->metadata->getHumanizedName() => [
-                'label' => sprintf('%s.label.%s', $this->metadata->getHumanizedName(), $this->metadata->getHumanizedName()),
+            $this->getUnderscoreName() => [
+                'label' => sprintf('%s.label.%s', $this->getUnderscoreName(), $this->getUnderscoreName()),
                 'template' => 'EnhavoAppBundle:Tab:default.html.twig'
             ]
         ];
@@ -52,6 +52,9 @@ class CreateViewer extends AbstractViewer
     public function getFormAction()
     {
         $action = $this->optionAccessor->get('form.action');
+        if($action == null) {
+            return null;
+        }
         return $this->container->get('router')->generate($action);
     }
 
@@ -60,7 +63,7 @@ class CreateViewer extends AbstractViewer
         return sprintf(
             '%s_%s_create',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 

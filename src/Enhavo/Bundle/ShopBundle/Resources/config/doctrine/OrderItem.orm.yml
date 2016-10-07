@@ -4,7 +4,6 @@ Enhavo\Bundle\ShopBundle\Entity\OrderItem:
 
     manyToOne:
         product:
-            targetEntity: Enhavo\Bundle\ShopBundle\Entity\Product
-
+            targetEntity: Enhavo\Bundle\ShopBundle\Model\ProductInterface
 
     lifecycleCallbacks: {  }

@@ -13,20 +13,4 @@ class ArticleController extends ResourceController
             'data' => $article
         ));
     }
-
-    public function batchActionPublish($resources)
-    {
-        $this->isGrantedOr403('edit');
-        $em = $this->get('doctrine.orm.entity_manager');
-        /** @var Article $article */
-        foreach ($resources as $article) {
-            if (!$article->getPublic()) {
-                $article->setPublic(true);
-                $em->persist($article);
-            }
-        }
-        $em->flush();
-
-        return true;
-    }
 }

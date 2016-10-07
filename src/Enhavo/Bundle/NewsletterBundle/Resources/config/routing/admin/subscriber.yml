@@ -31,7 +31,7 @@ enhavo_newsletter_subscriber_update:
 enhavo_newsletter_subscriber_table:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/table/{page}
+    path: /enhavo/newsletter/subscriber/table
     methods: [GET]
     defaults:
         page: 1

@@ -39,9 +39,4 @@ abstract class AbstractRenderer extends \Twig_Extension
     {
         return $this->collector->getType($type);
     }
-
-    /**
-     * @inheritdoc
-     */
-    abstract public function getName();
 } 

@@ -22,7 +22,7 @@ class IndexViewer extends AppViewer
         return sprintf(
             '%s_%s_table',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 
@@ -31,7 +31,7 @@ class IndexViewer extends AppViewer
         return sprintf(
             '%s_%s_update',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 
@@ -40,7 +40,7 @@ class IndexViewer extends AppViewer
         return sprintf(
             '%s_%s_create',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 

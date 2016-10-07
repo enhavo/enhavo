@@ -73,22 +73,22 @@ class TableViewer extends AbstractViewer
 
     protected function getDefaultMoveAfterRoute()
     {
-        return sprintf('%s_%s_move_after', $this->metadata->getApplicationName(), $this->metadata->getHumanizedName());
+        return sprintf('%s_%s_move_after', $this->metadata->getApplicationName(), $this->getUnderscoreName());
     }
 
     protected function getDefaultMoveToPageRoute()
     {
-        return sprintf('%s_%s_move_to_page', $this->metadata->getApplicationName(), $this->metadata->getHumanizedName());
+        return sprintf('%s_%s_move_to_page', $this->metadata->getApplicationName(), $this->getUnderscoreName());
     }
 
     protected function getBatchRoute()
     {
-        return sprintf('%s_%s_batch', $this->metadata->getApplicationName(), $this->metadata->getHumanizedName());
+        return sprintf('%s_%s_batch', $this->metadata->getApplicationName(), $this->getUnderscoreName());
     }
 
     protected function getPermissionRole()
     {
-        return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->metadata->getHumanizedName()));
+        return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->getUnderscoreName()));
     }
 
     public function getType()
