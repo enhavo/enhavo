@@ -320,7 +320,7 @@ class FileService
             $fileInfo = pathinfo($file);
             return array(
                 'pathname'  => $file,
-                'extension' => $fileInfo['extension'],
+                'extension' => array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : null,
                 'basename'  => $fileInfo['basename'],
                 'filename'  => $fileInfo['filename'],
                 'mime_type' => $this->guessMimeType($file)
