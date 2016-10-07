@@ -221,8 +221,7 @@ class InstallCommand extends ContainerAwareCommand
                 '--namespace'  => 'ProjectBundle',
                 '--bundle-name'  => 'ProjectBundle',
                 '--dir'  => realpath($srcDir),
-                '--format'  => 'yml',
-                '--structure' => 'no',
+                '--format'  => 'yml'
             );
 
             $argumentInputs = new ArrayInput($arguments);
