@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\User\Security\Generator\TokenGenerator;
 use Sylius\Component\Core\OrderCheckoutStates;
@@ -57,7 +58,7 @@ class OrderInitProcessor implements ProcessorInterface
     {
         /** @var OrderInterface[] $orders */
         $orders = $this->orderRepository->findBy([], [
-            'number' => 'DESC'
+            'createdAt' => 'DESC'
         ], 1);
 
         if(count($orders)) {
@@ -67,14 +68,17 @@ class OrderInitProcessor implements ProcessorInterface
                 return $number;
             }
         }
-        return 10000;
+        return 1;
     }
 
     private function getUser()
     {
         $token = $this->tokenStorage->getToken();
         if($token) {
-            return $token->getUser();
+            $user = $token->getUser();
+            if($user instanceof UserInterface) {
+                return $user;
+            }
         }
         return null;
     }

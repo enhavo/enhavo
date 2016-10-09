@@ -63,11 +63,15 @@ class CartController extends SyliusCartController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
         $cart = $this->getCurrentCart();
+        
+        $compositionCalculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
+        $orderComposition = $compositionCalculator->calculateOrder($cart);
 
         $view = View::create()
             ->setTemplate($configuration->getTemplate('EnhavoShopBundle:Theme:Cart/summary.html.twig'))
             ->setData([
                 'cart' => $cart,
+                'order' => $orderComposition->toArray(),
             ])
         ;
 
