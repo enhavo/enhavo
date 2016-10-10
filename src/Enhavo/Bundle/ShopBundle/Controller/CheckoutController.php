@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\ShopBundle\Model\CheckoutContext;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckoutController extends Controller
+class CheckoutController extends AppController
 {
     /**
      * @return CartProviderInterface
@@ -49,15 +49,6 @@ class CheckoutController extends Controller
         return $this->get('doctrine')->getManager();
     }
 
-    /**
-     * @return string
-     */
-    protected function getTemplate($name)
-    {
-        $templates = $this->container->getParameter('enhavo_shop.templates');
-        return $templates[$name];
-    }
-
     protected function getErrors(FormInterface $form)
     {
         $messages = [];
@@ -74,6 +65,8 @@ class CheckoutController extends Controller
 
     protected function processCheckoutContext(CheckoutContext $context)
     {
+        $configuration = $this->requestConfigurationFactory->createSimple($context->getRequest());
+
         $order = $this->getCurrentCart();
 
         $form = $this->get('form.factory')->create($context->getFormType());
@@ -100,10 +93,8 @@ class CheckoutController extends Controller
 
         $context->addData('order', $order);
         $context->addData('form', $form->createView());
-        $context->addData('baseTemplate', $this->getTemplate('base'));
 
-
-        return $this->render($this->getTemplate($context->getTemplate()), $context->getData());
+        return $this->render($configuration->getTemplate($context->getTemplate()), $context->getData());
     }
 
     /**
@@ -140,7 +131,7 @@ class CheckoutController extends Controller
         $context = $this->createCheckoutContext($request);
         $context->setNextRoute('enhavo_shop_theme_checkout_payment');
         $context->setFormType('enhavo_shop_order_address');
-        $context->setTemplate('checkout_addressing');
+        $context->setTemplate('EnhavoShopBundle:Theme:Checkout/addressing.html.twig');
         $context->setProcessor($this->get('enhavo.order_processing.addressing_processor'));
 
         return $this->processCheckoutContext($context);
@@ -156,7 +147,7 @@ class CheckoutController extends Controller
         $context = $this->createCheckoutContext($request);
         $context->setNextRoute('enhavo_shop_theme_checkout_confirm');
         $context->setFormType('enhavo_shop_order_payment');
-        $context->setTemplate('checkout_payment');
+        $context->setTemplate('EnhavoShopBundle:Theme:Checkout/payment.html.twig');
         $context->setProcessor($this->get('enhavo.order_processing.payment_processor'));
 
         return $this->processCheckoutContext($context);
@@ -173,7 +164,7 @@ class CheckoutController extends Controller
         $context = $this->createCheckoutContext($request);
         $context->setNextRoute('enhavo_shop_theme_checkout_finish');
         $context->setFormType('enhavo_shop_order_confirm');
-        $context->setTemplate('checkout_confirm');
+        $context->setTemplate('EnhavoShopBundle:Theme:Checkout/confirm.html.twig');
         $context->setProcessor($this->get('enhavo.order_processing.confirm_processor'));
         $context->setRouteParameters([
             'token' => $order->getToken()
@@ -184,6 +175,7 @@ class CheckoutController extends Controller
 
     public function finishAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
         $token = $request->get('token');
         if($token === null) {
             throw $this->createNotFoundException();
@@ -197,9 +189,8 @@ class CheckoutController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->render($this->getTemplate('checkout_finish'), [
+        return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme:Checkout/finish.html.twig'), [
             'order' => $order,
-            'baseTemplate' => $this->getTemplate('base')
         ]);
     }
 }

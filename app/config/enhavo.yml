@@ -141,8 +141,3 @@ enhavo_theme:
                 social_media:
                     type: template
                     template: 'EnhavoThemeBundle:Theme:Widget/social-media.html.twig'
-
-
-enhavo_shop:
-    templates:
-        base: 'EnhavoThemeBundle:Theme:base.html.twig'
