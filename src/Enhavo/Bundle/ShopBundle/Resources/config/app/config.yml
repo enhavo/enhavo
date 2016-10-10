@@ -3,16 +3,13 @@ sylius_cart:
     resources:
         cart:
             classes:
-                controller: Enhavo\Bundle\ShopBundle\Controller\CartController
                 model: Enhavo\Bundle\ShopBundle\Entity\Order
-                form:
-                    default: Enhavo\Bundle\ShopBundle\Form\Type\CartType
+                controller: Enhavo\Bundle\ShopBundle\Controller\CartController
+
         cart_item:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\OrderItem
                 controller: Enhavo\Bundle\ShopBundle\Controller\CartItemController
-                form:
-                    default: Enhavo\Bundle\ShopBundle\Form\Type\CartItemType
 
 sylius_order:
     resources:
@@ -74,3 +71,10 @@ enhavo_shop:
             from: %mailer_from%
         tracking:
             from: %mailer_from%
+
+jms_serializer:
+    metadata:
+        directories:
+            EnhavoShopBundle:
+                namespace_prefix: "Enhavo\\Bundle\\ShopBundle"
+                path: "@EnhavoShopBundle/Resources/config/serializer"

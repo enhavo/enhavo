@@ -41,9 +41,6 @@ services:
             - '@enhavo_shop.repository.product'
             - '@sylius.order_item_quantity_modifier'
 
-    enhavo_shop.calculator.order_composition_calculator:
-        class: Enhavo\Bundle\ShopBundle\Calculator\OrderCompositionCalculator
-
     enhavo_shop.listener.cart_subscriber:
         class: Enhavo\Bundle\ShopBundle\EventListener\CartSubscriber
         arguments:
@@ -181,3 +178,8 @@ services:
             - '%enhavo_shop.mailer.tracking%'
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_shop.event_listner.serializer_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\SerializerSubscriber
+        tags:
+          - { name: jms_serializer.event_subscriber }

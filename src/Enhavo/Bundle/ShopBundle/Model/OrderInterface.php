@@ -233,4 +233,11 @@ interface OrderInterface extends
      * @param boolean $trackingMail
      */
     public function setTrackingMail($trackingMail);
+
+    /**
+     * Returns true if shipping cost is 0
+     *
+     * @return boolean
+     */
+    public function isFreeShipping();
 }

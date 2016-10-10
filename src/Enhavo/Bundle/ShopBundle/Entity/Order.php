@@ -544,4 +544,9 @@ class Order extends Cart implements OrderInterface
     {
         $this->trackingMail = $trackingMail;
     }
+
+    public function isFreeShipping()
+    {
+        return $this->getShippingTotal() === 0;
+    }
 }
