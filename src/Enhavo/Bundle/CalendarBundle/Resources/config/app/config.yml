@@ -1,0 +1,18 @@
+enhavo_content:
+    sitemap:
+        collectors:
+            appointment:
+                type: publish
+                repository: enhavo_calendar.repository.appointment
+
+enhavo_workflow:
+    entities:
+        -
+            class: %enhavo_newsletter.model.newsletter.class%
+            label: 'newsletter.label.newsletter'
+            translationDomain: EnhavoNewsletterBundle
+            repository: enhavo_newsletter.repository.newsletter
+
+
+
+

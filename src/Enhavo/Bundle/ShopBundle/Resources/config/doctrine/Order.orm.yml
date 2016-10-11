@@ -1,6 +1,7 @@
 Enhavo\Bundle\ShopBundle\Entity\Order:
     type: entity
     table: shop_order
+
     attributeOverride:
         expiresAt:
             nullable: true
@@ -28,6 +29,14 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
 
         email:
             type: string
+            nullable: true
+
+        token:
+            type: string
+            nullable: true
+
+        trackingMail:
+            type: boolean
             nullable: true
 
     manyToOne:

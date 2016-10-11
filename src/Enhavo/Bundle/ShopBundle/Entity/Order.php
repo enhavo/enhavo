@@ -87,6 +87,16 @@ class Order extends Cart implements OrderInterface
      */
     private $user;
 
+    /**
+     * @var string
+     */
+    private $token;
+
+    /**
+     * @var boolean
+     */
+    private $trackingMail;
+
     public function __construct()
     {
         parent::__construct();
@@ -493,5 +503,45 @@ class Order extends Cart implements OrderInterface
             $total += $items->getTaxTotal();
         }
         return $total;
+    }
+
+    public function getCustomerEmail()
+    {
+        if($this->getUser() !== null) {
+            return $this->getUser()->getEmail();
+        }
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTrackingMail()
+    {
+        return $this->trackingMail;
+    }
+
+    /**
+     * @param boolean $trackingMail
+     */
+    public function setTrackingMail($trackingMail)
+    {
+        $this->trackingMail = $trackingMail;
     }
 }

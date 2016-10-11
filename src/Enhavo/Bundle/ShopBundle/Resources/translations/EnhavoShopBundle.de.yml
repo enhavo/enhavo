@@ -19,3 +19,42 @@ promotion:
 label:
   product: Produkt
   order: Bestellung
+
+mailer:
+  confirm:
+    subject: Bestellung
+  tracking:
+    subject: Paket versendet
+
+order:
+  label:
+    number: Bestellnummer
+    ordered_at: Aufgegben am
+    name: Name
+    order: Bestellung
+    items: Posten
+    address: Adresse
+    payment: Bezahlung
+
+  form:
+    label:
+      state:
+        label: Status
+        cancelled: Storniert
+        confirmed: Bestellt
+        returned: Retoure
+      payment:
+        label: Bezahlung
+        completed: Bezahlt
+        pending: Offen
+      shipping:
+        label: Versand
+        pending: Offen
+        ready: Versandfertig
+        shipped: Versendet
+
+order_item:
+  form:
+    label:
+      quantity: Anzahl
+      product: Produkt

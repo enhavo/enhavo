@@ -34,7 +34,7 @@
 {{ app }}_{{ resource }}_table:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/table/{page}
+    path: /{{ app_url }}/{{ resource_url }}/table
     methods: [GET]
     defaults:
         page: 1

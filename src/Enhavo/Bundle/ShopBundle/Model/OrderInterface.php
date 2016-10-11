@@ -193,4 +193,44 @@ interface OrderInterface extends
      * @return integer
      */
     public function getUnitPriceTotal();
+
+    /**
+     * Return email of customer
+     *
+     * @return mixed
+     */
+    public function getCustomerEmail();
+
+    /**
+     * @return string
+     */
+    public function getToken();
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token);
+
+    /**
+     * @param $orderedAt
+     * @return mixed
+     */
+    public function setOrderedAt($orderedAt);
+
+    /**
+     * Get orderedAt
+     *
+     * @return \DateTime
+     */
+    public function getOrderedAt();
+
+    /**
+     * @return mixed
+     */
+    public function isTrackingMail();
+
+    /**
+     * @param boolean $trackingMail
+     */
+    public function setTrackingMail($trackingMail);
 }

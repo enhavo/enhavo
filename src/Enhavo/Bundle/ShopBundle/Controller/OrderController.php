@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends ResourceController
 {
@@ -48,6 +49,17 @@ class OrderController extends ResourceController
 
         $route = $configuration->getRedirectRoute('enhavo_shop_theme_cart_summary');
         return $this->redirectToRoute($route);
+    }
+
+    public function billingAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $order = $this->getOrder($configuration);
+        $billingGenerator = $this->get('enhavo_shop.document.billing_generator');
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->setContent($billingGenerator->generate($order));
+        return $response;
     }
 
     private function getOrder(RequestConfiguration $configuration)

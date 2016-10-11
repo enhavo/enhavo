@@ -15,9 +15,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
     mailer_delivery_address: ~
+    mailer_from: ~
+    mailer_to: ~
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
-
-    contact_form_recipient: ~
-    emails_send_from: ~

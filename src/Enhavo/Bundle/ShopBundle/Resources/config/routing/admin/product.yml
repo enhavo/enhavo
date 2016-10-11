@@ -55,7 +55,7 @@ enhavo_shop_product_update:
 enhavo_shop_product_table:
     options:
         expose: true
-    path: /enhavo/shop/product/table/{page}
+    path: /enhavo/shop/product/table
     methods: [GET]
     defaults:
         page: 1

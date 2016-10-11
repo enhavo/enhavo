@@ -19,6 +19,6 @@ enhavo_shop_theme_checkout_confirm:
         _controller: enhavo_shop.controller.checkout:confirmAction
 
 enhavo_shop_theme_checkout_finish:
-    path: /finish
+    path: /{token}/finish
     defaults:
         _controller: enhavo_shop.controller.checkout:finishAction

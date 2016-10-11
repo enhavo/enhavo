@@ -122,4 +122,11 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
             'translationDomain' => null
         ]);
     }
+
+    protected function getUnderscoreName()
+    {
+        $name = $this->metadata->getHumanizedName();
+        $name = str_replace(' ', '_', $name);
+        return $name;
+    }
 }

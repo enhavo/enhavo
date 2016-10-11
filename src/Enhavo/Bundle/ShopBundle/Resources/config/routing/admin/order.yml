@@ -7,6 +7,9 @@ enhavo_shop_order_index:
         _controller: sylius.controller.order:indexAction
         _sylius:
             viewer:
+                stylesheets:
+                    - '@EnhavoShopBundle/Resources/public/css/order.css'
+                translationDomain: EnhavoShopBundle
                 app: shop/OrderApp
                 blocks:
                     table:
@@ -27,6 +30,7 @@ enhavo_shop_order_create:
         _sylius:
             form: enhavo_shop_order
             viewer:
+                translationDomain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_order_create
 
@@ -40,50 +44,51 @@ enhavo_shop_order_update:
         _sylius:
             form: enhavo_shop_order
             viewer:
+                translationDomain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_order_update
                     delete: enhavo_shop_order_delete
                 tabs:
                     order:
                         label: order.label.order
-                        template: EnhavoShopBundle:Order/Tab:order.html.twig
-                    list:
-                        label: order.label.order
-                        template: EnhavoShopBundle:Order/Tab:list.html.twig
+                        template: EnhavoShopBundle:Admin:Order/Tab/order.html.twig
                     address:
-                        label: order.label.order
-                        template: EnhavoShopBundle:Order/Tab:address.html.twig
+                        label: order.label.address
+                        template: EnhavoShopBundle:Admin:Order/Tab/address.html.twig
                     payment:
-                        label: order.label.order
-                        template: EnhavoShopBundle:Order/Tab:payment.html.twig
+                        label: order.label.payment
+                        template: EnhavoShopBundle:Admin:Order/Tab/payment.html.twig
 
 
 enhavo_shop_order_table:
     options:
         expose: true
-    path: /enhavo/shop/order/table/{page}
+    path: /enhavo/shop/order/table
     methods: [GET]
     defaults:
         page: 1
         _controller: sylius.controller.order:tableAction
         _sylius:
+            criteria:
+                checkoutState: completed
             viewer:
+                translationDomain: EnhavoShopBundle
                 batch_route: enhavo_shop_order_batch
                 columns:
                     number:
                         label: order.label.number
                         property: number
-                        width: 1
+                        width: 2
                     date:
                         label: order.label.ordered_at
-                        type: date
+                        type: datetime
                         property: orderedAt
-                        width: 1
+                        width: 2
                     name:
                         label: order.label.name
                         type: shop_address
                         property: shippingAddress
-                        width: 10
+                        width: 8
 
 
 
@@ -109,3 +114,11 @@ enhavo_shop_order_batch:
             batches:
                 delete:
                     type: delete
+
+enhavo_shop_order_billing:
+    options:
+        expose: true
+    path: /enhavo/shop/order/{id}/billing.pdf
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order:billingAction

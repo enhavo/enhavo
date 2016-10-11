@@ -17,13 +17,16 @@ class UpdateViewer extends CreateViewer
         return sprintf(
             '%s_%s_update',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 
     public function getFormDelete()
     {
         $route = $this->optionAccessor->get('form.delete');
+        if($route == null) {
+            return null;
+        }
         return $this->container->get('router')->generate($route, array(
             'id' => $this->resource->getId()
         ));
@@ -32,6 +35,9 @@ class UpdateViewer extends CreateViewer
     public function getFormAction()
     {
         $route = $this->optionAccessor->get('form.action');
+        if($route == null) {
+            return null;
+        }
         return $this->container->get('router')->generate($route, [
             'id' => $this->resource->getId()
         ]);
@@ -42,7 +48,7 @@ class UpdateViewer extends CreateViewer
         return sprintf(
             '%s_%s_delete',
             $this->metadata->getApplicationName(),
-            $this->metadata->getHumanizedName()
+            $this->getUnderscoreName()
         );
     }
 

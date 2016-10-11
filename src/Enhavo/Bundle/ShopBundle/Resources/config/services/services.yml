@@ -14,7 +14,7 @@ services:
     enhavo_shop.locale.country_resolver:
         class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
         arguments:
-            - @sylius.repository.country
+            - '@sylius.repository.country'
 
     enhavo_shop.menu_builder.product:
         class: Enhavo\Bundle\ShopBundle\Menu\ProductMenuBuilder
@@ -29,3 +29,6 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: order }
+            
+    enhavo.token_generator:
+        class: Sylius\Component\User\Security\Generator\TokenGenerator

@@ -6,17 +6,17 @@
   "autoload": {
     "psr-4": {
       "": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "": "tests/"
     },
     "classmap": [
       "app/AppKernel.php",
       "app/AppCache.php",
       "app/Environment.php"
     ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "": "tests/"
-    }
   },
   "require": {
     "php": "^5.6|^7.0",
@@ -39,7 +39,6 @@
     "sylius/cart-bundle": "v0.19.*",
     "sylius/currency-bundle": "v0.19.*",
     "sylius/order-bundle": "v0.19.*",
-    "sylius/flow-bundle": "v0.19.*",
     "sylius/addressing-bundle": "v0.19.*",
     "sylius/payment-bundle": "v0.19.*",
     "sylius/promotion-bundle": "v0.19.*",

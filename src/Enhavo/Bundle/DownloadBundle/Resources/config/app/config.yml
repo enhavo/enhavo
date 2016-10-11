@@ -1,0 +1,4 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\DownloadBundle\Model\DownloadInterface: Enhavo\Bundle\DownloadBundle\Entity\Download

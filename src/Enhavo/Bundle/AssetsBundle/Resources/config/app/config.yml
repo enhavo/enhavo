@@ -60,34 +60,5 @@ enhavo_assets:
             fos-routing-data:
                 location: /js/routing.json
 
-            app:
-                location: /bundles/enhavoapp/js
-
-            media:
-                location: /bundles/enhavomedia/js
-
-            newsletter:
-                location: /bundles/enhavonewsletter/js
-
-            category:
-                location: /bundles/enhavocategory/js
-
-            slider:
-                location: /bundles/enhavoslider/js
-
-            search:
-                location: /bundles/enhavosearch/js
-
             assets:
                 location: /bundles/enhavoassets/js
-
-            grid:
-                location: /bundles/enhavogrid/js
-
-            shop:
-                location: /bundles/enhavoshop/js
-
-
-
-
-

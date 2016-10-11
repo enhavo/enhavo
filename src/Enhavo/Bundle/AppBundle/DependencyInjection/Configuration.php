@@ -22,12 +22,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('permission_check')
-                    ->defaultTrue()
-                ->end()
-            ->end()
-
-            ->children()
                 ->scalarNode('login_redirect')->defaultValue('enhavo_dashboard_index')->end()
             ->end()
 
@@ -42,9 +36,7 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->booleanNode('show_version')
-                    ->defaultTrue()
-                ->end()
+                ->booleanNode('show_version')->defaultTrue()->end()
             ->end()
 
             ->children()

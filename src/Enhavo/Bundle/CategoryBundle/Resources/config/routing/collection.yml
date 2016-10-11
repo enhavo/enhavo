@@ -6,17 +6,23 @@ enhavo_category_collection_update:
     defaults:
         _controller: enhavo_category.controller.collection:updateAction
         _sylius:
+            repository:
+                method: findCollectionOrCreate
+                arguments: $collection
             template: EnhavoAppBundle:Resource:update-small.html.twig
-        _viewer:
-            translationDomain: EnhavoCategoryBundle
-            buttons:
-                delete:
-                    display: false
-                save:
-                    route: enhavo_category_collection_update
-                    routeParameters:
-                        collection: $collection
-            tabs:
-                category:
-                    label: category.label.categories
-                    template: EnhavoCategoryBundle:Tab:collection.html.twig
+            viewer:
+                translationDomain: EnhavoCategoryBundle
+                form:
+                    action: ~
+                    delete: ~
+                buttons:
+                    delete:
+                        display: false
+                    save:
+                        route: enhavo_category_collection_update
+                        routeParameters:
+                            collection: $collection
+                tabs:
+                    category:
+                        label: category.label.categories
+                        template: EnhavoCategoryBundle:Tab:collection.html.twig
