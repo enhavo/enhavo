@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Enhavo\Bundle\AppBundle\Exception\AliasRequiredException;
 
 class TypeCompilerPass implements CompilerPassInterface
 {
@@ -59,7 +60,7 @@ class TypeCompilerPass implements CompilerPassInterface
                         array($attributes['alias'], $id)
                     );
                 } else {
-                    throw new \Exception(sprintf('alias required for %s', $id));
+                    throw new AliasRequiredException(sprintf('alias required for %s', $id));
                 }
             }
         }

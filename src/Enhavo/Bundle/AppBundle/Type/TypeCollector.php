@@ -10,6 +10,7 @@
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
+use Enhavo\Bundle\AppBundle\Exception\TypeNotValidException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TypeCollector implements CollectorInterface
@@ -42,7 +43,10 @@ class TypeCollector implements CollectorInterface
     {
         if(isset($this->collection[$alias])) {
             $serviceId = $this->collection[$alias];
-            return $this->container->get($serviceId);
+            $type = $this->container->get($serviceId);
+            if($this->isTypeValid($type, $alias)){
+                return $type;
+            }
         }
 
         throw new TypeNotFoundException(sprintf(
@@ -51,6 +55,19 @@ class TypeCollector implements CollectorInterface
             $alias,
             implode(', ', $this->getNames())
         ));
+    }
+
+    protected function isTypeValid($type, $alias)
+    {
+        if($type instanceof TypeInterface) {
+            if($type->getType() == $alias) {
+                return true;
+            } else {
+                throw new TypeNotValidException(sprintf('%s does not match alias %s', $type->getType(), $alias));
+            }
+        } else {
+            throw new TypeNotValidException(sprintf('%s does not implement TypeInterface', $type));
+        }
     }
 
     protected function getNames()

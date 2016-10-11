@@ -3,6 +3,8 @@
 services:
     enhavo_app.viewer_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
 
     viewer.factory:
         class: Enhavo\Bundle\AppBundle\Viewer\ViewerFactory
