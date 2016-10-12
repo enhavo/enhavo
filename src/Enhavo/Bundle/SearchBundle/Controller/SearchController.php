@@ -2,20 +2,30 @@
 
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter;
 use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class SearchController extends Controller
+class SearchController extends AppController
 {
-    //Happens when someone pressed the submit button of the search field.
+    /**
+     * Handle search submit
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function submitAction(Request $request)
     {
-        //set the current entry to searchEspression
-        $searchExpression = $request->get('search');
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+
+        $template = $configuration->getTemplate('EnhavoSearchBundle:Admin:Search/result.html.twig');
+
+        // set the current entry to search expression
+        $searchExpression = $request->get('q', '');
         $searchTypes = $request->get('entities');
-        $searchFields = $request->get('fields');
+        $searchFields = $request->get('fields', []);
 
         // check if there are any keywords entered
         if(!empty($searchExpression)) {
@@ -28,12 +38,13 @@ class SearchController extends Controller
                 //get search results
                 $result = $searchEngine->search($searchExpression, array($filter), $searchTypes, $searchFields);
                 if(empty($result)) {
-                    return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
-                        'data' => 'No results'
+                    return $this->render($template, array(
+                        'results' => 'No results',
+                        'expression' => $searchExpression
                     ));
                 }
 
-                //do the highlighting
+                // highlighting
                 $resourcesBefore = $result->getResources();
                 $resourcesBefore = array_filter($resourcesBefore);
                 $resourcesAfter = array();
@@ -43,21 +54,23 @@ class SearchController extends Controller
                 $result->setResources($resourcesAfter);
 
                 //get resource to render
-                return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
-                    'data' => $result->getResources()
+                return $this->render($template, array(
+                    'results' => $result->getResources(),
+                    'expression' => $searchExpression
                 ));
             } catch(SearchEngineException $e) {
 
                 //exception
-                return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
-                    'data' => $e->getMessage()
+                return $this->render($template, array(
+                    'results' => $e->getMessage(),
+                    'expression' => $searchExpression
                 ));
             }
         } else {
-
             //there were no keywords entered
-            return $this->render('EnhavoSearchBundle:Search:result.html.twig', array(
-                'data' => $this->get('translator')->trans('search.form.error.blank', [], 'EnhavoSearchBundle')
+            return $this->render($template, array(
+                'results' => $this->get('translator')->trans('search.form.error.blank', [], 'EnhavoSearchBundle'),
+                'expression' => $searchExpression
             ));
         }
     }

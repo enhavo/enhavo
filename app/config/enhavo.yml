@@ -122,8 +122,7 @@ enhavo_theme:
             template: 'EnhavoThemeBundle:Box:sidebar.html.twig'
             widgets:
                 search:
-                    type: template
-                    template: 'EnhavoThemeBundle:Theme:Widget/search.html.twig'
+                    type: search
                 category:
                     type: article_category
                 newsletter:

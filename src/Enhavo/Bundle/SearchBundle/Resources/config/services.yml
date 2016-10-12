@@ -5,71 +5,71 @@ services:
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
         arguments:
-            - @service_container
-            - @enhavo_search_metadata_factory
+            - '@service_container'
+            - '@enhavo_search_metadata_factory'
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.update, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.pre_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.pre_update, method: onSave }
     
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
         arguments:
-            - @service_container
-            - @enhavo_search_metadata_factory
+            - '@service_container'
+            - '@enhavo_search_metadata_factory'
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.delete, method: onDelete }
+            - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }
 
 
     enhavo_search_render:
         class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
         arguments:
-            - @service_container
+            - '@service_container'
         tags:
             - { name: twig.extension }
 
     enhavo_search_index_walker:
         class: Enhavo\Bundle\SearchBundle\Index\IndexWalker
         arguments:
-            - @enhavo_search.index_collector
+            - '@enhavo_search.index_collector'
 
     enhavo_search_index_engine:
         class: Enhavo\Bundle\SearchBundle\Index\IndexEngine
         arguments:
-            - @doctrine.orm.entity_manager
-            - %enhavo_search.search.strategy%
-            - @enhavo_search_index_walker
-            - @enhavo_search_metadata_factory
-            - @enhavo_search_search_util
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_search.search.strategy%'
+            - '@enhavo_search_index_walker'
+            - '@enhavo_search_metadata_factory'
+            - '@enhavo_search_search_util'
 
     enhavo_search_search_engine:
         class: Enhavo\Bundle\SearchBundle\Search\SearchEngine
         arguments:
-            - @service_container
-            - @doctrine.orm.entity_manager
-            - @enhavo_search_search_util
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_search_search_util'
 
     enhavo_search_search_util:
         class: Enhavo\Bundle\SearchBundle\Util\SearchUtil
         arguments:
-            - @kernel
-            - @service_container
-            - @enhavo_search_metadata_factory
-            - @doctrine.orm.entity_manager
+            - '@kernel'
+            - '@service_container'
+            - '@enhavo_search_metadata_factory'
+            - '@doctrine.orm.entity_manager'
 
     enhavo_search.block.search:
         class: Enhavo\Bundle\SearchBundle\Block\SearchBlock
         calls:
             - [setContainer, ['@service_container']]
         arguments:
-            - @enhavo_search_search_util
-            - @enhavo_search_metadata_factory
+            - '@enhavo_search_search_util'
+            - '@enhavo_search_metadata_factory'
         tags:
             - { name: enhavo.block }
 
     enhavo_search_permission_filter:
         class: Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter
         arguments:
-            - @service_container
+            - '@service_container'
 
     enhavo_search_update_route:
         class: Enhavo\Bundle\SearchBundle\Twig\UpdateRoute
@@ -79,93 +79,109 @@ services:
     enhavo_search_index_elasticsearch_engine:
         class: Enhavo\Bundle\SearchBundle\Index\IndexElasticsearchEngine
         arguments:
-            - @enhavo_search_search_util
-            - @enhavo_search_pdf_type
-            - @enhavo_search_metadata_factory
-            - @enhavo_search_index_walker
+            - '@enhavo_search_search_util'
+            - '@enhavo_search_pdf_type'
+            - '@enhavo_search_metadata_factory'
+            - '@enhavo_search_index_walker'
 
     enhavo_search_elasticsearch_engine:
         class: Enhavo\Bundle\SearchBundle\Search\ElasticSearchEngine
         arguments:
-            - @doctrine.orm.entity_manager
-            - @enhavo_search_search_util
-            - @enhavo_search_metadata_factory
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_search_search_util'
+            - '@enhavo_search_metadata_factory'
 
     enhavo_search_collection_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\CollectionType
         arguments:
-            - @enhavo_search_search_util
-            - @service_container
-            - @enhavo_search_metadata_factory
+            - '@enhavo_search_search_util'
+            - '@service_container'
+            - '@enhavo_search_metadata_factory'
         tags:
             - { name: enhavo_search.index }
 
     enhavo_search_html_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\HtmlType
         arguments:
-            - @enhavo_search_search_util
-            - @service_container
+            - '@enhavo_search_search_util'
+            - '@service_container'
         tags:
             - { name: enhavo_search.index }
 
     enhavo_search_model_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\ModelType
         arguments:
-            - @enhavo_search_search_util
-            - @service_container
-            - @enhavo_search_metadata_factory
+            - '@enhavo_search_search_util'
+            - '@service_container'
+            - '@enhavo_search_metadata_factory'
         tags:
             - { name: enhavo_search.index }
 
     enhavo_search_plain_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\PlainType
         arguments:
-            - @enhavo_search_search_util
-            - @service_container
+            - '@enhavo_search_search_util'
+            - '@service_container'
         tags:
             - { name: enhavo_search.index }
 
     enhavo_search_pdf_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\PdfType
         arguments:
-            - @enhavo_search_search_util
-            - @service_container
-            - @enhavo_media.file_service
+            - '@enhavo_search_search_util'
+            - '@service_container'
+            - '@enhavo_media.file_service'
         tags:
             - { name: enhavo_search.index }
 
     enhavo_search.index_collector:
-        class: %enhavo_search.index_collector.class%
+        class: '%enhavo_search.index_collector.class%'
         arguments:
             - 'index'
 
     enhavo_search_highlight:
         class: Enhavo\Bundle\SearchBundle\Search\Highlight
         arguments:
-            - @doctrine.orm.entity_manager
-            - @enhavo_search_search_util
-            - @enhavo_search_pdf_type
-            - @enhavo_search_metadata_factory
-            - @service_container
-            - @enhavo_search_index_walker
-            - @enhavo_search_text_extractor
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_search_search_util'
+            - '@enhavo_search_pdf_type'
+            - '@enhavo_search_metadata_factory'
+            - '@service_container'
+            - '@enhavo_search_index_walker'
+            - '@enhavo_search_text_extractor'
 
     enhavo_search_metadata_collector:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataCollector
         arguments:
-            - @kernel
-            - @filesystem
+            - '@kernel'
+            - '@filesystem'
 
     enhavo_search_metadata_factory:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory
         arguments:
-            - @kernel
-            - @enhavo_search_metadata_collector
+            - '@kernel'
+            - '@enhavo_search_metadata_collector'
 
     enhavo_search_text_extractor:
         class: Enhavo\Bundle\SearchBundle\Extractor\TextExtractor
         arguments:
-            - @enhavo_search_search_util
-            - @enhavo_search_metadata_factory
-            - @service_container
-            - @enhavo_search_index_walker
+            - '@enhavo_search_search_util'
+            - '@enhavo_search_metadata_factory'
+            - '@service_container'
+            - '@enhavo_search_index_walker'
+
+    enhavo_search.widget.search:
+        class: Enhavo\Bundle\SearchBundle\Widget\SearchWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: search }
+
+    enhavo_search.controller.search:
+        class: Enhavo\Bundle\SearchBundle\Controller\SearchController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]

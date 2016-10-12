@@ -110,7 +110,7 @@ class IndexEngine implements IndexEngineInterface
                 $this->em->flush();
             }
             $this->indexingData($resource);
-        } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW){
+        } else if($this->strategy == self::INDEX_STRATEGY_INDEX_NEW) {
 
             //indexing the first time otherwise set reindex
             if(!$wordsForDataset){
@@ -123,7 +123,7 @@ class IndexEngine implements IndexEngineInterface
                 $dataSet->setReindex(1);
                 $this->em->persist($dataSet);
             }
-        } else if($this->strategy == self::INDEX_STRATEGY_REINDEX && $wordsForDataset){
+        } else if($this->strategy == self::INDEX_STRATEGY_REINDEX) {
 
             //set reindex
             $dataSet->setReindex(1);

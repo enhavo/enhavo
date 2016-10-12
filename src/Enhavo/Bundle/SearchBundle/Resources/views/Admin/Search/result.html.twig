@@ -1,7 +1,7 @@
 <div id="search-results">
     <h3>{{ 'search.label.result'|trans({}, 'EnhavoSearchBundle')|nl2br }}</h3>
-    {% if data is iterable %}
-        {% for item in data %}
+    {% if results is iterable %}
+        {% for item in results %}
             <div data-id="{{ item.resource.id }}" {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
                 <div class="row">
                     <div class="col-xs-12">
@@ -13,6 +13,6 @@
         {% endfor %}
     {% else %}
         <br />
-        {{ data|nl2br }}
+        {{ results|nl2br }}
     {% endif %}
 </div>

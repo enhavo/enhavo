@@ -24,16 +24,16 @@ class TextExtractor
 
     public function extract($resource)
     {
-        if($this->container->getParameter('enhavo_search.search.search_engine') == 'enhavo_search_search_engine'){
+        if($this->container->getParameter('enhavo_search.search.search_engine') == 'enhavo_search_search_engine') {
 
-            //for enhaovo IndexEngine
+            // for enhavo IndexEngine
             $resourceDataset = $this->util->getDataset($resource);
             return $resourceDataset->getRawdata();
         } else {
 
-            //for elasticsearch
-            $metadate = $this->metadataFactory->create($resource);
-            $indexItems = $this->indexWalker->getIndexItems($resource, $metadate, array('rawData'));
+            // for elastic search
+            $metadata = $this->metadataFactory->create($resource);
+            $indexItems = $this->indexWalker->getIndexItems($resource, $metadata, array('rawData'));
             $text = '';
             foreach ($indexItems as $indexItem) {
                 $text .= "\n ".$indexItem->getRawData();

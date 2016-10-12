@@ -1,0 +1,4 @@
+enhavo_search_submit:
+    path:     /enhavo/search/{type}/submit
+    defaults:
+        _controller: enhavo_search.controller.search:submitAction
