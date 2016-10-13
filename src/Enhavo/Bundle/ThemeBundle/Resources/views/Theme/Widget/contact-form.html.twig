@@ -1,3 +1,4 @@
+{% use 'EnhavoContactBundle:Widget:contact.html.twig' %}
 <section id="contact">
     <div class="container">
         <h2>Contact</h2>
@@ -6,7 +7,7 @@
     <div class="row npam">
         <div class="col-md-8 col-sm-12 npam">
             <div class="form">
-                {{ contact_form('contact') }}
+                {{ block('form') }}
                 <div id="form-messages" data-response-container></div>
             </div>
         </div>

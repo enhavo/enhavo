@@ -1,18 +1,16 @@
-/**
- * Created by jhelbing on 10.11.15.
- */
-$(function() {
-    contact.init()
-});
-
-var contact = new ContactForm();
-
-function ContactForm() {
-
+function ContactForm()
+{
     var self = this;
 
-    this.init = function () {
-        $('#contact_form').on('submit', function (event) {
+    this.init = function ()
+    {
+        $(function() {
+            self.initContactForms();
+        });
+    };
+
+    this.initContactForms = function() {
+        $('[data-contact-form]').on('submit', function (event) {
             event.preventDefault();
             var form = $(this);
             var url = $(this).attr('action');
@@ -23,15 +21,21 @@ function ContactForm() {
                 type: 'POST',
                 data: data,
                 success: function(response) {
-                    $('#contact_message').remove();
-                    form.append('<div id="contact_message">'+response.message+'</div>');
+                    form.find('[data-response-container]').html(
+                      '<div class="contact-message-success">'+response.message+'</div>'
+                    );
                 },
                 error: function(response) {
-                    $('#contact_message').remove();
-                    form.append('<div id="contact_message">'+response.responseJSON.message+'</div>');
+                    form.find('[data-response-container]').html(
+                      '<div id="contact-message-error">'+response.responseJSON.message+'</div>'
+                    );
                 }
             });
             return false;
         });
     };
+
+    this.init();
 }
+
+var contact = new ContactForm();

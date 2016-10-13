@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,10 +19,10 @@ class ContactFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'text');
-        $builder->add('firstname', 'text');
-        $builder->add('lastname', 'text');
-        $builder->add('message', 'textarea');
+        $builder->add('email', TextType::class);
+        $builder->add('firstName', TextType::class);
+        $builder->add('lastName', TextType::class);
+        $builder->add('message', TextareaType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

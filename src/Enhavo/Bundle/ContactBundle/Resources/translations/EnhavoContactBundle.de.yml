@@ -1,3 +1,6 @@
 contact:
   message:
     email_subject: Kontaktformular
+  form:
+    message:
+      success: 'Nachricht erfolgreich gesendet!'

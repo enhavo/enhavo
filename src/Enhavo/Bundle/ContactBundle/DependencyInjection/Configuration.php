@@ -20,30 +20,28 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_contact');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
         $rootNode
             ->children()
-                ->arrayNode('contact')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\ContactBundle\Model\Contact')->end()
-                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType')->end()
+                ->arrayNode('forms')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('model')->defaultValue('Enhavo\Bundle\ContactBundle\Model\Contact')->end()
+                            ->scalarNode('form')->defaultValue('Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType')->end()
                             ->arrayNode('template')
                                 ->addDefaultsIfNotSet()
                                 ->children()
-                                    ->scalarNode('form')->defaultValue('EnhavoContactBundle:Contact:form.html.twig')->end()
-                                    ->scalarNode('recipient')->defaultValue('EnhavoContactBundle:Contact:recipient.html.twig')->end()
-                                    ->scalarNode('sender')->defaultValue('EnhavoContactBundle:Contact:sender.html.twig')->end()
+                                    ->scalarNode('form')->defaultValue('EnhavoContactBundle:Widget:form.html.twig')->end()
+                                    ->scalarNode('recipient')->defaultValue('EnhavoContactBundle:Mail:recipient.html.twig')->end()
+                                    ->scalarNode('confirm')->defaultValue('EnhavoContactBundle:Mail:confirm.html.twig')->end()
                                 ->end()
                             ->end()
-                        ->scalarNode('recipient')->defaultValue('no-reply@enhavo.com')->end()
-                        ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
-                        ->scalarNode('subject')->defaultValue('contact.message.email_subject')->end()
-                        ->scalarNode('translationDomain')->defaultValue('EnhavoContactBundle')->end()
-                        ->scalarNode('send_to_sender')->defaultValue(true)->end()
+                            ->scalarNode('recipient')->defaultValue('no-reply@enhavo.com')->end()
+                            ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
+                            ->scalarNode('subject')->defaultValue('contact.message.email_subject')->end()
+                            ->scalarNode('translation_domain')->defaultValue('EnhavoContactBundle')->end()
+                            ->scalarNode('confirm_mail')->defaultValue(true)->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

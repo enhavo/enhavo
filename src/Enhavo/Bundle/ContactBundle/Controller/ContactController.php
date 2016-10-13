@@ -2,78 +2,75 @@
 
 namespace Enhavo\Bundle\ContactBundle\Controller;
 
-use Enhavo\Bundle\ContactBundle\Model\Contact;
-use Enhavo\Bundle\ContactBundle\Model\ContactInterface;
+use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
+use Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver;
+use Enhavo\Bundle\ContactBundle\Mailer\ContactMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ContactController extends Controller
 {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
 
-    protected $errorResolver = null;
+    /**
+     * @var ContactMailer
+     */
+    protected $contactMailer;
 
-    public function getErrorResolver()
-    {
-        if($this->errorResolver === null) {
-            $this->errorResolver = $this->get('errorresolver.formerrorresolver');
-        }
-        return $this->errorResolver;
+    /**
+     * @var ConfigurationFactory
+     */
+    protected $configurationFactory;
+
+    /**
+     * @var FormErrorResolver
+     */
+    protected $formErrorResolver;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        ContactMailer $contactMailer,
+        ConfigurationFactory $configurationFactory,
+        FormErrorResolver $formErrorResolver
+    ) {
+        $this->translator = $translator;
+        $this->contactMailer = $contactMailer;
+        $this->configurationFactory = $configurationFactory;
+        $this->formErrorResolver = $formErrorResolver;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function submitAction(Request $request)
     {
-        $form = $this->get('form.factory')->create('enhavo_contact_'.$this->container->getParameter("enhavo_contact.contact.type"));
+        $name = $request->get('name');
+
+        $configuration = $this->configurationFactory->create($name);
+
+        $form = $this->createForm($configuration->getFormName());
         $form->handleRequest($request);
-
         if($form->isValid()) {
-            $emailTo = $this->container->getParameter('enhavo_contact.contact.recipient');
+            $model = $form->getData();
+            $this->contactMailer->send($name, $model);
 
-            $contact = $form->getData();
-
-            $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.recipient'), array(
-                'contact' => $contact
-            ));
-
-            $subject = $this->container->getParameter('enhavo_contact.contact.subject');
-            $td = $this->container->getParameter('enhavo_contact.contact.translationDomain');
-            $subject = $this->get('translator')->trans($subject, array(), $td);
-
-            $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
-                ->setTo($emailTo)
-                ->setBody($text);
-
-            $this->get('mailer')->send($message);
-            if($this->container->getParameter('enhavo_contact.contact.send_to_sender')) {
-                $this->sendMailToSender($contact);
-            }
             $response = new JsonResponse(array(
-                'message' => 'Nachricht erfolgreich gesendet!'
+                'message' => $this->translator->trans('contact.form.message.success', [], 'EnhavoContactBundle')
             ));
         } else {
-            $errors = $this->getErrorResolver()->getErrors($form);
+            $errors = $this->formErrorResolver->getErrors($form);
             $response = new JsonResponse(array(
                 'message' => $errors[0]
             ), 400);
         }
+
         return $response;
-    }
-
-    protected function sendMailToSender(ContactInterface $contact) {
-
-        $text = $this->renderView($this->container->getParameter('enhavo_contact.contact.template.sender'), array(
-            'contact' => $contact
-        ));
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject($this->get('translator')->trans($this->container->getParameter('enhavo_contact.contact.subject'), array(), $this->container->getParameter('enhavo_contact.contact.translationDomain')))
-            ->setFrom($this->container->getParameter('enhavo_contact.contact.from'))
-            ->setTo($contact->getEmail())
-            ->setBody($text);
-
-        $this->get('mailer')->send($message);
     }
 }
