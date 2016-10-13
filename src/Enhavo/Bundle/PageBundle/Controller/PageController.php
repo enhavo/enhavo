@@ -13,20 +13,4 @@ class PageController extends ResourceController
             'data' => $contentDocument
         ));
     }
-
-    public function batchActionPublish($resources)
-    {
-        $this->isGrantedOr403('edit');
-        $em = $this->get('doctrine.orm.entity_manager');
-        /** @var Page $page */
-        foreach ($resources as $page) {
-            if (!$page->getPublic()) {
-                $page->setPublic(true);
-                $em->persist($page);
-            }
-        }
-        $em->flush();
-
-        return true;
-    }
 }
