@@ -21,14 +21,14 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu, alias: product }
+            - { name: enhavo.menu, alias: shop_product }
 
     enhavo_shop.menu_builder.order:
         class: Enhavo\Bundle\ShopBundle\Menu\OrderMenuBuilder
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu, alias: order }
-            
+            - { name: enhavo.menu, alias: shop_order }
+
     enhavo.token_generator:
         class: Sylius\Component\User\Security\Generator\TokenGenerator
