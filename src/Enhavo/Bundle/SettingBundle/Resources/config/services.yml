@@ -37,11 +37,11 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: setting }
 
     enhavo_setting.menu_builder.setting:
         class: Enhavo\Bundle\SettingBundle\Menu\SettingMenuBuilder
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: setting }

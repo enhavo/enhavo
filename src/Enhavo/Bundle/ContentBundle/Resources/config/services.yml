@@ -12,7 +12,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.batch }
+            - { name: enhavo.batch, alias: publish }
 
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -30,12 +30,12 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.sitemap_collector }
+            - { name: enhavo.sitemap_collector, alias: repository }
 
     enhavo_content.sitemap_collector.publish:
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\PublishCollector
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.sitemap_collector }
+            - { name: enhavo.sitemap_collector, alias: publish }
 

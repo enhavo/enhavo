@@ -6,6 +6,7 @@ services:
     enhavo_app.table_widget_collector:
         class: %enhavo_app.twig.table_widget_collector.class%
         arguments:
+          - '@service_container'
           - 'TableWidget'
 
     enhavo_app.twig.table_widget_renderer:
@@ -20,60 +21,60 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: list }
 
     enhavo_app.table.template_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: template }
 
     enhavo_app.table.multiple_property_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\MultiplePropertyWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: multiple_property }
 
     enhavo_app.table.property_widget:
         class: Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: property }
 
     enhavo_app.table.position:
         class: Enhavo\Bundle\AppBundle\Table\Widget\PositionWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: position }
 
     enhavo_app.table.date:
         class: Enhavo\Bundle\AppBundle\Table\Widget\DateWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: date }
 
     enhavo_app.table.datetime:
         class: Enhavo\Bundle\AppBundle\Table\Widget\DateTimeWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: datetime }
 
     enhavo_app.table.boolean:
         class: Enhavo\Bundle\AppBundle\Table\Widget\BooleanWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: boolean }
 
     enhavo_app.table.label:
         class: Enhavo\Bundle\AppBundle\Table\Widget\LabelWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: label }

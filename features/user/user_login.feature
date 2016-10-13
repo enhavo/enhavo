@@ -6,8 +6,9 @@ Feature: User Login
   Background:
     Given no active session
     Given following users
-     | username   | email             | password   | roles      |
-     | paul       | paul@enhavo.com   | userPW     | ROLE_USER  |
+      | username   | email             | password   | roles      |
+      | peter      | peter@enhavo.com  | savePW     | ROLE_ADMIN |
+      | paul       | paul@enhavo.com   | userPW     | ROLE_USER  |
 
   Scenario: Redirect to login page
     Given I am on "/user/profile"

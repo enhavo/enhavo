@@ -7,7 +7,8 @@ php:
 before_install:
     - composer self-update
     - if [[ ! -z "$GITHUB_OAUTH_TOKEN" ]]; then composer config -g github-oauth.github.com "$GITHUB_OAUTH_TOKEN" >/dev/null 2>&1; fi
-
+    - export USE_ZEND_ALLOC=0
+    
 install:
     - sudo apt-get install -y --force-yes php5-mysql
     - mysql -e 'create database enhavo_test'

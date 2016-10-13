@@ -7,6 +7,7 @@ services:
     enhavo_app.button_collector:
         class: %enhavo_app.twig.button_collector.class%
         arguments:
+          - '@service_container'
           - 'Button'
 
     enhavo_app.twig.button_renderer:
@@ -21,25 +22,25 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.button }
+            - { name: enhavo.button, alias: delete }
 
     enhavo_app.button.cancel:
         class: Enhavo\Bundle\AppBundle\Button\Button\CancelButton
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.button }
+            - { name: enhavo.button, alias: cancel }
 
     enhavo_app.button.preview:
         class: Enhavo\Bundle\AppBundle\Button\Button\PreviewButton
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.button }
+            - { name: enhavo.button, alias: preview }
 
     enhavo_app.button.save:
         class: Enhavo\Bundle\AppBundle\Button\Button\SaveButton
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.button }
+            - { name: enhavo.button, alias: save }

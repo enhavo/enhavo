@@ -64,7 +64,7 @@ services:
             - @enhavo_search_search_util
             - @enhavo_search_metadata_factory
         tags:
-            - { name: enhavo.block }
+            - { name: enhavo.block, alias: search }
 
     enhavo_search_permission_filter:
         class: Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter
@@ -98,7 +98,7 @@ services:
             - @service_container
             - @enhavo_search_metadata_factory
         tags:
-            - { name: enhavo_search.index }
+            - { name: enhavo_search.index, alias: Collection }
 
     enhavo_search_html_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\HtmlType
@@ -106,7 +106,7 @@ services:
             - @enhavo_search_search_util
             - @service_container
         tags:
-            - { name: enhavo_search.index }
+            - { name: enhavo_search.index, alias: Html }
 
     enhavo_search_model_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\ModelType
@@ -115,7 +115,7 @@ services:
             - @service_container
             - @enhavo_search_metadata_factory
         tags:
-            - { name: enhavo_search.index }
+            - { name: enhavo_search.index, alias: Model }
 
     enhavo_search_plain_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\PlainType
@@ -123,7 +123,7 @@ services:
             - @enhavo_search_search_util
             - @service_container
         tags:
-            - { name: enhavo_search.index }
+            - { name: enhavo_search.index, alias: Plain }
 
     enhavo_search_pdf_type:
         class: Enhavo\Bundle\SearchBundle\Index\Type\PdfType
@@ -132,7 +132,7 @@ services:
             - @service_container
             - @enhavo_media.file_service
         tags:
-            - { name: enhavo_search.index }
+            - { name: enhavo_search.index, alias: PDF }
 
     enhavo_search.index_collector:
         class: %enhavo_search.index_collector.class%

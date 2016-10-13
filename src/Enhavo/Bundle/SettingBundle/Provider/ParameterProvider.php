@@ -21,6 +21,6 @@ class ParameterProvider implements ProviderInterface
 
     public function getSetting($key)
     {
-        return $this->container->get('service_container')->getParameter($key);
+        return $this->container->getParameter($key);
     }
 }

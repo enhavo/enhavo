@@ -3,6 +3,8 @@
 services:
     enhavo_app.viewer_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
 
     viewer.factory:
         class: Enhavo\Bundle\AppBundle\Viewer\ViewerFactory
@@ -13,34 +15,34 @@ services:
     enhavo_app.viewer.index:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: index }
 
     enhavo_app.viewer.create:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: create }
 
     enhavo_app.viewer.update:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: update }
 
     enhavo_app.viewer.app:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: app }
 
     enhavo_app.viewer.base:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: base }
 
     enhavo_app.viewer.table:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: table }
 
     enhavo_app.viewer.preview:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer
         tags:
-            - { name: enhavo.viewer }
+            - { name: enhavo.viewer, alias: preview }

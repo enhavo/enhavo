@@ -88,7 +88,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget }
+            - { name: enhavo.table_widget, alias: workflow_assigned }
 
     enhavo_workflow_status:
         class: Enhavo\Bundle\AppBundle\Form\Type\WorkflowStatusType
@@ -132,4 +132,4 @@ services:
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
-            - { name: enhavo.menu }
+            - { name: enhavo.menu, alias: workflow }
