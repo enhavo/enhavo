@@ -46,17 +46,19 @@ class SearchEngine implements SearchEngineInterface
 
             //check filters
             $resultResources = array();
+
             foreach ($results as $result) {
-                $allFilters = true;
-                foreach ($filters as $filter) {
-                    if(!$filter->isGranted($result)){
-                        $allFilters = false;
-                        break;
-                    }
-                }
-                if($allFilters){
-                    $resultResources[] = $result;
-                }
+                $resultResources[] = $result;
+//                $allFilters = true;
+//                foreach ($filters as $filter) {
+//                    if(!$filter->isGranted($result)){
+//                        $allFilters = false;
+//                        break;
+//                    }
+//                }
+//                if($allFilters){
+//                    $resultResources[] = $result;
+//                }
             }
 
             //return searchResult

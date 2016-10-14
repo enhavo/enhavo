@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Bundle\CartBundle\Controller\CartController as SyliusCartController;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Cart\SyliusCartEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +22,12 @@ use FOS\RestBundle\View\View;
 
 class CartController extends SyliusCartController
 {
+    use CartSummaryTrait;
+
     public function saveQuantityAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $id = intval($request->get('id'));
         $quantity = intval($request->get('quantity'));
 
@@ -46,32 +51,6 @@ class CartController extends SyliusCartController
         $eventDispatcher->dispatch(SyliusCartEvents::CART_SAVE_INITIALIZE, $event);
         $eventDispatcher->dispatch(SyliusCartEvents::CART_SAVE_COMPLETED, new FlashEvent());
 
-        $compositionCalculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
-
-        /** @var OrderInterface $cart */
-        $orderItemComposition = $compositionCalculator->calculateOrderItem($orderItem);
-        $orderComposition = $compositionCalculator->calculateOrder($cart);
-
-        return new JsonResponse([
-            'order' => $orderComposition->toArray(),
-            'orderItem' => $orderItemComposition->toArray()
-        ]);
+        return $this->redirectToCartSummary($configuration);
     }
-
-    public function summaryAction(Request $request)
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $cart = $this->getCurrentCart();
-
-        $view = View::create()
-            ->setTemplate($configuration->getTemplate('EnhavoShopBundle:Theme:Cart/summary.html.twig'))
-            ->setData([
-                'cart' => $cart,
-            ])
-        ;
-
-        return $this->viewHandler->handle($configuration, $view);
-    }
-
 }

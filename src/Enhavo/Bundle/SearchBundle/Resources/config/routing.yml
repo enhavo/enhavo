@@ -1,3 +1,0 @@
-enhavo_search_submit:
-    path:     /enhavo/search/{type}/submit
-    defaults: { _controller: EnhavoSearchBundle:Search:submit }

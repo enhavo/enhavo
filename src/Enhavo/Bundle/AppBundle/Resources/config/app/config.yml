@@ -65,3 +65,7 @@ enhavo_assets:
         paths:
             app:
                 location: /bundles/enhavoapp/js
+
+jms_serializer:
+    metadata:
+        auto_detection: false

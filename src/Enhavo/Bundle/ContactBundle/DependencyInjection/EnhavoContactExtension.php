@@ -21,17 +21,22 @@ class EnhavoContactExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('enhavo_contact.contact.type', 'contact');
-        $container->setParameter('enhavo_contact.contact.model', $config['contact']['model']);
-        $container->setParameter('enhavo_contact.contact.form', $config['contact']['form']);
-        $container->setParameter('enhavo_contact.contact.template.form', $config['contact']['template']['form']);
-        $container->setParameter('enhavo_contact.contact.template.recipient', $config['contact']['template']['recipient']);
-        $container->setParameter('enhavo_contact.contact.template.sender', $config['contact']['template']['sender']);
-        $container->setParameter('enhavo_contact.contact.recipient', $config['contact']['recipient']);
-        $container->setParameter('enhavo_contact.contact.from', $config['contact']['from']);
-        $container->setParameter('enhavo_contact.contact.subject', $config['contact']['subject']);
-        $container->setParameter('enhavo_contact.contact.translationDomain', $config['contact']['translationDomain']);
-        $container->setParameter('enhavo_contact.contact.send_to_sender', $config['contact']['send_to_sender']);
+
+        if(isset($config['forms']) && is_array($config['forms'])) {
+            foreach($config['forms'] as $name => $form) {
+                $container->setParameter(sprintf('enhavo_contact.%s.model', $name), $form['model']);
+                $container->setParameter(sprintf('enhavo_contact.%s.form', $name), $form['form']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template.form', $name), $form['template']['form']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template.recipient', $name), $form['template']['recipient']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template.confirm', $name), $form['template']['confirm']);
+                $container->setParameter(sprintf('enhavo_contact.%s.recipient', $name), $form['recipient']);
+                $container->setParameter(sprintf('enhavo_contact.%s.from', $name), $form['from']);
+                $container->setParameter(sprintf('enhavo_contact.%s.subject', $name), $form['subject']);
+                $container->setParameter(sprintf('enhavo_contact.%s.translation_domain', $name), $form['translation_domain']);
+                $container->setParameter(sprintf('enhavo_contact.%s.confirm_mail', $name), $form['confirm_mail']);
+            }
+            $container->setParameter('enhavo_contact.forms', $config['forms']);
+        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

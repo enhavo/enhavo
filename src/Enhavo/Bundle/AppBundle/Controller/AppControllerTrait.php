@@ -9,8 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
-use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\View\ViewHandler;
+use FOS\RestBundle\View\ViewHandler as FOSViewHandler;
 
 trait AppControllerTrait
 {
@@ -32,7 +31,7 @@ trait AppControllerTrait
     public function __construct(
         SimpleRequestConfigurationFactoryInterface $requestConfigurationFactory,
         ViewerFactory $viewerFactory,
-        ViewHandler $viewHandler
+        FOSViewHandler $viewHandler
     ) {
         $this->viewerFactory = $viewerFactory;
         $this->viewHandler = $viewHandler;

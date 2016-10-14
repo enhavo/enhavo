@@ -5,11 +5,11 @@
  * Date: 11.11.15
  * Time: 13:41
  */
+
 namespace Enhavo\Bundle\ContactBundle\ErrorResolver;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-
 
 class FormErrorResolver {
     /**

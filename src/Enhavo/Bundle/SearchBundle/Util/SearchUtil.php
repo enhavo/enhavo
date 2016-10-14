@@ -57,7 +57,7 @@ class SearchUtil
 
             } else if ($bundle->getName() == 'EnhavoSearchBundle') {
                 $searchBundlePath = $bundle->getPath();
-                $splittedPath = explode('/', $searchBundlePath);
+                $splittedPath = explode(DIRECTORY_SEPARATOR, $searchBundlePath);
                 while (end($splittedPath) != 'src') {
                     array_pop($splittedPath);
                 }

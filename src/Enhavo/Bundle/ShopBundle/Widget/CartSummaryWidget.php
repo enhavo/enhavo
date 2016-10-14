@@ -30,13 +30,9 @@ class CartSummaryWidget extends AbstractType implements WidgetInterface
         if(empty($cart)) {
             $cart = $this->container->get('sylius.cart_provider')->getCart();
         }
-
-        $calculator = $this->container->get('enhavo_shop.calculator.order_composition_calculator');
-        $orderComposition = $calculator->calculateOrder($cart);
-
+        
         return $this->renderTemplate($resolvedOptions['template'], [
             'cart' => $cart,
-            'total' => $orderComposition,
             'immutable' => $resolvedOptions['immutable']
         ]);
     }

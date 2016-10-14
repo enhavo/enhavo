@@ -1,5 +1,5 @@
 <form action="{{ path('enhavo_search_submit', { type: type }) }}" id="search_form">
-    <input id="search" name="search" placeholder="{{ 'search.label.search'|trans({}, 'EnhavoSearchBundle') }}">
+    <input id="search" name="q" placeholder="{{ 'search.label.search'|trans({}, 'EnhavoSearchBundle') }}">
     <button type="submit" value="search" id="submit_search"></button><br>
     <button class="btn show search-options" data-show-search-options>Suchoptionen einblenden</button>
     <div class="row search-list-container clearfix" data-search-options>

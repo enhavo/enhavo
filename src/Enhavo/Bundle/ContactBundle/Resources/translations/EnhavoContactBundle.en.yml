@@ -1,3 +1,6 @@
 contact:
   message:
     email_subject: Contactform
+  form:
+    message:
+      success: 'Message successfully send!'

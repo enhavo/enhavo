@@ -35,3 +35,10 @@ services:
         class: Enhavo\Bundle\AppBundle\Twig\UrlBeautifier
         tags:
             - { name: twig.extension }
+
+    enhavo_app.twig.url_resolver:
+        class: Enhavo\Bundle\AppBundle\Twig\UrlResolver
+        arguments:
+            - '@enhavo_app.url_resolver'
+        tags:
+            - { name: twig.extension }

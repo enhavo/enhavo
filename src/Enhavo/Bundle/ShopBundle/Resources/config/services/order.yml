@@ -41,9 +41,6 @@ services:
             - '@enhavo_shop.repository.product'
             - '@sylius.order_item_quantity_modifier'
 
-    enhavo_shop.calculator.order_composition_calculator:
-        class: Enhavo\Bundle\ShopBundle\Calculator\OrderCompositionCalculator
-
     enhavo_shop.listener.cart_subscriber:
         class: Enhavo\Bundle\ShopBundle\EventListener\CartSubscriber
         arguments:
@@ -108,10 +105,12 @@ services:
 
     enhavo_shop.controller.checkout:
         class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
-        tags:
-            - { name: sylius.process.scenario, alias: enhavo_checkout }
 
     enhavo_shop.promotion_rule_checker.shipping_country:
         class: Enhavo\Bundle\ShopBundle\Promotion\Checker\ShippingCountryRuleChecker
@@ -181,3 +180,8 @@ services:
             - '%enhavo_shop.mailer.tracking%'
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_shop.event_listner.serializer_subscriber:
+        class: Enhavo\Bundle\ShopBundle\EventListener\SerializerSubscriber
+        tags:
+          - { name: jms_serializer.event_subscriber }

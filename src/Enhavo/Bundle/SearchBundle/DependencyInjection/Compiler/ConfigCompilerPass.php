@@ -39,16 +39,17 @@ class ConfigCompilerPass implements CompilerPassInterface
         $configuration = [];
         foreach($bundles as $bundle) {
             $absolutePath = $this->composeSettingPathFor($bundle);
+            if(file_exists($absolutePath)) {
+                try {
+                    $data = Yaml::parse(file_get_contents($absolutePath));
+                } catch(\Exception $e) {
+                    continue;
+                }
 
-            try {
-                $data = Yaml::parse(file_get_contents($absolutePath));
-            } catch(\Exception $e) {
-                continue;
-            }
-
-            if (is_array($data)) {
-                foreach ($data as $class => $config) {
-                    $configuration[$class] = $config;
+                if (is_array($data)) {
+                    foreach ($data as $class => $config) {
+                        $configuration[$class] = $config;
+                    }
                 }
             }
         }

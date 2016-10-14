@@ -38,10 +38,8 @@ class PromotionController extends Controller
 
         if($request->isXmlHttpRequest()) {
             /** @var OrderInterface $order */
-            $calculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
-            $orderComposition = $calculator->calculateOrder($order);
             return new JsonResponse([
-                'order' => $orderComposition->toArray(),
+                'order' => $order,
                 'coupon' => $order->getPromotionCoupon() ? $order->getPromotionCoupon()->getCode() : null
             ]);
         }
@@ -51,7 +49,7 @@ class PromotionController extends Controller
             return $this->redirect($redirectUrl);
         }
 
-        return $this->render('EnhavoShopBundle:Promotion:redeem-coupon.html.twig', [
+        return $this->render('EnhavoShopBundle:Theme:Promotion/coupon.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -70,10 +68,8 @@ class PromotionController extends Controller
         $this->getManager()->flush();
 
         if($request->isXmlHttpRequest()) {
-            $calculator = $this->get('enhavo_shop.calculator.order_composition_calculator');
-            $orderComposition = $calculator->calculateOrder($order);
             return new JsonResponse([
-                'order' => $orderComposition->toArray(),
+                'order' => $order,
                 'coupon' => $order->getPromotionCoupon() ? $order->getPromotionCoupon()->getCode() : null
             ]);
         }
@@ -83,7 +79,7 @@ class PromotionController extends Controller
             return $this->redirect($redirectUrl);
         }
 
-        return $this->render('EnhavoShopBundle:Promotion:cancel-coupon.html.twig');
+        return $this->render('EnhavoShopBundle:Theme:Promotion/coupon.html.twig');
     }
 
     /**

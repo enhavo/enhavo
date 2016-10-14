@@ -1,8 +1,5 @@
 enhavo_contact_submit:
-    path:     /enhavo/contact/{type}/submit
-    defaults: { _controller: EnhavoContactBundle:Contact:submit }
+    path:     /contact/{name}/submit
+    defaults:
+      _controller: enhavo_contact.controller.contact:submitAction
     methods: [POST]
-
-enhavo_contact_sender_mail:
-    path: /sendSenderMail
-    defaults: { _controller: EnhavoContactBundle:Contact:senderMail }

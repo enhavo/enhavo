@@ -1,19 +1,45 @@
 services:
-    enhavo_contact_render:
-        class: Enhavo\Bundle\ContactBundle\Twig\ContactForm
-        arguments:
-            - @service_container
-        tags:
-            - { name: twig.extension }
-
     enhavo_contact_contact:
-        class: %enhavo_contact.contact.form%
+        class: '%enhavo_contact.contact.form%'
         arguments:
-            - %enhavo_contact.contact.model%
+            - '%enhavo_contact.contact.model%'
         tags:
             - { name: form.type }
 
-    errorresolver.formerrorresolver:
+    enhavo_contact.configuration.factory:
+        class: Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_contact.widget.contact:
+        class: Enhavo\Bundle\ContactBundle\Widget\ContactWidget
+        arguments:
+            - '@enhavo_contact.configuration.factory'
+            - '@form.factory'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'contact' }
+
+    enhavo_contact.mailer:
+        class: Enhavo\Bundle\ContactBundle\Mailer\ContactMailer
+        arguments:
+            - '@enhavo_contact.configuration.factory'
+            - '@templating'
+            - '@translator'
+            - '@mailer'
+
+    enhavo_contact.form_error_resolver:
         class: Enhavo\Bundle\ContactBundle\ErrorResolver\FormErrorResolver
         arguments:
-            - @translator
+            - '@translator'
+
+    enhavo_contact.controller.contact:
+        class: Enhavo\Bundle\ContactBundle\Controller\ContactController
+        arguments:
+            - '@translator'
+            - '@enhavo_contact.mailer'
+            - '@enhavo_contact.configuration.factory'
+            - '@enhavo_contact.form_error_resolver'
+        calls:
+            - [setContainer, ['@service_container']]
