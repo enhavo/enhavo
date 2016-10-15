@@ -15,28 +15,27 @@ class ContentType extends AbstractType
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoContentBundle'
         ));
 
         $builder->add('meta_description', 'textarea', array(
             'label' => 'form.label.meta_description',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoContentBundle'
         ));
 
         $builder->add('page_title', 'text', array(
-            'label' => 'article.form.label.page_title',
-            'translation_domain' => 'EnhavoArticleBundle'
+            'label' => 'form.label.page_title',
+            'translation_domain' => 'EnhavoContentBundle'
         ));
-
 
         $builder->add('public', 'enhavo_boolean', array(
             'label' => 'form.label.public',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoContentBundle'
         ));
 
         $builder->add('priority', 'choice', array(
-            'label' => 'article.form.label.priority',
-            'translation_domain' => 'EnhavoArticleBundle',
+            'label' => 'form.label.priority',
+            'translation_domain' => 'EnhavoContentBundle',
             'choices'   => array(
                 '0.1' => '1',
                 '0.2' => '2',
@@ -54,24 +53,29 @@ class ContentType extends AbstractType
         ));
 
         $builder->add('change_frequency', 'choice', array(
-            'label' => 'article.form.label.change_frequency',
-            'translation_domain' => 'EnhavoArticleBundle',
+            'label' => 'form.label.change_frequency',
+            'translation_domain' => 'EnhavoContentBundle',
             'choices'   => array(
-                'always' => 'article.label.always',
-                'hourly' => 'article.label.hourly',
-                'daily' => 'article.label.daily',
-                'weekly' => 'article.label.weekly',
-                'monthly' => 'article.label.monthly',
-                'yearly' => 'article.label.yearly',
-                'never' => 'article.label.never',
+                'always' => 'form.label.always',
+                'hourly' => 'form.label.hourly',
+                'daily' => 'form.label.daily',
+                'weekly' => 'form.label.weekly',
+                'monthly' => 'form.label.monthly',
+                'yearly' => 'form.label.yearly',
+                'never' => 'form.label.never',
             ),
             'expanded' => false,
             'multiple' => false
         ));
 
         $builder->add('publication_date', 'enhavo_datetime', array(
-            'label' => 'article.form.label.publication_date',
-            'translation_domain' => 'EnhavoArticleBundle'
+            'label' => 'form.label.publication_date',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
+        $builder->add('hide_at', 'enhavo_datetime', array(
+            'label' => 'form.label.hide_at',
+            'translation_domain' => 'EnhavoContentBundle'
         ));
     }
 

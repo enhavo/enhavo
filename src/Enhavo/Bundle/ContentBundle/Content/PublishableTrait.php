@@ -45,7 +45,7 @@ trait PublishableTrait
     /**
      * {@inheritdoc}
      */
-    public function setPublicationDate(\DateTime $date)
+    public function setPublicationDate(\DateTime $date = null)
     {
         $this->publicationDate = $date;
     }
@@ -61,7 +61,7 @@ trait PublishableTrait
     /**
      * {@inheritdoc}
      */
-    public function setHideAt(\DateTime $date)
+    public function setHideAt(\DateTime $date = null)
     {
         $this->hideAt = $date;
     }

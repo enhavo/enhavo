@@ -27,13 +27,20 @@ abstract class AbstractType implements ContainerAwareInterface
      */
     protected function getProperty($resource, $property)
     {
+        $method = sprintf('is%s', ucfirst($property));
+        if(method_exists($resource, $method)) {
+            return call_user_func(array($resource, $method));
+        }
+
         $method = sprintf('get%s', ucfirst($property));
         if(method_exists($resource, $method)) {
             return call_user_func(array($resource, $method));
         }
+
         throw new PropertyNotExistsException(sprintf(
-            'Trying to call "%s" on class "%s", but method does not exists. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
-            $method,
+            'Trying to call "get%s" or "is%s" on class "%s", but method does not exists. Maybe you spelled it wrong or you didn\'t add the getter for property "%s"',
+            ucfirst($property),
+            ucfirst($property),
             get_class($resource),
             $property
         ));

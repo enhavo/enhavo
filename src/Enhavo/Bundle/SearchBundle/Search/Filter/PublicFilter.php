@@ -14,8 +14,8 @@ class PublicFilter implements SearchFilterInterface
     public function isGranted($resource){
 
         //check if resource is public
-        if (method_exists($resource['object'], 'getPublic')) {
-            if ($resource['object']->getPublic()) {
+        if (method_exists($resource['object'], 'isPublic')) {
+            if ($resource['object']->isPublic()) {
                 return true;
             }
         }

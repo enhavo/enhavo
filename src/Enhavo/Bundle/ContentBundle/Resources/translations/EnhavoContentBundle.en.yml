@@ -3,3 +3,21 @@ batch:
     label: 'Publish'
     message:
       confirm: 'Do you really want to publish all selected items?'
+
+form:
+  label:
+    title: 'Title'
+    meta_description: 'Meta Description'
+    page_title: 'Page Title'
+    public: 'Public'
+    priority: 'Priority'
+    change_frequency: 'Change frequency'
+    publication_date: 'Publication date'
+    hide_at: 'Hide at'
+    always: 'Always'
+    hourly: 'Hourly'
+    daily: 'Daily'
+    weekly: 'Weekly'
+    monthly: 'Monthly'
+    yearly: 'Yearly'
+    never: 'Never'

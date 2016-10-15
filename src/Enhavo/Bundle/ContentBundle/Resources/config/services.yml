@@ -3,7 +3,7 @@ parameters:
 
 services:
     enhavo_content_content:
-        class: %enhavo_content.form.type.content.class%
+        class: '%enhavo_content.form.type.content.class%'
         tags:
             - { name: form.type }
 
@@ -22,8 +22,8 @@ services:
     enhavo_content.sitemap.generator:
         class: Enhavo\Bundle\ContentBundle\Sitemap\SitemapGenerator
         arguments:
-            - %enhavo_content.sitemap.collectors%
-            - @enhavo_content.sitemap_collector
+            - '%enhavo_content.sitemap.collectors%'
+            - '@enhavo_content.sitemap_collector'
 
     enhavo_content.sitemap_collector.repository:
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\RepositoryCollector
@@ -38,4 +38,9 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.sitemap_collector, alias: publish }
+
+    enhavo_content.event_listener.publish_subscriber:
+        class: Enhavo\Bundle\ContentBundle\EventListener\PublishSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
 

@@ -28,9 +28,19 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: boolean
             nullable: true
 
+        publicationDate:
+            type: datetime
+            nullable: true
+
+        hideAt:
+            type: datetime
+            nullable: true
+
         position:
             type: integer
             nullable: true
+
+
 
     oneToOne:
         image:
@@ -41,3 +51,4 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
     manyToOne:
         slider:
             targetEntity: Enhavo\Bundle\SliderBundle\Model\SliderInterface
+

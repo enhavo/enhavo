@@ -25,17 +25,16 @@ class ContentRepository extends EntityRepository
 
         if($year >= 1970 && $month > 0 && $month < 13) {
             $monthEnd = new \DateTime(sprintf('%s-%s-01 23:59:59', $year, $month));
-            $query->Where('n.publicationDate >= :monthStart');
-            $query->AndWhere('n.publicationDate <= :monthEnd');
+            $query->where('n.publicationDate >= :monthStart');
+            $query->andWhere('n.publicationDate <= :monthEnd');
             $query->setParameter('monthStart', new \DateTime(sprintf('%s-%s-01 00:00:00', $year, $month)));
             $query->setParameter('monthEnd', $monthEnd->modify('last day of this month'));
         } elseif($year >= 1970) {
-            $query->Where('n.publicationDate >= :yearStart');
-            $query->AndWhere('n.publicationDate <= :yearEnd');
+            $query->where('n.publicationDate >= :yearStart');
+            $query->andWhere('n.publicationDate <= :yearEnd');
+            $query->andWhere('n.publicationDate <= :yearEnd');
             $query->setParameter('yearStart', new \DateTime(sprintf('%s-01-01 00:00:00', $year)));
             $query->setParameter('yearEnd', new \DateTime(sprintf('%s-12-31 23:59:59', $year)));
-        } else {
-            $query->orderBy('n.sticky','desc');
         }
 
         $query->andWhere('n.publicationDate <= :currentDate');
@@ -53,6 +52,8 @@ class ContentRepository extends EntityRepository
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', new \DateTime());
         $query->orderBy('n.publicationDate','desc');
         $content = $query->getQuery()->getResult();
@@ -74,13 +75,23 @@ class ContentRepository extends EntityRepository
         return $dates;
     }
 
-    public function findPublished()
+    public function findPublished($orderBy = null)
     {
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', new \DateTime());
-        $query->orderBy('n.publicationDate','desc');
+
+        if($orderBy === null) {
+            $query->orderBy('n.publicationDate','desc');
+        } elseif(is_array($orderBy)) {
+            foreach($orderBy as $field => $direction) {
+                $query->orderBy(sprintf('n.%s', $field), $direction);
+            }
+        }
+
         $contents = $query->getQuery()->getResult();
 
         return $contents;
@@ -106,6 +117,8 @@ class ContentRepository extends EntityRepository
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate = :contentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $contentsSameDate = $query->getQuery()->getResult();
@@ -123,6 +136,8 @@ class ContentRepository extends EntityRepository
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate > :contentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $query->addOrderBy('n.publicationDate','asc');
@@ -157,6 +172,8 @@ class ContentRepository extends EntityRepository
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate = :contentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $contentsSameDate = $query->getQuery()->getResult();
@@ -174,6 +191,8 @@ class ContentRepository extends EntityRepository
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate < :contentDate');
+        $query->andWhere('n.hideAt >= :currentDate');
+        $query->orWhere('n.hideAt IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $query->addOrderBy('n.publicationDate','desc');

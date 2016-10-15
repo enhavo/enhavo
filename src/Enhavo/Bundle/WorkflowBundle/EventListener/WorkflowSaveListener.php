@@ -141,10 +141,10 @@ class WorkflowSaveListener {
             $workflowStatus = new WorkflowStatus();
 
             //check if there is a public field in the type
-            if(method_exists($element, 'getPublic')){
+            if(method_exists($element, 'isPublic')){
 
                 // if there is a public field, check if it is set true and set the end-node to the workflow-status; if it is false set the start-node to the workflow-status
-                if($element->getPublic()){
+                if($element->isPublic()){
                     $workflowStatus->setNode($endNode);
                 } else {
                     $workflowStatus->setNode($startNode);
