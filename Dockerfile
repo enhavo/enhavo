@@ -3,8 +3,8 @@ FROM phusion/baseimage
 CMD ["/sbin/my_init"]
 
 # set mysql password
-RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections &&
-    echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password' && \
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'
 
 # install server tools
 RUN add-apt-repository -y ppa:ondrej/php && \
@@ -20,7 +20,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get install -y --force-yes php7.0-dom && \
     apt-get install -y --force-yes git && \
     a2enmod rewrite && \
-    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # server setting and start up scripts
 COPY docker/etc/my_init.d/01_apache2.bash /etc/my_init.d/01_apache2.bash
