@@ -2,6 +2,11 @@ FROM phusion/baseimage
 
 CMD ["/sbin/my_init"]
 
+
+# set mysql password
+RUN echo "mysql-server mysql-server/root_password password root" | sudo debconf-set-selections &&
+    echo "mysql-server mysql-server/root_password_again password root" | sudo debconf-set-selections
+
 # install server tools
 RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get update -y --force-yes && \
@@ -31,6 +36,7 @@ ADD src /var/www/src
 ADD web /var/www/web
 ADD composer.json /var/www/composer.json
 ADD composer.lock /var/www/composer.lock
+ADD docker/config/parameters.yml /var/www/app/config/parameters.yml
 
 # install enhavo
 RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
