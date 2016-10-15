@@ -3,8 +3,8 @@ FROM phusion/baseimage
 CMD ["/sbin/my_init"]
 
 # set mysql password
-RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password' && \
-    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'
+RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
+RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 
 # install server tools
 RUN add-apt-repository -y ppa:ondrej/php && \
