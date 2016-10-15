@@ -131,7 +131,8 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
     };
 
     this.initCancel = function (form) {
-      $(form).find('[data-button][data-type=cancel]').click(function () {
+      $(form).find('[data-button][data-type=cancel]').click(function (e) {
+        e.preventDefault();
         admin.overlayClose();
       });
     };
