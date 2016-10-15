@@ -13,12 +13,15 @@ use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface
 {
+    use PublishableTrait;
+    
     /**
      * @var \DateTime
      */
@@ -38,12 +41,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
      * @var string
      */
     protected $title;
-
-    /**
-     * @var \DateTime
-     */
-    protected $publicationDate;
-
+    
     /**
      * @var string
      */
@@ -68,11 +66,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
      * @var string
      */
     protected $changeFrequency;
-
-    /**
-     * @var boolean
-     */
-    protected $public;
+    
 
     /**
      * @var RouteInterface
@@ -156,29 +150,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     public function getTitle()
     {
         return $this->title;
-    }
-    
-    /**
-     * Set publication_date
-     *
-     * @param \DateTime $publicationDate
-     * @return Content
-     */
-    public function setPublicationDate(\DateTime $publicationDate = null)
-    {
-        $this->publicationDate = $publicationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get publication_date
-     *
-     * @return \DateTime
-     */
-    public function getPublicationDate()
-    {
-        return $this->publicationDate;
     }
 
     /**
@@ -293,32 +264,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
             return 'never';
         }
         return $this->changeFrequency;
-    }
-
-    /**
-     * Set public
-     *
-     * @param boolean $public
-     * @return Content
-     */
-    public function setPublic($public)
-    {
-        $this->public = $public;
-
-        return $this;
-    }
-
-    /**
-     * Get public
-     *
-     * @return boolean
-     */
-    public function getPublic()
-    {
-        if($this->public === null) {
-            return false;
-        }
-        return $this->public;
     }
 
     /**
