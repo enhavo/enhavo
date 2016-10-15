@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\SliderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
@@ -11,8 +13,10 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /**
  * Slider
  */
-class Slide implements SlideInterface, ResourceInterface
+class Slide implements SlideInterface, ResourceInterface, Publishable
 {
+    use PublishableTrait;
+
     /**
      * @var integer
      */
@@ -37,11 +41,6 @@ class Slide implements SlideInterface, ResourceInterface
      * @var integer
      */
     protected $position;
-
-    /**
-     * @var integer
-     */
-    protected $public;
 
     /**
      * @var FileInterface
@@ -153,33 +152,6 @@ class Slide implements SlideInterface, ResourceInterface
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * Set public
-     *
-     * @param boolean $public
-     * @return Slide
-     */
-    public function setPublic($public)
-    {
-        $this->public = $public;
-
-        return $this;
-    }
-
-    /**
-     * Get public
-     *
-     * @return boolean
-     */
-    public function getPublic()
-    {
-        if($this->public === null) {
-            return false;
-        }
-
-        return $this->public;
     }
 
     /**

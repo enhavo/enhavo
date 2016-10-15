@@ -34,7 +34,15 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
             type: text
             nullable: true
 
+        public:
+            type: boolean
+            nullable: true
+
         publicationDate:
+            type: datetime
+            nullable: true
+
+        hideAt:
             type: datetime
             nullable: true
 
@@ -45,10 +53,6 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
         changeFrequency:
             type: string
             length: 255
-            nullable: true
-
-        public:
-            type: boolean
             nullable: true
 
         created:

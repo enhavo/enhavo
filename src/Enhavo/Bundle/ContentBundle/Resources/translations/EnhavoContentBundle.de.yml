@@ -3,3 +3,21 @@ batch:
     label: 'Veröffentlichen'
     message:
       confirm: 'Wollen sie wirklich alle ausgewählten Elemente veröffentlichen?'
+
+form:
+  label:
+    title: 'Titel'
+    meta_description: 'Meta Description'
+    page_title: 'Seiten Titel'
+    public: 'Öffentlich'
+    priority: 'Priorität'
+    change_frequency: 'Änderungsferquenz'
+    publication_date: 'Erscheinungsdatum'
+    hide_at: 'Verstecken am'
+    always: 'Immer'
+    hourly: 'Stündlich'
+    daily: 'Täglich'
+    weekly: 'Wöchentlich'
+    monthly: 'Monatlich'
+    yearly: 'Jährlich'
+    never: 'Nie'

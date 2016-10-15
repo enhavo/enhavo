@@ -137,7 +137,8 @@ services:
     enhavo_search.index_collector:
         class: '%enhavo_search.index_collector.class%'
         arguments:
-            - 'index'
+            - '@service_container'
+            - 'Index'
 
     enhavo_search_highlight:
         class: Enhavo\Bundle\SearchBundle\Search\Highlight

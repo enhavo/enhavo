@@ -39,9 +39,19 @@ class SlideType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ));
 
+        $builder->add('publicationDate', 'enhavo_date', array(
+            'label' => 'form.label.publication_date',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
+        $builder->add('hideAt', 'enhavo_date', array(
+            'label' => 'form.label.hide_at',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
         $builder->add('public', 'enhavo_boolean', array(
             'label' => 'form.label.public',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoContentBundle'
         ));
 
         $builder->add('image', 'enhavo_files', array(

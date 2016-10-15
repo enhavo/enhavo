@@ -1,0 +1,22 @@
+parameters:
+    environment: dev
+    debug: true
+    debug_toolbar: false
+
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     enhavo
+    database_user:     root
+    database_password: root
+
+    mailer_transport:  mail
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_delivery_address: ~
+    mailer_from: ~
+    mailer_to: ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt

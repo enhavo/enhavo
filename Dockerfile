@@ -2,6 +2,10 @@ FROM phusion/baseimage
 
 CMD ["/sbin/my_init"]
 
+# set mysql password
+RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
+RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+
 # install server tools
 RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get update -y --force-yes && \
@@ -16,7 +20,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get install -y --force-yes php7.0-dom && \
     apt-get install -y --force-yes git && \
     a2enmod rewrite && \
-    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # server setting and start up scripts
 COPY docker/etc/my_init.d/01_apache2.bash /etc/my_init.d/01_apache2.bash
@@ -31,6 +35,7 @@ ADD src /var/www/src
 ADD web /var/www/web
 ADD composer.json /var/www/composer.json
 ADD composer.lock /var/www/composer.lock
+ADD docker/config/parameters.yml /var/www/app/config/parameters.yml
 
 # install enhavo
 RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
