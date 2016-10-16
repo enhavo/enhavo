@@ -57,6 +57,8 @@ doctrine:
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
+            Sylius\Component\Product\Model\ProductAssociationInterface: Sylius\Component\Product\Model\ProductAssociation
+            Sylius\Component\Product\Model\ArchetypeInterface: Sylius\Component\Product\Model\Archetype
 
 enhavo_assets:
     require_js:
@@ -78,3 +80,26 @@ jms_serializer:
             EnhavoShopBundle:
                 namespace_prefix: "Enhavo\\Bundle\\ShopBundle"
                 path: "@EnhavoShopBundle/Resources/config/serializer"
+
+
+sylius_resource:
+    resources:
+        sylius.product_variant:
+            classes:
+                model: Sylius\Component\Core\Model\ProductVariant
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+        sylius.product_archetype:
+            classes:
+                model: Sylius\Component\Archetype\Model\Archetype
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+        sylius.product_attribute_value:
+            classes:
+                model: Sylius\Component\Product\Model\AttributeValue
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+
+
+services:
+    sylius.builder.product_archetype:
+        class: Sylius\Component\Archetype\Builder\ArchetypeBuilder
+        arguments:
+          - '@sylius.factory.product_attribute_value'

@@ -8,6 +8,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
+            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
             new Sylius\Bundle\CartBundle\SyliusCartBundle(),
             new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
             new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
@@ -17,6 +18,10 @@ class AppKernel extends Kernel
             new Sylius\Bundle\PaymentBundle\SyliusPaymentBundle(),
             new Sylius\Bundle\ShippingBundle\SyliusShippingBundle(),
             new Sylius\Bundle\TaxationBundle\SyliusTaxationBundle(),
+            new Sylius\Bundle\ProductBundle\SyliusProductBundle(),
+            new Sylius\Bundle\AttributeBundle\SyliusAttributeBundle(),
+            new Sylius\Bundle\ArchetypeBundle\SyliusArchetypeBundle(),
+            new Sylius\Bundle\VariationBundle\SyliusVariationBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -29,7 +34,6 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),

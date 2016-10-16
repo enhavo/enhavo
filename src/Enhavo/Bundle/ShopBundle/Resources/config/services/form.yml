@@ -1,11 +1,11 @@
 services:
-    enhavo_shop_product:
-        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
-        arguments:
-            - '%enhavo_shop.model.product.class%'
-            - '%sylius.model.tax_rate.class%'
-        tags:
-            - { name: form.type }
+#    enhavo_shop_product:
+#        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
+#        arguments:
+#            - '%enhavo_shop.model.product.class%'
+#            - '%sylius.model.tax_rate.class%'
+#        tags:
+#            - { name: form.type }
 
     enhavo_shop_order_address:
         class: Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType
@@ -27,7 +27,7 @@ services:
         arguments:
             - '%sylius.model.order_item.class%'
             - '@sylius.form.data_mapper.order_item_quantity'
-            - '%enhavo_shop.model.product.class%'
+            - '%sylius.model.product.class%'
         tags:
             - { name: form.type }
 
