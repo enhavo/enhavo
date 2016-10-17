@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Exception\TypeOptionException;
 
 abstract class AbstractType implements ContainerAwareInterface
 {
@@ -79,6 +80,14 @@ abstract class AbstractType implements ContainerAwareInterface
             return $options[$key];
         }
         return $default;
+    }
+
+    protected function getRequiredOption($key, $options)
+    {
+        if(array_key_exists($key, $options)) {
+            return $options[$key];
+        }
+        throw new TypeOptionException(sprintf('option "%s" is required', $key));
     }
 
     protected function resolveOptions($defaultOptions, $options)

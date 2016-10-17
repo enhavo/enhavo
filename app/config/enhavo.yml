@@ -39,75 +39,25 @@ enhavo_app:
 enhavo_grid:
     items:
         picture:
-            model: Enhavo\Bundle\GridBundle\Entity\Picture
-            form: Enhavo\Bundle\GridBundle\Form\Type\PictureType
-            repository: EnhavoGridBundle:Picture
-            template: EnhavoGridBundle:Item:picture.html.twig
-            label: picture.label.picture
-            translationDomain: EnhavoGridBundle
+            type: picture
         picture_picture:
-            model: Enhavo\Bundle\GridBundle\Entity\PicturePicture
-            form: Enhavo\Bundle\GridBundle\Form\Type\PicturePictureType
-            repository: EnhavoGridBundle:PicturePicture
-            template: EnhavoGridBundle:Item:picture_picture.html.twig
-            label: picturePicture.label.picturePicture
-            translationDomain: EnhavoGridBundle
+            type: picture_picture
         three_picture:
-            model: Enhavo\Bundle\GridBundle\Entity\ThreePicture
-            form: Enhavo\Bundle\GridBundle\Form\Type\ThreePictureType
-            repository: EnhavoGridBundle:ThreePicture
-            template: EnhavoGridBundle:Item:three_picture.html.twig
-            label: threePicture.label.threePicture
-            translationDomain: EnhavoGridBundle
+            type: three_picture
         gallery:
-            model: Enhavo\Bundle\GridBundle\Entity\Gallery
-            form: Enhavo\Bundle\GridBundle\Form\Type\GalleryType
-            repository: EnhavoGridBundle:Gallery
-            template: EnhavoGridBundle:Item:gallery.html.twig
-            label: gallery.label.gallery
-            translationDomain: EnhavoGridBundle
+            type: gallery
         text:
-            model: Enhavo\Bundle\GridBundle\Entity\Text
-            form: Enhavo\Bundle\GridBundle\Form\Type\TextType
-            repository: EnhavoGridBundle:Text
-            template: EnhavoGridBundle:Item:text.html.twig
-            label: text.label.text
-            translationDomain: EnhavoGridBundle
+            type: text
         text_picture:
-            model: Enhavo\Bundle\GridBundle\Entity\TextPicture
-            form: Enhavo\Bundle\GridBundle\Form\Type\TextPictureType
-            repository: EnhavoGridBundle:TextPicture
-            template: EnhavoGridBundle:Item:text_picture.html.twig
-            label: textPicture.label.textPicture
-            translationDomain: EnhavoGridBundle
+            type: text_picture
         text_text:
-            model: Enhavo\Bundle\GridBundle\Entity\TextText
-            form: Enhavo\Bundle\GridBundle\Form\Type\TextTextType
-            repository: EnhavoGridBundle:TextText
-            template: EnhavoGridBundle:Item:text_text.html.twig
-            label: textText.label.textText
-            translationDomain: EnhavoGridBundle
+            type: text_text
         cite_text:
-            model: Enhavo\Bundle\GridBundle\Entity\CiteText
-            form: Enhavo\Bundle\GridBundle\Form\Type\CiteTextType
-            repository: EnhavoGridBundle:CiteText
-            template: EnhavoGridBundle:Item:cite_text.html.twig
-            label: citeText.label.citeText
-            translationDomain: EnhavoGridBundle
+            type: cite_text
         download:
-            model: Enhavo\Bundle\DownloadBundle\Entity\DownloadItem
-            form: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
-            repository: EnhavoDownloadBundle:DownloadItem
-            template: EnhavoDownloadBundle:Item:download.html.twig
-            label: download.label.download
-            translationDomain: EnhavoGridBundle
+            type: download
         video:
-            model: Enhavo\Bundle\GridBundle\Entity\Video
-            form: Enhavo\Bundle\GridBundle\Form\Type\VideoType
-            repository: EnhavoGridBundle:Video
-            template: EnhavoGridBundle:Item:video.html.twig
-            label: video.label.video
-            translationDomain: EnhavoGridBundle
+            type: video
 
 enhavo_article:
     resources:

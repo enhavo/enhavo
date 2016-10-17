@@ -24,7 +24,7 @@ save the content.
 
     namespace Acme\FooBundle\Entity;
 
-    use Enhavo\GridBundle\Item\ItemTypeInterface;
+    use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
     class Youtube implements ItemTypeInterface
     {
@@ -64,9 +64,9 @@ The FormType should extend from ``ItemFormType``.
 
     namespace Acme\FooBundle\Form\Type;
 
-    use Enhavo\GridBundle\Item\ItemFormType;
+    use Enhavo\Bundle\GridBundle\Item\ItemFormType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class YoutubeType extends ItemFormType
     {
@@ -77,7 +77,7 @@ The FormType should extend from ``ItemFormType``.
             $builder->add('author', 'text');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'Acme\FooBundle\Entity\Youtube'

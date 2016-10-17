@@ -49,18 +49,19 @@ class GridType extends AbstractType
         $items = array();
         if(count($options['items'])) {
             foreach($options['items'] as $item) {
+                $definition = $this->resolver->getDefinition($item);
                 $items[] = array(
-                    'type' => $item['type'],
-                    'label' => isset($item['label']) ? $item['label'] : $this->resolver->getLabel($item['type']),
-                    'translationDomain' => isset($item['translationDomain']) ? $item['translationDomain'] : 'EnhavoGridBundle'
+                    'type' => $definition->getName(),
+                    'label' => $definition->getLabel(),
+                    'translationDomain' => $definition->getTranslationDomain()
                 );
             }
         } else {
-            foreach($this->resolver->getItems() as $name => $item) {
+            foreach($this->resolver->getItems() as $item) {
                 $items[] = array(
-                    'type' => $name,
-                    'label' => $this->resolver->getLabel($name),
-                    'translationDomain' => isset($item['translationDomain']) ? $item['translationDomain'] : 'EnhavoGridBundle'
+                    'type' => $item->getName(),
+                    'label' => $item->getLabel(),
+                    'translationDomain' => $item->getTranslationDomain()
                 );
             }
         }
