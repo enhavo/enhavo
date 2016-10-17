@@ -59,7 +59,7 @@ services:
     enhavo_grid.factory.item_type:
         class: '%enhavo_grid.factory.item_type.class%'
         arguments:
-            - '%enhavo_grid.items%'
+            - '@enhavo_grid.item_configuration_collection'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
@@ -70,3 +70,53 @@ services:
         class: Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration
         tags:
             - { name: enhavo.grid_item, alias: base }
+
+    enhavo_grid.grid_item.cite_text:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\CiteTextConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: cite_text }
+
+    enhavo_grid.grid_item.download:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\DownloadConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: download }
+
+    enhavo_grid.grid_item.gallery:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: gallery }
+
+    enhavo_grid.grid_item.picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\PictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: picture }
+
+    enhavo_grid.grid_item.picture_picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\PicturePictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: picture_picture }
+
+    enhavo_grid.grid_item.text:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: text }
+
+    enhavo_grid.grid_item.text_picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextPictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: text_picture }
+
+    enhavo_grid.grid_item.text_text:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextTextConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: text_text }
+
+    enhavo_grid.grid_item.three_picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\ThreePictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: three_picture }
+
+    enhavo_grid.grid_item.video:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\VideoConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: video }

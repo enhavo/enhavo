@@ -9,29 +9,35 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
+use Enhavo\Bundle\GridBundle\Item\ItemConfigurationCollection;
+use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+
 class ItemTypeFactory
 {
     /**
      * @var array
      */
-    protected $items;
+    protected $itemConfigurations;
 
-    public function __construct($items)
+    public function __construct(ItemConfigurationCollection $itemConfigurations)
     {
-        $this->items = $items;
+        $this->itemConfigurations = $itemConfigurations;
     }
 
     /**
-     * @param $type
+     * @param string $type
+     * @return ItemTypeInterface
      */
     public function create($type)
     {
-        if(!isset($this->items[$type])) {
-            throw new \InvalidArgumentException(sprintf('Item type "%s" does not exists'));
+        foreach($this->itemConfigurations->getItemConfigurations() as $item) {
+            if($item->getName() == $type) {
+                $className = $item->getModel();
+                $itemType = new $className;
+                return $itemType;
+            }
         }
 
-        $className = $this->items[$type]['model'];
-        $itemType = new $className;
-        return $itemType;
+        throw new \InvalidArgumentException(sprintf('Item type "%s" does not exists'));
     }
 }
