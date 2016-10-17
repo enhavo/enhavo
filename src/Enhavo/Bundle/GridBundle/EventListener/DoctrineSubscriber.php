@@ -29,21 +29,10 @@ class DoctrineSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist',
             'postPersist',
             'postLoad',
             'preRemove',
         );
-    }
-
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        $manager = $args->getEntityManager();
-        if ($entity instanceof Item) {
-            $itemType = $entity->getItemType();
-            $manager->persist($itemType);
-        }
     }
 
     public function postPersist(LifecycleEventArgs $args)
@@ -52,6 +41,7 @@ class DoctrineSubscriber implements EventSubscriber
         $manager = $args->getEntityManager();
         if ($entity instanceof Item) {
             $itemType = $entity->getItemType();
+            $manager->persist($itemType);
             //if itemType id was not set yet, force setting the id
             if($itemType->getId() === null) {
                 $manager->flush();
