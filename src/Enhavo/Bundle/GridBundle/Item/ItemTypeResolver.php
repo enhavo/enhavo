@@ -42,15 +42,42 @@ class ItemTypeResolver
     }
 
     /**
-     * @param $itemType ItemTypeInterface
+     * @param $itemType ItemTypeInterface|string
      * @throws NoTypeFoundException
      * @return string
      */
-    public function getType(ItemTypeInterface $itemType)
+    public function getType($itemType)
     {
-        $className = get_class($itemType);
+        if($itemType instanceof ItemTypeInterface) {
+            $className = get_class($itemType);
+        } else {
+            $className = $itemType;
+        }
+
         foreach($this->itemCollection->getItemConfigurations() as $item) {
             if($item->getModel() == $className) {
+                return $item->getName();
+            }
+        }
+        throw new NoTypeFoundException;
+    }
+
+    /**
+     * @param $itemType ItemTypeInterface|string
+     * @throws NoTypeFoundException
+     *
+     * @return string
+     */
+    public function getTypeByParent($itemType)
+    {
+        if($itemType instanceof ItemTypeInterface) {
+            $className = get_class($itemType);
+        } else {
+            $className = $itemType;
+        }
+
+        foreach($this->itemCollection->getItemConfigurations() as $item) {
+            if($item->getParent() == $className) {
                 return $item->getName();
             }
         }
