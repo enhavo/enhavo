@@ -66,7 +66,7 @@ class TypeCollector implements CollectorInterface
                 throw new TypeNotValidException(sprintf('%s does not match alias %s', $type->getType(), $alias));
             }
         } else {
-            throw new TypeNotValidException(sprintf('%s does not implement TypeInterface', $type));
+            throw new TypeNotValidException(sprintf('%s does not implement TypeInterface', get_class($type)));
         }
     }
 

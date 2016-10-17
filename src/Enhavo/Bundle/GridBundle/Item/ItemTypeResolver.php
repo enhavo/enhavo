@@ -16,9 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 class ItemTypeResolver
 {
     /**
-     * @var array
+     * @var ItemConfigurationCollection
      */
-    protected $items;
+    protected $itemCollection;
 
     /**
      * @var Container
@@ -31,12 +31,12 @@ class ItemTypeResolver
     protected $sets;
 
     /**
-     * @param $items
+     * @param $itemCollection
      * @param $container
      */
-    public function __construct($items, $sets, $container)
+    public function __construct(ItemConfigurationCollection $itemCollection, $sets, $container)
     {
-        $this->items = $items;
+        $this->itemCollection = $itemCollection;
         $this->sets = $sets;
         $this->container = $container;
     }
@@ -49,9 +49,9 @@ class ItemTypeResolver
     public function getType(ItemTypeInterface $itemType)
     {
         $className = get_class($itemType);
-        foreach($this->items as $type => $item) {
-            if($item['model'] == $className) {
-                return $type;
+        foreach($this->itemCollection->getItemConfigurations() as $item) {
+            if($item->getModel() == $className) {
+                return $item->getName();
             }
         }
         throw new NoTypeFoundException;
@@ -64,7 +64,7 @@ class ItemTypeResolver
      */
     public function getRepository($type)
     {
-        $repository = $this->getDefinition($type, 'repository');
+        $repository = $this->getDefinition($type)->getRepository();
         return $this->solveRepository($repository);
     }
 
@@ -88,7 +88,7 @@ class ItemTypeResolver
      */
     public function getFormType($type)
     {
-        $formType = $this->getDefinition($type, 'form');
+        $formType = $this->getDefinition($type)->getForm();
         return $this->solveFormType($formType);
     }
 
@@ -119,40 +119,38 @@ class ItemTypeResolver
             if(isset($this->sets[$set]) && isset($this->sets[$set][$type])) {
                 return $this->sets[$set][$type];
             } else {
-                throw new NoRenderSetFoundException(sprintf('Set [%s] or template for type [%s] not found', $set, $type));
+                throw new NoRenderSetFoundException(sprintf('Set "%s" or template for type "%s" not found', $set, $type));
             }
         }
-        return $this->getDefinition($type, 'template');
+        return $this->getDefinition($type)->getTemplate();
     }
 
     /**
      * @param $type
-     * @param $key
-     * @return mixed
+     * @return ItemConfiguration
      * @throws NoTypeFoundException
      */
-    protected function getDefinition($type, $key)
+    public function getDefinition($type)
     {
-        foreach($this->items as $typeName => $item) {
-            if($typeName == $type) {
-                if(isset($item[$key])) {
-                    return $item[$key];
-                } else {
-                    return null;
-                }
+        foreach($this->itemCollection->getItemConfigurations() as $item) {
+            if($item->getName() == $type) {
+                return $item;
             }
         }
-        throw new NoTypeFoundException(sprintf('Cant resolve type [%s], no type found with this name', $type));
+        throw new NoTypeFoundException(sprintf('Cant resolve type "%s", no type found with this name', $type));
     }
 
+    /**
+     * @return ItemConfiguration[]
+     */
     public function getItems()
     {
-        return $this->items;
+        return $this->itemCollection->getItemConfigurations();
     }
 
     public function getLabel($type)
     {
-        $label = $this->getDefinition($type, 'label');
+        $label = $this->getDefinition($type)->getLabel();
         if($label === null) {
             return sprintf('label.%s', $type);
         }
