@@ -25,14 +25,33 @@ class ProductType extends AbstractType
      */
     private $taxRateClass;
 
-    public function __construct($dataClass, $taxRateClass)
+    /**
+     * @var string
+     */
+    private $optionClass;
+
+    public function __construct($dataClass, $taxRateClass, $optionClass)
     {
         $this->dataClass = $dataClass;
         $this->taxRateClass = $taxRateClass;
+        $this->optionClass = $optionClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('title', 'text', array(
+            'label' => 'label.title'
+        ));
+
+        $builder->add('picture', 'enhavo_files', array(
+            'label' => 'label.picture',
+            'multiple' => false
+        ));
+
+        $builder->add('code', 'text', array(
+            'label' => 'label.code',
+        ));
+
         $builder->add('price', 'text', array(
             'label' => 'label.price'
         ));
@@ -70,6 +89,14 @@ class ProductType extends AbstractType
             'choice_label' => 'name',
             'label' => 'label.taxRate'
         ));
+
+        $builder->add('options', 'entity', array(
+            'class' => $this->optionClass,
+            'choice_label' => 'code',
+            'label' => 'label.options',
+            'multiple' => true,
+            'expanded' => true
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -82,10 +109,5 @@ class ProductType extends AbstractType
     public function getName()
     {
         return 'enhavo_shop_product';
-    }
-
-    public function getParent()
-    {
-        return 'enhavo_content_content';
     }
 }

@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Sylius\Bundle\AttributeBundle\SyliusAttributeBundle(),
             new Sylius\Bundle\ArchetypeBundle\SyliusArchetypeBundle(),
             new Sylius\Bundle\VariationBundle\SyliusVariationBundle(),
+            new Sylius\Bundle\InventoryBundle\SyliusInventoryBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),

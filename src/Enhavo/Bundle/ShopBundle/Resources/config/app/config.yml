@@ -59,6 +59,7 @@ doctrine:
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
             Sylius\Component\Product\Model\ProductAssociationInterface: Sylius\Component\Product\Model\ProductAssociation
             Sylius\Component\Product\Model\ArchetypeInterface: Sylius\Component\Product\Model\Archetype
+            Sylius\Component\Variation\Model\OptionInterface: Sylius\Component\Variation\Model\Option
 
 enhavo_assets:
     require_js:
@@ -97,6 +98,17 @@ sylius_resource:
                 model: Sylius\Component\Product\Model\AttributeValue
                 controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
 
+sylius_inventory:
+    resources:
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                model: Enhavo\Bundle\ShopBundle\Entity\Product
+                form:
+                    default: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
 
 services:
     sylius.builder.product_archetype:

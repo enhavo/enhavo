@@ -58,3 +58,8 @@ order_item:
     label:
       quantity: Quantity
       product: Product
+
+product:
+  label:
+    product: Product
+    title: Title

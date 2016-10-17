@@ -46,6 +46,7 @@
     "sylius/shipping-bundle": "v0.19.*",
     "sylius/taxation-bundle": "v0.19.*",
     "sylius/product-bundle": "v0.19.*",
+    "sylius/inventory-bundle": "v0.19.*",
     "friendsofsymfony/user-bundle": "v2.0.0-alpha3",
     "friendsofsymfony/jsrouting-bundle": "@stable",
     "willdurand/js-translation-bundle" : "@stable",

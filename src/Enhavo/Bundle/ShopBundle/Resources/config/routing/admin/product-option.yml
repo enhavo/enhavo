@@ -1,0 +1,105 @@
+enhavo_shop_product_option_index:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/index
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product_option:indexAction
+        _sylius:
+            form: enhavo_shop_product_option
+            viewer:
+                blocks:
+                    table:
+                        type: table
+                        table_route: enhavo_shop_product_option_table
+                        update_route: enhavo_shop_product_option_update
+                actions:
+                    create:
+                        route: enhavo_shop_product_option_create
+
+enhavo_shop_product_option_create:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/create
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.product_option:createAction
+        _sylius:
+            form: enhavo_shop_product_option
+            viewer:
+                translationDomain: EnhavoShopBundle
+                form:
+                    action: enhavo_shop_product_option_create
+                buttons:
+                    preview:
+                        type: preview
+                        route: enhavo_shop_product_option_preview
+
+enhavo_shop_product_option_update:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.product_option:updateAction
+        _sylius:
+            form: enhavo_shop_product_option
+            viewer:
+                translationDomain: EnhavoShopBundle
+                form:
+                    action: enhavo_shop_product_option_update
+                    delete: enhavo_shop_product_option_delete
+                buttons:
+                    preview:
+                        type: preview
+                        route: enhavo_shop_product_option_preview
+
+enhavo_shop_product_option_table:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/table
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: sylius.controller.product_option:tableAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoShopBundle
+                columns:
+                    code:
+                        label: product_option.label.code
+                        property: code
+                        width: 12
+
+enhavo_shop_product_option_delete:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.product_option:deleteAction
+
+enhavo_shop_product_option_batch:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/batch
+    methods: [POST]
+    defaults:
+        _controller: sylius.controller.product_option:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_shop_product_option_preview:
+    options:
+        expose: true
+    path: /enhavo/shop/product/option/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_shop.controller.product_option:previewAction
+        _sylius:
+            viewer:

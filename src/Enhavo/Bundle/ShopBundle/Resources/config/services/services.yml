@@ -30,5 +30,12 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_order }
 
+    enhavo_shop.menu_builder.product_option:
+        class: Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: shop_product_option }
+
     enhavo.token_generator:
         class: Sylius\Component\User\Security\Generator\TokenGenerator
