@@ -19,7 +19,7 @@ services:
 
 
     enhavo_newsletter_subscriber:
-        class: %enhavo_newsletter.form.type.subscriber.class%
+        class: '%enhavo_newsletter.form.type.subscriber.class%'
         tags:
             - { name: form.type }
 
@@ -39,6 +39,7 @@ services:
     enhavo_newsletter.strategy_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
+            - '@service_container'
             - 'NewsletterStrategy'
 
     enhavo_newsletter.strategy.notify:

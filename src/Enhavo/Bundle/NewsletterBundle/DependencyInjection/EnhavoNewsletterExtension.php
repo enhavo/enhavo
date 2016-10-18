@@ -33,6 +33,9 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
 
         $container->setParameter('enhavo_newsletter.storage', $config['storage']);
 
+        $container->setParameter('enhavo_newsletter.cleverreach.credentials', $config['resources']['newsletter']['options']['credentials']);
+        $container->setParameter('enhavo_newsletter.cleverreach.group', $config['resources']['newsletter']['options']['group']);
+
         $configFiles = array(
             'services/services.yml',
             'services/newsletter.yml',
