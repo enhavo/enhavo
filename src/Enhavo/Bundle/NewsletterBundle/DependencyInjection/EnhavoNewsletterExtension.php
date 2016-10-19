@@ -22,7 +22,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
     public function load(array $config, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $config);
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_newsletter.subscriber.strategy', $config['subscriber']['strategy']);
@@ -33,8 +33,17 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
 
         $container->setParameter('enhavo_newsletter.storage', $config['storage']);
 
-        $container->setParameter('enhavo_newsletter.cleverreach.credentials', $config['resources']['newsletter']['options']['credentials']);
-        $container->setParameter('enhavo_newsletter.cleverreach.group', $config['resources']['newsletter']['options']['group']);
+        if (isset($config['resources']['newsletter']['options']['credentials'])) {
+            $container->setParameter('enhavo_newsletter.cleverreach.credentials', $config['resources']['newsletter']['options']['credentials']);
+        } else {
+            $container->setParameter('enhavo_newsletter.cleverreach.credentials', []);
+        }
+
+        if (isset($config['resources']['newsletter']['options']['group'])) {
+            $container->setParameter('enhavo_newsletter.cleverreach.group', $config['resources']['newsletter']['options']['group']);
+        } else {
+            $container->setParameter('enhavo_newsletter.cleverreach.group', []);
+        }
 
         $configFiles = array(
             'services/services.yml',
