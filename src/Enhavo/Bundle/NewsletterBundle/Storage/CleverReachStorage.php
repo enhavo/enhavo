@@ -15,9 +15,9 @@ class CleverReachStorage implements StorageInterface
 {
     protected $cleverReachClient;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct($cleverReachClient)
     {
-        $this->cleverReachClient = $container->get('enhavo_newsletter.cleverreach_client');
+        $this->cleverReachClient = $cleverReachClient;
     }
 
     public function saveSubscriber(SubscriberInterface $subscriber)

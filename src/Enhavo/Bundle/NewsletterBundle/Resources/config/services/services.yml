@@ -17,7 +17,7 @@ services:
     enhavo_newsletter.storage.cleverreach:
         class: Enhavo\Bundle\NewsletterBundle\Storage\CleverReachStorage
         arguments:
-            - '@service_container'
+            - '@enhavo_newsletter.cleverreach_client'
         tags:
             - { name: enhavo.newsletter_storage, alias: clever_reach}
 
