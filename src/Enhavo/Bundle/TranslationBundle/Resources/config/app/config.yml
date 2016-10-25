@@ -1,0 +1,4 @@
+twig:
+    form:
+        resources:
+            - 'EnhavoTranslationBundle:Form:fields.html.twig'
