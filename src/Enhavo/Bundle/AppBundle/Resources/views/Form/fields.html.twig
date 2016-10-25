@@ -66,11 +66,11 @@
 
 {% block enhavo_list_widget %}
     {% import _self as forms %}
-    <ul class="list-fields"
+    <ul
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
         data-prototype="{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}"
         data-prototype-name="{{ prototype_name }}"
-        class="enhavo_list
+        class="list-fields enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
         {% elseif sortable and allow_delete and not border %}
