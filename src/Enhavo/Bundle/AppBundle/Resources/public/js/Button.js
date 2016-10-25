@@ -4,7 +4,8 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
     var self = this;
 
     this.initDelete = function (form) {
-      $(form).find('[data-button][data-type=delete]').click(function () {
+      $(form).find('[data-button][data-type=delete]').click(function (event) {
+        event.preventDefault();
         var url = $(form).data('delete');
         if (confirm(translator.trans('form.delete.question'))) {
           admin.openLoadingOverlay();

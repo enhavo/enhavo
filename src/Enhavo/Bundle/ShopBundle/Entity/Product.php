@@ -9,11 +9,12 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 
-class Product extends SyliusProduct
+class Product extends SyliusProduct implements ProductInterface
 {
     /**
      * @var string

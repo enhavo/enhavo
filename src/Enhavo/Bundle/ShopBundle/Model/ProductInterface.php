@@ -8,8 +8,6 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
-use Sylius\Component\Cart\Model\CartItemInterface;
-
 interface ProductInterface
 {
     /**

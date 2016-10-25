@@ -27,9 +27,15 @@ class UpdateViewer extends CreateViewer
         if($route == null) {
             return null;
         }
-        return $this->container->get('router')->generate($route, array(
-            'id' => $this->resource->getId()
-        ));
+
+        $parameters = $this->optionAccessor->get('form.delete_parameters');
+        if($parameters === null) {
+            $parameters = [
+                'id' => $this->resource->getId()
+            ];
+        }
+
+        return $this->container->get('router')->generate($route, $parameters);
     }
 
     public function getFormAction()
@@ -38,9 +44,14 @@ class UpdateViewer extends CreateViewer
         if($route == null) {
             return null;
         }
-        return $this->container->get('router')->generate($route, [
-            'id' => $this->resource->getId()
-        ]);
+
+        $parameters = $this->optionAccessor->get('form.action_parameters');
+        if($parameters === null) {
+            $parameters = [
+                'id' => $this->resource->getId()
+            ];
+        }
+        return $this->container->get('router')->generate($route, $parameters);
     }
 
     public function getDeleteRoute()
@@ -89,7 +100,8 @@ class UpdateViewer extends CreateViewer
             'form' => array(
                 'template' => 'EnhavoAppBundle:View:tab.html.twig',
                 'action' => $this->getActionRoute(),
-                'delete' => $this->getDeleteRoute()
+                'delete' => $this->getDeleteRoute(),
+                'delete_parameters' => null
             )
         ]);
     }

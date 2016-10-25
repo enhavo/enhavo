@@ -16,9 +16,10 @@ abstract class AbstractTableWidget extends AbstractType implements TableWidgetIn
      */
     public function getLabel($options)
     {
+        $label = $this->getOption('label', $options, '');
+        $translationDomain = $this->getOption('translationDomain', $options);
         $translator = $this->container->get('translator');
-        $translationDomain = isset($options['translationDomain']) ? $options['translationDomain'] : null;
-        return $translator->trans($options['label'], [], $translationDomain);
+        return $translator->trans($label, [], $translationDomain);
     }
 
     /**

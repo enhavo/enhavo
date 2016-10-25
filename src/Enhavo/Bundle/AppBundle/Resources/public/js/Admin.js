@@ -227,19 +227,14 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       });
     };
 
-    this.initTable = function () {
-      $(document).on('click', '.table-container .entry-row', function () {
-        var tableContainer = $(this).parents('.table-container');
-        var route = tableContainer.attr('data-edit-route');
-        var id = $(this).attr('data-id');
-        var url = router.generate(route, {id: id});
-        self.ajaxOverlay(url);
-      });
-    };
-
     this.reloadBlock = function (block, callback) {
       var page = block.data('block-page');
-      var url = router.generate(block.data('block-table-route'), {page: page});
+      var tableRouteParameters = block.data('block-table-route-parameters');
+      if(typeof tableRouteParameters != 'object') {
+        tableRouteParameters = {};
+      }
+      tableRouteParameters.page = page;
+      var url = router.generate(block.data('block-table-route'), tableRouteParameters);
       self.openLoadingOverlay();
       $.ajax({
         url: url,
@@ -301,7 +296,11 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       $('[data-block]').each(function (index, element) {
         var type = $(this).data('block-type');
         var route = $(element).data('block-table-route');
-        var url = router.generate(route);
+        var parameters = $(element).data('block-table-route-parameters');
+        if(typeof parameters != 'object') {
+          parameters = {};
+        }
+        var url = router.generate(route, parameters);
         var block = $(this);
         self.openLoadingOverlay();
         $.get(url, function (data) {
@@ -310,7 +309,6 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
 
           $(document).on('formSaveAfter', function () {
             var page = block.data('block-page');
-            var url = router.generate(route, {page: page});
             self.reloadBlock(block);
             self.closeLoadingOverlay();
           });
@@ -318,15 +316,24 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
           block.on('click', '[data-page]', function () {
             var page = $(this).data('page');
             block.data('block-page', page);
-            var url = router.generate(route, {page: page});
             self.reloadBlock(block);
           });
 
-          block.on('click', '[data-id]', function () {
+          block.on('click', '[data-id]', function (event) {
+            var $target = $(event.target);
+            if($target.is('a')) {
+              return true;
+            }
+            event.preventDefault();
             var id = $(this).data('id');
             var route = block.data('block-update-route');
+            var parameters = $(element).data('block-update-route-parameters');
+            if(typeof parameters != 'object') {
+              parameters = {};
+            }
+            parameters.id = id;
             if (route != undefined) {
-              var url = router.generate(route, {id: id});
+              var url = router.generate(route, parameters);
               self.ajaxOverlay(url);
             }
           });

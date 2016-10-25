@@ -11,6 +11,13 @@ services:
         tags:
             - { name: enhavo.table_widget, alias: shop_address }
 
+    enhavo_shop.table.shop_product_variant_widget:
+        class: Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget, alias: shop_product_variant }
+
     enhavo_shop.locale.country_resolver:
         class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver
         arguments:

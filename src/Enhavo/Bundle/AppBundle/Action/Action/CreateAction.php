@@ -19,6 +19,7 @@ class CreateAction extends AbstractType implements ActionInterface
         return $this->renderTemplate('EnhavoAppBundle:Action:default.html.twig', [
             'type' => $this->getType(),
             'route' => isset($parameters['route']) ? $parameters['route'] : '',
+            'routeParameters' => isset($parameters['routeParameters']) ? $parameters['routeParameters'] : [],
             'label' => isset($parameters['label']) ? $parameters['label'] : 'label.create',
             'icon' => isset($parameters['icon']) ? $parameters['icon'] : 'create',
             'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoAppBundle',

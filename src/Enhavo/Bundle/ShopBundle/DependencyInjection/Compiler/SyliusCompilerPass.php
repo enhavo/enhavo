@@ -11,6 +11,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $this->overwriteOrderItemQuantityModifier($container);
         $this->overwriteProductOption($container);
+        $this->overwriteProductVariant($container);
     }
 
     protected function overwriteOrderItemQuantityModifier(ContainerBuilder $container)
@@ -24,6 +25,11 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('sylius.controller.product_option');
         $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ResourceController');
-        $definition->addArgument($container->getDefinition('sylius.factory.adjustment'));
+    }
+
+    protected function overwriteProductVariant(ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('sylius.controller.product_variant');
+        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ResourceController');
     }
 }

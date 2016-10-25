@@ -68,4 +68,18 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_shop_product_variant_create:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType
+        arguments:
+            - '%sylius.model.product.class%'
+        tags:
+            - { name: form.type }
+
+    enhavo_shop_product_variant:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType
+        arguments:
+            - '%sylius.model.product.class%'
+        tags:
+            - { name: form.type }
+
 

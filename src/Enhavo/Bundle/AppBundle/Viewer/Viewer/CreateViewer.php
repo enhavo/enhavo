@@ -55,7 +55,13 @@ class CreateViewer extends AbstractViewer
         if($action == null) {
             return null;
         }
-        return $this->container->get('router')->generate($action);
+
+        $parameters = $this->optionAccessor->get('form.action_parameters');
+        if($parameters === null) {
+            $parameters = [];
+        }
+
+        return $this->container->get('router')->generate($action, $parameters);
     }
 
     public function getActionRoute()
@@ -125,7 +131,8 @@ class CreateViewer extends AbstractViewer
             ],
             'form' => [
                 'template' => $this->getDefaultFormTemplate(),
-                'action' => $this->getActionRoute()
+                'action' => $this->getActionRoute(),
+                'action_parameters' => null,
             ],
             'tabs' => $this->getDefaultTab()
         ]);

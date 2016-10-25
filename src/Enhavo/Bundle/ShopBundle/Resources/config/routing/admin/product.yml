@@ -82,7 +82,10 @@ enhavo_shop_product_table:
                     title:
                         label: product.label.title
                         property: title
-                        width: 12
+                        width: 11
+                    variant:
+                        type: shop_product_variant
+                        width: 1
 
 enhavo_shop_product_delete:
     options:
