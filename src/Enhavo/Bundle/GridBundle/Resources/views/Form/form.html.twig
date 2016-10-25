@@ -1,7 +1,7 @@
 {% form_theme formItem _self %}
 {% trans_default_domain 'EnhavoGridBundle' %}
 <div class="item">
-    <div class="button-container mb1">
+    <div class="button-container">
         <div class="button button-up"><i class="fa fa-angle-up"></i></div>
         <div class="button button-down"><i class="fa fa-angle-down"></i></div>
         <div class="button button-delete"><i class="icon-cross"></i></div>
@@ -9,7 +9,7 @@
     </div>
 
     {% for itemType in formItem.children %}
-        <div class="mb1 clearfix" data-form-row>
+        <div class="clearfix" data-form-row>
             <div class="col-md-2 label-container">{{ form_label(itemType) }}</div>
             <div class="col-md-10">{{ form_widget(itemType) }}</div>
         </div>

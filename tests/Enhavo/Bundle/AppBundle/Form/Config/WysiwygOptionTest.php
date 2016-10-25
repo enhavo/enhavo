@@ -75,10 +75,10 @@ class WysiwygOptionTest extends \PHPUnit_Framework_TestCase
     {
         $option = new WysiwygOption();
 
-        $this->assertEquals('/bundles/path/', $option->getContentCss('path'));
-        $this->assertEquals(null, $option->getContentCss(''));
+        $this->assertArraySubset(array('/bundles/enhavoapp/css/editor.css','/bundles/path/'), $option->getContentCss('path'));
+        $this->assertArraySubset(array('/bundles/enhavoapp/css/editor.css'),$option->getContentCss());
 
         $option->setContentCss(['path1', 'path2']);
-        $this->assertArraySubset(['/bundles/path1/', '/bundles/path2/'], $option->getContentCss());
+        $this->assertArraySubset(['/bundles/enhavoapp/css/editor.css','/bundles/path1/', '/bundles/path2/'], $option->getContentCss());
     }
 }

@@ -1,4 +1,4 @@
-height: 150
+height: 220
 
 toolbar1: "undo redo | bold italic underline strikethrough subscript superscript removeformat | link styleselect"
 
@@ -18,9 +18,9 @@ formats:
       aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'center'}
       alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'right'}
       alignfull: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'full'}
-      bold: {inline: 'span', 'classes': 'bold'}
-      italic: {inline: 'span', 'classes': 'italic'}
-      underline: {inline: 'span', 'classes': 'underline', exact: true}
+      bold: {inline: 'strong'}
+      italic: {inline: 'em'}
+      underline: {inline: 'u', exact: true}
       strikethrough: {inline: 'del'}
       customformat: {inline: 'span', styles: {color: '#00ff00', fontSize: '20px'}, attributes: {title: 'My custom format'}}
 

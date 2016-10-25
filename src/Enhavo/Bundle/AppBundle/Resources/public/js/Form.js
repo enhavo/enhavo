@@ -47,9 +47,6 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       var addTinymce = function (element) {
 
         var options = {
-          // Location of TinyMCE script
-          script_url: '/js/lib/tinymce/tinymce.min.js',
-          //content_css: "/css/editor.css",
           menubar: false,
           // General options
           plugins: ["advlist autolink lists link image charmap print preview anchor",
