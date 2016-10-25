@@ -121,23 +121,23 @@ class WysiwygOption
      */
     public function getContentCss($contentCss = null)
     {
-        if(is_string($this->contentCss) || is_array($this->contentCss)) {
-            $css = $this->contentCss;
-        } else {
-            $css = $contentCss;
+
+        $css = array('@EnhavoAppBundle/Resources/public/css/editor.css');
+
+        if(is_string($this->contentCss)) {
+            $css[] = $this->contentCss;
+        } elseif(is_array($this->contentCss)) {
+            $css = array_merge($css,$this->contentCss);
+        } elseif(is_string($contentCss)) {
+            $css[] = $contentCss;
+        } elseif(is_array($contentCss)) {
+            $css = array_merge($css,$contentCss);
         }
 
-        if(empty($css)) {
-            return null;
+        foreach($css as &$path) {
+            $path = Assetic::convertPathToAsset($path);
         }
 
-        if(is_array($css)) {
-            foreach($css as &$path) {
-                $path = Assetic::convertPathToAsset($path);
-            }
-        } else {
-            $css = Assetic::convertPathToAsset($css);
-        }
         return $css;
     }
 
