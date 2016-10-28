@@ -191,9 +191,7 @@ class ResourceController extends BaseController
         $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
         $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
 
-        return new JsonResponse(array(
-            'success' => true
-        ));
+        return $this->redirectHandler->redirectToResource($configuration, $newResource);
     }
 
     public function indexAction(Request $request)
