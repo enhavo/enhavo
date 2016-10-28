@@ -130,6 +130,36 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
+    this.initDuplicate = function (form) {
+      $(form).find('[data-button][data-type=duplicate]').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var route = $(this).data('route');
+
+        //admin.confirm(translator.trans('message.duplicate.confirm'), function() {
+          var link = router.generate(route, {id: $(form).data('id')});
+          admin.overlayClose();
+          admin.openLoadingOverlay();
+          $.ajax({
+            url: link,
+            success: function (data) {
+              admin.reloadBlock($('[data-block][data-block-type=table]'));
+              admin.closeLoadingOverlay();
+              admin.overlayMessage(translator.trans('message.duplicate.success'), admin.MessageType.Success);
+            },
+            error: function (data) {
+              admin.closeLoadingOverlay();
+              var message = 'error.occurred';
+              if (data.status == 403) {
+                message = 'error.forbidden';
+              }
+              admin.overlayMessage(translator.trans(message), admin.MessageType.Error);
+            }
+          });
+        //});
+      });
+    };
+
     this.initCancel = function (form) {
       $(form).find('[data-button][data-type=cancel]').click(function (e) {
         e.preventDefault();
@@ -143,6 +173,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
         self.initDelete(form);
         self.initPreview(form);
         self.initCancel(form);
+        self.initDuplicate(form);
       });
     };
 

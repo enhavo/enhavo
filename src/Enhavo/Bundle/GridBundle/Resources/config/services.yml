@@ -56,11 +56,6 @@ services:
             - '%enhavo_grid.render.sets%'
             - '@service_container'
 
-    enhavo_grid.factory.item_type:
-        class: '%enhavo_grid.factory.item_type.class%'
-        arguments:
-            - '@enhavo_grid.item_configuration_collection'
-
     validator.video_url_validator:
         class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
         tags:

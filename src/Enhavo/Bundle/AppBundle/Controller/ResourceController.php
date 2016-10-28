@@ -49,6 +49,11 @@ class ResourceController extends BaseController
      */
     protected $batchManager;
 
+    /**
+     * @var DuplicateResourceFactoryInterface
+     */
+    protected $duplicateResourceFactory;
+
     public function __construct(
         MetadataInterface $metadata,
         SyliusRequestConfigurationFactoryInterface $requestConfigurationFactory,
@@ -67,7 +72,8 @@ class ResourceController extends BaseController
         StateMachineInterface $stateMachine,
         ViewerFactory $viewerFactory,
         SortingManager $sortingManager,
-        BatchManager $batchManager
+        BatchManager $batchManager,
+        DuplicateResourceFactoryInterface $duplicateResourceFactory
     )
     {
         parent::__construct(
@@ -91,6 +97,7 @@ class ResourceController extends BaseController
         $this->viewerFactory = $viewerFactory;
         $this->sortingManger = $sortingManager;
         $this->batchManager = $batchManager;
+        $this->duplicateResourceFactory = $duplicateResourceFactory;
     }
 
     /**
@@ -165,6 +172,28 @@ class ResourceController extends BaseController
         );
 
         return $this->viewHandler->handle($configuration, $viewer->createView());
+    }
+
+    public function duplicateAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
+
+        $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+        $resource = $this->findOr404($configuration);
+
+        $newResource = $this->duplicateResourceFactory->duplicate($configuration, $this->factory, $resource);
+        $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
+        $this->repository->add($newResource);
+        $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
+        $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
     }
 
     public function indexAction(Request $request)

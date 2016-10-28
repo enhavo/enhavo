@@ -46,6 +46,7 @@ class SyliusCompilerPass implements CompilerPassInterface
                 $definition->addArgument($container->getDefinition('viewer.factory'));
                 $definition->addArgument($container->getDefinition('enhavo.sorting_manager'));
                 $definition->addArgument($container->getDefinition('enhavo_app.batch_manager'));
+                $definition->addArgument($container->getDefinition('enhavo_app.factory.duplicate_resource_factory'));
             }
         }
     }

@@ -24,3 +24,9 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: download }
+
+    enhavo_download.factory.download:
+        class: '%enhavo_download.factory.download.class%'
+        arguments:
+            - '%enhavo_download.model.download.class%'
+            - '@enhavo_media.factory.file'
