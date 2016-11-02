@@ -31,7 +31,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       $(form).find('[data-button][data-type=save]').click(function (event) {
         event.preventDefault();
         $(this).trigger('formSaveBefore', form);
-
+        var close = $(this).data('close');
         var $form = $(form);
         var data = $form.serialize();
         var url = $form.attr('action');
@@ -53,8 +53,13 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
           type: 'POST',
           data: data,
           url: url,
-          success: function (data) {
+          success: function () {
             admin.closeLoadingOverlay();
+            if(!close) {
+              admin.overlayMessage(translator.trans('page.form.message.success'), admin.MessageType.Success);
+            } else {
+              admin.overlayClose();
+            }
             $(form).trigger('formSaveAfter', form);
           },
           error: function (jqXHR) {

@@ -418,11 +418,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
         self.initWysiwyg(item);
         self.initList(item);
       });
-
-      $(document).on('formSaveAfter', function () {
-        admin.overlayClose();
-      });
-
+      
       $(document).on('formCloseAfter', function (event, content) {
         self.destroyWysiwyg(content);
       });

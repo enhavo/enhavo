@@ -33,12 +33,13 @@ class SaveButton extends AbstractType implements ButtonInterface
 
         return $this->renderTemplate('EnhavoAppBundle:Button:save.html.twig', [
             'type' => $this->getType(),
-            'icon' => isset($options['icon']) ? $options['icon'] : 'save',
-            'display' =>  isset($options['display']) ? $options['display'] : true,
-            'role' => isset($options['role']) ? $options['role'] : null,
-            'label' => isset($options['label']) ? $options['label'] : 'label.save',
-            'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle',
-            'route' => isset($options['route']) ? $options['route'] : null,
+            'icon' => $this->getOption('icon', $options, 'save'),
+            'display' =>  $this->getOption('display', $options, true),
+            'role' => $this->getOption('role', $options),
+            'label' => $this->getOption('label', $options, 'label.save'),
+            'translationDomain' => $this->getOption('translationDomain', $options, 'EnhavoAppBundle'),
+            'route' => $this->getOption('route', $options),
+            'close' => $this->getOption('close', $options, true),
             'routeParameters' => $routeParameters,
             'id' => isset($resource) && $this->getProperty($resource, 'id') ? $this->getProperty($resource, 'id') : null
         ]);
