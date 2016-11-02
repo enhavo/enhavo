@@ -24,6 +24,7 @@ class BaseConfiguration extends AbstractType implements ConfigurationInterface
         $itemConfiguration->setForm($this->getRequiredOption('form', $options));
         $itemConfiguration->setRepository($this->getRequiredOption('repository', $options));
         $itemConfiguration->setTemplate($this->getRequiredOption('template', $options));
+        $itemConfiguration->setFactory($this->getRequiredOption('factory', $options));
 
         $itemConfiguration->setParent($this->getOption('parent', $options));
         $itemConfiguration->setTranslationDomain($this->getOption('translationDomain', $options));

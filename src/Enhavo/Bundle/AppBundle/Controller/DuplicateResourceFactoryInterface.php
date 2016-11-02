@@ -3,8 +3,9 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 
-interface DuplicateResourceFactoryInterface
+interface DuplicateResourceFactoryInterface extends NewResourceFactoryInterface
 {
     /**
      * @param RequestConfiguration $requestConfiguration

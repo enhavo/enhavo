@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Enhavo\Bundle\AppBundle\Exception\BadMethodCallException;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactory;
 
-class DuplicateResourceFactory implements DuplicateResourceFactoryInterface
+class DuplicateResourceFactory extends NewResourceFactory implements DuplicateResourceFactoryInterface
 {
     /**
      * {@inheritdoc}

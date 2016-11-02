@@ -4,10 +4,10 @@ services:
         arguments:
             - 'Enhavo\Bundle\GridBundle\Entity\Grid'
             - '@enhavo_grid.factory.item_type'
-            - '@enhavo_media.factory.file'
-            - '@enhavo_download.factory.download'
 
     enhavo_grid.factory.item_type:
         class: '%enhavo_grid.factory.item_type.class%'
         arguments:
             - '@enhavo_grid.item_configuration_collection'
+        calls:
+            - [setContainer, ['@service_container']]

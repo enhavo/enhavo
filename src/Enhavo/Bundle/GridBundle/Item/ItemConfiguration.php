@@ -57,6 +57,11 @@ class ItemConfiguration
     private $options = [];
 
     /**
+     * @var string
+     */
+    private $factory;
+
+    /**
      * @return string
      */
     public function getModel()
@@ -198,5 +203,21 @@ class ItemConfiguration
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
+     * @param string $factory
+     */
+    public function setFactory($factory)
+    {
+        $this->factory = $factory;
     }
 }

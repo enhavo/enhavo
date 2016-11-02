@@ -32,6 +32,6 @@ class EnhavoGridExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('factories.yml');
+        $loader->load('factory.yml');
     }
 }

@@ -72,8 +72,7 @@ class ResourceController extends BaseController
         StateMachineInterface $stateMachine,
         ViewerFactory $viewerFactory,
         SortingManager $sortingManager,
-        BatchManager $batchManager,
-        DuplicateResourceFactoryInterface $duplicateResourceFactory
+        BatchManager $batchManager
     )
     {
         parent::__construct(
@@ -97,7 +96,6 @@ class ResourceController extends BaseController
         $this->viewerFactory = $viewerFactory;
         $this->sortingManger = $sortingManager;
         $this->batchManager = $batchManager;
-        $this->duplicateResourceFactory = $duplicateResourceFactory;
     }
 
     /**
@@ -185,7 +183,11 @@ class ResourceController extends BaseController
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $resource = $this->findOr404($configuration);
 
-        $newResource = $this->duplicateResourceFactory->duplicate($configuration, $this->factory, $resource);
+        if(!$this->newResourceFactory instanceof DuplicateResourceFactoryInterface) {
+            throw new \Exception('newResourceFactory should implement DuplicateResourceFactoryInterface');
+        }
+
+        $newResource = $this->newResourceFactory->duplicate($configuration, $this->factory, $resource);
         $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->repository->add($newResource);
         $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);

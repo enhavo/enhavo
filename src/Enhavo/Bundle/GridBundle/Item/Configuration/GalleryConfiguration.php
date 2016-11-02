@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
 use Enhavo\Bundle\GridBundle\Entity\Gallery;
+use Enhavo\Bundle\GridBundle\Factory\GalleryFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\GalleryType;
 
 class GalleryConfiguration extends BaseConfiguration
@@ -18,6 +19,7 @@ class GalleryConfiguration extends BaseConfiguration
         $options['model'] = $this->getOption('model', $options, Gallery::class);
         $options['parent'] = $this->getOption('parent', $options, Gallery::class);
         $options['form'] = $this->getOption('form', $options, GalleryType::class);
+        $options['factory'] = $this->getOption('factory', $options, GalleryFactory::class);
         $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:Gallery');
         $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:gallery.html.twig');
         $options['label'] = $this->getOption('label', $options, 'gallery.label.gallery');
