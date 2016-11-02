@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('translationDomain')->end()
                             ->scalarNode('type')->end()
                             ->scalarNode('parent')->end()
+                            ->scalarNode('factory')->end()
                             ->arrayNode('options')->end()
                         ->end()
                     ->end()
