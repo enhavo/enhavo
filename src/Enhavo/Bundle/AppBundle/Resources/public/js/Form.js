@@ -51,7 +51,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
           // General options
           plugins: ["advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"],
+            "insertdatetime media table contextmenu paste autoresize"],
           force_br_newlines: false,
           force_p_newlines: true,
           forced_root_block: "p",
@@ -418,7 +418,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
         self.initWysiwyg(item);
         self.initList(item);
       });
-      
+
       $(document).on('formCloseAfter', function (event, content) {
         self.destroyWysiwyg(content);
       });
