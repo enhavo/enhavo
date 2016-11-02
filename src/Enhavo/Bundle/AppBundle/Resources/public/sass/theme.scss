@@ -318,8 +318,8 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
             .button-delete{height: 32px;}
         }
         &.sortable {
-            .button-down{right: 34px; left:inherit;height: 32px;padding-top: 5px;}
-            .button-up{right: 0; left:inherit;height: 32px;padding-top: 5px;}
+            .button-down{right: 34px; left:inherit;height: 30px;padding-top: 5px;top:1px;}
+            .button-up{right: 0; left:inherit;height: 30px;padding-top: 5px;top:1px;}
         }
         &.sortable-border {
             li{border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
@@ -332,7 +332,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
         }
         &.sortable-delete {
             .button-delete{right:79px; height: 30px; padding-top: 5px;top:1px;}
-            .button-down{right:45px; left:inherit;height: 32px;padding-top: 5px;}
+            .button-down{right:45px; left:inherit;height: 30px;padding-top: 5px;top:1px;}
             .button-up{right:11px;left:inherit;height:30px;padding-top:5px;top:1px;}
         }
 
