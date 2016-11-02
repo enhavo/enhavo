@@ -20,6 +20,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         $this->overwriteEventDispatcher($container);
         $this->overwriteResourceResolver($container);
         $this->overwriteViewHandler($container);
+        $this->overwriteNewResourceFactory($container);
     }
 
     protected function overwriteRequestConfigurationFactory(ContainerBuilder $container)
@@ -66,5 +67,11 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('sylius.resource_controller.view_handler');
         $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ViewHandler');
+    }
+
+    protected function overwriteNewResourceFactory(ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('sylius.resource_controller.new_resource_factory');
+        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory');
     }
 }

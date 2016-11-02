@@ -41,3 +41,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget, alias: picture }
+
+    enhavo_media.factory.file:
+        class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
+        arguments:
+            - 'Enhavo\Bundle\MediaBundle\Entity\File'
+            - '%kernel.root_dir%/media'
+            - '@doctrine.orm.entity_manager'

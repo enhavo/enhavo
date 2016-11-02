@@ -3,5 +3,6 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Button', 'media/UploadForm', 'gr
     admin.initBlocks();
     admin.initActions();
     admin.initAfterSaveHandler();
+    admin.initEscButton();
   });
 });

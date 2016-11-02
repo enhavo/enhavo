@@ -44,3 +44,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: save }
+
+    enhavo_app.button.duplicate:
+        class: Enhavo\Bundle\AppBundle\Button\Button\DuplicateButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button, alias: duplicate }

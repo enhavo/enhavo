@@ -7,6 +7,7 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
     var overlayMessage = null;
     var overlayIsDialog = false;
     var overlayIsOpen = false;
+    var iframeOverlayIsOpen = false;
     var ajaxOverlaySynchronized = true;
     var loadingOverlay = null;
     var loadingOverlayMutex = 0;
@@ -31,20 +32,29 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       overlayContent = $("#overlayContent");
       overlayMessage = $("#overlayMessage");
 
-      $(document).on('keyup', function (event) {
-        if (event.keyCode == 27) {
-          if (overlayIsOpen) {
-            event.stopPropagation();
-            event.preventDefault();
-            self.overlayClose();
-          }
-        }
-      });
       $(document).on('click', '#overlayContent .close', function (event) {
         if (overlayIsOpen) {
           event.stopPropagation();
           event.preventDefault();
           self.overlayClose();
+        }
+      });
+    };
+
+    this.initEscButton = function() {
+      $(document).on('keyup', function (event) {
+        if (event.keyCode == 27) { // esc button
+          if (iframeOverlayIsOpen) {
+            event.stopPropagation();
+            event.preventDefault();
+            self.iframeClose();
+            return;
+          }
+          if (overlayIsOpen) {
+            event.stopPropagation();
+            event.preventDefault();
+            self.overlayClose();
+          }
         }
       });
     };
@@ -176,6 +186,8 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
         options = {};
       }
 
+      iframeOverlayIsOpen = true;
+
       var originalAction = $(form).prop('action');
       var iframeContainer = $('#iframeContainer');
       var iframe = iframeContainer.find('iframe');
@@ -201,6 +213,7 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
         iframe.prop('src', '');
         $(form).prop('target', '');
         $(form).prop('action', originalAction);
+        iframeOverlayIsOpen = false;
       });
     };
 

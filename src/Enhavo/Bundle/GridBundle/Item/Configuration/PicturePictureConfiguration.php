@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
 use Enhavo\Bundle\GridBundle\Entity\PicturePicture;
+use Enhavo\Bundle\GridBundle\Factory\PicturePictureFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\PicturePictureType;
 
 class PicturePictureConfiguration extends BaseConfiguration
@@ -18,6 +19,7 @@ class PicturePictureConfiguration extends BaseConfiguration
         $options['model'] = $this->getOption('model', $options, PicturePicture::class);
         $options['parent'] = $this->getOption('parent', $options, PicturePicture::class);
         $options['form'] = $this->getOption('form', $options, PicturePictureType::class);
+        $options['factory'] = $this->getOption('factory', $options, PicturePictureFactory::class);
         $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:PicturePicture');
         $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:text_text.html.twig');
         $options['label'] = $this->getOption('label', $options, 'textText.label.textText');
