@@ -21,8 +21,8 @@ class PicturePictureConfiguration extends BaseConfiguration
         $options['form'] = $this->getOption('form', $options, PicturePictureType::class);
         $options['factory'] = $this->getOption('factory', $options, PicturePictureFactory::class);
         $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:PicturePicture');
-        $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:text_text.html.twig');
-        $options['label'] = $this->getOption('label', $options, 'textText.label.textText');
+        $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:picture_picture.html.twig');
+        $options['label'] = $this->getOption('label', $options, 'picturePicture.label.picturePicture');
         $options['translationDomain'] = $this->getOption('translationDomain', $options, 'EnhavoGridBundle');
 
         return parent::configure($name, $options);
