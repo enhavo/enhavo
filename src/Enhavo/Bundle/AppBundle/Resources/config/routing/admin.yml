@@ -1,4 +1,4 @@
 enhavo_app_index:
-    pattern:  /
+    path:  /
     defaults:
         _controller: EnhavoAppBundle:Redirect:index

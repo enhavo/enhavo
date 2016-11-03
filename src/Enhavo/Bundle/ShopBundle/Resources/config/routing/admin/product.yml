@@ -4,9 +4,17 @@ enhavo_shop_product_index:
     path: /enhavo/shop/product/index
     methods: [GET]
     defaults:
-        _controller: enhavo_shop.controller.product:indexAction
+        _controller: sylius.controller.product:indexAction
         _sylius:
             viewer:
+                blocks:
+                    table:
+                        type: table
+                        table_route: enhavo_shop_product_table
+                        update_route: enhavo_shop_product_update
+                actions:
+                    create:
+                        route: enhavo_shop_product_create
 
 enhavo_shop_product_create:
     options:
@@ -14,17 +22,20 @@ enhavo_shop_product_create:
     path: /enhavo/shop/product/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_shop.controller.product:createAction
+        _controller: sylius.controller.product:createAction
         _sylius:
+            form: enhavo_shop_product
             viewer:
                 translationDomain: EnhavoShopBundle
+                form:
+                    action: enhavo_shop_product_create
                 tabs:
                     product:
                         label: product.label.product
-                        template: EnhavoShopBundle:Tab:product.html.twig
-                    seo:
-                        label: product.label.seo
-                        template: EnhavoContentBundle:Tab:seo.html.twig
+                        template: EnhavoShopBundle:Admin:Product/Tab/product.html.twig
+                    options:
+                        label: product.label.options
+                        template: EnhavoShopBundle:Admin:Product/Tab/options.html.twig
                 buttons:
                     preview:
                         type: preview
@@ -36,17 +47,21 @@ enhavo_shop_product_update:
     path: /enhavo/shop/product/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_shop.controller.product:updateAction
+        _controller: sylius.controller.product:updateAction
         _sylius:
+            form: enhavo_shop_product
             viewer:
                 translationDomain: EnhavoShopBundle
+                form:
+                    action: enhavo_shop_product_update
+                    delete: enhavo_shop_product_delete
                 tabs:
                     product:
                         label: product.label.product
-                        template: EnhavoShopBundle:Tab:product.html.twig
-                    seo:
-                        label: product.label.seo
-                        template: EnhavoContentBundle:Tab:seo.html.twig
+                        template: EnhavoShopBundle:Admin:Product/Tab/product.html.twig
+                    options:
+                        label: product.label.options
+                        template: EnhavoShopBundle:Admin:Product/Tab/options.html.twig
                 buttons:
                     preview:
                         type: preview
@@ -59,25 +74,18 @@ enhavo_shop_product_table:
     methods: [GET]
     defaults:
         page: 1
-        _controller: enhavo_shop.controller.product:tableAction
+        _controller: sylius.controller.product:tableAction
         _sylius:
             viewer:
                 translationDomain: EnhavoShopBundle
                 columns:
-                    public:
-                        label: article.label.public
-                        property: public
-                        width: 2
-                        type: boolean
                     title:
-                        label: article.label.title
+                        label: product.label.title
                         property: title
-                        width: 7
-                    publicationDate:
-                        label: article.label.publicationDate
-                        property: publicationDate
-                        type: date
-                        width: 3
+                        width: 11
+                    variant:
+                        type: shop_product_variant
+                        width: 1
 
 enhavo_shop_product_delete:
     options:
@@ -85,7 +93,7 @@ enhavo_shop_product_delete:
     path: /enhavo/shop/product/delete/{id}
     methods: [DELETE]
     defaults:
-        _controller: enhavo_shop.controller.product:deleteAction
+        _controller: sylius.controller.product:deleteAction
 
 enhavo_shop_product_batch:
     options:
@@ -93,7 +101,7 @@ enhavo_shop_product_batch:
     path: /enhavo/shop/product/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_shop.controller.product:batchAction
+        _controller: sylius.controller.product:batchAction
         _sylius:
             paginate: false
             criteria:

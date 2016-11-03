@@ -15,15 +15,7 @@ class AddressWidget extends AbstractTableWidget
         }
         return '';
     }
-
-    public function getLabel($options)
-    {
-        if(isset($options['label'])) {
-            return parent::getLabel($options);
-        }
-        return '';
-    }
-
+    
     public function getType()
     {
         return 'shop_address';

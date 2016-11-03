@@ -1,21 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 6/6/16
- * Time: 10:02 AM
+ * Product.php
+ *
+ * @since 16/10/16
+ * @author gseidel
  */
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
-use Sylius\Component\Shipping\Model\ShippableInterface;
-use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
+use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
+use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
 
-class Product extends Content implements ShippableInterface, ProductInterface
+class Product extends SyliusProduct implements ProductInterface
 {
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var FileInterface
+     */
+    private $picture;
+
     /**
      * @var integer
      */
@@ -55,6 +65,38 @@ class Product extends Content implements ShippableInterface, ProductInterface
      * @var integer
      */
     private $weight;
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return FileInterface
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param FileInterface $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
 
     /**
      * Set price
@@ -178,7 +220,7 @@ class Product extends Content implements ShippableInterface, ProductInterface
     /**
      * Get height
      *
-     * @return integer 
+     * @return integer
      */
     public function getHeight()
     {
@@ -201,7 +243,7 @@ class Product extends Content implements ShippableInterface, ProductInterface
     /**
      * Get width
      *
-     * @return integer 
+     * @return integer
      */
     public function getWidth()
     {
@@ -224,7 +266,7 @@ class Product extends Content implements ShippableInterface, ProductInterface
     /**
      * Get depth
      *
-     * @return integer 
+     * @return integer
      */
     public function getDepth()
     {
@@ -247,7 +289,7 @@ class Product extends Content implements ShippableInterface, ProductInterface
     /**
      * Get volume
      *
-     * @return integer 
+     * @return integer
      */
     public function getVolume()
     {
@@ -270,7 +312,7 @@ class Product extends Content implements ShippableInterface, ProductInterface
     /**
      * Get weight
      *
-     * @return integer 
+     * @return integer
      */
     public function getWeight()
     {

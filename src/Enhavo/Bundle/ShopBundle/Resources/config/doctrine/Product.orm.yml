@@ -1,8 +1,11 @@
 Enhavo\Bundle\ShopBundle\Entity\Product:
-    table: shop_product
     type: entity
+    table: shop_product
 
     fields:
+        title:
+            type: string
+
         price:
             type: integer
             nullable: true
@@ -28,8 +31,23 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
             nullable: true
 
     manyToOne:
+        picture:
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
         taxRate:
             cascade: ['persist']
             targetEntity: Sylius\Component\Taxation\Model\TaxRateInterface
+
+    manyToMany:
+        options:
+            targetEntity: Sylius\Component\Variation\Model\OptionInterface
+            joinTable:
+                name: shop_product_options
+                joinColumns:
+                  product_id:
+                    referencedColumnName: id
+                inverseJoinColumns:
+                  option_id:
+                    referencedColumnName: id
 
     lifecycleCallbacks: {  }

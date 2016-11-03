@@ -38,7 +38,7 @@ services:
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
-            - '@enhavo_shop.repository.product'
+            - '@sylius.repository.product'
             - '@sylius.order_item_quantity_modifier'
 
     enhavo_shop.listener.cart_subscriber:
