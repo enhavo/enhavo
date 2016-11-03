@@ -32,6 +32,7 @@ label:
   delete: 'Löschen'
   preview: 'Vorschau'
   create: 'Erstellen'
+  duplicate: 'Duplizieren'
   yes: 'Ja'
   no: 'Nein'
   title: 'Titel'
@@ -47,6 +48,9 @@ message:
       delete: 'Wollen sie wirklich alle ausgewählten Elemente löschen?'
       yes: 'Ja'
       no: 'Nein'
+  duplicate:
+    confirm: 'Warnung: Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?'
+    success: 'Das Element wurde erfolgreich dupliziert'
 tab:
   label:
     category: 'Kategorie'

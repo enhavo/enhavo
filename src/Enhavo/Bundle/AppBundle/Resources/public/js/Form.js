@@ -47,14 +47,11 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       var addTinymce = function (element) {
 
         var options = {
-          // Location of TinyMCE script
-          script_url: '/js/lib/tinymce/tinymce.min.js',
-          //content_css: "/css/editor.css",
           menubar: false,
           // General options
           plugins: ["advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"],
+            "insertdatetime media table contextmenu paste autoresize"],
           force_br_newlines: false,
           force_p_newlines: true,
           forced_root_block: "p",
@@ -420,10 +417,6 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
         self.initInput(item);
         self.initWysiwyg(item);
         self.initList(item);
-      });
-
-      $(document).on('formSaveAfter', function () {
-        admin.overlayClose();
       });
 
       $(document).on('formCloseAfter', function (event, content) {

@@ -41,3 +41,9 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: page }
+
+    enhavo_page.factory.page:
+        class: '%enhavo_page.factory.page.class%'
+        arguments:
+            - '%enhavo_page.model.page.class%'
+            - '@enhavo_grid.factory.grid'

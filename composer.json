@@ -57,7 +57,8 @@
     "stof/doctrine-extensions-bundle": "^1.2",
     "elasticsearch/elasticsearch": "^2.2",
     "smalot/pdfparser": "*",
-    "tecnickcom/tcpdf": "^6.2"
+    "tecnickcom/tcpdf": "^6.2",
+    "guzzlehttp/guzzle": "^6.2"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",

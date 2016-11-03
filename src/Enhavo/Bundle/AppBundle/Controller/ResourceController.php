@@ -49,6 +49,11 @@ class ResourceController extends BaseController
      */
     protected $batchManager;
 
+    /**
+     * @var DuplicateResourceFactoryInterface
+     */
+    protected $duplicateResourceFactory;
+
     public function __construct(
         MetadataInterface $metadata,
         SyliusRequestConfigurationFactoryInterface $requestConfigurationFactory,
@@ -165,6 +170,30 @@ class ResourceController extends BaseController
         );
 
         return $this->viewHandler->handle($configuration, $viewer->createView());
+    }
+
+    public function duplicateAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
+            throw new AccessDeniedHttpException;
+        }
+
+        $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+        $resource = $this->findOr404($configuration);
+
+        if(!$this->newResourceFactory instanceof DuplicateResourceFactoryInterface) {
+            throw new \Exception('newResourceFactory should implement DuplicateResourceFactoryInterface');
+        }
+
+        $newResource = $this->newResourceFactory->duplicate($configuration, $this->factory, $resource);
+        $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
+        $this->repository->add($newResource);
+        $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
+        $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+
+        return $this->redirectHandler->redirectToResource($configuration, $newResource);
     }
 
     public function indexAction(Request $request)

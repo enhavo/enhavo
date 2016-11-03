@@ -1,3 +1,23 @@
+body {font-family:"Open Sans", Arial, sans-serif;font-size:12px;line-height:1.42em;
+  p {margin:0 0 1em 0;}
+  ul, ol {padding-left:23px;margin-bottom:1em;
+  	li {
+	  + li {margin-top:3px;}
+	}
+  }
+}
 img {
 	max-width:100%;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-center {
+  text-align: center;
 }

@@ -69,6 +69,9 @@ enhavo_page_page_update:
                     preview:
                         type: preview
                         route: enhavo_page_page_preview
+                    duplicate:
+                        type: duplicate
+                        route: enhavo_page_page_duplicate
 
 enhavo_page_page_table:
     options:
@@ -96,6 +99,14 @@ enhavo_page_page_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_page.controller.page:deleteAction
+
+enhavo_page_page_duplicate:
+    options:
+        expose: true
+    path: /enhavo/page/page/duplicate/{id}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_page.controller.page:duplicateAction
 
 enhavo_page_page_batch:
     options:

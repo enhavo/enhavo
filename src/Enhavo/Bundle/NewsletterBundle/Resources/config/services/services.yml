@@ -2,6 +2,7 @@ services:
     enhavo_newsletter.storage_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
+            - '@service_container'
             - 'NewsletterStorage'
 
     enhavo_newsletter.storage.local:
@@ -12,3 +13,16 @@ services:
             - '@enhavo_newsletter.repository.subscriber'
         tags:
             - { name: enhavo.newsletter_storage, alias: local }
+
+    enhavo_newsletter.storage.cleverreach:
+        class: Enhavo\Bundle\NewsletterBundle\Storage\CleverReachStorage
+        arguments:
+            - '@enhavo_newsletter.cleverreach_client'
+        tags:
+            - { name: enhavo.newsletter_storage, alias: clever_reach}
+
+    enhavo_newsletter.cleverreach_client:
+        class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
+        arguments:
+            - '%enhavo_newsletter.cleverreach.credentials%'
+            - '%enhavo_newsletter.cleverreach.group%'
