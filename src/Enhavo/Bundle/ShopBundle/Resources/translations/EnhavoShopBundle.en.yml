@@ -62,4 +62,6 @@ order_item:
 product:
   label:
     product: Product
+    product_option: Option
+    code: Code
     title: Title
