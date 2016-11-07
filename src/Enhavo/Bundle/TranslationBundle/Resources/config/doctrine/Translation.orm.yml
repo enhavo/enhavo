@@ -1,0 +1,26 @@
+Enhavo\Bundle\TranslationBundle\Entity\Translation:
+    type: entity
+    table: translation_translation
+    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        class:
+            type: string
+        property:
+            type: string
+        refId:
+            type: integer
+            nullable: true
+        locale:
+            type: string
+        translation:
+            type: text
+
+    lifecycleCallbacks: {  }

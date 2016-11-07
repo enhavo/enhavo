@@ -1,4 +1,34 @@
 services:
-#    enhavo_translation.example:
-#        class: Enhavo\Bundle\TranslationBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    enhavo_translation.metatdata.collection:
+        class: Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection
+        arguments:
+
+    enhavo_translation.translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Translator
+        arguments:
+            - '@enhavo_translation.metatdata.collection'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.doctrine_subscriber:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineSubscriber
+        arguments:
+            - '@enhavo_translation.translator'
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_translation.extension.textarea:
+        class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextareaExtension
+        arguments:
+            - '@enhavo_translation.translator'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
+
+    enhavo_translation.save_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\SaveListener
+        arguments:
+            - '@enhavo_translation.translator'
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }

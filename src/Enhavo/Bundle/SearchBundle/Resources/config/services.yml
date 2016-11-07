@@ -147,6 +147,7 @@ services:
             - '@enhavo_search_search_util'
             - '@enhavo_search_pdf_type'
             - '@enhavo_search_metadata_factory'
+            - '@enhavo_search_metadata_factory'
             - '@service_container'
             - '@enhavo_search_index_walker'
             - '@enhavo_search_text_extractor'

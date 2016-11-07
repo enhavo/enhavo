@@ -1,3 +1,5 @@
+{% extends 'EnhavoAppBundle:Form:fields.html.twig' %}
+
 {% block sylius_translations_widget %}
     {{ form_errors(form) }}
     <div class="tab-container">
@@ -25,4 +27,16 @@
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+
+{% block textarea_widget %}
+    {% if translation %}
+        <div>
+            {% for locale, value in translations %}
+                <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
