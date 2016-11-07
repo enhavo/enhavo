@@ -1,16 +1,16 @@
 <?php
 /**
- * TextareaExtension.php
+ * TextExtension.php
  *
- * @since 03/11/16
+ * @since 07/11/16
  * @author gseidel
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
 
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class TextareaExtension extends TranslationExtension
+class TextExtension extends TranslationExtension
 {
     /**
      * Returns the name of the type being extended.
@@ -19,6 +19,6 @@ class TextareaExtension extends TranslationExtension
      */
     public function getExtendedType()
     {
-        return TextareaType::class;
+        return TextType::class;
     }
 }

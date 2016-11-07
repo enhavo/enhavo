@@ -31,9 +31,50 @@
 
 {% block textarea_widget %}
     {% if translation %}
-        <div>
+        <div class="translation">
             {% for locale, value in translations %}
-                <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
+                <div data-translation-switch="{{ locale }}">{{ locale }}</div>
+            {% endfor %}
+            <div class="translation-container">
+                {% for locale, value in translations %}
+                    <div class="input-container">
+                        <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block text_widget %}
+    {% if translation %}
+        <div class="translation">
+            {% for locale, value in translations %}
+                <div data-translation-switch="{{ locale }}">{{ locale }}</div>
+            {% endfor %}
+            <div class="translation-container">
+                {% for locale, value in translations %}
+                    <div class="input-container" data-translation-locale="{{ locale }}">
+                        <input type="text" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block enhavo_wysiwyg_widget %}
+    {% if translation %}
+        <div class="translation">
+            <div class="wysiwyg-container">
+                <textarea data-wysiwyg data-config="{{ config|e }}"></textarea>
+            </div>
+            {% for locale, value in translations %}
+                <input type="hidden" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
             {% endfor %}
         </div>
     {% else %}

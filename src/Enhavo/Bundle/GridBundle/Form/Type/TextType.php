@@ -23,7 +23,8 @@ class TextType extends ItemFormType
 
         $builder->add('text', 'enhavo_wysiwyg', array(
             'label' => 'form.label.text',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => true
         ));
     }
 

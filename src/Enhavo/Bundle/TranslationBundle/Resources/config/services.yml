@@ -25,6 +25,20 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
 
+    enhavo_translation.extension.text:
+        class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextExtension
+        arguments:
+            - '@enhavo_translation.translator'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+
+    enhavo_translation.extension.wysiwyg:
+        class: Enhavo\Bundle\TranslationBundle\Form\Extension\WysiwygExtension
+        arguments:
+            - '@enhavo_translation.translator'
+        tags:
+            - { name: form.type_extension, extended_type: Enhavo\Bundle\AppBundle\Form\Type\WysiwygType }
+
     enhavo_translation.save_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\SaveListener
         arguments:

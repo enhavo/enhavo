@@ -40,6 +40,9 @@ module.exports = function(grunt) {
             },{
               sassDir: 'src/Enhavo/Bundle/ShopBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/ShopBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/TranslationBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/TranslationBundle/Resources/public/css'
             }
           ]
         }
