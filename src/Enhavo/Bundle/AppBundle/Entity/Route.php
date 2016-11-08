@@ -9,15 +9,10 @@
 namespace Enhavo\Bundle\AppBundle\Entity;
 
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Symfony\Cmf\Bundle\RoutingBundle\Model\Route as RouteModel;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as RouteModel;
 
 class Route extends RouteModel implements RouteInterface
 {
-    /**
-     * @var string
-     */
-    protected $host = "";
-
     /**
      * @var string
      */
@@ -27,42 +22,7 @@ class Route extends RouteModel implements RouteInterface
      * @var int
      */
     protected $typeId;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var int
-     */
-    protected $position = 0;
-
-    /**
-     * @var array
-     */
-    protected $schemes = array();
-
-    /**
-     * @var array
-     */
-    protected $methods = array();
-
-    /**
-     * @var array
-     */
-    protected $defaults = array();
-
-    /**
-     * @var array
-     */
-    protected $requirements = array();
-
-    /**
-     * @var array
-     */
-    protected $options = array();
-
+    
     /**
      * @return mixed
      */
@@ -93,53 +53,5 @@ class Route extends RouteModel implements RouteInterface
     public function setTypeId($typeId)
     {
         $this->typeId = $typeId;
-    }
-
-    /**
-     * Sets the name.
-     *
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets the name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Sets the position.
-     *
-     * @param int $position
-     *
-     * @return self
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Gets the position.
-     *
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
     }
 }
