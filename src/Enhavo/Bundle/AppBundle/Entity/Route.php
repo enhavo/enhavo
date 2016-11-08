@@ -16,52 +16,52 @@ class Route extends RouteModel implements RouteInterface
     /**
      * @var string
      */
-    private $host = "";
+    protected $host = "";
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var int
      */
-    private $typeId;
+    protected $typeId;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var int
      */
-    private $position = 0;
+    protected $position = 0;
 
     /**
      * @var array
      */
-    private $schemes = array();
+    protected $schemes = array();
 
     /**
      * @var array
      */
-    private $methods = array();
+    protected $methods = array();
 
     /**
      * @var array
      */
-    private $defaults = array();
+    protected $defaults = array();
 
     /**
      * @var array
      */
-    private $requirements = array();
+    protected $requirements = array();
 
     /**
      * @var array
      */
-    private $options = array();
+    protected $options = array();
 
     /**
      * @return mixed
