@@ -126,7 +126,7 @@ class Translator
     {
         $metadata = $this->metadataCollection->getMetadata($entity);
         if($metadata === null) {
-            throw new \Exception(sprintf('No metadata found for class %s', get_class($entity)));
+            return null;
         }
 
         /** @var Translation[] $translations */

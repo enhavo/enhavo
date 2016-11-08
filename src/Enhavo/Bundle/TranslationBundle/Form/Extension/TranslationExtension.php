@@ -61,7 +61,12 @@ abstract class TranslationExtension extends AbstractTypeExtension
 
             if($parent instanceof Form && is_object($parent->getData())) {
                 $property = new Property($form->getPropertyPath());
-                $view->vars['translations'] = $this->translator->getTranslations($parent->getData(), $property);
+                $translations = $this->translator->getTranslations($parent->getData(), $property);
+                if($translations === null) {
+                    $view->vars['translation'] = false;
+                    return;
+                }
+                $view->vars['translations'] = $translations;
             }
         }
     }
