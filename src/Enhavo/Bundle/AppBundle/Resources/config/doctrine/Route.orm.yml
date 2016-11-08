@@ -15,24 +15,6 @@ Enhavo\Bundle\AppBundle\Entity\Route:
                 strategy: AUTO
 
     fields:
-        host:
-            type: string
-
-        schemes:
-            type: array
-
-        methods:
-             type: array
-
-        defaults:
-            type: array
-
-        requirements:
-            type: array
-
-        options:
-            type: array
-
         variablePattern:
             type: string
             length: 255
