@@ -44,7 +44,8 @@ class ContentRepository extends EntityRepository
         }
 
         $query->orderBy('n.publicationDate','desc');
-        return $query->getQuery()->getResult();
+
+        return $this->getPaginator($query);
     }
 
     public function getMonths()
@@ -92,9 +93,7 @@ class ContentRepository extends EntityRepository
             }
         }
 
-        $contents = $query->getQuery()->getResult();
-
-        return $contents;
+        return $this->getPaginator($query);
     }
 
     /**
