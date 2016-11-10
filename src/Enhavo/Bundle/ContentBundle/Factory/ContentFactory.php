@@ -27,7 +27,7 @@ class ContentFactory extends Factory
         $newResource->setChangeFrequency($originalResource->getChangeFrequency());
         $newResource->setPublic($originalResource->isPublic());
         $newResource->setPublicationDate($originalResource->getPublicationDate());
-        $newResource->setHideAt($originalResource->getHideAt());
+        $newResource->setPublishedUntil($originalResource->getPublishedUntil());
         $newResource->setCreated(new \DateTime());
         $newResource->setUpdated(new \DateTime());
 

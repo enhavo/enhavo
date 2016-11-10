@@ -73,8 +73,8 @@ class ContentType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('hide_at', 'enhavo_datetime', array(
-            'label' => 'form.label.hide_at',
+        $builder->add('published_until', 'enhavo_datetime', array(
+            'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
     }

@@ -42,7 +42,7 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
             type: datetime
             nullable: true
 
-        hideAt:
+        publishedUntil:
             type: datetime
             nullable: true
 
