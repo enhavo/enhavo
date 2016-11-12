@@ -6,7 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\ThemeBundle\Model;
+namespace Enhavo\Bundle\ProjectBundle\Model;
 
 use Enhavo\Bundle\ContactBundle\Model\Contact as BaseModel;
 

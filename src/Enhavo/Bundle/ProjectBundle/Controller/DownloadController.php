@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ThemeBundle\Controller;
+namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,7 +16,7 @@ class DownloadController extends Controller
     {
         $downloads = $this->get('enhavo_download.repository.download')->findAll();
 
-        return $this->render('EnhavoThemeBundle:Theme:Download/index.html.twig', [
+        return $this->render('EnhavoProjectBundle:Theme:Download/index.html.twig', [
             'downloads' => $downloads
         ]);
     }

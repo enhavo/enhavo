@@ -1,7 +1,7 @@
-{% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
+{% extends 'EnhavoProjectBundle:Theme:base.html.twig' %}
 
 {% block hero %}
-    {{ theme_widget_render('slider', {template:'EnhavoThemeBundle:Theme:Widget/slider.html.twig'}) }}
+    {{ theme_widget_render('slider', {template:'EnhavoProjectBundle:Theme:Widget/slider.html.twig'}) }}
 {% endblock %}
 
 
@@ -18,19 +18,19 @@
                     <div class="speechbubble">
                         <p>New! <br/>Available <br/>as app</p>
                     </div>
-                    <img src="/bundles/enhavotheme/img/ipad.png" alt=""/>
+                    <img src="/bundles/enhavoproject/img/ipad.png" alt=""/>
                 </div>
                 <div class="container npam">
                     {% for article in articles %}
                         <article class="clearfix" data-article-item>
-                            <a href="{{ path('enhavo_theme_article_show', {slug: article.slug}) }}">
+                            <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
                                 {% if article.picture %}
                                     <span class="article-photo">
                                         <img src="{{ media_url(article.picture) }}" alt=""/>
                                     </span>
                                     {% else %}
                                     <span class="article-photo">
-                                        <img src="/bundles/enhavotheme/img/default-article-picture.jpg" alt=""/>
+                                        <img src="/bundles/enhavoproject/img/default-article-picture.jpg" alt=""/>
                                     </span>
                                 {% endif %}
                                 <span class="article-content">
@@ -63,7 +63,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 image">
-                    <img src="/bundles/enhavotheme/img/magazine.png" alt=""/>
+                    <img src="/bundles/enhavoproject/img/magazine.png" alt=""/>
                     <div class="stoerer">
                         <p>Our <br/>new <br/>edition</p>
                     </div>
@@ -89,7 +89,7 @@
                             {% if category.picture %}
                                 <img src="{{ media_url(category.picture) }}" alt=""/>
                                 {% else %}
-                                <img src="/bundles/enhavotheme/img/default-category-picture.jpg" alt=""/>
+                                <img src="/bundles/enhavoproject/img/default-category-picture.jpg" alt=""/>
                             {% endif %}
                         </span>
                         <span class="text-bottom">
@@ -102,5 +102,5 @@
         </div>
     </section>
 
-    {{ theme_widget_render('contact',  { template: 'EnhavoThemeBundle:Theme:Widget/contact-form.html.twig'}) }}
+    {{ theme_widget_render('contact',  { template: 'EnhavoProjectBundle:Theme:Widget/contact-form.html.twig'}) }}
 {% endblock %}

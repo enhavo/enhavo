@@ -1,24 +1,12 @@
 #
 # theme
 #
-enhavo_theme_hompage:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/homepage.yml"
-    prefix:   /
-
-enhavo_theme_download:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/download.yml"
-    prefix:   /
-
-enhavo_theme_article:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
-    prefix:   /
-
-enhavo_search_theme:
+enhavo_theme_search:
     resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
     prefix:   /
 
 enhavo_theme_project:
-    resource: "@EnhavoProjectBundle/Resources/config/routing.yml"
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
     prefix:   /
 
 #

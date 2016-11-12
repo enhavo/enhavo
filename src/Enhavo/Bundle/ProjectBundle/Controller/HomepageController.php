@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ThemeBundle\Controller;
+namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +28,7 @@ class HomepageController extends Controller
             }
         }
 
-        return $this->render('EnhavoThemeBundle:Theme:Homepage/index.html.twig', [
+        return $this->render('EnhavoProjectBundle:Theme:Homepage/index.html.twig', [
             'articles' => $articles,
             'categories' => $setCategories
         ]);

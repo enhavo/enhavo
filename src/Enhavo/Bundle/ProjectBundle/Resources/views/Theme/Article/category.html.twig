@@ -1,4 +1,4 @@
-{% extends 'EnhavoThemeBundle:Theme:base.html.twig' %}
+{% extends 'EnhavoProjectBundle:Theme:base.html.twig' %}
 {% block main %}
 <div class="clearfix page-wrap">
     <section id="article-feed">
@@ -9,12 +9,12 @@
             <div class="container npam">
                 {% for article in articles %}
                     <article class="clearfix" data-article-item>
-                        <a href="{{ path('enhavo_theme_article_show', {slug: article.slug}) }}">
+                        <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
                             <span class="article-photo">
                                 {% if article.picture %}
                                     <img src="{{ media_url(article.picture) }}" alt=""/>
                                  {% else %}
-                                    <img src="/bundles/enhavotheme/img/default-article-picture.jpg" alt=""/>
+                                    <img src="/bundles/enhavoproject/img/default-article-picture.jpg" alt=""/>
                                 {% endif %}
                             </span>
                             <span class="article-content">

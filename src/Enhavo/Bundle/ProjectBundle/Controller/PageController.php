@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ThemeBundle\Controller;
+namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,7 +14,7 @@ class PageController extends Controller
 {
     public function showAction($contentDocument)
     {
-        return $this->render('EnhavoThemeBundle:Theme:Page/show.html.twig', [
+        return $this->render('EnhavoProjectBundle:Theme:Page/show.html.twig', [
             'page' => $contentDocument,
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ThemeBundle\Form\Type;
+namespace Enhavo\Bundle\ProjectBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType as BaseType;

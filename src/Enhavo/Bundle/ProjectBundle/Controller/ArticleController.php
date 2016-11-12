@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ThemeBundle\Controller;
+namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -18,7 +18,7 @@ class ArticleController extends Controller
             'slug' => $slug
         ));
 
-        return $this->render('EnhavoThemeBundle:Theme/Article:show.html.twig', [
+        return $this->render('EnhavoProjectBundle:Project/Article:show.html.twig', [
             'article' => $article,
         ]);
     }
@@ -44,7 +44,7 @@ class ArticleController extends Controller
             }
         }
 
-        return $this->render('EnhavoThemeBundle:Theme/Article:category.html.twig', [
+        return $this->render('EnhavoProjectBundle:Project/Article:category.html.twig', [
             'articles' => $matchingArticles,
             'category' => $category,
         ]);
@@ -54,7 +54,7 @@ class ArticleController extends Controller
     {
         $article = $this->get('enhavo_article.repository.article')->find($id);
 
-        return $this->render('EnhavoThemeBundle:Theme/Article:mobile.html.twig', [
+        return $this->render('EnhavoProjectBundle:Project/Article:mobile.html.twig', [
             'article' => $article,
         ]);
     }

@@ -120,7 +120,7 @@ function Base() {
           position: new google.maps.LatLng(48.19898, 11.25217),
           map: map,
           title: 'Acme Magazine, 82256 Fürstenfeldbruck',
-          icon:  '/bundles/enhavotheme/img/map-marker.png'
+          icon:  '/bundles/enhavoproject/img/map-marker.png'
         });
       }
     };
