@@ -1,0 +1,38 @@
+{% extends 'EnhavoProjectBundle:Theme:base.html.twig' %}
+{% block main %}
+<div class="clearfix page-wrap">
+    <section id="article-feed">
+        <div class="articles">
+            <div class="container">
+                <h2>Artikel aus der Kategorie {{ category.name }}</h2>
+            </div>
+            <div class="container npam">
+                {% for article in articles %}
+                    <article class="clearfix" data-article-item>
+                        <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
+                            <span class="article-photo">
+                                {% if article.picture %}
+                                    <img src="{{ media_url(article.picture) }}" alt=""/>
+                                 {% else %}
+                                    <img src="/bundles/enhavoproject/img/default-article-picture.jpg" alt=""/>
+                                {% endif %}
+                            </span>
+                            <span class="article-content">
+                                <h3 class="title">{{ article.title }}</h3>
+                                {% for category in article.categories %}
+                                <p class="category capitals">{{ category }}</p>
+                                {% endfor %}
+                                <p class="desc">{{ article.teaser }}</p>
+                                <span href="" class="capitals readmore-link">...more</span>
+                                <p class="date">{{ article.publicationDate|date('m d Y') }}</p>
+                            </span>
+                        </a>
+                        <span class="readmore-btn" data-tablet-btn></span>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {{ theme_box_render('sidebar') }}
+</div>
+{% endblock %}

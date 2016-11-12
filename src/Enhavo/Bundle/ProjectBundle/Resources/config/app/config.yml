@@ -1,0 +1,40 @@
+enhavo_article:
+    resources:
+        article:
+            routing:
+                strategy: slug
+                route: enhavo_project_article_show
+            classes:
+                controller: Enhavo\Bundle\ProjectBundle\Controller\ArticleController
+
+enhavo_page:
+    resources:
+        page:
+            classes:
+                controller: Enhavo\Bundle\ProjectBundle\Controller\PageController
+enhavo_theme:
+    template:
+        base: 'EnhavoProjectBundle:Theme:base.html.twig'
+    boxes:
+        sidebar:
+            template: 'EnhavoThemeBundle:Box:sidebar.html.twig'
+            widgets:
+                search:
+                    type: search
+                category:
+                    type: article_category
+                newsletter:
+                    type: template
+                    template: 'EnhavoProjectBundle:Theme:Widget/newsletter.html.twig'
+        footer:
+            template: 'EnhavoProjectBundle:Theme:Box/footer.html.twig'
+            widgets:
+                contact:
+                    type: template
+                    template: 'EnhavoProjectBundle:Theme:Widget/contact.html.twig'
+                about-us:
+                    type: template
+                    template: 'EnhavoProjectBundle:Theme:Widget/about-us.html.twig'
+                social_media:
+                    type: template
+                    template: 'EnhavoProjectBundle:Theme:Widget/social-media.html.twig'

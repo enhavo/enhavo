@@ -7,7 +7,7 @@ use Enhavo\Bundle\PageBundle\Entity\Page;
 
 class PageController extends ResourceController
 {
-    public function showResource(Page $contentDocument)
+    public function showResourceAction($contentDocument)
     {
         return $this->render('EnhavoPageBundle:Page:show.html.twig', array(
             'data' => $contentDocument

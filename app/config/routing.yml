@@ -1,26 +1,10 @@
 #
-# theme
+# enhavo
 #
-enhavo_theme_hompage:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/homepage.yml"
-    prefix:   /
-
-enhavo_theme_download:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/download.yml"
-    prefix:   /
-
-enhavo_theme_article:
-    resource: "@EnhavoThemeBundle/Resources/config/routing/article.yml"
-    prefix:   /
-
-enhavo_search_theme:
+enhavo_theme_search:
     resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
     prefix:   /
 
-
-#
-# enhavo
-#
 enhavo_shop_theme:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme.yml"
     prefix:   /
@@ -117,6 +101,10 @@ enhavo_setting:
     resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
     prefix: /admin
 
+enhavo_comment:
+    resource: "@EnhavoCommentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 #
 # 3rd Party
 #
@@ -128,3 +116,10 @@ fos_js_routing:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+#
+# project
+#
+enhavo_theme_project:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
+    prefix:   /

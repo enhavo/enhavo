@@ -2,11 +2,11 @@ services:
     enhavo_theme.box_render:
         class: Enhavo\Bundle\ThemeBundle\Box\BoxRendererExtension
         arguments:
-            - @service_container
+            - '@service_container'
         tags:
             - { name: twig.extension }
 
     enhavo_theme.box_collector:
         class: Enhavo\Bundle\ThemeBundle\Box\BoxCollector
         arguments:
-            - %enhavo_theme.boxes%
+            - '%enhavo_theme.boxes%'
