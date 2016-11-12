@@ -1,15 +1,17 @@
-cmf_routing:
-    dynamic:
-        controllers_by_class:
-            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoProjectBundle:Page:show
-
 enhavo_article:
     resources:
         article:
             routing:
                 strategy: slug
                 route: enhavo_project_article_show
+            classes:
+                controller: Enhavo\Bundle\ProjectBundle\Controller\ArticleController
 
+enhavo_page:
+    resources:
+        page:
+            classes:
+                controller: Enhavo\Bundle\ProjectBundle\Controller\PageController
 enhavo_theme:
     template:
         base: 'EnhavoProjectBundle:Theme:base.html.twig'

@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\ProjectBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Enhavo\Bundle\PageBundle\Controller\PageController as EnhavoPageController;
 
-class PageController extends Controller
+class PageController extends EnhavoPageController
 {
-    public function showAction($contentDocument)
+    public function showResourceAction($contentDocument)
     {
         return $this->render('EnhavoProjectBundle:Theme:Page/show.html.twig', [
             'page' => $contentDocument,

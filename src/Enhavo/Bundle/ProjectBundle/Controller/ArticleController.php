@@ -8,19 +8,24 @@
 
 namespace Enhavo\Bundle\ProjectBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Enhavo\Bundle\ArticleBundle\Controller\ArticleController as EnhavoArticleController;
 
-class ArticleController extends Controller
+class ArticleController extends EnhavoArticleController
 {
-    public function showAction($slug)
+    public function showResourceAction($article)
+    {
+        return $this->render('EnhavoProjectBundle:Theme/Article:show.html.twig', array(
+            'article' => $article
+        ));
+    }
+
+    public function showArticleAction($slug)
     {
         $article = $this->get('enhavo_article.repository.article')->findOneBy(array(
             'slug' => $slug
         ));
 
-        return $this->render('EnhavoProjectBundle:Project/Article:show.html.twig', [
-            'article' => $article,
-        ]);
+        return $this->showResource($article);
     }
 
     public function categoryAction($slug)
@@ -44,7 +49,7 @@ class ArticleController extends Controller
             }
         }
 
-        return $this->render('EnhavoProjectBundle:Project/Article:category.html.twig', [
+        return $this->render('EnhavoProjectBundle:Theme/Article:category.html.twig', [
             'articles' => $matchingArticles,
             'category' => $category,
         ]);
@@ -54,7 +59,7 @@ class ArticleController extends Controller
     {
         $article = $this->get('enhavo_article.repository.article')->find($id);
 
-        return $this->render('EnhavoProjectBundle:Project/Article:mobile.html.twig', [
+        return $this->render('EnhavoProjectBundle:Theme/Article:mobile.html.twig', [
             'article' => $article,
         ]);
     }

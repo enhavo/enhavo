@@ -1,17 +1,10 @@
 #
-# theme
+# enhavo
 #
 enhavo_theme_search:
     resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
     prefix:   /
 
-enhavo_theme_project:
-    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
-    prefix:   /
-
-#
-# enhavo
-#
 enhavo_shop_theme:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme.yml"
     prefix:   /
@@ -123,3 +116,10 @@ fos_js_routing:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+#
+# project
+#
+enhavo_theme_project:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
+    prefix:   /
