@@ -1,0 +1,4 @@
+services:
+#    enhavo_comment.example:
+#        class: Enhavo\Bundle\CommentBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

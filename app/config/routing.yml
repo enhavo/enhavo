@@ -17,6 +17,9 @@ enhavo_search_theme:
     resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
     prefix:   /
 
+enhavo_theme_project:
+    resource: "@EnhavoProjectBundle/Resources/config/routing.yml"
+    prefix:   /
 
 #
 # enhavo
@@ -116,6 +119,10 @@ enhavo_calendar:
 enhavo_setting:
     resource: "@EnhavoSettingBundle/Resources/config/routing/setting.yml"
     prefix: /admin
+
+enhavo_comment:
+    resource: "@EnhavoCommentBundle/Resources/config/routing.yml"
+    prefix:   /
 
 #
 # 3rd Party
