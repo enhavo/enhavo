@@ -38,7 +38,24 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+
+                ->arrayNode('route')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('url_resolver')
+                            ->useAttributeAsKey('name')
+                            ->prototype('array')
+                            ->children()
+                                ->scalarNode('model')->end()
+                                ->scalarNode('strategy')->end()
+                                ->scalarNode('route')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
+
+
 
         return $treeBuilder;
     }

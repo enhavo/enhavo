@@ -1,0 +1,14 @@
+{% extends 'EnhavoProjectBundle:Theme:base.html.twig' %}
+
+{% block bodyclass %}light{% endblock %}
+
+{% block main %}
+    <div class="clearfix page-wrap about-container">
+        <section>
+            <article class="container">
+                <h2>Shop</h2>
+                {{ theme_widget_render('shop_product_list') }}
+            </article>
+        </section>
+    </div>
+{% endblock %}

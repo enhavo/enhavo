@@ -84,6 +84,8 @@ class ProductType extends AbstractType
             'label' => 'label.volume'
         ));
 
+        $builder->add('route', 'enhavo_route');
+
         $builder->add('taxRate', 'entity', array(
             'class' => $this->taxRateClass,
             'choice_label' => 'name',

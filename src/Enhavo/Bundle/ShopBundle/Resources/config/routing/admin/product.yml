@@ -36,6 +36,9 @@ enhavo_shop_product_create:
                     options:
                         label: product.label.options
                         template: EnhavoShopBundle:Admin:Product/Tab/options.html.twig
+                    meta:
+                        label: product.label.meta
+                        template: EnhavoShopBundle:Admin:Product/Tab/meta.html.twig
                 buttons:
                     preview:
                         type: preview
@@ -62,6 +65,9 @@ enhavo_shop_product_update:
                     options:
                         label: product.label.options
                         template: EnhavoShopBundle:Admin:Product/Tab/options.html.twig
+                    meta:
+                        label: product.label.meta
+                        template: EnhavoShopBundle:Admin:Product/Tab/meta.html.twig
                 buttons:
                     preview:
                         type: preview

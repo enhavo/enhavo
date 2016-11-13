@@ -5,6 +5,7 @@
     <ul data-menu-items>
         <li><a href="{{ path('enhavo_project_hompage_index') }}">Home</a></li>
         <li><a href="{{ path('enhavo_project_download_index') }}">Downloads</a></li>
+        <li><a href="{{ path('enhavo_project_theme_shop_index') }}">Shop</a></li>
         {% for page in pages %}
             <li><a href="{% if page.route %}{{ path(page.route.name) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
         {% endfor %}

@@ -1,3 +1,8 @@
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product:showResourceAction
+
 sylius_cart:
     resolver: enhavo.shop.cart_item_resolver
     resources:
@@ -71,9 +76,17 @@ enhavo_assets:
 enhavo_shop:
     mailer:
         confirm:
-            from: %mailer_from%
+            from: '%mailer_from%'
         tracking:
-            from: %mailer_from%
+            from: '%mailer_from%'
+
+enhavo_theme:
+    route:
+        url_resolver:
+            product:
+                model: sylius.product
+                strategy: route
+                route: ~
 
 jms_serializer:
     metadata:
@@ -105,7 +118,7 @@ sylius_product:
     resources:
         product:
             classes:
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                controller: Enhavo\Bundle\ShopBundle\Controller\ProductController
                 model: Enhavo\Bundle\ShopBundle\Entity\Product
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\ProductType

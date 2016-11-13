@@ -38,6 +38,11 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
             cascade: ['persist']
             targetEntity: Sylius\Component\Taxation\Model\TaxRateInterface
 
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            orphanRemoval: true
+
     manyToMany:
         options:
             targetEntity: Sylius\Component\Variation\Model\OptionInterface

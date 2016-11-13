@@ -12,10 +12,10 @@ use Enhavo\Bundle\ArticleBundle\Controller\ArticleController as EnhavoArticleCon
 
 class ArticleController extends EnhavoArticleController
 {
-    public function showResourceAction($article)
+    public function showResourceAction($contentDocument)
     {
         return $this->render('EnhavoProjectBundle:Theme/Article:show.html.twig', array(
-            'article' => $article
+            'article' => $contentDocument
         ));
     }
 
@@ -25,7 +25,7 @@ class ArticleController extends EnhavoArticleController
             'slug' => $slug
         ));
 
-        return $this->showResource($article);
+        return $this->showResourceAction($article);
     }
 
     public function categoryAction($slug)

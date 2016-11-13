@@ -27,7 +27,7 @@ class ProductListWidget extends AbstractType implements WidgetInterface
             'template' => 'EnhavoShopBundle:Theme:Widget/product-list.html.twig'
         ], $options);
 
-        $products = $this->container->get('enhavo_shop.repository.product')->findPublished();
+        $products = $this->container->get('sylius.repository.product')->findAll();
 
         return $this->renderTemplate($resolvedOptions['template'], [
             'products' => $products

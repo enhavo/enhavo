@@ -8,13 +8,17 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
+use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
+use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
-class Product extends SyliusProduct implements ProductInterface
+class Product extends SyliusProduct implements ProductInterface, Routeable
 {
     /**
      * @var string
@@ -65,6 +69,11 @@ class Product extends SyliusProduct implements ProductInterface
      * @var integer
      */
     private $weight;
+
+    /**
+     * @var Route
+     */
+    private $route;
 
     /**
      * @return mixed
@@ -335,5 +344,15 @@ class Product extends SyliusProduct implements ProductInterface
             return '';
         }
         return $this->title;
+    }
+
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    public function setRoute(RouteObjectInterface $route)
+    {
+        $this->route = $route;
     }
 }
