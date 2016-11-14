@@ -18,7 +18,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
             success: function () {
               admin.closeLoadingOverlay();
               admin.overlayClose();
-              $(form).trigger('formSaveAfter', form);
+              $(document).trigger('formSaveAfter', form);
             },
             error: function () {
               admin.closeLoadingOverlay();
@@ -62,7 +62,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
             } else {
               admin.overlayClose();
             }
-            $(form).trigger('formSaveAfter', form);
+            $(document).trigger('formSaveAfter', form);
           },
           error: function (jqXHR) {
             admin.closeLoadingOverlay();
