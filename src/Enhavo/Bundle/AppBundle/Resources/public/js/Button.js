@@ -17,6 +17,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
             url: url,
             success: function () {
               admin.closeLoadingOverlay();
+              admin.overlayClose();
               $(form).trigger('formSaveAfter', form);
             },
             error: function () {
