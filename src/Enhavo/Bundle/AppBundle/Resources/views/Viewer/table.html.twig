@@ -6,7 +6,10 @@
     {% endfor %}
 </div>
 
+
+
 <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
+    <div class="loading-spinner"></div>
     <div class="col-xs-{{ width }}"
         {% if sortable %}
             data-sortable-container data-move-after-route="{{ move_after_route }}"
