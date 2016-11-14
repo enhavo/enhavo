@@ -158,6 +158,13 @@ services:
         tags:
             - { name: enhavo.theme_widget,  alias: 'shop_coupon_redeem' }
 
+    enhavo_shop.widget.product_configurator:
+        class: Enhavo\Bundle\ShopBundle\Widget\ProductConfiguratorWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_product_configurator' }
+
     enhavo_shop.document.billing_generator:
         class: Enhavo\Bundle\ShopBundle\Document\BillingGenerator
         arguments:

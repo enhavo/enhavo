@@ -30,13 +30,14 @@ class ItemResolver implements ItemResolverInterface
      */
     public function __construct(RepositoryInterface $productRepository, OrderItemQuantityModifier $modifier)
     {
-        $this->productRepository = $productRepository;
+        $this->variantRepository = $productRepository;
         $this->modifier = $modifier;
     }
 
     public function resolve(CartItemInterface $item, $request)
     {
-        $productId = $request->get('product');
+        $product = $request->get('product');
+        $variantId = $request->get('variant');
         $quantity = intval($request->get('quantity'));
 
         if($quantity < 1) {
@@ -44,7 +45,7 @@ class ItemResolver implements ItemResolverInterface
         }
 
         // If no product id given, or product not found, we throw exception with nice message.
-        if (!$productId || !$product = $this->productRepository->find($productId)) {
+        if (!$variantId || !$product = $this->productRepository->find($variantId)) {
             throw new ItemResolvingException('Requested product was not found');
         }
         /** @var $product ProductInterface */

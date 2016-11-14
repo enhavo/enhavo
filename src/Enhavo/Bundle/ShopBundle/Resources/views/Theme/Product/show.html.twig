@@ -6,4 +6,5 @@
 
 {% block main %}
     <h1>{{ product.title }}</h1>
+    {{ theme_widget_render('shop_product_configurator', { product: product }) }}
 {% endblock %}
