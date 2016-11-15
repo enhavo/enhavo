@@ -11,45 +11,74 @@ namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\GridBundle\Entity\Text;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class MetadataCollection
 {
+    const CACHE_FILE_NAME = 'translation_metadata_array.json';
+
+    /**
+     * @var array
+     */
+    private $metadataArray;
+
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
+     * @var array
+     */
+    private $metadataCache = [];
+
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
     /**
      * @param $entity
      * @return Metadata|null
      */
     public function getMetadata($entity)
     {
-        if($entity instanceof Article) {
-            $metadata = new Metadata();
-            $metadata->setClass('Enhavo\Bundle\ArticleBundle\Entity\Article');
-            $teaser = new Property();
-            $teaser->setName('teaser');
-            $metaDescription = new Property();
-            $metaDescription->setName('metaDescription');
+        $className = get_class($entity);
 
-            $title = new Property();
-            $title->setName('title');
-
-            $metadata->setProperties([
-                $teaser, $metaDescription, $title
-            ]);
-            return $metadata;
+        if(array_key_exists($className, $this->metadataCache)) {
+            return  $this->metadataCache[$className];
         }
 
+        $metadata = $this->createMetadata($className);
+        $this->metadataCache[$className] = $metadata;
+        return $metadata;
+    }
 
-        if($entity instanceof Text) {
+    private function createMetadata($className)
+    {
+        $metadataArray = $this->getMetadataArray();
+        if(array_key_exists($className, $metadataArray)) {
             $metadata = new Metadata();
-            $metadata->setClass('Enhavo\Bundle\GridBundle\Entity\Text');
-
-            $text = new Property();
-            $text->setName('text');
-
-            $metadata->setProperties([
-                $text
-            ]);
-            return $metadata;
+            $metadata->setClass($className);
+            if(isset($metadataArray[$className]['properties']) && is_array($metadataArray[$className]['properties'])) {
+                $properties = $metadataArray[$className]['properties'];
+                foreach($properties as $name => $propertyData) {
+                    $property = new Property();
+                    $property->setName($name);
+                    $metadata->addProperty($property);
+                }
+            }
         }
         return null;
+    }
+
+    private function getMetadataArray()
+    {
+        if($this->metadataArray === null) {
+            $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), MetadataCollection::CACHE_FILE_NAME);
+            $content = file_get_contents($cacheFilePath);
+            $this->metadataArray = json_decode($content, true);
+        }
+        return $this->metadataArray;
     }
 }

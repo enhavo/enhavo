@@ -37,6 +37,11 @@ class Metadata
         $this->properties = $properties;
     }
 
+    public function addProperty(Property $property)
+    {
+        $this->properties[] = $property;
+    }
+
     /**
      * @return string
      */

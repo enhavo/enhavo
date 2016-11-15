@@ -1,8 +1,8 @@
 services:
-
     enhavo_translation.metatdata.collection:
         class: Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection
         arguments:
+            - '@kernel'
 
     enhavo_translation.translator:
         class: Enhavo\Bundle\TranslationBundle\Translator\Translator

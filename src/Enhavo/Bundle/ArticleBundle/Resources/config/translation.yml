@@ -1,0 +1,3 @@
+Enhavo\Bundle\ArticleBundle\Entity\Article:
+    properties:
+        title:
