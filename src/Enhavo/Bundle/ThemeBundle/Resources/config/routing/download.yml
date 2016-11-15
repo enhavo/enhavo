@@ -1,4 +1,0 @@
-enhavo_theme_download_index:
-    path: /downloads
-    defaults:
-        _controller: EnhavoThemeBundle:Download:index

@@ -1,0 +1,4 @@
+enhavo_project_hompage_index:
+    path: /
+    defaults:
+        _controller: EnhavoProjectBundle:Homepage:index

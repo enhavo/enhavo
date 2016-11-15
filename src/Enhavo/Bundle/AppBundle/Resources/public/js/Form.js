@@ -243,7 +243,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
           }
           var list = liElement.parent();
           var index = list.children().index(liElement);
-          var size = list.children().size();
+          var size = list.children().length;
 
           if (index < (size - 1)) { // is not last element
             if (liElement.find('[data-wysiwyg]').length) {
