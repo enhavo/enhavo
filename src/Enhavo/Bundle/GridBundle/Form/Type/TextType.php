@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextType extends ItemFormType
 {
@@ -18,17 +18,18 @@ class TextType extends ItemFormType
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('text', 'enhavo_wysiwyg', array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => true
+            'translation' => $this->translation
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Text'

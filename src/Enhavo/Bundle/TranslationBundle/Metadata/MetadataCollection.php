@@ -54,11 +54,21 @@ class MetadataCollection
         return $metadata;
     }
 
-    private function createMetadata($className)
+    private function createMetadata($className, Metadata $metadata = null)
     {
+        $parentClass = get_parent_class($className);
+        if($parentClass) {
+            $parentMetadata = $this->createMetadata($parentClass, $metadata);
+            if($parentMetadata !== null) {
+                $metadata = $parentMetadata;
+            }
+        }
+
         $metadataArray = $this->getMetadataArray();
         if(array_key_exists($className, $metadataArray)) {
-            $metadata = new Metadata();
+            if($metadata === null) {
+                $metadata = new Metadata();
+            }
             $metadata->setClass($className);
             if(isset($metadataArray[$className]['properties']) && is_array($metadataArray[$className]['properties'])) {
                 $properties = $metadataArray[$className]['properties'];
@@ -68,6 +78,7 @@ class MetadataCollection
                     $metadata->addProperty($property);
                 }
             }
+            return $metadata;
         }
         return null;
     }

@@ -13,10 +13,6 @@ Enhavo\Bundle\GridBundle\Entity\PicturePicture:
             type: string
             length: 255
             nullable: true
-        title:
-            type: string
-            length: 255
-            nullable: true
         captionLeft:
             type: string
             length: 255

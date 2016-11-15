@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThreePictureType extends ItemFormType
 {
@@ -18,7 +18,8 @@ class ThreePictureType extends ItemFormType
     {
         $builder->add('titleLeft', 'text', array(
             'label' => 'threePicture.form.label.title_left',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('fileLeft', 'enhavo_files', array(
@@ -29,12 +30,14 @@ class ThreePictureType extends ItemFormType
 
         $builder->add('captionLeft', 'text', array(
             'label' => 'threePicture.form.label.caption_left',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('titleCenter', 'text', array(
             'label' => 'threePicture.form.label.title_center',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('fileCenter', 'enhavo_files', array(
@@ -45,12 +48,14 @@ class ThreePictureType extends ItemFormType
 
         $builder->add('captionCenter', 'text', array(
             'label' => 'threePicture.form.label.caption_center',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('titleRight', 'text', array(
             'label' => 'threePicture.form.label.title_right',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('fileRight', 'enhavo_files', array(
@@ -61,11 +66,12 @@ class ThreePictureType extends ItemFormType
 
         $builder->add('captionRight', 'text', array(
             'label' => 'threePicture.form.label.caption_right',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enhavo\Bundle\GridBundle\Entity\ThreePicture'

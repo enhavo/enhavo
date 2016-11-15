@@ -17,7 +17,17 @@ abstract class ItemFormType extends AbstractType
     /**
      * @var string
      */
+    protected $translation;
+
+    /**
+     * @var string
+     */
     private $formName;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
 
     /**
      * @return string

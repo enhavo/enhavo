@@ -1,11 +1,11 @@
 services:
     enhavo_article_article:
-        class: %enhavo_article.form.type.article.class%
+        class: '%enhavo_article.form.type.article.class%'
         arguments:
-            - %enhavo_article.model.article.class%
-            - %enhavo_article.routing.article.strategy%
-            - %enhavo_article.routing.article.route%
-            - @security.context
+            - '%enhavo_article.model.article.class%'
+            - '%enhavo_article.routing.article.strategy%'
+            - '%enhavo_article.routing.article.route%'
+            - '%enhavo_translation.translate%'
         tags:
             - { name: form.type }
 
@@ -20,7 +20,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\ArticleBundle\Entity\Article
-            - %enhavo_article.model.article.class%
+            - '%enhavo_article.model.article.class%'
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }

@@ -1,3 +1,6 @@
+enhavo_translation:
+    translate: true
+
 enhavo_article:
     resources:
         article:
