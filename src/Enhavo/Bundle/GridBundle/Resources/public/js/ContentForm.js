@@ -1,4 +1,4 @@
-define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm'], function($, router, formScript, admin, uploadForm) {
+define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm', 'tinymce'], function($, router, formScript, admin, uploadForm, tinymce) {
 
   function GridForm() {
     var self = this;
@@ -112,10 +112,9 @@ define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm'], fu
 
           if (index > 0) { // is not first element
             if (item.find('[data-wysiwyg]').length) {
-              var editorId = item.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
+              formScript.destroyWysiwyg(item);
               $(container.children().get(index - 1)).before(item); //move element before last
-              tinymce.execCommand('mceAddEditor', false, editorId);
+              formScript.initWysiwyg(item);
             } else {
               $(container.children().get(index - 1)).before(item); //move element before last
             }
@@ -133,10 +132,9 @@ define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm'], fu
 
           if (index < (size - 1)) { // is not last element
             if (item.find('[data-wysiwyg]').length) {
-              var editorId = item.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
+              formScript.destroyWysiwyg(item);
               $(container.children().get(index + 1)).after(item); //move element after next
-              tinymce.execCommand('mceAddEditor', false, editorId);
+              formScript.initWysiwyg(item);
             } else {
               $(container.children().get(index + 1)).after(item); //move element after next
             }
