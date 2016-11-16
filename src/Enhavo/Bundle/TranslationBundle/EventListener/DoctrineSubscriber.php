@@ -39,6 +39,7 @@ class DoctrineSubscriber implements EventSubscriber
             'prePersist',
             'preUpdate',
             'preRemove',
+            'postLoad'
         );
     }
 
@@ -67,5 +68,14 @@ class DoctrineSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         $this->translator->delete($entity);
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $this->translator->translate($entity, $this->translator->getLocale());
     }
 }

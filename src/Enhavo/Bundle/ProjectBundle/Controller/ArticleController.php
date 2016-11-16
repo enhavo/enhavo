@@ -25,7 +25,7 @@ class ArticleController extends EnhavoArticleController
             'slug' => $slug
         ));
 
-        return $this->showResource($article);
+        return $this->showResourceAction($article);
     }
 
     public function categoryAction($slug)

@@ -8,6 +8,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Translator
         arguments:
             - '@enhavo_translation.metatdata.collection'
+            - '@request_stack'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
         calls:

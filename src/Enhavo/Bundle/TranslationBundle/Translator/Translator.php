@@ -13,6 +13,7 @@ use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 
@@ -40,13 +41,24 @@ class Translator
      */
     private $locales = [];
 
-    public function __construct(MetadataCollection $metadataCollection, $locales, $defaultLocale)
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @var string
+     */
+    private $locale;
+
+    public function __construct(MetadataCollection $metadataCollection, RequestStack $requestStack, $locales, $defaultLocale)
     {
         $this->metadataCollection = $metadataCollection;
         foreach($locales as $locale => $data) {
             $this->locales[] = $locale;
         }
         $this->defaultLocale = $defaultLocale;
+        $this->requestStack = $requestStack;
     }
 
     public function store($entity)
@@ -168,5 +180,58 @@ class Translator
             unset($this->updateRefIds[$key]);
         }
         $this->getEntityManager()->flush();
+    }
+
+    public function translate($entity, $locale)
+    {
+        if($locale === $this->defaultLocale) {
+            return;
+        }
+
+        $metadata = $this->metadataCollection->getMetadata($entity);
+
+        if($metadata !== null) {
+            $accessor = PropertyAccess::createPropertyAccessor();
+            foreach($metadata->getProperties() as $property) {
+                /** @var Translation $translation */
+                $translation = $this->getRepository()->findOneBy([
+                    'class' => $metadata->getClass(),
+                    'refId' => $entity->getId(),
+                    'property' => $property->getName(),
+                    'locale' => $locale
+                ]);
+                $value = '';
+                if($translation !== null && $translation->getTranslation() !== null) {
+                    $value = $translation->getTranslation();
+                }
+                $accessor->setValue($entity, $property->getName(), $value);
+            }
+        }
+    }
+
+    public function getLocale()
+    {
+        if($this->locale) {
+            return $this->locale;
+        }
+
+        $request = $this->requestStack->getCurrentRequest();
+        if($request === null) {
+            $this->locale = $this->defaultLocale;
+            return $this->locale;
+        }
+
+        if(preg_match('#^/admin/#', $request->getPathInfo())) {
+            $this->locale = $this->defaultLocale;
+            return $this->locale;
+        }
+
+        if(!in_array($request->getLocale(), $this->locales)) {
+            $this->locale = $this->defaultLocale;
+            return $this->locale;
+        }
+
+        $this->locale = $request->getLocale();
+        return $this->locale;
     }
 }
