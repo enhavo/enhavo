@@ -4,8 +4,8 @@ require(['translation/app/Translation', 'tinymce', 'jquery'], function(translati
     var $translationDom = $('#' + editor.id).parents('[data-translation]');
 
     editor.on('change', function(ed, e) {
-      if(translation.isSwitchLanguageMutex()) {
-        return;
+      if(!translation.getCurrentLocale() || translation.isSwitchLanguageMutex()) {
+        return
       }
       //save content
       var content = editor.getContent();
@@ -13,6 +13,9 @@ require(['translation/app/Translation', 'tinymce', 'jquery'], function(translati
     });
 
     editor.addCommand('switchLanguage', function(ui, v) {
+      if(!translation.getCurrentLocale()) {
+        return;
+      }
       //load content
       var value = $translationDom.find('[data-translation-value=' + translation.getSwitchToLocale() + ']').val();
       editor.setContent(value);

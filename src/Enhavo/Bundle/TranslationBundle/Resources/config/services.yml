@@ -8,6 +8,8 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Translator
         arguments:
             - '@enhavo_translation.metatdata.collection'
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
         calls:
             - [ setContainer, ['@service_container']]
 
@@ -22,6 +24,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextExtension
         arguments:
             - '@enhavo_translation.translator'
+            - '%enhavo_translation.default_locale%'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
 

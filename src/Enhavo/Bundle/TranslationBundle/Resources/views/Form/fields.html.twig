@@ -67,7 +67,7 @@
     {% if translation %}
         <div class="translation" data-translation>
             <div class="wysiwyg-container" >
-                <textarea data-wysiwyg data-config="{{ config|e }}">{{ translations[currentTranslation] }}</textarea>
+                <textarea data-wysiwyg data-config="{{ config|e }}">{{ translations[currentLocale] }}</textarea>
             </div>
             {% for locale, value in translations %}
                 <input type="hidden" data-translation-value="{{ locale }}" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">

@@ -2,7 +2,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, 
   function Translation() {
     var self = this;
     var switchToLocale;
-    var currentLocale = 'de';
+    var currentLocale;
     var switchLanguageMutex = false;
 
     this.getSwitchToLocale = function() {
@@ -15,6 +15,12 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, 
 
     this.isSwitchLanguageMutex = function() {
       return switchLanguageMutex;
+    };
+
+    this.initCurrentLocale = function() {
+        if(!currentLocale) {
+          currentLocale = $('[data-translation-current-locale]').data('translation-current-locale');
+        }
     };
 
     this.switchLanguage = function(locale) {
@@ -51,14 +57,21 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, 
 
     this.init = function () {
       $(document).on('formOpenAfter', function (event, form) {
+        self.initCurrentLocale();
         self.initTranslationSwitcher(form);
+        if(currentLocale) {
+          self.switchLanguage(currentLocale);
+        }
       });
 
       $(document).on('gridAddAfter', function (event, data) {
         window.setTimeout(function() {
+          self.initCurrentLocale();
           self.switchLanguage(currentLocale);
         }, 10);
       });
+
+      self.initCurrentLocale();
     };
 
     self.init();

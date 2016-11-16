@@ -1,5 +1,9 @@
 enhavo_translation:
     translate: true
+    default_locale: en
+    locales:
+        en:
+        de:
 
 enhavo_article:
     resources:

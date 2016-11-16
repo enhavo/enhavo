@@ -24,6 +24,20 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('translate')->defaultValue(false)->end()
             ->end()
+            ->children()
+                ->scalarNode('default_locale')->end()
+            ->end()
+            ->children()
+                ->arrayNode('locales')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('label')->end()
+                            ->scalarNode('flag')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

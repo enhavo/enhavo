@@ -2,6 +2,13 @@ Enhavo\Bundle\TranslationBundle\Entity\Translation:
     type: entity
     table: translation_translation
     repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository
+    indexes:
+        IDX_REFERENCE:
+            columns:
+                - refId
+                - class
+                - property
+                - locale
 
     id:
         id:

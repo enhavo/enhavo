@@ -33,17 +33,20 @@ class Translator
     /**
      * @var string
      */
-    private $defaultLocale = 'de';
+    private $defaultLocale;
 
     /**
      * @var string[]
      */
-    private $locales;
+    private $locales = [];
 
-    public function __construct(MetadataCollection $metadataCollection)
+    public function __construct(MetadataCollection $metadataCollection, $locales, $defaultLocale)
     {
         $this->metadataCollection = $metadataCollection;
-        $this->locales = ['de', 'en', 'us'];
+        foreach($locales as $locale => $data) {
+            $this->locales[] = $locale;
+        }
+        $this->defaultLocale = $defaultLocale;
     }
 
     public function store($entity)

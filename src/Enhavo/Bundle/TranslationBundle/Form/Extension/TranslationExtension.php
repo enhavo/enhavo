@@ -24,13 +24,20 @@ abstract class TranslationExtension extends AbstractTypeExtension
     protected $translator;
 
     /**
+     * @var string
+     */
+    protected $defaultLocale;
+
+    /**
      * DoctrineSubscriber constructor.
      *
      * @param Translator $translator
+     * @param string $defaultLocale
      */
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, $defaultLocale)
     {
         $this->translator = $translator;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -55,7 +62,7 @@ abstract class TranslationExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['translation'] = isset($options['translation']) && $options['translation'] === true;
-        $view->vars['currentTranslation'] = 'de';
+        $view->vars['currentLocale'] = $this->defaultLocale;
         if($view->vars['translation']) {
             $parent = $form->getParent();
 
