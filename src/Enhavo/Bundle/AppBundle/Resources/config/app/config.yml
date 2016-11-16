@@ -49,7 +49,7 @@ services:
         arguments: ["@pdo", "%pdo.db_options%"]
 
 stof_doctrine_extensions:
-    default_locale: %locale%
+    default_locale: "%locale%"
     orm:
         default:
             sluggable: true

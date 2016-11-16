@@ -4,8 +4,7 @@ namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleType extends AbstractType
 {
@@ -25,23 +24,24 @@ class ArticleType extends AbstractType
     protected $routingStrategy;
 
     /**
-     * @var SecurityContext
+     * @var boolean
      */
-    protected $securityContext;
+    protected $translation;
 
-    public function __construct($dataClass, $routingStrategy, $route, $securityContext)
+    public function __construct($dataClass, $routingStrategy, $route, $translation)
     {
         $this->dataClass = $dataClass;
         $this->route = $route;
         $this->routingStrategy = $routingStrategy;
-        $this->securityContext = $securityContext;
+        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('teaser', 'textarea', array(
             'label' => 'form.label.teaser',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('picture', 'enhavo_files', array(
@@ -55,21 +55,10 @@ class ArticleType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
-            $entityName = array();
-            $entityName[0] = $this->dataClass;
-
-            $builder->add('workflow_status', 'enhavo_workflow_status', array(
-                'label' => 'workflow.form.label.next_state',
-                'translation_domain' => 'EnhavoWorkflowBundle',
-                'attr' => $entityName
-            ));
-        }
-
         $builder->add('categories', 'enhavo_category', array());
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,

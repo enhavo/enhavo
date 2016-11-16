@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PicturePictureType extends ItemFormType
 {
@@ -19,7 +19,8 @@ class PicturePictureType extends ItemFormType
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('fileLeft', 'enhavo_files', array(
@@ -30,7 +31,8 @@ class PicturePictureType extends ItemFormType
 
         $builder->add('captionLeft', 'text', array(
             'label' => 'picturePicture.form.label.caption_left',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('fileRight', 'enhavo_files', array(
@@ -42,10 +44,11 @@ class PicturePictureType extends ItemFormType
         $builder->add('captionRight', 'text', array(
             'label' => 'picturePicture.form.label.caption_right',
             'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enhavo\Bundle\GridBundle\Entity\PicturePicture'

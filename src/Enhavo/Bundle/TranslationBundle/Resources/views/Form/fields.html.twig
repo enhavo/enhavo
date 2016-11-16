@@ -1,3 +1,5 @@
+{% extends 'EnhavoAppBundle:Form:fields.html.twig' %}
+
 {% block sylius_translations_widget %}
     {{ form_errors(form) }}
     <div class="tab-container">
@@ -25,4 +27,54 @@
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+
+{% block textarea_widget %}
+    {% if translation %}
+        <div class="translation">
+            <div class="translation-input-container">
+                {% for locale, value in translations %}
+                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
+                        <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
+                    </div>
+                {% endfor %}
+            </div>
+            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block text_widget %}
+    {% if translation %}
+        <div class="translation">
+            <div class="translation-input-container">
+                {% for locale, value in translations %}
+                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
+                        <input type="text" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
+                    </div>
+                {% endfor %}
+            </div>
+            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block enhavo_wysiwyg_widget %}
+    {% if translation %}
+        <div class="translation" data-translation>
+            <div class="wysiwyg-container" >
+                <textarea data-wysiwyg data-config="{{ config|e }}">{{ translations[currentLocale] }}</textarea>
+            </div>
+            {% for locale, value in translations %}
+                <input type="hidden" data-translation-value="{{ locale }}" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
+            {% endfor %}
+            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}

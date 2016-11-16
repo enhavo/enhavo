@@ -1,4 +1,4 @@
-define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce'], function($, templating, admin, translator, timepicker, tinyMCE) {
+define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce', 'tinymce'], function($, templating, admin, translator, timepicker, jQueryTinymce, tinymce) {
 
   var Form = function () {
     var self = this;
@@ -38,8 +38,8 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
     };
 
     this.destroyWysiwyg = function (content) {
-      content.find('.wysiwyg').each(function () {
-        tinymce.remove('#'.$(this).attr('id'));
+      content.find('[data-wysiwyg]').each(function () {
+        tinymce.remove('#'+$(this).attr('id'));
       });
     };
 
@@ -51,7 +51,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
           // General options
           plugins: ["advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste autoresize"],
+            "insertdatetime media table contextmenu paste autoresize enhavo_translation"],
           force_br_newlines: false,
           force_p_newlines: true,
           forced_root_block: "p",
@@ -218,10 +218,9 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
 
           if (index > 0) { // is not first element
             if (liElement.find('[data-wysiwyg]').length) {
-              var editorId = liElement.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
+              self.destroyWysiwyg(liElement);
               $(list.children().get(index - 1)).before(liElement); //move element before last
-              tinymce.execCommand('mceAddEditor', false, editorId);
+              self.initWysiwyg(liElement);
             } else {
               $(list.children().get(index - 1)).before(liElement); //move element before last
             }
@@ -247,10 +246,9 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
 
           if (index < (size - 1)) { // is not last element
             if (liElement.find('[data-wysiwyg]').length) {
-              var editorId = liElement.find('[data-wysiwyg]').attr('id');
-              tinymce.execCommand('mceRemoveEditor', false, editorId);
+              self.destroyWysiwyg(liElement);
               $(list.children().get(index + 1)).after(liElement); //move element after next
-              tinymce.execCommand('mceAddEditor', false, editorId);
+              self.initWysiwyg(liElement);
             } else {
               $(list.children().get(index + 1)).after(liElement); //move element after next
             }
