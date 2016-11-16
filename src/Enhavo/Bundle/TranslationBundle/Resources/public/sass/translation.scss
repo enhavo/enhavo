@@ -1,3 +1,52 @@
 .translation {
+  position: relative;
 
+  .wysiwyg-container {
+    padding-right: 30px;
+  }
+}
+
+
+
+.translation-input-container {
+  padding-right: 30px;
+  .input-container {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+}
+
+.translation-switcher {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  background-color: #fefefe;
+
+  .translation-switcher-current {
+    img {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+  &:hover {
+    .translation-switcher-menu {
+      display: block;
+    }
+  }
+
+  .translation-switcher-menu {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    top: 24px;
+    background-color: #fefefe;
+  }
 }

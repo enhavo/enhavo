@@ -42,6 +42,7 @@ enhavo_assets:
 
             tinymce:
                 location: /bundles/enhavoassets/vendor/tinymce/tinymce.min
+                exports: tinymce
 
             select2:
                 location: /bundles/enhavoassets/vendor/select2/select2.min

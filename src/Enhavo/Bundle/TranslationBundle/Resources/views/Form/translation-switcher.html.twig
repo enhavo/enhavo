@@ -1,0 +1,14 @@
+<div class="translation-switcher">
+    <div class="translation-switcher-current">
+        {% for locale, value in translations %}
+            <img data-translation-current="{{ locale }}" class="{% if loop.first %}active{% endif %}" src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />
+        {% endfor %}
+    </div>
+    <div class="translation-switcher-menu">
+        {% for locale, value in translations %}
+            <div data-translation-switch="{{ locale }}">
+                <img src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -47,8 +47,7 @@ class TextPictureType extends ItemFormType
                 BooleanType::VALUE_FALSE => 'textPicture.form.label.picture_left-text_right'
             ),
             'expanded' => true,
-            'multiple' => false,
-            'translation' => $this->translation
+            'multiple' => false
         ));
 
         $builder->add('float', 'enhavo_boolean', array(

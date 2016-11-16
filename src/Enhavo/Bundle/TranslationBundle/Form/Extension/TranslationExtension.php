@@ -55,7 +55,7 @@ abstract class TranslationExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['translation'] = isset($options['translation']) && $options['translation'] === true;
-
+        $view->vars['currentTranslation'] = 'de';
         if($view->vars['translation']) {
             $parent = $form->getParent();
 
