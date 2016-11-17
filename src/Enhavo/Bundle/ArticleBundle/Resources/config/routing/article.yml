@@ -68,6 +68,8 @@ enhavo_article_article_table:
     defaults:
         _controller: enhavo_article.controller.article:tableAction
         _sylius:
+            sorting:
+                publicationDate: desc
             viewer:
                 translationDomain: EnhavoArticleBundle
                 columns:

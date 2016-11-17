@@ -13,7 +13,7 @@ form:
     priority: 'Priorität'
     change_frequency: 'Änderungsferquenz'
     publication_date: 'Erscheinungsdatum'
-    hide_at: 'Verstecken am'
+    published_until: 'Ausblenden ab'
     always: 'Immer'
     hourly: 'Stündlich'
     daily: 'Täglich'

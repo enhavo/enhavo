@@ -32,7 +32,7 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: datetime
             nullable: true
 
-        hideAt:
+        publishedUntil:
             type: datetime
             nullable: true
 

@@ -24,7 +24,7 @@ trait PublishableTrait
     /**
      * @var \DateTime
      */
-    protected $hideAt;
+    protected $publishedUntil;
 
     /**
      * {@inheritdoc}
@@ -61,17 +61,17 @@ trait PublishableTrait
     /**
      * {@inheritdoc}
      */
-    public function setHideAt(\DateTime $date = null)
+    public function setPublishedUntil(\DateTime $date = null)
     {
-        $this->hideAt = $date;
+        $this->publishedUntil = $date;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHideAt()
+    public function getPublishedUntil()
     {
-        return $this->hideAt;
+        return $this->publishedUntil;
     }
 
     /**
@@ -85,7 +85,7 @@ trait PublishableTrait
 
         $now = new \DateTime();
         if($now > $this->publicationDate) {
-            if($this->hideAt !== null && $now > $this->hideAt) {
+            if($this->publishedUntil !== null && $now > $this->publishedUntil) {
                 return false;
             }
             return true;

@@ -44,8 +44,8 @@ class SlideType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('hideAt', 'enhavo_date', array(
-            'label' => 'form.label.hide_at',
+        $builder->add('publishedUntil', 'enhavo_date', array(
+            'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 

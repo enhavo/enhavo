@@ -23,6 +23,7 @@ class CreateAction extends AbstractType implements ActionInterface
             'label' => isset($parameters['label']) ? $parameters['label'] : 'label.create',
             'icon' => isset($parameters['icon']) ? $parameters['icon'] : 'create',
             'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoAppBundle',
+            'display' =>  isset($parameters['display']) ? $parameters['display'] : true,
         ]);
     }
 
