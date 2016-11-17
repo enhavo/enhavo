@@ -43,3 +43,19 @@ enhavo_user_theme_user_profile:
         _sylius:
             template: EnhavoUserBundle:Theme:User/profile.html.twig
             form: enhavo_user_profile
+
+enhavo_user_theme_user_register:
+    options:
+        expose: true
+    path: /registration
+    methods: [GET, POST]
+    defaults:
+        _controller: enhavo_user.controller.user:registerAction
+
+enhavo_user_theme_user_registration_confirmed:
+    options:
+        expose: true
+    path: /confirmed
+    methods: [GET, POST]
+    defaults:
+        _controller: enhavo_user.controller.user:confirmedAction
