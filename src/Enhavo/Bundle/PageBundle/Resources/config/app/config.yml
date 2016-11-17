@@ -1,7 +1,7 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\PageBundle\Entity\Page: EnhavoPageBundle:Page:showResource
+            Enhavo\Bundle\PageBundle\Entity\Page: enhavo_page.controller.page:showResourceAction
 
 enhavo_content:
     sitemap:
@@ -13,7 +13,7 @@ enhavo_content:
 enhavo_workflow:
     entities:
         -
-            class: %enhavo_page.model.page.class%
+            class: '%enhavo_page.model.page.class%'
             label: 'page.label.page'
             translationDomain: EnhavoPageBundle
             repository: enhavo_page.repository.page

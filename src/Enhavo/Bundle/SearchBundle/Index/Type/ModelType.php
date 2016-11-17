@@ -31,6 +31,11 @@ class ModelType extends AbstractIndexType
         //get the metadata of the given model
         $metaData = $this->metadataFactory->create($val);
 
+        if($metaData == null)
+        {
+            return null;
+        }
+
         //get the IndexWalker
         $indexWalker = $this->getIndexWalker();
 

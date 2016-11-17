@@ -122,4 +122,4 @@ enhavo_article_article_preview:
         _controller: enhavo_article.controller.article:previewAction
         _sylius:
             viewer:
-                service: enhavo_article.controller.article:showResource
+                service: enhavo_article.controller.article:showResourceAction

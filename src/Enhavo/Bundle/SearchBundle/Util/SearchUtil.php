@@ -92,7 +92,7 @@ class SearchUtil
         $bundle = $metaData->getBundleName();
         $id = $resource->getId();
         $dataSet = $this->em->getRepository('EnhavoSearchBundle:Dataset')->findOneBy(array(
-            'type' => strtolower($entity),
+            'type' => lcfirst($entity),
             'bundle' => $bundle,
             'reference' => $id
         ));
@@ -101,7 +101,7 @@ class SearchUtil
         if($dataSet == null){
             //create new dataset
             $dataSet = new Dataset();
-            $dataSet->setType(strtolower($entity));
+            $dataSet->setType(lcfirst($entity));
             $dataSet->setBundle($bundle);
             $dataSet->setReference($id);
             $dataSet->setReindex(1);

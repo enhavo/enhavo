@@ -8,8 +8,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\GridBundle\Item\Type\Text;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\GridBundle\Entity\TextText;
 
 class TextTextType extends ItemFormType
@@ -19,26 +18,31 @@ class TextTextType extends ItemFormType
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('titleLeft', 'text', array(
             'label' => 'textText.form.label.title_left',
             'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('textLeft', 'enhavo_wysiwyg', array(
             'label' => 'textText.form.label.text_left',
             'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('titleRight', 'text', array(
             'label' => 'textText.form.label.title_right',
             'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('textRight', 'enhavo_wysiwyg', array(
             'label' => 'textText.form.label.text_right',
-            'translation_domain' => 'EnhavoGridBundle'
+            'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('layout', 'choice', array(
@@ -54,7 +58,7 @@ class TextTextType extends ItemFormType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enhavo\Bundle\GridBundle\Entity\TextText'

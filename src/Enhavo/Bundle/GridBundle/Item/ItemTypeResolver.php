@@ -31,14 +31,20 @@ class ItemTypeResolver
     protected $sets;
 
     /**
+     * @var boolean
+     */
+    protected $translation;
+
+    /**
      * @param $itemCollection
      * @param $container
      */
-    public function __construct(ItemConfigurationCollection $itemCollection, $sets, $container)
+    public function __construct(ItemConfigurationCollection $itemCollection, $sets, $container, $translation)
     {
         $this->itemCollection = $itemCollection;
         $this->sets = $sets;
         $this->container = $container;
+        $this->translation = $translation;
     }
 
     /**
@@ -126,7 +132,7 @@ class ItemTypeResolver
     protected function solveFormType($formType)
     {
         if(preg_match('#\\\#', $formType)) {
-            $form = new $formType;
+            $form = new $formType($this->translation);
         } else {
             $form = $this->container->get($formType);
         }

@@ -25,7 +25,11 @@ class GridController extends Controller
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $formType->setFormName($formName);
-        $form = $formFactory->create($formType, null, array(
+
+        $factory = $this->container->get('enhavo_grid.factory.item_type');
+        $itemType = $factory->create($type);
+
+        $form = $formFactory->create($formType, $itemType, array(
             'csrf_protection' => false,
         ));
         $label = $resolver->getLabel($type);

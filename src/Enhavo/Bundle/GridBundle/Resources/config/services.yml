@@ -55,6 +55,7 @@ services:
             - '@enhavo_grid.item_configuration_collection'
             - '%enhavo_grid.render.sets%'
             - '@service_container'
+            - '%enhavo_translation.translate%'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator

@@ -13,6 +13,7 @@ Book
     menu/index
     grid/index
     search/index
+    newsletter/index
 
 * **Installation**
 
@@ -66,3 +67,7 @@ Book
   * :doc:`/book/search/installation`
   * :doc:`/book/search/strategies`
   * :doc:`/book/search/search-engines`
+
+* **Newsletter**
+
+  * :doc:`/book/newsletter/cr_config`

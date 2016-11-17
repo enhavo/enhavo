@@ -25,7 +25,7 @@ Enhavo\Bundle\GridBundle\Entity\TextPicture:
         float:
             type: boolean
             nullable: true
-            column: `float`
+            column: '`float`'
 
     oneToOne:
         file:

@@ -1,0 +1,51 @@
+Enhavo\Bundle\GridBundle\Entity\CiteText:
+    properties:
+        cite:
+
+Enhavo\Bundle\GridBundle\Entity\Gallery:
+    properties:
+        title:
+        text:
+
+Enhavo\Bundle\GridBundle\Entity\Picture:
+    properties:
+        title:
+        caption:
+
+Enhavo\Bundle\GridBundle\Entity\PicturePicture:
+    properties:
+        title:
+        captionLeft:
+        captionRight:
+
+Enhavo\Bundle\GridBundle\Entity\Text:
+    properties:
+        title:
+        text:
+
+Enhavo\Bundle\GridBundle\Entity\TextPicture:
+    properties:
+        title:
+        text:
+        caption:
+
+Enhavo\Bundle\GridBundle\Entity\TextText:
+    properties:
+        title:
+        textLeft:
+        titleLeft:
+        textRight:
+        titleRight:
+
+Enhavo\Bundle\GridBundle\Entity\ThreePicture:
+    properties:
+        titleLeft:
+        titleRight:
+        titleCenter:
+        captionLeft:
+        captionRight:
+        captionCenter:
+
+Enhavo\Bundle\GridBundle\Entity\Video:
+    properties:
+        title:

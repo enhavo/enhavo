@@ -11,21 +11,34 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ContentType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    private $translation;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('meta_description', 'textarea', array(
             'label' => 'form.label.meta_description',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('page_title', 'text', array(
             'label' => 'form.label.page_title',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('public', 'enhavo_boolean', array(

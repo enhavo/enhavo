@@ -1,0 +1,5 @@
+Enhavo\Bundle\ContentBundle\Entity\Content:
+    properties:
+        title:
+        metaDescription:
+        pageTitle:
