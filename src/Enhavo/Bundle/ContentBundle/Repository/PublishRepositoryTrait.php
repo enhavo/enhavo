@@ -40,7 +40,7 @@ trait PublishRepositoryTrait
         }
 
         $query->orderBy('n.publicationDate','desc');
-        return $query->getQuery()->getResult();
+        return $this->getPaginator($query);
     }
 
     public function getMonths()
@@ -88,9 +88,7 @@ trait PublishRepositoryTrait
             }
         }
 
-        $contents = $query->getQuery()->getResult();
-
-        return $contents;
+        return $this->getPaginator($query);
     }
 
     /**

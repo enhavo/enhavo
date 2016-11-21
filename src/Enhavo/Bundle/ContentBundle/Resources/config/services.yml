@@ -46,3 +46,9 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    enhavo_content.widget.pagination:
+        class: Enhavo\Bundle\ContentBundle\Widget\PaginationWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'pagination' }
