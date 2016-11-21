@@ -49,9 +49,6 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
         var options = {
           menubar: false,
           // General options
-          plugins: ["advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste autoresize enhavo_translation"],
           force_br_newlines: false,
           force_p_newlines: true,
           forced_root_block: "p",
@@ -82,6 +79,14 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
 
         if (config.height) {
           options.height = config.height;
+        }
+
+        if (config.plugins) {
+          options.plugins = config.plugins;
+        } else {
+          options.plugins = ["advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste autoresize"]
         }
 
         if (config.style_formats) {
