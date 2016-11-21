@@ -27,6 +27,7 @@ class WysiwygConfig
     {
         $data = array(
             'formats' => $this->getConfig('formats'),
+            'plugins' => $this->getConfig('plugins'),
             'toolbar1' => $option->getToolbar1($this->getConfig('toolbar1')),
             'toolbar2' => $option->getToolbar2($this->getConfig('toolbar2')),
             'height' => $option->getHeight($this->getConfig('height')),
