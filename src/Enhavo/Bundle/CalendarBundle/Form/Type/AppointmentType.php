@@ -37,7 +37,8 @@ class AppointmentType extends AbstractType
     {
         $builder->add('teaser', 'textarea', array(
             'label' => 'form.label.teaser',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => true
         ));
 
         $builder->add('dateFrom', 'enhavo_datetime', array(

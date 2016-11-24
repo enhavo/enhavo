@@ -1,0 +1,20 @@
+Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings:
+    type: entity
+    table: null
+    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationStringsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        translationKey:
+            type: string
+            length: 255
+            nullable: true
+        translationValue:
+            type: string
+            length: 255
+            nullable: true
+    lifecycleCallbacks: {  }

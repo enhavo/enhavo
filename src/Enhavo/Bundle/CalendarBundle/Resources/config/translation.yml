@@ -1,0 +1,3 @@
+Enhavo\Bundle\CalendarBundle\Entity\Appointment:
+    properties:
+        teaser:

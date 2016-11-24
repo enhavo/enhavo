@@ -105,6 +105,9 @@ enhavo_comment:
     resource: "@EnhavoCommentBundle/Resources/config/routing.yml"
     prefix:   /
 
+enhavo_translation:
+    resource: "@EnhavoTranslationBundle/Resources/config/routing/translation_strings.yml"
+    prefix: /admin
 #
 # 3rd Party
 #

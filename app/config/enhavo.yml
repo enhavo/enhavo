@@ -32,6 +32,8 @@ enhavo_app:
             type: shop_order
         setting:
             type: setting
+        translation-strings:
+            type: translation
 
 enhavo_grid:
     items:
@@ -55,3 +57,12 @@ enhavo_grid:
             type: download
         video:
             type: video
+
+sylius_resource:
+    resources:
+        enhavo.translation_strings:
+            classes:
+                model: Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                form:
+                    default: Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringsType

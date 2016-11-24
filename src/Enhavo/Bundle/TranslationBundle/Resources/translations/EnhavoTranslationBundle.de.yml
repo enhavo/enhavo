@@ -1,0 +1,8 @@
+translation:
+  form:
+    label:
+      translationKey: 'Schlüssel'
+      translationValue: 'Wert'
+  label:
+    translationKey: 'Schlüssel'
+    translationStrings: 'Translation'
