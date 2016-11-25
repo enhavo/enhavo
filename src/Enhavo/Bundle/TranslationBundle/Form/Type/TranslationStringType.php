@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TranslationStringsType extends AbstractType
+class TranslationStringType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -29,12 +29,12 @@ class TranslationStringsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings'
+            'data_class' => 'Enhavo\Bundle\TranslationBundle\Entity\TranslationString'
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_translation_strings';
+        return 'enhavo_translation_translation_string';
     }
 }

@@ -1,7 +1,7 @@
-Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings:
+Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
     type: entity
-    table: null
-    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationStringsRepository
+    table: translation_translation_string
+    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationStringRepository
     id:
         id:
             type: integer
@@ -13,8 +13,10 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings:
             type: string
             length: 255
             nullable: true
+
         translationValue:
             type: string
             length: 255
             nullable: true
+
     lifecycleCallbacks: {  }
