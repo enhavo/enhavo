@@ -71,3 +71,12 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: category }
+
+    enhavo_category.save_listener:
+        class: Enhavo\Bundle\CategoryBundle\EventListener\SaveListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %enhavo_category.model.collection.class%
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }

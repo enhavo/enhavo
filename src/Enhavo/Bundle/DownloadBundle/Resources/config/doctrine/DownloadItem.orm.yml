@@ -18,6 +18,8 @@ Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
         download:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\DownloadBundle\Model\DownloadInterface
+            joinColumn:
+                onDelete: SET NULL
 
     oneToOne:
         file:

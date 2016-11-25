@@ -28,5 +28,7 @@ Enhavo\Bundle\SearchBundle\Entity\Index:
         dataset:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\SearchBundle\Entity\Dataset
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

@@ -25,7 +25,8 @@ class SlideType extends AbstractType
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => true
         ));
 
         $builder->add('url', 'text', array(
@@ -36,7 +37,8 @@ class SlideType extends AbstractType
 
         $builder->add('text', 'textarea', array(
             'label' => 'form.label.text',
-            'translation_domain' => 'EnhavoAppBundle'
+            'translation_domain' => 'EnhavoAppBundle',
+            'translation' => true
         ));
 
         $builder->add('publicationDate', 'enhavo_date', array(

@@ -40,7 +40,8 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
-            'label' => 'label.title'
+            'label' => 'label.title',
+            'translation' => true
         ));
 
         $builder->add('picture', 'enhavo_files', array(

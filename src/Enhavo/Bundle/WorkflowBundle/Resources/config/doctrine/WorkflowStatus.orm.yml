@@ -13,5 +13,7 @@ Enhavo\Bundle\WorkflowBundle\Entity\WorkflowStatus:
         node:
             cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

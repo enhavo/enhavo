@@ -23,6 +23,8 @@ class CategoryAction extends AbstractType implements ActionInterface
                 'collection' => $collection
             ],
             'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoCategoryBundle',
+            'display' =>  isset($parameters['display']) ? $parameters['display'] : true,
+
         ]);
     }
 

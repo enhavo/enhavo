@@ -21,9 +21,13 @@ class CategoryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array());
+        $builder->add('name', 'text', array(
+            'translation' => true
+        ));
 
-        $builder->add('text', 'enhavo_wysiwyg', array());
+        $builder->add('text', 'enhavo_wysiwyg', array(
+            'translation' => true
+        ));
 
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',

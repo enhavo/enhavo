@@ -1,0 +1,3 @@
+Enhavo\Bundle\ShopBundle\Entity\Product:
+    properties:
+        title:

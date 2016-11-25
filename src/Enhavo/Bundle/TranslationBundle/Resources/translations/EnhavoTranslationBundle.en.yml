@@ -1,0 +1,10 @@
+translation:
+  form:
+    label:
+      translationKey: 'Key'
+      translationValue: 'Value'
+  label:
+    translationKey: 'Key'
+translation:
+  label:
+    translationStrings: 'TranslationStrings'

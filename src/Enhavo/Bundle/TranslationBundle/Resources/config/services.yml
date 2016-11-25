@@ -36,3 +36,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
+
+    enhavo_translation.menu_builder.translation:
+        class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringsMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: translation }

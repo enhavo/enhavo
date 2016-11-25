@@ -16,10 +16,16 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
     manyToOne:
         nodeFrom:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
+            joinColumn:
+                onDelete: CASCADE
         nodeTo:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\NodeInterface
+            joinColumn:
+                onDelete: CASCADE
         workflow:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
+            joinColumn:
+                onDelete: CASCADE
 
 
     manyToMany:
@@ -30,8 +36,10 @@ Enhavo\Bundle\WorkflowBundle\Entity\Transition:
                 joinColumns:
                     transition_id:
                       referencedColumnName: id
+                      onDelete: CASCADE
                 inverseJoinColumns:
                     group_id:
                        referencedColumnName: id
+                       onDelete: CASCADE
 
     lifecycleCallbacks: {  }
