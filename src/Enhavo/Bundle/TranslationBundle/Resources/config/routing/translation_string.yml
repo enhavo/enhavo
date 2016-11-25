@@ -1,0 +1,89 @@
+enhavo_translation_translation_string_index:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:indexAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTranslationBundle
+
+enhavo_translation_translation_string_create:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:createAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTranslationBundle
+                tabs:
+                    translation_string:
+                        label: translation.label.translationstring
+
+enhavo_translation_translation_string_update:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTranslationBundle
+                tabs:
+                    translation_string:
+                        label: translation.label.translationstring
+
+enhavo_translation_translation_string_table:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/table
+    methods: [GET]
+    defaults:
+        page: 1
+        _controller: enhavo_translation.controller.translation_string:tableAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTranslationBundle
+                columns:
+                    translationKey:
+                        label: translation.label.translationKey
+                        property: translationKey
+                        width: 12
+
+enhavo_translation_translation_string_delete:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:deleteAction
+
+enhavo_translation_string_batch:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_translation_string_preview:
+    options:
+        expose: true
+    path: /enhavo/translation/translation/string/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_translation.controller.translation_string:previewAction
+        _sylius:
+            viewer:
+

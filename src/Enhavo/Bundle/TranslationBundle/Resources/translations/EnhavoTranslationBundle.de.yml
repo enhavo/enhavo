@@ -5,4 +5,4 @@ translation:
       translationValue: 'Wert'
   label:
     translationKey: 'Schlüssel'
-    translationStrings: 'Translation'
+    translationString: 'Translation'

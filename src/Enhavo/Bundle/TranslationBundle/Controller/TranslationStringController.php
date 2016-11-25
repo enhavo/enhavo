@@ -9,7 +9,7 @@ namespace Enhavo\Bundle\TranslationBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 
-class TranslationStringsController extends ResourceController
+class TranslationStringController extends ResourceController
 {
 
 }
