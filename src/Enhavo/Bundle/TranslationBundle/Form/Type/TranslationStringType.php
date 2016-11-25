@@ -13,6 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TranslationStringType extends AbstractType
 {
+    /**
+     * @var boolean
+     */
+    protected $translation;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('translationKey', 'text', array(
@@ -21,7 +31,7 @@ class TranslationStringType extends AbstractType
         ));
         $builder->add('translationValue', 'text', array(
             'label' => 'translation.form.label.translationValue',
-            'translation' => true,
+            'translation' => $this->translation,
             'translation_domain' => 'EnhavoTranslationBundle',
         ));
     }

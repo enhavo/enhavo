@@ -43,3 +43,10 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: translation }
+
+    enhavo_translation_translation_string:
+        class: '%enhavo_translation.form.type.translation_string.class%'
+        arguments:
+            - '%enhavo_translation.translate%'
+        tags:
+            - { name: form.type }
