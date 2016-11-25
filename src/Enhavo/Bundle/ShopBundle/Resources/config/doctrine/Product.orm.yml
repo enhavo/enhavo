@@ -33,10 +33,14 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
     manyToOne:
         picture:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            joinColumn:
+                onDelete: SET NULL
 
         taxRate:
             cascade: ['persist']
             targetEntity: Sylius\Component\Taxation\Model\TaxRateInterface
+            joinColumn:
+                onDelete: SET NULL
 
     manyToMany:
         options:
@@ -46,8 +50,10 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
                 joinColumns:
                   product_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
                 inverseJoinColumns:
                   option_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
 
     lifecycleCallbacks: {  }

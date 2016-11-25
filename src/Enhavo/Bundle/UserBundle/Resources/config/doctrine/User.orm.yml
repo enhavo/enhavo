@@ -30,8 +30,10 @@ Enhavo\Bundle\UserBundle\Entity\User:
                 joinColumns:
                     user_id:
                         referencedColumnName: id
+                        onDelete: CASCADE
                 inverseJoinColumns:
                     group_id:
                         referencedColumnName: id
+                        onDelete: CASCADE
 
     lifecycleCallbacks: {  }

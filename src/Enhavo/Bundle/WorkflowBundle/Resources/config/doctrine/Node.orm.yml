@@ -24,6 +24,8 @@ Enhavo\Bundle\WorkflowBundle\Entity\Node:
     manyToOne:
         workflow:
             targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowInterface
+            joinColumn:
+                onDelete: CASCADE
 
     oneToMany:
         transitions:

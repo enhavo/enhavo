@@ -36,7 +36,8 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
     manyToOne:
         collection:
             targetEntity: Enhavo\Bundle\CategoryBundle\Model\CollectionInterface
-
+            joinColumn:
+                onDelete: CASCADE
     oneToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']

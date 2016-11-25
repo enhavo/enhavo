@@ -43,24 +43,36 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
         shippingAddress:
             cascade: ['persist']
             targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+            joinColumn:
+                onDelete: SET NULL
 
         billingAddress:
             cascade: ['persist']
             targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+            joinColumn:
+                onDelete: SET NULL
 
         promotionCoupon:
             targetEntity: Sylius\Component\Promotion\Model\CouponInterface
+            joinColumn:
+                onDelete: SET NULL
 
         payment:
             cascade: ['persist']
             targetEntity: Sylius\Component\Payment\Model\PaymentInterface
+            joinColumn:
+                onDelete: SET NULL
 
         shipment:
             cascade: ['persist']
             targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
+            joinColumn:
+                onDelete: SET NULL
 
         user:
             targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface
+            joinColumn:
+                onDelete: SET NULL
 
     manyToMany:
         promotions:
@@ -71,8 +83,10 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
                 joinColumns:
                     order_id:
                         referencedColumnName: id
+                        onDelete: CASCADE
                 inverseJoinColumns:
                     promotion_id:
                         referencedColumnName: id
+                        onDelete: CASCADE
 
     lifecycleCallbacks: {  }

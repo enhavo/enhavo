@@ -28,5 +28,7 @@ Enhavo\Bundle\GridBundle\Entity\Column:
     manyToOne:
         overview:
             targetEntity: Enhavo\Bundle\GridBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

@@ -51,4 +51,6 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
     manyToOne:
         slider:
             targetEntity: Enhavo\Bundle\SliderBundle\Model\SliderInterface
+            joinColumn:
+                onDelete: CASCADE
 
