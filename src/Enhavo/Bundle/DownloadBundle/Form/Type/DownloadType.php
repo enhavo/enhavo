@@ -10,9 +10,15 @@ class DownloadType extends AbstractType
 {
     protected $dataClass;
 
-    public function __construct($dataClass)
+    /**
+     * @var boolean
+     */
+    protected $translation;
+
+    public function __construct($dataClass, $translation)
     {
         $this->dataClass = $dataClass;
+        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,13 +26,13 @@ class DownloadType extends AbstractType
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => true
+            'translation' => $this->translation
         ));
 
         $builder->add('text', 'enhavo_wysiwyg', array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => true
+            'translation' => $this->translation
         ));
 
         $builder->add('file', 'enhavo_files', array(

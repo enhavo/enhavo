@@ -26,19 +26,22 @@ class AppointmentType extends AbstractType
      */
     protected $routingStrategy;
 
+    protected $translation;
+
     public function __construct($dataClass, $routingStrategy, $route)
     {
         $this->dataClass = $dataClass;
         $this->route = $route;
         $this->routingStrategy = $routingStrategy;
+        $this->translation = $translation;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options, $translation)
     {
         $builder->add('teaser', 'textarea', array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => true
+            'translation' => $this->translation
         ));
 
         $builder->add('dateFrom', 'enhavo_datetime', array(

@@ -13,6 +13,7 @@ services:
         class: '%enhavo_slider.form.type.slide.class%'
         arguments:
             - '%enhavo_slider.model.slide.class%'
+            - '%enhavo_translation.translate%'
         tags:
             - { name: form.type }
 
