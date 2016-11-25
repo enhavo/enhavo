@@ -57,12 +57,3 @@ enhavo_grid:
             type: download
         video:
             type: video
-
-sylius_resource:
-    resources:
-        enhavo.translation_strings:
-            classes:
-                model: Enhavo\Bundle\TranslationBundle\Entity\TranslationStrings
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
-                form:
-                    default: Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringsType

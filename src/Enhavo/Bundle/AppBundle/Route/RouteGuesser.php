@@ -42,6 +42,10 @@ class RouteGuesser
 
     protected function slugifiy($guess)
     {
+        //ToDo: Because of translation we need to check for array, maybe its better to overwrite this class in TransaltionBundle
+        if(is_array($guess)) {
+            $guess = reset($guess);
+        }
         $slugifier = new Slugifier();
         return sprintf('/%s', $slugifier->slugify($guess));
     }

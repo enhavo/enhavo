@@ -5,9 +5,9 @@ namespace Enhavo\Bundle\TranslationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
 /**
- * TranslationStrings
+ * TranslationString
  */
-class TranslationStrings implements ResourceInterface
+class TranslationString implements ResourceInterface
 {
     /**
      * @var int
@@ -39,7 +39,7 @@ class TranslationStrings implements ResourceInterface
      * Set translationKey
      *
      * @param string $translationKey
-     * @return TranslationStrings
+     * @return TranslationString
      */
     public function setTranslationKey($translationKey)
     {
@@ -62,7 +62,7 @@ class TranslationStrings implements ResourceInterface
      * Set translationValue
      *
      * @param string $translationValue
-     * @return TranslationStrings
+     * @return TranslationString
      */
     public function setTranslationValue($translationValue)
     {

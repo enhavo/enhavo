@@ -11,14 +11,14 @@ namespace Enhavo\Bundle\TranslationBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder;
 
-class TranslationStringsMenuBuilder extends BaseMenuBuilder
+class TranslationStringMenuBuilder extends BaseMenuBuilder
 {
     public function createMenu(array $options)
     {
         $this->setOption('icon', $options, 'exchange');
-        $this->setOption('label', $options, 'translation.label.translationStrings');
+        $this->setOption('label', $options, 'translation.label.translationString');
         $this->setOption('translationDomain', $options, 'EnhavoTranslationBundle');
-        $this->setOption('route', $options, 'enhavo_translation_strings_index');
+        $this->setOption('route', $options, 'enhavo_translation_translation_string_index');
         $this->setOption('role', $options, 'ROLE_ENHAVO_TRANSLATION_STRINGS_INDEX');
         return parent::createMenu($options);
     }
