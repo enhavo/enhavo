@@ -5,6 +5,7 @@ services:
             - %enhavo_calendar.model.appointment.class%
             - %enhavo_calendar.routing.appointment.strategy%
             - %enhavo_calendar.routing.appointment.route%
+            - %enhavo_translation.translate%
         tags:
             - { name: form.type }
 

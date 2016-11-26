@@ -25,6 +25,7 @@ services:
         class: %enhavo_category.form.type.category.class%
         arguments:
             - %enhavo_category.model.category.class%
+            - %enhavo_translation.translate%
         tags:
             - { name: form.type, alias: 'enhavo_category_category'}
 
