@@ -8,7 +8,25 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Translator
         arguments:
             - '@enhavo_translation.metatdata.collection'
+            - '@enhavo_translation.strategy_resolver'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.locale_resolver:
+        class: Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver
+        arguments:
             - '@request_stack'
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
+
+    enhavo_translation.strategy_resolver:
+        class: Enhavo\Bundle\TranslationBundle\Translator\StrategyResolver
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.strategy.translation_table:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\TranslationTableStrategy
+        arguments:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
         calls:
@@ -18,6 +36,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineSubscriber
         arguments:
             - '@enhavo_translation.translator'
+            - '@enhavo_translation.locale_resolver'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

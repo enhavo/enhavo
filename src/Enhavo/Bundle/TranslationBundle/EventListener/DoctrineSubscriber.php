@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Enhavo\Bundle\GridBundle\Exception\NoTypeFoundException;
+use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 
 class DoctrineSubscriber implements EventSubscriber
@@ -21,13 +22,19 @@ class DoctrineSubscriber implements EventSubscriber
     protected $translator;
 
     /**
+     * @var Translator
+     */
+    protected $localeResolver;
+
+    /**
      * DoctrineSubscriber constructor.
      *
      * @param Translator $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, LocaleResolver $localeResolver)
     {
         $this->translator = $translator;
+        $this->localeResolver = $localeResolver;
     }
 
     /**
@@ -76,6 +83,6 @@ class DoctrineSubscriber implements EventSubscriber
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->translator->translate($entity, $this->translator->getLocale());
+        $this->translator->translate($entity, $this->localeResolver->getLocale());
     }
 }
