@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\TranslationBundle\Metadata;
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\GridBundle\Entity\Text;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Doctrine\ORM\Proxy\Proxy;
 
 class MetadataCollection
 {
@@ -43,7 +44,17 @@ class MetadataCollection
      */
     public function getMetadata($entity)
     {
-        $className = get_class($entity);
+        if(is_string($entity)) {
+            $className = $entity;
+        } else if(is_object($entity)) {
+            if($entity instanceof Proxy) {
+                $className = get_parent_class($entity);
+            } else {
+                $className = get_class($entity);
+            }
+        } else {
+            throw new \Exception('entity should be type of string or an object');
+        }
 
         if(array_key_exists($className, $this->metadataCache)) {
             return  $this->metadataCache[$className];
