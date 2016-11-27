@@ -33,13 +33,11 @@
     {% if translation %}
         <div class="translation">
             <div class="translation-input-container">
-                {% if translations is defined %}
-                    {% for locale, value in translations %}
-                        <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
-                            <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                {% for locale, value in translations %}
+                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
+                        <textarea name="{{ full_name }}[{{ locale }}]">{{ value }}</textarea>
+                    </div>
+                {% endfor %}
             </div>
             {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
         </div>
@@ -52,13 +50,11 @@
     {% if translation %}
         <div class="translation">
             <div class="translation-input-container">
-                {% if translations is defined %}
-                    {% for locale, value in translations %}
-                        <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
-                            <input type="text" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                {% for locale, value in translations %}
+                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
+                        <input type="text" name="{{ full_name }}[{{ locale }}]" value="{{ value }}">
+                    </div>
+                {% endfor %}
             </div>
             {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
         </div>

@@ -144,14 +144,22 @@ class Translator
             return null;
         }
 
-        /** @var Translation[] $translations */
-        $translations = $this->getRepository()->findBy([
-            'class' => $metadata->getClass(),
-            'refId' => $entity->getId(),
-            'property' => $property->getName(),
-        ]);
-
         $data = [];
+        $translations = null;
+        if(is_object($entity) && method_exists($entity, 'getId')) {
+            /** @var Translation[] $translations */
+            $translations = $this->getRepository()->findBy([
+                'class' => $metadata->getClass(),
+                'refId' => $entity->getId(),
+                'property' => $property->getName(),
+            ]);
+        } else {
+            foreach($this->locales as $locale) {
+                $data[$locale] = null;
+            }
+            return $data;
+        }
+
         foreach($this->locales as $locale) {
             if($locale === $this->defaultLocale) {
                 $accessor = PropertyAccess::createPropertyAccessor();
