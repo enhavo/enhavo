@@ -70,6 +70,11 @@ services:
             - '@router'
             - '@enhavo_app.route_guesser'
 
+    enhavo_slug:
+        class: Enhavo\Bundle\AppBundle\Form\Type\SlugType
+        tags:
+            - { name: form.type }
+
     enhavo_app.route_manager:
         class: Enhavo\Bundle\AppBundle\Route\RouteManager
         arguments:

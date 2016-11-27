@@ -48,7 +48,7 @@ services:
             - '@enhavo_translation.translator'
             - '@enhavo_translation.locale_resolver'
         tags:
-            - { name: doctrine.event_subscriber, connection: default,  priority: 10 }
+            - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
 
     enhavo_translation.extension.text:
         class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextExtension
@@ -87,3 +87,9 @@ services:
             - '@enhavo_translation.locale_resolver'
         tags:
             - { name: kernel.event_subscriber }
+
+    enhavo_translation.slug_translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\SlugTranslator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_translation.locale_resolver'

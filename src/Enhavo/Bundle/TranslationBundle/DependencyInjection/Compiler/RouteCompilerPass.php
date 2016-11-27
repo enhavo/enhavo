@@ -16,6 +16,7 @@ class RouteCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $this->overwriteRouteType($container);
+        $this->overwriteSlugType($container);
         $this->overwriteRouteValidator($container);
     }
 
@@ -23,6 +24,14 @@ class RouteCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('enhavo_app.form.route');
         $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\RouteType');
+        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
+    }
+
+    protected function overwriteSlugType(ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('enhavo_slug');
+        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\SlugType');
+        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
     }
 
     protected function overwriteRouteValidator(ContainerBuilder $container)

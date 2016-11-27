@@ -3,3 +3,4 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
         title:
         metaDescription:
         pageTitle:
+        slug:

@@ -13,6 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RouteType extends AppRouteType
 {
+    private $translation;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -23,7 +30,7 @@ class RouteType extends AppRouteType
         $builder->remove('staticPrefix');
         
         $builder->add('staticPrefix', 'text', [
-            'translation' => true
+            'translation' => $this->translation
         ]);
     }
 }

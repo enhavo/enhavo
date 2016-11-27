@@ -75,10 +75,7 @@ class RoutingType extends AbstractType
                     ));
                 }
 
-                $form->add('slug', 'text', array(
-                    'label' => 'form.label.slug',
-                    'translation_domain' => 'EnhavoAppBundle'
-                ));
+                $form->add('slug', 'enhavo_slug');
             }
 
             if ($options['routing_strategy'] === Routing::STRATEGY_SLUG_ID) {
@@ -101,10 +98,7 @@ class RoutingType extends AbstractType
                     ));
                 }
 
-                $form->add('slug', 'text', array(
-                    'label' => 'form.label.slug',
-                    'translation_domain' => 'EnhavoAppBundle'
-                ));
+                $form->add('slug', 'enhavo_slug', array());
             }
 
             if ($options['routing_strategy'] === Routing::STRATEGY_ROUTE) {

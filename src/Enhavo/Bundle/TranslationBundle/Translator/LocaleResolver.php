@@ -74,4 +74,9 @@ class LocaleResolver
     {
         $this->locale = $locale;
     }
+
+    public function isDefaultLocale()
+    {
+        return $this->getLocale() === $this->defaultLocale;
+    }
 }

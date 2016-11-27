@@ -10,9 +10,9 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Enhavo\Bundle\GridBundle\Exception\NoTypeFoundException;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 
 class DoctrineSubscriber implements EventSubscriber
 {
@@ -22,7 +22,7 @@ class DoctrineSubscriber implements EventSubscriber
     protected $translator;
 
     /**
-     * @var Translator
+     * @var LocaleResolver
      */
     protected $localeResolver;
 
@@ -46,8 +46,23 @@ class DoctrineSubscriber implements EventSubscriber
             'prePersist',
             'preUpdate',
             'preRemove',
-            'postLoad'
+            'postLoad',
+            'onFlush'
         );
+    }
+
+    public function onFlush(OnFlushEventArgs $event)
+    {
+        $em = $event->getEntityManager();
+        $uow = $em->getUnitOfWork();
+
+        foreach($uow->getScheduledEntityUpdates() as $object) {
+            $this->translator->store($object);
+        }
+
+        foreach($uow->getScheduledEntityInsertions() as $object) {
+            $this->translator->store($object);
+        }
     }
 
     /**
