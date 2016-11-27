@@ -57,4 +57,15 @@ class Metadata
     {
         $this->class = $class;
     }
+
+    public function getProperty($name)
+    {
+        /** @var Property $property */
+        foreach($this->properties as $property) {
+            if($property->getName() == $name) {
+                return $property;
+            }
+        }
+        return null;
+    }
 }

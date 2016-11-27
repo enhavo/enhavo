@@ -8,10 +8,13 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocaleResolver
 {
+    use ContainerAwareTrait;
+
     /**
      * @var string[]
      */
@@ -47,7 +50,7 @@ class LocaleResolver
             return $this->locale;
         }
 
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getMasterRequest();
         if($request === null) {
             $this->locale = $this->defaultLocale;
             return $this->locale;
@@ -65,5 +68,10 @@ class LocaleResolver
 
         $this->locale = $request->getLocale();
         return $this->locale;
+    }
+
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

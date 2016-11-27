@@ -5,3 +5,4 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
 Enhavo\Bundle\AppBundle\Entity\Route:
     properties:
         staticPrefix:
+            strategy: route_translation

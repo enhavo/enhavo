@@ -86,6 +86,9 @@ class MetadataCollection
                 foreach($properties as $name => $propertyData) {
                     $property = new Property();
                     $property->setName($name);
+                    if(isset($propertyData['strategy'])) {
+                        $property->setStrategy($propertyData['strategy']);
+                    }
                     $metadata->addProperty($property);
                 }
             }

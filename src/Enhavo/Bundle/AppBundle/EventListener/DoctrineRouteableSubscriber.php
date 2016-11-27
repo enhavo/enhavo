@@ -10,35 +10,30 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
-use Enhavo\Bundle\AppBundle\Route\RouteContentResolver;
 use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\AppBundle\Route\RouteManager;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class DoctrineRouteableSubscriber
 {
-    /**
-     * @var RouteContentResolver
-     */
-    protected $resolver;
-
     /**
      * @var object
      */
     protected $content;
 
     /**
-     * @var Route
+     * @var RouteManager
      */
-    protected $route;
+    protected $routeManager;
 
     /**
      * @var EntityManager
      */
     protected $entityManager;
 
-    public function __construct(RouteContentResolver $resolver, EntityManager $entityManager)
+    public function __construct(RouteManager $routeManager, EntityManager $entityManager)
     {
-        $this->resolver = $resolver;
+        $this->routeManager = $routeManager;
         $this->entityManager = $entityManager;
     }
 
@@ -61,10 +56,7 @@ class DoctrineRouteableSubscriber
     public function updateRoute(Route $route)
     {
         if (!$route->getTypeId()) {
-            $content = $route->getContent();
-            $route->setTypeId($content->getId());
-            $route->setType($this->resolver->getType($content));
-            $route->setName(sprintf('dynamic_route_%s', $route->getId()));
+            $this->routeManager->update($route);
             $this->entityManager->flush();
         }
     }

@@ -21,6 +21,10 @@ class StrategyResolver
      */
     public function getStrategy($strategy)
     {
+        if($strategy == 'route_translation') {
+            return $this->container->get('enhavo_translation.strategy.route_translation');
+        }
+
         return $this->container->get('enhavo_translation.strategy.translation_table');
     }
 
@@ -30,7 +34,8 @@ class StrategyResolver
     public function getStrategies()
     {
         return [
-            $this->container->get('enhavo_translation.strategy.translation_table')
+            $this->container->get('enhavo_translation.strategy.translation_table'),
+            $this->container->get('enhavo_translation.strategy.route_translation')
         ];
     }
 }

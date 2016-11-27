@@ -18,6 +18,8 @@ services:
             - '@request_stack'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
+        calls:
+          - [ 'setContainer', ['@service_container']]
 
     enhavo_translation.strategy_resolver:
         class: Enhavo\Bundle\TranslationBundle\Translator\StrategyResolver
@@ -32,13 +34,21 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
 
+    enhavo_translation.strategy.route_translation:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
+        arguments:
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
+        calls:
+            - [ setContainer, ['@service_container']]
+
     enhavo_translation.doctrine_subscriber:
         class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineSubscriber
         arguments:
             - '@enhavo_translation.translator'
             - '@enhavo_translation.locale_resolver'
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_subscriber, connection: default,  priority: 10 }
 
     enhavo_translation.extension.text:
         class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextExtension
@@ -69,3 +79,11 @@ services:
             - '%enhavo_translation.translate%'
         tags:
             - { name: form.type }
+
+    enhavo_translation.listener.locale_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_translation.locale_resolver'
+        tags:
+            - { name: kernel.event_subscriber }

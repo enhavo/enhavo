@@ -67,6 +67,8 @@ class Translator
             return null;
         }
 
+        $property = $metadata->getProperty($property->getName());
+
         $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
         return $strategy->getTranslations($entity, $metadata, $property);
     }

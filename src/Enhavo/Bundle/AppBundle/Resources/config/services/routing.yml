@@ -36,12 +36,12 @@ services:
         arguments:
             - '@enhavo_app.route_content_resolver'
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_subscriber, connection: default, priority: 100 }
 
     enhavo_app.doctrine_routeable_subscriber:
         class: '%enhavo_app.doctrine_routeable_subscriber.class%'
         arguments:
-            - '@enhavo_app.route_content_resolver'
+            - '@enhavo_app.route_manager'
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onCreate }
@@ -69,3 +69,9 @@ services:
         arguments:
             - '@router'
             - '@enhavo_app.route_guesser'
+
+    enhavo_app.route_manager:
+        class: Enhavo\Bundle\AppBundle\Route\RouteManager
+        arguments:
+            - '@enhavo_app.route_content_resolver'
+            - '@doctrine.orm.entity_manager'
