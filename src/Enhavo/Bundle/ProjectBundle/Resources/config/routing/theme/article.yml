@@ -1,8 +1,14 @@
 enhavo_project_article_show:
-    path: /{_locale}/article/{slug}
+    path: /en/article/{slug}
     defaults:
-        _controller: enhavo_article.controller.article:showArticleAction
         _locale: en
+        _controller: enhavo_article.controller.article:showArticleAction
+
+enhavo_project_article_show_de:
+    path: /de/artikel/{slug}
+    defaults:
+        _locale: de
+        _controller: enhavo_article.controller.article:showArticleAction
 
 enhavo_project_article_category:
     path: /category/{slug}

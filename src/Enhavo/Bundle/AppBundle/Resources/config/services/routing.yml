@@ -8,17 +8,17 @@ parameters:
 
 services:
     enhavo_app.orm_candidates:
-        class: %cmf_routing.orm_candidates.class%
+        class: '%cmf_routing.orm_candidates.class%'
         arguments:
-            - %cmf_routing.dynamic.locales%
-            - %cmf_routing.dynamic.limit_candidates%
+            - '%cmf_routing.dynamic.locales%'
+            - '%cmf_routing.dynamic.limit_candidates%'
 
     enhavo_app.route_provider:
-        class: %cmf_routing.route_entity_provider%
+        class: '%cmf_routing.route_entity_provider%'
         arguments:
-            - @doctrine
-            - @enhavo_app.orm_candidates
-            - %cmf_routing.route_entity.class%
+            - '@doctrine'
+            - '@enhavo_app.orm_candidates'
+            - '%cmf_routing.route_entity.class%'
         calls:
             - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]
 
@@ -28,34 +28,34 @@ services:
     enhavo_app.route_content_resolver:
         class: Enhavo\Bundle\AppBundle\Route\RouteContentResolver
         arguments:
-            - @enhavo_app.route_content_collector
-            - @service_container
+            - '@enhavo_app.route_content_collector'
+            - '@service_container'
 
     enhavo_app.doctrine_route_subscriber:
-        class: %enhavo_app.doctrine_route_subscriber.class%
+        class: '%enhavo_app.doctrine_route_subscriber.class%'
         arguments:
-            - @enhavo_app.route_content_resolver
+            - '@enhavo_app.route_content_resolver'
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_subscriber, connection: default, priority: 100 }
 
     enhavo_app.doctrine_routeable_subscriber:
-        class: %enhavo_app.doctrine_routeable_subscriber.class%
+        class: '%enhavo_app.doctrine_routeable_subscriber.class%'
         arguments:
-            - @enhavo_app.route_content_resolver
-            - @doctrine.orm.entity_manager
+            - '@enhavo_app.route_manager'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onCreate }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onUpdate }
 
     enhavo_app.form.route:
-        class: %enhavo_app.form.route.class%
+        class: '%enhavo_app.form.route.class%'
         tags:
             - { name: form.type, alias: 'enhavo_route' }
 
     enhavo_app.validator.unique_url:
         class: Enhavo\Bundle\AppBundle\Validator\Constraints\RouteValidator
         arguments:
-          - @router
+          - '@router'
         tags:
             - { name: validator.constraint_validator, alias: route }
 
@@ -67,5 +67,16 @@ services:
         tags:
             - { name: form.type }
         arguments:
-            - @router
-            - @enhavo_app.route_guesser
+            - '@router'
+            - '@enhavo_app.route_guesser'
+
+    enhavo_slug:
+        class: Enhavo\Bundle\AppBundle\Form\Type\SlugType
+        tags:
+            - { name: form.type }
+
+    enhavo_app.route_manager:
+        class: Enhavo\Bundle\AppBundle\Route\RouteManager
+        arguments:
+            - '@enhavo_app.route_content_resolver'
+            - '@doctrine.orm.entity_manager'

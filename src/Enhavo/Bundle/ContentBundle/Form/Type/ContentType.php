@@ -4,10 +4,7 @@ namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentType extends AbstractType
 {
@@ -92,7 +89,7 @@ class ContentType extends AbstractType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'routing_strategy' => 'id',

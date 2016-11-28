@@ -1,0 +1,34 @@
+Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute:
+    type: entity
+    table: translation_translation_route
+    repositoryClass: Enhavo\Bundle\TranslationBundle\Repository\TranslationRouteRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        locale:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: 255
+            nullable: true
+        typeId:
+            type: integer
+            nullable: true
+        path:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        route:
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

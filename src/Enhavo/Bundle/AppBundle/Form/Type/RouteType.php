@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Validator\Constraints\Route as RouteConstraint;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -38,7 +38,7 @@ class RouteType extends AbstractType
         });
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'label' => 'label.url',
