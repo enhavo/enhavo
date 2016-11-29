@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ContentBundle\Repository;
 
+use Enhavo\Bundle\ContentBundle\Entity\Content;
+
 trait PublishRepositoryTrait
 {
     public function filterByDate($year = 0, $month = 0, $limit = 0)
@@ -48,8 +50,7 @@ trait PublishRepositoryTrait
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', new \DateTime());
         $query->orderBy('n.publicationDate','desc');
         $content = $query->getQuery()->getResult();
@@ -76,8 +77,7 @@ trait PublishRepositoryTrait
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', new \DateTime());
 
         if($orderBy === null) {
@@ -111,8 +111,7 @@ trait PublishRepositoryTrait
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate = :contentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $contentsSameDate = $query->getQuery()->getResult();
@@ -130,8 +129,7 @@ trait PublishRepositoryTrait
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate > :contentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $query->addOrderBy('n.publicationDate','asc');
@@ -166,8 +164,7 @@ trait PublishRepositoryTrait
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate = :contentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $contentsSameDate = $query->getQuery()->getResult();
@@ -185,8 +182,7 @@ trait PublishRepositoryTrait
         $query->andWhere('n.public = true');
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publicationDate < :contentDate');
-        $query->andWhere('n.publishedUntil >= :currentDate');
-        $query->orWhere('n.publishedUntil IS NULL');
+        $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
         $query->addOrderBy('n.publicationDate','desc');
