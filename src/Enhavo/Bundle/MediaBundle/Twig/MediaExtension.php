@@ -36,6 +36,8 @@ class MediaExtension extends \Twig_Extension
             new \Twig_SimpleFunction('media_filename', array($this, 'getMediaUrl')),
             new \Twig_SimpleFunction('media_slug', array($this, 'getMediaSlug')),
             new \Twig_SimpleFunction('media_parameter', array($this, 'getMediaParameter')),
+            new \Twig_SimpleFunction('media_extension', array($this, 'getMediaExtension')),
+            new \Twig_SimpleFunction('is_picture', array($this, 'isPicture')),
         );
     }
 
@@ -90,6 +92,19 @@ class MediaExtension extends \Twig_Extension
     public function getMediaParameter(File $file, $parameterName)
     {
         return $file->getParameter($parameterName);
+    }
+
+    public function getMediaExtension(File $file)
+    {
+        return strtolower($file->getExtension());
+    }
+
+    public function isPicture(File $file)
+    {
+        if($this->getMediaExtension($file) == 'jpg' || $this->getMediaExtension($file) == 'jpeg' || $this->getMediaExtension($file) == 'png' || $this->getMediaExtension($file) == 'gif'){
+            return true;
+        }
+        return false;
     }
 
     private function getSlugifiedFilename($text)
