@@ -7,6 +7,11 @@ enhavo_setting_setting_index:
         _controller: enhavo_setting.controller.setting:indexAction
         _sylius:
             viewer:
+                title: setting.label.setting
+                translationDomain: EnhavoSettingBundle
+                actions:
+                    create:
+                        display: false
 
 enhavo_setting_setting_create:
     options:
@@ -49,36 +54,3 @@ enhavo_setting_setting_table:
                         type: setting
                         label: setting.label.value
                         width: 6
-
-enhavo_setting_setting_delete:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/delete/{id}
-    methods: [DELETE]
-    defaults:
-        _controller: enhavo_setting.controller.setting:deleteAction
-
-enhavo_setting_setting_batch:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_setting_setting_preview:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:previewAction
-        _sylius:
-            viewer:
