@@ -58,3 +58,7 @@ Cookbook
 * **Category**
 
   * :doc:`/cookbook/category/add-mulitple-categories`
+
+* **Setting**
+
+  * :doc:`/cookbook/setting/add-new-setting`
