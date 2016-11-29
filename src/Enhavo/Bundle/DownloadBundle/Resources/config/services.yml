@@ -6,6 +6,7 @@ services:
         arguments:
             - %enhavo_download.model.download.class%
             - %enhavo_translation.translate%
+            - @router
         tags:
             - { name: form.type }
 
