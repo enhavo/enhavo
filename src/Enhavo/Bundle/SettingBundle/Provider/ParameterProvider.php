@@ -23,4 +23,9 @@ class ParameterProvider implements ProviderInterface
     {
         return $this->container->getParameter($key);
     }
+
+    public function hasSetting($key)
+    {
+        return $this->container->hasParameter($key);
+    }
 }

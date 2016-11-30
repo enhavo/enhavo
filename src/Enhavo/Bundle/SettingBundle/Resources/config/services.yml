@@ -1,7 +1,5 @@
 parameters:
     enhavo_setting.form.setting.class: Enhavo\Bundle\SettingBundle\Form\Type\SettingType
-    enhavo_setting.event.setting.class: Enhavo\Bundle\SettingBundle\EventListener\AdminBuilderSubscriber
-    enhavo_setting.setting_service.class: Enhavo\Bundle\SettingBundle\Service\SettingService
 
 services:
     enhavo_setting.event.setting:
@@ -14,11 +12,11 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_setting.setting_service:
-        class: '%enhavo_setting.setting_service.class%'
+    enhavo_setting.manager:
+        class: Enhavo\Bundle\SettingBundle\Service\SettingManager
         arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@event_dispatcher'
+            - '@enhavo_setting.provider.database_provider'
+            - '@enhavo_setting.provider.parameter_provider'
 
     enhavo_setting.provider.database_provider:
         class: Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider
