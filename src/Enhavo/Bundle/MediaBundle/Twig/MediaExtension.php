@@ -37,7 +37,7 @@ class MediaExtension extends \Twig_Extension
             new \Twig_SimpleFunction('media_slug', array($this, 'getMediaSlug')),
             new \Twig_SimpleFunction('media_parameter', array($this, 'getMediaParameter')),
             new \Twig_SimpleFunction('media_extension', array($this, 'getMediaExtension')),
-            new \Twig_SimpleFunction('is_picture', array($this, 'isPicture')),
+            new \Twig_SimpleFunction('media_is_picture', array($this, 'isPicture')),
         );
     }
 
