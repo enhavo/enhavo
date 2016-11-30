@@ -22,6 +22,7 @@ class CategoryRepository extends EntityRepository
             return $this->createQueryBuilder('u')
                 ->leftJoin('u.collection', 'r')
                 ->where('r.name = ?1')
+                ->orderBy('u.order', 'asc')
                 ->setParameter(1, $name);
         } else {
             return $this->createQueryBuilder('u');
