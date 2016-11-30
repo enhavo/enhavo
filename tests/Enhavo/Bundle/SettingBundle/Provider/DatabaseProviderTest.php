@@ -50,7 +50,7 @@ class DatabaseProviderTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMockBuilder(Filesystem::class)->getMock();
         $mock->method('readFile')->willReturn(json_encode([
             'setting1' => [
-                'type' => 'actual_type',
+                'type' => 'text',
                 'value' => 'actual_value',
                 'label' => 'actual_label',
                 'translationDomain' => 'actual_translationDomain'
@@ -75,7 +75,7 @@ class DatabaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $em->expects($this->any())->method('persist')->willReturnCallback(function (Setting $object){
             static::assertEquals('setting1', $object->getKey());
-            static::assertEquals('actual_type', $object->getType());
+            static::assertEquals('text', $object->getType());
             static::assertEquals('actual_value', $object->getValue());
             static::assertEquals('actual_label', $object->getLabel());
             static::assertEquals('actual_translationDomain', $object->getTranslationDomain());
@@ -99,13 +99,8 @@ class DatabaseProviderTest extends \PHPUnit_Framework_TestCase
         });
 
         $databaseProvider = new DatabaseProvider($kernel, $em, $factory, $filesystem);
-        $setting = $databaseProvider->getSetting('setting1');
-        static::assertEquals('setting1', $setting->getKey());
-        static::assertEquals('actual_type', $setting->getType());
-        static::assertEquals('actual_value', $setting->getValue());
-        static::assertEquals('actual_label', $setting->getLabel());
-        static::assertEquals('actual_translationDomain', $setting->getTranslationDomain());
-        static::assertTrue($persistSetting === $setting);
+        $value = $databaseProvider->getSetting('setting1');
+        static::assertEquals('actual_value', $value);
     }
 
     public function testCacheEntryNotValid()
@@ -119,13 +114,6 @@ class DatabaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $setting = $databaseProvider->getSetting('setting2');
         static::assertNull($setting);
-
-        $setting = $databaseProvider->getSetting('setting3');
-        static::assertNull($setting->getLabel());
-
-        $setting = $databaseProvider->getSetting('setting4');
-        static::assertNull($setting->getType());
-
     }
 
     public function testKeyNotExistentInCache()

@@ -5,8 +5,9 @@ setting:
     label:
         key: 'Schlüssel'
         type: 'Typ'
-        label: 'Label'
+        label: 'Name'
         value: 'Wert'
         file: 'Datei'
         files: 'Dateien'
         setting: 'Einstellung'
+        date: 'Datum'

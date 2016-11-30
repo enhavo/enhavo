@@ -22,6 +22,9 @@ Enhavo\Bundle\SettingBundle\Entity\Setting:
         value:
             type: text
             nullable: true
+        date:
+            type: datetime
+            nullable: true
         translationDomain:
             type: text
             nullable: true

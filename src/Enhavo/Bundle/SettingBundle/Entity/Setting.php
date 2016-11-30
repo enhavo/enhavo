@@ -2,25 +2,68 @@
 
 namespace Enhavo\Bundle\SettingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Setting implements ResourceInterface
 {
-
     const SETTING_TYPE_TEXT = 'text';
     const SETTING_TYPE_BOOLEAN = 'boolean';
     const SETTING_TYPE_FILE = 'file';
     const SETTING_TYPE_FILES = 'files';
     const SETTING_TYPE_WYSIWYG = 'wysiwyg';
+    const SETTING_TYPE_DATE = 'date';
+    const SETTING_TYPE_DATETIME = 'datetime';
 
+    /**
+     * @var integer
+     */
     protected $id;
+
+    /**
+     * @var string
+     */
     protected $label;
+
+    /**
+     * @var string
+     */
     protected $key;
+
+    /**
+     * @var string
+     */
     protected $type;
+
+    /**
+     * @var mixed
+     */
     protected $value;
+
+    /**
+     * @var string
+     */
     protected $translationDomain;
-    protected $file;            // pointing to one file
-    protected $files;           // pointing to a collection of files
+
+    /**
+     * Pointing to one file
+     *
+     * @var FileInterface
+     */
+    protected $file;
+
+    /**
+     * Pointing to a collection of files
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $files;
+
+    /**
+     * @var \DateTime
+     */
+    private $date;
+
     /**
      * Constructor
      */
@@ -216,5 +259,21 @@ class Setting implements ResourceInterface
     public function getTranslationDomain()
     {
         return $this->translationDomain;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

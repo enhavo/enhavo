@@ -67,6 +67,18 @@ class SettingType extends AbstractType
                         'translation_domain' => 'EnhavoSettingBundle',
                     ));
                 }
+                if ($type === Setting::SETTING_TYPE_DATE) {
+                    $form->add('date', 'enhavo_date', array(
+                        'label' => 'setting.label.date',
+                        'translation_domain' => 'EnhavoSettingBundle',
+                    ));
+                }
+                if ($type === Setting::SETTING_TYPE_DATETIME) {
+                    $form->add('date', 'enhavo_datetime', array(
+                        'label' => 'setting.label.date',
+                        'translation_domain' => 'EnhavoSettingBundle',
+                    ));
+                }
             }
         );
     }

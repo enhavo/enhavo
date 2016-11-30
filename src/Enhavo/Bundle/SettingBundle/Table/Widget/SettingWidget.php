@@ -15,30 +15,57 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SettingWidget extends AbstractTableWidget
 {
-
+    /**
+     * @param array $options
+     * @param Setting $item
+     *
+     * @return mixed
+     */
     public function render($options, $item)
     {
-        if ($item->getType() === Setting::SETTING_TYPE_TEXT){
+        if ($item->getType() === Setting::SETTING_TYPE_TEXT) {
             return $item->getValue();
         }
-        if ($item->getType() === Setting::SETTING_TYPE_BOOLEAN){
+
+        if ($item->getType() === Setting::SETTING_TYPE_BOOLEAN) {
             $booleanWidget = $this->container->get('enhavo_app.table.boolean');
             $options['property'] = 'value';
             return $booleanWidget->render($options, $item);
         }
-        if ($item->getType() === Setting::SETTING_TYPE_FILE){
+
+        if ($item->getType() === Setting::SETTING_TYPE_FILE) {
             $pictureWidget = $this->container->get('enhavo_media.table.picture_widget');
             $options['property'] = 'file';
             return $pictureWidget->render($options, $item);
         }
-        if ($item->getType() === Setting::SETTING_TYPE_FILES){
+
+        if ($item->getType() === Setting::SETTING_TYPE_FILES) {
             $pictureWidget = $this->container->get('enhavo_media.table.picture_widget');
             $options['property'] = 'files';
             return $pictureWidget->render($options, $item);
         }
-        if ($item->getType() === Setting::SETTING_TYPE_WYSIWYG){
+
+        if ($item->getType() === Setting::SETTING_TYPE_WYSIWYG) {
             return $item->getValue();
         }
+
+        if ($item->getType() === Setting::SETTING_TYPE_DATE) {
+            $date = $item->getDate();
+            if($date instanceof \DateTime) {
+                return $date->format('d.m.y');
+            }
+            return '';
+        }
+
+        if ($item->getType() === Setting::SETTING_TYPE_DATETIME) {
+            $date = $item->getDate();
+            if($date instanceof \DateTime) {
+                return $date->format('d.m.y H:i');
+            }
+            return '';
+        }
+        
+        return '';
     }
 
     public function getType()

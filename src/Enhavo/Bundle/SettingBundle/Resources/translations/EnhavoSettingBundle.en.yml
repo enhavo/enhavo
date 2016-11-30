@@ -10,3 +10,4 @@ setting:
         file: 'File'
         files: 'Files'
         setting: 'Setting'
+        date: 'Date'
