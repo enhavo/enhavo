@@ -7,21 +7,11 @@ enhavo_setting_setting_index:
         _controller: enhavo_setting.controller.setting:indexAction
         _sylius:
             viewer:
-                title: setting.label.setting
+                title: label.setting
                 translationDomain: EnhavoSettingBundle
                 actions:
                     create:
                         display: false
-
-enhavo_setting_setting_create:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/create
-    methods: [GET,POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:createAction
-        _sylius:
-            viewer:
 
 enhavo_setting_setting_update:
     options:
@@ -32,6 +22,17 @@ enhavo_setting_setting_update:
         _controller: enhavo_setting.controller.setting:updateAction
         _sylius:
             viewer:
+                translationDomain: EnhavoSettingBundle
+                form:
+                    delete: ~
+                buttons:
+                    delete:
+                        display: false
+                tabs:
+                    setting:
+                        label: setting.label.setting
+                        template: EnhavoSettingBundle:Setting:setting.html.twig
+
 
 enhavo_setting_setting_table:
     options:
