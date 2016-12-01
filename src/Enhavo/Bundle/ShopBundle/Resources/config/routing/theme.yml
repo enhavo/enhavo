@@ -8,7 +8,7 @@ enhavo_shop_theme_checkout:
 
 enhavo_shop_theme_product:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/product.yml"
-    prefix: /
+    prefix: /shop/product
 
 enhavo_shop_theme_promotion:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/promotion.yml"

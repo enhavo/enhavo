@@ -65,3 +65,15 @@ product:
     product_option: Option
     code: Code
     title: Title
+    options: Options
+    dimension: Dimension
+    meta: Meta
+    picture: Picture
+    price: Price
+    shippingCategory: Shipping category
+    width: Width
+    height: Height
+    depth: Depth
+    weight: Weight
+    volume: Volume
+    taxRate: Tax rate
