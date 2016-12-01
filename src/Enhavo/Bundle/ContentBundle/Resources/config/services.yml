@@ -19,6 +19,7 @@ services:
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
+            - '@service_container'
             - 'SitemapCollector'
 
     enhavo_content.sitemap.generator:

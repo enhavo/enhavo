@@ -168,4 +168,10 @@ class DatabaseProvider implements ProviderInterface
         }
         return $object;
     }
+
+    public function hasSetting($key)
+    {
+        // TODO: Implement hasSetting() method.
+        return true;
+    }
 }

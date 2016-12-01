@@ -93,3 +93,10 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_translation.locale_resolver'
+
+    enhavo_translation.twig.translate_string:
+        class: Enhavo\Bundle\TranslationBundle\Twig\TranslateString
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setContainer, ['@service_container']]
