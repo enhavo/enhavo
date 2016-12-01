@@ -8,6 +8,10 @@
         <div>
             <h2>{{ item.product.title }}</h2>
 
+            {% if item.product.picture %}
+                <img src="{{ media_url(item.product.picture, 100, 100) }}" />
+            {% endif %}
+
             <div>Quantity: {{ item.quantity }}</div>
 
             <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>

@@ -46,6 +46,33 @@ sylius_promotion:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Promotion
 
+payum:
+    storages:
+        "%sylius.model.order.class%": { doctrine: orm }
+        "%sylius.model.payment.class%": { doctrine: orm }
+
+    security:
+        token_storage:
+            Sylius\Bundle\PayumBundle\Model\PaymentSecurityToken: { doctrine: orm }
+
+    dynamic_gateways:
+        config_storage:
+            Sylius\Bundle\PayumBundle\Model\GatewayConfig: { doctrine: orm }
+
+    gateways:
+        offline:
+            offline: ~
+
+
+#        paypal_express_checkout:
+#            factory: "paypal_express_checkout"
+#            payum.http_client: "@sylius.payum.http_client"
+#            username: "%paypal.express_checkout.username%"
+#            password: "%paypal.express_checkout.password%"
+#            signature: "%paypal.express_checkout.signature%"
+#            sandbox: "%paypal.express_checkout.sandbox%"
+
+
 sylius_payment:
     gateways:
         offline: Offline
@@ -71,7 +98,6 @@ enhavo_assets:
         paths:
             shop:
                 location: /bundles/enhavoshop/js
-
 
 enhavo_shop:
     mailer:

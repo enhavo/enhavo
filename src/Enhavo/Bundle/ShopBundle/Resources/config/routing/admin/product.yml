@@ -7,6 +7,8 @@ enhavo_shop_product_index:
         _controller: sylius.controller.product:indexAction
         _sylius:
             viewer:
+                title: product.label.product
+                translationDomain: EnhavoShopBundle
                 blocks:
                     table:
                         type: table
