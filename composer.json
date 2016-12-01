@@ -58,7 +58,8 @@
     "elasticsearch/elasticsearch": "^2.2",
     "smalot/pdfparser": "*",
     "tecnickcom/tcpdf": "^6.2",
-    "guzzlehttp/guzzle": "^6.2"
+    "guzzlehttp/guzzle": "^6.2",
+    "ocramius/proxy-manager": "1.0.2"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",

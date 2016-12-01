@@ -8,40 +8,18 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Bundle\CartBundle\Controller\CartController as SyliusCartController;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Cart\SyliusCartEvents;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sylius\Component\Cart\Event\CartEvent;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
-use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends SyliusCartController
 {
     use CartSummaryTrait;
-
-    public function summaryAction(Request $request)
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $cart = $this->getCurrentCart();
-        $form = $this->resourceFormFactory->create($configuration, $cart);
-
-        $view = View::create()
-            ->setTemplate($configuration->getTemplate('summary.html'))
-            ->setData([
-                'cart' => $cart,
-                'form' => $form->createView(),
-            ])
-        ;
-
-        return $this->viewHandler->handle($configuration, $view);
-    }
 
     public function saveQuantityAction(Request $request)
     {

@@ -62,9 +62,9 @@ doctrine:
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
-            Sylius\Component\Product\Model\ProductAssociationInterface: Sylius\Component\Product\Model\ProductAssociation
             Sylius\Component\Product\Model\ArchetypeInterface: Sylius\Component\Product\Model\Archetype
             Sylius\Component\Variation\Model\OptionInterface: Sylius\Component\Variation\Model\Option
+            Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
 
 enhavo_assets:
     require_js:
