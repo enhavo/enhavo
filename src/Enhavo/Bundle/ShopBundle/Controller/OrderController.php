@@ -57,7 +57,10 @@ class OrderController extends ResourceController
         $order = $this->getOrder($configuration);
         $billingGenerator = $this->get('enhavo_shop.document.billing_generator');
         $response = new Response();
-        $response->headers->set('Content-Type', 'application/pdf');
+
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment');
+        
         $response->setContent($billingGenerator->generate($order));
         return $response;
     }

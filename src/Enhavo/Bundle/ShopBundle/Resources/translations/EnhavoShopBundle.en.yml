@@ -35,6 +35,7 @@ order:
     items: Items
     address: Address
     payment: Payment
+    billing: Bill
 
   form:
     label:

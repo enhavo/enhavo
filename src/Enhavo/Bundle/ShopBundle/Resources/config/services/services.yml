@@ -46,3 +46,10 @@ services:
 
     enhavo.token_generator:
         class: Sylius\Component\User\Security\Generator\TokenGenerator
+
+    enhavo_shop.button.billing:
+        class: Enhavo\Bundle\ShopBundle\Button\BillingButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button, alias: shop_billing }

@@ -35,6 +35,7 @@ order:
     items: Posten
     address: Adresse
     payment: Bezahlung
+    billing: Rechnung
 
   form:
     label:
