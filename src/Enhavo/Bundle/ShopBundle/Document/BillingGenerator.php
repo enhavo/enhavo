@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\ShopBundle\Document;
 
-
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class BillingGenerator
+class BillingGenerator implements GeneratorInterface
 {
     /**
      * @var KernelInterface $kernel
@@ -24,11 +23,16 @@ class BillingGenerator
         $this->kernel = $kernel;
     }
     
-    public function generate(OrderInterface $order)
+    public function generate(OrderInterface $order, $options = [])
     {
         $pdf = new BaseDocument();
         $pdf->AddPage();
         $pdf->setAddress($order->getShippingAddress());
         return $pdf->Output(null, 'S');
+    }
+
+    public function generateName(OrderInterface $order, $options = [])
+    {
+        return sprintf('billing-%s.pdf', $order->getNumber());
     }
 }

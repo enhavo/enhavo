@@ -53,3 +53,9 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: shop_billing }
+
+    enhavo_shop.document.manager:
+        class: Enhavo\Bundle\ShopBundle\Document\DocumentManager
+        calls:
+            - [setContainer, ['@service_container']]
+
