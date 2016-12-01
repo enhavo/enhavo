@@ -30,6 +30,8 @@ enhavo_app:
             type: shop_order
         setting:
             type: setting
+        translation-strings:
+            type: translation
 
 enhavo_grid:
     items:

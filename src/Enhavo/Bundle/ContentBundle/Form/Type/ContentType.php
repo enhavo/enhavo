@@ -4,28 +4,38 @@ namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    private $translation;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('meta_description', 'textarea', array(
             'label' => 'form.label.meta_description',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('page_title', 'text', array(
             'label' => 'form.label.page_title',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('public', 'enhavo_boolean', array(
@@ -73,13 +83,13 @@ class ContentType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('hide_at', 'enhavo_datetime', array(
-            'label' => 'form.label.hide_at',
+        $builder->add('published_until', 'enhavo_datetime', array(
+            'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'routing_strategy' => 'id',

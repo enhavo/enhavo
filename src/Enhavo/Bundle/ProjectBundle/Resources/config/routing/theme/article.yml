@@ -1,14 +1,21 @@
 enhavo_project_article_show:
-    path: /article/{slug}
+    path: /en/article/{slug}
     defaults:
-        _controller: EnhavoProjectBundle:Article:showArticle
+        _locale: en
+        _controller: enhavo_article.controller.article:showArticleAction
+
+enhavo_project_article_show_de:
+    path: /de/artikel/{slug}
+    defaults:
+        _locale: de
+        _controller: enhavo_article.controller.article:showArticleAction
 
 enhavo_project_article_category:
     path: /category/{slug}
     defaults:
-        _controller: EnhavoProjectBundle:Article:category
+        _controller: enhavo_article.controller.article:categoryAction
 
 enhavo_project_article_mobile:
     path: /mobile/{id}
     defaults:
-        _controller: EnhavoProjectBundle:Article:category
+        _controller: enhavo_article.controller.article:categoryAction

@@ -8,8 +8,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\GridBundle\Item\Type\Text;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CiteTextType extends ItemFormType
 {
@@ -18,10 +17,11 @@ class CiteTextType extends ItemFormType
         $builder->add('cite', 'textarea', array(
             'label' => 'citeText.form.label.cite',
             'translation_domain' => 'EnhavoGridBundle',
+            'translation' => $this->translation
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enhavo\Bundle\GridBundle\Entity\CiteText'

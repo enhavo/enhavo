@@ -10,7 +10,7 @@ services:
         tags:
             - { name: form.type }
         arguments:
-            - @translator
+            - '@translator'
 
     enhavo_list:
         class: Enhavo\Bundle\AppBundle\Form\Type\ListType
@@ -28,25 +28,25 @@ services:
             - { name: form.type }
 
     enhavo_app.form.enhavo_boolean:
-        class: %enhavo_app.form.enhavo_boolean.class%
+        class: '%enhavo_app.form.enhavo_boolean.class%'
         arguments:
-            - @translator
+            - '@translator'
         tags:
             - { name: form.type, alias: 'enhavo_boolean' }
 
     enhavo_app.form.enhavo_position:
-        class: %enhavo_app.form.enhavo_position.class%
+        class: '%enhavo_app.form.enhavo_position.class%'
         tags:
             - { name: form.type, alias: 'enhavo_position' }
 
     enhavo_app.form.wysiwyg:
-        class: %enhavo_app.form.wysiwyg.class%
+        class: '%enhavo_app.form.wysiwyg.class%'
         arguments:
-            - @enhavo_app.form.config.wysiwyg
+            - '@enhavo_app.form.config.wysiwyg'
         tags:
             - { name: form.type, alias: 'enhavo_wysiwyg' }
 
     enhavo_app.form.config.wysiwyg:
-        class: %enhavo_app.form.config.wysiwyg.class%
+        class: '%enhavo_app.form.config.wysiwyg.class%'
         arguments:
-            - %kernel.root_dir%/config/wysiwyg.yml
+            - '%kernel.root_dir%/config/wysiwyg.yml'

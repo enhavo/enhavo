@@ -248,11 +248,11 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       }
       tableRouteParameters.page = page;
       var url = router.generate(block.data('block-table-route'), tableRouteParameters);
-      self.openLoadingOverlay();
+      block.addClass('loading');
       $.ajax({
         url: url,
         success: function (data) {
-          self.closeLoadingOverlay();
+          block.removeClass('loading');
           block.html(data);
           self.initSortable(block);
           self.initBatchActions(block);

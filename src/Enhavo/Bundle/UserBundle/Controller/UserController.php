@@ -15,6 +15,10 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\RestBundle\View\View;
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 
 class UserController extends ResourceController
 {
@@ -154,5 +158,83 @@ class UserController extends ResourceController
         ;
 
         return $this->viewHandler->handle($configuration, $view);
+    }
+
+    public function registerAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+        $formFactory = $this->get('fos_user.registration.form.factory');
+        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $user = $userManager->createUser();
+        $user->setEnabled(true);
+
+        $event = new GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
+        }
+
+        $form = $formFactory->createForm();
+        $form->setData($user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+
+            $userManager->updateUser($user);
+
+            if (null === $response = $event->getResponse()) {
+                $url = $this->generateUrl('enhavo_user_theme_user_registration_confirmed');
+                $response = new RedirectResponse($url);
+            }
+
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+            return $response;
+        }
+
+        $valid = true;
+        $form->handleRequest($request);
+        if (in_array($request->getMethod(), ['POST'])) {
+            if($form->isValid()) {
+                $this->manager->flush();
+            } else {
+                $valid = false;
+            }
+        }
+
+        $view = View::create($form)
+            ->setData([
+                'form' => $form->createView(),
+            ])
+            ->setStatusCode($valid ? 200 : 400)
+            ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:register.html.twig')))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
+
+        /*return $this->render('EnhavoUserBundle:Theme/User:register.html.twig', array(
+            'form' => $form->createView(),
+        ));*/
+    }
+
+    public function confirmedAction()
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        return $this->render('EnhavoUserBundle:Theme/User:registration-confirmed.html.twig', array(
+            'user' => $user
+        ));
     }
 }

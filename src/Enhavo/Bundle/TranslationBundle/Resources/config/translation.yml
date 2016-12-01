@@ -1,0 +1,8 @@
+Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
+    properties:
+        translationValue:
+
+Enhavo\Bundle\AppBundle\Entity\Route:
+    properties:
+        staticPrefix:
+            strategy: route_translation

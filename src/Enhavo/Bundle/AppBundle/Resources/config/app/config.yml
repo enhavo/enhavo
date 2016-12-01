@@ -12,6 +12,9 @@ twig:
             - 'EnhavoAppBundle:Form:fields.html.twig'
 
 doctrine:
+    dbal:
+        mapping_types:
+            enum: string
     orm:
         resolve_target_entities:
             Enhavo\Bundle\AppBundle\Model\RouteInterface: Enhavo\Bundle\AppBundle\Entity\Route
@@ -49,7 +52,7 @@ services:
         arguments: ["@pdo", "%pdo.db_options%"]
 
 stof_doctrine_extensions:
-    default_locale: %locale%
+    default_locale: "%locale%"
     orm:
         default:
             sluggable: true

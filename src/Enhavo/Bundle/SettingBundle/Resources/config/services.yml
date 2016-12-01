@@ -1,36 +1,30 @@
 parameters:
     enhavo_setting.form.setting.class: Enhavo\Bundle\SettingBundle\Form\Type\SettingType
-    enhavo_setting.event.setting.class: Enhavo\Bundle\SettingBundle\EventListener\AdminBuilderSubscriber
-    enhavo_setting.setting_service.class: Enhavo\Bundle\SettingBundle\Service\SettingService
 
 services:
-    enhavo_setting.event.setting:
-        class: %enhavo_setting.event.setting.class%
-        tags:
-            - { name: kernel.event_subscriber }
-
     enhavo_setting_setting:
-        class: %enhavo_setting.form.setting.class%
+        class: '%enhavo_setting.form.setting.class%'
         tags:
             - { name: form.type }
 
-    enhavo_setting.setting_service:
-        class: %enhavo_setting.setting_service.class%
+    enhavo_setting.manager:
+        class: Enhavo\Bundle\SettingBundle\Service\SettingManager
         arguments:
-            - @doctrine.orm.entity_manager
-            - @event_dispatcher
+            - '@enhavo_setting.provider.database_provider'
+            - '@enhavo_setting.provider.parameter_provider'
 
     enhavo_setting.provider.database_provider:
         class: Enhavo\Bundle\SettingBundle\Provider\DatabaseProvider
         arguments:
-            - @kernel
-            - @doctrine.orm.entity_manager
-            - @enhavo_setting.factory.setting
+            - '@kernel'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_setting.factory.setting'
+            - '@filesystem'
 
     enhavo_setting.provider.parameter_provider:
         class: Enhavo\Bundle\SettingBundle\Provider\ParameterProvider
         arguments:
-            - @service_container
+            - '@service_container'
 
     enhavo_setting.table.setting:
         class: Enhavo\Bundle\SettingBundle\Table\Widget\SettingWidget

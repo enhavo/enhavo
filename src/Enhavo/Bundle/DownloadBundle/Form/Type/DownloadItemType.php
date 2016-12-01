@@ -23,6 +23,7 @@ class DownloadItemType extends ItemFormType
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
+            'translation' => $this->translation
         ));
 
         $builder->add('file', 'enhavo_files', array(

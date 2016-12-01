@@ -20,9 +20,62 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_translation');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+               ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+            ->end()
+            ->children()
+                ->scalarNode('translate')->defaultValue(false)->end()
+            ->end()
+            ->children()
+                ->scalarNode('default_locale')->end()
+            ->end()
+            ->children()
+                ->arrayNode('locales')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('label')->end()
+                            ->scalarNode('flag')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('translation_string')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('routing')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('strategy')->defaultValue('slug')->end()
+                                        ->scalarNode('route')->defaultValue(null)->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\TranslationBundle\Entity\TranslationString')->end()
+                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
+                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
+                                        ->arrayNode('form')
+                                            ->addDefaultsIfNotSet()
+                                            ->children()
+                                                ->scalarNode('default')->defaultValue('Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringType')->cannotBeEmpty()->end()
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

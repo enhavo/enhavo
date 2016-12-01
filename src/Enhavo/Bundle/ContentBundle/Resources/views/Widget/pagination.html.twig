@@ -1,0 +1,7 @@
+{% if resources.getNbPages() > 1 %}
+    <div class="pagination">
+        {% for page in 1..resources.getNbPages() %}
+            <a href="{{ path(route, { page: loop.index }) }}" data-page="{{ loop.index }}" {% if loop.index == resources.currentPage %}class="selected"{% endif %}>{{ loop.index }}</a>
+        {% endfor %}
+    </div>
+{% endif %}

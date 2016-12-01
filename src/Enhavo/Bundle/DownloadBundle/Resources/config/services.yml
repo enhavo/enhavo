@@ -5,9 +5,10 @@ services:
         class: %enhavo_download.form.type.download.class%
         arguments:
             - %enhavo_download.model.download.class%
+            - %enhavo_translation.translate%
+            - @router
         tags:
             - { name: form.type }
-
 
     enhavo_download.extend_listener.download:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener

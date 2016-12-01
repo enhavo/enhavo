@@ -67,7 +67,36 @@ class DatabaseProvider implements ProviderInterface
                 $this->persistToDatabase($setting);
             }
         }
-        return $setting;
+        if($setting !== null) {
+            return $this->getSettingValue($setting);
+        }
+        return null;
+    }
+
+    protected function getSettingValue(Setting $setting)
+    {
+        if ($setting->getType() === Setting::SETTING_TYPE_TEXT) {
+            return $setting->getValue();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_BOOLEAN) {
+            return $setting->getValue();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_FILE) {
+            return $setting->getFile();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_FILES) {
+            return $setting->getFiles();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_WYSIWYG) {
+            return $setting->getValue();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_DATE) {
+            return $setting->getDate();
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_DATETIME) {
+            return $setting->getDate();
+        }
+        return null;
     }
 
     protected function getSettingFromDatabase($key)
@@ -138,5 +167,11 @@ class DatabaseProvider implements ProviderInterface
             $object->setTranslationDomain($array['translationDomain']);
         }
         return $object;
+    }
+
+    public function hasSetting($key)
+    {
+        // TODO: Implement hasSetting() method.
+        return true;
     }
 }

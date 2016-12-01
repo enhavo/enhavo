@@ -7,16 +7,11 @@ enhavo_setting_setting_index:
         _controller: enhavo_setting.controller.setting:indexAction
         _sylius:
             viewer:
-
-enhavo_setting_setting_create:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/create
-    methods: [GET,POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:createAction
-        _sylius:
-            viewer:
+                title: label.setting
+                translationDomain: EnhavoSettingBundle
+                actions:
+                    create:
+                        display: false
 
 enhavo_setting_setting_update:
     options:
@@ -27,6 +22,17 @@ enhavo_setting_setting_update:
         _controller: enhavo_setting.controller.setting:updateAction
         _sylius:
             viewer:
+                translationDomain: EnhavoSettingBundle
+                form:
+                    delete: ~
+                buttons:
+                    delete:
+                        display: false
+                tabs:
+                    setting:
+                        label: setting.label.setting
+                        template: EnhavoSettingBundle:Setting:setting.html.twig
+
 
 enhavo_setting_setting_table:
     options:
@@ -49,36 +55,3 @@ enhavo_setting_setting_table:
                         type: setting
                         label: setting.label.value
                         width: 6
-
-enhavo_setting_setting_delete:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/delete/{id}
-    methods: [DELETE]
-    defaults:
-        _controller: enhavo_setting.controller.setting:deleteAction
-
-enhavo_setting_setting_batch:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
-
-enhavo_setting_setting_preview:
-    options:
-        expose: true
-    path: /enhavo/setting/setting/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_setting.controller.setting:previewAction
-        _sylius:
-            viewer:

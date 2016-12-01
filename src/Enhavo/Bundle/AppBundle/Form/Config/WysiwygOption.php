@@ -33,8 +33,8 @@ class WysiwygOption
     {
         if(is_array($formats) && count($formats) && is_array($this->formats) && count($this->formats)) {
             $data = array();
-            foreach($formats as $filterFormat) {
-                foreach($this->formats as $format) {
+            foreach($this->formats as $filterFormat) {
+                foreach($formats as $format) {
                     if($filterFormat == $format['title']) {
                         $data[] = $format;
                         break;
@@ -43,7 +43,7 @@ class WysiwygOption
             }
             return $data;
         }
-        return $this->formats;
+        return $formats;
     }
 
     /**

@@ -23,8 +23,11 @@ Enhavo\Bundle\GridBundle\Entity\Container:
     manyToOne:
         grid:
             targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
-
+            joinColumn:
+                onDelete: CASCADE
         column:
             targetEntity: Enhavo\Bundle\GridBundle\Model\ColumnInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

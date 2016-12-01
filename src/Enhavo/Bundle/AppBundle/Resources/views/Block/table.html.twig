@@ -5,5 +5,5 @@
     {% if table_route_parameters is defined %}data-block-table-route-parameters="{{ table_route_parameters|json_encode }}"{% endif %}
     {% if update_route_parameters is defined %}data-block-update-route-parameters="{{ update_route_parameters|json_encode }}"{% endif %}
     data-block-page="1"
-    {% if update_route is defined %}class="updateable" data-block-update-route="{{ update_route }}"{% endif %}>
+    {% if update_route is defined %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
 </div>

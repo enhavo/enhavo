@@ -3,23 +3,24 @@ parameters:
 
 services:
     enhavo_slider_slide_order:
-        class: %enhavo_slider.form.type.slider_order.class%
+        class: '%enhavo_slider.form.type.slider_order.class%'
         arguments:
-            - %enhavo_slider.model.slide.class%
+            - '%enhavo_slider.model.slide.class%'
         tags:
             - { name: form.type }
 
     enhavo_slider_slide:
-        class: %enhavo_slider.form.type.slide.class%
+        class: '%enhavo_slider.form.type.slide.class%'
         arguments:
-            - %enhavo_slider.model.slide.class%
+            - '%enhavo_slider.model.slide.class%'
+            - '%enhavo_translation.translate%'
         tags:
             - { name: form.type }
 
     enhavo_slider_slider:
-        class: %enhavo_slider.form.type.slider.class%
+        class: '%enhavo_slider.form.type.slider.class%'
         arguments:
-            - %enhavo_slider.model.slider.class%
+            - '%enhavo_slider.model.slider.class%'
         tags:
             - { name: form.type }
 
@@ -35,7 +36,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\SliderBundle\Entity\Slider
-            - %enhavo_slider.model.slider.class%
+            - '%enhavo_slider.model.slider.class%'
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
@@ -44,7 +45,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\SliderBundle\Entity\Slide
-            - %enhavo_slider.model.slide.class%
+            - '%enhavo_slider.model.slide.class%'
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }

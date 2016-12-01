@@ -2,3 +2,15 @@ twig:
     form:
         resources:
             - 'EnhavoTranslationBundle:Form:fields.html.twig'
+
+enhavo_assets:
+    require_js:
+        paths:
+            translation:
+                location: /bundles/enhavotranslation/js
+
+enhavo_app:
+    stylesheets:
+      - '@EnhavoTranslationBundle/Resources/public/css/translation.css'
+    javascripts:
+      - '@EnhavoTranslationBundle/Resources/public/js/translation.js'

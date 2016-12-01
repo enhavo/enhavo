@@ -1,0 +1,19 @@
+{{ form_row(form.name) }}
+
+{% if form.date is defined %}
+    {{ form_row(form.date) }}
+{% endif %}
+
+{% if form.value is defined  %}
+    {{ form_row(form.value) }}
+{% endif %}
+
+{% if form.file is defined  %}
+    {{ form_row(form.file) }}
+{% endif %}
+
+{% if form.files is defined  %}
+    {{ form_row(form.files) }}
+{% endif %}
+
+

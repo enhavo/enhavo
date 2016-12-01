@@ -12,4 +12,6 @@ namespace Enhavo\Bundle\SettingBundle\Provider;
 interface ProviderInterface
 {
     public function getSetting($key);
+
+    public function hasSetting($key);
 }

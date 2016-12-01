@@ -47,14 +47,14 @@ interface Publishable
      * @param \DateTime $date
      * @return mixed
      */
-    public function setHideAt(\DateTime $date);
+    public function setPublishedUntil(\DateTime $date);
 
     /**
-     * Get hide at date
+     * Get published until date
      *
      * @return mixed
      */
-    public function getHideAt();
+    public function getPublishedUntil();
 
     /**
      * Return if resource is published at the moment

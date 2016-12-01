@@ -31,6 +31,8 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
                 joinColumns:
                   article_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
                 inverseJoinColumns:
                   category_id:
                     referencedColumnName: id
+                    onDelete: CASCADE

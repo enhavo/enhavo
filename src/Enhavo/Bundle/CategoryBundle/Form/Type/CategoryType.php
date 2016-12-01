@@ -14,16 +14,23 @@ class CategoryType extends AbstractType
      */
     protected $dataClass;
 
-    public function __construct($dataClass)
+    protected $translation;
+
+    public function __construct($dataClass, $translation)
     {
         $this->dataClass = $dataClass;
+        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array());
+        $builder->add('name', 'text', array(
+            'translation' => $this->translation
+        ));
 
-        $builder->add('text', 'enhavo_wysiwyg', array());
+        $builder->add('text', 'enhavo_wysiwyg', array(
+            'translation' => $this->translation
+        ));
 
         $builder->add('picture', 'enhavo_files', array(
             'label' => 'form.label.picture',

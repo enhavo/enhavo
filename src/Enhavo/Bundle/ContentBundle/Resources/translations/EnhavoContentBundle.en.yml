@@ -13,7 +13,7 @@ form:
     priority: 'Priority'
     change_frequency: 'Change frequency'
     publication_date: 'Publication date'
-    hide_at: 'Hide at'
+    published_until: 'Published Until'
     always: 'Always'
     hourly: 'Hourly'
     daily: 'Daily'

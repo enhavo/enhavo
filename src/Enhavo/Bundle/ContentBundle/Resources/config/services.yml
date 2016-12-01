@@ -4,6 +4,8 @@ parameters:
 services:
     enhavo_content_content:
         class: '%enhavo_content.form.type.content.class%'
+        arguments:
+            - '%enhavo_translation.translate%'
         tags:
             - { name: form.type }
 
@@ -17,6 +19,7 @@ services:
     enhavo_content.sitemap_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
+            - '@service_container'
             - 'SitemapCollector'
 
     enhavo_content.sitemap.generator:
@@ -44,3 +47,9 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    enhavo_content.widget.pagination:
+        class: Enhavo\Bundle\ContentBundle\Widget\PaginationWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'pagination' }

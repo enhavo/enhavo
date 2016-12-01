@@ -32,7 +32,7 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
             type: datetime
             nullable: true
 
-        hideAt:
+        publishedUntil:
             type: datetime
             nullable: true
 
@@ -51,4 +51,6 @@ Enhavo\Bundle\SliderBundle\Entity\Slide:
     manyToOne:
         slider:
             targetEntity: Enhavo\Bundle\SliderBundle\Model\SliderInterface
+            joinColumn:
+                onDelete: CASCADE
 

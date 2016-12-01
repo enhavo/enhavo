@@ -21,9 +21,14 @@ class ArticleController extends EnhavoArticleController
 
     public function showArticleAction($slug)
     {
-        $article = $this->get('enhavo_article.repository.article')->findOneBy(array(
-            'slug' => $slug
-        ));
+        $article = $this->get('enhavo_translation.slug_translator')->fetch(
+            $slug,
+            $this->getParameter('enhavo_article.model.article.class')
+        );
+
+        if($article === null) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->showResourceAction($article);
     }

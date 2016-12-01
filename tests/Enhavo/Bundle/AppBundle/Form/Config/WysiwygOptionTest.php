@@ -28,13 +28,13 @@ class WysiwygOptionTest extends \PHPUnit_Framework_TestCase
         ];
 
         $option = new WysiwygOption();
-        $option->setFormats($defaultFormats);
 
-        $formats = $option->getFormats();
+        $formats = $option->getFormats($defaultFormats);
         $this->assertTrue(is_array($formats), 'Format should be an array');
         $this->assertCount(2, $formats);
 
-        $formats = $option->getFormats(['hello']);
+        $option->setFormats(['hello']);
+        $formats = $option->getFormats($defaultFormats);
         $this->assertTrue(is_array($formats), 'Format should be an array');
         $this->assertCount(1, $formats);
         $this->assertArrayHasKey('title', $formats[0]);

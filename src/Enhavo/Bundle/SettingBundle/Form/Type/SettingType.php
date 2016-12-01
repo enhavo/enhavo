@@ -17,11 +17,6 @@ use Symfony\Component\Form\AbstractType;
 
 class SettingType extends AbstractType
 {
-    public function __construct()
-    {
-
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -29,46 +24,65 @@ class SettingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $settingObject = $event->getData();
-                $type = $settingObject->getType();
-                if ($type === Setting::SETTING_TYPE_TEXT) {
-                    $form->add('value', 'text', array(
-                        'label' => 'setting.label.value',
-                        'translation_domain' => 'EnhavoSettingBundle',
-                    ));
-                }
-                if ($type === Setting::SETTING_TYPE_BOOLEAN) {
-                    $form->add('value', 'enhavo_boolean', array(
-                        'label' => 'setting.label.value',
-                        'translation_domain' => 'EnhavoSettingBundle',
-                    ));
-                }
-                if ($type === Setting::SETTING_TYPE_FILE) {
-                    $form->add('file', 'enhavo_files', array(
-                        'label' => 'setting.label.file',
-                        'translation_domain' => 'EnhavoSettingBundle',
-                        'multiple' => false
-                    ));
-                }
-                if ($type === Setting::SETTING_TYPE_FILES) {
-                    $form->add('files', 'enhavo_files', array(
-                        'label' => 'setting.label.files',
-                        'translation_domain' => 'EnhavoSettingBundle',
-                        'multiple' => true
-                    ));
-                }
-                if ($type === Setting::SETTING_TYPE_WYSIWYG) {
-                    $form->add('value', 'enhavo_wysiwyg', array(
-                        'label' => 'setting.label.value',
-                        'translation_domain' => 'EnhavoSettingBundle',
-                    ));
-                }
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event)
+        {
+            $form = $event->getForm();
+            /** @var Setting $settingObject */
+            $settingObject = $event->getData();
+
+            $form->add('name', 'text', [
+                'read_only' => true,
+                'mapped' => false,
+                'data' => $settingObject->getLabel(),
+                'translation_domain' => $settingObject->getTranslationDomain()
+            ]);
+
+            $type = $settingObject->getType();
+            if ($type === Setting::SETTING_TYPE_TEXT) {
+                $form->add('value', 'text', array(
+                    'label' => 'setting.label.value',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
             }
-        );
+            if ($type === Setting::SETTING_TYPE_BOOLEAN) {
+                $form->add('value', 'enhavo_boolean', array(
+                    'label' => 'setting.label.value',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
+            }
+            if ($type === Setting::SETTING_TYPE_FILE) {
+                $form->add('file', 'enhavo_files', array(
+                    'label' => 'setting.label.file',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                    'multiple' => false
+                ));
+            }
+            if ($type === Setting::SETTING_TYPE_FILES) {
+                $form->add('files', 'enhavo_files', array(
+                    'label' => 'setting.label.files',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                    'multiple' => true
+                ));
+            }
+            if ($type === Setting::SETTING_TYPE_WYSIWYG) {
+                $form->add('value', 'enhavo_wysiwyg', array(
+                    'label' => 'setting.label.value',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
+            }
+            if ($type === Setting::SETTING_TYPE_DATE) {
+                $form->add('date', 'enhavo_date', array(
+                    'label' => 'setting.label.date',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
+            }
+            if ($type === Setting::SETTING_TYPE_DATETIME) {
+                $form->add('date', 'enhavo_datetime', array(
+                    'label' => 'setting.label.date',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
+            }
+        });
     }
 
     /**

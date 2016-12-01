@@ -72,7 +72,7 @@ class AppKernel extends Kernel
             new Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle(),
             new Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle(),
             new Enhavo\Bundle\GeneratorBundle\EnhavoGeneratorBundle(),
-            new Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle(),
+            new Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle($this),
             new Enhavo\Bundle\CommentBundle\EnhavoCommentBundle(),
             new Enhavo\Bundle\ProjectBundle\EnhavoProjectBundle(),
         );
