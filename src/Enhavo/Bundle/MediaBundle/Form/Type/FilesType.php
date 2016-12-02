@@ -92,6 +92,14 @@ class FilesType extends AbstractType
             if (!isset($field['translationDomain'])) {
                 $fields[$index]['translationDomain'] = '';
             }
+            if (!isset($field['type'])) {
+                $fields[$index]['type'] = 'text';
+            }
+            if ($fields[$index]['type'] == 'choices') {
+                if (!isset($field['choices'])) {
+                    $fields[$index]['choices'] = array();
+                }
+            }
         }
         $view->vars['fields'] = $fields;
     }

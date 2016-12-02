@@ -22,3 +22,36 @@
         </{% if multiple_mode %}li{% else %}div{% endif %}>
     {% endspaceless %}
 {% endmacro %}
+
+{% macro fileUploadField(field_name, field_type, field_label, translation_domain, field_options) %}
+    {% spaceless %}
+        {% if field_type == 'choices' %}
+            <div class="fileupload-field row">
+                <div class="col-md-4 fileupload-field-label-container">
+                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_label|trans({}, translation_domain)|nl2br }}</label>
+                </div>
+                <div class="col-md-8 fileupload-field-input-container">
+                    <div class="input-container">
+                        <select id="fileupload-field-{{ field_name }}" class="fileupload-field-input" name="" data-fileupload-field-input data-field-name="{{ field_name }}" data-field-type="choices" disabled>
+                            {% for value, label in field_options['choices'] %}
+                                <option value="{{ value }}">{{ label|trans({}, translation_domain) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {# Default type: text #}
+            <div class="fileupload-field row">
+                <div class="col-md-4 fileupload-field-label-container">
+                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_label|trans({}, translation_domain)|nl2br }}</label>
+                </div>
+                <div class="col-md-8 fileupload-field-input-container">
+                    <div class="input-container">
+                        <input id="fileupload-field-{{ field_name }}" class="fileupload-field-input" type="text" name="" data-fileupload-field-input data-field-name="{{ field_name }}" data-field-type="text" disabled />
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
