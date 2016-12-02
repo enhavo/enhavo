@@ -59,10 +59,17 @@ payum:
         config_storage:
             Sylius\Bundle\PayumBundle\Model\GatewayConfig: { doctrine: orm }
 
+    gateways_v2:
+        paypal_express_checkout:
+            factory: paypal_express_checkout_nvp
+            username: "%paypal.express_checkout.username%"
+            password: "%paypal.express_checkout.password%"
+            signature: "%paypal.express_checkout.signature%"
+            sandbox: "%paypal.express_checkout.sandbox%"
+
     gateways:
         offline:
             offline: ~
-
 
 #        paypal_express_checkout:
 #            factory: "paypal_express_checkout"

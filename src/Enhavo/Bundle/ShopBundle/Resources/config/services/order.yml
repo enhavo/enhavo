@@ -35,6 +35,9 @@ services:
         arguments:
             - '@enhavo_shop.mailer.tracking_mailer'
 
+    enhavo.order_processing.purchase_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPurchaseProcessor
+
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:

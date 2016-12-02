@@ -14,6 +14,10 @@ enhavo_shop_theme_promotion:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/promotion.yml"
     prefix: /shop/promotion
 
+enhavo_shop_theme_payment:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/payment.yml"
+    prefix: /shop/payment
+
 enhavo_shop_theme_user:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/user.yml"
     prefix: /user
