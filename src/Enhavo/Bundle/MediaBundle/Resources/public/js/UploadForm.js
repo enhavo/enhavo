@@ -132,16 +132,16 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
             if (selected[formIndex].data('id') == $(this).data('id')) {
               fileUploadFields.removeClass('disabled');
-              fileUploadFields.find('input').prop('disabled', false);
+              fileUploadFields.find('[data-fileupload-field-input]').prop('disabled', false);
               self.loadFields(uploadForm, selected[formIndex]);
             } else {
               fileUploadFields.addClass('disabled');
-              fileUploadFields.find('input').prop('disabled', true);
+              fileUploadFields.find('[data-fileupload-field-input]').prop('disabled', true);
               self.loadFields(uploadForm, $(this));
             }
           } else {
             fileUploadFields.addClass('disabled');
-            fileUploadFields.find('input').prop('disabled', true);
+            fileUploadFields.find('[data-fileupload-field-input]').prop('disabled', true);
             self.loadFields(uploadForm, $(this));
           }
         });
@@ -152,11 +152,11 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
             selected[formIndex].addClass('selected');
             fileUploadFields.removeClass('disabled');
-            fileUploadFields.find('input').prop('disabled', false);
+            fileUploadFields.find('[data-fileupload-field-input]').prop('disabled', false);
             self.loadFields(uploadForm, selected[formIndex]);
           } else {
             fileUploadFields.addClass('disabled');
-            fileUploadFields.find('input').each(function () {
+            fileUploadFields.find('[data-fileupload-field-input]').each(function () {
               $(this).prop('disabled', true);
               $(this).val('');
             });
@@ -168,7 +168,7 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           var fileUploadFields = $(uploadForm).find('.fileupload-fields');
           fileUploadFields.removeClass('hidden');
           fileUploadFields.removeClass('disabled');
-          fileUploadFields.find('input').prop('disabled', false);
+          fileUploadFields.find('[data-fileupload-field-input]').prop('disabled', false);
           event.stopPropagation();
         }).on('click', '.fileupload-fields', function (event) {
           event.stopPropagation();
@@ -178,13 +178,20 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           $(uploadForm).find('.imgContainer.selected').removeClass('selected');
           selected[formIndex] = null;
         });
-        $(uploadForm).on('input', '.fileupload-field-input', function (event) {
+        $(uploadForm).on('input', '[data-fileupload-field-input][data-field-type="text"]', function (event) {
           if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
             selected[formIndex].find('[data-field-name="' + $(this).data('field-name') + '"]').val($(this).val());
             if ($(this).data('field-name') == "filename") {
               var slug = self.slugifyFileName($(this).val());
               selected[formIndex].find('[data-field-name="slug"]').val(slug);
               $(uploadForm).find('#fileupload-field-slug').html(slug);
+            }
+          }
+        });
+        $(uploadForm).on('change', '[data-fileupload-field-input][data-field-type="choices"]', function (event) {
+          if (typeof selected[formIndex] != 'undefined' && selected[formIndex] != null) {
+            if (!$(this).prop('disabled')) {
+              selected[formIndex].find('[data-field-name="' + $(this).data('field-name') + '"]').val($(this).val());
             }
           }
         });
@@ -236,8 +243,15 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
     this.loadFields = function (form, source) {
       var fileUploadFields = $(form).find('.fileupload-fields');
       var slugField = $(form).find('#fileupload-field-slug');
-      fileUploadFields.find('input').each(function () {
-        $(this).val(source.find('[data-field-name="' + $(this).data('field-name') + '"]').val());
+      fileUploadFields.find('[data-fileupload-field-input]').each(function () {
+        var sourceValue = source.find('[data-field-name="' + $(this).data('field-name') + '"]').val();
+        if ($(this).data('field-type') == 'choices') {
+          // Set to first value in list to have a default value in case source value is not set or not in list
+          $(this).val($(this).find('option:first').val()).trigger('change');
+          $(this).val(sourceValue).trigger('change');
+        } else {
+          $(this).val(sourceValue);
+        }
       });
       var slug = source.find('[data-field-name="' + slugField.data('field-name') + '"]').val();
       if (slug == "") {

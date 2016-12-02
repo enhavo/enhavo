@@ -1,11 +1,11 @@
 {% block enhavo_files_widget %}
-    {% import '@EnhavoMedia/Form/macro_file_container.html.twig' as fcmacro %}
+    {% import '@EnhavoMedia/Form/field_macros.html.twig' as fieldMacros %}
     {% spaceless %}
         {% trans_default_domain 'EnhavoAppBundle' %}
             <div class="uploadForm" data-multiple="{% if multiple %}1{% else %}0{% endif %}">
 
                 <script type="text/html" data-id="files-template">
-                    {{ fcmacro.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
+                    {{ fieldMacros.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
                 </script>
                 <script type="text/html" data-id="thumb-template">
                     <img class="file-thumb" src="/file/{file_id}/100/100?v={prevent_caching_number}">
@@ -81,7 +81,7 @@
                                 <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% for index, file in form.vars.value %}
                                         {% if file %}
-                                            {{ fcmacro.fileContainer(multiple, full_name, fields, index, file.id, file.order, file.filename, file.slug, file.mimeType, file.parameters) }}
+                                            {{ fieldMacros.fileContainer(multiple, full_name, fields, index, file.id, file.order, file.filename, file.slug, file.mimeType, file.parameters) }}
                                        {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -91,7 +91,7 @@
                             <div class="dropzone fade well{% if not form.vars.value %} empty{% endif %}">
                                 <div class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% if form.vars.value %}
-                                        {{ fcmacro.fileContainer(multiple, full_name, fields, 0, form.vars.value.id, form.vars.value.order, form.vars.value.filename, form.vars.value.slug, form.vars.value.mimeType, form.vars.value.parameters) }}
+                                        {{ fieldMacros.fileContainer(multiple, full_name, fields, 0, form.vars.value.id, form.vars.value.order, form.vars.value.filename, form.vars.value.slug, form.vars.value.mimeType, form.vars.value.parameters) }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -99,35 +99,10 @@
                         {% endif %}
                     </div>
                     <div class="fileupload-fields disabled hidden">
-                        <div class="fileupload-field row">
-                            <div class="col-md-4 fileupload-field-label-container">
-                                <label for="fileupload-field-filename" class="fileupload-field-label">{{ 'media.form.label.filename'|trans({}, 'EnhavoMediaBundle')|nl2br }}</label>
-                            </div>
-                            <div class="col-md-8 fileupload-field-input-container">
-                                <div class="input-container">
-                                    <input id="fileupload-field-filename" class="fileupload-field-input" type="text" name="" data-field-name="filename" disabled />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fileupload-field row">
-                            <div class="col-md-4 fileupload-field-label-container">
-                                <label for="fileupload-field-slug" class="fileupload-field-label">{{ 'media.form.label.slug'|trans({}, 'EnhavoMediaBundle')|nl2br }}</label>
-                            </div>
-                            <div class="col-md-8 fileupload-field-input-container">
-                                <span id="fileupload-field-slug" class="fileupload-field-slug" data-field-name="slug"> </span>
-                            </div>
-                        </div>
+                        {{ fieldMacros.fileUploadField('filename', 'text', 'media.form.label.filename', 'EnhavoMediaBundle', null) }}
+                        {{ fieldMacros.fileUploadField('slug', 'text', 'media.form.label.slug', 'EnhavoMediaBundle', null) }}
                         {% for field_name, field_options in fields %}
-                            <div class="fileupload-field row">
-                                <div class="col-md-4 fileupload-field-label-container">
-                                    <label for="fileupload-field-{{ field_name }}" class="fileupload-field-label">{{ field_options['label']|trans({}, field_options['translationDomain'])|nl2br }}</label>
-                                </div>
-                                <div class="col-md-8 fileupload-field-input-container">
-                                    <div class="input-container">
-                                        <input id="fileupload-field-{{ field_name }}" class="fileupload-field-input" type="text" name="" data-field-name="pa_{{ field_name }}" disabled />
-                                    </div>
-                                </div>
-                            </div>
+                            {{ fieldMacros.fileUploadField('pa_' ~ field_name, field_options['type'], field_options['label'], field_options['translationDomain'], field_options) }}
                         {% endfor %}
                         <div class="fileupload-actions row">
                             <div class="col-md-4">
