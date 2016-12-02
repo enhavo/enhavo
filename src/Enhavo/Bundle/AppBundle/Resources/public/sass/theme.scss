@@ -12,7 +12,7 @@ html, body{
 }
 
 [data-form-row] {
-    {margin-top:10px;}
+    margin-top:10px;
 }
 
 [class*="span"].nomargin {margin-left:0;}
@@ -507,6 +507,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 .select2-container {
+  width: 100%;
   .select2-choice {
     background-image:none;border:1px solid #eee;border-radius:0;height:30px;color: #333;
     .select2-arrow {
