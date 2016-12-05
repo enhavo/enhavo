@@ -155,3 +155,15 @@
         {{ form_widget(form) }}
     </div>
 {% endblock %}
+
+{% block email_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block integer_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
