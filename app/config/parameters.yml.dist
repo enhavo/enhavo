@@ -20,3 +20,8 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    paypal.express_checkout.username: ~
+    paypal.express_checkout.password: ~
+    paypal.express_checkout.signature: ~
+    paypal.express_checkout.sandbox: true

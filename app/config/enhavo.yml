@@ -24,8 +24,6 @@ enhavo_app:
             type: calendar
         workflow:
             type: workflow
-        product_option:
-            type: shop_product_option
         product:
             type: shop_product
         order:

@@ -7,10 +7,10 @@ use Enhavo\Bundle\ArticleBundle\Entity\Article;
 
 class ArticleController extends ResourceController
 {
-    public function showResourceAction($article)
+    public function showResourceAction($contentDocument)
     {
         return $this->render('EnhavoArticleBundle:Article:show.html.twig', array(
-            'data' => $article
+            'data' => $contentDocument
         ));
     }
 }

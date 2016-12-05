@@ -7,6 +7,7 @@ enhavo_shop_order_index:
         _controller: sylius.controller.order:indexAction
         _sylius:
             viewer:
+                title: order.label.order
                 stylesheets:
                     - '@EnhavoShopBundle/Resources/public/css/order.css'
                 translationDomain: EnhavoShopBundle
@@ -18,21 +19,8 @@ enhavo_shop_order_index:
                         update_route: enhavo_shop_order_update
                 actions:
                     create:
-                        route: enhavo_shop_order_create
-
-enhavo_shop_order_create:
-    options:
-        expose: true
-    path: /enhavo/shop/order/create
-    methods: [GET,POST]
-    defaults:
-        _controller: sylius.controller.order:createAction
-        _sylius:
-            form: enhavo_shop_order
-            viewer:
-                translationDomain: EnhavoShopBundle
-                form:
-                    action: enhavo_shop_order_create
+                        route: ~
+                        display: false
 
 enhavo_shop_order_update:
     options:
@@ -58,6 +46,9 @@ enhavo_shop_order_update:
                     payment:
                         label: order.label.payment
                         template: EnhavoShopBundle:Admin:Order/Tab/payment.html.twig
+                buttons:
+                    billing:
+                        type: shop_billing
 
 
 enhavo_shop_order_table:

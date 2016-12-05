@@ -5,21 +5,21 @@ parameters:
 services:
     cache:
         class: Doctrine\Common\Cache\PhpFileCache
-        arguments: [%kernel.cache_dir%]
+        arguments: ['%kernel.cache_dir%']
 
     security.roles.provider:
-        class: %security.roles.provider.class%
+        class: '%security.roles.provider.class%'
         arguments:
-            - %security.role_hierarchy.roles%
+            - '%security.role_hierarchy.roles%'
 
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController
         arguments:
-            - @sylius.resource_controller.request_configuration_factory
-            - @viewer.factory
-            - @fos_rest.view_handler
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
         calls:
-            - [setContainer, [@service_container]]
+            - [setContainer, ['@service_container']]
 
     enhavo_app.preview.default_renderer:
         class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
@@ -27,17 +27,17 @@ services:
     enhavo_app.preview.strategy_resolver:
         class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
         arguments:
-            - @service_container
+            - '@service_container'
 
     enhavo_app.preview.strategy.dynamic:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
         arguments:
-            - @service_container
+            - '@service_container'
 
     enhavo_app.preview.strategy.service:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
         arguments:
-            - @service_container
+            - '@service_container'
 
     security.authentication.voter.super_admin:
         class: Enhavo\Bundle\AppBundle\Security\Authentication\Voter\SuperAdminVoter
@@ -47,21 +47,19 @@ services:
     enhavo_app.url_resolver:
         class: Enhavo\Bundle\AppBundle\Route\UrlResolver
         arguments:
-          - @router
-          - %sylius.resources%
-          - %enhavo_app.route.url_resolver%
-
+          - '@router'
+          - '%sylius.resources%'
+          - '%enhavo_app.route.url_resolver%'
 
     enhavo.sorting_manager:
         class: Enhavo\Bundle\AppBundle\Controller\SortingManager
         arguments:
-            - @doctrine.orm.entity_manager
-
+            - '@doctrine.orm.entity_manager'
 
     enhavo.translation.locale_provider.contextual:
         class: Enhavo\Bundle\AppBundle\Provider\TranslationLocaleProvider
         arguments:
-            - %locale%
+            - '%locale%'
 
     enhavo_app.factory.duplicate_resource_factory:
         class: Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory

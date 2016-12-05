@@ -55,10 +55,16 @@ class OrderController extends ResourceController
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $order = $this->getOrder($configuration);
-        $billingGenerator = $this->get('enhavo_shop.document.billing_generator');
+        $documentManager = $this->get('enhavo_shop.document.manager');
         $response = new Response();
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->setContent($billingGenerator->generate($order));
+
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set(
+            'Content-Disposition',
+            sprintf('attachment; filename="%s"', $documentManager->generateBillingName($order))
+        );
+
+        $response->setContent($documentManager->generateBilling($order));
         return $response;
     }
 

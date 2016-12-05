@@ -46,7 +46,7 @@ class UrlResolver implements UrlResolverInterface
 
         if(empty($url)) {
             throw new \InvalidArgumentException(
-                sprintf('Can\'t resolve route for class "%s". Maybe you need to add the class to enhavo_app.route.url_resolver configuration', $className)
+                sprintf('Can\'t resolve route for class "%s". Maybe you need to add the class to url_resolver configuration', $className)
             );
         }
 
@@ -55,7 +55,15 @@ class UrlResolver implements UrlResolverInterface
 
     protected function getUrl($resource, $strategy, $route)
     {
-        if($strategy == Routing::STRATEGY_ROUTE && $resource instanceof Routeable) {
+        if($strategy == Routing::STRATEGY_ROUTE) {
+            if(!$resource instanceof Routeable) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Class "%s" is not Routable',
+                        get_class($resource)
+                    )
+                );
+            }
             if(empty($resource->getRoute())) {
                 throw new \InvalidArgumentException(
                     sprintf(

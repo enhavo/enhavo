@@ -29,6 +29,7 @@ class EnhavoThemeExtension extends Extension
 
         $container->setParameter('enhavo_theme.boxes', $boxes);
         $container->setParameter('enhavo_theme.template', $config[ 'template' ]);
+        $container->setParameter('enhavo_theme.route.url_resolver', $config['route']['url_resolver']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         

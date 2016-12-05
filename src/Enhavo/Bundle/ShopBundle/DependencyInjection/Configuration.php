@@ -49,6 +49,21 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('document')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('billing')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('generator')->defaultValue('enhavo_shop.document.billing_generator')->end()
+                                ->variableNode('options')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

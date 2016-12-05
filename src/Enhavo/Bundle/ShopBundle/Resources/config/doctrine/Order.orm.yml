@@ -58,6 +58,7 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
                 onDelete: SET NULL
 
         payment:
+            fetch: EAGER
             cascade: ['persist']
             targetEntity: Sylius\Component\Payment\Model\PaymentInterface
             joinColumn:

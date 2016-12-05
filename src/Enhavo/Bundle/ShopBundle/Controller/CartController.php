@@ -8,17 +8,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Bundle\CartBundle\Controller\CartController as SyliusCartController;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Cart\SyliusCartEvents;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sylius\Component\Cart\Event\CartEvent;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
-use FOS\RestBundle\View\View;
 
 class CartController extends SyliusCartController
 {

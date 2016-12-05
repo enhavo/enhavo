@@ -1,8 +1,9 @@
 {% for product in products %}
-    <form method="POST" action="{{ path('enhavo_shop_theme_cart_item_add', {product: product.id}) }}" data-form-cart-add>
-        <div>
-            {{ product.id }} -
-            {{ product.title }} - <input type="text" name="quantity" value="1" /> <a data-submit-cart-add href="javascript:return false;">Add product to cart</a>
-        </div>
-    </form>
+    <div>
+        <a href="{{ resolve_theme_url(product) }}">{{ product.title }}</a>
+
+        {% if product.picture %}
+            <img src="{{ media_url(product.picture) }}" />
+        {% endif %}
+    </div>
 {% endfor %}

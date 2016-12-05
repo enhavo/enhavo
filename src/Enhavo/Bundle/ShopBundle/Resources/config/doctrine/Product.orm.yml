@@ -42,6 +42,11 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
             joinColumn:
                 onDelete: SET NULL
 
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            orphanRemoval: true
+
     manyToMany:
         options:
             targetEntity: Sylius\Component\Variation\Model\OptionInterface

@@ -35,6 +35,7 @@ order:
     items: Posten
     address: Adresse
     payment: Bezahlung
+    billing: Rechnung
 
   form:
     label:
@@ -65,3 +66,16 @@ product:
     product_option: Option
     code: Code
     title: Titel
+    options: Optionen
+    dimension: Abmessungen
+    meta: Meta
+    picture: Bild
+    price: Preis
+    shippingCategory: Versand Kategory
+    width: Breite
+    height: Höhe
+    depth: Tiefe
+    weight: Gewicht
+    volume: Volumen
+    taxRate: Umsatzsteuer
+

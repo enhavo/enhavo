@@ -1,3 +1,8 @@
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\ShopBundle\Entity\Product: sylius.controller.product:showResourceAction
+
 sylius_cart:
     resolver: enhavo.shop.cart_item_resolver
     resources:
@@ -41,6 +46,40 @@ sylius_promotion:
             classes:
                 model: Enhavo\Bundle\ShopBundle\Entity\Promotion
 
+payum:
+    storages:
+        "%sylius.model.order.class%": { doctrine: orm }
+        "%sylius.model.payment.class%": { doctrine: orm }
+
+    security:
+        token_storage:
+            Sylius\Bundle\PayumBundle\Model\PaymentSecurityToken: { doctrine: orm }
+
+    dynamic_gateways:
+        config_storage:
+            Sylius\Bundle\PayumBundle\Model\GatewayConfig: { doctrine: orm }
+
+    gateways_v2:
+        paypal_express_checkout:
+            factory: paypal_express_checkout_nvp
+            username: "%paypal.express_checkout.username%"
+            password: "%paypal.express_checkout.password%"
+            signature: "%paypal.express_checkout.signature%"
+            sandbox: "%paypal.express_checkout.sandbox%"
+
+    gateways:
+        offline:
+            offline: ~
+
+#        paypal_express_checkout:
+#            factory: "paypal_express_checkout"
+#            payum.http_client: "@sylius.payum.http_client"
+#            username: "%paypal.express_checkout.username%"
+#            password: "%paypal.express_checkout.password%"
+#            signature: "%paypal.express_checkout.signature%"
+#            sandbox: "%paypal.express_checkout.sandbox%"
+
+
 sylius_payment:
     gateways:
         offline: Offline
@@ -57,9 +96,9 @@ doctrine:
             Sylius\Component\Promotion\Model\PromotionInterface: Enhavo\Bundle\ShopBundle\Entity\Promotion
             Enhavo\Bundle\ShopBundle\Model\ProductInterface: Enhavo\Bundle\ShopBundle\Entity\Product
             Enhavo\Bundle\ShopBundle\Model\OrderInterface: Enhavo\Bundle\ShopBundle\Entity\Order
-            Sylius\Component\Product\Model\ProductAssociationInterface: Sylius\Component\Product\Model\ProductAssociation
             Sylius\Component\Product\Model\ArchetypeInterface: Sylius\Component\Product\Model\Archetype
             Sylius\Component\Variation\Model\OptionInterface: Sylius\Component\Variation\Model\Option
+            Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
 
 enhavo_assets:
     require_js:
@@ -67,13 +106,20 @@ enhavo_assets:
             shop:
                 location: /bundles/enhavoshop/js
 
-
 enhavo_shop:
     mailer:
         confirm:
-            from: %mailer_from%
+            from: '%mailer_from%'
         tracking:
-            from: %mailer_from%
+            from: '%mailer_from%'
+
+enhavo_theme:
+    route:
+        url_resolver:
+            product:
+                model: sylius.product
+                strategy: route
+                route: ~
 
 jms_serializer:
     metadata:
@@ -105,7 +151,7 @@ sylius_product:
     resources:
         product:
             classes:
-                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                controller: Enhavo\Bundle\ShopBundle\Controller\ProductController
                 model: Enhavo\Bundle\ShopBundle\Entity\Product
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\ProductType

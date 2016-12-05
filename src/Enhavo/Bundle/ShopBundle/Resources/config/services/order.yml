@@ -35,6 +35,9 @@ services:
         arguments:
             - '@enhavo_shop.mailer.tracking_mailer'
 
+    enhavo.order_processing.purchase_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPurchaseProcessor
+
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver
         arguments:
@@ -157,6 +160,13 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.theme_widget,  alias: 'shop_coupon_redeem' }
+
+    enhavo_shop.widget.product_configurator:
+        class: Enhavo\Bundle\ShopBundle\Widget\ProductConfiguratorWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget,  alias: 'shop_product_configurator' }
 
     enhavo_shop.document.billing_generator:
         class: Enhavo\Bundle\ShopBundle\Document\BillingGenerator

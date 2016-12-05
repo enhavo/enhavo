@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Sylius\Bundle\AddressingBundle\SyliusAddressingBundle(),
             new Sylius\Bundle\PromotionBundle\SyliusPromotionBundle(),
             new Sylius\Bundle\PaymentBundle\SyliusPaymentBundle(),
+            new Sylius\Bundle\PayumBundle\SyliusPayumBundle(),
             new Sylius\Bundle\ShippingBundle\SyliusShippingBundle(),
             new Sylius\Bundle\TaxationBundle\SyliusTaxationBundle(),
             new Sylius\Bundle\ProductBundle\SyliusProductBundle(),
@@ -45,6 +46,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
+            new Payum\Bundle\PayumBundle\PayumBundle(),
 
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
 
