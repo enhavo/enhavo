@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\UserBundle\Entity\User;
 use Enhavo\Bundle\UserBundle\Viewer\ResetPasswordViewer;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -163,15 +164,15 @@ class UserController extends ResourceController
     public function registerAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.registration.form.factory');
+
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
+
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
 
-        $user = $userManager->createUser();
-        $user->setEnabled(true);
+        /** @var User $user */
+        $user = $this->newResourceFactory->create($configuration, $this->factory);
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -180,32 +181,27 @@ class UserController extends ResourceController
             return $event->getResponse();
         }
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+        $form = $this->resourceFormFactory->create($configuration, $user);
 
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
-            $userManager->updateUser($user);
-
-            if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('enhavo_user_theme_user_registration_confirmed');
-                $response = new RedirectResponse($url);
-            }
-
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-            return $response;
-        }
 
         $valid = true;
-        $form->handleRequest($request);
-        if (in_array($request->getMethod(), ['POST'])) {
-            if($form->isValid()) {
-                $this->manager->flush();
+        if($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $user = $form->getData();
+                $event = new FormEvent($form, $request);
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+
+                $userManager->updateUser($user);
+
+                if (null === $response = $event->getResponse()) {
+                    $url = $this->generateUrl('enhavo_user_theme_user_registration_confirmed');
+                    $response = new RedirectResponse($url);
+                }
+
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                return $response;
             } else {
                 $valid = false;
             }
@@ -220,10 +216,6 @@ class UserController extends ResourceController
         ;
 
         return $this->viewHandler->handle($configuration, $view);
-
-        /*return $this->render('EnhavoUserBundle:Theme/User:register.html.twig', array(
-            'form' => $form->createView(),
-        ));*/
     }
 
     public function confirmedAction()
