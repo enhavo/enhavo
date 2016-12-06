@@ -42,3 +42,10 @@ services:
             - '@enhavo_app.url_resolver'
         tags:
             - { name: twig.extension }
+
+    enhavo_app.twig.form:
+        class: Enhavo\Bundle\AppBundle\Twig\Form
+        arguments:
+            - '@enhavo_app.form.error.resolver'
+        tags:
+            - { name: twig.extension }
