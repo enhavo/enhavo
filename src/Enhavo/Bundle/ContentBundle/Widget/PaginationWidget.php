@@ -17,7 +17,8 @@ class PaginationWidget extends AbstractType implements WidgetInterface
     {
         return $this->renderTemplate('EnhavoContentBundle:Widget:pagination.html.twig', [
             'resources' => $options['resources'],
-            'route' => $options['route']
+            'route' => $options['route'],
+            'routeParameters' => $this->getOption('routeParameters', $options, [])
         ]);
     }
 
