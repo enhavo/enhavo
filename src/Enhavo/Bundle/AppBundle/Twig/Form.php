@@ -44,7 +44,7 @@ class Form extends \Twig_Extension
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            $this->formErrorResolver->getErrors($form, $translationDomain);
+            return $this->formErrorResolver->getErrors($form, $translationDomain);
         }
         return [];
     }
@@ -53,7 +53,7 @@ class Form extends \Twig_Extension
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            $this->formErrorResolver->hasErrors($form);
+            return $this->formErrorResolver->hasErrors($form);
         }
         return false;
     }
@@ -62,7 +62,7 @@ class Form extends \Twig_Extension
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            $this->formErrorResolver->isSubmitted($form);
+            return $this->formErrorResolver->isSubmitted($form);
         }
         return false;
     }
@@ -71,7 +71,7 @@ class Form extends \Twig_Extension
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            $this->formErrorResolver->isSuccessful($form);
+            return $this->formErrorResolver->isSuccessful($form);
         }
         return false;
     }
