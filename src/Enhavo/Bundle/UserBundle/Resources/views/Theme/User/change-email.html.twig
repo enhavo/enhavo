@@ -1,0 +1,24 @@
+{% extends theme_template('dialog') %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block main %}
+    {{ form_start(form, { 'action': path('enhavo_user_theme_user_change_email', {_format: 'json'}), 'attr': { 'class': 'fos_user_change_password' } }) }}
+    <div class="row tabContainer">
+        <div class="container-fluid">
+            <a href="#" tabid="tab1" class="selected"><span>{{ 'label.changePassword'|trans({ }, 'EnhavoAppBundle')|nl2br }}</span></a>
+        </div>
+    </div>
+    <div class="row tabContentContainer">
+        {{ form_widget(form) }}
+    </div>
+    <div class="row">
+        <div class="col-md-push-2 col-sm-2">
+            <button data-button="" data-route="" data-type="cancel" class="btn col-md-12 save" type="button"><i class="button-icon icon-cross"></i> {{ 'label.cancel'|trans({}, 'EnhavoAppBundle')|nl2br }}</button>
+        </div>
+        <div class="col-md-push-2 col-sm-2">
+            <button data-button data-type="save" type="submit" value="{{ 'change_password.submit'|trans }}" id="changeUserPassword" class="btn col-md-12 save"><i class="button-icon icon-save"></i> {{ 'label.save'|trans({}, 'EnhavoAppBundle')|nl2br }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

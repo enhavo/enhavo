@@ -218,15 +218,54 @@ class UserController extends ResourceController
         return $this->viewHandler->handle($configuration, $view);
     }
 
-    public function confirmedAction()
+    public function confirmedAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $view = View::create()
+            ->setData([
+                'user' => $this->getUser(),
+            ])
+            ->setStatusCode(200)
+            ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:registration-confirmed.html.twig')))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
+
+    public function changeEmailAction(Request $request)
     {
         $user = $this->getUser();
+
         if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
+            throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('EnhavoUserBundle:Theme/User:registration-confirmed.html.twig', array(
-            'user' => $user
-        ));
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $form = $this->resourceFormFactory->create($configuration, $user);
+
+        $form->handleRequest($request);
+        $valid = true;
+        if($request->getMethod() == 'POST') {
+            if ($form->isValid()) {
+                $userManager = $this->getUserManager();
+                $userManager->updateUser($user);
+            } else {
+                $valid = false;
+            }
+        }
+
+        $view = View::create($form)
+            ->setData([
+                'form' => $form->createView(),
+            ])
+            ->setStatusCode($valid ? 200 : 400)
+            ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Admin:User/change-email.html.twig')))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
     }
 }
