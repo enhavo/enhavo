@@ -53,10 +53,13 @@ class CategoryEntityType extends AbstractType
         ));
 
         $resolver->setNormalizer('label', function(Options $options, $value) {
-            if ($options['multiple']) {
-                return 'category.label.categories';
+            if(empty($value)) {
+                if ($options['multiple']) {
+                    return 'category.label.categories';
+                }
+                return 'category.label.category';
             }
-            return 'category.label.category';
+            return $value;
         });
     }
 

@@ -23,6 +23,6 @@ enhavo_category_collection_update:
                         routeParameters:
                             collection: $collection
                 tabs:
-                    category:
+                    collection:
                         label: category.label.categories
                         template: EnhavoCategoryBundle:Tab:collection.html.twig

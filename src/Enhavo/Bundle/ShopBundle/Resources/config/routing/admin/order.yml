@@ -60,6 +60,8 @@ enhavo_shop_order_table:
         page: 1
         _controller: sylius.controller.order:tableAction
         _sylius:
+            sorting:
+                orderedAt: desc
             criteria:
                 checkoutState: completed
             viewer:

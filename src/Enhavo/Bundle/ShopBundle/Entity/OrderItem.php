@@ -7,6 +7,7 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 class OrderItem extends CartItem implements OrderItemInterface
 {
@@ -34,7 +35,10 @@ class OrderItem extends CartItem implements OrderItemInterface
     public function equals(SyliusOrderItemInterface $item)
     {
         /** @var $item OrderItem */
-        return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
+        if($this->product instanceof ResourceInterface) {
+            return $this->product === $item->getProduct() || $this->product->getId() == $item->getProduct()->getId();
+        }
+        return false;
     }
 
     /**

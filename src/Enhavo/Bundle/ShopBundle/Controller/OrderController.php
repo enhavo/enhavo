@@ -54,7 +54,7 @@ class OrderController extends ResourceController
     public function billingAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $order = $this->getOrder($configuration);
+        $order = $this->singleResourceProvider->get($configuration, $this->repository);
         $documentManager = $this->get('enhavo_shop.document.manager');
         $response = new Response();
 
