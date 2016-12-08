@@ -6,8 +6,7 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\SettingBundle\Service;
-
+namespace Enhavo\Bundle\SettingBundle\Setting;
 
 use Enhavo\Bundle\SettingBundle\Provider\ProviderInterface;
 

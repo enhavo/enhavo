@@ -6,17 +6,21 @@
     <hr />
     {% for item in data.items %}
         <div>
-            <h2>{{ item.product.title }}</h2>
+            {% if item.product %}
+                <h2>{{ item.product.title }}</h2>
+            {% else %}
+                <h2>Product deleted</h2>
+            {% endif %}
 
-            {% if item.product.picture %}
+            {% if item.product and item.product.picture %}
                 <img src="{{ media_url(item.product.picture, 100, 100) }}" />
             {% endif %}
 
             <div>Quantity: {{ item.quantity }}</div>
 
-            <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>
-            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.product.tax }}</span></div>
-            <div>Unit Total: <span data-cart-item-unit-total>{{ item.product.unitPriceTotal }}</span></div>
+            <div>Unit Price: <span data-cart-item-unit-price>{{ item.unitPrice }}</span></div>
+            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.unitTax }}</span></div>
+            <div>Unit Total: <span data-cart-item-unit-total>{{ item.unitTotal }}</span></div>
 
             <div>Tax Total: <span data-cart-item-tax-total>{{ item.taxTotal }}</span></div>
             <div>Net Total: <span data-cart-item-unit-price-total>{{ item.unitPriceTotal }}</span></div>
