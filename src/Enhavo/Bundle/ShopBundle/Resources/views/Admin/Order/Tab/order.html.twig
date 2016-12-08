@@ -1,93 +1,119 @@
-{{ form_row(form.state) }}
-{{ form_row(form.paymentState) }}
-{{ form_row(form.shippingState) }}
-
-<div>
+<div class="order-order">
+    {{ form_row(form.state) }}
+    {{ form_row(form.paymentState) }}
+    {{ form_row(form.shippingState) }}
     <hr />
-    {% for item in data.items %}
-        <div>
-            {% if item.product %}
-                <h2>{{ item.product.title }}</h2>
-            {% else %}
-                <h2>Product deleted</h2>
+    <div class="row">
+        <div class="col-sm-7">
+            {% if data.items|length %}
+                <div class="itemlist-head">
+                    <div class="row">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-6">Produkt</div>
+                        <div class="col-xs-2">Preis/Stk.</div>
+                        <div class="col-xs-2">Preis</div>
+                    </div>
+                </div>
+                <ul class="itemlist">
+                {% for item in data.items %}
+                    <li>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                {% if item.product and item.product.picture %}
+                                    <div class="img">
+                                        <img src="{{ media_url(item.product.picture, 100, 100) }}" />
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="item-title">
+                                    {% if item.product %}
+                                        {{ item.product.title }}
+                                    {% else %}
+                                        Product deleted
+                                    {% endif %}
+                                    <span class="item-quantity">x{{ item.quantity }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="item-unit-price">
+                                    <div class="details">
+                                        <div>Netto: {{ item.unitPrice }}</div>
+                                        <div>Steuern: {{ item.unitTax }}</div>
+                                    </div>
+                                    <div>{{ item.unitTotal }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="item-unit-price total">
+                                    <div class="details">
+                                        <div>Netto: {{ item.unitPriceTotal }}</div>
+                                        <div>Steuern: {{ item.taxTotal }}</div>
+                                    </div>
+                                    <div>{{ item.total }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
             {% endif %}
-
-            {% if item.product and item.product.picture %}
-                <img src="{{ media_url(item.product.picture, 100, 100) }}" />
-            {% endif %}
-
-            <div>Quantity: {{ item.quantity }}</div>
-
-            <div>Unit Price: <span data-cart-item-unit-price>{{ item.unitPrice }}</span></div>
-            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.unitTax }}</span></div>
-            <div>Unit Total: <span data-cart-item-unit-total>{{ item.unitTotal }}</span></div>
-
-            <div>Tax Total: <span data-cart-item-tax-total>{{ item.taxTotal }}</span></div>
-            <div>Net Total: <span data-cart-item-unit-price-total>{{ item.unitPriceTotal }}</span></div>
-            <div>Total: <span data-cart-item-total>{{ item.total }}</span></div>
-
+            <div class="row">
+                <div class="col-xs-8">
+                </div>
+                <div class="col-xs-4">
+                    <div class="order-sum">
+                        <div>Nettobetrag: {{ data.unitTotal }}</div>
+                        <div>
+                            {% if data.shippingTotal > 0 %}
+                                Versand: {{ data.shippingTotal }}
+                            {% else %}
+                                Kostenloser Versand
+                            {% endif %}
+                        </div>
+                        {% if data.discountTotal > 0 %}
+                            <div>Ermäßigung: {{ data.discountTotal }}</div>
+                        {% endif %}
+                        <div>
+                            MwSt.: {{ data.taxTotal }}
+                        </div>
+                        <div class="total">Summe: {{ data.total }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <hr />
-    {% endfor %}
+        <div class="col-sm-5">
+            <div><strong>Rechnungsnummer:</strong> {{ data.number }}</div>
+            <div><strong>Bestelldatum:</strong> {{ data.orderedAt|date }}</div>
+            <div><strong>E-Mail:</strong> {{ data.customerEmail }}</div>
+            <div><strong>Bezahlart:</strong> {{ data.payment.method.code }}</div>
 
-    <div>
-        Total: <span data-cart-total>{{ data.total }}</span>
+            <div class="address">
+                <div><strong>Liefer{% if not data.differentBillingAddress %}- und Rechnungs{% endif %}anschrift</strong></div>
+                <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
+                {% if data.shippingAddress.company %}
+                    <div>{{ data.shippingAddress.company }}</div>
+                {% endif %}
+                <div>{{ data.shippingAddress.street }}</div>
+                <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
+                <div>Land: {{ data.shippingAddress.countryCode }}</div>
+                {% if data.shippingAddress.phoneNumber %}
+                    <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
+                {% endif %}
+                {% if data.differentBillingAddress %}
+                    <div>Rechnungsanschrift</div>
+                    <div>{{ data.billingAddress.firstName }} {{ data.billingAddress.lastName }}</div>
+                    {% if data.billingAddress.company %}
+                        <div>{{ data.billingAddress.company }}</div>
+                    {% endif %}
+                    <div>{{ data.billingAddress.street }}</div>
+                    <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
+                    <div>Land: {{ data.billingAddress.countryCode }}</div>
+                    {% if data.billingAddress.phoneNumber %}
+                        <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <div>
-        Netto: <span data-cart-unit-price-total>{{ data.unitPriceTotal }}</span>
-    </div>
-    <div>
-        Unit Total: <span data-cart-unit-total>{{ data.unitTotal }}</span>
-    </div>
-    <div>
-        Shipping: <span data-cart-shipping-total>{{ data.shippingTotal }}</span>
-    </div>
-    <div>
-        Discount: <span data-cart-discount-total>{{ data.discountTotal }}</span>
-    </div>
-    <div>
-        Tax: <span data-cart-tax-total>{{ data.taxTotal }}</span>
-    </div>
-</div>
-
-<div>
-    <div>Rechnungsnummer: {{ data.number }}</div>
-    <div>Bestelldatum: {{ data.orderedAt|date }}</div>
-    <div>E-Mail: {{ data.customerEmail }}</div>
-    <div>Bezahlart: {{ data.payment.method.code }}</div>
-    {% if data.differentBillingAddress %}
-        <div>Lieferanschrift</div>
-        <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
-        {% if data.shippingAddress.company %}
-            <div>{{ data.shippingAddress.company }}</div>
-        {% endif %}
-        <div>{{ data.shippingAddress.street }}</div>
-        <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
-        <div>{{ data.shippingAddress.countryCode }}</div>
-        {% if data.shippingAddress.phoneNumber %}
-            <div>{{ data.shippingAddress.phoneNumber }}</div>
-        {% endif %}
-        <div>Rechnungsanschrift</div>
-        <div>{{ data.billingAddress.firstName }} {{ data.billingAddress.lastName }}</div>
-        {% if data.billingAddress.company %}
-            <div>{{ data.billingAddress.company }}</div>
-        {% endif %}
-        <div>{{ data.billingAddress.street }}</div>
-        <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
-        <div>{{ data.billingAddress.countryCode }}</div>
-        {% if data.billingAddress.phoneNumber %}
-            <div>{{ data.shippingAddress.phoneNumber }}</div>
-        {% endif %}
-    {% else %}
-        <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
-        {% if data.shippingAddress.company %}
-            <div>{{ data.shippingAddress.company }}</div>
-        {% endif %}
-        <div>{{ data.shippingAddress.street }}</div>
-        <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
-        <div>{{ data.shippingAddress.countryCode }}</div>
-        {% if data.shippingAddress.phoneNumber %}
-            <div>{{ data.shippingAddress.phoneNumber }}</div>
-        {% endif %}
-    {% endif %}
 </div>
