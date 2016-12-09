@@ -62,7 +62,7 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('price', 'text', array(
+        $builder->add('price', 'enhavo_currency', array(
             'label' => 'product.label.price',
             'translation_domain' => 'EnhavoShopBundle',
         ));

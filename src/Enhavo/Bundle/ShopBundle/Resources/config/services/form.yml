@@ -83,4 +83,9 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_currency:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\CurrencyType
+        tags:
+            - { name: form.type }
+
 
