@@ -32,6 +32,8 @@ services:
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\RepositoryCollector
         calls:
             - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_theme.url_resolver'
         tags:
             - { name: enhavo.sitemap_collector, alias: repository }
 
@@ -39,6 +41,8 @@ services:
         class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\PublishCollector
         calls:
             - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_theme.url_resolver'
         tags:
             - { name: enhavo.sitemap_collector, alias: publish }
 

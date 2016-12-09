@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 
+use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;
@@ -19,6 +20,16 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
      * @var array
      */
     protected $options;
+
+    /**
+     * @var UrlResolverInterface
+     */
+    protected $urlResolver;
+
+    public function __construct(UrlResolverInterface $urlResolver)
+    {
+        $this->urlResolver = $urlResolver;
+    }
 
     public function setOptions($options)
     {
@@ -46,13 +57,11 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
 
     protected function convertToUrl(SitemapInterface $resource)
     {
-        $urlResolver = $this->container->get('enhavo_app.url_resolver');
-
         $url = new SitemapUrl();
         $url->setChangeFrequency($resource->getChangeFrequency());
         $url->setLastModified($resource->getUpdated());
         $url->setPriority($resource->getPriority());
-        $url->setLocation($urlResolver->resolve($resource));
+        $url->setLocation($this->urlResolver->resolve($resource));
 
         return $url;
     }

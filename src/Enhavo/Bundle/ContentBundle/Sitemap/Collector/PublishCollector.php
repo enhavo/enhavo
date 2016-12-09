@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
+use Pagerfanta\Pagerfanta;
 
 /**
  * PublishCollector.php
@@ -17,18 +18,6 @@ class PublishCollector extends RepositoryCollector
     public function getType()
     {
         return 'publish';
-    }
-
-    public function setOptions($options)
-    {
-        if(!isset($options['repository'])) {
-            throw new \InvalidArgumentException(sprintf('repository not set for SitemapCollector type "%s"', $this->getType()));
-        }
-
-        $this->options = [
-            'repository' => $options['repository'],
-            'method' => isset($options['method']) ? $options['method']: 'findPublished'
-        ];
     }
 
     public function getUrls()
