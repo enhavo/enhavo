@@ -41,6 +41,11 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $activatedAt;
 
     /**
+     * @var Group
+     */
+    private $group;
+
+    /**
      * Get id
      *
      * @return integer
@@ -151,7 +156,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * Get activatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getActivatedAt()
     {
@@ -172,5 +177,74 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @var string
+     */
+    private $condition;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set condition
+     *
+     * @param string $condition
+     * @return Subscriber
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return string 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
+     * @return Subscriber
+     */
+    public function addGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
+    {
+        $this->group[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Group $group
+     */
+    public function removeGroup(\Enhavo\Bundle\NewsletterBundle\Entity\Group $group)
+    {
+        $this->group->removeElement($group);
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

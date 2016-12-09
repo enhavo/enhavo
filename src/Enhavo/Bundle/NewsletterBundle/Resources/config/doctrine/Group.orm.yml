@@ -1,0 +1,17 @@
+Enhavo\Bundle\NewsletterBundle\Entity\Group:
+    type: entity
+    table: newsletter_group
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: text
+            nullable: false
+    manyToMany:
+        subscriber:
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            mappedBy: group

@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\NewsletterBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
@@ -16,8 +18,7 @@ class SubscriberController extends ResourceController
 {
     public function activateAction(Request $request)
     {
-        $subscriberManager = $this->getSubscriberManager();
-        $strategy = $subscriberManager->getStrategy();
+        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($request->get('type'));
 
         if(!$strategy instanceof DoubleOptInStrategy) {
             throw $this->createNotFoundException();
@@ -34,7 +35,7 @@ class SubscriberController extends ResourceController
             throw $this->createNotFoundException();
         }
 
-        $strategy->activateSubscriber($subscriber);
+        $strategy->activateSubscriber($subscriber, $request->get('type'));
 
         return $this->render($strategy->getActivationTemplate(), [
             'subscriber' => $subscriber
@@ -43,8 +44,7 @@ class SubscriberController extends ResourceController
 
     public function acceptAction(Request $request)
     {
-        $subscriberManager = $this->getSubscriberManager();
-        $strategy = $subscriberManager->getStrategy();
+        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($request->get('type'));
 
         if(!$strategy instanceof AcceptStrategy) {
             throw $this->createNotFoundException();
@@ -61,7 +61,7 @@ class SubscriberController extends ResourceController
             throw $this->createNotFoundException();
         }
 
-        $strategy->activateSubscriber($subscriber);
+        $strategy->activateSubscriber($subscriber, $request->get('type'));
 
         return $this->render($strategy->getActivationTemplate(), [
             'subscriber' => $subscriber
@@ -74,13 +74,15 @@ class SubscriberController extends ResourceController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         /** @var SubscriberInterface $subscriber */
         $subscriber = $this->newResourceFactory->create($configuration, $this->factory);
-        $form = $this->resourceFormFactory->create($configuration, $subscriber);
+        $configFromYml = $this->getParameter('enhavo_newsletter.forms');
+        $form = $this->get('form.factory')->create($configFromYml[$request->get('type')]['type'], $subscriber);
 
         $form->handleRequest($request);
         if($form->isValid()) {
-            if(!$this->getSubscriberManager()->exists($subscriber)) {
-                $subscriber = $form->getData();
-                $message = $this->getSubscriberManager()->addSubscriber($subscriber);
+            if(!$this->getSubscriberManager()->exists($subscriber, $request->get('type'))) {
+                $event = new SubscriberEvent($subscriber, $request->get('type'));
+                $this->get('event_dispatcher')->dispatch(NewsletterEvents::EVENT_ADD_SUBSCRIBER, $event);
+                $message = $this->getSubscriberManager()->addSubscriber($subscriber, $request->get('type'));
                 return new JsonResponse([
                     'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle'),
                     'subscriber' => $subscriber

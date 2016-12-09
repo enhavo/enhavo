@@ -4,7 +4,7 @@ services:
     enhavo_newsletter.twig.subscribe_renderer:
         class: Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer
         arguments:
-            - '%enhavo_newsletter.subscriber.form%'
+            - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -32,9 +32,12 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager
         arguments:
             - '@enhavo_newsletter.strategy_collector'
-            - '%enhavo_newsletter.subscriber.strategy%'
+            - '%enhavo_newsletter.strategy%'
+            - '@enhavo_newsletter.strategy_resolver'
             - '@enhavo_newsletter.storage_collector'
             - '%enhavo_newsletter.storage%'
+            - '@enhavo_newsletter.storage_resolver'
+            - '@enhavo_newsletter.form_resolver'
 
     enhavo_newsletter.strategy_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -45,7 +48,7 @@ services:
     enhavo_newsletter.strategy.notify:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
         arguments:
-            - '%enhavo_newsletter.subscriber.strategy_options%'
+            - '%enhavo_newsletter.strategy.notify.settings%'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -54,7 +57,7 @@ services:
     enhavo_newsletter.strategy.double_opt_in:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
         arguments:
-            - '%enhavo_newsletter.subscriber.strategy_options%'
+            - '%enhavo_newsletter.strategy.double_opt_in.settings%'
             - '@enhavo_newsletter.storage.local'
         calls:
           - [ 'setContainer', ['@service_container']]
@@ -64,7 +67,7 @@ services:
     enhavo_newsletter.strategy.accept:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
         arguments:
-            - '%enhavo_newsletter.subscriber.strategy_options%'
+            - '%enhavo_newsletter.strategy.accept.settings%'
             - '@enhavo_newsletter.storage.local'
         calls:
           - [ 'setContainer', ['@service_container']]

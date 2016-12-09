@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
+use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SubscribeFormRenderer extends \Twig_Extension
@@ -11,16 +12,16 @@ class SubscribeFormRenderer extends \Twig_Extension
     /**
      * @var array
      */
-    private $form;
+    private $formResolver;
 
     /**
      * SubscriberRenderer constructor.
      *
-     * @param array $form
+     * @param $formResolver Resolver
      */
-    public function __construct(array $form)
+    public function __construct($formResolver)
     {
-        $this->form = $form;
+        $this->formResolver = $formResolver;
     }
 
     public function getFunctions()
@@ -30,11 +31,15 @@ class SubscribeFormRenderer extends \Twig_Extension
         );
     }
 
-    public function render($template = null)
+    public function render($formTypeName = null, $template = null)
     {
-        $form = $this->getFormFactory()->create($this->form['type']);
+        if ($formTypeName === null) {
+            $formTypeName = 'default';
+        }
 
-        $formTemplate = $this->form['template'];
+        $form = $this->getFormFactory()->create($this->formResolver->resolveType($formTypeName));
+
+        $formTemplate = $this->formResolver->resolveTemplate($formTypeName);
         if($template !== null){
             $formTemplate = $template;
         }

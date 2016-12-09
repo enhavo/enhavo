@@ -13,12 +13,12 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 
 interface StrategyInterface extends TypeInterface
 {
-    public function addSubscriber(SubscriberInterface $subscriber);
+    public function addSubscriber(SubscriberInterface $subscriber, $type);
 
     /**
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber);
+    public function exists(SubscriberInterface $subscriber, $groupNames);
 
     /**
      * @return string

@@ -9,9 +9,12 @@
 namespace Enhavo\Bundle\NewsletterBundle\Subscriber;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyInterface;
+use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver;
 
 class SubscriberManager
 {
@@ -26,6 +29,11 @@ class SubscriberManager
     private $strategy;
 
     /**
+     * @var StrategyResolver
+     */
+    private $strategyResolver;
+
+    /**
      * @var TypeCollector
      */
     private $storageTypeCollector;
@@ -35,17 +43,33 @@ class SubscriberManager
      */
     private $storage;
 
+    /**
+     * @var StorageResolver
+     */
+    private $storageResolver;
+
+    /**
+     * @var Resolver
+     */
+    private $formResolver;
+
     public function __construct(
         TypeCollector $strategyTypeCollector,
         $strategy,
+        $strategyResolver,
         TypeCollector $storageTypeCollector,
-        $storage
+        $storage,
+        $storageResolver,
+        $formResolver
     )
     {
         $this->strategyTypeCollector = $strategyTypeCollector;
         $this->strategy = $strategy;
+        $this->strategyResolver = $strategyResolver;
         $this->storageTypeCollector = $storageTypeCollector;
         $this->storage = $storage;
+        $this->storageResolver = $storageResolver;
+        $this->formResolver = $formResolver;
     }
 
     /**
@@ -58,6 +82,15 @@ class SubscriberManager
     }
 
     /**
+     * @return StrategyInterface
+     * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
+     */
+    public function getStrategyByName($name)
+    {
+        return $this->strategyTypeCollector->getType($name);
+    }
+
+    /**
      * @return StorageInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
@@ -66,22 +99,43 @@ class SubscriberManager
         return $this->storageTypeCollector->getType($this->storage);
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber)
+    /**
+     * @return StorageInterface
+     * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
+     */
+    public function getStorageByName($name)
     {
-        $strategy = $this->getStrategy();
-        return $strategy->addSubscriber($subscriber);
+        return $this->storageTypeCollector->getType($name);
     }
 
-    public function saveSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
-        $storage = $this->getStorage();
+        if ($type === null) {
+            $strategy = $this->getStrategy();
+        } else {
+            $strategy = $this->strategyResolver->resolve($type);
+        }
+        return $strategy->addSubscriber($subscriber, $type);
+    }
+
+    public function saveSubscriber(SubscriberInterface $subscriber, $type)
+    {
+        if ($type === null) {
+            $storage = $this->getStorage();
+        } else {
+            $storage = $this->storageResolver->resolve($type);
+        }
         $storage->saveSubscriber($subscriber);
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber, $type)
     {
-        $strategy = $this->getStrategy();
-        return $strategy->exists($subscriber);
+        if ($type === null) {
+            $strategy = $this->getStrategy();
+        } else {
+            $strategy = $this->strategyResolver->resolve($type);
+        }
+        return $strategy->exists($subscriber, $this->formResolver->resolveGroups($type));
     }
 
     public function handleExists(SubscriberInterface $subscriber)

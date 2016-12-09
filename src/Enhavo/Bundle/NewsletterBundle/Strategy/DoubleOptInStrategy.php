@@ -24,28 +24,31 @@ class DoubleOptInStrategy extends AbstractStrategy
         $this->localStorage = $localStorage;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActive(false);
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->notifySubscriber($subscriber);
+        $this->notifySubscriber($subscriber, $type);
         return 'subscriber.form.message.double_opt_in';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber)
+    public function activateSubscriber(SubscriberInterface $subscriber, $type)
     {
         $subscriber->setActive(true);
         $subscriber->setToken(null);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->getSubscriberManager()->saveSubscriber($subscriber);
+        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
         $this->notifyAdmin($subscriber);
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber)
+    private function notifySubscriber(SubscriberInterface $subscriber, $type)
     {
-        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', array('token' => $subscriber->getToken()), true);
+        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
+            'token' => $subscriber->getToken(),
+            'type' => $type
+            ], true);
         $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
         $message = \Swift_Message::newInstance()
             ->setSubject($this->getSubject())
@@ -80,14 +83,14 @@ class DoubleOptInStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber, $groupNames)
     {
-        return $this->localStorage->exists($subscriber) || $this->getSubscriberManager()->getStorage()->exists($subscriber);
+        return $this->localStorage->exists($subscriber, $groupNames) || $this->getSubscriberManager()->getStorage()->exists($subscriber, $groupNames);
     }
 
     public function handleExists(SubscriberInterface $subscriber)
     {
-        $subscriber = $this->localStorage->getSubscriber($subscriber);
+        $subscriber = $this->localStorage->getSubscriber($subscriber->getEmail());
         if(!$subscriber->isActive()) {
             $this->setToken($subscriber);
             $this->notifySubscriber($subscriber);

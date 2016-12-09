@@ -19,10 +19,40 @@ services:
         arguments:
             - '@enhavo_newsletter.cleverreach_client'
         tags:
-            - { name: enhavo.newsletter_storage, alias: clever_reach}
+            - { name: enhavo.newsletter_storage, alias: cleverreach}
 
     enhavo_newsletter.cleverreach_client:
         class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
         arguments:
             - '%enhavo_newsletter.cleverreach.credentials%'
-            - '%enhavo_newsletter.cleverreach.group%'
+            - '%enhavo_newsletter.defaultgroups%'
+            - '%enhavo_newsletter.cleverreach.mapping%'
+
+    enhavo_newsletter.add_subscriber_listener:
+        class: Enhavo\Bundle\NewsletterBundle\EventListener\AddSubscriberListener
+        arguments:
+            - '%enhavo_newsletter.forms%'
+            - '%enhavo_newsletter.defaultgroups%'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_listener, event: newsletter.add_subscriber, method: onAddSubscriber }
+
+    enhavo_newsletter.strategy_resolver:
+        class: Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver
+        arguments:
+            - '%enhavo_newsletter.forms%'
+            - '@enhavo_newsletter.strategy_collector'
+            - '%enhavo_newsletter.strategy%'
+
+    enhavo_newsletter.storage_resolver:
+        class: Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver
+        arguments:
+            - '%enhavo_newsletter.forms%'
+            - '@enhavo_newsletter.storage_collector'
+            - '%enhavo_newsletter.storage%'
+
+    enhavo_newsletter.form_resolver:
+        class: Enhavo\Bundle\NewsletterBundle\Form\Resolver
+        arguments:
+            - '%enhavo_newsletter.forms%'
+            - '%enhavo_newsletter.defaultgroups%'
