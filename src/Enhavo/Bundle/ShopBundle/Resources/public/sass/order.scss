@@ -1,0 +1,22 @@
+@import 'compass';
+.order-order {
+  strong {font-weight:700;}
+  .address {margin-top:1.4em;}
+  .itemlist {margin-bottom:10px;
+    li {padding:5px 0;background:#f3f3f3;
+      + li {margin-top:5px;}
+      .img {margin:-5px 0;line-height:0;}
+      .item-unit-price {position:relative;z-index:2;
+        &:hover {
+          .details {display:block;}
+        }
+        &.total {z-index:1;}
+        .details {position:absolute;left:calc(100% - 5px);top:-5px;background:#fff;padding:5px;border:1px solid #000;display:none;width:110px;}
+      }
+    }
+  }
+  .itemlist-head {font-weight:700;}
+  .order-sum {text-align:right;padding-right:10px;
+    .total {font-weight:700;}
+  }
+}
