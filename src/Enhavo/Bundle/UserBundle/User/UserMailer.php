@@ -30,4 +30,22 @@ class UserMailer extends FOSMailer
         ));
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['resetting'], $user->getEmail());
     }
+
+    public function sendRegisterConfirmMessage(UserInterface $user, $template = null, $route = null)
+    {
+        if($template === null) {
+            $template = $this->parameters['confirmation.template'];
+        }
+
+        if($route === null) {
+            $route = 'enhavo_user_theme_user_registration_confirmed';
+        }
+
+        $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), true);
+        $rendered = $this->templating->render($template, array(
+            'user' => $user,
+            'confirmationUrl' => $url
+        ));
+        $this->sendEmailMessage($rendered, $this->parameters['from_email']['confirmation'], $user->getEmail());
+    }
 }

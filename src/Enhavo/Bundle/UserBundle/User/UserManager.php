@@ -28,6 +28,16 @@ class UserManager extends FOSUserManager
         $this->updateUser($user);
     }
 
+    public function sendRegisterConfirmEmail(UserInterface $user, $template = null, $route = null)
+    {
+        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+        $user->setConfirmationToken($tokenGenerator->generateToken());
+
+        $this->container->get('fos_user.mailer')->sendRegisterConfirmMessage($user, $template, $route);
+
+        $this->updateUser($user);
+    }
+
     public function authenticateUser(UserInterface $user, Response $response)
     {
         try {

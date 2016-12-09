@@ -90,9 +90,9 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_user.viewer.reset_password:
-        class: Enhavo\Bundle\UserBundle\Viewer\ResetPasswordViewer
+    enhavo_user.viewer.confirm:
+        class: Enhavo\Bundle\UserBundle\Viewer\ConfirmViewer
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.viewer, alias: reset_password }
+            - { name: enhavo.viewer, alias: confirm }

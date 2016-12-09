@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\UserBundle\Entity\User;
-use Enhavo\Bundle\UserBundle\Viewer\ResetPasswordViewer;
+use Enhavo\Bundle\UserBundle\Viewer\ConfirmViewer;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,8 +45,8 @@ class UserController extends ResourceController
             } else {
                 $reset = true;
                 $template = null;
-                $viewer = $this->viewerFactory->createType($configuration, 'reset_password');
-                if($viewer instanceof ResetPasswordViewer) {
+                $viewer = $this->viewerFactory->createType($configuration, 'confirm');
+                if($viewer instanceof ConfirmViewer) {
                     $template = $viewer->getMailTemplate();
                     $route = $viewer->getConfirmRoute();
                 }
@@ -201,6 +201,17 @@ class UserController extends ResourceController
 
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
+
+                $userManager = $this->getUserManager();
+
+                $route = null;
+                $template = null;
+                $viewer = $this->viewerFactory->createType($configuration, 'confirm');
+                if($viewer instanceof ConfirmViewer) {
+                    $template = $viewer->getMailTemplate();
+                    $route = $viewer->getConfirmRoute();
+                }
+                $userManager->sendRegisterConfirmEmail($user, $template, $route);
                 return $response;
             } else {
                 $valid = false;

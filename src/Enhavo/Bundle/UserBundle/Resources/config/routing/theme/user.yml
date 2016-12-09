@@ -61,6 +61,10 @@ enhavo_user_theme_user_register:
     methods: [GET, POST]
     defaults:
         _controller: enhavo_user.controller.user:registerAction
+        _sylius:
+            viewer:
+                mailTemplate: ~
+                confirmRoute: enhavo_user_user_reset_password_confirm
 
 enhavo_user_theme_user_registration_confirmed:
     options:

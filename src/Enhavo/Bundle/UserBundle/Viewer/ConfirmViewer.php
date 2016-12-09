@@ -11,11 +11,11 @@ namespace Enhavo\Bundle\UserBundle\Viewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 
-class ResetPasswordViewer extends AbstractViewer
+class ConfirmViewer extends AbstractViewer
 {
     public function getType()
     {
-        return 'reset_password';
+        return 'confirm';
     }
 
     public function getMailTemplate()
