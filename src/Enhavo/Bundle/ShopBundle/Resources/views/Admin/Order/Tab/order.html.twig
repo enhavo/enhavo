@@ -38,8 +38,8 @@
                             <div class="col-xs-2">
                                 <div class="item-unit-price">
                                     <div class="details">
-                                        <div>Netto: {{ item.unitPrice }}</div>
-                                        <div>Steuern: {{ item.unitTax }}</div>
+                                        <div>Netto: {{ item.unitPrice|currency }}</div>
+                                        <div>Steuern: {{ item.unitTax|currency }}</div>
                                     </div>
                                     <div>{{ item.unitTotal }}</div>
                                 </div>
@@ -47,10 +47,10 @@
                             <div class="col-xs-2">
                                 <div class="item-unit-price total">
                                     <div class="details">
-                                        <div>Netto: {{ item.unitPriceTotal }}</div>
-                                        <div>Steuern: {{ item.taxTotal }}</div>
+                                        <div>Netto: {{ item.unitPriceTotal|currency }}</div>
+                                        <div>Steuern: {{ item.taxTotal|currency }}</div>
                                     </div>
-                                    <div>{{ item.total }}</div>
+                                    <div>{{ item.total|currency }}</div>
                                 </div>
                             </div>
                         </div>
@@ -63,21 +63,21 @@
                 </div>
                 <div class="col-xs-4">
                     <div class="order-sum">
-                        <div>Nettobetrag: {{ data.unitTotal }}</div>
+                        <div>Nettobetrag: {{ data.unitTotal|currency }}</div>
                         <div>
                             {% if data.shippingTotal > 0 %}
-                                Versand: {{ data.shippingTotal }}
+                                Versand: {{ data.shippingTotal|currency }}
                             {% else %}
                                 Kostenloser Versand
                             {% endif %}
                         </div>
                         {% if data.discountTotal > 0 %}
-                            <div>Ermäßigung: {{ data.discountTotal }}</div>
+                            <div>Ermäßigung: {{ data.discountTotal|currency }}</div>
                         {% endif %}
                         <div>
-                            MwSt.: {{ data.taxTotal }}
+                            MwSt.: {{ data.taxTotal|currency }}
                         </div>
-                        <div class="total">Summe: {{ data.total }}</div>
+                        <div class="total">Summe: {{ data.total|currency }}</div>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                 {% endif %}
                 <div>{{ data.shippingAddress.street }}</div>
                 <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
-                <div>Land: {{ data.shippingAddress.countryCode }}</div>
+                <div>Land: {{ data.shippingAddress.countryCode|country }}</div>
                 {% if data.shippingAddress.phoneNumber %}
                     <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
                 {% endif %}
@@ -108,7 +108,7 @@
                     {% endif %}
                     <div>{{ data.billingAddress.street }}</div>
                     <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
-                    <div>Land: {{ data.billingAddress.countryCode }}</div>
+                    <div>Land: {{ data.billingAddress.countryCode|country }}</div>
                     {% if data.billingAddress.phoneNumber %}
                         <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
                     {% endif %}
