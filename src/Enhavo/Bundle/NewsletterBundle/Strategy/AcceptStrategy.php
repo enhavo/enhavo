@@ -24,22 +24,22 @@ class AcceptStrategy extends AbstractStrategy
         $this->localStorage = $localStorage;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActive(false);
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->notifyAdmin($subscriber);
+        $this->notifyAdmin($subscriber, $type);
         return 'subscriber.form.message.accept';
     }
 
-    public function activateSubscriber(SubscriberInterface $subscriber)
+    public function activateSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setActive(true);
         $subscriber->setToken(null);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->getSubscriberManager()->saveSubscriber($subscriber);
+        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
         $this->notifySubscriber($subscriber);
     }
 
@@ -58,9 +58,12 @@ class AcceptStrategy extends AbstractStrategy
         }
     }
 
-    private function notifyAdmin(SubscriberInterface $subscriber)
+    private function notifyAdmin(SubscriberInterface $subscriber, $type)
     {
-        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_accept', array('token' => $subscriber->getToken()), true);
+        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_accept', [
+            'token' => $subscriber->getToken(),
+            'type' => $type
+        ], true);
         $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig');
         $message = \Swift_Message::newInstance()
             ->setSubject($this->getAdminSubject())
@@ -80,9 +83,9 @@ class AcceptStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber, $groupNames)
     {
-        return $this->localStorage->exists($subscriber) || $this->getSubscriberManager()->getStorage()->exists($subscriber);
+        return $this->localStorage->exists($subscriber, $groupNames) || $this->getSubscriberManager()->getStorage()->exists($subscriber, $groupNames);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

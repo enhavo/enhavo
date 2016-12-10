@@ -22,5 +22,5 @@ interface StorageInterface extends TypeInterface
     /**
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber);
+    public function exists(SubscriberInterface $subscriber, $groupNames);
 }

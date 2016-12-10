@@ -30,5 +30,17 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
             type: string
             lenght: 255
             nullable: true
+    manyToMany:
+        group:
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Group
+            inversedBy: subscriber
+            joinTable:
+                name: newsletter_subscriber_group
+                joinColumns:
+                    subscriber_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    group_id:
+                        referencedColumnName: id
 
     lifecycleCallbacks: {  }

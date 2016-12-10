@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
@@ -37,14 +38,39 @@ class LocalStorage implements StorageInterface
         $this->manager->flush();
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber, $groupNames)
     {
-        return $this->getSubscriber($subscriber->getEmail()) !== null;
+        // subscriber has to be in ALL given groups to return true
+
+        if ($this->getSubscriber($subscriber->getEmail()) === null) {
+            return false;
+        }
+
+        $groupsSubscriberIsIn = $this->getSubscriber($subscriber->getEmail())->getGroup()->getValues();
+
+        $subscriberGroupNames = [];
+        /**
+         * @var $group Group
+         */
+        foreach ($groupsSubscriberIsIn as $group) {
+            $subscriberGroupNames[] = $group->getName();
+        }
+
+        foreach ($groupNames as $groupName) {
+            $group = $this->manager->getRepository(Group::class)->findOneBy(['name' => $groupName]);
+            if ($group === null) {
+                return false;
+            }
+            if (!in_array($groupName, $subscriberGroupNames)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
-     * @param $email
-     * @return SubscriberInterface|null
+     * @param $subscriber SubscriberInterface
+     * @return object
      */
     public function getSubscriber($email)
     {

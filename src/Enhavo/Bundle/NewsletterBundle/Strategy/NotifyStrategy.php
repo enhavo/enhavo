@@ -13,12 +13,12 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 
 class NotifyStrategy extends AbstractStrategy
 {
-    public function addSubscriber(SubscriberInterface $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActivatedAt(new \DateTime());
         $subscriber->setActive(true);
-        $this->getSubscriberManager()->saveSubscriber($subscriber);
+        $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
         $this->notifySubscriber($subscriber);
         $this->notifyAdmin($subscriber);
         return 'subscriber.form.message.notify';
@@ -61,9 +61,9 @@ class NotifyStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber)
+    public function exists(SubscriberInterface $subscriber, $groupNames)
     {
-        return $this->getSubscriberManager()->getStorage()->exists($subscriber);
+        return $this->getSubscriberManager()->getStorage()->exists($subscriber, $groupNames);
     }
 
     public function handleExists(SubscriberInterface $subscriber)
