@@ -102,3 +102,9 @@ services:
             - { name: twig.extension }
         calls:
             - [ setContainer, ['@service_container']]
+
+    enhavo_translation.translation_route_manager:
+        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
+        arguments:
+            - '@enhavo_app.route_manager'
+            - '@doctrine.orm.entity_manager'

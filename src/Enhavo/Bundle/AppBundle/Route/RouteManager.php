@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Route;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 
@@ -45,5 +44,14 @@ class RouteManager
             'type' => $type,
             'typeId' => $content->getId()
         ]);
+    }
+
+    public function createRoute(Routeable $content, $staticPrefix)
+    {
+        $route = new Route();
+        $route->setStaticPrefix($staticPrefix);
+        $route->setContent($content);
+        $this->update($route);
+        $content->setRoute($route);
     }
 }

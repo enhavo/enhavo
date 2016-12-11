@@ -9,9 +9,11 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Routing;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -22,20 +24,16 @@ use Enhavo\Bundle\AppBundle\Route\RouteGuesser;
 
 class RoutingType extends AbstractType
 {
+    use ContainerAwareTrait;
+
     /**
      * @var RouterInterface
      */
     protected $router;
 
-    /**
-     * @var RouteGuesser
-     */
-    protected $guesser;
-
-    public function __construct(RouterInterface $router, RouteGuesser $guesser)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
-        $this->guesser = $guesser;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -118,7 +116,9 @@ class RoutingType extends AbstractType
                 if($data instanceof Routeable) {
                     $route = $data->getRoute();
                     if($route instanceof Route && empty($route->getStaticPrefix())) {
-                        $url = $this->guesser->guessUrl($data);
+                        /** @var GeneratorInterface $generator */
+                        $generator = $this->container->get($options['routing_generator']);
+                        $url = $generator->generate($data);
                         if($url !== null) {
                             $route->setStaticPrefix($url);
                         }
@@ -133,6 +133,7 @@ class RoutingType extends AbstractType
         $resolver->setDefaults(array(
             'routing_strategy' => null,
             'routing_route' => null,
+            'routing_generator' => 'enhavo_app.route_guess_generator'
         ));
     }
 

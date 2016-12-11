@@ -73,6 +73,27 @@ class Translator
         return $strategy->getTranslations($entity, $metadata, $property);
     }
 
+    public function getTranslation($entity, $property, $locale)
+    {
+        $metadata = $this->metadataCollection->getMetadata($entity);
+        if($metadata === null) {
+            return null;
+        }
+
+        $property = $metadata->getProperty($property);
+        if($property === null) {
+            return null;
+        }
+
+        $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
+        $translations = $strategy->getTranslations($entity, $metadata, $property);
+        if(isset($translations[$locale])) {
+            return $translations[$locale];
+        }
+
+        return null;
+    }
+
     public function updateReferences()
     {
         $strategies = $this->strategyResolver->getStrategies();

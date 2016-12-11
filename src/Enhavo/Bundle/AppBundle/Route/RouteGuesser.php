@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Route;
 
 
 use BaconStringUtils\Slugifier;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteGuesser
 {
@@ -25,20 +26,10 @@ class RouteGuesser
     public function guessContext($model)
     {
         $guesses = [];
-        if(method_exists($model, 'getTitle')) {
-            $guesses[] = $model->getTitle();
-        }
-
-        if(method_exists($model, 'getName')) {
-            $guesses[] = $model->getName();
-        }
-
-        if(method_exists($model, 'getSlug')) {
-            $guesses[] = $model->getSlug();
-        }
-
-        if(method_exists($model, 'getHeadline')) {
-            $guesses[] = $model->getHeadline();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $properties = $this->getContextProperties($model);
+        foreach($properties as $property) {
+            $guesses[] = $accessor->getValue($model, $property);
         }
 
         foreach($guesses as $guess) {
@@ -47,6 +38,26 @@ class RouteGuesser
             }
         }
         return null;
+    }
+
+    public function getContextProperties($model)
+    {
+        $possibleProperties = [];
+        $checkProperties = [
+            'title',
+            'name',
+            'headline',
+            'slug'
+        ];
+
+        foreach($checkProperties as $property) {
+            $method = sprintf('get%s', ucfirst($property));
+            if(method_exists($model, $method)) {
+                $possibleProperties[] = $property;
+            }
+        }
+
+        return $possibleProperties;
     }
 
     protected function slugifiy($context)
