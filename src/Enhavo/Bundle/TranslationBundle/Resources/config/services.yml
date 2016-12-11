@@ -62,9 +62,12 @@ services:
         class: Enhavo\Bundle\TranslationBundle\EventListener\SaveListener
         arguments:
             - '@enhavo_translation.translator'
+            - '@enhavo_app.route_guesser'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
+            - { name: kernel.event_listener, event: enhavo_app.pre_create, method: preSave }
+            - { name: kernel.event_listener, event: enhavo_app.pre_update, method: preSave }
 
     enhavo_translation.menu_builder.translation:
         class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenuBuilder
@@ -83,7 +86,6 @@ services:
     enhavo_translation.listener.locale_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener
         arguments:
-            - '@doctrine.orm.entity_manager'
             - '@enhavo_translation.locale_resolver'
         tags:
             - { name: kernel.event_subscriber }

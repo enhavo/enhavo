@@ -15,6 +15,15 @@ class RouteGuesser
 {
     public function guessUrl($model)
     {
+        $context = $this->guessContext($model);
+        if($context !== null) {
+            return $this->slugifiy($context);
+        }
+        return $context;
+    }
+
+    public function guessContext($model)
+    {
         $guesses = [];
         if(method_exists($model, 'getTitle')) {
             $guesses[] = $model->getTitle();
@@ -34,19 +43,15 @@ class RouteGuesser
 
         foreach($guesses as $guess) {
             if(!empty($guess)) {
-                return $this->slugifiy($guess);
+                return $guess;
             }
         }
         return null;
     }
 
-    protected function slugifiy($guess)
+    protected function slugifiy($context)
     {
-        //ToDo: Because of translation we need to check for array, maybe its better to overwrite this class in TransaltionBundle
-        if(is_array($guess)) {
-            $guess = reset($guess);
-        }
         $slugifier = new Slugifier();
-        return sprintf('/%s', $slugifier->slugify($guess));
+        return sprintf('/%s', $slugifier->slugify($context));
     }
 }

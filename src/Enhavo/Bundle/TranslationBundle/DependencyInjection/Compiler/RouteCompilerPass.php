@@ -18,6 +18,7 @@ class RouteCompilerPass implements CompilerPassInterface
         $this->overwriteRouteType($container);
         $this->overwriteSlugType($container);
         $this->overwriteRouteValidator($container);
+        $this->overwriteRouteGuesser($container);
     }
 
     protected function overwriteRouteType(ContainerBuilder $container)
@@ -38,5 +39,11 @@ class RouteCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('enhavo_app.validator.unique_url');
         $definition->setClass('Enhavo\Bundle\TranslationBundle\Validator\Constraints\RouteValidator');
+    }
+
+    protected function overwriteRouteGuesser(ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('enhavo_app.route_guesser');
+        $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuesser');
     }
 }
