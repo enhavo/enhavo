@@ -37,13 +37,24 @@
     path: /{{ app_url }}/{{ resource_url }}/table
     methods: [GET]
     defaults:
-        page: 1
         _controller: {{ app }}.controller.{{ resource }}:tableAction
         _sylius:
 {% if not sorting is null %}
             sortable: true
+            sorting:
+                {{ sorting }}: asc
 {% endif %}
             viewer:
+{% if not sorting is null %}
+                columns:
+                    title:
+                        property: id
+                        width: 11
+                        label: id
+                    position:
+                        type: position
+                        width: 1
+{% endif %}
 
 {{ app }}_{{ resource }}_delete:
     options:

@@ -1,0 +1,15 @@
+<div data-file-index="{{ index }}">
+    <div class="row">
+        <div class="col-md-10">{{ filename }}</div>
+        <div class="col-md-2"><a href="javascript:return false;" data-delete-item>&nbsp;</a></div>
+    </div>
+
+    <div class="row">
+        <input type="text" name="{{ prefix }}[parameters][title]" value="{{ file.parameter('title') }}" />
+    </div>
+
+    <input type="hidden" name="{{ prefix }}[id]" value="{{ id }}" />
+    <input type="hidden" name="{{ prefix }}[filename]" value="{{ filename }}" />
+    <input type="hidden" name="{{ prefix }}[slug]" value="{{ slug }}" />
+    <input type="hidden" name="{{ prefix }}[order]" value="0" />
+</div>

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
+use League\Uri\Components\HierarchicalPath;
 
 class LocaleResolver
 {
@@ -50,29 +51,27 @@ class LocaleResolver
             return $this->locale;
         }
 
-        $request = $this->requestStack->getMasterRequest();
-        if($request === null) {
-            $this->locale = $this->defaultLocale;
-            return $this->locale;
-        }
-
-        if(preg_match('#^/admin/#', $request->getPathInfo())) {
-            $this->locale = $this->defaultLocale;
-            return $this->locale;
-        }
-
-        if(!in_array($request->getLocale(), $this->locales)) {
-            $this->locale = $this->defaultLocale;
-            return $this->locale;
-        }
-
-        $this->locale = $request->getLocale();
+        $this->resolveLocale();
         return $this->locale;
     }
 
     public function setLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    public function resolveLocale()
+    {
+        $this->setLocale($this->defaultLocale);
+
+        $request = $this->requestStack->getMasterRequest();
+        if($request !== null) {
+            $path = new HierarchicalPath($request->getPathInfo());
+            $segment = $path->getSegment(0);
+            if(!empty($segment) && in_array($segment, $this->locales)) {
+                $this->setLocale($segment);
+            }
+        }
     }
 
     public function isDefaultLocale()

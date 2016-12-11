@@ -10,43 +10,59 @@ namespace Enhavo\Bundle\AppBundle\Route;
 
 
 use BaconStringUtils\Slugifier;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteGuesser
 {
     public function guessUrl($model)
     {
+        $context = $this->guessContext($model);
+        if($context !== null) {
+            return $this->slugifiy($context);
+        }
+        return $context;
+    }
+
+    public function guessContext($model)
+    {
         $guesses = [];
-        if(method_exists($model, 'getTitle')) {
-            $guesses[] = $model->getTitle();
-        }
-
-        if(method_exists($model, 'getName')) {
-            $guesses[] = $model->getName();
-        }
-
-        if(method_exists($model, 'getSlug')) {
-            $guesses[] = $model->getSlug();
-        }
-
-        if(method_exists($model, 'getHeadline')) {
-            $guesses[] = $model->getHeadline();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $properties = $this->getContextProperties($model);
+        foreach($properties as $property) {
+            $guesses[] = $accessor->getValue($model, $property);
         }
 
         foreach($guesses as $guess) {
             if(!empty($guess)) {
-                return $this->slugifiy($guess);
+                return $guess;
             }
         }
         return null;
     }
 
-    protected function slugifiy($guess)
+    public function getContextProperties($model)
     {
-        //ToDo: Because of translation we need to check for array, maybe its better to overwrite this class in TransaltionBundle
-        if(is_array($guess)) {
-            $guess = reset($guess);
+        $possibleProperties = [];
+        $checkProperties = [
+            'title',
+            'name',
+            'headline',
+            'slug'
+        ];
+
+        foreach($checkProperties as $property) {
+            $method = sprintf('get%s', ucfirst($property));
+            if(method_exists($model, $method)) {
+                $possibleProperties[] = $property;
+            }
         }
+
+        return $possibleProperties;
+    }
+
+    protected function slugifiy($context)
+    {
         $slugifier = new Slugifier();
-        return sprintf('/%s', $slugifier->slugify($guess));
+        return sprintf('/%s', $slugifier->slugify($context));
     }
 }
