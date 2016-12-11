@@ -386,6 +386,9 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
       $(document).on('formOpenAfter', function (event, form) {
         self.initUploadForm(form);
       });
+      $(document).on('formListAddItem', function (event, form) {
+        self.initUploadForm(form);
+      });
     };
 
     $(function() {
