@@ -40,6 +40,10 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->booleanNode('show_branding')->defaultTrue()->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
                 ->end()

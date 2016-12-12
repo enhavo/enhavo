@@ -31,6 +31,7 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
         $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
+        $container->setParameter('enhavo_app.show_branding', $config[ 'show_branding' ]);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
         $container->setParameter('enhavo_app.template', $config[ 'template' ]);
         $container->setParameter('enhavo_app.route.url_resolver', $config['route']['url_resolver']);
