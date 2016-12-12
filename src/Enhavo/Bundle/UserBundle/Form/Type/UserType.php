@@ -43,6 +43,11 @@ class UserType extends AbstractType
             'translation_domain' => 'EnhavoUserBundle'
         ));
 
+        $builder->add('admin', 'enhavo_boolean', array(
+            'label' => 'user.form.label.admin',
+            'translation_domain' => 'EnhavoUserBundle'
+        ));
+
         $builder->add('groups', 'entity', array(
             'class' => 'EnhavoUserBundle:Group',
             'property' => 'name',

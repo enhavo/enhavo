@@ -17,6 +17,7 @@ user:
       lastName: 'Lastname'
       groups: 'Groups'
       password: 'Password'
+      admin: 'Admin'
   label:
     username: 'Username'
     id: 'ID'
