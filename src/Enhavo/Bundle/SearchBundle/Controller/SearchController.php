@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\AppController;
+use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter;
 use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,21 @@ class SearchController extends AppController
                         'results' => 'No results',
                         'expression' => $searchExpression
                     ));
+                }
+
+                $user = $this->getUser();
+                if($user == null || !$user->isAdmin()){
+                    $publicResults = [];
+                    foreach ($result->getResources() as $resource) {
+                        if($resource instanceof Publishable){
+                            if($resource->isPublic()){
+                                $publicResults[] = $resource;
+                            }
+                        } else {
+                            $publicResults[] = $resource;
+                        }
+                    }
+                    $result->setResources($publicResults);
                 }
 
                 // highlighting

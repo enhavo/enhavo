@@ -13,6 +13,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 class User extends BaseUser implements UserInterface, ResourceInterface
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
     /**
      * @var integer
      */
@@ -133,5 +134,24 @@ class User extends BaseUser implements UserInterface, ResourceInterface
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    public function isAdmin()
+    {
+        if($this->hasRole(static::ROLE_ADMIN) || $this->hasRole(static::ROLE_SUPER_ADMIN)){
+            return true;
+        }
+        return false;
+    }
+
+    public function setAdmin($boolean)
+    {
+        if (true === $boolean) {
+            $this->addRole(static::ROLE_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_ADMIN);
+        }
+
+        return $this;
     }
 }
