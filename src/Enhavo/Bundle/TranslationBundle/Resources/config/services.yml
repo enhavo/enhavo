@@ -103,6 +103,13 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
 
+    enhavo_translation.twig.locale:
+        class: Enhavo\Bundle\TranslationBundle\Twig\Locale
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setContainer, ['@service_container']]
+
     enhavo_translation.translation_route_manager:
         class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
         arguments:

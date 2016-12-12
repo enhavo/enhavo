@@ -24,8 +24,12 @@ class AutoGenerator extends AppAutoGenerator
         if($route instanceof Route) {
             $route->setStaticPrefix($staticPrefix);
         } else {
-            $this->routeManager->createRoute($routeable, $staticPrefix);
+            $route = $this->routeManager->createRoute($routeable, $staticPrefix);
         }
+
+        $this->em->flush();
+        $this->routeManager->update($route);
+        $this->em->flush();
 
         $locales = $this->getTranslationRouteLocales();
         foreach($locales as $locale) {

@@ -42,17 +42,18 @@ class TranslationRouteManager
 
         $translationRoute = $this->em->getRepository('EnhavoTranslationBundle:TranslationRoute')->findOneBy([
             'type' => $route->getType(),
-            'typeId' => $route->getTypeId()
+            'typeId' => $route->getTypeId(),
+            'locale' => $locale
         ]);
 
         if($translationRoute === null) {
             $route = new Route();
             $route->setContent($routeable);
-            $this->routeManager->update($route);
 
             $translationRoute = new TranslationRoute();
             $translationRoute->setLocale($locale);
             $translationRoute->setRoute($route);
+            $this->em->persist($translationRoute);
         }
 
         /** @var Route $route */
@@ -60,6 +61,29 @@ class TranslationRouteManager
         $route->setStaticPrefix($staticPrefix);
         $translationRoute->setPath($staticPrefix);
 
+        $this->em->flush();
+        $this->routeManager->update($route);
+        $translationRoute->setType($route->getType());
+        $translationRoute->setTypeId($route->getTypeId());
+        $this->em->flush();
+
         return $translationRoute;
+    }
+
+    public function getRoute(Routeable $routeable, $locale)
+    {
+        $route = $routeable->getRoute();
+        if($route instanceof Route) {
+            $translationRoute = $this->em->getRepository('EnhavoTranslationBundle:TranslationRoute')->findOneBy([
+                'type' => $route->getType(),
+                'typeId' => $route->getTypeId(),
+                'locale' => $locale
+            ]);
+            if($translationRoute) {
+                return $translationRoute->getRoute();
+            }
+            return $route;
+        }
+        return null;
     }
 }

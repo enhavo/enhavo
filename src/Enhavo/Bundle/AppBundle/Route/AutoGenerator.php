@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Route;
 
 use Doctrine\Common\Persistence\Proxy;
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -31,10 +32,11 @@ class AutoGenerator implements GeneratorInterface
      */
     protected $em;
 
-    public function __construct($autoGeneratorConfig, RouteManager $routeManager)
+    public function __construct($autoGeneratorConfig, RouteManager $routeManager, EntityManagerInterface $em)
     {
         $this->autoGeneratorConfig = $autoGeneratorConfig;
         $this->routeManager = $routeManager;
+        $this->em = $em;
     }
 
     public function generate(Routeable $routeable)
@@ -62,5 +64,9 @@ class AutoGenerator implements GeneratorInterface
         } else {
             $this->routeManager->createRoute($routeable, $staticPrefix);
         }
+
+        $this->em->flush();
+        $this->routeManager->update($route);
+        $this->em->flush();
     }
 }
