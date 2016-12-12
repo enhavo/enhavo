@@ -53,5 +53,6 @@ class RouteManager
         $route->setContent($content);
         $this->update($route);
         $content->setRoute($route);
+        return $route;
     }
 }

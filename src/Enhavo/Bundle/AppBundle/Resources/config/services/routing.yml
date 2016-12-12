@@ -51,6 +51,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\AutoRouteGeneratorListener
         arguments:
           - '@enhavo_app.route.auto_generator'
+          - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
@@ -100,5 +101,6 @@ services:
         arguments:
             - '%enhavo_app.route.auto_generator%'
             - '@enhavo_app.route_manager'
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container']]
