@@ -24,6 +24,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    enhavo_app.branding.twig_extension:
+        class:  Enhavo\Bundle\AppBundle\Twig\Branding
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
+
     enhavo_app.twig.template:
         class:  Enhavo\Bundle\AppBundle\Twig\Template
         arguments:

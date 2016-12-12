@@ -46,8 +46,10 @@
                 </form>
             </div>
             <p>
-                enhavo is an open source content-management-system based on symfony 2 and sylius. <br/>
-                Created and launched by <a href="http://xq-web.de" target="_blank">xq-web.de</a>
+                {% if showBranding() %}
+                    enhavo is an open source content-management-system based on symfony 2 and sylius. <br/>
+                    Created and launched by <a href="http://xq-web.de" target="_blank">xq-web.de</a>
+                {% endif %}
             </p>
         </div>
     </div>
