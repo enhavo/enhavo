@@ -44,6 +44,10 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->scalarNode('logo_path')->defaultValue('@EnhavoAppBundle/Resources/public/img/enhavo_admin_logo.svg')->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('stylesheets')
                     ->prototype('scalar')->end()
                 ->end()

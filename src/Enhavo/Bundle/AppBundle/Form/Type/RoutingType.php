@@ -13,27 +13,27 @@ use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Routing;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
+use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Routing\RouterInterface;
-use Enhavo\Bundle\AppBundle\Route\RouteGuesser;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RoutingType extends AbstractType
 {
     use ContainerAwareTrait;
 
     /**
-     * @var RouterInterface
+     * @var UrlResolverInterface
      */
-    protected $router;
+    protected $urlResolver;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(UrlResolverInterface $urlResolver)
     {
-        $this->router = $router;
+        $this->urlResolver = $urlResolver;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -46,31 +46,11 @@ class RoutingType extends AbstractType
                 if (!method_exists($data, 'getId')) {
                     throw new \Exception('Routing strategy id used, but data has no getId method');
                 }
-
-                if($data->getId() && !empty($options['routing_route'])) {
-                    $form->add('link', 'text', array(
-                        'mapped' => false,
-                        'data' => $this->router->generate($options['routing_route'], array(
-                            'id' => $data->getId()
-                        ), true),
-                        'disabled' => true
-                    ));
-                }
             }
 
             if ($options['routing_strategy'] === Routing::STRATEGY_SLUG) {
                 if (!$data instanceof Slugable || !method_exists($data, 'getSlug')) {
                     throw new \Exception('Routing strategy slug used, but data has no getSlug method nor is instanceof Slugable');
-                }
-
-                if($data->getSlug() && !empty($options['routing_route'])) {
-                    $form->add('link', 'text', array(
-                        'mapped' => false,
-                        'data' => $this->router->generate($options['routing_route'], array(
-                            'slug' => $data->getSlug()
-                        ), true),
-                        'disabled' => true
-                    ));
                 }
 
                 $form->add('slug', 'enhavo_slug');
@@ -85,17 +65,6 @@ class RoutingType extends AbstractType
                     throw new \Exception('Routing strategy id_slug used, but data has no getId method');
                 }
 
-                if($data->getId() && $data->getSlug() && !empty($options['routing_route'])) {
-                    $form->add('link', 'text', array(
-                        'mapped' => false,
-                        'data' => $this->router->generate($options['routing_route'], array(
-                            'id' => $data->getId(),
-                            'slug' => $data->getSlug()
-                        ), true),
-                        'disabled' => true
-                    ));
-                }
-
                 $form->add('slug', 'enhavo_slug', array());
             }
 
@@ -105,9 +74,20 @@ class RoutingType extends AbstractType
                 }
 
                 $form->add('route', 'enhavo_route');
-
             }
-
+            
+            if($data) {
+                try {
+                    $url = $this->urlResolver->resolve($data, UrlGeneratorInterface::ABSOLUTE_URL);
+                    $form->add('link', 'text', array(
+                        'mapped' => false,
+                        'data' => $url,
+                        'read_only' => true
+                    ));
+                } catch (\InvalidArgumentException $e) {
+                    return;
+                }
+            }
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
@@ -128,7 +108,7 @@ class RoutingType extends AbstractType
         });
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'routing_strategy' => null,

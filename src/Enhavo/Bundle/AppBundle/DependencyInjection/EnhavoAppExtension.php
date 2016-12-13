@@ -32,11 +32,12 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
         $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
         $container->setParameter('enhavo_app.show_branding', $config[ 'show_branding' ]);
+        $container->setParameter('enhavo_app.logo_path', $config['logo_path']);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
         $container->setParameter('enhavo_app.template', $config[ 'template' ]);
         $container->setParameter('enhavo_app.route.url_resolver', $config['route']['url_resolver']);
         $container->setParameter('enhavo_app.route.auto_generator', $config['route']['auto_generator']);
-
+        
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yml');
         $loader->load('services/twig.yml');

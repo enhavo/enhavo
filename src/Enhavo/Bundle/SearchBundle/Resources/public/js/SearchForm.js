@@ -37,8 +37,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Form'], function($, admin, rou
         this.initResults = function() {
             $('#search-results').on('click', '[data-id]', function() {
                 var id = $(this).data('id');
-                var route = $(this).data('update-route');
-                var url = router.generate(route, {id: id});
+                var url = $(this).data('url');
                 admin.ajaxOverlay(url);
             });
         };

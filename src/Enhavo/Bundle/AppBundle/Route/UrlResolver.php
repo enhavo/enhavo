@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Route;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class UrlResolver implements UrlResolverInterface
@@ -34,7 +35,7 @@ class UrlResolver implements UrlResolverInterface
         $this->config = $config;
     }
 
-    public function resolve($resource)
+    public function resolve($resource , $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $className = get_class($resource);
         $config = $this->getConfig($className);
@@ -42,7 +43,7 @@ class UrlResolver implements UrlResolverInterface
         $strategy = $config['strategy'];
         $route = $config['route'];
 
-        $url = $this->getUrl($resource, $strategy, $route);
+        $url = $this->getUrl($resource, $strategy, $route, $referenceType);
 
         if(empty($url)) {
             throw new \InvalidArgumentException(
@@ -53,7 +54,7 @@ class UrlResolver implements UrlResolverInterface
         return $url;
     }
 
-    protected function getUrl($resource, $strategy, $route)
+    protected function getUrl($resource, $strategy, $route, $referenceType)
     {
         if($strategy == Routing::STRATEGY_ROUTE) {
             if(!$resource instanceof Routeable) {
@@ -73,43 +74,31 @@ class UrlResolver implements UrlResolverInterface
                     )
                 );
             }
-            return $this->router->generate($resource->getRoute());
+            return $this->router->generate($resource->getRoute(), [], $referenceType);
         }
 
         if($strategy == Routing::STRATEGY_SLUG && !empty($route) && $resource instanceof Slugable) {
             return $this->router->generate($route, [
                 'slug' => $resource->getSlug()
-            ]);
+            ], $referenceType);
         }
 
         if($strategy == Routing::STRATEGY_ID && !empty($route)) {
             return $this->router->generate($route, [
                 'id' => $resource->getId()
-            ]);
+            ], $referenceType);
         }
 
         if($strategy == Routing::STRATEGY_SLUG_ID && !empty($route) && $resource instanceof Slugable) {
             return $this->router->generate($route, [
                 'slug' => $resource->getSlug(),
                 'id' => $resource->getId()
-            ]);
+            ], $referenceType);
         }
 
         return null;
     }
-
-    protected function getFromResources($className)
-    {
-        foreach($this->resources as $type => $resource) {
-            if($resource['classes']['model'] == $className) {
-                if(isset($resource['routing'])) {
-                    return $resource['routing'];
-                }
-            }
-        }
-        return null;
-    }
-
+    
     protected function getTypeFromSylius($className)
     {
         foreach($this->resources as $type => $resource) {
@@ -131,6 +120,5 @@ class UrlResolver implements UrlResolverInterface
                 return $resource;
             }
         }
-        return $this->getFromResources($className);
     }
 }

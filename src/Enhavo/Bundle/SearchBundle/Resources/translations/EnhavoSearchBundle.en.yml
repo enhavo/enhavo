@@ -1,5 +1,6 @@
 search:
   label:
+    no_results: No Results
     search: Search
     result: Search results
     types: Types
