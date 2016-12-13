@@ -5,6 +5,22 @@ enhavo_content:
                 type: publish
                 repository: enhavo_article.repository.article
 
+enhavo_app:
+    route:
+        url_resolver:
+            page:
+                model: enhavo_article.article
+                strategy: id
+                route: enhavo_page_page_update
+
+enhavo_theme:
+    route:
+        url_resolver:
+            page:
+                model: enhavo_article.article
+                strategy: slug
+                route: ~
+
 enhavo_workflow:
     entities:
         -

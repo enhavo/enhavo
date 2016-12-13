@@ -1,5 +1,6 @@
 search:
   label:
+    no_results: Keine Suchergebnisse gefunden
     search: Suche
     result: Suchergebnisse
     types: Typen

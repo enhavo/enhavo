@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\AppBundle\Route;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface UrlResolverInterface
 {
-    public function resolve($resource);
+    public function resolve($resource, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH);
 }

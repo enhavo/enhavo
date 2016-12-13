@@ -40,7 +40,7 @@ class SearchController extends AppController
                 $result = $searchEngine->search($searchExpression, array($filter), $searchTypes, $searchFields);
                 if(empty($result)) {
                     return $this->render($template, array(
-                        'results' => 'No results',
+                        'results' => $this->get('translator')->trans('search.label.no_results', [], 'EnhavoSearchBundle'),
                         'expression' => $searchExpression
                     ));
                 }

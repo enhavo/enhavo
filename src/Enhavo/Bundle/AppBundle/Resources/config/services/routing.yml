@@ -75,7 +75,7 @@ services:
         tags:
             - { name: form.type }
         arguments:
-            - '@router'
+            - '@enhavo_app.url_resolver'
         calls:
             - [setContainer, ['@service_container']]
 

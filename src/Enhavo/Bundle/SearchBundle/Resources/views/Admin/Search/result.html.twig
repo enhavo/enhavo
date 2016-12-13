@@ -2,7 +2,7 @@
     <h3>{{ 'search.label.result'|trans({}, 'EnhavoSearchBundle')|nl2br }}</h3>
     {% if results is iterable %}
         {% for item in results %}
-            <div data-id="{{ item.resource.id }}" {% if is_granted('WORKFLOW_UPDATE', item.resource) %}data-update-route="{{ item.resource|updateRoute }}"{% endif %} style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
+            <div data-id="{{ item.resource.id }}" data-url="{{ resolve_url(item.resource) }}" style="border-bottom: 5px solid #e4e6ea;" class="entry-row">
                 <div class="row">
                     <div class="col-xs-12">
                         <h1>{{ item.resource.title|raw }}</h1>

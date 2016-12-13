@@ -3,6 +3,22 @@ cmf_routing:
         controllers_by_class:
             Enhavo\Bundle\PageBundle\Entity\Page: enhavo_page.controller.page:showResourceAction
 
+enhavo_app:
+    route:
+        url_resolver:
+            page:
+                model: enhavo_page.page
+                strategy: id
+                route: enhavo_page_page_update
+
+enhavo_theme:
+    route:
+        url_resolver:
+            page:
+                model: enhavo_page.page
+                strategy: route
+                route: ~
+
 enhavo_content:
     sitemap:
         collectors:
