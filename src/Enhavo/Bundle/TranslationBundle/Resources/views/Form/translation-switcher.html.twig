@@ -9,7 +9,7 @@
     <div class="translation-switcher-menu">
         {% if translations is defined %}
             {% for locale, value in translations %}
-                <div data-translation-switch="{{ locale }}">
+                <div data-translation-switch="{{ locale }}" class="flag-container{% if loop.first %} active{% endif %}">
                     <img src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />
                 </div>
             {% endfor %}
