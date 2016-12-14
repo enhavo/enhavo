@@ -27,6 +27,8 @@
   cursor: pointer;
   background-color: #fefefe;
 
+  .active {display:none;}
+
   .translation-switcher-current {
     img {
       display: none;
@@ -47,6 +49,11 @@
     position: absolute;
     z-index: 100;
     top: 24px;
+    left: -3px;
+    width:30px;
     background-color: #fefefe;
+    border: 1px dashed #eee;
+
+    .flag-container {padding:3px;line-height:0;}
   }
 }

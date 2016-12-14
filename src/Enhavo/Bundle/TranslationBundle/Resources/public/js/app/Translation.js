@@ -33,13 +33,12 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, 
           $(this).removeClass('active');
         }
       });
-      $('[data-translation-current]').each(function () {
-        if($(this).data('translation-current') == locale) {
-          $(this).addClass('active');
-        } else {
-          $(this).removeClass('active');
-        }
-      });
+      $('[data-translation-switch]').removeClass('active');
+      $('[data-translation-current]').removeClass('active');
+
+      $('[data-translation-switch="'+locale+'"]').addClass('active');
+      $('[data-translation-current="'+locale+'"]').addClass('active');
+
       var id;
       for (id in tinymce.editors) {
         tinymce.editors[id].execCommand('switchLanguage');
