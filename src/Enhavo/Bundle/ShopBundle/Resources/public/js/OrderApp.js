@@ -11,6 +11,7 @@ define(['jquery', 'app/Index', 'app/Router'], function($, index, router) {
       $(document).on('formOpenAfter', function(event, form) {
         self.initDifferentBillingAddressSwitch(form);
         self.initBillingButton(form)
+        self.initPackingSlipButton(form);
       });
     };
 
@@ -21,6 +22,15 @@ define(['jquery', 'app/Index', 'app/Router'], function($, index, router) {
         var url = router.generate('enhavo_shop_order_billing', {id: id});
         window.location.href = url;
       });
+    };
+
+    this.initPackingSlipButton = function(form) {
+        $(form).find('[data-button][data-type="shop_packing_slip"]').click(function(event) {
+            event.preventDefault();
+            var id = $(form).data('id');
+            var url = router.generate('enhavo_shop_order_packing_slip', {id: id});
+            window.location.href = url;
+        });
     };
 
     this.initDifferentBillingAddressSwitch = function (form) {

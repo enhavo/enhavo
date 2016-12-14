@@ -55,4 +55,44 @@ class DocumentManager
         }
         return array_merge($generatorOptions, $options);
     }
+
+    public function generatePackingSlip(OrderInterface $order, $options = [])
+    {
+        $generatorOptions = $this->getPackingSlipOptions($options);
+        $generator = $this->getPackingSlipGenerator();
+        return $generator->generate($order, $generatorOptions);
+    }
+
+    public function generatePackingSlipName(OrderInterface $order, $options = [])
+    {
+        $generatorOptions = $this->getPackingSlipOptions($options);
+        $generator = $this->getPackingSlipGenerator();
+        return $generator->generateName($order, $generatorOptions);
+    }
+
+    /**
+     * @return GeneratorInterface
+     * @throws DocumentGeneratorException
+     */
+    private function getPackingSlipGenerator()
+    {
+        $packingSlipParameters = $this->container->getParameter('enhavo_shop.document.packing_slip');
+        $generatorName = $packingSlipParameters['generator'];
+
+        if(!$this->container->has($generatorName)) {
+            throw new DocumentGeneratorException(sprintf('Service "%s" does not exist', $generatorName));
+        }
+
+        return $this->container->get($generatorName);
+    }
+
+    private function getPackingSlipOptions($options)
+    {
+        $packingSlipParameters = $this->container->getParameter('enhavo_shop.document.packing_slip');
+        $generatorOptions = [];
+        if(isset($packingSlipParameters['options'])) {
+            $generatorOptions = $packingSlipParameters['options'];
+        }
+        return array_merge($generatorOptions, $options);
+    }
 }

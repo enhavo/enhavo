@@ -49,6 +49,8 @@ enhavo_shop_order_update:
                 buttons:
                     billing:
                         type: shop_billing
+                    packingSlip:
+                        type: shop_packing_slip
 
 
 enhavo_shop_order_table:
@@ -115,3 +117,11 @@ enhavo_shop_order_billing:
     methods: [GET]
     defaults:
         _controller: sylius.controller.order:billingAction
+
+enhavo_shop_order_packing_slip:
+    options:
+        expose: true
+    path: /enhavo/shop/order/{id}/packing-slip.pdf
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order:packingSlipAction
