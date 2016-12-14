@@ -105,5 +105,5 @@
     path: /{{ app_url }}/{{ resource_url }}/move-to-page/{id}/{page}/{top}
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveDownAction
+        _controller: {{ app }}.controller.{{ resource }}:moveToPageAction
 {% endif %}
