@@ -65,7 +65,7 @@ Also you can define the type and template individually. Do it as follows
                             - group3
                 strategy:
                     type: accept
-                ype: enhavo_newsletter_subscribe
+                type: enhavo_newsletter_subscribe
                 template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
 The form name "default" is already in use and defines type: enhavo_newsletter_subscribe and template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig as default - of course you can change these values, e.g.
