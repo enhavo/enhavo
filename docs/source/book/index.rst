@@ -71,3 +71,4 @@ Book
 * **Newsletter**
 
   * :doc:`/book/newsletter/cr_config`
+  * :doc:`/book/newsletter/general_config`
