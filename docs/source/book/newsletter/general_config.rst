@@ -16,7 +16,7 @@ If you want to use Clever Reach, put the following statement in your app/config/
 
     enhavo_newsletter:
         storage:
-        	default: cleverreach
+            default: cleverreach
 
 Default Groups
 ----
@@ -28,11 +28,11 @@ To set default groups use the following example
 
     enhavo_newsletter:
         storage:
-        	groups:
-        		defaults:
-        			- group1
-        			- group2
-        			- ..
+            groups:
+                defaults:
+                    - group1
+                    - group2
+                    - ..
 
 Default Strategy
 ----
@@ -45,7 +45,7 @@ To set another default strategy use this statement
 
     enhavo_newsletter:
         strategy:
-        	default: double_opt_in
+            default: double_opt_in
 
 Individual Form Settings
 ----
@@ -57,16 +57,16 @@ Also you can define the type and template individually. Do it as follows
 
     enhavo_newsletter:
         forms:
-        	<form_name>:
-        		storage: 
-        			type: local
-        			options:
-        				groups:
-        					- group3
-				strategy:
-					type: accept
-				type: enhavo_newsletter_subscribe
-				template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
+            <form_name>:
+                storage: 
+                    type: local
+                    options:
+                        groups:
+                            - group3
+                strategy:
+                    type: accept
+                ype: enhavo_newsletter_subscribe
+                template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
 The form name "default" is already in use and defines type: enhavo_newsletter_subscribe and template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig as default - of course you can change these values, e.g.
 
@@ -74,6 +74,6 @@ The form name "default" is already in use and defines type: enhavo_newsletter_su
 
     enhavo_newsletter:
         forms:
-        	default:
-        		type: <your_type>
-				template: <your_template>
+            default:
+                type: <your_type>
+                template: <your_template>
