@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ShopBundle\Twig;
+namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 class Currency extends \Twig_Extension

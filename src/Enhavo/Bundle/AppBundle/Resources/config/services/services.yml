@@ -66,3 +66,10 @@ services:
 
     enhavo_app.formatter.currency_formatter:
         class: Enhavo\Bundle\AppBundle\Formatter\CurrencyFormatter
+
+    enhavo_shop.twig.currency:
+        class: Enhavo\Bundle\AppBundle\Twig\Currency
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }

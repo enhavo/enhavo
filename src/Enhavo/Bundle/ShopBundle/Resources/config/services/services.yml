@@ -69,13 +69,6 @@ services:
     sylius.invoice_number_generator:
         class: Enhavo\Bundle\ShopBundle\Document\InvoiceNumberGenerator
 
-    enhavo_shop.twig.currency:
-        class: Enhavo\Bundle\ShopBundle\Twig\Currency
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: twig.extension }
-
     enhavo_shop.twig.country:
         class: Enhavo\Bundle\ShopBundle\Twig\Country
         tags:
