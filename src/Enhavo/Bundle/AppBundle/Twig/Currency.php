@@ -32,10 +32,10 @@ class Currency extends \Twig_Extension
         );
     }
 
-    public function getCurrency($value)
+    public function getCurrency($value, $currency = 'Euro', $position = 'right')
     {
         $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
-        return $currencyFormatter->getCurrency($value);
+        return $currencyFormatter->getCurrency($value, $currency, $position);
     }
 
     public function getName()
