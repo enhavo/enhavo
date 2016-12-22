@@ -36,6 +36,7 @@ order:
     address: Adresse
     payment: Bezahlung
     billing: Rechnung
+    packing_slip: Lieferschein
 
   form:
     label:

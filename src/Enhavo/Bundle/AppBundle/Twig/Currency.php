@@ -6,10 +6,18 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ShopBundle\Twig;
+namespace Enhavo\Bundle\AppBundle\Twig;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 class Currency extends \Twig_Extension
 {
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     public function getFunctions()
     {
         return array(
@@ -24,14 +32,10 @@ class Currency extends \Twig_Extension
         );
     }
 
-    public function getCurrency($value)
+    public function getCurrency($value, $currency = 'Euro', $position = 'right')
     {
-        $string = (string)$value;
-        $string = str_pad($string, 3, '0', STR_PAD_LEFT);
-        $length = strlen($string);
-        $right = substr($string, $length - 2, 2 );
-        $left = substr($string, 0, $length - 2);
-        return sprintf('%s,%s &euro;', $left, $right);
+        $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
+        return $currencyFormatter->getCurrency($value, $currency, $position);
     }
 
     public function getName()

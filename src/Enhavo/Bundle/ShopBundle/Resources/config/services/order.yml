@@ -171,7 +171,12 @@ services:
     enhavo_shop.document.billing_generator:
         class: Enhavo\Bundle\ShopBundle\Document\BillingGenerator
         arguments:
-            - '@kernel'
+            - '@service_container'
+
+    enhavo_shop.document.packing_slip_generator:
+        class: Enhavo\Bundle\ShopBundle\Document\PackingSlipGenerator
+        arguments:
+            - '@service_container'
 
     enhavo_shop.mailer.confirm_mailer:
         class: Enhavo\Bundle\ShopBundle\Mailer\ConfirmMailer

@@ -1,9 +1,9 @@
 <?php
 /**
- * BillingGenerator.php
- *
- * @since 25/09/16
- * @author gseidel
+ * Created by PhpStorm.
+ * User: jenny
+ * Date: 12.12.16
+ * Time: 15:39
  */
 
 namespace Enhavo\Bundle\ShopBundle\Document;
@@ -14,7 +14,7 @@ use Enhavo\Bundle\ShopBundle\Entity\Product;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BillingGenerator implements GeneratorInterface
+class PackingSlipGenerator implements GeneratorInterface
 {
     protected $container;
 
@@ -22,13 +22,13 @@ class BillingGenerator implements GeneratorInterface
     {
         $this->container = $container;
     }
-    
+
     public function generate(OrderInterface $order, $options = [])
     {
         $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
 
         $pdf = new BaseDocument();
-        $pdf->setTitle("Rechnung");
+        $pdf->setTitle("Lieferschein");
 
         /**
          * @var OrderItem[] $items
@@ -74,7 +74,7 @@ class BillingGenerator implements GeneratorInterface
             if($order->getState() == "cancelled") {
                 $subject = "Stornierung zu Rechnung " . $order->getNumber();
             } else {
-                $subject = "Rechnung";
+                $subject = "Lieferschein";
             }
 
 
@@ -253,6 +253,6 @@ class BillingGenerator implements GeneratorInterface
 
     public function generateName(OrderInterface $order, $options = [])
     {
-        return sprintf('billing-%s.pdf', $order->getNumber());
+        return sprintf('packing-slip-%s.pdf', $order->getNumber());
     }
 }

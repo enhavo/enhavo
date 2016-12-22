@@ -68,6 +68,23 @@ class OrderController extends ResourceController
         return $response;
     }
 
+    public function packingSlipAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $order = $this->singleResourceProvider->get($configuration, $this->repository);
+        $documentManager = $this->get('enhavo_shop.document.manager');
+        $response = new Response();
+
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set(
+            'Content-Disposition',
+            sprintf('attachment; filename="%s"', $documentManager->generatePackingSlipName($order))
+        );
+
+        $response->setContent($documentManager->generatePackingSlip($order));
+        return $response;
+    }
+
     private function getOrder(RequestConfiguration $configuration)
     {
         /** @var OrderInterface $order */

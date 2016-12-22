@@ -36,6 +36,7 @@ order:
     address: Address
     payment: Payment
     billing: Bill
+    packing_slip: Packing Slip
 
   form:
     label:
