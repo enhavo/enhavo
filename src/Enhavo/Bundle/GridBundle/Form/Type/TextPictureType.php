@@ -7,6 +7,7 @@
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\GridBundle\Entity\TextPicture;
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,8 +44,8 @@ class TextPictureType extends ItemFormType
             'label' => 'textPicture.form.label.position',
             'translation_domain' => 'EnhavoGridBundle',
             'choices' => array(
-                BooleanType::VALUE_TRUE => 'textPicture.form.label.text_left-picture_right',
-                BooleanType::VALUE_FALSE => 'textPicture.form.label.picture_left-text_right'
+                BooleanType::VALUE_FALSE => 'textPicture.form.label.picture_left-text_right',
+                BooleanType::VALUE_TRUE => 'textPicture.form.label.text_left-picture_right'
             ),
             'expanded' => true,
             'multiple' => false
@@ -53,6 +54,18 @@ class TextPictureType extends ItemFormType
         $builder->add('float', 'enhavo_boolean', array(
             'label' => 'textPicture.form.label.float',
             'translation_domain' => 'EnhavoGridBundle'
+        ));
+
+        $builder->add('layout', 'choice', array(
+            'label' => 'textText.form.label.layout',
+            'translation_domain' => 'EnhavoGridBundle',
+            'choices'   => array(
+                TextPicture::LAYOUT_1_1 => 'textPicture.form.label.1_1',
+                TextPicture::LAYOUT_1_2 => 'textPicture.form.label.1_2',
+                TextPicture::LAYOUT_2_1 => 'textPicture.form.label.2_1'
+            ),
+            'expanded' => true,
+            'multiple' => false
         ));
     }
 

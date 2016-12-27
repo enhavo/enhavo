@@ -13,6 +13,17 @@ use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 
 class TextPictureFactory extends AbstractItemFactory
 {
+    public function create()
+    {
+        /** @var TextPicture $data */
+        $data = parent::create();
+        $data->setLayout(TextPicture::LAYOUT_1_1);
+        $data->setFloat(false);
+        $data->setTextLeft(false);
+
+        return $data;
+    }
+
     public function duplicate(ItemTypeInterface $original)
     {
         /** @var TextPicture $data */
