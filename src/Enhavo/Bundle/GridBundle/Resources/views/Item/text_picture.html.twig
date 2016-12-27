@@ -1,8 +1,8 @@
 {% import _self as element %}
 
-{% macro text(data) %}
+{% macro text(data, layout = 0) %}
     {% import _self as element %}
-    <div class="{% if data.float %}col-sm-12{% else %}col-sm-6 right6{% endif %}">
+    <div class="{% if not data.float %}{% if layout == 0 %}col-md-6{% endif %}{% if layout == 1 %}col-md-3{% endif %}{% if layout == 2 %}col-md-9{% endif %}{% endif %}">
         <div class="enhavo_grid_text">
             {% if data.title %}
                 <h2 class="title">{{ data.title }}</h2>
@@ -17,8 +17,8 @@
     </div>
 {% endmacro %}
 
-{% macro picture(data) %}
-    <div class="picture_container {% if not data.float %}col-sm-6 right6{% endif %}">
+{% macro picture(data, layout = 0) %}
+    <div class="picture_container {% if not data.float %}{% if layout == 0 %}col-md-6{% endif %}{% if layout == 1 %}col-md-3{% endif %}{% if layout == 2 %}col-md-9{% endif %}{% endif %}">
         {% if data.file %}
             <img class="enhavo_grid_img" src="{{ media_url(data.file, 960) }}">
         {% endif %}
@@ -35,11 +35,11 @@
             {{ element.text(data) }}
         {% else %}
             {% if data.textLeft %}
-                {{ element.text(data) }}
-                {{ element.picture(data) }}
+                {{ element.text(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
+                {{ element.picture(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
             {% else %}
-                {{ element.picture(data) }}
-                {{ element.text(data) }}
+                {{ element.picture(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
+                {{ element.text(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
             {% endif %}
         {% endif %}
     </div>

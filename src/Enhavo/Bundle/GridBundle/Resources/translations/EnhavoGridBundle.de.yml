@@ -23,6 +23,9 @@ textPicture:
       text_left-picture_right: 'Text | Bild'
       float: 'Text umfließen'
       caption: 'BU'
+      1_1: '1:1'
+      1_2: '1:2'
+      2_1: '2:1'
   label:
     textPicture: 'Text | Bild'
 picture:

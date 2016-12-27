@@ -41,7 +41,7 @@ picturePicture:
   label:
     picturePicture: 'Picture | Picture'
     caption: 'Caption'
-treePicture:
+threePicture:
   form:
     label:
       title_left: 'Title left'

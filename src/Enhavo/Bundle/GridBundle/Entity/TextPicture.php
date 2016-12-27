@@ -12,6 +12,10 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class TextPicture implements ItemTypeInterface
 {
+    const LAYOUT_1_1 = 0;
+    const LAYOUT_1_2 = 1;
+    const LAYOUT_2_1 = 2;
+
     /**
      * @var integer
      */
@@ -37,7 +41,6 @@ class TextPicture implements ItemTypeInterface
      */
     protected $file;
 
-
     /**
      * @var boolean
      */
@@ -47,6 +50,11 @@ class TextPicture implements ItemTypeInterface
      * @var string
      */
     private $caption;
+
+    /**
+     * @var integer
+     */
+    protected $layout;
 
     /**
      * Get id
@@ -199,5 +207,21 @@ class TextPicture implements ItemTypeInterface
     public function getCaption()
     {
         return $this->caption;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param int $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
     }
 }
