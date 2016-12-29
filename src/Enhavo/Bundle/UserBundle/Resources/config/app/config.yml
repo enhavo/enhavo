@@ -10,3 +10,13 @@ fos_user:
     user_class: Enhavo\Bundle\UserBundle\Entity\User
     group:
         group_class: Enhavo\Bundle\UserBundle\Entity\Group
+    resetting:
+        email:
+            from_email:
+                address: '%mailer_from%'
+                sender_name: '%mailer_name%'
+    registration:
+        confirmation:
+            from_email:
+                address: '%mailer_from%'
+                sender_name: '%mailer_name%'
