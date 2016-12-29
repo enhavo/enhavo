@@ -79,9 +79,6 @@ class SubscriberController extends ResourceController
         $form = $this->get('form.factory')->create($configFromYml[$request->get('type')]['type'], $subscriber);
         $form->handleRequest($request);
 
-        $event = new PreValidationEvent($subscriber, $request->get('type'));
-        $this->get('event_dispatcher')->dispatch(NewsletterEvents::EVENT_PREVALIDATION, $event);
-
         if($form->isValid()) {
             if(!$this->getSubscriberManager()->exists($subscriber, $request->get('type'))) {
                 $event = new SubscriberEvent($subscriber, $request->get('type'));

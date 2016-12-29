@@ -3,3 +3,9 @@ enhavo_assets:
         paths:
             newsletter:
                 location: /bundles/enhavonewsletter/js
+
+enhavo_newsletter:
+    forms:
+        default:
+            type: enhavo_newsletter_subscribe
+            template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
