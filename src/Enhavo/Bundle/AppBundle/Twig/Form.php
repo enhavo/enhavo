@@ -44,7 +44,8 @@ class Form extends \Twig_Extension
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            return $this->formErrorResolver->getErrors($form, $translationDomain);
+            $errors = $this->formErrorResolver->getErrors($form, $translationDomain);
+            return $errors;
         }
         return [];
     }

@@ -25,30 +25,28 @@ class FormErrorResolver {
 
     /**
      * @param FormInterface $form
-     * @param string $translationDomain
      * @return array
      */
-    public function getErrors(FormInterface $form, $translationDomain = null)
+    public function getErrors(FormInterface $form)
     {
-        return $this->getErrorMessages($form, $translationDomain);
+        return $this->getErrorMessages($form);
     }
 
     /**
      * @param FormInterface $form
-     * @param string $translationDomain
      * @return array
      */
-    protected function getErrorMessages(FormInterface $form, $translationDomain = null)
+    protected function getErrorMessages(FormInterface $form)
     {
         $errors = array();
 
         foreach ($form->getErrors() as $key => $error) {
-            $errors[] = $this->translator->trans($error->getMessage(), [], $translationDomain);
+            $errors[] = $error;
         }
 
         foreach ($form->all() as $child) {
             if (!$child->isValid()) {
-                $childErrors = $this->getErrorMessages($child, $translationDomain);
+                $childErrors = $this->getErrorMessages($child);
                 foreach($childErrors as $childError) {
                     $errors[] = $childError;
                 }

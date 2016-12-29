@@ -46,7 +46,9 @@ class FilesType extends AbstractType
                             $file->setFilename($formFile['filename']);
                             $file->setSlug($formFile['slug']);
                             $file->setOrder($formFile['order']);
-                            $file->setParameters($formFile['parameters']);
+                            if(isset($formFile['parameters'])) {
+                                $file->setParameters($formFile['parameters']);
+                            }
                             $file->setGarbage(false);
                             $collection->add($file);
                         }
@@ -55,7 +57,9 @@ class FilesType extends AbstractType
                         $file->setFilename($data['filename']);
                         $file->setSlug($data['slug']);
                         $file->setOrder($data['order']);
-                        $file->setParameters($data['parameters']);
+                        if(isset($formFile['parameters'])) {
+                            $file->setParameters($formFile['parameters']);
+                        }
                         $file->setGarbage(false);
                         $collection->add($file);
                     }
