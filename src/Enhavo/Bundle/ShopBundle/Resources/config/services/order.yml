@@ -22,11 +22,16 @@ services:
         arguments:
             - '@sylius.cart_provider'
             - '@enhavo_shop.mailer.confirm_mailer'
+            - '@enhavo_shop.order.number_generator'
+
+    enhavo_shop.order.number_generator:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderNumberGenerator
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
     enhavo.order_processing.init_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderInitProcessor
         arguments:
-            - '@sylius.repository.order'
             - '@enhavo.token_generator'
             - '@security.token_storage'
 

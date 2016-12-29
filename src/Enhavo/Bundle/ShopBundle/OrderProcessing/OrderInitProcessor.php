@@ -11,18 +11,12 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\User\Security\Generator\TokenGenerator;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class OrderInitProcessor implements ProcessorInterface
 {
-    /**
-     * @var RepositoryInterface
-     */
-    private $orderRepository;
-
     /**
      * @var TokenGenerator
      */
@@ -33,9 +27,8 @@ class OrderInitProcessor implements ProcessorInterface
      */
     private $tokenStorage;
 
-    public function __construct(RepositoryInterface $orderRepository, TokenGenerator $tokenGenerator, TokenStorage $tokenStorage)
+    public function __construct(TokenGenerator $tokenGenerator, TokenStorage $tokenStorage)
     {
-        $this->orderRepository = $orderRepository;
         $this->tokenGenerator = $tokenGenerator;
         $this->tokenStorage = $tokenStorage;
     }
@@ -45,30 +38,9 @@ class OrderInitProcessor implements ProcessorInterface
         $order->setCheckoutState(OrderCheckoutStates::STATE_CART);
         $order->setUser($this->getUser());
 
-        if($order->getNumber() === null) {
-            $order->setNumber($this->generateNumber());
-        }
-
         if($order->getToken() === null) {
             $order->setToken($this->tokenGenerator->generate(40));
         }
-    }
-
-    private function generateNumber()
-    {
-        /** @var OrderInterface[] $orders */
-        $orders = $this->orderRepository->findBy([], [
-            'createdAt' => 'DESC'
-        ], 1);
-
-        if(count($orders)) {
-            $number = $orders[0]->getNumber();
-            if($number !== null) {
-                $number++;
-                return $number;
-            }
-        }
-        return 1;
     }
 
     private function getUser()
