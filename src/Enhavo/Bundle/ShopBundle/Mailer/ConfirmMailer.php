@@ -40,6 +40,6 @@ class ConfirmMailer extends AbstractMailer
      */
     protected function getBillingGenerator()
     {
-        return $this->container->get('enhavo_shop.document.billing_generator');
+        return $this->container->get($this->container->getParameter('enhavo_shop.document.billing')['generator']);
     }
 }
