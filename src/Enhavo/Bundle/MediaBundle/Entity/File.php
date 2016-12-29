@@ -237,7 +237,11 @@ class File implements FileInterface
      */
     public function setParameters($parameters)
     {
-        $this->parameters = $parameters;
+        if(is_array($this->parameters) && is_array($parameters)) {
+            $this->parameters = array_merge($this->parameters, $parameters);
+        } else {
+            $this->parameters = $parameters;
+        }
         return $this;
     }
 

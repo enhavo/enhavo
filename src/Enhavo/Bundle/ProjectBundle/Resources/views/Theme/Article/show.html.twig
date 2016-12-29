@@ -4,19 +4,18 @@
 
 {% block main %}
     <section id="article">
-            <article>
-                <div class="article-head">
-                    <div class="container npb">
-                        <h1 class="article-title">{{ article.title }}</h1>
-                        {% for category in article.categories %}
-                            <p class="category capitals spacing">{{ category }}</p>
-                        {% endfor %}
-                        <a href="/" class="back-to-blog"><i class="icon-forward"></i></a>
-                    </div>
+        <article>
+            <div class="article-head">
+                <div class="container npb">
+                    <h1 class="article-title">{{ article.title }}</h1>
+                    {% for category in article.categories %}
+                        <p class="category capitals spacing">{{ category }}</p>
+                    {% endfor %}
+                    <a href="/" class="back-to-blog"><i class="icon-forward"></i></a>
                 </div>
-                {{ grid_render(article.grid) }}
-            </article>
-        </div>
+            </div>
+            {{ grid_render(article.grid) }}
+        </article>
     </section>
     <div class="article-footer">
         <div class="container">
