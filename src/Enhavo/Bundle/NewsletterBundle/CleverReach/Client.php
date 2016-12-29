@@ -10,10 +10,13 @@ namespace Enhavo\Bundle\NewsletterBundle\CleverReach;
 
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
+use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use GuzzleHttp\Exception\ClientException;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Client
 {
@@ -23,13 +26,18 @@ class Client
     protected $credentials;
     protected $defaultGroupNames;
     protected $groupMapping;
+    /**
+     * @var EventDispatcher
+     */
+    protected $eventDispatcher;
 
-    public function __construct($credentials, $defaultGroupNames, $groupMapping)
+    public function __construct($credentials, $defaultGroupNames, $groupMapping, $eventDispatcher)
     {
         $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => Client::REST_BASE_URI]);
         $this->credentials = $credentials;
         $this->defaultGroupNames = $defaultGroupNames;
         $this->groupMapping = $groupMapping;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -45,9 +53,15 @@ class Client
             'postdata' => [
                 [
                     'email' => $subscriber->getEmail()
-                ],
-            ],
+                ]
+            ]
         ];
+
+        $event = new CleverReachEvent($subscriber, $data);
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CLEVERREACH_PRE_SEND, $event);
+        if($event->getDataArray()){
+            $data = $event->getDataArray();
+        }
 
         /** @var Group $group */
         foreach ($groups as $group) {

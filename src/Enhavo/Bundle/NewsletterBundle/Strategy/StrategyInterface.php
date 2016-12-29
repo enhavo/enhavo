@@ -18,7 +18,7 @@ interface StrategyInterface extends TypeInterface
     /**
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber, $groupNames);
+    public function exists(SubscriberInterface $subscriber, $type);
 
     /**
      * @return string

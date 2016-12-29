@@ -30,6 +30,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
             type: string
             lenght: 255
             nullable: true
+
     manyToMany:
         group:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Group
