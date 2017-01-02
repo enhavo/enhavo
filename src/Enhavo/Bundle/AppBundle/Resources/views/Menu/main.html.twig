@@ -8,7 +8,7 @@
     {% trans_default_domain translationDomain %}
     {% if menu.isDisplayed %}
         <li class="{% if menu.isCurrent() %}selected{% endif %}">
-            <a href="{{ menu.uri }}" class="{{ menu.attribute('class') }} icon-{{ menu.icon }}">
+            <a href="{{ menu.uri }}" class="{{ menu.attribute('class') }} icon-{{ menu.icon }}" title="{{ menu.label|trans|nl2br }}">
               <span>{{ menu.label|trans|nl2br }}</span>
             </a>
         </li>

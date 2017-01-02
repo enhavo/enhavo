@@ -45,12 +45,15 @@ img {max-width:100%;}
 
 h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;margin-left: -10px;text-align: left;}
 
-#menu-main{width: 230px;height: auto;}
-#menu-main-container .desc {font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 0 0 15px; margin-top:25px;}
+#menu-main{width: 245px;height: auto;}
+#menu-main-container .desc {font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 0 0 20px; margin-top:25px;}
 #menu-main-container .desc a{color: #FFF;}
-#menu-main-container .menu-logo{width: 155px;position: relative;left: 50%;margin-left: -85px;margin-bottom: 15px;margin-top: 40px;}
+#menu-main-container .menu-logo{width: 155px;position: relative;left:13px;margin-bottom: 15px;margin-top: 40px;}
 
-#menu-main li a {text-transform: uppercase;font-weight: 600;letter-spacing: 1px;display:block;padding: 10px 40px 10px 40px;background-position:156px 10px;background-repeat:no-repeat;color:#a8b2b4;text-align:left;font-size: 12px;}
+#menu-main li a {
+    text-transform: uppercase;font-weight: 600;letter-spacing: 1px;display:block;padding: 10px 20px 10px 20px;
+    background-position:156px 10px;background-repeat:no-repeat;color:#a8b2b4;text-align:left;font-size: 12px;white-space:nowrap;text-overflow:ellipsis; overflow:hidden;
+}
 #menu-main li.selected{background: #20383f;}
 #menu-main li a:hover,
 #menu-main li.selected a {color:#fff;;filter:none;}
@@ -405,24 +408,21 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 
 
 @media all and (max-width:1250px){
-    #menu-main-container{width: 20%;min-width: 160px;}
-    #menu-main{width: 100%;}
-    #content-container{width: 80%;padding: 60px 30px;margin-left: 20%;}
+    //#menu-main-container{width: 20%;min-width: 160px;}
+    //#menu-main{width: 100%;}
+    #content-container{width: calc(100% - 245px);padding: 60px 30px;margin-left: 245px;}
 }
 
 @media all and (max-width:1024px) {
-    #menu-main-container {width: 25%;}
-    #content-container{width: 75%;margin-left: 25%;}
     .container{width: 100%}
     #overlayContent .container {padding: 0 60px 10px 60px;}
     .tabContentContainer {padding: 50px 20px 50px 20px;}
     .batch-actions-wrapper { width:100%;}
     .tabContainer a span{padding: 10px 25px;display: inline-block;}
+    .tabContainer a:after { right:-20px;}
 }
 
 @media all and (max-width:991px) {
-    #menu-main li a{padding: 10px 40px 10px 20px;}
-    #menu-main-container .menu-logo { left:13px; margin-left:0;}
     #overlayContent .form-container form > .row:last-of-type{padding: 25px 20px;}
     .formwidget-container .enhavo_gridForm .menu { margin-left:0;}
     .formwidget-container .enhavo_gridForm .menu .triangle-up { margin-left:0; left:9px;}
@@ -431,7 +431,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 @media all and (max-width:767px) {
-    #menu-main-container {width: 200px;margin-left: -200px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
+    #menu-main-container {width: 245px;margin-left: -245px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
     #content-container{width: 100%;margin-left: 0;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 
     .responsive-menu-btn{cursor: pointer;z-index: 1;position: absolute;left: 20px;padding: 19px 0;}
@@ -452,7 +452,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     #user-menu.background { background:#FFF;}
 
     #menu-main-container.active{margin-left: 0;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
-    #content-container.push, .responsive-menu-btn.push{margin-left: 200px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
+    #content-container.push, .responsive-menu-btn.push{margin-left: 245px;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
     .btn{width:100%;}
     .label-container {padding: 0px 5px 2px 5px;}
     .label-container label {margin-left: 5px;display: inline-block;}
