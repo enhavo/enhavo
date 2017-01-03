@@ -9,6 +9,9 @@
 namespace Enhavo\Bundle\NewsletterBundle\Form;
 
 
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use ProjectBundle\Entity\Subscriber;
+
 class Resolver
 {
     private $formConfig;
@@ -37,14 +40,26 @@ class Resolver
         return null;
     }
 
-    public function resolveGroups($formType)
+    public function resolveGroupNames($formType, $subscriber = null)
     {
         if (isset($this->formConfig[$formType]['storage']['options']['groups'])) {
             $formGroups = $this->formConfig[$formType]['storage']['options']['groups'];
         } else {
             $formGroups = [];
         }
-        return $this->mergeArrays($this->defaultGroups, $formGroups);
+        $groupsFromYml = $this->mergeArrays($this->defaultGroups, $formGroups);
+
+        /** @var $subscriber Subscriber */
+        $groupNamesFromSubscriber = [];
+        if ($subscriber !== null) {
+            $groupsFromSubscriber = $subscriber->getGroup();
+            /** @var Group $group */
+            foreach ($groupsFromSubscriber as $group){
+                $groupNamesFromSubscriber[] = $group->getName();
+            }
+        }
+
+        return $this->mergeArrays($groupNamesFromSubscriber, $groupsFromYml);
     }
 
     protected function mergeArrays($array, $arrayToAdd) {

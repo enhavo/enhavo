@@ -38,7 +38,7 @@ class LocalStorage implements StorageInterface
         $this->manager->flush();
     }
 
-    public function exists(SubscriberInterface $subscriber, $groupNames)
+    public function exists(SubscriberInterface $subscriber, $groupNames = [])
     {
         // subscriber has to be in ALL given groups to return true
 

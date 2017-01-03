@@ -8,8 +8,11 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
+use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 
 class AcceptStrategy extends AbstractStrategy
 {
@@ -18,10 +21,22 @@ class AcceptStrategy extends AbstractStrategy
      */
     private $localStorage;
 
-    public function __construct($options, LocalStorage $localStorage)
+    /**
+     * @var StorageResolver
+     */
+    private $storageResolver;
+
+    /**
+     * @var Resolver
+     */
+    private $formResolver;
+
+    public function __construct($options, LocalStorage $localStorage, $storageResolver, $formResolver)
     {
         parent::__construct($options);
         $this->localStorage = $localStorage;
+        $this->storageResolver = $storageResolver;
+        $this->formResolver = $formResolver;
     }
 
     public function addSubscriber(SubscriberInterface $subscriber, $type = null)
@@ -83,9 +98,15 @@ class AcceptStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, $groupNames)
+    public function exists(SubscriberInterface $subscriber, $type)
     {
-        return $this->localStorage->exists($subscriber, $groupNames) || $this->getSubscriberManager()->getStorage()->exists($subscriber, $groupNames);
+        /** @var StorageInterface $storage */
+        $storage = $this->storageResolver->resolve($type);
+        $groupNames = $this->formResolver->resolveGroupNames($type, $subscriber);
+        if($storage instanceof LocalStorage){
+            return $this->localStorage->exists($subscriber, $groupNames);
+        }
+        return $this->localStorage->exists($subscriber, $groupNames) || $storage->exists($subscriber, $groupNames);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

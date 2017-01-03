@@ -9,10 +9,30 @@
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 
+use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 
 class NotifyStrategy extends AbstractStrategy
 {
+    /**
+     * @var StorageResolver
+     */
+    private $storageResolver;
+
+    /**
+     * @var Resolver
+     */
+    private $formResolver;
+
+    public function __construct($options, $storageResolver, $formResolver)
+    {
+        parent::__construct($options);
+        $this->storageResolver = $storageResolver;
+        $this->formResolver = $formResolver;
+    }
+
     public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
         $subscriber->setCreatedAt(new \DateTime());
@@ -61,9 +81,12 @@ class NotifyStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, $groupNames)
+    public function exists(SubscriberInterface $subscriber, $type)
     {
-        return $this->getSubscriberManager()->getStorage()->exists($subscriber, $groupNames);
+        /** @var StorageInterface $storage */
+        $storage = $this->storageResolver->resolve($type);
+        $groupNames = $this->formResolver->resolveGroupNames($type, $subscriber);
+        return $storage->exists($subscriber, $groupNames);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

@@ -135,7 +135,7 @@ class SubscriberManager
         } else {
             $strategy = $this->strategyResolver->resolve($type);
         }
-        return $strategy->exists($subscriber, $this->formResolver->resolveGroups($type));
+        return $strategy->exists($subscriber, $type);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

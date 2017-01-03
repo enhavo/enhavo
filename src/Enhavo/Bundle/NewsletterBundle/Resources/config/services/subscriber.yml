@@ -49,6 +49,8 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
         arguments:
             - '%enhavo_newsletter.strategy.notify.settings%'
+            - '@enhavo_newsletter.storage_resolver'
+            - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -59,6 +61,8 @@ services:
         arguments:
             - '%enhavo_newsletter.strategy.double_opt_in.settings%'
             - '@enhavo_newsletter.storage.local'
+            - '@enhavo_newsletter.storage_resolver'
+            - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -69,7 +73,19 @@ services:
         arguments:
             - '%enhavo_newsletter.strategy.accept.settings%'
             - '@enhavo_newsletter.storage.local'
+            - '@enhavo_newsletter.storage_resolver'
+            - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: accept }
+
+
+    enhavo_newsletter.extend_listener.subscriber:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            - '%enhavo_newsletter.model.subscriber.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

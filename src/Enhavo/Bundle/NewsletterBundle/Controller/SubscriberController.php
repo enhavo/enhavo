@@ -8,6 +8,7 @@ use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy;
 use Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy;
+use ProjectBundle\Event\PreValidationEvent;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -76,8 +77,8 @@ class SubscriberController extends ResourceController
         $subscriber = $this->newResourceFactory->create($configuration, $this->factory);
         $configFromYml = $this->getParameter('enhavo_newsletter.forms');
         $form = $this->get('form.factory')->create($configFromYml[$request->get('type')]['type'], $subscriber);
-
         $form->handleRequest($request);
+
         if($form->isValid()) {
             if(!$this->getSubscriberManager()->exists($subscriber, $request->get('type'))) {
                 $event = new SubscriberEvent($subscriber, $request->get('type'));

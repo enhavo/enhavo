@@ -27,6 +27,7 @@ services:
             - '%enhavo_newsletter.cleverreach.credentials%'
             - '%enhavo_newsletter.defaultgroups%'
             - '%enhavo_newsletter.cleverreach.mapping%'
+            - '@event_dispatcher'
 
     enhavo_newsletter.add_subscriber_listener:
         class: Enhavo\Bundle\NewsletterBundle\EventListener\AddSubscriberListener
@@ -56,3 +57,7 @@ services:
         arguments:
             - '%enhavo_newsletter.forms%'
             - '%enhavo_newsletter.defaultgroups%'
+
+    enhavo_newsletter.event.cleverreach_pre_send:
+            class: Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent
+            arguments:

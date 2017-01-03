@@ -27,3 +27,4 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
+
