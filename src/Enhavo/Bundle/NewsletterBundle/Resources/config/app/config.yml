@@ -4,7 +4,19 @@ enhavo_assets:
             newsletter:
                 location: /bundles/enhavonewsletter/js
 
+
 enhavo_newsletter:
+    strategy:
+        settings:
+            notify:
+                from: '%mailer_from%'
+                admin_email: '%mailer_to%'
+            accept:
+                from: '%mailer_from%'
+                admin_email: '%mailer_to%'
+            double_opt_in:
+                from: '%mailer_from%'
+                admin_email: '%mailer_to%'
     forms:
         default:
             type: enhavo_newsletter_subscribe

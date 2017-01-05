@@ -70,5 +70,6 @@ Book
 
 * **Newsletter**
 
-  * :doc:`/book/newsletter/cr_config`
   * :doc:`/book/newsletter/general_config`
+  * :doc:`/book/newsletter/strategies`
+  * :doc:`/book/newsletter/storages`
