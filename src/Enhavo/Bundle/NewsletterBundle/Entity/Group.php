@@ -27,6 +27,16 @@ class Group
     private $subscriber;
 
     /**
+     * @var string
+     */
+    private $code;
+
+    /**
+     * @var string
+     */
+    private $condition;
+    
+    /**
      * @return string
      */
     public function getName()
@@ -57,11 +67,6 @@ class Group
     {
         $this->id = $id;
     }
-
-    /**
-     * @var string
-     */
-    private $condition;
 
     /**
      * Constructor
@@ -125,5 +130,21 @@ class Group
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 }

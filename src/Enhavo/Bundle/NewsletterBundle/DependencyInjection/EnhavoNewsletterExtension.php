@@ -73,22 +73,22 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
 
     private function setStorageSettings(array $config, ContainerBuilder $container)
     {
-        if(isset($config['strategy']['settings']['notify'])){
-            $container->setParameter('enhavo_newsletter.strategy.notify.settings', $config['strategy']['settings']['notify']);
+        if(isset($config['storage']['groups']['defaults'])){
+            $container->setParameter('enhavo_newsletter.default_groups', $config['storage']['groups']['defaults']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.notify.settings', []);
+            $container->setParameter('enhavo_newsletter.default_groups', []);
         }
 
-        if(isset($config['strategy']['settings']['accept'])) {
-            $container->setParameter('enhavo_newsletter.strategy.accept.settings', $config['strategy']['settings']['accept']);
+        if(isset($config['storage']['settings']['cleverreach']['credentials'])) {
+            $container->setParameter('enhavo_newsletter.cleverreach.credentials', $config['storage']['settings']['cleverreach']['credentials']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.accept.settings', []);
+            $container->setParameter('enhavo_newsletter.cleverreach.credentials', []);
         }
 
-        if(isset($config['strategy']['settings']['double_opt_in'])) {
-            $container->setParameter('enhavo_newsletter.strategy.double_opt_in.settings', $config['strategy']['settings']['double_opt_in']);
+        if(isset($config['storage']['settings']['cleverreach']['groups']['mapping'])){
+            $container->setParameter('enhavo_newsletter.cleverreach.mapping', $config['storage']['settings']['cleverreach']['groups']['mapping']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.double_opt_in.settings', []);
+            $container->setParameter('enhavo_newsletter.cleverreach.mapping', []);
         }
     }
 }

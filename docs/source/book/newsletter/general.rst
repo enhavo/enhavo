@@ -1,10 +1,16 @@
-General Configuration
-====
+General
+=======
 
 Overview
 ----
 
 With enhavo you are able to set global values for your storage and strategy. Additionally you can define these values for every newsletter subscription form individually. You are able to set one or more group for every subscriber globally and add additional groups per subscription form.
+
+
+Workflow
+--------
+
+.. image:: ../../_static/image/newsletter_workflow.png
 
 Default Storage Type
 ----

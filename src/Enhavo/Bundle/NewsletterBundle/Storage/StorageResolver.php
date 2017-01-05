@@ -29,6 +29,13 @@ class StorageResolver
      */
     private $defaultStorage;
 
+    /**
+     * StorageResolver constructor.
+     * 
+     * @param $formTypes
+     * @param $storageTypeCollector
+     * @param $defaultStorage
+     */
     public function __construct($formTypes, $storageTypeCollector, $defaultStorage)
     {
         $this->formTypes = $formTypes;

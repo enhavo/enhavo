@@ -25,7 +25,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
         arguments:
             - '%enhavo_newsletter.cleverreach.credentials%'
-            - '%enhavo_newsletter.defaultgroups%'
+            - '%enhavo_newsletter.default_groups%'
             - '%enhavo_newsletter.cleverreach.mapping%'
             - '@event_dispatcher'
 
@@ -33,7 +33,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\EventListener\AddSubscriberListener
         arguments:
             - '%enhavo_newsletter.forms%'
-            - '%enhavo_newsletter.defaultgroups%'
+            - '%enhavo_newsletter.default_groups%'
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_listener, event: newsletter.add_subscriber, method: onAddSubscriber }
@@ -56,8 +56,11 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Form\Resolver
         arguments:
             - '%enhavo_newsletter.forms%'
-            - '%enhavo_newsletter.defaultgroups%'
+            - '%enhavo_newsletter.default_groups%'
 
-    enhavo_newsletter.event.cleverreach_pre_send:
-            class: Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent
-            arguments:
+    enhavo_newsletter.subscriber_exists_validator:
+        class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
+        arguments:
+            - '@enhavo_newsletter.subscriber.manager'
+        tags:
+            - { name: validator.constraint_validator, alias: subscriber_exists }

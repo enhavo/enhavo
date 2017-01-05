@@ -4,7 +4,6 @@ enhavo_assets:
             newsletter:
                 location: /bundles/enhavonewsletter/js
 
-
 enhavo_newsletter:
     strategy:
         settings:

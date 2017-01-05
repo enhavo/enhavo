@@ -113,4 +113,15 @@ interface SubscriberInterface extends ResourceInterface
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroup();
+
+    /**
+     * @param string $type
+     *
+     */
+    public function setType($type);
+
+    /**
+     * @return string
+     */
+    public function getType();
 }

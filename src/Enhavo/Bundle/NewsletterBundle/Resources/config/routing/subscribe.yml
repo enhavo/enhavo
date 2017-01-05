@@ -1,12 +1,12 @@
 enhavo_newsletter_subscribe_activate:
-    pattern: /newsletter/activate/{token}/{type}
+    path: /newsletter/activate/{token}/{type}
     options:
         expose: true
     defaults:
         _controller: enhavo_newsletter.controller.subscriber:activateAction
 
 enhavo_newsletter_subscribe_accept:
-    pattern: /newsletter/accept/{token}/{type}
+    path: /newsletter/accept/{token}/{type}
     options:
         expose: true
     defaults:

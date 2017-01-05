@@ -41,7 +41,6 @@ class LocalStorage implements StorageInterface
     public function exists(SubscriberInterface $subscriber, $groupNames = [])
     {
         // subscriber has to be in ALL given groups to return true
-
         if ($this->getSubscriber($subscriber->getEmail()) === null) {
             return false;
         }

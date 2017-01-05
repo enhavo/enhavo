@@ -46,6 +46,24 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $group;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $condition;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -180,19 +198,6 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     }
 
     /**
-     * @var string
-     */
-    private $condition;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Set condition
      *
      * @param string $condition
@@ -246,5 +251,21 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

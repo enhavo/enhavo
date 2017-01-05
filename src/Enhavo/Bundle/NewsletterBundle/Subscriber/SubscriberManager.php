@@ -15,6 +15,9 @@ use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyInterface;
 use Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver;
+use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
+use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SubscriberManager
 {
@@ -53,6 +56,11 @@ class SubscriberManager
      */
     private $formResolver;
 
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
     public function __construct(
         TypeCollector $strategyTypeCollector,
         $strategy,
@@ -60,7 +68,8 @@ class SubscriberManager
         TypeCollector $storageTypeCollector,
         $storage,
         $storageResolver,
-        $formResolver
+        $formResolver,
+        EventDispatcherInterface $eventDispatcher
     )
     {
         $this->strategyTypeCollector = $strategyTypeCollector;
@@ -70,6 +79,7 @@ class SubscriberManager
         $this->storage = $storage;
         $this->storageResolver = $storageResolver;
         $this->formResolver = $formResolver;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -110,12 +120,21 @@ class SubscriberManager
 
     public function addSubscriber(SubscriberInterface $subscriber, $type = null)
     {
+        $event = new SubscriberEvent($subscriber, $subscriber->getType());
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_ADD_SUBSCRIBER, $event);
+
         if ($type === null) {
             $strategy = $this->getStrategy();
         } else {
             $strategy = $this->strategyResolver->resolve($type);
         }
         return $strategy->addSubscriber($subscriber, $type);
+    }
+
+    public function createSubscriber(SubscriberInterface $subscriber)
+    {
+        $event = new SubscriberEvent($subscriber, $subscriber->getType());
+        $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CREATE_SUBSCRIBER, $event);
     }
 
     public function saveSubscriber(SubscriberInterface $subscriber, $type)
@@ -142,5 +161,10 @@ class SubscriberManager
     {
         $strategy = $this->getStrategy();
         return $strategy->handleExists($subscriber);
+    }
+
+    public function createForm(SubscriberInterface $subscriber)
+    {
+
     }
 }
