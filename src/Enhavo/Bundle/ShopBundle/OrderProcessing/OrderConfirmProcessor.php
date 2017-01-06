@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
-
 use Enhavo\Bundle\ShopBundle\Mailer\MailerInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
+use Enhavo\Bundle\ShopBundle\Order\OrderNumberGeneratorInterface;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\Component\Payment\Model\PaymentInterface;
@@ -29,10 +29,16 @@ class OrderConfirmProcessor implements ProcessorInterface
      */
     protected $confirmMailer;
 
-    public function __construct(CartProviderInterface $cartProvider, MailerInterface $confirmMailer)
+    /**
+     * @var OrderNumberGeneratorInterface
+     */
+    protected $numberGenerator;
+
+    public function __construct(CartProviderInterface $cartProvider, MailerInterface $confirmMailer, OrderNumberGeneratorInterface $numberGenerator)
     {
         $this->cartProvider = $cartProvider;
         $this->confirmMailer = $confirmMailer;
+        $this->numberGenerator = $numberGenerator;
     }
 
     public function process(OrderInterface $order)
@@ -42,6 +48,9 @@ class OrderConfirmProcessor implements ProcessorInterface
         $order->setPaymentState(PaymentInterface::STATE_PENDING);
         $order->setState(OrderInterface::STATE_CONFIRMED);
         $order->setOrderedAt(new \DateTime);
+        if($order->getNumber() === null) {
+            $order->setNumber($this->numberGenerator->generate());
+        }
         $this->confirmMailer->sendMail($order);
         $this->cartProvider->abandonCart();
     }

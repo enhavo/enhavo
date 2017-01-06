@@ -12,5 +12,12 @@ use Sylius\Bundle\OrderBundle\Doctrine\ORM\OrderRepository as SyliusOrderReposit
 
 class OrderRepository extends SyliusOrderRepository
 {
-
+    public function findLastNumber()
+    {
+        $query = $this->createQueryBuilder('n');
+        $query->addSelect('ABS(n.number) AS HIDDEN nr');
+        $query->orderBy('nr', 'DESC');
+        $query->setMaxResults(1);
+        return $query->getQuery()->getResult();
+    }
 }
