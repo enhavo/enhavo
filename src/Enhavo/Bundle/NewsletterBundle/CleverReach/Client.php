@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\CleverReach;
 
-
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Event\CleverReachEvent;
 use Enhavo\Bundle\NewsletterBundle\Event\NewsletterEvents;
@@ -41,13 +40,16 @@ class Client
     }
 
     /**
-     * @param $subscriber SubscriberInterface
+     * @param SubscriberInterface $subscriber
+     * @throws InsertException
+     *
+     * @throws MappingException
      */
-    public function saveSubscriber($subscriber)
+    public function saveSubscriber(SubscriberInterface $subscriber)
     {
         $token = $this->getToken();
 
-        $groups = $subscriber->getGroup()->getValues();
+        $groups = $subscriber->getGroups()->getValues();
 
         $data = [
             'postdata' => [
@@ -65,36 +67,31 @@ class Client
 
         /** @var Group $group */
         foreach ($groups as $group) {
-            if ($this->exists($subscriber->getEmail(), $group->getName())) {
+            if ($this->exists($subscriber->getEmail(), $group)) {
                 continue;
             }
 
-            if (isset($this->groupMapping[$group->getName()])) {
-                $groupId = $this->groupMapping[$group->getName()];
-            } else {
-                throw new MappingException('Mapping for group ' . $group->getName() . ' is wrong.');
-            }
+            $groupId = $this->mapGroup($group);
 
             $res = $this->guzzleClient->request('POST', 'groups.json/' . $groupId . '/receivers/insert' . '?token=' . $token, [
                 'json' => $data
             ]);
+
             $response = $res->getBody()->getContents();
 
             if (json_decode($response)[0]->status !== 'insert success') {
-                throw new InsertException('insertion in group ' . $group->getName() . ' with id ' . $groupId . ' failed.');
+                throw new InsertException(
+                    sprintf('Insertion in group "%s" with id "%s" failed.', $group->getName(), $groupId)
+                );
             }
         }
     }
 
-    public function exists($eMail, $groupName)
+    public function exists($eMail, Group $group)
     {
         $token = $this->getToken();
 
-        if (isset($this->groupMapping[$groupName])) {
-            $groupId = $this->groupMapping[$groupName];
-        } else {
-            throw new MappingException('Mapping for group ' . $groupName . ' is wrong.');
-        }
+        $groupId = $this->mapGroup($group);
 
         try {
             $res = $this->guzzleClient->request('GET', 'groups.json/' . $groupId . '/receivers/' . $eMail . '?token=' . $token, []);
@@ -108,7 +105,18 @@ class Client
         return false;
     }
 
-    protected function getToken()
+    private function mapGroup(Group $group)
+    {
+        if (isset($this->groupMapping[$group->getCode()])) {
+            return $this->groupMapping[$group->getCode()];
+        }
+
+        throw new MappingException(
+            sprintf('Mapping for group "%s" with code "%s" not exists.', $group->getName(), $group->getCode())
+        );
+    }
+
+    private function getToken()
     {
         $res = $this->guzzleClient->request('POST', 'login', [
             'json' => [

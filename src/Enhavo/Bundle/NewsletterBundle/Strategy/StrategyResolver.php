@@ -19,7 +19,6 @@ class StrategyResolver
      */
     private $formTypes;
 
-
     /**
      * @var TypeCollector
      */

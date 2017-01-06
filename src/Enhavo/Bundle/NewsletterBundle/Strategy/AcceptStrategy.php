@@ -98,15 +98,19 @@ class AcceptStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, $type)
+    public function exists(SubscriberInterface $subscriber)
     {
-        /** @var StorageInterface $storage */
-        $storage = $this->storageResolver->resolve($type);
-        $groupNames = $this->formResolver->resolveGroupNames($type, $subscriber);
-        if($storage instanceof LocalStorage){
-            return $this->localStorage->exists($subscriber, $groupNames);
+        if( $this->localStorage->exists($subscriber)) {
+            return true;
         }
-        return $this->localStorage->exists($subscriber, $groupNames) || $storage->exists($subscriber, $groupNames);
+
+        /** @var StorageInterface $storage */
+        $storage = $this->storageResolver->resolve($subscriber->getType());
+        if($storage->exists($subscriber)) {
+            return true;
+        }
+        
+        return false;
     }
 
     public function handleExists(SubscriberInterface $subscriber)

@@ -81,12 +81,11 @@ class NotifyStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, $type)
+    public function exists(SubscriberInterface $subscriber)
     {
         /** @var StorageInterface $storage */
-        $storage = $this->storageResolver->resolve($type);
-        $groupNames = $this->formResolver->resolveGroupNames($type, $subscriber);
-        return $storage->exists($subscriber, $groupNames);
+        $storage = $this->storageResolver->resolve($subscriber->getType());
+        return $storage->exists($subscriber);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

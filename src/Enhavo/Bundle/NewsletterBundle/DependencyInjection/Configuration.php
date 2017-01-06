@@ -82,6 +82,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('groups')->addDefaultsIfNotSet()->end()
                 ->arrayNode('storage')
                     ->addDefaultsIfNotSet()
                     ->children()

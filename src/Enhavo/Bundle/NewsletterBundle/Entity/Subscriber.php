@@ -248,7 +248,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getGroup()
+    public function getGroups()
     {
         return $this->group;
     }

@@ -13,14 +13,16 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 
 interface StrategyInterface extends TypeInterface
 {
-    public function addSubscriber(SubscriberInterface $subscriber, $type);
+    public function addSubscriber(SubscriberInterface $subscriber);
 
     /**
+     * @param SubscriberInterface $subscriber
      * @return boolean
      */
-    public function exists(SubscriberInterface $subscriber, $type);
+    public function exists(SubscriberInterface $subscriber);
 
     /**
+     * @param SubscriberInterface $subscriber
      * @return string
      */
     public function handleExists(SubscriberInterface $subscriber);

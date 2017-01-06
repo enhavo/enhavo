@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
-
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
-use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
 
 class StorageResolver
 {

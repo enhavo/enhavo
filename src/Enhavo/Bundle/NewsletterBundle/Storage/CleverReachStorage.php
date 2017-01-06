@@ -7,10 +7,11 @@
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
+
 use Enhavo\Bundle\NewsletterBundle\CleverReach\Client;
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-
 
 class CleverReachStorage implements StorageInterface
 {
@@ -29,19 +30,20 @@ class CleverReachStorage implements StorageInterface
         $this->cleverReachClient->saveSubscriber($subscriber);
     }
 
-    public function exists(SubscriberInterface $subscriber, $groupNames = [])
+    public function exists(SubscriberInterface $subscriber)
     {
         // subscriber has to be in ALL given groups to return true
-
-        if ($groupNames === []) {
+        if (count($subscriber->getGroups()) === 0) {
             throw new NoGroupException('no groups given');
         }
 
-        foreach ($groupNames as $groupName) {
-            if (!$this->cleverReachClient->exists($subscriber->getEmail(), $groupName)) {
+        /** @var Group $group */
+        foreach ($subscriber->getGroups() as $group) {
+            if (!$this->cleverReachClient->exists($subscriber->getEmail(), $group)) {
                 return false;
             }
         }
+
         return true;
     }
 

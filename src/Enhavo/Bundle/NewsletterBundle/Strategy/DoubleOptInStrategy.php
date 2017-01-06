@@ -12,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
+use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
 
 class DoubleOptInStrategy extends AbstractStrategy
 {
@@ -57,11 +58,11 @@ class DoubleOptInStrategy extends AbstractStrategy
         $this->notifyAdmin($subscriber);
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber, $type)
+    private function notifySubscriber(SubscriberInterface $subscriber)
     {
         $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
             'token' => $subscriber->getToken(),
-            'type' => $type
+            'type' => $subscriber->getType()
             ], true);
         $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
         $message = \Swift_Message::newInstance()
@@ -97,14 +98,19 @@ class DoubleOptInStrategy extends AbstractStrategy
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
-    public function exists(SubscriberInterface $subscriber, $type)
+    public function exists(SubscriberInterface $subscriber)
     {
-        $storage = $this->storageResolver->resolve($type);
-        $groupNames = $this->formResolver->resolveGroupNames($type, $subscriber);
-        if($storage instanceof LocalStorage){
-            return $this->localStorage->exists($subscriber, $groupNames);
+        if( $this->localStorage->exists($subscriber)) {
+            return true;
         }
-        return $this->localStorage->exists($subscriber, $groupNames) || $storage->exists($subscriber, $groupNames);
+
+        /** @var StorageInterface $storage */
+        $storage = $this->storageResolver->resolve($subscriber->getType());
+        if($storage->exists($subscriber)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function handleExists(SubscriberInterface $subscriber)

@@ -38,14 +38,14 @@ class LocalStorage implements StorageInterface
         $this->manager->flush();
     }
 
-    public function exists(SubscriberInterface $subscriber, $groupNames = [])
+    public function exists(SubscriberInterface $subscriber)
     {
         // subscriber has to be in ALL given groups to return true
         if ($this->getSubscriber($subscriber->getEmail()) === null) {
             return false;
         }
 
-        $groupsSubscriberIsIn = $this->getSubscriber($subscriber->getEmail())->getGroup()->getValues();
+        $groupsSubscriberIsIn = $this->getSubscriber($subscriber->getEmail())->getGroups()->getValues();
 
         $subscriberGroupNames = [];
         /**
@@ -55,21 +55,22 @@ class LocalStorage implements StorageInterface
             $subscriberGroupNames[] = $group->getName();
         }
 
-        foreach ($groupNames as $groupName) {
-            $group = $this->manager->getRepository(Group::class)->findOneBy(['name' => $groupName]);
+        foreach ($subscriber->getGroups() as $group) {
+            $group = $this->manager->getRepository(Group::class)->findOneBy(['name' => $group->getName()]);
             if ($group === null) {
                 return false;
             }
-            if (!in_array($groupName, $subscriberGroupNames)) {
+            if (!in_array($group->getName(), $subscriberGroupNames)) {
                 return false;
             }
         }
+
         return true;
     }
 
     /**
-     * @param $subscriber SubscriberInterface
-     * @return object
+     * @param $email string
+     * @return SubscriberInterface|null
      */
     public function getSubscriber($email)
     {

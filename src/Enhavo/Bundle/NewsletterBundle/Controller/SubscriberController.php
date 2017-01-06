@@ -77,9 +77,9 @@ class SubscriberController extends ResourceController
         $subscriber = $this->newResourceFactory->create($configuration, $this->factory);
 
         $this->setSubscriberType($subscriber, $request);
+        $this->getSubscriberManager()->createSubscriber($subscriber);
         $form = $this->createSubscriberForm($subscriber);
         $form->handleRequest($request);
-        $this->getSubscriberManager()->createSubscriber($subscriber);
 
         if($form->isValid()) {
             $message =  $this->getSubscriberManager()->addSubscriber($subscriber, $request->get('type'));

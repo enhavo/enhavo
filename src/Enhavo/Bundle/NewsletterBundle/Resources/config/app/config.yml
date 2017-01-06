@@ -20,3 +20,4 @@ enhavo_newsletter:
         default:
             type: enhavo_newsletter_subscribe
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
+
