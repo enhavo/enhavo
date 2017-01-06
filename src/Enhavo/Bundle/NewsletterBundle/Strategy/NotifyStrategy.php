@@ -83,9 +83,12 @@ class NotifyStrategy extends AbstractStrategy
 
     public function exists(SubscriberInterface $subscriber)
     {
-        /** @var StorageInterface $storage */
-        $storage = $this->storageResolver->resolve($subscriber->getType());
-        return $storage->exists($subscriber);
+        if($this->getOption('check_exists', $this->options, false)) {
+            /** @var StorageInterface $storage */
+            $storage = $this->storageResolver->resolve($subscriber->getType());
+            return $storage->exists($subscriber);
+        }
+        return false;
     }
 
     public function handleExists(SubscriberInterface $subscriber)

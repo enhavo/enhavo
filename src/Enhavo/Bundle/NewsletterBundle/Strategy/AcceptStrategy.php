@@ -100,17 +100,9 @@ class AcceptStrategy extends AbstractStrategy
 
     public function exists(SubscriberInterface $subscriber)
     {
-        if( $this->localStorage->exists($subscriber)) {
-            return true;
-        }
-
         /** @var StorageInterface $storage */
         $storage = $this->storageResolver->resolve($subscriber->getType());
-        if($storage->exists($subscriber)) {
-            return true;
-        }
-        
-        return false;
+        return $storage->exists($subscriber);
     }
 
     public function handleExists(SubscriberInterface $subscriber)

@@ -23,6 +23,8 @@ The notify strategy just inform the admin and/or the subscriber that the subscri
 +-------------------------------+-------------------------------------------------------------------------+
 | **notify**                    | A boolean if the subscriber should be notified                          |
 +-------------------------------+-------------------------------------------------------------------------+
+| **check_exists**              | Check if email already exists in validation                             |
++-------------------------------+-------------------------------------------------------------------------+
 | **subject**                   | Subscriber subject                                                      |
 +-------------------------------+-------------------------------------------------------------------------+
 | **translation_domain**        | Subscriber Translation domain                                           |
