@@ -38,6 +38,7 @@ services:
             - '%enhavo_newsletter.storage%'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
+            - '@event_dispatcher'
 
     enhavo_newsletter.strategy_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector

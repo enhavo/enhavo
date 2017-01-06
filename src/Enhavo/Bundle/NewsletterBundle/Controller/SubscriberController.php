@@ -75,30 +75,45 @@ class SubscriberController extends ResourceController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         /** @var SubscriberInterface $subscriber */
         $subscriber = $this->newResourceFactory->create($configuration, $this->factory);
-        $configFromYml = $this->getParameter('enhavo_newsletter.forms');
-        $form = $this->get('form.factory')->create($configFromYml[$request->get('type')]['type'], $subscriber);
+
+        $this->setSubscriberType($subscriber, $request);
+        $this->getSubscriberManager()->createSubscriber($subscriber);
+        $form = $this->createSubscriberForm($subscriber);
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            if(!$this->getSubscriberManager()->exists($subscriber, $request->get('type'))) {
-                $event = new SubscriberEvent($subscriber, $request->get('type'));
-                $this->get('event_dispatcher')->dispatch(NewsletterEvents::EVENT_ADD_SUBSCRIBER, $event);
-                $message = $this->getSubscriberManager()->addSubscriber($subscriber, $request->get('type'));
-                return new JsonResponse([
-                    'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle'),
-                    'subscriber' => $subscriber
-                ]);
-            } else {
-                $message = $this->getSubscriberManager()->handleExists($subscriber);
-                return new JsonResponse([
-                    'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle')
-                ], 400);
-            }
-        } else {
+            $message =  $this->getSubscriberManager()->addSubscriber($subscriber, $request->get('type'));
             return new JsonResponse([
-                'message' => $translator->trans('subscriber.form.error.valid', [], 'EnhavoNewsletterBundle')
+                'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle'),
+                'subscriber' => $subscriber
+            ]);
+        } else {
+            $errorResolver = $this->container->get('enhavo_contact.form_error_resolver');
+            $errors = $errorResolver->getErrors($form);
+            return new JsonResponse([
+                'errors' => $errors,
+                'subscriber' => $subscriber
             ], 400);
         }
+    }
+
+    private function setSubscriberType(SubscriberInterface $subscriber, Request $request)
+    {
+        $type = $request->get('type');
+        $formResolver = $this->container->get('enhavo_newsletter.form_resolver');
+        $resolveType = $formResolver->resolveType($type);
+        if($resolveType === null) {
+            throw $this->createNotFoundException('type could not be resolved');
+        }
+        $subscriber->setType($type);
+    }
+
+    private function createSubscriberForm(SubscriberInterface $subscriber)
+    {
+        $formResolver = $this->container->get('enhavo_newsletter.form_resolver');
+        $formType = $formResolver->resolveType($subscriber->getType());
+        $form = $this->get('form.factory')->create($formType, $subscriber);
+        return $form;
     }
 
     protected function getSubscriberManager()

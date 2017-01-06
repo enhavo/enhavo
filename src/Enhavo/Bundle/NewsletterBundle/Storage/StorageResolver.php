@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
-
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
-use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
 
 class StorageResolver
 {
@@ -29,6 +27,13 @@ class StorageResolver
      */
     private $defaultStorage;
 
+    /**
+     * StorageResolver constructor.
+     * 
+     * @param $formTypes
+     * @param $storageTypeCollector
+     * @param $defaultStorage
+     */
     public function __construct($formTypes, $storageTypeCollector, $defaultStorage)
     {
         $this->formTypes = $formTypes;

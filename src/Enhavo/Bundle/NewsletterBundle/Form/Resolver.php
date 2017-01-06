@@ -10,18 +10,39 @@ namespace Enhavo\Bundle\NewsletterBundle\Form;
 
 
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Group\GroupManager;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use ProjectBundle\Entity\Subscriber;
 
 class Resolver
 {
+    /**
+     * @var array
+     */
     private $formConfig;
 
+    /**
+     * @var array
+     */
     private $defaultGroups;
 
-    public function __construct($formConfig, $defaultGroups)
+    /**
+     * @var GroupManager
+     */
+    private $groupManager;
+
+    /**
+     * Resolver constructor.
+     *
+     * @param $formConfig
+     * @param $defaultGroups
+     * @param GroupManager $groupManager
+     */
+    public function __construct($formConfig, $defaultGroups, GroupManager $groupManager)
     {
         $this->formConfig = $formConfig;
         $this->defaultGroups = $defaultGroups;
+        $this->groupManager = $groupManager;
     }
 
     public function resolveType($formType)
@@ -40,34 +61,26 @@ class Resolver
         return null;
     }
 
-    public function resolveGroupNames($formType, $subscriber = null)
+    /**
+     * Return groups by form type
+     *
+     * @param string $formType
+     *
+     * @return Group[]
+     */
+    public function resolveGroups($formType)
     {
-        if (isset($this->formConfig[$formType]['storage']['options']['groups'])) {
-            $formGroups = $this->formConfig[$formType]['storage']['options']['groups'];
+        $formGroups = null;
+        if (isset($this->formConfig[$formType]['default_groups'])) {
+            $formGroups = $this->formConfig[$formType]['default_groups'];
+        }
+
+        if(is_array($formGroups)) {
+            $groups = $formGroups;
         } else {
-            $formGroups = [];
-        }
-        $groupsFromYml = $this->mergeArrays($this->defaultGroups, $formGroups);
-
-        /** @var $subscriber Subscriber */
-        $groupNamesFromSubscriber = [];
-        if ($subscriber !== null) {
-            $groupsFromSubscriber = $subscriber->getGroup();
-            /** @var Group $group */
-            foreach ($groupsFromSubscriber as $group){
-                $groupNamesFromSubscriber[] = $group->getName();
-            }
+            $groups = $this->defaultGroups;
         }
 
-        return $this->mergeArrays($groupNamesFromSubscriber, $groupsFromYml);
-    }
-
-    protected function mergeArrays($array, $arrayToAdd) {
-        foreach ($arrayToAdd as $toAdd) {
-            if (!in_array($toAdd, $array)) {
-                $array[] = $toAdd;
-            }
-        }
-        return $array;
+        return $this->groupManager->getGroupsByCodes($groups);
     }
 }
