@@ -9,8 +9,8 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
+use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
-use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
 {

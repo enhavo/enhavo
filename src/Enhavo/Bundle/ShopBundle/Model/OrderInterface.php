@@ -8,7 +8,7 @@ use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
-use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Promotion\Model\PromotionCountableSubjectInterface;
 use Sylius\Component\Promotion\Model\PromotionCouponAwareSubjectInterface;
 
@@ -168,7 +168,7 @@ interface OrderInterface extends
 
     /**
      * Returns the amount of the shipping tax
-     * 
+     *
      * @return integer
      */
     public function getShippingTax();

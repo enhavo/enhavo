@@ -13,11 +13,11 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
+use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
-use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 
 class Order extends Cart implements OrderInterface
@@ -332,6 +332,7 @@ class Order extends Cart implements OrderInterface
      */
     public function setShipment(ShipmentInterface $shipment = null)
     {
+        $shipment->setOrder($this);
         $this->shipment = $shipment;
 
         return $this;

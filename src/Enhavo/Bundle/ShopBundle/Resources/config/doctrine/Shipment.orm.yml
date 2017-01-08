@@ -1,0 +1,8 @@
+Enhavo\Bundle\ShopBundle\Entity\Shipment:
+    type: entity
+    table: shop_shipment
+
+    oneToOne:
+        order:
+            targetEntity: Enhavo\Bundle\ShopBundle\Model\OrderInterface
+            mappedBy: shipment
