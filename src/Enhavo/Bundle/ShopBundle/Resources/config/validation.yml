@@ -3,14 +3,17 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
         promotionCoupon:
             - NotNull: { groups: [redeem] }
         shippingAddress:
-            - Valid: ~
+            - Valid:
         billingAddress:
-            - Valid: ~
+            - Valid:
+        payment:
+            - NotNull: { groups: [payment, confirm] }
 
     constraints:
         - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressing:
             groups: [shipping]
-
+        - Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderPayment:
+            groups: [payment]
 
 Sylius\Component\Addressing\Model\Address:
     properties:
