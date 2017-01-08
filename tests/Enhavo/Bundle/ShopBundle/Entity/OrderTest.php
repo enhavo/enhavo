@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Shipping\Model\ShipmentInterface;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,11 +19,13 @@ class OrderTest extends \PHPUnit_Framework_TestCase
      * @param int $amount
      * @return AdjustmentInterface
      */
-    protected function createAdjustment($type, $amount)
+    protected function createAdjustment($type, $amount, $originType = null)
     {
         $adjustment = $this->getMockBuilder(AdjustmentInterface::class)->getMock();
         $adjustment->method('getType')->willReturn($type);
         $adjustment->method('getAmount')->willReturn($amount);
+        $adjustment->method('getAmount')->willReturn($amount);
+        $adjustment->method('getOriginType')->willReturn($originType);
 
         return $adjustment;
     }
@@ -98,8 +100,9 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
         $order->addItem($this->createItem(1000, 190));
         $order->addItem($this->createItem(2000, 380));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::TAX_ADJUSTMENT, 200));
 
-        static::assertEquals(570, $order->getTaxTotal());
+        static::assertEquals(770, $order->getTaxTotal());
     }
 
     public function testSummaryOfTotals()
@@ -112,8 +115,42 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $order->addAdjustment($this->createAdjustment(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT, -500));
         $order->addAdjustment($this->createAdjustment(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT, -500));
         $order->addAdjustment($this->createAdjustment(AdjustmentInterface::SHIPPING_ADJUSTMENT, 1200));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::TAX_ADJUSTMENT, 200));
 
         $summary = $order->getShippingTotal() + $order->getDiscountTotal() + $order->getTaxTotal() + $order->getUnitPriceTotal();
-        static::assertEquals(3770, $summary);
+        static::assertEquals(3970, $summary);
+    }
+
+    public function testShippingTax()
+    {
+        $order = new Order();
+
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT, -500));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::SHIPPING_ADJUSTMENT, 1200));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::TAX_ADJUSTMENT, 400, ShipmentInterface::class));
+
+        static::assertEquals(400, $order->getShippingTax());
+    }
+
+    public function testShippingPrice()
+    {
+        $order = new Order();
+
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT, -500));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::SHIPPING_ADJUSTMENT, 1200));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::TAX_ADJUSTMENT, 400, ShipmentInterface::class));
+
+        static::assertEquals(700, $order->getShippingPrice());
+    }
+
+    public function testShippingTotal()
+    {
+        $order = new Order();
+
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT, -500));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::SHIPPING_ADJUSTMENT, 1200));
+        $order->addAdjustment($this->createAdjustment(AdjustmentInterface::TAX_ADJUSTMENT, 400, ShipmentInterface::class));
+
+        static::assertEquals(1100, $order->getShippingTotal());
     }
 }

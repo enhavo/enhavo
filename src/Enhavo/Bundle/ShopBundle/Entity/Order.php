@@ -452,10 +452,15 @@ class Order extends Cart implements OrderInterface
 
     public function getShippingTotal()
     {
-        $total = 0;
+        return $this->getShippingPrice() + $this->getShippingTax();
+    }
 
+    public function getShippingPrice()
+    {
+        $total = 0;
         $shippingAdjustments = $this->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT);
         $shippingPromotionAdjustments = $this->getAdjustments(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
+
 
         foreach($shippingAdjustments as $adjustment) {
             $total += $adjustment->getAmount();
@@ -465,6 +470,18 @@ class Order extends Cart implements OrderInterface
             $total += $adjustment->getAmount();
         }
 
+        return $total;
+    }
+
+    public function getShippingTax()
+    {
+        $total = 0;
+        $tax = $this->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
+        foreach($tax as $adjustment) {
+            if($adjustment->getOriginType() === ShipmentInterface::class) {
+                $total += $adjustment->getAmount();
+            }
+        }
         return $total;
     }
 
@@ -502,6 +519,12 @@ class Order extends Cart implements OrderInterface
         foreach($this->getItems() as $items) {
             $total += $items->getTaxTotal();
         }
+
+        $taxes = $this->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
+        foreach($taxes as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+        
         return $total;
     }
 

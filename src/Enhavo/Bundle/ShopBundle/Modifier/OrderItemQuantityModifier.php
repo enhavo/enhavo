@@ -66,7 +66,6 @@ class OrderItemQuantityModifier implements OrderItemQuantityModifierInterface
                 $adjustment = $this->adjustmentFactory->createNew();
                 $adjustment->setType('tax');
                 $adjustment->setAmount($orderItem->getProduct()->getTax());
-
                 $unit->addAdjustment($adjustment);
             }
         }
