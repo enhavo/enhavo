@@ -8,16 +8,18 @@
 
 namespace Enhavo\Bundle\ShopBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Payum\Core\Registry\RegistryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
+use Sylius\Component\Payment\Model\Payment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sylius\Bundle\PayumBundle\Request\GetStatus;
 
-class PaymentController extends Controller
+class PaymentController extends AppController
 {
     public function purchaseAction(Request $request)
     {
@@ -52,25 +54,27 @@ class PaymentController extends Controller
 
     public function afterAction(Request $request)
     {
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+
         $token = $this->getHttpRequestVerifier()->verify($request);
         $this->getHttpRequestVerifier()->invalidate($token);
 
         $status = new GetStatus($token);
-        $this->getPayum()->getGateway($token->getGatewayName())->execute($status);
+        $gatewayName = $token->getGatewayName();
+        $payum =  $this->getPayum();
+        $gateway = $payum->getGateway($gatewayName);
+        $gateway->execute($status);
         $payment = $status->getFirstModel();
-        $order = $payment->getOrder();
-#        $this->checkAccessToOrder($order);
+        $order = $this->getOrderByPayment($payment);
+        $orderStateResolver = $this->get('enhavo.order.state_resolver');
+        $orderStateResolver->resolvePaymentState($order);
 
-#        $orderStateResolver = $this->get('sylius.order_processing.state_resolver');
-#        $orderStateResolver->resolvePaymentState($order);
-#        $orderStateResolver->resolveShippingState($order);
-
-#        $this->getOrderManager()->flush();
-        if ($status->isCanceled() || $status->isFailed()) {
-            return new Response('test');
-        }
-
-        return new Response('after payment');
+        $this->getDoctrine()->getManager()->flush();
+        
+        return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme/Payment:after.html.twig'), [
+            'order' => $order,
+            'status' => $status
+        ]);
     }
 
     /**
@@ -95,5 +99,12 @@ class PaymentController extends Controller
     protected function getHttpRequestVerifier()
     {
         return $this->get('payum')->getHttpRequestVerifier();
+    }
+
+    protected function getOrderByPayment(Payment $payment)
+    {
+        $orderRepository = $this->get('sylius.repository.order');
+        /** @var OrderInterface $order */
+        return $orderRepository->findByPaymentId($payment->getId());
     }
 }

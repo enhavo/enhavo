@@ -40,6 +40,13 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             type: boolean
             nullable: true
 
+    oneToOne:
+        shipment:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
+            joinColumn:
+                onDelete: SET NULL
+
     manyToOne:
         shippingAddress:
             cascade: ['persist']
@@ -62,12 +69,6 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             fetch: EAGER
             cascade: ['persist']
             targetEntity: Sylius\Component\Payment\Model\PaymentInterface
-            joinColumn:
-                onDelete: SET NULL
-
-        shipment:
-            cascade: ['persist']
-            targetEntity: Sylius\Component\Shipping\Model\ShipmentInterface
             joinColumn:
                 onDelete: SET NULL
 

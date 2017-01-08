@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
-use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

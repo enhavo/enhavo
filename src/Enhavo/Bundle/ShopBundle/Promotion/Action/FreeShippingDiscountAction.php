@@ -15,6 +15,6 @@ class FreeShippingDiscountAction extends AbstractShippingDiscountAction
 {
     protected function configureAdjustmentAmount(AdjustmentInterface $adjustment, OrderInterface $subject, array $configuration)
     {
-        $adjustment->setAmount(- $subject->getShippingTotal());
+        $adjustment->setAmount(- $subject->getShippingPrice());
     }
 }

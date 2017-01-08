@@ -7,7 +7,11 @@ services:
             - '@sylius.resolver.default_shipping_method'
             - '@sylius.factory.shipment'
             - '@sylius.shipping_calculator'
+            - '@enhavo.shipping.shipping_tax_calculator'
             - '@sylius.factory.adjustment'
+
+    enhavo.shipping.shipping_tax_calculator:
+        class: Enhavo\Bundle\ShopBundle\Shipping\ShippingTaxCalculator
 
     enhavo.order_processing.payment_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPaymentProcessor
@@ -111,8 +115,24 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: order_addressing }
 
+    enhavo_shop.validator.order_payment:
+        class:  Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderPaymentValidator
+        arguments:
+            - '@validator'
+        tags:
+            - { name: validator.constraint_validator, alias: order_payment }
+
     enhavo_shop.controller.checkout:
         class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_shop.controller.payment:
+        class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@viewer.factory'
@@ -205,3 +225,6 @@ services:
         class: Enhavo\Bundle\ShopBundle\EventListener\SerializerSubscriber
         tags:
           - { name: jms_serializer.event_subscriber }
+
+    enhavo.order.state_resolver:
+        class: Enhavo\Bundle\ShopBundle\Order\OrderStateResolver

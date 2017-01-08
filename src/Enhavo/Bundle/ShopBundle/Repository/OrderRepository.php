@@ -20,4 +20,17 @@ class OrderRepository extends SyliusOrderRepository
         $query->setMaxResults(1);
         return $query->getQuery()->getResult();
     }
+
+    public function findByPaymentId($id)
+    {
+        $query = $this->createQueryBuilder('o');
+        $query->join('o.payment', 'p');
+        $query->where('p.id = :id');
+        $query->setParameter('id', $id);
+        $result =  $query->getQuery()->getResult();
+        if(count($result)) {
+            return $result[0];
+        }
+        return null;
+    }
 }

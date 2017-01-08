@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 use Enhavo\Bundle\ShopBundle\Mailer\MailerInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
-use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 
 class OrderTrackingProcessor implements ProcessorInterface
 {
