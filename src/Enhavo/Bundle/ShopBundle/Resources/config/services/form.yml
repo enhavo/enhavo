@@ -88,4 +88,9 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_unit:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\UnitType
+        tags:
+            - { name: form.type }
+
 
