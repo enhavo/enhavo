@@ -82,6 +82,12 @@ class SettingType extends AbstractType
                     'translation_domain' => 'EnhavoSettingBundle',
                 ));
             }
+            if ($type === Setting::SETTING_TYPE_CURRENCY) {
+                $form->add('value', 'enhavo_currency', array(
+                    'label' => 'setting.label.value',
+                    'translation_domain' => 'EnhavoSettingBundle',
+                ));
+            }
         });
     }
 

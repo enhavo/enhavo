@@ -14,6 +14,7 @@ class Setting implements ResourceInterface
     const SETTING_TYPE_WYSIWYG = 'wysiwyg';
     const SETTING_TYPE_DATE = 'date';
     const SETTING_TYPE_DATETIME = 'datetime';
+    const SETTING_TYPE_CURRENCY = 'currency';
 
     /**
      * @var integer
