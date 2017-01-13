@@ -386,7 +386,7 @@ class Order extends Cart implements OrderInterface
      */
     public function getPromotionSubjectTotal()
     {
-        $this->getItemsTotal();
+        return $this->getItemsTotal();
     }
 
     /**

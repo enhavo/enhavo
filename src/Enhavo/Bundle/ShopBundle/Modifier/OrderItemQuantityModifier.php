@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Modifier;
 
+use Doctrine\Common\Persistence\Proxy;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Order\Factory\OrderItemUnitFactoryInterface;
 use Sylius\Component\Order\Model\OrderItemInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
@@ -66,6 +66,13 @@ class OrderItemQuantityModifier implements OrderItemQuantityModifierInterface
                 $adjustment = $this->adjustmentFactory->createNew();
                 $adjustment->setType('tax');
                 $adjustment->setAmount($orderItem->getProduct()->getTax());
+                $taxRate = $orderItem->getProduct()->getTaxRate();
+                $taxClass = get_class($taxRate);
+                if($taxRate instanceof Proxy) {
+                    $taxClass = get_parent_class($taxRate);
+                }
+                $adjustment->setOriginType($taxClass);
+                $adjustment->setOriginId($taxRate->getId());
                 $unit->addAdjustment($adjustment);
             }
         }

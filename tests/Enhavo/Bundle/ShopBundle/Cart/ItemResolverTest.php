@@ -16,6 +16,7 @@ class ItemResolverTest extends \PHPUnit_Framework_TestCase
         $item = $this->getMockBuilder(OrderItemInterface::class)->getMock();
         $item->expects(static::once())->method('setProduct');
         $item->expects(static::once())->method('setUnitPrice');
+        $item->expects(static::once())->method('setName');
 
         $modifier = $this->getMockBuilder(OrderItemQuantityModifier::class)
             ->disableOriginalConstructor()

@@ -14,6 +14,18 @@ interface OrderItemInterface extends SyliusOrderItemInterface, CartItemInterface
     public function setProduct($product);
 
     /**
+     * @param string $name
+     *
+     */
+    public function setName($name);
+
+    /**
+     * @return  string $name
+     *
+     */
+    public function getName();
+
+    /**
      * @return ProductInterface
      */
     public function getProduct();

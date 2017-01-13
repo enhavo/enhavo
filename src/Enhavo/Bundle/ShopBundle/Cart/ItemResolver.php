@@ -53,6 +53,7 @@ class ItemResolver implements ItemResolverInterface
         $item->setUnitPrice($product->getPrice());
         /** @var $item OrderItem */
         $item->setProduct($product);
+        $item->setName($product->getName());
 
         $this->modifier->modify($item, $quantity);
 

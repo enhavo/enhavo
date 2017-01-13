@@ -71,6 +71,21 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('payment')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('paypal')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('logo')->defaultValue(null)->end()
+                                ->variableNode('branding')->defaultValue(null)->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;
