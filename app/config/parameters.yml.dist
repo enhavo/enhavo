@@ -15,7 +15,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
     mailer_delivery_address: ~
-    mailer_from: ~
+    mailer_from: no-reply@enhavo.com
+    mailer_name: enhavo
     mailer_to: ~
 
     locale:            en
