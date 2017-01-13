@@ -17,6 +17,11 @@ class OrderItem extends CartItem implements OrderItemInterface
     private $product;
 
     /**
+     * @var string
+     */
+    private $name;
+
+    /**
      * @return ProductInterface
      */
     public function getProduct()
@@ -85,5 +90,21 @@ class OrderItem extends CartItem implements OrderItemInterface
             $total += $adjustment->getAmount();
         }
         return $total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

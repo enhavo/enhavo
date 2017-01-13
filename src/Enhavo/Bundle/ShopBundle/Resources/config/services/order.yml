@@ -46,6 +46,8 @@ services:
 
     enhavo.order_processing.purchase_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderPurchaseProcessor
+        calls:
+            - [setContainer, ['@service_container']]
 
     enhavo.shop.cart_item_resolver:
         class: Enhavo\Bundle\ShopBundle\Cart\ItemResolver

@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\ShopBundle\Model\CheckoutContext;
+use Sylius\Component\Cart\SyliusCartEvents;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,6 +78,7 @@ class CheckoutController extends AppController
         if($form->isSubmitted()) {
             if($form->isValid()) {
                 if($context->getProcessor()) {
+                    $this->get('event_dispatcher')->dispatch(SyliusCartEvents::CART_CHANGE, new GenericEvent($order));
                     $context->getProcessor()->process($order);
                 }
                 $this->getManager()->flush();

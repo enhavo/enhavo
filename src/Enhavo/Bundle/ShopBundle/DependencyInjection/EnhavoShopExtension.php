@@ -29,6 +29,9 @@ class EnhavoShopExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']);
         $container->setParameter('enhavo_shop.document.packing_slip', $config['document']['packing_slip']);
 
+        $container->setParameter('enhavo_shop.payment.paypal.logo', $config['payment']['paypal']['logo']);
+        $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
+
         $configFiles = array(
             'services/services.yml',
             'services/order.yml',

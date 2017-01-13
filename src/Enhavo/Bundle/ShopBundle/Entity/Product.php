@@ -355,4 +355,17 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     {
         $this->route = $route;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->getTitle();
+    }
+
+    public function setName($name)
+    {
+        return $this->setTitle($name);
+    }
 }
