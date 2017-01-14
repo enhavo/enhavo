@@ -6,30 +6,30 @@ parameters:
 
 services:
     enhavo_media_files:
-        class: %enhavo_media.form.files_type.class%
+        class: '%enhavo_media.form.files_type.class%'
         arguments:
-            - @doctrine.orm.entity_manager
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type, alias: enhavo_files }
 
     enhavo_media.file_service:
-        class: %enhavo_media.file_service.class%
+        class: '%enhavo_media.file_service.class%'
         arguments:
-            - %kernel.root_dir%/media
-            - @doctrine.orm.entity_manager
+            - '%kernel.root_dir%/media'
+            - '@doctrine.orm.entity_manager'
 
     enhavo_media.twig_extension:
-        class: %enhavo_media.twig_extension.class%
+        class: '%enhavo_media.twig_extension.class%'
         arguments:
-            - @service_container
-            - @doctrine.orm.entity_manager
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: twig.extension }
 
     enhavo_media.lifecycle_listener:
-        class: %enhavo_media.lifecycle_listener.class%
+        class: '%enhavo_media.lifecycle_listener.class%'
         arguments:
-             - @service_container
+             - '@service_container'
         tags:
             - { name: doctrine.event_listener, event: preRemove }
             - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
@@ -48,3 +48,10 @@ services:
             - 'Enhavo\Bundle\MediaBundle\Entity\File'
             - '%kernel.root_dir%/media'
             - '@doctrine.orm.entity_manager'
+
+    enhavo_media.controller.file:
+        class: Enhavo\Bundle\MediaBundle\Controller\FileController
+        arguments:
+            - '@enhavo_media.file_service'
+        calls:
+            - [setContainer, ['@service_container']]

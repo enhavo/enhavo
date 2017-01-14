@@ -2,17 +2,39 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Enhavo\Bundle\MediaBundle\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class FileController extends Controller
 {
-    public function showAction($id,$width,$height)
+    /**
+     * @var FileService
+     */
+    protected $fileManager;
+
+    public function __construct(FileService $fileManager)
     {
-        if($width) {
-            return $this->container->get('enhavo_media.file_service')->getCustomImageSizeResponse($id,$width,$height);
+        $this->fileManager = $fileManager;
+    }
+
+    public function showAction($id, $width, $height, $filename)
+    {
+        if ($filename === null) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            $file = $this->fileManager->getFileById($id);
+        } else {
+            $file = $this->fileManager->getFileByIdAndName($id, $filename);
         }
-        return $this->container->get('enhavo_media.file_service')->getResponse($id);
+
+        if ($file === null) {
+            throw $this->createNotFoundException('file not found');
+        }
+
+        if ($width) {
+            return $this->fileManager->getCustomImageSizeResponse($file, $width, $height);
+        }
+        return $this->fileManager->getResponse($file);
     }
 
     public function uploadAction(Request $request)
@@ -22,11 +44,23 @@ class FileController extends Controller
 
     public function replaceAction($id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->get('enhavo_media.file_service')->replaceFile($id, $request);
     }
 
-    public function downloadAction($id)
+    public function downloadAction($id, $filename)
     {
-        return $this->container->get('enhavo_media.file_service')->getResponse($id, true);
+        if ($filename === null) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            $file = $this->fileManager->getFileById($id);
+        } else {
+            $file = $this->fileManager->getFileByIdAndName($id, $filename);
+        }
+
+        if ($file === null) {
+            throw $this->createNotFoundException('file not found');
+        }
+
+        return $this->fileManager->getResponse($file, true);
     }
 }
