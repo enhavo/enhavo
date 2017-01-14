@@ -1,32 +1,50 @@
 enhavo_media_upload:
-    pattern:  /file/add
+    path:  /file/add
     defaults:
-        _controller: EnhavoMediaBundle:File:upload
+        _controller: enhavo_media.controller.file:uploadAction
 
 enhavo_media_replace:
-    pattern:  /file/replace/{id}
+    path:  /file/replace/{id}
     methods: [POST]
     defaults:
-        _controller: EnhavoMediaBundle:File:replace
+        _controller: enhavo_media.controller.file:replaceAction
     options:
         expose: true
 
 enhavo_media_download:
-    pattern:  /file/download/{id}
-    defaults: {_controller: EnhavoMediaBundle:File:download,_method: GET}
+    path:  /file/download/{id}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:downloadAction
+        _method: GET
+        filename: ~
 
 enhavo_media_show_two_dim:
-    pattern:  /file/{id}/{width}/{height}/{slug}
-    defaults: { _controller: EnhavoMediaBundle:File:show,slug:'',_method: GET}
-    requirements: {width: \d+,height: \d+}
+    path:  /file/{id}/{width}/{height}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showAction
+        _method: GET
+        filename: ~
+    requirements:
+        width: \d+
+        height: \d+
 
 enhavo_media_show_one_dim:
-    pattern:  /file/{id}/{width}/{slug}
-    defaults: { _controller: EnhavoMediaBundle:File:show,height:'',slug:'',_method: GET}
-    requirements: {width: \d+}
+    path:  /file/{id}/{width}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showAction
+        height: ~
+        _method: GET
+        filename: ~
+    requirements:
+        width: \d+
 
 enhavo_media_show:
-    pattern:  /file/{id}/{slug}
-    defaults: { _controller: EnhavoMediaBundle:File:show,width:'',height:'',slug:'',_method: GET}
+    path:  /file/{id}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showAction
+        width: ~
+        height: ~
+        filename: ~
+        _method: GET
     options:
         expose: true

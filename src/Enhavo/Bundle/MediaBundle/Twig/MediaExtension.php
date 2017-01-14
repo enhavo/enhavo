@@ -53,9 +53,8 @@ class MediaExtension extends \Twig_Extension
 
     public function getMediaUrl(File $file, $width = null, $height = null)
     {
-        $path = '';
         if($file) {
-            $path .= '/file/'.$file->getId();
+            $path = '/file/'.$file->getId();
 
             if($width) {
                 $path .= '/'.$width;
@@ -63,20 +62,10 @@ class MediaExtension extends \Twig_Extension
                     $path .= '/'.$height;
                 }
             }
-
-            $slug = $file->getSlug();
-            if (empty($slug)) {
-                $filename = $file->getFilename();
-                if (!empty($filename)) {
-                    $slug = $this->getSlugifiedFilename($filename);
-                }
-            }
-            if (!empty($slug)) {
-                $path .= '/' . $slug;
-            }
+            $path .= '/' . rawurlencode($file->getFilename());
+            return $path;
         }
-
-        return $path;
+        return null;
     }
 
     public function getMediaFilename(File $file)

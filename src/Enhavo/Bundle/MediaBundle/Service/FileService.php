@@ -135,25 +135,19 @@ class FileService
         return new JsonResponse(array('files' => array($this->getFileInfo($entityFile))));
     }
 
-    public function getCustomImageSizeResponse($id,$width,$height)
+    public function getCustomImageSizeResponse(EnhavoFile $file, $width, $height)
     {
-        $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
-        $file = $repository->find($id);
-        if($file === null) {
-            throw new NotFoundResourceException;
-        }
-
         if($width && !$height) {
             $path = $this->path.'/custom/'.$width;
             $this->createPathIfNotExists($path);
-            $filepath = $path.'/'.$id;
+            $filepath = $path.'/'.$file->getId();
             if(!file_exists($filepath) || (filemtime($filepath) < filemtime($this->getFilepath($file)))) {
                 Resize::make($this->getFilepath($file),$filepath,$width,99999);
             }
         } else {
             $path = $this->path.'/custom/'.$width.'x'.$height;
             $this->createPathIfNotExists($path);
-            $filepath = $path.'/'.$id;
+            $filepath = $path.'/'.$file->getId();
             if(!file_exists($filepath) || (filemtime($filepath) < filemtime($this->getFilepath($file)))) {
                 Thumbnail::make($this->getFilepath($file),$filepath,$width,$height);
             }
@@ -161,29 +155,38 @@ class FileService
 
         $response = new BinaryFileResponse($filepath);
         $response->headers->set('Content-Type', $file->getMimeType());
+        $filename = $file->getFilename();
+        $response->headers->set('Content-Disposition', 'filename="' . $filename . '"');
         return $response;
     }
 
-    public function getResponse($id, $forceDownload = false)
+    public function getFileByIdAndName($id, $filename)
+    {
+        $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
+        $file = $repository->findOneBy([
+            'id' => $id,
+            'filename' => $filename
+        ]);
+        return $file;
+    }
+
+    public function getFileById($id)
     {
         $repository = $this->manager->getRepository('EnhavoMediaBundle:File');
         $file = $repository->find($id);
-        if($file === null) {
-            throw new NotFoundResourceException;
-        }
+        return $file;
+    }
 
+    public function getResponse(EnhavoFile $file, $forceDownload = false)
+    {
         $response = new BinaryFileResponse($this->getFilepath($file));
         if ($forceDownload) {
             $response->headers->set('Content-Type', 'application/octet-stream');
-            $filename = $file->getSlug();
-            if ($filename) {
-                $response->headers->set('Content-Disposition', 'filename="' . $filename . '"');
-            } else {
-                $response->headers->set('Content-Disposition', 'filename="file"');
-            }
         } else {
             $response->headers->set('Content-Type', $file->getMimeType());
         }
+        $filename = $file->getFilename();
+        $response->headers->set('Content-Disposition', 'filename="' . $filename . '"');
         return $response;
     }
 
