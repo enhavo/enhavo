@@ -1,3 +1,4 @@
+{% trans_default_domain 'EnhavoShopBundle' %}
 <div class="order-order">
     {{ form_row(form.state) }}
     {{ form_row(form.paymentState) }}
@@ -9,9 +10,9 @@
                 <div class="itemlist-head">
                     <div class="row">
                         <div class="col-xs-2"></div>
-                        <div class="col-xs-6">Produkt</div>
-                        <div class="col-xs-2">Preis/Stk.</div>
-                        <div class="col-xs-2">Preis</div>
+                        <div class="col-xs-6">{{ 'order.label.product'|trans }}</div>
+                        <div class="col-xs-2">{{ 'order.label.single_price'|trans }}</div>
+                        <div class="col-xs-2">{{ 'order.label.price'|trans }}</div>
                     </div>
                 </div>
                 <ul class="itemlist">
@@ -27,28 +28,24 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="item-title">
-                                    {% if item.product %}
-                                        {{ item.product.title }}
-                                    {% else %}
-                                        Product deleted
-                                    {% endif %}
+                                    {{ item.name }}
                                     <span class="item-quantity">x{{ item.quantity }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="item-unit-price">
                                     <div class="details">
-                                        <div>Netto: {{ item.unitPrice|currency }}</div>
-                                        <div>Steuern: {{ item.unitTax|currency }}</div>
+                                        <div>{{ 'order.label.unitPrice'|trans }}: {{ item.unitPrice|currency }}</div>
+                                        <div>{{ 'order.label.unitTax'|trans }}: {{ item.unitTax|currency }}</div>
                                     </div>
-                                    <div>{{ item.unitTotal }}</div>
+                                    <div>{{ item.unitTotal|currency }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="item-unit-price total">
                                     <div class="details">
-                                        <div>Netto: {{ item.unitPriceTotal|currency }}</div>
-                                        <div>Steuern: {{ item.taxTotal|currency }}</div>
+                                        <div>{{ 'order.label.unitPrice'|trans }}: {{ item.unitPriceTotal|currency }}</div>
+                                        <div>{{ 'order.label.unitTax'|trans }}: {{ item.taxTotal|currency }}</div>
                                     </div>
                                     <div>{{ item.total|currency }}</div>
                                 </div>
@@ -63,54 +60,63 @@
                 </div>
                 <div class="col-xs-4">
                     <div class="order-sum">
-                        <div>Nettobetrag: {{ data.unitTotal|currency }}</div>
+                        <div>{{'order.label.unitPrice'|trans }}: {{ data.unitTotal|currency }}</div>
                         <div>
                             {% if data.shippingTotal > 0 %}
-                                Versand: {{ data.shippingTotal|currency }}
+                                {{ 'order.label.shipping'|trans }}: {{ data.shippingTotal|currency }}
                             {% else %}
-                                Kostenloser Versand
+                                {{ 'order.label.freeShipping'|trans }}
                             {% endif %}
                         </div>
                         {% if data.discountTotal > 0 %}
-                            <div>Ermäßigung: {{ data.discountTotal|currency }}</div>
+                            <div>{{ 'order.label.discount'|trans }}: {{ data.discountTotal|currency }}</div>
                         {% endif %}
                         <div>
-                            MwSt.: {{ data.taxTotal|currency }}
+                            {{ 'order.label.salesTax'|trans }}.: {{ data.taxTotal|currency }}
                         </div>
-                        <div class="total">Summe: {{ data.total|currency }}</div>
+                        <div class="total">{{ 'order.label.sum'|trans }}: {{ data.total|currency }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-5">
-            <div><strong>Rechnungsnummer:</strong> {{ data.number }}</div>
-            <div><strong>Bestelldatum:</strong> {{ data.orderedAt|date }}</div>
-            <div><strong>E-Mail:</strong> {{ data.customerEmail }}</div>
-            <div><strong>Bezahlart:</strong> {{ data.payment.method.code }}</div>
+            <div><strong>{{ 'order.label.billingNumber'|trans }}:</strong> {{ data.number }}</div>
+            <div><strong>{{ 'order.label.orderedAt'|trans }}:</strong> {{ data.orderedAt|date }}</div>
+            <div><strong>{{ 'order.label.eMail'|trans }}:</strong> {{ data.customerEmail }}</div>
+            <div><strong>{{ 'order.label.paymentMethod'|trans }}:</strong> {{ data.payment.method.name }}</div>
 
             <div class="address">
-                <div><strong>Liefer{% if not data.differentBillingAddress %}- und Rechnungs{% endif %}anschrift</strong></div>
+                <div>
+                    <strong>
+                        {% if not data.differentBillingAddress %}
+                            {{ 'order.label.shippingAndBillingAddress'|trans }}
+                        {% else %}
+                            {{ 'order.label.shippingAddress'|trans }}
+                        {% endif %}
+                    </strong>
+                </div>
                 <div>{{ data.shippingAddress.firstName }} {{ data.shippingAddress.lastName }}</div>
                 {% if data.shippingAddress.company %}
                     <div>{{ data.shippingAddress.company }}</div>
                 {% endif %}
                 <div>{{ data.shippingAddress.street }}</div>
                 <div>{{ data.shippingAddress.postCode }} {{ data.shippingAddress.city }}</div>
-                <div>Land: {{ data.shippingAddress.countryCode|country }}</div>
+                <div>{{ 'order.label.country'|trans }}: {{ data.shippingAddress.countryCode|country }}</div>
                 {% if data.shippingAddress.phoneNumber %}
-                    <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
+                    <div>{{ 'order.label.phone'|trans }}: {{ data.shippingAddress.phoneNumber }}</div>
                 {% endif %}
                 {% if data.differentBillingAddress %}
-                    <div>Rechnungsanschrift</div>
+                    <br />
+                    <div><strong>{{ 'order.label.billingAddress'|trans }}</strong></div>
                     <div>{{ data.billingAddress.firstName }} {{ data.billingAddress.lastName }}</div>
                     {% if data.billingAddress.company %}
                         <div>{{ data.billingAddress.company }}</div>
                     {% endif %}
                     <div>{{ data.billingAddress.street }}</div>
                     <div>{{ data.billingAddress.postCode }} {{ data.billingAddress.city }}</div>
-                    <div>Land: {{ data.billingAddress.countryCode|country }}</div>
+                    <div>{{ 'order.label.country'|trans }}: {{ data.billingAddress.countryCode|country }}</div>
                     {% if data.billingAddress.phoneNumber %}
-                        <div>Telefon: {{ data.shippingAddress.phoneNumber }}</div>
+                        <div>{{ 'order.label.phone'|trans }}: {{ data.shippingAddress.phoneNumber }}</div>
                     {% endif %}
                 {% endif %}
             </div>
