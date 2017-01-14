@@ -37,6 +37,25 @@ order:
     payment: Payment
     billing: Bill
     packing_slip: Packing Slip
+    product: Product
+    single_price: Unit price
+    price: Price
+    unitPrice: Total price
+    unitTax: Tax
+    shipping: Shipping
+    freeShipping: Free shipping
+    discount: Dicount
+    salesTax: VAT
+    sum: Sum
+    billingNumber: Billing number
+    orderedAt: Order date
+    eMail: E-Mail
+    paymentMethod: Payment
+    shippingAndBillingAddress: Shipping & billing address
+    shippingAddress: Shipping address
+    billingAddress: Billing address
+    country: Country
+    phone: Phone
 
   form:
     label:
