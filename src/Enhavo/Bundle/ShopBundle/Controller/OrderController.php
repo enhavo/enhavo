@@ -40,6 +40,25 @@ class OrderController extends ResourceController
         ]);
     }
 
+    public function showAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        /** @var OrderInterface $order */
+        $order = $this->singleResourceProvider->get($configuration, $this->repository);
+        if($order === null) {
+            throw $this->createNotFoundException();
+        }
+        if($order->getState() === 'cart') {
+            throw $this->createNotFoundException();
+        }
+
+        $template = $configuration->getTemplate('EnhavoShopBundle:Theme:Order/show.html.twig');
+        return $this->render($template, [
+            'order' => $order
+        ]);
+    }
+
     public function transferOrderAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
