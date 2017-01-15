@@ -33,4 +33,11 @@ class OrderRepository extends SyliusOrderRepository
         }
         return null;
     }
+
+    public function findByToken($token)
+    {
+        return $this->findOneBy([
+            'token' => $token
+        ]);
+    }
 }

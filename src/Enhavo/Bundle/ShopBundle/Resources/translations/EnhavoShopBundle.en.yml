@@ -56,6 +56,9 @@ order:
     billingAddress: Billing address
     country: Country
     phone: Phone
+  action:
+    transfer: Transfer to cart
+    purchase: Pay
 
   form:
     label:

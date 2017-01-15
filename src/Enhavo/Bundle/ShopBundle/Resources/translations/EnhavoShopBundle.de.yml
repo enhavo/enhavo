@@ -56,6 +56,9 @@ order:
     billingAddress: Rechnungsanschrift
     country: Land
     phone: Telefon
+  action:
+    transfer: In den Warenkorb
+    purchase: Bezahlen
 
   form:
     label:

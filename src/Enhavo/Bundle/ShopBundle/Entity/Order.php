@@ -573,4 +573,9 @@ class Order extends Cart implements OrderInterface
     {
         return $this->getShippingTotal() === 0;
     }
+
+    public function isPayed()
+    {
+        return $this->paymentState === PaymentInterface::STATE_COMPLETED;
+    }
 }
