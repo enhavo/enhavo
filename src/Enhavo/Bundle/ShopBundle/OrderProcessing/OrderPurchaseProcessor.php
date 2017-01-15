@@ -22,6 +22,7 @@ class OrderPurchaseProcessor
         if($payment->getMethod()->getGateway() === 'paypal_express_checkout') {
             $details = $payment->getDetails();
             $details['PAYMENTREQUEST_0_AMT'] = (string)($order->getTotal()/100);
+            $details['PAYMENTREQUEST_0_CURRENCYCODE'] = $payment->getCurrencyCode();
 
             $details['PAYMENTREQUEST_0_SHIPTONAME'] = sprintf('%s %s %s',
                 $order->getShippingAddress()->getFirstName(),
