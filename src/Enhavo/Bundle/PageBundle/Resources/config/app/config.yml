@@ -25,11 +25,3 @@ enhavo_content:
             page:
                 type: publish
                 repository: enhavo_page.repository.page
-
-enhavo_workflow:
-    entities:
-        -
-            class: '%enhavo_page.model.page.class%'
-            label: 'page.label.page'
-            translationDomain: EnhavoPageBundle
-            repository: enhavo_page.repository.page

@@ -85,11 +85,6 @@ role:
     ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE: 'Newsletter löschen'
     ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND: 'Newsletter verschicken'
 
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX: 'Workflow sehen'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_UPDATE: 'Workflow bearebeiten'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_CREATE: 'Workflow erstellen'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_DELETE: 'Workflow löschen'
-
     ROLE_ENHAVO_SLIDER_SLIDE_INDEX: 'Slides sehen'
     ROLE_ENHAVO_SLIDER_SLIDE_UPDATE: 'Slides bearebeiten'
     ROLE_ENHAVO_SLIDER_SLIDE_CREATE: 'Slides erstellen'

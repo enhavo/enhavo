@@ -20,11 +20,3 @@ enhavo_theme:
                 model: enhavo_article.article
                 strategy: slug
                 route: ~
-
-enhavo_workflow:
-    entities:
-        -
-            class: %enhavo_article.model.article.class%
-            label: 'article.label.article'
-            translationDomain: EnhavoArticleBundle
-            repository: enhavo_article.repository.article

@@ -6,47 +6,47 @@ parameters:
 
 services:
     enhavo_category_collection:
-        class: %enhavo_category.form.collection.class%
+        class: '%enhavo_category.form.collection.class%'
         arguments:
-            - %enhavo_category.model.collection.class%
+            - '%enhavo_category.model.collection.class%'
         tags:
             - { name: form.type }
 
     enhavo_category:
-        class: %enhavo_category.class%
+        class: '%enhavo_category.class%'
         arguments:
             - '@doctrine.orm.entity_manager'
-            - %enhavo_category.model.category.class%
-            - %enhavo_category.default_collection%
+            - '%enhavo_category.model.category.class%'
+            - '%enhavo_category.default_collection%'
         tags:
             - { name: form.type, alias: 'enhavo_category'}
 
     enhavo_category_category:
-        class: %enhavo_category.form.type.category.class%
+        class: '%enhavo_category.form.type.category.class%'
         arguments:
-            - %enhavo_category.model.category.class%
-            - %enhavo_translation.translate%
+            - '%enhavo_category.model.category.class%'
+            - '%enhavo_translation.translate%'
         tags:
             - { name: form.type, alias: 'enhavo_category_category'}
 
     enhavo_collection_category:
-        class: %enhavo_category.form.type.collection_category.class%
+        class: '%enhavo_category.form.type.collection_category.class%'
         arguments:
-            - %enhavo_category.model.category.class%
+            - '%enhavo_category.model.category.class%'
         tags:
             - { name: form.type, alias: 'enhavo_collection_category'}
 
     enhavo_category.category.subscriber:
-        class: %enhavo_category.category.subscriber.class%
+        class: '%enhavo_category.category.subscriber.class%'
         arguments:
-            - @service_container
+            - '@service_container'
         tags:
             - { name: kernel.event_subscriber }
 
     enhavo_category.factory.category:
-        class: %enhavo_category.factory.category.class%
+        class: '%enhavo_category.factory.category.class%'
         arguments:
-            - %enhavo_category.model.category.class%
+            - '%enhavo_category.model.category.class%'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -61,7 +61,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\CategoryBundle\Entity\Category
-            - %enhavo_category.model.category.class%
+            - '%enhavo_category.model.category.class%'
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
@@ -76,8 +76,8 @@ services:
     enhavo_category.save_listener:
         class: Enhavo\Bundle\CategoryBundle\EventListener\SaveListener
         arguments:
-            - @doctrine.orm.entity_manager
-            - %enhavo_category.model.collection.class%
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_category.model.collection.class%'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }

@@ -57,11 +57,6 @@ security:
         ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE:
         ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND:
 
-        ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX:
-        ROLE_ENHAVO_WORKFLOW_WORKFLOW_UPDATE:
-        ROLE_ENHAVO_WORKFLOW_WORKFLOW_CREATE:
-        ROLE_ENHAVO_WORKFLOW_WORKFLOW_DELETE:
-
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username

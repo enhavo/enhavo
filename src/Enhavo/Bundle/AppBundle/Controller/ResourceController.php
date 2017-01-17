@@ -143,10 +143,6 @@ class ResourceController extends BaseController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
         $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
-        //ToDo: Check for workflow update
-        //if(!$this->isGranted('WORKFLOW_UPDATE', $resource)) {
-        //    return new JsonResponse(null, 403);
-        //}
 
         $resource = $this->findOr404($configuration);
 

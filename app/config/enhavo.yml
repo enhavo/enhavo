@@ -22,8 +22,6 @@ enhavo_app:
             type: newsletter_subscriber
         calendar:
             type: calendar
-        workflow:
-            type: workflow
         product:
             type: shop_product
         order:

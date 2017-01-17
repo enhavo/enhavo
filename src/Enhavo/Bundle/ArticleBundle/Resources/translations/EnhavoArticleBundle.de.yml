@@ -7,7 +7,6 @@ article:
       priority: 'Priorität'
       change_frequency: 'Änderungsfrequenz'
       publication_date: 'Erscheinungsdatum'
-      workflow: 'Workflow'
   label:
     article: 'Artikel'
     teaser: 'Teaser'
