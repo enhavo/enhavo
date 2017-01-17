@@ -19,7 +19,7 @@ class SliderMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'slider.label.slider');
         $this->setOption('translationDomain', $options, 'EnhavoSliderBundle');
         $this->setOption('route', $options, 'enhavo_slider_slide_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_SLIDER_SLIDE_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_INDEX');
         return parent::createMenu($options);
     }
 

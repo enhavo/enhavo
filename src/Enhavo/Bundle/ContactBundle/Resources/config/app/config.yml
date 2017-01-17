@@ -1,5 +1,5 @@
 enhavo_contact:
     forms:
         contact:
-            recipient: %mailer_to%
-            from: %mailer_from%
+            recipient: '%mailer_to%'
+            from: '%mailer_from%'

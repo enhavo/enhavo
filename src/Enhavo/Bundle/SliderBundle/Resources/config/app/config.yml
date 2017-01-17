@@ -9,3 +9,10 @@ enhavo_assets:
         paths:
             slider:
                 location: /bundles/enhavoslider/js
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_INDEX:
+        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_UPDATE:
+        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_CREATE:
+        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_DELETE:

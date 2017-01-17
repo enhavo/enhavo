@@ -18,7 +18,7 @@ class GroupMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'group.label.group');
         $this->setOption('translationDomain', $options, 'EnhavoUserBundle');
         $this->setOption('route', $options, 'enhavo_user_group_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_USER_GROUP_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_USER_GROUP_INDEX');
         return parent::createMenu($options);
     }
 

@@ -32,7 +32,7 @@ class SendBatch extends AbstractBatch
             'label' => isset($parameters['label']) ? $parameters['label'] : 'newsletter.batch.action.send',
             'confirmMessage' => isset($parameters['confirmMessage']) ? $parameters['confirmMessage'] : 'newsletter.batch.message.confirm.send',
             'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoNewsletterBundle',
-            'permission' =>  isset($parameters['permission']) ? $parameters['permission'] : 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
+            'permission' =>  isset($parameters['permission']) ? $parameters['permission'] : 'ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
         ]);
     }
 

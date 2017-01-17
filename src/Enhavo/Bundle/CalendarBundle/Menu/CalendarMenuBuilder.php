@@ -19,7 +19,7 @@ class CalendarMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'label.calendar');
         $this->setOption('translationDomain', $options, 'EnhavoCalendarBundle');
         $this->setOption('route', $options, 'enhavo_calendar_appointment_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_INDEX');
         return parent::createMenu($options);
     }
 

@@ -18,7 +18,7 @@ class CategoryMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'category.label.category');
         $this->setOption('translationDomain', $options, 'EnhavoCategoryBundle');
         $this->setOption('route', $options, 'enhavo_category_category_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_INDEX');
         return parent::createMenu($options);
     }
 

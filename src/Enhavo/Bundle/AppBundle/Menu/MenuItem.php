@@ -18,6 +18,11 @@ class MenuItem extends KnpMenuItem implements MenuItemInterface
     private $icon;
 
     /**
+     * @var string
+     */
+    private $role;
+
+    /**
      * @return string
      */
     public function getIcon()
@@ -31,5 +36,21 @@ class MenuItem extends KnpMenuItem implements MenuItemInterface
     public function setIcon($icon)
     {
         $this->icon = $icon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 }

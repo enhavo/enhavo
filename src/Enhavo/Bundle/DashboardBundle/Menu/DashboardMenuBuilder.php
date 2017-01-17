@@ -18,7 +18,7 @@ class DashboardMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'dashboard.label.dashboard');
         $this->setOption('translationDomain', $options, 'EnhavoDashboardBundle');
         $this->setOption('route', $options, 'enhavo_dashboard_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_DASHBOARD_DASHBOARD_INDEX');
         return parent::createMenu($options);
     }
 

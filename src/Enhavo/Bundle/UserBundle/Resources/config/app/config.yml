@@ -20,3 +20,15 @@ fos_user:
             from_email:
                 address: '%mailer_from%'
                 sender_name: '%mailer_name%'
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_USER_USER_INDEX:
+        ROLE_ADMIN_ENHAVO_USER_USER_UPDATE:
+        ROLE_ADMIN_ENHAVO_USER_USER_CREATE:
+        ROLE_ADMIN_ENHAVO_USER_USER_DELETE:
+
+        ROLE_ADMIN_ENHAVO_USER_GROUP_INDEX:
+        ROLE_ADMIN_ENHAVO_USER_GROUP_UPDATE:
+        ROLE_ADMIN_ENHAVO_USER_GROUP_CREATE:
+        ROLE_ADMIN_ENHAVO_USER_GROUP_DELETE:

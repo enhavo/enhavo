@@ -15,4 +15,8 @@ interface MenuItemInterface extends ItemInterface
     public function getIcon();
 
     public function setIcon($icon);
+
+    public function getRole();
+
+    public function setRole($role);
 }

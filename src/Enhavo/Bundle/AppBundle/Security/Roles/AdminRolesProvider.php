@@ -18,7 +18,7 @@ class AdminRolesProvider implements RolesProvider
     public function __construct($roles)
     {
         foreach($roles as $role => $value) {
-            if(preg_match('/enhavo/i', $role)) {
+            if(preg_match('/^role_admin_/i', $role)) {
                 $this->roles[$role] = $value;
             }
         }

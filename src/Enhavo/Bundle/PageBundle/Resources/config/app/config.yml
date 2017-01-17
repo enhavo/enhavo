@@ -25,3 +25,10 @@ enhavo_content:
             page:
                 type: publish
                 repository: enhavo_page.repository.page
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_PAGE_PAGE_INDEX:
+        ROLE_ADMIN_ENHAVO_PAGE_PAGE_UPDATE:
+        ROLE_ADMIN_ENHAVO_PAGE_PAGE_CREATE:
+        ROLE_ADMIN_ENHAVO_PAGE_PAGE_DELETE:

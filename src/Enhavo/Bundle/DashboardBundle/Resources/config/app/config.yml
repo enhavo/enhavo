@@ -1,0 +1,3 @@
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_DASHBOARD_DASHBOARD_INDEX:

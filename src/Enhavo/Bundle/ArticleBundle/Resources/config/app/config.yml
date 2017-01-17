@@ -20,3 +20,10 @@ enhavo_theme:
                 model: enhavo_article.article
                 strategy: slug
                 route: ~
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_INDEX:
+        ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_UPDATE:
+        ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_CREATE:
+        ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_DELETE:

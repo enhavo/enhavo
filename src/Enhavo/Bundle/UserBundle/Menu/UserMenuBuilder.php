@@ -18,7 +18,7 @@ class UserMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'user.label.user');
         $this->setOption('translationDomain', $options, 'EnhavoUserBundle');
         $this->setOption('route', $options, 'enhavo_user_user_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_USER_USER_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_USER_USER_INDEX');
         return parent::createMenu($options);
     }
 

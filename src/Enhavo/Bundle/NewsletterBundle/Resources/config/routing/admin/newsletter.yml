@@ -59,13 +59,13 @@ enhavo_newsletter_newsletter_table:
                             label: table.batch.action.delete
                             confirm_message: table.batch.message.confirm.delete
                             translation_domain: EnhavoAppBundle
-                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
+                            permission: ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
                             position: 0
                         send:
                             label: newsletter.batch.action.send
                             confirm_message: newsletter.batch.message.confirm.send
                             translation_domain: EnhavoNewsletterBundle
-                            permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
+                            permission: ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
                     title:
                         label: newsletter.label.title

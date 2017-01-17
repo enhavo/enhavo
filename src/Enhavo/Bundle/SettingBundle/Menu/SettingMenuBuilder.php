@@ -19,7 +19,7 @@ class SettingMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'label.setting');
         $this->setOption('translationDomain', $options, 'EnhavoSettingBundle');
         $this->setOption('route', $options, 'enhavo_setting_setting_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_SETTING_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_SETTING_INDEX');
         return parent::createMenu($options);
     }
 

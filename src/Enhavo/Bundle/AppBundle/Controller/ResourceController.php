@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
@@ -29,8 +30,7 @@ use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 
 class ResourceController extends BaseController
 {
@@ -247,11 +247,6 @@ class ResourceController extends BaseController
     public function tableAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
-            throw new AccessDeniedHttpException;
-        }
-
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
@@ -307,5 +302,42 @@ class ResourceController extends BaseController
     protected function getPermissionRole($type, MetadataInterface $metadata)
     {
         return strtoupper(sprintf('ROLE_%s_%s_%s', $metadata->getApplicationName(), $metadata->getHumanizedName(), $type));
+    }
+
+    /**
+     * @param SyliusRequestConfiguration $configuration
+     * @param string $permission
+     *
+     * @throws AccessDeniedException
+     */
+    protected function isGrantedOr403(SyliusRequestConfiguration $configuration, $permission)
+    {
+        if (!$configuration->hasPermission()) {
+            $role = $this->getRoleName($permission);
+            if (!$this->get('security.authorization_checker')->isGranted($role)) {
+                throw $this->createAccessDeniedException();
+            }
+            return;
+        }
+
+        $permission = $configuration->getPermission($permission);
+        if (!$this->authorizationChecker->isGranted($configuration, $permission)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return;
+    }
+
+    private function getRoleName($permission)
+    {
+        $name = $this->metadata->getHumanizedName();
+        $name = str_replace(' ', '_', $name);
+        $role = sprintf(
+            'role_%s_%s_%s',
+            $this->metadata->getApplicationName(),
+            $name,
+            $permission
+        );
+        return strtoupper($role);
     }
 }

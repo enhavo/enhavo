@@ -21,3 +21,11 @@ enhavo_newsletter:
             type: enhavo_newsletter_subscribe
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
+security:
+    role_hierarchy:
+        ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX:
+        ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE:
+        ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE:
+        ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE:
+        ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_SEND:
+

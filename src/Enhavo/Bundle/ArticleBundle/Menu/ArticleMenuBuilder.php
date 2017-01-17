@@ -18,7 +18,7 @@ class ArticleMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'article.label.article');
         $this->setOption('translationDomain', $options, 'EnhavoArticleBundle');
         $this->setOption('route', $options, 'enhavo_article_article_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX');
+        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_INDEX');
         return parent::createMenu($options);
     }
 
