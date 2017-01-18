@@ -34,6 +34,7 @@ class ConfigurationFactory
         $configuration->setRecipientTemplate($this->getParameter($name, 'template.recipient'));
         $configuration->setConfirmTemplate($this->getParameter($name, 'template.confirm'));
         $configuration->setFrom($this->getParameter($name, 'from'));
+        $configuration->setSenderName($this->getParameter($name, 'sender_name'));
         $configuration->setSubject($this->getParameter($name, 'subject'));
         $configuration->setTranslationDomain($this->getParameter($name, 'translation_domain'));
         $configuration->setConfirmMail($this->getParameter($name, 'confirm_mail'));
