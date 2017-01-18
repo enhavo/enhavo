@@ -77,15 +77,6 @@ payum:
         offline:
             offline: ~
 
-#        paypal_express_checkout:
-#            factory: "paypal_express_checkout"
-#            payum.http_client: "@sylius.payum.http_client"
-#            username: "%paypal.express_checkout.username%"
-#            password: "%paypal.express_checkout.password%"
-#            signature: "%paypal.express_checkout.signature%"
-#            sandbox: "%paypal.express_checkout.sandbox%"
-
-
 sylius_payment:
     gateways:
         offline: Offline
@@ -111,6 +102,42 @@ enhavo_assets:
         paths:
             shop:
                 location: /bundles/enhavoshop/js
+
+enhavo_app:
+    roles:
+        enhavo_shop_product_index:
+            role: ROLE_ENHAVO_SHOP_PRODUCT_INDEX
+            label: product.role.label.index
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_product_create:
+            role: ROLE_ENHAVO_SHOP_PRODUCT_CREATE
+            label: product.role.label.create
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_product_update:
+            role: ROLE_ENHAVO_SHOP_PRODUCT_UPDATE
+            label: product.role.label.update
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_product_delete:
+            role: ROLE_ENHAVO_SHOP_PRODUCT_DELETE
+            label: product.role.label.delete
+            translationDomain: EnhavoShopBundle
+
+        enhavo_shop_order_index:
+            role: ROLE_ENHAVO_SHOP_ORDER_INDEX
+            label: order.role.label.index
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_order_create:
+            role: ROLE_ENHAVO_SHOP_ORDER_CREATE
+            label: order.role.label.create
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_order_update:
+            role: ROLE_ENHAVO_SHOP_ORDER_UPDATE
+            label: order.role.label.update
+            translationDomain: EnhavoShopBundle
+        enhavo_shop_order_delete:
+            role: ROLE_ENHAVO_SHOP_ORDER_DELETE
+            label: order.role.label.delete
+            translationDomain: EnhavoShopBundle
 
 enhavo_shop:
     mailer:

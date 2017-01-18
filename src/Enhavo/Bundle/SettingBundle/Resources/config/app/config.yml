@@ -1,0 +1,10 @@
+enhavo_app:
+    roles:
+        enhavo_setting_setting_index:
+            role: ROLE_ENHAVO_SETTING_SETTING_INDEX
+            label: setting.role.label.index
+            translationDomain: EnhavoSettingBundle
+        enhavo_setting_setting_update:
+            role: ROLE_ENHAVO_SETTING_SETTING_UPDATE
+            label: setting.role.label.update
+            translationDomain: EnhavoSettingBundle

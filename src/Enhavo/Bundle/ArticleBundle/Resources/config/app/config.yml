@@ -12,6 +12,23 @@ enhavo_app:
                 model: enhavo_article.article
                 strategy: id
                 route: enhavo_page_page_update
+    roles:
+        enhavo_article_article_index:
+            role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
+            label: article.role.label.index
+            translationDomain: EnhavoArticleBundle
+        enhavo_article_article_create:
+            role: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
+            label: article.role.label.create
+            translationDomain: EnhavoArticleBundle
+        enhavo_article_article_update:
+            role: ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE
+            label: article.role.label.update
+            translationDomain: EnhavoArticleBundle
+        enhavo_article_article_delete:
+            role: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
+            label: article.role.label.delete
+            translationDomain: EnhavoArticleBundle
 
 enhavo_theme:
     route:
@@ -20,11 +37,3 @@ enhavo_theme:
                 model: enhavo_article.article
                 strategy: slug
                 route: ~
-
-enhavo_workflow:
-    entities:
-        -
-            class: %enhavo_article.model.article.class%
-            label: 'article.label.article'
-            translationDomain: EnhavoArticleBundle
-            repository: enhavo_article.repository.article

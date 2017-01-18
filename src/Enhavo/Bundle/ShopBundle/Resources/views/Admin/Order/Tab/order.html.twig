@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-xs-4">
                     <div class="order-sum">
-                        <div>{{'order.label.unitPrice'|trans }}: {{ data.unitTotal|currency }}</div>
+                        <div>{{'order.label.unitPrice'|trans }}: {{ data.unitPriceTotal|currency }}</div>
                         <div>
                             {% if data.shippingTotal > 0 %}
                                 {{ 'order.label.shipping'|trans }}: {{ data.shippingTotal|currency }}

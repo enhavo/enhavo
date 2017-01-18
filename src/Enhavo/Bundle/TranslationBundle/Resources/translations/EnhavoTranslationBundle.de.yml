@@ -6,3 +6,11 @@ translation:
   label:
     translationKey: 'Schlüssel'
     translationString: 'Übersetzung'
+
+translation_string:
+  role:
+    label:
+      index: 'Übersetzung anzeigen'
+      update: 'Übersetzung bearbeiten'
+      create: 'Übersetzung erstellen'
+      delete: 'Übersetzung löschen'

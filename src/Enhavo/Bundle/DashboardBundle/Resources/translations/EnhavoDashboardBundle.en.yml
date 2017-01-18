@@ -1,3 +1,6 @@
 dashboard:
   label:
     dashboard: 'Dashboard'
+  role:
+    label:
+      index: 'Dashboard show'

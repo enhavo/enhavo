@@ -27,6 +27,12 @@ mailer:
     subject: Paket versendet
 
 order:
+  role:
+    label:
+      index: 'Bestellung anzeigen'
+      update: 'Bestellung bearbeiten'
+      create: 'Bestellung erstellen'
+      delete: 'Bestellung löschen'
   label:
     number: Bestellnummer
     ordered_at: Aufgegben am
@@ -84,6 +90,12 @@ order_item:
       product: Produkt
 
 product:
+  role:
+    label:
+      index: 'Produkt anzeigen'
+      update: 'Produkt bearbeiten'
+      create: 'Produkt erstellen'
+      delete: 'Produkt löschen'
   label:
     product: Produkt
     product_option: Option

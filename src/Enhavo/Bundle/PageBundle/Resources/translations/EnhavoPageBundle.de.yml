@@ -1,4 +1,10 @@
 page:
+  role:
+    label:
+      index: 'Seite anzeigen'
+      update: 'Seite bearbeiten'
+      create: 'Seite erstellen'
+      delete: 'Seite löschen'
   form:
     label:
       social_media: 'Social Media'

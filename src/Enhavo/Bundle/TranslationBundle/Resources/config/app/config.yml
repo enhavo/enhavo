@@ -14,3 +14,21 @@ enhavo_app:
       - '@EnhavoTranslationBundle/Resources/public/css/translation.css'
     javascripts:
       - '@EnhavoTranslationBundle/Resources/public/js/translation.js'
+
+    roles:
+        enhavo_translation_translation_string_index:
+            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX
+            label: translation_string.role.label.index
+            translationDomain: EnhavoTranslationBundle
+        enhavo_translation_translation_string_create:
+            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_CREATE
+            label: translation_string.role.label.create
+            translationDomain: EnhavoTranslationBundle
+        enhavo_translation_translation_string_update:
+            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_UPDATE
+            label: translation_string.role.label.update
+            translationDomain: EnhavoTranslationBundle
+        enhavo_translation_translation_string_delete:
+            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_DELETE
+            label: translation_string.role.label.delete
+            translationDomain: EnhavoTranslationBundle

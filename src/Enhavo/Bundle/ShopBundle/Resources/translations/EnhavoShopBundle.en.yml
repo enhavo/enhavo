@@ -27,6 +27,12 @@ mailer:
     subject: Order has been shipped
 
 order:
+  role:
+    label:
+      index: 'Order list'
+      update: 'Order update'
+      create: 'Order create'
+      delete: 'Order delete'
   label:
     number: Ordernumber
     ordered_at: Ordered At
@@ -84,6 +90,12 @@ order_item:
       product: Product
 
 product:
+  role:
+    label:
+      index: 'Product list'
+      update: 'Product update'
+      create: 'Product create'
+      delete: 'Product delete'
   label:
     product: Product
     product_option: Option

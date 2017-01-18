@@ -18,10 +18,6 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
-        workflow_status:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface
-
     manyToMany:
         categories:
             cascade: ['persist', 'refresh']

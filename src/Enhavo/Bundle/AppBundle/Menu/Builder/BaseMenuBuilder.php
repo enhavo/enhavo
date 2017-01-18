@@ -39,6 +39,10 @@ class BaseMenuBuilder extends AbstractMenuBuilder
             $menu->setIcon($options['icon']);
         }
 
+        if(isset($options['role'])) {
+            $menu->setRole($options['role']);
+        }
+
         return $menu;
     }
 

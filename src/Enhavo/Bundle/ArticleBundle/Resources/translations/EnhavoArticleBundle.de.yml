@@ -1,4 +1,10 @@
 article:
+  role:
+    label:
+      index: 'Artikel anzeigen'
+      update: 'Artikel bearbeiten'
+      create: 'Artikel erstellen'
+      delete: 'Artikel löschen'
   form:
     label:
       page_title: 'Seitentitel'
@@ -7,7 +13,6 @@ article:
       priority: 'Priorität'
       change_frequency: 'Änderungsfrequenz'
       publication_date: 'Erscheinungsdatum'
-      workflow: 'Workflow'
   label:
     article: 'Artikel'
     teaser: 'Teaser'

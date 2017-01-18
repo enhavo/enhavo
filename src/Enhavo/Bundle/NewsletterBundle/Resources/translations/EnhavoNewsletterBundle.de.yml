@@ -1,4 +1,11 @@
 newsletter:
+  role:
+    label:
+      index: 'Newsletter anzeigen'
+      update: 'Newsletter bearbeiten'
+      create: 'Newsletter erstellen'
+      delete: 'Newsletter löschen'
+      send: 'Newsletter verschicken'
   action:
     sendAndSave: 'Senden und Speichern'
     sent:
@@ -21,6 +28,12 @@ newsletter:
       confirm:
         send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
 subscriber:
+  role:
+    label:
+      index: 'Abonennt anzeigen'
+      update: 'Abonennt bearbeiten'
+      create: 'Abonennt erstellen'
+      delete: 'Abonennt löschen'
   label:
     subscriber: Abonnent
     active: 'Aktiviert'

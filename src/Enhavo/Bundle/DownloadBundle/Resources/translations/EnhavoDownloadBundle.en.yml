@@ -1,4 +1,10 @@
 download:
+  role:
+    label:
+      index: 'Download list'
+      update: 'Download update'
+      create: 'Download create'
+      delete: 'Download delete'
   form:
     label:
       file: 'File'

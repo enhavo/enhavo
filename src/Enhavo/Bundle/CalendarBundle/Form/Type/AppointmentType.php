@@ -4,10 +4,7 @@ namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AppointmentType extends AbstractType
 {
@@ -26,9 +23,12 @@ class AppointmentType extends AbstractType
      */
     protected $routingStrategy;
 
+    /**
+     * @var string
+     */
     protected $translation;
 
-    public function __construct($dataClass, $routingStrategy, $route)
+    public function __construct($dataClass, $routingStrategy, $route, $translation)
     {
         $this->dataClass = $dataClass;
         $this->route = $route;
@@ -36,7 +36,7 @@ class AppointmentType extends AbstractType
         $this->translation = $translation;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options, $translation)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('teaser', 'textarea', array(
             'label' => 'form.label.teaser',
@@ -66,7 +66,7 @@ class AppointmentType extends AbstractType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,

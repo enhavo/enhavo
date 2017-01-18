@@ -24,3 +24,43 @@ enhavo_newsletter:
             type: enhavo_newsletter_subscribe
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
+enhavo_app:
+    roles:
+        enhavo_newsletter_subscriber_index:
+            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX
+            label: subscriber.role.label.index
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_subscriber_create:
+            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_CREATE
+            label: subscriber.role.label.create
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_subscriber_update:
+            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_UPDATE
+            label: subscriber.role.label.update
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_subscriber_delete:
+            role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_DELETE
+            label: subscriber.role.label.delete
+            translationDomain: EnhavoNewsletterBundle
+
+        enhavo_newsletter_newsletter_index:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX
+            label: newsletter.role.label.index
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_newsletter_create:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE
+            label: newsletter.role.label.create
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_newsletter_update:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE
+            label: newsletter.role.label.update
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_newsletter_delete:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
+            label: newsletter.role.label.delete
+            translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_newsletter_send:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_send
+            label: newsletter.role.label.send
+            translationDomain: EnhavoNewsletterBundle
+

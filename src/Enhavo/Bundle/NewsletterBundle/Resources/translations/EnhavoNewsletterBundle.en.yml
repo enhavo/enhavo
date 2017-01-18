@@ -1,4 +1,11 @@
 newsletter:
+  role:
+    label:
+      index: 'Newsletter list'
+      update: 'Newsletter update'
+      create: 'Newsletter create'
+      delete: 'Newsletter delete'
+      send: 'Newsletter send'
   action:
     sendAndSave: 'Send and Save'
     sent:
@@ -21,6 +28,12 @@ newsletter:
       confirm:
         send: 'Do you really want to send all selected newsletters?'
 subscriber:
+  role:
+    label:
+      index: 'Subscriber list'
+      update: 'Subscriber update'
+      create: 'Subscriber create'
+      delete: 'Subscriber delete'
   label:
     subscriber: Subscriber
     active: 'Active'
