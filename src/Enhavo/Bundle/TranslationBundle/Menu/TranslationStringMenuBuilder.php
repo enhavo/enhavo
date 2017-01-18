@@ -19,7 +19,7 @@ class TranslationStringMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'translation.label.translationString');
         $this->setOption('translationDomain', $options, 'EnhavoTranslationBundle');
         $this->setOption('route', $options, 'enhavo_translation_translation_string_index');
-        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_TRANSLATION_STRINGS_INDEX');
+        $this->setOption('role', $options, 'ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX');
         return parent::createMenu($options);
     }
 

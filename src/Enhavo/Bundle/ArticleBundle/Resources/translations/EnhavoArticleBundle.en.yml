@@ -1,4 +1,10 @@
 article:
+  role:
+    label:
+      index: 'Article list'
+      update: 'Article update'
+      create: 'Article create'
+      delete: 'Article delete'
   form:
     label:
       page_title: 'Pagetitle'

@@ -14,7 +14,7 @@ class SendButton extends AbstractType implements ButtonInterface
             'route' => 'enhavo_newsletter_newsletter_send',
             'icon' => 'eye',
             'display' => true,
-            'role' => 'ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
+            'role' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
             'label' => 'newsletter.action.sendAndSave',
             'translationDomain' => 'EnhavoNewsletterBundle'
         ]);

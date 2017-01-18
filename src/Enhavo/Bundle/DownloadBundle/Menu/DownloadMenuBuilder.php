@@ -19,7 +19,7 @@ class DownloadMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'download.label.download');
         $this->setOption('translationDomain', $options, 'EnhavoDownloadBundle');
         $this->setOption('route', $options, 'enhavo_download_download_index');
-        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX');
+        $this->setOption('role', $options, 'ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX');
         return parent::createMenu($options);
     }
 

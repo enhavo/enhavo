@@ -19,7 +19,7 @@ class ProductOptionMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'product.label.product_option');
         $this->setOption('translationDomain', $options, 'EnhavoShopBundle');
         $this->setOption('route', $options, 'enhavo_shop_product_option_index');
-        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_SHOP_PRODUCT_OPTION_INDEX');
+        $this->setOption('role', $options, 'ROLE_ENHAVO_SHOP_PRODUCT_OPTION_INDEX');
         return parent::createMenu($options);
     }
 

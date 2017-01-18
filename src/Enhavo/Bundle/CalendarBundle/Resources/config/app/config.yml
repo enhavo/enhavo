@@ -5,9 +5,21 @@ enhavo_content:
                 type: publish
                 repository: enhavo_calendar.repository.appointment
 
-security:
-    role_hierarchy:
-        ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_INDEX:
-        ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_UPDATE:
-        ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_CREATE:
-        ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_DELETE:
+enhavo_app:
+    roles:
+        enhavo_calendar_appointment_index:
+            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX
+            label: appointment.role.label.index
+            translationDomain: EnhavoCalendarBundle
+        enhavo_calendar_appointment_create:
+            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_CREATE
+            label: appointment.role.label.create
+            translationDomain: EnhavoCalendarBundle
+        enhavo_calendar_appointment_update:
+            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_UPDATE
+            label: appointment.role.label.update
+            translationDomain: EnhavoCalendarBundle
+        enhavo_calendar_appointment_delete:
+            role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_DELETE
+            label: appointment.role.label.delete
+            translationDomain: EnhavoCalendarBundle

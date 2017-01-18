@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Security\Roles;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 class AdminRolesProvider implements RolesProvider
 {
     /**
@@ -15,11 +17,11 @@ class AdminRolesProvider implements RolesProvider
      */
     protected $roles = array();
 
-    public function __construct($roles)
+    public function __construct($roles, TranslatorInterface $translator)
     {
-        foreach($roles as $role => $value) {
-            if(preg_match('/^role_admin_/i', $role)) {
-                $this->roles[$role] = $value;
+        foreach($roles as $role => $data) {
+            if($data['display']) {
+                $this->roles[$data['role']] = $translator->trans($data['label'], [], $data['translationDomain']);
             }
         }
     }

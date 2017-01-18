@@ -18,7 +18,7 @@ class PageMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'page.label.page');
         $this->setOption('translationDomain', $options, 'EnhavoPageBundle');
         $this->setOption('route', $options, 'enhavo_page_page_index');
-        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_PAGE_PAGE_INDEX');
+        $this->setOption('role', $options, 'ROLE_ENHAVO_PAGE_PAGE_INDEX');
         return parent::createMenu($options);
     }
 

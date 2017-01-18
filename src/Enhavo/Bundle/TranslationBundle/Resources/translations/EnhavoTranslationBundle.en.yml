@@ -6,3 +6,11 @@ translation:
   label:
     translationKey: 'Key'
     translationString: 'Translation'
+
+translation_string:
+  role:
+    label:
+      index: 'Translation list'
+      update: 'Translation update'
+      create: 'Translation create'
+      delete: 'Translation delete'

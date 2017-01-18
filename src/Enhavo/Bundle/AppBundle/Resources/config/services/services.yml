@@ -10,7 +10,8 @@ services:
     security.roles.provider:
         class: '%security.roles.provider.class%'
         arguments:
-            - '%security.role_hierarchy.roles%'
+            - '%enhavo_app.roles%'
+            - '@translator'
 
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController

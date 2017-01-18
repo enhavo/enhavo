@@ -1,4 +1,10 @@
 appointment:
+  role:
+    label:
+      index: 'Termin anzeigen'
+      update: 'Termin bearbeiten'
+      create: 'Termin erstellen'
+      delete: 'Termin löschen'
   form:
     label:
       dateFrom: 'Von/Am'

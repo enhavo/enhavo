@@ -3,9 +3,23 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\DownloadBundle\Model\DownloadInterface: Enhavo\Bundle\DownloadBundle\Entity\Download
 
-security:
-    role_hierarchy:
-        ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX:
-        ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_UPDATE:
-        ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_CREATE:
-        ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_DELETE:
+enhavo_app:
+    roles:
+        enhavo_download_download_index:
+            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX
+            label: download.role.label.index
+            translationDomain: EnhavoDownloadBundle
+        enhavo_download_download_create:
+            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_CREATE
+            label: download.role.label.create
+            translationDomain: EnhavoDownloadBundle
+        enhavo_download_download_update:
+            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_UPDATE
+            label: download.role.label.update
+            translationDomain: EnhavoDownloadBundle
+        enhavo_download_download_delete:
+            role: ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_DELETE
+            label: download.role.label.delete
+            translationDomain: EnhavoDownloadBundle
+
+

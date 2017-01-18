@@ -18,7 +18,7 @@ class NewsletterMenuBuilder extends BaseMenuBuilder
         $this->setOption('label', $options, 'newsletter.label.newsletter');
         $this->setOption('translationDomain', $options, 'EnhavoNewsletterBundle');
         $this->setOption('route', $options, 'enhavo_newsletter_newsletter_index');
-        $this->setOption('role', $options, 'ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX');
+        $this->setOption('role', $options, 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX');
         return parent::createMenu($options);
     }
 

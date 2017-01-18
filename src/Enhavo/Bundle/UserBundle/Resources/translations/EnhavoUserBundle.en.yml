@@ -1,4 +1,10 @@
 group:
+  role:
+    label:
+      index: 'Group list'
+      update: 'Group update'
+      create: 'Group create'
+      delete: 'Group delete'
   form:
     label:
       name: 'Name'
@@ -9,6 +15,12 @@ group:
     group: 'Group'
     permission: 'Permission'
 user:
+  role:
+    label:
+      index: 'User list'
+      update: 'User update'
+      create: 'User create'
+      delete: 'User delete'
   form:
     label:
       username: 'Username'
@@ -40,53 +52,3 @@ confirm:
       password-repeat: Repeat password
     action:
       reset: Reset
-role:
-  label:
-    ROLE_ADMIN_ENHAVO_DASHBOARD_DASHBOARD_INDEX: 'see dashboard'
-
-    ROLE_ADMIN_ENHAVO_USER_USER_INDEX: 'see users'
-    ROLE_ADMIN_ENHAVO_USER_USER_UPDATE: 'edit users'
-    ROLE_ADMIN_ENHAVO_USER_USER_CREATE: 'create users'
-    ROLE_ADMIN_ENHAVO_USER_USER_DELETE: 'delete users'
-
-    ROLE_ADMIN_ENHAVO_USER_GROUP_INDEX: 'see usergroups'
-    ROLE_ADMIN_ENHAVO_USER_GROUP_UPDATE: 'edit usergroups'
-    ROLE_ADMIN_ENHAVO_USER_GROUP_CREATE: 'create usergroups'
-    ROLE_ADMIN_ENHAVO_USER_GROUP_DELETE: 'delete usergroups'
-
-    ROLE_ADMIN_ENHAVO_PAGE_PAGE_INDEX: 'see pages'
-    ROLE_ADMIN_ENHAVO_PAGE_PAGE_UPDATE: 'edit pages'
-    ROLE_ADMIN_ENHAVO_PAGE_PAGE_CREATE: 'create pages'
-    ROLE_ADMIN_ENHAVO_PAGE_PAGE_DELETE:  'delete pages'
-
-    ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_INDEX: 'see categories'
-    ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_UPDATE: 'edit categories'
-    ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_CREATE: 'create categories'
-    ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_DELETE:  'delete categories'
-
-    ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_INDEX: 'see articles'
-    ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_UPDATE: 'edit articles'
-    ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_CREATE: 'create articles'
-    ROLE_ADMIN_ENHAVO_ARTICLE_ARTICLE_DELETE:  'delete articles'
-
-    ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_INDEX: 'see appointments'
-    ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_UPDATE: 'edit appointments'
-    ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_CREATE: 'create appointments'
-    ROLE_ADMIN_ENHAVO_CALENDAR_APPOINTMENT_DELETE: 'delete appointments'
-
-    ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX: 'see downloads'
-    ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_UPDATE: 'edit downloads'
-    ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_CREATE: 'create downloads'
-    ROLE_ADMIN_ENHAVO_DOWNLOAD_DOWNLOAD_DELETE: 'delete downloads'
-
-    ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX: 'see newsletters'
-    ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE: 'edit newsletters'
-    ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE: 'create newsletters'
-    ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE: 'delete newsletters'
-    ROLE_ADMIN_ENHAVO_NEWSLETTER_NEWSLETTER_SEND: 'send newsletters'
-
-    ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_INDEX: 'see slides'
-    ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_UPDATE: 'edit slides'
-    ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_CREATE: 'create slides'
-    ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_DELETE: 'delete slides'
-

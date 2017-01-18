@@ -37,6 +37,7 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.template', $config[ 'template' ]);
         $container->setParameter('enhavo_app.route.url_resolver', $config['route']['url_resolver']);
         $container->setParameter('enhavo_app.route.auto_generator', $config['route']['auto_generator']);
+        $container->setParameter('enhavo_app.roles', $config['roles']);
         
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yml');

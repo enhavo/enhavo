@@ -21,14 +21,38 @@ fos_user:
                 address: '%mailer_from%'
                 sender_name: '%mailer_name%'
 
-security:
-    role_hierarchy:
-        ROLE_ADMIN_ENHAVO_USER_USER_INDEX:
-        ROLE_ADMIN_ENHAVO_USER_USER_UPDATE:
-        ROLE_ADMIN_ENHAVO_USER_USER_CREATE:
-        ROLE_ADMIN_ENHAVO_USER_USER_DELETE:
+enhavo_app:
+    roles:
+        enhavo_user_user_index:
+            role: ROLE_ENHAVO_USER_USER_INDEX
+            label: user.role.label.index
+            translationDomain: EnhavoUserBundle
+        enhavo_user_user_create:
+            role: ROLE_ENHAVO_USER_USER_CREATE
+            label: user.role.label.create
+            translationDomain: EnhavoUserBundle
+        enhavo_user_user_update:
+            role: ROLE_ENHAVO_USER_USER_UPDATE
+            label: user.role.label.update
+            translationDomain: EnhavoUserBundle
+        enhavo_user_user_delete:
+            role: ROLE_ENHAVO_USER_USER_DELETE
+            label: user.role.label.delete
+            translationDomain: EnhavoUserBundle
 
-        ROLE_ADMIN_ENHAVO_USER_GROUP_INDEX:
-        ROLE_ADMIN_ENHAVO_USER_GROUP_UPDATE:
-        ROLE_ADMIN_ENHAVO_USER_GROUP_CREATE:
-        ROLE_ADMIN_ENHAVO_USER_GROUP_DELETE:
+        enhavo_user_group_index:
+            role: ROLE_ENHAVO_USER_GROUP_INDEX
+            label: group.role.label.index
+            translationDomain: EnhavoUserBundle
+        enhavo_user_group_create:
+            role: ROLE_ENHAVO_USER_GROUP_CREATE
+            label: group.role.label.create
+            translationDomain: EnhavoUserBundle
+        enhavo_user_group_update:
+            role: ROLE_ENHAVO_USER_GROUP_UPDATE
+            label: group.role.label.update
+            translationDomain: EnhavoUserBundle
+        enhavo_user_group_delete:
+            role: ROLE_ENHAVO_USER_GROUP_DELETE
+            label: group.role.label.delete
+            translationDomain: EnhavoUserBundle

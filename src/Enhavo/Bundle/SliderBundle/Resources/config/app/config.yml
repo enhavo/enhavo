@@ -10,9 +10,21 @@ enhavo_assets:
             slider:
                 location: /bundles/enhavoslider/js
 
-security:
-    role_hierarchy:
-        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_INDEX:
-        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_UPDATE:
-        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_CREATE:
-        ROLE_ADMIN_ENHAVO_SLIDER_SLIDE_DELETE:
+enhavo_app:
+    roles:
+        enhavo_slider_slide_index:
+            role: ROLE_ENHAVO_SLIDER_SLIDE_INDEX
+            label: slide.role.label.index
+            translationDomain: EnhavoSliderBundle
+        enhavo_slider_slide_create:
+            role: ROLE_ENHAVO_SLIDER_SLIDE_CREATE
+            label: slide.role.label.create
+            translationDomain: EnhavoSliderBundle
+        enhavo_slider_slide_update:
+            role: ROLE_ENHAVO_SLIDER_SLIDE_UPDATE
+            label: slide.role.label.update
+            translationDomain: EnhavoSliderBundle
+        enhavo_slider_slide_delete:
+            role: ROLE_ENHAVO_SLIDER_SLIDE_DELETE
+            label: slide.role.label.delete
+            translationDomain: EnhavoSliderBundle

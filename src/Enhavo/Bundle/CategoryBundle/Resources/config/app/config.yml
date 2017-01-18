@@ -15,9 +15,26 @@ enhavo_assets:
             category:
                 location: /bundles/enhavocategory/js
 
+enhavo_app:
+    roles:
+        enhavo_category_category_index:
+            role: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX
+            label: category.role.label.index
+            translationDomain: EnhavoCategoryBundle
+        enhavo_category_category_create:
+            role: ROLE_ENHAVO_CATEGORY_CATEGORY_CREATE
+            label: category.role.label.create
+            translationDomain: EnhavoCategoryBundle
+        enhavo_category_category_update:
+            role: ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE
+            label: category.role.label.update
+            translationDomain: EnhavoCategoryBundle
+        enhavo_category_category_delete:
+            role: ROLE_ENHAVO_CATEGORY_CATEGORY_DELETE
+            label: category.role.label.delete
+            translationDomain: EnhavoCategoryBundle
+
 security:
     role_hierarchy:
-        ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_INDEX:
-        ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_UPDATE:
-        ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_CREATE:
-        ROLE_ADMIN_ENHAVO_CATEGORY_CATEGORY_DELETE:
+        ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE:
+            ROLE_ENHAVO_CATEGORY_COLLECTION_UPDATE:

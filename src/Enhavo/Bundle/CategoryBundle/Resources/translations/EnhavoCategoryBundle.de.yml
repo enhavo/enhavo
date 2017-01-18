@@ -1,4 +1,10 @@
 category:
+  role:
+    label:
+      index: 'Katgorie anzeigen'
+      update: 'Katgorie bearbeiten'
+      create: 'Katgorie erstellen'
+      delete: 'Katgorie löschen'
   label:
     id: 'ID'
     name: 'Name'
