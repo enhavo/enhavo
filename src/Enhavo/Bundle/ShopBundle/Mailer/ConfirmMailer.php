@@ -26,7 +26,7 @@ class ConfirmMailer extends AbstractMailer
         $attach->setBody($this->getBillingGenerator()->generate($order));
 
         $message = $this->createMessage();
-        $message->addFrom($this->from);
+        $message->addFrom($this->from, $this->senderName);
         $message->setSubject($this->getTranslator()->trans($this->subject, [], $this->translationDomain));
         $message->addTo($order->getCustomerEmail());
         $message->setBody($body, 'text/html');

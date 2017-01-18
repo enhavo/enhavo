@@ -67,7 +67,7 @@ class DoubleOptInStrategy extends AbstractStrategy
         $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
         $message = \Swift_Message::newInstance()
             ->setSubject($this->getSubject())
-            ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'))
+            ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
             ->setTo($subscriber->getEmail())
             ->setBody($this->renderTemplate($template, [
                 'subscriber' => $subscriber,
@@ -82,7 +82,7 @@ class DoubleOptInStrategy extends AbstractStrategy
             $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->getAdminSubject())
-                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'))
+                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
                 ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
