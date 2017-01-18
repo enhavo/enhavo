@@ -10,12 +10,15 @@ enhavo_newsletter:
             notify:
                 from: '%mailer_from%'
                 admin_email: '%mailer_to%'
+                sender_name: '%mailer_name%'
             accept:
                 from: '%mailer_from%'
                 admin_email: '%mailer_to%'
+                sender_name: '%mailer_name%'
             double_opt_in:
                 from: '%mailer_from%'
                 admin_email: '%mailer_to%'
+                sender_name: '%mailer_name%'
     forms:
         default:
             type: enhavo_newsletter_subscribe

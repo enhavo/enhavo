@@ -54,6 +54,11 @@ class Configuration
     /**
      * @var string
      */
+    private $senderName;
+
+    /**
+     * @var string
+     */
     private $subject;
 
     /**
@@ -197,6 +202,22 @@ class Configuration
     public function setFrom($from)
     {
         $this->from = $from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSenderName()
+    {
+        return $this->senderName;
+    }
+
+    /**
+     * @param string $senderName
+     */
+    public function setSenderName($senderName)
+    {
+        $this->senderName = $senderName;
     }
 
     /**

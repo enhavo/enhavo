@@ -3,3 +3,4 @@ enhavo_contact:
         contact:
             recipient: '%mailer_to%'
             from: '%mailer_from%'
+            sender_name: '%mailer_name%'

@@ -46,6 +46,8 @@ abstract class AbstractMailer implements MailerInterface
      */
     protected $translationDomain;
 
+    protected $senderName;
+
     /**
      * AbstractMailer constructor.
      *
@@ -62,6 +64,7 @@ abstract class AbstractMailer implements MailerInterface
         $this->subject = $config['subject'];
         $this->from = $config['from'];
         $this->translationDomain = $config['translationDomain'];
+        $this->senderName = $config['sender_name'];
     }
 
     protected function render($template, $parameters)

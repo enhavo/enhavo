@@ -64,7 +64,7 @@ class ContactMailer
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom($configuration->getFrom())
+            ->setFrom($configuration->getFrom(), $configuration->getSenderName())
             ->setReplyTo($model->getEmail())
             ->setTo($configuration->getRecipient())
             ->setBody($text, 'text/html');
@@ -90,7 +90,7 @@ class ContactMailer
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom($configuration->getFrom())
+            ->setFrom($configuration->getFrom(), $configuration->getSenderName())
             ->setTo($model->getEmail())
             ->setBody($text, 'text/html');
 

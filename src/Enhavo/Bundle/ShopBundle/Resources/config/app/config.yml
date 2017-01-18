@@ -143,8 +143,10 @@ enhavo_shop:
     mailer:
         confirm:
             from: '%mailer_from%'
+            sender_name: '%mailer_name%'
         tracking:
             from: '%mailer_from%'
+            sender_name: '%mailer_name%'
 
 enhavo_theme:
     route:

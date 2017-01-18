@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('recipient')->defaultValue('no-reply@enhavo.com')->end()
                             ->scalarNode('from')->defaultValue('no-reply@enhavo.com')->end()
+                            ->scalarNode('sender_name')->defaultValue('enhavo')->end()
                             ->scalarNode('subject')->defaultValue('contact.message.email_subject')->end()
                             ->scalarNode('translation_domain')->defaultValue('EnhavoContactBundle')->end()
                             ->scalarNode('confirm_mail')->defaultValue(true)->end()
