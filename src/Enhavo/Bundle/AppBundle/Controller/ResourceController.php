@@ -313,8 +313,8 @@ class ResourceController extends BaseController
     protected function isGrantedOr403(SyliusRequestConfiguration $configuration, $permission)
     {
         if (!$configuration->hasPermission()) {
-            $role = $this->getRoleName($permission);
-            if (!$this->get('security.authorization_checker')->isGranted($role)) {
+            $permission = $this->getRoleName($permission);
+            if (!$this->authorizationChecker->isGranted($configuration, $permission)) {
                 throw $this->createAccessDeniedException();
             }
             return;
