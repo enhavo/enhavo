@@ -41,8 +41,6 @@ class PageFactory extends ContentFactory
         $newGrid = $this->gridFactory->duplicate($originalResource->getGrid());
         $newPage->setGrid($newGrid);
 
-        //TODO: workflow_status
-
         return $newPage;
     }
 }

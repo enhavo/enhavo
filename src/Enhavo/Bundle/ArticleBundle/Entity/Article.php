@@ -12,10 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
-use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\WorkflowBundle\Model\WorkflowStatusInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Article extends Content
 {
@@ -33,11 +30,6 @@ class Article extends Content
      * @var GridInterface
      */
     protected $grid;
-
-    /**
-     * @var WorkflowStatusInterface
-     */
-    protected $workflow_status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -119,30 +111,6 @@ class Article extends Content
     public function getGrid()
     {
         return $this->grid;
-    }
-
-    /**
-     * Set workflowStatus
-     *
-     * @param WorkflowStatusInterface $workflowStatus
-     *
-     * @return Article
-     */
-    public function setWorkflowStatus(WorkflowStatusInterface $workflowStatus = null)
-    {
-        $this->workflow_status = $workflowStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get workflowStatus
-     *
-     * @return WorkflowStatusInterface
-     */
-    public function getWorkflowStatus()
-    {
-        return $this->workflow_status;
     }
 
     /**

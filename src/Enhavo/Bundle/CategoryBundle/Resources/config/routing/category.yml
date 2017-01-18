@@ -46,9 +46,10 @@ enhavo_category_category_table:
         _sylius:
             repository:
                 method: findByCollection
-            criteria:
-                collection: %enhavo_category.default_collection%
-                paging: true
+                arguments:
+                    criteria:
+                        collection: test
+                        paging: true
             viewer:
                 translationDomain: EnhavoCategoryBundle
                 width: 12

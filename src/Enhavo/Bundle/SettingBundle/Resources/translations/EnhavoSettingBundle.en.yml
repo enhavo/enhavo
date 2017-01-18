@@ -1,13 +1,17 @@
 label:
-    setting: 'Settings'
+  setting: 'Settings'
 
 setting:
+  role:
     label:
-        key: 'Key'
-        type: 'Type'
-        label: 'Label'
-        value: 'Value'
-        file: 'File'
-        files: 'Files'
-        setting: 'Setting'
-        date: 'Date'
+      index: 'Setting list'
+      update: 'Setting update'
+  label:
+    key: 'Key'
+    type: 'Type'
+    label: 'Label'
+    value: 'Value'
+    file: 'File'
+    files: 'Files'
+    setting: 'Setting'
+    date: 'Date'

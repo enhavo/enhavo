@@ -1,4 +1,10 @@
 appointment:
+  role:
+    label:
+      index: 'Appointment list'
+      update: 'Appointment update'
+      create: 'Appointment create'
+      delete: 'Appointment delete'
   form:
     label:
       dateFrom: 'From'

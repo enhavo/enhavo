@@ -1,4 +1,10 @@
 group:
+  role:
+    label:
+      index: 'Gruppe anzeigen'
+      update: 'Gruppe bearbeiten'
+      create: 'Gruppe erstellen'
+      delete: 'Gruppe löschen'
   form:
     label:
       name: 'Name'
@@ -9,6 +15,12 @@ group:
     group: 'Gruppe'
     permission: 'Rechte'
 user:
+  role:
+    label:
+      index: 'Benutzer anzeigen'
+      update: 'Benutzer bearbeiten'
+      create: 'Benutzer erstellen'
+      delete: 'Benutzer löschen'
   form:
     label:
       username: 'Benutzername'
@@ -40,57 +52,3 @@ confirm:
       password-repeat: Passwort wiederholen
     action:
       reset: Zurücksetzen
-role:
-  label:
-    ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX: 'Dashboard sehen'
-
-    ROLE_ENHAVO_USER_USER_INDEX: 'Benutzer sehen'
-    ROLE_ENHAVO_USER_USER_UPDATE: 'Benutzer bearbeiten'
-    ROLE_ENHAVO_USER_USER_CREATE: 'Benutzer erstellen'
-    ROLE_ENHAVO_USER_USER_DELETE: 'Benutzer löschen'
-
-    ROLE_ENHAVO_USER_GROUP_INDEX: 'Benutzergruppen sehen'
-    ROLE_ENHAVO_USER_GROUP_UPDATE: 'Benutzergruppen bearbeiten'
-    ROLE_ENHAVO_USER_GROUP_CREATE: 'Benutzergruppen erstellen'
-    ROLE_ENHAVO_USER_GROUP_DELETE: 'Benutzergruppen löschen'
-
-    ROLE_ENHAVO_PAGE_PAGE_INDEX: 'Seiten sehen'
-    ROLE_ENHAVO_PAGE_PAGE_UPDATE: 'Seiten bearbeiten'
-    ROLE_ENHAVO_PAGE_PAGE_CREATE: 'Seiten erstellen'
-    ROLE_ENHAVO_PAGE_PAGE_DELETE:  'Seiten löschen'
-
-    ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX: 'Kategorie sehen'
-    ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE: 'Kategorie bearbeiten'
-    ROLE_ENHAVO_CATEGORY_CATEGORY_CREATE: 'Kategorie erstellen'
-    ROLE_ENHAVO_CATEGORY_CATEGORY_DELETE:  'Kategorie löschen'
-
-    ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX: 'Artikel sehen'
-    ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE: 'Artikel bearbeiten'
-    ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE: 'Artikel erstellen'
-    ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE:  'Artikel löschen'
-
-    ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX: 'Termine sehen'
-    ROLE_ENHAVO_CALENDAR_APPOINTMENT_UPDATE: 'Termine bearbeiten'
-    ROLE_ENHAVO_CALENDAR_APPOINTMENT_CREATE: 'Termine erstellen'
-    ROLE_ENHAVO_CALENDAR_APPOINTMENT_DELETE: 'Termine löschen'
-
-    ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_INDEX: 'Downloads sehen'
-    ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_UPDATE: 'Downloads bearbeiten'
-    ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_CREATE: 'Downloads erstellen'
-    ROLE_ENHAVO_DOWNLOAD_DOWNLOAD_DELETE: 'Downloads löschen'
-
-    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX: 'Newsletter sehen'
-    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_UPDATE: 'Newsletter bearebeiten'
-    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE: 'Newsletter erstellen'
-    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE: 'Newsletter löschen'
-    ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND: 'Newsletter verschicken'
-
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_INDEX: 'Workflow sehen'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_UPDATE: 'Workflow bearebeiten'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_CREATE: 'Workflow erstellen'
-    ROLE_ENHAVO_WORKFLOW_WORKFLOW_DELETE: 'Workflow löschen'
-
-    ROLE_ENHAVO_SLIDER_SLIDE_INDEX: 'Slides sehen'
-    ROLE_ENHAVO_SLIDER_SLIDE_UPDATE: 'Slides bearebeiten'
-    ROLE_ENHAVO_SLIDER_SLIDE_CREATE: 'Slides erstellen'
-    ROLE_ENHAVO_SLIDER_SLIDE_DELETE: 'Slides löschen'

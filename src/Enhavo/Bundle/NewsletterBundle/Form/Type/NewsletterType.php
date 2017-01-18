@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NewsletterType extends AbstractType
 {
@@ -12,12 +12,9 @@ class NewsletterType extends AbstractType
      * @var string
      */
     protected $dataClass;
-
-    protected $securityContext;
-
-    public function __construct($securityContext, $dataClass)
+    
+    public function __construct($dataClass)
     {
-        $this->securityContext = $securityContext;
         $this->dataClass = $dataClass;
     }
 
@@ -37,23 +34,12 @@ class NewsletterType extends AbstractType
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle'
         ) );
-
-        if($this->securityContext->isGranted('WORKFLOW_ACTIVE', $this->dataClass)){
-            $entityName = array();
-            $entityName[0] = $this->dataClass;
-
-            $builder->add('workflow_status', 'enhavo_workflow_status', array(
-                'label' => 'workflow.form.label.next_state',
-                'translation_domain' => 'EnhavoWorkflowBundle',
-                'attr' => $entityName
-            ));
-        }
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\Newsletter'
+            'data_class' => $this->dataClass
         ));
     }
 

@@ -1,9 +1,12 @@
 enhavo_translation:
     translate: true
-    default_locale: en
+    default_locale: '%locale%'
     locales:
         en:
         de:
+
+sylius_resource:
+    authorization_checker: enhavo_app.security.default_authorization_checker
 
 enhavo_article:
     resources:

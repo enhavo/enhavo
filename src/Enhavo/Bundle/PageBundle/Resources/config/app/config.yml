@@ -10,6 +10,23 @@ enhavo_app:
                 model: enhavo_page.page
                 strategy: id
                 route: enhavo_page_page_update
+    roles:
+        page_index:
+            role: ROLE_ENHAVO_PAGE_PAGE_INDEX
+            label: page.role.label.index
+            translationDomain: EnhavoPageBundle
+        page_create:
+            role: ROLE_ENHAVO_PAGE_PAGE_CREATE
+            label: page.role.label.create
+            translationDomain: EnhavoPageBundle
+        page_update:
+            role: ROLE_ENHAVO_PAGE_PAGE_UPDATE
+            label: page.role.label.update
+            translationDomain: EnhavoPageBundle
+        page_delete:
+            role: ROLE_ENHAVO_PAGE_PAGE_DELETE
+            label: page.role.label.delete
+            translationDomain: EnhavoPageBundle
 
 enhavo_theme:
     route:
@@ -25,11 +42,3 @@ enhavo_content:
             page:
                 type: publish
                 repository: enhavo_page.repository.page
-
-enhavo_workflow:
-    entities:
-        -
-            class: '%enhavo_page.model.page.class%'
-            label: 'page.label.page'
-            translationDomain: EnhavoPageBundle
-            repository: enhavo_page.repository.page

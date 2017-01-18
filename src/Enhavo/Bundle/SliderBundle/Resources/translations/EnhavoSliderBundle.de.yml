@@ -1,4 +1,10 @@
 slide:
+  role:
+    label:
+      index: 'Slide anzeigen'
+      update: 'Slide bearbeiten'
+      create: 'Slide erstellen'
+      delete: 'Slide löschen'
   form:
     label:
       url: 'URL'

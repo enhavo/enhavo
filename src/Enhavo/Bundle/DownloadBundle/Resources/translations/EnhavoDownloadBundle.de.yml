@@ -1,4 +1,10 @@
 download:
+  role:
+    label:
+      index: 'Download anzeigen'
+      update: 'Download bearbeiten'
+      create: 'Download erstellen'
+      delete: 'Download löschen'
   form:
     label:
       file: 'Datei'

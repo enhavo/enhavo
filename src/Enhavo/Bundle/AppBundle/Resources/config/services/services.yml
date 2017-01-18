@@ -10,7 +10,8 @@ services:
     security.roles.provider:
         class: '%security.roles.provider.class%'
         arguments:
-            - '%security.role_hierarchy.roles%'
+            - '%enhavo_app.roles%'
+            - '@translator'
 
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController
@@ -66,6 +67,11 @@ services:
 
     enhavo_app.formatter.currency_formatter:
         class: Enhavo\Bundle\AppBundle\Formatter\CurrencyFormatter
+
+    enhavo_app.security.default_authorization_checker:
+        class: Enhavo\Bundle\AppBundle\Security\AuthorizationChecker\SymfonyAuthorizationChecker
+        arguments:
+            - '@security.authorization_checker'
 
     enhavo_shop.twig.currency:
         class: Enhavo\Bundle\AppBundle\Twig\Currency

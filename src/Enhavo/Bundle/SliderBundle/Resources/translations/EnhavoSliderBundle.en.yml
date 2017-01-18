@@ -1,4 +1,10 @@
 slide:
+  role:
+    label:
+      index: 'Slide list'
+      update: 'Slide update'
+      create: 'Slide create'
+      delete: 'Slide delete'
   form:
     label:
       url: 'URL'

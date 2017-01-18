@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Menu\Builder;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuBuilder;
+use Enhavo\Bundle\AppBundle\Menu\MenuItemInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Menu\MenuBuilderInterface;
 
@@ -45,12 +46,13 @@ class ListMenuBuilder extends AbstractMenuBuilder
         }
 
         $menu = $this->getFactory()->createItem($name);
-        foreach($this->menu as $name => $itemOptions) {
+        foreach($this->menu as $name => $options) {
             /** @var MenuBuilderInterface $menuBuilder */
-            $menuBuilder = $this->menuItemTypeCollector->getType($itemOptions['type']);
-            $itemOptions['name'] = $name;
-            if($menuBuilder->isGranted()) {
-                $menu->addChild($menuBuilder->createMenu($itemOptions));
+            $menuBuilder = $this->menuItemTypeCollector->getType($options['type']);
+            $menuItem  = $menuBuilder->createMenu($options);
+            $options['name'] = $name;
+            if($menuBuilder->isGranted($menuItem)) {
+                $menu->addChild($menuBuilder->createMenu($options));
             }
         }
         return $menu;

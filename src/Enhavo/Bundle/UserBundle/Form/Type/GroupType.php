@@ -16,15 +16,19 @@ use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class GroupType extends AbstractType
 {
-    protected $roles;
+    /**
+     * @var AdminRolesProvider
+     */
+    protected $rolesProvider;
 
+    /**
+     * GroupType constructor.
+     *
+     * @param AdminRolesProvider $rolesProvider
+     */
     public function __construct(AdminRolesProvider $rolesProvider)
     {
-        $roles = array_keys($rolesProvider->getRoles());
-
-        foreach ($roles as $role) {
-            $this->roles[$role] = (sprintf('role.label.%s', $role));
-        }
+        $this->rolesProvider = $rolesProvider;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,7 +42,7 @@ class GroupType extends AbstractType
         $builder->add('roles', 'choice', array(
             'label' => 'group.form.label.roles',
             'translation_domain' => 'EnhavoUserBundle',
-            'choices' => $this->roles,
+            'choices' => $this->rolesProvider->getRoles(),
             'multiple' => true,
             'expanded' => true
         ));

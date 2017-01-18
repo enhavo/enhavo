@@ -24,18 +24,21 @@ abstract class AbstractMenuBuilder extends AbstractType implements MenuBuilderIn
      */
     public function createMenu(array $options)
     {
-        if(array_key_exists('role', $options)) {
-            $this->role = $options['role'];
-        }
+
+    }
+
+    public function setOptions(array $options)
+    {
+
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isGranted()
+    public function isGranted(MenuItemInterface $menuItem)
     {
-        if(is_string($this->role)) {
-            return $this->getAuthorizedChecker()->isGranted($this->role);
+        if(is_string($menuItem->getRole())) {
+            return $this->getAuthorizedChecker()->isGranted($menuItem->getRole());
         }
         return true;
     }

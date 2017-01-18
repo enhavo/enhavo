@@ -2,12 +2,11 @@ parameters:
 
 services:
     enhavo_page_page:
-        class: %enhavo_page.form.type.page.class%
+        class: '%enhavo_page.form.type.page.class%'
         arguments:
-            - %enhavo_page.model.page.class%
-            - %enhavo_page.routing.page.strategy%
-            - %enhavo_page.routing.page.route%
-            - @security.context
+            - '%enhavo_page.model.page.class%'
+            - '%enhavo_page.routing.page.strategy%'
+            - '%enhavo_page.routing.page.route%'
         tags:
             - { name: form.type }
 
@@ -22,7 +21,7 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\PageBundle\Entity\Page
-            - %enhavo_page.model.page.class%
+            - '%enhavo_page.model.page.class%'
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }

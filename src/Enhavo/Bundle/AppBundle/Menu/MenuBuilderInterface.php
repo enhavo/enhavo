@@ -14,5 +14,5 @@ interface MenuBuilderInterface extends TypeInterface
 {
     public function createMenu(array $options);
 
-    public function isGranted();
+    public function isGranted(MenuItemInterface $menuItem);
 }
