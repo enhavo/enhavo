@@ -57,7 +57,7 @@ class TableViewer extends AbstractViewer
 
         return $columns;
     }
-
+    
     protected function getBatches()
     {
         $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');

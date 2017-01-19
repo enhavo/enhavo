@@ -45,6 +45,8 @@ tab:
     seo: 'SEO'
 table:
   empty: 'no data'
+  filter:
+    apply: 'Apply'
 batch:
   form:
     action:

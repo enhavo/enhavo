@@ -6,8 +6,6 @@
     {% endfor %}
 </div>
 
-
-
 <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
     <div class="col-xs-{{ width }}"
         {% if sortable %}
@@ -18,7 +16,7 @@
             <div class="row entry-row{% if batches %} has-batch-actions{% endif %}" data-id="{{ item.id }}"{% if sortable %} data-sortable-row{% endif %}>
                 {% if batches %}
                     <div class="batch-checkbox-wrapper">
-                      <input type="checkbox" data-batch-selection value="{{ item.id }}" />
+                        <input type="checkbox" data-batch-selection value="{{ item.id }}" />
                     </div>
                 {% endif %}
                 {% for column in columns %}

@@ -73,4 +73,14 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
         }
         return null;
     }
+
+    public function getFilters()
+    {
+        return $this->parameters->get('filters', []);
+    }
+
+    public function hasFilters()
+    {
+        return $this->parameters->has('filters');
+    }
 }

@@ -8,17 +8,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Repository;
 
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository as SyliusEntityRepository;
 
 class EntityRepository extends SyliusEntityRepository
 {
-    public function addAtFirst($resource, $property = 'position')
+    public function filter(FilterQuery $query)
     {
-
-    }
-
-    public function addAtLast($resource, $property = 'position')
-    {
-
+        return $this->createPaginator([]);
     }
 }

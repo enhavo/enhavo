@@ -61,6 +61,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('sylius.resource_controller.resources_resolver');
         $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ResourcesResolver');
+        $definition->addArgument($container->getDefinition('enhavo_app.filter.filer_query_builder'));
     }
 
     protected function overwriteViewHandler(ContainerBuilder $container)

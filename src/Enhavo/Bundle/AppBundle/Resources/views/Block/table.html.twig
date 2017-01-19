@@ -1,9 +1,23 @@
 <div
     data-block
+    data-block-app="{{ app }}"
     data-block-type="table"
     data-block-table-route="{{ table_route }}"
-    {% if table_route_parameters is defined %}data-block-table-route-parameters="{{ table_route_parameters|json_encode }}"{% endif %}
-    {% if update_route_parameters is defined %}data-block-update-route-parameters="{{ update_route_parameters|json_encode }}"{% endif %}
+    {% if table_route_parameters %}data-block-table-route-parameters="{{ table_route_parameters|json_encode }}"{% endif %}
+    {% if update_route_parameters %}data-block-update-route-parameters="{{ update_route_parameters|json_encode }}"{% endif %}
     data-block-page="1"
-    {% if update_route is defined %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
+    {% if update_route %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
+
+    <div class="row" data-filter>
+        {% for filter in filters %}
+            <div class="col-md-3">
+                {{ filter_render(filter.type, filter, filter.value) }}
+            </div>
+        {% endfor %}
+        <div class="col-md-3">
+            <button>{{ 'table.filter.apply'|trans([], 'EnhavoAppBundle') }}</button>
+        </div>
+    </div>
+
+    <div data-table></div>
 </div>

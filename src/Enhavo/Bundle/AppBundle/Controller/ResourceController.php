@@ -104,11 +104,6 @@ class ResourceController extends BaseController
     public function createAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
-            throw new AccessDeniedHttpException;
-        }
-
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
 
@@ -141,9 +136,7 @@ class ResourceController extends BaseController
     public function updateAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
         $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
-
         $resource = $this->findOr404($configuration);
 
         $form = $this->resourceFormFactory->create($configuration, $resource);
@@ -171,11 +164,6 @@ class ResourceController extends BaseController
     public function duplicateAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
-            throw new AccessDeniedHttpException;
-        }
-
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $resource = $this->findOr404($configuration);
 
@@ -196,10 +184,7 @@ class ResourceController extends BaseController
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
-            throw new AccessDeniedHttpException;
-        }
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
 
         $viewer = $this->viewerFactory->create(
             $configuration,
@@ -218,10 +203,7 @@ class ResourceController extends BaseController
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        if(!$this->authorizationChecker->isGranted($configuration, $this->metadata)) {
-            throw new AccessDeniedHttpException;
-        }
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
 
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
         $form = $this->resourceFormFactory->create($configuration, $newResource);

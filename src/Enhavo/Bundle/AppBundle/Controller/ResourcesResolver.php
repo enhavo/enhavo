@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourcesResolverInterface;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 
 /**
  * Class ResourcesResolver
@@ -23,10 +25,32 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 class ResourcesResolver implements ResourcesResolverInterface
 {
     /**
+     * @var FilterQueryBuilder
+     */
+    private $filterQueryBuilder;
+
+    /**
+     * ResourcesResolver constructor.
+     *
+     * @param FilterQueryBuilder $filterQueryBuilder
+     */
+    public function __construct(FilterQueryBuilder $filterQueryBuilder)
+    {
+        $this->filterQueryBuilder = $filterQueryBuilder;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function getResources(RequestConfiguration $requestConfiguration, RepositoryInterface $repository)
+    public function getResources(SyliusRequestConfiguration $requestConfiguration, RepositoryInterface $repository)
     {
+        if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepository) {
+            if($requestConfiguration->hasFilters()) {
+                $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
+                return $repository->filter($query);
+            }
+        }
+
         if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
             $callable = [$repository, $repositoryMethod];
             $resources = call_user_func_array($callable, $requestConfiguration->getRepositoryArguments());
