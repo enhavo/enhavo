@@ -99,44 +99,4 @@ class SitemapGenerator
 
         return $xml->outputMemory();
     }
-
-    /*
-    public function createSitemapIndex($loc, $lastmod = 'Today') {
-        $this->endSitemap();
-        $indexwriter->openURI($this->getPath() . $this->getFilename() . self::SEPERATOR . self::INDEX_SUFFIX . self::EXT);
-        $indexwriter->startDocument('1.0', 'UTF-8');
-        $indexwriter->setIndent(true);
-        $indexwriter->startElement('sitemapindex');
-        $indexwriter->writeAttribute('xmlns', self::SCHEMA);
-        for ($index = 0; $index < $this->getCurrentSitemap(); $index++) {
-            $indexwriter->startElement('sitemap');
-            $indexwriter->writeElement('loc', $loc . $this->getFilename() . ($index ? self::SEPERATOR . $index : '') . self::EXT);
-            $indexwriter->writeElement('lastmod', $this->getLastModifiedDate($lastmod));
-            $indexwriter->endElement();
-        }
-        $indexwriter->endElement();
-        $indexwriter->endDocument();
-    }
-
-    public function addItem($loc, $priority = self::DEFAULT_PRIORITY, $changefreq = NULL, $lastmod = NULL) {
-        if (($this->getCurrentItem() % self::ITEM_PER_SITEMAP) == 0) {
-            if ($this->getWriter() instanceof XMLWriter) {
-                $this->endSitemap();
-            }
-            $this->startSitemap();
-            $this->incCurrentSitemap();
-        }
-        $this->incCurrentItem();
-        $this->getWriter()->startElement('url');
-        $this->getWriter()->writeElement('loc', $this->getDomain() . $loc);
-        $this->getWriter()->writeElement('priority', $priority);
-        if ($changefreq)
-            $this->getWriter()->writeElement('changefreq', $changefreq);
-        if ($lastmod)
-            $this->getWriter()->writeElement('lastmod', $this->getLastModifiedDate($lastmod));
-        $this->getWriter()->endElement();
-        return $this;
-    }
-    */
-
 }

@@ -1,31 +1,31 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: @EnhavoAppBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoArticleBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoAssetsBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoCalendarBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoCategoryBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoContactBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoContentBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoDashboardBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoDownloadBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoGeneratorBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoGridBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoInstallerBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoMediaBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoMigrationBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoNewsletterBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoPageBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoSearchBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoSerializerBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoSettingBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoShopBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoSliderBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoShopBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoThemeBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoTranslationBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoUserBundle/Resources/config/app/config.yml }
-    - { resource: @EnhavoProjectBundle/Resources/config/app/config.yml }
+    - { resource: '@EnhavoAppBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoArticleBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoAssetsBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoCalendarBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoCategoryBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoContactBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoContentBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoDashboardBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoDownloadBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoGeneratorBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoGridBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoInstallerBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoMediaBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoMigrationBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoNewsletterBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoPageBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSearchBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSerializerBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSettingBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoThemeBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoUserBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoProjectBundle/Resources/config/app/config.yml' }
     - { resource: security.yml }
     - { resource: enhavo.yml }
 

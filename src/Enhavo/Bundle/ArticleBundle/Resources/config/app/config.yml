@@ -33,7 +33,7 @@ enhavo_app:
 enhavo_theme:
     route:
         url_resolver:
-            page:
+            article:
                 model: enhavo_article.article
                 strategy: slug
                 route: ~

@@ -28,13 +28,18 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('sitemap')
                     ->children()
-                        ->variableNode('collectors')->end()
+                        ->arrayNode('collectors')
+                            ->useAttributeAsKey('name')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('type')->end()
+                                    ->scalarNode('repository')->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();
-
-
-
         return $treeBuilder;
     }
 }
