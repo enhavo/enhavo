@@ -267,19 +267,26 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       })
     };
 
-    this.initActions = function () {
-      $(document).on('click', '[data-action=""]', function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        var route = $(this).data('action-route');
-        var parameters = $(this).data('action-route-parameters');
-        if (!parameters) {
-          parameters = {};
-        }
-        var link = router.generate(route, parameters);
-        self.ajaxOverlay(link);
-      });
-    };
+     this.initActions = function () {
+         $(document).on('click', '[data-action=""]', function (event) {
+             event.stopPropagation();
+             event.preventDefault();
+             var route = $(this).data('action-route');
+             var actionType = $(this).data('action-type');
+             var parameters = $(this).data('action-route-parameters');
+             if (!parameters) {
+                 parameters = {};
+             }
+             if(actionType == 'overlay'){
+                 var link = router.generate(route, parameters);
+                 self.ajaxOverlay(link);
+             } else if(actionType == 'link'){
+                 var url = router.generate(route);
+                 window.location.href = url;
+             }
+
+         });
+     };
 
     this.initTabs = function (selector) {
       $(selector + " .tabContainer a").each(function () {

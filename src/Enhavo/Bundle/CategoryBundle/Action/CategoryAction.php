@@ -16,6 +16,7 @@ class CategoryAction extends AbstractType implements ActionInterface
 
         return $this->renderTemplate('EnhavoAppBundle:Action:default.html.twig', [
             'type' => $this->getType(),
+            'actionType' => 'overlay',
             'route' => isset($parameters['route']) ? $parameters['route'] : 'enhavo_category_collection_update',
             'label' => isset($parameters['label']) ? $parameters['label'] : 'category.label.manageCategories',
             'icon' => isset($parameters['icon']) ? $parameters['icon'] : 'create',
