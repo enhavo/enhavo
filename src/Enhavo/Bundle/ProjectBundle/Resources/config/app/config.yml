@@ -23,6 +23,12 @@ enhavo_page:
             classes:
                 controller: Enhavo\Bundle\ProjectBundle\Controller\PageController
 enhavo_theme:
+    route:
+        url_resolver:
+            article:
+                model: enhavo_article.article
+                strategy: slug
+                route: enhavo_project_article_show
     template:
         base: 'EnhavoProjectBundle:Theme:base.html.twig'
     boxes:

@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * PublishCollector.php
@@ -61,7 +62,7 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
         $url->setChangeFrequency($resource->getChangeFrequency());
         $url->setLastModified($resource->getUpdated());
         $url->setPriority($resource->getPriority());
-        $url->setLocation($this->urlResolver->resolve($resource));
+        $url->setLocation($this->urlResolver->resolve($resource, UrlGeneratorInterface::ABSOLUTE_URL));
 
         return $url;
     }

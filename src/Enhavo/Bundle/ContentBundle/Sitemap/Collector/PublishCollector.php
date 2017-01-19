@@ -25,7 +25,7 @@ class PublishCollector extends RepositoryCollector
         $resources = $this->getResources();
         $urls = [];
         foreach($resources as $resource) {
-            if($resource instanceof Publishable && $resource->isPublic()) {
+            if($resource instanceof Publishable && $resource->isPublished()) {
                 $urls[] = $this->convertToUrl($resource);
             }
         }
