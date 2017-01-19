@@ -240,33 +240,6 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       });
     };
 
-    this.reloadBlock = function (block, callback) {
-      var page = block.data('block-page');
-      var tableRouteParameters = block.data('block-table-route-parameters');
-      if(typeof tableRouteParameters != 'object') {
-        tableRouteParameters = {};
-      }
-      tableRouteParameters.page = page;
-      var url = router.generate(block.data('block-table-route'), tableRouteParameters);
-      block.addClass('loading');
-      $.ajax({
-        url: url,
-        success: function (data) {
-          block.removeClass('loading');
-          block.html(data);
-          self.initSortable(block);
-          self.initBatchActions(block);
-          if (callback) {
-            callback();
-          }
-        },
-        error: function () {
-          self.closeLoadingOverlay();
-          self.overlayMessage(translator.trans('error.occurred'), self.MessageType.Error);
-        }
-      })
-    };
-
     this.initActions = function () {
       $(document).on('click', '[data-action=""]', function (event) {
         event.stopPropagation();
@@ -308,39 +281,81 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
     this.initBlocks = function () {
       $('[data-block]').each(function (index, element) {
         var type = $(this).data('block-type');
-        var route = $(element).data('block-table-route');
-        var parameters = $(element).data('block-table-route-parameters');
+        $('body').trigger('initBlock', {
+          type: type,
+          block: element
+        });
+      });
+    };
+
+    this.initTable = function() {
+      $('body').on('initBlock', function(event, data) {
+        if(data.type == 'table') {
+          initTable(data.block);
+        }
+      });
+
+      var reloadTable = function(block, callback) {
+        var page = block.data('block-page');
+        var tableRouteParameters = block.data('block-table-route-parameters');
+        if(typeof tableRouteParameters != 'object') {
+          tableRouteParameters = {};
+        }
+        tableRouteParameters.page = page;
+        var url = router.generate(block.data('block-table-route'), tableRouteParameters);
+        block.addClass('loading');
+        $.ajax({
+          url: url,
+          success: function (data) {
+            block.removeClass('loading');
+            block.html(data);
+            self.initSortable(block);
+            self.initBatchActions(block);
+            if (callback) {
+              callback();
+            }
+          },
+          error: function () {
+            self.closeLoadingOverlay();
+            self.overlayMessage(translator.trans('error.occurred'), self.MessageType.Error);
+          }
+        })
+      };
+
+      var initTable = function(block) {
+        var route = $(block).data('block-table-route');
+        var parameters = $(block).data('block-table-route-parameters');
         if(typeof parameters != 'object') {
           parameters = {};
         }
         var url = router.generate(route, parameters);
-        var block = $(this);
+        var $block = $(block);
         self.openLoadingOverlay();
         $.get(url, function (data) {
           self.closeLoadingOverlay();
-          block.html(data);
+          $block.html(data);
 
           $(document).on('formSaveAfter', function () {
-            var page = block.data('block-page');
-            self.reloadBlock(block);
+            var page = $block.data('block-page');
+            reloadTable($block);
             self.closeLoadingOverlay();
           });
 
-          block.on('click', '[data-page]', function () {
+          $block.on('click', '[data-page]', function () {
             var page = $(this).data('page');
-            block.data('block-page', page);
-            self.reloadBlock(block);
+            $block.data('block-page', page);
+            reloadTable($block);
           });
 
-          block.on('click', '[data-id]', function (event) {
+          $block.on('click', '[data-id]', function (event) {
             var $target = $(event.target);
             if($target.is('a')) {
               return true;
             }
             event.preventDefault();
             var id = $(this).data('id');
-            var route = block.data('block-update-route');
-            var parameters = $(element).data('block-update-route-parameters');
+            var route = $block.data('block-update-route');
+            var parameters = $block.data('block-update-route-parameters');
             if(typeof parameters != 'object') {
               parameters = {};
             }
@@ -351,12 +366,13 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
             }
           });
 
-          self.initSortable(block);
-          self.initBatchActions(block);
+          self.initSortable($block);
+          self.initBatchActions($block);
+          self.initFilter($block);
         }).fail(function () {
           self.closeLoadingOverlay();
         });
-      });
+      };
     };
 
     this.initNavigation = function () {
@@ -422,6 +438,15 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
         } else {
           $(desc).css({"position": "absolute", "bottom": "25px"})
         }
+      });
+    };
+
+    this.initFilter = function (block) {
+      block.find('[data-filter]').each(function() {
+        $(this).find('[data-filter-boolean]').iCheck({
+          checkboxClass: 'icheckbox-esperanto',
+          radioClass: 'icheckbox-esperanto'
+        });
       });
     };
 
