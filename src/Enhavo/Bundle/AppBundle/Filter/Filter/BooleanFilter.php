@@ -32,7 +32,8 @@ class BooleanFilter extends AbstractType implements FilterInterface
 
         $value = (boolean)$value;
         if($value) {
-            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+            $equals = $this->getRequiredOption('equals', $options);
+            $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals);
         }
     }
 

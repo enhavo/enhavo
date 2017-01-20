@@ -47,6 +47,8 @@ table:
   empty: 'no data'
   filter:
     apply: 'Apply'
+    show: 'Show filter'
+    hide: 'Hide filter'
 batch:
   form:
     action:
