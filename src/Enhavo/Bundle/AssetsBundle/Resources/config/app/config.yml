@@ -63,3 +63,6 @@ enhavo_assets:
 
             assets:
                 location: /bundles/enhavoassets/js
+
+            urijs:
+                location: /bundles/enhavoassets/vendor/urijs/src

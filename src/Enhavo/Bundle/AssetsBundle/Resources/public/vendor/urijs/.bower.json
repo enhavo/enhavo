@@ -1,0 +1,27 @@
+{
+  "name": "urijs",
+  "version": "1.18.4",
+  "main": "src/URI.js",
+  "ignore": [
+    ".*",
+    "*.css",
+    "/*.js",
+    "/*.html",
+    "/*.json",
+    "utils",
+    "test",
+    "prettify"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/medialize/URI.js",
+  "_release": "1.18.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.18.4",
+    "commit": "b2ff01deeaef7bde62cee7539aad143a8df2a2be"
+  },
+  "_source": "https://github.com/medialize/URI.js.git",
+  "_target": "^1.18.4",
+  "_originalSource": "uri.js",
+  "_direct": true
+}
