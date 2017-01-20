@@ -1,4 +1,4 @@
-define(['jquery', 'app/Admin', 'app/Router', 'app/Translator'], function($, admin, router, translator) {
+define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI'], function($, admin, router, translator, URI) {
   
   function Table()
   {
@@ -10,33 +10,6 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator'], function($, admi
           initTable(data.block);
         }
       });
-
-      var reloadTable = function(block, callback) {
-        var page = block.data('block-page');
-        var tableRouteParameters = block.data('block-table-route-parameters');
-        if(typeof tableRouteParameters != 'object') {
-          tableRouteParameters = {};
-        }
-        tableRouteParameters.page = page;
-        var url = router.generate(block.data('block-table-route'), tableRouteParameters);
-        block.addClass('loading');
-        $.ajax({
-          url: url,
-          success: function (data) {
-            block.removeClass('loading');
-            block.html(data);
-            admin.initSortable(block);
-            admin.initBatchActions(block);
-            if (callback) {
-              callback();
-            }
-          },
-          error: function () {
-            admin.closeLoadingOverlay();
-            admin.overlayMessage(translator.trans('error.occurred'), admin.MessageType.Error);
-          }
-        })
-      };
 
       var initTable = function(block) {
         var $block = $(block);
@@ -59,14 +32,14 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator'], function($, admi
 
           $(document).on('formSaveAfter', function () {
             var page = $block.data('block-page');
-            reloadTable($block);
+            self.loadTable($block);
             admin.closeLoadingOverlay();
           });
 
           $block.on('click', '[data-page]', function () {
             var page = $(this).data('page');
             $block.data('block-page', page);
-            reloadTable($block);
+            self.loadTable($block);
           });
 
           $block.on('click', '[data-id]', function (event) {
@@ -96,13 +69,68 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator'], function($, admi
       };
     };
 
-    this.initFilter = function (block) {
-      block.find('[data-filter]').each(function() {
-        $(this).find('[data-filter-boolean]').iCheck({
-          checkboxClass: 'icheckbox-esperanto',
-          radioClass: 'icheckbox-esperanto'
-        });
+    this.loadTable = function(block, callback) {
+      var page = block.data('block-page');
+      var tableRouteParameters = block.data('block-table-route-parameters');
+      if(typeof tableRouteParameters != 'object') {
+        tableRouteParameters = {};
+      }
+      tableRouteParameters.page = page;
+      var url = router.generate(block.data('block-table-route'), tableRouteParameters);
+      url = self.applyFilterOnUrl(block, url);
+      block.addClass('loading');
+      $.ajax({
+        url: url,
+        success: function (data) {
+          block.removeClass('loading');
+          var table = $.parseHTML(data);
+          var $table = $(table);
+          block.find('[data-table]').html(table);
+          admin.initSortable($table);
+          admin.initBatchActions($table);
+          if (callback) {
+            callback();
+          }
+        },
+        error: function () {
+          admin.closeLoadingOverlay();
+          admin.overlayMessage(translator.trans('error.occurred'), admin.MessageType.Error);
+        }
       });
+    };
+
+    this.initFilter = function (block) {
+      block.find('[data-filter-boolean]').iCheck({
+        checkboxClass: 'icheckbox-esperanto',
+        radioClass: 'icheckbox-esperanto'
+      });
+
+      block.find('[data-filter-apply]').click(function(event) {
+        event.preventDefault();
+        self.loadTable(block);
+      });
+    };
+
+    this.applyFilterOnUrl = function(block, url) {
+
+      var filters = [];
+      block.find('[data-filter]').each(function() {
+        var $input = $(this);
+        if($input.attr('type') == 'checkbox') {
+          filters.push({
+            name: $(this).attr('name'),
+            value: $input.prop('checked')
+          });
+        } else {
+          filters.push({
+            name: $(this).attr('name'),
+            value: $(this).val()
+          });
+        }
+      });
+      var data = JSON.stringify(filters);
+      url = URI(url).addSearch("filters", data);
+      return url;
     };
   }
 

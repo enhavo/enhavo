@@ -9,7 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
 use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
+use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Doctrine\ORM\Query;
 
 class TextFilter extends AbstractType implements FilterInterface
 {
@@ -21,7 +23,16 @@ class TextFilter extends AbstractType implements FilterInterface
             'label' => $this->getOption('label', $options, ''),
             'translationDomain' => $this->getOption('translationDomain', $options, null),
             'icon' => $this->getOption('icon', $options, ''),
+            'name' => $this->getRequiredOption('name', $options),
         ]);
+    }
+
+    public function buildQuery(FilterQuery $query, $options, $value)
+    {
+        $property = $this->getRequiredOption('property', $options);
+        if($value) {
+            $query->addWhere($property, FilterQuery::OPERATOR_LIKE, $value);
+        }
     }
 
     public function getType()

@@ -8,14 +8,14 @@
     data-block-page="1"
     {% if update_route %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
 
-    <div class="row" data-filter>
+    <div class="row" data-filters>
         {% for filter in filters %}
             <div class="col-md-3">
                 {{ filter_render(filter.type, filter, filter.value) }}
             </div>
         {% endfor %}
         <div class="col-md-3">
-            <button>{{ 'table.filter.apply'|trans([], 'EnhavoAppBundle') }}</button>
+            <button data-filter-apply>{{ 'table.filter.apply'|trans([], 'EnhavoAppBundle') }}</button>
         </div>
     </div>
 

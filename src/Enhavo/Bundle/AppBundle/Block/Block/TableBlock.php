@@ -31,11 +31,13 @@ class TableBlock extends AbstractType implements BlockInterface
 
     protected function getFilters(array $filters, $translationDomain = null)
     {
-        foreach($filters as $key => &$options) {
+        foreach($filters as $name => &$options) {
             $options['value'] = '';
+            $options['name'] = $name;
+
         }
 
-        foreach($filters as $key => &$options) {
+        foreach($filters as $name => &$options) {
             if(!array_key_exists('translationDomain', $options)) {
                 $options['translationDomain'] = $translationDomain;
             }

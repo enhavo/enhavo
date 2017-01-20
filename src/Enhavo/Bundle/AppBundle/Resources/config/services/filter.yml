@@ -19,6 +19,8 @@ services:
 
     enhavo_app.filter.filer_query_builder:
         class: Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder
+        arguments:
+            - '@enhavo_app.filter_collector'
 
     enhavo_app.filter.text:
         class: Enhavo\Bundle\AppBundle\Filter\Filter\TextFilter

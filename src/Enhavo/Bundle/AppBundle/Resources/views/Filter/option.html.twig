@@ -1,1 +1,6 @@
-Option
+<select name="{{ name }}" data-filter>
+    <option value="">-- {{ label|trans([], translationDomain) }} --</option>
+    {% for value,name in options %}
+        <option value="{{ value }}">{{ name }}</option>
+    {% endfor %}
+</select>
