@@ -97,7 +97,7 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
 
     .dialog {margin:200px auto 0 auto;padding:10px;border-radius:2px;width:360px;background-color:#fff;
         .dialog-content {text-align: center;padding-left:50px;position:relative;
-            .dialog-buttons {margin-top:10px;
+            .dialog-buttons {margin-top:100px;
                 &:after {clear:both;content:" ";display:table;}
                 .btn {float:right;margin-left:30px;width:auto;}
             }
