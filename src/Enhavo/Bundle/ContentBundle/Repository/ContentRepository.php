@@ -9,8 +9,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\ContentBundle\Entity\Content;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
 class ContentRepository extends EntityRepository
 {

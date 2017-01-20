@@ -70,6 +70,18 @@ enhavo_article_article_table:
         _sylius:
             sorting:
                 publicationDate: desc
+            filters:
+                title:
+                    type: text
+                    label: article.label.title
+                    translationDomain: EnhavoArticleBundle
+                    property: title
+                public:
+                    type: boolean
+                    label: article.label.public
+                    translationDomain: EnhavoArticleBundle
+                    property: public
+                    equals: true
             viewer:
                 translationDomain: EnhavoArticleBundle
                 columns:

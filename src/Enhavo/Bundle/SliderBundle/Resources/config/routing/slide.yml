@@ -46,6 +46,18 @@ enhavo_slider_slide_table:
             sortable: true
             sorting:
                 position: desc
+            filters:
+                title:
+                    type: text
+                    label: article.label.title
+                    translationDomain: EnhavoArticleBundle
+                    property: title
+                public:
+                    type: boolean
+                    label: article.label.public
+                    translationDomain: EnhavoArticleBundle
+                    property: public
+                    equals: true
             viewer:
                 translationDomain: EnhavoSliderBundle
                 sorting:

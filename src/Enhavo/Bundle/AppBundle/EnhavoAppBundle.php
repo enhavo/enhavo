@@ -46,6 +46,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.filter_collector', 'enhavo.filter')
+        );
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
 

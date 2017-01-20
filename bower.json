@@ -12,6 +12,7 @@
     "datetimepicker": "~2.5.4",
     "jqueryui-timepicker-addon": "~0.9.8",
     "blueimp-file-upload": "~8.9.0",
-    "components-font-awesome": "^4.6.3"
+    "components-font-awesome": "^4.6.3",
+    "urijs": "uri.js#^1.18.4"
   }
 }

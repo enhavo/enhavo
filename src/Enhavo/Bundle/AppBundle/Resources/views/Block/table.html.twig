@@ -1,9 +1,44 @@
+{% trans_default_domain 'EnhavoAppBundle' %}
+
 <div
     data-block
+    data-block-app="{{ app }}"
     data-block-type="table"
     data-block-table-route="{{ table_route }}"
-    {% if table_route_parameters is defined %}data-block-table-route-parameters="{{ table_route_parameters|json_encode }}"{% endif %}
-    {% if update_route_parameters is defined %}data-block-update-route-parameters="{{ update_route_parameters|json_encode }}"{% endif %}
+    data-block-table-filter-active="false"
+    {% if table_route_parameters %}data-block-table-route-parameters="{{ table_route_parameters|json_encode }}"{% endif %}
+    {% if update_route_parameters %}data-block-update-route-parameters="{{ update_route_parameters|json_encode }}"{% endif %}
     data-block-page="1"
-    {% if update_route is defined %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
+    {% if update_route %}class="updateable block-table" data-block-update-route="{{ update_route }}"{% endif %}>
+
+    {% if filters %}
+        <div class="row no-gutter">
+            <div class="col-md-6">
+                <button
+                        class="btn show block-options"
+                        data-filter-show="false"
+                        data-filter-show-message="{{ 'table.filter.show'|trans }}"
+                        data-filter-hide-message="{{ 'table.filter.hide'|trans }}"
+                >{{ 'table.filter.show'|trans }}</button>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn disabled filter-apply hide" data-filter-apply>
+                    <i class="icon-ok-circled"></i> {{ 'table.filter.apply'|trans }}
+                </button>
+            </div>
+        </div>
+
+        {% for row in filters %}
+            <div class="row hide filter-row {% if loop.last %}last-row{% endif %}" data-filters>
+                {% for filter in row %}
+                    <div class="col-md-{{ filterRowSize }} filter-cell">
+                        {{ filter_render(filter.type, filter, filter.value) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+    <div data-table></div>
 </div>

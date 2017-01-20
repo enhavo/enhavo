@@ -58,6 +58,10 @@ tab:
     seo: 'SEO'
 table:
   empty: 'Keine Daten vorhanden'
+  filter:
+    apply: 'Filter anwenden'
+    show: 'Filter einblenden'
+    hide: 'Filter ausblenden'
 batch:
   form:
     action:
