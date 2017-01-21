@@ -30,7 +30,7 @@ trait EntityRepositoryTrait
             $i++;
         }
 
-        foreach($orderBy  as $property => $value) {
+        foreach($orderBy as $property => $value) {
             $query->addOrderBy($property, $value);
         }
 
@@ -44,8 +44,17 @@ trait EntityRepositoryTrait
         $i = 0;
         foreach($filterQuery->getWhere() as $where) {
             $i++;
-            $query->andWhere(sprintf('e.%s %s :parameter%s', $where['property'], $this->getOperator($where), $i));
+            if($where['joinProperty']) {
+                $query->join(sprintf('e.%s', $where['property']), sprintf('j%s', $i));
+                $query->andWhere(sprintf('j%s.%s %s :parameter%s', $i, $where['joinProperty'], $this->getOperator($where), $i));
+            } else {
+                $query->andWhere(sprintf('e.%s %s :parameter%s', $where['property'], $this->getOperator($where), $i));
+            }
             $query->setParameter(sprintf('parameter%s', $i), $this->getValue($where));
+        }
+
+        foreach($filterQuery->getOrderBy() as $order) {
+            $query->addOrderBy(sprintf('e.%s', $order['property']), $order['order']);
         }
 
         return $this->getPaginator($query);
