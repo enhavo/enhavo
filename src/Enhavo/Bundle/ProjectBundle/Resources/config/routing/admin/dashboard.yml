@@ -1,0 +1,33 @@
+enhavo_dashboard_index:
+    path:  /enhavo/dashboard
+    methods: [GET]
+    defaults:
+        _controller: enhavo_app.controller.app:indexAction
+        _sylius:
+            viewer:
+                type: app
+                title: dashboard.label.dashboard
+                translationDomain: EnhavoDashboardBundle
+                blocks:
+                    search:
+                        type: search
+                        entities:
+                            page:
+                                label: page.label.page
+                                translationDomain: EnhavoPageBundle
+                            article:
+                                label: article.label.article
+                                translationDomain: EnhavoArticleBundle
+                        fields:
+                            title:
+                                label: article.label.title
+                                translationDomain: EnhavoArticleBundle
+                            teaser:
+                                label: article.label.teaser
+                                translationDomain: EnhavoArticleBundle
+                            text:
+                                label: text.label.text
+                                translationDomain: EnhavoGridBundle
+                    order:
+                        type: chart
+                        provider: shop_order
