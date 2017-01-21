@@ -22,7 +22,10 @@ class ChartBlock extends AbstractType implements BlockInterface
 
         return $this->renderTemplate('EnhavoAppBundle:Block:chart.html.twig', [
             'app' => $this->getOption('app', $parameters, 'app/Block/Chart'),
-            'data' => $provider->getData($parameters)
+            'data' => $provider->getData($parameters),
+            'options' => $provider->getOptions($parameters),
+            'type' => $provider->getChartType($parameters),
+            'chartApp' => $provider->getApp($parameters)
         ]);
     }
 

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Filter\FilterQueryBuilder;
-use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourcesResolverInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
@@ -44,7 +44,7 @@ class ResourcesResolver implements ResourcesResolverInterface
      */
     public function getResources(SyliusRequestConfiguration $requestConfiguration, RepositoryInterface $repository)
     {
-        if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepository) {
+        if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepositoryInterface) {
             if($requestConfiguration->hasFilters()) {
                 $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
                 return $repository->filter($query);
