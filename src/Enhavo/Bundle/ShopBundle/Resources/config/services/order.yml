@@ -230,3 +230,10 @@ services:
 
     enhavo.order.state_resolver:
         class: Enhavo\Bundle\ShopBundle\Order\OrderStateResolver
+
+    enhavo_shop.chart.order_chart_provicer:
+        class: Enhavo\Bundle\ShopBundle\Chart\OrderChartProvider
+        arguments:
+          - '@sylius.repository.order'
+        tags:
+          - { name: enhavo.chart_provider, alias: 'shop_order' }

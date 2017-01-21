@@ -28,3 +28,7 @@ enhavo_dashboard_index:
                             text:
                                 label: text.label.text
                                 translationDomain: EnhavoGridBundle
+
+                    order:
+                        type: chart
+                        provider: shop_order

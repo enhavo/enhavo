@@ -1,0 +1,13 @@
+{% trans_default_domain 'EnhavoAppBundle' %}
+
+<div
+    data-block
+    data-block-app="{{ app }}"
+    data-block-type="chart"
+    data-block-chart-data="{{ data|json_encode|e }}"
+    class="block-chart"
+>
+    <div class="chart-container">
+        <canvas></canvas>
+    </div>
+</div>
