@@ -19,6 +19,7 @@ promotion:
 label:
   product: Product
   order: Order
+  sales: Sales
 
 mailer:
   confirm:

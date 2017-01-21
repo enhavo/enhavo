@@ -53,7 +53,7 @@ class OrderChartProvider extends AbstractType implements ChartProviderInterface
             'labels' => $data['labels'],
             'datasets' => [
                 [
-                    'label' => "Sales",
+                    'label' => $this->container->get('translator')->trans('label.sales', [], 'EnhavoShopBundle'),
                     'fill' => false,
                     'lineTension' => 0.1,
                     'backgroundColor' => "rgba(75,192,192,0.4)",
@@ -94,7 +94,7 @@ class OrderChartProvider extends AbstractType implements ChartProviderInterface
 
         $labels = [];
         foreach($steps as $stepDate) {
-            $labels[] = $stepDate->format('F');
+            $labels[] = $this->container->get('translator')->trans($stepDate->format('F'));
         }
 
         $data = [];
