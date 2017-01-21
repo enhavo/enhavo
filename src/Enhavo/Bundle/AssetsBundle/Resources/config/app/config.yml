@@ -66,3 +66,6 @@ enhavo_assets:
 
             urijs:
                 location: /bundles/enhavoassets/vendor/urijs/src
+
+            chartjs:
+                location: /bundles/enhavoassets/vendor/chart.js/dist/Chart.min

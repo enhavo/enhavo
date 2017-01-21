@@ -13,6 +13,7 @@
     "jqueryui-timepicker-addon": "~0.9.8",
     "blueimp-file-upload": "~8.9.0",
     "components-font-awesome": "^4.6.3",
-    "urijs": "uri.js#^1.18.4"
+    "urijs": "uri.js#^1.18.4",
+    "chart.js": "^2.4.0"
   }
 }
