@@ -48,7 +48,7 @@ enhavo_category_category_table:
                 method: findByCollection
                 arguments:
                     criteria:
-                        collection: test
+                        collection: '%enhavo_category.default_collection%'
                         paging: true
             viewer:
                 translationDomain: EnhavoCategoryBundle

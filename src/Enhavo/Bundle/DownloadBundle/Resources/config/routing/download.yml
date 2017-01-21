@@ -40,6 +40,12 @@ enhavo_download_download_table:
     defaults:
         _controller: enhavo_download.controller.download:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: download.label.title
+                    translationDomain: EnhavoDownloadBundle
             viewer:
                 translationDomain: EnhavoDownloadBundle
                 columns:

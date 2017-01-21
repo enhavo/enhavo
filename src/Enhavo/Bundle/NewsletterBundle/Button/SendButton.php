@@ -15,13 +15,13 @@ class SendButton extends AbstractType implements ButtonInterface
             'icon' => 'eye',
             'display' => true,
             'role' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND',
-            'label' => 'newsletter.action.sendAndSave',
+            'label' => 'newsletter.action.sent.sent',
             'translationDomain' => 'EnhavoNewsletterBundle'
         ]);
     }
 
     public function getType()
     {
-        return 'send';
+        return 'newsletter_send';
     }
 }

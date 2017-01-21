@@ -4,7 +4,14 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.button, alias: send }
+            - { name: enhavo.button, alias: newsletter_send }
+
+    enhavo_newsletter.batch.send:
+        class: Enhavo\Bundle\NewsletterBundle\Batch\SendBatch
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch, alias: newsletter_send }
 
     enhavo_newsletter.newsletter.manager:
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager

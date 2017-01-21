@@ -40,6 +40,19 @@ enhavo_user_user_table:
     defaults:
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: username
+                    label: user.label.username
+                    translationDomain: EnhavoUserBundle
+                group:
+                    type: entity
+                    property: groups
+                    path: name
+                    label: group.label.group
+                    repository: enhavo_user.repository.group
+                    translationDomain: EnhavoUserBundle
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:

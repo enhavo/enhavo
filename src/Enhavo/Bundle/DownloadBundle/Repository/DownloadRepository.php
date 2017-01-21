@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\DownloadBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
 class DownloadRepository extends EntityRepository
 {

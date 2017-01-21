@@ -81,6 +81,12 @@ enhavo_page_page_table:
     defaults:
         _controller: enhavo_page.controller.page:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: page.label.public
+                    translationDomain: EnhavoPageBundle
             viewer:
                 translationDomain: EnhavoPageBundle
                 columns:

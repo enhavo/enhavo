@@ -54,6 +54,12 @@ enhavo_user_group_table:
     defaults:
         _controller: enhavo_user.controller.group:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: name
+                    label: group.label.name
+                    translationDomain: EnhavoUserBundle
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:
@@ -61,7 +67,6 @@ enhavo_user_group_table:
                         label: group.label.name
                         property: name
                         width: 12
-
 
 enhavo_user_group_delete:
     options:

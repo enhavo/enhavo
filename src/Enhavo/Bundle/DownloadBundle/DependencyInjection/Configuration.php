@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\DownloadBundle\Entity\Download')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('repository')->end()
+                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\DownloadBundle\Repository\DownloadRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Enhavo\Bundle\DownloadBundle\Factory\DownloadFactory')->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()

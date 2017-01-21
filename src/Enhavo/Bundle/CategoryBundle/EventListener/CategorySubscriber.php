@@ -10,9 +10,9 @@ namespace Enhavo\Bundle\CategoryBundle\EventListener;
 
 use Enhavo\Bundle\CategoryBundle\Entity\Collection;
 use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
+use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Sylius\Component\Resource\Event\ResourceEvent;
 use Enhavo\Bundle\CategoryBundle\Entity\Category;
 
 class CategorySubscriber implements EventSubscriberInterface
@@ -35,14 +35,14 @@ class CategorySubscriber implements EventSubscriberInterface
         );
     }
 
-    public function onPreCreate(ResourceEvent $event)
+    public function onPreCreate(ResourceControllerEvent $event)
     {
         /** @var $category Category */
         $category = $event->getSubject();
         $this->setCollection($category);
     }
 
-    public function onPreUpdate(ResourceEvent $event)
+    public function onPreUpdate(ResourceControllerEvent $event)
     {
         /** @var $category Category */
         $category = $event->getSubject();
