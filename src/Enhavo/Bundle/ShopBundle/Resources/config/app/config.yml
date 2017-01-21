@@ -188,6 +188,7 @@ sylius_product:
             classes:
                 controller: Enhavo\Bundle\ShopBundle\Controller\ProductController
                 model: Enhavo\Bundle\ShopBundle\Entity\Product
+                repository: Enhavo\Bundle\ShopBundle\Repository\ProductRepository
                 form:
                     default: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
 

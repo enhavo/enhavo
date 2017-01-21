@@ -42,3 +42,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: option }
+
+    enhavo_app.filter.entity:
+        class: Enhavo\Bundle\AppBundle\Filter\Filter\EntityFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.filter, alias: entity }

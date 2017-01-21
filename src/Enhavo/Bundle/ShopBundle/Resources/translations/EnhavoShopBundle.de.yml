@@ -19,6 +19,7 @@ promotion:
 label:
   product: Produkt
   order: Bestellung
+  sales: Umsatz
 
 mailer:
   confirm:

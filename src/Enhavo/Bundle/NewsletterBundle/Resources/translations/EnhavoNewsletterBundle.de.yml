@@ -7,8 +7,8 @@ newsletter:
       delete: 'Newsletter löschen'
       send: 'Newsletter verschicken'
   action:
-    sendAndSave: 'Senden und Speichern'
     sent:
+      sent: 'Senden'
       success: 'Newsletter erfolgreich gesendet!'
       error: 'Newsletter konnte nicht gesendet werden!'
       again: 'Möchten Sie den Newsletter wirklich erneut senden?'

@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
@@ -20,6 +19,11 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
+    /**
+     * @var string
+     */
+    private $slug;
+
     /**
      * @var string
      */
@@ -367,5 +371,21 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     public function setName($name)
     {
         return $this->setTitle($name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug = null)
+    {
+        $this->slug = $slug;
     }
 }

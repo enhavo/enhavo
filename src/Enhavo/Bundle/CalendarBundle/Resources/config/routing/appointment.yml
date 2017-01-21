@@ -60,6 +60,12 @@ enhavo_calendar_appointment_table:
     defaults:
         _controller: enhavo_calendar.controller.appointment:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: appointment.label.title
+                    translationDomain: EnhavoCalendarBundle
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 columns:

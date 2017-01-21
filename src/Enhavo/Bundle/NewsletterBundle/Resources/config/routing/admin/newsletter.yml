@@ -23,7 +23,7 @@ enhavo_newsletter_newsletter_create:
                 tabs:
                     newsletter:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Resource:create.html.twig
+                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -38,10 +38,10 @@ enhavo_newsletter_newsletter_update:
                 tabs:
                     newsletter:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Resource:edit.html.twig
+                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
                 buttons:
                     send:
-                        type: send
+                        type: newsletter_send
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -51,6 +51,12 @@ enhavo_newsletter_newsletter_table:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: newsletter.label.title
+                    translationDomain: EnhavoNewsletterBundle
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 batches:

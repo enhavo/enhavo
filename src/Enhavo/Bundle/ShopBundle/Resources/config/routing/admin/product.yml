@@ -84,6 +84,12 @@ enhavo_shop_product_table:
         page: 1
         _controller: sylius.controller.product:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: title
+                    label: product.label.title
+                    translationDomain: EnhavoShopBundle
             viewer:
                 translationDomain: EnhavoShopBundle
                 columns:

@@ -62,6 +62,12 @@ enhavo_shop_order_table:
         page: 1
         _controller: sylius.controller.order:tableAction
         _sylius:
+            filters:
+                number:
+                    type: text
+                    property: number
+                    label: order.label.number
+                    translationDomain: EnhavoShopBundle
             sorting:
                 orderedAt: desc
             criteria:

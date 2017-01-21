@@ -17,6 +17,7 @@ enhavo_newsletter_subscriber_create:
         _controller: enhavo_newsletter.controller.subscriber:createAction
         _sylius:
             viewer:
+                translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_update:
     options:
@@ -27,6 +28,7 @@ enhavo_newsletter_subscriber_update:
         _controller: enhavo_newsletter.controller.subscriber:updateAction
         _sylius:
             viewer:
+                translationDomain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_table:
     options:
@@ -37,6 +39,18 @@ enhavo_newsletter_subscriber_table:
         page: 1
         _controller: enhavo_newsletter.controller.subscriber:tableAction
         _sylius:
+            filters:
+                title:
+                    type: text
+                    property: email
+                    label: subscriber.label.email
+                    translationDomain: EnhavoNewsletterBundle
+                active:
+                    type: boolean
+                    property: active
+                    label: subscriber.label.active
+                    translationDomain: EnhavoNewsletterBundle
+                    equals: true
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 columns:

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Repository;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 
 class UserRepository extends EntityRepository
 {

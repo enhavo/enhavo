@@ -235,5 +235,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Chart\OrderChartProvider
         arguments:
           - '@sylius.repository.order'
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
           - { name: enhavo.chart_provider, alias: 'shop_order' }
