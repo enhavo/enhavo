@@ -8,10 +8,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Repository;
 
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
 use Sylius\Bundle\OrderBundle\Doctrine\ORM\OrderRepository as SyliusOrderRepository;
 
-class OrderRepository extends SyliusOrderRepository
+class OrderRepository extends SyliusOrderRepository implements EntityRepositoryInterface
 {
+    use EntityRepositoryTrait;
+
     public function findLastNumber()
     {
         $query = $this->createQueryBuilder('n');
@@ -40,4 +44,6 @@ class OrderRepository extends SyliusOrderRepository
             'token' => $token
         ]);
     }
+
+
 }

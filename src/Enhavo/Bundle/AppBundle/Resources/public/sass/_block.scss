@@ -40,6 +40,14 @@
   }
 }
 
+.block-chart {
+  .chart-container {
+    background-color: #fff;
+    padding: 10px;
+    min-height: 150px;
+  }
+}
+
 .block-options {
   margin:15px 0;
   &.show {

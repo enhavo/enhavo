@@ -50,6 +50,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.chart_provider_collector', 'enhavo.chart_provider')
+        );
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
 
