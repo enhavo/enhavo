@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends ResourceController
 {
@@ -73,7 +74,21 @@ class OrderController extends ResourceController
     public function billingAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $formData = $request->get('data');
+        $formDataArray = array();
+        $formData = parse_str(urldecode($formData), $formDataArray);
         $order = $this->singleResourceProvider->get($configuration, $this->repository);
+
+        $form = $this->resourceFormFactory->create($configuration, $order);
+
+        $validOrder = null;
+        if(key_exists($form->getName(), $formDataArray)){
+            $form->submit($formDataArray[$form->getName()]);
+            if(!$form->isValid()){
+                return new JsonResponse($this->getErrors($form), 400);
+            }
+        }
+
         $documentManager = $this->get('enhavo_shop.document.manager');
         $response = new Response();
 
@@ -86,7 +101,6 @@ class OrderController extends ResourceController
         $response->setContent($documentManager->generateBilling($order));
         return $response;
     }
-
     public function packingSlipAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
