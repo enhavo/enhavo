@@ -81,7 +81,6 @@ class OrderController extends ResourceController
 
         $form = $this->resourceFormFactory->create($configuration, $order);
 
-        $validOrder = null;
         if(key_exists($form->getName(), $formDataArray)){
             $form->submit($formDataArray[$form->getName()]);
             if(!$form->isValid()){
