@@ -15,14 +15,15 @@ define(['jquery', 'app/Index', 'app/Router'], function($, index, router) {
       });
     };
 
-    this.initBillingButton = function(form) {
-      $(form).find('[data-button][data-type="shop_billing"]').click(function(event) {
-        event.preventDefault();
-        var id = $(form).data('id');
-        var url = router.generate('enhavo_shop_order_billing', {id: id});
-        window.location.href = url;
-      });
-    };
+      this.initBillingButton = function(form) {
+          $(form).find('[data-button][data-type="shop_billing"]').click(function(event) {
+              event.preventDefault();
+              var id = $(form).data('id');
+              var data = $(form).serialize();
+              var url = router.generate('enhavo_shop_order_billing', {id: id, data: data});
+              window.location.href = url;
+          });
+      };
 
     this.initPackingSlipButton = function(form) {
         $(form).find('[data-button][data-type="shop_packing_slip"]').click(function(event) {
