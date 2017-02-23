@@ -20,6 +20,7 @@ use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends ResourceController
 {
@@ -211,7 +212,9 @@ class UserController extends ResourceController
                     $template = $viewer->getMailTemplate();
                     $route = $viewer->getConfirmRoute();
                 }
-                $userManager->sendRegisterConfirmEmail($user, $template, $route);
+                if($template != null){
+                    $userManager->sendRegisterConfirmEmail($user, $template, $route);
+                }
                 return $response;
             } else {
                 $valid = false;
@@ -241,6 +244,64 @@ class UserController extends ResourceController
             ])
             ->setStatusCode(200)
             ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:registration-confirmed.html.twig')))
+        ;
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
+
+    /**
+     * Receive the confirmation token from user email provider, login the user
+     */
+    public function confirmAction(Request $request, $token)
+    {
+        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+
+        $user = $userManager->findUserByConfirmationToken($token);
+
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+        }
+
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $user->setConfirmationToken(null);
+        $user->setEnabled(true);
+
+        $event = new GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
+
+        $userManager->updateUser($user);
+
+        if (null === $response = $event->getResponse()) {
+            $url = $this->generateUrl('enhavo_user_theme_user_registration_confirmed');
+            $response = new RedirectResponse($url);
+        }
+
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
+
+        return $response;
+    }
+
+    public function checkEmailAction(Request $request)
+    {
+        $email = $this->get('session')->get('fos_user_send_confirmation_email/email');
+        $this->get('session')->remove('fos_user_send_confirmation_email/email');
+        $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
+
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
+        }
+
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
+        $view = View::create()
+            ->setData([
+                'user' => $this->getUser(),
+            ])
+            ->setStatusCode(200)
+            ->setTemplate($configuration->getTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:checkEmail.html.twig')))
         ;
 
         return $this->viewHandler->handle($configuration, $view);

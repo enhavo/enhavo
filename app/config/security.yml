@@ -70,6 +70,7 @@ security:
 
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/check-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/registration$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }
