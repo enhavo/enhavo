@@ -15,7 +15,7 @@ use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
-use Sylius\Component\Core\Model\AdjustmentInterface;
+use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
@@ -493,6 +493,12 @@ class Order extends Cart implements OrderInterface
         foreach($adjustments as $adjustment) {
             $total += $adjustment->getAmount();
         }
+
+        $adjustments = $this->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
+        foreach($adjustments as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
         return $total;
     }
 
@@ -514,14 +520,26 @@ class Order extends Cart implements OrderInterface
         return $total;
     }
 
-    public function getTaxTotal()
+    public function getUnitTaxTotal()
     {
         $total = 0;
         foreach($this->getItems() as $items) {
             $total += $items->getTaxTotal();
         }
+        return $total;
+    }
+
+    public function getTaxTotal()
+    {
+        $total = 0;
+        $total += $this->getUnitTaxTotal();
 
         $taxes = $this->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
+        foreach($taxes as $adjustment) {
+            $total += $adjustment->getAmount();
+        }
+
+        $taxes = $this->getAdjustments(AdjustmentInterface::TAX_PROMOTION_ADJUSTMENT);
         foreach($taxes as $adjustment) {
             $total += $adjustment->getAmount();
         }

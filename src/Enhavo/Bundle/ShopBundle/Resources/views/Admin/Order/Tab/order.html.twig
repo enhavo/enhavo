@@ -68,7 +68,7 @@
                                 {{ 'order.label.freeShipping'|trans }}
                             {% endif %}
                         </div>
-                        {% if data.discountTotal > 0 %}
+                        {% if data.discountTotal != 0 %}
                             <div>{{ 'order.label.discount'|trans }}: {{ data.discountTotal|currency }}</div>
                         {% endif %}
                         <div>

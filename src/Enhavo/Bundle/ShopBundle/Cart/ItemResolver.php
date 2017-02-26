@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ShopBundle\Cart;
 
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Modifier\OrderItemQuantityModifier;
+use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Cart\Resolver\ItemResolverInterface;
@@ -18,7 +18,7 @@ class ItemResolver implements ItemResolverInterface
     protected $productRepository;
 
     /**
-     * @var OrderItemQuantityModifier
+     * @var OrderItemQuantityModifierInterface
      */
     protected $modifier;
 
@@ -26,9 +26,9 @@ class ItemResolver implements ItemResolverInterface
      * ItemResolver constructor.
      *
      * @param RepositoryInterface $productRepository
-     * @param OrderItemQuantityModifier $modifier
+     * @param OrderItemQuantityModifierInterface $modifier
      */
-    public function __construct(RepositoryInterface $productRepository, OrderItemQuantityModifier $modifier)
+    public function __construct(RepositoryInterface $productRepository, OrderItemQuantityModifierInterface $modifier)
     {
         $this->productRepository = $productRepository;
         $this->modifier = $modifier;

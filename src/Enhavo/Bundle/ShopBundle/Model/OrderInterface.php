@@ -254,4 +254,11 @@ interface OrderInterface extends
      * @return boolean
      */
     public function isFreeShipping();
+
+    /**
+     * Return total tax of all units
+     *
+     * @return mixed
+     */
+    public function getUnitTaxTotal();
 }

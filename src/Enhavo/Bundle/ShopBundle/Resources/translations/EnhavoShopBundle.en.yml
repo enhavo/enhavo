@@ -51,7 +51,7 @@ order:
     unitTax: Tax
     shipping: Shipping
     freeShipping: Free shipping
-    discount: Dicount
+    discount: Discount
     salesTax: VAT
     sum: Sum
     billingNumber: Billing number

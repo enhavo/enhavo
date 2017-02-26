@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor;
+use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor;
 use Sylius\Component\Cart\SyliusCartEvents;
 use Sylius\Component\Promotion\Processor\PromotionProcessorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,6 +36,11 @@ class CartSubscriber implements EventSubscriberInterface
     private $orderInitProcessor;
 
     /**
+     * @var ProcessorInterface
+     */
+    private $taxProcessor;
+
+    /**
      * @var EntityManagerInterface
      */
     private $em;
@@ -43,12 +49,14 @@ class CartSubscriber implements EventSubscriberInterface
         OrderShipmentProcessor $orderShipmentProcessor,
         PromotionProcessorInterface $promotionProcessor,
         ProcessorInterface $orderInitProcessor,
+        OrderTaxProcessor $taxProcessor,
         EntityManagerInterface $em
     )
     {
         $this->orderShipmentProcessor = $orderShipmentProcessor;
         $this->promotionProcessor = $promotionProcessor;
         $this->orderInitProcessor = $orderInitProcessor;
+        $this->taxProcessor = $taxProcessor;
         $this->em = $em;
     }
 
@@ -61,14 +69,18 @@ class CartSubscriber implements EventSubscriberInterface
             SyliusCartEvents::CART_INITIALIZE => 'init',
             SyliusCartEvents::CART_CHANGE => 'change',
             SyliusCartEvents::CART_ABANDON => 'abandon',
+            SyliusCartEvents::ITEM_ADD_INITIALIZE => 'add',
+
         ];
     }
 
     public function change(GenericEvent $event)
     {
         $cart = $event->getSubject();
+        $this->promotionProcessor->process($cart);
         $this->orderShipmentProcessor->process($cart);
         $this->promotionProcessor->process($cart);
+        $this->orderShipmentProcessor->process($cart);
     }
 
     public function init(GenericEvent $event)
@@ -84,5 +96,11 @@ class CartSubscriber implements EventSubscriberInterface
             $cart->setExpiresAt(new \DateTime());
         }
         $this->em->flush();
+    }
+
+    public function add(GenericEvent $event)
+    {
+        $item = $event->getSubject();
+        //$this->taxProcessor->processItem($item);
     }
 }
