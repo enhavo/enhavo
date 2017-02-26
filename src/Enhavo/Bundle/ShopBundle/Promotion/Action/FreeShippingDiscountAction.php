@@ -9,12 +9,16 @@
 namespace Enhavo\Bundle\ShopBundle\Promotion\Action;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Sylius\Component\Order\Model\AdjustmentInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface;
 
-class FreeShippingDiscountAction extends AbstractShippingDiscountAction
+class FreeShippingDiscountAction extends AbstractDiscountAction
 {
-    protected function configureAdjustmentAmount(AdjustmentInterface $adjustment, OrderInterface $subject, array $configuration)
+    protected function configureAdjustments(OrderInterface $subject, array $configuration, PromotionInterface $promotion)
     {
+        $adjustment = $this->createAdjustment($promotion);
+        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
         $adjustment->setAmount(- $subject->getShippingPrice());
+
+        return $adjustment;
     }
 }

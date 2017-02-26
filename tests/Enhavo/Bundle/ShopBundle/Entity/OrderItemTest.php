@@ -25,7 +25,12 @@ class OrderItemTest extends \PHPUnit_Framework_TestCase
 
         $unit = $this->getMockBuilder(OrderItemUnitInterface::class)->getMock();
         $unit->method('getAdjustmentsTotal')->willReturn($tax);
-        $unit->method('getAdjustments')->willReturn(new ArrayCollection([$adjustment]));
+        $unit->method('getAdjustments')->willReturnCallback(function($argument) use ($adjustment) {
+            if($argument == AdjustmentInterface::TAX_ADJUSTMENT)  {
+                return new ArrayCollection([$adjustment]);
+            }
+            return new ArrayCollection();
+        });
         $unit->method('getOrderItem')->willReturn($orderItem);
 
         return $unit;

@@ -10,6 +10,11 @@ services:
             - '@enhavo.shipping.shipping_tax_calculator'
             - '@sylius.factory.adjustment'
 
+    enhavo.order_processing.tax_processor:
+        class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor
+        arguments:
+            - '@sylius.factory.adjustment'
+
     enhavo.shipping.shipping_tax_calculator:
         class: Enhavo\Bundle\ShopBundle\Shipping\ShippingTaxCalculator
 
@@ -61,6 +66,7 @@ services:
             - '@enhavo.order_processing.shipment_processor'
             - '@sylius.promotion_processor'
             - '@enhavo.order_processing.init_processor'
+            - '@enhavo.order_processing.tax_processor'
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_subscriber }
@@ -101,6 +107,14 @@ services:
             - '@sylius.factory.adjustment'
         tags:
             - { name: sylius.promotion_action, type: order_fixed_discount, label: "Order fixed discount" }
+
+    enhavo.promotion_action.order_percentage_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderPercentageDiscountAction
+        arguments:
+            - '@sylius.originator'
+            - '@sylius.factory.adjustment'
+        tags:
+            - { name: sylius.promotion_action, type: order_percentage_discount, label: "Order percentage discount" }
 
     enhavo.promotion_action.free_shipping_discount:
         class: Enhavo\Bundle\ShopBundle\Promotion\Action\FreeShippingDiscountAction

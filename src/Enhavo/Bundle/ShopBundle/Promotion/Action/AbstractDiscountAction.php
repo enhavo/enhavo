@@ -45,22 +45,27 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
             return;
         }
 
+        $adjustments = $this->configureAdjustments($subject, $configuration, $promotion);
+
+        if(is_array($adjustments)) {
+            foreach($adjustments as $adjustment) {
+                $subject->addAdjustment($adjustment);
+            }
+        } elseif($adjustments instanceof AdjustmentInterface) {
+            $subject->addAdjustment($adjustments);
+        }
+    }
+
+    abstract protected function configureAdjustments(OrderInterface $subject, array $configuration, PromotionInterface $promotion);
+
+    protected function createAdjustment(PromotionInterface $promotion)
+    {
         /** @var AdjustmentInterface $adjustment */
         $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType($this->getAdjustmentType());
         $adjustment->setOriginId($promotion->getOriginId());
         $adjustment->setOriginType($promotion->getOriginType());
 
-        $this->configureAdjustmentAmount($adjustment, $subject, $configuration);
-
-        $subject->addAdjustment($adjustment);
-    }
-
-    abstract protected function configureAdjustmentAmount(AdjustmentInterface $adjustment, OrderInterface $subject, array $configuration);
-
-    protected function getAdjustmentType()
-    {
-        return \Sylius\Component\Core\Model\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT;
+        return $adjustment;
     }
 
     public function revert(PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion)
@@ -77,11 +82,9 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
         foreach($subject->getAdjustments() as $adjustment) {
             if(
                 $adjustment->getOriginId() === $promotion->getOriginId() &&
-                $adjustment->getOriginType() ===  $promotion->getOriginType() &&
-                $adjustment->getType() === $this->getAdjustmentType()
+                $adjustment->getOriginType() ===  $promotion->getOriginType()
             ) {
                 $subject->removeAdjustment($adjustment);
-                break;
             }
         }
     }
