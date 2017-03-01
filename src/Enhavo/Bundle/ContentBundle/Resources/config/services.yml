@@ -46,6 +46,11 @@ services:
         tags:
             - { name: enhavo.sitemap_collector, alias: publish }
 
+    enhavo_content.sitemap_collector.configuration:
+        class: Enhavo\Bundle\ContentBundle\Sitemap\Collector\ConfigurationCollector
+        tags:
+            - { name: enhavo.sitemap_collector, alias: configuration }
+
     enhavo_content.event_listener.publish_subscriber:
         class: Enhavo\Bundle\ContentBundle\EventListener\PublishSubscriber
         tags:
