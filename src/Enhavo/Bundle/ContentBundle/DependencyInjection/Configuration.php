@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('type')->end()
                                     ->scalarNode('repository')->end()
+                                    ->variableNode('entries')->end()
                                 ->end()
                             ->end()
                         ->end()
