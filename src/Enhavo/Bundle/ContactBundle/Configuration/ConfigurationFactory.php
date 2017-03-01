@@ -32,6 +32,7 @@ class ConfigurationFactory
         $configuration->setForm($this->getParameter($name, 'form'));
         $configuration->setFormTemplate($this->getParameter($name, 'template.form'));
         $configuration->setRecipientTemplate($this->getParameter($name, 'template.recipient'));
+        $configuration->setRecipient($this->getParameter($name, 'recipient'));
         $configuration->setConfirmTemplate($this->getParameter($name, 'template.confirm'));
         $configuration->setFrom($this->getParameter($name, 'from'));
         $configuration->setSenderName($this->getParameter($name, 'sender_name'));
