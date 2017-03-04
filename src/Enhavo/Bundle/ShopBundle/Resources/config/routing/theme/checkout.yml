@@ -22,3 +22,8 @@ enhavo_shop_theme_checkout_finish:
     path: /{token}/finish
     defaults:
         _controller: enhavo_shop.controller.checkout:finishAction
+
+enhavo_shop_theme_checkout_login:
+    path: /login
+    defaults:
+        _controller: enhavo_shop.controller.checkout:loginAction

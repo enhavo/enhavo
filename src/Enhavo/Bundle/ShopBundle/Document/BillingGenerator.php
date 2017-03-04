@@ -180,7 +180,7 @@ class BillingGenerator implements GeneratorInterface
                 }
 //\Doctrine\Common\Util\Debug::dump($article);die();
                 // missing packing unit in name for merchants
-                $pdf->Cell(64,0,$article->getTitle(),$cellBorder);
+                $pdf->Cell(64,0,$article->getName(),$cellBorder);
 
                 //$pdf->Cell(20,0,$article->getItemNumber(),$cellBorder);
                 $pdf->Cell(15,0,$orderedArticle->getQuantity(),$cellBorder);

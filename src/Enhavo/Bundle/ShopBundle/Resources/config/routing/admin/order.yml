@@ -123,6 +123,8 @@ enhavo_shop_order_billing:
     methods: [GET]
     defaults:
         _controller: sylius.controller.order:billingAction
+        _sylius:
+            form: enhavo_shop_order
 
 enhavo_shop_order_packing_slip:
     options:
@@ -131,3 +133,5 @@ enhavo_shop_order_packing_slip:
     methods: [GET]
     defaults:
         _controller: sylius.controller.order:packingSlipAction
+        _sylius:
+            form: enhavo_shop_order

@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 
 interface ProductInterface
@@ -31,4 +32,9 @@ interface ProductInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @return FileInterface|null
+     */
+    public function getPicture();
 }
