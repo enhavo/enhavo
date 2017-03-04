@@ -1,19 +1,12 @@
 <?php
-/**
- * OrderPromotionCoupon.php
- *
- * @since 19/08/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotNull;
 
-class OrderPromotionCouponType extends AbstractType
+class OrderShipmentType extends AbstractType
 {
     /**
      * @var string
@@ -25,26 +18,27 @@ class OrderPromotionCouponType extends AbstractType
         $this->dataClass = $dataClass;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('promotionCoupon', 'sylius_promotion_coupon_to_code', [
-            'label' => 'promotion.coupon.form.label.code',
-            'translation_domain' => 'EnhavoShopBundle',
-            'required' => $options['required']
-        ]);
+        $builder->add('shipment', 'enhavo_shop_shipment');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->dataClass,
-            'validation_groups' => ['redeem'],
-            'required' => true
+            'validation_groups' => ['shipment']
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
-        return 'enhavo_shop_order_promotion_coupon';
+        return 'enhavo_shop_order_shipment';
     }
 }

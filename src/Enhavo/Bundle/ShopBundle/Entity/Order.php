@@ -97,6 +97,11 @@ class Order extends Cart implements OrderInterface
      */
     private $trackingMail;
 
+    /**
+     * @var string
+     */
+    private $notice;
+
     public function __construct()
     {
         parent::__construct();
@@ -595,5 +600,21 @@ class Order extends Cart implements OrderInterface
     public function isPayed()
     {
         return $this->paymentState === PaymentInterface::STATE_COMPLETED;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotice()
+    {
+        return $this->notice;
+    }
+
+    /**
+     * @param string $notice
+     */
+    public function setNotice($notice)
+    {
+        $this->notice = $notice;
     }
 }

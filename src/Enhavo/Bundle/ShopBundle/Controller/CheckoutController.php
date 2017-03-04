@@ -114,7 +114,7 @@ class CheckoutController extends AppController
     /**
      * @return RedirectResponse
      */
-    public function checkoutAction()
+    public function checkoutAction(Request $request)
     {
         $order = $this->getCurrentCart();
 
@@ -122,7 +122,22 @@ class CheckoutController extends AppController
             throw $this->createNotFoundException();
         }
 
-        return $this->redirectToRoute('enhavo_shop_theme_checkout_addressing');
+        if($this->getUser()) {
+            return $this->redirectToRoute('enhavo_shop_theme_checkout_addressing');
+        }
+
+        return $this->redirectToRoute('enhavo_shop_theme_checkout_login');
+    }
+
+    public function loginAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+
+        $order = $this->getCurrentCart();
+
+        return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme:Checkout/login.html.twig'), [
+            'order' => $order
+        ]);
     }
 
     /**

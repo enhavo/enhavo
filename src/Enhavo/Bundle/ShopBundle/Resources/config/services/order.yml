@@ -1,4 +1,5 @@
 parameters:
+    enhavo_shop.controller.checkout.class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
 
 services:
     enhavo.order_processing.shipment_processor:
@@ -139,7 +140,7 @@ services:
             - { name: validator.constraint_validator, alias: order_payment }
 
     enhavo_shop.controller.checkout:
-        class: Enhavo\Bundle\ShopBundle\Controller\CheckoutController
+        class: '%enhavo_shop.controller.checkout.class%'
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@viewer.factory'

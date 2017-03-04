@@ -40,11 +40,26 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_shop_order_shipment:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType
+        arguments:
+            - '%sylius.model.order.class%'
+        tags:
+            - { name: form.type }
+
     enhavo_shop_payment:
         class: Enhavo\Bundle\ShopBundle\Form\Type\PaymentType
         arguments:
             - '%sylius.model.payment.class%'
             - '%sylius.model.payment_method.class%'
+        tags:
+            - { name: form.type }
+
+    enhavo_shop_shipment:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType
+        arguments:
+            - '%sylius.model.shipment.class%'
+            - '%sylius.model.shipping_method.class%'
         tags:
             - { name: form.type }
 

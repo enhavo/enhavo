@@ -40,6 +40,10 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
             type: boolean
             nullable: true
 
+        notice:
+            type: text
+            nullable: true
+
     oneToOne:
         shipment:
             cascade: ['persist']

@@ -48,6 +48,7 @@ class SerializerSubscriber implements EventSubscriberInterface
         $visitor->addData('unit_total', $order->getUnitTotal());
         $visitor->addData('tax_total', $order->getTaxTotal());
         $visitor->addData('free_shipping', $order->isFreeShipping());
+        $visitor->addData('quantity', $order->getTotalQuantity());
     }
 
     public function onPostSerializeOrderItem(ObjectEvent $event)

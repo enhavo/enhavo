@@ -1,7 +1,7 @@
 {% for item in cart.items %}
     <div>
         {% if not immutable %}<form action="{{ path('enhavo_shop_theme_cart_save_quantity', {id: item.id, _format: 'json'}) }}" method="POST" data-form-cart-quantity data-item-id="{{ item.id }}">{% endif %}
-            <h2>{{ item.product.title }}</h2>
+            <h2>{{ item.product.name }}</h2>
 
             {% if immutable %}
                 <div>Quantity: {{ item.quantity }}</div>
@@ -9,9 +9,9 @@
                 <div><input type="text" name="quantity" value="{{ item.quantity }}" /></div><button type="submit">Save</button>
             {% endif %}
 
-            <div>Unit Price: <span data-cart-item-unit-price>{{ item.product.price }}</span></div>
-            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.product.tax }}</span></div>
-            <div>Unit Total: <span data-cart-item-unit-total>{{ item.product.unitPriceTotal }}</span></div>
+            <div>Unit Price: <span data-cart-item-unit-price>{{ item.unitPrice }}</span></div>
+            <div>Unit Tax: <span data-cart-item-unit-tax>{{ item.unitTax }}</span></div>
+            <div>Unit Total: <span data-cart-item-unit-total>{{ item.unitPriceTotal }}</span></div>
 
             <div>Tax Total: <span data-cart-item-tax-total>{{ item.taxTotal }}</span></div>
             <div>Net Total: <span data-cart-item-unit-price-total>{{ item.unitPriceTotal }}</span></div>
