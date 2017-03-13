@@ -1,3 +1,6 @@
+parameters:
+    enhavo_shop_shipment.class: Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType
+
 services:
     enhavo_shop_product:
         class: Enhavo\Bundle\ShopBundle\Form\Type\ProductType
@@ -56,7 +59,7 @@ services:
             - { name: form.type }
 
     enhavo_shop_shipment:
-        class: Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType
+        class: '%enhavo_shop_shipment.class%'
         arguments:
             - '%sylius.model.shipment.class%'
             - '%sylius.model.shipping_method.class%'
@@ -108,4 +111,9 @@ services:
         tags:
             - { name: form.type }
 
-
+    enhavo_shop_user_address:
+        class: Enhavo\Bundle\ShopBundle\Form\Type\UserAddressType
+        arguments:
+            - 'Enhavo\Bundle\ShopBundle\Entity\UserAddress'
+        tags:
+            - { name: form.type }

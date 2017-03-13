@@ -1,3 +1,6 @@
+parameters:
+    enhavo_shop.controller.user.class: Enhavo\Bundle\ShopBundle\Controller\UserController
+
 services:
     enhavo_shop.listener.doctrine_sylius_meta:
         class: Enhavo\Bundle\ShopBundle\EventListener\DoctrineSyliusMetaListener
@@ -91,3 +94,12 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_shop.controller.user:
+        class: '%enhavo_shop.controller.user.class%'
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
