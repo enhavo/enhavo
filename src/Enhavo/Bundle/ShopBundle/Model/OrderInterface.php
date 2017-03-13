@@ -261,4 +261,19 @@ interface OrderInterface extends
      * @return mixed
      */
     public function getUnitTaxTotal();
+
+    /**
+     * Set differentBillingAddress
+     *
+     * @param boolean $differentBillingAddress
+     * @return OrderInterface
+     */
+    public function setDifferentBillingAddress($differentBillingAddress);
+
+    /**
+     * Get differentBillingAddress
+     *
+     * @return boolean
+     */
+    public function getDifferentBillingAddress();
 }

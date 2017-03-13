@@ -33,6 +33,7 @@ services:
             - '@sylius.cart_provider'
             - '@enhavo_shop.mailer.confirm_mailer'
             - '@enhavo_shop.order.number_generator'
+            - '@enhavo_shop.order.order_address_provider'
 
     enhavo_shop.order.number_generator:
         class: Enhavo\Bundle\ShopBundle\Order\OrderNumberGenerator
@@ -169,6 +170,7 @@ services:
         arguments:
             - '@sylius.factory.address'
             - '@enhavo_shop.order.order_provider'
+            - '@doctrine.orm.entity_manager'
 
     enhavo_shop.order.order_provider:
         class: Enhavo\Bundle\ShopBundle\Order\OrderProvider
