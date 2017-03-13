@@ -1,0 +1,32 @@
+Enhavo\Bundle\ShopBundle\Entity\UserAddress:
+    type: entity
+    table: shop_user_address
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        differentBillingAddress:
+            type: boolean
+            nullable: true
+
+    manyToOne:
+        shippingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+            joinColumn:
+                onDelete: SET NULL
+
+        billingAddress:
+            cascade: ['persist']
+            targetEntity: Sylius\Component\Addressing\Model\AddressInterface
+            joinColumn:
+                onDelete: SET NULL
+
+    oneToOne:
+        user:
+            targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface

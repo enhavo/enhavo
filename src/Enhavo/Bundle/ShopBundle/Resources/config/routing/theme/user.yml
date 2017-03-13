@@ -16,3 +16,7 @@ enhavo_shop_theme_user_order_transfer:
         _sylius:
             redirect: 'enhavo_shop_theme_cart_summary'
 
+enhavo_shop_theme_order_user_address:
+    path: /order/address
+    defaults:
+        _controller: enhavo_shop.controller.user:addressAction
