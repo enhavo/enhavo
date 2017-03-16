@@ -35,19 +35,19 @@ Here is an example route
             _controller: enhavo_page.controller.page:indexAction
             _sylius:
                 template: EnhavoAppBundle:App:index.html.twig
-            _viewer:
-                type: app
-                parameters:
-                    name: value
-                blocks:
-                    table:
-                        type: enhavo_page_page_table
-                        parameters:
-                            table_route: enhavo_page_page_table
-                            update_route: enhavo_page_page_update
-                actions:
-                    create:
-                        type: overlay
-                        route: enhavo_page_page_create
-                        icon: plus
-                        label: label.create
+                viewer:
+                    type: app
+                    parameters:
+                        name: value
+                    blocks:
+                        table:
+                            type: enhavo_page_page_table
+                            parameters:
+                                table_route: enhavo_page_page_table
+                                update_route: enhavo_page_page_update
+                    actions:
+                        create:
+                            type: overlay
+                            route: enhavo_page_page_create
+                            icon: plus
+                            label: label.create

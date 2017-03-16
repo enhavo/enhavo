@@ -28,15 +28,15 @@ This is really short, isn't it? Here you can see it with all the default values 
             _controller: enhavo_page.controller.page:indexAction
             _sylius:
                 template: EnhavoAppBundle:Resource:index.html.twig
-            _viewer:
-                type: index
-                blocks:
-                    table:
-                        type: table
-                        table_route: enhavo_page_page_table
-                        update_route: enhavo_page_page_update
-                actions:
-                    create:
-                        type: create
-                        route: enhavo_page_page_create
+                viewer:
+                    type: index
+                    blocks:
+                        table:
+                            type: table
+                            table_route: enhavo_page_page_table
+                            update_route: enhavo_page_page_update
+                    actions:
+                        create:
+                            type: create
+                            route: enhavo_page_page_create
 

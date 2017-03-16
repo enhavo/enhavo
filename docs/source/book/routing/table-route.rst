@@ -26,45 +26,45 @@ Here is a full configuration example of a table route
                         score: desc
                     paginate: 5
                     limit: 3
-                _viewer
-                    type: table
-                    parameters:
-                        param1: value1
-                        param2: value2
-                    table:
-                        width: 8
-                        columns:
-                            id:
-                                label: id
-                                property: id
-                                width: 1
-                            title:
-                                label: title
-                                property: title
-                                width: 9
-                            public:
-                                label: public
-                                property: public
-                                width: 1
-                                widget: EnhavoAppBundle:Widget:boolean.html.twig
-                            position:
-                                label:
-                                property: position
-                                width: 1
-                                widget:
-                                    type: template
-                                    template: EnhavoAppBundle:Widget:position.html.twig
-                        sorting:
-                            sortable: true
-                            move_after_route: enhavo_user_user_move_after
-                            move_to_page_route: enhavo_user_user_move_to_page
-                        batch_actions:
-                            delete:
-                                label: table.batch.action.delete
-                                confirm_message: table.batch.message.confirm.delete
-                                translation_domain: EnhavoAppBundle
-                                permission: ROLE_ENHAVO_APP_USER_DELETE
-                                position: 0
+                    viewer
+                        type: table
+                        parameters:
+                            param1: value1
+                            param2: value2
+                        table:
+                            width: 8
+                            columns:
+                                id:
+                                    label: id
+                                    property: id
+                                    width: 1
+                                title:
+                                    label: title
+                                    property: title
+                                    width: 9
+                                public:
+                                    label: public
+                                    property: public
+                                    width: 1
+                                    widget: EnhavoAppBundle:Widget:boolean.html.twig
+                                position:
+                                    label:
+                                    property: position
+                                    width: 1
+                                    widget:
+                                        type: template
+                                        template: EnhavoAppBundle:Widget:position.html.twig
+                            sorting:
+                                sortable: true
+                                move_after_route: enhavo_user_user_move_after
+                                move_to_page_route: enhavo_user_user_move_to_page
+                            batch_actions:
+                                delete:
+                                    label: table.batch.action.delete
+                                    confirm_message: table.batch.message.confirm.delete
+                                    translation_domain: EnhavoAppBundle
+                                    permission: ROLE_ENHAVO_APP_USER_DELETE
+                                    position: 0
 
 Viewer
 ------
