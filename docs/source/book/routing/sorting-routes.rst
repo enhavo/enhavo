@@ -17,7 +17,7 @@ as well.
 +-------------------------------+-------------------------------------------------------------------------+
 | **_sylius.paginate**          | If set in table route, must be set to the same value here               |
 +-------------------------------+-------------------------------------------------------------------------+
-| **_viewer.sorting**           | **desc** (default) means higher values come before lower values, with 0 |
+| **viewer.sorting**           | **desc** (default) means higher values come before lower values, with 0 |
 |                               | being the last element; **asc** is the other way around                 |
 +-------------------------------+-------------------------------------------------------------------------+
 
@@ -33,8 +33,8 @@ as well.
             _controller: enhavo_page.controller.slide:moveAfterAction
             _sylius:
                 sortable_position: position
-            _viewer:
-                sorting: desc
+                viewer:
+                    sorting: desc
 
 
 .. code-block:: yaml
