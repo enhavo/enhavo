@@ -20,6 +20,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CheckoutController extends AppController
 {
@@ -116,17 +117,29 @@ class CheckoutController extends AppController
      */
     public function checkoutAction(Request $request)
     {
-        $order = $this->getCurrentCart();
+        try {
+            $order = $this->getCurrentCart();
+        } catch (NotFoundHttpException $e) {
+            return $this->redirectToRoute('enhavo_shop_theme_checkout_empty');
+        }
 
         if($order->isEmpty()) {
-            throw $this->createNotFoundException();
+            return $this->redirectToRoute('enhavo_shop_theme_checkout_empty');
         }
 
         if($this->getUser()) {
             return $this->redirectToRoute('enhavo_shop_theme_checkout_addressing');
         }
 
+        $this->setTargetPath($request, 'enhavo_shop_theme_checkout_addressing');
         return $this->redirectToRoute('enhavo_shop_theme_checkout_login');
+    }
+
+    public function emptyAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->createSimple($request);
+
+        return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme:Checkout/empty.html.twig'));
     }
 
     public function loginAction(Request $request)
@@ -210,5 +223,15 @@ class CheckoutController extends AppController
         return $this->render($configuration->getTemplate('EnhavoShopBundle:Theme:Checkout/finish.html.twig'), [
             'order' => $order,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    protected function setTargetPath(Request $request, $route, $parameters = [])
+    {
+        if ($request->hasSession() && $request->isMethodSafe(false) && !$request->isXmlHttpRequest()) {
+            $request->getSession()->set('_security.user.target_path', $this->get('router')->generate($route, $parameters));
+        }
     }
 }

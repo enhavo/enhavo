@@ -27,3 +27,8 @@ enhavo_shop_theme_checkout_login:
     path: /login
     defaults:
         _controller: enhavo_shop.controller.checkout:loginAction
+
+enhavo_shop_theme_checkout_empty:
+    path: /empty
+    defaults:
+        _controller: enhavo_shop.controller.checkout:emptyAction

@@ -43,7 +43,6 @@ class ShipmentType extends AbstractType
         $builder
             ->add('method', 'entity', [
                 'class' => $this->shipmentClass,
-                'choice_label' => 'code',
                 'expanded' => true
             ])
         ;

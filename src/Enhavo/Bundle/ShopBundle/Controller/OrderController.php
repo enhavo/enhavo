@@ -74,9 +74,7 @@ class OrderController extends ResourceController
     public function billingAction(Request $request)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $formData = $request->get('data');
         $formDataArray = array();
-        $formData = parse_str(urldecode($formData), $formDataArray);
         $order = $this->singleResourceProvider->get($configuration, $this->repository);
 
         $form = $this->resourceFormFactory->create($configuration, $order);
