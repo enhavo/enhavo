@@ -21,15 +21,25 @@ trait CartSummaryTrait
     protected function redirectToCartSummary(RequestConfiguration $configuration)
     {
         $format = $configuration->getRequest()->getRequestFormat('html');
-        if (null === $configuration->getParameters()->get('redirect')) {
-            return $this->getRedirectHandler()->redirectToRoute($configuration, $this->getCartSummaryRoute(), [
-                '_format' => $format
-            ]);
+        $defaultParams = [
+            '_format' => $format
+        ];
+
+        if (null !== $configuration->getParameters()->get('redirect')) {
+            $redirect = $configuration->getParameters()->get('redirect');
+
+            $params = array();
+            if(is_array($redirect)) {
+                $route = $redirect['route'];
+                $params = isset($redirect['parameters']) ? $redirect['parameters'] : array();
+            } else {
+                $route = $redirect;
+            }
+
+            return $this->getRedirectHandler()->redirectToRoute($configuration, $route, $params);
         }
 
-        return $this->getRedirectHandler()->redirectToRoute($configuration, $this->getCartSummaryRoute(), [
-            '_format' => $format
-        ]);
+        return $this->getRedirectHandler()->redirectToRoute($configuration, $this->getCartSummaryRoute(), $defaultParams);
     }
 
     /**
@@ -42,5 +52,4 @@ trait CartSummaryTrait
         }
         return $this->redirectHandler;
     }
-
 }

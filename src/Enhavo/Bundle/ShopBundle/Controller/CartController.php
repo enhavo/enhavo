@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sylius\Component\Cart\Event\CartEvent;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
+use Sylius\Component\Cart\Event\CartItemEvent;
 
 class CartController extends SyliusCartController
 {
@@ -28,15 +29,16 @@ class CartController extends SyliusCartController
         $id = intval($request->get('id'));
         $quantity = intval($request->get('quantity'));
 
-        if($quantity < 1) {
-            throw $this->createNotFoundException();
-        }
-
         /** @var OrderItem $orderItem */
         $orderItem = $this->get('sylius.repository.order_item')->find($id);
 
         if(empty($orderItem)) {
             throw $this->createNotFoundException();
+        }
+
+        if($quantity < 1) {
+            $this->removeItem($orderItem);
+            return $this->redirectToCartSummary($configuration);
         }
 
         $this->get('sylius.order_item_quantity_modifier')->modify($orderItem, $quantity);
@@ -49,5 +51,26 @@ class CartController extends SyliusCartController
         $eventDispatcher->dispatch(SyliusCartEvents::CART_SAVE_COMPLETED, new FlashEvent());
 
         return $this->redirectToCartSummary($configuration);
+    }
+
+    protected function removeItem($item)
+    {
+        $cart = $this->getCurrentCart();
+        $eventDispatcher = $this->getEventDispatcher();
+
+        if (!$item || false === $cart->hasItem($item)) {
+            // Write flash message
+            $eventDispatcher->dispatch(SyliusCartEvents::ITEM_REMOVE_ERROR, new FlashEvent());
+        }
+
+        $event = new CartItemEvent($cart, $item);
+
+        // Update models
+        $eventDispatcher->dispatch(SyliusCartEvents::ITEM_REMOVE_INITIALIZE, $event);
+        $eventDispatcher->dispatch(SyliusCartEvents::CART_CHANGE, new GenericEvent($cart));
+        $eventDispatcher->dispatch(SyliusCartEvents::CART_SAVE_INITIALIZE, $event);
+
+        // Write flash message
+        $eventDispatcher->dispatch(SyliusCartEvents::ITEM_REMOVE_COMPLETED, new FlashEvent());
     }
 }

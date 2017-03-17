@@ -66,11 +66,10 @@ class CartSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            SyliusCartEvents::CART_INITIALIZE => 'init',
-            SyliusCartEvents::CART_CHANGE => 'change',
-            SyliusCartEvents::CART_ABANDON => 'abandon',
-            SyliusCartEvents::ITEM_ADD_INITIALIZE => 'add',
-
+            SyliusCartEvents::CART_INITIALIZE => ['init', 10],
+            SyliusCartEvents::CART_CHANGE => ['change', 10],
+            SyliusCartEvents::CART_ABANDON => ['abandon', 10],
+            SyliusCartEvents::ITEM_ADD_INITIALIZE => ['add', 10],
         ];
     }
 
