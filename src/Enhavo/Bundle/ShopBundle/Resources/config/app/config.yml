@@ -147,6 +147,10 @@ enhavo_shop:
         tracking:
             from: '%mailer_from%'
             sender_name: '%mailer_name%'
+        notification:
+            from: '%mailer_from%'
+            sender_name: '%mailer_name%'
+            to: '%mailer_to%'
 
 enhavo_theme:
     route:

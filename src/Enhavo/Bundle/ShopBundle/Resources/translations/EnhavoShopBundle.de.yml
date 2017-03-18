@@ -26,6 +26,8 @@ mailer:
     subject: Bestellung
   tracking:
     subject: Paket versendet
+  notification:
+    subject: Eine neue Bestellung ist eingegangen
 
 order:
   role:

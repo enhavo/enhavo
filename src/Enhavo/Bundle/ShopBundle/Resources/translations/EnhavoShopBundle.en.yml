@@ -26,6 +26,8 @@ mailer:
     subject: Order
   tracking:
     subject: Order has been shipped
+  notification:
+    subject: You have a new order
 
 order:
   role:
