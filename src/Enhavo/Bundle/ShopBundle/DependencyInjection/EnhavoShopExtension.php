@@ -25,6 +25,7 @@ class EnhavoShopExtension extends AbstractResourceExtension
         
         $container->setParameter('enhavo_shop.mailer.confirm', $config['mailer']['confirm']);
         $container->setParameter('enhavo_shop.mailer.tracking', $config['mailer']['tracking']);
+        $container->setParameter('enhavo_shop.mailer.notification', $config['mailer']['notification']);
 
         $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']);
         $container->setParameter('enhavo_shop.document.packing_slip', $config['document']['packing_slip']);

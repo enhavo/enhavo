@@ -32,6 +32,7 @@ services:
         arguments:
             - '@sylius.cart_provider'
             - '@enhavo_shop.mailer.confirm_mailer'
+            - '@enhavo_shop.mailer.notification_mailer'
             - '@enhavo_shop.order.number_generator'
             - '@enhavo_shop.order.order_address_provider'
 
@@ -251,6 +252,15 @@ services:
             - '@mailer'
             - '@templating'
             - '%enhavo_shop.mailer.tracking%'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_shop.mailer.notification_mailer:
+        class: Enhavo\Bundle\ShopBundle\Mailer\NotificationMailer
+        arguments:
+            - '@mailer'
+            - '@templating'
+            - '%enhavo_shop.mailer.notification%'
         calls:
             - [setContainer, ['@service_container']]
 

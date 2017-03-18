@@ -31,6 +31,11 @@ class OrderConfirmProcessor implements ProcessorInterface
     protected $confirmMailer;
 
     /**
+     * @var MailerInterface
+     */
+    protected $notificationMailer;
+
+    /**
      * @var OrderNumberGeneratorInterface
      */
     protected $numberGenerator;
@@ -43,12 +48,14 @@ class OrderConfirmProcessor implements ProcessorInterface
     public function __construct(
         CartProviderInterface $cartProvider,
         MailerInterface $confirmMailer,
+        MailerInterface $notificationMailer,
         OrderNumberGeneratorInterface $numberGenerator,
         OrderAddressProvider $orderAddressProvider
     )
     {
         $this->cartProvider = $cartProvider;
         $this->confirmMailer = $confirmMailer;
+        $this->notificationMailer = $notificationMailer;
         $this->numberGenerator = $numberGenerator;
         $this->orderAddressProvider = $orderAddressProvider;
     }
@@ -67,6 +74,7 @@ class OrderConfirmProcessor implements ProcessorInterface
             $this->orderAddressProvider->save($order);
         }
         $this->confirmMailer->sendMail($order);
+        $this->notificationMailer->sendMail($order);
         $this->cartProvider->abandonCart();
     }
 
