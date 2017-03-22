@@ -37,7 +37,14 @@ class UserAddressType extends AbstractType
         });
         $builder->add('billingAddress', 'sylius_address');
         $builder->add('shippingAddress', 'sylius_address');
-        $builder->add('differentBillingAddress', 'enhavo_boolean');
+        $builder->add('differentBillingAddress', 'checkbox', [
+            'required' => false,
+            'label' => 'checkout.addressing.form.label.different_billing_address',
+            'translation_domain' => 'EnhavoShopBundle',
+            'attr' => [
+                'data-checkout-addressing-different-billing-address' => ''
+            ]
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
