@@ -27,28 +27,29 @@ class OrderAddressingValidator extends ConstraintValidator
         if(!$value instanceof OrderInterface) {
             $this->context->buildViolation('Value should implements OrderInterface')->addViolation();
         }
-
         if($value->getUser() === null) {
             $emailErrors = $this->validator->validate($value->getEmail(), [new NotNull(), new Email()]);
             foreach($emailErrors as $error) {
-                $this->context->buildViolation($error->getMessage())->addViolation();
+                $this->context->buildViolation($error->getMessage())->atPath('email')->addViolation();
             }
         }
 
-        $shippingAddressErrors = $this->validator->validate($value->getShippingAddress());
+        $shippingAddressErrors = $this->validator->validate($value->getShippingAddress(), $constraint->groups);
         if(count($shippingAddressErrors)) {
             /** @var ConstraintViolation $error */
             foreach($shippingAddressErrors as $error) {
-                $this->context->buildViolation($error->getMessage())->addViolation();
+                $propertyPath = sprintf('shippingAddress.%s', $error->getPropertyPath());
+                $this->context->buildViolation($error->getMessage())->atPath($propertyPath)->addViolation();
             }
         }
 
         if($value->isDifferentBillingAddress()) {
-            $billingAddressErrors = $this->validator->validate($value->getBillingAddress());
+            $billingAddressErrors = $this->validator->validate($value->getBillingAddress(), $constraint->groups);
             if(count($billingAddressErrors)) {
                 /** @var ConstraintViolation $error */
                 foreach($billingAddressErrors as $error) {
-                    $this->context->buildViolation($error->getMessage())->addViolation();
+                    $propertyPath = sprintf('billingAddress.%s', $error->getPropertyPath());
+                    $this->context->buildViolation($error->getMessage())->atPath($propertyPath)->addViolation();
                 }
             }
         }

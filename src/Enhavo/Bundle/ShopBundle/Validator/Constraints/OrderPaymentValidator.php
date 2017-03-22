@@ -33,13 +33,13 @@ class OrderPaymentValidator extends ConstraintValidator
 
         $payment = $value->getPayment();
         if(!$payment instanceof PaymentInterface) {
-            $this->context->buildViolation('Order doesn\'t contain payment')->addViolation();
+            $this->context->buildViolation('Order doesn\'t contain payment')->atPath('payment')->addViolation();
             return;
         }
 
         $method = $payment->getMethod();
         if(!$method instanceof PaymentMethodInterface) {
-            $this->context->buildViolation('Paymebt doesn\'t contain method')->addViolation();
+            $this->context->buildViolation('Paymebt doesn\'t contain method')->atPath('payment.method')->addViolation();
             return;
         }
     }

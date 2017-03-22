@@ -2,10 +2,6 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
     properties:
         promotionCoupon:
             - NotNull: { groups: [redeem] }
-        shippingAddress:
-            - Valid:
-        billingAddress:
-            - Valid:
         payment:
             - NotNull: { groups: [payment, confirm] }
 
@@ -18,14 +14,14 @@ Enhavo\Bundle\ShopBundle\Entity\Order:
 Sylius\Component\Addressing\Model\Address:
     properties:
         firstName:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
         lastName:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
         street:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
         city:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
         postcode:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
         countryCode:
-            - NotBlank: ~
+            - NotBlank: { groups: [shipping] }
