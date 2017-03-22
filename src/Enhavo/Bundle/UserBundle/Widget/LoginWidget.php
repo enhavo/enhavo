@@ -49,10 +49,17 @@ class LoginWidget extends AbstractType implements WidgetInterface
             $error = $this->getError();
         }
 
+        if(isset($options['failurePath'])) {
+            $failurePath = $options['failurePath'];
+        } else {
+            $failurePath = null;
+        }
+        
         return $this->renderTemplate($template, [
             'csrf_token' => $token,
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'failurePath' => $failurePath
         ]);
     }
 

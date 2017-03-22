@@ -65,6 +65,11 @@ order:
     billingAddress: Rechnungsanschrift
     country: Land
     phone: Telefon
+    payed: Bezahlt
+    packed: Verpackt
+    shipped: Versendet
+    cancelled: Storniert
+
   action:
     transfer: In den Warenkorb
     purchase: Bezahlen

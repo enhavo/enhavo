@@ -89,8 +89,27 @@ enhavo_shop_order_table:
                         label: order.label.name
                         type: shop_address
                         property: shippingAddress
-                        width: 8
-
+                        width: 4
+                    payed:
+                        label: order.label.payed
+                        type: order_state
+                        property: payed
+                        width: 1
+                    packed:
+                        label: order.label.packed
+                        type: order_state
+                        property: packed
+                        width: 1
+                    shipped:
+                        label: order.label.shipped
+                        type: order_state
+                        property: shipped
+                        width: 1
+                    cancelled:
+                        label: order.label.cancelled
+                        type: order_state
+                        property: cancelled
+                        width: 1
 
 
 enhavo_shop_order_delete:

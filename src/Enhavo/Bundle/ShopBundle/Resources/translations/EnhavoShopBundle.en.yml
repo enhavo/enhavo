@@ -65,6 +65,11 @@ order:
     billingAddress: Billing address
     country: Country
     phone: Phone
+    payed: Payed
+    packed: Packed
+    shipped: Shipped
+    cancelled: Cancelled
+
   action:
     transfer: Transfer to cart
     purchase: Pay

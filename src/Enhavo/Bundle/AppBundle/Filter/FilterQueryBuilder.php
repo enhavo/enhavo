@@ -34,18 +34,23 @@ class FilterQueryBuilder
     {
         $request = $requestConfiguration->getRequest();
         $filters = $requestConfiguration->getFilters();
+        $criteria = $requestConfiguration->getCriteria();
 
         $sorting = $requestConfiguration->getSorting();
 
-        return $this->buildQueryFromRequest($request, $filters, $sorting);
+        return $this->buildQueryFromRequest($request, $filters, $sorting, $criteria);
     }
 
-    public function buildQueryFromRequest(Request $request, $filters, $sorting = [])
+    public function buildQueryFromRequest(Request $request, $filters, $sorting = [], $criteria = [])
     {
         $filterQuery = $this->createFilterQuery();
 
         foreach($sorting as $property => $order) {
             $filterQuery->addOrderBy($property, $order);
+        }
+
+        foreach($criteria as $property => $value) {
+            $filterQuery->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
         }
 
         $requestFilters = $request->query->get('filters', null);

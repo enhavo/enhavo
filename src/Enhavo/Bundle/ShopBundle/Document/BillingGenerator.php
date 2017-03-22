@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\ShopBundle\Document;
 
+use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
+use Sylius\Component\Taxation\Model\TaxRate;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -28,7 +30,7 @@ class BillingGenerator implements GeneratorInterface
         $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
 
         $pdf = new BaseDocument();
-        $pdf->setTitle("Rechnung");
+        $pdf->SetTitle("Rechnung");
 
         /**
          * @var OrderItem[] $items
@@ -36,37 +38,38 @@ class BillingGenerator implements GeneratorInterface
         $items = $order->getItems();
 
         $itemsPerPage = 15;
-        $totalPagenumber = ceil(count($items)/$itemsPerPage);
+        $totalPageNumber = ceil(count($items)/$itemsPerPage);
 
-        for($pagenumber=1;$pagenumber<=$totalPagenumber;$pagenumber++) {
+        $marginLeft = 22;
+        $marginTop = 54;
+
+        $addressWidth = 60;
+        $metaDataWidth = 40;
+        $metaDataValueWidth = 25;
+        $subjectWidth = 80;
+        $sumWidth = 60;
+        $sumValueWidth = 40;
+
+        $metaDataMarginTop = 79;
+        $subjectMarginTop = 108;
+        $metaDataMarginLeft = $marginLeft+118.5;
+        $metaDataValueMarginLeft = $metaDataMarginLeft+40;
+        $readonMarginLeft = $marginLeft+118.5;
+        $itemTableMarginTop = 118;
+        $sumMarginLeft = 100;
+        $sumValueMarginLeft = 167;
+
+        $stdColor = 0;
+
+        $subjectSize = 12;
+        $stdSize = 9;
+        $itemSize = 8;
+        $sumSize = 11;
+
+
+        for($pageNumber=1; $pageNumber <= $totalPageNumber; $pageNumber++) {
 
             $pdf->AddPage();
-
-            $marginLeft = 22;
-            $marginTop = 54;
-
-            $addressWidth = 60;
-            $metaDataWidth = 40;
-            $metaDataValueWidth = 25;
-            $subjectWidth = 80;
-            $sumWidth = 60;
-            $sumValueWidth = 40;
-
-            $metaDataMarginTop = 79;
-            $subjectMarginTop = 108;
-            $metaDataMarginLeft = $marginLeft+118.5;
-            $metaDataValueMarginLeft = $metaDataMarginLeft+40;
-            $readonMarginLeft = $marginLeft+118.5;
-            $itemTableMarginTop = 118;
-            $sumMarginLeft = 100;
-            $sumValueMarginLeft = 167;
-
-            $stdColor = 0;
-
-            $subjectSize = 12;
-            $stdSize = 9;
-            $itemSize = 8;
-            $sumSize = 11;
 
             $stdFont = "pdfahelvetica";
             $stdFontBold = "pdfahelveticab";
@@ -78,8 +81,8 @@ class BillingGenerator implements GeneratorInterface
             }
 
 
-            if($pagenumber > 1) {
-                $subject .= " Seite ".$pagenumber;
+            if($pageNumber > 1) {
+                $subject .= " Seite ".$pageNumber;
             }
 
             $pdf->SetAutoPageBreak(false, 0);
@@ -119,21 +122,18 @@ class BillingGenerator implements GeneratorInterface
                 $pdf->MultiCell($metaDataWidth,0,"Rechnungsnummer:",0,"L",false,1,$metaDataMarginLeft,$metaDataMarginTop);
             }
             $pdf->MultiCell($metaDataWidth,0,"Rechnungsdatum:",0,"L",false,1,$metaDataMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,"Leistungsdatum:",0,"L",false,1,$metaDataMarginLeft);
             $pdf->MultiCell($metaDataWidth,0,"Bezahlart:",0,"L",false,1,$metaDataMarginLeft);
 
             // metadata values
-            if($order->getState() == "cancelled")
-            {
+            if($order->getState() == "cancelled")  {
                 $pdf->MultiCell($metaDataValueWidth,0,"S" . $order->getNumber(),0,"L",false,1,$metaDataValueMarginLeft,$metaDataMarginTop);
-            }
-            else
-            {
+            } else {
                 $pdf->MultiCell($metaDataValueWidth,0,$order->getNumber(),0,"L",false,1,$metaDataValueMarginLeft,$metaDataMarginTop);
             }
-            $paymentName = "n.a.";
+
             $pdf->MultiCell($metaDataWidth,0,$order->getCreatedAt()->format('d.m.Y'),0,"L",false,1,$metaDataValueMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,$paymentName,0,"L",false,1,$metaDataValueMarginLeft);
+            $pdf->MultiCell($metaDataWidth,0,$order->getPayment()->getMethod()->getName(),0,"L",false,1,$metaDataValueMarginLeft);
+
 
             // item table header
             $pdf->SetFontSize($itemSize);
@@ -142,30 +142,26 @@ class BillingGenerator implements GeneratorInterface
             $pdf->SetAbsX($marginLeft);
             $pdf->SetAbsY($itemTableMarginTop);
             $pdf->Cell(64,0,"Artikel",'B', 0, 'L');
-            //$pdf->Cell(20,0,"Artikel-Nr.",'B', 0, 'L');
             $pdf->Cell(15,0,"Menge",'B', 0, 'L');
             $pdf->Cell(40,0,"Betrag netto",'B', 0, 'L');
             $pdf->Cell(25,0,"USt. %",'B', 0, 'L');
             $pdf->Cell(33,0,"Betrag (inkl. USt.)",'B', 0, 'L');
 
-
-            //$pdf->SetTextColor($stdColor);
             $pdf->SetFont($stdFont);
             $pdf->setCellPaddings(1.5,1.5,0,1.5);
 
-            $start = ($pagenumber-1)*$itemsPerPage+1;
-            $end = $itemsPerPage*$pagenumber;
-            for($i=$start;$i<=$end;$i++) {
-                if(!isset($items[$i-1])) break;
+            $start = ($pageNumber-1)*$itemsPerPage+1;
+            $end = $itemsPerPage*$pageNumber;
+            for($i = $start; $i <= $end; $i++) {
+                if(!isset($items[$i-1])) {
+                    break;
+                }
                 $orderedArticle = $items[$i-1];
 
-                /**
-                 * @var Product $article
-                 */
+                /** @var ProductInterface $product */
+                $product = $orderedArticle->getProduct();
 
-                $article = $orderedArticle->getProduct();
-
-                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitPriceTotal());
+                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
                 $itemNet = $currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
 
                 $pdf->Ln();
@@ -178,30 +174,22 @@ class BillingGenerator implements GeneratorInterface
                     $cellBorder = "BR";
                     $cellBorderLast = "B";
                 }
-//\Doctrine\Common\Util\Debug::dump($article);die();
-                // missing packing unit in name for merchants
-                $pdf->Cell(64,0,$article->getName(),$cellBorder);
 
-                //$pdf->Cell(20,0,$article->getItemNumber(),$cellBorder);
+                // missing packing unit in name for merchants
+                $pdf->Cell(64,0,$product->getName(),$cellBorder);
+
                 $pdf->Cell(15,0,$orderedArticle->getQuantity(),$cellBorder);
                 $pdf->Cell(40,0,$itemNet,$cellBorder);
-                $pdf->Cell(25,0,$article->getTaxRate()->getAmount()."%",$cellBorder);
+                $pdf->Cell(25,0, ($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
                 $pdf->Cell(33,0,$itemSum,$cellBorderLast);
-
-                /* TODO
-                if(!isset($dividedTaxValues[(float)$orderedArticle["taxValue"]])) {
-                    $dividedTaxValues[(float)$orderedArticle["taxValue"]] = 0;
-                }
-                $dividedTaxValues[(float)$orderedArticle["taxValue"]] += $orderedArticle["quantity"]*$orderedArticle["grossPrice"] - $orderedArticle["quantity"]*$orderedArticle["grossPrice"]/((100+(float)$orderedArticle["taxValue"])/100);
-                */
             }
 
-            if($totalPagenumber > 1 && $pagenumber < $totalPagenumber) {
+            if($totalPageNumber > 1 && $pageNumber < $totalPageNumber) {
                 $pdf->Ln();
                 $pdf->Ln();
                 $pdf->Ln();
                 $pdf->Ln();
-                $pdf->MultiCell($metaDataWidth,0,"Fortsetzung auf Seite ".($pagenumber+1),0,"L",false,1,$readonMarginLeft);
+                $pdf->MultiCell($metaDataWidth,0,"Fortsetzung auf Seite ".($pageNumber+1),0,"L",false,1,$readonMarginLeft);
             }
             $pdf->setCellPaddings(0,0,0,0);
         }
@@ -214,14 +202,10 @@ class BillingGenerator implements GeneratorInterface
         $pdf->SetCellPadding(0);
         $pdf->setCellMargins("","","",0.5);
         $pdf->SetFontSize($stdSize);
-        $pdf->MultiCell($sumWidth,0,"Zwischensumme netto:",0,"R",false,1,$sumMarginLeft);
-        $pdf->MultiCell($sumWidth,0,"Versandkosten netto:",0,"R",false,1,$sumMarginLeft);
-        /* TODO
-        foreach($dividedTaxValues as $taxKey => $dividedTaxValue) {
-            $pdf->MultiCell($sumWidth,0,$taxKey."% gesetzl. USt. (Artikel):",0,"R",false,1,$sumMarginLeft);
-        }
-        */
-        $pdf->MultiCell($sumWidth,0,"19% gesetzl. USt. (Versandkosten):",0,"R",false,1,$sumMarginLeft);
+        $pdf->MultiCell($sumWidth,0,"Zwischensumme:",0,"R",false,1,$sumMarginLeft);
+        $pdf->MultiCell($sumWidth,0,"Versandkosten:",0,"R",false,1,$sumMarginLeft);
+
+        $pdf->MultiCell($sumWidth,0,"19% gesetzl. USt.",0,"R",false,1,$sumMarginLeft);
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumWidth,0,"Rechnungsbetrag:",0,"R",false,1,$sumMarginLeft);
@@ -229,7 +213,7 @@ class BillingGenerator implements GeneratorInterface
         $shippingNetSum = $currencyFormatter->getCurrency($order->getShippingTotal());
         $netSum = $currencyFormatter->getCurrency($order->getUnitTotal());
         // not available in order?
-        $shippingTaxValue = "n.a.";
+        $shippingTaxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '19', true));
         $totalSum = $currencyFormatter->getCurrency($order->getTotal());
 
         $pdf->SetFont($stdFont);
@@ -237,18 +221,29 @@ class BillingGenerator implements GeneratorInterface
         $pdf->SetAbsY($y);
         $pdf->MultiCell($sumValueWidth,0,$netSum,0,"L",false,1,$sumValueMarginLeft);
         $pdf->MultiCell($sumValueWidth,0,$shippingNetSum,0,"L",false,1,$sumValueMarginLeft);
-        /* TODO
-        foreach($dividedTaxValues as $taxKey => $dividedTaxValue) {
-            $dividedTaxValue = str_replace(".",",",number_format($dividedTaxValue,2));
-            $pdf->MultiCell($sumValueWidth,0,$dividedTaxValue." Euro",0,"L",false,1,$sumValueMarginLeft);
-        }
-        */
+
         $pdf->MultiCell($sumValueWidth,0,$shippingTaxValue,0,"L",false,1,$sumValueMarginLeft);
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumValueWidth,0,$totalSum,0,"L",false,1,$sumValueMarginLeft);
 
         return $pdf->Output(null, 'S');
+    }
+
+    public function getTaxByCode(OrderInterface $order, $code)
+    {
+        $taxRate = $this->container->get('sylius.repository.tax_rate')->findOneBy([
+            'code' => $code,
+        ]);
+        /** @var AdjustmentInterface[] $adjustments */
+        $adjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
+        $amount = 0;
+        foreach($adjustments as $adjustment) {
+            if ($adjustment->getOriginType() === TaxRate::class && $adjustment->getOriginId() == $taxRate->getId()) {
+                $amount += $adjustment->getAmount();
+            }
+        }
+        return $amount;
     }
 
     public function generateName(OrderInterface $order, $options = [])

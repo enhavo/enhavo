@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Document;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
-use Enhavo\Bundle\ShopBundle\Entity\Product;
+use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -28,7 +28,7 @@ class PackingSlipGenerator implements GeneratorInterface
         $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
 
         $pdf = new BaseDocument();
-        $pdf->setTitle("Lieferschein");
+        $pdf->SetTitle("Lieferschein");
 
         /**
          * @var OrderItem[] $items
@@ -36,37 +36,37 @@ class PackingSlipGenerator implements GeneratorInterface
         $items = $order->getItems();
 
         $itemsPerPage = 15;
-        $totalPagenumber = ceil(count($items)/$itemsPerPage);
+        $totalPageNumber = ceil(count($items)/$itemsPerPage);
 
-        for($pagenumber=1;$pagenumber<=$totalPagenumber;$pagenumber++) {
+        $marginLeft = 22;
+        $marginTop = 54;
+
+        $addressWidth = 60;
+        $metaDataWidth = 40;
+        $metaDataValueWidth = 25;
+        $subjectWidth = 80;
+        $sumWidth = 60;
+        $sumValueWidth = 40;
+
+        $metaDataMarginTop = 79;
+        $subjectMarginTop = 108;
+        $metaDataMarginLeft = $marginLeft+118.5;
+        $metaDataValueMarginLeft = $metaDataMarginLeft+40;
+        $readonMarginLeft = $marginLeft+118.5;
+        $itemTableMarginTop = 118;
+        $sumMarginLeft = 100;
+        $sumValueMarginLeft = 167;
+
+        $stdColor = 0;
+
+        $subjectSize = 12;
+        $stdSize = 9;
+        $itemSize = 8;
+        $sumSize = 11;
+
+        for($pageNumber=1 ; $pageNumber <= $totalPageNumber; $pageNumber++) {
 
             $pdf->AddPage();
-
-            $marginLeft = 22;
-            $marginTop = 54;
-
-            $addressWidth = 60;
-            $metaDataWidth = 40;
-            $metaDataValueWidth = 25;
-            $subjectWidth = 80;
-            $sumWidth = 60;
-            $sumValueWidth = 40;
-
-            $metaDataMarginTop = 79;
-            $subjectMarginTop = 108;
-            $metaDataMarginLeft = $marginLeft+118.5;
-            $metaDataValueMarginLeft = $metaDataMarginLeft+40;
-            $readonMarginLeft = $marginLeft+118.5;
-            $itemTableMarginTop = 118;
-            $sumMarginLeft = 100;
-            $sumValueMarginLeft = 167;
-
-            $stdColor = 0;
-
-            $subjectSize = 12;
-            $stdSize = 9;
-            $itemSize = 8;
-            $sumSize = 11;
 
             $stdFont = "pdfahelvetica";
             $stdFontBold = "pdfahelveticab";
@@ -78,8 +78,8 @@ class PackingSlipGenerator implements GeneratorInterface
             }
 
 
-            if($pagenumber > 1) {
-                $subject .= " Seite ".$pagenumber;
+            if($pageNumber > 1) {
+                $subject .= " Seite ".$pageNumber;
             }
 
             $pdf->SetAutoPageBreak(false, 0);
@@ -113,27 +113,11 @@ class PackingSlipGenerator implements GeneratorInterface
             // metadata
             $pdf->SetFont($stdFont);
             $pdf->SetFontSize($stdSize);
-            if($order->getState() == "cancelled") {
-                $pdf->MultiCell($metaDataWidth,0,"Stornierungsnr.:",0,"L",false,1,$metaDataMarginLeft,$metaDataMarginTop);
-            } else {
-                $pdf->MultiCell($metaDataWidth,0,"Rechnungsnummer:",0,"L",false,1,$metaDataMarginLeft,$metaDataMarginTop);
-            }
-            $pdf->MultiCell($metaDataWidth,0,"Rechnungsdatum:",0,"L",false,1,$metaDataMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,"Leistungsdatum:",0,"L",false,1,$metaDataMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,"Bezahlart:",0,"L",false,1,$metaDataMarginLeft);
 
-            // metadata values
-            if($order->getState() == "cancelled")
-            {
-                $pdf->MultiCell($metaDataValueWidth,0,"S" . $order->getNumber(),0,"L",false,1,$metaDataValueMarginLeft,$metaDataMarginTop);
-            }
-            else
-            {
-                $pdf->MultiCell($metaDataValueWidth,0,$order->getNumber(),0,"L",false,1,$metaDataValueMarginLeft,$metaDataMarginTop);
-            }
-            $paymentName = "n.a.";
-            $pdf->MultiCell($metaDataWidth,0,$order->getCreatedAt()->format('d.m.Y'),0,"L",false,1,$metaDataValueMarginLeft);
-            $pdf->MultiCell($metaDataWidth,0,$paymentName,0,"L",false,1,$metaDataValueMarginLeft);
+            $pdf->MultiCell($metaDataWidth,0,"Bestellnummer:",0,"L",false,1,$metaDataMarginLeft,$metaDataMarginTop);
+
+            $pdf->MultiCell($metaDataValueWidth,0, $order->getNumber(),0,"L",false,1,$metaDataValueMarginLeft,$metaDataMarginTop);
+
 
             // item table header
             $pdf->SetFontSize($itemSize);
@@ -142,30 +126,25 @@ class PackingSlipGenerator implements GeneratorInterface
             $pdf->SetAbsX($marginLeft);
             $pdf->SetAbsY($itemTableMarginTop);
             $pdf->Cell(64,0,"Artikel",'B', 0, 'L');
-            //$pdf->Cell(20,0,"Artikel-Nr.",'B', 0, 'L');
             $pdf->Cell(15,0,"Menge",'B', 0, 'L');
             $pdf->Cell(40,0,"Betrag netto",'B', 0, 'L');
             $pdf->Cell(25,0,"USt. %",'B', 0, 'L');
             $pdf->Cell(33,0,"Betrag (inkl. USt.)",'B', 0, 'L');
 
 
-            //$pdf->SetTextColor($stdColor);
             $pdf->SetFont($stdFont);
             $pdf->setCellPaddings(1.5,1.5,0,1.5);
 
-            $start = ($pagenumber-1)*$itemsPerPage+1;
-            $end = $itemsPerPage*$pagenumber;
+            $start = ($pageNumber-1)*$itemsPerPage+1;
+            $end = $itemsPerPage*$pageNumber;
             for($i=$start;$i<=$end;$i++) {
                 if(!isset($items[$i-1])) break;
                 $orderedArticle = $items[$i-1];
 
-                /**
-                 * @var Product $article
-                 */
+                /**  @var ProductInterface $product */
+                $product = $orderedArticle->getProduct();
 
-                $article = $orderedArticle->getProduct();
-
-                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitPriceTotal());
+                $itemSum = $currencyFormatter->getCurrency($orderedArticle->getUnitTotal());
                 $itemNet = $currencyFormatter->getCurrency($orderedArticle->getUnitPrice());
 
                 $pdf->Ln();
@@ -178,30 +157,21 @@ class PackingSlipGenerator implements GeneratorInterface
                     $cellBorder = "BR";
                     $cellBorderLast = "B";
                 }
-//\Doctrine\Common\Util\Debug::dump($article);die();
                 // missing packing unit in name for merchants
-                $pdf->Cell(64,0,$article->getTitle(),$cellBorder);
+                $pdf->Cell(64,0,$product->getName(),$cellBorder);
 
-                //$pdf->Cell(20,0,$article->getItemNumber(),$cellBorder);
                 $pdf->Cell(15,0,$orderedArticle->getQuantity(),$cellBorder);
                 $pdf->Cell(40,0,$itemNet,$cellBorder);
-                $pdf->Cell(25,0,$article->getTaxRate()->getAmount()."%",$cellBorder);
+                $pdf->Cell(25,0,($product->getTaxRate()->getAmount()*100)."%",$cellBorder);
                 $pdf->Cell(33,0,$itemSum,$cellBorderLast);
-
-                /* TODO
-                if(!isset($dividedTaxValues[(float)$orderedArticle["taxValue"]])) {
-                    $dividedTaxValues[(float)$orderedArticle["taxValue"]] = 0;
-                }
-                $dividedTaxValues[(float)$orderedArticle["taxValue"]] += $orderedArticle["quantity"]*$orderedArticle["grossPrice"] - $orderedArticle["quantity"]*$orderedArticle["grossPrice"]/((100+(float)$orderedArticle["taxValue"])/100);
-                */
             }
 
-            if($totalPagenumber > 1 && $pagenumber < $totalPagenumber) {
+            if($totalPageNumber > 1 && $pageNumber < $totalPageNumber) {
                 $pdf->Ln();
                 $pdf->Ln();
                 $pdf->Ln();
                 $pdf->Ln();
-                $pdf->MultiCell($metaDataWidth,0,"Fortsetzung auf Seite ".($pagenumber+1),0,"L",false,1,$readonMarginLeft);
+                $pdf->MultiCell($metaDataWidth,0, "Fortsetzung auf Seite". " " .($pageNumber+1),0,"L",false,1,$readonMarginLeft);
             }
             $pdf->setCellPaddings(0,0,0,0);
         }
@@ -214,39 +184,6 @@ class PackingSlipGenerator implements GeneratorInterface
         $pdf->SetCellPadding(0);
         $pdf->setCellMargins("","","",0.5);
         $pdf->SetFontSize($stdSize);
-        $pdf->MultiCell($sumWidth,0,"Zwischensumme netto:",0,"R",false,1,$sumMarginLeft);
-        $pdf->MultiCell($sumWidth,0,"Versandkosten netto:",0,"R",false,1,$sumMarginLeft);
-        /* TODO
-        foreach($dividedTaxValues as $taxKey => $dividedTaxValue) {
-            $pdf->MultiCell($sumWidth,0,$taxKey."% gesetzl. USt. (Artikel):",0,"R",false,1,$sumMarginLeft);
-        }
-        */
-        $pdf->MultiCell($sumWidth,0,"19% gesetzl. USt. (Versandkosten):",0,"R",false,1,$sumMarginLeft);
-        $pdf->SetFont($stdFontBold);
-        $pdf->SetFontSize($sumSize);
-        $pdf->MultiCell($sumWidth,0,"Rechnungsbetrag:",0,"R",false,1,$sumMarginLeft);
-
-        $shippingNetSum = $currencyFormatter->getCurrency($order->getShippingTotal());
-        $netSum = $currencyFormatter->getCurrency($order->getUnitTotal());
-        // not available in order?
-        $shippingTaxValue = "n.a.";
-        $totalSum = $currencyFormatter->getCurrency($order->getTotal());
-
-        $pdf->SetFont($stdFont);
-        $pdf->SetFontSize($stdSize);
-        $pdf->SetAbsY($y);
-        $pdf->MultiCell($sumValueWidth,0,$netSum,0,"L",false,1,$sumValueMarginLeft);
-        $pdf->MultiCell($sumValueWidth,0,$shippingNetSum,0,"L",false,1,$sumValueMarginLeft);
-        /* TODO
-        foreach($dividedTaxValues as $taxKey => $dividedTaxValue) {
-            $dividedTaxValue = str_replace(".",",",number_format($dividedTaxValue,2));
-            $pdf->MultiCell($sumValueWidth,0,$dividedTaxValue." Euro",0,"L",false,1,$sumValueMarginLeft);
-        }
-        */
-        $pdf->MultiCell($sumValueWidth,0,$shippingTaxValue,0,"L",false,1,$sumValueMarginLeft);
-        $pdf->SetFont($stdFontBold);
-        $pdf->SetFontSize($sumSize);
-        $pdf->MultiCell($sumValueWidth,0,$totalSum,0,"L",false,1,$sumValueMarginLeft);
 
         return $pdf->Output(null, 'S');
     }
