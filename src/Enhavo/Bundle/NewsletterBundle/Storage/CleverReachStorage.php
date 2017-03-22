@@ -27,6 +27,10 @@ class CleverReachStorage implements StorageInterface
 
     public function saveSubscriber(SubscriberInterface $subscriber)
     {
+        if (count($subscriber->getGroups()) === 0) {
+            throw new NoGroupException('no groups given');
+        }
+
         $this->cleverReachClient->saveSubscriber($subscriber);
     }
 
@@ -34,7 +38,7 @@ class CleverReachStorage implements StorageInterface
     {
         // subscriber has to be in ALL given groups to return true
         if (count($subscriber->getGroups()) === 0) {
-            throw new NoGroupException('no groups given');
+            return false;
         }
 
         /** @var Group $group */
