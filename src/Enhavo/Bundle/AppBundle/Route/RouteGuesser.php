@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Route;
 
 
-use BaconStringUtils\Slugifier;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class RouteGuesser
@@ -18,7 +18,7 @@ class RouteGuesser
     {
         $context = $this->guessContext($model);
         if($context !== null) {
-            return $this->slugifiy($context);
+            return $this->slugify($context);
         }
         return $context;
     }
@@ -60,7 +60,7 @@ class RouteGuesser
         return $possibleProperties;
     }
 
-    protected function slugifiy($context)
+    protected function slugify($context)
     {
         $slugifier = new Slugifier();
         return sprintf('/%s', $slugifier->slugify($context));

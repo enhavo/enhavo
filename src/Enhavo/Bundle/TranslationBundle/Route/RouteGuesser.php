@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
 use Enhavo\Bundle\AppBundle\Route\RouteGuesser as AppRouteGuesser;
-use BaconStringUtils\Slugifier;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 
 class RouteGuesser extends AppRouteGuesser
 {
-    protected function slugifiy($guess)
+    protected function slugify($guess)
     {
         $slugifier = new Slugifier();
         if(is_array($guess)) {
