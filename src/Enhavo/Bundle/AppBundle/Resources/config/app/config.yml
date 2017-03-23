@@ -57,6 +57,9 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+    class:
+        sluggable: Enhavo\Bundle\AppBundle\Slugifier\SluggableListener
+
 
 sylius_resource:
     translation:

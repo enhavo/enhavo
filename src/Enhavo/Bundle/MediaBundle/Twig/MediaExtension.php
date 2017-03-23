@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
-use BaconStringUtils\Slugifier;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;

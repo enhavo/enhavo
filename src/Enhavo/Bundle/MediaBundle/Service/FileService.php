@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\MediaBundle\Entity\File as EnhavoFile;
 use Doctrine\ORM\EntityManager;
-use BaconStringUtils\Slugifier;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class FileService

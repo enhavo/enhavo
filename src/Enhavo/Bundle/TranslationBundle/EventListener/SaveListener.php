@@ -6,7 +6,7 @@ use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Slugable;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
-use BaconStringUtils\Slugifier;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -97,6 +97,6 @@ class SaveListener
 
     protected function slugify($text)
     {
-        return (new Slugifier())->slugify($text);
+        return Slugifier::slugify($text);
     }
 }
