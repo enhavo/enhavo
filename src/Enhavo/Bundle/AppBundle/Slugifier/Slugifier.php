@@ -13,9 +13,11 @@ use Gedmo\Sluggable\Util\Urlizer;
 
 class Slugifier implements SlugifierInterface
 {
-    public static function slugify($content)
+    public static function slugify($content, $separator = '-')
     {
         $urlizer = new Urlizer();
-        return $urlizer->urlize($content);
+        $content = $urlizer->urlize($content, $separator);
+        $content  = $urlizer->transliterate($content, $separator);
+        return $content;
     }
 }

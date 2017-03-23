@@ -11,5 +11,5 @@ namespace Enhavo\Bundle\AppBundle\Slugifier;
 
 interface SlugifierInterface
 {
-    public static function slugify($content);
+    public static function slugify($content, $separator = '-');
 }
