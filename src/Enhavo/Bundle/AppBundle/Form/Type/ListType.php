@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,6 +61,9 @@ class ListType extends AbstractType
         $view->vars['block_name'] = $options['block_name'];
         $lastIndex = null;
         $array = $form->getData();
+        if ($array instanceof Collection) {
+            $array = $array->toArray();
+        }
         if($array != null) {
             end($array);
             $lastIndex = key($array);
