@@ -7,7 +7,9 @@
       <select data-batch-actions-select name="batchActionCommand">
         <option value="0">{{ 'batch.form.label.action'|trans({}, 'EnhavoAppBundle') }}</option>
         {% for batch in batches %}
+          {% if batch.display %}
             <option value="{{ batch.type }}" data-confirm-message="{{ batch.confirmMessage }}">{{ batch.label }}</option>
+          {% endif %}
         {% endfor %}
       </select>
     </div>

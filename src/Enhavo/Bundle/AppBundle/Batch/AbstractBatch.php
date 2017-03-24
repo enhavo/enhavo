@@ -16,6 +16,7 @@ abstract class AbstractBatch extends AbstractType implements BatchInterface
             'label' => isset($parameters['label']) ? $parameters['label'] : null,
             'confirmMessage' => isset($parameters['confirmMessage']) ? $parameters['confirmMessage'] : null,
             'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : null,
+            'display' => isset($parameters['display']) ? $parameters['display'] : true
         ];
     }
 
@@ -52,5 +53,10 @@ abstract class AbstractBatch extends AbstractType implements BatchInterface
             return true;
         }
         return $this->container->get('security.authorization_checker')->isGranted($permission);
+    }
+
+    public function getDisplay()
+    {
+        return $this->options['display'];
     }
 }
