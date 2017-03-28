@@ -26,6 +26,7 @@ class EnhavoTranslationExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_translation.translate', $config[ 'translate' ]);
         $container->setParameter('enhavo_translation.default_locale', $config[ 'default_locale' ]);
         $container->setParameter('enhavo_translation.locales', $config[ 'locales' ]);
+        $container->setParameter('enhavo_translation.translation_strings', $config[ 'translation_strings' ]);
 
         $this->registerResources('enhavo_translation', $config['driver'], $config['resources'], $container);
 
