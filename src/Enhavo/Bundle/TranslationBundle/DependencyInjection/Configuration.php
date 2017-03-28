@@ -41,7 +41,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
@@ -74,6 +73,11 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                ->end()
+            ->end()
+            ->children()
+                ->arrayNode('translation_strings')
+                    ->prototype('scalar')->end()
                 ->end()
             ->end();
 
