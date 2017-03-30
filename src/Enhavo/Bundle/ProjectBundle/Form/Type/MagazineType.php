@@ -24,7 +24,7 @@ class MagazineType extends AbstractResourceType
         $allowDelete = null;
         $allowAdd = null;
         
-        $case = 1;
+        $case = 3;
         
         switch($case) {
             case(0):
@@ -100,7 +100,7 @@ class MagazineType extends AbstractResourceType
         ]);
     }
 
-    
+
 
     public function getName()
     {

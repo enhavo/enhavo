@@ -36,6 +36,11 @@ class Content implements ResourceInterface
     private $tags;
 
     /**
+     * @var integer
+     */
+    private $position;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -128,5 +133,21 @@ class Content implements ResourceInterface
     public function setTags($tags)
     {
         $this->tags = $tags;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

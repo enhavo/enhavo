@@ -29,7 +29,7 @@ class Magazine implements ResourceInterface
      * @var \Doctrine\Common\Collections\Collection
      */
     private $toc;
-    
+
     /**
      * Constructor
      */
@@ -95,6 +95,7 @@ class Magazine implements ResourceInterface
      */
     public function addToc(\Enhavo\Bundle\ProjectBundle\Entity\Content $toc)
     {
+        $toc->setMagazine($this);
         $this->toc[] = $toc;
 
         return $this;

@@ -20,6 +20,9 @@ Enhavo\Bundle\ProjectBundle\Entity\Content:
         tags:
             type: json_array
             nullable: true
+        position:
+            type: integer
+            nullable: true
 
     manyToOne:
         magazine:

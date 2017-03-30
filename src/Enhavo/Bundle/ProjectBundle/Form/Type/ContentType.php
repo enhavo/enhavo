@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ProjectBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\ListType;
+use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Enhavo\Bundle\ProjectBundle\Entity\Content;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +22,7 @@ class ContentType extends AbstractType
     {
         $builder->add('title', TextType::class);
         $builder->add('teaser', TextType::class);
+        $builder->add('position', PositionType::class);
 
         $border = null;
         $sortable = null;

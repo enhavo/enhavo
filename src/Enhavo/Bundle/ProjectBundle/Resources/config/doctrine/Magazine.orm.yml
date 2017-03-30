@@ -22,6 +22,8 @@ Enhavo\Bundle\ProjectBundle\Entity\Magazine:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\ProjectBundle\Entity\Content
             mappedBy: magazine
+            orderBy:
+                position: ASC
 
 
     lifecycleCallbacks: {  }
