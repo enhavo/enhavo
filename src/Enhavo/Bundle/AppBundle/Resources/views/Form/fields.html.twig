@@ -92,17 +92,19 @@
         {% endfor %}
     </ul>
 
-    <div class="row">
-        <div class="col-md-9">
-            <div class="button col-md-1 btnsmall add-another">
-                <i class="icon-circle-with-plus"></i>
+    {% if allow_add %}
+        <div class="row">
+            <div class="col-md-9">
+                <div class="button col-md-1 btnsmall add-another">
+                    <i class="icon-circle-with-plus"></i>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
-    <li class="row listElement">
+    <li class="row listElement nopadding">
         {% if sortable and border and allow_delete %}
             <div class="button-container">
                 <div class="button button-up"><i class="fa fa-angle-up"></i></div>

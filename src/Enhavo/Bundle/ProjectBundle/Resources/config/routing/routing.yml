@@ -17,3 +17,7 @@ enhavo_project_theme_shop:
 enhavo_project_dashboard:
     resource: "@EnhavoProjectBundle/Resources/config/routing/admin/dashboard.yml"
     prefix:   /admin
+
+enhavo_project_magazine:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/admin/magazine.yml"
+    prefix:   /magazine

@@ -58,6 +58,7 @@ class ListType extends AbstractType
         $view->vars['sortable'] = $options['sortable'];
         $view->vars['sortable_property'] = $options['sortable_property'];
         $view->vars['allow_delete'] = $options['allow_delete'];
+        $view->vars['allow_add'] = $options['allow_add'];
         $view->vars['block_name'] = $options['block_name'];
         $lastIndex = null;
         $array = $form->getData();

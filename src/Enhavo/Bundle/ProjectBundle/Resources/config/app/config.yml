@@ -6,7 +6,15 @@ enhavo_translation:
         de:
 
 sylius_resource:
-    authorization_checker: enhavo_app.security.default_authorization_checker
+    resources:
+        enhavo_project.magazine:
+            classes:
+                model: Enhavo\Bundle\ProjectBundle\Entity\Magazine
+                controller: Enhavo\Bundle\AppBundle\Controller\ResourceController
+                repository: Enhavo\Bundle\ProjectBundle\Repository\MagazineRepository
+                factory: Sylius\Component\Resource\Factory\Factory
+                form:
+                    default: Enhavo\Bundle\ProjectBundle\Form\Type\MagazineType
 
 enhavo_article:
     resources:

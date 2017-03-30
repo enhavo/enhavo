@@ -26,6 +26,8 @@ b {font-weight:700;}
 body {font: 14px/1.6em "Open Sans";background:#f3f3f3;color: #454545}
 img {max-width:100%;}
 
+
+.nopadding {  padding: 0 !important; margin: 0 !important; }
 #content-container {float:left; padding: 60px 0 60px 110px;margin-left: 200px;}
 .entry-row:nth-child(2n){background-color: #fbfbfb;}
 
@@ -320,7 +322,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
             .button-delete {height: 32px;margin-top: 10px;}
         }
         &.delete {
-            .button-delete{height: 32px;}
+            .button-delete {height: 32px; right: 0 }
         }
         &.sortable {
             .button-down{right: 34px; left:inherit;height: 30px;padding-top: 5px;top:1px;}
