@@ -28,14 +28,23 @@ abstract class AbstractType implements ContainerAwareInterface
      */
     protected function getProperty($resource, $property)
     {
-        $method = sprintf('is%s', ucfirst($property));
-        if(method_exists($resource, $method)) {
-            return call_user_func(array($resource, $method));
-        }
+        $propertyPath = explode('.', $property);
 
-        $method = sprintf('get%s', ucfirst($property));
-        if(method_exists($resource, $method)) {
-            return call_user_func(array($resource, $method));
+        if(count($propertyPath) > 1) {
+            $property = array_shift($propertyPath);
+            $newResource = $this->getProperty($resource, $property);
+            $propertyPath = implode('.', $propertyPath);
+            return $this->getProperty($newResource, $propertyPath);
+        } else {
+            $method = sprintf('is%s', ucfirst($property));
+            if(method_exists($resource, $method)) {
+                return call_user_func(array($resource, $method));
+            }
+
+            $method = sprintf('get%s', ucfirst($property));
+            if(method_exists($resource, $method)) {
+                return call_user_func(array($resource, $method));
+            }
         }
 
         throw new PropertyNotExistsException(sprintf(
