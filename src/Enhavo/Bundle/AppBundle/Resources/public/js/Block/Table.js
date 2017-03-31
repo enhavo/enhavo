@@ -1,5 +1,5 @@
 define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app/Form'], function($, admin, router, translator, URI, form) {
-  
+
   function Table()
   {
     var self = this;
@@ -76,6 +76,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
         tableRouteParameters = {};
       }
       tableRouteParameters.page = page;
+
       var url = router.generate(block.data('block-table-route'), tableRouteParameters);
       url = self.applyFilterOnUrl(block, url);
       block.addClass('loading');
@@ -344,17 +345,14 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
 
           if (switchToPage > -1) {
             sortable.sortable("cancel");
-            self.openLoadingOverlay();
             $.ajax({
               url: url,
               method: 'POST',
               success: function () {
                 block.data('block-page', switchToPage);
-                self.loadTable(block);
-                self.closeLoadingOverlay();
+                self.loadTable(block.parents('[data-block]'));
               },
               error: function () {
-                self.closeLoadingOverlay();
                 self.overlayMessage(translator.trans('error.occurred'), self.MessageType.Error);
               }
             });

@@ -1,3 +1,9 @@
+enhavo_media:
+    formats:
+        articleThumbnail:
+            height: 350
+            width: 350
+
 enhavo_translation:
     translate: true
     default_locale: '%locale%'

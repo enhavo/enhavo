@@ -17,6 +17,14 @@ services:
         arguments:
             - '%kernel.root_dir%/media'
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.format_manager'
+
+    enhavo_media.format_manager:
+        class: Enhavo\Bundle\MediaBundle\Media\FormatManager
+        arguments:
+            - '%kernel.root_dir%/media'
+            - '@filesystem'
+            - '%enhavo_media.formats%'
 
     enhavo_media.twig_extension:
         class: '%enhavo_media.twig_extension.class%'
