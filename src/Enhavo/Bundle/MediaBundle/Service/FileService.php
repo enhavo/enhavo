@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\MediaBundle\Service;
 
+use Enhavo\Bundle\MediaBundle\Media\FormatManager;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
@@ -35,10 +37,17 @@ class FileService
      */
     protected $manager;
 
-    public function __construct($path, EntityManager $entityManager)
+    /**
+     * @var FormatManager
+     */
+    protected $formatManager;
+
+    public function __construct($path, EntityManager $entityManager, FormatManager $formatManager)
     {
         $this->path = $path;
         $this->manager = $entityManager;
+        $this->formatManager = $formatManager;
+
     }
 
     protected function createPathIfNotExists($path)
@@ -411,5 +420,22 @@ class FileService
         $info['filename'] = $file->getFilename();
         $info['slug'] = $file->getSlug();
         return $info;
+    }
+
+    /**
+     * @param FileInterface $file
+     * @param $format
+     *
+     * @return File
+     */
+    public function getFormatFile(FileInterface $file, $format)
+    {
+        $filePath = sprintf('%s/custom/%s/%s', $this->path, $format, $file->getId());
+
+        if(!file_exists($filePath)) {
+            $this->formatManager->createFormat($file, $format);
+        }
+
+        return new File($filePath);
     }
 }

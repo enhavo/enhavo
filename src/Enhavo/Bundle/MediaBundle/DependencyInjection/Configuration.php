@@ -18,12 +18,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_media');
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
+        $rootNode = $treeBuilder->root('enhavo_media')
+            ->children()
+                ->arrayNode('formats')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('height')->defaultValue(null)->end()
+                            ->scalarNode('width')->defaultValue(null)->end()
+                            ->scalarNode('maxHeight')->defaultValue(null)->end()
+                            ->scalarNode('maxWidth')->defaultValue(null)->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
         return $treeBuilder;
     }
 }

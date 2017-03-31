@@ -53,6 +53,11 @@ class MediaExtension extends \Twig_Extension
 
     public function getMediaUrl(File $file, $width = null, $height = null)
     {
+        if(is_string($width)) {
+            $format = $width;
+            return sprintf('/media/%s/%s/%s', $file->getId(), $format, rawurlencode($file->getFilename()));
+        }
+        
         if($file) {
             $path = '/file/'.$file->getId();
 

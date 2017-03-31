@@ -26,11 +26,11 @@
                             <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
                                 {% if article.picture %}
                                     <span class="article-photo">
-                                        <img src="{{ media_url(article.picture) }}" alt=""/>
+                                        <img src="{{ media_url(article.picture, 'articleThumbnail') }}" alt=""/>
                                     </span>
                                     {% else %}
                                     <span class="article-photo">
-                                        <img src="/bundles/enhavoproject/img/default-article-picture.jpg" alt=""/>
+                                        <img src="{{ asset('/bundles/enhavoproject/img/default-article-picture.jpg') }}" alt=""/>
                                     </span>
                                 {% endif %}
                                 <span class="article-content">

@@ -48,3 +48,12 @@ enhavo_media_show:
         _method: GET
     options:
         expose: true
+
+enhavo_media_show_format:
+    path:  /media/{id}/{format}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showFormatAction
+        _method: GET
+    options:
+        expose: true
+
