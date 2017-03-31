@@ -14,12 +14,7 @@ class PropertyWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
-        $path = $this->getOption('path', $options);
         $resource =  $this->getProperty($item, $options['property']);
-
-        if($path != null) {
-            $resource = $this->getProperty($resource , $path);
-        }
 
         return $resource;
     }
