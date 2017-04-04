@@ -29,6 +29,7 @@ class EnhavoContactExtension extends Extension
                 $container->setParameter(sprintf('enhavo_contact.%s.template.form', $name), $form['template']['form']);
                 $container->setParameter(sprintf('enhavo_contact.%s.template.recipient', $name), $form['template']['recipient']);
                 $container->setParameter(sprintf('enhavo_contact.%s.template.confirm', $name), $form['template']['confirm']);
+                $container->setParameter(sprintf('enhavo_contact.%s.template.page', $name), $form['template']['page']);
                 $container->setParameter(sprintf('enhavo_contact.%s.recipient', $name), $form['recipient']);
                 $container->setParameter(sprintf('enhavo_contact.%s.from', $name), $form['from']);
                 $container->setParameter(sprintf('enhavo_contact.%s.sender_name', $name), $form['sender_name']);

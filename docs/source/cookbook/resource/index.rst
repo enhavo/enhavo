@@ -9,3 +9,4 @@ Resource
     dynamic-routing
     make-resource-sortable
     add-media-file-to-resource
+    create-controller-without-resource-binding

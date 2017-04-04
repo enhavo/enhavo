@@ -28,11 +28,11 @@ Cookbook
   * :doc:`/cookbook/resource/dynamic-routing`
   * :doc:`/cookbook/resource/make-resource-sortable`
   * :doc:`/cookbook/resource/add-media-file-to-resource`
+  * :doc:`/cookbook/resource/create-controller-without-resource-binding`
 
 * **Contact Form**
 
-  * :doc:`/cookbook/contactForm/add-contact-form`
-  * :doc:`/cookbook/contactForm/add-fields-to-form`
+  * :doc:`/cookbook/contactForm/add-your-customize-contact-form`
 
 * **Workflow**
 

@@ -4,3 +4,6 @@ contact:
   form:
     message:
       success: 'Message successfully send!'
+      invalid: 'Please check form for errors.'
+    action:
+      send: Send

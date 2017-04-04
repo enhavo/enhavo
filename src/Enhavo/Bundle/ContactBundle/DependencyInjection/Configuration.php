@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('form')->defaultValue('EnhavoContactBundle:Widget:form.html.twig')->end()
                                     ->scalarNode('recipient')->defaultValue('EnhavoContactBundle:Mail:recipient.html.twig')->end()
                                     ->scalarNode('confirm')->defaultValue('EnhavoContactBundle:Mail:confirm.html.twig')->end()
+                                    ->scalarNode('page')->defaultValue('EnhavoContactBundle:Theme:page.html.twig')->end()
                                 ->end()
                             ->end()
                             ->scalarNode('recipient')->defaultValue('no-reply@enhavo.com')->end()

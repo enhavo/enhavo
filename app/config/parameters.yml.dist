@@ -17,7 +17,7 @@ parameters:
     mailer_delivery_address: ~
     mailer_from: no-reply@enhavo.com
     mailer_name: enhavo
-    mailer_to: ~
+    mailer_to: no-reply@enhavo.com
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt

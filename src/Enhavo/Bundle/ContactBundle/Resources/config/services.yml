@@ -41,5 +41,6 @@ services:
             - '@enhavo_contact.mailer'
             - '@enhavo_contact.configuration.factory'
             - '@enhavo_contact.form_error_resolver'
+            - '@sylius.resource_controller.request_configuration_factory'
         calls:
             - [setContainer, ['@service_container']]

@@ -44,6 +44,11 @@ class Configuration
     /**
      * @var string
      */
+    private $pageTemplate;
+
+    /**
+     * @var string
+     */
     private $recipient;
 
     /**
@@ -70,11 +75,6 @@ class Configuration
      * @var boolean
      */
     private $confirmMail;
-
-    /**
-     * @var string
-     */
-    private $formName;
 
     /**
      * @return string
@@ -271,16 +271,16 @@ class Configuration
     /**
      * @return string
      */
-    public function getFormName()
+    public function getPageTemplate()
     {
-        return $this->formName;
+        return $this->pageTemplate;
     }
 
     /**
-     * @param string $formName
+     * @param string $pageTemplate
      */
-    public function setFormName($formName)
+    public function setPageTemplate($pageTemplate)
     {
-        $this->formName = $formName;
+        $this->pageTemplate = $pageTemplate;
     }
 }

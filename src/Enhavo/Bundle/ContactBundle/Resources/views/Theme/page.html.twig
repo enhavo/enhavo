@@ -1,0 +1,18 @@
+{% extends theme_template('base') %}
+
+{% block main %}
+    {% trans_default_domain 'EnhavoContactBundle' %}
+    <form method="POST" action="{{ path('enhavo_contact_submit', {name: name}) }}">
+
+        {% if form_has_errors(form) %}
+            <div>{{ 'contact.form.message.invalid'|trans }}</div>
+        {% endif %}
+
+        {% if sent %}
+            <div>{{ 'contact.form.message.success'|trans }}</div>
+        {% endif %}
+
+        {{ form_widget(form) }}
+        <button type="submit">{{ 'contact.form.action.send'|trans }}</button>
+    </form>
+{% endblock %}
