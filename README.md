@@ -34,6 +34,19 @@ Documentation
 
 Documentation is available at [docs.enhavo.com](http://docs.enhavo.com).
 
+Compile the documentation with
+
+```bash
+$ pip install -U Sphinx
+$ sphinx-build -b html docs/source build/docs
+```
+Or use the autobuilder
+
+```bash
+$ pip install sphinx-autobuild
+$ sphinx-autobuild docs/source build/html
+```
+
 Run tests
 ---------
 
