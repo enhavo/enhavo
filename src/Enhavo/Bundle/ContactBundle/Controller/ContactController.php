@@ -111,6 +111,7 @@ class ContactController extends Controller
         $template = $configuration->getTemplate($formConfiguration->getPageTemplate());
         return $this->render($template, [
             'form' => $form->createView(),
+            'name' => $name,
             'sent' => $sent
         ]);
     }

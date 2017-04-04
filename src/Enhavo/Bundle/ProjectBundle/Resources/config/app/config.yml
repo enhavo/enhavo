@@ -60,3 +60,10 @@ enhavo_theme:
                 social_media:
                     type: template
                     template: 'EnhavoProjectBundle:Theme:Widget/social-media.html.twig'
+
+enhavo_contact:
+    forms:
+        contact:
+            recipient: '%mailer_to%'
+            from: '%mailer_from%'
+            sender_name: '%mailer_name%'

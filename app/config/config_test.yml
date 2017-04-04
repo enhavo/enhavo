@@ -6,7 +6,8 @@ framework:
     session:
         storage_id: session.storage.mock_file
     profiler:
-        collect: false
+        collect: true
+        only_exceptions: false
 
 web_profiler:
     toolbar: false
@@ -17,7 +18,14 @@ swiftmailer:
 
 doctrine:
     dbal:
-        dbname: %database_name%_test
+        dbname: '%database_name%_test'
 
 parameters:
      locale: en
+
+enhavo_contact:
+    forms:
+        contact:
+            recipient: 'admin@enhavo.com'
+            from: 'no-reply@enhavo.com'
+            sender_name: 'enhavo'

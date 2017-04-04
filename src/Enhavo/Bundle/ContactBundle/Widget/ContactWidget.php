@@ -41,7 +41,7 @@ class ContactWidget extends AbstractType implements WidgetInterface
         $name = $this->getOption('name', $options, 'contact');
         $configuration = $this->configurationFactory->create($name);
         $template = $this->getOption('template', $options, $configuration->getFormTemplate()) ;
-        $form = $formFactory = $this->formFactory->create($configuration->getFormName());
+        $form = $formFactory = $this->formFactory->create($configuration->getForm());
 
         return $this->renderTemplate($template, array(
             'form' => $form->createView(),

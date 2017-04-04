@@ -4,3 +4,6 @@ contact:
   form:
     message:
       success: 'Nachricht erfolgreich gesendet!'
+      invalid: 'Bitte überprüfen sie das Formular.'
+    action:
+      send: Versenden
