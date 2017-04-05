@@ -34,6 +34,22 @@ class Translator
 
     public function store($entity)
     {
+//        $metadata = $this->metadataCollection->getMetadata($entity);
+//        if($metadata === null) {
+//            return null;
+//        }
+//
+//        if($metadata !== null) {
+//            foreach($metadata->getProperties() as $property) {
+//                $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
+//                $strategy->storeValue($entity, $metadata, $property);
+//            }
+//        }
+        $this->storeTranslationData($entity);
+    }
+
+    public function storeTranslationData($entity)
+    {
         $metadata = $this->metadataCollection->getMetadata($entity);
         if($metadata === null) {
             return null;
@@ -42,9 +58,61 @@ class Translator
         if($metadata !== null) {
             foreach($metadata->getProperties() as $property) {
                 $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
-                $strategy->storeValue($entity, $metadata, $property);
+                $strategy->storeTranslationData($entity, $metadata);
             }
         }
+    }
+
+    public function addTranslationData($entity, $propertyPath, $data)
+    {
+        $metadata = $this->metadataCollection->getMetadata($entity);
+        $property = $metadata->getProperty($propertyPath);
+        $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
+        $strategy->addTranslationData($entity, $metadata, $property, $data);
+    }
+
+    public function normalizeTranslationData($entity, $propertyPath, $data)
+    {
+        $metadata = $this->metadataCollection->getMetadata($entity);
+        $property = $metadata->getProperty($propertyPath);
+        $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
+        return $strategy->normalizeTranslationData($data);
+    }
+
+    public function normalizeFormData($entity, $propertyPath, $data)
+    {
+        $metadata = $this->metadataCollection->getMetadata($entity);
+        $property = $metadata->getProperty($propertyPath);
+        $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
+        return $strategy->normalizeFormData($data);
+    }
+
+    public function isPropertyTranslatable($entity, $propertyPath)
+    {
+        if($entity === null) {
+            return false;
+        }
+
+        if(!is_string($propertyPath)) {
+            return false;
+        }
+
+        $metadata = $this->metadataCollection->getMetadata($entity);
+        if($metadata === null) {
+            return false;
+        }
+
+        $property = $metadata->getProperty($propertyPath);
+        if($property === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getTranslationData($entity, Property $property)
+    {
+
     }
 
     public function delete($entity)

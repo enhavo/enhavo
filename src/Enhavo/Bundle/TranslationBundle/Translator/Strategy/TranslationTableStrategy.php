@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
+use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslationStrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -35,12 +37,23 @@ class TranslationTableStrategy implements TranslationStrategyInterface
      */
     private $locales = [];
 
-    public function __construct($locales, $defaultLocale)
+    /**
+     * @var array
+     */
+    private $translationDataMap = [];
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct($locales, $defaultLocale, EntityManagerInterface $em)
     {
         foreach($locales as $locale => $data) {
             $this->locales[] = $locale;
         }
         $this->defaultLocale = $defaultLocale;
+        $this->em = $em;
     }
 
 
@@ -52,6 +65,83 @@ class TranslationTableStrategy implements TranslationStrategyInterface
             $value = $this->storeValues($values, $entity, $property, $metadata);
             $accessor->setValue($entity, $property->getName(), $value);
         }
+    }
+
+    public function addTranslationData($entity, $metadata, Property $property, $data)
+    {
+        $translationData = new TranslationTableData();
+        $translationData->setEntity($entity);
+        $translationData->setProperty($property);
+        $translationData->setValues($data);
+
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translationDataMap[$oid])) {
+            $this->translationDataMap[$oid] = [];
+        }
+
+        $this->translationDataMap[$oid][] = $translationData;
+    }
+
+    public function normalizeTranslationData($data)
+    {
+        $translationData = [];
+        foreach($data as $locale => $value) {
+            if($locale == $this->defaultLocale) {
+                continue;
+            }
+            $translationData[$locale] = $value;
+        }
+        return $translationData;
+    }
+
+    public function normalizeFormData($data)
+    {
+        return $data[$this->defaultLocale];
+    }
+
+    public function storeTranslationData($entity, $metadata)
+    {
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translationDataMap[$oid])) {
+            return;
+        }
+
+        $translationData = $this->translationDataMap[$oid];
+        $repository = $this->getRepository();
+        $unsetKeys = [];
+
+        foreach($translationData as $key => $data) {
+            $unsetKeys[] = $key;
+            foreach($data->getValues() as $locale => $value) {
+                $translation = $repository->findOneBy([
+                    'class' => $metadata->getClass(),
+                    'refId' => $entity->getId(),
+                    'property' => $data->getProperty()->getName(),
+                    'locale' => $locale
+                ]);
+
+                if($translation === null || $entity->getId() === null) {
+                    $translation = new Translation();
+                    $translation->setClass($metadata->getClass());
+                    $translation->setRefId($entity->getId());
+                    $translation->setProperty($data->getProperty()->getName());
+                    $translation->setLocale($locale);
+                    $this->em->persist($translation);
+                    $this->updateRefIds[] = $translation;
+                }
+                $translation->setTranslation($value);
+                $translation->setObject($entity);
+            }
+        }
+
+        unset($this->translationDataMap[$oid]);
+
+        return;
+    }
+
+    public function getTranslationData($entity, $metadata, Property $property)
+    {
+        // TODO: Implement getTranslationData() method.
     }
 
     protected function getEntityManager()

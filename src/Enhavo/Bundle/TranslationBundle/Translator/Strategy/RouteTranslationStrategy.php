@@ -180,7 +180,32 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
         $this->getEntityManager()->flush();
     }
 
+    public function storeTranslationData($entity, $metadata)
+    {
+        // TODO: Implement storeTranslationData() method.
+    }
+
+    public function addTranslationData($entity, $metadata, Property $property, $data)
+    {
+        return;
+    }
+
+    public function getTranslationData($entity, $metadata, Property $property)
+    {
+        // TODO: Implement getTranslationData() method.
+    }
+
     public function translate($entity, Metadata $metadata, Property $property, $locale)
+    {
+        return;
+    }
+
+    public function normalizeTranslationData($data)
+    {
+        return;
+    }
+
+    public function normalizeFormData($data)
     {
         return;
     }

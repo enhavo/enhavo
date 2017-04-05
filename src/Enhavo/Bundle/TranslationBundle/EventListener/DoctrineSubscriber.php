@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -47,21 +48,19 @@ class DoctrineSubscriber implements EventSubscriber
             'preUpdate',
             'preRemove',
             'postLoad',
-            'onFlush'
+            'preFlush'
         );
     }
 
-    public function onFlush(OnFlushEventArgs $event)
+    public function preFlush(PreFlushEventArgs $event)
     {
         $em = $event->getEntityManager();
         $uow = $em->getUnitOfWork();
 
-        foreach($uow->getScheduledEntityUpdates() as $object) {
-            $this->translator->store($object);
-        }
-
-        foreach($uow->getScheduledEntityInsertions() as $object) {
-            $this->translator->store($object);
+        foreach($uow->getIdentityMap() as $className) {
+            foreach($className as $object) {
+                $this->translator->store($object);
+            }
         }
     }
 

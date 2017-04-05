@@ -11,10 +11,14 @@ namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class TranslationExtension extends AbstractTypeExtension
 {
@@ -50,6 +54,52 @@ abstract class TranslationExtension extends AbstractTypeExtension
         $resolver->setDefined([
             'translation'
         ]);
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $translationData = null;
+
+        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use (&$translationData) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $parent = $form->getParent();
+            if($parent instanceof Form) {
+                $propertyPath = (string)$form->getPropertyPath();
+                $entity = $parent->getData();
+
+                if($entity === null) {
+                    $entity = $parent->getConfig()->getDataClass();
+                }
+
+                if(!$this->translator->isPropertyTranslatable($entity, $propertyPath)) {
+                    return;
+                }
+
+                $translationData = $this->translator->normalizeTranslationData($entity, $propertyPath, $data);
+                $data = $this->translator->normalizeFormData($entity, $propertyPath, $data);
+
+                $event->setData($data);
+            }
+        });
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use (&$translationData) {
+            $form = $event->getForm();
+
+            $parent = $form->getParent();
+            if($parent instanceof Form) {
+                $propertyPath = (string)$form->getPropertyPath();
+                $entity = $parent->getData();
+
+                if(!$this->translator->isPropertyTranslatable($entity, $propertyPath)) {
+                    return;
+                }
+
+                $this->translator->addTranslationData($entity, $propertyPath, $translationData);
+            }
+        });
+
     }
 
     /**
