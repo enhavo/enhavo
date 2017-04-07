@@ -1,0 +1,31 @@
+Enhavo\Bundle\ProjectBundle\Entity\Content:
+    type: entity
+    table: project_content
+    repositoryClass: Enhavo\Bundle\ProjectBundle\Repository\ContentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        teaser:
+            type: text
+            nullable: true
+        tags:
+            type: json_array
+            nullable: true
+        position:
+            type: integer
+            nullable: true
+
+    manyToOne:
+        magazine:
+            targetEntity: Enhavo\Bundle\ProjectBundle\Entity\Magazine
+
+    lifecycleCallbacks: {  }

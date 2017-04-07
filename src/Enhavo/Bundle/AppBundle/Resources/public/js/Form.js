@@ -177,7 +177,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       };
 
       var initAddButton = function (list) {
-        list.next().find('.add-another').click(function (e) {
+        list.parents('[data-formwidget-container]').find('[data-add-button]').click(function (e) {
           e.preventDefault();
 
           // grab the prototype template

@@ -1,4 +1,5 @@
 services:
-#    enhavo_project.example:
-#        class: Enhavo\Bundle\ProjectBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    enhavo_project.form.content:
+        class: Enhavo\Bundle\ProjectBundle\Form\Type\ContentType
+        tags:
+            - { name: form.type, alias: enhavo_project_content }

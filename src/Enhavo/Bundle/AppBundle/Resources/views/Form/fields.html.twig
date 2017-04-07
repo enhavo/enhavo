@@ -26,8 +26,14 @@
 {% block form_row %}
     {% spaceless %}
         <div class="row" data-form-row>
-            <label class="col-md-2 text-right label-container">{{ form_label(form) }}</label>
-            <div class="col-md-9 formwidget-container">{{ form_widget(form) }}</div>
+            <div class="col-md-2 text-right">
+                <div class="label-container">{{ form_label(form) }}</div>
+            </div>
+            <div class="col-md-9">
+                <div class="formwidget-container" data-formwidget-container>
+                    {{ form_widget(form) }}
+                </div>
+            </div>
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -68,7 +74,7 @@
     {% import _self as forms %}
     <ul
         {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
-        data-prototype="{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}"
+        data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
         data-prototype-name="{{ prototype_name }}"
         class="list-fields enhavo_list
         {% if border and sortable and allow_delete %}
@@ -92,49 +98,40 @@
         {% endfor %}
     </ul>
 
-    <div class="row">
-        <div class="col-md-9">
-            <div class="button col-md-1 btnsmall add-another">
-                <i class="icon-circle-with-plus"></i>
-            </div>
+    {% if allow_add %}
+        <div class="btnsmall" data-add-button>
+            <i class="icon-circle-with-plus"></i>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
-    <li class="row listElement">
-        {% if sortable and border and allow_delete %}
-            <div class="button-container">
-                <div class="button button-up"><i class="fa fa-angle-up"></i></div>
-                <div class="button button-down"><i class="fa fa-angle-down"></i></div>
-                <div class="label">{% if block_name %}{{ block_name|nl2br }}{% else %}{{ name|nl2br }}{% endif %}</div>
-            </div>
+    <li class="listElement">
+        {% if sortable or allow_delete %}
+            {% spaceless %}
+                <ul class="buttons-container">
+                    {% if sortable %}
+                        <li class="button button-up"><i class="fa fa-angle-up"></i></li>
+                        <li class="button button-down"><i class="fa fa-angle-down"></i></li>
+                    {% endif %}
+                    {% if allow_delete %}
+                        <li class="button button-delete">
+                            <i class="icon-cross"></i>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endspaceless %}
         {% endif %}
-
-        <div class="col-md-12">
-            {{ form_widget|raw }}
-        </div>
-        {% if allow_delete %}
-            <div class="button button-delete">
-                <i class="icon-cross"></i>
-            </div>
-            {% if sortable and not border %}
-                <div class="button button-up"><i class="fa fa-angle-up"></i></div>
-                <div class="button button-down"><i class="fa fa-angle-down"></i></div>
-            {% endif %}
+        {% if block_name or name %}
+            <div class="block-name">{% if block_name %}{{ block_name|nl2br }}{% else %}{{ name|nl2br }}{% endif %}</div>
         {% endif %}
-        {% if sortable and border and not allow_delete %}
-            <div class="button button-up"><i class="fa fa-angle-up"></i></div>
-            <div class="button button-down"><i class="fa fa-angle-down"></i></div>
-        {% endif %}
+        {{ form_widget|raw }}
     </li>
 {% endmacro %}
 
 {% block enhavo_message_widget %}
-    <div class="row form-message-box type-{{ type }}">
-        <div class="col-md-12">
-            {{ message|nl2br }}
-        </div>
+    <div class="form-message-box type-{{ type }}">
+        {{ message|nl2br }}
     </div>
 {% endblock %}
 

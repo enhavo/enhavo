@@ -1,0 +1,29 @@
+Enhavo\Bundle\ProjectBundle\Entity\Magazine:
+    type: entity
+    table: project_magazine
+    repositoryClass: Enhavo\Bundle\ProjectBundle\Repository\MagazineRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+        tags:
+            type: json_array
+            nullable: true
+
+    oneToMany:
+        toc:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\ProjectBundle\Entity\Content
+            mappedBy: magazine
+            orderBy:
+                position: ASC
+
+
+    lifecycleCallbacks: {  }

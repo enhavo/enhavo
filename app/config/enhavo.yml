@@ -30,6 +30,10 @@ enhavo_app:
             type: setting
         translation-strings:
             type: translation
+        magazine:
+            type: base
+            route: enhavo_project_magazine_index
+
 
 enhavo_grid:
     items:
