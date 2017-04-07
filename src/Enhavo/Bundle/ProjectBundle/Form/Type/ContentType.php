@@ -29,7 +29,7 @@ class ContentType extends AbstractType
         $allowDelete = null;
         $allowAdd = null;
 
-        $case = 0;
+        $case = 6;
 
         switch($case) {
             case(0):

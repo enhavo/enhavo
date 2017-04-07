@@ -24,7 +24,7 @@ class MagazineType extends AbstractResourceType
         $allowDelete = null;
         $allowAdd = null;
         
-        $case = 3;
+        $case = 7;
         
         switch($case) {
             case(0):

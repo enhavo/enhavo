@@ -13,7 +13,11 @@ html, body{
 }
 
 [data-form-row] {
-    margin-top:10px;
+    ~ input[type="hidden"] {
+        + [data-form-row] {margin-top:10px;}
+    }
+    .btnsmall {padding-top:5px;}
+    + [data-form-row] {margin-top:10px;}
 }
 
 [class*="span"].nomargin {margin-left:0;}
@@ -196,7 +200,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 
 .action-row {margin-bottom:45px;}
 .action-row [class*=col-]:first-child {padding-left:0;}
-.btnsmall {display: inline-block;padding: 10px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:$primaryColor;font-weight:700;border:none;}
+.btnsmall {display: inline-block;padding:5px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:$primaryColor;font-weight:700;border:none;}
 .btnsmall[class*="fa-"] {font-weight:normal;}
 .btn {border: 0;font-weight: 700;background: none;color:$primaryColor;padding: 0;text-align: left;white-space: nowrap;@include transition(all 200ms);
     &:before{width: 24px;height: 24px;display: inline-block;text-align: center;font-weight: normal;}
@@ -315,49 +319,51 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     }
     .list-fields {
         &.border {
-            li {border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
+            > li {border: 1px solid #ddd;padding:10px;}
         }
         &.border-delete {
-            li{border: 1px solid #ddd; padding-top: 10px;margin-top: 10px;margin-bottom: 16px;}
-            .button-delete {height: 32px;margin-top: 10px;}
-        }
-        &.delete {
-            .button-delete {height: 32px; right: 0 }
-        }
-        &.sortable {
-            .button-down{right: 34px; left:inherit;height: 30px;padding-top: 5px;top:1px;}
-            .button-up{right: 0; left:inherit;height: 30px;padding-top: 5px;top:1px;}
-        }
-        &.sortable-border {
-            li{border: 1px solid #ddd;margin-bottom: 10px; padding-top: 10px;}
-            .button-down{right: 44px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}
-            .button-up{right: 10px; left:inherit;height: 32px;padding-top: 5px;    margin-top: 10px;}
-        }
-        &.sortable-border-delete {
-            .button-delete {height:32px;padding:5px 0;right:0;}
-            li{border: 1px solid #ddd;margin-bottom: 10px;}
-        }
-        &.sortable-delete {
-            .button-delete{right:79px; height: 30px; padding-top: 5px;top:1px;}
-            .button-down{right:45px; left:inherit;height: 30px;padding-top: 5px;top:1px;}
-            .button-up{right:11px;left:inherit;height:30px;padding-top:5px;top:1px;}
-        }
-
-        li {position: relative;}
-
-        .button {position: absolute;cursor: pointer;height: 100%;z-index: 1;top: 0;text-align: center;width: 33px;background: #fff;}
-        .button-container { height:33px;line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;padding-left: 85px; position: relative; line-height: 25px;
-            .button {
-                &:hover {background:$primaryColor;
-                    i { color:#fff;}
+            > li{border: 1px solid #ddd;padding:10px;
+                > .buttons-container {top:-1px;
+                    .button {line-height:26px;}
                 }
             }
         }
-        .button-delete {position: absolute;  cursor: pointer;  z-index: 1;  top: 0;  text-align: center;  width: 33px;  background: #fff;  right: 28px; height: 100%; padding-top: 5px;}
-        .button-down {left: 34px}
-        .button-up {left: 0}
-        .listElement{ padding-bottom:5px;margin-left: 0px;margin-right: 0px;
-            .input-container {margin-bottom: 10px;}
+        &.sortable-border {
+            > li{border: 1px solid #ddd;padding:10px;
+                .buttons-container {top:-1px;
+                    .button {line-height:26px;}
+                }
+            }
+        }
+        &.sortable-border-delete {
+            > li{border: 1px solid #ddd;padding:10px;
+                > .buttons-container {top:-1px;
+                    .button {line-height:26px;}
+                }
+            }
+        }
+
+        li {position: relative;
+            + li {margin-top:10px;}
+            .buttons-container {position:absolute;left:calc(100% + 8px);top:0;width:78px;
+                .button {display:inline-block;width:26px;line-height:30px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border:1px solid #ddd;border-right:0;
+                    &:last-child {border-right:1px solid #ddd;}
+                    &.button-delete {background:#eeaaaa;border-color:#eeaaaa;
+                        &:hover {background:#cc8888;border-color:#cc8888;}
+                    }
+                    &:hover {background:$primaryColor;
+                        i { color:#fff;}
+                    }
+                }
+            }
+        }
+
+        .list-fields {
+            > li {
+                .buttons-container {width:60px;left:calc(100% + 4px);
+                    .button {width:20px;line-height:20px;}
+                }
+            }
         }
     }
 }
