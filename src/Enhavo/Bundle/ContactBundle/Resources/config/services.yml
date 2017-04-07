@@ -1,10 +1,14 @@
+parameters:
+    enhavo_contact.form.contact.class: Enhavo\Bundle\ContactBundle\Form\Type\ContactFormType
+    enhavo_contact.model.contact.class: Enhavo\Bundle\ContactBundle\Model\Contact
+
 services:
-    enhavo_contact_contact:
-        class: '%enhavo_contact.contact.form%'
+    enhavo_contact.form.contact:
+        class: '%enhavo_contact.form.contact.class%'
         arguments:
-            - '%enhavo_contact.contact.model%'
+            - '%enhavo_contact.model.contact.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_contact_contact' }
 
     enhavo_contact.configuration.factory:
         class: Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory
