@@ -47,6 +47,14 @@ enhavo_translation_translation_string_table:
         page: 1
         _controller: enhavo_translation.controller.translation_string:tableAction
         _sylius:
+            sorting:
+                translationKey: asc
+#            filters:
+#                translationKey:
+#                    type: text
+#                    label: translation.label.translationKey
+#                    translationDomain: EnhavoTranslationBundle
+#                    property: translationKey
             viewer:
                 translationDomain: EnhavoTranslationBundle
                 columns:
