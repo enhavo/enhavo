@@ -44,7 +44,7 @@ Or use the autobuilder
 
 ```bash
 $ pip install sphinx-autobuild
-$ sphinx-autobuild docs/source build/html
+$ sphinx-autobuild docs/source build/docs
 ```
 
 Run tests

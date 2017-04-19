@@ -46,13 +46,15 @@ class ListMenuBuilder extends AbstractMenuBuilder
         }
 
         $menu = $this->getFactory()->createItem($name);
-        foreach($this->menu as $name => $options) {
-            /** @var MenuBuilderInterface $menuBuilder */
-            $menuBuilder = $this->menuItemTypeCollector->getType($options['type']);
-            $menuItem  = $menuBuilder->createMenu($options);
-            $options['name'] = $name;
-            if($menuBuilder->isGranted($menuItem)) {
-                $menu->addChild($menuBuilder->createMenu($options));
+        if(is_array($this->menu)) {
+            foreach($this->menu as $name => $options) {
+                /** @var MenuBuilderInterface $menuBuilder */
+                $menuBuilder = $this->menuItemTypeCollector->getType($options['type']);
+                $menuItem  = $menuBuilder->createMenu($options);
+                $options['name'] = $name;
+                if($menuBuilder->isGranted($menuItem)) {
+                    $menu->addChild($menuBuilder->createMenu($options));
+                }
             }
         }
         return $menu;

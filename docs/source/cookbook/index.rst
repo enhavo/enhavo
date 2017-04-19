@@ -62,3 +62,8 @@ Cookbook
 * **Setting**
 
   * :doc:`/cookbook/setting/add-new-setting`
+
+
+* **Javascript**
+
+  * :doc:`/cookbook/javascript/add-js-file`
