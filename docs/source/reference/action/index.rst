@@ -11,4 +11,4 @@ Action
 
 * :doc:`/reference/action/category-action`
 
-
+* :doc:`/reference/action/download-action`

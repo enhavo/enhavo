@@ -26,6 +26,7 @@ label:
   preview: 'Preview'
   create: 'Create'
   duplicate: 'Duplicate'
+  download: 'Download'
   yes: 'Yes'
   no: 'No'
   title: 'Title'

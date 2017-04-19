@@ -22,3 +22,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.action, alias: create }
+
+    enhavo_app.action.download:
+        class:  Enhavo\Bundle\AppBundle\Action\Action\DownloadAction
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.action, alias: download }

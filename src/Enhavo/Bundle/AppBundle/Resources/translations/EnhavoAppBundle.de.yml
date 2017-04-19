@@ -33,6 +33,7 @@ label:
   preview: 'Vorschau'
   create: 'Erstellen'
   duplicate: 'Duplizieren'
+  download: 'Download'
   yes: 'Ja'
   no: 'Nein'
   title: 'Titel'
