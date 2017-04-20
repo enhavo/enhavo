@@ -2,8 +2,6 @@
 /**
  * DoctrineSubscriber.php
  *
- * @since 03/10/16
- * @author gseidel
  */
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
@@ -13,9 +11,17 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
-use Doctrine\ORM\Event\OnFlushEventArgs;
 
-class DoctrineSubscriber implements EventSubscriber
+/**
+ * Class DoctrineTranslatorSubscriber
+ * 
+ * This subscriber is listing to doctrine events to call the translator actions
+ *
+ * @since 03/10/16
+ * @author gseidel
+ * @package Enhavo\Bundle\TranslationBundle\EventListener
+ */
+class DoctrineTranslatorSubscriber implements EventSubscriber
 {
     /**
      * @var Translator
@@ -44,54 +50,47 @@ class DoctrineSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist',
-            'preUpdate',
             'preRemove',
             'postLoad',
             'preFlush'
         );
     }
 
+    /**
+     * Before flushing the data, we have to check if some translation data was stored for an object.
+     *
+     * @param PreFlushEventArgs $event
+     */
     public function preFlush(PreFlushEventArgs $event)
     {
         $em = $event->getEntityManager();
         $uow = $em->getUnitOfWork();
 
+        /*
+         * We need to use the IdentityMap, because the update and persist collection stores entities, that have
+         * computed changes, but translation data might have changed without changing it underlying model!
+         */
         foreach($uow->getIdentityMap() as $className) {
             foreach($className as $object) {
-                $this->translator->store($object);
+                $this->translator->storeTranslationData($object);
             }
         }
     }
 
     /**
-     * @param LifecycleEventArgs $args
-     */
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        $this->translator->store($entity);
-    }
-
-    /**
-     * @param LifecycleEventArgs $args
-     */
-    public function preUpdate(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        $this->translator->store($entity);
-    }
-
-    /**
+     * If entity will be deleted, we need to delete all its translation data as well
+     * 
      * @param LifecycleEventArgs $args
      */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->translator->delete($entity);
+        $this->translator->deleteTranslationData($entity);
     }
 
     /**
+     * Load TranslationData into to entity if it's fetched from the database
+     * 
      * @param LifecycleEventArgs $args
      */
     public function postLoad(LifecycleEventArgs $args)

@@ -40,6 +40,7 @@ class MetadataCollection
 
     /**
      * @param $entity
+     * @throws \Exception
      * @return Metadata|null
      */
     public function getMetadata($entity)
@@ -86,8 +87,11 @@ class MetadataCollection
                 foreach($properties as $name => $propertyData) {
                     $property = new Property();
                     $property->setName($name);
+                    $property->setOptions($propertyData);
                     if(isset($propertyData['strategy'])) {
                         $property->setStrategy($propertyData['strategy']);
+                    } else {
+                        $property->setStrategy('');
                     }
                     $metadata->addProperty($property);
                 }

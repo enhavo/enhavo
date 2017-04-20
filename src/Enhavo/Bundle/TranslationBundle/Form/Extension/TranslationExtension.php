@@ -77,8 +77,8 @@ abstract class TranslationExtension extends AbstractTypeExtension
                     return;
                 }
 
-                $translationData = $this->translator->normalizeTranslationData($entity, $propertyPath, $data);
-                $data = $this->translator->normalizeFormData($entity, $propertyPath, $data);
+                $translationData = $this->translator->normalizeToTranslationData($entity, $propertyPath, $data);
+                $data = $this->translator->normalizeToModelData($entity, $propertyPath, $data);
 
                 $event->setData($data);
             }
@@ -122,7 +122,7 @@ abstract class TranslationExtension extends AbstractTypeExtension
                     $entity = $parent->getData();
                 }
 
-                $translations = $this->translator->getTranslations($entity, $property);
+                $translations = $this->translator->getTranslationData($entity, $property);
                 if($translations === null) {
                     $view->vars['translation'] = false;
                     return;

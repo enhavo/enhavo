@@ -50,6 +50,14 @@ $ sphinx-autobuild docs/source build/docs
 Run tests
 ---------
 
+First setup the test database for behat testing, with
+
+```bash
+$ app/console doctrine:schema:update --force --env="test"
+```
+
+Then run the test itself.
+
 ```bash
 $ bin/behat
 $ bin/phpunit

@@ -33,6 +33,7 @@ enhavo_app:
         magazine:
             type: base
             route: enhavo_project_magazine_index
+            icon: open-book
 
 
 enhavo_grid:

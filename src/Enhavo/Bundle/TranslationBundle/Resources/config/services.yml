@@ -9,6 +9,7 @@ services:
         arguments:
             - '@enhavo_translation.metatdata.collection'
             - '@enhavo_translation.strategy_resolver'
+            - '%enhavo_translation.default_locale%'
         calls:
             - [ setContainer, ['@service_container']]
 
@@ -40,11 +41,22 @@ services:
         arguments:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.strategy.slug_translation:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
+        arguments:
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_app.route_guesser'
         calls:
             - [ setContainer, ['@service_container']]
 
     enhavo_translation.doctrine_subscriber:
-        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineSubscriber
+        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslatorSubscriber
         arguments:
             - '@enhavo_translation.translator'
             - '@enhavo_translation.locale_resolver'
@@ -60,15 +72,12 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
 
     enhavo_translation.save_listener:
-        class: Enhavo\Bundle\TranslationBundle\EventListener\SaveListener
+        class: Enhavo\Bundle\TranslationBundle\EventListener\SaveTranslatorListener
         arguments:
             - '@enhavo_translation.translator'
-            - '@enhavo_app.route_guesser'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
-            - { name: kernel.event_listener, event: enhavo_app.pre_create, method: preSave }
-            - { name: kernel.event_listener, event: enhavo_app.pre_update, method: preSave }
 
     enhavo_translation.menu_builder.translation:
         class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenuBuilder

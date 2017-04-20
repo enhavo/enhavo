@@ -23,6 +23,11 @@ class Property
     private $strategy;
 
     /**
+     * @var array
+     */
+    private $options = [];
+
+    /**
      * @var string
      */
     private $underscoreName;
@@ -84,5 +89,34 @@ class Property
     public function setStrategy($strategy)
     {
         $this->strategy = $strategy;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    }
+
+    public function setOption($option, $value)
+    {
+        $this->options[$option] = $value;
+    }
+
+    public function getOption($option)
+    {
+        if(isset($this->options[$option])) {
+            return $this->options[$option];
+        }
+        return null;
     }
 }
