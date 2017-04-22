@@ -62,7 +62,7 @@ class Metadata
     {
         /** @var Property $property */
         foreach($this->properties as $property) {
-            if($property->getName() == $name) {
+            if($property->getName() == $name || $property->getUnderscoreName() == $name) {
                 return $property;
             }
         }

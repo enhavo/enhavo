@@ -8,74 +8,70 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\TranslationBundle\Entity\Translation;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
-use Enhavo\Bundle\TranslationBundle\Translator\TranslationStrategyInterface;
+use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
+use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
-class RouteTranslationStrategy implements TranslationStrategyInterface
+class RouteTranslationStrategy extends TranslationTableStrategy
 {
     use ContainerAwareTrait;
 
     /**
-     * @var Translation[]
+     * @var RouteGuesser
      */
-    private $updateRefIds = [];
+    protected $routeGuesser;
 
     /**
-     * @var string
+     * @var array
      */
-    private $defaultLocale;
+    protected $updateRouteMap = [];
 
-    /**
-     * @var string[]
-     */
-    private $locales = [];
-
-    public function __construct($locales, $defaultLocale)
+    public function __construct($locales, $defaultLocale, EntityManagerInterface $em, $routeGuesser)
     {
-        foreach($locales as $locale => $data) {
-            $this->locales[] = $locale;
+        parent::__construct($locales, $defaultLocale, $em);
+        $this->routeGuesser = $routeGuesser;
+    }
+
+    public function addTranslationData($entity, Property $property, $data, Metadata $metadata)
+    {
+        parent::addTranslationData($entity, $property, $data, $metadata);
+
+        $oid = spl_object_hash($entity);
+        if(!isset($this->updateRouteMap[$oid])) {
+            $this->updateRouteMap[$oid] = [];
         }
-        $this->defaultLocale = $defaultLocale;
+        $this->updateRouteMap[$oid][] = [
+            'entity' => $entity
+        ];
     }
 
-
-    public function storeValue($entity, Metadata $metadata, Property $property)
+    public function storeTranslationData($entity, Metadata $metadata)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $values = $accessor->getValue($entity, $property->getName());
-        if(is_array($values)) {
-            $value = $this->storeValues($values, $entity, $property, $metadata);
-            $accessor->setValue($entity, $property->getName(), $value);
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translationDataMap[$oid])) {
+            return;
         }
-    }
 
-    protected function getEntityManager()
-    {
-        return $this->container->get('doctrine.orm.default_entity_manager');
-    }
-
-    protected function storeValues(array $values, $entity, Property $property, Metadata $metadata)
-    {
-        $return = null;
         if(!$entity instanceof Route) {
-            return null;
+            return;
         }
 
-        foreach($values as $locale => $value) {
-            if($this->defaultLocale === $locale) {
-                $return = $value;
-            } else {
+        $translationData = $this->translationDataMap[$oid];
 
-                $translationRoute = $this->getRepository('EnhavoTranslationBundle:TranslationRoute')->findOneBy([
+        /** @var TranslationTableData $data */
+        foreach($translationData as $data) {
+            foreach($data->getValues() as $locale => $value) {
+                $translationRoute = $this->getEntityManager()->getRepository('EnhavoTranslationBundle:TranslationRoute')->findOneBy([
                     'type' => $entity->getType(),
-                    'typeId' => $entity->getTypeId()
+                    'typeId' => $entity->getTypeId(),
+                    'locale' => $locale
                 ]);
 
                 if($translationRoute === null || $entity->getType() === null || $entity->getTypeId() === null) {
@@ -95,22 +91,16 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
                 $translationRoute->setPath($value);
             }
         }
-
-        return $return;
+        unset($this->translationDataMap[$oid]);
     }
 
-    protected function getRepository($repository)
-    {
-        return $this->getEntityManager()->getRepository($repository);
-    }
-
-    public function delete($entity, Metadata $metadata)
+    public function deleteTranslationData($entity, Metadata $metadata)
     {
         if(!$entity instanceof Route) {
             return;
         }
 
-        $translationRoutes = $this->getRepository('EnhavoTranslationBundle:TranslationRoute')->findBy([
+        $translationRoutes = $this->getEntityManager()->getRepository('EnhavoTranslationBundle:TranslationRoute')->findBy([
             'type' => $entity->getType(),
             'typeId' => $entity->getTypeId()
         ]);
@@ -120,7 +110,7 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
         }
     }
 
-    public function getTranslations($entity, Metadata $metadata, Property $property)
+    public function getTranslationData($entity, Property $property, Metadata $metadata)
     {
         $data = [];
 
@@ -132,7 +122,7 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
             return $data;
         }
 
-        $translationRoutes = $this->getRepository('EnhavoTranslationBundle:TranslationRoute')->findBy([
+        $translationRoutes = $this->getEntityManager()->getRepository('EnhavoTranslationBundle:TranslationRoute')->findBy([
             'type' => $entity->getType(),
             'typeId' => $entity->getTypeId()
         ]);
@@ -157,7 +147,7 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
         return $data;
     }
 
-    public function updateReferences()
+    public function postFlush()
     {
         /**
          * @var string $key
@@ -177,11 +167,70 @@ class RouteTranslationStrategy implements TranslationStrategyInterface
             $this->getEntityManager()->persist($translationRoute);
             unset($this->updateRefIds[$key]);
         }
+
+        $this->getEntityManager()->flush();
+
+        //update path if the aren't set or has not correct country prefix
+        foreach($this->updateRouteMap as $entities) {
+            foreach($entities as $updateSlug) {
+                /** @var Route $entity */
+                $entity = $updateSlug['entity'];
+
+                $translationRoutes = $this->getEntityManager()->getRepository('EnhavoTranslationBundle:TranslationRoute')->findBy([
+                    'type' => $entity->getType(),
+                    'typeId' => $entity->getTypeId(),
+                ]);
+
+                /** @var TranslationRoute $translationRoute */
+                if($translationRoutes) {
+                    foreach($translationRoutes as $translationRoute) {
+                        if(empty($translationRoute->getPath())) {
+                            $slug = Slugifier::slugify($this->getContext($entity->getContent(), $translationRoute->getLocale()));
+                            $path = sprintf('/%s/%s', $translationRoute->getLocale(), $slug);
+                            $translationRoute->setPath($path);
+                            $translationRoute->getRoute()->setStaticPrefix($path);
+                        }
+                    }
+                }
+
+                if(empty($entity->getStaticPrefix())) {
+                    $slug = Slugifier::slugify($this->getContext($entity->getContent(), $this->defaultLocale));
+                    $path = sprintf('/%s/%s', $this->defaultLocale, $slug);
+                    $entity->setStaticPrefix($path);
+                }
+
+                $shouldStartWith = sprintf('/%s/', $this->defaultLocale);
+                $startWith = substr($entity->getStaticPrefix(), 0 , strlen($shouldStartWith));
+                if($startWith != $shouldStartWith) {
+                    $entity->setStaticPrefix(sprintf('/%s%s', $this->defaultLocale, $entity->getStaticPrefix()));
+                }
+            }
+        }
+
+        $this->updateRouteMap = [];
         $this->getEntityManager()->flush();
     }
 
-    public function translate($entity, Metadata $metadata, Property $property, $locale)
+    protected function getContext($subject, $locale)
     {
-        return;
+        $context = $this->routeGuesser->guessContext($subject);
+
+        if(is_array($context)) {
+            $newTitle = null;
+            foreach($context as $titleLocale => $value) {
+                if(!empty($value) && empty($newTitle)) {
+                    $newTitle = $value;
+                }
+                if($titleLocale === $locale && !empty($value)) {
+                    $newTitle = $value;
+                }
+            }
+            if(empty($newTitle)) {
+                $newTitle = microtime(true);
+            }
+            return $newTitle;
+        }
+
+        return $context;
     }
 }

@@ -4,3 +4,5 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
         metaDescription:
         pageTitle:
         slug:
+            strategy: slug_translation
+            fields: title

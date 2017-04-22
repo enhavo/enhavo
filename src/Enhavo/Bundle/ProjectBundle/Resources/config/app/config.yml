@@ -10,6 +10,10 @@ enhavo_translation:
     locales:
         en:
         de:
+    translation_strings:
+      - company.name
+      - company.street
+      - company.city
 
 sylius_resource:
     resources:

@@ -8,9 +8,11 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
+use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslationStrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -23,71 +25,40 @@ class TranslationTableStrategy implements TranslationStrategyInterface
     /**
      * @var Translation[]
      */
-    private $updateRefIds = [];
+    protected $updateRefIds = [];
 
     /**
      * @var string
      */
-    private $defaultLocale;
+    protected $defaultLocale;
 
     /**
      * @var string[]
      */
-    private $locales = [];
+    protected $locales = [];
 
-    public function __construct($locales, $defaultLocale)
+    /**
+     * @var array
+     */
+    protected $translationDataMap = [];
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $em;
+
+    public function __construct($locales, $defaultLocale, EntityManagerInterface $em)
     {
         foreach($locales as $locale => $data) {
             $this->locales[] = $locale;
         }
         $this->defaultLocale = $defaultLocale;
-    }
-
-
-    public function storeValue($entity, Metadata $metadata, Property $property)
-    {
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $values = $accessor->getValue($entity, $property->getName());
-        if(is_array($values)) {
-            $value = $this->storeValues($values, $entity, $property, $metadata);
-            $accessor->setValue($entity, $property->getName(), $value);
-        }
+        $this->em = $em;
     }
 
     protected function getEntityManager()
     {
         return $this->container->get('doctrine.orm.default_entity_manager');
-    }
-
-    protected function storeValues(array $values, $entity, Property $property, Metadata $metadata)
-    {
-        $return = null;
-
-        $repository = $this->getRepository();
-        foreach($values as $locale => $value) {
-            if($this->defaultLocale === $locale) {
-                $return = $value;
-            } else {
-                $translation = $repository->findOneBy([
-                    'class' => $metadata->getClass(),
-                    'refId' => $entity->getId(),
-                    'property' => $property->getName(),
-                    'locale' => $locale
-                ]);
-                if($translation === null || $entity->getId() === null) {
-                    $translation = new Translation();
-                    $translation->setClass($metadata->getClass());
-                    $translation->setRefId($entity->getId());
-                    $translation->setProperty($property->getName());
-                    $translation->setLocale($locale);
-                    $this->updateRefIds[] = $translation;
-                }
-                $translation->setTranslation($value);
-                $translation->setObject($entity);
-            }
-        }
-
-        return $return;
     }
 
     /**
@@ -98,7 +69,85 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         return $this->getEntityManager()->getRepository('EnhavoTranslationBundle:Translation');
     }
 
-    public function delete($entity, Metadata $metadata)
+    public function addTranslationData($entity, Property $property, $data, Metadata $metadata)
+    {
+        if($data === null) {
+            return;
+        }
+
+        $translationData = new TranslationTableData();
+        $translationData->setEntity($entity);
+        $translationData->setProperty($property);
+        $translationData->setValues($data);
+
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translationDataMap[$oid])) {
+            $this->translationDataMap[$oid] = [];
+        }
+
+        $this->translationDataMap[$oid][] = $translationData;
+    }
+
+    public function normalizeToTranslationData($entity, Property $property, $formData, Metadata $metadata)
+    {
+        if($formData === null) {
+            return null;
+        }
+
+        $translationData = [];
+        foreach($formData as $locale => $value) {
+            if($locale == $this->defaultLocale) {
+                continue;
+            }
+            $translationData[$locale] = $value;
+        }
+        return $translationData;
+    }
+
+    public function normalizeToModelData($entity, Property $property, $formData, Metadata $metadata)
+    {
+        return $formData[$this->defaultLocale];
+    }
+
+    public function storeTranslationData($entity, Metadata $metadata)
+    {
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translationDataMap[$oid])) {
+            return;
+        }
+
+        $translationData = $this->translationDataMap[$oid];
+        $repository = $this->getRepository();
+
+        foreach($translationData as $data) {
+            foreach($data->getValues() as $locale => $value) {
+                $translation = $repository->findOneBy([
+                    'class' => $metadata->getClass(),
+                    'refId' => $entity->getId(),
+                    'property' => $data->getProperty()->getName(),
+                    'locale' => $locale
+                ]);
+
+                if($translation === null || $entity->getId() === null) {
+                    $translation = new Translation();
+                    $translation->setClass($metadata->getClass());
+                    $translation->setRefId($entity->getId());
+                    $translation->setProperty($data->getProperty()->getName());
+                    $translation->setLocale($locale);
+                    $this->em->persist($translation);
+                    $this->updateRefIds[] = $translation;
+                }
+                $translation->setTranslation($value);
+                $translation->setObject($entity);
+            }
+        }
+
+        unset($this->translationDataMap[$oid]);
+
+        return;
+    }
+
+    public function deleteTranslationData($entity, Metadata $metadata)
     {
         /** @var Translation[] $translations */
         $translations = $this->getRepository()->findBy([
@@ -110,7 +159,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         }
     }
 
-    public function getTranslations($entity, Metadata $metadata, Property $property)
+    public function getTranslationData($entity, Property $property, Metadata $metadata)
     {
         $data = [];
         $translations = null;
@@ -148,7 +197,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         return $data;
     }
 
-    public function updateReferences()
+    public function postFlush()
     {
         foreach($this->updateRefIds as $key => $translation) {
             $translation->setRefId($translation->getObject()->getId());
@@ -158,14 +207,8 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         $this->getEntityManager()->flush();
     }
 
-    public function translate($entity, Metadata $metadata, Property $property, $locale)
+    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
     {
-        if($locale === $this->defaultLocale) {
-            return;
-        }
-
-        $accessor = PropertyAccess::createPropertyAccessor();
-
         /** @var Translation $translation */
         $translation = $this->getRepository()->findOneBy([
             'class' => $metadata->getClass(),
@@ -177,6 +220,6 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         if($translation !== null && $translation->getTranslation() !== null) {
             $value = $translation->getTranslation();
         }
-        $accessor->setValue($entity, $property->getName(), $value);
+        return $value;
     }
 }

@@ -44,11 +44,19 @@ Or use the autobuilder
 
 ```bash
 $ pip install sphinx-autobuild
-$ sphinx-autobuild docs/source build/html
+$ sphinx-autobuild docs/source build/docs
 ```
 
 Run tests
 ---------
+
+First setup the test database for behat testing, with
+
+```bash
+$ app/console doctrine:schema:update --force --env="test"
+```
+
+Then run the test itself.
 
 ```bash
 $ bin/behat

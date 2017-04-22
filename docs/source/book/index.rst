@@ -73,3 +73,9 @@ Book
   * :doc:`/book/newsletter/general`
   * :doc:`/book/newsletter/strategies`
   * :doc:`/book/newsletter/storages`
+
+* **Translation**
+
+  * :doc:`/book/translation/index`
+
+

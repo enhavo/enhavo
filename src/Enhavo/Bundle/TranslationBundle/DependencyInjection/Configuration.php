@@ -62,6 +62,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\TranslationBundle\Entity\TranslationString')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
+                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\TranslationBundle\Repository\TranslationStringRepository')->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()
                                             ->children()
