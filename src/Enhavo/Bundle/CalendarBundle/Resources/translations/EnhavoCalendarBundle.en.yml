@@ -9,6 +9,16 @@ appointment:
     label:
       dateFrom: 'From'
       dateTo: 'To'
+      externalId: 'External ID'
+      importerName: 'Importer Name'
+      repeatRule: 'Repeat Rule'
+      locationLongitude: 'Location Longitude'
+      locationLatitude: 'Location Latitude'
+      locationName: 'Location Name'
+      locationCity: 'Location City'
+      locationZip: 'Location Zip'
+      locationStreet: 'Location Street'
+      locationCountry: 'Location Country'
   label:
     appointment: 'Appointment'
     content: 'Content'
