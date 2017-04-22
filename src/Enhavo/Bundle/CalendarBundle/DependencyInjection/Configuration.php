@@ -60,7 +60,16 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->variableNode('importer')
+                ->end()
+                ->arrayNode('exporter')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('calendarName')->defaultValue('enhavo')->end()
+                    ->end()
+                ->end()
             ->end()
+
         ;
 
         return $treeBuilder;

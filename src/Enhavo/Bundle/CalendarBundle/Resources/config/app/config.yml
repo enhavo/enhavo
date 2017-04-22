@@ -23,3 +23,6 @@ enhavo_app:
             role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_DELETE
             label: appointment.role.label.delete
             translationDomain: EnhavoCalendarBundle
+
+enhavo_calendar:
+    importer:

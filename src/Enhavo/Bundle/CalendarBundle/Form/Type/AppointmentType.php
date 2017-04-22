@@ -64,6 +64,59 @@ class AppointmentType extends AbstractType
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));
+
+        $builder->add('externalId', 'text', array(
+            'label' => 'appointment.form.label.externalId',
+            'translation_domain' => 'EnhavoCalendarBundle',
+            'read_only' => true
+        ));
+
+        $builder->add('locationLongitude', 'text', array(
+            'label' => 'appointment.form.label.locationLongitude',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationLatitude', 'text', array(
+            'label' => 'appointment.form.label.locationLatitude',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationName', 'text', array(
+            'label' => 'appointment.form.label.locationName',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationCity', 'text', array(
+            'label' => 'appointment.form.label.locationCity',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationCountry', 'text', array(
+            'label' => 'appointment.form.label.locationCountry',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationStreet', 'text', array(
+            'label' => 'appointment.form.label.locationStreet',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('locationZip', 'text', array(
+            'label' => 'appointment.form.label.locationZip',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('repeatRule', 'text', array(
+            'label' => 'appointment.form.label.repeatRule',
+            'translation_domain' => 'EnhavoCalendarBundle'
+        ));
+
+        $builder->add('importerName', 'text', array(
+            'label' => 'appointment.form.label.importerName',
+            'translation_domain' => 'EnhavoCalendarBundle',
+            'read_only' => true
+        ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

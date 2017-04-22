@@ -60,7 +60,10 @@
     "tecnickcom/tcpdf": "^6.2",
     "guzzlehttp/guzzle": "^6.2",
     "ocramius/proxy-manager": "1.0.2",
-    "league/uri": "^4.2"
+    "league/uri": "^4.2",
+    "jsvrcek/ics-bundle": "^0.1.0",
+    "facebook/graph-sdk": "^5.4",
+    "johngrogg/ics-parser": "^2.0"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",

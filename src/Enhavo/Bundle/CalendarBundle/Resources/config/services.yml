@@ -31,3 +31,15 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: calendar }
+
+    enhavo_calendar.import_manager:
+        class: Enhavo\Bundle\CalendarBundle\Import\ImportManager
+        arguments:
+            - '%enhavo_calendar.imports%'
+            - '@service_container'
+
+    enhavo_calendar.exporter:
+        class: Enhavo\Bundle\CalendarBundle\Export\CalendarExporter
+        arguments:
+            - '%enhavo_calendar.export_name%'
+            - '@doctrine.orm.entity_manager'
