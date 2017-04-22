@@ -49,12 +49,12 @@ enhavo_translation_translation_string_table:
         _sylius:
             sorting:
                 translationKey: asc
-#            filters:
-#                translationKey:
-#                    type: text
-#                    label: translation.label.translationKey
-#                    translationDomain: EnhavoTranslationBundle
-#                    property: translationKey
+            filters:
+                translationKey:
+                    type: text
+                    label: translation.label.translationKey
+                    translationDomain: EnhavoTranslationBundle
+                    property: translationKey
             viewer:
                 translationDomain: EnhavoTranslationBundle
                 columns:

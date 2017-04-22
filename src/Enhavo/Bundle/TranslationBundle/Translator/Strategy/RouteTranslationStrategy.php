@@ -170,7 +170,7 @@ class RouteTranslationStrategy extends TranslationTableStrategy
 
         $this->getEntityManager()->flush();
 
-        //update path if the aren't set
+        //update path if the aren't set or has not correct country prefix
         foreach($this->updateRouteMap as $entities) {
             foreach($entities as $updateSlug) {
                 /** @var Route $entity */
@@ -197,6 +197,12 @@ class RouteTranslationStrategy extends TranslationTableStrategy
                     $slug = Slugifier::slugify($this->getContext($entity->getContent(), $this->defaultLocale));
                     $path = sprintf('/%s/%s', $this->defaultLocale, $slug);
                     $entity->setStaticPrefix($path);
+                }
+
+                $shouldStartWith = sprintf('/%s/', $this->defaultLocale);
+                $startWith = substr($entity->getStaticPrefix(), 0 , strlen($shouldStartWith));
+                if($startWith != $shouldStartWith) {
+                    $entity->setStaticPrefix(sprintf('/%s%s', $this->defaultLocale, $entity->getStaticPrefix()));
                 }
             }
         }

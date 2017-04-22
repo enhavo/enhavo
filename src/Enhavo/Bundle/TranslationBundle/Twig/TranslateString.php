@@ -23,11 +23,7 @@ class TranslateString extends \Twig_Extension
 
     public function getStringTranslation($key)
     {
-        $translation = $this->container->get('enhavo_translation.repository.translation_string')->findOneBy(array('translationKey' => $key));
-        if($translation === null) {
-            return $key;
-        }
-        return $translation->getTranslationValue();
+        return  $this->container->get('enhavo_translation.translate_string.translator')->translate($key);
     }
 
     public function getName()

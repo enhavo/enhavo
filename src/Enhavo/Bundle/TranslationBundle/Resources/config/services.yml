@@ -134,3 +134,8 @@ services:
         arguments:
             - '@enhavo_app.route_manager'
             - '@doctrine.orm.entity_manager'
+
+    enhavo_translation.translate_string.translator:
+        class: Enhavo\Bundle\TranslationBundle\TranslationString\TranslateStringTranslator
+        arguments:
+            - '@enhavo_translation.repository.translation_string'
