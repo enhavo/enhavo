@@ -26,6 +26,8 @@ class EnhavoCalendarExtension extends AbstractResourceExtension
 
         $container->setParameter('enhavo_calendar.routing.appointment.strategy', $config['resources']['appointment']['routing']['strategy']);
         $container->setParameter('enhavo_calendar.routing.appointment.route', $config['resources']['appointment']['routing']['route']);
+        $container->setParameter('enhavo_calendar.imports', $config['importer']);
+        $container->setParameter('enhavo_calendar.export_name', $config['exporter']['calendarName']);
 
         $configFiles = array(
             'services.yml',
