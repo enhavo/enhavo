@@ -42,6 +42,7 @@ services:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_app.route_guesser'
         calls:
             - [ setContainer, ['@service_container']]
 
@@ -70,6 +71,14 @@ services:
             - '%enhavo_translation.default_locale%'
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+
+    enhavo_translation.extension.translation_data:
+        class: Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationDataExtension
+        arguments:
+            - '@enhavo_translation.translator'
+            - '%enhavo_translation.default_locale%'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     enhavo_translation.save_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\SaveTranslatorListener

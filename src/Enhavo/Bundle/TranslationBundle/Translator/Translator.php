@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
+use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -161,34 +162,15 @@ class Translator
     }
 
     /**
-     * Check is a property is translatable
+     * Get meta data
      *
      * @param $entity
-     * @param $propertyPath
-     * @return bool
+     * @return Metadata
      * @throws \Exception
      */
-    public function isPropertyTranslatable($entity, $propertyPath)
+    public function getMetadata($entity)
     {
-        if($entity === null) {
-            return false;
-        }
-
-        if(!is_string($propertyPath)) {
-            return false;
-        }
-
-        $metadata = $this->metadataCollection->getMetadata($entity);
-        if($metadata === null) {
-            return false;
-        }
-
-        $property = $metadata->getProperty($propertyPath);
-        if($property === null) {
-            return false;
-        }
-
-        return true;
+        return $this->metadataCollection->getMetadata($entity);
     }
 
     /**

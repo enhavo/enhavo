@@ -71,6 +71,10 @@ class TranslationTableStrategy implements TranslationStrategyInterface
 
     public function addTranslationData($entity, Property $property, $data, Metadata $metadata)
     {
+        if($data === null) {
+            return;
+        }
+
         $translationData = new TranslationTableData();
         $translationData->setEntity($entity);
         $translationData->setProperty($property);
@@ -86,6 +90,10 @@ class TranslationTableStrategy implements TranslationStrategyInterface
 
     public function normalizeToTranslationData($entity, Property $property, $formData, Metadata $metadata)
     {
+        if($formData === null) {
+            return null;
+        }
+
         $translationData = [];
         foreach($formData as $locale => $value) {
             if($locale == $this->defaultLocale) {
@@ -110,10 +118,8 @@ class TranslationTableStrategy implements TranslationStrategyInterface
 
         $translationData = $this->translationDataMap[$oid];
         $repository = $this->getRepository();
-        $unsetKeys = [];
 
-        foreach($translationData as $key => $data) {
-            $unsetKeys[] = $key;
+        foreach($translationData as $data) {
             foreach($data->getValues() as $locale => $value) {
                 $translation = $repository->findOneBy([
                     'class' => $metadata->getClass(),

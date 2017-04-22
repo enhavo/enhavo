@@ -36,6 +36,10 @@ class SlugTranslationStrategy extends TranslationTableStrategy
 
     public function normalizeToTranslationData($entity, Property $property, $formData, Metadata $metadata)
     {
+        if($formData === null) {
+            return null;
+        }
+
         $translationData = parent::normalizeToTranslationData($entity, $property, $formData, $metadata);
 
         /**
@@ -57,6 +61,10 @@ class SlugTranslationStrategy extends TranslationTableStrategy
 
     public function normalizeToModelData($entity, Property $property, $formData, Metadata $metadata)
     {
+        if($formData === null) {
+            return null;
+        }
+
         $modelData = parent::normalizeToModelData($entity, $property, $formData, $metadata);
         if(empty($modelData)) {
             $accessor = PropertyAccess::createPropertyAccessor();
@@ -73,6 +81,11 @@ class SlugTranslationStrategy extends TranslationTableStrategy
             $context = implode(' ', $context);
             $modelData = Slugifier::slugify($context);
             //ToDo: unify slug
+        }
+
+        //return null if string is empty, to let doctrine sluggable change this field if possible
+        if($modelData == '') {
+            return null;
         }
         return $modelData;
     }

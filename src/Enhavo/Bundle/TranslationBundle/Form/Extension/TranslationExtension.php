@@ -56,52 +56,6 @@ abstract class TranslationExtension extends AbstractTypeExtension
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $translationData = null;
-
-        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use (&$translationData) {
-            $form = $event->getForm();
-            $data = $event->getData();
-
-            $parent = $form->getParent();
-            if($parent instanceof Form) {
-                $propertyPath = (string)$form->getPropertyPath();
-                $entity = $parent->getData();
-
-                if($entity === null) {
-                    $entity = $parent->getConfig()->getDataClass();
-                }
-
-                if(!$this->translator->isPropertyTranslatable($entity, $propertyPath)) {
-                    return;
-                }
-
-                $translationData = $this->translator->normalizeToTranslationData($entity, $propertyPath, $data);
-                $data = $this->translator->normalizeToModelData($entity, $propertyPath, $data);
-
-                $event->setData($data);
-            }
-        });
-
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use (&$translationData) {
-            $form = $event->getForm();
-
-            $parent = $form->getParent();
-            if($parent instanceof Form) {
-                $propertyPath = (string)$form->getPropertyPath();
-                $entity = $parent->getData();
-
-                if(!$this->translator->isPropertyTranslatable($entity, $propertyPath)) {
-                    return;
-                }
-
-                $this->translator->addTranslationData($entity, $propertyPath, $translationData);
-            }
-        });
-
-    }
-
     /**
      * Pass the image URL to the view
      *
