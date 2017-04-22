@@ -1,12 +1,18 @@
 -
-  name: Lifestyle
+  name:
+    de: Lifestyle
+    en: Lifestyle
   collection: default
   picture: category/cat-img-01.jpg
 -
-  name: Travel
+  name:
+    de: Travel
+    en: Travel
   collection: default
   picture: category/cat-img-02.jpg
 -
-  name: Food
+  name:
+    de: Food
+    en: Food
   collection: default
   picture: category/cat-img-03.jpg

@@ -27,6 +27,7 @@ class SlideFixture extends AbstractFixture
         $slide->setPublic(true);
         $slide->setTitle($args['title']);
         $slide->setImage($this->createImage($args['image']));
+        $this->translate($slide);
         return $slide;
     }
 

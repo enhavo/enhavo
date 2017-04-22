@@ -23,6 +23,7 @@ class DownloadFixture extends AbstractFixture
         $download->setTitle($args['title']);
         $download->setText($args['text']);
         $download->setFile($this->createImage($args['file']));
+        $this->translate($download);
         return $download;
     }
 

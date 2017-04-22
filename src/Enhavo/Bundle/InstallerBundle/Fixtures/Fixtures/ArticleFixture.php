@@ -30,6 +30,7 @@ class ArticleFixture extends AbstractFixture
         foreach($args['categories'] as $category) {
             $article->addCategory($this->getCategory($category));
         }
+        $this->translate($article);
         return $article;
     }
 
