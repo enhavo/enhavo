@@ -9,7 +9,7 @@
   grid:
     -
       type: text
-      title: About Us
+      title:
         de: Über uns
         en: About Us
       text:

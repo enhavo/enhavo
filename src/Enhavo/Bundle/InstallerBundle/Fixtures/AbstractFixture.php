@@ -150,7 +150,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
             $itemEntity->setItemType($this->createItemType($type, $fields));
             $gridEntity->addItem($itemEntity);
         }
-        $this->translate($grid);
+        $this->translate($gridEntity);
         return $gridEntity;
     }
 
@@ -194,10 +194,11 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         }
     }
 
-    protected function createRoute($url)
+    protected function createRoute($url, $content)
     {
         $route = new Route();
         $route->setStaticPrefix($url);
+        $route->setContent($content);
         $this->translate($route);
         return $route;
     }
@@ -221,6 +222,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         $this->reindex();
 
         $this->manager->flush();
+        $this->container->get('enhavo_translation.translator')->postFlush();
     }
 
     protected function index($item)
@@ -247,7 +249,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         foreach($metadata->getProperties() as $property) {
             $formData = $accessor->getValue($entity, $property->getName());
             $translationData = $translator->normalizeToTranslationData($entity, $property->getName(), $formData);
-            $this->getTranslator()->addTranslationData($entity, $property->getName(), $translationData);
+            $translator->addTranslationData($entity, $property->getName(), $translationData);
             $normalizeData = $translator->normalizeToModelData($entity, $property->getName(), $formData);
             $accessor->setValue($entity, $property->getName(), $normalizeData);
         }
