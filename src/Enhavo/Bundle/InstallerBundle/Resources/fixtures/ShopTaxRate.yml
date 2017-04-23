@@ -1,0 +1,14 @@
+-
+  code: 19
+  name: Normal
+  amount: 0.19000
+  includedInPrice: false
+  calculator: flat
+  category: VAT
+-
+  code: 7
+  name: Reduced
+  amount: 0.19000
+  includedInPrice: false
+  calculator: flat
+  category: VAT

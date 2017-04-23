@@ -33,6 +33,10 @@ enhavo_newsletter_subscribe:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
     prefix: /
 
+enhavo_article_theme:
+    resource: "@EnhavoArticleBundle/Resources/config/routing/theme/article.yml"
+    prefix: /
+
 enhavo_search_admin:
     resource: "@EnhavoSearchBundle/Resources/config/routing/admin.yml"
     prefix:   /admin

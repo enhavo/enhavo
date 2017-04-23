@@ -19,7 +19,6 @@ parameters:
     mailer_name: enhavo
     mailer_to: no-reply@enhavo.com
 
-    locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     paypal.express_checkout.username: ~

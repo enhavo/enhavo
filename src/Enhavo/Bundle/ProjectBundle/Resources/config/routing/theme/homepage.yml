@@ -1,4 +1,12 @@
-enhavo_project_hompage_index:
+enhavo_project_hompage_redirect:
     path: /
     defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: enhavo_project_hompage_index
+        permanent: true
+
+enhavo_project_hompage_index:
+    path: /{_locale}/index
+    defaults:
         _controller: EnhavoProjectBundle:Homepage:index
+        _locale: '%locale%'
