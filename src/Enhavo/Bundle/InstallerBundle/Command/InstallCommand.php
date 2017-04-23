@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends ContainerAwareCommand
 {
@@ -26,6 +27,10 @@ class InstallCommand extends ContainerAwareCommand
         $this
             ->setName('enhavo:install')
             ->setDescription('Installer')
+            ->addOption('user', null, InputOption::VALUE_REQUIRED, 'Admin username')
+            ->addOption('password', null, InputOption::VALUE_REQUIRED, 'Admin password')
+            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'Admin email address')
+            ->addOption('no-bundle')
         ;
     }
 
@@ -44,7 +49,7 @@ class InstallCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @throws \Symfony\Component\Console\Exception\ExceptionInterface
      */
-    protected function installDatabase(InputInterface $input, OutputInterface $output)
+    private function installDatabase(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Update Database</info>');
         $command = $this->getApplication()->find('doctrine:schema:update');
@@ -61,14 +66,26 @@ class InstallCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function insertUser(InputInterface $input, OutputInterface $output)
+    private function insertUser(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Create admin user</info>');
         $helper = $this->getHelper('question');
 
-        $username = $this->askForUsername($input, $output);
-        $password = $this->askForPassword($input, $output);
-        $email = $this->askForEmail($input, $output);
+        $username = $input->getOption('user');
+        $password = $input->getOption('password');
+        $email = $input->getOption('email');
+
+        if(empty($username)) {
+            $username = $this->askForUsername($input, $output);
+        }
+
+        if(empty($password)) {
+            $password = $this->askForPassword($input, $output);
+        }
+
+        if(empty($email)) {
+            $email = $this->askForEmail($input, $output);
+        }
 
         $question = new ConfirmationQuestion('<info>Is this information correct</info> [<comment>yes</comment>]?', true);
 
@@ -85,7 +102,7 @@ class InstallCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @return mixed
      */
-    protected function askForUserName(InputInterface $input, OutputInterface $output)
+    private function askForUserName(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
         $question = new Question('<question>Admin username:</question> ', 'admin');
@@ -106,7 +123,7 @@ class InstallCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @return mixed
      */
-    protected function askForEmail(InputInterface $input, OutputInterface $output)
+    private function askForEmail(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
         $question = new Question('<question>Admin email:</question> ');
@@ -130,7 +147,7 @@ class InstallCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @return mixed
      */
-    protected function askForDemoData(InputInterface $input, OutputInterface $output)
+    private function askForDemoData(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
         $question = new Question('<question>Add demo data:</question> ');
@@ -148,7 +165,7 @@ class InstallCommand extends ContainerAwareCommand
      *
      * @return boolean
      */
-    public function isEmailValid($email)
+    private function isEmailValid($email)
     {
         $validator = $this->getContainer()->get('validator');
 
@@ -166,7 +183,7 @@ class InstallCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @return mixed
      */
-    protected function askForPassword(InputInterface $input, OutputInterface $output)
+    private function askForPassword(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
         $question = new Question('<question>Admin password:</question> ');
@@ -201,8 +218,13 @@ class InstallCommand extends ContainerAwareCommand
         $em->flush();
     }
 
-    protected function createBundle(InputInterface $input, OutputInterface $output)
+    private function createBundle(InputInterface $input, OutputInterface $output)
     {
+        $noBundle = $input->getOption('no-bundle');
+        if($noBundle) {
+            return;
+        }
+
         $srcDir = sprintf('%s/../src', $this->getContainer()->getParameter('kernel.root_dir'));
         $projectBundleDir = sprintf('%s/ProjectBundle', $srcDir);
 
@@ -230,7 +252,7 @@ class InstallCommand extends ContainerAwareCommand
         }
     }
 
-    protected function overwriteProjectBundle($projectBundleDir)
+    private function overwriteProjectBundle($projectBundleDir)
     {
         $templateEngine = $this->getContainer()->get('templating');
 

@@ -3,6 +3,9 @@ twig:
         resources:
             - 'EnhavoTranslationBundle:Form:fields.html.twig'
 
+enhavo_translation:
+    default_locale: '%locale%'
+
 enhavo_assets:
     require_js:
         paths:

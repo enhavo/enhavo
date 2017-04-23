@@ -19,7 +19,7 @@ Quick Installation
 
 ```bash
 $ wget http://getcomposer.org/composer.phar
-$ php composer.phar create-project enhavo/enhavo-project enhavo
+$ php composer.phar create-project enhavo/enhavo-cms enhavo
 ```
 
 Demo
