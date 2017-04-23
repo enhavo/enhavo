@@ -1,0 +1,22 @@
+-
+  code: arran-single-malt
+  title:
+    de: Arran Single Malt
+    en: Arran Single Malt
+  price: 4400
+  picture: product/product-img-01.png
+  url:
+    de: /de/arran-single-malt
+    en: /en/arran-single-malt
+  taxRate: 19
+-
+  code: arran-single-malt-cask-finish
+  title:
+    de: Arran Single Malt Cask Finish
+    en: Arran Single Malt Cask Finish
+  price: 4800
+  picture: product/product-img-02.png
+  url:
+    de: /de/arran-single-malt-cask-finish
+    en: /en/arran-single-malt-cask-finish
+  taxRate: 19

@@ -29,6 +29,7 @@ class CategoryFixture extends AbstractFixture
         $category->setName($args['name']);
         $category->setCollection($this->getCollection($args['collection']));
         $category->setPicture($this->createImage($args['picture']));
+        $this->translate($category);
         return $category;
     }
 
@@ -59,7 +60,7 @@ class CategoryFixture extends AbstractFixture
      */
     function getName()
     {
-        return 'category';
+        return 'Category';
     }
 
     /**

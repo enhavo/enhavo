@@ -1,0 +1,9 @@
+-
+  code: normal
+  name:
+    de: Normal
+    en: Normal
+  configuration:
+    amount: 490
+  calculator: flat_rate
+  category: Germany
