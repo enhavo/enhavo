@@ -8,7 +8,7 @@
 -
   code: 7
   name: Reduced
-  amount: 0.19000
+  amount: 0.7000
   includedInPrice: false
   calculator: flat
   category: VAT

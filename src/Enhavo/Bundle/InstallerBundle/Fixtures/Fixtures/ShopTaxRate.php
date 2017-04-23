@@ -21,7 +21,7 @@ class ShopTaxRate extends AbstractFixture
         $taxRate = new TaxRate();
         $taxRate->setCode($args['code']);
         $taxRate->setName($args['name']);
-        $taxRate->setAmount($args['name']);
+        $taxRate->setAmount($args['amount']);
         $taxRate->setIncludedInPrice($args['includedInPrice']);
         $taxRate->setCalculator($args['calculator']);
         $taxRate->setCreatedAt(new \DateTime);

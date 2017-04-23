@@ -21,8 +21,6 @@ use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
 class RouteTranslationStrategy extends TranslationTableStrategy
 {
-    use ContainerAwareTrait;
-
     /**
      * @var RouteGuesser
      */
