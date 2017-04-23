@@ -2,12 +2,17 @@ FROM phusion/baseimage
 
 CMD ["/sbin/my_init"]
 
-# set mysql password
-RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
-RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
-
 # install server tools
 RUN add-apt-repository -y ppa:ondrej/php && \
+    echo 'mysql-apt-config mysql-apt-config/repo-codename select trusty' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/repo-distro select ubuntu' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/repo-url string http://repo.mysql.com/apt/' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/select-preview select' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/select-product select Ok' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/select-server select mysql-5.7' | debconf-set-selections && \
+    echo 'mysql-apt-config mysql-apt-config/select-tools select' | debconf-set-selections && \
+    echo 'mysql-server mysql-server/root_password password root' | debconf-set-selections && \
+    echo 'mysql-server mysql-server/root_password_again password root' | debconf-set-selections && \
     apt-get update -y --force-yes && \
     apt-get upgrade -y --force-yes && \
     apt-get install -y --force-yes apache2 && \
@@ -17,6 +22,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get install -y --force-yes php7.0-gd && \
     apt-get install -y --force-yes php7.0-curl && \
     apt-get install -y --force-yes php7.0-mbstring && \
+    apt-get install -y --force-yes php7.0-intl && \
     apt-get install -y --force-yes php7.0-dom && \
     apt-get install -y --force-yes git && \
     a2enmod rewrite && \
@@ -38,14 +44,15 @@ ADD composer.lock /var/www/composer.lock
 ADD docker/config/parameters.yml /var/www/app/config/parameters.yml
 
 # install enhavo
-RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
-  sleep 5 && \
-  mysql -u root -e "CREATE DATABASE enhavo" && \
-  cd /var/www/ && \
-  composer install --no-interaction && \
-  app/console doctrine:schema:update --force && \
-  app/console enhavo:install:fixtures && \
-  app/console fos:user:create admin info@localhost.com admin --super-admin
+RUN mkdir -p /var/run/mysqld && \
+    chown mysql:mysql /var/run/mysqld && \
+    /bin/bash -c "/usr/bin/mysqld_safe &" && \
+    sleep 5 && \
+    mysql -u root -proot -e "CREATE DATABASE enhavo" && \
+    cd /var/www/ && \
+    composer install --no-interaction && \
+    app/console enhavo:install --user=admin --password=admin --email=admin@enhavo.com --no-bundle --no-interaction && \
+    app/console enhavo:install:fixtures
 
 # user rights
 RUN usermod -u 1000 www-data && \
