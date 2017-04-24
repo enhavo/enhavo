@@ -36,6 +36,15 @@ class BaseViewer extends AbstractViewer
         return array_merge($javascripts, $this->optionAccessor->get('javascripts'));
     }
 
+    /**
+     * @return string[]
+     */
+    public function getApps()
+    {
+        $apps = $this->container->getParameter('enhavo_app.apps');
+        return array_merge($apps, $this->optionAccessor->get('apps'));
+    }
+
     public function getApp()
     {
         return $this->optionAccessor->get('app');
@@ -48,6 +57,7 @@ class BaseViewer extends AbstractViewer
         $view->setTemplateData(array_merge($view->getTemplateData(), [
             'javascripts' => $this->getJavascripts(),
             'stylesheets' => $this->getStylesheets(),
+            'requireJsApps' => $this->getApps(),
             'requireJsApp' => $this->getApp()
         ]));
         return $view;
@@ -59,6 +69,7 @@ class BaseViewer extends AbstractViewer
         $optionsAccessor->setDefaults([
             'javascripts' => [],
             'stylesheets' => [],
+            'apps' => [],
             'app' => null
         ]);
     }

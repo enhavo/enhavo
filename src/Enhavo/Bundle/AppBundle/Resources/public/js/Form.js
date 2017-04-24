@@ -177,12 +177,15 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       };
 
       var initAddButton = function (list) {
-        list.parents('[data-formwidget-container]').find('[data-add-button]').click(function (e) {
+        list.parents('[data-formwidget-container]').first().children('[data-add-button]').click(function (e) {
           e.preventDefault();
 
+          var $formWidget = $(this).parents('[data-formwidget-container]').first();
+          var $listContainer = $formWidget.children('[data-list-container]');
+
           // grab the prototype template
-          var item = list.attr('data-prototype');
-          var prototype_name = list.attr('data-prototype-name');
+          var item = $listContainer.attr('data-prototype');
+          var prototype_name = $listContainer.attr('data-prototype-name');
 
           // Generate unique placeholder for reindexing service
           var placeholder = '__name' + placeholderIndex + '__';
@@ -195,7 +198,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
           // Initialize sub-elements for reindexing
           self.initReindexableItem(item, placeholder);
 
-          list.append(item);
+          $listContainer.append(item);
           initItem(item);
           $(document).trigger('formListAddItem', item);
           setOrderForContainer(list);
@@ -272,7 +275,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       };
 
       (function (form) {
-        $(form).find('.enhavo_list').each(function () {
+        $(form).find('[data-list-container]').each(function () {
           var list = $(this);
 
           if (typeof list.attr('data-reindexable') != 'undefined') {

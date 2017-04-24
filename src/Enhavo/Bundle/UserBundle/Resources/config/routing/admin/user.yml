@@ -89,8 +89,6 @@ enhavo_user_user_batch:
             batches:
                 delete:
                     type: delete
-                publish:
-                    type: publish
 
 enhavo_user_user_reset_password:
     options:

@@ -5,6 +5,8 @@ twig:
 
 enhavo_translation:
     default_locale: '%locale%'
+    locales:
+        en:
 
 enhavo_assets:
     require_js:

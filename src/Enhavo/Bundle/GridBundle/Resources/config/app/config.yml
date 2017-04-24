@@ -14,6 +14,8 @@ doctrine:
 enhavo_app:
     stylesheets:
       - '@EnhavoGridBundle/Resources/public/css/style.css'
+    apps:
+      - 'grid/ContentForm'
 
 enhavo_assets:
     require_js:
