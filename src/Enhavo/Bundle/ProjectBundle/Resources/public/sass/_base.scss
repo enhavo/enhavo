@@ -21,17 +21,13 @@ body {
   width: $containerWidth;padding: 60px $columnSpacing;
   &.npb { padding-bottom:0;}
   &.npt { padding-top:0;}
+  &.article-container {position:relative;}
 }
 
 a {@include transition(all .3s ease-in-out);
   &:hover {@include transition(all .3s ease-in-out); text-decoration:none;}
   &:focus { text-decoration:none;}
 }
-
-h1 {font-size:$firstHeadingFontSize; font-family:$lightFontFamily;}
-h2 {font-size:$secondHeadingFontSize; font-family:$lightFontFamily; padding-bottom:40px;line-height:$smallLineHeight;}
-h3 {font-size:$thirdHeadingFontSize; font-family:$lightFontFamily;}
-h4 { letter-spacing:$defaultLetterSpacing; text-transform:uppercase; font-family:$capitalFontBold;}
 
 h1, h2, h3, h4, p, a {
   line-height:$defaultLineHeight;
@@ -41,6 +37,11 @@ h1, h2, h3, h4, p, a {
   }
   &.cat { font-size:$smallFontSize;}
 }
+
+h1 {font-size:$firstHeadingFontSize; font-family:$lightFontFamily;}
+h2 {font-size:$secondHeadingFontSize; font-family:$lightFontFamily; padding-bottom:40px;line-height:$smallLineHeight;}
+h3 {font-size:$thirdHeadingFontSize; font-family:$lightFontFamily;}
+h4 { letter-spacing:$defaultLetterSpacing; text-transform:uppercase; font-family:$capitalFontBold;}
 
 img{ width:100%; min-width:100%;}
 
@@ -52,10 +53,10 @@ section {
 .npam {padding:0; margin:0;}
 
 nav {
-  width:100%;background:#FFF;height:auto;border-bottom:1px solid $lighter;
+  width:100%;background:#FFF;height:auto;border-bottom:1px solid $lighter; position:relative;
   .menu-btn { width:100px; padding:18px 40px; background:#FFF; display:none;}
   ul {
-    padding-left:440px;
+    .nav-container { display:block; margin:0 auto; padding:0 $columnSpacing; position:relative;}
     li{
       float:left;
       a {
@@ -64,11 +65,43 @@ nav {
       }
     }
   }
+  .shopping-cart{
+    position:absolute; top:35px; right:75px; color:$light;@include transition(all .2s);
+    i { font-size:$bigFontSize;}
+    .indicator {border-radius:35px; display:inline-block; font-size:$smallFontSize; font-family:$capitalFontBold; background:$blueberry;color:#FFF; text-align:center; position:absolute; top:-15px; right:-10px; width:20px; height:20px;@include transition(all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275));line-height: 1.1em;}
+    &:hover {
+      color:$mediumlight;@include transition(all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+      .indicator { margin-top:-5px;@include transition(all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275));}
+    }
+  }
+  .search-widget {
+    position:absolute; right:125px; top:17px;
+    input {
+      background:$lighter;border-radius:35px; border:0; padding:15px; display:inline-block; width:50px; height:50px;@include transition(all .3s cubic-bezier(0.77, 0, 0.175, 1)); padding: 8px 25px 8px 25px;
+      &::-webkit-input-placeholder { opacity:0;}
+      &:-moz-placeholder { opacity:0;}
+      &::-moz-placeholder { opacity:0;}
+      &:-ms-input-placeholder { opacity:0;}
+      &:focus {
+        width:250px;border-radius:35px;@include transition(all .3s cubic-bezier(0.77, 0, 0.175, 1));outline:0; padding-right:45px;
+        + button {
+          i { color:$aubergine;@include transition(all .3s);}
+        }
+      }
+    }
+    button {
+      position:absolute; background:none; border:0;right: 5px;top: 13px;pointer-events:none;
+      i { color:#FFF;@include transition(all .3s);}
+    }
+    + li {
+      a { padding-left:0;}
+    }
+  }
 }
 
 .page-wrap {
-  position:relative;width:100%;height:auto;min-height:930px;padding-top:160px;
-  section{width:calc(100% - 400px); float:left; height:auto;}
+  position:relative;width:100%;height:auto;min-height:930px;padding-top:90px;
+  section{width:100%; float:left; height:auto;}
   #categories {
     .category {
       .cat-image {height:250px;}
@@ -92,9 +125,8 @@ main, header, footer {
 :-ms-input-placeholder {color:$light; text-transform:uppercase; letter-spacing:$smallLetterSpacing; font-family:$capitalFontLightItalic;}
 
 aside {
-  width:400px; right:0; top:0;position:absolute; height:auto;min-height:100%; background:#FFF;border-bottom:1px solid $lighter;
-  @include box-shadow(inset 6px 0 0 $light);
-  .fade-out-widgets {position:absolute;bottom:-1px;width: 100%;pointer-events: none;right: 0;height: 400px;@include background-image(linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 63%,rgba(255,255,255,1) 100%)); display:none;}
+  width:350px; right:0; top:0;position:absolute; height:auto;min-height:100%; background:#FFF;border-bottom:1px solid $lighter;
+  //.fade-out-widgets {position:absolute;bottom:-1px;width: 100%;pointer-events: none;right: 0;height: 400px;@include background-image(linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 63%,rgba(255,255,255,1) 100%)); display:none;}
   .widget-area {
     &.sticky { position:fixed; top:0; width:100%;height: 100%;overflow: auto; padding-bottom:150px;}
   }
@@ -116,12 +148,12 @@ aside {
       i { @include transition(all .3s);position:absolute; left:50%; top:50%;@include transform(translateX(-50%) translateY(-50%));color:$dark;}
     }
   }
-  h3 { padding: 0 30px;border-left:6px solid $light; padding-top:50px;}
-  p { padding: 30px;border-left:6px solid $light;}
+  h3 { padding: 0 30px;padding-top:50px;}
+  p { padding: 30px;}
   .columns {
-    padding:30px 0 0 0;border-left:6px solid $light;
+    padding:30px 0 0 0;
     li{
-      padding:15px 30px; border-bottom:1px solid $lighter;
+      padding:15px 30px;
       a{
         color:$dark;
         &:hover{color:$blueberry;}
@@ -132,7 +164,7 @@ aside {
 
 footer {
   background:$night; width:100%;color:$mediumlight; position:relative; z-index:1;
-  h4{ padding-bottom:50px;}
+  h4{ padding-bottom:35px;}
   .approach {
     border-top:10px solid $citrus; padding-top:90px;
     ul {
@@ -150,7 +182,7 @@ footer {
     border-top:10px solid $aubergine; padding-top:90px;
     .social-icons {
       li {
-        width:33.33333%; float:left; position:relative; height:0; padding-bottom:33.33333%;
+        width:16.666%; float:left; position:relative; height:0; padding-bottom:16.666%;
         a {
           position:absolute; top:0;left:0;border-left:1px solid $night;border-bottom:1px solid $night; overflow:hidden;
           width:100%; height:100%; display:block;background:$dark;
@@ -165,16 +197,32 @@ footer {
     }
   }
   .bottom-bar {
-    display:inline-block; width:100%;background:$dark; padding:24px $columnSpacing;color:black; margin-top:50px;
+    display:inline-block; width:100%;background:$dark; padding:24px $columnSpacing;color:$mediumlight;margin-top:50px; font-family:$capitalFontBold;
     .links {
       float:right; display:inline-block;
       a {
-        color:black; font-size:$smallFontSize; text-transform:uppercase; letter-spacing:$defaultLetterSpacing; display:inline-block;
+        color:$mediumlight; font-size:$smallFontSize; text-transform:uppercase; letter-spacing:$defaultLetterSpacing; display:inline-block;
         &:first-child{ padding-right:7px;}
         &:last-child{ padding-left:14px;border-left:1px solid #000}
         &:hover {color:$citrus;}
       }
     }
     p {display:inline-block;font-size:$smallFontSize; float:left; text-transform:uppercase; letter-spacing:$defaultLetterSpacing;}
+  }
+}
+
+.switch-language {
+  position:absolute; right: $columnSpacing; top:110px;
+  li {
+    float:left;padding:6px 0; text-align:center;  font-size:$smallFontSize; letter-spacing:$defaultLetterSpacing; width:34px; height:34px;border:2px solid #FFF;@include transition(all .2s);
+    &.de {margin-right:7px;}
+    &.active, &:hover {
+      background:#FFF;@include transition(all .2s);
+      a {color:$dark;}
+    }
+    a {
+      color:#FFF;font-family:$capitalFontBold;
+      &:hover { color:$blueberry;}
+    }
   }
 }

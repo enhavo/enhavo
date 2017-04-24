@@ -46,6 +46,9 @@ module.exports = function(grunt) {
             },{
               sassDir: 'src/Enhavo/Bundle/MediaBundle/Resources/public/sass',
               cssDir: 'src/Enhavo/Bundle/MediaBundle/Resources/public/css'
+            },{
+              sassDir: 'src/Enhavo/Bundle/ProjectBundle/Resources/public/sass',
+              cssDir: 'src/Enhavo/Bundle/ProjectBundle/Resources/public/css'
             }
           ]
         }
