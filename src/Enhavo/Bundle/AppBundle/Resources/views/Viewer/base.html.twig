@@ -13,6 +13,13 @@
             require(['{{ requireJsApp }}'], function(app) {});
         </script>
     {% endif %}
+
+    {% for requireJsApp in requireJsApps %}
+        <script type="text/javascript">
+            require(['{{ requireJsApp }}'], function(app) {});
+        </script>
+    {% endfor %}
+
 {% endblock %}
 
 

@@ -90,5 +90,3 @@ enhavo_user_group_batch:
             batches:
                 delete:
                     type: delete
-                publish:
-                    type: publish

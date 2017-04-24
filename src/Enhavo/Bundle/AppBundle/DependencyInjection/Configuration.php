@@ -60,6 +60,12 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('apps')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+
+            ->children()
                 ->variableNode('menu')->end()
             ->end()
 

@@ -15,9 +15,9 @@
 {% block choice_widget_expanded %}
     <div class="choice-input-container" {{ block('widget_container_attributes') }}>
         {%- for child in form %}
-        <span class="choice-input-with-label">
+            <span class="choice-input-with-label">
             {{- form_widget(child) -}}
-            {{- form_label(child) -}}
+                {{- form_label(child) -}}
         </span>
         {% endfor -%}
     </div>
@@ -45,13 +45,13 @@
 {% endblock %}
 
 {% block text_integer %}
-   <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
 {% endblock %}
 
 {% block textarea_widget %}
-  <div class="input-container">
-    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-  </div>
+    <div class="input-container">
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
 {% endblock %}
 
 {% block password_widget %}
@@ -73,10 +73,11 @@
 {% block enhavo_list_widget %}
     {% import _self as forms %}
     <ul
-        {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
-        data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
-        data-prototype-name="{{ prototype_name }}"
-        class="list-fields enhavo_list
+            data-list-container
+            {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
+            data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
+            data-prototype-name="{{ prototype_name }}"
+            class="list-fields enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
         {% elseif sortable and allow_delete and not border %}
@@ -92,7 +93,7 @@
         {% elseif sortable and border and not allow_delete %}
             sortable-border
         {% endif %}"
-        data-reindexable>
+            data-reindexable>
         {% for item in form.children %}
             {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
         {% endfor %}

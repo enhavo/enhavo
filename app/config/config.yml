@@ -21,7 +21,6 @@ imports:
     - { resource: '@EnhavoSettingBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoThemeBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoUserBundle/Resources/config/app/config.yml' }
