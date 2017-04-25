@@ -27,7 +27,7 @@
     .slide-link{display: block; width: 100%;  height: 100%;}
   }
   #secondary {
-    width:calc(((100vw - 1360px) / 2));float:left;height:100%;position:absolute;left:0;padding:110px 70px;background:rgba(255, 255, 255, .3);
+    width:calc(((100vw - 1360px) / 2));float:left;height:100%;position:absolute;left:0;padding:110px 70px;background:rgba(255, 255, 255, .3); min-width:320px;
     .logo {width:175px;height:175px;background:url(../img/acme_logo.svg) no-repeat top left; -webkit-background-size:100%; background-size:100%; margin:0 auto;}
     .socialmedia {
       position:absolute; bottom: 165px; left:75px;
@@ -144,11 +144,10 @@
 }
 
 #categories {
-  border-top:6px solid $light; position:relative; z-index:2;
+  position:relative; z-index:2;
   &.related { background:$night; border-top:0;color:#FFF}
   .category {
-    position:relative;
-    background:#FFF;
+    position:relative;background:#FFF;
     &:nth-child(2) {background:$softwhite;}
     a{ display:block;color:$aubergine;}
     color:$night;

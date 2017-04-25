@@ -1,8 +1,10 @@
 @media all and (max-width:1350px) {
   h1 {font-size: 67px;}
-  aside {width: 320px;}
   nav {
-    ul {padding-left: 360px;}
+    ul {
+      .nav-container { padding-left:$smallerColumnSpacing; padding-right:$smallerColumnSpacing;}
+    }
+    .search-widget { right:90px;}
   }
 }
 
@@ -50,11 +52,21 @@
   }
   nav {
     ul {
-      padding-left:$smallerColumnSpacing;
       li {
         &:first-child {
           a { padding-left:0;}
         }
+      }
+    }
+  }
+}
+
+@media all and (max-width:991px) {
+  .payment-services { padding-bottom:$smallerColumnSpacing;}
+  footer {
+    .socialmedia {
+      .social-icons {
+        li { width:16.666%; padding-bottom:16.666%;}
       }
     }
   }
@@ -76,11 +88,18 @@
   }
   h2 { font-size:40px;padding-bottom: 20px;}
   footer {
-    .socialmedia {padding-bottom:40px;border-top-width:6px;}
+    .socialmedia {
+      border-top-width:6px; padding-left:0; padding-right:0;
+      h4, p { padding-left:$smallerColumnSpacing;padding-right:$smallerColumnSpacing;}
+      .social-icons {
+        padding-left:$smallerColumnSpacing;padding-right:$smallerColumnSpacing;
+        li { width:16.66666%; padding-bottom:16.66666%;}
+      }
+    }
     .approach {padding-bottom:40px;border-top-width:6px;}
     .about {padding-bottom:40px;border-top-width:6px;}
     h4 { padding-bottom:20px;}
-    .socialmedia .social-icons li {width: 16.66666%;padding-bottom: 16.66666%;}
+    .bottom-bar { margin-top:1px;}
   }
   nav {
     .menu-btn {display:block;}
@@ -97,7 +116,23 @@
           a { padding-left:$smallerColumnSpacing;}
         }
       }
+      .nav-container { padding-left:0; padding-right:0;}
     }
+    .search-widget{
+      top:-48px; right:80px;
+      + li {
+        a { padding-left:$smallerColumnSpacing;}
+      }
+      input {
+        padding: 8px 20px 8px 20px; width:40px; height:40px;
+        &:focus { width:150px;}
+      }
+      button {right: 1px;top: 8px;}
+    }
+    .shopping-cart {top: -35px;}
+  }
+  #contact {
+    form {height:285px;}
   }
 }
 
