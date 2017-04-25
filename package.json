@@ -1,10 +1,11 @@
 {
   "name": "enhavo",
-  "dependencies": {
-    "grunt": "^1.0.1",
-    "grunt-compass-multiple": "^0.2.1",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-exec": "^1.0.0"
-  },
-  "license": "MIT"
+  "dependencies": {},
+  "license": "MIT",
+  "devDependencies": {
+    "compass-importer": "^0.4.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.6.3"
+  }
 }
