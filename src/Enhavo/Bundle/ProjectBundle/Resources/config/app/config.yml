@@ -79,3 +79,9 @@ enhavo_contact:
             recipient: '%mailer_to%'
             from: '%mailer_from%'
             sender_name: '%mailer_name%'
+
+enhavo_newsletter:
+    forms:
+        default:
+            type: enhavo_newsletter_subscribe
+            template: EnhavoProjectBundle:Theme/Newsletter:subscribe.html.twig

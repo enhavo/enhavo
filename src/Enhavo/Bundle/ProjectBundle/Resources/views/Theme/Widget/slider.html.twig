@@ -1,20 +1,38 @@
-{% use 'EnhavoSliderBundle:Widget:slider.html.twig' %}
 {% if slides %}
-<div id="hero">
-    {{ block('slider') }}
-    <div class="container npam">
-        <div id="secondary">
-            <div class="logo"></div>
-            <ul class="socialmedia">
-                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                <li><a href="#"><i class="icon-pinterest"></i></a></li>
+    <div id="hero">
+        <ul class="slider">
+            {% for slide in slides %}
+                {% if slide.image %}
+                    <li class="slider-img" style="background-image:url({{ media_url(slide.image) }}); background-size:cover; background-attachment: fixed;">
+                        {% if slide.url is not null %}
+                        <a href="{{ slide.url|url_beautifier }}" class="slide-link">
+                            {% endif %}
+                            <span class="container hero-container">
+                        <span class="hero-caption" href="">
+                            <p class="slide-text">{{ slide.text|raw }}</p>
+                            <h1 class="slide-title">{{ slide.title }}</h1>
+                        </span>
+                    </span>
+                            {% if slide.url is not null %}
+                        </a>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="container npam">
+            <div id="secondary">
+                <div class="logo"></div>
+                <ul class="socialmedia">
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-pinterest"></i></a></li>
+                </ul>
+            </div>
+            <ul class="switch-language clearfix">
+                <li class="de active"><a href="">DE</a></li>
+                <li class="en"><a href="">EN</a></li>
             </ul>
         </div>
-        <ul class="switch-language clearfix">
-            <li class="de active"><a href="">DE</a></li>
-            <li class="en"><a href="">EN</a></li>
-        </ul>
     </div>
-</div>
 {% endif %}

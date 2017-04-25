@@ -1,4 +1,4 @@
-enhavo_project_hompage_index:
+enhavo_project_hompage_redirect:
     path: /
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
