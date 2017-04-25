@@ -6,9 +6,11 @@
                 {% if slide.url is not null %}
                     <a href="{{ slide.url|url_beautifier }}" class="slide-link">
                 {% endif %}
-                <span class="hero-caption" href="">
-                    <p class="slide-text">{{ slide.text|raw }}</p>
-                    <h1 class="slide-title">{{ slide.title }}</h1>
+                <span class="container hero-container">
+                    <span class="hero-caption" href="">
+                        <p class="slide-text">{{ slide.text|raw }}</p>
+                        <h1 class="slide-title">{{ slide.title }}</h1>
+                    </span>
                 </span>
                 {% if slide.url is not null %}
                     </a>

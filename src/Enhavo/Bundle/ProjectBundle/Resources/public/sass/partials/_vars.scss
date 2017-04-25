@@ -1,5 +1,5 @@
 // Dimensions
-$containerWidth:100%;
+$containerWidth:1360px;
 $columnSpacing:75px;
 $smallerColumnSpacing:40px;
 
@@ -23,7 +23,7 @@ $bigLineHeight: 1.45em;
 $defaultLineHeight: 1.35;
 $lines-to-show: 3;
 $less-lines-to-show: 2;
-$smallLineHeight: 1.15em;
+$smallLineHeight: 1.05em;
 $defaultLetterSpacing: 2px;
 $smallLetterSpacing: 1px;
 
@@ -41,3 +41,13 @@ $smallLetterSpacing: 1px;
   $citrus: #ffec48;
   $aubergine: #2a465b;
   $blueberry: #5c91be;
+
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+}

@@ -8,45 +8,31 @@
 {% block main %}
     <div class="clearfix page-wrap">
         <section id="article-feed">
+            <div class="white-bg"></div>
             <div class="articles" data-article-container>
                 <div class="container">
                     <h2>ACME Online</h2>
                     <p class="capitals spacing cat" data-article-section-subline>recent articles</p>
                 </div>
-
-                <div class="mobile-app">
-                    <div class="speechbubble">
-                        <p>New! <br/>Available <br/>as app</p>
+                <div class="container article-container">
+                    <div class="mobile-app">
+                        <div class="speechbubble">
+                            <p>New! <br/>Available <br/>as app</p>
+                        </div>
+                        <img src="/bundles/enhavoproject/img/ipad.png" alt=""/>
                     </div>
-                    <img src="/bundles/enhavoproject/img/ipad.png" alt=""/>
-                </div>
-                <div class="container npam">
-                    {% for article in articles %}
-                        <article class="clearfix" data-article-item>
-                            <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
-                                {% if article.picture %}
-                                    <span class="article-photo">
-                                        <img src="{{ media_url(article.picture, 'articleThumbnail') }}" alt=""/>
-                                    </span>
-                                    {% else %}
-                                    <span class="article-photo">
-                                        <img src="{{ asset('/bundles/enhavoproject/img/default-article-picture.jpg') }}" alt=""/>
-                                    </span>
-                                {% endif %}
-                                <span class="article-content">
-                                    <h3 class="title">{{ article.title }}</h3>
-                                    {% for category in article.categories %}
-                                    <p class="category capitals">{{ category }}</p>
-                                    {% endfor %}
-                                    <p class="desc">{{ article.teaser }}</p>
-                                    <span href="" class="capitals readmore-link">...more</span>
-                                    <p class="date">{{ article.publicationDate|date('m d Y') }}</p>
-                                </span>
-                            </a>
-                            <span class="readmore-btn" data-tablet-btn></span>
-                        </article>
-                    {% endfor %}
-
+                    <div class="articles-head" data-toggle-dropdown>
+                        <div class="category capitals"><span data-current-category>All</span> <i class="icon-chevron-thin-down"></i></div>
+                        <ul class="dropdown" data-dropdown>
+                            <li><a href="" data-category="0">All</a></li>
+                            {% for category in categories %}
+                                <li><a href="" data-category="{{ category.id }}">{{ category }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="articles" data-article-stream>
+                        {% include 'EnhavoProjectBundle:Theme:Homepage/articles.html.twig' %}
+                    </div>
                     <div class="load-articles">
                         <a href="#" class="capitals" data-more-articles>
                             Load more articles <br/>
@@ -56,7 +42,7 @@
                 </div>
             </div>
         </section>
-        {{ theme_box_render('sidebar') }}
+        {#{{ theme_box_render('sidebar') }}#}
     </div>
 
     <section id="image-text">
@@ -77,28 +63,26 @@
     </section>
 
     <section id="categories" class="clearfix">
-        <div class="container npam">
-            <div class="row npam">
-                {% for category in categories|slice(0, 3) %}
-                <div class="{% if categories|length == 2 %}col-md-6{% endif %}{% if categories|length > 2 %}col-md-4{% endif %} col-sm-6 col-xs-12 npam category" data-category-item>
-                    <a href="">
-                        <span class="cat-image">
-                            <span class="over">
-                                <p class="capitals cat-name">{{ category }}</p>
-                            </span>
-                            {% if category.picture %}
-                                <img src="{{ media_url(category.picture) }}" alt=""/>
-                                {% else %}
-                                <img src="/bundles/enhavoproject/img/default-category-picture.jpg" alt=""/>
-                            {% endif %}
+        <div class="row npam">
+            {% for category in categories|slice(0, 3) %}
+            <div class="{% if categories|length == 2 %}col-md-6{% endif %}{% if categories|length > 2 %}col-md-4{% endif %} col-sm-6 col-xs-12 npam category" data-category-item>
+                <a href="">
+                    <span class="cat-image">
+                        <span class="over">
+                            <p class="capitals cat-name">{{ category }}</p>
                         </span>
-                        <span class="text-bottom">
-                            <p class="article-excerpt">{{ category.text|raw }}<span class="readmore-link capitals" href="">view articles</span></p>
-                        </span>
-                    </a>
-                </div>
-                {% endfor %}
+                        {% if category.picture %}
+                            <img src="{{ media_url(category.picture) }}" alt=""/>
+                            {% else %}
+                            <img src="/bundles/enhavoproject/img/default-category-picture.jpg" alt=""/>
+                        {% endif %}
+                    </span>
+                    <span class="text-bottom">
+                        <p class="article-excerpt">{{ category.text|raw }}<span class="readmore-link capitals" href="">view articles</span></p>
+                    </span>
+                </a>
             </div>
+            {% endfor %}
         </div>
     </section>
 

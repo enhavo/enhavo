@@ -33,4 +33,35 @@ class HomepageController extends Controller
             'categories' => $setCategories
         ]);
     }
+
+    public function filterArticlesAction($id)
+    {
+        $articles = $this->get('enhavo_article.repository.article')->findPublished();
+
+        $filteredArticles = [];
+
+        foreach ($articles as $article) {
+            if($id == '0') {
+                $filteredArticles[] = $article;
+                continue;
+            }
+
+            // get category of article with a function defined in the article entity
+            $categories = $article->getCategories();
+            // convert variable into array
+            $categories = $categories->toArray();
+
+            foreach($categories as $category) {
+                if($category->getId() == $id) {
+                    $filteredArticles[] = $article;
+                    continue;
+                }
+            }
+        }
+
+        return $this->render('EnhavoProjectBundle:Theme:Homepage/articles.html.twig', [
+            'articles' => $filteredArticles
+        ]);
+    }
+
 }
