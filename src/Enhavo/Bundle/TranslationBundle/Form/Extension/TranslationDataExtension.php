@@ -59,7 +59,18 @@ class TranslationDataExtension extends AbstractTypeExtension
 
             $accessor = PropertyAccess::createPropertyAccessor();
             foreach($metadata->getProperties() as $property) {
+
                 if(!$form->has($property->getName()) && !$form->has($property->getUnderscoreName())) {
+                    continue;
+                }
+                
+                if($form->has($property->getName()) &&
+                    $form->get($property->getName())->getConfig()->getOption('translation') === false) {
+                    continue;
+                }
+
+                if($form->has($property->getUnderscoreName()) &&
+                    $form->get($property->getUnderscoreName())->getConfig()->getOption('translation') === false) {
                     continue;
                 }
 

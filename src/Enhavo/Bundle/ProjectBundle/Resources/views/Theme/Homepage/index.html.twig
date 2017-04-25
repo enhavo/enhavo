@@ -42,14 +42,13 @@
                 </div>
             </div>
         </section>
-        {#{{ theme_box_render('sidebar') }}#}
     </div>
 
     <section id="image-text">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 image">
-                    <img src="/bundles/enhavoproject/img/magazine.png" alt=""/>
+                    <img src="{{ asset('/bundles/enhavoproject/img/magazine.png') }}" alt=""/>
                     <div class="stoerer">
                         <p>Our <br/>new <br/>edition</p>
                     </div>
@@ -74,7 +73,7 @@
                         {% if category.picture %}
                             <img src="{{ media_url(category.picture) }}" alt=""/>
                             {% else %}
-                            <img src="/bundles/enhavoproject/img/default-category-picture.jpg" alt=""/>
+                            <img src="{{ asset('/bundles/enhavoproject/img/default-category-picture.jpg') }}" alt=""/>
                         {% endif %}
                     </span>
                     <span class="text-bottom">
