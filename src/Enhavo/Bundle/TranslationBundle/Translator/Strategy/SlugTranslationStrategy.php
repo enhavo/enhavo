@@ -14,6 +14,7 @@ use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
+use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class SlugTranslationStrategy extends TranslationTableStrategy
@@ -28,9 +29,9 @@ class SlugTranslationStrategy extends TranslationTableStrategy
      */
     protected $updateSlugMap = [];
 
-    public function __construct($locales, $defaultLocale, EntityManagerInterface $em, $routeGuesser)
+    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em, $routeGuesser)
     {
-        parent::__construct($locales, $defaultLocale, $em);
+        parent::__construct($locales, $localeResolver, $em);
         $this->routeGuesser = $routeGuesser;
     }
 

@@ -17,4 +17,5 @@ class ResourceEvents
     const POST_UPDATE = 'enhavo_app.post_update';
     const PRE_DELETE = 'enhavo_app.pre_delete';
     const POST_DELETE = 'enhavo_app.post_delete';
+    const INIT_PREVIEW = 'enhavo_app.init_preview';
 }
