@@ -32,8 +32,6 @@ RUN add-apt-repository -y ppa:ondrej/php && \
 COPY docker/etc/my_init.d/01_apache2.bash /etc/my_init.d/01_apache2.bash
 COPY docker/etc/my_init.d/02_mysql.bash /etc/my_init.d/02_mysql.bash
 COPY docker/etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
-RUN chmod 755 /etc/my_init.d/01_apache2.bash
-RUN chmod 755 /etc/my_init.d/02_mysql.bash
 
 # add source files
 ADD app /var/www/app
@@ -51,11 +49,11 @@ RUN mkdir -p /var/run/mysqld && \
     mysql -u root -proot -e "CREATE DATABASE enhavo" && \
     cd /var/www/ && \
     composer install --no-interaction && \
+    app/console enhavo:install:fixtures && \
     app/console enhavo:install --user=admin --password=admin --email=admin@enhavo.com --no-bundle --no-interaction && \
-    app/console enhavo:install:fixtures
-
-# user rights
-RUN usermod -u 1000 www-data && \
+    chmod 755 /etc/my_init.d/01_apache2.bash && \
+    chmod 755 /etc/my_init.d/02_mysql.bash && \
+    usermod -u 1000 www-data && \
     cd /var/www/ && \
     chown www-data:www-data -R app/cache && \
     chmod 755 app/cache && \

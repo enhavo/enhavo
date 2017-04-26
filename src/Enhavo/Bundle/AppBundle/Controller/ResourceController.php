@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
-use Enhavo\Bundle\AppBundle\Event\PreviewEvent;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -206,9 +205,11 @@ class ResourceController extends BaseController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
-        
-        $this->get('event_dispatcher')->dispatch(ResourceEvents::INIT_PREVIEW, new PreviewEvent($request, $configuration));
-        
+
+        if($this->eventDispatcher instanceof EventDispatcher) {
+            $this->eventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
+        }
+
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
         $form = $this->resourceFormFactory->create($configuration, $newResource);
 
