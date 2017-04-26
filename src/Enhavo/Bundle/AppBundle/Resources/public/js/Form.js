@@ -177,10 +177,10 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       };
 
       var initAddButton = function (list) {
-        list.parents('[data-formwidget-container]').first().children('[data-add-button]').click(function (e) {
+        list.parents('[data-list-container]').first().children('[data-add-button]').click(function (e) {
           e.preventDefault();
 
-          var $formWidget = $(this).parents('[data-formwidget-container]').first();
+          var $formWidget = $(this).parents('[data-list-container]').first();
           var $listContainer = $formWidget.children('[data-list-container]');
 
           // grab the prototype template

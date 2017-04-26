@@ -72,12 +72,13 @@
 
 {% block enhavo_list_widget %}
     {% import _self as forms %}
-    <ul
-            data-list-container
-            {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
-            data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
-            data-prototype-name="{{ prototype_name }}"
-            class="list-fields enhavo_list
+    <div data-list-container>
+        <ul
+                data-list-container
+                {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
+                data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
+                data-prototype-name="{{ prototype_name }}"
+                class="list-fields enhavo_list
         {% if border and sortable and allow_delete %}
             sortable-border-delete
         {% elseif sortable and allow_delete and not border %}
@@ -93,17 +94,18 @@
         {% elseif sortable and border and not allow_delete %}
             sortable-border
         {% endif %}"
-            data-reindexable>
-        {% for item in form.children %}
-            {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
-        {% endfor %}
-    </ul>
+                data-reindexable>
+            {% for item in form.children %}
+                {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
+            {% endfor %}
+        </ul>
 
-    {% if allow_add %}
-        <div class="btnsmall" data-add-button>
-            <i class="icon-circle-with-plus"></i>
-        </div>
-    {% endif %}
+        {% if allow_add %}
+            <div class="btnsmall" data-add-button>
+                <i class="icon-circle-with-plus"></i>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
