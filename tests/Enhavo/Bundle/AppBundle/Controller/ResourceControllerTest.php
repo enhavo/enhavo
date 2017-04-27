@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -180,6 +181,13 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         return $mock;
     }
 
+    private function getSymfonyEventDispatcherMock()
+    {
+        $mock = $this->getMockBuilder(EventDispatcher::class)->getMock();
+        return $mock;
+    }
+
+
     protected function createResourceController()
     {
         $metadata = $this->getMetadataMock();
@@ -200,6 +208,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $viewerFactory = $this->getViewerFactoryMock();
         $sortingManager = $this->getSortingManagerMock();
         $batchManager = $this->getBatchManagerMock();
+        $symfonyEventDispatcher = $this->getSymfonyEventDispatcherMock();
 
         $controller = new ResourceController(
             $metadata,
@@ -219,7 +228,8 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
             $stateMachine,
             $viewerFactory,
             $sortingManager,
-            $batchManager
+            $batchManager,
+            $symfonyEventDispatcher
         );
 
         return $controller;

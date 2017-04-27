@@ -15,7 +15,7 @@ use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
@@ -31,9 +31,9 @@ class RouteTranslationStrategy extends TranslationTableStrategy
      */
     protected $updateRouteMap = [];
 
-    public function __construct($locales, $defaultLocale, EntityManagerInterface $em, $routeGuesser)
+    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em, $routeGuesser)
     {
-        parent::__construct($locales, $defaultLocale, $em);
+        parent::__construct($locales, $localeResolver, $em);
         $this->routeGuesser = $routeGuesser;
     }
 
@@ -126,7 +126,7 @@ class RouteTranslationStrategy extends TranslationTableStrategy
         ]);
 
         foreach($this->locales as $locale) {
-            if($locale === $this->defaultLocale) {
+            if($locale === $this->localeResolver->getLocale()) {
                 $accessor = PropertyAccess::createPropertyAccessor();
                 $value = $accessor->getValue($entity, $property->getName());
                 $data[$locale] = $value;
@@ -192,15 +192,15 @@ class RouteTranslationStrategy extends TranslationTableStrategy
                 }
 
                 if(empty($entity->getStaticPrefix())) {
-                    $slug = Slugifier::slugify($this->getContext($entity->getContent(), $this->defaultLocale));
-                    $path = sprintf('/%s/%s', $this->defaultLocale, $slug);
+                    $slug = Slugifier::slugify($this->getContext($entity->getContent(), $this->localeResolver->getLocale()));
+                    $path = sprintf('/%s/%s', $this->localeResolver->getLocale(), $slug);
                     $entity->setStaticPrefix($path);
                 }
 
-                $shouldStartWith = sprintf('/%s/', $this->defaultLocale);
+                $shouldStartWith = sprintf('/%s/', $this->localeResolver->getLocale());
                 $startWith = substr($entity->getStaticPrefix(), 0 , strlen($shouldStartWith));
                 if($startWith != $shouldStartWith) {
-                    $entity->setStaticPrefix(sprintf('/%s%s', $this->defaultLocale, $entity->getStaticPrefix()));
+                    $entity->setStaticPrefix(sprintf('/%s%s', $this->localeResolver->getLocale(), $entity->getStaticPrefix()));
                 }
             }
         }
@@ -230,5 +230,11 @@ class RouteTranslationStrategy extends TranslationTableStrategy
         }
 
         return $context;
+    }
+
+    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        return $accessor->getValue($entity, $property->getName());
     }
 }

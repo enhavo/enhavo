@@ -1,4 +1,4 @@
-define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, tinymce) {
+define(['jquery', 'app/Admin', 'app/Form', 'tinymce', 'app/Router'], function($, admin, form, tinymce, router) {
   function Translation() {
     var self = this;
     var switchToLocale;
@@ -61,6 +61,12 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce'], function($, admin, form, 
         if(currentLocale) {
           self.switchLanguage(currentLocale);
         }
+      });
+
+      $(document).on('previewOpenBefore', function (event, data) {
+        data.link = router.generate(data.route, {
+          locale: currentLocale
+        });
       });
 
       $(document).on('gridAddAfter', function (event, data) {

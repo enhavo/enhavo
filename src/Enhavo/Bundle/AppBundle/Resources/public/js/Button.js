@@ -131,7 +131,16 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
         e.stopPropagation();
         var route = $(this).data('route');
         var link = router.generate(route);
-        admin.iframeOverlay(form, link, {
+
+        var data = {
+          form: form,
+          route: route,
+          link: link
+        };
+
+        $(document).trigger('previewOpenBefore', data);
+
+        admin.iframeOverlay(data.form, data.link, {
           submit: true
         });
       });

@@ -13,6 +13,7 @@ use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
+use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslationStrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -26,12 +27,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
      * @var Translation[]
      */
     protected $updateRefIds = [];
-
-    /**
-     * @var string
-     */
-    protected $defaultLocale;
-
+    
     /**
      * @var string[]
      */
@@ -43,16 +39,21 @@ class TranslationTableStrategy implements TranslationStrategyInterface
     protected $translationDataMap = [];
 
     /**
+     * @var LocaleResolver
+     */
+    protected $localeResolver;
+
+    /**
      * @var EntityManagerInterface
      */
     protected $em;
 
-    public function __construct($locales, $defaultLocale, EntityManagerInterface $em)
+    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em)
     {
         foreach($locales as $locale => $data) {
             $this->locales[] = $locale;
         }
-        $this->defaultLocale = $defaultLocale;
+        $this->localeResolver = $localeResolver;
         $this->em = $em;
     }
 
@@ -96,7 +97,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
 
         $translationData = [];
         foreach($formData as $locale => $value) {
-            if($locale == $this->defaultLocale) {
+            if($locale == $this->localeResolver->getLocale()) {
                 continue;
             }
             $translationData[$locale] = $value;
@@ -106,7 +107,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
 
     public function normalizeToModelData($entity, Property $property, $formData, Metadata $metadata)
     {
-        return $formData[$this->defaultLocale];
+        return $formData[$this->localeResolver->getLocale()];
     }
 
     public function storeTranslationData($entity, Metadata $metadata)
@@ -178,7 +179,7 @@ class TranslationTableStrategy implements TranslationStrategyInterface
         }
 
         foreach($this->locales as $locale) {
-            if($locale === $this->defaultLocale) {
+            if($locale === $this->localeResolver->getLocale()) {
                 $accessor = PropertyAccess::createPropertyAccessor();
                 $value = $accessor->getValue($entity, $property->getName());
                 $data[$locale] = $value;

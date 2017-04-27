@@ -31,7 +31,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\TranslationTableStrategy
         arguments:
             - '%enhavo_translation.locales%'
-            - '%enhavo_translation.default_locale%'
+            - '@enhavo_translation.locale_resolver'
             - '@doctrine.orm.entity_manager'
         calls:
             - [ setContainer, ['@service_container']]
@@ -40,7 +40,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
         arguments:
             - '%enhavo_translation.locales%'
-            - '%enhavo_translation.default_locale%'
+            - '@enhavo_translation.locale_resolver'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_app.route_guesser'
         calls:
@@ -50,7 +50,7 @@ services:
         class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
         arguments:
             - '%enhavo_translation.locales%'
-            - '%enhavo_translation.default_locale%'
+            - '@enhavo_translation.locale_resolver'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_app.route_guesser'
         calls:
@@ -87,6 +87,13 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
+
+    enhavo_translation.preview_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
+        arguments:
+            - '@enhavo_translation.locale_resolver'
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
 
     enhavo_translation.menu_builder.translation:
         class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenuBuilder
@@ -139,3 +146,4 @@ services:
         class: Enhavo\Bundle\TranslationBundle\TranslationString\TranslateStringTranslator
         arguments:
             - '@enhavo_translation.repository.translation_string'
+
