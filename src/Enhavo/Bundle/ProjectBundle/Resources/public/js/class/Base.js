@@ -375,7 +375,7 @@ function Base() {
 
   this.viewOnTablet = function(){
     $("[data-tablet-btn]").on("click", function(){
-      document.getElementById('ipad-overlay').contentWindow.location.reload();
+      $("[data-tablet-view]").attr("src", window.location.pathname);
       $("#ipad-overlay").fadeIn();
       $("main, header, footer").addClass("blur");
       $("body").addClass("fixed");
