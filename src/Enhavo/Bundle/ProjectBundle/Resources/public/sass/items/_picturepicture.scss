@@ -6,5 +6,11 @@
 }
 
 @media all and (max-width:767px) {
-  .enhavo_grid_picturepicture { padding-bottom:120px;}
+  .enhavo_grid_picturepicture {
+    padding-bottom:120px;
+    [class*=col-sm-] {
+      padding-bottom:45px;
+      &:last-of-type { padding-bottom:0;}
+    }
+  }
 }

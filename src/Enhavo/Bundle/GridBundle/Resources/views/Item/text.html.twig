@@ -1,8 +1,10 @@
-<div class="user-data-container mb3 enhavo_grid_text enhavo_grid container">
-    {% if data.title %}
-        <h2 class="title">{{ data.title|raw }}</h2>
-    {% endif %}
-    {% if data.text %}
-        {{ data.text|raw }}
-    {% endif %}
+<div class="enhavo_grid">
+    <div class="container enhavo_grid_text">
+        {% if data.title %}
+            <h2 class="title">{{ data.title|raw }}</h2>
+        {% endif %}
+        {% if data.text %}
+            {{ data.text|raw }}
+        {% endif %}
+    </div>
 </div>

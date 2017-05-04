@@ -6,7 +6,7 @@
 #article {
   position:relative; padding-bottom:100px;
   .article-head {
-    display:block;
+    display:block; padding-bottom: 30px;
     .article-title { padding-bottom:10px; font-size:$secondHeadingFontSize;}
     .category {
       padding-bottom:20px; font-size:$smallFontSize; display:inline-block;;
@@ -16,7 +16,7 @@
     }
   }
   .enhavo_grid {
-    padding-top:80px;clear:both; min-height: 250px;
+    clear:both;
     .title {
       padding-bottom:30px;font-size:$thirdHeadingFontSize; text-transform:none; letter-spacing:normal; font-family:$lightFontFamily;
       &:before {content:normal; }
@@ -33,7 +33,7 @@
 }
 
 .enhavo_grid_frame {border:6px solid $light;}
-.picture_caption{color:$medium; padding-top:10px; padding-bottom:120px;}
+.picture_caption{color:$medium; padding-top:10px;}
 
 .article-footer {
   background:$softwhite;

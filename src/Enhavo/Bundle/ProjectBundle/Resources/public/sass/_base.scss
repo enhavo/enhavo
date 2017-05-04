@@ -124,44 +124,6 @@ main, header, footer {
 ::-moz-placeholder {color:$light; text-transform:uppercase; letter-spacing:$smallLetterSpacing; font-family:$capitalFontLightItalic;}
 :-ms-input-placeholder {color:$light; text-transform:uppercase; letter-spacing:$smallLetterSpacing; font-family:$capitalFontLightItalic;}
 
-aside {
-  width:350px; right:0; top:0;position:absolute; height:auto;min-height:100%; background:#FFF;border-bottom:1px solid $lighter;
-  //.fade-out-widgets {position:absolute;bottom:-1px;width: 100%;pointer-events: none;right: 0;height: 400px;@include background-image(linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 63%,rgba(255,255,255,1) 100%)); display:none;}
-  .widget-area {
-    &.sticky { position:fixed; top:0; width:100%;height: 100%;overflow: auto; padding-bottom:150px;}
-  }
-  .input {
-    position:relative;border-left:6px solid $night;
-    input {
-      color:$citrus; text-transform:uppercase; letter-spacing:$smallLetterSpacing;font-family:$capitalFontLightItalic;-webkit-appearance:none;border-radius: 0;
-      width:100%; padding:27px 100px 27px 45px; border:0; background:$dark; @include transition(all .3s);
-      &:focus {
-        outline:0; background:$night;@include transition(all .3s);
-        + .submit-input {
-          background:$dark;@include transition(all .3s);
-          i{color:$citrus;@include transition(all .3s);}
-        }
-      }
-    }
-    .submit-input {
-      position:absolute; width:78px; height:78px; right:0; top:0; background:$night;@include transition(all .3s);
-      i { @include transition(all .3s);position:absolute; left:50%; top:50%;@include transform(translateX(-50%) translateY(-50%));color:$dark;}
-    }
-  }
-  h3 { padding: 0 30px;padding-top:50px;}
-  p { padding: 30px;}
-  .columns {
-    padding:30px 0 0 0;
-    li{
-      padding:15px 30px;
-      a{
-        color:$dark;
-        &:hover{color:$blueberry;}
-      }
-    }
-  }
-}
-
 footer {
   background:$night; width:100%;color:$mediumlight; position:relative; z-index:1;
   h4{ padding-bottom:35px;}

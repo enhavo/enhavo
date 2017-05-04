@@ -31,6 +31,7 @@
     padding-left: $smallerColumnSpacing;padding-right: $smallerColumnSpacing;
     &.npam { padding:0;}
   }
+  .row { margin-right:-$smallerColumnSpacing;margin-left:-$smallerColumnSpacing;}
   .container {width: 100%; padding-left:$smallerColumnSpacing;padding-right:$smallerColumnSpacing;}
   nav {
     .shopping-cart { right:$smallerColumnSpacing;}
