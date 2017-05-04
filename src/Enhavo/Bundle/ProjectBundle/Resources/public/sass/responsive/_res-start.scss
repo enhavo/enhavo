@@ -138,6 +138,11 @@
       .cat-image {height:220px;}
     }
   }
+  #hero {
+    .slick-slider {
+      .slick-dots { width:auto;}
+    }
+  }
 }
 
 @media all and (max-width:1024px) {
@@ -212,7 +217,7 @@
         .readmore-btn { display:none;}
         .article-photo {width: 22%;padding-bottom: 22%;}
         .article-content {
-          padding: 60px $smallerColumnSpacing 40px $smallerColumnSpacing; width:78%;
+          padding: 60px 25px 40px 25px; width:78%;
           .date { left:25px; top:30px;}
           .category {padding-bottom: 20px;}
           .title {padding-bottom: 5px;}
@@ -299,7 +304,10 @@
   }
   #article-feed {
     .articles {
-      article { width:100%; background:#FFF;}
+      article {
+        width:100%; background:#FFF;
+        &:nth-child(2n) { border-left:0;}
+      }
     }
   }
 }
