@@ -149,6 +149,12 @@ class IndexEngine implements IndexEngineInterface
             foreach($wordsForDataset as $word){
                 $this->em->remove($word);
             }
+
+            if($resource === null) {
+                $this->em->remove($currentDataset);
+                continue;
+            }
+
             $this->em->flush();
 
             //index new resource

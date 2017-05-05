@@ -8,3 +8,5 @@ search:
   form:
     error:
       blank: No result
+  action:
+    show_options: Show search options

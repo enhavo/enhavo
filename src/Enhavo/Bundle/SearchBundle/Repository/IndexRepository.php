@@ -21,7 +21,7 @@ class IndexRepository extends EntityRepository
     public function getSearchResults($conditions, $matches, $simple, $types, $fields)
     {
         $query = $this->createQueryBuilder('i');
-        $query->select('i.locale AS language', 'i.type AS type', 'i.id AS id', 'sum(i.score * t.count) AS calculated_score');
+        $query->select('min(i.locale) AS language', 'min(i.type) AS type', 'min(i.id) AS id', 'sum(i.score * t.count) AS calculated_score');
         $wordCounter = 0;
         $query->innerJoin('EnhavoSearchBundle:Total', 't', 'WITH', 'i.word = t.word');
         $query->innerJoin('EnhavoSearchBundle:Dataset', 'd', 'WITH', 'i.dataset = d');

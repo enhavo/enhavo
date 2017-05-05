@@ -1,7 +1,7 @@
 define([], function() {
   return {
-    trans: function() {
-      return 'trans';
+    trans: function(key) {
+      return key;
     }
   }
 });
