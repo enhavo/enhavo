@@ -1,0 +1,41 @@
+enhavo_shop_theme_checkout_addressing:
+    path: /addressing
+    defaults:
+        _controller: enhavo_shop.controller.checkout:addressingAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:addressing.html.twig
+
+enhavo_shop_theme_checkout_payment:
+    path: /payment
+    defaults:
+        _controller: enhavo_shop.controller.checkout:paymentAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:payment.html.twig
+
+enhavo_shop_theme_checkout_confirm:
+    path: /confirm
+    defaults:
+        _controller: enhavo_shop.controller.checkout:confirmAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:confirm.html.twig
+
+enhavo_shop_theme_checkout_finish:
+    path: /{token}/finish
+    defaults:
+        _controller: enhavo_shop.controller.checkout:finishAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:finish.html.twig
+
+enhavo_shop_theme_checkout_login:
+    path: /login
+    defaults:
+        _controller: enhavo_shop.controller.checkout:loginAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:login.html.twig
+
+enhavo_shop_theme_checkout_empty:
+    path: /empty
+    defaults:
+        _controller: enhavo_shop.controller.checkout:emptyAction
+        _sylius:
+            template: EnhavoProjectBundle:Theme/Shop/Checkout:empty.html.twig

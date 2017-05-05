@@ -64,6 +64,10 @@ class ArticleController extends EnhavoArticleController
     {
         $article = $this->get('enhavo_article.repository.article')->find($id);
 
+        if($article === null) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('EnhavoProjectBundle:Theme/Article:mobile.html.twig', [
             'article' => $article,
         ]);

@@ -2,10 +2,3 @@ enhavo_project_theme_shop_index:
     path: /shop
     defaults:
         _controller: EnhavoProjectBundle:Shop:index
-
-enhavo_shop_theme_checkout_payment:
-    path: /shop/checkout/payment
-    defaults:
-        _controller: enhavo_shop.controller.checkout:paymentAction
-        _sylius:
-            template: EnhavoProjectBundle:Theme:Shop/Checkout/payment.html.twig

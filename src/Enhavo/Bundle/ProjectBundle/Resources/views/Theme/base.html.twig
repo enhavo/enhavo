@@ -31,7 +31,7 @@
     <body class="{% block bodyclass %}{% endblock %}" lang="{{ app.request.locale }}">
         <div id="ipad-overlay">
             <div class="ipad-view">
-                <iframe src="http://enhavocms.dev/en/index" frameborder="0" data-tablet-view></iframe>
+                <iframe src="{{ path('enhavo_project_article_mobile', {id: 0}) }}" frameborder="0" data-tablet-view></iframe>
                 <div class="close-btn" data-close-tabletview><i class="icon-cross"></i></div>
             </div>
         </div>

@@ -1,0 +1,18 @@
+{% extends theme_template('base') %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <h1>Login</h1>
+    <div>
+        {{ theme_widget_render('login', {failurePath: 'enhavo_shop_theme_checkout_login'}) }}
+    </div>
+    <div>Sie haben noch kein Konto</div>
+
+    <a href="{{ path('enhavo_user_theme_user_register') }}">Registrieren</a>
+
+    <a href="{{ path('enhavo_shop_theme_checkout_addressing') }}">Als Gast bestellen</a>
+{% endblock %}

@@ -6,7 +6,9 @@
 
 {% block main %}
     <section>
-        {{ theme_widget_render('shop_cart_summary') }}
+        {{ theme_widget_render('shop_cart_summary', {
+            template: 'EnhavoProjectBundle:Theme/Widget:cart-summary.html.twig'
+        }) }}
     </section>
     <a href="{{ path('enhavo_shop_theme_checkout') }}">Checkout</a>
 {% endblock %}

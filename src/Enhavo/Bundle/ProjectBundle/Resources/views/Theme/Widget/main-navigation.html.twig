@@ -1,6 +1,6 @@
 <nav class="clearfix">
     <a class="menu-btn" href="" data-open-menu>
-        <img src="/bundles/enhavoproject/img/menu-btn.svg" alt=""/>
+        <img src="{{ asset('/bundles/enhavoproject/img/menu-btn.svg') }}" alt=""/>
     </a>
     <ul data-menu-items>
         <span class="nav-container clearfix">
@@ -11,7 +11,7 @@
             {% for page in pages %}
                 <li><a href="{% if page.route %}{{ path(page.route.name) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
             {% endfor %}
-            <a class="shopping-cart">
+            <a class="shopping-cart" href="{{ path('enhavo_shop_theme_cart_summary') }}">
                 <i class="icon-shopping-cart"></i>
                 <span class="indicator">3</span>
             </a>

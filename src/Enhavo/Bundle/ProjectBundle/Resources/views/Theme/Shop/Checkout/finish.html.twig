@@ -1,0 +1,20 @@
+{% extends theme_template('base') %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            window.setTimeout(function() {
+                window.location.href = "{{ path('enhavo_shop_theme_payment_purchase', {token: order.token}) }}";
+            }, 3000);
+        })
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1>Finish</h1>
+    <div>
+        You will be redirected automatically. If redirect takes to long please click <a href="{{ path('enhavo_shop_theme_payment_purchase', {token: order.token}) }}">here</a>.
+    </div>
+{% endblock %}
