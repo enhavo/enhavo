@@ -39,7 +39,7 @@
             {% block header %}
                 {% block hero %}{% endblock %}
                 {% block main_navigation %}
-                    {{ theme_widget_render('page', { template: 'EnhavoThemeBundle:Theme:Widget/main-navigation.html.twig' }) }}
+                    {{ theme_widget_render('page') }}
                 {% endblock %}
             {% endblock %}
             <a href="{{ path('enhavo_user_theme_user_register') }}"><b>Registrieren</b></a>

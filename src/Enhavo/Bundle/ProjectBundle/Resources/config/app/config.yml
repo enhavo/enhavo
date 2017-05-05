@@ -85,3 +85,8 @@ enhavo_newsletter:
         default:
             type: enhavo_newsletter_subscribe
             template: EnhavoProjectBundle:Theme/Newsletter:subscribe.html.twig
+
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\ShopBundle\Entity\Product: EnhavoProjectBundle:Shop:showProduct

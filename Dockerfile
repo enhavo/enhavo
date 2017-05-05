@@ -49,8 +49,8 @@ RUN mkdir -p /var/run/mysqld && \
     mysql -u root -proot -e "CREATE DATABASE enhavo" && \
     cd /var/www/ && \
     composer install --no-interaction && \
+    app/console doctrine:schema:update --force
     app/console enhavo:install:fixtures && \
-    app/console enhavo:install --user=admin --password=admin --email=admin@enhavo.com --no-bundle --no-interaction && \
     chmod 755 /etc/my_init.d/01_apache2.bash && \
     chmod 755 /etc/my_init.d/02_mysql.bash && \
     usermod -u 1000 www-data && \
