@@ -1,5 +1,10 @@
-<div class="user-data-container grid-type-video container">
-    <div class="video-container">
-        <iframe src="{{ data.url }}"></iframe>
+<div class="user-data-container grid-type-video enhavo_grid">
+    <div class="container enhavo_grid_video">
+        {% if data.title %}
+            <h2 class="title">{{ data.title|raw }}</h2>
+        {% endif %}
+        <div class="video-container">
+            <iframe src="{{ data.url }}"></iframe>
+        </div>
     </div>
 </div>

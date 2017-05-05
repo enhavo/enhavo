@@ -1,4 +1,5 @@
 .download {
+  padding-bottom:0;
   li{
     background:$softwhite;border-bottom:0;
     &:nth-child(2n) {
@@ -47,9 +48,9 @@
     padding-bottom:0;
     li {
       a {
-        .download-title { float:none;padding: 22px 0 0 30px; width:calc(100% - 88px);}
-        .download-desc { float:none;padding: 6px 30px 12px 30px; width:calc(100% - 88px); text-align:left;}
-        .download-btn { width:88px; height:88px;padding: 24px 32px;}
+        .download-title { float:none;padding: 20px 0 0 20px; width:100%;}
+        .download-desc { float:none;padding: 0 0 20px 20px; width:100%; text-align:left; display:block;}
+        .download-btn { display:none;}
       }
     }
   }
@@ -59,9 +60,8 @@
   .download {
     li {
       a {
-        .download-btn { display:none;}
-        .download-title { width:100%; font-size:$smallFontSize;}
-        .download-desc { width:100%;font-size:$smallFontSize;}
+        .download-title { font-size:$smallFontSize;}
+        .download-desc { font-size:$smallFontSize;}
       }
     }
   }

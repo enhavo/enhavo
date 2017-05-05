@@ -1,10 +1,11 @@
+
 function Base() {
     var self = this;
 
     this.init = function() {
 
       var pathname = window.location.pathname;
-      if (pathname == "/") {
+      if (pathname == "/en/index" || pathname == "/de/index") {
         this.handleArticleFeed();
         this.setWaypoints();
       }
@@ -374,7 +375,7 @@ function Base() {
 
   this.viewOnTablet = function(){
     $("[data-tablet-btn]").on("click", function(){
-      document.getElementById('tablet').contentWindow.location.reload();
+      $("[data-tablet-view]").attr("src", window.location.pathname);
       $("#ipad-overlay").fadeIn();
       $("main, header, footer").addClass("blur");
       $("body").addClass("fixed");

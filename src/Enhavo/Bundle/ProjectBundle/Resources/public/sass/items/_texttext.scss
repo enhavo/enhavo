@@ -7,5 +7,7 @@
 }
 
 @media all and (max-width:767px) {
-  .enhavo_grid_texttext { padding-bottom:120px;}
+  [class*=col-sm-] {
+    &:first-child { padding-bottom:45px;}
+  }
 }

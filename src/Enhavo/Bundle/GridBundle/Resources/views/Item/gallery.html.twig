@@ -1,9 +1,13 @@
 <div class="enhavo_grid">
-    {% if data.text %}
+
     <div class="container">
+        {% if data.title %}
+            <h2 class="title">{{ data.title|raw }}</h2>
+        {% endif %}
+        {% if data.text %}
         <p>{{ data.text|raw }}</p>
+        {% endif %}
     </div>
-    {% endif %}
     <div class="enhavo_grid_gallery">
         <div class="slider">
             {% for file in data.files %}
