@@ -8,3 +8,5 @@ search:
   form:
     error:
       blank: Keine Suchergebnisse gefunden
+  action:
+    show_options: Suchoptionen einblenden

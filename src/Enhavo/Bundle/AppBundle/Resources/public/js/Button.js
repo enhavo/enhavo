@@ -152,16 +152,16 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
         e.stopPropagation();
         var route = $(this).data('route');
 
-        //admin.confirm(translator.trans('message.duplicate.confirm'), function() {
+        admin.confirm(translator.trans('message.duplicate.confirm'), function() {
           var link = router.generate(route, {id: $(form).data('id')});
           admin.overlayClose();
           admin.openLoadingOverlay();
           $.ajax({
             url: link,
-            success: function (data) {
-              admin.reloadBlock($('[data-block][data-block-type=table]'));
+            success: function () {
               admin.closeLoadingOverlay();
               admin.overlayMessage(translator.trans('message.duplicate.success'), admin.MessageType.Success);
+              $(document).trigger('formSaveAfter', form);
             },
             error: function (data) {
               admin.closeLoadingOverlay();
@@ -172,7 +172,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
               admin.overlayMessage(translator.trans(message), admin.MessageType.Error);
             }
           });
-        //});
+        });
       });
     };
 

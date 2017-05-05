@@ -32,6 +32,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
 COPY docker/etc/my_init.d/01_apache2.bash /etc/my_init.d/01_apache2.bash
 COPY docker/etc/my_init.d/02_mysql.bash /etc/my_init.d/02_mysql.bash
 COPY docker/etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/cron/crontab /var/spool/cron/crontabs/root
 
 # add source files
 ADD app /var/www/app
@@ -49,8 +50,9 @@ RUN mkdir -p /var/run/mysqld && \
     mysql -u root -proot -e "CREATE DATABASE enhavo" && \
     cd /var/www/ && \
     composer install --no-interaction && \
-    app/console doctrine:schema:update --force
+    app/console doctrine:schema:update --force && \
     app/console enhavo:install:fixtures && \
+    chmod 600 /var/spool/cron/crontabs/root && \
     chmod 755 /etc/my_init.d/01_apache2.bash && \
     chmod 755 /etc/my_init.d/02_mysql.bash && \
     usermod -u 1000 www-data && \

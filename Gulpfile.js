@@ -64,7 +64,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('sass:watch', function () {
-  gulp.run(['sass']);
+  gulp.start(['sass']);
   gulp.watch([
     'src/Enhavo/Bundle/*Bundle/Resources/public/sass/**/*.scss'
   ], ['sass']);

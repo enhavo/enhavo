@@ -8,10 +8,11 @@ enhavo_content:
 enhavo_app:
     route:
         url_resolver:
-            page:
+            article:
                 model: enhavo_article.article
                 strategy: id
-                route: enhavo_page_page_update
+                route: enhavo_article_article_update
+
     roles:
         enhavo_article_article_index:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
