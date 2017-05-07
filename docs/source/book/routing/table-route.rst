@@ -31,7 +31,7 @@ Here is a full configuration example of a table route
                         parameters:
                             param1: value1
                             param2: value2
-                        table:
+                        columns:
                             width: 8
                             columns:
                                 id:

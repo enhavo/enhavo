@@ -9,14 +9,17 @@ app/config/enhavo.yml. The logout button will be added automatically.
     enhavo_admin:
         menu:
             user:
+                type: base
                 label: label.user
                 route: enhavo_user_user_index
                 role: ROLE_ESPERANTO_USER_USER_INDEX
             group:
+                type: base
                 label: label.group
                 route: enhavo_user_group_index
                 role: ROLE_ESPERANTO_USER_GROUP_INDEX
-            myresource:
+            my_resource:
+                type: base
                 label: My Resource
                 route: acme_my_resource_index
                 role: ROLE_MY_RESOURCE_INDEX
