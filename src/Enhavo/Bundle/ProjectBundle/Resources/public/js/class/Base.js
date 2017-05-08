@@ -20,6 +20,7 @@ function Base() {
       this.setTitleHeightOfThreePictureItem();
       this.toggleDropDown();
       this.sortArticleStream();
+      this.addToCart();
     };
 
     this.sortArticleStream = function() {
@@ -384,6 +385,20 @@ function Base() {
       $("#ipad-overlay").fadeOut();
       $("main, header, footer").removeClass("blur");
       $("body").removeClass("fixed");
+    });
+  }
+
+  this.addToCart = function() {
+    $('[data-submit-cart-add]').on('click', function() {
+      $(this).addClass('added');
+
+      $('[data-shopping-cart]').addClass("add-item");
+
+      setTimeout(function() {
+        $('[data-submit-cart-add]').removeClass('added');
+        $('[data-shopping-cart]').addClass('update-value');
+      }, 1200);
+
     });
   }
 

@@ -22,14 +22,15 @@
       &:before {content:normal; }
     }
   }
-  .back-to-blog {
-    width:80px; height:80px; position:absolute; left:0; bottom:0; background:$blueberry;
-    &:hover {
-      background:$citrus;
-      i{color:$night;@include transition(all .3s);}
-    }
-    i {color:#FFF;@include transform(scaleX(-1));display: inline-block;position: absolute;left: 50%;margin-left: -12px;top: 50%;margin-top: -9px;;@include transition(all .3s);}
+}
+
+.back-to-blog {
+  width:80px; height:80px; position:absolute; left:0; bottom:0; background:$blueberry;
+  &:hover {
+    background:$citrus;
+    i{color:$night;@include transition(all .3s);}
   }
+  i {color:#FFF;@include transform(scaleX(-1));display: inline-block;position: absolute;left: 50%;margin-left: -12px;top: 50%;margin-top: -9px;;@include transition(all .3s);}
 }
 
 .enhavo_grid_frame {border:6px solid $light;}

@@ -49,6 +49,15 @@
   }
 }
 
+@include keyframes (slideOut) {
+  from{
+    margin-left:0;
+  }
+  to{
+    margin-left:150px;
+  }
+}
+
 @include keyframes (fadeRight) {
   from{
     opacity: 0;

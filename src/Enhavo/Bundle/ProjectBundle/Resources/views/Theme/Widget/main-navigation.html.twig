@@ -11,7 +11,7 @@
             {% for page in pages %}
                 <li><a href="{% if page.route %}{{ path(page.route.name) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
             {% endfor %}
-            <a class="shopping-cart" href="{{ path('enhavo_shop_theme_cart_summary') }}">
+            <a class="shopping-cart" href="{{ path('enhavo_shop_theme_cart_summary') }}" data-shopping-cart>
                 <i class="icon-shopping-cart"></i>
                 <span class="indicator">3</span>
             </a>
