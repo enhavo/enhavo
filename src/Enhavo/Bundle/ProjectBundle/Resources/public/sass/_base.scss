@@ -45,6 +45,8 @@ h4 { letter-spacing:$defaultLetterSpacing; text-transform:uppercase; font-family
 
 img{ width:100%; min-width:100%;}
 
+strong { font-family:$mediumFontFamily;}
+
 section {
   height: auto;
   &.fullheight{height: 100vh;}
@@ -102,6 +104,24 @@ nav {
     + li {
       a { padding-left:0;}
     }
+  }
+}
+
+.btn {
+  @include transition(all .3s);
+  &:hover {@include transition(all .3s);}
+  &.rounded {border-radius:35px; background:$medium; color:#FFF; padding:7px 35px; text-align:center; font-size:$defaultFontSize;}
+  &.aubergine {
+    background:$aubergine; color:#FFF;
+    &:hover { background:$blueberry;}
+  }
+  &.citrus {
+    background:$citrus;color:$aubergine;
+    &:hover { background:$aubergine; color:$citrus;}
+  }
+  &.blueberry {
+    background:$blueberry; color:#FFF;
+    &:hover { background:$citrus; color:$aubergine;}
   }
 }
 
