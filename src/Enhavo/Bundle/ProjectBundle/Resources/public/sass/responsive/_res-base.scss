@@ -67,6 +67,13 @@
       }
     }
   }
+  .btn { display:block; width:100%;}
+  form {
+    .styled-checkbox {
+      label { margin-top:12px; display:block; margin-left:0;}
+    }
+    label { margin-top:20px;}
+  }
   .enhavo_grid {
     + .enhavo_grid { padding-top:45px;}
   }

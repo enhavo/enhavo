@@ -57,10 +57,10 @@ form {
     padding:9px 16px; border:1px solid $light; width:100%; display:block;@include transition(all .2s); color:$night;
     &:focus { outline:0; border-color:$aubergine;@include transition(all .2s);}
   }
-  label { display:block; margin-bottom:5px; color:$mediumlight;}
+  label { display:block; margin-bottom:5px; color:$mediumlight; margin-top:30px;}
   fieldset {
     &.row {
-      + .row {margin-top:30px;}
+      + .row {margin-top:0;}
     }
   }
   .styled-select {
@@ -85,7 +85,7 @@ form {
     label { display:inline-block; margin-left:8px;}
     span {
       position:relative;width:20px; height:20px; background:#FFF;top: 4px;left: 0; cursor:pointer;
-      border:1px solid $light;border-radius:2px; position:relative; display:inline-block;
+      border:1px solid $light;border-radius:2px; display:inline-block;
       &:after {
         content: "\e82a";color:$aubergine; position:absolute; left:50%; top:50%; opacity:0;
         font-family: 'enhavo_iconfont';margin-left: -8px;margin-top: -12px;
