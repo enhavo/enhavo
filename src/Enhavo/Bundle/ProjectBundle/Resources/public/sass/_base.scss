@@ -74,8 +74,8 @@ form {
   }
   .styled-checkbox {
     position:relative;
-    input[type="checkbox"] {
-      opacity:0; left:0;top: 5px;position: absolute;z-index: 1;padding: 10px;-webkit-appearance: none;-moz-appearance: none;cursor:pointer;
+    input[type="checkbox"], input[type="radio"] {
+      opacity:0; left:0;top: 27px;position: absolute;z-index: 1;padding: 10px;-webkit-appearance: none;-moz-appearance: none;cursor:pointer; width:auto;
       &:checked {
         + span {border-color:$aubergine;
           &:after { opacity:1;}
@@ -85,7 +85,7 @@ form {
     label { display:inline-block; margin-left:8px;}
     span {
       position:relative;width:20px; height:20px; background:#FFF;top: 4px;left: 0; cursor:pointer;
-      border:1px solid $light;border-radius:2px; display:inline-block;
+      border:1px solid $light;border-radius:2px; display:inline-block;pointer-events:none;
       &:after {
         content: "\e82a";color:$aubergine; position:absolute; left:50%; top:50%; opacity:0;
         font-family: 'enhavo_iconfont';margin-left: -8px;margin-top: -12px;

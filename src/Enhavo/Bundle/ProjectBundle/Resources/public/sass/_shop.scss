@@ -20,6 +20,7 @@
     border:4px solid $softwhite; width:80px; height:80px; display:inline-block; padding:12px;
     + .product-title { display:inline-block; margin-left:25px;position:absolute; top:50%;@include transform(translateY(-50%)); margin-top:-15px;}
   }
+  .proceed { margin-top:45px;}
 }
 .shop-grid { margin-left:-$smallerColumnSpacing; margin-right:-$smallerColumnSpacing;}
 .shop-product { padding-left:$smallerColumnSpacing;padding-right:$smallerColumnSpacing;}
@@ -110,5 +111,59 @@
     &.row {margin-left:-15px;margin-right:-15px;}
     .form-column { padding-left:15px;padding-right:15px;}
     &.different-billing-address { margin:25px 0;}
+  }
+}
+
+.payment-choice {
+  border-bottom:1px solid $light; padding-bottom:15px;
+  .styled-checkbox {
+    width:100%; display:inline-block;
+    span { position:absolute; right:0; top:29px;left:auto}
+    input[type="radio"] { right:0; left:auto;}
+  }
+  .payment-logo { margin-right:15px; display:inline-block; color:$mediumlight;}
+}
+
+@media all and (max-width:991px) {
+  .cart-summary {
+    thead {
+      tr {
+        th {
+          display:block; padding:2px 0;
+          .align { top:0;}
+        }
+      }
+    }
+    tbody {
+      tr {
+        border:0;
+        td { display:block; border-width:0 1px 1px 1px;}
+      }
+      &.price-details {border-top:6px solid $aubergine;}
+    }
+    .price-total {
+      .show-details { top:-5px;}
+      .remove-product { top:-59px;}
+    }
+    &:last-of-type {border-top:6px solid $citrus;}
+  }
+  .shop-product{
+    .product-thumb {
+      display:block;
+      + .product-title {display:block;position:initial;@include transform(none); margin-left:0; margin-top:15px; font-size:$bigFontSize; font-family:$blackFontFamily;}
+    }
+  }
+}
+
+@media all and (max-width:767px) {
+  .shop-product {
+    .proceed { margin-bottom:45px;}
+  }
+  .payment-choice {
+    .styled-checkbox {
+      span {top: 15px; right:auto; left:0;}
+      input[type="radio"] { top:15px; right:auto; left:0;}
+      label { margin-left:35px;}
+    }
   }
 }

@@ -10,13 +10,14 @@
     <div class="product-single-view">
         <div class="container">
             <div class="row shop-product">
-                <div class="col-sm-6">
+                <div class="col-md-6 col-sm-7">
                     {{ theme_widget_render('shop_product_configurator', {
                         product: product,
                         template: 'EnhavoProjectBundle:Theme/Widget:product-configurator.html.twig'
                     }) }}
+                    <a href="{{ path('enhavo_shop_theme_cart_summary') }}" class="btn rounded aubergine proceed">Proceed</a>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-md-6 col-sm-5">
                     {% if product.picture %}
                         <div class="product-picture">
                             <img src="{{ media_url(product.picture) }}" />
