@@ -104,3 +104,11 @@
   }
 }
 .checkout { margin-top:45px; float:right;}
+
+#addressing-form {
+  fieldset {
+    &.row {margin-left:-15px;margin-right:-15px;}
+    .form-column { padding-left:15px;padding-right:15px;}
+    &.different-billing-address { margin:25px 0;}
+  }
+}

@@ -52,6 +52,48 @@ section {
   &.fullheight{height: 100vh;}
 }
 
+form {
+  input {
+    padding:9px 16px; border:1px solid $light; width:100%; display:block;@include transition(all .2s); color:$night;
+    &:focus { outline:0; border-color:$aubergine;@include transition(all .2s);}
+  }
+  label { display:block; margin-bottom:5px; color:$mediumlight;}
+  fieldset {
+    &.row {
+      + .row {margin-top:30px;}
+    }
+  }
+  .styled-select {
+    position:relative;
+    select {
+      -webkit-appearance:none;-moz-appearance:none; background:#FFF; border:1px solid $light; display:block; width:100%;
+      -webkit-border-radius:0; -moz-border-radius:0; border-radius:0; text-align:center; height:44px; color:$night;padding:9px 16px;
+      &:focus {border-color:$aubergine; outline:0;}
+    }
+    &:after { content: '\e82e'; position:absolute; right:12px; top:11px; color:$light; font-family: 'enhavo_iconfont';}
+  }
+  .styled-checkbox {
+    position:relative;
+    input[type="checkbox"] {
+      opacity:0; left:0;top: 5px;position: absolute;z-index: 1;padding: 10px;-webkit-appearance: none;-moz-appearance: none;cursor:pointer;
+      &:checked {
+        + span {border-color:$aubergine;
+          &:after { opacity:1;}
+        }
+      }
+    }
+    label { display:inline-block; margin-left:8px;}
+    span {
+      position:relative;width:20px; height:20px; background:#FFF;top: 4px;left: 0; cursor:pointer;
+      border:1px solid $light;border-radius:2px; position:relative; display:inline-block;
+      &:after {
+        content: "\e82a";color:$aubergine; position:absolute; left:50%; top:50%; opacity:0;
+        font-family: 'enhavo_iconfont';margin-left: -8px;margin-top: -12px;
+      }
+    }
+  }
+}
+
 .npam {padding:0; margin:0;}
 
 nav {
