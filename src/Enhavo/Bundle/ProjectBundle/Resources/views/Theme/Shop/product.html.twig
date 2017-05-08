@@ -5,9 +5,15 @@
 {% endblock %}
 
 {% block main %}
-    <h1>{{ product.title }}</h1>
-    {{ theme_widget_render('shop_product_configurator', {
-        product: product,
-        template: 'EnhavoProjectBundle:Theme/Widget:product-configurator.html.twig'
-    }) }}
+    <div class="container">
+        <div class="row shop-grid">
+                <div class="col-sm-4">
+                <p class="product-title">{{ product.title }}</p>
+                {{ theme_widget_render('shop_product_configurator', {
+                    product: product,
+                    template: 'EnhavoProjectBundle:Theme/Widget:product-configurator.html.twig'
+                }) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
