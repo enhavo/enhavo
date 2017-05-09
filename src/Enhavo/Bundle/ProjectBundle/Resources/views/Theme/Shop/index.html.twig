@@ -7,7 +7,11 @@
         <section>
             <article class="container">
                 <h2>Shop</h2>
-                {{ theme_widget_render('shop_product_list') }}
+                <div class="row shop-grid">
+                    {{ theme_widget_render('shop_product_list', {
+                        template: 'EnhavoProjectBundle:Theme/Widget:product-list.html.twig'
+                    }) }}
+                </div>
             </article>
         </section>
     </div>

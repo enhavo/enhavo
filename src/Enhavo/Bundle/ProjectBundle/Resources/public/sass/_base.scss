@@ -45,9 +45,53 @@ h4 { letter-spacing:$defaultLetterSpacing; text-transform:uppercase; font-family
 
 img{ width:100%; min-width:100%;}
 
+strong { font-family:$mediumFontFamily;}
+
 section {
   height: auto;
   &.fullheight{height: 100vh;}
+}
+
+form {
+  input {
+    padding:9px 16px; border:1px solid $light; width:100%; display:block;@include transition(all .2s); color:$night;
+    &:focus { outline:0; border-color:$aubergine;@include transition(all .2s);}
+  }
+  label { display:block; margin-bottom:5px; color:$mediumlight; margin-top:30px;}
+  fieldset {
+    &.row {
+      + .row {margin-top:0;}
+    }
+  }
+  .styled-select {
+    position:relative;
+    select {
+      -webkit-appearance:none;-moz-appearance:none; background:#FFF; border:1px solid $light; display:block; width:100%;
+      -webkit-border-radius:0; -moz-border-radius:0; border-radius:0; text-align:center; height:44px; color:$night;padding:9px 16px;
+      &:focus {border-color:$aubergine; outline:0;}
+    }
+    &:after { content: '\e82e'; position:absolute; right:12px; top:11px; color:$light; font-family: 'enhavo_iconfont';}
+  }
+  .styled-checkbox {
+    position:relative;
+    input[type="checkbox"], input[type="radio"] {
+      opacity:0; left:0;top: 27px;position: absolute;z-index: 1;padding: 10px;-webkit-appearance: none;-moz-appearance: none;cursor:pointer; width:auto;
+      &:checked {
+        + span {border-color:$aubergine;
+          &:after { opacity:1;}
+        }
+      }
+    }
+    label { display:inline-block; margin-left:8px;}
+    span {
+      position:relative;width:20px; height:20px; background:#FFF;top: 4px;left: 0; cursor:pointer;
+      border:1px solid $light;border-radius:2px; display:inline-block;pointer-events:none;
+      &:after {
+        content: "\e82a";color:$aubergine; position:absolute; left:50%; top:50%; opacity:0;
+        font-family: 'enhavo_iconfont';margin-left: -8px;margin-top: -12px;
+      }
+    }
+  }
 }
 
 .npam {padding:0; margin:0;}
@@ -73,6 +117,12 @@ nav {
       color:$mediumlight;@include transition(all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275));
       .indicator { margin-top:-5px;@include transition(all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275));}
     }
+    &.add-item {
+      .indicator { opacity:0;@include transition(all .3s);}
+      &.update-value {
+        .indicator {@include animation(fadeUp 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards 400ms);}
+      }
+    }
   }
   .search-widget {
     position:absolute; right:125px; top:17px;
@@ -96,6 +146,24 @@ nav {
     + li {
       a { padding-left:0;}
     }
+  }
+}
+
+.btn {
+  @include transition(all .3s);
+  &:hover {@include transition(all .3s);}
+  &.rounded {border-radius:35px; background:$medium; color:#FFF; padding:7px 35px; text-align:center; font-size:$defaultFontSize;}
+  &.aubergine {
+    background:$aubergine; color:#FFF;
+    &:hover { background:$blueberry;}
+  }
+  &.citrus {
+    background:$citrus;color:$aubergine;
+    &:hover { background:$aubergine; color:$citrus;}
+  }
+  &.blueberry {
+    background:$blueberry; color:#FFF;
+    &:hover { background:$citrus; color:$aubergine;}
   }
 }
 
