@@ -1,5 +1,7 @@
 {% extends theme_template('base') %}
 
+{% block bodyclass %}light{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
@@ -7,23 +9,27 @@
 
 {% block main %}
 
+    {% form_theme form _self %}
     {% trans_default_domain 'EnhavoShopBundle' %}
-
-    <h1>Confirm</h1>
-
-    <div>
-        {{ theme_widget_render('shop_coupon_redeem', {order: order}) }}
-    </div>
-
-    <div>
-        {{ theme_widget_render('shop_cart_summary', {immutable: true, cart: order}) }}
-    </div>
-
-    <div>
-        <form action="{{ path('enhavo_shop_theme_checkout_confirm') }}" method="POST" data-checkout-form>
-            {{ form_errors(form) }}
-            {{ form_row(form._token) }}
-            <button type="submit">Confirm</button>
-        </form>
-    </div>
+    <section class="container">
+        <h2>Confirm</h2>
+        <p>Falls Sie einen Gutscheincode besitzen, geben Sie ihn hier ein.</p>
+        <div class="redeem">
+            {{ theme_widget_render('shop_coupon_redeem', {
+                template: 'EnhavoProjectBundle:Theme/Widget:coupon-redeem.html.twig',
+                order: order}) }}
+        </div>
+        <div>
+            {{ theme_widget_render('shop_cart_summary', {
+                template: 'EnhavoProjectBundle:Theme/Widget:cart-summary.html.twig',
+                immutable: true, cart: order}) }}
+        </div>
+        <div>
+            <form action="{{ path('enhavo_shop_theme_checkout_confirm') }}" method="POST" data-checkout-form>
+                {{ form_errors(form) }}
+                {{ form_row(form._token) }}
+                <button type="submit" class="btn aubergine rounded checkout">Confirm</button>
+            </form>
+        </div>
+    </section>
 {% endblock %}

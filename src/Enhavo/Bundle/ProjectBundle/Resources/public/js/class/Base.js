@@ -398,6 +398,10 @@ function Base() {
         $('[data-submit-cart-add]').removeClass('added');
         $('[data-shopping-cart]').addClass('update-value');
       }, 1200);
+      setTimeout(function() {
+        $('[data-shopping-cart]').removeClass('add-item');
+        $('[data-shopping-cart]').removeClass('update-value');
+      }, 3000);
     });
   }
 

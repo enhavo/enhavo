@@ -1,5 +1,7 @@
 {% extends theme_template('base') %}
 
+{% block bodyclass %}light{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/enhavoshop/js/Shop.js') }}"></script>
@@ -13,8 +15,10 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Finish</h1>
-    <div>
-        You will be redirected automatically. If redirect takes to long please click <a href="{{ path('enhavo_shop_theme_payment_purchase', {token: order.token}) }}">here</a>.
-    </div>
+    <section class="container">
+        <h2>Vielen Dank</h2>
+        <p>
+            You will be redirected automatically. If redirect takes to long please click <a href="{{ path('enhavo_shop_theme_payment_purchase', {token: order.token}) }}">here</a>.
+        </p>
+    </section>
 {% endblock %}

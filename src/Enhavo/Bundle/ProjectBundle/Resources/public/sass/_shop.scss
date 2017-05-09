@@ -119,9 +119,49 @@
   .styled-checkbox {
     width:100%; display:inline-block;
     span { position:absolute; right:0; top:29px;left:auto}
-    input[type="radio"] { right:0; left:auto;}
+    input[type="radio"] {
+      right:0; left:auto;
+      &:checked {
+        + span {
+          + label {
+            color:$aubergine;
+            .payment-logo {color:$aubergine;}
+          }
+        }
+      }
+    }
   }
   .payment-logo { margin-right:15px; display:inline-block; color:$mediumlight;}
+}
+
+.login-form {
+  max-width:550px; margin:0 auto; padding:60px 0;
+  .no-account {
+    padding-top:45px;
+    .btn {
+      margin-top:8px;
+      + a { display:block; margin-top:8px;}
+    }
+  }
+}
+
+.redeem {
+  margin:45px 0;
+  .coupon {
+    max-width:500px; min-width:500px;position:relative; display:inline-block; margin-bottom:45px;
+    form{
+      max-width:500px;min-width:500px; position:relative;
+      div {width:100%;}
+    }
+    .input-container {
+      display:inline-block; width:100%;
+      input {padding: 27px 95px 27px 35px;border: 1px solid $light;width: 100%; position:relative; max-width:500px;min-width:500px; display:inline-block;}
+    }
+    .redeem-btn {
+      position:absolute; right:0; top:0;background: $aubergine;width: 80px;height: 80px;border: 0;color: #FFF;padding: 0;@include transition(all .2s);
+      &:hover { background:$citrus;@include transition(all .2s); color:$aubergine;}
+    }
+  }
 }
 
 @media all and (max-width:991px) {
@@ -164,6 +204,16 @@
       span {top: 15px; right:auto; left:0;}
       input[type="radio"] { top:15px; right:auto; left:0;}
       label { margin-left:35px;}
+    }
+  }
+  .redeem {
+    margin:25px 0;
+    .coupon {
+      width:100%; min-width:100%;;
+      form{width:100%;min-width:100%;}
+      .input-container {
+        input {min-width:100%;}
+      }
     }
   }
 }
