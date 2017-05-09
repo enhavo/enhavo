@@ -51,3 +51,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: duplicate }
+
+    enhavo_app.button.download:
+        class: Enhavo\Bundle\AppBundle\Button\Button\DownloadButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button, alias: 'download' }

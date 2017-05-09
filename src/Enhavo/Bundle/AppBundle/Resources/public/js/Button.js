@@ -183,6 +183,28 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
+    this.initDownload = function (form) {
+      $(form).find('[data-button][data-type=download]').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var route = $(this).data('route');
+        $.ajax({
+          type : 'post',
+          url: router.generate(route),
+          data: $(form).serialize(),
+          success: function(data) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:application/octet-stream;base64,' + data.data);
+            element.setAttribute('download', data.filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+          }
+        });
+      });
+    };
+
     this.init = function () {
       $(document).on('formOpenAfter', function (event, form) {
         self.initSave(form);
@@ -190,6 +212,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
         self.initPreview(form);
         self.initCancel(form);
         self.initDuplicate(form);
+        self.initDownload(form);
       });
     };
 
