@@ -212,13 +212,15 @@ class FileService
             unlink($this->getFilepath($file));
 
             $path = $this->getDirectory($file) . '/custom';
-            $thumbDirectories = scandir($path);
-            foreach($thumbDirectories as $dir) {
-                if ($dir !== '.'
-                    && $dir !== '..'
-                    && is_dir($path . '/' . $dir)) {
-                    if (file_exists($path . '/' . $dir . '/' . $this->getFilename($file))) {
-                        unlink($path . '/' . $dir . '/' . $this->getFilename($file));
+            if(file_exists($path)) {
+                $thumbDirectories = scandir($path);
+                foreach($thumbDirectories as $dir) {
+                    if ($dir !== '.'
+                        && $dir !== '..'
+                        && is_dir($path . '/' . $dir)) {
+                        if (file_exists($path . '/' . $dir . '/' . $this->getFilename($file))) {
+                            unlink($path . '/' . $dir . '/' . $this->getFilename($file));
+                        }
                     }
                 }
             }
