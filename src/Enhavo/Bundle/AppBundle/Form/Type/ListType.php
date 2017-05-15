@@ -27,6 +27,14 @@ class ListType extends AbstractType
     {
         $data = null;
 
+        // save origin value that was set as data
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use (&$data) {
+            $item = $event->getData();
+            $data = $item;
+            return;
+        });
+
+        // reorder if origin was array
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use (&$data){
             $item = $event->getData();
             if(is_array($data) && is_array($item)) {
@@ -35,17 +43,25 @@ class ListType extends AbstractType
                 sort($itemKeys);
                 $result = array();
                 for($i = 0; $i < count($itemKeys); $i++) {
-                    $result[$itemKeys[$i]] = $copyValues[$i];
+                    $result[intval($itemKeys[$i])] = $copyValues[$i];
                 }
-
                 $event->setData($result);
             }
             return;
         });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use (&$data){
-            $item = $event->getData();
-            $data = $item;
+        // reindex data, so array starts with index 0
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use (&$data){
+            $items = $event->getData();
+            if(is_array($data) && is_array($items)) {
+                $result = [];
+                $i = 0;
+                foreach($items as $item) {
+                    $result[$i] = $item;
+                    $i++;
+                }
+                $event->setData($result);
+            }
             return;
         });
     }
@@ -107,4 +123,4 @@ class ListType extends AbstractType
             return '__' . $options['type'] . '__';
         });
     }
-} 
+}
