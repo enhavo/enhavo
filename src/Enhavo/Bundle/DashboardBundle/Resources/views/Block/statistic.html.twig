@@ -1,9 +1,14 @@
 {% trans_default_domain 'EnhavoAppBundle' %}
 
-<div data-block class="block-app block-statistic">
+<div data-block class="block-app row">
     {% for provider in providers %}
-        <div>{{ provider.label }}</div>
-        <div>{{ provider.number }}</div>
-        <div>{{ provider.icon }}</div>
+        <div class="block-statistic col-md-4 col-sm-6{% if provider.number|length > 3 and provider.number|length < 7 %} small-number{% endif %} {% if provider.number|length > 6 %} smaller-number{% endif %}">
+            <div class="block-statistic-content">
+                <div class="number">{{ provider.number }}</div>
+                <div class="description">
+                    <div class="label"><i class="icon-{{ provider.icon }}"></i> {{ provider.label }}</div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 </div>

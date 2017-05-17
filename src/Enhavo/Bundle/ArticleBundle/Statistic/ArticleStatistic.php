@@ -14,6 +14,7 @@ use Enhavo\Bundle\DashboardBundle\Statistic\StatisticProviderInterface;
 
 class ArticleStatistic extends AbstractType implements StatisticProviderInterface
 {
+
     public function getLabel()
     {
         return $this->container->get('translator')->trans('article.label.article', [], 'EnhavoArticleBundle');
