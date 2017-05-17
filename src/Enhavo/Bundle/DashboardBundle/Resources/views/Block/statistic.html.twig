@@ -1,0 +1,9 @@
+{% trans_default_domain 'EnhavoAppBundle' %}
+
+<div data-block class="block-app block-statistic">
+    {% for provider in providers %}
+        <div>{{ provider.label }}</div>
+        <div>{{ provider.number }}</div>
+        <div>{{ provider.icon }}</div>
+    {% endfor %}
+</div>

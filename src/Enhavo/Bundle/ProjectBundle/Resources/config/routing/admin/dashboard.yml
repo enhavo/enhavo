@@ -31,3 +31,7 @@ enhavo_dashboard_index:
                     order:
                         type: chart
                         provider: shop_order
+                    statistc:
+                        type: statistic
+                        providers:
+                            - article

@@ -5,3 +5,16 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: dashboard }
+
+    enhavo_dashboard.statistic_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+          - '@service_container'
+          - 'Statistic'
+
+    enhavo_dashboard.block.statistic:
+        class: Enhavo\Bundle\DashboardBundle\Block\StatisticBlock
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: statistic }
