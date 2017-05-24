@@ -8,9 +8,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
-
-use Enhavo\Bundle\ArticleBundle\Entity\Article;
-use Enhavo\Bundle\GridBundle\Entity\Text;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Doctrine\ORM\Proxy\Proxy;
 
@@ -85,15 +82,25 @@ class MetadataCollection
             if(isset($metadataArray[$className]['properties']) && is_array($metadataArray[$className]['properties'])) {
                 $properties = $metadataArray[$className]['properties'];
                 foreach($properties as $name => $propertyData) {
-                    $property = new Property();
-                    $property->setName($name);
-                    $property->setOptions($propertyData);
-                    if(isset($propertyData['strategy'])) {
-                        $property->setStrategy($propertyData['strategy']);
+                    $property = $metadata->getProperty($name);
+                    if($property) {
+                        if(is_array($propertyData) && is_array($property->getOptions())) {
+                            $property->setOptions(array_merge($property->getOptions(), $propertyData));
+                        }
+                        if(isset($propertyData['strategy'])) {
+                            $property->setStrategy($propertyData['strategy']);
+                        }
                     } else {
-                        $property->setStrategy('');
+                        $property = new Property();
+                        $property->setName($name);
+                        $property->setOptions($propertyData);
+                        if(isset($propertyData['strategy'])) {
+                            $property->setStrategy($propertyData['strategy']);
+                        } else {
+                            $property->setStrategy('');
+                        }
+                        $metadata->addProperty($property);
                     }
-                    $metadata->addProperty($property);
                 }
             }
             return $metadata;
