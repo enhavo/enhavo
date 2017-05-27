@@ -1,6 +1,7 @@
 Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     type: entity
     table: calendar_appointment
+    repositoryClass: Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository
     fields:
         teaser:
             type: string

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\CalendarBundle\Import;
 
 use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 class ImportManager
 {
@@ -31,13 +32,22 @@ class ImportManager
     public function __construct($importerConfig, $container)
     {
         $this->importerInstances = [];
-        $this->importerConfig = $importerConfig;
+        if($importerConfig) {
+            $this->importerConfig = $importerConfig;
+        } else {
+            $this->importerConfig = [];
+        }
         $this->container = $container;
     }
 
     public function import($from = null, $to = null, $filter = [])
     {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        $eventDispatcher->dispatch('enhavo_calendar.event.preImport', new Event());
+
         $this->createImporterInstances();
+
+        $importersHandled = [];
 
         /** @var ImporterInterface $importerInstance */
         foreach ($this->importerInstances as $importerInstance){
@@ -61,6 +71,31 @@ class ImportManager
                 }
             }
             $this->deleteObsoleteAppointments($externalIdsHandled, $importerInstance->getName());
+            $importersHandled[] = $importerInstance->getName();
+        }
+        $this->deleteObsoleteImporterAppointments($importersHandled);
+        $this->container->get('doctrine.orm.entity_manager')->flush();
+    }
+
+    protected function deleteObsoleteImporterAppointments($validImporters)
+    {
+        $obsoleteImporters = [];
+        $appointments = $this->container->get('doctrine.orm.entity_manager')->getRepository(Appointment::class)->findAll();
+        /** @var Appointment $appointment */
+        foreach ($appointments as $appointment){
+            if(!in_array($appointment->getImporterName(), $validImporters)){
+                if(!in_array($appointment->getImporterName(), $obsoleteImporters)){
+                    $obsoleteImporters[] = $appointment->getImporterName();
+                }
+            }
+        }
+
+        foreach ($obsoleteImporters as $obsoleteImporter){
+            $appointments = $this->container->get('doctrine.orm.entity_manager')
+                ->getRepository(Appointment::class)->findBy(['importerName' => $obsoleteImporter]);
+            foreach ($appointments as $appointment){
+                $this->container->get('doctrine.orm.entity_manager')->remove($appointment);
+            }
         }
         $this->container->get('doctrine.orm.entity_manager')->flush();
     }
@@ -124,5 +159,12 @@ class ImportManager
             }
         }
         return false;
+    }
+
+    public function addImporterInstance(ImporterInterface $instance)
+    {
+        if(!$this->isInstanceAlreadyCreated($instance->getName())) {
+            $this->importerInstances[] = $instance;
+        }
     }
 }

@@ -63,7 +63,8 @@
     "league/uri": "^4.2",
     "jsvrcek/ics-bundle": "^0.1.0",
     "facebook/graph-sdk": "^5.4",
-    "johngrogg/ics-parser": "^2.0"
+    "johngrogg/ics-parser": "^2.0",
+    "simshaun/recurr": "^2.2"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",

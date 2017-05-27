@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\CalendarBundle\Entity\Appointment')->end()
                                         ->scalarNode('controller')->defaultValue('Enhavo\Bundle\CalendarBundle\Controller\AppointmentController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\ContentBundle\Repository\ContentRepository')->end()
+                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()
