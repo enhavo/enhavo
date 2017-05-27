@@ -43,3 +43,8 @@ services:
         arguments:
             - '%enhavo_calendar.export_name%'
             - '@doctrine.orm.entity_manager'
+
+    enhavo_calendar.appointment_provider:
+        class: Enhavo\Bundle\CalendarBundle\Provider\AppointmentProvider
+        arguments:
+            - '@doctrine.orm.entity_manager'

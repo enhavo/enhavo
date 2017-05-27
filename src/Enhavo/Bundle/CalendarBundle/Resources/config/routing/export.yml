@@ -1,7 +1,0 @@
-enhavo_calendar_appointment_export:
-    options:
-        expose: true
-    path: /calendar/export.ics
-    methods: [GET]
-    defaults:
-        _controller: enhavo_calendar.controller.appointment:exportICSAction

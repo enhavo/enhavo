@@ -15,3 +15,8 @@ enhavo_project_hompage_filter_articles:
     path: /article-stream/category/{id}
     defaults:
         _controller: EnhavoProjectBundle:Homepage:filterArticles
+
+enhavo_project_homepage_show_calendar:
+    path: /show-calendar
+    defaults:
+        _controller: EnhavoProjectBundle:Calendar:index
