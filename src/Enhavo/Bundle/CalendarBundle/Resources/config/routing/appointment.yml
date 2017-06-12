@@ -1,0 +1,4 @@
+# keep file for 0.3 release for BC
+enhavo_calendar:
+    resource: "@EnhavoCalendarBundle/Resources/config/routing/admin/appointment.yml"
+    prefix: /
