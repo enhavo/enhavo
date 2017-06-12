@@ -23,14 +23,14 @@ In this example we use a doctrine formType.
         'prototype' => true,
         'allow_add' => true,
         'by_reference' => false,
-        'allow_delete' => true,
+        'allow_delete' => true
     ));
 
 If you want to use your own entity, just replace the ``type`` like this:
 
 .. code-block:: php
 
-        'type' =>  'acme_bundle_tag',
+        'type' =>  'project_tag',
 
 In this example we added a tag to the ``enhavo_list``.
 

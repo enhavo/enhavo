@@ -81,3 +81,17 @@ gulp.task('changelog', function (cb) {
     cb(err);
   });
 });
+
+gulp.task('docs', function (cb) {
+  exec('sphinx-build -b html docs/source build/docs', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
+gulp.task('docs:watch', function () {
+  gulp.watch([
+    'docs/**/*.rst'
+  ], ['docs']);
+});

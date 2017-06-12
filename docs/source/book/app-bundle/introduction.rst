@@ -28,7 +28,7 @@ Imagine a library, where we have books. First, we would add our model.
 
     <?php
 
-        namespace Acme\LibraryBundle\Entity
+        namespace ProjectBundle\Entity
 
         class Book {
             private $author;
@@ -43,7 +43,7 @@ If we have a model, we also need the FormType
 
     <?php
 
-        namespace Acme\LibraryBundle\Form\Type
+        namespace ProjectBundle\Form\Type
 
         class BookType extends AbstractType {
             public function builder //..
@@ -56,9 +56,10 @@ Now, you add your controller. Of course our controller need the basic CRUD funct
 
     <?php
 
-        namespace Acme\LibraryBundle\Controller
+        namespace ProjectBundle\Controller
 
-        class BookController extends Controller {
+        class BookController extends Controller
+        {
             public function createAction() {  /* you know what to do here */ }
             public function readAction()   {  /* you know what to do here */ }
             public function updateAction() {  /* you know what to do here */ }
@@ -89,29 +90,29 @@ And last but not least, we add the routing.
 
 .. code-block:: yaml
 
-    acme_library_book_create:
-        path: /acme/library/book/create
+    project_book_create:
+        path: /project/book/create
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:create
+            _controller: ProjectBundle:Book:create
 
-    acme_library_book_read:
-        path: /acme/library/book/read
+    project_book_read:
+        path: /project/book/read
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:read
+            _controller: ProjectBundle:Book:read
 
-    acme_library_book_update:
-        path: /acme/library/book/update
+    project_book_update:
+        path: /project/book/update
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:update
+            _controller: ProjectBundle:Book:update
 
-    acme_library_book_delete:
-        path: /acme/library/book/delete
+    project_book_delete:
+        path: /project/book/delete
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:delete
+            _controller: ProjectBundle:Book:delete
 
 After this we can add and show the book model.
 
@@ -134,41 +135,41 @@ out the part of the view and controller. Instead we add our model to the configu
 
     sylius_resource:
         resources:
-            acme_library.book:
+            project.book:
                 driver: doctrine/orm
                 object_manager: default
-                templates: acme_library:Book
+                templates: project:Book
                 classes:
-                    model: Acme\LibraryBundle\Model\Book
-                    controller: Acme\LibraryBundle\Controller\BookController
+                    model: ProjectBundle\Model\Book
+                    controller: ProjectBundle\Controller\BookController
 
 
 .. code-block:: yaml
 
     //routing
-    acme_library_book_create:
-        path: /acme/library/book/create
+    project_book_create:
+        path: /project/book/create
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:create
+            _controller: ProjectBundle:Book:create
 
-    acme_library_book_read:
-        path: /acme/library/book/read
+    project_book_read:
+        path: /project/book/read
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:read
+            _controller: ProjectBundle:Book:read
 
-    acme_library_book_update:
-        path: /acme/library/book/update
+    project_book_update:
+        path: /project/book/update
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:update
+            _controller: ProjectBundle:Book:update
 
-    acme_library_book_delete:
-        path: /acme/library/book/delete
+    project_book_delete:
+        path: /project/book/delete
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:delete
+            _controller: ProjectBundle:Book:delete
 
 Instead of implementing a controller, we just create an empty class and extend AppBundles ResourceController.
 
@@ -193,14 +194,14 @@ information to the route definition.
 .. code-block:: yaml
 
     //routing
-    acme_library_book_create:
-        path: /acme/library/book/create
+    project_book_create:
+        path: /project/book/create
         methods: [GET]
         defaults:
-            _controller: AcmeLibraryBundle:Book:create
+            _controller: ProjectBundle:Book:create
             _viewer:
                 form:
-                    template: AcmeLibraryBundle:Book:form.html.twig
+                    template: ProjectBundle:Book:form.html.twig
 
 Of course the route provides much more features and options. This should only give you an idea what this bundle wants
 to do and where it can help you doing your work. The next chapters will give you a deeper understanding in what you

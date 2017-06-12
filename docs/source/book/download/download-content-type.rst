@@ -3,17 +3,17 @@ Download Content Type
 
 The ``DownloadBundle`` has a content item, which can be activated. This article show how you do this.
 
-Just add the item to ``enhavo_content``.
+Just add the item to ``enhavo_grid``.
 
 .. code-block:: yaml
 
-    enhavo_content:
+    enhavo_grid:
         items:
             download:
-                model: enhavo\DownloadBundle\Entity\DownloadItem
-                form: enhavo\DownloadBundle\Form\Type\DownloadItemType
-                repository: enhavoDownloadBundle:DownloadItem
-                template: enhavoDownloadBundle:Item:download.html.twig
+                model: Enhavo\DownloadBundle\Entity\DownloadItem
+                form: Enhavo\DownloadBundle\Form\Type\DownloadItemType
+                repository: EnhavoDownloadBundle:DownloadItem
+                template: EnhavoDownloadBundle:Item:download.html.twig
                 label: Download
 
 And the fields.html into the twig config.

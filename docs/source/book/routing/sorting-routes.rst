@@ -48,6 +48,6 @@ as well.
             _controller: enhavo_page.controller.slide:moveToPageAction
             _sylius:
                 sortable_position: position
-            _viewer:
-                sorting: desc
+                viewer:
+                    sorting: desc
 
