@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\CalendarBundle\Controller;
 
 
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 
 class AppointmentController extends ResourceController
 {
