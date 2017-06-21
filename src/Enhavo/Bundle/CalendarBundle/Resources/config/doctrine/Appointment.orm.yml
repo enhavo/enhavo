@@ -4,8 +4,7 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     repositoryClass: Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository
     fields:
         teaser:
-            type: string
-            length: 255
+            type: text
             nullable: true
         dateFrom:
             type: datetime
