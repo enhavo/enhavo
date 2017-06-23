@@ -55,7 +55,7 @@
     "knplabs/knp-menu-bundle": "^2.1",
     "memio/memio": "^1.1",
     "stof/doctrine-extensions-bundle": "^1.2",
-    "elasticsearch/elasticsearch": "^2.2",
+    "elasticsearch/elasticsearch": "^5.2",
     "smalot/pdfparser": "*",
     "tecnickcom/tcpdf": "^6.2",
     "guzzlehttp/guzzle": "^6.2",
