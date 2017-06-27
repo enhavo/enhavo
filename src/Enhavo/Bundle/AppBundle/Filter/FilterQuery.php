@@ -35,6 +35,22 @@ class FilterQuery
         ];
     }
 
+    public function removeOrderBy($property, $order)
+    {
+        if(!$property && !$order){
+            return;
+        }
+        foreach ($this->orderBy as $index => $orderBy){
+            if($property && $orderBy['property'] !== $property){
+                continue;
+            }
+            if($order && $orderBy['operator'] !== $order){
+                continue;
+            }
+            unset($this->orderBy[$index]);
+        }
+    }
+
     public function addWhere($property, $operator, $value, $joinProperty = null)
     {
         $this->where[] = [
@@ -43,6 +59,28 @@ class FilterQuery
             'value' => $value,
             'joinProperty' => $joinProperty
         ];
+    }
+
+    public function removeWhere($property, $operator, $value, $joinProperty = null)
+    {
+        if(!$property && !$operator && !$value && !$joinProperty){
+            return;
+        }
+        foreach ($this->where as $index => $where){
+            if($property && $where['property'] !== $property){
+                continue;
+            }
+            if($operator && $where['operator'] !== $operator){
+                continue;
+            }
+            if($value && $where['value'] !== $value){
+                continue;
+            }
+            if($joinProperty && $where['joinProperty'] !== $joinProperty){
+                continue;
+            }
+            unset($this->where[$index]);
+        }
     }
 
     public function getWhere()
