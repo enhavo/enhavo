@@ -45,8 +45,17 @@ trait EntityRepositoryTrait
         foreach($filterQuery->getWhere() as $where) {
             $i++;
             if($where['joinProperty']) {
-                $query->join(sprintf('e.%s', $where['property']), sprintf('j%s', $i));
-                $query->andWhere(sprintf('j%s.%s %s :parameter%s', $i, $where['joinProperty'], $this->getOperator($where), $i));
+                if(is_array($where['joinProperty']) && count($where['joinProperty'])) {
+                    $joinPrefixes = ['e', 'f', 'g', 'h'];
+                    foreach($where['joinProperty'] as $joinProperty) {
+                        $joinPrefix = array_shift($joinPrefixes);
+                        $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
+                    }
+                    $query->andWhere(sprintf('%s.%s %s :parameter%s', $joinPrefixes[0], $where['property'], $this->getOperator($where), $i));
+                } else {
+                    $query->join(sprintf('e.%s', $where['property']), sprintf('j%s', $i));
+                    $query->andWhere(sprintf('j%s.%s %s :parameter%s', $i, $where['property'], $this->getOperator($where), $i));
+                }
             } else {
                 $query->andWhere(sprintf('e.%s %s :parameter%s', $where['property'], $this->getOperator($where), $i));
             }
