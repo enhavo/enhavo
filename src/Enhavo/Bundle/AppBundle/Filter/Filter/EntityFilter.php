@@ -49,9 +49,10 @@ class EntityFilter extends AbstractType implements FilterInterface
         if($value == '') {
             return;
         }
-        
+
         $property = $this->getRequiredOption('property', $options);
-        $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value, 'id');
+        $propertyPath = explode('.', $property);
+        $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }
 
     public function getRepository($repository)
