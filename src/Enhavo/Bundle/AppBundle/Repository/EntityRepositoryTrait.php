@@ -42,11 +42,11 @@ trait EntityRepositoryTrait
         /** @var QueryBuilder $query */
         $query = $this->createQueryBuilder('e');
         $i = 0;
-        foreach($filterQuery->getWhere() as $where) {
+        foreach($filterQuery->getWhere() as $index => $where) {
             $i++;
             if($where['joinProperty']) {
                 if(is_array($where['joinProperty']) && count($where['joinProperty'])) {
-                    $joinPrefixes = ['e', 'f', 'g', 'h'];
+                    $joinPrefixes = $this->createJoinPropertyArray($index, count($where['joinProperty']) + 1);
                     foreach($where['joinProperty'] as $joinProperty) {
                         $joinPrefix = array_shift($joinPrefixes);
                         $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
@@ -67,6 +67,30 @@ trait EntityRepositoryTrait
         }
 
         return $this->getPaginator($query);
+    }
+
+    public function createJoinPropertyArray($index, $length)
+    {
+        $i=0;
+        $allLetters = [];
+
+        $letters = range('e', 'z');
+        $lettersAdded = $letters;
+        while ($length > 0) {
+            $i++;
+            foreach ($lettersAdded as $indexFor => &$addLetter){
+                $addLetter .= $letters[$indexFor];
+            }
+            foreach ($lettersAdded as $letter) {
+                $letter .= $index;
+                $allLetters[] = $letter;
+                $length--;
+                if($length <= 0){
+                    $allLetters[0] = 'e';
+                    return $allLetters;
+                }
+            }
+        }
     }
 
     private function getValue($where)
