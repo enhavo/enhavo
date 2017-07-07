@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
-use Doctrine\ORM\Query;
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
 use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;

@@ -30,8 +30,19 @@ class TextFilter extends AbstractType implements FilterInterface
     public function buildQuery(FilterQuery $query, $options, $value)
     {
         $property = $this->getRequiredOption('property', $options);
+        $joinProperty = [];
+        if(substr_count($property, '.') >= 1){
+            $exploded = explode('.', $property);
+            foreach ($exploded as $piece){
+                if(count($exploded) > 1){
+                    $joinProperty[] = array_shift($exploded);
+                } elseif (count($exploded) === 1) {
+                    $property = array_shift($exploded);
+                }
+            }
+        }
         if($value) {
-            $query->addWhere($property, FilterQuery::OPERATOR_LIKE, $value);
+            $query->addWhere($property, FilterQuery::OPERATOR_LIKE, $value, $joinProperty ? $joinProperty : null);
         }
     }
 
