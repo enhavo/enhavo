@@ -89,6 +89,11 @@ class Appointment extends Content
     protected $importerName;
 
     /**
+     * @var boolean
+     */
+    protected $notImporterHandled;
+
+    /**
      * Set teaser
      *
      * @param string $teaser
@@ -220,7 +225,7 @@ class Appointment extends Content
     /**
      * Get externalId
      *
-     * @return string 
+     * @return string
      */
     public function getExternalId()
     {
@@ -243,7 +248,7 @@ class Appointment extends Content
     /**
      * Get condition
      *
-     * @return string 
+     * @return string
      */
     public function getCondition()
     {
@@ -266,7 +271,7 @@ class Appointment extends Content
     /**
      * Get locationLongitude
      *
-     * @return string 
+     * @return string
      */
     public function getLocationLongitude()
     {
@@ -289,7 +294,7 @@ class Appointment extends Content
     /**
      * Get locationLatitude
      *
-     * @return string 
+     * @return string
      */
     public function getLocationLatitude()
     {
@@ -312,7 +317,7 @@ class Appointment extends Content
     /**
      * Get locationName
      *
-     * @return string 
+     * @return string
      */
     public function getLocationName()
     {
@@ -335,7 +340,7 @@ class Appointment extends Content
     /**
      * Get locationCity
      *
-     * @return string 
+     * @return string
      */
     public function getLocationCity()
     {
@@ -358,7 +363,7 @@ class Appointment extends Content
     /**
      * Get locationCountry
      *
-     * @return string 
+     * @return string
      */
     public function getLocationCountry()
     {
@@ -381,7 +386,7 @@ class Appointment extends Content
     /**
      * Get locationStreet
      *
-     * @return string 
+     * @return string
      */
     public function getLocationStreet()
     {
@@ -404,7 +409,7 @@ class Appointment extends Content
     /**
      * Get locationZip
      *
-     * @return string 
+     * @return string
      */
     public function getLocationZip()
     {
@@ -427,7 +432,7 @@ class Appointment extends Content
     /**
      * Get repeatRule
      *
-     * @return string 
+     * @return string
      */
     public function getRepeatRule()
     {
@@ -450,10 +455,33 @@ class Appointment extends Content
     /**
      * Get importerName
      *
-     * @return string 
+     * @return string
      */
     public function getImporterName()
     {
         return $this->importerName;
+    }
+
+    /**
+     * Set notImporterHandled
+     *
+     * @param boolean $notImporterHandled
+     * @return Appointment
+     */
+    public function setNotImporterHandled($notImporterHandled)
+    {
+        $this->notImporterHandled = $notImporterHandled;
+
+        return $this;
+    }
+
+    /**
+     * Get notImporterHandled
+     *
+     * @return boolean
+     */
+    public function getNotImporterHandled()
+    {
+        return $this->notImporterHandled;
     }
 }

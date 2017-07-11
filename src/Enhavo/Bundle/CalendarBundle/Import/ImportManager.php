@@ -94,6 +94,9 @@ class ImportManager
             $appointments = $this->container->get('doctrine.orm.entity_manager')
                 ->getRepository(Appointment::class)->findBy(['importerName' => $obsoleteImporter]);
             foreach ($appointments as $appointment){
+                if($appointment->getNotImporterHandled()){
+                    continue;
+                }
                 $this->container->get('doctrine.orm.entity_manager')->remove($appointment);
             }
         }
