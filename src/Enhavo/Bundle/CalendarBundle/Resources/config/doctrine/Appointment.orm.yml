@@ -42,6 +42,9 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
         importerName:
             type: text
             nullable: true
+        notImporterHandled:
+            type: boolean
+            nullable: true
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
