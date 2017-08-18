@@ -14,7 +14,8 @@ class PositionWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
-        return $this->renderTemplate('EnhavoAppBundle:TableWidget:position.html.twig');
+        $template = $this->getOption('template', $options, 'EnhavoAppBundle:TableWidget:position.html.twig');
+        return $this->renderTemplate($template);
     }
 
     public function getLabel($options)

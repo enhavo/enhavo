@@ -101,6 +101,14 @@ trait EntityRepositoryTrait
             return '%'.$value.'%';
         }
 
+        if($where['operator'] == FilterQuery::OPERATOR_START_LIKE) {
+            return $value.'%';
+        }
+
+        if($where['operator'] == FilterQuery::OPERATOR_END_LIKE) {
+            return '%'.$value;
+        }
+
         return $value;
     }
 
@@ -110,6 +118,8 @@ trait EntityRepositoryTrait
             case(FilterQuery::OPERATOR_EQUALS):
                 return '=';
             case(FilterQuery::OPERATOR_LIKE):
+            case(FilterQuery::OPERATOR_START_LIKE):
+            case(FilterQuery::OPERATOR_END_LIKE):
                 return 'like';
         }
         throw new FilterException('Operator not supported in Repository');

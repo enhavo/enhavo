@@ -34,6 +34,7 @@ user:
     username: 'Username'
     id: 'ID'
     user: 'User'
+    email: 'Email'
 reset:
   form:
     error:

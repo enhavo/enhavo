@@ -16,7 +16,9 @@ class BooleanFilter extends AbstractType implements FilterInterface
 {
     public function render($options, $value)
     {
-        return $this->renderTemplate('EnhavoAppBundle:Filter:boolean.html.twig', [
+        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:boolean.html.twig');
+
+        return $this->renderTemplate($template, [
             'type' => $this->getType(),
             'value' => $value,
             'label' => $this->getOption('label', $options, ''),

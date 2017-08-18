@@ -14,8 +14,9 @@ class BooleanWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
+        $template = $this->getOption('template', $options, 'EnhavoAppBundle:TableWidget:boolean.html.twig');
         $property = $this->getProperty($item, $options['property']);
-        return $this->renderTemplate('EnhavoAppBundle:TableWidget:boolean.html.twig', array(
+        return $this->renderTemplate($template, array(
             'value' => (boolean) $property
         ));
     }
