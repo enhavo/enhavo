@@ -20,7 +20,7 @@ class UserFixture extends AbstractFixture
     {
         $user = new User();
         $user->setEmail($args['email']);
-        $user->setUsername($args['username']);
+        $user->setUsername($args['email']);
         $user->setPlainPassword($args['password']);
         
         if(isset($args['roles']) && is_array($args['roles'])) {

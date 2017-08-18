@@ -71,51 +71,25 @@ class InstallCommand extends ContainerAwareCommand
         $output->writeln('<info>Create admin user</info>');
         $helper = $this->getHelper('question');
 
-        $username = $input->getOption('user');
-        $password = $input->getOption('password');
         $email = $input->getOption('email');
+        $password = $input->getOption('password');
 
-        if(empty($username)) {
-            $username = $this->askForUsername($input, $output);
+        if(empty($email)) {
+            $email = $this->askForEmail($input, $output);
         }
 
         if(empty($password)) {
             $password = $this->askForPassword($input, $output);
         }
 
-        if(empty($email)) {
-            $email = $this->askForEmail($input, $output);
-        }
-
         $question = new ConfirmationQuestion('<info>Is this information correct</info> [<comment>yes</comment>]?', true);
 
         if ($helper->ask($input, $output, $question)) {
-            $this->createUser($username, $email, $password);
+            $this->createUser($email, $email, $password);
             $output->writeln('User created');
         } else {
             $output->writeln('Aborted');
         }
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return mixed
-     */
-    private function askForUserName(InputInterface $input, OutputInterface $output)
-    {
-        $helper = $this->getHelper('question');
-        $question = new Question('<question>Admin username:</question> ', 'admin');
-        $username = $helper->ask($input, $output, $question);
-
-        $repository = $this->getContainer()->get('enhavo_user.repository.user');
-        $user = $repository->findOneBy(['username' => $username]);
-        if(!empty($user)) {
-            $output->writeln('<error>Username already exists!</error>');
-            return $this->askForUserName($input, $output);
-        }
-
-        return $username;
     }
 
     /**
@@ -140,22 +114,6 @@ class InstallCommand extends ContainerAwareCommand
             return $this->askForEmail($input, $output);
         }
         return $email;
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return mixed
-     */
-    private function askForDemoData(InputInterface $input, OutputInterface $output)
-    {
-        $helper = $this->getHelper('question');
-        $question = new Question('<question>Add demo data:</question> ');
-        $answer = $helper->ask($input, $output, $question);
-
-        if($answer == 'yes') {
-            $this->getContainer()->get('enhavo_installer.demo_fixtures');
-        }
     }
 
     /**
@@ -197,18 +155,17 @@ class InstallCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param $username
      * @param $email
      * @param $password
      */
-    protected function createUser($username, $email, $password)
+    protected function createUser($email, $password)
     {
         $manager = $this->getContainer()->get('fos_user.user_manager');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $factory = $this->getContainer()->get('enhavo_user.factory.user');
         /** @var User $user */
         $user = $factory->createNew();
-        $user->setUsername($username);
+        $user->setUsername($email);
         $user->setEmail($email);
         $user->setPlainPassword($password);
         $user->addRole('ROLE_SUPER_ADMIN');
