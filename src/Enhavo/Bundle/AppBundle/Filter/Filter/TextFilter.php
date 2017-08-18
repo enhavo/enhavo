@@ -43,8 +43,11 @@ class TextFilter extends AbstractType implements FilterInterface
                 }
             }
         }
+        
+        $operator = $this->getOption('operator', $options, FilterQuery::OPERATOR_LIKE);
+        
         if($value) {
-            $query->addWhere($property, FilterQuery::OPERATOR_LIKE, $value, $joinProperty ? $joinProperty : null);
+            $query->addWhere($property, $operator, $value, $joinProperty ? $joinProperty : null);
         }
     }
 

@@ -41,10 +41,10 @@ enhavo_user_user_table:
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
             filters:
-                title:
+                username:
                     type: text
-                    property: username
-                    label: user.label.username
+                    property: email
+                    label: user.label.email
                     translationDomain: EnhavoUserBundle
                 group:
                     type: entity
@@ -56,9 +56,9 @@ enhavo_user_user_table:
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:
-                    username:
-                        label: user.label.username
-                        property: username
+                    email:
+                        label: user.label.email
+                        property: email
                         width: 6
                     groups:
                         type: list

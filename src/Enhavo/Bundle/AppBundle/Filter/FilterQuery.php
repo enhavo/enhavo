@@ -13,6 +13,8 @@ class FilterQuery
 {
     const OPERATOR_EQUALS = '=';
     const OPERATOR_LIKE = 'like';
+    const OPERATOR_START_LIKE = 'start_like';
+    const OPERATOR_END_LIKE = 'end_like';
 
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
