@@ -9,7 +9,9 @@ class DownloadAction extends AbstractType implements ActionInterface
 {
     public function render($parameters)
     {
-        return $this->renderTemplate('EnhavoAppBundle:Action:default.html.twig', [
+        $template = $this->getOption('template', $parameters, 'EnhavoAppBundle:Action:default.html.twig');
+
+        return $this->renderTemplate($template, [
             'type' => $this->getType(),
             'actionType' => 'link',
             'route' => $this->getOption('route', $parameters, ''),

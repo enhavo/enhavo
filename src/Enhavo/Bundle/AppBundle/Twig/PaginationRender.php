@@ -7,9 +7,14 @@ use Twig_Environment;
 
 class PaginationRender extends \Twig_Extension
 {
-    /** @var $templateEngine Twig_Environment */
+    /**
+     * @var $templateEngine Twig_Environment
+     */
     protected $twigEnvironment;
 
+    /**
+     * @var string
+     */
     protected $template = '';
 
     public function initRuntime(Twig_Environment $environment)

@@ -63,3 +63,8 @@ services:
             - '@service_container'
         tags:
             - { name: twig.extension }
+
+    enhavo_app.twig.slugify:
+        class: Enhavo\Bundle\AppBundle\Twig\Slugify
+        tags:
+            - { name: twig.extension }

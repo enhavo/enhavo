@@ -17,7 +17,9 @@ class TextFilter extends AbstractType implements FilterInterface
 {
     public function render($options, $value)
     {
-        return $this->renderTemplate('EnhavoAppBundle:Filter:text.html.twig', [
+        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:text.html.twig');
+
+        return $this->renderTemplate($template, [
             'type' => $this->getType(),
             'value' => $value,
             'label' => $this->getOption('label', $options, ''),
@@ -33,7 +35,7 @@ class TextFilter extends AbstractType implements FilterInterface
         $joinProperty = [];
         if(substr_count($property, '.') >= 1){
             $exploded = explode('.', $property);
-            foreach ($exploded as $piece){
+            foreach ($exploded as $piece) {
                 if(count($exploded) > 1){
                     $joinProperty[] = array_shift($exploded);
                 } elseif (count($exploded) === 1) {

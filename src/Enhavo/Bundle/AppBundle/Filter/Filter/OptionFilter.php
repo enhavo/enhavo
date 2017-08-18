@@ -17,7 +17,9 @@ class OptionFilter extends AbstractType implements FilterInterface
 {
     public function render($options, $value)
     {
-        return $this->renderTemplate('EnhavoAppBundle:Filter:option.html.twig', [
+        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:option.html.twig');
+
+        return $this->renderTemplate($template, [
             'type' => $this->getType(),
             'value' => $value,
             'label' => $this->getOption('label', $options, ''),

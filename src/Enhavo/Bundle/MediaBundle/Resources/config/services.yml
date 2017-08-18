@@ -3,6 +3,7 @@ parameters:
     enhavo_media.file_service.class: Enhavo\Bundle\MediaBundle\Service\FileService
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
     enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
+    enhavo_media.controller.file_controller.class: Enhavo\Bundle\MediaBundle\Controller\FileController
 
 services:
     enhavo_media_files:
@@ -58,7 +59,7 @@ services:
             - '@doctrine.orm.entity_manager'
 
     enhavo_media.controller.file:
-        class: Enhavo\Bundle\MediaBundle\Controller\FileController
+        class: '%enhavo_media.controller.file_controller.class%'
         arguments:
             - '@enhavo_media.file_service'
         calls:

@@ -19,8 +19,9 @@ class ChartBlock extends AbstractType implements BlockInterface
         $translationDomain = $this->getOption('translationDomain', $parameters, null);
         $provider = $this->getRequiredOption('provider', $parameters);
         $provider = $this->getChartProvider($provider);
+        $template = $this->getOption('template', $parameters, 'EnhavoAppBundle:Block:chart.html.twig');
 
-        return $this->renderTemplate('EnhavoAppBundle:Block:chart.html.twig', [
+        return $this->renderTemplate($template, [
             'app' => $this->getOption('app', $parameters, 'app/Block/Chart'),
             'data' => $provider->getData($parameters),
             'options' => $provider->getOptions($parameters),

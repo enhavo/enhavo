@@ -17,6 +17,7 @@ class TableBlock extends AbstractType implements BlockInterface
     {
         $translationDomain = $this->getOption('translationDomain', $parameters, null);
         $tableRoute = $this->getRequiredOption('table_route', $parameters);
+        $template = $this->getOption('template', $parameters, 'EnhavoAppBundle:Block:table.html.twig');
 
         if(!isset($parameters['filters'])) {
             $filters = $this->getFiltersFromRoute($tableRoute, $translationDomain);
@@ -24,7 +25,7 @@ class TableBlock extends AbstractType implements BlockInterface
             $filters = $this->getFilters($this->getOption('filters', $parameters, []), $translationDomain);
         }
 
-        return $this->renderTemplate('EnhavoAppBundle:Block:table.html.twig', [
+        return $this->renderTemplate($template, [
             'app' => $this->getOption('app', $parameters, 'app/Block/Table'),
             'table_route' => $tableRoute,
             'table_route_parameters' => $this->getOption('table_route_parameters', $parameters, null),
