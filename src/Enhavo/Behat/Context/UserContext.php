@@ -42,7 +42,7 @@ class UserContext extends KernelContext
      */
     public function adminUser()
     {
-        $user = $this->findUser('admin');
+        $user = $this->findUser('admin@enhavo.com');
         $em = $this->getManager();
         if($user === null) {
             $group = $this->createAdminGroup();
@@ -74,7 +74,6 @@ class UserContext extends KernelContext
     public function createAdminUser($group)
     {
         $user = new User();
-        $user->setUsername('admin');
         $user->setEmail('admin@enhavo.com');
         $user->setPlainPassword('admin');
         $user->setEnabled(true);
@@ -145,7 +144,7 @@ class UserContext extends KernelContext
      */
     public function iAmLoggedInAsAdmin()
     {
-        $this->iAmLoggedInAsUser('admin');
+        $this->iAmLoggedInAsUser('admin@enhavo.com');
     }
 
     /**
