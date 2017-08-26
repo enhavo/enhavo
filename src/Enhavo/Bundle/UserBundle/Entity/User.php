@@ -154,4 +154,13 @@ class User extends BaseUser implements UserInterface, ResourceInterface
 
         return $this;
     }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->setUsername($email);
+        return parent::setEmail($email);
+    }
 }

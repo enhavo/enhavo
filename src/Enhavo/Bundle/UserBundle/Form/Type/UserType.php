@@ -15,8 +15,8 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', 'text', array(
-            'label' => 'user.form.label.username',
+        $builder->add('email', 'text', array(
+            'label' => 'user.form.label.email',
             'translation_domain' => 'EnhavoUserBundle'
         ));
 
@@ -26,11 +26,6 @@ class UserType extends AbstractType
             'first_options' => array('label' => 'form.password'),
             'second_options' => array('label' => 'form.password_confirmation'),
             'invalid_message' => 'fos_user.password.mismatch',
-        ));
-
-        $builder->add('email', 'text', array(
-            'label' => 'user.form.label.email',
-            'translation_domain' => 'EnhavoUserBundle'
         ));
 
         $builder->add('firstName', 'text', array(
