@@ -5,21 +5,14 @@ doctrine:
             Enhavo\Bundle\UserBundle\Model\GroupInterface: Enhavo\Bundle\UserBundle\Entity\Group
 
 fos_user:
+    from_email:
+        address: '%mailer_from%'
+        sender_name: '%mailer_name%'
     db_driver: orm
     firewall_name: main
     user_class: Enhavo\Bundle\UserBundle\Entity\User
     group:
         group_class: Enhavo\Bundle\UserBundle\Entity\Group
-    resetting:
-        email:
-            from_email:
-                address: '%mailer_from%'
-                sender_name: '%mailer_name%'
-    registration:
-        confirmation:
-            from_email:
-                address: '%mailer_from%'
-                sender_name: '%mailer_name%'
 
 enhavo_app:
     roles:
@@ -39,7 +32,6 @@ enhavo_app:
             role: ROLE_ENHAVO_USER_USER_DELETE
             label: user.role.label.delete
             translationDomain: EnhavoUserBundle
-
         enhavo_user_group_index:
             role: ROLE_ENHAVO_USER_GROUP_INDEX
             label: group.role.label.index
