@@ -8,52 +8,82 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
-use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatSetting;
+use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 
 class FormatManager
 {
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
     /**
      * @var array
      */
     private $formats;
 
-    public function __construct($path, $filesystem, $formats)
+    /**
+     * @var StorageInterface
+     */
+    private $storage;
+
+    /**
+     * @var ProviderInterface
+     */
+    private $provider;
+
+    /**
+     * @var FormatFactory
+     */
+    private $formatFactory;
+
+    public function __construct($formats, StorageInterface $storage, ProviderInterface $provider, FormatFactory $formatFactory)
     {
-        $this->path = $path;
-        $this->filesystem = $filesystem;
         $this->formats = $formats;
+        $this->storage = $storage;
+        $this->provider = $provider;
+        $this->formatFactory = $formatFactory;
     }
 
-    public function createFormat(File $file, $format)
+    public function getFormat(FileInterface $file, $format, $parameters = [])
     {
         $setting = $this->getFormatSettings($format);
+        $content = $this->storage->getContent($file);
 
-        $originalPath = sprintf('%s/%s', $this->path, $file->getId());
-        $targetPath = sprintf('%s/custom/%s/%s', $this->path, $format, $file->getId());
         $savePath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Imagine'), $file->getExtension());
-
         $imagine = new Imagine();
-        $imagine = $imagine->open($originalPath);
+        $imagine = $imagine->load($content);
         $imagine = $this->format($imagine, $setting);
         $imagine->save($savePath);
 
-        $this->filesystem->copy($savePath, $targetPath);
+        $format = $this->formatFactory->createFromPath($savePath);
+        $format->setFile($file);
+        $this->provider->saveFormat($format);
+        $this->storage->saveFile($format);
+        return $format;
+    }
+
+    public function deleteFormats(FileInterface $file)
+    {
+        $formats = $this->provider->findAllFormats($file);
+        foreach($formats as $format) {
+            $this->deleteFormat($format);
+        }
+    }
+
+    public function saveFormat(FormatInterface $format)
+    {
+        $this->provider->saveFormat($format);
+        $this->storage->saveFile($format);
+    }
+
+    public function deleteFormat(FormatInterface $format)
+    {
+        $this->provider->deleteFormat($format);
+        $this->storage->deleteFile($format);
     }
 
     public function format(ImageInterface $image, FormatSetting $setting)
@@ -85,7 +115,7 @@ class FormatManager
         return $image;
     }
 
-    protected function resizeWithFixHeightAndWidth(ImageInterface $image, $width, $height)
+    private function resizeWithFixHeightAndWidth(ImageInterface $image, $width, $height)
     {
         if($image->getSize()->getHeight() < $height) {
             $image = $this->scaleToHeight($image, $height);
@@ -100,7 +130,7 @@ class FormatManager
         return $image;
     }
 
-    protected function resizeWithMaxHeightAndWidth(ImageInterface $image, $width, $height)
+    private function resizeWithMaxHeightAndWidth(ImageInterface $image, $width, $height)
     {
         if($image->getSize()->getHeight() > $height) {
             $image = $this->scaleToHeight($image, $height);
@@ -113,7 +143,7 @@ class FormatManager
         return $image;
     }
 
-    protected function resizeWithMaxHeight(ImageInterface $image, $height)
+    private function resizeWithMaxHeight(ImageInterface $image, $height)
     {
         if($image->getSize()->getHeight() > $height) {
             $image = $this->scaleToHeight($image, $height);
@@ -122,7 +152,7 @@ class FormatManager
         return $image;
     }
 
-    protected function resizeWithMaxWidth(ImageInterface $image, $width)
+    private function resizeWithMaxWidth(ImageInterface $image, $width)
     {
         if($image->getSize()->getWidth() > $width) {
             $image = $this->scaleToWidth($image, $width);
@@ -131,13 +161,13 @@ class FormatManager
         return $image;
     }
 
-    protected function scaleToHeight(ImageInterface $image, $height)
+    private function scaleToHeight(ImageInterface $image, $height)
     {
         $width = $image->getSize()->getWidth() / $image->getSize()->getHeight() * $height;
         return $image->resize(new Box($width, $height));
     }
 
-    protected function scaleToWidth(ImageInterface $image, $width)
+    private function scaleToWidth(ImageInterface $image, $width)
     {
         $height = $width / ($image->getSize()->getWidth() / $image->getSize()->getHeight());
         return $image->resize(new Box($width, $height));

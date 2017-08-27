@@ -1,0 +1,173 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 26.08.17
+ * Time: 21:13
+ */
+
+namespace Enhavo\Bundle\MediaBundle\Controller;
+
+use Enhavo\Bundle\MediaBundle\Exception\StorageException;
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
+class UploadController extends Controller
+{
+    /**
+     * @var FileFactory
+     */
+    private $fileFactory;
+
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    /**
+     * @var FormatFactory
+     */
+    private $formatFactory;
+
+    public function __construct(
+        FileFactory $fileFactory,
+        FormatFactory $formatFactory,
+        MediaManager $mediaManager)
+    {
+        $this->fileFactory = $fileFactory;
+        $this->formatFactory = $formatFactory;
+        $this->mediaManager = $mediaManager;
+    }
+
+    public function uploadAction(Request $request)
+    {
+        $files = $request->files->get('files');
+        $storedFiles = [];
+        foreach($files as $uploadedFile) {
+            try {
+                /** @var $uploadedFile UploadedFile */
+                if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+                    throw new UploadException('Error in file upload');
+                }
+                $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
+                $this->mediaManager->saveFile($file);
+            } catch(StorageException $exception) {
+                foreach($storedFiles as $file) {
+                    $this->mediaManager->deleteFile($file);
+                }
+            }
+        }
+
+        return $this->getFileResponse($files);
+    }
+
+    public function replaceAction(Request $request)
+    {
+        $file = $this->getFileByToken($request);
+        $uploadedFile = $this->getUploadedFile($request);
+
+        $newFile = $this->fileFactory->createFromUploadedFile($uploadedFile);
+
+        $file->setContent($newFile->getContent());
+        $file->setMimeType($newFile->getMimeType());
+        $file->setFilename($newFile->getFilename());
+        $file->setExtension($newFile->getExtension());
+
+        $this->mediaManager->saveFile($file);
+
+        return $this->getFileResponse($file);
+    }
+
+    public function replaceFormatAction(Request $request)
+    {
+        $format = $request->get('format');
+        $file = $this->getFileByToken($request);
+        $uploadedFile = $this->getUploadedFile($request);
+
+        $format = $this->mediaManager->getFormat($file, $format);
+        $newFormat = $this->fileFactory->createFromUploadedFile($uploadedFile);
+
+        $format->setContent($newFormat->getContent());
+        $format->setMimeType($newFormat->getMimeType());
+        $format->setExtension($newFormat->getExtension());
+
+        $this->mediaManager->saveFormat($format);
+
+        return $this->getFileResponse($file);
+    }
+
+    /**
+     * @param Request $request
+     * @return FileInterface
+     */
+    private function getFileByToken(Request $request)
+    {
+        $token = $request->get('token');
+
+        $file = $this->mediaManager->findOneBy([
+            'token' => $token
+        ]);
+
+        if (!$file) {
+            throw $this->createNotFoundException();
+        }
+
+        return $file;
+    }
+
+    private function getUploadedFile(Request $request)
+    {
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('file');
+        if (!$uploadedFile) {
+            throw new BadRequestHttpException('File not in request');
+        }
+
+        if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+            throw new UploadException('Error in file upload');
+        }
+
+        return $uploadedFile;
+    }
+
+    private function getFileResponse($files)
+    {
+        $data = null;
+
+        if(is_array($files)) {
+            $data = [];
+            /** @var FileInterface $file */
+            foreach($files as $file) {
+                $data[] = [
+                    'id' => $file->getId(),
+                    'token' => $file->getToken(),
+                    'filename' => $file->getFilename(),
+                    'extension' => $file->getExtension(),
+                    'mimeType' => $file->getMimeType(),
+                    'md5Checksum' => $file->getMd5Checksum()
+                ];
+            }
+        }
+
+        if($files instanceof FileInterface) {
+            $data = [
+                'id' => $files->getId(),
+                'token' => $files->getToken(),
+                'filename' => $files->getFilename(),
+                'extension' => $files->getExtension(),
+                'mimeType' => $files->getMimeType(),
+                'md5Checksum' => $files->getMd5Checksum()
+            ];
+        }
+
+        return new JsonResponse($data);
+    }
+}

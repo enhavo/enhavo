@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
@@ -36,11 +36,6 @@ class File implements FileInterface
     protected $filename;
 
     /**
-     * @var string
-     */
-    protected $slug;
-
-    /**
      * @var array
      */
     protected $parameters;
@@ -56,6 +51,21 @@ class File implements FileInterface
     protected $garbageTimestamp;
 
     /**
+     * @var ContentInterface
+     */
+    protected $content;
+
+    /**
+     * @var string
+     */
+    protected $token;
+
+    /**
+     * @var string
+     */
+    protected $md5Checksum;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -63,11 +73,6 @@ class File implements FileInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -167,22 +172,6 @@ class File implements FileInterface
         $this->filename = $filename;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
     }
 
     /**
@@ -300,5 +289,61 @@ class File implements FileInterface
     public function isImage()
     {
         return strtolower(substr($this->getMimeType(), 0, 5)) == 'image';
+    }
+
+    /**
+     * @param string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * @return ContentInterface
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param ContentInterface $content
+     */
+    public function setContent(ContentInterface $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMd5Checksum()
+    {
+        return $this->md5Checksum;
+    }
+
+    /**
+     * @param string $md5Checksum
+     */
+    public function setMd5Checksum($md5Checksum)
+    {
+        $this->md5Checksum = $md5Checksum;
     }
 }

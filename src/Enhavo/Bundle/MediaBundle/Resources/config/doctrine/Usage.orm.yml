@@ -1,0 +1,12 @@
+Enhavo\Bundle\MediaBundle\Entity\Usage:
+    type: entity
+    table: media_usage
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    lifecycleCallbacks: {  }
