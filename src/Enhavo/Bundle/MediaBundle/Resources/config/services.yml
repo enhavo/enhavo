@@ -2,36 +2,47 @@ parameters:
     enhavo_media.form.files_type.class: Enhavo\Bundle\MediaBundle\Form\Type\FilesType
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
     enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
-    enhavo_media.controller.file_controller.class: Enhavo\Bundle\MediaBundle\Controller\FileController
+    enhavo_media.controller.file.class: Enhavo\Bundle\MediaBundle\Controller\FileController
+    enhavo_media.controller.upload.class: Enhavo\Bundle\MediaBundle\Controller\UploadController
 
 services:
-    enhavo_media_files:
+    enhavo_media.form.files:
         class: '%enhavo_media.form.files_type.class%'
         arguments:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type, alias: enhavo_files }
 
-    enhavo_media.media_manager:
+    enhavo_media.media.media_manager:
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
         arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_media.format_manager'
-            - '@enhavo_media.storage.file_storage'
+            - '@enhavo_media.media.format_manager'
+            - '@enhavo_media.storage'
+            - '@enhavo_media.provider'
+            - '@enhavo_app.util.secure_url_token_generator'
 
-    enhavo_media.storage.file_storage:
-        class:
-        arguments:
-            - '%kernel.root_dir%/media'
-
-    enhavo_media.format_manager:
+    enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager
         arguments:
-            - '@filesystem'
             - '%enhavo_media.formats%'
-            - '@enhavo_media.storage.file_storage'
+            - '@enhavo_media.storage'
+            - '@enhavo_media.provider'
+            - '@enhavo_media.factory.format'
 
-    enhavo_media.twig_extension:
+    enhavo_media.storage.local_file_storage:
+        class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
+        arguments:
+            - '%kernel.root_dir%/media'
+            - '@filesystem'
+
+    enhavo_media.provider.database_provider:
+        class: Enhavo\Bundle\MediaBundle\Provider\DatabaseProvider
+        arguments:
+            - '@enhavo_media.repository.file'
+            - '@enhavo_media.repository.format'
+            - '@doctrine.orm.entity_manager'
+
+    enhavo_media.twig.media_extension:
         class: '%enhavo_media.twig_extension.class%'
         arguments:
             - '@service_container'
@@ -39,7 +50,7 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_media.lifecycle_listener:
+    enhavo_media.listener.lifecycle_listener:
         class: '%enhavo_media.lifecycle_listener.class%'
         arguments:
              - '@service_container'
@@ -58,14 +69,29 @@ services:
     enhavo_media.factory.file:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
         arguments:
-            - 'Enhavo\Bundle\MediaBundle\Entity\File'
+            - '%enhavo_media.model.file.class%'
             - '%kernel.root_dir%/media'
             - '@doctrine.orm.entity_manager'
 
-    enhavo_media.controller.file:
-        class: '%enhavo_media.controller.file_controller.class%'
+    enhavo_media.factory.format:
+        class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
         arguments:
-            - '@enhavo_media.file_service'
+            - '%enhavo_media.model.format.class%'
+
+    enhavo_media.controller.file:
+        class: '%enhavo_media.controller.file.class%'
+        arguments:
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.security.default_authorization_checker'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_media.controller.upload:
+        class: '%enhavo_media.controller.upload.class%'
+        arguments:
+            - '@enhavo_media.factory.file'
+            - '@enhavo_media.factory.format'
+            - '@enhavo_media.media.format_manager'
         calls:
             - [setContainer, ['@service_container']]
 
