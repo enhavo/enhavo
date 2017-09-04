@@ -33,8 +33,12 @@ abstract class AbstractType implements ContainerAwareInterface
         if(count($propertyPath) > 1) {
             $property = array_shift($propertyPath);
             $newResource = $this->getProperty($resource, $property);
-            $propertyPath = implode('.', $propertyPath);
-            return $this->getProperty($newResource, $propertyPath);
+            if($newResource !== null) {
+                $propertyPath = implode('.', $propertyPath);
+                return $this->getProperty($newResource, $propertyPath);
+            } else {
+                return null;
+            }
         } else {
             $method = sprintf('is%s', ucfirst($property));
             if(method_exists($resource, $method)) {
