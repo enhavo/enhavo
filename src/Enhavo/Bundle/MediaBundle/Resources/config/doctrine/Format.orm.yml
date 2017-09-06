@@ -27,8 +27,8 @@ Enhavo\Bundle\MediaBundle\Entity\Format:
               type: json_array
               nullable: true
 
-    oneToMany:
-        parent:
-            targetEntity: FileInterface
+    manyToMany:
+        file:
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 
     lifecycleCallbacks: {  }

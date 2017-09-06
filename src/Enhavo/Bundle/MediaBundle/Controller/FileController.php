@@ -3,9 +3,9 @@
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
-use Enhavo\Bundle\MediaBundle\Security\AuthorizationChecker\AuthorizationCheckerInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,12 +27,9 @@ class FileController extends Controller
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function showAction($id, $filename)
+    public function showAction(Request $request)
     {
-        $file = $this->mediaManager->findOneBy([
-            'id' => $id,
-            'filename' => $filename
-        ]);
+        $file = $this->getFile($request);
 
         if(!$this->authorizationChecker->isGranted($file)) {
             throw $this->createAccessDeniedException();
@@ -41,31 +38,63 @@ class FileController extends Controller
         $response = new Response();
         $response->setContent($file->getContent()->getContent());
         $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Disposition', sprintf('filename="%s"', $filename));
+        $response->headers->set('Content-Disposition', sprintf('filename="%s"', $file->getFilename()));
         return $response;
     }
 
-    public function downloadAction($id, $filename)
+    /**
+     * @return FileInterface
+     */
+    private function getFile(Request $request)
     {
-        $response = $this->showAction($id, $filename);
+        $id = $request->get('id');
+        $filename = $request->get('filename');
+        $shortChecksum = $request->get('shortMd5Checksum');
+
+        $file = $this->mediaManager->findOneBy([
+            'id' => $id,
+            'filename' => $filename
+        ]);
+
+        if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $file;
+    }
+
+    public function downloadAction(Request $request)
+    {
+        $filename = $request->get('filename');
+
+        $response = $this->showAction($request);
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
         return $response;
     }
 
-    public function showFormatAction($id, $filename, $format)
+    public function showFormatAction(Request $request)
     {
+        $id = $request->get('id');
+        $filename = $request->get('filename');
+        $shortChecksum = $request->get('shortMd5Checksum');
+        $format = $request->get('format');
+
         $file = $this->mediaManager->findOneBy([
             'id' => $id
         ]);
 
-        if(!$this->authorizationChecker->isGranted($file)) {
-            throw $this->createAccessDeniedException();
+        if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
+            throw $this->createNotFoundException();
         }
 
         $formatFile = $this->mediaManager->getFormat($file, $format);
         if($formatFile->getFilename() !== $filename) {
             throw $this->createNotFoundException();
+        }
+
+        if(!$this->authorizationChecker->isGranted($file)) {
+            throw $this->createAccessDeniedException();
         }
 
         $response = new Response();
@@ -75,11 +104,28 @@ class FileController extends Controller
         return $response;
     }
 
-    public function downloadFormatAction($id, $filename, $format)
+    public function downloadFormatAction(Request $request)
     {
-        $response = $this->showFormatAction($id, $filename, $format);
+        $filename = $request->get('filename');
+
+        $response = $this->showFormatAction($request);
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
         return $response;
+    }
+
+    public function resolveAction(Request $request)
+    {
+        $token = $request->get('token');
+
+        $file = $this->mediaManager->findOneBy([
+            'token' => $token
+        ]);
+
+        return $this->redirectToRoute('enhavo_media_show', [
+            'id' => $file->getId(),
+            'md5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'filename' => $file->getFilename(),
+        ]);
     }
 }

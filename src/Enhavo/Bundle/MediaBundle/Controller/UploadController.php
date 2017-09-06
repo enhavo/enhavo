@@ -59,6 +59,7 @@ class UploadController extends Controller
                 }
                 $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
                 $this->mediaManager->saveFile($file);
+                $storedFiles[] = $file;
             } catch(StorageException $exception) {
                 foreach($storedFiles as $file) {
                     $this->mediaManager->deleteFile($file);
@@ -66,7 +67,7 @@ class UploadController extends Controller
             }
         }
 
-        return $this->getFileResponse($files);
+        return $this->getFileResponse($storedFiles);
     }
 
     public function replaceAction(Request $request)

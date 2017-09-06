@@ -14,7 +14,7 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-class DatabaseProvider
+class DatabaseProvider implements ProviderInterface
 {
     /**
      * @var FileRepository

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class FormatRepository extends EntityRepository
 {

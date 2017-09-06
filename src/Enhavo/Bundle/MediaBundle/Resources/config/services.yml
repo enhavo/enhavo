@@ -91,9 +91,15 @@ services:
         arguments:
             - '@enhavo_media.factory.file'
             - '@enhavo_media.factory.format'
-            - '@enhavo_media.media.format_manager'
+            - '@enhavo_media.media.media_manager'
         calls:
             - [setContainer, ['@service_container']]
 
     enhavo_media.security.default_authorization_checker:
-        class: Enhavo\Bundle\AppBundle\Security\AuthorizationChecker\DefaultAuthorizationChecker
+        class: Enhavo\Bundle\MediaBundle\Security\DefaultAuthorizationChecker
+
+    enhavo_media.media.url_resolver:
+        class: Enhavo\Bundle\MediaBundle\Media\UrlResolver
+        arguments:
+            - '@enhavo_media.media.media_manager'
+            - '@router'

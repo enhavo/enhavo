@@ -93,4 +93,9 @@ interface FormatInterface extends ResourceInterface
      * @return FileInterface
      */
     public function getFile();
+
+    /**
+     * @return string
+     */
+    public function getFilename();
 }

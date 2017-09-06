@@ -41,7 +41,7 @@ class LocalFileStorage implements StorageInterface
     public function saveFile($file)
     {
         $savePath = $this->getAndCreateSavePath($file);
-        $this->filesystem->dumpFile($file->getContent()->getContent(), $savePath);
+        $this->filesystem->dumpFile($savePath, $file->getContent()->getContent());
     }
 
     public function applyContent($file)

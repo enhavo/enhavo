@@ -6,7 +6,7 @@
  * Time: 16:43
  */
 
-namespace Enhavo\Bundle\MediaBundle\Security\AuthorizationChecker;
+namespace Enhavo\Bundle\MediaBundle\Security;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 

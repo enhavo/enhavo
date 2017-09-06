@@ -1,45 +1,33 @@
 enhavo_media_upload:
     path:  /file/add
     defaults:
-        _controller: enhavo_media.controller.file:uploadAction
+        _controller: enhavo_media.controller.upload:uploadAction
 
 enhavo_media_replace:
-    path:  /file/replace/{id}
+    path:  /file/replace/{token}
     methods: [POST]
     defaults:
-        _controller: enhavo_media.controller.file:replaceAction
+        _controller: enhavo_media.controller.upload:replaceAction
+    options:
+        expose: true
+
+enhavo_media_resolve:
+    path:  /file/resolve/{token}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_media.controller.file:resolveAction
     options:
         expose: true
 
 enhavo_media_download:
-    path:  /file/download/{id}/{filename}
+    path:  /file/download/{id}/{md5ShortChecksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:downloadAction
         _method: GET
         filename: ~
 
-enhavo_media_show_two_dim:
-    path:  /file/{id}/{width}/{height}/{filename}
-    defaults:
-        _controller: enhavo_media.controller.file:showAction
-        _method: GET
-        filename: ~
-    requirements:
-        width: \d+
-        height: \d+
-
-enhavo_media_show_one_dim:
-    path:  /file/{id}/{width}/{filename}
-    defaults:
-        _controller: enhavo_media.controller.file:showAction
-        height: ~
-        _method: GET
-        filename: ~
-    requirements:
-        width: \d+
-
 enhavo_media_show:
-    path:  /file/{id}/{filename}
+    path:  /file/show/{id}/{md5ShortChecksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:showAction
         width: ~
@@ -49,8 +37,8 @@ enhavo_media_show:
     options:
         expose: true
 
-enhavo_media_show_format:
-    path:  /media/{id}/{format}/{filename}
+enhavo_media_format:
+    path:  /file/format/{id}/{format}/{md5ShortChecksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:showFormatAction
         _method: GET

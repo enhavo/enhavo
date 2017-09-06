@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Security\AuthorizationChecker;
+namespace Enhavo\Bundle\MediaBundle\Security;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
