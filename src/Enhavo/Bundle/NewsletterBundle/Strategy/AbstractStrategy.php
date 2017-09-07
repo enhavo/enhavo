@@ -14,11 +14,20 @@ use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
 
 abstract class AbstractStrategy extends AbstractType implements StrategyInterface
 {
+    /**
+     * @var array
+     */
     protected $options;
 
-    public function __construct($options)
+    /**
+     * @var array
+     */
+    protected $typeOptions;
+
+    public function __construct($options, $typeOptions = [])
     {
         $this->options = $options;
+        $this->typeOptions = $typeOptions;
     }
 
     /**
@@ -45,5 +54,19 @@ abstract class AbstractStrategy extends AbstractType implements StrategyInterfac
     {
         $token = $this->container->get('fos_user.util.token_generator')->generateToken();
         $subscriber->setToken($token);
+    }
+
+    private function getTypeOptions($type)
+    {
+        $options = $this->options;
+        if(isset($this->typeOptions[$type])) {
+            $options = array_merge_recursive($options, $this->typeOptions[$type]);
+        }
+        return $options;
+    }
+
+    protected function getTypeOption($key, $type, $default = null)
+    {
+        return $this->getOption($key, $this->getTypeOptions($type), $default);
     }
 }

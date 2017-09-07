@@ -1,1 +1,6 @@
-accept
+{% extends theme_template('base') %}
+
+{% block main %}
+    {% trans_default_domain 'EnhavoNewsletterBundle' %}
+    {{ 'subscriber.message.accept'|trans({'%email%': subscriber.email}) }}
+{% endblock %}

@@ -1,3 +1,3 @@
 enhavo_newsletter:
-  subscribe:
+  subscriber:
     exists: 'E-Mail "%email%" address already exists'

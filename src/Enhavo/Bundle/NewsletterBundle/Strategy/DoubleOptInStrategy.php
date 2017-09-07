@@ -31,21 +31,29 @@ class DoubleOptInStrategy extends AbstractStrategy
      */
     private $formResolver;
 
-    public function __construct($options, LocalStorage $localStorage, $storageResolver, $formResolver)
+    /**
+     * DoubleOptInStrategy constructor.
+     * @param array$options
+     * @param array $typeOptions
+     * @param LocalStorage $localStorage
+     * @param StorageResolver $storageResolver
+     * @param Resolver $formResolver
+     */
+    public function __construct($options, $typeOptions, LocalStorage $localStorage, StorageResolver $storageResolver, Resolver $formResolver)
     {
-        parent::__construct($options);
+        parent::__construct($options, $typeOptions);
         $this->localStorage = $localStorage;
         $this->storageResolver = $storageResolver;
         $this->formResolver = $formResolver;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
+    public function addSubscriber(SubscriberInterface $subscriber)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActive(false);
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->notifySubscriber($subscriber, $type);
+        $this->notifySubscriber($subscriber, $subscriber->getType());
         return 'subscriber.form.message.double_opt_in';
     }
 
@@ -55,35 +63,45 @@ class DoubleOptInStrategy extends AbstractStrategy
         $subscriber->setToken(null);
         $this->localStorage->saveSubscriber($subscriber);
         $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
-        $this->notifyAdmin($subscriber);
+        $this->notifyAdmin($subscriber, $type);
     }
 
-    private function notifySubscriber(SubscriberInterface $subscriber)
+    private function notifySubscriber(SubscriberInterface $subscriber, $type)
     {
         $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
             'token' => $subscriber->getToken(),
             'type' => $subscriber->getType()
-            ], true);
-        $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
+        ], true);
+
+        $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
+        $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
+        $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+
         $message = \Swift_Message::newInstance()
             ->setSubject($this->getSubject())
-            ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
+            ->setFrom($from, $senderName)
             ->setTo($subscriber->getEmail())
             ->setBody($this->renderTemplate($template, [
                 'subscriber' => $subscriber,
                 'link' => $link
             ]), 'text/html');
+
         $this->sendMessage($message);
     }
 
-    private function notifyAdmin(SubscriberInterface $subscriber)
+    private function notifyAdmin(SubscriberInterface $subscriber, $type)
     {
-        if($this->getOption('admin_notify', $this->options, false)) {
-            $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
+        $notify = $this->getTypeOption('admin_notify', $type, false);
+        if($notify) {
+            $template = $this->getTypeOption('admin_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
+            $from = $this->getTypeOption('from', $$type, 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+            $to = $this->getTypeOption('admin_email', $type, 'no-reply@enhavo.com');
+
             $message = \Swift_Message::newInstance()
-                ->setSubject($this->getAdminSubject())
-                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
-                ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
+                ->setSubject($this->getAdminSubject($type))
+                ->setFrom($from, $senderName)
+                ->setTo($to)
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
                 ]), 'text/html');
@@ -91,10 +109,11 @@ class DoubleOptInStrategy extends AbstractStrategy
         }
     }
 
-    private function getAdminSubject()
+    private function getAdminSubject($type)
     {
-        $subject = $this->getOption('admin_subject', $this->options, 'Newsletter Subscription');
-        $translationDomain = $this->getOption('admin_translation_domain', $this->options, null);
+        $subject = $this->getTypeOption('admin_subject', $type, 'Newsletter Subscription');
+        $translationDomain = $this->getTypeOption('admin_translation_domain', $type, null);
+
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
@@ -118,15 +137,15 @@ class DoubleOptInStrategy extends AbstractStrategy
         $subscriber = $this->localStorage->getSubscriber($subscriber->getEmail());
         if(!$subscriber->isActive()) {
             $this->setToken($subscriber);
-            $this->notifySubscriber($subscriber);
+            $this->notifySubscriber($subscriber, $subscriber->getType());
             return 'subscriber.form.error.sent_again';
         }
         return 'subscriber.form.error.exists';
     }
 
-    public function getActivationTemplate()
+    public function getActivationTemplate($type)
     {
-        return $this->getOption('activation_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:activate.html.twig');
+        return $this->getTypeOption('activation_template', $type, 'EnhavoNewsletterBundle:Subscriber:activate.html.twig');
     }
 
     private function getRouter()

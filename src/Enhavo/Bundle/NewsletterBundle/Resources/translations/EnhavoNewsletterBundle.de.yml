@@ -28,6 +28,9 @@ newsletter:
       confirm:
         send: 'Wollen sie wirklich alle ausgewählten Newsletter versenden?'
 subscriber:
+  message:
+    accept: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
+    activate: 'Die E-Mail Adresse "%email%" wurde erfolgreich hinzugefügt'
   role:
     label:
       index: 'Abonennt anzeigen'

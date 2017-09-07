@@ -28,6 +28,9 @@ newsletter:
       confirm:
         send: 'Do you really want to send all selected newsletters?'
 subscriber:
+  message:
+    accept: 'E-Mail Address "%email%" has been added'
+    activate: 'E-Mail Address "%email%" has been added'
   role:
     label:
       index: 'Subscriber list'
