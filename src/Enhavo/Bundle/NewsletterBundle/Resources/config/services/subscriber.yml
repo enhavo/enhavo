@@ -1,5 +1,3 @@
-
-
 services:
     enhavo_newsletter.twig.subscribe_renderer:
         class: Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer
@@ -80,7 +78,6 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: accept }
-
 
     enhavo_newsletter.extend_listener.subscriber:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
