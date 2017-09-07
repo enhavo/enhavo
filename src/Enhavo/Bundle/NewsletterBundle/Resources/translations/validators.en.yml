@@ -1,0 +1,3 @@
+enhavo_newsletter:
+  subscribe:
+    exists: 'E-Mail "%email%" address already exists'

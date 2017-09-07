@@ -12,13 +12,22 @@ use Symfony\Component\Validator\Constraint;
 
 class SubscriberExists extends Constraint
 {
-    public $message = 'The subscriber "%string%" already exists';
+    /**
+     * @var string
+     */
+    public $message = 'enhavo_newsletter.subscriber.exists';
 
+    /**
+     * @return string
+     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }
 
+    /**
+     * @return string
+     */
     public function validatedBy()
     {
         return 'subscriber_exists';

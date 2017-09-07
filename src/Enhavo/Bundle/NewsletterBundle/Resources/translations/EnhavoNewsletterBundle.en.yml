@@ -48,5 +48,4 @@ subscriber:
       active: 'Active'
     error:
       valid: 'E-Mail not valid'
-      exists: 'E-Mail address already exists'
       sent_again: 'Please confirm your registration'
