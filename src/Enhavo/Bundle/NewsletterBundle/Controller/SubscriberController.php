@@ -19,7 +19,8 @@ class SubscriberController extends ResourceController
 {
     public function activateAction(Request $request)
     {
-        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($request->get('type'));
+        $type = $request->get('type');
+        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($type);
 
         if(!$strategy instanceof DoubleOptInStrategy) {
             throw $this->createNotFoundException();
@@ -38,14 +39,15 @@ class SubscriberController extends ResourceController
 
         $strategy->activateSubscriber($subscriber, $request->get('type'));
 
-        return $this->render($strategy->getActivationTemplate(), [
+        return $this->render($strategy->getActivationTemplate($type), [
             'subscriber' => $subscriber
         ]);
     }
 
     public function acceptAction(Request $request)
     {
-        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($request->get('type'));
+        $type = $request->get('type');
+        $strategy = $this->get('enhavo_newsletter.strategy_resolver')->resolve($type);
 
         if(!$strategy instanceof AcceptStrategy) {
             throw $this->createNotFoundException();
@@ -62,15 +64,16 @@ class SubscriberController extends ResourceController
             throw $this->createNotFoundException();
         }
 
-        $strategy->activateSubscriber($subscriber, $request->get('type'));
+        $strategy->activateSubscriber($subscriber, $type);
 
-        return $this->render($strategy->getActivationTemplate(), [
+        return $this->render($strategy->getActivationTemplate($type), [
             'subscriber' => $subscriber
         ]);
     }
 
     public function addAction(Request $request)
     {
+        $type = $request->get('type');
         $translator = $this->get('translator');
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         /** @var SubscriberInterface $subscriber */
@@ -82,7 +85,7 @@ class SubscriberController extends ResourceController
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            $message =  $this->getSubscriberManager()->addSubscriber($subscriber, $request->get('type'));
+            $message =  $this->getSubscriberManager()->addSubscriber($subscriber, $type);
             return new JsonResponse([
                 'message' => $translator->trans($message, [], 'EnhavoNewsletterBundle'),
                 'subscriber' => $subscriber

@@ -31,21 +31,29 @@ class AcceptStrategy extends AbstractStrategy
      */
     private $formResolver;
 
-    public function __construct($options, LocalStorage $localStorage, $storageResolver, $formResolver)
+    /**
+     * AcceptStrategy constructor.
+     * @param array $options
+     * @param array $typeOptions
+     * @param LocalStorage $localStorage
+     * @param StorageResolver $storageResolver
+     * @param Resolver $formResolver
+     */
+    public function __construct($options, $typeOptions, LocalStorage $localStorage, StorageResolver $storageResolver, Resolver $formResolver)
     {
-        parent::__construct($options);
+        parent::__construct($options, $typeOptions);
         $this->localStorage = $localStorage;
         $this->storageResolver = $storageResolver;
         $this->formResolver = $formResolver;
     }
 
-    public function addSubscriber(SubscriberInterface $subscriber, $type = null)
+    public function addSubscriber(SubscriberInterface $subscriber)
     {
         $subscriber->setCreatedAt(new \DateTime());
         $subscriber->setActive(false);
         $this->setToken($subscriber);
         $this->localStorage->saveSubscriber($subscriber);
-        $this->notifyAdmin($subscriber, $type);
+        $this->notifyAdmin($subscriber);
         return 'subscriber.form.message.accept';
     }
 
@@ -60,11 +68,16 @@ class AcceptStrategy extends AbstractStrategy
 
     private function notifySubscriber(SubscriberInterface $subscriber)
     {
-        if($this->getOption('notify', $this->options, false)) {
-            $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig');
+        $notify = $this->getTypeOption('notify', $subscriber->getType(), false);
+
+        if($notify) {
+            $template = $this->getTypeOption('template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/accept.html.twig');
+            $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->getSubject())
-                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
+                ->setFrom($from, $senderName)
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
@@ -73,17 +86,22 @@ class AcceptStrategy extends AbstractStrategy
         }
     }
 
-    private function notifyAdmin(SubscriberInterface $subscriber, $type)
+    private function notifyAdmin(SubscriberInterface $subscriber)
     {
         $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_accept', [
             'token' => $subscriber->getToken(),
-            'type' => $type
+            'type' => $subscriber->getType()
         ], true);
-        $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig');
+
+        $template = $this->getTypeOption('admin_template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/accept-admin.html.twig');
+        $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
+        $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+        $to = $this->getTypeOption('admin_email', $subscriber->getType(), 'no-reply@enhavo.com');
+
         $message = \Swift_Message::newInstance()
-            ->setSubject($this->getAdminSubject())
-            ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
-            ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
+            ->setSubject($this->getAdminSubject($subscriber->getType()))
+            ->setFrom($from, $senderName)
+            ->setTo($to)
             ->setBody($this->renderTemplate($template, [
                 'subscriber' => $subscriber,
                 'link' => $link
@@ -91,16 +109,19 @@ class AcceptStrategy extends AbstractStrategy
         $this->sendMessage($message);
     }
 
-    private function getAdminSubject()
+    private function getAdminSubject($type)
     {
-        $subject = $this->getOption('admin_subject', $this->options, 'Newsletter Subscription');
-        $translationDomain = $this->getOption('admin_translation_domain', $this->options, null);
+        $subject = $this->getTypeOption('admin_subject', $type, 'Newsletter Subscription');
+        $translationDomain = $this->getTypeOption('admin_translation_domain', $type, null);
+
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber)
     {
-        if($this->getOption('check_exists', $this->options, false)) {
+        $checkExists = $this->getTypeOption('check_exists', $subscriber->getType(), false);
+
+        if($checkExists) {
             /** @var StorageInterface $storage */
             $storage = $this->storageResolver->resolve($subscriber->getType());
             return $storage->exists($subscriber);
@@ -113,9 +134,9 @@ class AcceptStrategy extends AbstractStrategy
         return 'subscriber.form.error.exists';
     }
 
-    public function getActivationTemplate()
+    public function getActivationTemplate($type)
     {
-        return $this->getOption('activation_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:accept.html.twig');
+        return $this->getTypeOption('activation_template', $type, 'EnhavoNewsletterBundle:Subscriber:accept.html.twig');
     }
 
     private function getRouter()

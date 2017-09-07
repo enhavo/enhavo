@@ -48,6 +48,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
         arguments:
             - '%enhavo_newsletter.strategy.notify.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
         calls:
@@ -59,6 +60,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
         arguments:
             - '%enhavo_newsletter.strategy.double_opt_in.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
@@ -71,6 +73,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
         arguments:
             - '%enhavo_newsletter.strategy.accept.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
