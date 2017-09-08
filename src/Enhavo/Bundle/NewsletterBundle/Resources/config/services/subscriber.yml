@@ -1,5 +1,3 @@
-
-
 services:
     enhavo_newsletter.twig.subscribe_renderer:
         class: Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer
@@ -50,6 +48,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
         arguments:
             - '%enhavo_newsletter.strategy.notify.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
         calls:
@@ -61,6 +60,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
         arguments:
             - '%enhavo_newsletter.strategy.double_opt_in.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
@@ -73,6 +73,7 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
         arguments:
             - '%enhavo_newsletter.strategy.accept.settings%'
+            - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
@@ -80,7 +81,6 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: accept }
-
 
     enhavo_newsletter.extend_listener.subscriber:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener

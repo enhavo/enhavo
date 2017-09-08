@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -40,7 +41,7 @@ class SubscriberExistsValidator extends ConstraintValidator
         if($value instanceof SubscriberInterface) {
             if($this->manager->exists($value, $value->getType())) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value->getEmail())
+                    ->setParameter('%email%', $value->getEmail())
                     ->addViolation();
             }
         }

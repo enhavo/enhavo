@@ -26,9 +26,17 @@ class NotifyStrategy extends AbstractStrategy
      */
     private $formResolver;
 
-    public function __construct($options, $storageResolver, $formResolver)
+    /**
+     * NotifyStrategy constructor.
+     *
+     * @param array $options
+     * @param array $typeOptions
+     * @param StorageResolver $storageResolver
+     * @param Resolver $formResolver
+     */
+    public function __construct($options, $typeOptions, $storageResolver, $formResolver)
     {
-        parent::__construct($options);
+        parent::__construct($options, $typeOptions);
         $this->storageResolver = $storageResolver;
         $this->formResolver = $formResolver;
     }
@@ -46,11 +54,16 @@ class NotifyStrategy extends AbstractStrategy
 
     private function notifySubscriber(SubscriberInterface $subscriber)
     {
-        if($this->getOption('notify', $this->options, true)) {
-            $template = $this->getOption('template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/notify.html.twig');
+        $notify = $this->getTypeOption('notify', $subscriber->getType(), true);
+
+        if($notify) {
+            $template = $this->getTypeOption('template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/notify.html.twig');
+            $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->getSubject())
-                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
+                ->setFrom($from, $senderName)
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
@@ -61,12 +74,18 @@ class NotifyStrategy extends AbstractStrategy
 
     private function notifyAdmin(SubscriberInterface $subscriber)
     {
-        if($this->getOption('admin_notify', $this->options, false)) {
-            $template = $this->getOption('admin_template', $this->options, 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
+        $notify = $this->getTypeOption('admin_notify', $subscriber->getType(), false);
+
+        if($notify) {
+            $template = $this->getTypeOption('admin_template', $subscriber->getType(), 'EnhavoNewsletterBundle:Subscriber:Email/notify-admin.html.twig');
+            $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
+            $to = $this->getTypeOption('admin_email', $subscriber->getType(), 'no-reply@enhavo.com');
+
             $message = \Swift_Message::newInstance()
-                ->setSubject($this->getAdminSubject())
-                ->setFrom($this->getOption('from', $this->options, 'no-reply@enhavo.com'), $this->getOption('sender_name', $this->options, 'enahvo'))
-                ->setTo($this->getOption('admin_email', $this->options, 'no-reply@enhavo.com'))
+                ->setSubject($this->getAdminSubject($subscriber->getType()))
+                ->setFrom($from, $senderName)
+                ->setTo($to)
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber
                 ]), 'text/html');
@@ -74,16 +93,19 @@ class NotifyStrategy extends AbstractStrategy
         }
     }
 
-    private function getAdminSubject()
+    private function getAdminSubject($type)
     {
-        $subject = $this->getOption('admin_subject', $this->options, 'Newsletter Subscription');
-        $translationDomain = $this->getOption('admin_translation_domain', $this->options, null);
+        $subject = $this->getTypeOption('admin_subject', $type, 'Newsletter Subscription');
+        $translationDomain = $this->getTypeOption('admin_translation_domain', $type, null);
+
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
     public function exists(SubscriberInterface $subscriber)
     {
-        if($this->getOption('check_exists', $this->options, false)) {
+        $checkExists = $this->getTypeOption('check_exists',$subscriber->getType(), false);
+
+        if($checkExists) {
             /** @var StorageInterface $storage */
             $storage = $this->storageResolver->resolve($subscriber->getType());
             return $storage->exists($subscriber);

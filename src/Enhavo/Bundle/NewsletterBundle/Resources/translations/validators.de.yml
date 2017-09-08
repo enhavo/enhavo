@@ -1,0 +1,3 @@
+enhavo_newsletter:
+  subscriber:
+    exists: 'E-Mail "%email%" ist bereits registriert'

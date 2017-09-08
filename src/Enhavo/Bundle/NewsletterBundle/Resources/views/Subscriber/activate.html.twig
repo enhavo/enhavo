@@ -1,1 +1,6 @@
-activate
+{% extends theme_template('base') %}
+
+{% block main %}
+    {% trans_default_domain 'EnhavoNewsletterBundle' %}
+    {{ 'subscriber.message.activate'|trans({'%email%': subscriber.email}) }}
+{% endblock %}

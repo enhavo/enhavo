@@ -88,16 +88,21 @@ class SubscriberManager
      */
     public function getStrategy()
     {
-        return $this->strategyTypeCollector->getType($this->strategy);
+        /** @var StrategyInterface $strategy */
+        $strategy = $this->strategyTypeCollector->getType($this->strategy);
+        return $strategy;
     }
 
     /**
+     * @param string $name
      * @return StrategyInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStrategyByName($name)
     {
-        return $this->strategyTypeCollector->getType($name);
+        /** @var StrategyInterface $strategy */
+        $strategy = $this->strategyTypeCollector->getType($name);
+        return $strategy;
     }
 
     /**
@@ -106,16 +111,21 @@ class SubscriberManager
      */
     public function getStorage()
     {
-        return $this->storageTypeCollector->getType($this->storage);
+        /** @var StorageInterface $storage */
+        $storage = $this->storageTypeCollector->getType($this->storage);
+        return $storage;
     }
 
     /**
+     * @param string $name
      * @return StorageInterface
      * @throws \Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException
      */
     public function getStorageByName($name)
     {
-        return $this->storageTypeCollector->getType($name);
+        /** @var StorageInterface $storage */
+        $storage = $this->storageTypeCollector->getType($name);
+        return $storage;
     }
 
     public function addSubscriber(SubscriberInterface $subscriber, $type = null)
@@ -128,7 +138,7 @@ class SubscriberManager
         } else {
             $strategy = $this->strategyResolver->resolve($type);
         }
-        return $strategy->addSubscriber($subscriber, $type);
+        return $strategy->addSubscriber($subscriber);
     }
 
     public function createSubscriber(SubscriberInterface $subscriber)
@@ -154,7 +164,7 @@ class SubscriberManager
         } else {
             $strategy = $this->strategyResolver->resolve($type);
         }
-        return $strategy->exists($subscriber, $type);
+        return $strategy->exists($subscriber);
     }
 
     public function handleExists(SubscriberInterface $subscriber)
