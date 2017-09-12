@@ -237,6 +237,10 @@ class Setting implements ResourceInterface
         return $this->files;
     }
 
+    public function setFiles($files)
+    {
+        $this->files = $files;
+    }
 
     /**
      * Set translationDomain
