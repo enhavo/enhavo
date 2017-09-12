@@ -4,8 +4,11 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var compass = require('compass-importer');
 var exec = require('child_process').exec;
+var ts = require("gulp-typescript");
 
-gulp.task('sass', function () {
+gulp.task('sass', ['sass:compile']);
+
+gulp.task('sass:compile', function () {
   var directories = [
     {
       from: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/sass/*.scss',
@@ -94,4 +97,37 @@ gulp.task('docs:watch', function () {
   gulp.watch([
     'docs/**/*.rst'
   ], ['docs']);
+});
+
+gulp.task("tsc", ["tsc:compile"]);
+
+gulp.task("tsc:compile", function () {
+  gulp.start(['tsc:compile:app']);
+  gulp.start(['tsc:compile:media']);
+});
+
+gulp.task("tsc:compile:media", function () {
+  var tsProject = ts.createProject("src/Enhavo/Bundle/MediaBundle/Resources/public/ts/tsconfig.json");
+  return tsProject.src()
+    .pipe(tsProject())
+    .js.pipe(gulp.dest("src/Enhavo/Bundle/MediaBundle/Resources/public/js"));
+});
+
+gulp.task("tsc:compile:app", function () {
+  var tsProject = ts.createProject("src/Enhavo/Bundle/AppBundle/Resources/public/ts/tsconfig.json");
+  return tsProject.src()
+    .pipe(tsProject())
+    .js.pipe(gulp.dest("src/Enhavo/Bundle/AppBundle/Resources/public/js"));
+});
+
+gulp.task("tsc:watch", function () {
+  gulp.start(['tsc:compile']);
+  gulp.watch([
+    'src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/*',
+    'src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/**/*'
+  ], ['tsc:compile:media']);
+  gulp.watch([
+    'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/*',
+    'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/**/*'
+  ], ['tsc:compile:app']);
 });
