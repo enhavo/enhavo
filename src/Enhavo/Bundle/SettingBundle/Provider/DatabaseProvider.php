@@ -60,6 +60,15 @@ class DatabaseProvider implements ProviderInterface
 
     public function getSetting($key)
     {
+        $setting = $this->getSettingObject($key);
+        if($setting !== null) {
+            return $this->getSettingValue($setting);
+        }
+        return null;
+    }
+
+    private function getSettingObject($key)
+    {
         $setting = $this->getSettingFromDatabase($key);
         if ($setting === null) {
             $setting = $this->getSettingFromCache($key);
@@ -67,13 +76,10 @@ class DatabaseProvider implements ProviderInterface
                 $this->persistToDatabase($setting);
             }
         }
-        if($setting !== null) {
-            return $this->getSettingValue($setting);
-        }
-        return null;
+        return $setting;
     }
 
-    protected function getSettingValue(Setting $setting)
+    private function getSettingValue(Setting $setting)
     {
         if ($setting->getType() === Setting::SETTING_TYPE_TEXT) {
             return $setting->getValue();
@@ -99,34 +105,61 @@ class DatabaseProvider implements ProviderInterface
         return null;
     }
 
-    protected function getSettingFromDatabase($key)
+    private function setSettingValue(Setting $setting, $value)
+    {
+        if ($setting->getType() === Setting::SETTING_TYPE_TEXT) {
+            $setting->setValue($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_BOOLEAN) {
+            $setting->setValue($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_FILE) {
+            $setting->setFile($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_FILES) {
+            $setting->setFiles($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_WYSIWYG) {
+            $setting->setValue($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_DATE) {
+            $setting->setDate($value);
+        }
+        if ($setting->getType() === Setting::SETTING_TYPE_DATETIME) {
+            $setting->setDate($value);
+        }
+    }
+
+    private function getSettingFromDatabase($key)
     {
         return $this->em->getRepository('EnhavoSettingBundle:Setting')->findOneBy(array('key' => $key));
     }
 
-    protected function getSettingArrayFromCache()
+    private function getSettingArrayFromCache()
     {
         $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), self::CACHE_FILE_NAME);
         $settingArray = json_decode($this->fileSystem->readFile($cacheFilePath), $assoc=true);
         return array_filter($settingArray);
     }
 
-    protected function getSettingFromCache($key)
+    private function getSettingFromCache($key)
     {
         $settingArray = $this->getSettingArrayFromCache();
 
         if (array_key_exists($key, $settingArray)){
             return $this->convertToObject($key, $settingArray[$key]);
         }
+
         return null;
     }
 
-    protected function persistToDatabase($object){
+    private function persistToDatabase($object)
+    {
         $this->em->persist($object);
         $this->em->flush();
     }
 
-    protected function isCacheEntryValid($cacheEntry)
+    private function isCacheEntryValid($cacheEntry)
     {
         if(is_array($cacheEntry)) {
             if(!array_key_exists('type', $cacheEntry)) {
@@ -150,7 +183,7 @@ class DatabaseProvider implements ProviderInterface
         return false;
     }
 
-    protected function convertToObject($key, $array)
+    private function convertToObject($key, $array)
     {
         $object = $this->settingFactory->createNew();
         $object->setKey($key);
@@ -171,7 +204,24 @@ class DatabaseProvider implements ProviderInterface
 
     public function hasSetting($key)
     {
-        // TODO: Implement hasSetting() method.
-        return true;
+        $setting = $this->getSettingFromDatabase($key);
+        if($setting !== null) {
+            return true;
+        }
+
+        $setting = $this->getSettingFromCache($key);
+        if($setting !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function setSetting($key, $value)
+    {
+        if($this->hasSetting($key)) {
+            $setting = $this->getSettingObject($key);
+            $this->setSettingValue($setting, $value);
+        }
     }
 }

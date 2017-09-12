@@ -7,6 +7,7 @@
  */
 
 namespace Enhavo\Bundle\SettingBundle\Provider;
+use Enhavo\Bundle\SettingBundle\Exception\ReadOnlyException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -27,5 +28,10 @@ class ParameterProvider implements ProviderInterface
     public function hasSetting($key)
     {
         return $this->container->hasParameter($key);
+    }
+
+    public function setSetting($key, $value)
+    {
+        throw new ReadOnlyException();
     }
 }

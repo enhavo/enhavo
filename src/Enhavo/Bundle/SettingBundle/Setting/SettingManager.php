@@ -38,4 +38,14 @@ class SettingManager
         }
         return null;
     }
+
+    public function setSetting($key, $value)
+    {
+        if($this->databaseProvider->hasSetting($key)) {
+            $this->databaseProvider->setSetting($key, $value);
+        }
+        if($this->parameterProvider->hasSetting($key)) {
+            $this->parameterProvider->setSetting($key, $value);
+        }
+    }
 }
