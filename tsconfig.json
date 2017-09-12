@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "app/Admin": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Admin"]
+    }
+  }
+}
