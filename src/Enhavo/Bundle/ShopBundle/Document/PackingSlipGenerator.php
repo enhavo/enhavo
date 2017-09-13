@@ -84,6 +84,11 @@ class PackingSlipGenerator implements GeneratorInterface
 
             $pdf->SetAutoPageBreak(false, 0);
 
+            if(isset($options['backgroundImage'])) {
+                $backgroundImagePath = $this->container->get('kernel')->locateResource($options['backgroundImage']);
+                $pdf->Image($backgroundImagePath,0,0,210,297,'','','T',true);
+            }
+
             $pdf->SetFontSize($stdSize);
             $pdf->SetTextColor($stdColor);
 
