@@ -55,15 +55,16 @@ class FormatManager
 
         $savePath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Imagine'), $file->getExtension());
         $imagine = new Imagine();
-        $imagine = $imagine->load($content);
+        $imagine = $imagine->load($content->getContent());
         $imagine = $this->format($imagine, $setting);
         $imagine->save($savePath);
 
-        $format = $this->formatFactory->createFromPath($savePath);
-        $format->setFile($file);
-        $this->provider->saveFormat($format);
-        $this->storage->saveFile($format);
-        return $format;
+        $formatEntity = $this->formatFactory->createFromPath($savePath);
+        $formatEntity->setFile($file);
+        $formatEntity->setName($format);
+        $this->provider->saveFormat($formatEntity);
+        $this->storage->saveFile($formatEntity);
+        return $formatEntity;
     }
 
     public function deleteFormats(FileInterface $file)
@@ -181,7 +182,7 @@ class FormatManager
     private function getFormatSettings($format)
     {
         if(!is_array($this->formats) || !isset($this->formats[$format])) {
-            throw new \Exception('format not available');
+            throw new \Exception(sprintf('format "%s" not available', $format));
         }
 
         $setting = new FormatSetting();

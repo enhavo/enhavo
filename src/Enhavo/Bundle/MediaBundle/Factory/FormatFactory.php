@@ -70,7 +70,7 @@ class FormatFactory extends Factory
         /** @var FormatInterface $format */
         $format = $this->createNew();
 
-        $format->setMimeType($this->guessMimeType($format));
+        $format->setMimeType($this->guessMimeType($path));
         $format->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
         $format->setContent(new PathContent($path));
 

@@ -27,7 +27,7 @@ Enhavo\Bundle\MediaBundle\Entity\Format:
               type: json_array
               nullable: true
 
-    manyToMany:
+    manyToOne:
         file:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
 

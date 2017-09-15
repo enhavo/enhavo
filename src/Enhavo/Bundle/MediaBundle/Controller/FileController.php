@@ -38,11 +38,11 @@ class FileController extends Controller
         $response = new Response();
         $response->setContent($file->getContent()->getContent());
         $response->headers->set('Content-Type', $file->getMimeType());
-        $response->headers->set('Content-Disposition', sprintf('filename="%s"', $file->getFilename()));
         return $response;
     }
 
     /**
+     * @param Request $request
      * @return FileInterface
      */
     private function getFile(Request $request)
@@ -100,7 +100,6 @@ class FileController extends Controller
         $response = new Response();
         $response->setContent($formatFile->getContent()->getContent());
         $response->headers->set('Content-Type', $formatFile->getMimeType());
-        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
         return $response;
     }
 
@@ -124,7 +123,57 @@ class FileController extends Controller
 
         return $this->redirectToRoute('enhavo_media_show', [
             'id' => $file->getId(),
-            'md5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'filename' => $file->getFilename(),
+        ]);
+    }
+
+    /**
+     * @deprecated this function will be removed on 0.4
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function showCompatibleAction(Request $request)
+    {
+        $id = $request->get('id');
+        $format = $request->get('format');
+
+        $file = $this->mediaManager->findOneBy([
+            'id' => $id
+        ]);
+
+        if($format) {
+            return $this->redirectToRoute('enhavo_media_format', [
+                'id' => $file->getId(),
+                'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+                'filename' => $file->getFilename(),
+                'format' => $format
+            ]);
+        }
+
+        return $this->redirectToRoute('enhavo_media_show', [
+            'id' => $file->getId(),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'filename' => $file->getFilename(),
+        ]);
+    }
+
+    /**
+     * @deprecated this function will be removed on 0.4
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function downloadCompatibleAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $file = $this->mediaManager->findOneBy([
+            'id' => $id
+        ]);
+
+        return $this->redirectToRoute('enhavo_media_download', [
+            'id' => $file->getId(),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $file->getFilename(),
         ]);
     }

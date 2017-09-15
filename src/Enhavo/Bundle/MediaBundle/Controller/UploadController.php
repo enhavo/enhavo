@@ -171,4 +171,29 @@ class UploadController extends Controller
 
         return new JsonResponse($data);
     }
+
+    /**
+     * @deprecated this function will be removed on 0.4
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function replaceCompatibleAction(Request $request)
+    {
+        $file = $this->mediaManager->findOneBy([
+            'id' => $request->get('id')
+        ]);
+
+        $uploadedFile = $this->getUploadedFile($request);
+
+        $newFile = $this->fileFactory->createFromUploadedFile($uploadedFile);
+
+        $file->setContent($newFile->getContent());
+        $file->setMimeType($newFile->getMimeType());
+        $file->setFilename($newFile->getFilename());
+        $file->setExtension($newFile->getExtension());
+
+        $this->mediaManager->saveFile($file);
+
+        return $this->getFileResponse($file);
+    }
 }

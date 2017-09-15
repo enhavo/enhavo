@@ -31,3 +31,12 @@ enhavo_assets:
         paths:
             media:
                 location: /bundles/enhavomedia/js
+
+enhavo_media:
+    formats:
+        enhavoTableThumb:
+            width: 60
+            height: 60
+        enhavoPreviewThumb:
+            width: 100
+            height: 100

@@ -33,7 +33,7 @@ class UrlResolver
     {
         return $this->router->generate('enhavo_media_show', [
             'id' => $file->getId(),
-            'md5ShortChecksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $file->getFilename()
         ]);
     }
@@ -50,7 +50,7 @@ class UrlResolver
         $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_format', [
             'id' => $file->getId(),
-            'md5ShortChecksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $formatObj->getFilename(),
             'format' => $format,
         ]);
@@ -61,7 +61,7 @@ class UrlResolver
         $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_format', [
             'id' => $file->getId(),
-            'md5ShortChecksum' => substr($file->getMd5Checksum(), 0, 6),
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $formatObj->getFilename(),
             'format' => $format,
         ]);

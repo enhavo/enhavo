@@ -20,25 +20,7 @@ class LifecycleListener
 
     public function collectGarbage()
     {
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
-
-        $garbage = $entityManager->getRepository('EnhavoMediaBundle:File')->findGarbage();
-        if ($garbage) {
-            foreach($garbage as $file) {
-                $entityManager->remove($file);
-            }
-            $entityManager->flush();
-        }
-    }
-
-    public function preRemove(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof File) {
-            return;
-        }
-
-        $this->container->get('enhavo_media.file_service')->deleteFile($entity);
+        $mediaManager = $this->container->get('enhavo_media.media.media_manager');
+        $mediaManager->collectGarbage();
     }
 }

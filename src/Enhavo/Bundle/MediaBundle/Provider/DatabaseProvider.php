@@ -113,7 +113,7 @@ class DatabaseProvider implements ProviderInterface
      */
     public function saveFormat(FormatInterface $format)
     {
-        $this->em->remove($format);
+        $this->em->persist($format);
         $this->em->flush();
     }
 

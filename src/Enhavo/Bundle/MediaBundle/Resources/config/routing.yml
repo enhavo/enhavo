@@ -20,14 +20,14 @@ enhavo_media_resolve:
         expose: true
 
 enhavo_media_download:
-    path:  /file/download/{id}/{md5ShortChecksum}/{filename}
+    path:  /file/download/{id}/{shortMd5Checksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:downloadAction
         _method: GET
         filename: ~
 
 enhavo_media_show:
-    path:  /file/show/{id}/{md5ShortChecksum}/{filename}
+    path:  /file/show/{id}/{shortMd5Checksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:showAction
         width: ~
@@ -38,10 +38,42 @@ enhavo_media_show:
         expose: true
 
 enhavo_media_format:
-    path:  /file/format/{id}/{format}/{md5ShortChecksum}/{filename}
+    path:  /file/format/{id}/{format}/{shortMd5Checksum}/{filename}
     defaults:
         _controller: enhavo_media.controller.file:showFormatAction
         _method: GET
     options:
         expose: true
 
+
+enhavo_media_compatible_show:
+    path: /file/compatible/show/{id}
+    defaults:
+        _controller: enhavo_media.controller.file:showCompatibleAction
+        _method: GET
+    options:
+        expose: true
+
+enhavo_media_compatible_format:
+    path: /file/compatible/show/{id}/{format}
+    defaults:
+        _controller: enhavo_media.controller.file:showCompatibleAction
+        _method: GET
+    options:
+        expose: true
+
+enhavo_media_compatible_download:
+    path: /file/compatible/download/{id}
+    defaults:
+        _controller: enhavo_media.controller.file:downloadCompatibleAction
+        _method: GET
+    options:
+        expose: true
+
+enhavo_media_compatible_replace:
+    path: /file/compatible/replace/{id}
+    defaults:
+        _controller: enhavo_media.controller.upload:replaceCompatibleAction
+        _method: GET
+    options:
+        expose: true
