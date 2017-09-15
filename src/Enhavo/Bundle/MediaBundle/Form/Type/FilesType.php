@@ -44,7 +44,6 @@ class FilesType extends AbstractType
                         foreach($data as $formFile) {
                             $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
                             $file->setFilename($formFile['filename']);
-                            $file->setSlug($formFile['slug']);
                             $file->setOrder($formFile['order']);
                             if(isset($formFile['parameters'])) {
                                 $file->setParameters($formFile['parameters']);
@@ -55,7 +54,6 @@ class FilesType extends AbstractType
                     } else {
                         $file = $manager->getRepository('EnhavoMediaBundle:File')->find($data['id']);
                         $file->setFilename($data['filename']);
-                        $file->setSlug($data['slug']);
                         $file->setOrder($data['order']);
                         if(isset($data['parameters'])) {
                             $file->setParameters($data['parameters']);

@@ -1,7 +1,7 @@
 <div data-simple-file-uploader>
     <input type="file"
            name="files[]"
-           data-url="/file/add"
+           data-url="{{ path('enhavo_media_upload') }}"
            data-file-upload
            data-multiple="{% if multiple %}true{% else %}false{% endif %}"
            data-prototype="{{ prototype|e }}"
@@ -11,7 +11,7 @@
 
     <div>
         Status:
-        <div data-file-status-bar class="bar" style="width: 0%;"></div>
+        <div data-file-status-bar class="bar" style="width: 0;"></div>
     </div>
 
     <div data-file-list>

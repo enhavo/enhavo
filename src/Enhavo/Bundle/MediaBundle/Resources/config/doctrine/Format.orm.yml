@@ -1,0 +1,34 @@
+Enhavo\Bundle\MediaBundle\Entity\Format:
+    type: entity
+    table: media_format
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            nullable: true
+
+        mimeType:
+            type: string
+            length: 255
+            nullable: true
+
+        extension:
+            type: string
+            length: 255
+            nullable: true
+
+        parameters:
+              type: json_array
+              nullable: true
+
+    manyToOne:
+        file:
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+    lifecycleCallbacks: {  }

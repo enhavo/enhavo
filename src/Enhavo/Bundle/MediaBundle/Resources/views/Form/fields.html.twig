@@ -8,10 +8,10 @@
                     {{ fieldMacros.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
                 </script>
                 <script type="text/html" data-id="thumb-template">
-                    <img class="file-thumb" src="/file/{file_id}/100/100?v={prevent_caching_number}">
+                    <img class="file-thumb" src="/file/compatible/show/{file_id}/enhavoPreviewThumb?v={prevent_caching_number}">
                 </script>
 
-                <div class="image-crop-modal-overlay-wrapper" data-image-crop-overlay data-image-show-route="enhavo_media_show" data-image-upload-route="enhavo_media_replace">
+                <div class="image-crop-modal-overlay-wrapper" data-image-crop-overlay data-image-show-route="enhavo_media_compatible_show" data-image-upload-route="enhavo_media_compatible_replace">
                     <div class="image-crop-modal-overlay-background"></div>
                     <div class="image-crop-modal-overlay">
                         <div class="image-crop-modal">
@@ -81,7 +81,7 @@
                                 <ul class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% for index, file in form.vars.value %}
                                         {% if file %}
-                                            {{ fieldMacros.fileContainer(multiple, full_name, fields, index, file.id, file.order, file.filename, file.slug, file.mimeType, file.parameters) }}
+                                            {{ fieldMacros.fileContainer(multiple, full_name, fields, index, file.id, file.order, file.filename, file.mimeType, file.parameters) }}
                                        {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -91,7 +91,7 @@
                             <div class="dropzone fade well{% if not form.vars.value %} empty{% endif %}">
                                 <div class="list clearfix" data-name="{{ full_name }}" data-file-list>
                                     {% if form.vars.value %}
-                                        {{ fieldMacros.fileContainer(multiple, full_name, fields, 0, form.vars.value.id, form.vars.value.order, form.vars.value.filename, form.vars.value.slug, form.vars.value.mimeType, form.vars.value.parameters) }}
+                                        {{ fieldMacros.fileContainer(multiple, full_name, fields, 0, form.vars.value.id, form.vars.value.order, form.vars.value.filename, form.vars.value.mimeType, form.vars.value.parameters) }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -100,7 +100,6 @@
                     </div>
                     <div class="fileupload-fields disabled hidden">
                         {{ fieldMacros.fileUploadField('filename', 'text', 'media.form.label.filename', 'EnhavoMediaBundle', null) }}
-                        {{ fieldMacros.fileUploadField('slug', 'text', 'media.form.label.slug', 'EnhavoMediaBundle', null) }}
                         {% for field_name, field_options in fields %}
                             {{ fieldMacros.fileUploadField('pa_' ~ field_name, field_options['type'], field_options['label'], field_options['translationDomain'], field_options) }}
                         {% endfor %}

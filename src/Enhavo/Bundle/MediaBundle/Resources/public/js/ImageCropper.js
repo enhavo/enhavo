@@ -16,8 +16,10 @@ define(['jquery', 'app/Router', 'app/Admin', 'cropper'], function($, router, adm
         self.mimeType = selected.find('[data-mime-type]').data('mime-type');
 
         var preventCachingNumber = Math.random();
+        var url = router.generate(self.imageShowRoute, {id: fileId, v: preventCachingNumber});
+        console.log(url);
+        self.$cropperCanvas.attr('src', url);
 
-        self.$cropperCanvas.attr('src', router.generate(self.imageShowRoute, {id: fileId, v: preventCachingNumber}));
         $(uploadForm).find('[data-image-crop-canvas-wrapper]').addClass('loading');
         $(uploadForm).find('[data-image-crop-overlay]').show();
         self.$cropperCanvas.cropper();

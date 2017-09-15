@@ -130,7 +130,6 @@ services:
         arguments:
             - '@enhavo_search_search_util'
             - '@service_container'
-            - '@enhavo_media.file_service'
         tags:
             - { name: enhavo_search.index, alias: PDF }
 

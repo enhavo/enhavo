@@ -10,66 +10,47 @@ namespace Enhavo\Bundle\MediaBundle\Table\Widget;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
-use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 class PictureWidget extends AbstractTableWidget
 {
     public function render($options, $item)
     {
-        $property = $this->getProperty($item, $options['property']);
+        $property = $this->getRequiredOption('property', $options);
+        $format = $this->getOption('format', $options, 'enhavoTableThumb');
+        $height = $this->getOption('height', $options, '60');
 
-        $pictureWidth = (isset($options['pictureWidth']) ? $options['pictureWidth'] : 60);
-        $pictureHeight = (isset($options['pictureHeight']) ? $options['pictureHeight'] : 60);
+        $file = $this->getProperty($item, $property);
 
-        $id = null;
-        if (is_a($property, 'Doctrine\Common\Collections\Collection')) {
-            /** @var Collection $property */
-            if ($property->isEmpty()) {
-                $id = null;
-            } else {
-                if ($this->checkIsCorrectFileType($property->first())) {
-                    $propertyArray = $property->toArray();
-                    usort($propertyArray, function($a, $b) {
-                        /** @var File $a */
-                        /** @var File $b */
-                        if ($a->getOrder() == $b->getOrder()) {
-                            return 0;
-                        } else if ($a->getOrder() > $b->getOrder()) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
-                    });
-                    $id = array_shift($propertyArray);
-                    $id = $id->getId();
+        if ($file instanceof Collection && $file->first() instanceof FileInterface) {
+            $files = $file->toArray();
+            usort($files, function($a, $b) {
+                /** @var FileInterface $a */
+                /** @var FileInterface $b */
+                if ($a->getOrder() == $b->getOrder()) {
+                    return 0;
+                } else if ($a->getOrder() > $b->getOrder()) {
+                    return 1;
                 } else {
-                    $id = null;
+                    return -1;
                 }
-            }
-        } else {
-            $id = $this->checkIsCorrectFileType($property);
+            });
+            $file = $files[0];
+        }
+
+        if($file !== null && !$file instanceof FileInterface) {
+            throw new FileException(sprintf(
+                'Error rendering TableWidget type PictureWidget: Property must be of type "Enhavo\Bundle\MediaBundle\Model\FileInterface" or a Collection thereof, is "%s"',
+                get_class($file)
+            ));
         }
 
         return $this->renderTemplate('EnhavoMediaBundle:TableWidget:picture.html.twig', array(
-            'id' => $id,
-            'pictureWidth' => $pictureWidth,
-            'pictureHeight' => $pictureHeight
+            'file' => $file,
+            'format' => $format,
+            'height' => $height
         ));
-    }
-
-    private function checkIsCorrectFileType($property)
-    {
-        if (is_a($property, 'Enhavo\Bundle\MediaBundle\Entity\File')) {
-            /** @var $property File */
-            return $property->getId();
-        } else {
-            if (!$property) {
-                return null;
-            } else {
-                $typeName = (is_object($property) ? get_class($property) : gettype($property));
-                throw new \Exception('Error rendering TableWidget type PictureWidget: Property must be of type "Enhavo\Bundle\MediaBundle\Entity\File" or a Collection thereof, is "' . $typeName . '"');
-            }
-        }
     }
 
     public function getType()

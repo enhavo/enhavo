@@ -3,18 +3,18 @@
         <ul class="slider">
             {% for slide in slides %}
                 {% if slide.image %}
-                    <li class="slider-img" style="background-image:url({{ media_url(slide.image) }}); background-size:cover; background-attachment: fixed;">
+                    <li class="slider-img" style="background-image:url({{ media_url(slide.image, 'sliderHero') }}); background-size:cover; background-attachment: fixed;">
                         {% if slide.url is not null %}
-                        <a href="{{ slide.url|url_beautifier }}" class="slide-link">
-                            {% endif %}
-                            <span class="container hero-container">
-                        <span class="hero-caption" href="">
-                            <p class="slide-text">{{ slide.text|raw }}</p>
-                            <h1 class="slide-title">{{ slide.title }}</h1>
+                            <a href="{{ slide.url|url_beautifier }}" class="slide-link">
+                        {% endif %}
+                        <span class="container hero-container">
+                            <span class="hero-caption" href="">
+                                <p class="slide-text">{{ slide.text|raw }}</p>
+                                <h1 class="slide-title">{{ slide.title }}</h1>
+                            </span>
                         </span>
-                    </span>
-                            {% if slide.url is not null %}
-                        </a>
+                        {% if slide.url is not null %}
+                            </a>
                         {% endif %}
                     </li>
                 {% endif %}

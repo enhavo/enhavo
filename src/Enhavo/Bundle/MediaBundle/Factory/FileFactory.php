@@ -1,57 +1,98 @@
 <?php
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Content\PathContent;
+use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Factory\Factory;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Finder\SplFileInfo;
 
 class FileFactory extends Factory
 {
-    /**
-     * @var string
-     */
-    protected $mediaPath;
+    use GuessTrait;
 
     /**
-     * @var EntityManagerInterface
+     * @param FileInterface $originalResource
+     * @return FileInterface
      */
-    protected $entityManager;
-
-    public function __construct($className, $mediaPath, EntityManagerInterface $entityManager)
+    public function duplicate(FileInterface $originalResource)
     {
-        parent::__construct($className);
+        /** @var FileInterface $file */
+        $file = $this->createNew();
 
-        $this->mediaPath = $mediaPath;
-        $this->entityManager = $entityManager;
+        $file->setMimeType($originalResource->getMimeType());
+        $file->setExtension($originalResource->getExtension());
+        $file->setOrder($originalResource->getOrder());
+        $file->setFilename($originalResource->getFilename());
+        $file->setParameters($originalResource->getParameters());
+        $file->setContent($originalResource->getContent());
+
+        $file->setGarbage(false);
+        $file->setGarbageTimestamp(new \DateTime());
+
+        return $file;
     }
 
     /**
-     * @param File|null $originalResource
-     * @return File
+     * @param UploadedFile $uploadedFile
+     * @return FileInterface
      */
-    public function duplicate($originalResource)
+    public function createFromUploadedFile(UploadedFile $uploadedFile)
     {
-        if (!$originalResource) {
-            return null;
+        /** @var File $newFile */
+        $file = $this->createNew();
+
+        $file->setMimeType($uploadedFile->getMimeType());
+        $file->setExtension($uploadedFile->guessClientExtension());
+        $file->setFilename($uploadedFile->getClientOriginalName());
+        $file->setGarbage(true);
+        $file->setContent(new PathContent($uploadedFile->getRealPath()));
+
+        return $file;
+    }
+
+    /**
+     * @param File $file
+     * @return FileInterface
+     */
+    public function createFromFile(File $file)
+    {
+        return $this->createFromPath($file->getRealPath());
+    }
+
+    /**
+     * @param SplFileInfo $file
+     * @return FileInterface
+     */
+    public function createFromSplFileInfo(SplFileInfo $file)
+    {
+        return $this->createFromPath($file->getRealPath());
+    }
+
+    /**
+     * @param string $path
+     * @return FileInterface
+     * @throws FileException
+     */
+    public function createFromPath($path)
+    {
+        if (!is_readable($path)) {
+            throw new FileException(sprintf('File "%s" not found or not readable.', $path));
         }
 
-        /** @var File $newFile */
-        $newFile = $this->createNew();
+        $fileInfo = pathinfo($path);
 
-        $newFile->setMimeType($originalResource->getMimeType());
-        $newFile->setExtension($originalResource->getExtension());
-        $newFile->setOrder($originalResource->getOrder());
-        $newFile->setFilename($originalResource->getFilename());
-        $newFile->setSlug($originalResource->getSlug());
-        $newFile->setParameters($originalResource->getParameters());
-        $newFile->setGarbage(false);
-        $newFile->setGarbageTimestamp(new \DateTime());
+        /** @var FileInterface $file */
+        $file = $this->createNew();
 
-        $this->entityManager->persist($newFile);
-        $this->entityManager->flush();
+        $file->setMimeType($this->guessMimeType($file));
+        $file->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
+        $file->setFilename($fileInfo['basename']);
+        $file->setGarbage(true);
+        $file->setContent(new PathContent($path));
 
-        copy($this->mediaPath . '/' . $originalResource->getId(), $this->mediaPath . '/' . $newFile->getId());
-
-        return $newFile;
+        return $file;
     }
 }

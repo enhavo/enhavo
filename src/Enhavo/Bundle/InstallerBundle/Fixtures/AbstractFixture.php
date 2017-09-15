@@ -91,7 +91,8 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     protected function createImage($path)
     {
         $path = sprintf('%s/../Resources/images/%s', __DIR__, $path);
-        return $this->container->get('enhavo_media.file_service')->storeFile($path);
+        $file = $this->container->get('enhavo_media.factory.file')->createFromPath($path);
+        return $this->container->get('enhavo_media.media.media_manager')->saveFile($file);
     }
 
     /**

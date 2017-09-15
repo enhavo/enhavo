@@ -3,8 +3,6 @@ namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\MediaBundle\Service\FileService;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 /**
@@ -18,12 +16,9 @@ use Enhavo\Bundle\SearchBundle\Util\SearchUtil;
 
 class PdfType extends PlainType
 {
-    protected $fileService;
-
-    public function __construct(SearchUtil $util, ContainerInterface $container, FileService $fileService)
+    public function __construct(SearchUtil $util, ContainerInterface $container)
     {
         parent::__construct($util, $container);
-        $this->fileService = $fileService;
     }
 
     function index($value, $options, $properties = null)
@@ -42,14 +37,7 @@ class PdfType extends PlainType
 
     public function getPdfContent(FileInterface $file)
     {
-        if($file != null) {
-            if (strpos($file->getMimeType(), 'pdf') !== false) {
-                $response = new BinaryFileResponse($this->fileService->getFilepath($file));
-                $text = $this->pdfToString($response->getFile());
-                return $text;
-            }
-        }
-        return '';
+        return $this->pdfToString($file->getContent()->getContent());
     }
 
     protected function pdfToString($sourcefile)
@@ -72,5 +60,4 @@ class PdfType extends PlainType
     {
         return 'PDF';
     }
-
 }

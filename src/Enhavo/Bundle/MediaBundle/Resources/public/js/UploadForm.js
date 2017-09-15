@@ -200,6 +200,7 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           event.preventDefault();
 
           imageCropper[formIndex].startImageCrop(selected[formIndex], function (result) {
+            console.log(result);
             admin.openLoadingOverlay();
 
             var id = selected[formIndex].data('id');
@@ -253,12 +254,6 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
           $(this).val(sourceValue);
         }
       });
-      var slug = source.find('[data-field-name="' + slugField.data('field-name') + '"]').val();
-      if (slug == "") {
-        slug = self.slugifyFileName(source.find('[data-field-name="filename"]').val());
-        source.find('[data-field-name="slug"]').val(slug);
-      }
-      slugField.html(slug);
       $(form).find('[data-download-button]').attr("href", source.data('download-link'));
 
       var mimeType = source.find('[data-mime-type]').data('mime-type');

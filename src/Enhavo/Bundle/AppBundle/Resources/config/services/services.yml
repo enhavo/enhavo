@@ -73,9 +73,12 @@ services:
         arguments:
             - '@security.authorization_checker'
 
-    enhavo_shop.twig.currency:
+    enhavo_app.twig.currency:
         class: Enhavo\Bundle\AppBundle\Twig\Currency
         arguments:
             - '@service_container'
         tags:
             - { name: twig.extension }
+
+    enhavo_app.util.secure_url_token_generator:
+        class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator

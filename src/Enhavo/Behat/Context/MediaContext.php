@@ -108,7 +108,7 @@ class MediaContext extends KernelContext
      */
     public function iApplyImageFormat()
     {
-        self::$image = $this->get('enhavo_media.format_manager')->format(self::$image, self::$setting);
+        self::$image = $this->get('enhavo_media.media.format_manager')->format(self::$image, self::$setting);
     }
 
     /**
