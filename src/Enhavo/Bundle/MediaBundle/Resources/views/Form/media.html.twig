@@ -1,0 +1,40 @@
+{% block enhavo_media_widget %}
+    {% import '@EnhavoMedia/Form/field_macros.html.twig' as fieldMacros %}
+    {% spaceless %}
+        {% trans_default_domain 'EnhavoAppBundle' %}
+        <div class="media-type" data-media-type="{{ mediaConfig|json_encode }}" data-media-data="{{ serializeData|json_encode }}">
+            <script type="text/html" data-media-item-template>
+                <li class="media-item" data-media-item>
+                    <div class="thumb" data-media-thumb>
+                        <i class="icon" data-media-thumb-icon></i>
+                        <div class="hover"></div>
+                        <div class="icons">
+                            <i class="icon icon-edit-1"></i>
+                            <i class="icon sortable-icon icon-swap"></i>
+                        </div>
+                    </div>
+
+                    <div class="delete-button" data-media-item-delete>
+                        <i class="icon icon-cross"></i>
+                    </div>
+
+                    <div class="edit" data-media-edit>
+                        <div>TEST</div>
+                    </div>
+                </li>
+            </script>
+
+            <div class="media-extensions"></div>
+
+            <div class="media-progress">
+                <div class="bar" style="width: 0;" data-media-progress-bar></div>
+            </div>
+
+            <ul class="media-row drop-zone {% if multiple %}multiple{% endif %} {% if sortable %}sortable{% endif %}" data-media-row data-media-drop-zone></ul>
+
+            <div>
+                <input id="{{ id }}" type="file" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

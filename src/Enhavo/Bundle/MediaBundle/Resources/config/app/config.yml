@@ -30,7 +30,7 @@ enhavo_assets:
     require_js:
         paths:
             media:
-                location: /bundles/enhavomedia/js
+                location: /bundles/enhavomedia/js/media
 
 enhavo_media:
     formats:
@@ -38,5 +38,5 @@ enhavo_media:
             width: 60
             height: 60
         enhavoPreviewThumb:
-            width: 100
-            height: 100
+            width: 72
+            height: 72

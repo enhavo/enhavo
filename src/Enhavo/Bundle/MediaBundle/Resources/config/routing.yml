@@ -77,3 +77,11 @@ enhavo_media_compatible_replace:
         _method: GET
     options:
         expose: true
+
+enhavo_media_demo_demo:
+    path: /media/demo
+    defaults:
+        _controller: EnhavoMediaBundle:Demo:demo
+        _method: GET
+    options:
+        expose: true
