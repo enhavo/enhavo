@@ -2,11 +2,18 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Media = /** @class */ (function () {
-        function Media(mediaType) {
-            this.$mediaType = $(mediaType);
-            this.config = this.$mediaType.data('media-type');
+        function Media(element) {
+            this.$element = $(element);
+            this.config = this.$element.data('media-type');
             this.init();
+            this.dispatchInitEvent();
         }
+        Media.prototype.dispatchInitEvent = function () {
+            var event = new CustomEvent('mediaInit', {
+                detail: this
+            });
+            document.dispatchEvent(event);
+        };
         Media.prototype.showDropZone = function () {
             this.row.showDropZone();
         };
@@ -14,42 +21,62 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             this.row.hideDropZone();
         };
         Media.prototype.init = function () {
-            var element = this.$mediaType.find('[data-media-row]').get(0);
+            var element = this.$element.find('[data-media-row]').get(0);
             this.row = new MediaRow(element, this.config);
             this.initFileUpload();
-            var self = this;
+            this.initUploadButton();
         };
         Media.prototype.initFileUpload = function () {
             var self = this;
-            this.$mediaType.find('[data-file-upload]').fileupload({
-                dataType: 'json',
-                done: function (event, data) {
-                    $.each(data.result, function (index, meta) {
-                        var item = self.row.createItem(meta);
-                        item.updateThumb();
-                        self.row.setOrder();
-                    });
-                },
-                fail: function (event, data) {
-                    self.row.showError();
-                },
-                add: function (event, data) {
-                    data.submit();
-                },
-                progressall: function (event, data) {
-                    var progress = data.loaded / data.total * 100;
-                    if (progress >= 100) {
-                        self.setProgress(0);
-                    }
-                    else {
-                        self.setProgress(progress);
-                    }
-                },
-                dropZone: this.$mediaType.find('[data-media-drop-zone]')
+            if (this.config.upload) {
+                this.$element.find('[data-file-upload]').fileupload({
+                    dataType: 'json',
+                    done: function (event, data) {
+                        $.each(data.result, function (index, meta) {
+                            var item = self.row.createItem(meta);
+                            item.updateThumb();
+                            self.row.setOrder();
+                        });
+                    },
+                    fail: function (event, data) {
+                        self.row.showError();
+                    },
+                    add: function (event, data) {
+                        if (!self.config.multiple) {
+                            self.row.clearItems();
+                        }
+                        self.row.closeEdit();
+                        data.submit();
+                    },
+                    progressall: function (event, data) {
+                        var progress = data.loaded / data.total * 100;
+                        if (progress >= 100) {
+                            self.setProgress(0);
+                        }
+                        else {
+                            self.setProgress(progress);
+                        }
+                    },
+                    dropZone: this.$element.find('[data-media-drop-zone]')
+                });
+            }
+        };
+        Media.prototype.initUploadButton = function () {
+            var self = this;
+            this.$element.find('[data-file-upload-button]').click(function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+                self.$element.find('[data-file-upload]').trigger('click');
             });
         };
         Media.prototype.setProgress = function (value) {
-            this.$mediaType.find('[data-media-progress-bar]').css('width', value + '%');
+            this.$element.find('[data-media-progress-bar]').css('width', value + '%');
+        };
+        Media.prototype.getRow = function () {
+            return this.row;
+        };
+        Media.prototype.getElement = function () {
+            return this.$element.get(0);
         };
         Media.apply = function (form) {
             $(form).find('[data-media-type]').each(function () {
@@ -73,7 +100,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         Media.media = function (mediaType) {
             for (var _i = 0, _a = Media.mediaTypes; _i < _a.length; _i++) {
                 var media = _a[_i];
-                if (media.$mediaType.get(0) === mediaType) {
+                if (media.$element.get(0) === mediaType) {
                     return media;
                 }
             }
@@ -105,9 +132,16 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                 var item = new MediaItem(element, meta, self);
                 item.updateThumb();
                 self.items.push(item);
-                self.index = index;
+                self.index++;
             });
+            self.setOrder();
         }
+        MediaRow.prototype.getItems = function () {
+            return this.items;
+        };
+        MediaRow.prototype.getElement = function () {
+            return this.$element.get(0);
+        };
         MediaRow.prototype.updateThumbs = function () {
             for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -121,20 +155,33 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             this.$element.css('background-color', '');
         };
         MediaRow.prototype.createItem = function (meta) {
-            this.index++;
             var template = this.$element.parent().find('[data-media-item-template]').text();
             template = template.replace(/__name__/g, this.index.toString());
             var html = $.parseHTML(template)[0];
-            $(html).find('[data-media-item-filename]').val(meta.filename);
-            $(html).find('[data-media-item-id]').val(meta.id);
             var item = new MediaItem(html, meta, this);
+            item.setFilename(meta.filename);
+            item.setId(meta.id);
             this.items.push(item);
             this.$element.append(html);
+            this.index++;
             return item;
         };
         MediaRow.prototype.setOrder = function () {
+            var self = this;
+            this.$element.children().each(function (index, child) {
+                for (var _i = 0, _a = self.items; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    if (item.getElement() === child) {
+                        item.setOrder(index);
+                    }
+                }
+            });
         };
         MediaRow.prototype.showError = function () {
+            console.log('error ' + this);
+        };
+        MediaRow.prototype.clearItems = function () {
+            this.$element.children().remove();
         };
         MediaRow.prototype.openEdit = function (item) {
             if (this.openEditItem) {
@@ -144,6 +191,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             var editBox = "<li data-media-edit-container class='media-edit'></li>";
             var html = $.parseHTML(editBox)[0];
             var $html = $(html);
+            this.resizeEdit($html);
             $html.append(item.getEditElements());
             var afterElement = this.getListAfterElement(item);
             $(afterElement).after(html);
@@ -155,8 +203,26 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                 var $edit = this.$element.find('[data-media-edit-container]');
                 var html = $edit.children().toArray();
                 this.openEditItem.setEditElements(html);
+                this.removeResizeHandler();
                 $edit.remove();
                 this.openEditItem = null;
+            }
+        };
+        MediaRow.prototype.resizeEdit = function ($editElement) {
+            if (!this.config.multiple) {
+                var self_1 = this;
+                this.resizeHandler = function () {
+                    var width = self_1.$element.parent().innerWidth();
+                    $editElement.css('width', width + 'px');
+                    console.log('width', width + 'px');
+                };
+                $(window).bind('resize', 'resize', this.resizeHandler);
+                this.resizeHandler();
+            }
+        };
+        MediaRow.prototype.removeResizeHandler = function () {
+            if (!this.config.multiple) {
+                $(window).unbind('resize', this.resizeHandler);
             }
         };
         MediaRow.prototype.getListAfterElement = function (item) {
@@ -184,20 +250,16 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         MediaRow.prototype.initSortable = function () {
             if (this.config.multiple && this.config.sortable) {
-                var self_1 = this;
+                var self_2 = this;
                 this.$element.sortable({
                     delay: 150,
                     update: function () {
-                        self_1.$element.children().each(function (index, child) {
-                            for (var _i = 0, _a = self_1.items; _i < _a.length; _i++) {
-                                var item = _a[_i];
-                                if (item.getElement() === child) {
-                                    item.setOrder(index);
-                                }
-                            }
-                        });
+                        self_2.setOrder();
                     },
-                    items: '> li[data-media-item]'
+                    items: '> li[data-media-item]',
+                    start: function () {
+                        self_2.closeEdit();
+                    }
                 });
             }
         };
@@ -246,6 +308,16 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             return this.$element.find('[data-media-edit]').append(element);
         };
         MediaItem.prototype.setOrder = function (order) {
+            this.meta.order = order;
+            this.$element.find('[data-position]').val(order);
+        };
+        MediaItem.prototype.setFilename = function (filename) {
+            this.meta.filename = filename;
+            this.$element.find('[data-media-item-filename]').val(filename);
+        };
+        MediaItem.prototype.setId = function (id) {
+            this.meta.id = id;
+            this.$element.find('[data-media-item-id]').val(id);
         };
         MediaItem.prototype.getId = function () {
             return this.meta.id;
@@ -336,11 +408,9 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             }
         };
         MediaItem.prototype.getThumbUrl = function () {
-            var url = '/file/format/{id}/{format}/{shortMd5Checksum}/{filename}?v={random}';
-            url = url.replace('{id}', this.meta.id.toString());
+            var url = ' /file/resolve/{token}/{format}?v={random}';
+            url = url.replace('{token}', this.meta.token.toString());
             url = url.replace('{format}', 'enhavoPreviewThumb');
-            url = url.replace('{shortMd5Checksum}', this.meta.md5Checksum.substring(0, 6));
-            url = url.replace('{filename}', this.meta.filename);
             url = url.replace('{random}', Math.random().toString());
             return url;
         };

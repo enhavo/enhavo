@@ -57,7 +57,10 @@ class FileType extends AbstractType
                     /** @var FormFactory $formFactory */
                     $form = $formFactory->create(FileType::class, $file, $options);
                     $form->submit($submitData);
+                    /** @var FileInterface $file */
                     $file = $form->getData();
+                    $file->setGarbage(false);
+                    $file->setGarbageTimestamp(null);
 
                     return $file;
                 }
@@ -76,7 +79,10 @@ class FileType extends AbstractType
                     /** @var FormFactory $formFactory */
                     $form = $formFactory->create(FileType::class, $file, $options);
                     $form->submit($submitData);
+                    /** @var FileInterface $file */
                     $file = $form->getData();
+                    $file->setGarbage(false);
+                    $file->setGarbageTimestamp(null);
 
                     return $file;
                 }

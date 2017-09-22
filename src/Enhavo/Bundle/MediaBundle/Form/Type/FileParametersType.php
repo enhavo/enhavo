@@ -29,4 +29,14 @@ class FileParametersType extends AbstractType
     {
         $resolver->setDefaults([]);
     }
+
+    public function getBlockPrefix()
+    {
+        return 'enhavo_file_parameters';
+    }
+
+    public function getName()
+    {
+        return 'enhavo_file_parameters';
+    }
 }

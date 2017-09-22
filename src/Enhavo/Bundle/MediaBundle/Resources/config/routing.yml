@@ -13,9 +13,17 @@ enhavo_media_replace:
 
 enhavo_media_resolve:
     path:  /file/resolve/{token}
-    methods: [POST]
+    methods: [GET]
     defaults:
         _controller: enhavo_media.controller.file:resolveAction
+    options:
+        expose: true
+
+enhavo_media_resolve_format:
+    path:  /file/resolve/{token}/{format}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media.controller.file:resolveFormatAction
     options:
         expose: true
 
@@ -45,7 +53,6 @@ enhavo_media_format:
     options:
         expose: true
 
-
 enhavo_media_compatible_show:
     path: /file/compatible/show/{id}
     defaults:
@@ -74,14 +81,6 @@ enhavo_media_compatible_replace:
     path: /file/compatible/replace/{id}
     defaults:
         _controller: enhavo_media.controller.upload:replaceCompatibleAction
-        _method: GET
-    options:
-        expose: true
-
-enhavo_media_demo_demo:
-    path: /media/demo
-    defaults:
-        _controller: EnhavoMediaBundle:Demo:demo
         _method: GET
     options:
         expose: true

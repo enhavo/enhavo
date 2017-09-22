@@ -35,7 +35,8 @@ class PositionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'attr' => [
-                'class' => 'position'
+                'class' => 'position',
+                'data-position' => true
             ]
         ));
     }

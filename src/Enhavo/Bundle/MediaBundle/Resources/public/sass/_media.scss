@@ -83,4 +83,10 @@
       }
     }
   }
+  .upload-input {
+    display: none
+  }
+  .upload-button {
+    &:before {content: '\e817';font-family: "enhavo-iconfont";}
+  }
 }

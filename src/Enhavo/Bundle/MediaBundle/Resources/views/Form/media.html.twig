@@ -1,5 +1,4 @@
 {% block enhavo_media_widget %}
-    {% import '@EnhavoMedia/Form/field_macros.html.twig' as fieldMacros %}
     {% spaceless %}
         {% trans_default_domain 'EnhavoAppBundle' %}
         <div class="media-type" data-media-type="{{ mediaConfig|json_encode }}">
@@ -22,8 +21,11 @@
             </ul>
 
             <div>
-                <input id="{{ id }}" type="file" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
+                {% if upload %}
+                    <button class="btn upload-button" data-file-upload-button> {{ 'label.upload'|trans|nl2br }}</button>
+                {% endif %}
             </div>
+            <input id="{{ id }}" type="file" class="upload-input" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
         </div>
     {% endspaceless %}
 {% endblock %}

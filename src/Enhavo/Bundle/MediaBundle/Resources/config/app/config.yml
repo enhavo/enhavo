@@ -2,6 +2,7 @@ twig:
     form:
         resources:
             - 'EnhavoMediaBundle:Form:fields.html.twig'
+            - 'EnhavoMediaBundle:Form:media.html.twig'
 
 doctrine:
     orm:

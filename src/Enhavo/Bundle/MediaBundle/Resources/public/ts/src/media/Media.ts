@@ -7,6 +7,7 @@ interface MediaConfig
     multiple: boolean;
     sortable: boolean;
     extensions: Array<UploadExtension>;
+    upload: boolean;
 }
 
 interface UploadExtension
@@ -16,7 +17,7 @@ interface UploadExtension
 
 export class Media
 {
-    private $mediaType: JQuery;
+    private $element: JQuery;
 
     private config: MediaConfig;
 
@@ -24,11 +25,20 @@ export class Media
 
     private row: MediaRow;
 
-    constructor(mediaType:HTMLElement)
+    constructor(element:HTMLElement)
     {
-        this.$mediaType = $(mediaType);
-        this.config = this.$mediaType.data('media-type');
+        this.$element = $(element);
+        this.config = this.$element.data('media-type');
         this.init();
+        this.dispatchInitEvent();
+    }
+
+    private dispatchInitEvent()
+    {
+        let event = new CustomEvent('mediaInit', {
+            detail: this
+        });
+        document.dispatchEvent(event);
     }
 
     public showDropZone()
@@ -43,47 +53,72 @@ export class Media
 
     private init()
     {
-        let element:HTMLElement = this.$mediaType.find('[data-media-row]').get(0);
+        let element:HTMLElement = this.$element.find('[data-media-row]').get(0);
         this.row = new MediaRow(element, this.config);
         this.initFileUpload();
-
-        let self = this;
+        this.initUploadButton();
     }
 
     private initFileUpload()
     {
         let self = this;
 
-        this.$mediaType.find('[data-file-upload]').fileupload({
-            dataType: 'json',
-            done: function (event, data) {
-                $.each(data.result, function (index, meta) {
-                    let item = self.row.createItem(meta);
-                    item.updateThumb();
-                    self.row.setOrder();
-                });
-            },
-            fail: function (event, data) {
-                self.row.showError();
-            },
-            add: function (event, data) {
-                data.submit();
-            },
-            progressall: function (event, data) {
-                let progress = data.loaded / data.total * 100;
-                if(progress >= 100) {
-                    self.setProgress(0);
-                } else {
-                    self.setProgress(progress);
-                }
-            },
-            dropZone: this.$mediaType.find('[data-media-drop-zone]')
+        if (this.config.upload) {
+            this.$element.find('[data-file-upload]').fileupload({
+                dataType: 'json',
+                done: function (event, data) {
+                    $.each(data.result, function (index, meta) {
+                        let item = self.row.createItem(meta);
+                        item.updateThumb();
+                        self.row.setOrder();
+                    });
+                },
+                fail: function (event, data) {
+                    self.row.showError();
+                },
+                add: function (event, data) {
+                    if (!self.config.multiple) {
+                        self.row.clearItems();
+                    }
+                    self.row.closeEdit();
+                    data.submit();
+                },
+                progressall: function (event, data) {
+                    let progress = data.loaded / data.total * 100;
+                    if (progress >= 100) {
+                        self.setProgress(0);
+                    } else {
+                        self.setProgress(progress);
+                    }
+                },
+                dropZone: this.$element.find('[data-media-drop-zone]')
+            });
+        }
+    }
+
+    private initUploadButton()
+    {
+        let self = this;
+        this.$element.find('[data-file-upload-button]').click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            self.$element.find('[data-file-upload]').trigger('click');
         });
     }
 
     private setProgress(value:number)
     {
-        this.$mediaType.find('[data-media-progress-bar]').css('width', value + '%');
+        this.$element.find('[data-media-progress-bar]').css('width', value + '%');
+    }
+
+    public getRow(): MediaRow
+    {
+        return this.row;
+    }
+
+    public getElement(): HTMLElement
+    {
+        return this.$element.get(0);
     }
 
     static apply(form:HTMLElement|string)
@@ -113,7 +148,7 @@ export class Media
     static media(mediaType:HTMLElement): Media|null
     {
         for(let media of Media.mediaTypes) {
-            if(media.$mediaType.get(0) === mediaType) {
+            if(media.$element.get(0) === mediaType) {
                 return media;
             }
         }
@@ -140,6 +175,8 @@ class MediaRow
 
     private index = 0;
 
+    private resizeHandler: () => void;
+
     constructor(element:HTMLElement, config:MediaConfig)
     {
         this.config = config;
@@ -156,8 +193,19 @@ class MediaRow
             let item = new MediaItem(<HTMLElement>element, meta, self);
             item.updateThumb();
             self.items.push(item);
-            self.index = index;
+            self.index++;
         });
+        self.setOrder();
+    }
+
+    public getItems(): Array<MediaItem>
+    {
+        return this.items;
+    }
+
+    public getElement(): HTMLElement
+    {
+        return this.$element.get(0);
     }
 
     updateThumbs() {
@@ -178,26 +226,38 @@ class MediaRow
 
     createItem(meta:MediaItemMeta): MediaItem
     {
-        this.index++;
         let template = this.$element.parent().find('[data-media-item-template]').text();
         template = template.replace(/__name__/g, this.index.toString());
         let html = $.parseHTML(template)[0];
-        $(html).find('[data-media-item-filename]').val(meta.filename);
-        $(html).find('[data-media-item-id]').val(meta.id);
         let item = new MediaItem(html, meta, this);
+        item.setFilename(meta.filename);
+        item.setId(meta.id);
         this.items.push(item);
         this.$element.append(html);
+        this.index++;
         return item;
     }
 
     setOrder()
     {
-
+        let self = this;
+        this.$element.children().each(function(index, child) {
+            for (let item of self.items) {
+                if(item.getElement() === child) {
+                    item.setOrder(index);
+                }
+            }
+        });
     }
 
     showError()
     {
+        console.log('error ' + this);
+    }
 
+    clearItems()
+    {
+        this.$element.children().remove();
     }
 
     openEdit(item: MediaItem)
@@ -209,6 +269,7 @@ class MediaRow
         let editBox = "<li data-media-edit-container class='media-edit'></li>";
         let html = $.parseHTML(editBox)[0];
         let $html = $(html);
+        this.resizeEdit($html);
         $html.append(item.getEditElements());
         let afterElement = this.getListAfterElement(item);
         $(afterElement).after(html);
@@ -222,8 +283,31 @@ class MediaRow
             let $edit = this.$element.find('[data-media-edit-container]');
             let html = $edit.children().toArray();
             this.openEditItem.setEditElements(html);
+            this.removeResizeHandler();
             $edit.remove();
             this.openEditItem = null;
+        }
+    }
+
+    private resizeEdit($editElement: JQuery)
+    {
+        if(!this.config.multiple) {
+            let self = this;
+            this.resizeHandler = function() {
+                let width = self.$element.parent().innerWidth();
+                $editElement.css('width', width + 'px');
+                console.log('width', width + 'px');
+            };
+
+            $(window).bind('resize', 'resize', this.resizeHandler);
+            this.resizeHandler();
+        }
+    }
+
+    private removeResizeHandler()
+    {
+        if(!this.config.multiple) {
+            $(window).unbind('resize', this.resizeHandler);
         }
     }
 
@@ -260,15 +344,12 @@ class MediaRow
             this.$element.sortable({
                 delay: 150,
                 update: function () {
-                    self.$element.children().each(function(index, child) {
-                        for (let item of self.items) {
-                            if(item.getElement() === child) {
-                                item.setOrder(index);
-                            }
-                        }
-                    });
+                    self.setOrder();
                 },
-                items: '> li[data-media-item]'
+                items: '> li[data-media-item]',
+                start: function() {
+                    self.closeEdit();
+                }
             });
         }
     }
@@ -287,6 +368,8 @@ class MediaItemMeta
     filename: string;
 
     token: string;
+
+    order: number
 }
 
 class MediaItem
@@ -353,7 +436,20 @@ class MediaItem
 
     setOrder(order:number)
     {
+        this.meta.order = order;
+        this.$element.find('[data-position]').val(order);
+    }
 
+    setFilename(filename:string)
+    {
+        this.meta.filename = filename;
+        this.$element.find('[data-media-item-filename]').val(filename);
+    }
+
+    setId(id:number)
+    {
+        this.meta.id = id;
+        this.$element.find('[data-media-item-id]').val(id);
     }
 
     getId()
@@ -455,11 +551,9 @@ class MediaItem
 
     private getThumbUrl()
     {
-        let url = '/file/format/{id}/{format}/{shortMd5Checksum}/{filename}?v={random}';
-        url = url.replace('{id}', this.meta.id.toString());
+        let url = ' /file/resolve/{token}/{format}?v={random}';
+        url = url.replace('{token}', this.meta.token.toString());
         url = url.replace('{format}', 'enhavoPreviewThumb');
-        url = url.replace('{shortMd5Checksum}', this.meta.md5Checksum.substring(0, 6));
-        url = url.replace('{filename}', this.meta.filename);
         url = url.replace('{random}', Math.random().toString());
         return url;
     }
