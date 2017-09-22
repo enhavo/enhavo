@@ -1,0 +1,18 @@
+<li class="media-item" data-media-item data-media-meta="{{ media_meta(form.vars.data)|json_encode }}">
+    <div class="thumb" data-media-thumb>
+        <i class="icon" data-media-thumb-icon></i>
+        <div class="hover"></div>
+        <div class="icons">
+            <i class="icon icon-edit-1"></i>
+            <i class="icon sortable-icon icon-swap"></i>
+        </div>
+    </div>
+
+    <div class="delete-button" data-media-item-delete>
+        <i class="icon icon-cross"></i>
+    </div>
+
+    <div class="edit" data-media-edit>
+        {% block form %}{{ form_widget(form) }}{% endblock %}
+    </div>
+</li>

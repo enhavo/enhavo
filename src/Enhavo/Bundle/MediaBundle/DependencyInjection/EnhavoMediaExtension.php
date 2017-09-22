@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -26,6 +26,8 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_media.formats', $config[ 'formats' ]);
         $container->setParameter('enhavo_media.provider', $config[ 'provider' ]);
         $container->setParameter('enhavo_media.storage', $config[ 'storage' ]);
+
+
 
         $configFiles = array(
             'services.yml',

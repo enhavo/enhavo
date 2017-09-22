@@ -20,12 +20,12 @@
             })
           });
         </script>
-
     </head>
     <body>
-        <form>
+        <form method="post" action="{{ path('enhavo_media_demo_demo') }}">
             {% form_theme form '@EnhavoMedia/Form/media.html.twig' %}
             {{ form_widget(form) }}
+            <button type="submit">Speichern</button>
         </form>
     </body>
 </html>

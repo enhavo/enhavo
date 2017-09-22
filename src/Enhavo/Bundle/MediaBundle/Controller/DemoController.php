@@ -17,9 +17,21 @@ class DemoController extends Controller
 {
     public function demoAction(Request $request)
     {
-        $files = $this->get('doctrine.orm.default_entity_manager')->getRepository('EnhavoMediaBundle:File')->findBy([], [], 10);
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $files = $em->getRepository('EnhavoMediaBundle:File')->findBy([], [], 2);
+        //$files = [];
 
         $form = $this->createForm(MediaType::class, $files);
+
+        if($request->isMethod('post')) {
+            $form->submit($request);
+            $data = $form->getData();
+            if($form->isValid()) {
+                $em->flush();
+            }
+        }
+
+        $formView = $form->createView();
 
         return $this->render('EnhavoMediaBundle:Demo:demo.html.twig', [
             'form' => $form->createView()

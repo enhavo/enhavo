@@ -18,12 +18,6 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             this.row = new MediaRow(element, this.config);
             this.initFileUpload();
             var self = this;
-            var data = this.$mediaType.data('media-data');
-            $.each(data, function (index, meta) {
-                var item = self.row.createItem(meta);
-                item.updateThumb();
-            });
-            self.row.setOrder();
         };
         Media.prototype.initFileUpload = function () {
             var self = this;
@@ -97,10 +91,22 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
     exports.Media = Media;
     var MediaRow = /** @class */ (function () {
         function MediaRow(element, config) {
+            this.index = 0;
             this.config = config;
             this.$element = $(element);
             this.items = [];
             this.initSortable();
+            var self = this;
+            this.$element.children('[data-media-item]').each(function (index, element) {
+                var $element = $(element);
+                var id = $element.find('[data-media-item-id]').data('media-item-id');
+                var meta = $element.data('media-meta');
+                $element.find('[data-media-item-id]').val(meta.id);
+                var item = new MediaItem(element, meta, self);
+                item.updateThumb();
+                self.items.push(item);
+                self.index = index;
+            });
         }
         MediaRow.prototype.updateThumbs = function () {
             for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
@@ -115,8 +121,12 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             this.$element.css('background-color', '');
         };
         MediaRow.prototype.createItem = function (meta) {
+            this.index++;
             var template = this.$element.parent().find('[data-media-item-template]').text();
+            template = template.replace(/__name__/g, this.index.toString());
             var html = $.parseHTML(template)[0];
+            $(html).find('[data-media-item-filename]').val(meta.filename);
+            $(html).find('[data-media-item-id]').val(meta.id);
             var item = new MediaItem(html, meta, this);
             this.items.push(item);
             this.$element.append(html);

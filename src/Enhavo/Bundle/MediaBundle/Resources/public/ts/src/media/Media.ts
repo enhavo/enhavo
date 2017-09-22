@@ -48,13 +48,6 @@ export class Media
         this.initFileUpload();
 
         let self = this;
-        let data = this.$mediaType.data('media-data');
-        $.each(data, function (index, meta) {
-             let item = self.row.createItem(meta);
-            item.updateThumb();
-
-        });
-        self.row.setOrder();
     }
 
     private initFileUpload()
@@ -145,12 +138,26 @@ class MediaRow
 
     private openEditItem: MediaItem;
 
+    private index = 0;
+
     constructor(element:HTMLElement, config:MediaConfig)
     {
         this.config = config;
         this.$element = $(element);
         this.items = [];
         this.initSortable();
+
+        let self = this;
+        this.$element.children('[data-media-item]').each(function (index, element) {
+            let $element =  $(element);
+            let id = $element.find('[data-media-item-id]').data('media-item-id');
+            let meta = $element.data('media-meta');
+            $element.find('[data-media-item-id]').val(meta.id);
+            let item = new MediaItem(<HTMLElement>element, meta, self);
+            item.updateThumb();
+            self.items.push(item);
+            self.index = index;
+        });
     }
 
     updateThumbs() {
@@ -171,8 +178,12 @@ class MediaRow
 
     createItem(meta:MediaItemMeta): MediaItem
     {
+        this.index++;
         let template = this.$element.parent().find('[data-media-item-template]').text();
+        template = template.replace(/__name__/g, this.index.toString());
         let html = $.parseHTML(template)[0];
+        $(html).find('[data-media-item-filename]').val(meta.filename);
+        $(html).find('[data-media-item-id]').val(meta.id);
         let item = new MediaItem(html, meta, this);
         this.items.push(item);
         this.$element.append(html);

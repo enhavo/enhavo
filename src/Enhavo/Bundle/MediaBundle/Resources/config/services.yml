@@ -13,10 +13,19 @@ services:
         tags:
             - { name: form.type, alias: enhavo_files }
 
+    enhavo_media.form.file:
+        class: Enhavo\Bundle\MediaBundle\Form\Type\FileType
+        arguments:
+            - '@form.factory'
+            - '@enhavo_media.repository.file'
+        tags:
+            - { name: form.type, alias: enhavo_file }
+
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@form.factory'
+            - '@enhavo_media.repository.file'
         tags:
             - { name: form.type, alias: enhavo_media }
 

@@ -10,69 +10,87 @@ namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 class MediaType extends AbstractType
 {
-    protected $manager;
+    /**
+     * @var FormFactory
+     */
+    protected $formFactory;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    public function __construct($formFactory, RepositoryInterface $repository)
     {
-        $this->manager = $manager;
+        $this->formFactory = $formFactory;
+        $this->repository = $repository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $manager = $this->manager;
+        $repository = $this->repository;
         $collection = new ArrayCollection();
+        $formFactory = $this->formFactory;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($repository, &$collection, $options, $formFactory){
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            // Then add all rows again in the correct order
+            foreach ($data as $name => $value) {
+                $form->add($name, $options['entry_type'], array_replace(array(
+                    'property_path' => '['.$name.']',
+                ), $options['entry_options']));
+            }
+        });
 
         //convert view data into concrete file objects
         //save it to collection var because the normalization
         //will overwrite the model data immediately
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($manager, &$collection, $options) {
-                $data = $event->getData();
-                if($data) {
-                    if ($options['multiple']) {
-                        foreach($data as $formFile) {
-                            $file = $manager->getRepository('EnhavoMediaBundle:File')->find($formFile['id']);
-                            $file->setFilename($formFile['filename']);
-                            $file->setOrder($formFile['order']);
-                            if(isset($formFile['parameters'])) {
-                                $file->setParameters($formFile['parameters']);
-                            }
-                            $file->setGarbage(false);
-                            $collection->add($file);
-                        }
-                    } else {
-                        $file = $manager->getRepository('EnhavoMediaBundle:File')->find($data['id']);
-                        $file->setFilename($data['filename']);
-                        $file->setOrder($data['order']);
-                        if(isset($data['parameters'])) {
-                            $file->setParameters($data['parameters']);
-                        }
-                        $file->setGarbage(false);
-                        $collection->add($file);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($repository, &$collection, $options, $formFactory) {
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            $normData = $form->getNormData();
+            $viewData = $form->getViewData();
+
+            foreach($data as $index => $formData) {
+                $id = $formData['id'];
+
+                $isNew = true;
+                /** @var FileInterface $file */
+                foreach($normData as $file) {
+                    if($id == $file->getId()) {
+                        $isNew = false;
+                        break;
                     }
                 }
 
-                //set data to null to keep form synchronized
-                $event->setData(null);
+                if($isNew) {
+                    $file = $repository->find($id);
+                    $form->add($index, $options['entry_type'], array_replace(array(
+                        'property_path' => '['.$index.']',
+                    ), $options['entry_options']));
+                    $normData[] = $file;
+                    $viewData[] = $file;
+                }
             }
-        );
+        });
 
         //after normalization write back to model data
-        $builder->addEventListener(
-            FormEvents::SUBMIT,
-            function (FormEvent $event) use ($collection, $options) {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($collection, $options) {
                 if ($options['multiple']) {
                     $event->setData($collection);
                 } else {
@@ -80,36 +98,33 @@ class MediaType extends AbstractType
                 }
             }
         );
+
+        if ($options['prototype']) {
+            $prototypeOptions = array_replace(array(
+                'required' => $options['required'],
+                'label' => $options['prototype_name'].'label__',
+            ), $options['entry_options']);
+
+            if (null !== $options['prototype_data']) {
+                $prototypeOptions['data'] = $options['prototype_data'];
+            }
+
+            $prototype = $builder->create($options['prototype_name'], $options['entry_type'], $prototypeOptions);
+            $builder->setAttribute('prototype', $prototype->getForm());
+        }
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(array_key_exists('information', $options) && is_array($options['information'])) {
-            $view->information = $options['information'];
-        } else {
-            $view->information = array();
+        if ($form->getConfig()->hasAttribute('prototype')) {
+            $prototype = $form->getConfig()->getAttribute('prototype');
+            $view->vars['prototype'] = $prototype->setParent($form)->createView($view);
         }
 
-        $fields = $options['fields'];
-        foreach ($fields as $index => $field) {
-            if (!isset($field['translationDomain'])) {
-                $fields[$index]['translationDomain'] = '';
-            }
-            if (!isset($field['type'])) {
-                $fields[$index]['type'] = 'text';
-            }
-            if ($fields[$index]['type'] == 'choices') {
-                if (!isset($field['choices'])) {
-                    $fields[$index]['choices'] = array();
-                }
-            }
-        }
-
-        $data = $form->getData();
-        $view->vars['serializeData'] = $this->serialize($data);
-        $view->vars['fields'] = $fields;
+        $view->vars['information'] = $options['information'];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['sortable'] = $options['sortable'];
+        $view->vars['item_template'] = $options['item_template'];
         $view->vars['mediaConfig'] = [
             'multiple' => $options['multiple'],
             'sortable' => $options['sortable'],
@@ -117,41 +132,19 @@ class MediaType extends AbstractType
         ];
     }
 
-    private function serialize($data)
-    {
-        $serializeData = [];
-        /** @var $file FileInterface */
-        foreach($data as $file) {
-            $serializeData[] = [
-                'id' => $file->getId(),
-                'mimeType' => $file->getMimeType(),
-                'extension' => $file->getExtension(),
-                'order' => $file->getOrder(),
-                'filename' => $file->getFilename(),
-                'parameters' => $file->getParameters(),
-                'token' => $file->getToken(),
-                'md5Checksum' => $file->getMd5Checksum(),
-            ];
-        }
-        return $serializeData;
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'multiple'      => true,
-            'sortable'      => true,
-            'fields'        => array(
-                'title'         => array(
-                    'label'             => 'media.form.label.title',
-                    'translationDomain' => 'EnhavoMediaBundle'
-                ),
-                'alt_tag'       => array(
-                    'label'             => 'media.form.label.alt_tag',
-                    'translationDomain' => 'EnhavoMediaBundle'
-                )
-            ),
-            'information' => ''
+            'entry_type' => FileType::class,
+            'entry_options' => [],
+            'multiple' => true,
+            'sortable' => true,
+            'information' => '',
+            'allow_add' => true,
+            'prototype' => true,
+            'prototype_data' => null,
+            'prototype_name' => '__name__',
+            'item_template' => 'EnhavoMediaBundle:Form:item.html.twig'
         ));
     }
 
@@ -163,10 +156,5 @@ class MediaType extends AbstractType
     public function getName()
     {
         return 'enhavo_media';
-    }
-
-    public function getParent()
-    {
-        return 'form';
     }
 }
