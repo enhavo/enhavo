@@ -1,5 +1,4 @@
-define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm', 'tinymce'], function($, router, formScript, admin, uploadForm, tinymce) {
-
+define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/Adapter/EnhavoAdapter', 'tinymce'], function($, router, formScript, admin, media, tinymce) {
   function GridForm() {
     var self = this;
 
@@ -20,6 +19,7 @@ define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm', 'ti
 
           // Generate unique placeholder for reindexing service
           var placeholder = '__grid_name' + placeholderIndex + '__';
+          console.log(placeholder);
           var formName = addButton.attr('data-name') + '[items][' + placeholder + ']';
           placeholderIndex++;
 
@@ -162,7 +162,7 @@ define(['jquery', 'app/Router', 'app/Form', 'app/Admin', 'media/UploadForm', 'ti
       });
 
       $(document).on('gridAddAfter', function (event, data) {
-        uploadForm.initUploadForm(data);
+        media.enhavoAdapter.initMedia(data);
         formScript.initWysiwyg(data);
         formScript.initRadioAndCheckbox(data);
         formScript.initSelect(data);

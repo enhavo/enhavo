@@ -9,5 +9,8 @@ export interface Form {
     initList(form:HTMLElement|string): void;
     markInvalidFormElements(form:HTMLElement|string, errors:Array<string>): void;
     reindex(form:JQuery|string, initialize:boolean): void;
+    reindex(): void;
     initReindexableItem(item:HTMLElement|string, placeholder:string): void;
 }
+
+declare var form: Form;

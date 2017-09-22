@@ -23,6 +23,8 @@ export class Media
 
     private static mediaTypes: Array<Media> = [];
 
+    private static isDragAndDropBind: boolean = false;
+
     private row: MediaRow;
 
     constructor(element:HTMLElement)
@@ -35,10 +37,7 @@ export class Media
 
     private dispatchInitEvent()
     {
-        let event = new CustomEvent('mediaInit', {
-            detail: this
-        });
-        document.dispatchEvent(event);
+        $(document).trigger('mediaInit', [this]);
     }
 
     public showDropZone()
@@ -127,22 +126,26 @@ export class Media
             Media.mediaTypes.push(new Media(this));
         });
 
-        $(document).bind('dragover', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            Media.map(function (mediaType) {
-                mediaType.showDropZone();
+        if(!Media.isDragAndDropBind)
+        {
+            $(document).bind('dragover', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                Media.map(function (mediaType) {
+                    mediaType.showDropZone();
+                });
             });
 
-        });
-
-        $(document).bind('dragleave drop', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            Media.map(function (mediaType) {
-                mediaType.hideDropZone();
+            $(document).bind('dragleave drop', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                Media.map(function (mediaType) {
+                    mediaType.hideDropZone();
+                });
             });
-        });
+
+            Media.isDragAndDropBind = true;
+        }
     }
 
     static media(mediaType:HTMLElement): Media|null
@@ -163,7 +166,7 @@ export class Media
     }
 }
 
-class MediaRow
+export class MediaRow
 {
     private $element: JQuery;
 
@@ -193,6 +196,7 @@ class MediaRow
             let item = new MediaItem(<HTMLElement>element, meta, self);
             item.updateThumb();
             self.items.push(item);
+            $(document).trigger('mediaAddItem', [item]);
             self.index++;
         });
         self.setOrder();
@@ -233,6 +237,7 @@ class MediaRow
         item.setFilename(meta.filename);
         item.setId(meta.id);
         this.items.push(item);
+        $(document).trigger('mediaAddItem', [item]);
         this.$element.append(html);
         this.index++;
         return item;
@@ -372,7 +377,7 @@ class MediaItemMeta
     order: number
 }
 
-class MediaItem
+export class MediaItem
 {
     private $element: JQuery;
 
@@ -465,6 +470,11 @@ class MediaItem
     closeEdit()
     {
         this.row.closeEdit();
+    }
+
+    getRow()
+    {
+        return this.row;
     }
 
     updateThumb()

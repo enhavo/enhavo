@@ -8,8 +8,6 @@ parameters:
 services:
     enhavo_media.form.files:
         class: '%enhavo_media.form.files_type.class%'
-        arguments:
-            - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type, alias: enhavo_files }
 

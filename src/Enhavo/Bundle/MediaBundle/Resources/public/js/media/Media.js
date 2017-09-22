@@ -9,10 +9,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             this.dispatchInitEvent();
         }
         Media.prototype.dispatchInitEvent = function () {
-            var event = new CustomEvent('mediaInit', {
-                detail: this
-            });
-            document.dispatchEvent(event);
+            $(document).trigger('mediaInit', [this]);
         };
         Media.prototype.showDropZone = function () {
             this.row.showDropZone();
@@ -82,20 +79,23 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             $(form).find('[data-media-type]').each(function () {
                 Media.mediaTypes.push(new Media(this));
             });
-            $(document).bind('dragover', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                Media.map(function (mediaType) {
-                    mediaType.showDropZone();
+            if (!Media.isDragAndDropBind) {
+                $(document).bind('dragover', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Media.map(function (mediaType) {
+                        mediaType.showDropZone();
+                    });
                 });
-            });
-            $(document).bind('dragleave drop', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                Media.map(function (mediaType) {
-                    mediaType.hideDropZone();
+                $(document).bind('dragleave drop', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Media.map(function (mediaType) {
+                        mediaType.hideDropZone();
+                    });
                 });
-            });
+                Media.isDragAndDropBind = true;
+            }
         };
         Media.media = function (mediaType) {
             for (var _i = 0, _a = Media.mediaTypes; _i < _a.length; _i++) {
@@ -113,6 +113,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             }
         };
         Media.mediaTypes = [];
+        Media.isDragAndDropBind = false;
         return Media;
     }());
     exports.Media = Media;
@@ -132,6 +133,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                 var item = new MediaItem(element, meta, self);
                 item.updateThumb();
                 self.items.push(item);
+                $(document).trigger('mediaAddItem', [item]);
                 self.index++;
             });
             self.setOrder();
@@ -162,6 +164,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             item.setFilename(meta.filename);
             item.setId(meta.id);
             this.items.push(item);
+            $(document).trigger('mediaAddItem', [item]);
             this.$element.append(html);
             this.index++;
             return item;
@@ -265,6 +268,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         return MediaRow;
     }());
+    exports.MediaRow = MediaRow;
     var MediaItemMeta = /** @class */ (function () {
         function MediaItemMeta() {
         }
@@ -327,6 +331,9 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         MediaItem.prototype.closeEdit = function () {
             this.row.closeEdit();
+        };
+        MediaItem.prototype.getRow = function () {
+            return this.row;
         };
         MediaItem.prototype.updateThumb = function () {
             //reset
@@ -416,5 +423,6 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         return MediaItem;
     }());
+    exports.MediaItem = MediaItem;
     exports.default = Media;
 });
