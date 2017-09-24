@@ -12,10 +12,17 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             $(document).trigger('mediaInit', [this]);
         };
         Media.prototype.showDropZone = function () {
-            this.row.showDropZone();
+            if (this.config.upload) {
+                this.row.showDropZone();
+            }
         };
         Media.prototype.hideDropZone = function () {
-            this.row.hideDropZone();
+            if (this.config.upload) {
+                this.row.hideDropZone();
+            }
+        };
+        Media.prototype.getConfig = function () {
+            return this.config;
         };
         Media.prototype.init = function () {
             var element = this.$element.find('[data-media-row]').get(0);
@@ -274,6 +281,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         }
         return MediaItemMeta;
     }());
+    exports.MediaItemMeta = MediaItemMeta;
     var MediaItem = /** @class */ (function () {
         function MediaItem(element, meta, row) {
             this.$element = $(element);
