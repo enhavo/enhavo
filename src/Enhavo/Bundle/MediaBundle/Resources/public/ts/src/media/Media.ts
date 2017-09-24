@@ -42,12 +42,21 @@ export class Media
 
     public showDropZone()
     {
-        this.row.showDropZone();
+        if(this.config.upload) {
+            this.row.showDropZone();
+        }
     }
 
     public hideDropZone()
     {
-        this.row.hideDropZone();
+        if(this.config.upload) {
+            this.row.hideDropZone();
+        }
+    }
+
+    public getConfig(): MediaConfig
+    {
+        return this.config
     }
 
     private init()
@@ -360,7 +369,7 @@ export class MediaRow
     }
 }
 
-class MediaItemMeta
+export class MediaItemMeta
 {
     mimeType: string;
 

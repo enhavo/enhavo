@@ -87,7 +87,7 @@ class FileFactory extends Factory
         /** @var FileInterface $file */
         $file = $this->createNew();
 
-        $file->setMimeType($this->guessMimeType($file));
+        $file->setMimeType($this->guessMimeType($path));
         $file->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
         $file->setFilename($fileInfo['basename']);
         $file->setGarbage(true);

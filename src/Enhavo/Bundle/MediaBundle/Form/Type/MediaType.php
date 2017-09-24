@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,21 @@ use Symfony\Component\Form\FormInterface;
 
 class MediaType extends AbstractType
 {
+    /**
+     * @var ExtensionManager
+     */
+    private $extensionManager;
+
+    /**
+     * MediaType constructor.
+     *
+     * @param ExtensionManager $extensionManager
+     */
+    public function __construct(ExtensionManager $extensionManager)
+    {
+        $this->extensionManager = $extensionManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options) {
@@ -46,11 +62,12 @@ class MediaType extends AbstractType
         $view->vars['sortable'] = $options['sortable'];
         $view->vars['item_template'] = $options['item_template'];
         $view->vars['upload'] = $options['upload'];
-        $view->vars['extensionManager'] = null;
+        $view->vars['extensionManager'] = $this->extensionManager;
+        $view->vars['extensions'] = $options['extensions'];
         $view->vars['mediaConfig'] = [
             'multiple' => $options['multiple'],
             'sortable' => $options['sortable'],
-            'extensions' => [],
+            'extensions' => $view->vars['extensions'],
             'upload' => $options['upload'],
         ];
     }
@@ -70,7 +87,7 @@ class MediaType extends AbstractType
             'prototype_name' => '__name__',
             'item_template' => 'EnhavoMediaBundle:Form:item.html.twig',
             'upload' => true,
-            'extension' => [
+            'extensions' => [
                 'image-cropper' => [],
                 'download' => [],
             ]

@@ -21,6 +21,8 @@ services:
 
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
+        arguments:
+            - '@enhavo_media.extension_manager'
         tags:
             - { name: form.type, alias: enhavo_media }
 

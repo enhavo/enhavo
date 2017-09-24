@@ -1,6 +1,7 @@
 import { Media } from 'media/Media';
 import { MediaItem } from 'media/Media';
 import * as form from 'app/Form'
+
 class EnhavoAdapter
 {
     constructor() {

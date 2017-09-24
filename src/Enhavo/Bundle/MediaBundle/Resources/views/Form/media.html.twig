@@ -6,7 +6,9 @@
                 {{ media_render_item(item_template, form.vars.prototype) }}
             </script>
 
-            <div class="media-extensions"></div>
+            <div class="media-extensions">
+                {{ extensionManager.renderExtensions(extensions)|raw }}
+            </div>
 
             <div class="media-progress">
                 <div class="bar" style="width: 0;" data-media-progress-bar></div>
@@ -24,6 +26,7 @@
                 {% if upload %}
                     <button class="btn upload-button" data-file-upload-button> {{ 'label.upload'|trans|nl2br }}</button>
                 {% endif %}
+                {{ extensionManager.renderButtons(extensions)|raw }}
             </div>
             <input id="{{ id }}" type="file" class="upload-input" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
         </div>

@@ -27,10 +27,9 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_media.provider', $config[ 'provider' ]);
         $container->setParameter('enhavo_media.storage', $config[ 'storage' ]);
 
-
-
         $configFiles = array(
-            'services.yml',
+            'services/media.yml',
+            'services/extension.yml',
         );
 
         foreach ($configFiles as $configFile) {

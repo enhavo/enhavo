@@ -23,8 +23,6 @@ liip_imagine:
 enhavo_app:
     stylesheets:
       - '@EnhavoMediaBundle/Resources/public/css/style.css'
-    apps:
-      - 'media/UploadForm'
 
 enhavo_assets:
     require_js:
