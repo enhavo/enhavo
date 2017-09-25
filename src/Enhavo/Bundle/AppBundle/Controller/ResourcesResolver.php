@@ -47,6 +47,12 @@ class ResourcesResolver implements ResourcesResolverInterface
         if($requestConfiguration instanceof RequestConfiguration && $repository instanceof EntityRepositoryInterface) {
             if($requestConfiguration->hasFilters()) {
                 $query = $this->filterQueryBuilder->buildQueryFromRequestConfiguration($requestConfiguration);
+                if (null !== $repositoryMethod = $requestConfiguration->getRepositoryMethod()) {
+                    $callable = [$repository, $repositoryMethod];
+                    $resources = call_user_func_array($callable, array_merge([$query], $requestConfiguration->getRepositoryArguments()));
+                    return $resources;
+                }
+
                 return $repository->filter($query);
             }
         }
