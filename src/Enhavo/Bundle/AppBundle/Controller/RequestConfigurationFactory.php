@@ -11,7 +11,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ParametersParser;
 use Sylius\Bundle\ResourceBundle\Controller\Parameters;
 use Symfony\Component\HttpFoundation\Request;
