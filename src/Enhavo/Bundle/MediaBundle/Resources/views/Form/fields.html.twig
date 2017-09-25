@@ -5,7 +5,7 @@
             <div class="uploadForm" data-multiple="{% if multiple %}1{% else %}0{% endif %}">
 
                 <script type="text/html" data-id="files-template">
-                    {{ fieldMacros.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_slug}', '{file_mime_type}', {}) }}
+                    {{ fieldMacros.fileContainer(multiple, '{full_name}', fields, '{file_index}', '{file_id}', '', '{file_name}', '{file_mime_type}', {}) }}
                 </script>
                 <script type="text/html" data-id="thumb-template">
                     <img class="file-thumb" src="/file/compatible/show/{file_id}/enhavoPreviewThumb?v={prevent_caching_number}">

@@ -89,7 +89,8 @@ class FileController extends Controller
         }
 
         $formatFile = $this->mediaManager->getFormat($file, $format);
-        if($formatFile->getFilename() !== $filename) {
+
+        if(pathinfo($formatFile->getFilename())['filename'] !== pathinfo($filename)['filename']) {
             throw $this->createNotFoundException();
         }
 
