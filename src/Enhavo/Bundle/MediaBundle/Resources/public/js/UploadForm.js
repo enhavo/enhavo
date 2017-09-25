@@ -61,7 +61,7 @@ define(['jquery', 'app/Router', 'app/Admin', 'app/Form', 'app/Translator', 'medi
                   file_index: ++currentIndexes[formIndex],
                   file_name: file.filename,
                   file_slug: file.slug,
-                  file_mime_type: data.result[0].mimeType
+                  file_mime_type: file.mimeType
                 });
                 html = $.parseHTML(html);
                 if ($(this).parents('[data-reindexable]').length > 0) {
