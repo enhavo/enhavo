@@ -14,6 +14,7 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatSetting;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
+use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -54,10 +55,16 @@ class FormatManager
         $content = $this->storage->getContent($file);
 
         $savePath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Imagine'), $file->getExtension());
-        $imagine = new Imagine();
-        $imagine = $imagine->load($content->getContent());
-        $imagine = $this->format($imagine, $setting);
-        $imagine->save($savePath);
+
+        try {
+            $imagine = new Imagine();
+            $imagine = $imagine->load($content->getContent());
+            $imagine = $this->format($imagine, $setting);
+            $imagine->save($savePath);
+        } catch (RuntimeException $e) {
+            // if image cant be created we make an empty file
+            file_put_contents($savePath, '');
+        }
 
         $formatEntity = $this->formatFactory->createFromPath($savePath);
         $formatEntity->setFile($file);
