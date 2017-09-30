@@ -4,7 +4,8 @@ import * as form from 'app/Form'
 
 class EnhavoAdapter
 {
-    constructor() {
+    constructor()
+    {
         EnhavoAdapter.initFormListener();
     }
 
@@ -18,7 +19,8 @@ class EnhavoAdapter
         });
 
         $(document).on('mediaAddItem', function(event, item:MediaItem) {
-            let placeholder = $(item.getRow()).find('[data-form-placeholder]').data('form-placeholder');
+            let $media = $(item.getRow().getMedia().getElement());
+            let placeholder = $media.find('[data-form-placeholder]').data('form-placeholder');
             form.initReindexableItem(item.getElement(), placeholder);
             form.reindex();
         });

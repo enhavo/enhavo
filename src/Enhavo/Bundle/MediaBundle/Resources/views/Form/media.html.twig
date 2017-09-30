@@ -28,7 +28,7 @@
                 {% endif %}
                 {{ extensionManager.renderButtons(extensions)|raw }}
             </div>
-            <input id="{{ id }}" type="file" class="upload-input" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
+            <input id="{{ id }}" name="files" type="file" class="upload-input" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
         </div>
     {% endspaceless %}
 {% endblock %}

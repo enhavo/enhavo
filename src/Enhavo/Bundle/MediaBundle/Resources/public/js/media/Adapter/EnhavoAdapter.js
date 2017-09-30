@@ -13,7 +13,8 @@ define(["require", "exports", "media/Media", "app/Form"], function (require, exp
                 Media_1.Media.apply(form);
             });
             $(document).on('mediaAddItem', function (event, item) {
-                var placeholder = $(item.getRow()).find('[data-form-placeholder]').data('form-placeholder');
+                var $media = $(item.getRow().getMedia().getElement());
+                var placeholder = $media.find('[data-form-placeholder]').data('form-placeholder');
                 form.initReindexableItem(item.getElement(), placeholder);
                 form.reindex();
             });

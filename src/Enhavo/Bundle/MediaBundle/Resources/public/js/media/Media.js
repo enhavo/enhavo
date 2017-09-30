@@ -26,7 +26,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         Media.prototype.init = function () {
             var element = this.$element.find('[data-media-row]').get(0);
-            this.row = new MediaRow(element, this.config);
+            this.row = new MediaRow(element, this);
             this.initFileUpload();
             this.initUploadButton();
         };
@@ -125,9 +125,10 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
     }());
     exports.Media = Media;
     var MediaRow = /** @class */ (function () {
-        function MediaRow(element, config) {
+        function MediaRow(element, media) {
             this.index = 0;
-            this.config = config;
+            this.config = media.getConfig();
+            this.media = media;
             this.$element = $(element);
             this.items = [];
             this.initSortable();
@@ -151,6 +152,9 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         MediaRow.prototype.getElement = function () {
             return this.$element.get(0);
         };
+        MediaRow.prototype.getMedia = function () {
+            return this.media;
+        };
         MediaRow.prototype.updateThumbs = function () {
             for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -171,8 +175,8 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             item.setFilename(meta.filename);
             item.setId(meta.id);
             this.items.push(item);
-            $(document).trigger('mediaAddItem', [item]);
             this.$element.append(html);
+            $(document).trigger('mediaAddItem', [item]);
             this.index++;
             return item;
         };

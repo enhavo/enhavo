@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\ProjectBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\ListType;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -98,6 +99,8 @@ class MagazineType extends AbstractResourceType
             'allow_delete' => $allowDelete,
             'allow_add' => $allowAdd
         ]);
+
+        $builder->add('pictures', MediaType::class);
     }
 
 

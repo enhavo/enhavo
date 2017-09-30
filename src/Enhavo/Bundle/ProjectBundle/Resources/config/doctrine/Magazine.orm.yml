@@ -25,5 +25,20 @@ Enhavo\Bundle\ProjectBundle\Entity\Magazine:
             orderBy:
                 position: ASC
 
+    manyToMany:
+        pictures:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orderBy: { 'order': 'ASC' }
+            joinTable:
+                name: project_magazine_pictures
+                joinColumns:
+                    magazine_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+                        onDelete: cascade
 
     lifecycleCallbacks: {  }

@@ -62,7 +62,7 @@ export class Media
     private init()
     {
         let element:HTMLElement = this.$element.find('[data-media-row]').get(0);
-        this.row = new MediaRow(element, this.config);
+        this.row = new MediaRow(element, this);
         this.initFileUpload();
         this.initUploadButton();
     }
@@ -189,9 +189,12 @@ export class MediaRow
 
     private resizeHandler: () => void;
 
-    constructor(element:HTMLElement, config:MediaConfig)
+    private media: Media;
+
+    constructor(element:HTMLElement, media:Media)
     {
-        this.config = config;
+        this.config = media.getConfig();
+        this.media = media;
         this.$element = $(element);
         this.items = [];
         this.initSortable();
@@ -221,6 +224,11 @@ export class MediaRow
         return this.$element.get(0);
     }
 
+    public getMedia(): Media
+    {
+        return this.media;
+    }
+
     updateThumbs() {
         for (let item of this.items) {
             item.updateThumb();
@@ -246,8 +254,8 @@ export class MediaRow
         item.setFilename(meta.filename);
         item.setId(meta.id);
         this.items.push(item);
-        $(document).trigger('mediaAddItem', [item]);
         this.$element.append(html);
+        $(document).trigger('mediaAddItem', [item]);
         this.index++;
         return item;
     }

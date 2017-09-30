@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,35 +39,39 @@ class MediaType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $data = $event->getData();
+            if ($options['multiple'] === false && $data instanceof FileInterface) {
+                $event->setData([$data]);
+            }
+        }, 1);
+
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
             if ($options['multiple'] === false) {
                 $data = $event->getData();
                 if (is_array($data)) {
-                    if(isset($data[0])) {
-                        $event->setData($data[0]);
+                    if(count($data)) {
+                        $event->setData(array_pop($data));
                     } else {
                         $event->setData(null);
                     }
                 }
-                if($data instanceof ArrayCollection) {
-                    $event->setData($data->get(0));
-                }
             }
-        });
+        }, 10);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['information'] = $options['information'];
         $view->vars['multiple'] = $options['multiple'];
-        $view->vars['sortable'] = $options['sortable'];
+        $view->vars['sortable'] = $options['multiple']  ? $options['sortable'] : false;
         $view->vars['item_template'] = $options['item_template'];
         $view->vars['upload'] = $options['upload'];
         $view->vars['extensionManager'] = $this->extensionManager;
         $view->vars['extensions'] = $options['extensions'];
         $view->vars['mediaConfig'] = [
             'multiple' => $options['multiple'],
-            'sortable' => $options['sortable'],
+            'sortable' =>  $options['multiple'] ? $options['sortable'] : false,
             'extensions' => $view->vars['extensions'],
             'upload' => $options['upload'],
         ];
@@ -82,14 +87,15 @@ class MediaType extends AbstractType
             'by_reference' => false,
             'information' => '',
             'allow_add' => true,
+            'allow_delete' => true,
             'prototype' => true,
             'prototype_data' => null,
             'prototype_name' => '__name__',
             'item_template' => 'EnhavoMediaBundle:Form:item.html.twig',
             'upload' => true,
             'extensions' => [
-                'image-cropper' => [],
-                'download' => [],
+//                'image-cropper' => [],
+//                'download' => [],
             ]
         ));
     }
