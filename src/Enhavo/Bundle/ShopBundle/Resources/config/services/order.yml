@@ -237,7 +237,7 @@ services:
         arguments:
             - '@service_container'
 
-    enhavo_shop.mailer.confirm_mailer:
+    enhavo_shop.mailer.confirm_mailer_default:
         class: Enhavo\Bundle\ShopBundle\Mailer\ConfirmMailer
         arguments:
             - '@mailer'
@@ -246,7 +246,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_shop.mailer.tracking_mailer:
+    enhavo_shop.mailer.tracking_mailer_default:
         class: Enhavo\Bundle\ShopBundle\Mailer\TrackingMailer
         arguments:
             - '@mailer'
@@ -255,7 +255,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_shop.mailer.notification_mailer:
+    enhavo_shop.mailer.notification_mailer_default:
         class: Enhavo\Bundle\ShopBundle\Mailer\NotificationMailer
         arguments:
             - '@mailer'
