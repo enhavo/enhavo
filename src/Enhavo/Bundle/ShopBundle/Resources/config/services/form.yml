@@ -1,5 +1,6 @@
 parameters:
     enhavo_shop_shipment.class: Enhavo\Bundle\ShopBundle\Form\Type\ShipmentType
+    enhavo_shop_payment.class: Enhavo\Bundle\ShopBundle\Form\Type\PaymentType
 
 services:
     enhavo_shop_product:
@@ -51,7 +52,7 @@ services:
             - { name: form.type }
 
     enhavo_shop_payment:
-        class: Enhavo\Bundle\ShopBundle\Form\Type\PaymentType
+        class: '%enhavo_shop_payment.class%'
         arguments:
             - '%sylius.model.payment.class%'
             - '%sylius.model.payment_method.class%'
