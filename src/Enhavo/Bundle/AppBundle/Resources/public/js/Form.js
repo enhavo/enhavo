@@ -44,6 +44,13 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
     };
 
     this.initWysiwyg = function (form) {
+      var uuidv4 = function () {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      };
+
       var addTinymce = function (element) {
 
         var options = {
@@ -113,6 +120,15 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
       };
 
       $(form).find('[data-wysiwyg]').each(function (index, element) {
+        /**
+         * The id of the input field in tiny mce MUST be unique, otherwise it can't be initialized.
+         * To make sure it has a unique id, we generate our own at on first initialize
+         */
+        var id = $(element).attr('id');
+        if(!id.match(/^wysiwyg_/)) {
+          id = 'wysiwyg_' + uuidv4();
+          $(element).attr('id', id);
+        }
         addTinymce(element);
       });
     };
