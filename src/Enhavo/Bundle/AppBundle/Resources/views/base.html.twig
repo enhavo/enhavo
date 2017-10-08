@@ -20,23 +20,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/vendor/components-font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/theme.css') }}">
 
-
-
     {% block stylesheets %}<!-- additional stylesheets -->{% endblock %}
 
     {% block javascripts %}
-
         {{ require_js_configuration() }}
 
         <script type="text/javascript">
             require(['app/Main'], function(main) {});
         </script>
-
-        {% if viewer is defined %}
-            {% for javascript in viewer.javascripts %}
-                <script type="text/javascript" src="{{ admin_asset(javascript) }}"></script>
-            {% endfor %}
-        {% endif %}
     {% endblock %}
 
 </head>

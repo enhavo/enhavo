@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-6 left6">
                 {% if data.fileLeft %}
-                    <img class="enhavo_grid_img" src="{{ media_url(data.fileLeft,960) }}">
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileLeft, 'enhavoGridFull') }}">
                 {% endif %}
                 {% if data.captionLeft %}
                     <p class="picture_caption">{{ data.captionLeft }}</p>
@@ -14,7 +14,7 @@
             </div>
             <div class="col-sm-6 right6">
                 {% if data.fileRight %}
-                    <img class="enhavo_grid_img" src="{{ media_url(data.fileRight,960) }}">
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileRight, 'enhavoGridFull') }}">
                 {% endif %}
                 {% if data.captionRight %}
                     <p class="picture_caption">{{ data.captionRight }}</p>

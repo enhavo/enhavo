@@ -125,7 +125,7 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
          * To make sure it has a unique id, we generate our own at on first initialize
          */
         var id = $(element).attr('id');
-        if(!id.match(/^wysiwyg_/)) {
+        if(typeof id === 'undefined' || id === null || !id.match(/^wysiwyg_/)) {
           id = 'wysiwyg_' + uuidv4();
           $(element).attr('id', id);
         }

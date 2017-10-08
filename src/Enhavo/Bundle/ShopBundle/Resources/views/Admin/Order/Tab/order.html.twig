@@ -22,7 +22,7 @@
                             <div class="col-xs-2">
                                 {% if item.product and item.product.picture %}
                                     <div class="img">
-                                        <img src="{{ media_url(item.product.picture, 100, 100) }}" />
+                                        <img src="{{ media_url(item.product.picture, 'enhavoPreviewThumb') }}" />
                                     </div>
                                 {% endif %}
                             </div>

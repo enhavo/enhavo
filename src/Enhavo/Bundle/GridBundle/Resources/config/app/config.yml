@@ -22,3 +22,8 @@ enhavo_assets:
         paths:
             grid:
                 location: /bundles/enhavogrid/js
+
+enhavo_media:
+    formats:
+        enhavoGridFull:
+            width: 960
