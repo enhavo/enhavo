@@ -40,8 +40,6 @@ class WysiwygType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['id'] = uniqid(self::$uniqueIdPrefix++);
-
         $option = new WysiwygOption();
         $option->setFormats($options['formats']);
         $option->setToolbar1($options['toolbar1']);
