@@ -6,7 +6,7 @@
                     <h3 data-image-title>{{ data.titleLeft }}</h3>
                 {% endif %}
                 {% if data.fileLeft %}
-                    <img class="enhavo_grid_img" src="{{ media_url(data.fileLeft,960) }}" data-grid-image>
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileLeft, 'enhavoGridFull') }}" data-grid-image>
                 {% endif %}
                 {% if data.captionLeft %}
                     <p class="picture_caption">{{ data.captionLeft }}</p>
@@ -17,7 +17,7 @@
                     <h3 data-image-title>{{ data.titleCenter }}</h3>
                 {% endif %}
                 {% if data.fileCenter %}
-                    <img class="enhavo_grid_img" src="{{ media_url(data.fileCenter,960) }}" data-grid-image>
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileCenter, 'enhavoGridFull') }}" data-grid-image>
                 {% endif %}
                 {% if data.captionCenter %}
                     <p class="picture_caption">{{ data.captionCenter }}</p>
@@ -28,7 +28,7 @@
                     <h3 data-image-title>{{ data.titleRight }}</h3>
                 {% endif %}
                 {% if data.fileRight %}
-                    <img class="enhavo_grid_img" src="{{ media_url(data.fileRight,960) }}" data-grid-image>
+                    <img class="enhavo_grid_img" src="{{ media_url(data.fileRight, 'enhavoGridFull') }}" data-grid-image>
                 {% endif %}
                 {% if data.captionRight %}
                     <p class="picture_caption">{{ data.captionRight }}</p>

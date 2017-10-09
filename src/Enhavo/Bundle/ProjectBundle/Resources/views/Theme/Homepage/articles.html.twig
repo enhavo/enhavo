@@ -3,7 +3,7 @@
         <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}" class="row npam">
             {% if article.picture %}
                 <span class="article-photo">
-                    <img src="{{ media_url(article.picture, 'articleThumbnail', 150, 150) }}" alt=""/>
+                    <img src="{{ media_url(article.picture, 'articleThumbnail') }}" alt=""/>
                 </span>
                 {% else %}
                 <span class="article-photo">

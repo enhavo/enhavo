@@ -20,7 +20,7 @@
 {% macro picture(data, layout = 0) %}
     <div class="picture_container {% if not data.float %}{% if layout == 0 %}col-sm-6{% endif %}{% if layout == 1 %}col-sm-3{% endif %}{% if layout == 2 %}col-sm-9{% endif %}{% endif %}">
         {% if data.file %}
-            <img class="enhavo_grid_img" src="{{ media_url(data.file, 960) }}">
+            <img class="enhavo_grid_img" src="{{ media_url(data.file, 'enhavoGridFull') }}">
         {% endif %}
         {% if data.caption %}
             <p class="picture_caption">{{ data.caption }}</p>
