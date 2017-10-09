@@ -1,0 +1,11 @@
+{{ bundle_namespace }}\Entity\{{ item_name }}:
+    type: entity
+    table: {{ table_name }}
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    lifecycleCallbacks: {  }
