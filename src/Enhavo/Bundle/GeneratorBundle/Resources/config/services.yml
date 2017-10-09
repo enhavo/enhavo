@@ -9,3 +9,9 @@ services:
         arguments:
             - @templating
             - @kernel
+
+    enhavo_generator.generator.grid_item_generator:
+        class: Enhavo\Bundle\GeneratorBundle\Generator\GridItemGenerator
+        arguments:
+            - '@kernel'
+            - '@templating'
