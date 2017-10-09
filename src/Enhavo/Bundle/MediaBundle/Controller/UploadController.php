@@ -49,9 +49,8 @@ class UploadController extends Controller
 
     public function uploadAction(Request $request)
     {
-        $files = $request->files->get('files');
         $storedFiles = [];
-        foreach($files as $uploadedFile) {
+        foreach($request->files as $uploadedFile) {
             try {
                 /** @var $uploadedFile UploadedFile */
                 if ($uploadedFile->getError() != UPLOAD_ERR_OK) {

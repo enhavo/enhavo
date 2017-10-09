@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
@@ -44,6 +45,8 @@ class MediaExtension extends \Twig_Extension
             new \Twig_SimpleFunction('media_parameter', array($this, 'getMediaParameter')),
             new \Twig_SimpleFunction('media_extension', array($this, 'getMediaExtension')),
             new \Twig_SimpleFunction('media_is_picture', array($this, 'isPicture')),
+            new \Twig_SimpleFunction('media_render_item', array($this, 'renderItem'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('media_meta', array($this, 'getMeta')),
         );
     }
 
@@ -87,6 +90,30 @@ class MediaExtension extends \Twig_Extension
             return true;
         }
         return false;
+    }
+
+    public function renderItem($template, $form)
+    {
+        return $this->container->get('templating')->render($template, [
+            'form' => $form
+        ]);
+    }
+
+    public function getMeta($file = null)
+    {
+        if($file instanceof FileInterface) {
+            $data =  [
+                'id' => $file->getId(),
+                'mimeType' => $file->getMimeType(),
+                'extension' => $file->getExtension(),
+                'order' => $file->getOrder(),
+                'filename' => $file->getFilename(),
+                'token' => $file->getToken(),
+                'md5Checksum' => $file->getMd5Checksum(),
+            ];
+            return $data;
+        }
+        return null;
     }
 
     public function getName()

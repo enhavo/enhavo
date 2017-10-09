@@ -30,5 +30,7 @@ Enhavo\Bundle\MediaBundle\Entity\Format:
     manyToOne:
         file:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

@@ -1,0 +1,11 @@
+enhavo_project_demo_index:
+    path: /
+    defaults:
+        _controller: EnhavoProjectBundle:Demo:index
+        _method: GET
+
+enhavo_project_demo_media:
+    path: /media
+    defaults:
+        _controller: EnhavoProjectBundle:Demo:media
+        _method: GET

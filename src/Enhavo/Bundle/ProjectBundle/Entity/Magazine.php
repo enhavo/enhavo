@@ -31,6 +31,16 @@ class Magazine implements ResourceInterface
     private $toc;
 
     /**
+     * @var string
+     */
+    private $condition;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $pictures;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -119,5 +129,61 @@ class Magazine implements ResourceInterface
     public function getToc()
     {
         return $this->toc;
+    }
+
+    /**
+     * Set condition
+     *
+     * @param string $condition
+     * @return Magazine
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return string 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Add pictures
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $pictures
+     * @return Magazine
+     */
+    public function addPicture(\Enhavo\Bundle\MediaBundle\Entity\File $pictures)
+    {
+        $this->pictures[] = $pictures;
+
+        return $this;
+    }
+
+    /**
+     * Remove pictures
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $pictures
+     */
+    public function removePicture(\Enhavo\Bundle\MediaBundle\Entity\File $pictures)
+    {
+        $this->pictures->removeElement($pictures);
+    }
+
+    /**
+     * Get pictures
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
     }
 }

@@ -8,9 +8,132 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
+use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\CallbackTransformer;
 
 class FileType extends AbstractType
 {
+    /**
+     * @var FormFactory
+     */
+    protected $formFactory;
 
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    public function __construct($formFactory, RepositoryInterface $repository)
+    {
+        $this->formFactory = $formFactory;
+        $this->repository = $repository;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $submitData = null;
+        $repository = $this->repository;
+        $formFactory = $this->formFactory;
+
+        $builder->addModelTransformer(new CallbackTransformer(
+            function ($originalDescription) {
+                return $originalDescription;
+            },
+            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options) {
+                if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
+                    $file = $repository->find($submitData['id']);
+
+                    /** @var FormFactory $formFactory */
+                    $form = $formFactory->create(FileType::class, $file, $options);
+                    $form->submit($submitData);
+                    /** @var FileInterface $file */
+                    $file = $form->getData();
+                    $file->setGarbage(false);
+                    $file->setGarbageTimestamp(null);
+
+                    return $file;
+                }
+                return $submittedDescription;
+            }
+        ));
+
+        $builder->addViewTransformer(new CallbackTransformer(
+            function ($originalDescription) {
+                return $originalDescription;
+            },
+            function ($submittedDescription) use (&$submitData, $repository, $formFactory, $options) {
+                if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
+                    $file = $repository->find($submitData['id']);
+
+                    /** @var FormFactory $formFactory */
+                    $form = $formFactory->create(FileType::class, $file, $options);
+                    $form->submit($submitData);
+                    /** @var FileInterface $file */
+                    $file = $form->getData();
+                    $file->setGarbage(false);
+                    $file->setGarbageTimestamp(null);
+
+                    return $file;
+                }
+                return $submittedDescription;
+            }
+        ));
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) use (&$submitData)
+        {
+            $data = $event->getData();
+            $submitData = $data;
+        });
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event)
+        {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $form->add('id', HiddenType::class, [
+                'required' => true,
+                'attr' => [
+                    'data-media-item-id' => $data instanceof FileInterface ? $data->getId() : true
+                ],
+                'mapped' => false,
+                'read_only' => true
+            ]);
+        });
+
+        $builder->add('filename', TextType::class, [
+            'required' => true,
+            'attr' => ['data-media-item-filename' => true],
+        ]);
+
+        $builder->add('order', PositionType::class, [
+            'required' => true
+        ]);
+
+        if($options['parameters_type']) {
+            $builder->add('parameters', $options['parameters_type'], $options['parameters_options']);
+        }
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'parameters_type' => FileParametersType::class,
+            'parameters_options' => [],
+            'data_class' => File::class
+        ]);
+    }
 }

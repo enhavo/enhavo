@@ -129,6 +129,23 @@ class FileController extends Controller
         ]);
     }
 
+    public function resolveFormatAction(Request $request)
+    {
+        $token = $request->get('token');
+        $format = $request->get('format');
+
+        $file = $this->mediaManager->findOneBy([
+            'token' => $token
+        ]);
+
+        return $this->redirectToRoute('enhavo_media_format', [
+            'id' => $file->getId(),
+            'format' => $format,
+            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
+            'filename' => $file->getFilename(),
+        ]);
+    }
+
     /**
      * @deprecated this function will be removed on 0.4
      * @param Request $request

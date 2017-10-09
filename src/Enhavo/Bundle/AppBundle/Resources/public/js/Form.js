@@ -1,4 +1,6 @@
-define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce', 'tinymce'], function($, templating, admin, translator, timepicker, jQueryTinymce, tinymce) {
+define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce', 'tinymce'], function(exports, $, templating, admin, translator, timepicker, jQueryTinymce, tinymce) {
+  "use strict";
+  Object.defineProperty(exports, "__esModule", { value: true });
 
   var Form = function () {
     var self = this;
@@ -449,5 +451,6 @@ define(['jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-ti
     init();
   };
 
-  return new Form();
+  var form = new Form();
+  return form;
 });

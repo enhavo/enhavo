@@ -1,0 +1,34 @@
+{% block enhavo_media_widget %}
+    {% spaceless %}
+        {% trans_default_domain 'EnhavoAppBundle' %}
+        <div class="media-type" data-media-type="{{ mediaConfig|json_encode }}">
+            <script type="text/html" data-media-item-template>
+                {{ media_render_item(item_template, form.vars.prototype) }}
+            </script>
+
+            <div class="media-extensions">
+                {{ extensionManager.renderExtensions(extensions)|raw }}
+            </div>
+
+            <div class="media-progress">
+                <div class="bar" style="width: 0;" data-media-progress-bar></div>
+            </div>
+
+            <ul class="media-row drop-zone {% if multiple %}multiple{% endif %} {% if sortable %}sortable{% endif %}" data-media-row data-media-drop-zone>
+                {% for key, child in form.children %}
+                    {% if key matches '/^\\d+$/' %}
+                        {{ media_render_item(item_template, child) }}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <div>
+                {% if upload %}
+                    <button class="btn upload-button" data-file-upload-button> {{ 'label.upload'|trans|nl2br }}</button>
+                {% endif %}
+                {{ extensionManager.renderButtons(extensions)|raw }}
+            </div>
+            <input id="{{ id }}" name="files" type="file" class="upload-input" data-file-upload data-url="{{ path('enhavo_media_upload') }}" multiple>
+        </div>
+    {% endspaceless %}
+{% endblock %}

@@ -1,0 +1,3 @@
+.table-widget-picture-wrapper { position: relative; }
+.table-widget-picture-wrapper:before { content: '.'; visibility: hidden; }
+.table-widget-picture-wrapper .table-widget-picture { position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%); border-radius:2px; }

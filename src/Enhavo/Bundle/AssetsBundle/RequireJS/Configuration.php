@@ -33,7 +33,8 @@ class Configuration
     {
         $config =  [
             'paths' => [],
-            'shim' => []
+            'shim' => [],
+            'waitSeconds' => 200
         ];
 
         if(isset($this->configuration['paths']) && is_array($this->configuration['paths'])) {

@@ -8,10 +8,23 @@ parameters:
 services:
     enhavo_media.form.files:
         class: '%enhavo_media.form.files_type.class%'
-        arguments:
-            - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type, alias: enhavo_files }
+
+    enhavo_media.form.file:
+        class: Enhavo\Bundle\MediaBundle\Form\Type\FileType
+        arguments:
+            - '@form.factory'
+            - '@enhavo_media.repository.file'
+        tags:
+            - { name: form.type, alias: enhavo_file }
+
+    enhavo_media.form.media:
+        class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
+        arguments:
+            - '@enhavo_media.extension_manager'
+        tags:
+            - { name: form.type, alias: enhavo_media }
 
     enhavo_media.media.media_manager:
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
@@ -102,3 +115,21 @@ services:
         arguments:
             - '@enhavo_media.media.media_manager'
             - '@router'
+
+    enhavo_media.extend_listener.file:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\MediaBundle\Entity\File
+            - '%enhavo_media.model.file.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_media.extend_listener.format:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\MediaBundle\Entity\Format
+            - '%enhavo_media.model.format.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
