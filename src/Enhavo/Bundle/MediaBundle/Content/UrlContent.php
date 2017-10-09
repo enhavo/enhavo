@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Content;
 
 
-class UrlContent
+class UrlContent extends PathContent
 {
 
 }

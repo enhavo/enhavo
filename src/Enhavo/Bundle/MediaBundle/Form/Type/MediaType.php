@@ -79,6 +79,17 @@ class MediaType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        /*
+         * If by_reference is set to false, the model data will be cloned. We need to avoid this behaviour in
+         * order do keep doctrine references synchronized.
+         */
+        $resolver->setNormalizer('by_reference', function ($options) {
+            if($options['multiple'] === false) {
+                return true;
+            }
+            return $options['by_reference'];
+        });
+
         $resolver->setDefaults(array(
             'entry_type' => FileType::class,
             'entry_options' => [],
