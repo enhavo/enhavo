@@ -59,7 +59,7 @@ class GridItemGenerator extends Generator
             throw new \RuntimeException('Entity "' . $itemName . '" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $bundleNameSnakeCase = $this->camelCaseToSnakeCase($bundle->getName());
+        $bundleNameSnakeCase = $this->camelCaseToSnakeCase($this->removeBundlePostFix($bundle->getName()));
         $itemNameSnakeCase = $this->camelCaseToSnakeCase($itemName);
 
         if (!$this->renderFile(
@@ -182,7 +182,7 @@ class GridItemGenerator extends Generator
     protected function getFormTypeName(BundleInterface $bundle, $itemName)
     {
         return
-            $this->camelCaseToSnakeCase($bundle->getName())
+            $this->camelCaseToSnakeCase($this->removeBundlePostFix($bundle->getName()))
             . '_grid_item_'
             . $this->camelCaseToSnakeCase($itemName);
     }
@@ -208,6 +208,11 @@ class GridItemGenerator extends Generator
         }
 
         return $snakeCasedName;
+    }
+
+    protected function removeBundlePostFix($bundleName)
+    {
+        return preg_replace('/Bundle$/', '', $bundleName);
     }
 
     protected function renderFile($template, $target, $parameters)
