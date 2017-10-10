@@ -21,3 +21,6 @@ form:
     monthly: 'Monthly'
     yearly: 'Yearly'
     never: 'Never'
+    openGraphTitle: 'Open Graph Title'
+    openGraphDescription: 'Open Graph Description'
+    openGraphImage: 'Open Graph Image'

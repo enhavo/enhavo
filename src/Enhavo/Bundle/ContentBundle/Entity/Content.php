@@ -15,6 +15,7 @@ use Enhavo\Bundle\AppBundle\Route\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
@@ -66,6 +67,21 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
      * @var string
      */
     protected $changeFrequency;
+
+    /**
+     * @var FileInterface
+     */
+    protected $openGraphImage;
+
+    /**
+     * @var string
+     */
+    protected $openGraphTitle;
+
+    /**
+     * @var string
+     */
+    protected $openGraphDescription;
     
 
     /**
@@ -280,5 +296,112 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     public function setRoute(RouteObjectInterface $route)
     {
         $this->route = $route;
+    }
+    /**
+     * @var string
+     */
+    private $condition;
+
+
+    /**
+     * Get public
+     *
+     * @return boolean 
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Set openGraphTitle
+     *
+     * @param string $openGraphTitle
+     * @return Content
+     */
+    public function setOpenGraphTitle($openGraphTitle)
+    {
+        $this->openGraphTitle = $openGraphTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get openGraphTitle
+     *
+     * @return string 
+     */
+    public function getOpenGraphTitle()
+    {
+        return $this->openGraphTitle;
+    }
+
+    /**
+     * Set openGraphDescription
+     *
+     * @param string $openGraphDescription
+     * @return Content
+     */
+    public function setOpenGraphDescription($openGraphDescription)
+    {
+        $this->openGraphDescription = $openGraphDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get openGraphDescription
+     *
+     * @return string 
+     */
+    public function getOpenGraphDescription()
+    {
+        return $this->openGraphDescription;
+    }
+
+    /**
+     * Set condition
+     *
+     * @param string $condition
+     * @return Content
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return string 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Set openGraphImage
+     *
+     * @param \Enhavo\Bundle\MediaBundle\Entity\File $openGraphImage
+     * @return Content
+     */
+    public function setOpenGraphImage(\Enhavo\Bundle\MediaBundle\Entity\File $openGraphImage = null)
+    {
+        $this->openGraphImage = $openGraphImage;
+
+        return $this;
+    }
+
+    /**
+     * Get openGraphImage
+     *
+     * @return \Enhavo\Bundle\MediaBundle\Entity\File 
+     */
+    public function getOpenGraphImage()
+    {
+        return $this->openGraphImage;
     }
 }

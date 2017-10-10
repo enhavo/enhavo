@@ -87,6 +87,24 @@ class ContentType extends AbstractType
             'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
+
+        $builder->add('openGraphTitle', 'text', array(
+            'label' => 'form.label.openGraphTitle',
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
+        ));
+
+        $builder->add('openGraphDescription', 'text', array(
+            'label' => 'form.label.openGraphDescription',
+            'translation_domain' => 'EnhavoContentBundle',
+            'translation' => $this->translation
+        ));
+
+        $builder->add('openGraphImage', 'enhavo_files', array(
+            'label' => 'form.label.openGraphImage',
+            'translation_domain' => 'EnhavoContentBundle',
+            'multiple' => false
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
