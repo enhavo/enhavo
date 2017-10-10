@@ -69,6 +69,19 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
                 timestampable:
                     on: update
 
+        openGraphTitle:
+            type: text
+            nullable: true
+        openGraphDescription:
+            type: text
+            nullable: true
+
+    oneToOne:
+        openGraphImage:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orphanRemoval: true
+
     manyToOne:
         route:
             cascade: ['persist', 'refresh', 'remove']

@@ -21,3 +21,6 @@ form:
     monthly: 'Monatlich'
     yearly: 'Jährlich'
     never: 'Nie'
+    openGraphTitle: 'Open Graph Titel'
+    openGraphDescription: 'Open Graph Beschreibung'
+    openGraphImage: 'Open Graph Bild'
