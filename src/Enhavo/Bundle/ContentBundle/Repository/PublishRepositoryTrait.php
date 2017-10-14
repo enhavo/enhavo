@@ -84,7 +84,7 @@ trait PublishRepositoryTrait
             $query->orderBy('n.publicationDate','desc');
         } elseif(is_array($orderBy)) {
             foreach($orderBy as $field => $direction) {
-                $query->orderBy(sprintf('n.%s', $field), $direction);
+                $query->addOrderBy(sprintf('n.%s', $field), $direction);
             }
         }
 
