@@ -64,6 +64,7 @@ class MediaType extends AbstractType
     {
         $view->vars['information'] = $options['information'];
         $view->vars['multiple'] = $options['multiple'];
+        $view->vars['edit'] = $options['edit'];
         $view->vars['sortable'] = $options['multiple']  ? $options['sortable'] : false;
         $view->vars['item_template'] = $options['item_template'];
         $view->vars['upload'] = $options['upload'];
@@ -74,6 +75,7 @@ class MediaType extends AbstractType
             'sortable' =>  $options['multiple'] ? $options['sortable'] : false,
             'extensions' => $view->vars['extensions'],
             'upload' => $options['upload'],
+            'edit' => $options['edit']
         ];
     }
 
@@ -93,6 +95,7 @@ class MediaType extends AbstractType
         $resolver->setDefaults(array(
             'entry_type' => FileType::class,
             'entry_options' => [],
+            'edit' => true,
             'multiple' => true,
             'sortable' => true,
             'by_reference' => false,

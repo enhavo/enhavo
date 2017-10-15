@@ -14,7 +14,7 @@
                 <div class="bar" style="width: 0;" data-media-progress-bar></div>
             </div>
 
-            <ul class="media-row drop-zone {% if multiple %}multiple{% endif %} {% if sortable %}sortable{% endif %}" data-media-row data-media-drop-zone>
+            <ul class="media-row drop-zone {% if multiple %}multiple{% endif %} {% if sortable %}sortable{% endif %} {% if edit %}editable{% endif %}" data-media-row data-media-drop-zone>
                 {% for key, child in form.children %}
                     {% if key matches '/^\\d+$/' %}
                         {{ media_render_item(item_template, child) }}

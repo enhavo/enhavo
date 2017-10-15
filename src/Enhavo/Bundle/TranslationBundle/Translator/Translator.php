@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
+use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
@@ -155,10 +156,18 @@ class Translator
             return null;
         }
 
-        $property = $metadata->getProperty($property->getName());
+        $metaProperty = $metadata->getProperty($property->getName());
 
-        $strategy = $this->strategyResolver->getStrategy($property->getStrategy());
-        return $strategy->getTranslationData($entity, $property, $metadata);
+        if($metaProperty === null) {
+            throw new TranslationException(
+                sprintf('The property "%s" was used for translation, but no metadata was found. Maybe you forgot to define one for the entity "%s"',
+                $property->getName(),
+                get_class($entity)
+            ));
+        }
+
+        $strategy = $this->strategyResolver->getStrategy($metaProperty->getStrategy());
+        return $strategy->getTranslationData($entity, $metaProperty, $metadata);
     }
 
     /**

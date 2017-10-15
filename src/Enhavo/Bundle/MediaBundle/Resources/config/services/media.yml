@@ -71,6 +71,13 @@ services:
             - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
             - { name: kernel.event_listener, event: enhavo_app.update, method: collectGarbage }
 
+    enhavo_media.listener.doctrine_subscriber:
+        class: Enhavo\Bundle\MediaBundle\EventListener\DoctrineSubscriber
+        arguments:
+            - '@enhavo_media.storage'
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
     enhavo_media.table.picture_widget:
         class: Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget
         calls:

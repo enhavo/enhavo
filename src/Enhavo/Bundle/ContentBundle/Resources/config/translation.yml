@@ -3,6 +3,8 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
         title:
         metaDescription:
         pageTitle:
+        openGraphTitle:
+        openGraphDescription:
         slug:
             strategy: slug_translation
             fields: title

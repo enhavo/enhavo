@@ -25,4 +25,9 @@ class PathContent implements ContentInterface
     {
         return file_get_contents($this->path);
     }
+
+    public function getFilePath()
+    {
+        return $this->path;
+    }
 }
