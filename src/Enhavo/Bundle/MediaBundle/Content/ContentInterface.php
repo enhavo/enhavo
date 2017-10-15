@@ -12,4 +12,6 @@ namespace Enhavo\Bundle\MediaBundle\Content;
 interface ContentInterface
 {
     public function getContent();
+
+    public function getFilePath();
 }

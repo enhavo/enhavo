@@ -295,9 +295,11 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         }
         MediaItem.prototype.addHandler = function () {
             var self = this;
-            this.$element.click(function () {
-                self.openEdit();
-            });
+            if (this.row.getMedia().getConfig().edit) {
+                this.$element.click(function () {
+                    self.openEdit();
+                });
+            }
             this.$element.find('[data-media-item-delete]').click(function (event) {
                 event.stopPropagation();
                 event.preventDefault();

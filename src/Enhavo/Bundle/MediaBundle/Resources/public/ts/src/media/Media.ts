@@ -8,6 +8,7 @@ interface MediaConfig
     sortable: boolean;
     extensions: Array<UploadExtension>;
     upload: boolean;
+    edit: boolean;
 }
 
 interface UploadExtension
@@ -414,9 +415,11 @@ export class MediaItem
     {
         let self = this;
 
-        this.$element.click(function() {
-            self.openEdit();
-        });
+        if(this.row.getMedia().getConfig().edit) {
+            this.$element.click(function() {
+                self.openEdit();
+            });
+        }
 
         this.$element.find('[data-media-item-delete]').click(function(event) {
             event.stopPropagation();
