@@ -12,7 +12,7 @@ class GenerateGridItemCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('enhavo:generate:grid:item')
+            ->setName('enhavo:generate:grid-item')
             ->setDescription('Generate templates for new grid item')
             ->addArgument(
                 'bundleName',
