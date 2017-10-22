@@ -68,7 +68,7 @@ class GridItemGenerator extends Generator
             array(
                 'bundle_namespace' => $bundle->getNamespace(),
                 'item_name' => $itemName,
-                'table_name' => 'grid_item_' . $bundleNameSnakeCase . '_' . $itemNameSnakeCase
+                'table_name' => $bundleNameSnakeCase . '_' . $itemNameSnakeCase
             )))
         {
             throw new \RuntimeException('Error writing file "' . $filePath . '".');
@@ -183,8 +183,7 @@ class GridItemGenerator extends Generator
     {
         return
             $this->camelCaseToSnakeCase($this->removeBundlePostFix($bundle->getName()))
-            . '_grid_item_'
-            . $this->camelCaseToSnakeCase($itemName);
+            . '_' . $this->camelCaseToSnakeCase($itemName);
     }
 
     protected function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
