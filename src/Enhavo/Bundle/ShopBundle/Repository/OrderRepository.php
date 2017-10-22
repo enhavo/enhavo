@@ -10,12 +10,16 @@ namespace Enhavo\Bundle\ShopBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryTrait;
+use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Bundle\OrderBundle\Doctrine\ORM\OrderRepository as SyliusOrderRepository;
 
 class OrderRepository extends SyliusOrderRepository implements EntityRepositoryInterface
 {
     use EntityRepositoryTrait;
 
+    /**
+     * @return OrderInterface[]
+     */
     public function findLastNumber()
     {
         $query = $this->createQueryBuilder('n');

@@ -39,7 +39,7 @@ services:
     enhavo_shop.order.number_generator:
         class: Enhavo\Bundle\ShopBundle\Order\OrderNumberGenerator
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@sylius.repository.order'
 
     enhavo.order_processing.init_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderInitProcessor

@@ -8,20 +8,20 @@
 
 namespace Enhavo\Bundle\ShopBundle\Order;
 
-use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\ShopBundle\Repository\OrderRepository;
 
 class OrderNumberGenerator implements OrderNumberGeneratorInterface
 {
-    protected $em;
+    protected $repository;
 
-    public function __construct(EntityManager $em)
+    public function __construct(OrderRepository $repository)
     {
-        $this->em = $em;
+        $this->repository = $repository;
     }
 
     public function generate()
     {
-        $order = $this->em->getRepository('EnhavoShopBundle:Order')->findLastNumber();
+        $order = $this->repository->findLastNumber();
 
         if(count($order)) {
             $number = $order[0]->getNumber();
