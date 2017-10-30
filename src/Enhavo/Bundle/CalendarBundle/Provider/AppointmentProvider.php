@@ -26,26 +26,47 @@ class AppointmentProvider
         $this->em = $em;
     }
 
-    public function getNormalizedAppointments(\DateTime $startDate, \DateTime $endDate)
+    public function getAppointments(\DateTime $startDate, \DateTime $endDate)
     {
+        $normalizedAppointments = [];
         $appointmentsWithRRULE = [];
+
         $appointments = $this->em->getRepository(Appointment::class)->getAppointments($startDate, $endDate);
 
         /** @var Appointment $appointment */
-        foreach ($appointments as $index => $appointment){
+        foreach ($appointments as $index => $appointment) {
             if($appointment->getRepeatRule()){
                 $appointmentsWithRRULE[] = $appointment;
-                unset($appointments[$index]);
+            } else {
+                $normalizedAppointments[] = $appointment;
             }
         }
+
         $appointmentsWithoutRRULE = array_values($appointments);
 
+        foreach($appointmentsWithRRULE as $appointmentWithRRULE) {
+            $repeatedAppointments = $this->getAppointmentsWithRRule($appointmentWithRRULE, $startDate, $endDate);
+            foreach($repeatedAppointments as $repeatedAppointment) {
+                $normalizedAppointments[] = $repeatedAppointment;
+            }
+        }
+
+        return $appointmentsWithoutRRULE;
+    }
+
+    private function getAppointmentsWithRRule($appointmentsWithRRULE, \DateTime $startDate, \DateTime $endDate)
+    {
+        $appointments = [];
+
         $transformer = new ArrayTransformer();
-        /** @var Appointment $appointmentWithRRULE */
+
         foreach ($appointmentsWithRRULE as $appointmentWithRRULE){
-            $rule = new Rule(   $appointmentWithRRULE->getRepeatRule(),
-                                $appointmentWithRRULE->getDateFrom(),
-                                $appointmentWithRRULE->getDateTo());
+            $rule = new Rule(
+                $appointmentWithRRULE->getRepeatRule(),
+                $appointmentWithRRULE->getDateFrom(),
+                $appointmentWithRRULE->getDateTo()
+            );
+
             $timeRanges = $transformer->transform($rule);
             foreach ($timeRanges as $timeRange){
                 if($timeRange->getStart() < $endDate && $timeRange->getEnd() > $startDate){
@@ -54,10 +75,11 @@ class AppointmentProvider
                     $newAppointmentWithoutRRULE->setRepeatRule(null);
                     $newAppointmentWithoutRRULE->setDateFrom($timeRange->getStart());
                     $newAppointmentWithoutRRULE->setDateTo($timeRange->getEnd());
-                    $appointmentsWithoutRRULE[] = $newAppointmentWithoutRRULE;
+                    $appointments[] = $newAppointmentWithoutRRULE;
                 }
             }
         }
-        return $appointmentsWithoutRRULE;
+
+        return $appointments;
     }
 }

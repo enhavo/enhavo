@@ -9,6 +9,9 @@
 namespace Enhavo\Bundle\CalendarBundle\Import;
 
 use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
+use Enhavo\Bundle\CalendarBundle\Events\CreateImportEvent;
+use Enhavo\Bundle\CalendarBundle\Events\ImportEvents;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -43,17 +46,19 @@ class ImportManager
     public function import($from = null, $to = null, $filter = [])
     {
         $eventDispatcher = $this->container->get('event_dispatcher');
-        $eventDispatcher->dispatch('enhavo_calendar.event.preImport', new Event());
+        $eventDispatcher->dispatch(ImportEvents::PRE_IMPORT, new Event());
 
         $this->createImporterInstances();
 
         $importersHandled = [];
 
         /** @var ImporterInterface $importerInstance */
-        foreach ($this->importerInstances as $importerInstance){
+        foreach ($this->importerInstances as $importerInstance) {
             $externalIdsHandled = [];
 
             $appointmentsToImport = $importerInstance->import($from, $to, $filter);
+            $createImports = [];
+
             /** @var Appointment $appointmentToImport */
             foreach ($appointmentsToImport as $appointmentToImport){
                 /** @var Appointment $appointmentFromDb */
@@ -64,12 +69,16 @@ class ImportManager
 
                 $externalIdsHandled[] = $appointmentToImport->getExternalId();
 
-                if(!$appointmentFromDb){
+                if(!$appointmentFromDb) {
                     $this->container->get('doctrine.orm.entity_manager')->persist($appointmentToImport);
+                    $eventDispatcher = $this->container->get('event_dispatcher');
+                    $eventDispatcher->dispatch(ImportEvents::PRE_CREATE, new CreateImportEvent($appointmentToImport, $importerInstance));
+
                 } else {
                     $this->updateAppointment($appointmentFromDb, $appointmentToImport);
                 }
             }
+
             $this->deleteObsoleteAppointments($externalIdsHandled, $importerInstance->getName());
             $importersHandled[] = $importerInstance->getName();
         }
@@ -139,6 +148,7 @@ class ImportManager
         $appointmentFromDb->setLocationCity($appointmentToImport->getLocationCity());
         $appointmentFromDb->setLocationCountry($appointmentToImport->getLocationCountry());
         $appointmentFromDb->setLocationStreet($appointmentToImport->getLocationStreet());
+        $appointmentFromDb->setLocationStreet($appointmentToImport->getLocationStreet());
     }
 
     protected function createImporterInstances()
@@ -147,7 +157,9 @@ class ImportManager
             if(!$this->isInstanceAlreadyCreated($name)){
                 /** @var ImporterInterface $newInstance */
                 $newInstance = new $config['class']($name, $config);
-                $newInstance->setContainer($this->container);
+                if($newInstance instanceof ContainerAwareInterface) {
+                    $newInstance->setContainer($this->container);
+                }
                 $this->importerInstances[] = $newInstance;
             }
         }
