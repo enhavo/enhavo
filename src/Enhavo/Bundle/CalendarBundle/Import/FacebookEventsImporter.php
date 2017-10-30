@@ -8,18 +8,32 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Import;
 
-
-use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
 use Facebook\Facebook;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class FacebookEventsImporter implements ImporterInterface
+class FacebookEventsImporter implements ImporterInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $appId;
+
+    /**
+     * @var string
+     */
     protected $appSecret;
+
+    /**
+     * @var string
+     */
     protected $pageName;
+
+    /**
+     * @var string
+     */
     protected $importerName;
 
     public function __construct($importerName, $config)
@@ -55,18 +69,19 @@ class FacebookEventsImporter implements ImporterInterface
                 continue;
             }
 
-            if($from){
+            if($from) {
                 if($event['end_time'] < $from){
                     continue;
                 }
             }
-            if($to){
+            if($to) {
                 if($event['start_time'] > $to){
                     continue;
                 }
             }
 
-            $appointment = new Appointment();
+            $appointment = $this->getFactory()->createNew();
+
             $appointment->setImporterName($this->importerName);
             $appointment->setDateFrom($event['start_time']);
             $appointment->setDateTo($event['end_time']);
@@ -78,17 +93,24 @@ class FacebookEventsImporter implements ImporterInterface
             if(array_key_exists('place', $event)){
                 $placeNode = $event['place']->all();
                 $appointment->setLocationName($placeNode['name']);
-                $locationNode = $placeNode['location']->all();
-                $appointment->setLocationCity($locationNode['city']);
-                $appointment->setLocationCountry($locationNode['country']);
-                $appointment->setLocationLongitude($locationNode['longitude']);
-                $appointment->setLocationLatitude($locationNode['latitude']);
-                $appointment->setLocationStreet($locationNode['street']);
-                $appointment->setLocationZip($locationNode['zip']);
+                if(array_key_exists('location', $placeNode)) {
+                    $locationNode = $placeNode['location']->all();
+                    $appointment->setLocationCity(isset($locationNode['city']) ? $locationNode['city'] : '');
+                    $appointment->setLocationCountry(isset($locationNode['country']) ? $locationNode['country'] : '');
+                    $appointment->setLocationLongitude(isset($locationNode['longitude']) ? $locationNode['longitude'] : '');
+                    $appointment->setLocationLatitude(isset($locationNode['latitude']) ? $locationNode['latitude'] : '');
+                    $appointment->setLocationStreet(isset($locationNode['street']) ? $locationNode['street'] : '');
+                    $appointment->setLocationZip(isset($locationNode['zip']) ? $locationNode['zip'] : '');
+                }
             }
             $appointments[] = $appointment;
         }
         return $appointments;
+    }
+
+    private function getFactory()
+    {
+        return $this->container->get('enhavo_calendar.factory.appointment');
     }
 
     public function getName()

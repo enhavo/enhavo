@@ -13,15 +13,29 @@ use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
 use GuzzleHttp\Client;
 use ICal\EventObject;
 use ICal\ICal;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class ICSImporter implements ImporterInterface
+class ICSImporter implements ImporterInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $url;
+
+    /**
+     * @var string
+     */
     protected $importerName;
 
+    /**
+     * ICSImporter constructor.
+     *
+     * @param string $importerName
+     * @param array $config
+     */
     public function __construct($importerName, $config)
     {
         $this->importerName = $importerName;
@@ -55,7 +69,8 @@ class ICSImporter implements ImporterInterface
         return $appointments;
     }
 
-    protected function getAppointmentFromEvent(EventObject $event, ICal $ical){
+    protected function getAppointmentFromEvent(EventObject $event, ICal $ical)
+    {
         $appointment = new Appointment();
         $appointment->setImporterName($this->importerName);
         $appointment->setDateFrom(new \DateTime('@' . (int)$ical->iCalDateToUnixTimestamp($event->dtstart)));
