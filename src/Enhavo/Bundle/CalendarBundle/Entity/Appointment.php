@@ -2,16 +2,15 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 
 /**
  * Appointment
  */
-class Appointment extends Content
+class Appointment extends Content implements AppointmentInterface
 {
     /**
      * @var string

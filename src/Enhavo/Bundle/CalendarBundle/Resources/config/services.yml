@@ -21,7 +21,7 @@ services:
         arguments:
             - Enhavo\Bundle\CalendarBundle\Entity\Appointment
             - '%enhavo_calendar.model.appointment.class%'
-            - '%enhavo_translation.translate%'
+            - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
