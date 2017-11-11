@@ -34,7 +34,7 @@ class ImageFilter extends AbstractFilter
         }
     }
 
-    public function format(ImageInterface $image, FilterSetting $setting)
+    private function format(ImageInterface $image, FilterSetting $setting)
     {
         if($setting->getSetting('maxHeight') && $setting->getSetting('maxWidth') == null) {
             $image = $this->resizeWithMaxHeight($image, $setting->getSetting('maxHeight'));

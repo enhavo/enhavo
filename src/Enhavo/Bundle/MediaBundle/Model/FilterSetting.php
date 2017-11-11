@@ -59,4 +59,9 @@ class FilterSetting
         }
         return $default;
     }
+
+    public function setSetting($name, $value) 
+    {
+        $this->settings[$name] = $value;
+    }
 }

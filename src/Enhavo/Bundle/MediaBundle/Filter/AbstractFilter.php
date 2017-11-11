@@ -23,7 +23,7 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
         } elseif($file instanceof FormatInterface) {
             return $file->getContent();
         } elseif($file instanceof ContentInterface) {
-            return $file->getContent();
+            return $file;
         }
 
         throw new FilterException(sprintf('Unsupported type "%s" for media filter', get_class($file)));
