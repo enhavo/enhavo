@@ -18,18 +18,32 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
 {
     protected function getContent($file)
     {
-        if($file instanceof  FileInterface) {
+        if($file instanceof FileInterface) {
             return $file->getContent();
-        }
-
-        if($file instanceof FormatInterface) {
+        } elseif($file instanceof FormatInterface) {
             return $file->getContent();
-        }
-
-        if($file instanceof ContentInterface) {
+        } elseif($file instanceof ContentInterface) {
             return $file->getContent();
         }
 
         throw new FilterException(sprintf('Unsupported type "%s" for media filter', get_class($file)));
+    }
+
+    protected function setMimeType($file, $mimeType)
+    {
+        if($file instanceof FileInterface) {
+            $file->setMimeType($mimeType);
+        } elseif($file instanceof FormatInterface) {
+            $file->setMimeType($mimeType);
+        }
+    }
+
+    protected function setExtension($file, $extension)
+    {
+        if($file instanceof FileInterface) {
+            $file->setExtension($extension);
+        } elseif($file instanceof FormatInterface) {
+            $file->setExtension($extension);
+        }
     }
 }

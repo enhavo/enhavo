@@ -28,6 +28,23 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('storage')->defaultValue('enhavo_media.storage.local_file_storage')->end()
             ->end()
 
+            ->children()
+                ->arrayNode('filter')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('video_image')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('ffmpeg_path')->defaultValue('/usr/local/bin/ffmpeg')->end()
+                                ->scalarNode('ffprobe_path')->defaultValue('/usr/local/bin/ffprobe')->end()
+                                ->scalarNode('timeout')->defaultValue(3600)->end()
+                                ->scalarNode('ffmpeg_threads')->defaultValue(12)->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+
             // Driver used by the resource bundle
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()

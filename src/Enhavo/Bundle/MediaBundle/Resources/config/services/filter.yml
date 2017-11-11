@@ -18,3 +18,17 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: background }
+
+    enhavo_media.filter.pdf_image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\PDFImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: pdf_image }
+
+    enhavo_media.filter.video_image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\VideoImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: video_image }
