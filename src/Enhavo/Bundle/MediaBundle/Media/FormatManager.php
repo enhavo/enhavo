@@ -123,6 +123,7 @@ class FormatManager
                     throw new FormatException(sprintf('No filter type was set for format "%s" in chain with index "%s"', $format, $index));
                 }
                 $formatSetting = new FilterSetting();
+                $formatSetting->setType($chainSettings['type']);
                 $formatSetting->setSettings($chainSettings);
                 $settings[] = $formatSetting;
             }

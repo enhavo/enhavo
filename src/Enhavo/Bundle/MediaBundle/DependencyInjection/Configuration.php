@@ -20,7 +20,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_media')
             ->children()
-                ->variableNode('formats')
+                ->arrayNode('formats')
+                    ->useAttributeAsKey('name')
+                    ->prototype('variable')->end()
                 ->end()
                 ->scalarNode('provider')->defaultValue('enhavo_media.provider.database_provider')->end()
                 ->scalarNode('storage')->defaultValue('enhavo_media.storage.local_file_storage')->end()

@@ -4,6 +4,7 @@ enhavo_media:
             type: image
             width: 350
             height: 350
+
         sliderHero:
             type: image
             width: 1300

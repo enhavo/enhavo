@@ -11,3 +11,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image }
+
+    enhavo_media.filter.background:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\BackgroundFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: background }
