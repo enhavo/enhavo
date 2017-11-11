@@ -1,0 +1,34 @@
+services:
+    enhavo_media.filter_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+          - '@service_container'
+          - 'MediaFilter'
+
+    enhavo_media.filter.image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: image }
+
+    enhavo_media.filter.background:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\BackgroundFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: background }
+
+    enhavo_media.filter.pdf_image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\PDFImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: pdf_image }
+
+    enhavo_media.filter.video_image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\VideoImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: video_image }

@@ -23,13 +23,15 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_media', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_media.formats', $config[ 'formats' ]);
-        $container->setParameter('enhavo_media.provider', $config[ 'provider' ]);
-        $container->setParameter('enhavo_media.storage', $config[ 'storage' ]);
+        $container->setParameter('enhavo_media.formats', $config['formats']);
+        $container->setParameter('enhavo_media.provider', $config['provider']);
+        $container->setParameter('enhavo_media.storage', $config['storage']);
+        $container->setParameter('enhavo_media.filter.video_image', $config['filter']['video_image']);
 
         $configFiles = array(
             'services/media.yml',
             'services/extension.yml',
+            'services/filter.yml',
         );
 
         foreach ($configFiles as $configFile) {

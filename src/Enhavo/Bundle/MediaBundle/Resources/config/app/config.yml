@@ -33,8 +33,10 @@ enhavo_assets:
 enhavo_media:
     formats:
         enhavoTableThumb:
+            type: image
             width: 60
             height: 60
         enhavoPreviewThumb:
+            type: image
             width: 72
             height: 72

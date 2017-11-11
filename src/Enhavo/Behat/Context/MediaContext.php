@@ -8,23 +8,34 @@
 
 namespace Enhavo\Behat\Context;
 
-use Enhavo\Bundle\MediaBundle\Model\FormatSetting;
+use Enhavo\Bundle\MediaBundle\Content\Content;
+use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Content\PathContent;
+use Enhavo\Bundle\MediaBundle\Filter\FilterInterface;
+use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Imagine\Gd\Imagine;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Box;
 
 class MediaContext extends KernelContext
 {
     /**
-     * @var ImageInterface
+     * @var ContentInterface
      */
     public static $image;
 
     /**
-     * @var FormatSetting
+     * @var FilterSetting
      */
     public static $setting;
+
+    /**
+     * @Given A new filter setting
+     */
+    public function aNewFilterSetting()
+    {
+        self::$setting = new FilterSetting();
+    }
 
     /**
      * @Given A image with ":width"px width and ":height"px height
@@ -38,77 +49,28 @@ class MediaContext extends KernelContext
         $color = $palette->color('#000', 100);
         $image = $imagine->create($size, $color);
 
-        self::$image = $image;
+        $tempPath = tempnam(sys_get_temp_dir(), 'Content').'.png';
+        $image->save($tempPath);
+        self::$image = new PathContent($tempPath);
     }
 
     /**
-     * @Given A image format setting with ":width"px width and ":height"px height
+     * @Given A filter setting ":key" with value ":value"
      */
-    public function aImageFormatSettingWithPxHeightAndPxWidth($width, $height)
+    public function aFilterSetting($key, $value)
     {
-        $setting = new FormatSetting();
-        $setting->setHeight($height);
-        $setting->setWidth($width);
-        self::$setting = $setting;
+        self::$setting->setSetting($key, $value);
     }
 
     /**
-     * @Given A image format setting with ":arg1"px width
+     * @Then I apply image on filter ":type"
      */
-    public function aImageFormatSettingWithPxWidth($arg1)
+    public function iApplyImageOnFilter($type)
     {
-        $setting = new FormatSetting();
-        $setting->setWidth($arg1);
-        self::$setting = $setting;
-    }
-
-    /**
-     * @Given A image format setting with ":arg1"px height
-     */
-    public function aImageFormatSettingWithPxHeight($arg1)
-    {
-        $setting = new FormatSetting();
-        $setting->setHeight($arg1);
-        self::$setting = $setting;
-    }
-
-    /**
-     * @Given A image format setting with ":arg1"px max height
-     */
-    public function aImageFormatSettingWithPxMaxHeight($arg1)
-    {
-        $setting = new FormatSetting();
-        $setting->setMaxHeight($arg1);
-        self::$setting = $setting;
-    }
-
-    /**
-     * @Given A image format setting with ":arg1"px max width
-     */
-    public function aImageFormatSettingWithPxMaxWidth($arg1)
-    {
-        $setting = new FormatSetting();
-        $setting->setMaxWidth($arg1);
-        self::$setting = $setting;
-    }
-
-    /**
-     * @Given A image format setting with ":arg1"px max width and ":arg2"px max height
-     */
-    public function aImageWithPxMaxWidthAndPxMaxHeight($arg1, $arg2)
-    {
-        $setting = new FormatSetting();
-        $setting->setMaxWidth($arg1);
-        $setting->setMaxHeight($arg2);
-        self::$setting = $setting;
-    }
-
-    /**
-     * @Then I apply image format
-     */
-    public function iApplyImageFormat()
-    {
-        self::$image = $this->get('enhavo_media.media.format_manager')->format(self::$image, self::$setting);
+        $filterCollector = $this->get('enhavo_media.filter_collector');
+        /** @var FilterInterface $filter */
+        $filter = $filterCollector->getType($type);
+        $filter->apply(self::$image, self::$setting);
     }
 
     /**
@@ -116,7 +78,10 @@ class MediaContext extends KernelContext
      */
     public function theImageSizeShouldBePxHeightAndPxWidth($height, $width)
     {
-        $box = self::$image->getSize();
+        $imagine = new Imagine();
+        $image = $imagine->open(self::$image->getFilePath());
+
+        $box = $image->getSize();
 
         if($height != $box->getHeight() || $width != $box->getWidth()) {
             throw new \Exception(sprintf(
@@ -124,7 +89,6 @@ class MediaContext extends KernelContext
                 $box->getWidth(),
                 $box->getHeight()));
         }
-
     }
 
 }

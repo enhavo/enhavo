@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\MediaBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class DoctrineSubscriber implements EventSubscriber
@@ -37,6 +38,8 @@ class DoctrineSubscriber implements EventSubscriber
     {
         $object = $args->getObject();
         if($object instanceof FileInterface) {
+            $this->storage->applyContent($object);
+        } elseif($object instanceof FormatInterface) {
             $this->storage->applyContent($object);
         }
     }

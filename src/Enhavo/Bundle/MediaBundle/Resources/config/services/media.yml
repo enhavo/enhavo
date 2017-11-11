@@ -41,6 +41,7 @@ services:
             - '@enhavo_media.storage'
             - '@enhavo_media.provider'
             - '@enhavo_media.factory.format'
+            - '@enhavo_media.filter_collector'
 
     enhavo_media.storage.local_file_storage:
         class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage

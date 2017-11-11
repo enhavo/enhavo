@@ -16,5 +16,9 @@ class EnhavoMediaBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_media.extension_collector', 'enhavo.media_extension')
         );
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_media.filter_collector', 'enhavo.media_filter')
+        );
     }
 }

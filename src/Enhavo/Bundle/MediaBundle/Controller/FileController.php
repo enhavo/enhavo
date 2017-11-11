@@ -56,6 +56,10 @@ class FileController extends Controller
             'filename' => $filename
         ]);
 
+        if($file === null) {
+            throw $this->createNotFoundException();
+        }
+
         if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
             throw $this->createNotFoundException();
         }
@@ -83,6 +87,10 @@ class FileController extends Controller
         $file = $this->mediaManager->findOneBy([
             'id' => $id
         ]);
+
+        if($file === null) {
+            throw $this->createNotFoundException();
+        }
 
         if($shortChecksum != substr($file->getMd5Checksum(), 0, 6)) {
             throw $this->createNotFoundException();
