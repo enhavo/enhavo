@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Factory;
 
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -73,6 +74,24 @@ class FormatFactory extends Factory
         $format->setMimeType($this->guessMimeType($path));
         $format->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
         $format->setContent(new PathContent($path));
+
+        return $format;
+    }
+
+    public function createFromMediaFile(FileInterface $file)
+    {
+        /** @var FormatInterface $format */
+        $format = $this->createNew();
+
+        $format->setMimeType($file->getMimeType());
+        $format->setExtension($file->getExtension());
+        $format->setParameters($file->getParameters());
+        $format->setFile($file);
+
+        $tempPath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Duplicate'), $format->getExtension());
+        file_put_contents($tempPath, $file->getContent()->getContent());
+        $content = new PathContent($tempPath);
+        $format->setContent($content);
 
         return $format;
     }

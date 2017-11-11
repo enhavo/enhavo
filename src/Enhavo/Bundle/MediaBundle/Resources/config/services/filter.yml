@@ -1,0 +1,13 @@
+services:
+    enhavo_media.filter_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+          - '@service_container'
+          - 'MediaFilter'
+
+    enhavo_media.filter.image:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: image }

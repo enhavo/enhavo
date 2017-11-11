@@ -93,7 +93,7 @@ class DatabaseProvider implements ProviderInterface
     public function findFormat(FileInterface $file, $format)
     {
         return $this->formatRepository->findOneBy([
-            'format' => $format,
+            'name' => $format,
             'file' => $file
         ]);
     }

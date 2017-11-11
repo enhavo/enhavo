@@ -26,4 +26,5 @@ enhavo_assets:
 enhavo_media:
     formats:
         enhavoGridFull:
+            type: image
             width: 960

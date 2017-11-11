@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaBundle\Factory;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\ProjectBundle\Entity\Content;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -27,9 +28,13 @@ class FileFactory extends Factory
         $file->setOrder($originalResource->getOrder());
         $file->setFilename($originalResource->getFilename());
         $file->setParameters($originalResource->getParameters());
-        $file->setContent($originalResource->getContent());
 
-        $file->setGarbage(false);
+        $tempPath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Duplicate'), $file->getExtension());
+        file_put_contents($tempPath, $originalResource->getContent()->getContent());
+        $content = new PathContent($tempPath);
+        $file->setContent($content);
+
+        $file->setGarbage(true);
         $file->setGarbageTimestamp(new \DateTime());
 
         return $file;

@@ -30,6 +30,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $configFiles = array(
             'services/media.yml',
             'services/extension.yml',
+            'services/filter.yml',
         );
 
         foreach ($configFiles as $configFile) {
