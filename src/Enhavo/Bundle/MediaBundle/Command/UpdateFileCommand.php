@@ -17,8 +17,8 @@ class UpdateFileCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('enhavo:media:update-file')
-            ->setDescription('Update file command')
+            ->setName('enhavo:media:clean-up')
+            ->setDescription('Delete files from system without meta')
         ;
     }
 

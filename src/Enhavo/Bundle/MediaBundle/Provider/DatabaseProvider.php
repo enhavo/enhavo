@@ -66,7 +66,7 @@ class DatabaseProvider implements ProviderInterface
      */
     public function find($id)
     {
-        return $this->find($id);
+        return $this->fileRepository->find($id);
     }
 
     /**
