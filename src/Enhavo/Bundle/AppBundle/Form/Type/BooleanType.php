@@ -3,6 +3,8 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\CallbackTransformer;
@@ -34,7 +36,7 @@ class BooleanType extends AbstractType
                 if(false === $originalDescription) {
                     return self::VALUE_FALSE;
                 }
-                if(null === $originalDescription) {
+                if(null === $originalDescription || '' === $originalDescription) {
                     if(true === $options['default'] || self::VALUE_TRUE === $options['default']) {
                         return self::VALUE_TRUE;
                     }
@@ -55,6 +57,16 @@ class BooleanType extends AbstractType
                 return null;
             }
         ));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($view->vars['value'] === '') {
+            $view->vars['value'] = self::VALUE_NULL;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
