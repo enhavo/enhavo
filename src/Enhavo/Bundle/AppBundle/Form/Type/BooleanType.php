@@ -5,8 +5,6 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -29,7 +27,7 @@ class BooleanType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($originalDescription) {
+            function ($originalDescription) use ($options) {
                 if(true === $originalDescription) {
                     return self::VALUE_TRUE;
                 }
@@ -37,6 +35,12 @@ class BooleanType extends AbstractType
                     return self::VALUE_FALSE;
                 }
                 if(null === $originalDescription) {
+                    if(true === $options['default'] || self::VALUE_TRUE === $options['default']) {
+                        return self::VALUE_TRUE;
+                    }
+                    if(false === $options['default']|| self::VALUE_FALSE === $options['default']) {
+                        return self::VALUE_FALSE;
+                    }
                     return self::VALUE_NULL;
                 }
                 return $originalDescription;
@@ -51,30 +55,6 @@ class BooleanType extends AbstractType
                 return null;
             }
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $value = $view->vars['value'];
-        if($value === '') {
-            $value = 'null';
-        }
-        if($value === self::VALUE_NULL) {
-            if(true === $options['default']) {
-                $value = self::VALUE_TRUE;
-            }
-            if(false === $options['default']) {
-                $value = self::VALUE_FALSE;
-            }
-            if(null === $options['default']) {
-                $value = self::VALUE_NULL;
-            }
-
-            $view->vars['value'] = $value;
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
