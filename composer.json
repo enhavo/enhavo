@@ -65,7 +65,8 @@
     "facebook/graph-sdk": "^5.4",
     "johngrogg/ics-parser": "^2.0",
     "simshaun/recurr": "^2.2",
-    "php-ffmpeg/php-ffmpeg": "^0.11.0"
+    "php-ffmpeg/php-ffmpeg": "^0.11.0",
+    "spatie/image-optimizer": "^1.0"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",
