@@ -3,7 +3,9 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
     Object.defineProperty(exports, "__esModule", { value: true });
     var Grid = /** @class */ (function () {
         function Grid(element) {
+            this.items = [];
             this.placeholderIndex = 0;
+            this.collapse = true;
             this.$element = $(element);
             this.$container = this.$element.find('[data-grid-container]');
             this.initMenu();
@@ -38,18 +40,36 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         };
         Grid.prototype.initActions = function () {
             var grid = this;
+            if (this.collapse) {
+                grid.collapseAll();
+            }
+            else {
+                grid.expandAll();
+            }
             this.$element.find('[data-grid-action-collapse-all]').click(function () {
-                for (var _i = 0, _a = grid.items; _i < _a.length; _i++) {
-                    var item = _a[_i];
-                    item.collapse();
-                }
+                grid.collapseAll();
             });
             this.$element.find('[data-grid-action-expand-all]').click(function () {
-                for (var _i = 0, _a = grid.items; _i < _a.length; _i++) {
-                    var item = _a[_i];
-                    item.expand();
-                }
+                grid.expandAll();
             });
+        };
+        Grid.prototype.collapseAll = function () {
+            this.$element.find('[data-grid-action-collapse-all]').hide();
+            this.$element.find('[data-grid-action-expand-all]').show();
+            this.collapse = true;
+            for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
+                var item = _a[_i];
+                item.collapse();
+            }
+        };
+        Grid.prototype.expandAll = function () {
+            this.$element.find('[data-grid-action-collapse-all]').show();
+            this.$element.find('[data-grid-action-expand-all]').hide();
+            this.collapse = false;
+            for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
+                var item = _a[_i];
+                item.expand();
+            }
         };
         Grid.prototype.initMenu = function () {
             var element = this.$element.find('[data-grid-menu]').get(0);
@@ -57,6 +77,9 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         };
         Grid.prototype.getMenu = function () {
             return this.menu;
+        };
+        Grid.prototype.isCollapse = function () {
+            return this.collapse;
         };
         Grid.prototype.addItem = function (type, button) {
             var url = router.generate('enhavo_grid_item', {
@@ -93,9 +116,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             });
         };
         Grid.prototype.createAddButton = function () {
-            var html = '<div data-grid-add-button>\n' +
-                '<i class="icon-circle-with-plus btnsmall add-grid-button"></i>\n' +
-                '</div>';
+            var html = this.$element.data('grid-add-button-template').trim();
             var element = $.parseHTML(html)[0];
             return new GridItemAddButton(element, this);
         };
@@ -197,26 +218,42 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             this.grid = grid;
             this.$element = $(element);
             this.initActions();
+            if (grid.isCollapse()) {
+                this.collapse();
+            }
+            else {
+                this.expand();
+            }
         }
         GridItem.prototype.initActions = function () {
             var grid = this;
-            this.$element.on('click', '.button-up', function () {
+            this.$element.find('[data-grid-item-action-up]').click(function () {
                 grid.up();
             });
-            this.$element.on('click', '.button-down', function () {
+            this.$element.find('[data-grid-item-action-down]').click(function () {
                 grid.down();
             });
-            this.$element.on('click', '.button-delete', function () {
+            this.$element.find('[data-grid-item-action-remove]').click(function () {
                 grid.remove();
+            });
+            this.$element.find('[data-grid-item-action-collapse]').click(function () {
+                grid.collapse();
+            });
+            this.$element.find('[data-grid-item-action-expand]').click(function () {
+                grid.expand();
             });
         };
         GridItem.prototype.getElement = function () {
             return this.$element.get(0);
         };
         GridItem.prototype.collapse = function () {
+            this.$element.find('[data-grid-item-action-expand]').show();
+            this.$element.find('[data-grid-item-action-collapse]').hide();
             this.$element.find('[data-grid-item-container]').hide();
         };
         GridItem.prototype.expand = function () {
+            this.$element.find('[data-grid-item-action-expand]').hide();
+            this.$element.find('[data-grid-item-action-collapse]').show();
             this.$element.find('[data-grid-item-container]').show();
         };
         GridItem.prototype.up = function () {

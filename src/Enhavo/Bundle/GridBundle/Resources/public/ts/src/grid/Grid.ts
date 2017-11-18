@@ -7,13 +7,15 @@ export class Grid
 {
     private $element: JQuery;
 
-    private items: GridItem[];
+    private items: GridItem[] = [];
 
     private menu: GridMenu;
 
     private $container: JQuery;
 
     private placeholderIndex:number = 0;
+
+    private collapse:boolean = true;
 
     constructor(element: HTMLElement)
     {
@@ -62,17 +64,39 @@ export class Grid
     {
         let grid = this;
 
+        if(this.collapse) {
+            grid.collapseAll();
+        } else {
+            grid.expandAll();
+        }
+
         this.$element.find('[data-grid-action-collapse-all]').click(function() {
-            for (let item of grid.items) {
-                item.collapse();
-            }
+            grid.collapseAll();
         });
 
         this.$element.find('[data-grid-action-expand-all]').click(function() {
-            for (let item of grid.items) {
-                item.expand();
-            }
+            grid.expandAll();
         });
+    }
+
+    public collapseAll()
+    {
+        this.$element.find('[data-grid-action-collapse-all]').hide();
+        this.$element.find('[data-grid-action-expand-all]').show();
+        this.collapse = true;
+        for (let item of this.items) {
+            item.collapse();
+        }
+    }
+
+    public expandAll()
+    {
+        this.$element.find('[data-grid-action-collapse-all]').show();
+        this.$element.find('[data-grid-action-expand-all]').hide();
+        this.collapse = false;
+        for (let item of this.items) {
+            item.expand();
+        }
     }
 
     private initMenu()
@@ -84,6 +108,11 @@ export class Grid
     public getMenu()
     {
         return this.menu;
+    }
+
+    public isCollapse()
+    {
+        return this.collapse;
     }
 
     public addItem(type: string, button: GridItemAddButton)
@@ -126,10 +155,7 @@ export class Grid
 
     private createAddButton() : GridItemAddButton
     {
-        let html =
-            '<div data-grid-add-button>\n' +
-            '<i class="icon-circle-with-plus btnsmall add-grid-button"></i>\n' +
-            '</div>';
+        let html = this.$element.data('grid-add-button-template').trim();
         let element = $.parseHTML(html)[0];
         return new GridItemAddButton(element, this);
     }
@@ -270,22 +296,35 @@ export class GridItem
         this.grid = grid;
         this.$element = $(element);
         this.initActions();
+        if(grid.isCollapse()) {
+            this.collapse();
+        } else {
+            this.expand();
+        }
     }
 
     private initActions()
     {
         let grid = this;
 
-        this.$element.on('click', '.button-up', function () {
+        this.$element.find('[data-grid-item-action-up]').click(function () {
             grid.up();
         });
 
-        this.$element.on('click', '.button-down', function () {
+        this.$element.find('[data-grid-item-action-down]').click(function () {
             grid.down();
         });
 
-        this.$element.on('click', '.button-delete', function () {
+        this.$element.find('[data-grid-item-action-remove]').click(function () {
             grid.remove();
+        });
+
+        this.$element.find('[data-grid-item-action-collapse]').click(function () {
+            grid.collapse();
+        });
+
+        this.$element.find('[data-grid-item-action-expand]').click(function () {
+            grid.expand();
         });
     }
 
@@ -296,11 +335,15 @@ export class GridItem
 
     public collapse()
     {
+        this.$element.find('[data-grid-item-action-expand]').show();
+        this.$element.find('[data-grid-item-action-collapse]').hide();
         this.$element.find('[data-grid-item-container]').hide();
     }
 
     public expand()
     {
+        this.$element.find('[data-grid-item-action-expand]').hide();
+        this.$element.find('[data-grid-item-action-collapse]').show();
         this.$element.find('[data-grid-item-container]').show();
     }
 

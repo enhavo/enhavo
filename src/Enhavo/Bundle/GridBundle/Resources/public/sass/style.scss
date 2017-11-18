@@ -1,23 +1,40 @@
 @import 'compass';
 @import 'vars';
-.enhavo_grid {padding-top: 10px; padding-bottom: 10px;}
-.enhavo_grid_img {width: 100%;}
-.enhavo_gridForm {position: relative;
+
+.enhavo_gridForm {
+  position: relative;
   .addItem {cursor: pointer;}
   .add-enhavo_grid-button {font-size:14px;line-height:19px;}
-  .item {border:1px solid #eee;padding-bottom:15px;
-    + .item {margin-top:15px;}
-    .button-container {line-height: 31px;background-color: #eee;border-bottom: 1px solid #eee;padding-left:85px;position: relative;line-height:25px;margin-bottom:15px;
-      .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;
-        &:hover {color:#fff;background:$primaryColor;}
+
+  .grid-actions {
+
+  }
+
+  .grid-container {
+    .grid-item-add-button {
+
+    }
+
+    .grid-item {
+      border:1px solid #eee;padding-bottom:15px;
+      + .item {margin-top:15px;}
+      .button-container {
+        background-color: #eee;border-bottom: 1px solid #eee;padding-left:85px;position: relative;line-height:25px;margin-bottom:15px;
+        .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;
+          &:hover {color:#fff;background:$primaryColor;}
+        }
+        .button-delete {right:0;}
+        .button-down {left:34px;}
+        .button-up {left:0;}
+        .button-expand {left: 68px}
+        .button-collapse {left: 68px}
+        .label {padding-left: 102px; font-weight: 700;}
       }
-      .button-delete {right:0;}
-      .button-down {left:34px;}
-      .button-up {left:0;}
-      .label {font-weight: 700;}
     }
   }
-  .menu {display: none;position: absolute;color: #000;z-index: 1000;padding: 1px;margin-top: 10px;@include transform(translateX(-50%));background-color:transparent;font-size:12px;line-height:16px;margin-left:19px;@include box-shadow(0px 0px 3px rgba(#4395d1,0.12));
+
+  .grid-menu {
+    display: none;position: absolute;color: #000;z-index: 1000;padding: 1px;margin-top: 10px;@include transform(translateX(-50%));background-color:transparent;font-size:12px;line-height:16px;margin-left:19px;@include box-shadow(0px 0px 3px rgba(#4395d1,0.12));
     &.bottomTriangle {
       .triangle-up {display: none;}
     }
@@ -35,14 +52,4 @@
   }
 }
 
-.picture_caption{font-size: 13px;margin-top: 5px}
-.enhavo_grid_picturepicture {margin-left: 0px;margin-right: 0px;}
-.enhavo_grid_picturepicture .left6{padding-left: 0px;}
-.enhavo_grid_picturepicture .right6 {padding-right: 0px;}
 
-.textleft label {
-  color: black !important;
-}
-.enhavo_grid_frame{border: black;border-style: solid;}
-
-.darkbg {background-color:#777;}

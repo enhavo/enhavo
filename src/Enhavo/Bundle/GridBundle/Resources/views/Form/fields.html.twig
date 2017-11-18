@@ -1,13 +1,22 @@
 {% block enhavo_grid_widget %}
+    {% import _self as helper %}
 
-    <div class="mb1 enhavo_gridForm" data-grid data-grid-name="{{ full_name }}">
+    <div class="mb1 enhavo_gridForm"
+         data-grid
+         data-grid-name="{{ full_name }}"
+         data-grid-add-button-template="{{ helper.addButton()|e }}"
+    >
 
         <div class="grid-actions">
-            <div data-grid-action-collapse-all>Collapse All</div>
-            <div data-grid-action-expand-all>Expand All</div>
+            <div data-grid-action-collapse-all>
+                <i class="icon-collapse"></i>
+            </div>
+            <div data-grid-action-expand-all>
+                <i class="icon-expand"></i>
+            </div>
         </div>
 
-        <div class="menu" data-grid-menu>
+        <div class="grid-menu" data-grid-menu>
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
             <ul>
@@ -19,28 +28,26 @@
             </ul>
         </div>
 
-        <div>
-            <div class="mt1em">
-                <div class="item-container" data-reindexable data-grid-container>
-                    <div data-grid-add-button>
-                      <i class="icon-circle-with-plus btnsmall add-grid-button"></i>
-                    </div>
-                    {% for child in form.children %}
-                        {% for item in child.children %}
-                            {% set formItem = item.itemType %}
-                            {% set formName = item.vars.full_name %}
-                            {% set formOrder = item.vars.value.order %}
-                            {% set formType = item.vars.value.type %}
-                            {% set label = item.vars.label %}
-                            {% include 'EnhavoGridBundle:Form:form.html.twig' %}
-                            <div data-grid-add-button>
-                                <i class="icon-circle-with-plus btnsmall add-grid-button"></i>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-              </div>
-            </div>
-        </div>
+        <div class="grid-container" data-reindexable data-grid-container>
+            {{ helper.addButton() }}
+            {% for child in form.children %}
+                {% for item in child.children %}
+                    {% set formItem = item.itemType %}
+                    {% set formName = item.vars.full_name %}
+                    {% set formOrder = item.vars.value.order %}
+                    {% set formType = item.vars.value.type %}
+                    {% set label = item.vars.label %}
+                    {% include 'EnhavoGridBundle:Form:form.html.twig' %}
+                    {{ helper.addButton() }}
+                {% endfor %}
+            {% endfor %}
+      </div>
 
     </div>
 {% endblock %}
+
+{% macro addButton() %}
+    <div class="grid-item-add-button" data-grid-add-button>
+        <i class="icon-circle-with-plus btnsmall"></i>
+    </div>
+{% endmacro %}
