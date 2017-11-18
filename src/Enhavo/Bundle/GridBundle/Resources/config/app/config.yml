@@ -15,7 +15,7 @@ enhavo_app:
     stylesheets:
       - '@EnhavoGridBundle/Resources/public/css/style.css'
     apps:
-      - 'grid/Grid'
+      - 'grid/Adapter/EnhavoAdapter'
 
 enhavo_assets:
     require_js:

@@ -1,4 +1,4 @@
-define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/Router", "app/Form"], function (require, exports, EnhavoAdapter_1, admin, router, form) {
+define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (require, exports, admin, router, form) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Grid = /** @class */ (function () {
@@ -11,6 +11,11 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
             this.initItems();
             this.initContainer();
         }
+        Grid.apply = function (element) {
+            $(element).find('[data-grid]').each(function () {
+                new Grid(this);
+            });
+        };
         Grid.prototype.initItems = function () {
             var items = [];
             var grid = this;
@@ -139,6 +144,7 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
         };
         return Grid;
     }());
+    exports.Grid = Grid;
     var GridMenu = /** @class */ (function () {
         function GridMenu(element, grid) {
             this.grid = grid;
@@ -149,19 +155,26 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
             var menu = this;
             this.$element.find('[data-grid-menu-item]').click(function () {
                 var name = $(this).data('grid-menu-item');
-                menu.$element.hide();
                 menu.grid.addItem(name, menu.button);
+                menu.hide();
             });
         };
         GridMenu.prototype.show = function (button) {
-            if (this.button == button) {
+            if (this.button === button) {
                 this.hide();
                 return;
             }
             this.button = button;
             var position = $(button.getElement()).position();
-            var top = false;
-            if (top) {
+            var dropDown = true;
+            var topOffset = $(button.getElement()).offset().top;
+            var windowHeight = $(window).height();
+            var menuHeight = this.$element.height();
+            var buttonHeight = $(button.getElement()).height();
+            if ((topOffset + menuHeight + buttonHeight) > windowHeight) {
+                dropDown = false;
+            }
+            if (dropDown) {
                 this.$element.addClass('topTriangle');
                 this.$element.css('top', 35 + position.top + 'px');
             }
@@ -173,10 +186,12 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
             this.$element.show();
         };
         GridMenu.prototype.hide = function () {
-            this.$element.show();
+            this.button = null;
+            this.$element.hide();
         };
         return GridMenu;
     }());
+    exports.GridMenu = GridMenu;
     var GridItem = /** @class */ (function () {
         function GridItem(element, grid) {
             this.grid = grid;
@@ -231,6 +246,7 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
         };
         return GridItem;
     }());
+    exports.GridItem = GridItem;
     var GridItemAddButton = /** @class */ (function () {
         function GridItemAddButton(element, grid) {
             this.grid = grid;
@@ -245,25 +261,5 @@ define(["require", "exports", "media/Adapter/EnhavoAdapter", "app/Admin", "app/R
         };
         return GridItemAddButton;
     }());
-    var EnhavoAdapter = /** @class */ (function () {
-        function EnhavoAdapter() {
-            $(document).on('formOpenAfter', function (event, element) {
-                $(element).find('[data-grid]').each(function () {
-                    new Grid(this);
-                });
-            });
-            $(document).on('gridAddAfter', function (event, element) {
-                EnhavoAdapter_1.enhavoAdapter.initMedia(element);
-                form.initWysiwyg(element);
-                form.initRadioAndCheckbox(element);
-                form.initSelect(element);
-                form.initDataPicker(element);
-                form.initList(element);
-            });
-        }
-        return EnhavoAdapter;
-    }());
-    exports.EnhavoAdapter = EnhavoAdapter;
-    var adapter = new EnhavoAdapter();
-    exports.default = adapter;
+    exports.GridItemAddButton = GridItemAddButton;
 });

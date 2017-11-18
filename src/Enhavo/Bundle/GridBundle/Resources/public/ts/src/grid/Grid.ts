@@ -3,7 +3,7 @@ import * as admin from 'app/Admin'
 import * as router from 'app/Router'
 import * as form from 'app/Form'
 
-class Grid
+export class Grid
 {
     private $element: JQuery;
 
@@ -23,6 +23,13 @@ class Grid
         this.initActions();
         this.initItems();
         this.initContainer();
+    }
+
+    public static apply(element: HTMLElement)
+    {
+        $(element).find('[data-grid]').each(function() {
+            new Grid(this);
+        });
     }
 
     private initItems()
@@ -187,7 +194,7 @@ class Grid
     }
 }
 
-class GridMenu
+export class GridMenu
 {
     private $element: JQuery;
 
@@ -207,14 +214,14 @@ class GridMenu
         let menu = this;
         this.$element.find('[data-grid-menu-item]').click(function () {
             let name = $(this).data('grid-menu-item');
-            menu.$element.hide();
             menu.grid.addItem(name, menu.button);
+            menu.hide();
         });
     }
 
     public show(button: GridItemAddButton)
     {
-        if(this.button == button) {
+        if(this.button === button) {
             this.hide();
             return;
         }
@@ -222,9 +229,18 @@ class GridMenu
         this.button = button;
 
         let position = $(button.getElement()).position();
-        let top = false;
+        let dropDown = true;
 
-        if (top) {
+        let topOffset = $(button.getElement()).offset().top;
+        let windowHeight = $(window).height();
+        let menuHeight = this.$element.height();
+        let buttonHeight = $(button.getElement()).height();
+
+        if((topOffset + menuHeight+ buttonHeight) > windowHeight) {
+            dropDown = false;
+        }
+
+        if (dropDown) {
             this.$element.addClass('topTriangle');
             this.$element.css('top', 35 + position.top + 'px');
         } else {
@@ -238,11 +254,12 @@ class GridMenu
 
     public hide()
     {
-        this.$element.show();
+        this.button = null;
+        this.$element.hide();
     }
 }
 
-class GridItem
+export class GridItem
 {
     private $element: JQuery;
 
@@ -317,7 +334,7 @@ class GridItem
     }
 }
 
-class GridItemAddButton
+export class GridItemAddButton
 {
     private $element: JQuery;
 
@@ -339,27 +356,3 @@ class GridItemAddButton
         return this.$element.get(0);
     }
 }
-
-export class EnhavoAdapter
-{
-    constructor()
-    {
-        $(document).on('formOpenAfter', function (event, element:HTMLElement) {
-            $(element).find('[data-grid]').each(function() {
-                new Grid(this);
-            });
-        });
-
-        $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            enhavoAdapter.initMedia(element);
-            form.initWysiwyg(element);
-            form.initRadioAndCheckbox(element);
-            form.initSelect(element);
-            form.initDataPicker(element);
-            form.initList(element);
-        });
-    }
-}
-
-let adapter = new EnhavoAdapter();
-export default adapter;
