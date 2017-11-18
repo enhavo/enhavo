@@ -15,13 +15,13 @@ enhavo_app:
     stylesheets:
       - '@EnhavoGridBundle/Resources/public/css/style.css'
     apps:
-      - 'grid/ContentForm'
+      - 'grid/Grid'
 
 enhavo_assets:
     require_js:
         paths:
             grid:
-                location: /bundles/enhavogrid/js
+                location: /bundles/enhavogrid/js/grid
 
 enhavo_media:
     formats:

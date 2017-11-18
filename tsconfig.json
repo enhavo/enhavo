@@ -10,7 +10,9 @@
       "media/Media": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Media"],
       "media/Extension/ImageCropper": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Extension/ImageCropper"],
       "media/Adapter/EnhavoAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],
-      "media/Adapter/JQueryAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/JQueryAdapter"]
+      "media/Adapter/JQueryAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/JQueryAdapter"],
+      "grid/Grid": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/grid/Grid"],
+      "grid/Form": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/grid/Form"]
     }
   }
 }

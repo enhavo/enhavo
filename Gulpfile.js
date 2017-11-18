@@ -104,6 +104,7 @@ gulp.task("tsc", ["tsc:compile"]);
 gulp.task("tsc:compile", function () {
   gulp.start(['tsc:compile:app']);
   gulp.start(['tsc:compile:media']);
+  gulp.start(['tsc:compile:grid']);
 });
 
 gulp.task("tsc:compile:media", function () {
@@ -120,6 +121,13 @@ gulp.task("tsc:compile:app", function () {
     .js.pipe(gulp.dest("src/Enhavo/Bundle/AppBundle/Resources/public/js"));
 });
 
+gulp.task("tsc:compile:grid", function () {
+  var tsProject = ts.createProject("src/Enhavo/Bundle/GridBundle/Resources/public/ts/tsconfig.json");
+  return tsProject.src()
+    .pipe(tsProject())
+    .js.pipe(gulp.dest("src/Enhavo/Bundle/GridBundle/Resources/public/js"));
+});
+
 gulp.task("tsc:watch", function () {
   gulp.start(['tsc:compile']);
   gulp.watch([
@@ -130,4 +138,8 @@ gulp.task("tsc:watch", function () {
     'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/*',
     'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/**/*'
   ], ['tsc:compile:app']);
+  gulp.watch([
+    'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/*',
+    'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/**/*'
+  ], ['tsc:compile:grid']);
 });
