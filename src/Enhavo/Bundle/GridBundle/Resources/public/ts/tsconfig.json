@@ -1,0 +1,30 @@
+{
+  "files": [
+    "src/*",
+    "src/**/*"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "amd",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": ".",
+    "paths": {
+      "app/Admin": ["../../../../AppBundle/Resources/public/ts/src/app/Admin"],
+      "app/Form": ["../../../../AppBundle/Resources/public/ts/src/app/Form"],
+      "app/Router": ["../../../../AppBundle/Resources/public/ts/src/app/Router"],
+      "app/Templating": ["../../../../AppBundle/Resources/public/ts/src/app/Templating"],
+      "app/Translator": ["../../../../AppBundle/Resources/public/ts/src/app/Translator"],
+      "media/Media": ["../../../../MediaBundle/Resources/public/ts/src/media/Media"],
+      "media/Adapter/EnhavoAdapter": ["../../../../MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],
+      "grid/Grid": ["src/grid/Grid"],
+      "grid/Adapter/EnhavoAdapter": ["src/grid/Adapter/EnhavoAdapter"],
+      "grid/Adapter/JQueryAdapter": ["src/grid/Adapter/JQueryAdapter"]
+    }
+  }
+}

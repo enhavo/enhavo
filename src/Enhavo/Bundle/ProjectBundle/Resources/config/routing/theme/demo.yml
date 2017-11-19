@@ -9,3 +9,9 @@ enhavo_project_demo_media:
     defaults:
         _controller: EnhavoProjectBundle:Demo:media
         _method: GET
+
+enhavo_project_demo_grid:
+    path: /grid
+    defaults:
+        _controller: EnhavoProjectBundle:Demo:grid
+        _method: GET
