@@ -78,3 +78,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget, alias: label }
+
+    enhavo_app.table.route:
+        class: Enhavo\Bundle\AppBundle\Table\Widget\UrlWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.table_widget, alias: url }
