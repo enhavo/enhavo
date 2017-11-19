@@ -45,9 +45,21 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
 
         $block.on('click', '[data-id]', function (event) {
           var $target = $(event.target);
+
+          // check if link
+          var isLink = false;
+          $target.parentsUntil('[data-id]').each(function() {
+            if($(this).is('a')) {
+              isLink = true;
+            }
+          });
           if($target.is('a')) {
+            isLink = true;
+          }
+          if(isLink) {
             return true;
           }
+
           event.preventDefault();
           var id = $(this).data('id');
           var route = $block.data('block-update-route');
