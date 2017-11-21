@@ -3,6 +3,11 @@ import * as admin from 'app/Admin'
 import * as router from 'app/Router'
 import * as form from 'app/Form'
 
+export class GridConfig
+{
+    scope: HTMLElement;
+}
+
 export class Grid
 {
     private $element: JQuery;
@@ -13,11 +18,13 @@ export class Grid
 
     private $container: JQuery;
 
-    private placeholderIndex:number = 0;
+    private placeholderIndex: number = 0;
 
-    private collapse:boolean = true;
+    private collapse: boolean = true;
 
-    constructor(element: HTMLElement)
+    private config: GridConfig;
+
+    constructor(element: HTMLElement, config: GridConfig|null = null)
     {
         this.$element = $(element);
         this.$container = this.$element.find('[data-grid-container]');
@@ -25,6 +32,11 @@ export class Grid
         this.initActions();
         this.initItems();
         this.initContainer();
+        if(config == null) {
+            this.config = new GridConfig;
+        } else {
+            this.config = config;
+        }
     }
 
     public static apply(element: HTMLElement)
@@ -77,6 +89,11 @@ export class Grid
         this.$element.find('[data-grid-action-expand-all]').click(function() {
             grid.expandAll();
         });
+    }
+
+    public getConfig()
+    {
+        return this.config;
     }
 
     public collapseAll()
@@ -137,11 +154,11 @@ export class Grid
             success: function (data) {
                 grid.endLoading();
                 data = $.parseHTML(data.trim());
+                $(button.getElement()).after(data);
                 grid.items.push(new GridItem(data, grid));
                 // Initialize sub-elements for reindexing
                 form.initReindexableItem(data, placeholder);
                 $(document).trigger('gridAddAfter', [data]);
-                $(button.getElement()).after(data);
                 let newButton = grid.createAddButton();
                 $(data).after(newButton.getElement());
                 grid.setOrder();
@@ -257,12 +274,17 @@ export class GridMenu
         let position = $(button.getElement()).position();
         let dropDown = true;
 
-        let topOffset = $(button.getElement()).offset().top;
-        let windowHeight = $(window).height();
-        let menuHeight = this.$element.height();
-        let buttonHeight = $(button.getElement()).height();
+        let scope:HTMLElement;
+        scope = this.grid.getConfig().scope;
+        if(scope == null) {
+            scope = $('body').get(0);
+        }
 
-        if((topOffset + menuHeight+ buttonHeight) > windowHeight) {
+        let topOffset = this.topToElement(button.getElement(), scope, 0);
+        let center = $(button.getElement()).height()/2 + topOffset;
+        let halfHeight = $(scope).height()/2;
+
+        if(halfHeight < center) {
             dropDown = false;
         }
 
@@ -276,6 +298,19 @@ export class GridMenu
         this.$element.css('left', position.left + 'px');
 
         this.$element.show();
+    }
+
+    private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0)
+    {
+        let parent = $(element).offsetParent().get(0);
+        if(parent == $('html').get(0)) {
+            return top;
+        }
+        let topOffset = $(element).position().top;
+        if(toElement == parent) {
+            return top + topOffset;
+        }
+        return this.topToElement(parent, toElement, top + topOffset)
     }
 
     public hide()

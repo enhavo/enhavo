@@ -1,4 +1,4 @@
-define(["require", "exports", "media/Media", "media/Adapter/EnhavoAdapter", "grid/Grid", "app/Form"], function (require, exports, Media_1, EnhavoAdapter_1, Grid_1, form) {
+define(["require", "exports", "media/Media", "grid/Grid", "app/Form"], function (require, exports, Media_1, Grid_1, form) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EnhavoAdapter = /** @class */ (function () {
@@ -7,19 +7,18 @@ define(["require", "exports", "media/Media", "media/Adapter/EnhavoAdapter", "gri
         }
         EnhavoAdapter.initFormListener = function () {
             $(document).on('formOpenAfter', function (event, element) {
+                var config = new Grid_1.GridConfig();
+                config.scope = $(element).offsetParent().get(0);
                 Grid_1.Grid.apply(element);
             });
             $(document).on('gridAddAfter', function (event, element) {
-                EnhavoAdapter_1.enhavoAdapter.initMedia(element);
+                Media_1.Media.apply(element);
                 form.initWysiwyg(element);
                 form.initRadioAndCheckbox(element);
                 form.initSelect(element);
                 form.initDataPicker(element);
                 form.initList(element);
             });
-        };
-        EnhavoAdapter.prototype.initMedia = function (form) {
-            Media_1.Media.apply(form);
         };
         return EnhavoAdapter;
     }());

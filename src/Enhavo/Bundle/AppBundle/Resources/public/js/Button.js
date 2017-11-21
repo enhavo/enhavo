@@ -58,7 +58,9 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
           success: function () {
             admin.closeLoadingOverlay();
             if(!close) {
-              admin.overlayMessage(translator.trans('page.form.message.success'), admin.MessageType.Success);
+              admin.overlayClose();
+              var url = $(form).attr('action');
+              admin.ajaxOverlay(url);
             } else {
               admin.overlayClose();
             }
