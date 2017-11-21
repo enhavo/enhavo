@@ -1,6 +1,5 @@
 import { Media } from 'media/Media';
-import { enhavoAdapter as enhavoMediaAdapter } from 'media/Adapter/EnhavoAdapter';
-import { Grid } from 'grid/Grid';
+import {Grid, GridConfig} from 'grid/Grid';
 import * as form from 'app/Form'
 
 class EnhavoAdapter
@@ -13,22 +12,19 @@ class EnhavoAdapter
     private static initFormListener(): void
     {
         $(document).on('formOpenAfter', function (event, element:HTMLElement) {
-            Grid.apply(element);
+            let config = new GridConfig();
+            config.scope = $(element).offsetParent().get(0);
+            Grid.apply(element, );
         });
 
         $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            enhavoMediaAdapter.initMedia(element);
+            Media.apply(element);
             form.initWysiwyg(element);
             form.initRadioAndCheckbox(element);
             form.initSelect(element);
             form.initDataPicker(element);
             form.initList(element);
         });
-    }
-
-    public initMedia(form:string|HTMLElement)
-    {
-        Media.apply(form);
     }
 }
 

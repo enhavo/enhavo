@@ -1,8 +1,15 @@
 define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (require, exports, admin, router, form) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var GridConfig = /** @class */ (function () {
+        function GridConfig() {
+        }
+        return GridConfig;
+    }());
+    exports.GridConfig = GridConfig;
     var Grid = /** @class */ (function () {
-        function Grid(element) {
+        function Grid(element, config) {
+            if (config === void 0) { config = null; }
             this.items = [];
             this.placeholderIndex = 0;
             this.collapse = true;
@@ -12,6 +19,12 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             this.initActions();
             this.initItems();
             this.initContainer();
+            if (config == null) {
+                this.config = new GridConfig;
+            }
+            else {
+                this.config = config;
+            }
         }
         Grid.apply = function (element) {
             $(element).find('[data-grid]').each(function () {
@@ -52,6 +65,9 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             this.$element.find('[data-grid-action-expand-all]').click(function () {
                 grid.expandAll();
             });
+        };
+        Grid.prototype.getConfig = function () {
+            return this.config;
         };
         Grid.prototype.collapseAll = function () {
             this.$element.find('[data-grid-action-collapse-all]').hide();
@@ -100,11 +116,11 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
                 success: function (data) {
                     grid.endLoading();
                     data = $.parseHTML(data.trim());
+                    $(button.getElement()).after(data);
                     grid.items.push(new GridItem(data, grid));
                     // Initialize sub-elements for reindexing
                     form.initReindexableItem(data, placeholder);
                     $(document).trigger('gridAddAfter', [data]);
-                    $(button.getElement()).after(data);
                     var newButton = grid.createAddButton();
                     $(data).after(newButton.getElement());
                     grid.setOrder();
@@ -188,11 +204,15 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             this.button = button;
             var position = $(button.getElement()).position();
             var dropDown = true;
-            var topOffset = $(button.getElement()).offset().top;
-            var windowHeight = $(window).height();
-            var menuHeight = this.$element.height();
-            var buttonHeight = $(button.getElement()).height();
-            if ((topOffset + menuHeight + buttonHeight) > windowHeight) {
+            var scope;
+            scope = this.grid.getConfig().scope;
+            if (scope == null) {
+                scope = $('body').get(0);
+            }
+            var topOffset = this.topToElement(button.getElement(), scope, 0);
+            var center = $(button.getElement()).height() / 2 + topOffset;
+            var halfHeight = $(scope).height() / 2;
+            if (halfHeight < center) {
                 dropDown = false;
             }
             if (dropDown) {
@@ -205,6 +225,18 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             }
             this.$element.css('left', position.left + 'px');
             this.$element.show();
+        };
+        GridMenu.prototype.topToElement = function (element, toElement, top) {
+            if (top === void 0) { top = 0; }
+            var parent = $(element).offsetParent().get(0);
+            if (parent == $('html').get(0)) {
+                return top;
+            }
+            var topOffset = $(element).position().top;
+            if (toElement == parent) {
+                return top + topOffset;
+            }
+            return this.topToElement(parent, toElement, top + topOffset);
         };
         GridMenu.prototype.hide = function () {
             this.button = null;
