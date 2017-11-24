@@ -15,10 +15,15 @@ class PaginationWidget extends AbstractType implements WidgetInterface
 {
     public function render($options)
     {
-        return $this->renderTemplate('EnhavoContentBundle:Widget:pagination.html.twig', [
-            'resources' => $options['resources'],
-            'route' => $options['route'],
-            'routeParameters' => $this->getOption('routeParameters', $options, [])
+        $template = $this->getOption('template', $options, 'EnhavoContentBundle:Widget:pagination.html.twig');
+        $resources = $this->getRequiredOption('resources', $options);
+        $route = $this->getRequiredOption('route', $options);
+        $routeParameters = $this->getOption('routeParameters', $options, []);
+
+        return $this->renderTemplate($template, [
+            'resources' => $resources,
+            'route' => $route,
+            'routeParameters' => $routeParameters
         ]);
     }
 
