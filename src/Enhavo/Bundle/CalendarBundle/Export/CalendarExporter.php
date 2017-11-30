@@ -48,13 +48,25 @@ class CalendarExporter
         /** @var Appointment $appointment */
         foreach ($appointments as $appointment){
             $event = new CalendarEvent();
-            $event->setStart($appointment->getDateFrom())
-                ->setEnd($appointment->getDateTo())
-                ->setUid(str_pad($appointment->getId(), 32, 0, STR_PAD_LEFT).'_'.$this->calendarExportName)
-                ->setSummary($appointment->getTitle())
-                ->setDescription($appointment->getTeaser())
-                ->addLocation($this->getLocationInstance($appointment))
-                ->setGeo($this->getGeoInstance($appointment));
+            $event->setUid(str_pad($appointment->getId(), 32, 0, STR_PAD_LEFT).'_'.$this->calendarExportName);
+            if($appointment->getDateFrom()){
+                $event->setStart($appointment->getDateFrom());
+            }
+            if($appointment->getTitle()){
+                $event->setSummary($appointment->getTitle());
+            }
+            if($appointment->getTeaser()){
+                $event->setDescription($appointment->getTeaser());
+            }
+            if($this->getLocationInstance($appointment)){
+                $event->addLocation($this->getLocationInstance($appointment));
+            }
+            if($this->getGeoInstance($appointment)){
+                $event->setGeo($this->getGeoInstance($appointment));
+            }
+            if ($appointment->getDateTo()){
+                $event->setEnd($appointment->getDateTo());
+            }
             $calendar->addEvent($event);
         }
         $calendarExport = new CalendarExport(new CalendarStream(), new Formatter());
