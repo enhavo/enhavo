@@ -14,8 +14,7 @@ class EnhavoAdapter
         $(document).on('formOpenAfter', function (event, element:HTMLElement) {
             let config = new GridConfig();
             config.scope = $(element).offsetParent().get(0);
-            Grid.apply(element, );
-            Media.apply(element);
+            Grid.apply(element);
         });
 
         $(document).on('gridAddAfter', function (event, element:HTMLElement) {

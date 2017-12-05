@@ -10,7 +10,6 @@ define(["require", "exports", "media/Media", "grid/Grid", "app/Form"], function 
                 var config = new Grid_1.GridConfig();
                 config.scope = $(element).offsetParent().get(0);
                 Grid_1.Grid.apply(element);
-                Media_1.Media.apply(element);
             });
             $(document).on('gridAddAfter', function (event, element) {
                 Media_1.Media.apply(element);

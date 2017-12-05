@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var compass = require('compass-importer');
 var exec = require('child_process').exec;
 var ts = require("gulp-typescript");
+var options = require('gulp-options');
 
 gulp.task('sass', ['sass:compile']);
 
@@ -56,13 +57,19 @@ gulp.task('sass:compile', function () {
   ];
 
   var streams = [];
+
+  var sourceMapEmbed = false;
+  if (options.has('debug')) {
+    sourceMapEmbed = true
+  }
+
   for (var i = 0; i < directories.length; i++) {
     streams.push(
       gulp.src(directories[i].from)
       .pipe(sass({
         importer: compass,
         outputStyle: 'compressed',
-        sourceMapEmbed: true
+        sourceMapEmbed: sourceMapEmbed
       }).on('error', sass.logError))
       .pipe(gulp.dest(directories[i].to))
     );

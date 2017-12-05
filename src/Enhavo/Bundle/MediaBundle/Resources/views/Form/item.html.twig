@@ -21,7 +21,9 @@
             {% block form %}
                 {% for key, child in form.children %}
                     {% if key == 'parameters' %}
-                        {{ form_widget(child) }}
+                        <div class="edit-parameters">
+                            {{ form_widget(child) }}
+                        </div>
                     {% else %}
                         {{ form_row(child) }}
                     {% endif %}
