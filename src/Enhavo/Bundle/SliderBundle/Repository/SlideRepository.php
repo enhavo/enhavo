@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SliderBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
+use Enhavo\Bundle\SliderBundle\Entity\Slider;
 
 class SlideRepository extends EntityRepository
 {
