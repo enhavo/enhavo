@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\AppBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\AppBundle\Route\Routing;
@@ -84,7 +85,7 @@ class RoutingType extends AbstractType
                         'data' => $url,
                         'read_only' => true
                     ));
-                } catch (\InvalidArgumentException $e) {
+                } catch (UrlResolverException $e) {
                     return;
                 }
             }
