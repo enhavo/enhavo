@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Route;
 use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\AppBundle\Exception\UrlResolverException;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -38,6 +39,12 @@ class UrlResolver implements UrlResolverInterface
         $this->config = $config;
     }
 
+    /**
+     * @param $resource
+     * @param int $referenceType
+     * @return null|string
+     * @throws UrlResolverException
+     */
     public function resolve($resource , $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $className = get_class($resource);
@@ -53,7 +60,7 @@ class UrlResolver implements UrlResolverInterface
         $url = $this->getUrl($resource, $strategy, $route, $referenceType);
 
         if(empty($url)) {
-            throw new \InvalidArgumentException(
+            throw new UrlResolverException(
                 sprintf('Can\'t resolve route for class "%s". Maybe you need to add the class to url_resolver configuration', $className)
             );
         }
@@ -61,6 +68,14 @@ class UrlResolver implements UrlResolverInterface
         return $url;
     }
 
+    /**
+     * @param $resource
+     * @param $strategy
+     * @param $route
+     * @param $referenceType
+     * @return null|string
+     * @throws UrlResolverException
+     */
     protected function getUrl($resource, $strategy, $route, $referenceType)
     {
         if($strategy == Routing::STRATEGY_ROUTE)
@@ -82,7 +97,15 @@ class UrlResolver implements UrlResolverInterface
                     )
                 );
             }
-            return $this->router->generate($resource->getRoute(), [], $referenceType);
+            try {
+                return $this->router->generate($resource->getRoute(), [], $referenceType);
+            } catch (InvalidParameterException $exception) {
+                throw new UrlResolverException(sprintf(
+                    'Can\'t generate route: "%s"',
+                    $exception->getMessage()
+                ));
+            }
+
         }
 
         if($strategy == Routing::STRATEGY_SLUG)
@@ -102,9 +125,16 @@ class UrlResolver implements UrlResolverInterface
                 ));
             }
 
-            return $this->router->generate($route, [
-                'slug' => $resource->getSlug()
-            ], $referenceType);
+            try {
+                return $this->router->generate($route, [
+                    'slug' => $resource->getSlug()
+                ], $referenceType);
+            } catch (InvalidParameterException $exception) {
+                throw new UrlResolverException(sprintf(
+                    'Can\'t generate route: "%s"',
+                    $exception->getMessage()
+                ));
+            }
         }
 
         if($strategy == Routing::STRATEGY_ID)
@@ -124,9 +154,16 @@ class UrlResolver implements UrlResolverInterface
                 ));
             }
 
-            return $this->router->generate($route, [
-                'id' => $resource->getId()
-            ], $referenceType);
+            try {
+                return $this->router->generate($route, [
+                    'id' => $resource->getId()
+                ], $referenceType);
+            } catch (InvalidParameterException $exception) {
+                throw new UrlResolverException(sprintf(
+                    'Can\'t generate route: "%s"',
+                    $exception->getMessage()
+                ));
+            }
         }
 
         if($strategy == Routing::STRATEGY_SLUG_ID)
@@ -154,10 +191,17 @@ class UrlResolver implements UrlResolverInterface
                 ));
             }
 
-            return $this->router->generate($route, [
-                'slug' => $resource->getSlug(),
-                'id' => $resource->getId()
-            ], $referenceType);
+            try {
+                return $this->router->generate($route, [
+                    'slug' => $resource->getSlug(),
+                    'id' => $resource->getId()
+                ], $referenceType);
+            } catch (InvalidParameterException $exception) {
+                throw new UrlResolverException(sprintf(
+                    'Can\'t generate route: "%s"',
+                    $exception->getMessage()
+                ));
+            }
         }
 
         return null;
