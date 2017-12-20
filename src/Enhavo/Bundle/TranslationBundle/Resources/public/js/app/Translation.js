@@ -76,6 +76,13 @@ define(['jquery', 'app/Admin', 'app/Form', 'tinymce', 'app/Router'], function($,
         }, 10);
       });
 
+      $(document).on('formListAddItem', function (event, data) {
+        window.setTimeout(function() {
+          self.initCurrentLocale();
+          self.switchLanguage(currentLocale);
+        }, 10);
+      });
+
       self.initCurrentLocale();
     };
 
