@@ -148,32 +148,66 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         Grid.prototype.endLoading = function () {
             admin.closeLoadingOverlay();
         };
-        Grid.prototype.moveItemUp = function (item) {
+        Grid.prototype.moveItemUp = function (item, callback) {
             var index = this.$container.children('[data-grid-item]').index(item.getElement());
+            var self = this;
             if (index > 0) {
-                var buttonToMove = this.$container.children('[data-grid-add-button]').get(index + 1);
-                var buttonTarget = this.$container.children('[data-grid-add-button]').get(index - 1);
-                $(buttonTarget).after(item.getElement());
-                $(item.getElement()).after(buttonToMove);
+                var buttonToMove_1 = $(this.$container.children('[data-grid-add-button]').get(index + 1));
+                var buttonTarget_1 = $(this.$container.children('[data-grid-add-button]').get(index - 1));
+                var domElementToMove_1 = $(item.getElement());
+                domElementToMove_1.slideUp(200, function () {
+                    buttonTarget_1.after(domElementToMove_1);
+                    domElementToMove_1.after(buttonToMove_1);
+                    domElementToMove_1.slideDown(200, function () {
+                        self.setOrder();
+                        form.reindex();
+                        if (typeof callback != "undefined") {
+                            callback();
+                        }
+                    });
+                });
             }
-            this.setOrder();
-            form.reindex();
+            else {
+                this.setOrder();
+                form.reindex();
+                if (typeof callback != "undefined") {
+                    callback();
+                }
+            }
         };
-        Grid.prototype.moveItemDown = function (item) {
+        Grid.prototype.moveItemDown = function (item, callback) {
             var index = this.$container.children('[data-grid-item]').index(item.getElement());
             var size = this.$container.children('[data-grid-item]').length;
+            var self = this;
             if (index < (size - 1)) {
-                var buttonToMove = this.$container.children('[data-grid-add-button]').get(index + 1);
-                var buttonTarget = this.$container.children('[data-grid-add-button]').get(index + 2);
-                $(buttonTarget).after(item.getElement());
-                $(item.getElement()).after(buttonToMove);
+                var buttonToMove_2 = $(this.$container.children('[data-grid-add-button]').get(index + 1));
+                var buttonTarget_2 = $(this.$container.children('[data-grid-add-button]').get(index + 2));
+                var domElementToMove_2 = $(item.getElement());
+                domElementToMove_2.slideUp(200, function () {
+                    buttonTarget_2.after(domElementToMove_2);
+                    domElementToMove_2.after(buttonToMove_2);
+                    domElementToMove_2.slideDown(200, function () {
+                        self.setOrder();
+                        form.reindex();
+                        if (typeof callback != "undefined") {
+                            callback();
+                        }
+                    });
+                });
             }
-            this.setOrder();
-            form.reindex();
+            else {
+                this.setOrder();
+                form.reindex();
+                if (typeof callback != "undefined") {
+                    callback();
+                }
+            }
         };
         Grid.prototype.removeItem = function (item) {
             $(item.getElement()).next().remove();
-            $(item.getElement()).remove();
+            $(item.getElement()).css({ opacity: 0, transition: 'opacity 550ms' }).slideUp(350, function () {
+                this.remove();
+            });
             var index = this.items.indexOf(item);
             if (index > -1) {
                 this.items.splice(index, 1);
@@ -290,10 +324,12 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         };
         GridItem.prototype.up = function () {
             var wyswigs = this.$element.find('[data-wysiwyg]');
+            var self = this;
             if (wyswigs.length) {
                 form.destroyWysiwyg(this.$element);
-                this.grid.moveItemUp(this);
-                form.initWysiwyg(this.getElement());
+                this.grid.moveItemUp(this, function () {
+                    form.initWysiwyg(self.getElement());
+                });
             }
             else {
                 this.grid.moveItemUp(this);
@@ -301,10 +337,12 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         };
         GridItem.prototype.down = function () {
             var wyswigs = this.$element.find('[data-wysiwyg]');
+            var self = this;
             if (wyswigs.length) {
                 form.destroyWysiwyg(this.$element);
-                this.grid.moveItemDown(this);
-                form.initWysiwyg(this.getElement());
+                this.grid.moveItemDown(this, function () {
+                    form.initWysiwyg(self.getElement());
+                });
             }
             else {
                 this.grid.moveItemDown(this);

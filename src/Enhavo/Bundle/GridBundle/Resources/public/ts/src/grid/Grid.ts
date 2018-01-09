@@ -194,41 +194,73 @@ export class Grid
         admin.closeLoadingOverlay();
     }
 
-    public moveItemUp(item: GridItem)
+    public moveItemUp(item: GridItem, callback: () => void)
     {
         let index = this.$container.children('[data-grid-item]').index(item.getElement());
+        let self = this;
 
         if (index > 0) { // is not first element
-            let buttonToMove = this.$container.children('[data-grid-add-button]').get(index + 1);
-            let buttonTarget = this.$container.children('[data-grid-add-button]').get(index - 1);
-            $(buttonTarget).after(item.getElement());
-            $(item.getElement()).after(buttonToMove);
-        }
+            let buttonToMove = $(this.$container.children('[data-grid-add-button]').get(index + 1));
+            let buttonTarget = $(this.$container.children('[data-grid-add-button]').get(index - 1));
+            let domElementToMove = $(item.getElement());
 
-        this.setOrder();
-        form.reindex();
+            domElementToMove.slideUp(200,function() {
+                buttonTarget.after(domElementToMove);
+                domElementToMove.after(buttonToMove);
+                domElementToMove.slideDown(200,function() {
+                    self.setOrder();
+                    form.reindex();
+                    if(typeof callback != "undefined") {
+                        callback();
+                    }
+                });
+            });
+        } else {
+            this.setOrder();
+            form.reindex();
+            if(typeof callback != "undefined") {
+                callback();
+            }
+        }
     }
 
-    public moveItemDown(item: GridItem)
+    public moveItemDown(item: GridItem, callback: () => void)
     {
         let index = this.$container.children('[data-grid-item]').index(item.getElement());
         let size = this.$container.children('[data-grid-item]').length;
+        let self = this;
 
         if (index < (size - 1)) { // is not last element
-            let buttonToMove = this.$container.children('[data-grid-add-button]').get(index + 1);
-            let buttonTarget = this.$container.children('[data-grid-add-button]').get(index + 2);
-            $(buttonTarget).after(item.getElement());
-            $(item.getElement()).after(buttonToMove);
-        }
+            let buttonToMove = $(this.$container.children('[data-grid-add-button]').get(index + 1));
+            let buttonTarget = $(this.$container.children('[data-grid-add-button]').get(index + 2));
+            let domElementToMove = $(item.getElement());
 
-        this.setOrder();
-        form.reindex();
+            domElementToMove.slideUp(200,function() {
+                buttonTarget.after(domElementToMove);
+                domElementToMove.after(buttonToMove);
+                domElementToMove.slideDown(200,function() {
+                    self.setOrder();
+                    form.reindex();
+                    if(typeof callback != "undefined") {
+                        callback();
+                    }
+                });
+            });
+        } else {
+            this.setOrder();
+            form.reindex();
+            if(typeof callback != "undefined") {
+                callback();
+            }
+        }
     }
 
     public removeItem(item: GridItem)
     {
         $(item.getElement()).next().remove();
-        $(item.getElement()).remove();
+        $(item.getElement()).css({opacity:0,transition: 'opacity 550ms'}).slideUp(350,function() {
+            this.remove();
+        });
 
         let index = this.items.indexOf(item);
         if (index > -1) {
@@ -385,10 +417,12 @@ export class GridItem
     public up()
     {
         let wyswigs = this.$element.find('[data-wysiwyg]');
+        let self = this;
         if (wyswigs.length) {
             form.destroyWysiwyg(this.$element);
-            this.grid.moveItemUp(this);
-            form.initWysiwyg(this.getElement());
+            this.grid.moveItemUp(this,function() {
+                form.initWysiwyg(self.getElement());
+            });
         } else {
             this.grid.moveItemUp(this);
         }
@@ -397,10 +431,12 @@ export class GridItem
     public down()
     {
         let wyswigs = this.$element.find('[data-wysiwyg]');
+        let self = this;
         if (wyswigs.length) {
             form.destroyWysiwyg(this.$element);
-            this.grid.moveItemDown(this);
-            form.initWysiwyg(this.getElement());
+            this.grid.moveItemDown(this,function() {
+                form.initWysiwyg(self.getElement());
+            });
         } else {
             this.grid.moveItemDown(this);
         }
