@@ -27,7 +27,7 @@ class BackgroundFilter extends AbstractFilter
             $imagine = new Imagine();
             $imagine = $imagine->load($content->getContent());
             $imagine = $this->format($imagine, $setting);
-            $imagine->save($content->getFilePath());
+            $imagine->save($content->getFilePath(), array('format' => $setting->getSetting('format')));
         } catch (RuntimeException $e) {
             // if image cant be created we make an empty file
             file_put_contents($content->getFilePath(), '');
