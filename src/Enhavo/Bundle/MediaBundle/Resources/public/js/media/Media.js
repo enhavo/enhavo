@@ -434,6 +434,12 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             url = url.replace('{random}', Math.random().toString());
             return url;
         };
+        MediaItem.prototype.getFileUrl = function () {
+            var url = ' /file/resolve/{token}?v={random}';
+            url = url.replace('{token}', this.meta.token.toString());
+            url = url.replace('{random}', Math.random().toString());
+            return url;
+        };
         return MediaItem;
     }());
     exports.MediaItem = MediaItem;

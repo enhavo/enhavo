@@ -578,11 +578,19 @@ export class MediaItem
         }
     }
 
-    private getThumbUrl()
+    getThumbUrl()
     {
         let url = ' /file/resolve/{token}/{format}?v={random}';
         url = url.replace('{token}', this.meta.token.toString());
         url = url.replace('{format}', 'enhavoPreviewThumb');
+        url = url.replace('{random}', Math.random().toString());
+        return url;
+    }
+
+    getFileUrl()
+    {
+        let url = ' /file/resolve/{token}?v={random}';
+        url = url.replace('{token}', this.meta.token.toString());
         url = url.replace('{random}', Math.random().toString());
         return url;
     }

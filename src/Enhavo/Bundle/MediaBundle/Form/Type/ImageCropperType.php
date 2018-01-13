@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,10 +23,13 @@ class ImageCropperType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $data = $form->getData();
-        $parent = $form->getParent()->getData();
+        $file = null;
+        if($form->getParent()) {
+            $file = $form->getParent()->getData();
+        }
 
-        return;
+        $view->vars['formats'] = $options['formats'];
+        $view->vars['file'] = $file;
     }
 
     public function configureOptions(OptionsResolver $resolver)

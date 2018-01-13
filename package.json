@@ -12,6 +12,7 @@
     "@types/jquery": "^2.0.45",
     "@types/select2": "4.0.37",
     "@types/jquery.fileupload": "^5.40.36",
-    "@types/jqueryui": "^1.11.36"
+    "@types/jqueryui": "^1.11.36",
+    "@types/cropperjs": "^1.1.1"
   }
 }
