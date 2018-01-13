@@ -275,7 +275,7 @@ export class MediaRow
 
     showError()
     {
-        console.log('error ' + this);
+        console.log('[Media][Error]: ' + this);
     }
 
     clearItems()
@@ -319,7 +319,6 @@ export class MediaRow
             this.resizeHandler = function() {
                 let width = self.$element.parent().innerWidth();
                 $editElement.css('width', width + 'px');
-                console.log('width', width + 'px');
             };
 
             $(window).bind('resize', 'resize', this.resizeHandler);

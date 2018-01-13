@@ -192,7 +192,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
             });
         };
         MediaRow.prototype.showError = function () {
-            console.log('error ' + this);
+            console.log('[Media][Error]: ' + this);
         };
         MediaRow.prototype.clearItems = function () {
             this.$element.children().remove();
@@ -228,7 +228,6 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                 this.resizeHandler = function () {
                     var width = self_1.$element.parent().innerWidth();
                     $editElement.css('width', width + 'px');
-                    console.log('width', width + 'px');
                 };
                 $(window).bind('resize', 'resize', this.resizeHandler);
                 this.resizeHandler();

@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\MediaBundle\Extension\ExtensionInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ExtensionManager
 {
@@ -43,5 +45,15 @@ class ExtensionManager
             $html .= $extension->renderExtension($option);
         }
         return $html;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, $options)
+    {
+        $extensionOptions = is_array($options['extensions']) ? $options['extensions'] : [];
+        foreach($extensionOptions as $key => $option) {
+            /** @var ExtensionInterface $extension */
+            $extension = $this->extensionCollector->getType($key);
+            $extension->buildForm($builder, $option);
+        }
     }
 }

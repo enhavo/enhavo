@@ -2,6 +2,7 @@ twig:
     form:
         resources:
             - 'EnhavoMediaBundle:Form:media.html.twig'
+            - 'EnhavoMediaBundle:Form:image-cropper.html.twig'
 
 doctrine:
     orm:
@@ -25,6 +26,7 @@ enhavo_app:
         - '@EnhavoMediaBundle/Resources/public/css/style.css'
     apps:
         - 'media/Adapter/EnhavoAdapter'
+        - 'media/Extension/ImageCropper'
 
 enhavo_assets:
     require_js:

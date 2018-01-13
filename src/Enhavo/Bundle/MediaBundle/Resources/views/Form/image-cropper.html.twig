@@ -1,48 +1,58 @@
-<div class="image-crop-modal-overlay-wrapper" data-image-crop-overlay data-image-show-route="enhavo_media_compatible_show" data-image-upload-route="enhavo_media_compatible_replace">
-    <div class="image-crop-modal-overlay-background"></div>
-    <div class="image-crop-modal-overlay">
-        <div class="image-crop-modal">
-            <div class="row image-crop-modal-canvas-row">
-                <div class="col-md-11 image-crop-modal-canvas-col">
-                    <div class="image-crop-modal-canvas-background">
-                        <i class="image-crop-modal-loading-icon icon-spinner icon-spin"></i>
-                        <div class="image-crop-modal-canvas-wrapper loading" data-image-crop-canvas-wrapper>
-                            <img class="image-crop-canvas" src="" data-image-crop-canvas />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-1 image-crop-modal-side-actions">
-                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_move'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="move-mode">
-                        <i class="icon-move"></i>
-                    </button>
-                    <button class="image-cropper-action-button bottom-space selected" title="{{ 'media.image_cropper.label.tooltip_cropframe'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="cropframe-mode">
-                        <i class="icon-crop"></i>
-                    </button>
-                    <button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_zoom_in'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-in">
-                        <i class="icon-zoom-in"></i>
-                    </button>
-                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_zoom_out'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-out">
-                        <i class="icon-zoom-out"></i>
-                    </button>
-                    <button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_reset'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="reset">
-                        <i class="icon-reply-all-1"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row image-crop-modal-actions-row">
-                <div class="col-md-push-2 col-md-2">
-                    <button class="btn col-md-12" data-image-crop-submit>
-                        <i class="button-icon icon-save"></i>
-                        {{ 'media.image_cropper.action.submit'|trans({}, 'EnhavoMediaBundle')|nl2br }}
-                    </button>
-                </div>
-                <div class="col-md-push-6 col-md-2">
-                    <button class="btn col-md-12" data-image-crop-cancel>
-                        <i class="button-icon icon-cross"></i>
-                        {{ 'label.cancel'|trans({}, 'EnhavoAppBundle')|nl2br }}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% block enhavo_image_cropper_widget %}
+    Image Cropper asdasd
+
+
+
+    <div data-image-cropper>Test</div>
+
+{% endblock %}
+
+
+{#<div class="image-crop-modal-overlay-wrapper" data-image-crop-overlay data-image-show-route="enhavo_media_compatible_show" data-image-upload-route="enhavo_media_compatible_replace">#}
+    {#<div class="image-crop-modal-overlay-background"></div>#}
+    {#<div class="image-crop-modal-overlay">#}
+        {#<div class="image-crop-modal">#}
+            {#<div class="row image-crop-modal-canvas-row">#}
+                {#<div class="col-md-11 image-crop-modal-canvas-col">#}
+                    {#<div class="image-crop-modal-canvas-background">#}
+                        {#<i class="image-crop-modal-loading-icon icon-spinner icon-spin"></i>#}
+                        {#<div class="image-crop-modal-canvas-wrapper loading" data-image-crop-canvas-wrapper>#}
+                            {#<img class="image-crop-canvas" src="" data-image-crop-canvas />#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="col-md-1 image-crop-modal-side-actions">#}
+                    {#<button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_move'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="move-mode">#}
+                        {#<i class="icon-move"></i>#}
+                    {#</button>#}
+                    {#<button class="image-cropper-action-button bottom-space selected" title="{{ 'media.image_cropper.label.tooltip_cropframe'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="cropframe-mode">#}
+                        {#<i class="icon-crop"></i>#}
+                    {#</button>#}
+                    {#<button class="image-cropper-action-button" title="{{ 'media.image_cropper.label.tooltip_zoom_in'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-in">#}
+                        {#<i class="icon-zoom-in"></i>#}
+                    {#</button>#}
+                    {#<button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_zoom_out'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="zoom-out">#}
+                        {#<i class="icon-zoom-out"></i>#}
+                    {#</button>#}
+                    {#<button class="image-cropper-action-button bottom-space" title="{{ 'media.image_cropper.label.tooltip_reset'|trans({}, 'EnhavoMediaBundle')|nl2br }}" data-image-cropper-action="reset">#}
+                        {#<i class="icon-reply-all-1"></i>#}
+                    {#</button>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="row image-crop-modal-actions-row">#}
+                {#<div class="col-md-push-2 col-md-2">#}
+                    {#<button class="btn col-md-12" data-image-crop-submit>#}
+                        {#<i class="button-icon icon-save"></i>#}
+                        {#{{ 'media.image_cropper.action.submit'|trans({}, 'EnhavoMediaBundle')|nl2br }}#}
+                    {#</button>#}
+                {#</div>#}
+                {#<div class="col-md-push-6 col-md-2">#}
+                    {#<button class="btn col-md-12" data-image-crop-cancel>#}
+                        {#<i class="button-icon icon-cross"></i>#}
+                        {#{{ 'label.cancel'|trans({}, 'EnhavoAppBundle')|nl2br }}#}
+                    {#</button>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

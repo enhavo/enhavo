@@ -16,6 +16,7 @@ services:
         arguments:
             - '@form.factory'
             - '@enhavo_media.repository.file'
+            - '@enhavo_media.extension_manager'
         tags:
             - { name: form.type, alias: enhavo_file }
 
@@ -25,6 +26,13 @@ services:
             - '@enhavo_media.extension_manager'
         tags:
             - { name: form.type, alias: enhavo_media }
+
+
+    enhavo_media.form.media_extension:
+        class: Enhavo\Bundle\MediaBundle\Form\Extension\ImageCropperMediaExtension
+        tags:
+            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
+
 
     enhavo_media.media.media_manager:
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
