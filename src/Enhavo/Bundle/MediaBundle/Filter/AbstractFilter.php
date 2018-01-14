@@ -16,6 +16,11 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 
 abstract class AbstractFilter extends AbstractType implements FilterInterface
 {
+    /**
+     * @param $file
+     * @return ContentInterface
+     * @throws FilterException
+     */
     protected function getContent($file)
     {
         if($file instanceof FileInterface) {

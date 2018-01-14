@@ -92,6 +92,20 @@ class MediaType extends AbstractType
             return $value;
         });
 
+        $resolver->setNormalizer('entry_options', function ($options, $value) {
+            if(isset($options['extensions']) && is_array($options['extensions'])) {
+                if(is_array($value)) {
+                    return array_merge($value, [
+                        'extensions' => $options['extensions']
+                    ]);
+                }
+                return [
+                    'extensions' => $options['extensions']
+                ];
+            }
+            return $value;
+        });
+
         $resolver->setDefaults(array(
             'entry_type' => FileType::class,
             'entry_options' => [],
@@ -107,10 +121,7 @@ class MediaType extends AbstractType
             'prototype_name' => '__name__',
             'item_template' => 'EnhavoMediaBundle:Form:item.html.twig',
             'upload' => true,
-            'extensions' => [
-//                'image-cropper' => [],
-//                'download' => [],
-            ]
+            'extensions' => []
         ));
     }
 

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -34,10 +35,16 @@ class FileType extends AbstractType
      */
     protected $repository;
 
-    public function __construct($formFactory, RepositoryInterface $repository)
+    /**
+     * @var ExtensionManager
+     */
+    protected $extensionManager;
+
+    public function __construct($formFactory, RepositoryInterface $repository, ExtensionManager $extensionManager)
     {
         $this->formFactory = $formFactory;
         $this->repository = $repository;
+        $this->extensionManager = $extensionManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -123,6 +130,8 @@ class FileType extends AbstractType
         if($options['parameters_type']) {
             $builder->add('parameters', $options['parameters_type'], $options['parameters_options']);
         }
+
+        $this->extensionManager->buildForm($builder, $options);
     }
 
     /**
@@ -133,7 +142,8 @@ class FileType extends AbstractType
         $resolver->setDefaults([
             'parameters_type' => FileParametersType::class,
             'parameters_options' => [],
-            'data_class' => File::class
+            'data_class' => File::class,
+            'extensions' => []
         ]);
     }
 }

@@ -275,7 +275,7 @@ export class MediaRow
 
     showError()
     {
-        console.log('error ' + this);
+        console.log('[Media][Error]: ' + this);
     }
 
     clearItems()
@@ -319,7 +319,6 @@ export class MediaRow
             this.resizeHandler = function() {
                 let width = self.$element.parent().innerWidth();
                 $editElement.css('width', width + 'px');
-                console.log('width', width + 'px');
             };
 
             $(window).bind('resize', 'resize', this.resizeHandler);
@@ -477,7 +476,7 @@ export class MediaItem
         this.$element.find('[data-media-item-id]').val(id);
     }
 
-    getId()
+    getId(): number
     {
         return this.meta.id;
     }
@@ -492,9 +491,14 @@ export class MediaItem
         this.row.closeEdit();
     }
 
-    getRow()
+    getRow(): MediaRow
     {
         return this.row;
+    }
+
+    getMeta(): MediaItemMeta
+    {
+        return this.meta;
     }
 
     updateThumb()
@@ -579,11 +583,19 @@ export class MediaItem
         }
     }
 
-    private getThumbUrl()
+    getThumbUrl(): string
     {
         let url = ' /file/resolve/{token}/{format}?v={random}';
         url = url.replace('{token}', this.meta.token.toString());
         url = url.replace('{format}', 'enhavoPreviewThumb');
+        url = url.replace('{random}', Math.random().toString());
+        return url;
+    }
+
+    getFileUrl(): string
+    {
+        let url = ' /file/resolve/{token}?v={random}';
+        url = url.replace('{token}', this.meta.token.toString());
         url = url.replace('{random}', Math.random().toString());
         return url;
     }

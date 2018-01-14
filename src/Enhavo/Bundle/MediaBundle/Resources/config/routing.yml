@@ -84,3 +84,19 @@ enhavo_media_compatible_replace:
         _method: GET
     options:
         expose: true
+
+enhavo_media_image_cropper_crop:
+    path:  /media/image/{token}/{format}/cropper/crop
+    methods: [POST]
+    defaults:
+        _controller: EnhavoMediaBundle:ImageCropper:crop
+    options:
+        expose: true
+
+enhavo_media_image_cropper_data:
+    path:  /media/image/{token}/{format}/cropper/data
+    methods: [GET]
+    defaults:
+        _controller: EnhavoMediaBundle:ImageCropper:data
+    options:
+        expose: true

@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,7 +45,7 @@ class ArticleType extends AbstractType
             'translation' => $this->translation
         ));
 
-        $builder->add('picture', 'enhavo_files', array(
+        $builder->add('picture', MediaType::class, array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false
