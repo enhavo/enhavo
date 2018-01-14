@@ -49,7 +49,7 @@ enhavo_assets:
                 exports: jquery
                 dependencies: [jquery]
 
-            cropper:
+            cropperjs:
                 location: /bundles/enhavoassets/vendor/cropper/dist/cropper
                 exports: jquery
                 dependencies: [jquery]

@@ -5,7 +5,7 @@
     "select2": "~3.5.1",
     "requirejs": "~2.1.20",
     "tinymce": "~4.0.1",
-    "cropper": "~2.3.1",
+    "cropperjs": "~1.2.2",
     "jquery": "~3.1.0",
     "icheck": "~1.0.2",
     "jquery-ui": "~1.12.0",
