@@ -8,17 +8,64 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
-
-use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 
 class ImageCropperManager
 {
     /**
-     * @param File $file
-     * @param string[] $formats
+     * @var array
      */
-    public function loadFormats(File $file = null, $formats = [])
-    {
+    private $formats;
 
+    public function __construct($formats)
+    {
+        $this->formats = $formats;
+    }
+
+    /**
+     * @param string|FormatInterface $format
+     * @return float|null
+     */
+    public function getFormatRatio($format)
+    {
+        $name = null;
+        if($format instanceof FormatInterface) {
+            $name = $format->getName();
+        } else {
+            $name = $format;
+        }
+        return $this->findFormatRatio($name);
+    }
+
+    private function findFormatRatio($name)
+    {
+        $width = null;
+        $height = null;
+
+        if(isset($this->formats[$name])) {
+            $format = $this->formats[$name];
+            if(isset($format[0])) {
+                foreach($format as $filter) {
+                    if(isset($filter['width'])) {
+                        $width = $filter['width'];
+                    }
+                    if(isset($filter['height'])) {
+                        $height = $filter['height'];
+                    }
+                }
+            } else {
+                if(isset($format['width'])) {
+                    $width = $format['width'];
+                }
+                if(isset($format['height'])) {
+                    $height = $format['height'];
+                }
+            }
+        }
+
+        if($width !== null && $height !== null) {
+            return $width / $height;
+        }
+        return null;
     }
 }

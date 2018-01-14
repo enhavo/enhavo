@@ -348,6 +348,9 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         MediaItem.prototype.getRow = function () {
             return this.row;
         };
+        MediaItem.prototype.getMeta = function () {
+            return this.meta;
+        };
         MediaItem.prototype.updateThumb = function () {
             //reset
             this.$element.find('[data-media-thumb]').css('background-image', 'none');

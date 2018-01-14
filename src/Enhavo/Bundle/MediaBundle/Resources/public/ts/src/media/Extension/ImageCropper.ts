@@ -57,25 +57,45 @@ export class ImageCropperOverlay
 
     private cropper: Cropper;
 
+    private closeMutex = false;
+
+    private format: string;
+
     constructor(element: HTMLElement, item: MediaItem)
     {
         this.item = item;
         this.$element = $(element);
-
     }
 
-    public open(format: String)
+    public open(format: string)
     {
-        let image = this.createImage();
-        this.showOverlay();
-
         let self = this;
-        this.cropper = new Cropper(image, {
-            ready: function () {
-                self.finishLoading();
-                this.cropper.move(1, -1);
-            }
+        self.format = format;
+        this.showOverlay();
+        this.getFormatData(function(formatData) {
+            let image = self.createImage();
+            self.cropper = new Cropper(image, {
+                ready: function () {
+                    self.finishLoading();
+                    let data = formatData.getData();
+
+                    if(formatData.ratio) {
+                        self.cropper.setAspectRatio(formatData.ratio);
+                    }
+
+                    if(data !== null) {
+                        self.cropper.setData(data);
+                    }
+                }
+            });
         });
+    }
+
+    public close()
+    {
+        this.$element.hide();
+        this.$element.find('[data-image-crop-canvas-wrapper] img').remove();
+        this.cropper.destroy();
     }
 
     private finishLoading()
@@ -87,7 +107,6 @@ export class ImageCropperOverlay
     {
         let image = new Image();
         image.src = this.item.getFileUrl();
-        this.$element.find('[data-image-crop-canvas-wrapper]').html();
         this.$element.find('[data-image-crop-canvas-wrapper]').append(image);
         return image
     }
@@ -100,18 +119,22 @@ export class ImageCropperOverlay
         this.$element.find('[data-image-crop-cancel]').click(function (event) {
             event.stopPropagation();
             event.preventDefault();
-            self.$element.hide();
+            self.close();
         });
 
         this.$element.find('[data-image-crop-submit]').click(function (event) {
             event.stopPropagation();
             event.preventDefault();
+            if(self.closeMutex) {
+                return;
+            }
 
-            self.sendImage(function() {
-                self.$element.hide();
+            self.closeMutex = true;
+            self.sendCropData(function() {
+                self.close();
+                self.closeMutex = false;
             });
         });
-
 
         this.$element.find('[data-image-cropper-action]').click(function (event) {
             event.stopPropagation();
@@ -143,29 +166,77 @@ export class ImageCropperOverlay
         });
     }
 
-    private sendImage(callback: () => void)
+    private sendCropData(callback: () => void)
     {
-        let canvasData = this.cropper.getCropBoxData();
-        console.log(canvasData);
-
-        let url = '/media/image/cropper';
+        let data = this.cropper.getData();
+        let url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/crop';
         $.ajax({
             url: url,
             type: 'POST',
             data: {
-                width: canvasData.width,
-                height: canvasData.height,
-                left: canvasData.left,
-                top: canvasData.top,
+                height: data.height,
+                width: data.width,
+                x: data.x,
+                y: data.y,
             },
-            processData: false,
-            contentType: false,
             success: function () {
                 if(callback) {
                     callback();
                 }
             },
         });
+    }
+
+    private getFormatData(callback: (data: FormatData) => void)
+    {
+        let url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/data';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                let formatData = new FormatData();
+                formatData.width = data.width;
+                formatData.height = data.height;
+                formatData.x = data.x;
+                formatData.y = data.y;
+                formatData.ratio = data.ratio;
+                callback(formatData);
+            },
+        });
+    }
+}
+
+class FormatData
+{
+    x: number = null;
+
+    y: number = null;
+
+    width: number = null;
+
+    height: number = null;
+
+    rotate: number = 0;
+
+    scaleX: number = 1;
+
+    scaleY: number = 1;
+
+    ratio: number = null;
+
+    getData() {
+        if(this.x !== null && this.y !== null && this.width !== null && this.height !== null) {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+                scaleX: this.scaleX,
+                scaleY: this.scaleY,
+                rotate: this.rotate,
+            }
+        }
+        return null;
     }
 }
 

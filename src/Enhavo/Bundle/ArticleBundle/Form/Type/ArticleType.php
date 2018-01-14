@@ -49,7 +49,7 @@ class ArticleType extends AbstractType
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false,
-            'formats' => ['test', 'blabla']
+            'formats' => ['enhavoPreviewThumb', 'sliderHero']
         ));
 
         $builder->add('grid', 'enhavo_grid', array(

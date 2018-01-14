@@ -36,19 +36,34 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
     exports.ImageCropperItem = ImageCropperItem;
     var ImageCropperOverlay = /** @class */ (function () {
         function ImageCropperOverlay(element, item) {
+            this.closeMutex = false;
             this.item = item;
             this.$element = $(element);
         }
         ImageCropperOverlay.prototype.open = function (format) {
-            var image = this.createImage();
-            this.showOverlay();
             var self = this;
-            this.cropper = new Cropper(image, {
-                ready: function () {
-                    self.finishLoading();
-                    this.cropper.move(1, -1);
-                }
+            self.format = format;
+            this.showOverlay();
+            this.getFormatData(function (formatData) {
+                var image = self.createImage();
+                self.cropper = new Cropper(image, {
+                    ready: function () {
+                        self.finishLoading();
+                        var data = formatData.getData();
+                        if (formatData.ratio) {
+                            self.cropper.setAspectRatio(formatData.ratio);
+                        }
+                        if (data !== null) {
+                            self.cropper.setData(data);
+                        }
+                    }
+                });
             });
+        };
+        ImageCropperOverlay.prototype.close = function () {
+            this.$element.hide();
+            this.$element.find('[data-image-crop-canvas-wrapper] img').remove();
+            this.cropper.destroy();
         };
         ImageCropperOverlay.prototype.finishLoading = function () {
             this.$element.find('[data-image-crop-canvas-wrapper]').removeClass('loading');
@@ -56,7 +71,6 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
         ImageCropperOverlay.prototype.createImage = function () {
             var image = new Image();
             image.src = this.item.getFileUrl();
-            this.$element.find('[data-image-crop-canvas-wrapper]').html();
             this.$element.find('[data-image-crop-canvas-wrapper]').append(image);
             return image;
         };
@@ -66,13 +80,18 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
             this.$element.find('[data-image-crop-cancel]').click(function (event) {
                 event.stopPropagation();
                 event.preventDefault();
-                self.$element.hide();
+                self.close();
             });
             this.$element.find('[data-image-crop-submit]').click(function (event) {
                 event.stopPropagation();
                 event.preventDefault();
-                self.sendImage(function () {
-                    self.$element.hide();
+                if (self.closeMutex) {
+                    return;
+                }
+                self.closeMutex = true;
+                self.sendCropData(function () {
+                    self.close();
+                    self.closeMutex = false;
                 });
             });
             this.$element.find('[data-image-cropper-action]').click(function (event) {
@@ -102,21 +121,18 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
                 }
             });
         };
-        ImageCropperOverlay.prototype.sendImage = function (callback) {
-            var canvasData = this.cropper.getCropBoxData();
-            console.log(canvasData);
-            var url = '/media/image/cropper';
+        ImageCropperOverlay.prototype.sendCropData = function (callback) {
+            var data = this.cropper.getData();
+            var url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/crop';
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: {
-                    width: canvasData.width,
-                    height: canvasData.height,
-                    left: canvasData.left,
-                    top: canvasData.top,
+                    height: data.height,
+                    width: data.width,
+                    x: data.x,
+                    y: data.y,
                 },
-                processData: false,
-                contentType: false,
                 success: function () {
                     if (callback) {
                         callback();
@@ -124,8 +140,51 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
                 },
             });
         };
+        ImageCropperOverlay.prototype.getFormatData = function (callback) {
+            var url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/data';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    var formatData = new FormatData();
+                    formatData.width = data.width;
+                    formatData.height = data.height;
+                    formatData.x = data.x;
+                    formatData.y = data.y;
+                    formatData.ratio = data.ratio;
+                    callback(formatData);
+                },
+            });
+        };
         return ImageCropperOverlay;
     }());
     exports.ImageCropperOverlay = ImageCropperOverlay;
+    var FormatData = /** @class */ (function () {
+        function FormatData() {
+            this.x = null;
+            this.y = null;
+            this.width = null;
+            this.height = null;
+            this.rotate = 0;
+            this.scaleX = 1;
+            this.scaleY = 1;
+            this.ratio = null;
+        }
+        FormatData.prototype.getData = function () {
+            if (this.x !== null && this.y !== null && this.width !== null && this.height !== null) {
+                return {
+                    x: this.x,
+                    y: this.y,
+                    width: this.width,
+                    height: this.height,
+                    scaleX: this.scaleX,
+                    scaleY: this.scaleY,
+                    rotate: this.rotate,
+                };
+            }
+            return null;
+        };
+        return FormatData;
+    }());
     exports.imageCropper = new ImageCropper();
 });

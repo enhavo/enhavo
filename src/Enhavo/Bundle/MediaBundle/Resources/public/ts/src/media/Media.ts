@@ -476,7 +476,7 @@ export class MediaItem
         this.$element.find('[data-media-item-id]').val(id);
     }
 
-    getId()
+    getId(): number
     {
         return this.meta.id;
     }
@@ -491,9 +491,14 @@ export class MediaItem
         this.row.closeEdit();
     }
 
-    getRow()
+    getRow(): MediaRow
     {
         return this.row;
+    }
+
+    getMeta(): MediaItemMeta
+    {
+        return this.meta;
     }
 
     updateThumb()
@@ -578,7 +583,7 @@ export class MediaItem
         }
     }
 
-    getThumbUrl()
+    getThumbUrl(): string
     {
         let url = ' /file/resolve/{token}/{format}?v={random}';
         url = url.replace('{token}', this.meta.token.toString());
@@ -587,7 +592,7 @@ export class MediaItem
         return url;
     }
 
-    getFileUrl()
+    getFileUrl(): string
     {
         let url = ' /file/resolve/{token}?v={random}';
         url = url.replace('{token}', this.meta.token.toString());

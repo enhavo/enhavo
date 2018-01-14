@@ -1,4 +1,3 @@
-import { enhavoAdapter } from 'media/Adapter/EnhavoAdapter';
 import * as admin from 'app/Admin'
 import * as router from 'app/Router'
 import * as form from 'app/Form'
@@ -332,7 +331,7 @@ export class GridMenu
         this.$element.show();
     }
 
-    private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0)
+    private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0): number
     {
         let parent = $(element).offsetParent().get(0);
         if(parent == $('html').get(0)) {

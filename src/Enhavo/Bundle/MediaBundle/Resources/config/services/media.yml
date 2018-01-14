@@ -51,6 +51,11 @@ services:
             - '@enhavo_media.factory.format'
             - '@enhavo_media.filter_collector'
 
+    enhavo_media.media.image_cropper_manager:
+        class: Enhavo\Bundle\MediaBundle\Media\ImageCropperManager
+        arguments:
+            - '%enhavo_media.formats%'
+
     enhavo_media.storage.local_file_storage:
         class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
         arguments:
