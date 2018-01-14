@@ -1,6 +1,6 @@
 import { MediaItem } from 'media/Media';
 import * as $ from 'jquery'
-import 'cropper';
+import * as Cropper from 'cropperjs';
 
 export class ImageCropper
 {
@@ -26,20 +26,16 @@ export class ImageCropperItem
 {
     private item: MediaItem;
 
-    private $itemElement : JQuery;
+    private $itemElement: JQuery;
 
-    private $imageOverlay: JQuery;
-
-    private $cropper: JQuery;
-
-    private loaded = false;
+    private overlay: ImageCropperOverlay;
 
     constructor(item: MediaItem)
     {
         this.item = item;
         this.$itemElement = $(this.item.getElement());
-        this.$imageOverlay = this.$itemElement.find('[data-image-cropping-overlay]');
-        this.$cropper = this.$imageOverlay.find('[data-image-crop-canvas]');
+        let overlayElement = this.$itemElement.find('[data-image-cropping-overlay]').get(0);
+        this.overlay = new ImageCropperOverlay(overlayElement, item);
         this.init();
     }
 
@@ -47,52 +43,77 @@ export class ImageCropperItem
     {
         let self = this;
         this.$itemElement.find('[data-image-cropping-tool]').click(function() {
-            self.loadCropper();
+            let format = $(this).data('image-cropping-tool');
+            self.overlay.open(format);
         });
     }
+}
 
-    private loadCropper()
+export class ImageCropperOverlay
+{
+    private item: MediaItem;
+
+    private $element: JQuery;
+
+    private cropper: Cropper;
+
+    constructor(element: HTMLElement, item: MediaItem)
     {
-        this.loadImage();
-        this.$cropper.cropper();
-        let self = this;
-        this.$cropper.on('built.cropper', function () {
-            // Finished loading
-            self.$imageOverlay.find('[data-image-crop-canvas-wrapper]').removeClass('loading');
-        });
+        this.item = item;
+        this.$element = $(element);
+
+    }
+
+    public open(format: String)
+    {
+        let image = this.createImage();
         this.showOverlay();
+
+        let self = this;
+        this.cropper = new Cropper(image, {
+            ready: function () {
+                self.finishLoading();
+                this.cropper.move(1, -1);
+            }
+        });
     }
 
-    private loadImage()
+    private finishLoading()
     {
-        if(!this.loaded) {
-            this.$cropper.attr('src', this.item.getFileUrl());
-        }
-        this.loaded  = true;
+        this.$element.find('[data-image-crop-canvas-wrapper]').removeClass('loading');
+    }
+
+    private createImage(): HTMLImageElement
+    {
+        let image = new Image();
+        image.src = this.item.getFileUrl();
+        this.$element.find('[data-image-crop-canvas-wrapper]').html();
+        this.$element.find('[data-image-crop-canvas-wrapper]').append(image);
+        return image
     }
 
     private showOverlay()
     {
-        this.$imageOverlay.show();
+        this.$element.show();
         let self = this;
 
-        this.$imageOverlay.find('[data-image-crop-cancel]').click(function (event) {
+        this.$element.find('[data-image-crop-cancel]').click(function (event) {
             event.stopPropagation();
             event.preventDefault();
-            self.$imageOverlay.hide();
+            self.$element.hide();
         });
 
-        this.$imageOverlay.find('[data-image-crop-submit]').click(function (event) {
+        this.$element.find('[data-image-crop-submit]').click(function (event) {
             event.stopPropagation();
             event.preventDefault();
 
             self.sendImage(function() {
-                self.$imageOverlay.hide();
+                self.$element.hide();
             });
         });
 
 
-        this.$imageOverlay.find('[data-image-cropper-action]').click(function (event) {
+        this.$element.find('[data-image-cropper-action]').click(function (event) {
             event.stopPropagation();
             event.preventDefault();
 
@@ -101,22 +122,22 @@ export class ImageCropperItem
             switch (action) {
                 case "move-mode":
                     $(this).addClass('selected');
-                    self.$imageOverlay.find('[data-image-cropper-action="cropframe-mode"]').removeClass('selected');
-                    self.$cropper.cropper('setDragMode', 'move');
+                    self.$element.find('[data-image-cropper-action="cropframe-mode"]').removeClass('selected');
+                    self.cropper.setDragMode('move');
                     break;
                 case "cropframe-mode":
                     $(this).addClass('selected');
-                    self.$imageOverlay.find('[data-image-cropper-action="move-mode"]').removeClass('selected');
-                    self.$cropper.cropper('setDragMode', 'crop');
+                    self.$element.find('[data-image-cropper-action="move-mode"]').removeClass('selected');
+                    self.cropper.setDragMode('crop');
                     break;
                 case "zoom-in":
-                    self.$cropper.cropper('zoom', '0.1');
+                    self.cropper.zoom(0.1);
                     break;
                 case "zoom-out":
-                    self.$cropper.cropper('zoom', '-0.1');
+                    self.cropper.zoom(-0.1);
                     break;
                 case "reset":
-                    self.$cropper.cropper('reset');
+                    self.cropper.reset();
                     break;
             }
         });
@@ -124,7 +145,7 @@ export class ImageCropperItem
 
     private sendImage(callback: () => void)
     {
-        let canvasData = this.$cropper.cropper('getCropBoxData');
+        let canvasData = this.cropper.getCropBoxData();
         console.log(canvasData);
 
         let url = '/media/image/cropper';
@@ -146,27 +167,6 @@ export class ImageCropperItem
             },
         });
     }
-
-    private static dataURItoBlob(dataURI): Blob
-    {
-        // convert base64/URLEncoded data component to raw binary data held in a string
-        let byteString;
-        if (dataURI.split(',')[0].indexOf('base64') >= 0)
-            byteString = atob(dataURI.split(',')[1]);
-        else
-            byteString = decodeURI(dataURI.split(',')[1]);
-
-        // separate out the mime component
-        let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-        // write the bytes of the string to a typed array
-        let ia = new Uint8Array(byteString.length);
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-
-        return new Blob([ia], {type: mimeString});
-    };
 }
 
 export let imageCropper = new ImageCropper();

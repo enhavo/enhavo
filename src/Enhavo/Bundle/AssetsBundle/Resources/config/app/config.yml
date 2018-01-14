@@ -50,9 +50,7 @@ enhavo_assets:
                 dependencies: [jquery]
 
             cropperjs:
-                location: /bundles/enhavoassets/vendor/cropper/dist/cropper
-                exports: jquery
-                dependencies: [jquery]
+                location: /bundles/enhavoassets/vendor/cropperjs/dist/cropper.min
 
             fos-routing:
                 location: /bundles/fosjsrouting/js/router

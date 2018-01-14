@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Extension\Extension;
 
-
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\MediaBundle\Extension\ExtensionInterface;
 use Enhavo\Bundle\MediaBundle\Form\Type\ImageCropperType;
@@ -18,7 +17,7 @@ class ImageCropperExtension extends AbstractType implements ExtensionInterface
 {
     public function renderExtension($options)
     {
-        return 'extension';
+        return '';
     }
 
     public function renderButton($options)
