@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
 
+use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Imagine\Exception\RuntimeException;
@@ -26,16 +27,50 @@ class ImageFilter extends AbstractFilter
         try {
             $imagine = new Imagine();
             $imagine = $imagine->load($content->getContent());
-            $imagine = $this->format($imagine, $setting);
-            $imagine->save($content->getFilePath(), array('format' => $setting->getSetting('format')));
+            $imagine = $this->resize($imagine, $setting);
+            $imagine->save($content->getFilePath(), [
+                'format' => $this->getFormat($content, $setting)
+            ]);
         } catch (RuntimeException $e) {
             // if image cant be created we make an empty file
             file_put_contents($content->getFilePath(), '');
         }
     }
 
-    private function format(ImageInterface $image, FilterSetting $setting)
+    private function getFormat(ContentInterface $content, FilterSetting $setting)
     {
+        $format = $setting->getSetting('format');
+        if($format === null) {
+            $type = exif_imagetype($content->getFilePath());
+            switch ($type) {
+                case(IMAGETYPE_GIF):
+                    return 'gif';
+                case(IMAGETYPE_JPEG):
+                    return 'jpg';
+                case(IMAGETYPE_PNG):
+                    return 'png';
+            }
+            return 'png';
+        }
+        return $format;
+    }
+
+    private function resize(ImageInterface $image, FilterSetting $setting)
+    {
+        if($setting->getSetting('cropHeight') !== null &&
+            $setting->getSetting('cropWidth') !== null  &&
+            $setting->getSetting('cropY') !== null  &&
+            $setting->getSetting('cropX') !== null
+        ) {
+            $image = $this->crop(
+                $image,
+                $setting->getSetting('cropWidth'),
+                $setting->getSetting('cropHeight'),
+                $setting->getSetting('cropX'),
+                $setting->getSetting('cropY')
+            );
+        }
+
         if($setting->getSetting('maxHeight') && $setting->getSetting('maxWidth') == null) {
             $image = $this->resizeWithMaxHeight($image, $setting->getSetting('maxHeight'));
         }
@@ -64,6 +99,52 @@ class ImageFilter extends AbstractFilter
             );
         }
 
+        return $image;
+    }
+
+    private function crop(ImageInterface $image, $width, $height, $x, $y)
+    {
+        $palette = new RGB();
+        $backgroundColor = $palette->color(array(255, 255, 255), 0);
+        $imagine = new Imagine();
+
+        $size = $image->getSize();
+        // resize image for x position if necessary
+        if($x < 0) {
+            $newImage = $imagine->create(new Box($size->getWidth() + abs($x), $size->getHeight()), $backgroundColor);
+            $image = $newImage->paste($image, new Point(abs($x), 0));
+            $x = 0;
+        } elseif($x > $size->getWidth()) {
+            $newImage = $imagine->create(new Box($x + 1, $size->getHeight()), $backgroundColor);
+            $image = $newImage->paste($image, new Point(0, 0));
+        }
+
+        $size = $image->getSize();
+        // resize image for y position if necessary
+        if($y < 0) {
+            $newImage = $imagine->create(new Box($size->getWidth(), $size->getHeight() + abs($y)), $backgroundColor);
+            $image = $newImage->paste($image, new Point(0, abs($y)));
+            $y = 0;
+        } elseif($y > $size->getHeight()) {
+            $newImage = $imagine->create(new Box($size->getWidth(), $y + 1), $backgroundColor);
+            $image = $newImage->paste($image, new Point(0, 0));
+        }
+
+        $size = $image->getSize();
+        // resize image if width is to big
+        if(($x + $width) > $size->getWidth()) {
+            $newImage = $imagine->create(new Box($x + $width, $size->getHeight()), $backgroundColor);
+            $image = $newImage->paste($image, new Point(0, 0));
+        }
+
+        $size = $image->getSize();
+        // resize image if height is to big
+        if(($y + $height) > $size->getHeight()) {
+            $newImage = $imagine->create(new Box($size->getWidth(), $y + $height + 1), $backgroundColor);
+            $image = $newImage->paste($image, new Point(0, 0));
+        }
+
+        $image = $image->crop(new Point($x, $y), new Box($width, $height));
         return $image;
     }
 

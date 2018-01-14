@@ -27,13 +27,16 @@ class ImageCropperController extends Controller
             $parameters = [];
         }
 
-        $parameters['height'] = $height;
-        $parameters['width'] = $width;
-        $parameters['x'] = $x;
-        $parameters['y'] = $y;
+        $parameters['cropHeight'] = $height;
+        $parameters['cropWidth'] = $width;
+        $parameters['cropX'] = $x;
+        $parameters['cropY'] = $y;
 
         $format->setParameters($parameters);
         $this->container->get('doctrine.orm.entity_manager')->flush();
+
+        $formatManager = $this->get('enhavo_media.media.format_manager');
+        $formatManager->applyFormat($format->getFile(), $format->getName(), $parameters);
 
         return new JsonResponse([
             'height' => $height,
@@ -51,16 +54,16 @@ class ImageCropperController extends Controller
         $ratio = $imageCropperManager->getFormatRatio($format);
 
         if(is_array($parameters)) {
-            if(array_key_exists('height', $parameters) &&
-                array_key_exists('width', $parameters) &&
-                array_key_exists('x', $parameters) &&
-                array_key_exists('y', $parameters))
+            if(array_key_exists('cropHeight', $parameters) &&
+                array_key_exists('cropWidth', $parameters) &&
+                array_key_exists('cropX', $parameters) &&
+                array_key_exists('cropY', $parameters))
             {
                 return new JsonResponse([
-                    'height' => $parameters['height'],
-                    'width' => $parameters['width'],
-                    'x' => $parameters['x'],
-                    'y' =>$parameters['y'],
+                    'height' => $parameters['cropHeight'],
+                    'width' => $parameters['cropWidth'],
+                    'x' => $parameters['cropX'],
+                    'y' =>$parameters['cropY'],
                     'ratio' => $ratio
                 ]);
             }

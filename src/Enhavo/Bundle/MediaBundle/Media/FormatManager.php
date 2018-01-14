@@ -54,11 +54,39 @@ class FormatManager
         $this->filterCollector = $filterCollector;
     }
 
-    public function createFormat(FileInterface $file, $format, $parameters = [])
+    private function createFormat(FileInterface $file, $format, $parameters = [])
     {
-        $settings = $this->getFormatSettings($format, $parameters);
         $fileFormat = $this->formatFactory->createFromMediaFile($file);
         $fileFormat->setName($format);
+        return $this->applyFilter($fileFormat, $parameters);
+    }
+
+    public function getFormat(FileInterface $file, $format, $parameters = [])
+    {
+        $fileFormat = $this->provider->findFormat($file, $format);
+        if($fileFormat === null) {
+            return $this->createFormat($file, $format, $parameters);
+        }
+        return $fileFormat;
+    }
+
+    public function applyFormat(FileInterface $file, $format, $parameters = [])
+    {
+        $fileFormat = $this->provider->findFormat($file, $format);
+        if($fileFormat === null) {
+            return $this->createFormat($file, $format, $parameters);
+        }
+        $this->applyFilter($fileFormat, $parameters);
+        return $fileFormat;
+    }
+
+    private function applyFilter(FormatInterface $fileFormat, $parameters)
+    {
+        $parameters = array_merge($fileFormat->getParameters(), $parameters);
+        $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
+
+        $newFileFormat = $this->formatFactory->createFromMediaFile($fileFormat->getFile());
+        $fileFormat->setContent($newFileFormat->getContent());
 
         foreach($settings as $setting) {
             /** @var FilterInterface $filter */
@@ -68,16 +96,8 @@ class FormatManager
 
         $this->provider->saveFormat($fileFormat);
         $this->storage->saveFile($fileFormat);
-        return $fileFormat;
-    }
 
-    public function getFormat(FileInterface $file, $format, $parameters = [])
-    {
-        $fileFormat = $this->provider->findFormat($file, $format);
-        if($fileFormat !== null) {
-            return $fileFormat;
-        }
-        return $this->createFormat($file, $format, $parameters);
+        return $fileFormat;
     }
 
     public function deleteFormats(FileInterface $file)
