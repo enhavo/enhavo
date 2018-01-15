@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\MediaBundle\Content;
 
 
+use Enhavo\Bundle\MediaBundle\Exception\FileException;
+
 class PathContent implements ContentInterface
 {
     /**
@@ -23,6 +25,9 @@ class PathContent implements ContentInterface
 
     public function getContent()
     {
+        if(!file_exists($this->path)) {
+            throw new FileException(sprintf('File could not be found on path "%s"', $this->path));
+        }
         return file_get_contents($this->path);
     }
 

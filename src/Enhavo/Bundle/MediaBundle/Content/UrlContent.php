@@ -9,7 +9,25 @@
 namespace Enhavo\Bundle\MediaBundle\Content;
 
 
-class UrlContent extends PathContent
+class UrlContent implements ContentInterface
 {
+    /**
+     * @var
+     */
+    private $url;
 
+    public function __construct($url)
+    {
+        $this->url = $url;
+    }
+
+    public function getContent()
+    {
+        return file_get_contents($this->url);
+    }
+
+    public function getFilePath()
+    {
+        return $this->url;
+    }
 }

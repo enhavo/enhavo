@@ -53,9 +53,6 @@ class LocalFileStorage implements StorageInterface
     public function getContent($file, $format = null)
     {
         $savePath = $this->getAndCreateSavePath($file);
-        if(!$this->filesystem->exists($savePath)) {
-            throw new FileException(sprintf('File with ID "%s" could not be found on path "%s"', $file->getId(), $savePath));
-        }
         return new PathContent($savePath);
     }
 
