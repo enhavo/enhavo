@@ -80,6 +80,14 @@ class FormatManager
         return $fileFormat;
     }
 
+    public function applyFormats(FileInterface $file)
+    {
+        $fileFormats = $this->provider->findAllFormats($file);
+        foreach($fileFormats as $fileFormat) {
+            $this->applyFormat($file, $fileFormat->getName());
+        }
+    }
+
     private function applyFilter(FormatInterface $fileFormat, $parameters)
     {
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
@@ -133,8 +141,7 @@ class FormatManager
         }
 
         $settings = [];
-
-        $formatSettings = array_merge_recursive($this->formats[$format], $parameters);
+        $formatSettings = $this->formats[$format];
 
         // look for chain
         if(isset($formatSettings[0]) && is_array($formatSettings[0])) {
@@ -144,7 +151,7 @@ class FormatManager
                 }
                 $formatSetting = new FilterSetting();
                 $formatSetting->setType($chainSettings['type']);
-                $formatSetting->setSettings($chainSettings);
+                $formatSetting->setSettings(array_merge($chainSettings, $parameters));
                 $settings[] = $formatSetting;
             }
         } else {
@@ -154,7 +161,7 @@ class FormatManager
             }
             $formatSetting = new FilterSetting();
             $formatSetting->setType($formatSettings['type']);
-            $formatSetting->setSettings($formatSettings);
+            $formatSetting->setSettings(array_merge($formatSettings, $parameters));
             $settings[] = $formatSetting;
         }
 
