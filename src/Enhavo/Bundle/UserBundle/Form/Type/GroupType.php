@@ -44,7 +44,8 @@ class GroupType extends AbstractType
             'translation_domain' => 'EnhavoUserBundle',
             'choices' => $this->rolesProvider->getRoles(),
             'multiple' => true,
-            'expanded' => true
+            'expanded' => true,
+            'list' => true
         ));
     }
 

@@ -1,4 +1,8 @@
-.choice-list .choice-input-with-label {display: block;margin-bottom: 3px;}
+.choice-list {
+    .choice-input-container {
+        .choice-input-with-label {display: block; margin-bottom: 3px;}
+    }
+}
 
 .choice-input-container {
     padding-top:3px;

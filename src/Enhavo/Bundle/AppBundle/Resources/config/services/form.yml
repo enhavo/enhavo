@@ -55,3 +55,13 @@ services:
         class: Enhavo\Bundle\AppBundle\Form\Error\FormErrorResolver
         arguments:
             - '@translator'
+
+    enhavo_app.form.extension.choice_type_extension:
+        class: Enhavo\Bundle\AppBundle\Form\Extension\ChoiceTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
+
+    enhavo_app.form.extension.entity_type_extension:
+        class: Enhavo\Bundle\AppBundle\Form\Extension\EntityTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }

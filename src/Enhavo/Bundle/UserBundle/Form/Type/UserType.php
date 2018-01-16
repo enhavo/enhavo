@@ -48,7 +48,7 @@ class UserType extends AbstractType
             'property' => 'name',
             'multiple' => true,
             'expanded' => true,
-            'attr' => array('class' => 'choice-list'),
+            'list' => true,
             'label' => 'user.form.label.groups',
             'translation_domain' => 'EnhavoUserBundle'
         ));
