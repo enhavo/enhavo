@@ -13,14 +13,16 @@
 {%- endblock %}
 
 {% block choice_widget_expanded %}
-    <div class="choice-input-container" {{ block('widget_container_attributes') }}>
-        {%- for child in form %}
-            <span class="choice-input-with-label">
-            {{- form_widget(child) -}}
+    {% if list %}<div class="choice-list">{% endif %}
+        <div class="choice-input-container" {{ block('widget_container_attributes') }}>
+            {%- for child in form %}
+                <span class="choice-input-with-label">
+                {{- form_widget(child) -}}
                 {{- form_label(child) -}}
-        </span>
-        {% endfor -%}
-    </div>
+            </span>
+            {% endfor -%}
+        </div>
+    {% if list %}</div>{% endif %}
 {% endblock %}
 
 {% block form_row %}
@@ -135,12 +137,6 @@
 {% block enhavo_message_widget %}
     <div class="form-message-box type-{{ type }}">
         {{ message|nl2br }}
-    </div>
-{% endblock %}
-
-{% block entity_widget %}
-    <div class="choice-list">
-        {{ form_widget(form) }}
     </div>
 {% endblock %}
 

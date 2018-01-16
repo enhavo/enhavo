@@ -56,7 +56,7 @@ class ArticleType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        $builder->add('categories', 'enhavo_category', array());
+        $builder->add('categories', 'enhavo_category');
     }
 
     public function configureOptions(OptionsResolver $resolver)
