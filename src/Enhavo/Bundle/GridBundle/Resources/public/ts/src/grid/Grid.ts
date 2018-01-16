@@ -193,7 +193,7 @@ export class Grid
         admin.closeLoadingOverlay();
     }
 
-    public moveItemUp(item: GridItem, callback: () => void)
+    public moveItemUp(item: GridItem, callback: () => void = function() {})
     {
         let index = this.$container.children('[data-grid-item]').index(item.getElement());
         let self = this;
@@ -223,7 +223,7 @@ export class Grid
         }
     }
 
-    public moveItemDown(item: GridItem, callback: () => void)
+    public moveItemDown(item: GridItem, callback: () => void = function() {})
     {
         let index = this.$container.children('[data-grid-item]').index(item.getElement());
         let size = this.$container.children('[data-grid-item]').length;

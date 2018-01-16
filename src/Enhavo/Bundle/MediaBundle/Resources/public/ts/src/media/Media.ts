@@ -440,6 +440,7 @@ export class MediaItem
     remove()
     {
         this.$element.remove();
+        this.row.closeEdit();
         this.row.setOrder();
     }
 
