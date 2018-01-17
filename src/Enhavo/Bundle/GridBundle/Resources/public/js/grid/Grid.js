@@ -149,6 +149,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             admin.closeLoadingOverlay();
         };
         Grid.prototype.moveItemUp = function (item, callback) {
+            if (callback === void 0) { callback = function () { }; }
             var index = this.$container.children('[data-grid-item]').index(item.getElement());
             var self = this;
             if (index > 0) {
@@ -176,6 +177,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             }
         };
         Grid.prototype.moveItemDown = function (item, callback) {
+            if (callback === void 0) { callback = function () { }; }
             var index = this.$container.children('[data-grid-item]').index(item.getElement());
             var size = this.$container.children('[data-grid-item]').length;
             var self = this;

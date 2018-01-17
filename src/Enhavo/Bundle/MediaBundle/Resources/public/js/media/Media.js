@@ -313,6 +313,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
         };
         MediaItem.prototype.remove = function () {
             this.$element.remove();
+            this.row.closeEdit();
             this.row.setOrder();
         };
         MediaItem.prototype.getElement = function () {
