@@ -36,8 +36,10 @@ class FileController extends Controller
         }
 
         $response = new Response();
-        $response->setContent($file->getContent()->getContent());
+        $content = $file->getContent()->getContent();
+        $response->setContent($content);
         $response->headers->set('Content-Type', $file->getMimeType());
+        $response->headers->set('Content-Length', strlen($content));
         return $response;
     }
 
@@ -107,8 +109,10 @@ class FileController extends Controller
         }
 
         $response = new Response();
-        $response->setContent($formatFile->getContent()->getContent());
+        $content = $formatFile->getContent()->getContent();
+        $response->setContent($content);
         $response->headers->set('Content-Type', $formatFile->getMimeType());
+        $response->headers->set('Content-Length', strlen($content));
         return $response;
     }
 
