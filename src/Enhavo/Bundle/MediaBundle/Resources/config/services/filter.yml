@@ -32,3 +32,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: video_image }
+
+    enhavo_media.filter.image_compression:
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageCompressionFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: image_compression }
