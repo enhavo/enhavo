@@ -30,9 +30,9 @@ class DeleteBatch extends AbstractBatch
         parent::setOptions($parameters);
 
         $this->options = array_merge($this->options, [
-            'label' => isset($parameters['label']) ? $parameters['label'] : 'batch.delete.label',
-            'confirmMessage' => isset($parameters['confirmMessage']) ? $parameters['confirmMessage'] : 'batch.delete.message.confirm',
-            'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoAppBundle',
+            'label' => $this->getOption('label', $parameters,'batch.delete.label'),
+            'confirmMessage' => $this->getOption('confirmMessage', $parameters,'batch.delete.message.confirm'),
+            'translationDomain' => $this->getOption('translationDomain', $parameters,'EnhavoAppBundle'),
         ]);
     }
 
