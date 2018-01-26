@@ -18,6 +18,12 @@ class CreateAction extends AbstractType implements ActionInterface
     {
         $template = $this->getOption('template', $parameters, 'EnhavoAppBundle:Action:default.html.twig');
 
+        $display = $this->getOption('display', $parameters, true);
+        $role = $this->getOption('role', $parameters);
+        if($role !== null && !$this->container->get('security.authorization_checker')->isGranted($role)) {
+            $display = false;
+        }
+
         return $this->renderTemplate($template, [
             'type' => $this->getType(),
             'actionType' => 'overlay',
@@ -26,7 +32,7 @@ class CreateAction extends AbstractType implements ActionInterface
             'label' => $this->getOption('label', $parameters, 'label.create'),
             'icon' => $this->getOption('icon', $parameters, 'create'),
             'translationDomain' => $this->getOption('translationDomain', $parameters, 'EnhavoAppBundle'),
-            'display' =>  $this->getOption('display', $parameters, true)
+            'display' => $display
         ]);
     }
 

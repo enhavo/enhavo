@@ -16,6 +16,8 @@ services:
             - @enhavo_app.button_collector
         tags:
             - { name: twig.extension }
+        calls:
+            - [setContainer, ['@service_container']]
 
     enhavo_app.button.delete:
         class: Enhavo\Bundle\AppBundle\Button\Button\DeleteButton

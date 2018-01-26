@@ -2,9 +2,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Type;
 
-use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
-
 abstract class AbstractRenderer extends \Twig_Extension
 {
     /**

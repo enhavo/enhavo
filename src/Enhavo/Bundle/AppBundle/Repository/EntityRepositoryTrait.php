@@ -51,15 +51,18 @@ trait EntityRepositoryTrait
                         $joinPrefix = array_shift($joinPrefixes);
                         $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
                     }
-                    $query->andWhere(sprintf('%s.%s %s :parameter%s', $joinPrefixes[0], $where['property'], $this->getOperator($where), $i));
+                    $query->andWhere(sprintf('%s.%s %s %s', $joinPrefixes[0], $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
                 } else {
                     $query->join(sprintf('e.%s', $where['property']), sprintf('j%s', $i));
-                    $query->andWhere(sprintf('j%s.%s %s :parameter%s', $i, $where['property'], $this->getOperator($where), $i));
+                    $query->andWhere(sprintf('j%s.%s %s %s', $i, $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
                 }
             } else {
-                $query->andWhere(sprintf('e.%s %s :parameter%s', $where['property'], $this->getOperator($where), $i));
+                $query->andWhere(sprintf('e.%s %s %s', $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
             }
-            $query->setParameter(sprintf('parameter%s', $i), $this->getValue($where));
+
+            if($this->hasParameter($where)) {
+                $query->setParameter(sprintf('parameter%s', $i), $this->getValue($where));
+            }
         }
 
         foreach($filterQuery->getOrderBy() as $order) {
@@ -114,8 +117,13 @@ trait EntityRepositoryTrait
 
     private function getOperator($where)
     {
+        $value = $where['value'];
+
         switch($where['operator']) {
             case(FilterQuery::OPERATOR_EQUALS):
+                if($value === null) {
+                    return 'is';
+                }
                 return '=';
             case(FilterQuery::OPERATOR_LIKE):
             case(FilterQuery::OPERATOR_START_LIKE):
@@ -123,5 +131,23 @@ trait EntityRepositoryTrait
                 return 'like';
         }
         throw new FilterException('Operator not supported in Repository');
+    }
+
+    private function getParameter($where, $number)
+    {
+        $value = $where['value'];
+        if(FilterQuery::OPERATOR_EQUALS && $value === null) {
+            return 'null';
+        }
+        return sprintf(':parameter%s', $number);
+    }
+
+    private function hasParameter($where)
+    {
+        $value = $where['value'];
+        if(FilterQuery::OPERATOR_EQUALS && $value === null) {
+            return false;
+        }
+        return true;
     }
 }
