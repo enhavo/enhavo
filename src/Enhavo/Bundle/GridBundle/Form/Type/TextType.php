@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
+use Enhavo\Bundle\ContentBundle\Form\Type\HeadLineType;
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,10 +17,9 @@ class TextType extends ItemFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', HeadLineType::class, array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('text', 'enhavo_wysiwyg', array(

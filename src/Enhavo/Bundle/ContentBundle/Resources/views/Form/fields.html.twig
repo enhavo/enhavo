@@ -1,0 +1,8 @@
+{% block head_line_widget %}
+    <div class="head-line-widget">
+        {% spaceless %}
+            {{ form_widget(form.text) }}
+            {{ form_widget(form.tag) }}
+        {% endspaceless %}
+    </div>
+{% endblock %}
