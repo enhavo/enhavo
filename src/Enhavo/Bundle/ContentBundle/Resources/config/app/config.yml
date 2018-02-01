@@ -1,0 +1,8 @@
+twig:
+    form:
+        resources:
+            - 'EnhavoContentBundle:Form:fields.html.twig'
+
+enhavo_app:
+    stylesheets:
+      - '@EnhavoContentBundle/Resources/public/css/style.css'
