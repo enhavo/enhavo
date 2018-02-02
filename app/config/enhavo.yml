@@ -31,13 +31,14 @@ enhavo_app:
             type: shop_order
         setting:
             type: setting
-        translation-strings:
+        translation_strings:
             type: translation
+        redirect:
+            type: redirect
         magazine:
             type: base
             route: enhavo_project_magazine_index
             icon: open-book
-
 
 enhavo_grid:
     items:

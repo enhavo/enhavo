@@ -1,0 +1,100 @@
+enhavo_content_redirect_index:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_content.controller.redirect:indexAction
+        _sylius:
+            viewer:
+                title: redirect.label.redirect
+                translationDomain: EnhavoContentBundle
+
+enhavo_content_redirect_create:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_content.controller.redirect:createAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoContentBundle
+
+enhavo_content_redirect_update:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_content.controller.redirect:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoContentBundle
+
+enhavo_content_redirect_table:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/table
+    methods: [GET]
+    defaults:
+        _controller: enhavo_content.controller.redirect:tableAction
+        _sylius:
+            filters:
+                from:
+                    type: text
+                    property: from
+                    label: form.label.from
+                    translationDomain: EnhavoContentBundle
+                to:
+                    type: text
+                    property: to
+                    label: form.label.to
+                    translationDomain: EnhavoContentBundle
+                code:
+                    type: option
+                    property: code
+                    options:
+                        - 301
+                        - 302
+                    label: form.label.code
+                    translationDomain: EnhavoContentBundle
+
+            viewer:
+                translationDomain: EnhavoContentBundle
+                columns:
+                    from:
+                        property: from
+                        label: form.label.from
+                        width: 5
+                    to:
+                        property: to
+                        label: form.label.to
+                        width: 6
+                    code:
+                        property: code
+                        label: form.label.code
+                        width: 1
+
+enhavo_content_redirect_delete:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_content.controller.redirect:deleteAction
+
+enhavo_content_redirect_batch:
+    options:
+        expose: true
+    path: /enhavo/content/redirect/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_content.controller.redirect:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

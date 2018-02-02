@@ -24,3 +24,10 @@ form:
     openGraphTitle: 'Open Graph Titel'
     openGraphDescription: 'Open Graph Beschreibung'
     openGraphImage: 'Open Graph Bild'
+    from: 'Von'
+    to: 'Nach'
+    code: 'Code'
+
+redirect:
+    label:
+        redirect: 'Weiterleitung'

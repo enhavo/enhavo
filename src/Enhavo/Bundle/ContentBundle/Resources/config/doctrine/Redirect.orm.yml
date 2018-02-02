@@ -1,0 +1,32 @@
+Enhavo\Bundle\ContentBundle\Entity\Redirect:
+    type: entity
+    table: content_redirect
+    repositoryClass: Enhavo\Bundle\ContentBundle\Repository\RedirectRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        from:
+            type: string
+            length: 512
+            nullable: true
+            column: "`from`"
+        to:
+            type: string
+            nullable: true
+            length: 512
+            column: "`to`"
+        code:
+            type: integer
+            nullable: true
+
+    manyToOne:
+        route:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+
+    lifecycleCallbacks: {  }
