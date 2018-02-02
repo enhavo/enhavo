@@ -6,3 +6,8 @@ twig:
 enhavo_app:
     stylesheets:
       - '@EnhavoContentBundle/Resources/public/css/style.css'
+
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\ContentBundle\Entity\Redirect: enhavo_content.controller.redirect:redirectAction

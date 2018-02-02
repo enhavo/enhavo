@@ -37,6 +37,10 @@ enhavo_article_theme:
     resource: "@EnhavoArticleBundle/Resources/config/routing/theme/article.yml"
     prefix: /
 
+enhavo_redirect_admin:
+    resource: "@EnhavoContentBundle/Resources/config/routing/redirect.yml"
+    prefix:   /admin
+
 enhavo_search_admin:
     resource: "@EnhavoSearchBundle/Resources/config/routing/admin.yml"
     prefix:   /admin

@@ -62,3 +62,22 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.theme_widget, alias: 'pagination' }
+
+    enhavo_content.menu_builder.redirect:
+        class: Enhavo\Bundle\ContentBundle\Menu\RedirectMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: redirect }
+
+    enhavo_content.redirect.redirect_manager:
+        class: Enhavo\Bundle\ContentBundle\Redirect\RedirectManager
+        arguments:
+            - '@enhavo_app.route_manager'
+
+    enhavo_content.event_listener.redirect_subscriber:
+        class: Enhavo\Bundle\ContentBundle\EventListener\RedirectSubscriber
+        arguments:
+            - '@enhavo_content.redirect.redirect_manager'
+        tags:
+            - { name: kernel.event_subscriber }
