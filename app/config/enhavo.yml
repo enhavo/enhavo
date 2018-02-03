@@ -25,6 +25,8 @@ enhavo_app:
             type: shop
         setting:
             type: setting
+        navigation:
+            type: navigation
         translation_strings:
             type: translation
         redirect:

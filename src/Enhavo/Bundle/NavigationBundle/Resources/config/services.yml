@@ -1,0 +1,7 @@
+services:
+   enhavo_navigation.menu_builder.navigation:
+        class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenuBuilder
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: navigation }

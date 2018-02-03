@@ -1,0 +1,8 @@
+navigation:
+    label:
+        navigation: 'Navigation'
+
+form:
+    label:
+        name: 'Name'
+        code: 'Code'

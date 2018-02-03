@@ -1,0 +1,8 @@
+enhavo_app:
+    stylesheets:
+      - '@EnhavoNavigationBundle/Resources/public/css/style.css'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\NavigationBundle\Model\NodeInterface: Enhavo\Bundle\NavigationBundle\Entity\Node

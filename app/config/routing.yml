@@ -116,6 +116,10 @@ enhavo_comment:
 enhavo_translation:
     resource: "@EnhavoTranslationBundle/Resources/config/routing/translation_string.yml"
     prefix: /admin
+
+enhavo_navigation:
+    resource: "@EnhavoNavigationBundle/Resources/config/routing/navigation.yml"
+    prefix: /admin
 #
 # 3rd Party
 #

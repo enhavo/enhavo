@@ -1,0 +1,28 @@
+Enhavo\Bundle\NavigationBundle\Entity\Node:
+    type: entity
+    table: navigation_node
+    repositoryClass: Enhavo\Bundle\NavigationBundle\Repository\NodesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        type:
+            type: string
+            length: 255
+
+    manyToOne:
+        parent:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+
+    oneToMany:
+        children:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+            mappedBy: parent
+
+    lifecycleCallbacks: {  }

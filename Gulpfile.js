@@ -61,6 +61,10 @@ gulp.task('sass:compile', function () {
     {
       from: 'src/Enhavo/Bundle/ContentBundle/Resources/public/sass/*.scss',
       to: 'src/Enhavo/Bundle/ContentBundle/Resources/public/css'
+    },
+    {
+      from: 'src/Enhavo/Bundle/NavigationBundle/Resources/public/sass/*.scss',
+      to: 'src/Enhavo/Bundle/NavigationBundle/Resources/public/css'
     }
   ];
 
