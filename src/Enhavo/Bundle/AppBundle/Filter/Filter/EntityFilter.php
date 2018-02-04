@@ -8,13 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\AppBundle\Exception\FilterException;
-use Doctrine\ORM\Query;
 
-class EntityFilter extends AbstractType implements FilterInterface
+class EntityFilter extends AbstractFilter
 {
     public function render($options, $value)
     {
@@ -25,8 +22,8 @@ class EntityFilter extends AbstractType implements FilterInterface
 
         $entities = $repository->findAll();
         $selectOptions = [];
-        foreach($entities as $entity) {
-            if($path) {
+        foreach ($entities as $entity) {
+            if ($path) {
                 $selectOptions[$this->getProperty($entity, 'id')] = $this->getProperty($entity, $path);
             } else {
                 $selectOptions[$this->getProperty($entity, 'id')] = (string)$entity;
@@ -48,7 +45,7 @@ class EntityFilter extends AbstractType implements FilterInterface
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        if($value == '') {
+        if ($value == '') {
             return;
         }
 
@@ -59,7 +56,7 @@ class EntityFilter extends AbstractType implements FilterInterface
 
     public function getRepository($repository)
     {
-        if(preg_match('#[:/]#', $repository)) {
+        if (preg_match('#[:/]#', $repository)) {
             return $this->container->get('doctrine.orm.entity_manager')->getRepository($repository);
         }
         return $this->container->get($repository);
