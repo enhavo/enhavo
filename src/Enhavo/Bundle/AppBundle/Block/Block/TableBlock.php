@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Block\Block;
 
 use Enhavo\Bundle\AppBundle\Block\BlockInterface;
+use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
+use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
 class TableBlock extends AbstractType implements BlockInterface
@@ -86,19 +88,35 @@ class TableBlock extends AbstractType implements BlockInterface
 
     protected function getFilters(array $filters, $translationDomain = null)
     {
-        foreach($filters as $name => &$options) {
-            $options['value'] = '';
-            $options['name'] = $name;
+        $collector = $this->container->get('enhavo_app.filter_collector');
+        $authorizationChecker = $this->container->get('security.authorization_checker');
 
+        $filterData = [];
+
+        // check permission
+        foreach($filters as $name => &$options) {
+            if(!isset($options['type'])) {
+                throw new TypeMissingException(sprintf('No type was set for filter "%s"', $name));
+            }
+            /** @var FilterInterface $filter */
+            $filter = $collector->getType($options['type']);
+            $permission = $filter->getPermission($options);
+            if(!empty($permission) && !$authorizationChecker->isGranted($permission)) {
+                continue;
+            }
+            $filterData[$name] = $options;
         }
 
-        foreach($filters as $name => &$options) {
+        // set default values
+        foreach($filterData as $name => &$options) {
+            $options['value'] = '';
+            $options['name'] = $name;
             if(!array_key_exists('translationDomain', $options)) {
                 $options['translationDomain'] = $translationDomain;
             }
         }
 
-        return $filters;
+        return $filterData;
     }
 
     public function getType()

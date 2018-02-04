@@ -9,11 +9,10 @@
 namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
-use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class OptionFilter extends AbstractType implements FilterInterface
+class OptionFilter extends AbstractFilter
 {
     public function render($options, $value)
     {
