@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
-use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 
-class BooleanFilter extends AbstractType implements FilterInterface
+class BooleanFilter extends AbstractFilter
 {
     public function render($options, $value)
     {
