@@ -59,10 +59,41 @@ abstract class AbstractStrategy extends AbstractType implements StrategyInterfac
     private function getTypeOptions($type)
     {
         $options = $this->options;
-        if(isset($this->typeOptions[$type])) {
-            $options = array_merge_recursive($options, $this->typeOptions[$type]);
+        if(isset($this->typeOptions[$type]) && isset($this->typeOptions[$type]['strategy'])) {
+            $options = $this->mergeArraysRecursive($options, $this->typeOptions[$type]['strategy']);
         }
         return $options;
+    }
+
+    /**
+     * @param array $array1
+     * @param array $array2
+     * @return array
+     */
+    private function mergeArraysRecursive($array1, $array2)
+    {
+        $result = array();
+        foreach($array1 as $key => $value) {
+            if (isset($array2[$key])) {
+                if (is_array($value)) {
+                    if (is_array($array2[$key])) {
+                        $result[$key] = $this->mergeArraysRecursive($value, $array2[$key]);
+                    } else {
+                        $result[$key] = $array2[$key];
+                    }
+                } else {
+                    $result[$key] = $array2[$key];
+                }
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        foreach($array2 as $key => $value) {
+            if (!isset($result[$key])) {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
     }
 
     protected function getTypeOption($key, $type, $default = null)
