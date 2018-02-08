@@ -1,0 +1,89 @@
+#menu-main{
+  width: 245px;height: auto;
+  li {
+    a {
+      font-weight: 500;display:block;padding: 10px 20px 10px 20px; overflow:hidden;
+      background-position:156px 10px;background-repeat:no-repeat;color:#a8b2b4;text-align:left;font-size: 15px;white-space:nowrap;text-overflow:ellipsis;
+      &:hover {
+        color:#fff;;filter:none;
+        &:before { color:#FFF;}
+      }
+      &:before {font-size: 16px;color:#a8b2b4;font-family: "enhavo-iconfont";font-weight: normal;padding-right: 10px;}
+    }
+    &.selected {
+      background: #030f11;
+      a {
+        color:#fff;filter:none; font-weight:600;
+        &:before { color:#FFF;}
+      }
+    }
+    .dropdown {
+      display:none;
+      li {
+        background: #20383f;
+        a {
+          color:#a8b2b4; font-weight:400;
+          &:before { color:#a8b2b4;}
+        }
+        &:hover {
+          a {
+            color:#FFF;
+            &:before { color:#FFF;}
+          }
+        }
+        &.selected {
+          a {
+            color:#FFF;font-weight:600;
+            &:before { color:#FFF;}
+          }
+        }
+      }
+    }
+    &.has-dropdown {
+      position:relative;
+      &:before {
+        font-size: 16px;color:#a8b2b4;font-family: "enhavo-iconfont";font-weight: normal;
+        position:absolute; right:20px; top:15px; content:'\e82b'; line-height:1em;
+      }
+      &.selected {
+        .dropdown { display:block;}
+        &:before {transform:rotate(-180deg); color:#FFF;}
+      }
+      &:hover {
+        &:before { color:#FFF;}
+      }
+    }
+  }
+}
+
+#menu-main-container {
+  position: absolute;background:#072129;height: auto;min-height:100%;
+  .desc {
+    font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 0 0 20px; margin-top:25px;
+    a {color: #FFF;}
+  }
+  .menu-logo{width: 155px;position: relative;left:13px;margin-bottom: 15px;margin-top: 40px;}
+}
+
+.menu-icon-logout {
+  &:before { content:'\e9d7'; }
+}
+
+#user-menu {
+  position:fixed;padding-top:12px;right:0; top:0; background:transparent; width:100%; height:55px;
+  &.background {transition:all .4s;background:#FBFBFB;}
+  ul {
+    position:absolute; right:0;
+    li {
+      float:left; margin-right:20px;
+      &:last-of-type {margin-right:40px;}
+      &:not(.menu-btn){ display:none;}
+      a {
+        color:#a7b1b3; padding-top:6px; display:inline-block; font-weight:600;transition:all .2s;
+        &:hover {color:#737677;transition:all .2s;}
+      }
+    }
+  }
+  .btn {color:#a7b1b3;transition:all .2s;right:20px; position:absolute;white-space:nowrap}
+  .menu-btn {padding-top:5px;width:auto;}
+}

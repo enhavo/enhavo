@@ -1,5 +1,27 @@
 <img src="{{ admin_asset(enhavo_logo_path()) }}" alt="Enhavo CMS Logo" class="menu-logo"/>
 <ul id="menu-main">
+    <li class="selected has-dropdown ">
+        <a href="#" class="icon-share" title="">
+            <span>Dropdown Menü</span>
+        </a>
+        <ul class="dropdown">
+            <li>
+                <a href="#" class="icon-share">
+                    <span>Unterpunkt</span>
+                </a>
+            </li>
+            <li class="selected">
+                <a href="#" class="icon-share">
+                    <span>sehr langer Unterpunkt</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="icon-share">
+                    <span>Hallo Hallo Hallo</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 {% for menu in menus %}
     {% set translationDomain = null %}
     {% for item in menu.labelAttributes %}

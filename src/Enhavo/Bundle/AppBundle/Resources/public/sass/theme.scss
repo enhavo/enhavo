@@ -1,6 +1,7 @@
 @import 'compass';
 @import 'vars';
 @import 'base';
+@import 'navigation';
 @import 'form';
 @import 'icheck';
 @import 'tinymce';
@@ -51,34 +52,6 @@ img {max-width:100%;}
 #iframeContainer iframe {border:0;width:100%;height:100%;min-height:500px;}
 
 h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;margin-left: -10px;text-align: left;}
-
-#menu-main{width: 245px;height: auto;}
-#menu-main-container .desc {font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 0 0 20px; margin-top:25px;}
-#menu-main-container .desc a{color: #FFF;}
-#menu-main-container .menu-logo{width: 155px;position: relative;left:13px;margin-bottom: 15px;margin-top: 40px;}
-
-#menu-main li a {
-    text-transform: uppercase;font-weight: 600;letter-spacing: 1px;display:block;padding: 10px 20px 10px 20px;
-    background-position:156px 10px;background-repeat:no-repeat;color:#a8b2b4;text-align:left;font-size: 12px;white-space:nowrap;text-overflow:ellipsis; overflow:hidden;
-}
-#menu-main li.selected{background: #20383f;}
-#menu-main li a:hover,
-#menu-main li.selected a {color:#fff;;filter:none;}
-#menu-main-container {position: absolute;background:#072129;height: auto;min-height:100%;}
-#menu-main li a:before{font-size: 16px;color:#a8b2b4;font-family: "enhavo-iconfont";font-weight: normal;padding-right: 10px;}
-.menu-icon-logout:before{content: '\e9d7';}
-
-
-#user-menu {position:fixed;padding-top:12px;right:0; top:0; background:transparent; width:100%; height:55px;}
-#user-menu.background {transition:all .4s;-webkit-transition:all .4s;-moz-transition:all .4s;-o-transition:all .4s;-ms-transition:all .4s;background:#FBFBFB;}
-#user-menu ul{ position:absolute; right:0;}
-#user-menu .btn{color:#a7b1b3;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;right:20px; position:absolute;white-space:nowrap}
-#user-menu .menu-btn {padding-top:5px;width:auto;}
-#user-menu ul li{float:left; margin-right:20px;}
-#user-menu ul li:last-of-type{margin-right:40px;}
-#user-menu ul li:not(.menu-btn){ display:none;}
-#user-menu ul li a{color:#a7b1b3; padding-top:6px; display:inline-block; font-weight:600;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;}
-#user-menu ul li a:hover{ color:#737677;transition:all .2s;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;}
 
 #overlay {position:fixed;top:0;left:0;width:100%;height:100%;background:#072129;opacity:0.8;z-index:99;display:none;}
 #overlayContent {position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:100;display:none;
