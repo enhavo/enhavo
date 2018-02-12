@@ -11,7 +11,7 @@
       &:before {font-size: 16px;color:#a8b2b4;font-family: "enhavo-iconfont";font-weight: normal;padding-right: 10px;}
     }
     &.selected {
-      background: #030f11;
+      box-shadow: inset 4px 0 0 #55b4e6;
       a {
         color:#fff;filter:none; font-weight:600;
         &:before { color:#FFF;}
@@ -32,6 +32,7 @@
           }
         }
         &.selected {
+          box-shadow: none;
           a {
             color:#FFF;font-weight:600;
             &:before { color:#FFF;}
