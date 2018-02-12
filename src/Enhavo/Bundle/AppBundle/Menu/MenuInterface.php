@@ -1,0 +1,20 @@
+<?php
+/**
+ * MenuBuilderInterface.php
+ *
+ * @since 20/09/16
+ * @author gseidel
+ */
+
+namespace Enhavo\Bundle\AppBundle\Menu;
+
+use Enhavo\Bundle\AppBundle\Type\TypeInterface;
+
+interface MenuInterface extends TypeInterface
+{
+    public function render(array $options);
+
+    public function getPermission(array $options);
+
+    public function isHidden(array $options);
+}

@@ -60,15 +60,15 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_user.menu_builder.user:
-        class: Enhavo\Bundle\UserBundle\Menu\UserMenuBuilder
+    enhavo_user.menu.user:
+        class: Enhavo\Bundle\UserBundle\Menu\UserMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user_user }
 
-    enhavo_user.menu_builder.group:
-        class: Enhavo\Bundle\UserBundle\Menu\GroupMenuBuilder
+    enhavo_user.menu.group:
+        class: Enhavo\Bundle\UserBundle\Menu\GroupMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

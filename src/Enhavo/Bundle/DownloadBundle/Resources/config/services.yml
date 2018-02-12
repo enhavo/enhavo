@@ -19,8 +19,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_download.menu_builder.download:
-        class: Enhavo\Bundle\DownloadBundle\Menu\DownloadMenuBuilder
+    enhavo_download.menu.download:
+        class: Enhavo\Bundle\DownloadBundle\Menu\DownloadMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

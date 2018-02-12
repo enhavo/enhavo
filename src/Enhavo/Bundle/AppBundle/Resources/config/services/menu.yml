@@ -1,6 +1,6 @@
 parameters:
     enhavo_app.twig.menu_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-    enhavo_app.main_menu_renderer.template: 'EnhavoAppBundle:Menu:main.html.twig'
+    enhavo_app.main_menu_renderer.template: 'EnhavoAppBundle:Menu:menu.html.twig'
 
 services:
     enhavo_app.menu_collector:
@@ -9,27 +9,36 @@ services:
             - '@service_container'
             - 'Menu'
 
-    enhavo_app.menu_builder.enhavo_main:
-        class: Enhavo\Bundle\AppBundle\Menu\Builder\MainMenuBuilder
-        arguments:
-          - "@enhavo_app.menu_collector"
-          - "%enhavo_app.menu%"
-        calls:
-          - [ 'setContainer', ['@service_container']]
-        tags:
-            - { name: knp_menu.menu_builder, method: createMenu, alias: enhavo_main }
-
-    enhavo_app.menu_builder.base:
-        class: Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder
+    enhavo_app.menu.base:
+        class: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: base }
 
-    enhavo_app.main_menu_renderer:
-        class: Enhavo\Bundle\AppBundle\Menu\MainMenuRenderer
+    enhavo_app.menu.list:
+        class: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: list }
+
+    enhavo_app.twig.menu.render:
+        class: Enhavo\Bundle\AppBundle\Twig\MenuRender
         arguments:
+          - "@enhavo_app.menu.factory"
+          - "@security.authorization_checker"
           - "%enhavo_app.main_menu_renderer.template%"
-          - '@templating'
+          - "%enhavo_app.menu%"
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: twig.extension }
+
+    enhavo_app.menu.factory:
+        class: Enhavo\Bundle\AppBundle\Type\TypeFactory
+        arguments:
+          - 'Enhavo\Bundle\AppBundle\Menu\Menu'
+          - "@enhavo_app.menu_collector"
         tags:
             - { name: knp_menu.renderer, alias: main_menu }

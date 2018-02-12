@@ -1,6 +1,6 @@
 services:
-    enhavo_dashvoard.menu_builder.dashboard:
-        class: Enhavo\Bundle\DashboardBundle\Menu\DashboardMenuBuilder
+    enhavo_dashvoard.menu.dashboard:
+        class: Enhavo\Bundle\DashboardBundle\Menu\DashboardMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

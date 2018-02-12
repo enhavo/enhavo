@@ -1,6 +1,6 @@
 <?php
 /**
- * OrderMenuBuilder.php
+ * OrderMenu.php
  *
  * @since 21/09/16
  * @author gseidel
@@ -8,19 +8,19 @@
 
 namespace Enhavo\Bundle\ShopBundle\Menu;
 
+use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 
-use Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder;
-
-class OrderMenuBuilder extends BaseMenuBuilder
+class OrderMenu extends BaseMenu
 {
-    public function createMenu(array $options)
+    public function render(array $options)
     {
         $this->setOption('icon', $options, 'shopping-cart');
         $this->setOption('label', $options, 'label.order');
         $this->setOption('translationDomain', $options, 'EnhavoShopBundle');
         $this->setOption('route', $options, 'enhavo_shop_order_index');
         $this->setOption('role', $options, 'ROLE_ENHAVO_SHOP_ORDER_INDEX');
-        return parent::createMenu($options);
+
+        return parent::render($options);
     }
 
     public function getType()

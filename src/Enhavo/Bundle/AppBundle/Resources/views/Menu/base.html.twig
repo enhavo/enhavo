@@ -1,0 +1,7 @@
+{% trans_default_domain translationDomain %}
+
+<li class="{% if current %}selected{% endif %}">
+    <a href="{{ path(route) }}" class="{{ class }} icon-{{ icon }}" title="{{ label|trans|nl2br }}">
+        <span>{{ label|trans|nl2br }}</span>
+    </a>
+</li>

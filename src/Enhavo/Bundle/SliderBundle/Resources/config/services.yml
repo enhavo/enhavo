@@ -50,8 +50,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_slider.menu_builder.slider:
-        class: Enhavo\Bundle\SliderBundle\Menu\SliderMenuBuilder
+    enhavo_slider.menu.slider:
+        class: Enhavo\Bundle\SliderBundle\Menu\SliderMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

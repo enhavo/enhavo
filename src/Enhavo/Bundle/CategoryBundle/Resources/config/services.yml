@@ -66,8 +66,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_category.menu_builder.category:
-        class: Enhavo\Bundle\CategoryBundle\Menu\CategoryMenuBuilder
+    enhavo_category.menu.category:
+        class: Enhavo\Bundle\CategoryBundle\Menu\CategoryMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

@@ -33,22 +33,22 @@ services:
         arguments:
             - '@sylius.repository.country'
 
-    enhavo_shop.menu_builder.product:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductMenuBuilder
+    enhavo_shop.menu.product:
+        class: Enhavo\Bundle\ShopBundle\Menu\ProductMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_product }
 
-    enhavo_shop.menu_builder.order:
-        class: Enhavo\Bundle\ShopBundle\Menu\OrderMenuBuilder
+    enhavo_shop.menu.order:
+        class: Enhavo\Bundle\ShopBundle\Menu\OrderMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_order }
 
-    enhavo_shop.menu_builder.product_option:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenuBuilder
+    enhavo_shop.menu.product_option:
+        class: Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

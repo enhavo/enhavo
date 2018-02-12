@@ -39,6 +39,7 @@ enhavo_app:
             type: base
             route: enhavo_project_magazine_index
             icon: open-book
+            label: Magazine
 
 enhavo_grid:
     items:

@@ -8,18 +8,19 @@
 
 namespace Enhavo\Bundle\UserBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder;
+use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 
-class GroupMenuBuilder extends BaseMenuBuilder
+class GroupMenu extends BaseMenu
 {
-    public function createMenu(array $options)
+    public function render(array $options)
     {
         $this->setOption('icon', $options, 'users');
         $this->setOption('label', $options, 'group.label.group');
         $this->setOption('translationDomain', $options, 'EnhavoUserBundle');
         $this->setOption('route', $options, 'enhavo_user_group_index');
         $this->setOption('role', $options, 'ROLE_ENHAVO_USER_GROUP_INDEX');
-        return parent::createMenu($options);
+
+        return parent::render($options);
     }
 
     public function getType()

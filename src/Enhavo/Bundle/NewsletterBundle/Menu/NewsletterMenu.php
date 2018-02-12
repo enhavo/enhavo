@@ -8,18 +8,19 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Builder\BaseMenuBuilder;
+use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 
-class NewsletterMenuBuilder extends BaseMenuBuilder
+class NewsletterMenu extends BaseMenu
 {
-    public function createMenu(array $options)
+    public function render(array $options)
     {
         $this->setOption('icon', $options, 'newsletter');
         $this->setOption('label', $options, 'newsletter.label.newsletter');
         $this->setOption('translationDomain', $options, 'EnhavoNewsletterBundle');
         $this->setOption('route', $options, 'enhavo_newsletter_newsletter_index');
         $this->setOption('role', $options, 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX');
-        return parent::createMenu($options);
+
+        return parent::render($options);
     }
 
     public function getType()

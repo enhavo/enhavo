@@ -25,8 +25,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_article.menu_builder.article:
-        class: Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuBuilder
+    enhavo_article.menu.article:
+        class: Enhavo\Bundle\ArticleBundle\Menu\ArticleMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

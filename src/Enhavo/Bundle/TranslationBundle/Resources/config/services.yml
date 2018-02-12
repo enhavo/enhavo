@@ -95,8 +95,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
 
-    enhavo_translation.menu_builder.translation:
-        class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenuBuilder
+    enhavo_translation.menu.translation:
+        class: Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
