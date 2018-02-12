@@ -37,12 +37,6 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
             'route' => null,
             'role' => null,
             'hidden' => false,
-
-            'label' => '',
-            'translationDomain' => null,
-            'icon' => null,
-            'class' => null,
-            'active' => false
         ]);
     }
 }

@@ -19,13 +19,12 @@ class ListMenu extends AbstractMenu
 {
     public function render(array $options)
     {
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Menu:list.html.twig');
-        $translationDomain = $this->getOption('translation_domain', $options, null);
-        $icon = $this->getOption('icon', $options, null);
+        $template = $options['template'];
+        $translationDomain = $options['translationDomain'];
+        $icon = $options['icon'];
+        $label = $options['label'];
+        $menuConfig = $options['menu'];
 
-        $label = $this->getRequiredOption('label', $options);
-
-        $menuConfig = $this->getRequiredOption('menu', $options);
         $menus = $this->getMenus($menuConfig);
 
         $active = false;
@@ -89,11 +88,14 @@ class ListMenu extends AbstractMenu
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'label' => '',
+            'template' => 'EnhavoAppBundle:Menu:list.html.twig',
             'translationDomain' => null,
-            'icon' => '',
-            'menu' => [],
-            'active' => false
+            'icon' => ''
+        ]);
+
+        $resolver->setRequired([
+            'label',
+            'menu'
         ]);
     }
 

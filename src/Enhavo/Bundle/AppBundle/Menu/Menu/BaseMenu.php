@@ -9,18 +9,19 @@
 namespace Enhavo\Bundle\AppBundle\Menu\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseMenu extends AbstractMenu
 {
     public function render(array $options)
     {
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Menu:base.html.twig');
-        $translationDomain = $this->getOption('translationDomain', $options, null);
-        $icon = $this->getOption('icon', $options, null);
-        $class = $this->getOption('class', $options, '');
+        $template = $options['template'];
+        $translationDomain = $options['translationDomain'];
+        $icon = $options['icon'];
+        $class = $options['class'];
 
-        $label = $this->getRequiredOption('label', $options);
-        $route = $this->getRequiredOption('route', $options);
+        $label = $options['label'];
+        $route = $options['route'];
 
         $active = $this->isActive($options);
 
@@ -31,6 +32,23 @@ class BaseMenu extends AbstractMenu
             'route' => $route,
             'class' => $class,
             'active' => $active
+        ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'template' => 'EnhavoAppBundle:Menu:base.html.twig',
+            'translationDomain' => null,
+            'icon' => null,
+            'class' => '',
+        ]);
+
+        $resolver->setRequired([
+            'label',
+            'route'
         ]);
     }
 
