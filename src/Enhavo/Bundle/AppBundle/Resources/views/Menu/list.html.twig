@@ -1,0 +1,12 @@
+{% trans_default_domain translationDomain %}
+
+<li class="{% if active %}selected open{% endif %} has-dropdown" data-menu-list>
+    <a href="javascript:" class="icon-{{ icon }}" title="{{ label|trans }}" data-menu-list-button>
+        <span>{{ label|trans|nl2br }}</span>
+    </a>
+    <ul class="dropdown" data-menu-list-container>
+        {% for menu in menus %}
+            {{ menu.render()|raw }}
+        {% endfor %}
+    </ul>
+</li>

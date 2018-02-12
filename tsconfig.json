@@ -7,6 +7,7 @@
       "app/Router": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Router"],
       "app/Templating": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Templating"],
       "app/Translator": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Translator"],
+      "app/Menu": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Menu"],
       "media/Media": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Media"],
       "media/Extension/ImageCropper": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Extension/ImageCropper"],
       "media/Adapter/EnhavoAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],

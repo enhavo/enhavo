@@ -87,6 +87,13 @@ abstract class AbstractType implements ContainerAwareInterface
         }
     }
 
+    protected function setDefaultOption($key, &$options, $default = null)
+    {
+        if(!array_key_exists($key, $options)) {
+            $options[$key] = $default;
+        }
+    }
+
     protected function getOption($key, $options, $default = null)
     {
         if(array_key_exists($key, $options)) {

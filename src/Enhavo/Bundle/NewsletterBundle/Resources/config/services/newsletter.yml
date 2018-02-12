@@ -27,10 +27,9 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_newsletter.menu_builder.newsletter:
-        class: Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenuBuilder
+    enhavo_newsletter.menu.newsletter:
+        class: Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
-

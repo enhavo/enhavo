@@ -20,6 +20,7 @@ label:
   product: Product
   order: Order
   sales: Sales
+  shop: Shop
 
 mailer:
   confirm:

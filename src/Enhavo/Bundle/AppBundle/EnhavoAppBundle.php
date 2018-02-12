@@ -60,9 +60,5 @@ class EnhavoAppBundle extends Bundle
         $container->addCompilerPass(
             new FilesystemCompilerPass()
         );
-
-        $container->addCompilerPass(
-            new KnpMenuCompilerPass()
-        );
     }
 }

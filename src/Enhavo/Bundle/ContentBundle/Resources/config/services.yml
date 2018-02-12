@@ -63,8 +63,8 @@ services:
         tags:
             - { name: enhavo.theme_widget, alias: 'pagination' }
 
-    enhavo_content.menu_builder.redirect:
-        class: Enhavo\Bundle\ContentBundle\Menu\RedirectMenuBuilder
+    enhavo_content.menu.redirect:
+        class: Enhavo\Bundle\ContentBundle\Menu\RedirectMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

@@ -34,8 +34,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_page.menu_builder.page:
-        class: Enhavo\Bundle\PageBundle\Menu\PageMenuBuilder
+    enhavo_page.menu.page:
+        class: Enhavo\Bundle\PageBundle\Menu\PageMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

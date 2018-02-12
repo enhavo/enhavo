@@ -77,3 +77,6 @@ jms_serializer:
     metadata:
         auto_detection: false
 
+enhavo_app:
+    apps:
+      - 'app/app/Menu'
