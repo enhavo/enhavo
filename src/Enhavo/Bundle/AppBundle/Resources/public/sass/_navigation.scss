@@ -46,9 +46,11 @@
         font-size: 16px;color:#a8b2b4;font-family: "enhavo-iconfont";font-weight: normal;
         position:absolute; right:20px; top:15px; content:'\e82b'; line-height:1em;
       }
+      &.open {
+        &:before {transform:rotate(-180deg); color:#FFF;}
+      }
       &.selected {
         .dropdown { display:block;}
-        &:before {transform:rotate(-180deg); color:#FFF;}
       }
       &:hover {
         &:before { color:#FFF;}

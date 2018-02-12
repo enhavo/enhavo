@@ -1,5 +1,5 @@
 <img src="{{ admin_asset(enhavo_logo_path()) }}" alt="Enhavo CMS Logo" class="menu-logo"/>
-<ul id="menu-main">
+<ul id="menu-main" data-menu>
     {% for menu in menus %}
         {{ menu.render()|raw }}
     {% endfor %}

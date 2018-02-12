@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubscriberMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'user-plus');
-        $this->setDefaultOption('label', $options, 'subscriber.label.subscriber');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoNewsletterBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_newsletter_subscriber_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'user-plus',
+            'label' => 'subscriber.label.subscriber',
+            'translationDomain' => 'EnhavoNewsletterBundle',
+            'route' => 'enhavo_newsletter_subscriber_index',
+            'role' => 'ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX',
+        ]);
     }
 
     public function getType()

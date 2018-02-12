@@ -10,18 +10,21 @@ namespace Enhavo\Bundle\ShopBundle\Menu;
 
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductOptionMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'sound-mix');
-        $this->setDefaultOption('label', $options, 'product.label.product_option');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoShopBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_shop_product_option_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_SHOP_PRODUCT_OPTION_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'sound-mix',
+            'label' => 'product.label.product_option',
+            'translationDomain' => 'EnhavoShopBundle',
+            'route' => 'enhavo_shop_product_option_index',
+            'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_OPTION_INDEX',
+        ]);
     }
 
     public function getType()

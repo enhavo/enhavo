@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\SettingBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SettingMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setOption('icon', $options, 'cog');
-        $this->setOption('label', $options, 'label.setting');
-        $this->setOption('translationDomain', $options, 'EnhavoSettingBundle');
-        $this->setOption('route', $options, 'enhavo_setting_setting_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_SETTING_SETTING_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'cog',
+            'label' => 'label.setting',
+            'translationDomain' => 'EnhavoSettingBundle',
+            'route' => 'enhavo_setting_setting_index',
+            'role' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
+        ]);
     }
 
     public function getType()

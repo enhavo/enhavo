@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Type;
 
+use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
+
 class TypeFactory
 {
     /**
@@ -27,14 +29,18 @@ class TypeFactory
     }
 
     /**
-     * @param $type
      * @param $options
-     *
+     * @throws TypeMissingException
      * @return object
      */
-    public function create($type, $options)
+    public function create($options)
     {
-        $type = $this->collector->getType($type);
+        if(!isset($options['type'])) {
+            throw new TypeMissingException(sprintf('No type was given to create "%s"', $this->class));
+        }
+
+        $type = $this->collector->getType($options['type']);
+        unset($options['type']);
         $class = new $this->class($type, $options);
         return $class;
     }

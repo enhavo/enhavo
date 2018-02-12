@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\TranslationBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationStringMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'exchange');
-        $this->setDefaultOption('label', $options, 'translation.label.translationString');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoTranslationBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_translation_translation_string_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'exchange',
+            'label' => 'translation.label.translationString',
+            'translationDomain' => 'EnhavoTranslationBundle',
+            'route' => 'enhavo_translation_translation_string_index',
+            'role' => 'ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX',
+        ]);
     }
 
     public function getType()

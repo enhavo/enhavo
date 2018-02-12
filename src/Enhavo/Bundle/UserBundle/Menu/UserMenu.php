@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\UserBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'user');
-        $this->setDefaultOption('label', $options, 'user.label.user');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoUserBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_user_user_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_USER_USER_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'user',
+            'label' => 'user.label.user',
+            'translationDomain' => 'EnhavoUserBundle',
+            'route' => 'enhavo_user_user_index',
+            'role' => 'ROLE_ENHAVO_USER_USER_INDEX',
+        ]);
     }
 
     public function getType()

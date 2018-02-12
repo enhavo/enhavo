@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\UserBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setOption('icon', $options, 'users');
-        $this->setOption('label', $options, 'group.label.group');
-        $this->setOption('translationDomain', $options, 'EnhavoUserBundle');
-        $this->setOption('route', $options, 'enhavo_user_group_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_USER_GROUP_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'users',
+            'label' => 'group.label.group',
+            'translationDomain' => 'EnhavoUserBundle',
+            'route' => 'enhavo_user_group_index',
+            'role' => 'ROLE_ENHAVO_USER_GROUP_INDEX',
+        ]);
     }
 
     public function getType()

@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\ContentBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedirectMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'arrow-long-right');
-        $this->setDefaultOption('label', $options, 'redirect.label.redirect');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoContentBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_content_redirect_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_CONTENT_REDIRECT_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'arrow-long-right',
+            'label' => 'redirect.label.redirect',
+            'translationDomain' => 'EnhavoContentBundle',
+            'route' => 'enhavo_content_redirect_index',
+            'role' => 'ROLE_ENHAVO_CONTENT_REDIRECT_INDEX',
+        ]);
     }
 
     public function getType()

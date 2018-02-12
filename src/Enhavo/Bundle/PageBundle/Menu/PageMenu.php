@@ -1,6 +1,6 @@
 <?php
 /**
- * PageMenuBuilder.php
+ * PageMenu.php
  *
  * @since 21/09/16
  * @author gseidel
@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\PageBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'news');
-        $this->setDefaultOption('label', $options, 'page.label.page');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoPageBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_page_page_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_PAGE_PAGE_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'news',
+            'label' => 'page.label.page',
+            'translationDomain' => 'EnhavoPageBundle',
+            'route' => 'enhavo_page_page_index',
+            'role' => 'ROLE_ENHAVO_PAGE_PAGE_INDEX',
+        ]);
     }
 
     public function getType()

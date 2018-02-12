@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Menu;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class Menu
 {
     /**
@@ -23,7 +25,9 @@ class Menu
     public function __construct(MenuInterface $menu, $options)
     {
         $this->menu = $menu;
-        $this->options = $options;
+        $resolver = new OptionsResolver();
+        $menu->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
     }
 
     public function render(array $options = [])
@@ -39,6 +43,11 @@ class Menu
     public function isHidden(array $options = [])
     {
         return $this->menu->isHidden($this->merge($this->options, $options));
+    }
+
+    public function isActive(array $options = [])
+    {
+        return $this->menu->isActive($this->merge($this->options, $options));
     }
 
     private function merge($optionsOne, $optionTwo)

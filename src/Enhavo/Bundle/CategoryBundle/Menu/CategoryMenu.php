@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\CategoryBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'th');
-        $this->setDefaultOption('label', $options, 'category.label.category');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoCategoryBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_category_category_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'th',
+            'label' => 'category.label.category',
+            'translationDomain' => 'EnhavoCategoryBundle',
+            'route' => 'enhavo_category_category_index',
+            'role' => 'ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX',
+        ]);
     }
 
     public function getType()

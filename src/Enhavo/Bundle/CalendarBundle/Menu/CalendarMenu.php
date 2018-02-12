@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\CalendarBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CalendarMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'calendar-1');
-        $this->setDefaultOption('label', $options, 'label.calendar');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoCalendarBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_calendar_appointment_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'calendar-1',
+            'label' => 'label.calendar',
+            'translationDomain' => 'EnhavoCalendarBundle',
+            'route' => 'enhavo_calendar_appointment_index',
+            'role' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
+        ]);
     }
 
     public function getType()

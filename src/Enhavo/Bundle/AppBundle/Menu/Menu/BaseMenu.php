@@ -22,7 +22,7 @@ class BaseMenu extends AbstractMenu
         $label = $this->getRequiredOption('label', $options);
         $route = $this->getRequiredOption('route', $options);
 
-        $current = false;
+        $active = $this->isActive($options);
 
         return $this->renderTemplate($template, [
             'label' => $label,
@@ -30,7 +30,7 @@ class BaseMenu extends AbstractMenu
             'icon' => $icon,
             'route' => $route,
             'class' => $class,
-            'current' => $current
+            'active' => $active
         ]);
     }
 

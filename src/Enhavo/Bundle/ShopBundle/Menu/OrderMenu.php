@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\ShopBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setOption('icon', $options, 'shopping-cart');
-        $this->setOption('label', $options, 'label.order');
-        $this->setOption('translationDomain', $options, 'EnhavoShopBundle');
-        $this->setOption('route', $options, 'enhavo_shop_order_index');
-        $this->setOption('role', $options, 'ROLE_ENHAVO_SHOP_ORDER_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'shopping-cart',
+            'label' => 'label.order',
+            'translationDomain' => 'EnhavoShopBundle',
+            'route' => 'enhavo_shop_order_index',
+            'role' => 'ROLE_ENHAVO_SHOP_ORDER_INDEX',
+        ]);
     }
 
     public function getType()

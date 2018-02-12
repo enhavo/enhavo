@@ -1,7 +1,7 @@
 {% trans_default_domain translationDomain %}
 
-<li class="{% if current %}selected{% endif %}">
-    <a href="{{ path(route) }}" class="{{ class }} icon-{{ icon }}" title="{{ label|trans|nl2br }}">
+<li class="{% if active %}selected{% endif %}" data-menu-item>
+    <a href="{{ path(route) }}" class="{{ class }} icon-{{ icon }}" title="{{ label|trans }}">
         <span>{{ label|trans|nl2br }}</span>
     </a>
 </li>

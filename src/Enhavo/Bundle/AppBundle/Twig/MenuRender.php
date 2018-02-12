@@ -67,12 +67,8 @@ class MenuRender extends \Twig_Extension
 
         $menus = [];
         foreach($this->config as $name => $options) {
-            if(!isset($options['type'])) {
-                throw new TypeMissingException(sprintf('No type was given for menu with name "%s"', $name));
-            }
-
             /** @var Menu $menu */
-            $menu = $this->factory->create($options['type'], $options);
+            $menu = $this->factory->create($options);
 
             if($menu->isHidden()) {
                 continue;

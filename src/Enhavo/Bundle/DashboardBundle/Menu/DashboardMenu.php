@@ -9,18 +9,21 @@
 namespace Enhavo\Bundle\DashboardBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DashboardMenu extends BaseMenu
 {
-    public function render(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOption('icon', $options, 'stopwatch');
-        $this->setDefaultOption('label', $options, 'dashboard.label.dashboard');
-        $this->setDefaultOption('translationDomain', $options, 'EnhavoDashboardBundle');
-        $this->setDefaultOption('route', $options, 'enhavo_dashboard_index');
-        $this->setDefaultOption('role', $options, 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX');
+        parent::configureOptions($resolver);
 
-        return parent::render($options);
+        $resolver->setDefaults([
+            'icon' => 'stopwatch',
+            'label' => 'dashboard.label.dashboard',
+            'translationDomain' => 'EnhavoDashboardBundle',
+            'route' => 'enhavo_dashboard_index',
+            'role' => 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX',
+        ]);
     }
 
     public function getType()
