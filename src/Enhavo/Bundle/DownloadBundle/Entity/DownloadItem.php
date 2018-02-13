@@ -11,6 +11,9 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class DownloadItem implements ItemTypeInterface
 {
+    const TYPE_FILE = 'file';
+    const TYPE_DOWNLOAD = 'download';
+
     /**
      * @var integer
      */
@@ -30,6 +33,11 @@ class DownloadItem implements ItemTypeInterface
      * @var string
      */
     protected $title;
+
+    /**
+     * @var string
+     */
+    private $downloadType = self::TYPE_FILE;
 
     /**
      * Get id
@@ -107,5 +115,22 @@ class DownloadItem implements ItemTypeInterface
     public function getTitle()
     {
         return $this->title;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getDownloadType()
+    {
+        return $this->downloadType;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setDownloadType(string $type)
+    {
+        $this->downloadType = $type;
     }
 }

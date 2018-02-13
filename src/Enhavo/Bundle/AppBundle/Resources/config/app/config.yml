@@ -80,3 +80,4 @@ jms_serializer:
 enhavo_app:
     apps:
       - 'app/app/Menu'
+      - 'app/app/ConditionType'
