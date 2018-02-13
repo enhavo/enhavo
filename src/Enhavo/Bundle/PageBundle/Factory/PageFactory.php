@@ -36,7 +36,7 @@ class PageFactory extends ContentFactory
 
         $newPage->setTitle($originalResource->getTitle() . ' (2)');
         $newPage->setPublic(false);
-        $newPage->setCode($originalResource->getCode());
+        $newPage->setCode(null);
 
         $newGrid = $this->gridFactory->duplicate($originalResource->getGrid());
         $newPage->setGrid($newGrid);
