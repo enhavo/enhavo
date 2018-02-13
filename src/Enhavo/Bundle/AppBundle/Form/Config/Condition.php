@@ -30,6 +30,9 @@ class Condition
         if(!is_array($values)) {
             $values = [$values];
         }
+        foreach($values as &$value) {
+            $value = (string)$value;
+        }
 
         $observer = new ConditionObserver($this, $values);
         return $observer;
