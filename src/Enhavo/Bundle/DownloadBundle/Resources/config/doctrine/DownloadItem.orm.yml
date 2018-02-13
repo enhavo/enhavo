@@ -14,6 +14,10 @@ Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
             length: 255
             nullable: true
 
+        downloadType:
+            type: text
+            nullable: true
+
     manyToOne:
         download:
             cascade: ['persist', 'refresh', 'remove']

@@ -17,6 +17,7 @@ downloadItem:
     label:
       file: 'File'
       download: 'Download'
+      downloadType: 'Type'
   label:
     pdf: 'PDF'
     downloadItem: 'Download'
