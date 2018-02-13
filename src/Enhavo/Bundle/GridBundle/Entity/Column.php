@@ -25,7 +25,6 @@ class Column implements ColumnInterface
      */
     protected $type;
 
-
     /**
      * @var \Doctrine\Common\Collections\Collection
      */

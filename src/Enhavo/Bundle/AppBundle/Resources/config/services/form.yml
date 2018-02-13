@@ -65,3 +65,8 @@ services:
         class: Enhavo\Bundle\AppBundle\Form\Extension\EntityTypeExtension
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
+    enhavo_app.form.extension.condition_type_extension:
+        class: Enhavo\Bundle\AppBundle\Form\Extension\ConditionTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }

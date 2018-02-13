@@ -66,7 +66,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
      * Set title
      *
      * @param string $title
-     * @return Slider
+     * @return Slide
      */
     public function setTitle($title)
     {
@@ -89,7 +89,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
      * Set text
      *
      * @param string $text
-     * @return Slider
+     * @return Slide
      */
     public function setText($text)
     {
@@ -112,7 +112,7 @@ class Slide implements SlideInterface, ResourceInterface, Publishable
      * Set url
      *
      * @param string $url
-     * @return Slider
+     * @return Slide
      */
     public function setUrl($url)
     {
