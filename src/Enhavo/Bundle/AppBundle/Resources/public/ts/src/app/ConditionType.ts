@@ -30,6 +30,8 @@ export class ConditionType
             this.$input.on('change', function(event) {
                 self.notify();
             });
+        } else if(this.$element.prop('tagName').toLowerCase() == 'select') {
+            this.$input = this.$element;
         } else {
             this.$input = this.$element.find('input');
         }
@@ -136,8 +138,6 @@ export class ConditionObserver
             this.$row.hide();
         }
     }
-
-
 }
 
 ConditionType.init();
