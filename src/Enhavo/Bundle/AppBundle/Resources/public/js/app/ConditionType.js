@@ -14,6 +14,9 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
                     self.notify();
                 });
             }
+            else if (this.$element.prop('tagName').toLowerCase() == 'select') {
+                this.$input = this.$element;
+            }
             else {
                 this.$input = this.$element.find('input');
             }
