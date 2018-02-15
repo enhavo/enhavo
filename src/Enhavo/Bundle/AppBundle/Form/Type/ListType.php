@@ -120,7 +120,7 @@ class ListType extends AbstractType
         ));
 
         $resolver->setNormalizer('prototype_name', function(Options $options, $value) {
-            return '__' . $options['type'] . '__';
+            return '__' . uniqid() . '__';
         });
     }
 }
