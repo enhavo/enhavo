@@ -96,7 +96,8 @@
         {% elseif sortable and border and not allow_delete %}
             sortable-border
         {% endif %}"
-                data-reindexable>
+                data-reindexable
+                {{ block('widget_attributes') }}>
             {% for item in form.children %}
                 {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
             {% endfor %}
