@@ -20,10 +20,16 @@ class ConditionObserver
      */
     private $values;
 
-    public function __construct(Condition $subject, array $values)
+    /**
+     * @var string
+     */
+    private $operator;
+
+    public function __construct(Condition $subject, array $values, $operator = Condition::AND)
     {
         $this->subject = $subject;
         $this->values = $values;
+        $this->operator = $operator;
     }
 
     /**
@@ -56,5 +62,21 @@ class ConditionObserver
     public function setValues(array $values)
     {
         $this->values = $values;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperator()
+    {
+        return $this->operator;
+    }
+
+    /**
+     * @param string $operator
+     */
+    public function setOperator(string $operator)
+    {
+        $this->operator = $operator;
     }
 }

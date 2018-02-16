@@ -28,6 +28,7 @@ class ConditionTypeExtension extends AbstractTypeExtension
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        // subject
         $condition = $options['condition'];
         if($condition instanceof Condition) {
             $view->vars['attr']['data-condition-type'] = json_encode([
@@ -35,12 +36,24 @@ class ConditionTypeExtension extends AbstractTypeExtension
             ]);
         }
 
-        $conditionObserver = $options['condition_observer'];
-        if($conditionObserver instanceof ConditionObserver) {
-            $view->vars['attr']['data-condition-type-observer'] = json_encode([
-                'id' => $conditionObserver->getSubject()->getId(),
-                'values' => $conditionObserver->getValues()
-            ]);
+        // observer
+        if(!is_array($options['condition_observer']))  {
+            $conditionObservers = [$options['condition_observer']];
+        } else {
+            $conditionObservers = $options['condition_observer'];
+        }
+        $data = [];
+        foreach($conditionObservers as $conditionObserver) {
+            if($conditionObserver instanceof ConditionObserver) {
+                $data[] = [
+                    'id' => $conditionObserver->getSubject()->getId(),
+                    'values' => $conditionObserver->getValues(),
+                    'operator' => $conditionObserver->getOperator()
+                ];
+            }
+        }
+        if(count($data) > 0) {
+            $view->vars['attr']['data-condition-type-observer'] = json_encode($data);
         }
     }
 
