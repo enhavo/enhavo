@@ -11,6 +11,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Config;
 
 class Condition
 {
+    const AND = 'and';
+    const OR = 'or';
+
     /**
      * @var string
      */
@@ -23,9 +26,10 @@ class Condition
 
     /**
      * @param array|string|null $values
+     * @param string $operator
      * @return ConditionObserver
      */
-    public function createObserver($values)
+    public function createObserver($values, $operator = self::AND)
     {
         if(!is_array($values)) {
             $values = [$values];
@@ -34,7 +38,7 @@ class Condition
             $value = (string)$value;
         }
 
-        $observer = new ConditionObserver($this, $values);
+        $observer = new ConditionObserver($this, $values, $operator);
         return $observer;
     }
 

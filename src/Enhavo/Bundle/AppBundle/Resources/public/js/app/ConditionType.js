@@ -74,24 +74,59 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
     exports.ConditionType = ConditionType;
     var ConditionObserver = /** @class */ (function () {
         function ConditionObserver(element) {
+            this.subjects = [];
             this.$element = $(element);
-            this.config = this.$element.data('condition-type-observer');
+            this.configs = this.$element.data('condition-type-observer');
             var parent = this.$element.parents('[data-form-row]').get(0);
             this.$row = $(parent);
             for (var _i = 0, _a = ConditionType.subjects; _i < _a.length; _i++) {
                 var subject = _a[_i];
-                if (subject.getId() == this.config.id) {
+                var config = this.getConfig(subject);
+                if (config !== null) {
+                    this.subjects.push(subject);
                     subject.register(this);
                 }
             }
         }
+        ConditionObserver.prototype.getConfig = function (subject) {
+            for (var _i = 0, _a = this.configs; _i < _a.length; _i++) {
+                var config = _a[_i];
+                if (subject.getId() == config.id) {
+                    return config;
+                }
+            }
+            return null;
+        };
         ConditionObserver.prototype.wakeUp = function (subject) {
-            if (this.config.values.indexOf(subject.getValue()) >= 0) {
-                this.$row.show();
+            var condition = null;
+            for (var _i = 0, _a = this.subjects; _i < _a.length; _i++) {
+                var subject_1 = _a[_i];
+                var config = this.getConfig(subject_1);
+                var subjectCondition = config.values.indexOf(subject_1.getValue()) >= 0;
+                if (condition === null) {
+                    condition = subjectCondition;
+                }
+                else {
+                    if (config.operator == 'and') {
+                        condition = condition && subjectCondition;
+                    }
+                    else if (config.operator == 'or') {
+                        condition = condition || subjectCondition;
+                    }
+                }
+            }
+            if (condition) {
+                this.show();
             }
             else {
-                this.$row.hide();
+                this.hide();
             }
+        };
+        ConditionObserver.prototype.hide = function () {
+            this.$row.hide();
+        };
+        ConditionObserver.prototype.show = function () {
+            this.$row.show();
         };
         return ConditionObserver;
     }());
