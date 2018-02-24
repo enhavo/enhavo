@@ -94,6 +94,7 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@viewer.factory'
             - '@fos_rest.view_handler'
+            - '@security.csrf.token_manager'
         calls:
             - [setContainer, ['@service_container']]
 
