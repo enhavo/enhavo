@@ -43,6 +43,16 @@ class ListMenu extends AbstractMenu
             'active' => $active
         ]);
     }
+    
+    public function isHidden(array $options)
+    {
+        $isHidden = parent::isHidden($options);
+        if(!$isHidden) {
+            $menus = $this->getMenus($options['menu']);
+            return count($menus) == 0;
+        }
+        return $isHidden;
+    }
 
     /**
      * @return TypeFactory
