@@ -47,7 +47,7 @@
     "sylius/taxation-bundle": "v0.19.*",
     "sylius/product-bundle": "v0.19.*",
     "sylius/inventory-bundle": "v0.19.*",
-    "friendsofsymfony/user-bundle": "^2.0",
+    "friendsofsymfony/user-bundle": "^2.1",
     "friendsofsymfony/jsrouting-bundle": "1.6.*",
     "willdurand/js-translation-bundle" : "2.6.*",
     "bacon/bacon-string-utils": "^1.1",

@@ -8,12 +8,41 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\AppControllerTrait;
+use Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfigurationFactoryInterface;
+use Enhavo\Bundle\AppBundle\Controller\ViewHandler;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
+use FOS\RestBundle\View\ViewHandler as FOSViewHandler;
 use FOS\UserBundle\Controller\SecurityController as FOSSecurityController;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class SecurityController extends FOSSecurityController
 {
-    use AppControllerTrait;
+    /**
+     * @var SimpleRequestConfigurationFactoryInterface
+     */
+    protected $requestConfigurationFactory;
+
+    /**
+     * @var ViewerFactory
+     */
+    protected $viewerFactory;
+
+    /**
+     * @var ViewHandler
+     */
+    protected $viewHandler;
+
+    public function __construct(
+        SimpleRequestConfigurationFactoryInterface $requestConfigurationFactory,
+        ViewerFactory $viewerFactory,
+        FOSViewHandler $viewHandler,
+        CsrfTokenManagerInterface $tokenManager
+    ) {
+        parent::__construct($tokenManager);
+        $this->viewerFactory = $viewerFactory;
+        $this->viewHandler = $viewHandler;
+        $this->requestConfigurationFactory = $requestConfigurationFactory;
+    }
 
     public function renderLogin(array $data)
     {
