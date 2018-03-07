@@ -1,7 +1,18 @@
 services:
-   enhavo_navigation.menu_builder.navigation:
-        class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenuBuilder
+   enhavo_navigation.menu.navigation:
+        class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: navigation }
+
+   enhavo_navigation.event_listener.node_reference:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
+        arguments:
+          - 'Enhavo\Bundle\NavigationBundle\Entity\Node'
+          - 'content'
+          - 'contentClass'
+          - 'contentId'
+          - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }

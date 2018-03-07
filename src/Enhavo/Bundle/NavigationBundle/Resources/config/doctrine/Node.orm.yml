@@ -14,6 +14,19 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             type: string
             length: 255
 
+        contentId:
+            type: integer
+            nullable: true
+
+        contentClass:
+            type: string
+            length: 255
+            nullable: true
+
+        configuration:
+            type: json_array
+            nullable: true
+
     manyToOne:
         parent:
             cascade: ['persist']

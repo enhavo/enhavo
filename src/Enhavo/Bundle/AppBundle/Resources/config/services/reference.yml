@@ -1,0 +1,5 @@
+services:
+   enhavo_app.reference.target_class_resolver:
+        class: Enhavo\Bundle\AppBundle\Reference\TargetClassResolver
+        calls:
+            - ['setContainer', ['@service_container']]

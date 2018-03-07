@@ -36,6 +36,26 @@ class Node
     private $parent;
 
     /**
+     * @var array
+     */
+    private $configuration;
+
+    /**
+     * @var object
+     */
+    private $content;
+
+    /**
+     * @var integer
+     */
+    private $contentId;
+
+    /**
+     * @var string
+     */
+    private $contentClass;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -153,5 +173,69 @@ class Node
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return object
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param object $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfiguration(): array
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param array $configuration
+     */
+    public function setConfiguration(array $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContentId()
+    {
+        return $this->contentId;
+    }
+
+    /**
+     * @param int $contentId
+     */
+    public function setContentId($contentId)
+    {
+        $this->contentId = $contentId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentClass()
+    {
+        return $this->contentClass;
+    }
+
+    /**
+     * @param string $contentClass
+     */
+    public function setContentClass($contentClass)
+    {
+        $this->contentClass = $contentClass;
     }
 }

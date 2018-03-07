@@ -44,7 +44,7 @@ class Navigation implements ResourceInterface
     /**
      * @return string
      */
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
@@ -52,7 +52,7 @@ class Navigation implements ResourceInterface
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -60,7 +60,7 @@ class Navigation implements ResourceInterface
     /**
      * @return NodeInterface|null
      */
-    public function getRoot(): ?NodeInterface
+    public function getRoot()
     {
         return $this->root;
     }
