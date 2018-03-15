@@ -31,6 +31,9 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
         parent:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+        navigation:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Entity\Navigation
 
     oneToMany:
         children:

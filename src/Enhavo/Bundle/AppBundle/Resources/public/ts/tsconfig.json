@@ -13,8 +13,18 @@
     "lib": [ "es2015", "dom" ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": ".",
     "paths": {
-
+      "app/Admin": ["src/app/Admin"],
+      "app/Form": ["src/app/Form"],
+      "app/Router": ["src/app/Router"],
+      "app/Templating": ["src/app/Templating"],
+      "app/Translator": ["src/app/Translator"],
+      "media/Media": ["../../../../MediaBundle/Resources/public/ts/src/media/Media"],
+      "media/Adapter/EnhavoAdapter": ["../../../../MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],
+      "app/app/DynamicForm": ["src/app/DynamicForm"],
+      "app/app/Adapter/DynamicForm/EnhavoAdapter": ["src/app/Adapter/DynamicForm/EnhavoAdapter"],
+      "app/app/Adapter/DynamicForm/JQueryAdapter": ["src/app/Adapter/DynamicForm/JQueryAdapter"]
     }
   }
 }

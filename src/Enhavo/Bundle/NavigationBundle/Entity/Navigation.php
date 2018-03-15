@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
-use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Navigation implements ResourceInterface
@@ -24,14 +23,27 @@ class Navigation implements ResourceInterface
     private $name;
 
     /**
-     * @var NodeInterface
+     * @var string
      */
-    private $root;
+    private $code;
 
     /**
      * @var string
      */
-    private $code;
+    private $condition;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $nodes;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return integer
@@ -58,22 +70,6 @@ class Navigation implements ResourceInterface
     }
 
     /**
-     * @return NodeInterface|null
-     */
-    public function getRoot()
-    {
-        return $this->root;
-    }
-
-    /**
-     * @param NodeInterface $root
-     */
-    public function setRoot(NodeInterface $root)
-    {
-        $this->root = $root;
-    }
-
-    /**
      * @return string
      */
     public function getCode()
@@ -87,5 +83,63 @@ class Navigation implements ResourceInterface
     public function setCode($code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * Set condition
+     *
+     * @param string $condition
+     * @return Navigation
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return string 
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * Add nodes
+     *
+     * @param Node $node
+     * @return Navigation
+     */
+    public function addNode(Node $node)
+    {
+        $node->setNavigation($this);
+        $this->nodes[] = $node;
+
+        return $this;
+    }
+
+    /**
+     * Remove nodes
+     *
+     * @param Node $node
+     */
+    public function removeNode(Node $node)
+    {
+        $node->setNavigation(null);
+        $this->nodes->removeElement($node);
+    }
+
+    /**
+     * Get nodes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
     }
 }

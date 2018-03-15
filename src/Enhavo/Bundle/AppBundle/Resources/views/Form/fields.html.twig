@@ -152,3 +152,57 @@
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
     </div>
 {% endblock %}
+
+{% block enhavo_dynamic_form_widget %}
+    {% import _self as helper %}
+    
+    <div class="mb1 enhavo-dynamic-form"
+         data-dynamic-form
+         data-dynamic-form-name="{{ full_name }}"
+         data-dynamic-form-add-button-template="{{ helper.addButton()|e }}"
+    >
+
+        <div class="dynamic-form-actions">
+            <div data-dynamic-form-action-collapse-all>
+                <i class="icon-collapse"></i>
+            </div>
+            <div data-dynamic-form-action-expand-all>
+                <i class="icon-expand"></i>
+            </div>
+        </div>
+
+        <div class="dynamic-form-menu" data-dynamic-form-menu>
+            <div class="triangle-up"></div>
+            <div class="triangle-down"></div>
+            <ul>
+                {#{% for item in items %}#}
+                    {#<li class="addItem" data-dynamic-form-menu-item="{{ item.type }}">#}
+                        {#{{ item.label|trans({}, item.translationDomain)|nl2br }}#}
+                    {#</li>#}
+                {#{% endfor %}#}
+            </ul>
+        </div>
+
+        <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
+            {{ helper.addButton() }}
+            {% for child in form.children %}
+                {% for item in child.children %}
+                    {% set formItem = item.itemType %}
+                    {% set formName = item.vars.full_name %}
+                    {% set formOrder = item.vars.value.order %}
+                    {% set formType = item.vars.value.type %}
+                    {% set label = item.vars.label %}
+                    {% include 'EnhavoAppBundle:DynamicForm:form.html.twig' %}
+                    {{ helper.addButton() }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% macro addButton() %}
+    <div class="dynamic-form-item-add-button" data-dynamic-form-add-button>
+        <i class="icon-circle-with-plus btnsmall"></i>
+    </div>
+{% endmacro %}

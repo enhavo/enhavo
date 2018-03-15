@@ -56,6 +56,11 @@ class Node
     private $contentClass;
 
     /**
+     * @var Navigation
+     */
+    private $navigation;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -237,5 +242,21 @@ class Node
     public function setContentClass($contentClass)
     {
         $this->contentClass = $contentClass;
+    }
+
+    /**
+     * @return Navigation
+     */
+    public function getNavigation()
+    {
+        return $this->navigation;
+    }
+
+    /**
+     * @param Navigation $navigation
+     */
+    public function setNavigation(Navigation $navigation = null)
+    {
+        $this->navigation = $navigation;
     }
 }

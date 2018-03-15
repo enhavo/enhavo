@@ -20,9 +20,10 @@ Enhavo\Bundle\NavigationBundle\Entity\Navigation:
             length: 256
             nullable: true
 
-    oneToOne:
-        root:
+    oneToMany:
+        nodes:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+            mappedBy: navigation
 
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: { }
