@@ -69,6 +69,16 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     protected $changeFrequency;
 
     /**
+     * @var boolean
+     */
+    protected $noIndex = false;
+
+    /**
+     * @var boolean
+     */
+    protected $noFollow = false;
+
+    /**
      * @var FileInterface
      */
     protected $openGraphImage;
@@ -280,6 +290,38 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
             return 'never';
         }
         return $this->changeFrequency;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNoIndex()
+    {
+        return $this->noIndex;
+    }
+
+    /**
+     * @param bool $noIndex
+     */
+    public function setNoIndex(bool $noIndex)
+    {
+        $this->noIndex = $noIndex;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNoFollow()
+    {
+        return $this->noFollow;
+    }
+
+    /**
+     * @param bool $noFollow
+     */
+    public function setNoFollow(bool $noFollow)
+    {
+        $this->noFollow = $noFollow;
     }
 
     /**
