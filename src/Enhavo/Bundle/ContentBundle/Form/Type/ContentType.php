@@ -78,6 +78,16 @@ class ContentType extends AbstractType
             'multiple' => false
         ));
 
+        $builder->add('noIndex', 'enhavo_boolean', array(
+            'label' => 'form.label.no_index',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
+        $builder->add('noFollow', 'enhavo_boolean', array(
+            'label' => 'form.label.no_follow',
+            'translation_domain' => 'EnhavoContentBundle'
+        ));
+
         $builder->add('publication_date', 'enhavo_datetime', array(
             'label' => 'form.label.publication_date',
             'translation_domain' => 'EnhavoContentBundle'

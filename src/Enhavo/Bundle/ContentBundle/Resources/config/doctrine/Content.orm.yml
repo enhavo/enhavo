@@ -55,6 +55,14 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
             length: 255
             nullable: true
 
+        noIndex:
+            type: boolean
+            nullable: true
+
+        noFollow:
+            type: boolean
+            nullable: true
+
         created:
             type: datetime
             nullable: false

@@ -12,6 +12,8 @@ form:
     public: 'Public'
     priority: 'Priority'
     change_frequency: 'Change frequency'
+    no_index: 'Robots NOINDEX'
+    no_follow: 'Robots NOFOLLOW'
     publication_date: 'Publication date'
     published_until: 'Published Until'
     always: 'Always'
