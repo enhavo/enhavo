@@ -15,8 +15,7 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
             nullable: true
 
         translationValue:
-            type: string
-            length: 255
+            type: text
             nullable: true
 
     lifecycleCallbacks: {  }
