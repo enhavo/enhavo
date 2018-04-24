@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\DynamicForm;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 interface ItemResolverInterface
 {
     /**
@@ -31,4 +33,16 @@ interface ItemResolverInterface
      * @return mixed
      */
     public function getFormType($name);
+
+    /**
+     * @param $type
+     * @return mixed
+     */
+    public function getFactory($type);
+
+    /**
+     * @param $type
+     * @return FormBuilderInterface
+     */
+    public function resolveFormBuilder($type);
 }

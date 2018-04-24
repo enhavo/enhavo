@@ -10,9 +10,21 @@ namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class ItemResolver implements ItemResolverInterface
 {
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    public function __construct(FormFactoryInterface $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
     public function getItemGroup($group)
     {
 
@@ -20,18 +32,17 @@ class ItemResolver implements ItemResolverInterface
 
     public function getItem($name)
     {
-
-    }
-
-    public function getItems()
-    {
         $item = new Item();
         $item->setType('node');
         $item->setLabel('Node');
         $item->setTranslationDomain(null);
+        return $item;
+    }
 
+    public function getItems()
+    {
         return [
-            $item
+            $this->getItem('')
         ];
     }
 
@@ -42,5 +53,17 @@ class ItemResolver implements ItemResolverInterface
         }
 
         return null;
+    }
+
+    public function resolveFormBuilder($name)
+    {
+        $formType = $this->getFormType($name);
+        $builder = $this->formFactory->createBuilder($formType);
+        return $builder;
+    }
+
+    public function getFactory($type)
+    {
+        return new NodeFactory();
     }
 }

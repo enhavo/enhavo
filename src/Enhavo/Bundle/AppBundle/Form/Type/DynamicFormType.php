@@ -35,7 +35,6 @@ class DynamicFormType extends AbstractType
 
         $view->vars['items'] = $items;
         $view->vars['dynamic_config'] = [
-            'scope' => null,
             'route' => $options['item_route']
         ];
     }
@@ -80,14 +79,15 @@ class DynamicFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'type' => null,
+            'type' => 'enhavo_app_dynamic_item',
             'allow_delete' => true,
             'allow_add' => true,
             'by_reference' => false,
-            'items' => array(),
+            'items' => [],
             'item_group' => null,
             'item_resolver' => null,
-            'item_route' => null
+            'item_route' => null,
+            'prototype' => false
         ]);
     }
 }

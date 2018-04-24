@@ -9,20 +9,18 @@
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\AbstractDynamicItemFormType;
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NodeType extends AbstractType
+class LinkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', HiddenType::class, []);
-        $builder->add('label', TextType::class, []);
+        $builder->add('order', 'hidden', array(
+            'data' => 0
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -35,10 +33,5 @@ class NodeType extends AbstractType
     public function getName()
     {
         return 'enhavo_navigation_node';
-    }
-
-    public function getParent()
-    {
-        return DynamicItemType::class;
     }
 }

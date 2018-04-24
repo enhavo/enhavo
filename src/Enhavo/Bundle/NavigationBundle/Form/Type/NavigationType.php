@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
+use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,6 +30,11 @@ class NavigationType extends AbstractResourceType
 
         $builder->add('nodes', DynamicFormType::class, [
             'label' => 'form.label.node',
+            'entry_type' => NodeType::class,
+            'entry_options' => [
+                'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
+                'data_class' => Node::class
+            ],
             'translation_domain' => 'EnhavoNavigationBundle',
             'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
             'item_route' => 'enhavo_navigation_navigation_form'

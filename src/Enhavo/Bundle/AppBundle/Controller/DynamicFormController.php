@@ -31,13 +31,13 @@ class DynamicFormController extends Controller
 
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
-        $formType->setFormName($formName);
-
-        $factory = $this->container->get($request->attributes->get('_factory'));
-        $itemType = $factory->create($type);
+        $factory = $resolver->getFactory($type);
+        $itemType = $factory->create();
 
         $form = $formFactory->create($formType, $itemType, array(
             'csrf_protection' => false,
+            'item_resolver' => $this->getResolverName($request),
+            'item_full_name' => '_________'
         ));
         $label = $resolver->getItem($type)->getLabel();
 
@@ -57,7 +57,7 @@ class DynamicFormController extends Controller
      */
     private function getResolver(Request $request)
     {
-        $resolverName = $request->attributes->get('_resolver');
+        $resolverName = $this->getResolverName($request);
 
         if(!$this->container->has($resolverName)) {
             throw new \Exception(sprintf('Resolver "%s" for dynamic form controller not found', $resolverName));
@@ -69,5 +69,11 @@ class DynamicFormController extends Controller
         }
 
         return $resolver;
+    }
+
+    private function getResolverName(Request $request)
+    {
+        $resolverName = $request->attributes->get('_resolver');
+        return $resolverName;
     }
 } 

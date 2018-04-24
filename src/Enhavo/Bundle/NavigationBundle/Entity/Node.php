@@ -61,6 +61,16 @@ class Node
     private $navigation;
 
     /**
+     * @var integer
+     */
+    private $order;
+
+    /**
+     * @var string
+     */
+    private $label;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -258,5 +268,37 @@ class Node
     public function setNavigation(Navigation $navigation = null)
     {
         $this->navigation = $navigation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
     }
 }

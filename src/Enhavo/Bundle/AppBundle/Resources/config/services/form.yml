@@ -53,6 +53,13 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_dynamic_form' }
 
+    enhavo_app.form.dynamic_item:
+        class: Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: form.type, alias: 'enhavo_app_dynamic_item' }
+
     enhavo_app.form.config.wysiwyg:
         class: '%enhavo_app.form.config.wysiwyg.class%'
         arguments:

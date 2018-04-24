@@ -1,12 +1,12 @@
 services:
-   enhavo_navigation.menu.navigation:
+    enhavo_navigation.menu.navigation:
         class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: navigation }
 
-   enhavo_navigation.event_listener.node_reference:
+    enhavo_navigation.event_listener.node_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
           - 'Enhavo\Bundle\NavigationBundle\Entity\Node'
@@ -17,5 +17,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-   enhavo_navigation.resolver.item_resolver:
+    enhavo_navigation.resolver.item_resolver:
         class: Enhavo\Bundle\NavigationBundle\Resolver\ItemResolver
+        arguments:
+            - '@form.factory'
+
+    enhavo_navigation.form.node_type:
+        class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType
+        tags:
+            - { name: form.type, alias: 'enhavo_navigation_node' }

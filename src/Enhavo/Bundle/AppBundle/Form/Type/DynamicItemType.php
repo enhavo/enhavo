@@ -8,8 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -20,44 +22,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DynamicItemType extends AbstractType
 {
-    /**
-     * @var ItemTypeResolver
-     */
-    protected $resolver;
-
-    /**
-     * @var string
-     */
-    protected $class;
-
-    public function __construct($class, ItemTypeResolver $itemTypeResolver)
-    {
-        $this->class = $class;
-        $this->resolver = $itemTypeResolver;
-    }
+    use ContainerAwareTrait;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', 'hidden', array(
-            'data' => 0
-        ));
+        $builder->add('type', HiddenType::class);
 
-        $builder->add('type', 'hidden');
+        $resolver = $this->getResolver($options);
 
-        $resolver = $this->resolver;
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver){
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver) {
             $item = $event->getData();
             $form = $event->getForm();
             if(!empty($item) && isset($item['type'])) {
-                $form->add('itemType', $resolver->getFormType($item['type']));
+                $builder = $resolver->resolveFormBuilder($item['type']);
+                foreach($builder as $child) {
+                    $form->add($child);
+                }
             }
         });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver){
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver) {
             $item = $event->getData();
             $form = $event->getForm();
             if(!empty($item) && $item->getType()) {
-                $form->add('itemType', $resolver->getFormType($item->getType()));
+                $builder = $resolver->resolveFormBuilder($item['type']);
+                foreach($builder as $child) {
+                    $form->add($child);
+                }
             }
         });
     }
@@ -67,23 +58,51 @@ class DynamicItemType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $resolver = $this->getResolver($options);
+
         $data = $form->getData();
         if($data instanceof Item) {
-            $view->vars['label'] = $this->resolver->getLabel($data->getType());
+            $view->vars['label'] = $resolver->getItem($data->getType())->getLabel();
         }
 
-        return;
+        if(isset($options['item_full_name'])) {
+            $view->vars['full_name'] = sprintf('%s', ($options['item_full_name']));
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->class
-        ));
+        $resolver->setDefaults([
+            'item_resolver' => null,
+            'csrf_protection' => false,
+            'item_full_name' => null
+        ]);
     }
 
     public function getName()
     {
         return 'enhavo_app_dynamic_item';
+    }
+
+    /**
+     * @param array $options
+     * @return ItemResolverInterface
+     * @throws \Exception
+     */
+    private function getResolver(array $options)
+    {
+        $resolver = $options['item_resolver'];
+        if(is_string($resolver)) {
+            if(!$this->container->has($resolver)) {
+                throw new \Exception(sprintf('Resolver "%s" for dynamic form not found', $resolver));
+            }
+            $resolver = $this->container->get($resolver);
+        }
+
+        if(!$resolver instanceof ItemResolverInterface) {
+            throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
+        }
+
+        return $resolver;
     }
 } 
