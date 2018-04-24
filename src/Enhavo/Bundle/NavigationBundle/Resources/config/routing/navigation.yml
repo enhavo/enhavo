@@ -48,7 +48,6 @@ enhavo_navigation_navigation_table:
                         label: form.navigation.name
                         width: 10
 
-
 enhavo_navigation_navigation_delete:
     options:
         expose: true
@@ -56,4 +55,3 @@ enhavo_navigation_navigation_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_navigation.controller.navigation:deleteAction
-

@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormInterface;
@@ -18,44 +18,48 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DynamicFormType extends AbstractType
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $manager;
-
-    /**
-     * @var ItemTypeResolver
-     */
-    protected $resolver;
-
-//    public function __construct(ObjectManager $manager, ItemTypeResolver $resolver)
-//    {
-//        $this->resolver = $resolver;
-//        $this->manager = $manager;
-//    }
+    use ContainerAwareTrait;
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-//        $items = array();
-//        if(count($options['items'])) {
-//            foreach($options['items'] as $item) {
-//                $definition = $this->resolver->getDefinition($item);
-//                $items[] = array(
-//                    'type' => $definition->getName(),
-//                    'label' => $definition->getLabel(),
-//                    'translationDomain' => $definition->getTranslationDomain()
-//                );
-//            }
-//        } else {
-//            foreach($this->resolver->getItems() as $item) {
-//                $items[] = array(
-//                    'type' => $item->getName(),
-//                    'label' => $item->getLabel(),
-//                    'translationDomain' => $item->getTranslationDomain()
-//                );
-//            }
-//        }
-//        $view->vars['items'] = $items;
+        $resolver = $this->getResolver($options);
+
+        if(count($options['items'])) {
+            $item = $resolver->getItem($options['items']);
+            $items = [$item];
+        } elseif(count($options['item_group'])) {
+            $items = $resolver->getItemGroup($options['item_group']);
+        } else {
+            $items = $resolver->getItems();
+        }
+
+        $view->vars['items'] = $items;
+        $view->vars['dynamic_config'] = [
+            'scope' => null,
+            'route' => $options['item_route']
+        ];
+    }
+
+    /**
+     * @param array $options
+     * @return ItemResolverInterface
+     * @throws \Exception
+     */
+    private function getResolver(array $options)
+    {
+        $resolver = $options['item_resolver'];
+        if(is_string($resolver)) {
+            if(!$this->container->has($resolver)) {
+                throw new \Exception(sprintf('Resolver "%s" for dynamic form not found', $resolver));
+            }
+            $resolver = $this->container->get($resolver);
+        }
+
+        if(!$resolver instanceof ItemResolverInterface) {
+            throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
+        }
+
+        return $resolver;
     }
 
     public function getParent()
@@ -76,10 +80,14 @@ class DynamicFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'type' => 'enhavo_grid_item',
+            'type' => null,
             'allow_delete' => true,
-            'allow_add'    => true,
-            'by_reference' => false
+            'allow_add' => true,
+            'by_reference' => false,
+            'items' => array(),
+            'item_group' => null,
+            'item_resolver' => null,
+            'item_route' => null
         ]);
     }
 }

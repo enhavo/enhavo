@@ -1,0 +1,7 @@
+enhavo_navigation_navigation_form:
+    path:  /enhavo/navigation/form
+    defaults:
+        _controller: EnhavoAppBundle:DynamicForm:item
+        _resolver: enhavo_navigation.resolver.item_resolver
+    options:
+        expose: true

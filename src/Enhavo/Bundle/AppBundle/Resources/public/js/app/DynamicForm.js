@@ -8,27 +8,28 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
     }());
     exports.DynamicFormConfig = DynamicFormConfig;
     var DynamicForm = /** @class */ (function () {
-        function DynamicForm(element, config) {
+        function DynamicForm(element, config, scope) {
             if (config === void 0) { config = null; }
+            if (scope === void 0) { scope = null; }
             this.items = [];
             this.placeholderIndex = 0;
             this.collapse = true;
-            console.log('test');
             this.$element = $(element);
             this.$container = this.$element.find('[data-dynamic-form-container]');
+            this.scope = scope;
             this.initMenu();
             this.initActions();
             this.initItems();
             this.initContainer();
             if (config == null) {
-                this.config = new DynamicFormConfig;
+                this.config = this.$element.data('dynamic-config');
             }
             else {
                 this.config = config;
             }
+            console.log(this.config);
         }
         DynamicForm.apply = function (element) {
-            console.log(element);
             $(element).find('[data-dynamic-form]').each(function () {
                 new DynamicForm(this);
             });
@@ -71,6 +72,9 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
         DynamicForm.prototype.getConfig = function () {
             return this.config;
         };
+        DynamicForm.prototype.getScope = function () {
+            return this.scope;
+        };
         DynamicForm.prototype.collapseAll = function () {
             this.$element.find('[data-dynamic-form-action-collapse-all]').hide();
             this.$element.find('[data-dynamic-form-action-expand-all]').show();
@@ -100,7 +104,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             return this.collapse;
         };
         DynamicForm.prototype.addItem = function (type, button) {
-            var url = router.generate('enhavo_dynamic_form_item', {
+            var url = router.generate(this.config.route, {
                 type: type
             });
             // Generate unique placeholder for reindexing service
@@ -243,7 +247,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             var position = $(button.getElement()).position();
             var dropDown = true;
             var scope;
-            scope = this.dynamicForm.getConfig().scope;
+            scope = this.dynamicForm.getScope();
             if (scope == null) {
                 scope = $('body').get(0);
             }

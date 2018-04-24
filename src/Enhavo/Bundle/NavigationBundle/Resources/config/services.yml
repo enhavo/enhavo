@@ -16,3 +16,6 @@ services:
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
+
+   enhavo_navigation.resolver.item_resolver:
+        class: Enhavo\Bundle\NavigationBundle\Resolver\ItemResolver

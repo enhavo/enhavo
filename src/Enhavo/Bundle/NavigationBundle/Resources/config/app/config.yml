@@ -6,3 +6,10 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\NavigationBundle\Model\NodeInterface: Enhavo\Bundle\NavigationBundle\Entity\Node
+
+enhavo_navigation:
+    items:
+        submenu:
+            type: submenu
+            model: ~
+            factory: ~

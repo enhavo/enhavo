@@ -4,7 +4,7 @@ import * as form from 'app/Form'
 
 export class DynamicFormConfig
 {
-    scope: HTMLElement;
+    route: string
 }
 
 export class DynamicForm
@@ -23,26 +23,28 @@ export class DynamicForm
 
     private config: DynamicFormConfig;
 
-    constructor(element: HTMLElement, config: DynamicFormConfig|null = null)
-    {
-        console.log('test');
+    private scope: HTMLElement;
 
+    constructor(element: HTMLElement, config: DynamicFormConfig|null = null, scope: HTMLElement = null)
+    {
         this.$element = $(element);
         this.$container = this.$element.find('[data-dynamic-form-container]');
+        this.scope = scope;
         this.initMenu();
         this.initActions();
         this.initItems();
         this.initContainer();
         if(config == null) {
-            this.config = new DynamicFormConfig;
+            this.config = this.$element.data('dynamic-config');
         } else {
             this.config = config;
         }
+
+        console.log(this.config);
     }
 
     public static apply(element: HTMLElement)
     {
-        console.log(element);
         $(element).find('[data-dynamic-form]').each(function() {
             new DynamicForm(this);
         });
@@ -98,6 +100,11 @@ export class DynamicForm
         return this.config;
     }
 
+    public getScope()
+    {
+        return this.scope;
+    }
+
     public collapseAll()
     {
         this.$element.find('[data-dynamic-form-action-collapse-all]').hide();
@@ -136,7 +143,7 @@ export class DynamicForm
 
     public addItem(type: string, button: DynamicFormItemAddButton)
     {
-        let url = router.generate('enhavo_dynamic_form_item', {
+        let url = router.generate(this.config.route, {
             type: type
         });
 
@@ -309,7 +316,7 @@ export class DynamicFormMenu
         let dropDown = true;
 
         let scope:HTMLElement;
-        scope = this.dynamicForm.getConfig().scope;
+        scope = this.dynamicForm.getScope();
         if(scope == null) {
             scope = $('body').get(0);
         }

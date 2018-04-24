@@ -30,6 +30,8 @@ class NavigationType extends AbstractResourceType
         $builder->add('nodes', DynamicFormType::class, [
             'label' => 'form.label.node',
             'translation_domain' => 'EnhavoNavigationBundle',
+            'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
+            'item_route' => 'enhavo_navigation_navigation_form'
         ]);
     }
 

@@ -7,8 +7,6 @@ define(["require", "exports", "app/app/DynamicForm"], function (require, exports
         }
         EnhavoAdapter.initFormListener = function () {
             $(document).on('formOpenAfter', function (event, element) {
-                var config = new DynamicForm_1.DynamicFormConfig();
-                config.scope = $(element).offsetParent().get(0);
                 DynamicForm_1.DynamicForm.apply(element);
             });
             $(document).on('gridAddAfter', function (event, element) {

@@ -59,7 +59,26 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-        ;
+
+            ->children()
+                ->arrayNode('items')
+                    ->isRequired()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('model')->end()
+                            ->scalarNode('form')->end()
+                            ->scalarNode('repository')->end()
+                            ->scalarNode('label')->end()
+                            ->scalarNode('translationDomain')->end()
+                            ->scalarNode('type')->end()
+                            ->scalarNode('parent')->end()
+                            ->scalarNode('factory')->end()
+                            ->arrayNode('options')->end()
+                        ->end()
+                    ->end()
+                 ->end()
+            ->end();
 
         return $treeBuilder;
     }

@@ -160,6 +160,7 @@
          data-dynamic-form
          data-dynamic-form-name="{{ full_name }}"
          data-dynamic-form-add-button-template="{{ helper.addButton()|e }}"
+         data-dynamic-config="{{ dynamic_config|json_encode|e }}"
     >
 
         <div class="dynamic-form-actions">
@@ -175,11 +176,11 @@
             <div class="triangle-up"></div>
             <div class="triangle-down"></div>
             <ul>
-                {#{% for item in items %}#}
-                    {#<li class="addItem" data-dynamic-form-menu-item="{{ item.type }}">#}
-                        {#{{ item.label|trans({}, item.translationDomain)|nl2br }}#}
-                    {#</li>#}
-                {#{% endfor %}#}
+                {% for item in items %}
+                    <li class="addItem" data-dynamic-form-menu-item="{{ item.type }}">
+                        {{ item.label|trans({}, item.translationDomain)|nl2br }}
+                    </li>
+                {% endfor %}
             </ul>
         </div>
 

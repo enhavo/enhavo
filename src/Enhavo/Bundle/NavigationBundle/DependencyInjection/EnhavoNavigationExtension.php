@@ -22,9 +22,13 @@ class EnhavoNavigationExtension extends AbstractResourceExtension
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_navigation', $config['driver'], $config['resources'], $container);
+
+        $container->setParameter('enhavo_navigation.items', $config['items']);
+
         $configFiles = array(
             'services.yml',
         );
+
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
         }

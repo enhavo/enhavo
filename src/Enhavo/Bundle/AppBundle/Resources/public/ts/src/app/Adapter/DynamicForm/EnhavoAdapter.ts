@@ -10,8 +10,6 @@ class EnhavoAdapter
     private static initFormListener(): void
     {
         $(document).on('formOpenAfter', function (event, element:HTMLElement) {
-            let config = new DynamicFormConfig();
-            config.scope = $(element).offsetParent().get(0);
             DynamicForm.apply(element);
         });
 
