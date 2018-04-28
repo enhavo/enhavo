@@ -186,12 +186,8 @@
 
         <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
             {{ helper.addButton() }}
-            {% for child in form.children %}
-                {% for item in child.children %}
-                    {% set formItem = item.itemType %}
-                    {% set formName = item.vars.full_name %}
-                    {% set formOrder = item.vars.value.order %}
-                    {% set formType = item.vars.value.type %}
+            {% for child in form %}
+                {% for item in child %}
                     {% set label = item.vars.label %}
                     {% include 'EnhavoAppBundle:DynamicForm:form.html.twig' %}
                     {{ helper.addButton() }}

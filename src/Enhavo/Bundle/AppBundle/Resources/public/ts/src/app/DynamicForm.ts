@@ -1,10 +1,14 @@
 import * as admin from 'app/Admin'
 import * as router from 'app/Router'
 import * as form from 'app/Form'
+import { FormListener } from "app/app/Form/Form";
+import { FormConvertEvent } from "app/app/Form/Form";
+import { FormInitializer } from "app/app/Form/Form";
 
 export class DynamicFormConfig
 {
-    route: string
+    route: string;
+    prototypeName: string;
 }
 
 export class DynamicForm
@@ -17,13 +21,15 @@ export class DynamicForm
 
     private $container: JQuery;
 
-    private placeholderIndex: number = 0;
+    private placeholderIndex: number = -1;
 
     private collapse: boolean = true;
 
     private config: DynamicFormConfig;
 
     private scope: HTMLElement;
+
+    private formListener: FormListener;
 
     constructor(element: HTMLElement, config: DynamicFormConfig|null = null, scope: HTMLElement = null)
     {
@@ -39,6 +45,16 @@ export class DynamicForm
         } else {
             this.config = config;
         }
+
+        this.formListener = new FormListener();
+
+        let self = this;
+        this.formListener.onConvert(function(event: FormConvertEvent) {
+            let html = event.getHtml();
+            html = html.replace(new RegExp(self.config.prototypeName, 'g'), String(self.placeholderIndex));
+            event.setHtml(html);
+            console.log(html);
+        });
 
         console.log(this.config);
     }
@@ -147,9 +163,7 @@ export class DynamicForm
             type: type
         });
 
-        // Generate unique placeholder for reindexing service
-        let placeholder = '__dynamic_form_name' + this.placeholderIndex + '__';
-        let formName = this.$element.data('dynamic-form-name') + '[items][' + placeholder + ']';
+        let formName = this.$element.data('dynamic-form-name') + '[' + this.config.prototypeName + ']';
         this.placeholderIndex++;
         let dynamicForm = this;
 
@@ -157,21 +171,23 @@ export class DynamicForm
         $.ajax({
             type: 'POST',
             data: {
-                formName: formName
+                formName: formName,
+                prototypeName: this.config.prototypeName
             },
             url: url,
             success: function (data) {
                 dynamicForm.endLoading();
-                data = $.parseHTML(data.trim());
-                $(button.getElement()).after(data);
-                dynamicForm.items.push(new DynamicFormItem(data, dynamicForm));
-                // Initialize sub-elements for reindexing
-                form.initReindexableItem(data, placeholder);
-                $(document).trigger('dynamicFormAddAfter', [data]);
+
+                let form = new FormInitializer();
+                form.setHtml(data);
+                form.insertAfter(button.getElement());
+
+                dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));
                 let newButton = dynamicForm.createAddButton();
                 $(data).after(newButton.getElement());
+
                 dynamicForm.setOrder();
-                form.reindex();
+
             },
             error: function () {
                 dynamicForm.endLoading();

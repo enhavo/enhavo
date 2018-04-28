@@ -25,6 +25,7 @@ class DynamicFormController extends Controller
         $resolver = $this->getResolver($request);
 
         $formName = $request->get('formName');
+        $prototypeName = $request->get('prototypeName');
         $type = $request->get('type');
 
         $formFactory = $this->container->get('form.factory');
@@ -32,20 +33,18 @@ class DynamicFormController extends Controller
         /** @var $formType ItemFormType */
         $formType = $resolver->getFormType($type);
         $factory = $resolver->getFactory($type);
-        $itemType = $factory->create();
+        $data = $factory->create();
 
-        $form = $formFactory->create($formType, $itemType, array(
+        $form = $formFactory->create($formType, $data, array(
             'csrf_protection' => false,
             'item_resolver' => $this->getResolverName($request),
-            'item_full_name' => '_________'
+            'item_full_name' => $formName
         ));
+
         $label = $resolver->getItem($type)->getLabel();
 
         return $this->render('EnhavoAppBundle:DynamicForm:form.html.twig', array(
-            'formItem' => $form->createView(),
-            'formName' => $formName,
-            'formOrder' => 0,
-            'formType' => $type,
+            'form' => $form->createView(),
             'label' => $label
         ));
     }

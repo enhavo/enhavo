@@ -1,4 +1,4 @@
-define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (require, exports, admin, router, form) {
+define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Form/Form", "app/app/Form/Form"], function (require, exports, admin, router, form, Form_1, Form_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var DynamicFormConfig = /** @class */ (function () {
@@ -12,7 +12,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             if (config === void 0) { config = null; }
             if (scope === void 0) { scope = null; }
             this.items = [];
-            this.placeholderIndex = 0;
+            this.placeholderIndex = -1;
             this.collapse = true;
             this.$element = $(element);
             this.$container = this.$element.find('[data-dynamic-form-container]');
@@ -27,6 +27,14 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             else {
                 this.config = config;
             }
+            this.formListener = new Form_1.FormListener();
+            var self = this;
+            this.formListener.onConvert(function (event) {
+                var html = event.getHtml();
+                html = html.replace(new RegExp(self.config.prototypeName, 'g'), String(self.placeholderIndex));
+                event.setHtml(html);
+                console.log(html);
+            });
             console.log(this.config);
         }
         DynamicForm.apply = function (element) {
@@ -107,30 +115,26 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form"], function (
             var url = router.generate(this.config.route, {
                 type: type
             });
-            // Generate unique placeholder for reindexing service
-            var placeholder = '__dynamic_form_name' + this.placeholderIndex + '__';
-            var formName = this.$element.data('dynamic-form-name') + '[items][' + placeholder + ']';
+            var formName = this.$element.data('dynamic-form-name') + '[' + this.config.prototypeName + ']';
             this.placeholderIndex++;
             var dynamicForm = this;
             this.startLoading();
             $.ajax({
                 type: 'POST',
                 data: {
-                    formName: formName
+                    formName: formName,
+                    prototypeName: this.config.prototypeName
                 },
                 url: url,
                 success: function (data) {
                     dynamicForm.endLoading();
-                    data = $.parseHTML(data.trim());
-                    $(button.getElement()).after(data);
-                    dynamicForm.items.push(new DynamicFormItem(data, dynamicForm));
-                    // Initialize sub-elements for reindexing
-                    form.initReindexableItem(data, placeholder);
-                    $(document).trigger('dynamicFormAddAfter', [data]);
+                    var form = new Form_2.FormInitializer();
+                    form.setHtml(data);
+                    form.insertAfter(button.getElement());
+                    dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));
                     var newButton = dynamicForm.createAddButton();
                     $(data).after(newButton.getElement());
                     dynamicForm.setOrder();
-                    form.reindex();
                 },
                 error: function () {
                     dynamicForm.endLoading();

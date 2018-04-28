@@ -1,4 +1,3 @@
-{% form_theme formItem _self %}
 {% trans_default_domain 'EnhavoGridBundle' %}
 
 <div class="dynamic-form-item" data-dynamic-form-item>
@@ -22,14 +21,11 @@
     </div>
 
     <div data-dynamic-form-item-container>
-        {% for itemType in formItem.children %}
+        {% for child in form %}
             <div class="clearfix" data-form-row>
-                <div class="col-md-2 label-container">{{ form_label(itemType) }}</div>
-                <div class="col-md-10">{{ form_widget(itemType) }}</div>
+                <div class="col-md-2 label-container">{{ form_label(child) }}</div>
+                <div class="col-md-10">{{ form_widget(child) }}</div>
             </div>
         {% endfor %}
     </div>
-
-    <input type="hidden" class="typeInput" name="{{ formName }}[type]" value="{{ formType }}">
-    <input type="hidden" data-dynamic-form-item-order class="orderInput" name="{{ formName }}[order]" value="{{ formOrder }}">
 </div>

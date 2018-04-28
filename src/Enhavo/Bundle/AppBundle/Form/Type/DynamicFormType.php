@@ -35,7 +35,8 @@ class DynamicFormType extends AbstractType
 
         $view->vars['items'] = $items;
         $view->vars['dynamic_config'] = [
-            'route' => $options['item_route']
+            'route' => $options['item_route'],
+            'prototypeName' => $options['prototype_name']
         ];
     }
 
@@ -87,7 +88,8 @@ class DynamicFormType extends AbstractType
             'item_group' => null,
             'item_resolver' => null,
             'item_route' => null,
-            'prototype' => false
+            'prototype' => false,
+            'prototype_name' => sprintf('__%s__', uniqid())
         ]);
     }
 }

@@ -24,7 +24,8 @@
       "media/Adapter/EnhavoAdapter": ["../../../../MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],
       "app/app/DynamicForm": ["src/app/DynamicForm"],
       "app/app/Adapter/DynamicForm/EnhavoAdapter": ["src/app/Adapter/DynamicForm/EnhavoAdapter"],
-      "app/app/Adapter/DynamicForm/JQueryAdapter": ["src/app/Adapter/DynamicForm/JQueryAdapter"]
+      "app/app/Adapter/DynamicForm/JQueryAdapter": ["src/app/Adapter/DynamicForm/JQueryAdapter"],
+      "app/app/Form/Form": ["src/app/Form/Form"]
     }
   }
 }

@@ -209,7 +209,7 @@ class Node
     /**
      * @return array
      */
-    public function getConfiguration(): array
+    public function getConfiguration()
     {
         return $this->configuration;
     }
