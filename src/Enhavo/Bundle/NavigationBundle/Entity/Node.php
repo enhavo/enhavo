@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
-class Node
+use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+
+class Node implements NodeInterface
 {
     /**
      * @var integer

@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
-use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
+use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class ItemResolver implements ItemResolverInterface
@@ -20,50 +20,71 @@ class ItemResolver implements ItemResolverInterface
      */
     private $formFactory;
 
-    public function __construct(FormFactoryInterface $formFactory)
+    /**
+     * @var array
+     */
+    private $configuration;
+
+    public function __construct(FormFactoryInterface $formFactory, $configuration)
     {
         $this->formFactory = $formFactory;
+        $this->configuration = $configuration;
     }
 
     public function getItemGroup($group)
     {
-
+        return [];
     }
 
     public function getItem($name)
     {
         $item = new Item();
-        $item->setType('node');
-        $item->setLabel('Node');
-        $item->setTranslationDomain(null);
+        $item->setType($name);
+        $item->setLabel($this->getValue($name, 'label'));
+        $item->setTranslationDomain($this->getValue($name, 'translationDomain'));
         return $item;
     }
 
     public function getItems()
     {
-        return [
-            $this->getItem('')
-        ];
+        $items = [];
+        foreach($this->configuration as $name => $item) {
+            $items[] = $this->getItem($name);
+        }
+        return $items;
     }
 
-    public function getFormType($item)
+    public function getFormType($type)
     {
-        if($item == 'node') {
-            return 'enhavo_navigation_node';
-        }
-
-        return null;
+        return $this->getValue($type, 'form');
     }
 
     public function resolveFormBuilder($name)
     {
         $formType = $this->getFormType($name);
-        $builder = $this->formFactory->createBuilder($formType);
+        $builder = $this->formFactory->create($formType, null, [
+            'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
+            'data_class' => Node::class
+        ]);
         return $builder;
     }
 
     public function getFactory($type)
     {
-        return new NodeFactory();
+        $factory = $this->getValue($type, 'factory');
+        return new $factory;
+    }
+
+    private function getValue($type, $key)
+    {
+        if(!array_key_exists($type, $this->configuration)) {
+            throw new \Exception(sprintf('Navigation type "%s" does not exist', $type));
+        }
+
+        if(!array_key_exists($key, $this->configuration[$type])) {
+            throw new \Exception(sprintf('The key "%s" for type "%s" does not exist', $key, $type));
+        }
+
+        return $this->configuration[$type][$key];
     }
 }

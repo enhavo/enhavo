@@ -45,7 +45,7 @@ class DynamicItemType extends AbstractType
             $item = $event->getData();
             $form = $event->getForm();
             if(!empty($item) && $item->getType()) {
-                $builder = $resolver->resolveFormBuilder($item['type']);
+                $builder = $resolver->resolveFormBuilder($item->getType());
                 foreach($builder as $child) {
                     $form->add($child);
                 }

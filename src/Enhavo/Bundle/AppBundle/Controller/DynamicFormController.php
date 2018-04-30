@@ -25,7 +25,6 @@ class DynamicFormController extends Controller
         $resolver = $this->getResolver($request);
 
         $formName = $request->get('formName');
-        $prototypeName = $request->get('prototypeName');
         $type = $request->get('type');
 
         $formFactory = $this->container->get('form.factory');

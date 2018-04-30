@@ -12,20 +12,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LinkType extends AbstractType
+class SubmenuType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('configuration', LinkConfigurationType::class, [
-            'compound' => true
-        ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'children' => false,
-            'label' => 'Link'
+            'children' => true,
+            'label' => 'Submenu'
         ]);
     }
 
@@ -36,6 +34,6 @@ class LinkType extends AbstractType
 
     public function getName()
     {
-        return 'enhavo_navigation_link';
+        return 'enhavo_navigation_submenu';
     }
 }

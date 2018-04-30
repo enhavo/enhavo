@@ -11,10 +11,12 @@ namespace Enhavo\Bundle\NavigationBundle\Factory;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 
-class NodeFactory
+class SubmenuFactory
 {
     public function create()
     {
-        return new Node();
+        $node = new Node();
+        $node->setType('submenu');
+        return $node;
     }
 }

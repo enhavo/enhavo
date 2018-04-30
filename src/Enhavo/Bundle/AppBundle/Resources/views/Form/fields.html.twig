@@ -163,7 +163,7 @@
          data-dynamic-config="{{ dynamic_config|json_encode|e }}"
     >
 
-        <div class="dynamic-form-actions">
+        <div class="dynamic-form-actions" data-dynamic-form-action>
             <div data-dynamic-form-action-collapse-all>
                 <i class="icon-collapse"></i>
             </div>
@@ -186,12 +186,11 @@
 
         <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
             {{ helper.addButton() }}
-            {% for child in form %}
-                {% for item in child %}
-                    {% set label = item.vars.label %}
-                    {% include 'EnhavoAppBundle:DynamicForm:form.html.twig' %}
-                    {{ helper.addButton() }}
-                {% endfor %}
+            {% for item in form %}
+                {% set label = item.vars.label %}
+                {% set form = item %}
+                {% include 'EnhavoAppBundle:DynamicForm:form.html.twig' %}
+                {{ helper.addButton() }}
             {% endfor %}
         </div>
 

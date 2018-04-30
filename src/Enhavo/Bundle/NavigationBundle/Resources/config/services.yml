@@ -21,6 +21,7 @@ services:
         class: Enhavo\Bundle\NavigationBundle\Resolver\ItemResolver
         arguments:
             - '@form.factory'
+            - '%enhavo_navigation.items%'
 
     enhavo_navigation.form.node_type:
         class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType

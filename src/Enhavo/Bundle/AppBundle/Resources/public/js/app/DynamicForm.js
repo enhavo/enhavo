@@ -15,7 +15,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             this.placeholderIndex = -1;
             this.collapse = true;
             this.$element = $(element);
-            this.$container = this.$element.find('[data-dynamic-form-container]');
+            this.$container = this.$element.children('[data-dynamic-form-container]');
             this.scope = scope;
             this.initMenu();
             this.initActions();
@@ -33,9 +33,8 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
                 var html = event.getHtml();
                 html = html.replace(new RegExp(self.config.prototypeName, 'g'), String(self.placeholderIndex));
                 event.setHtml(html);
-                console.log(html);
             });
-            console.log(this.config);
+            this.placeholderIndex = this.$container.children('[data-dynamic-form-item]').length - 1;
         }
         DynamicForm.apply = function (element) {
             $(element).find('[data-dynamic-form]').each(function () {
@@ -45,7 +44,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
         DynamicForm.prototype.initItems = function () {
             var items = [];
             var dynamicForm = this;
-            this.$element.find('[data-dynamic-form-item]').each(function () {
+            this.$container.children('[data-dynamic-form-item]').each(function () {
                 items.push(new DynamicFormItem(this, dynamicForm));
             });
             this.items = items;
@@ -70,10 +69,10 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             else {
                 dynamicForm.expandAll();
             }
-            this.$element.find('[data-dynamic-form-action-collapse-all]').click(function () {
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-collapse-all]').click(function () {
                 dynamicForm.collapseAll();
             });
-            this.$element.find('[data-dynamic-form-action-expand-all]').click(function () {
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-expand-all]').click(function () {
                 dynamicForm.expandAll();
             });
         };
@@ -84,8 +83,8 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             return this.scope;
         };
         DynamicForm.prototype.collapseAll = function () {
-            this.$element.find('[data-dynamic-form-action-collapse-all]').hide();
-            this.$element.find('[data-dynamic-form-action-expand-all]').show();
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-collapse-all]').hide();
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-expand-all]').show();
             this.collapse = true;
             for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -93,8 +92,8 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             }
         };
         DynamicForm.prototype.expandAll = function () {
-            this.$element.find('[data-dynamic-form-action-collapse-all]').show();
-            this.$element.find('[data-dynamic-form-action-expand-all]').hide();
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-collapse-all]').show();
+            this.$element.children('[data-dynamic-form-action]').children('[data-dynamic-form-action-expand-all]').hide();
             this.collapse = false;
             for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -102,7 +101,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             }
         };
         DynamicForm.prototype.initMenu = function () {
-            var element = this.$element.find('[data-dynamic-form-menu]').get(0);
+            var element = this.$element.children('[data-dynamic-form-menu]').get(0);
             this.menu = new DynamicFormMenu(element, this);
         };
         DynamicForm.prototype.getMenu = function () {
@@ -305,19 +304,20 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
         }
         DynamicFormItem.prototype.initActions = function () {
             var dynamicForm = this;
-            this.$element.find('[data-dynamic-form-item-action-up]').click(function () {
+            var $actions = this.$element.children('[data-dynamic-form-item-action]');
+            $actions.find('[data-dynamic-form-item-action-up]').click(function () {
                 dynamicForm.up();
             });
-            this.$element.find('[data-dynamic-form-item-action-down]').click(function () {
+            $actions.find('[data-dynamic-form-item-action-down]').click(function () {
                 dynamicForm.down();
             });
-            this.$element.find('[data-dynamic-form-item-action-remove]').click(function () {
+            $actions.find('[data-dynamic-form-item-action-remove]').click(function () {
                 dynamicForm.remove();
             });
-            this.$element.find('[data-dynamic-form-item-action-collapse]').click(function () {
+            $actions.find('[data-dynamic-form-item-action-collapse]').click(function () {
                 dynamicForm.collapse();
             });
-            this.$element.find('[data-dynamic-form-item-action-expand]').click(function () {
+            $actions.find('[data-dynamic-form-item-action-expand]').click(function () {
                 dynamicForm.expand();
             });
         };
@@ -325,14 +325,16 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             return this.$element.get(0);
         };
         DynamicFormItem.prototype.collapse = function () {
-            this.$element.find('[data-dynamic-form-item-action-expand]').show();
-            this.$element.find('[data-dynamic-form-item-action-collapse]').hide();
-            this.$element.find('[data-dynamic-form-item-container]').hide();
+            var $actions = this.$element.children('[data-dynamic-form-item-action]');
+            $actions.find('[data-dynamic-form-item-action-expand]').show();
+            $actions.find('[data-dynamic-form-item-action-collapse]').hide();
+            this.$element.children('[data-dynamic-form-item-container]').hide();
         };
         DynamicFormItem.prototype.expand = function () {
-            this.$element.find('[data-dynamic-form-item-action-expand]').hide();
-            this.$element.find('[data-dynamic-form-item-action-collapse]').show();
-            this.$element.find('[data-dynamic-form-item-container]').show();
+            var $actions = this.$element.children('[data-dynamic-form-item-action]');
+            $actions.find('[data-dynamic-form-item-action-expand]').hide();
+            $actions.find('[data-dynamic-form-item-action-collapse]').show();
+            this.$element.children('[data-dynamic-form-item-container]').show();
         };
         DynamicFormItem.prototype.up = function () {
             var wyswigs = this.$element.find('[data-wysiwyg]');

@@ -88,8 +88,15 @@ class DynamicFormType extends AbstractType
             'item_group' => null,
             'item_resolver' => null,
             'item_route' => null,
-            'prototype' => false,
-            'prototype_name' => sprintf('__%s__', uniqid())
+            'prototype' => false
         ]);
+
+        // force to create a unique placeholder for each form type
+        $resolver->setNormalizer('prototype_name', function($options, $value) {
+            if($value == '__name__') {
+                return sprintf('__%s__', uniqid());
+            }
+            return $value;
+        });
     }
 }
