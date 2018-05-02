@@ -10,9 +10,9 @@ namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
 use Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType;
+use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,12 +21,16 @@ class NodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', HiddenType::class, []);
-        $builder->add('label', TextType::class, []);
+        $builder->add('order', PositionType::class, []);
+
+        $builder->add('label', TextType::class, [
+            'label' => 'node.label.label',
+            'translation_domain' => 'EnhavoNavigationBundle',
+        ]);
 
         if($options['children']) {
             $builder->add('children', DynamicFormType::class, [
-                'label' => 'form.label.node',
+                'label' => 'node.label.items',
                 'entry_type' => NodeType::class,
                 'entry_options' => [
                     'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
@@ -43,8 +47,8 @@ class NodeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Node::class,
-            'label' => 'Node',
-            'children' => false
+            'children' => false,
+            'block_name' => 'enhavo_dynamic_item'
         ]);
     }
 

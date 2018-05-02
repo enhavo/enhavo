@@ -16,16 +16,13 @@ class LinkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('configuration', LinkConfigurationType::class, [
-            'compound' => true
-        ]);
+        $builder->add('configuration', LinkConfigurationType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'children' => false,
-            'label' => 'Link'
+            'children' => false
         ]);
     }
 

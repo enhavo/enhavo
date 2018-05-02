@@ -12,12 +12,12 @@ Enhavo\Bundle\NavigationBundle\Entity\Navigation:
     fields:
         name:
             type: string
-            length: 256
+            length: 255
             nullable: true
 
         code:
             type: string
-            length: 256
+            length: 255
             nullable: true
 
     oneToMany:
@@ -25,5 +25,7 @@ Enhavo\Bundle\NavigationBundle\Entity\Navigation:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
             mappedBy: navigation
+            orderBy:
+                order: ASC
 
     lifecycleCallbacks: { }

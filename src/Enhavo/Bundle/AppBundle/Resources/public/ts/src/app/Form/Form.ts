@@ -34,7 +34,6 @@ export class FormInitializer
     public insertAfter(element: HTMLElement)
     {
         this.insert();
-        console.log(this.element);
         $(this.element).insertAfter(element);
     }
 

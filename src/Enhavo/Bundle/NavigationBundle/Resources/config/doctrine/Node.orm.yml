@@ -14,6 +14,15 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             type: string
             length: 255
 
+        label:
+            type: string
+            length: 255
+            nullable: true
+
+        order:
+            type: integer
+            column: '`order`'
+
         contentId:
             type: integer
             nullable: true
@@ -40,5 +49,7 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
             mappedBy: parent
+            orderBy:
+                order: ASC
 
     lifecycleCallbacks: {  }

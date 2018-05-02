@@ -74,6 +74,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('type')->end()
                             ->scalarNode('parent')->end()
                             ->scalarNode('factory')->end()
+                            ->scalarNode('template')->defaultValue(null)->end()
                             ->arrayNode('options')->end()
                         ->end()
                     ->end()

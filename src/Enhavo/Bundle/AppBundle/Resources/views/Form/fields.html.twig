@@ -187,13 +187,47 @@
         <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
             {{ helper.addButton() }}
             {% for item in form %}
-                {% set label = item.vars.label %}
-                {% set form = item %}
-                {% include 'EnhavoAppBundle:DynamicForm:form.html.twig' %}
+                {{ form_widget(item) }}
                 {{ helper.addButton() }}
             {% endfor %}
         </div>
 
+    </div>
+{% endblock %}
+
+{% block enhavo_dynamic_item_widget %}
+    <div class="dynamic-form-item" data-dynamic-form-item>
+        <div class="button-container" data-dynamic-form-item-action>
+            <div class="button button-up" data-dynamic-form-item-action-up>
+                <i class="icon-chevron-up"></i>
+            </div>
+            <div class="button button-down" data-dynamic-form-item-action-down>
+                <i class="icon-chevron-down"></i>
+            </div>
+            <div class="button button-delete" data-dynamic-form-item-action-remove>
+                <i class="icon-cross"></i>
+            </div>
+            <div class="button button-collapse" data-dynamic-form-item-action-collapse>
+                <i class="icon-collapse"></i>
+            </div>
+            <div class="button button-expand" data-dynamic-form-item-action-expand>
+                <i class="icon-expand"></i>
+            </div>
+            <div class="label">{{ label|trans|nl2br }}</div>
+        </div>
+
+        <div data-dynamic-form-item-container>
+            {% if item_template %}
+                {% include item_template %}
+            {% else %}
+                {% for child in form %}
+                    <div class="clearfix" data-form-row>
+                        <div class="col-md-2 label-container">{{ form_label(child) }}</div>
+                        <div class="col-md-10">{{ form_widget(child) }}</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 

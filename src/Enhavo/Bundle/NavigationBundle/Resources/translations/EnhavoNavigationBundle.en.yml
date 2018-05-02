@@ -1,8 +1,12 @@
 navigation:
     label:
         navigation: 'Navigation'
-
-form:
-    label:
         name: 'Name'
+        items: 'Item'
         code: 'Code'
+
+node:
+    label:
+        items: 'Item'
+        label: 'Label'
+        link: 'Link'

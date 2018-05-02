@@ -84,7 +84,6 @@ export class DynamicForm
             this.$container.data('initial-list-index', this.$container.children('[data-dynamic-form-item]').length);
         }
         this.setOrder();
-        form.reindex();
 
         this.$container.children('[data-dynamic-form-add-button]').each(function() {
             new DynamicFormItemAddButton(this, dynamicForm);
@@ -184,10 +183,8 @@ export class DynamicForm
 
                 dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));
                 let newButton = dynamicForm.createAddButton();
-                $(data).after(newButton.getElement());
-
+                $(form.getElement()).after(newButton.getElement());
                 dynamicForm.setOrder();
-
             },
             error: function () {
                 dynamicForm.endLoading();
@@ -204,7 +201,7 @@ export class DynamicForm
 
     private setOrder()
     {
-        this.$container.children().children('[data-dynamic-form-item-order]').each(function (index:number, element:HTMLElement) {
+        this.$container.find('[data-position]').each(function (index:number, element:HTMLElement) {
             $(element).val(index + 1);
         });
     };
@@ -234,7 +231,6 @@ export class DynamicForm
                 domElementToMove.after(buttonToMove);
                 domElementToMove.slideDown(200,function() {
                     self.setOrder();
-                    form.reindex();
                     if(typeof callback != "undefined") {
                         callback();
                     }
@@ -242,7 +238,6 @@ export class DynamicForm
             });
         } else {
             this.setOrder();
-            form.reindex();
             if(typeof callback != "undefined") {
                 callback();
             }
@@ -265,7 +260,6 @@ export class DynamicForm
                 domElementToMove.after(buttonToMove);
                 domElementToMove.slideDown(200,function() {
                     self.setOrder();
-                    form.reindex();
                     if(typeof callback != "undefined") {
                         callback();
                     }
@@ -273,7 +267,6 @@ export class DynamicForm
             });
         } else {
             this.setOrder();
-            form.reindex();
             if(typeof callback != "undefined") {
                 callback();
             }

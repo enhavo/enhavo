@@ -56,7 +56,6 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
                 this.$container.data('initial-list-index', this.$container.children('[data-dynamic-form-item]').length);
             }
             this.setOrder();
-            form.reindex();
             this.$container.children('[data-dynamic-form-add-button]').each(function () {
                 new DynamicFormItemAddButton(this, dynamicForm);
             });
@@ -132,7 +131,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
                     form.insertAfter(button.getElement());
                     dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));
                     var newButton = dynamicForm.createAddButton();
-                    $(data).after(newButton.getElement());
+                    $(form.getElement()).after(newButton.getElement());
                     dynamicForm.setOrder();
                 },
                 error: function () {
@@ -146,7 +145,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             return new DynamicFormItemAddButton(element, this);
         };
         DynamicForm.prototype.setOrder = function () {
-            this.$container.children().children('[data-dynamic-form-item-order]').each(function (index, element) {
+            this.$container.find('[data-position]').each(function (index, element) {
                 $(element).val(index + 1);
             });
         };
@@ -170,7 +169,6 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
                     domElementToMove_1.after(buttonToMove_1);
                     domElementToMove_1.slideDown(200, function () {
                         self.setOrder();
-                        form.reindex();
                         if (typeof callback != "undefined") {
                             callback();
                         }
@@ -179,7 +177,6 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             }
             else {
                 this.setOrder();
-                form.reindex();
                 if (typeof callback != "undefined") {
                     callback();
                 }
@@ -199,7 +196,6 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
                     domElementToMove_2.after(buttonToMove_2);
                     domElementToMove_2.slideDown(200, function () {
                         self.setOrder();
-                        form.reindex();
                         if (typeof callback != "undefined") {
                             callback();
                         }
@@ -208,7 +204,6 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             }
             else {
                 this.setOrder();
-                form.reindex();
                 if (typeof callback != "undefined") {
                     callback();
                 }

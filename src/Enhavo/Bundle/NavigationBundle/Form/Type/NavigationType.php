@@ -19,17 +19,17 @@ class NavigationType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
-            'label' => 'form.label.name',
+            'label' => 'navigation.label.name',
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
 
         $builder->add('code', TextType::class, [
-            'label' => 'form.label.code',
+            'label' => 'navigation.label.code',
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
 
         $builder->add('nodes', DynamicFormType::class, [
-            'label' => 'form.label.node',
+            'label' => 'navigation.label.items',
             'entry_type' => NodeType::class,
             'entry_options' => [
                 'item_resolver' => 'enhavo_navigation.resolver.item_resolver',

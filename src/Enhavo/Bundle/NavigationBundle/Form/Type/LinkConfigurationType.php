@@ -16,7 +16,10 @@ class LinkConfigurationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('link', TextType::class, array());
+        $builder->add('link', TextType::class, [
+            'label' => 'node.label.link',
+            'translation_domain' => 'EnhavoNavigationBundle',
+        ]);
     }
 
     public function getName()

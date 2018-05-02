@@ -17,8 +17,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Enhavo\Bundle\GridBundle\Entity\Item;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class DynamicItemType extends AbstractType
 {
@@ -26,26 +26,29 @@ class DynamicItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type', HiddenType::class);
+        $itemProperty = $options['item_property'];
+
+        $builder->add($itemProperty, HiddenType::class);
 
         $resolver = $this->getResolver($options);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver, $itemProperty) {
             $item = $event->getData();
             $form = $event->getForm();
-            if(!empty($item) && isset($item['type'])) {
-                $builder = $resolver->resolveFormBuilder($item['type']);
+            if(!empty($item) && isset($item[$itemProperty])) {
+                $builder = $resolver->resolveFormBuilder($item[$itemProperty]);
                 foreach($builder as $child) {
                     $form->add($child);
                 }
             }
         });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver, $itemProperty) {
             $item = $event->getData();
             $form = $event->getForm();
-            if(!empty($item) && $item->getType()) {
-                $builder = $resolver->resolveFormBuilder($item->getType());
+            $accessor = PropertyAccess::createPropertyAccessor();
+            if(!empty($item) && $accessor->getValue($item, $itemProperty)) {
+                $builder = $resolver->resolveFormBuilder($accessor->getValue($item, $itemProperty));
                 foreach($builder as $child) {
                     $form->add($child);
                 }
@@ -59,22 +62,28 @@ class DynamicItemType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $resolver = $this->getResolver($options);
+        $itemProperty = $options['item_property'];
+
+        $accessor = PropertyAccess::createPropertyAccessor();
 
         $data = $form->getData();
-        if($data instanceof Item) {
-            $view->vars['label'] = $resolver->getItem($data->getType())->getLabel();
+        if($data) {
+            $view->vars['label'] = $resolver->getItem($accessor->getValue($data, $itemProperty))->getLabel();
         }
 
         if(isset($options['item_full_name'])) {
             $view->vars['full_name'] = sprintf('%s', ($options['item_full_name']));
         }
+
+        $view->vars['item_template'] = $resolver->resolveItemTemplate($accessor->getValue($data, $itemProperty));;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'item_resolver' => null,
             'csrf_protection' => false,
+            'item_property' => 'type',
+            'item_resolver' => null,
             'item_full_name' => null
         ]);
     }
@@ -104,5 +113,10 @@ class DynamicItemType extends AbstractType
         }
 
         return $resolver;
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'enhavo_dynamic_item';
     }
 } 

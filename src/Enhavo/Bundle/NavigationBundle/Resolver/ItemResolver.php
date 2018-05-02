@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\NavigationBundle\Resolver;
 use Enhavo\Bundle\AppBundle\DynamicForm\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class ItemResolver implements ItemResolverInterface
@@ -86,5 +87,11 @@ class ItemResolver implements ItemResolverInterface
         }
 
         return $this->configuration[$type][$key];
+    }
+
+    public function resolveItemTemplate($type)
+    {
+        $template = $this->getValue($type, 'template');
+        return $template;
     }
 }

@@ -20,6 +20,13 @@ enhavo_navigation_navigation_create:
         _sylius:
             viewer:
                 translationDomain: EnhavoNavigationBundle
+                tabs:
+                    navigation:
+                        label: article.label.article
+                        template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
+                    nodes:
+                        label: article.label.content
+                        template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
 
 enhavo_navigation_navigation_update:
     options:
@@ -31,6 +38,13 @@ enhavo_navigation_navigation_update:
         _sylius:
             viewer:
                 translationDomain: EnhavoNavigationBundle
+                tabs:
+                    navigation:
+                        label: navigation.label.navigation
+                        template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
+                    nodes:
+                        label: navigation.label.items
+                        template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
 
 enhavo_navigation_navigation_table:
     options:
@@ -45,7 +59,7 @@ enhavo_navigation_navigation_table:
                 columns:
                     name:
                         property: name
-                        label: form.navigation.name
+                        label: navigation.label.name
                         width: 10
 
 enhavo_navigation_navigation_delete:

@@ -32,7 +32,6 @@ define(["require", "exports"], function (require, exports) {
         };
         FormInitializer.prototype.insertAfter = function (element) {
             this.insert();
-            console.log(this.element);
             $(this.element).insertAfter(element);
         };
         FormInitializer.prototype.convert = function () {

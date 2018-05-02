@@ -16,6 +16,7 @@ enhavo_navigation:
             label: Submenu
             translationDomain: ~
             form:  Enhavo\Bundle\NavigationBundle\Form\Type\SubmenuType
+            template: 'EnhavoNavigationBundle:Form:submenu.html.twig'
 
         link:
             type: link
@@ -24,3 +25,4 @@ enhavo_navigation:
             label: Link
             translationDomain: ~
             form:  Enhavo\Bundle\NavigationBundle\Form\Type\LinkType
+            template: 'EnhavoNavigationBundle:Form:link.html.twig'

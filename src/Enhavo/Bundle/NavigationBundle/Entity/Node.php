@@ -145,6 +145,7 @@ class Node implements NodeInterface
     public function addChild(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children)
     {
         $this->children[] = $children;
+        $children->setParent($this);
 
         return $this;
     }
@@ -156,6 +157,7 @@ class Node implements NodeInterface
      */
     public function removeChild(\Enhavo\Bundle\NavigationBundle\Model\NodeInterface $children)
     {
+        $children->setParent(null);
         $this->children->removeElement($children);
     }
 

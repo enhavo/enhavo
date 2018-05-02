@@ -45,4 +45,10 @@ interface ItemResolverInterface
      * @return FormBuilderInterface
      */
     public function resolveFormBuilder($type);
+
+    /**
+     * @param $type
+     * @return FormBuilderInterface
+     */
+    public function resolveItemTemplate($type);
 }

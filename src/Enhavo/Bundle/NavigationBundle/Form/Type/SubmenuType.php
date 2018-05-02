@@ -14,16 +14,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubmenuType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'children' => true,
-            'label' => 'Submenu'
+            'children' => true
         ]);
     }
 
