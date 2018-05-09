@@ -9,12 +9,11 @@
 namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\Item;
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
-class ItemResolver implements ItemResolverInterface
+class NodeResolver implements ResolverInterface
 {
     /**
      * @var FormFactoryInterface
@@ -32,12 +31,12 @@ class ItemResolver implements ItemResolverInterface
         $this->configuration = $configuration;
     }
 
-    public function getItemGroup($group)
+    public function resolveItemGroup($group)
     {
         return [];
     }
 
-    public function getItem($name)
+    public function resolveItem($name)
     {
         $item = new Item();
         $item->setType($name);
@@ -46,7 +45,7 @@ class ItemResolver implements ItemResolverInterface
         return $item;
     }
 
-    public function getItems()
+    public function resolveItems()
     {
         $items = [];
         foreach($this->configuration as $name => $item) {
@@ -55,14 +54,9 @@ class ItemResolver implements ItemResolverInterface
         return $items;
     }
 
-    public function getFormType($type)
+    public function resolveFormType($type)
     {
-        return $this->getValue($type, 'form');
-    }
-
-    public function resolveFormBuilder($name)
-    {
-        $formType = $this->getFormType($name);
+        $formType = $this->getValue($type, 'form');
         $builder = $this->formFactory->create($formType, null, [
             'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
             'data_class' => Node::class
@@ -70,10 +64,16 @@ class ItemResolver implements ItemResolverInterface
         return $builder;
     }
 
-    public function getFactory($type)
+    public function resolveFactory($type)
     {
         $factory = $this->getValue($type, 'factory');
         return new $factory;
+    }
+
+    public function resolveFormTemplate($name)
+    {
+        $template = $this->getValue($name, 'template');
+        return $template;
     }
 
     private function getValue($type, $key)
@@ -87,11 +87,5 @@ class ItemResolver implements ItemResolverInterface
         }
 
         return $this->configuration[$type][$key];
-    }
-
-    public function resolveItemTemplate($type)
-    {
-        $template = $this->getValue($type, 'template');
-        return $template;
     }
 }

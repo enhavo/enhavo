@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\DynamicForm;
 
-interface ItemFactoryInterface
+interface FactoryInterface
 {
     public function createNew();
 }

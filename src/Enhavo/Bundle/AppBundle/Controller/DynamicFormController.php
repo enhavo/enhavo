@@ -15,11 +15,6 @@ use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 
 class DynamicFormController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     public function itemAction(Request $request)
     {
         $resolver = $this->getResolver($request);
@@ -40,11 +35,8 @@ class DynamicFormController extends Controller
             'item_full_name' => $formName
         ));
 
-        $label = $resolver->getItem($type)->getLabel();
-
         return $this->render('EnhavoAppBundle:DynamicForm:form.html.twig', array(
-            'form' => $form->createView(),
-            'label' => $label
+            'form' => $form->createView()
         ));
     }
 

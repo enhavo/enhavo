@@ -6,6 +6,7 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\NavigationBundle\Model\NodeInterface: Enhavo\Bundle\NavigationBundle\Entity\Node
+            Enhavo\Bundle\NavigationBundle\Model\NavigationInterface: Enhavo\Bundle\NavigationBundle\Entity\Navigation
 
 enhavo_navigation:
     items:

@@ -13,15 +13,16 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
         type:
             type: string
             length: 255
+            nullable: true
 
         label:
             type: string
             length: 255
             nullable: true
 
-        order:
+        position:
             type: integer
-            column: '`order`'
+            nullable: true
 
         contentId:
             type: integer
@@ -30,10 +31,6 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
         contentClass:
             type: string
             length: 255
-            nullable: true
-
-        configuration:
-            type: json_array
             nullable: true
 
     manyToOne:

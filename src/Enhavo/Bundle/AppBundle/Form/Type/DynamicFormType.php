@@ -88,7 +88,9 @@ class DynamicFormType extends AbstractType
             'item_group' => null,
             'item_resolver' => null,
             'item_route' => null,
-            'prototype' => false
+            'item_class' => null,
+            'prototype' => false,
+            'entry_type' => DynamicItemType::class
         ]);
 
         // force to create a unique placeholder for each form type
@@ -97,6 +99,25 @@ class DynamicFormType extends AbstractType
                 return sprintf('__%s__', uniqid());
             }
             return $value;
+        });
+
+
+        // force to create a unique placeholder for each form type
+        $resolver->setNormalizer('prototype_name', function($options, $value) {
+            if($value == '__name__') {
+                return sprintf('__%s__', uniqid());
+            }
+            return $value;
+        });
+
+        $resolver->setNormalizer('entry_options', function($options, $value) {
+            if(!is_array($value)) {
+                $value = [];
+            }
+            return array_merge([
+                'item_resolver' => $options['item_resolver'],
+                'data_class' => $options['item_class']
+            ], $value);
         });
     }
 }

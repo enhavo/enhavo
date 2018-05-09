@@ -4,8 +4,11 @@ namespace Enhavo\Bundle\NavigationBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
+use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
+use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
+use Enhavo\Bundle\NavigationBundle\Repository\NodeRepository;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -56,6 +59,27 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                        ->arrayNode('node')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Node::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(NodeRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->arrayNode('form')
+                                            ->addDefaultsIfNotSet()
+                                            ->children()
+                                                ->scalarNode('default')->defaultValue(NodeType::class)->cannotBeEmpty()->end()
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -74,7 +98,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('type')->end()
                             ->scalarNode('parent')->end()
                             ->scalarNode('factory')->end()
-                            ->scalarNode('template')->defaultValue(null)->end()
+                            ->scalarNode('template')->end()
                             ->arrayNode('options')->end()
                         ->end()
                     ->end()

@@ -23,11 +23,6 @@ class Node implements NodeInterface
     private $type;
 
     /**
-     * @var string
-     */
-    private $condition;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $children;
@@ -36,11 +31,6 @@ class Node implements NodeInterface
      * @var \Enhavo\Bundle\NavigationBundle\Model\NodeInterface
      */
     private $parent;
-
-    /**
-     * @var array
-     */
-    private $configuration;
 
     /**
      * @var object
@@ -65,7 +55,7 @@ class Node implements NodeInterface
     /**
      * @var integer
      */
-    private $order;
+    private $position;
 
     /**
      * @var string
@@ -111,29 +101,6 @@ class Node implements NodeInterface
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set condition
-     *
-     * @param string $condition
-     * @return Node
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string 
-     */
-    public function getCondition()
-    {
-        return $this->condition;
     }
 
     /**
@@ -211,22 +178,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return array
-     */
-    public function getConfiguration()
-    {
-        return $this->configuration;
-    }
-
-    /**
-     * @param array $configuration
-     */
-    public function setConfiguration(array $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
-    /**
      * @return int
      */
     public function getContentId()
@@ -277,17 +228,17 @@ class Node implements NodeInterface
     /**
      * @return int
      */
-    public function getOrder()
+    public function getPosition()
     {
-        return $this->order;
+        return $this->position;
     }
 
     /**
-     * @param int $order
+     * @param int $position
      */
-    public function setOrder($order)
+    public function setPosition($position)
     {
-        $this->order = $order;
+        $this->position = $position;
     }
 
     /**

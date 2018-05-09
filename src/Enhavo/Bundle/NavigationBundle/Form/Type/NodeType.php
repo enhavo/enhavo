@@ -19,6 +19,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NodeType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    private $class;
+
+    /**
+     * NodeType constructor.
+     *
+     * @param $class
+     */
+    public function __construct($class)
+    {
+        $this->class = $class;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('order', PositionType::class, []);
@@ -29,17 +44,7 @@ class NodeType extends AbstractType
         ]);
 
         if($options['children']) {
-            $builder->add('children', DynamicFormType::class, [
-                'label' => 'node.label.items',
-                'entry_type' => NodeType::class,
-                'entry_options' => [
-                    'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
-                    'data_class' => Node::class
-                ],
-                'translation_domain' => 'EnhavoNavigationBundle',
-                'item_resolver' => 'enhavo_navigation.resolver.item_resolver',
-                'item_route' => 'enhavo_navigation_navigation_form'
-            ]);
+            $builder->add('children', NodesType::class);
         }
     }
 
