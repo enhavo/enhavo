@@ -37,11 +37,10 @@ class Highlight {
 
     protected $textExtractor;
 
-    public function __construct(EntityManager $em, SearchUtil $util, PdfType $pdfType, MetadataFactory $metadataFactory, ContainerInterface $container, IndexWalker $indexWalker, TextExtractor $textExtractor)
+    public function __construct(EntityManager $em, SearchUtil $util, MetadataFactory $metadataFactory, ContainerInterface $container, IndexWalker $indexWalker, TextExtractor $textExtractor)
     {
         $this->em = $em;
         $this->util = $util;
-        $this->pdfType = $pdfType;
         $this->metadataFactory = $metadataFactory;
         $this->container = $container;
         $this->indexWalker = $indexWalker;

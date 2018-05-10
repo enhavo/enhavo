@@ -1,0 +1,40 @@
+services:
+    enhavo_search.indexer_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'Search Indexer'
+
+    enhavo_search.indexer.indexer:
+        class: Enhavo\Bundle\SearchBundle\Indexer\Indexer
+        arguments:
+            - '@enhavo_search.metadata.repository'
+            - '@enhavo_search.indexer_collector'
+
+    enhavo_search.indexer.indexer.model_indexer:
+        class: Enhavo\Bundle\SearchBundle\Indexer\Indexer\ModelIndexer
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.indexer, alias: model }
+
+    enhavo_search.indexer.indexer.collection_indexer:
+        class: Enhavo\Bundle\SearchBundle\Indexer\Indexer\CollectionIndexer
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.indexer, alias: collection }
+
+    enhavo_search.indexer.indexer.html_indexer:
+        class: Enhavo\Bundle\SearchBundle\Indexer\Indexer\HtmlIndexer
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.indexer, alias: html }
+
+    enhavo_search.indexer.indexer.text_indexer:
+        class: Enhavo\Bundle\SearchBundle\Indexer\Indexer\TextIndexer
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.indexer, alias: text }

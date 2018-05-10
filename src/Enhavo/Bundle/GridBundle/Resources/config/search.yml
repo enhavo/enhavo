@@ -1,95 +1,86 @@
 Enhavo\Bundle\GridBundle\Entity\Grid:
     properties:
         items:
-            - Collection:
-                entity: Enhavo\Bundle\GridBundle\Entity\Item
+            type: collection
 
 Enhavo\Bundle\GridBundle\Entity\Item:
     properties:
         itemType:
-            - Model
+            type: model
 
 Enhavo\Bundle\GridBundle\Entity\CiteText:
     properties:
-       cite:
-            - Plain:
-                weight: 8
-                type: citeText
+        cite:
+            type: text
+            weight: 8
 
 Enhavo\Bundle\GridBundle\Entity\Picture:
     properties:
-       title:
-            - Plain:
-                weight: 8
-                type: title
-       caption:
-            - Plain:
-                weight: 8
-                type: caption
+        title:
+            type: text
+            weight: 8
+        caption:
+            type: text
+            weight: 8
 
 Enhavo\Bundle\GridBundle\Entity\PicturePicture:
     properties:
-       title:
-            - Plain:
-                weight: 8
-                type: title
-       captionLeft:
-            - Plain:
-                weight: 8
-                type: caption
-       captionRight:
-            - Plain:
-                weight: 8
-                type: caption
+        title:
+            type: text
+            weight: 8
+        captionLeft:
+            type: text
+            weight: 8
+        captionRight:
+            type: text
+            weight: 8
 
 Enhavo\Bundle\GridBundle\Entity\Text:
     properties:
-       title:
-            - Plain:
-                weight: 8
-                type: title
-       text:
-            - Html:
-                weights:
-                  h1: 12
-                  h2: 10
-                  p: 7
-                type: text
+        title:
+            type: text
+            weight: 8
+        text:
+            type: html
+            weights:
+                h1: 12
+                h2: 10
+                p: 7
 
 Enhavo\Bundle\GridBundle\Entity\TextPicture:
     properties:
-       title:
-            - Plain:
-                weight: 8
-                type: title
-       text:
-            - Html:
-                type: text
+        title:
+            type: text
+            weight: 8
+        text:
+            type: html
 
 Enhavo\Bundle\GridBundle\Entity\TextText:
     properties:
         title:
-            - Plain:
-                weight: 8
-                type: title
+            type: text
+            weight: 8
         titleLeft:
-            - Plain:
-                weight: 8
-                type: title
+            type: text
+            weight: 8
         textLeft:
-            - Html:
-                type: text
+            type: html
         titleRight:
-            - Plain:
-                weight: 8
-                type: title
+            type: text
+            weight: 8
         textRight:
-            - Html:
-                type: text
+            type: html
 
 Enhavo\Bundle\GridBundle\Entity\Video:
     properties:
         title:
-            - Plain:
-                weight: 8
-                type: title
+            type: text
+            weight: 8
+
+Enhavo\Bundle\GridBundle\Entity\Gallery:
+    properties:
+        title:
+            type: text
+            weight: 8
+        text:
+            type: html

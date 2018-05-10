@@ -21,8 +21,13 @@ class SaveListener
     public function onSave($event)
     {
         //get the right IndexEngine
-        $engine = $this->container->getParameter('enhavo_search.search.index_engine');
-        $indexEngine = $this->container->get($engine);
-        $indexEngine->index($event->getSubject());
+        //$engine = $this->container->getParameter('enhavo_search.search.index_engine');
+        //$indexEngine = $this->container->get($engine);
+        //$indexEngine->index($event->getSubject());
+
+        $engine = $this->container->get('enhavo_search.engine.elastic_search_engine');
+        $engine->index($event->getSubject());
+
+        return;
     }
 }

@@ -30,10 +30,9 @@ class IndexElasticsearchEngine implements IndexEngineInterface
 
     protected $indexWalker;
 
-    public function __construct(SearchUtil $util, PdfType $pdfType, MetadataFactory $metadataFactory, IndexWalker $indexWalker)
+    public function __construct(SearchUtil $util, MetadataFactory $metadataFactory, IndexWalker $indexWalker)
     {
         $this->util = $util;
-        $this->pdfType = $pdfType;
         $this->metadataFactory = $metadataFactory;
         $this->indexWalker = $indexWalker;
     }

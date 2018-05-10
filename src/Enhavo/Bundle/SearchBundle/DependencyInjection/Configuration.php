@@ -20,15 +20,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('enhavo_search');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
-         $rootNode
+        $rootNode
             ->children()
                 ->arrayNode('search')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->scalarNode('indexing')->defaultValue(false)->end()
                         ->scalarNode('template')->defaultValue('EnhavoSearchBundle:Search:render.html.twig')->end()
                         ->scalarNode('strategy')->defaultValue('reindex')->end()
                         ->scalarNode('search_engine')->defaultValue('enhavo_search_search_engine')->end()

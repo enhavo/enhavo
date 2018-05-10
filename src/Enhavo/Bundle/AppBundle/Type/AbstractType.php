@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\AppBundle\Exception\TypeOptionException;
 
-abstract class AbstractType implements ContainerAwareInterface
+abstract class AbstractType implements ContainerAwareInterface, TypeInterface
 {
     use ContainerAwareTrait;
 

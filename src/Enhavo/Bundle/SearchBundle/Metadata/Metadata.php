@@ -37,6 +37,11 @@ class Metadata
     private $properties = [];
 
     /**
+     * @var array
+     */
+    private $filter;
+
+    /**
      * @return string
      */
     public function getClassName()
@@ -114,5 +119,21 @@ class Metadata
     public function setProperties($properties)
     {
         $this->properties = $properties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @param array $filter
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
     }
 }

@@ -18,4 +18,5 @@ default:
                 - Enhavo\Behat\Context\UserContext:
                 - Enhavo\Behat\Context\EmailContext:
                 - Enhavo\Behat\Context\MediaContext:
+                - Enhavo\Behat\Context\SearchContext:
                 - Behat\MinkExtension\Context\MinkContext

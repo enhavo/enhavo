@@ -12,6 +12,4 @@ AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 $loader->add('Symfony\Component\Intl\NumberFormatter', __DIR__.'/test.php');
 
-
-
 return $loader;

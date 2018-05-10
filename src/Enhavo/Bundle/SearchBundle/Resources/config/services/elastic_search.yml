@@ -1,0 +1,7 @@
+services:
+    enhavo_search.engine.elastic_search_engine:
+        class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchEngine
+        arguments:
+            - '@enhavo_search.indexer.indexer'
+            - '@enhavo_search.metadata.repository'
+            - '@doctrine.orm.entity_manager'

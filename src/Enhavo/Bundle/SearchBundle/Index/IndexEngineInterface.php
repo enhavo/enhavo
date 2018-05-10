@@ -13,7 +13,7 @@ interface IndexEngineInterface
 {
     public function index($resource);
 
-    public function unindex($resource);
+    public function removeIndex($resource);
 
     public function reindex();
 }
