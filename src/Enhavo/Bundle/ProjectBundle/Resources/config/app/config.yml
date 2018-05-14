@@ -96,3 +96,8 @@ cmf_routing:
     dynamic:
         controllers_by_class:
             Enhavo\Bundle\ShopBundle\Entity\Product: EnhavoProjectBundle:Shop:showProduct
+
+
+enhavo_search:
+    search:
+        indexing: true

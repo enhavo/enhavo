@@ -1,22 +1,4 @@
 services:
-    enhavo_search.block.search:
-        class: Enhavo\Bundle\SearchBundle\Block\SearchBlock
-        calls:
-            - [setContainer, ['@service_container']]
-        arguments:
-            - '@enhavo_search.search.util'
-            - '@enhavo_search.metadata.metadata_factory'
-        tags:
-            - { name: enhavo.block, alias: search }
-
-    enhavo_search.search.util:
-        class: Enhavo\Bundle\SearchBundle\Util\SearchUtil
-        arguments:
-            - '@kernel'
-            - '@service_container'
-            - '@enhavo_search.metadata.metadata_factory'
-            - '@doctrine.orm.entity_manager'
-
     enhavo_search_render:
         class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
         arguments:
@@ -24,75 +6,10 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_search_index_walker:
-        class: Enhavo\Bundle\SearchBundle\Index\IndexWalker
-        arguments:
-            - '@enhavo_search.index_collector'
-
-    enhavo_search_index_engine:
-        class: Enhavo\Bundle\SearchBundle\Index\IndexEngine
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%enhavo_search.search.strategy%'
-            - '@enhavo_search_index_walker'
-            - '@enhavo_search.metadata.metadata_factory'
-            - '@enhavo_search.search.util'
-
-    enhavo_search_search_engine:
-        class: Enhavo\Bundle\SearchBundle\Search\SearchEngine
-        arguments:
-            - '@service_container'
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_search.search.util'
-
-    enhavo_search_permission_filter:
-        class: Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter
-        arguments:
-            - '@service_container'
-
     enhavo_search_update_route:
         class: Enhavo\Bundle\SearchBundle\Twig\UpdateRoute
         tags:
             - { name: twig.extension }
-
-    enhavo_search_index_elasticsearch_engine:
-        class: Enhavo\Bundle\SearchBundle\Index\IndexElasticsearchEngine
-        arguments:
-            - '@enhavo_search.search.util'
-            - '@enhavo_search.metadata.metadata_factory'
-            - '@enhavo_search_index_walker'
-
-    enhavo_search_elasticsearch_engine:
-        class: Enhavo\Bundle\SearchBundle\Search\ElasticSearchEngine
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_search.search.util'
-            - '@enhavo_search.metadata.metadata_factory'
-
-    enhavo_search_collection_type:
-        class: Enhavo\Bundle\SearchBundle\Index\Type\CollectionType
-        arguments:
-            - '@enhavo_search.search.util'
-            - '@service_container'
-            - '@enhavo_search.metadata.metadata_factory'
-        tags:
-            - { name: enhavo_search.index, alias: Collection }
-
-    enhavo_search.index_collector:
-        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-        arguments:
-            - '@service_container'
-            - 'Index'
-
-    enhavo_search_highlight:
-        class: Enhavo\Bundle\SearchBundle\Search\Highlight
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_search.search.util'
-            - '@enhavo_search.metadata.metadata_factory'
-            - '@service_container'
-            - '@enhavo_search_index_walker'
-            - '@enhavo_search.extractor.extractor'
 
     enhavo_search.widget.search:
         class: Enhavo\Bundle\SearchBundle\Widget\SearchWidget
@@ -109,3 +26,16 @@ services:
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_search.result.result_converter:
+        class: Enhavo\Bundle\SearchBundle\Result\ResultConverter
+        arguments:
+            - '@enhavo_search.util.hightlighter'
+
+    enhavo_search.util.hightlighter:
+        class: Enhavo\Bundle\SearchBundle\Util\Highlighter
+        arguments:
+            - '@enhavo_search.extractor.extractor'
+
+    enhavo_search.util.text_simplify:
+        class: Enhavo\Bundle\SearchBundle\Util\TextSimplify

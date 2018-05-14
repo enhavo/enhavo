@@ -6,6 +6,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         teaser:
             type: text
             weight: 8
-            type: teaser
         grid:
             type: model
+    filter:
+        permission: 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'

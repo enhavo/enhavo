@@ -1,9 +1,8 @@
 services:
     enhavo_search.save_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\SaveListener
-        arguments:
-            - '@service_container'
-            - '@enhavo_search.metadata.metadata_factory'
+        calls:
+            - [ 'setContainer', [ '@service_container' ]]
         tags:
             - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
             - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }

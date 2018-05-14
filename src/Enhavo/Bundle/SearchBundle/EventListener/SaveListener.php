@@ -2,32 +2,26 @@
 
 namespace Enhavo\Bundle\SearchBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\Container;
-use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /*
  * Tells the IndexEngine to index a resource
  */
 class SaveListener
 {
-    protected $container;
+    use ContainerAwareTrait;
 
-    public function __construct(ContainerInterface $container, MetadataFactory $metadataFactory)
+    /**
+     * @param ResourceControllerEvent $event
+     */
+    public function onSave(ResourceControllerEvent $event)
     {
-        $this->container = $container;
-    }
-
-    public function onSave($event)
-    {
-        //get the right IndexEngine
-        //$engine = $this->container->getParameter('enhavo_search.search.index_engine');
-        //$indexEngine = $this->container->get($engine);
-        //$indexEngine->index($event->getSubject());
-
-        $engine = $this->container->get('enhavo_search.engine.elastic_search_engine');
-        $engine->index($event->getSubject());
-
-        return;
+        if($this->container->getParameter('enhavo_search.search.indexing')) {
+            //get the right index engine
+            $engine = $this->container->getParameter('enhavo_search.search.engine');
+            $indexEngine = $this->container->get($engine);
+            $indexEngine->index($event->getSubject());
+        }
     }
 }

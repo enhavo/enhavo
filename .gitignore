@@ -25,3 +25,4 @@
 /node_modules
 /auth.json
 /var
+/elasticsearch

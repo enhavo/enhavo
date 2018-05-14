@@ -6,6 +6,10 @@ var compass = require('compass-importer');
 var exec = require('child_process').exec;
 var ts = require("gulp-typescript");
 var options = require('gulp-options');
+var async = require('async');
+var download = require("gulp-download");
+var decompress = require('gulp-decompress');
+var clean = require('gulp-clean');
 
 gulp.task('sass', ['sass:compile']);
 
@@ -153,4 +157,25 @@ gulp.task("tsc:watch", function () {
     'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/*',
     'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/**/*'
   ], ['tsc:compile:grid']);
+});
+
+gulp.task("elastic:install", function(callback) {
+  async.series([
+    function (next) {
+      download('https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.0.0.zip')
+        .pipe(gulp.dest("."))
+        .on('end', next);
+    },
+    function (next) {
+      gulp.src('./elasticsearch-6.0.0.zip')
+        .pipe(decompress({strip: 1}))
+        .pipe(gulp.dest('./elasticsearch'))
+        .on('end', next);
+    },
+    function (next) {
+      gulp.src('./elasticsearch-6.0.0.zip', {read: false})
+        .pipe(clean())
+        .on('end', next);
+    }
+  ], callback);
 });
