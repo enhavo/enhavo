@@ -11,25 +11,25 @@ enhavo_dashboard_index:
                 stylesheets:
                     - '@EnhavoDashboardBundle/Resources/public/css/dashboard.css'
                 blocks:
-                    search:
-                        type: search
-                        entities:
-                            page:
-                                label: page.label.page
-                                translationDomain: EnhavoPageBundle
-                            article:
-                                label: article.label.article
-                                translationDomain: EnhavoArticleBundle
-                        fields:
-                            title:
-                                label: article.label.title
-                                translationDomain: EnhavoArticleBundle
-                            teaser:
-                                label: article.label.teaser
-                                translationDomain: EnhavoArticleBundle
-                            text:
-                                label: text.label.text
-                                translationDomain: EnhavoGridBundle
+#                    search:
+#                        type: search
+#                        entities:
+#                            page:
+#                                label: page.label.page
+#                                translationDomain: EnhavoPageBundle
+#                            article:
+#                                label: article.label.article
+#                                translationDomain: EnhavoArticleBundle
+#                        fields:
+#                            title:
+#                                label: article.label.title
+#                                translationDomain: EnhavoArticleBundle
+#                            teaser:
+#                                label: article.label.teaser
+#                                translationDomain: EnhavoArticleBundle
+#                            text:
+#                                label: text.label.text
+#                                translationDomain: EnhavoGridBundle
                     order:
                         type: chart
                         provider: shop_order

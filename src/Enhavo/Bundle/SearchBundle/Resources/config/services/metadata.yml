@@ -1,0 +1,24 @@
+services:
+    enhavo_search.metadata.configuration:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataCacheConfiguration
+        arguments:
+            - '@kernel'
+            - '@filesystem'
+            - 'search_metadata'
+
+    enhavo_search.metadata.metadata_factory:
+        class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory
+        arguments:
+            - '@kernel'
+
+    enhavo_search.metadata.filter_parser:
+        class: Enhavo\Bundle\SearchBundle\Metadata\FilterParser
+
+    enhavo_search.metadata.repository:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
+        arguments:
+            - '@enhavo_search.metadata.configuration'
+            - '@enhavo_search.metadata.metadata_factory'
+        calls:
+            - [addParser, ['@enhavo_app.metadata.parser.property_parser']]
+            - [addParser, ['@enhavo_search.metadata.filter_parser']]

@@ -1,10 +1,7 @@
 Enhavo\Bundle\PageBundle\Entity\Page:
-
     properties:
         title:
-            - Plain:
-                weight: 5
-                type: title
-
+            type: text
+            weight: 5
         grid:
-            - Model
+            type: model

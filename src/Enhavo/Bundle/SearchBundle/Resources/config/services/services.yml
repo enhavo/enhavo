@@ -1,0 +1,41 @@
+services:
+    enhavo_search_render:
+        class: Enhavo\Bundle\SearchBundle\Twig\SearchForm
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
+
+    enhavo_search_update_route:
+        class: Enhavo\Bundle\SearchBundle\Twig\UpdateRoute
+        tags:
+            - { name: twig.extension }
+
+    enhavo_search.widget.search:
+        class: Enhavo\Bundle\SearchBundle\Widget\SearchWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: search }
+
+    enhavo_search.controller.search:
+        class: Enhavo\Bundle\SearchBundle\Controller\SearchController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_search.result.result_converter:
+        class: Enhavo\Bundle\SearchBundle\Result\ResultConverter
+        arguments:
+            - '@enhavo_search.util.hightlighter'
+
+    enhavo_search.util.hightlighter:
+        class: Enhavo\Bundle\SearchBundle\Util\Highlighter
+        arguments:
+            - '@enhavo_search.extractor.extractor'
+
+    enhavo_search.util.text_simplify:
+        class: Enhavo\Bundle\SearchBundle\Util\TextSimplify
