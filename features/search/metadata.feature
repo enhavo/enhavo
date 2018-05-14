@@ -3,9 +3,9 @@ Feature: Metadata
   We want to receive the data
 
   Background:
-    Given search metadata factory
+    Given search metadata repository
 
   Scenario: Fetch information
     Given search resource
-    Given get metadata result from factory for search resource
+    Given get metadata result from repository for search resource
     Then the metadata result should be ok

@@ -2,9 +2,9 @@
 
 namespace Enhavo\Behat\Context;
 
+use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
-use Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory;
 use PHPUnit\Framework\Assert;
 
 /**
@@ -13,20 +13,20 @@ use PHPUnit\Framework\Assert;
 class SearchContext extends KernelContext
 {
     /**
-     * @var MetadataFactory
+     * @var MetadataRepository
      */
-    public static $factory;
+    public static $repository;
 
     public static $resource;
 
     public static $result;
 
     /**
-     * @Given search metadata factory
+     * @Given search metadata repository
      */
-    public function searchMetadataFactory()
+    public function searchMetadataRepository()
     {
-        self::$factory = $this->get('enhavo_search.metadata.metadata_factory');
+        self::$repository = $this->get('enhavo_search.metadata.repository');
     }
 
     /**
@@ -38,11 +38,11 @@ class SearchContext extends KernelContext
     }
 
     /**
-     * @Given get metadata result from factory for search resource
+     * @Given get metadata result from repository for search resource
      */
-    public function getMetadataResultFromFactoryForSearchResource()
+    public function getMetadataResultFromRepositoryForSearchResource()
     {
-        self::$result = self::$factory->create(self::$resource);
+        self::$result = self::$repository->getMetadata(self::$resource);
     }
 
     /**
