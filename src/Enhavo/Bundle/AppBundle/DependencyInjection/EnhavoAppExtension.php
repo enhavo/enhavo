@@ -17,7 +17,7 @@ class EnhavoAppExtension extends Extension
     /**
      * Enhavo Version
      */
-    const VERSION = '0.4.0';
+    const VERSION = '0.5.0';
 
     /**
      * {@inheritDoc}
