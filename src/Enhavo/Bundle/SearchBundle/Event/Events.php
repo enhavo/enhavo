@@ -11,5 +11,5 @@ namespace Enhavo\Bundle\SearchBundle\Event;
 
 class Events
 {
-    const INDEX_EVENT = 'enhavo_search.index_event';
+    const INDEX_EVENT = 'enhavo_search.index';
 }

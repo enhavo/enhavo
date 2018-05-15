@@ -39,7 +39,7 @@ class Metadata
     /**
      * @var array
      */
-    private $filter;
+    private $filter = [];
 
     /**
      * @return string

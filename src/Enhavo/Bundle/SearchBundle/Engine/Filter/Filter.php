@@ -22,6 +22,11 @@ class Filter
     private $filter = [];
 
     /**
+     * @var string
+     */
+    private $class;
+
+    /**
      * @return string
      */
     public function getTerm()
@@ -52,5 +57,21 @@ class Filter
     public function getFilter()
     {
         return $this->filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param string $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
     }
 }

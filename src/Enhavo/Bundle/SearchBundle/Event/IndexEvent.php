@@ -23,12 +23,12 @@ class IndexEvent extends Event
     /**
      * @var Index[]
      */
-    private $indexes;
+    private $indexes = [];
 
     /**
      * @var Filter[]
      */
-    private $filters;
+    private $filters = [];
 
     public function __construct($subject)
     {
@@ -65,6 +65,11 @@ class IndexEvent extends Event
     public function setFilters($filters)
     {
         $this->filters = $filters;
+    }
+
+    public function addFilter(Filter $filter)
+    {
+        $this->filters[] = $filter;
     }
 
     /**
