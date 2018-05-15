@@ -82,6 +82,7 @@ class ElasticSearchEngine implements EngineInterface
         }
 
         $mapping->setProperties(array(
+            'className' => array('type' => 'text'),
             'indexData' => array(
                 'type' => 'object',
                 'properties' => $indexData
@@ -96,7 +97,6 @@ class ElasticSearchEngine implements EngineInterface
 
     public function search(Filter $filter)
     {
-        $this->initialize();
         $search = new Search($this->client);
         $search->addIndex(self::ELASTIC_SEARCH_INDEX);
         $search->addType(self::ELASTIC_SEARCH_TYPE);

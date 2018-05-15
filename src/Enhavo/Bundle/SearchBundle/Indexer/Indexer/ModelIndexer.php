@@ -18,7 +18,10 @@ class ModelIndexer extends AbstractType implements IndexerInterface
 {
     public function getIndexes($value, array $options = [])
     {
-        return $this->container->get('enhavo_search.indexer.indexer')->getIndexes($value);
+        if($value !== null) {
+            return $this->container->get('enhavo_search.indexer.indexer')->getIndexes($value);
+        }
+        return [];
     }
 
     public function getType()

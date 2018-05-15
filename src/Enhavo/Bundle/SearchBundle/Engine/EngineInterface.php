@@ -22,4 +22,6 @@ interface EngineInterface
     public function removeIndex($resource);
 
     public function reindex();
+
+    public function initialize();
 }
