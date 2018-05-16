@@ -71,6 +71,11 @@ class ElasticSearchEngine implements EngineInterface
 
     public function initialize()
     {
+        $index = $this->getIndex();
+        if(!$index->exists()) {
+            $index->create();
+        }
+
         $type = $this->getType();
 
         $mapping = new Mapping();
