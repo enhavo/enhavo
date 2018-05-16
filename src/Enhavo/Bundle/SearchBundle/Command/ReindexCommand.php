@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 16.05.18
- * Time: 11:59
- */
-
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
@@ -14,27 +7,30 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class IndexCommand extends ContainerAwareCommand
+/*
+ * This command does the reindexing
+ */
+class ReindexCommand extends ContainerAwareCommand
 {
     use ContainerAwareTrait;
 
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:initialize')
-            ->setDescription('Runs search initialize')
+            ->setName('enhavo:search:reindex')
+            ->setDescription('Runs search reindex')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Start initialize');
+        $output->writeln('Start reindexing');
 
         $engineName = $this->container->getParameter('enhavo_search.search.engine');
         /** @var EngineInterface $engine */
         $engine = $this->container->get($engineName);
-        $engine->initialize();
+        $engine->reindex();
 
-        $output->writeln('Initialize finished');
+        $output->writeln('Indexing finished');
     }
 }
