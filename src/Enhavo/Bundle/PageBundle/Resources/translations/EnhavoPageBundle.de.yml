@@ -12,6 +12,7 @@ page:
       priority: 'Priorität'
       change_frequency: 'Änderungsfrequenz'
   label:
+    page: 'Seite'
     id: 'ID'
     public: 'öffentlich'
     title: 'Titel'

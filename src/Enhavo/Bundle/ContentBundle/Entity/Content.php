@@ -446,4 +446,9 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     {
         return $this->openGraphImage;
     }
+
+    public function __toString()
+    {
+        return (string)$this->getTitle();
+    }
 }

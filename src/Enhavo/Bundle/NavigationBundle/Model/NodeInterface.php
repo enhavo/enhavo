@@ -131,4 +131,14 @@ interface NodeInterface
      * @param string $label
      */
     public function setLabel($label);
+
+    /**
+     * @return array
+     */
+    public function getConfiguration();
+
+    /**
+     * @param array $configuration
+     */
+    public function setConfiguration($configuration);
 }

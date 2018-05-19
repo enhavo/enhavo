@@ -12,6 +12,7 @@ page:
       priority: 'Priority'
       change_frequency: 'Change frequency'
   label:
+    page: 'Page'
     id: 'ID'
     public: 'public'
     title: 'Title'

@@ -52,7 +52,8 @@ class NodeType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Node::class,
             'children' => false,
-            'block_name' => 'enhavo_dynamic_item'
+            'block_name' => 'enhavo_dynamic_item',
+            'item_resolver' => 'enhavo_navigation.resolver.node_resolver'
         ]);
     }
 

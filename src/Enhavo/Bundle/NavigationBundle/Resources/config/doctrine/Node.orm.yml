@@ -24,6 +24,10 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             type: integer
             nullable: true
 
+        configuration:
+            type: json_array
+            nullable: true
+
         contentId:
             type: integer
             nullable: true

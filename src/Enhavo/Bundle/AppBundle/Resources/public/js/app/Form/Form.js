@@ -64,6 +64,7 @@ define(["require", "exports"], function (require, exports) {
                 }
                 var event_3 = new FormInsertEvent(this.element);
                 $('body').trigger('formInsert', event_3);
+                $(document).trigger('gridAddAfter', [this.element]);
                 this.element = event_3.getElement();
             }
         };

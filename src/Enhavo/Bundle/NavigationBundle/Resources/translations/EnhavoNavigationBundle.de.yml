@@ -9,4 +9,8 @@ node:
     label:
         items: 'Items'
         label: 'Name'
+        submenu: 'Submenü'
+
+link:
+    label:
         link: 'Link'

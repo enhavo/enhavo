@@ -69,7 +69,9 @@ class DynamicItemType extends AbstractType
 
         $data = $form->getData();
         if($data) {
-            $view->vars['label'] = $resolver->resolveItem($accessor->getValue($data, $itemProperty))->getLabel();
+            $item = $resolver->resolveItem($accessor->getValue($data, $itemProperty));
+            $view->vars['label'] = $item->getLabel();
+            $view->vars['translation_domain'] = $item->getTranslationDomain();
         }
 
         if(isset($options['item_full_name'])) {
@@ -110,7 +112,7 @@ class DynamicItemType extends AbstractType
         }
 
         if(!$resolver instanceof ResolverInterface) {
-            throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
+            throw new \Exception(sprintf('Resolver for dynamic form is not implements ResolverInterface', $resolver));
         }
 
         return $resolver;

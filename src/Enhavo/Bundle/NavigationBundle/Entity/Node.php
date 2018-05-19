@@ -63,6 +63,11 @@ class Node implements NodeInterface
     private $label;
 
     /**
+     * @var array
+     */
+    private $configuration;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -255,5 +260,21 @@ class Node implements NodeInterface
     public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param array $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
     }
 }

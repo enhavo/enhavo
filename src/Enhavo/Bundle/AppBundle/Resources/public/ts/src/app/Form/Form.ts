@@ -75,6 +75,7 @@ export class FormInitializer
 
             let event = new FormInsertEvent(this.element);
             $('body').trigger('formInsert', event);
+            $(document).trigger('gridAddAfter', [this.element]);
             this.element = event.getElement()
         }
     }

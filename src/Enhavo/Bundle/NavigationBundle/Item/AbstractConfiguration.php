@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\NavigationBundle\Item;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\NavigationBundle\Entity\Node;
+use Enhavo\Bundle\NavigationBundle\Factory\Factory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfiguration extends AbstractType implements ConfigurationInterface
@@ -60,15 +62,15 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
             'options' => [],
             'parent' => null,
             'translationDomain' => null,
+            'factory' => Factory::class,
+            'model' => Node::class
         ]);
 
         $resolver->setRequired([
-            'model',
             'form',
             'label',
             'type',
             'parent',
-            'factory',
             'template',
         ]);
     }
