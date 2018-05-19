@@ -11,6 +11,8 @@ namespace Enhavo\Bundle\ProjectBundle\Controller;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
+use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
+use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -53,6 +55,23 @@ class DemoController extends Controller
         $formView = $form->createView();
 
         return $this->render('EnhavoProjectBundle:Theme/Demo:grid.html.twig', [
+            'form' => $formView
+        ]);
+    }
+
+    public function navigationAction(Request $request)
+    {
+        $navigation = new Navigation();
+
+        $form = $this->createForm(NavigationType::class, $navigation);
+
+        if($request->isMethod('post')) {
+            $form->submit($request);
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('EnhavoProjectBundle:Theme/Demo:navigation.html.twig', [
             'form' => $formView
         ]);
     }

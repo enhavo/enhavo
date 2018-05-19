@@ -1,0 +1,16 @@
+navigation:
+    label:
+        navigation: 'Navigation'
+        name: 'Name'
+        items: 'Items'
+        code: 'Code'
+
+node:
+    label:
+        items: 'Items'
+        label: 'Name'
+        submenu: 'Submenü'
+
+link:
+    label:
+        link: 'Link'

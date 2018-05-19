@@ -42,3 +42,8 @@ enhavo_content:
             page:
                 type: publish
                 repository: enhavo_page.repository.page
+
+enhavo_navigation:
+    items:
+        page:
+            type: page

@@ -8,6 +8,7 @@
       "app/Templating": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Templating"],
       "app/Translator": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Translator"],
       "app/Menu": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Menu"],
+      "app/app/Form/Form": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Form/Form"],
       "media/Media": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Media"],
       "media/Extension/ImageCropper": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Extension/ImageCropper"],
       "media/Adapter/EnhavoAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],

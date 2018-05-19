@@ -1,0 +1,56 @@
+Enhavo\Bundle\NavigationBundle\Entity\Node:
+    type: entity
+    table: navigation_node
+    repositoryClass: Enhavo\Bundle\NavigationBundle\Repository\NodesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        type:
+            type: string
+            length: 255
+            nullable: true
+
+        label:
+            type: string
+            length: 255
+            nullable: true
+
+        position:
+            type: integer
+            nullable: true
+
+        configuration:
+            type: json_array
+            nullable: true
+
+        contentId:
+            type: integer
+            nullable: true
+
+        contentClass:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        parent:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+        navigation:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Entity\Navigation
+
+    oneToMany:
+        children:
+            cascade: ['persist']
+            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
+            mappedBy: parent
+            orderBy:
+                position: ASC
+
+    lifecycleCallbacks: {  }

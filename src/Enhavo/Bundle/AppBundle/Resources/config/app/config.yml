@@ -81,3 +81,4 @@ enhavo_app:
     apps:
       - 'app/app/Menu'
       - 'app/app/ConditionType'
+      - 'app/app/Adapter/DynamicForm/EnhavoAdapter'

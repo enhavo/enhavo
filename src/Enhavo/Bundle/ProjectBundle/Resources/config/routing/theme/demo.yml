@@ -15,3 +15,9 @@ enhavo_project_demo_grid:
     defaults:
         _controller: EnhavoProjectBundle:Demo:grid
         _method: GET
+
+enhavo_project_demo_navigation:
+    path: /navigation
+    defaults:
+        _controller: EnhavoProjectBundle:Demo:navigation
+        _method: GET

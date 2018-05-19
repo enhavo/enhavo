@@ -13,10 +13,12 @@ default:
             snippets: false
 
     suites:
-        user:
+        enhavo:
             contexts:
                 - Enhavo\Behat\Context\UserContext:
                 - Enhavo\Behat\Context\EmailContext:
                 - Enhavo\Behat\Context\MediaContext:
+                - Enhavo\Behat\Context\DoctrineContext:
+                - Enhavo\Behat\Context\NavigationContext:
                 - Enhavo\Behat\Context\SearchContext:
                 - Behat\MinkExtension\Context\MinkContext

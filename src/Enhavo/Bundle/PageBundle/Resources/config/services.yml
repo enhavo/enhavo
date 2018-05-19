@@ -10,6 +10,13 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_page.form.type.navigation_page_node:
+        class: Enhavo\Bundle\PageBundle\Form\Type\NavigationPageNodeType
+        arguments:
+            - '%enhavo_page.model.page.class%'
+        tags:
+            - { name: form.type }
+
     enhavo_page.widget.page:
         class: Enhavo\Bundle\PageBundle\Widget\PageWidget
         calls:
@@ -46,3 +53,10 @@ services:
         arguments:
             - '%enhavo_page.model.page.class%'
             - '@enhavo_grid.factory.grid'
+
+    enhavo_page.navigation.page_configuration:
+        class: Enhavo\Bundle\PageBundle\Navigation\PageConfiguration
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_navigation.item, alias: 'page' }

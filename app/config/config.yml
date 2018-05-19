@@ -24,6 +24,7 @@ imports:
     - { resource: '@EnhavoThemeBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoUserBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoNavigationBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoProjectBundle/Resources/config/app/config.yml' }
     - { resource: security.yml }
     - { resource: enhavo.yml }
