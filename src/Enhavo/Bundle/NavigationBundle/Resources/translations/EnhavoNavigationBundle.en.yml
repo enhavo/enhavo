@@ -1,4 +1,11 @@
 navigation:
+    role:
+        label:
+            index: 'Navigation anzeigen'
+            update: 'Navigation bearbeiten'
+            create: 'Navigation erstellen'
+            delete: 'Navigation löschen'
+
     label:
         navigation: 'Navigation'
         name: 'Name'
