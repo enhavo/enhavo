@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NavigationBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
+use Enhavo\Bundle\NavigationBundle\Factory\NavigationFactory;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
@@ -48,7 +49,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(Navigation::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(NavigationRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(NavigationFactory::class)->end()
                                         ->arrayNode('form')
                                             ->addDefaultsIfNotSet()
                                             ->children()

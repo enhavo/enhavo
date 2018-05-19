@@ -6,6 +6,24 @@ services:
         tags:
             - { name: enhavo.menu, alias: navigation }
 
+    enhavo_navigation.extend_listener.navigation:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NavigationBundle\Entity\Navigation
+            - '%enhavo_navigation.model.navigation.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_navigation.extend_listener.node:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NavigationBundle\Entity\Node
+            - '%enhavo_navigation.model.node.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
     enhavo_navigation.event_listener.node_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
