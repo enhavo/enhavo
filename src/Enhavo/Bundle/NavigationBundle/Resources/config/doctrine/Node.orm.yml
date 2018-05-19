@@ -47,6 +47,6 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
             mappedBy: parent
             orderBy:
-                order: ASC
+                position: ASC
 
     lifecycleCallbacks: {  }

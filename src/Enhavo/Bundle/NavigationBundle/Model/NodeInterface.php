@@ -83,16 +83,6 @@ interface NodeInterface
     public function setContent($content);
 
     /**
-     * @return array
-     */
-    public function getConfiguration();
-
-    /**
-     * @param array $configuration
-     */
-    public function setConfiguration(array $configuration);
-
-    /**
      * @return int
      */
     public function getContentId();
@@ -125,12 +115,12 @@ interface NodeInterface
     /**
      * @return int
      */
-    public function getOrder();
+    public function getPosition();
 
     /**
      * @param int $order
      */
-    public function setOrder($order);
+    public function setPosition($order);
 
     /**
      * @return string

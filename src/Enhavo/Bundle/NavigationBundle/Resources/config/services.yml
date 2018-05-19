@@ -17,13 +17,45 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    enhavo_navigation.resolver.item_resolver:
-        class: Enhavo\Bundle\NavigationBundle\Resolver\ItemResolver
+    enhavo_navigation.item_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'NavigationItem'
+
+    enhavo_navigation.resolver.node_resolver:
+        class: Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver
+        calls:
+            - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
+            - '@enhavo_navigation.item_collector'
             - '%enhavo_navigation.items%'
 
     enhavo_navigation.form.node_type:
         class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType
+        arguments:
+            - '%enhavo_navigation.model.node.class%'
         tags:
             - { name: form.type, alias: 'enhavo_navigation_node' }
+
+    enhavo_navigation.form.nodes_type:
+        class: Enhavo\Bundle\NavigationBundle\Form\Type\NodesType
+        arguments:
+            - '%enhavo_navigation.model.node.class%'
+        tags:
+            - { name: form.type, alias: 'enhavo_navigation_nodes' }
+
+    enhavo_navigation.item.configuration.link_configuration:
+        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_navigation.item, alias: 'link' }
+
+    enhavo_navigation.item.configuration.submenu_configuration:
+        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_navigation.item, alias: 'submenu' }

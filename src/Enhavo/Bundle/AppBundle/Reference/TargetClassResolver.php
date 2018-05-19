@@ -33,7 +33,8 @@ class TargetClassResolver implements TargetClassResolverInterface
 
     public function find($id, $class)
     {
-        return $this->getRepository($class)->find($id);
+        $repository = $this->getRepository($class);
+        return $repository->find($id);
     }
 
     /**
@@ -53,7 +54,7 @@ class TargetClassResolver implements TargetClassResolverInterface
     private function getRepositoryFromSylius($type)
     {
         $resources = $this->container->getParameter('sylius.resources');
-        if(!isset($type, $resources)) {
+        if(!array_key_exists($type, $resources)) {
             return null;
         }
 

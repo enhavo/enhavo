@@ -8,14 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
-
-class LinkFactory
+class LinkFactory extends Factory
 {
-    public function create()
-    {
-        $node = new Node();
-        $node->setType('link');
-        return $node;
-    }
+
 }

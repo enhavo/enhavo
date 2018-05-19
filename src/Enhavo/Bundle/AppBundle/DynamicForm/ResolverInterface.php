@@ -25,7 +25,7 @@ interface ResolverInterface
      *
      * @return ItemInterface[]
      */
-    public function resolveItems();
+    public function resolveDefaultItems();
 
     /**
      * Get item by name
@@ -47,9 +47,11 @@ interface ResolverInterface
      * Get form type
      *
      * @param string $name
+     * @param object|null $data
+     * @param array $options
      * @return FormInterface
      */
-    public function resolveFormType($name);
+    public function resolveForm($name, $data = null, $options = []);
 
     /**
      * Get template path for rendering the form

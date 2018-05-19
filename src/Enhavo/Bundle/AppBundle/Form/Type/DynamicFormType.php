@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -25,12 +25,12 @@ class DynamicFormType extends AbstractType
         $resolver = $this->getResolver($options);
 
         if(count($options['items'])) {
-            $item = $resolver->getItem($options['items']);
+            $item = $resolver->resolveItem($options['items']);
             $items = [$item];
         } elseif(count($options['item_group'])) {
-            $items = $resolver->getItemGroup($options['item_group']);
+            $items = $resolver->resolveItemGroup($options['item_group']);
         } else {
-            $items = $resolver->getItems();
+            $items = $resolver->resolveDefaultItems();
         }
 
         $view->vars['items'] = $items;
@@ -42,7 +42,7 @@ class DynamicFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return ItemResolverInterface
+     * @return ResolverInterface
      * @throws \Exception
      */
     private function getResolver(array $options)
@@ -55,7 +55,7 @@ class DynamicFormType extends AbstractType
             $resolver = $this->container->get($resolver);
         }
 
-        if(!$resolver instanceof ItemResolverInterface) {
+        if(!$resolver instanceof ResolverInterface) {
             throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
         }
 

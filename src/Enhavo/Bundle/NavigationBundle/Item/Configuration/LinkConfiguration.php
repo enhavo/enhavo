@@ -8,6 +8,10 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Item\Configuration;
 
+use Enhavo\Bundle\NavigationBundle\Entity\Link;
+use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
+use Enhavo\Bundle\NavigationBundle\Factory\LinkFactory;
+use Enhavo\Bundle\NavigationBundle\Form\Type\LinkType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LinkConfiguration extends AbstractConfiguration
@@ -17,21 +21,17 @@ class LinkConfiguration extends AbstractConfiguration
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'model' => null,
-            'form' => null,
-            'repository' => null,
-            'label' => null,
-            'translationDomain' => null,
-            'type' => null,
-            'parent' => null,
-            'factory' => null,
-            'template' => 'EnhavoAppBundle:Menu:base.html.twig',
+            'model' => Link::class,
+            'form' => LinkType::class,
+            'factory' => LinkFactory::class,
+            'label' => 'Link',
+            'template' => 'EnhavoNavigationBundle:Form:link.html.twig',
             'options' => []
         ]);
     }
 
     public function getType()
     {
-        return 'base';
+        return 'link';
     }
 }

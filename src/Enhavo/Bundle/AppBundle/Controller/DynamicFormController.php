@@ -9,7 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 
@@ -22,18 +24,16 @@ class DynamicFormController extends Controller
         $formName = $request->get('formName');
         $type = $request->get('type');
 
-        $formFactory = $this->container->get('form.factory');
+        $factory = $resolver->resolveFactory($type);
+        $data = $factory->createNew();
 
-        /** @var $formType ItemFormType */
-        $formType = $resolver->getFormType($type);
-        $factory = $resolver->getFactory($type);
-        $data = $factory->create();
-
-        $form = $formFactory->create($formType, $data, array(
+        /** @var $form Form */
+        $form = $resolver->resolveForm($type, $data, array(
             'csrf_protection' => false,
             'item_resolver' => $this->getResolverName($request),
             'item_full_name' => $formName
         ));
+
 
         return $this->render('EnhavoAppBundle:DynamicForm:form.html.twig', array(
             'form' => $form->createView()
@@ -42,7 +42,7 @@ class DynamicFormController extends Controller
 
     /**
      * @param Request $request
-     * @return ItemResolverInterface
+     * @return ResolverInterface
      * @throws \Exception
      */
     private function getResolver(Request $request)
@@ -54,8 +54,8 @@ class DynamicFormController extends Controller
         }
         $resolver = $this->container->get($resolverName);
 
-        if(!$resolver instanceof ItemResolverInterface) {
-            throw new \Exception(sprintf('Resolver for dynamic form controller is not implements ItemResolverInterface', $resolver));
+        if(!$resolver instanceof ResolverInterface) {
+            throw new \Exception(sprintf('Resolver for dynamic form controller is not implements ResolverInterface', $resolver));
         }
 
         return $resolver;

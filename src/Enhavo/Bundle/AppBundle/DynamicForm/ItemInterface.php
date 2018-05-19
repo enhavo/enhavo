@@ -10,6 +10,8 @@ namespace Enhavo\Bundle\AppBundle\DynamicForm;
 
 interface ItemInterface
 {
+    public function getName();
+
     public function getLabel();
 
     public function getType();

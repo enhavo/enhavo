@@ -1,0 +1,23 @@
+Enhavo\Bundle\NavigationBundle\Entity\Link:
+    type: entity
+    table: navigation_link
+    repositoryClass: Enhavo\Bundle\NavigationBundle\Repository\LinkRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        link:
+            type: string
+            length: 1023
+            nullable: true
+
+        target:
+            type: string
+            length: 255
+            nullable: true
+
+    lifecycleCallbacks: { }

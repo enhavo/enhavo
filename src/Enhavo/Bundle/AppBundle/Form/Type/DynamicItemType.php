@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -36,8 +37,8 @@ class DynamicItemType extends AbstractType
             $item = $event->getData();
             $form = $event->getForm();
             if(!empty($item) && isset($item[$itemProperty])) {
-                $builder = $resolver->resolveFormBuilder($item[$itemProperty]);
-                foreach($builder as $child) {
+                $resolvedForm = $resolver->resolveForm($item[$itemProperty]);
+                foreach($resolvedForm as $child) {
                     $form->add($child);
                 }
             }
@@ -48,8 +49,8 @@ class DynamicItemType extends AbstractType
             $form = $event->getForm();
             $accessor = PropertyAccess::createPropertyAccessor();
             if(!empty($item) && $accessor->getValue($item, $itemProperty)) {
-                $builder = $resolver->resolveFormBuilder($accessor->getValue($item, $itemProperty));
-                foreach($builder as $child) {
+                $resolvedForm = $resolver->resolveForm($accessor->getValue($item, $itemProperty));
+                foreach($resolvedForm as $child) {
                     $form->add($child);
                 }
             }
@@ -68,14 +69,14 @@ class DynamicItemType extends AbstractType
 
         $data = $form->getData();
         if($data) {
-            $view->vars['label'] = $resolver->getItem($accessor->getValue($data, $itemProperty))->getLabel();
+            $view->vars['label'] = $resolver->resolveItem($accessor->getValue($data, $itemProperty))->getLabel();
         }
 
         if(isset($options['item_full_name'])) {
             $view->vars['full_name'] = sprintf('%s', ($options['item_full_name']));
         }
 
-        $view->vars['item_template'] = $resolver->resolveItemTemplate($accessor->getValue($data, $itemProperty));;
+        $view->vars['item_template'] = $resolver->resolveFormTemplate($accessor->getValue($data, $itemProperty));;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -95,7 +96,7 @@ class DynamicItemType extends AbstractType
 
     /**
      * @param array $options
-     * @return ItemResolverInterface
+     * @return ResolverInterface
      * @throws \Exception
      */
     private function getResolver(array $options)
@@ -108,7 +109,7 @@ class DynamicItemType extends AbstractType
             $resolver = $this->container->get($resolver);
         }
 
-        if(!$resolver instanceof ItemResolverInterface) {
+        if(!$resolver instanceof ResolverInterface) {
             throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
         }
 

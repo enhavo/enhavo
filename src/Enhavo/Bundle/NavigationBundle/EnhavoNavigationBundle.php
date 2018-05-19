@@ -16,5 +16,9 @@ class EnhavoNavigationBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_navigation.item_collector', 'enhavo_navigation.item')
+        );
     }
 }

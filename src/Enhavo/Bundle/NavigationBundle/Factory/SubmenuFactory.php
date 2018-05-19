@@ -8,15 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
-
-class SubmenuFactory
+class SubmenuFactory extends Factory
 {
-    public function create()
-    {
-        $node = new Node();
-        $node->setType('submenu');
-        return $node;
-    }
+
 }

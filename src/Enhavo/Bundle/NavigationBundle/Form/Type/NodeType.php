@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
 use Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType;
 use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
@@ -36,7 +35,7 @@ class NodeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', PositionType::class, []);
+        $builder->add('position', PositionType::class, []);
 
         $builder->add('label', TextType::class, [
             'label' => 'node.label.label',

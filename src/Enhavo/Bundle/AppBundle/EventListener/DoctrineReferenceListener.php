@@ -12,9 +12,11 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Doctrine\ORM\UnitOfWork;
 
 /**
  * Class DoctrineReferenceListener
@@ -75,7 +77,28 @@ class DoctrineReferenceListener implements EventSubscriber
             Events::preUpdate,
             Events::postPersist,
             Events::postUpdate,
+            Events::onFlush,
         );
+    }
+
+    public function onFlush(OnFlushEventArgs $args)
+    {
+        // persist target class
+        $em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+
+        $result = $uow->getIdentityMap();
+        if(isset($result[$this->targetClass])) {
+            foreach ($result[$this->targetClass] as $entity) {
+                $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
+                if($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+                    $em->persist($targetProperty);
+                    $metaData = $em->getClassMetadata(get_class($targetProperty));
+                    $uow->computeChangeSet($metaData, $targetProperty);
+                }
+            }
+        }
     }
 
     /**
@@ -84,13 +107,16 @@ class DoctrineReferenceListener implements EventSubscriber
     public function postLoad(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        if(get_class($object) instanceof $this->targetClass) {
+        if(get_class($object) === $this->targetClass) {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $id = $propertyAccessor->getValue($object, $this->idProperty);
             $class = $propertyAccessor->getValue($object, $this->classProperty);
-            $targetEntity = $this->targetClassResolver->find($id, $class);
-            if($targetEntity === null) {
-                $propertyAccessor->setValue($object, $this->targetProperty, $targetEntity);
+
+            if($id && $class) {
+                $targetEntity = $this->targetClassResolver->find($id, $class);
+                if($targetEntity !== null) {
+                    $propertyAccessor->setValue($object, $this->targetProperty, $targetEntity);
+                }
             }
         }
     }
@@ -149,10 +175,9 @@ class DoctrineReferenceListener implements EventSubscriber
      */
     private function updateEntity($entity)
     {
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
-
         $change = false;
         if(get_class($entity) == $this->targetClass) {
+            $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
 
             if($targetProperty) {

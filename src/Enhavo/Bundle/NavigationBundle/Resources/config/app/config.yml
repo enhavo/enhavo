@@ -12,18 +12,5 @@ enhavo_navigation:
     items:
         submenu:
             type: submenu
-            model: Enhavo\Bundle\NavigationBundle\Entity\Node
-            factory: Enhavo\Bundle\NavigationBundle\Factory\SubmenuFactory
-            label: Submenu
-            translationDomain: ~
-            form:  Enhavo\Bundle\NavigationBundle\Form\Type\SubmenuType
-            template: 'EnhavoNavigationBundle:Form:submenu.html.twig'
-
         link:
             type: link
-            model: Enhavo\Bundle\NavigationBundle\Entity\Node
-            factory: Enhavo\Bundle\NavigationBundle\Factory\LinkFactory
-            label: Link
-            translationDomain: ~
-            form:  Enhavo\Bundle\NavigationBundle\Form\Type\LinkType
-            template: 'EnhavoNavigationBundle:Form:link.html.twig'
