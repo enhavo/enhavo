@@ -95,3 +95,5 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
             orphanRemoval: true
+            joinColumn:
+                onDelete: CASCADE
