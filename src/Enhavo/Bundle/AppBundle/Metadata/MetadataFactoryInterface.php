@@ -11,5 +11,5 @@ namespace Enhavo\Bundle\AppBundle\Metadata;
 
 interface MetadataFactoryInterface
 {
-    public function create($className, array $configuration);
+    public function create($className, array $configuration = []);
 }
