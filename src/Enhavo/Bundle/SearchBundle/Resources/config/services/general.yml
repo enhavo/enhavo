@@ -9,8 +9,7 @@ services:
 
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
-        arguments:
-            - '@service_container'
-            - '@enhavo_search.metadata.metadata_factory'
+        calls:
+            - [ 'setContainer', [ '@service_container' ]]
         tags:
             - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }

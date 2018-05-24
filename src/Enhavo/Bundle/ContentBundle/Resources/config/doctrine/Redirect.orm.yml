@@ -28,5 +28,7 @@ Enhavo\Bundle\ContentBundle\Entity\Redirect:
         route:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            joinColumn:
+                onDelete: CASCADE
 
     lifecycleCallbacks: {  }

@@ -26,7 +26,7 @@ class MetadataFactory implements MetadataFactoryInterface
         $this->kernel = $kernel;
     }
 
-    public function create($className, array $configuration)
+    public function create($className, array $configuration = [])
     {
         $metadata = new Metadata();
 
