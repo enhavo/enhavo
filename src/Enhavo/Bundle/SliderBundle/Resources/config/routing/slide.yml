@@ -70,6 +70,7 @@ enhavo_slider_slide_table:
                         width: 2
                         label:
                     title:
+                        type: text
                         label: slide.label.title
                         property: title
                         width: 9

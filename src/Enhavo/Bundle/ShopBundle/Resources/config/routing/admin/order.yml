@@ -77,37 +77,38 @@ enhavo_shop_order_table:
                 batch_route: enhavo_shop_order_batch
                 columns:
                     number:
+                        type: text
                         label: order.label.number
                         property: number
                         width: 2
                     date:
-                        label: order.label.ordered_at
                         type: datetime
+                        label: order.label.ordered_at
                         property: orderedAt
                         width: 2
                     name:
-                        label: order.label.name
                         type: shop_address
+                        label: order.label.name
                         property: shippingAddress
                         width: 4
                     payed:
-                        label: order.label.payed
                         type: order_state
+                        label: order.label.payed
                         property: payed
                         width: 1
                     packed:
-                        label: order.label.packed
                         type: order_state
+                        label: order.label.packed
                         property: packed
                         width: 1
                     shipped:
-                        label: order.label.shipped
                         type: order_state
+                        label: order.label.shipped
                         property: shipped
                         width: 1
                     cancelled:
-                        label: order.label.cancelled
                         type: order_state
+                        label: order.label.cancelled
                         property: cancelled
                         width: 1
 

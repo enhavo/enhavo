@@ -64,6 +64,7 @@ enhavo_user_group_table:
                 translationDomain: EnhavoUserBundle
                 columns:
                     name:
+                        type: text
                         label: group.label.name
                         property: name
                         width: 12

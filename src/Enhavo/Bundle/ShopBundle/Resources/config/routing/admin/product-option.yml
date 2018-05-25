@@ -67,6 +67,7 @@ enhavo_shop_product_option_table:
                 translationDomain: EnhavoShopBundle
                 columns:
                     code:
+                        type: text
                         label: product.label.code
                         property: code
                         width: 12

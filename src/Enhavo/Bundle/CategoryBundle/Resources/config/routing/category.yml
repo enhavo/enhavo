@@ -55,6 +55,7 @@ enhavo_category_category_table:
                 width: 12
                 columns:
                     name:
+                        type: text
                         width: 12
                         label: category.label.name
                         property: name

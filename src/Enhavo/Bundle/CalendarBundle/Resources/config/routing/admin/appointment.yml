@@ -70,6 +70,7 @@ enhavo_calendar_appointment_table:
                 translationDomain: EnhavoCalendarBundle
                 columns:
                     title:
+                        type: text
                         label: appointment.label.title
                         property: title
                         width: 7

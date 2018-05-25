@@ -50,6 +50,7 @@ enhavo_download_download_table:
                 translationDomain: EnhavoDownloadBundle
                 columns:
                     title:
+                        type: text
                         label: download.label.title
                         property: title
                         width: 12

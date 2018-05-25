@@ -58,6 +58,7 @@ enhavo_navigation_navigation_table:
                 translationDomain: EnhavoNavigationBundle
                 columns:
                     name:
+                        type: text
                         property: name
                         label: navigation.label.name
                         width: 10

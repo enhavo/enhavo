@@ -75,3 +75,8 @@ table {
     padding-right:0;
     padding-left:0;
 }
+
+.word-cut {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

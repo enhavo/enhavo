@@ -91,6 +91,7 @@ enhavo_article_article_table:
                         width: 2
                         type: boolean
                     title:
+                        type: text
                         label: article.label.title
                         property: title
                         width: 7

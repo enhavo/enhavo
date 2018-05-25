@@ -55,6 +55,7 @@ enhavo_newsletter_subscriber_table:
                 translationDomain: EnhavoNewsletterBundle
                 columns:
                     email:
+                        type: text
                         label: subscriber.label.email
                         property: email
                         width: 10
