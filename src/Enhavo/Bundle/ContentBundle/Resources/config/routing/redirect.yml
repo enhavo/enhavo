@@ -64,14 +64,17 @@ enhavo_content_redirect_table:
                 translationDomain: EnhavoContentBundle
                 columns:
                     from:
+                        type: text
                         property: from
                         label: form.label.from
                         width: 5
                     to:
+                        type: text
                         property: to
                         label: form.label.to
                         width: 6
                     code:
+                        type: text
                         property: code
                         label: form.label.code
                         width: 1

@@ -96,6 +96,7 @@ enhavo_page_page_table:
                         property: public
                         width: 2
                     title:
+                        type: text
                         label: page.label.title
                         property: title
                         width: 10

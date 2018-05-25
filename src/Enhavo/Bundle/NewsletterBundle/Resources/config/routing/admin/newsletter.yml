@@ -74,6 +74,7 @@ enhavo_newsletter_newsletter_table:
                             permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
                 columns:
                     title:
+                        type: text
                         label: newsletter.label.title
                         property: title
                         width: 10

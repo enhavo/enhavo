@@ -52,6 +52,7 @@ enhavo_setting_setting_table:
                         label: setting.label.label
                         width: 6
                     value:
+                        type: text
                         type: setting
                         label: setting.label.value
                         width: 6

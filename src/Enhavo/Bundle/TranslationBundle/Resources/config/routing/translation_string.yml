@@ -59,6 +59,7 @@ enhavo_translation_translation_string_table:
                 translationDomain: EnhavoTranslationBundle
                 columns:
                     translationKey:
+                        type: text
                         label: translation.label.translationKey
                         property: translationKey
                         width: 12
