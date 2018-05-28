@@ -29,6 +29,7 @@ Cookbook
   * :doc:`/cookbook/resource/make-resource-sortable`
   * :doc:`/cookbook/resource/add-media-file-to-resource`
   * :doc:`/cookbook/resource/create-controller-without-resource-binding`
+  * :doc:`/cookbook/resource/delete-statements`
 
 * **Contact Form**
 
