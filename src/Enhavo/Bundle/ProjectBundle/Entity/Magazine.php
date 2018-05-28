@@ -118,6 +118,7 @@ class Magazine implements ResourceInterface
      */
     public function removeToc(\Enhavo\Bundle\ProjectBundle\Entity\Content $toc)
     {
+        $toc->setMagazine(null);
         $this->toc->removeElement($toc);
     }
 
