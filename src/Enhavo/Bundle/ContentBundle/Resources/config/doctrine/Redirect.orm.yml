@@ -26,7 +26,7 @@ Enhavo\Bundle\ContentBundle\Entity\Redirect:
 
     manyToOne:
         route:
-            cascade: ['persist']
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
             joinColumn:
                 onDelete: CASCADE
