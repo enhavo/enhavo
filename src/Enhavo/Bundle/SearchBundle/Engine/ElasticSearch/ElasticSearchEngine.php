@@ -108,18 +108,20 @@ class ElasticSearchEngine implements EngineInterface
 
         $query = new Query\BoolQuery();
 
-        $filterQuery = new Query\QueryString();
-        $filterQuery->setQuery($filter->getTerm());
-        $filterQuery->setDefaultField('indexData.*');
-        $query->addFilter($filterQuery);
+        for($i = 1; $i <= 100; $i++) {
+            $query->addShould(new Query\Match(sprintf('indexData.value%s', $i), $filter->getTerm()));
+        }
+        $query->setMinimumShouldMatch(1);
 
         foreach($filter->getFilter() as $key => $value) {
             $fieldName = sprintf('filterData.%s', $key);
+            $filterQuery = new Query\Term();
+            $filterQuery->setTerm($fieldName, $value);
+            $query->addFilter($filterQuery);
+        }
 
-            $filterQuery = new Query\QueryString();
-            $filterQuery->setQuery($value);
-            $filterQuery->setDefaultField($fieldName);
-
+        if($filter->getClass()) {
+            $filterQuery = new Query\Match('className', $filter->getClass());
             $query->addFilter($filterQuery);
         }
 
