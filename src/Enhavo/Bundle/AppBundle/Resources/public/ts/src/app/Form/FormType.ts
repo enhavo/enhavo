@@ -1,8 +1,10 @@
 import { FormElement } from "app/Form/Form";
 import * as $ from 'jquery'
+import * as tinymce from 'tinymce'
 import 'jquery-ui-timepicker'
 import 'jquery-tinymce'
-import 'tinymce'
+import 'icheck'
+import 'select2'
 
 export class DatePickerType extends FormElement
 {
@@ -38,7 +40,7 @@ export class DateTimePickerType extends FormElement
         return data;
     }
 
-    private init()
+    protected init()
     {
         this.$element.datetimepicker({
             timeFormat: 'hh:mm',
@@ -55,139 +57,158 @@ export class DateTimePickerType extends FormElement
 }
 
 
-// class Checkbox
-// {
-//     private $element: JQuery;
-//
-//     constructor(element: HTMLElement)
-//     {
-//         this.$element = $(element);
-//         this.init();
-//     }
-//
-//     private init()
-//     {
-//         $(form).find('input[type=radio],input[type=checkbox]').iCheck({
-//             checkboxClass: 'icheckbox-esperanto',
-//             radioClass: 'icheckbox-esperanto'
-//         });
-//     }
-// }
-//
-// class Select
-// {
-//     private $element: JQuery;
-//
-//     constructor(element: HTMLElement)
-//     {
-//         this.$element = $(element);
-//         this.init();
-//     }
-//
-//     private init()
-//     {
-//         $(form).find('select').select2();
-//     }
-// }
-//
-// class Wysiwyg
-// {
-//     private $element: jQuery;
-//
-//     constructor(element: HTMLElement)
-//     {
-//         this.$element = $(element);
-//         this.init();
-//     }
-//
-//     private generateId(): string {
-//         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-//             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//             return v.toString(16);
-//         });
-//     }
-//
-//     init() {
-//         /**
-//          * The id of the input field in tiny mce MUST be unique, otherwise it can't be initialized.
-//          * To make sure it has a unique id, we generate our own at on first initialize
-//          */
-//         var id = $(element).attr('id');
-//         if(typeof id === 'undefined' || id === null || !id.match(/^wysiwyg_/)) {
-//             id = 'wysiwyg_' + uuidv4();
-//             $(element).attr('id', id);
-//         }
-//
-//         var options = {
-//             menubar: false,
-//             // General options
-//             force_br_newlines: false,
-//             force_p_newlines: true,
-//             forced_root_block: "p",
-//             cleanup: false,
-//             cleanup_on_startup: false,
-//             font_size_style_values: "xx-small,x-small,small,medium,large,x-large,xx-large",
-//             convert_fonts_to_spans: true,
-//             resize: false,
-//             relative_urls: false,
-//             oninit: function (ed) {
-//                 $(ed.contentAreaContainer).droppable({
-//                     accept: ".imgList li.imgContainer",
-//                     drop: function (event, ui) {
-//                         var draggedImg = ui.draggable.find("img");
-//                         var src = '';
-//                         if (typeof draggedImg.attr("largesrc") == "undefined") {
-//                             src = draggedImg.attr("src")
-//                         } else {
-//                             src = draggedImg.attr("largesrc");
-//                         }
-//                         ed.execCommand('mceInsertContent', false, "<img src=\"" + src + "\" />");
-//                     }
-//                 });
-//             }
-//         };
-//
-//         var config = $(element).data('config');
-//
-//         if (config.height) {
-//             options.height = config.height;
-//         }
-//
-//         if (config.plugins) {
-//             options.plugins = config.plugins;
-//         } else {
-//             options.plugins = ["advlist autolink lists link image charmap print preview anchor",
-//                 "searchreplace visualblocks code fullscreen",
-//                 "insertdatetime media table contextmenu paste autoresize"]
-//         }
-//
-//         if (config.style_formats) {
-//             options.style_formats = config.style_formats;
-//         }
-//
-//         if (config.formats) {
-//             options.formats = config.formats;
-//         }
-//
-//         if (config.toolbar1) {
-//             options.toolbar1 = config.toolbar1
-//         }
-//
-//         if (config.toolbar2) {
-//             options.toolbar2 = config.toolbar2
-//         }
-//
-//         if (config.content_css) {
-//             options.content_css = config.content_css
-//         }
-//
-//         $(element).tinymce(options);
-//     }
-//
-//     public destroy() {
-//         tinymce.remove(this);
-//     }
-// }
+export class CheckboxType extends FormElement
+{
+    public static apply(element: HTMLElement)
+    {
+        let data = [];
+        let elements = FormElement.findElements(element, 'input[type=radio],input[type=checkbox]');
+        for(element of elements) {
+            data.push(new CheckboxType(element));
+        }
+        return data;
+    }
+
+    protected init()
+    {
+        this.$element.iCheck({
+            checkboxClass: 'icheckbox',
+            radioClass: 'icheckbox'
+        })
+    }
+}
+
+export class SelectType extends FormElement
+{
+    public static apply(element: HTMLElement)
+    {
+        let data = [];
+        let elements = FormElement.findElements(element, 'select');
+        for(element of elements) {
+            data.push(new SelectType(element));
+        }
+        return data;
+    }
+
+    protected init()
+    {
+        this.$element.select2();
+    }
+}
+
+
+export class WysiwygType extends FormElement
+{
+    public static apply(element: HTMLElement)
+    {
+        let data = [];
+        let elements = FormElement.findElements(element, '[data-wysiwyg]');
+        for(element of elements) {
+            data.push(new WysiwygType(element));
+        }
+        return data;
+    }
+
+    private generateId(): string {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    protected init() {
+        /**
+         * The id of the input field in tiny mce MUST be unique, otherwise it can't be initialized.
+         * To make sure it has a unique id, we generate our own at on first initialize
+         */
+        let id = this.$element.attr('id');
+        if(typeof id === 'undefined' || id === null || !id.match(/^wysiwyg_/)) {
+            id = 'wysiwyg_' + this.generateId();
+            this.$element.attr('id', id);
+        }
+
+        let options = {
+            menubar: false,
+            // General options
+            force_br_newlines: false,
+            force_p_newlines: true,
+            forced_root_block: "p",
+            cleanup: false,
+            cleanup_on_startup: false,
+            font_size_style_values: "xx-small,x-small,small,medium,large,x-large,xx-large",
+            convert_fonts_to_spans: true,
+            resize: false,
+            relative_urls: false,
+            oninit: function (ed) {
+                $(ed.contentAreaContainer).droppable({
+                    accept: ".imgList li.imgContainer",
+                    drop: function (event, ui) {
+                        var draggedImg = ui.draggable.find("img");
+                        var src = '';
+                        if (typeof draggedImg.attr("largesrc") == "undefined") {
+                            src = draggedImg.attr("src")
+                        } else {
+                            src = draggedImg.attr("largesrc");
+                        }
+                        ed.execCommand('mceInsertContent', false, "<img src=\"" + src + "\" />");
+                    }
+                });
+            }
+        };
+
+        let config : WysiwygConfig = this.$element.data('config');
+
+        if (config.height) {
+            options.height = config.height;
+        }
+
+        if (config.plugins) {
+            options.plugins = config.plugins;
+        } else {
+            options.plugins = ["advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste autoresize"]
+        }
+
+        if (config.style_formats) {
+            options.style_formats = config.style_formats;
+        }
+
+        if (config.formats) {
+            options.formats = config.formats;
+        }
+
+        if (config.toolbar1) {
+            options.toolbar1 = config.toolbar1
+        }
+
+        if (config.toolbar2) {
+            options.toolbar2 = config.toolbar2
+        }
+
+        if (config.content_css) {
+            options.content_css = config.content_css
+        }
+
+        this.$element.tinymce(options);
+    }
+
+    public destroy() {
+        tinymce.remove(this);
+    }
+}
+
+class WysiwygConfig {
+    height: string;
+    plugins: string;
+    style_formats: string;
+    formats: string;
+    toolbar1: string;
+    toolbar2: string;
+    content_css: string;
+}
+
+
 //
 // class List
 // {

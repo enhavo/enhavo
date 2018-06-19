@@ -1,6 +1,7 @@
 interface JQuery {
     datetimepicker: (config: DateTimePickerConfig) => void
     datetime: (config: DateTimePickerConfig) => void
+    iCheck
 }
 
 interface DateTimePickerConfig

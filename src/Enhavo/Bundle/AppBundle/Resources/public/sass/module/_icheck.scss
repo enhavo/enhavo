@@ -1,5 +1,4 @@
-.icheckbox-esperanto,
-.iradio-esperanto {
+.icheckbox {
   display: inline-block;
   vertical-align: middle;
   border: none;
@@ -12,7 +11,7 @@
   line-height: 16px;
   cursor: pointer;
   text-align:center;
-  font-family: FontAwesome;
+  font-family: "enhavo-iconfont";
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
@@ -21,34 +20,7 @@
   position: relative;
 }
 
-.icheckbox-esperanto {
-
-}
-
-.icheckbox-esperanto.checked:before {
-  content: "\f00d";
-}
-
-.icheckbox-esperanto.disabled {
-
-}
-
-.icheckbox-esperanto.checked.disabled {
-
-}
-
-.iradio-esperanto {
-
-}
-
-.iradio-esperanto.checked:before {
-  content: "\f00d";
-}
-
-.iradio-esperanto.disabled {
-
-}
-
-.iradio-esperanto.checked.disabled {
-
+  &.checked:before {
+    content: "\e847";
+  }
 }

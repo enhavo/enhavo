@@ -10,12 +10,14 @@ namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\AppBundle\Form\Type\DateType;
+use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 
 class DemoController extends AbstractController
@@ -91,6 +93,17 @@ class DemoController extends AbstractController
         $form = $this->createFormBuilder(null)
             ->add('date', DateType::class, [])
             ->add('datetime', DateTimeType::class, [])
+            ->add('wysiwyg', WysiwygType::class, [])
+            ->add('checkbox', ChoiceType::class, [
+                'choices' => ['foo', 'bar', 'hello', 'world'],
+                'multiple' => true,
+                'expanded' => true
+            ])
+            ->add('select', ChoiceType::class, [
+                'choices' => ['foo', 'bar', 'hello', 'world'],
+                'multiple' => false,
+                'expanded' => false
+            ])
             ->getForm();
 
 
