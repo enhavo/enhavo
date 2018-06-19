@@ -75,4 +75,11 @@ class DemoController extends AbstractController
             'form' => $formView
         ]);
     }
+
+    public function applicationAction()
+    {
+        return $this->render('EnhavoProjectBundle:Theme/Demo:application.html.twig', [
+
+        ]);
+    }
 }
