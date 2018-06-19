@@ -28,7 +28,7 @@ enhavo_assets:
     require_js:
         paths:
             app:
-                location: /bundles/enhavoapp/js
+                location: /bundles/enhavoapp/js/app
 
 jms_serializer:
     metadata:
@@ -36,8 +36,8 @@ jms_serializer:
 
 enhavo_app:
     apps:
-      - 'app/app/Menu'
-      - 'app/app/ConditionType'
-      - 'app/app/Adapter/DynamicForm/EnhavoAdapter'
+      - 'app/Menu'
+      - 'app/ConditionType'
+      - 'app/Adapter/DynamicForm/EnhavoAdapter'
     form_themes:
       - 'EnhavoAppBundle:Form:fields.html.twig'

@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var FormInitializer = /** @class */ (function () {
@@ -58,6 +58,9 @@ define(["require", "exports"], function (require, exports) {
                 this.element = event_2.getElement();
             }
         };
+        FormInitializer.prototype.init = function () {
+            this.release();
+        };
         FormInitializer.prototype.insert = function () {
             if (!this.inserted) {
                 this.inserted = true;
@@ -66,7 +69,6 @@ define(["require", "exports"], function (require, exports) {
                 }
                 var event_3 = new FormInsertEvent(this.element);
                 $('body').trigger('formInsert', event_3);
-                $(document).trigger('gridAddAfter', [this.element]);
                 this.element = event_3.getElement();
             }
         };
@@ -136,4 +138,31 @@ define(["require", "exports"], function (require, exports) {
         return FormInsertEvent;
     }(FormElementEvent));
     exports.FormInsertEvent = FormInsertEvent;
+    var Form = /** @class */ (function () {
+        function Form(element) {
+            this.$element = $(element);
+            this.init();
+        }
+        Form.prototype.init = function () {
+        };
+        return Form;
+    }());
+    var FormElement = /** @class */ (function () {
+        function FormElement(element) {
+            this.$element = $(element);
+            this.init();
+        }
+        FormElement.findElements = function (element, selector) {
+            var data = [];
+            if ($(element).is(selector)) {
+                data.push(element);
+            }
+            $(element).find(selector).each(function (index, element) {
+                data.push(element);
+            });
+            return data;
+        };
+        return FormElement;
+    }());
+    exports.FormElement = FormElement;
 });

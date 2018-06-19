@@ -1,7 +1,7 @@
 import * as jQuery from 'jquery'
-import { DynamicForm } from "app/app/DynamicForm";
-import { FormListener } from "app/app/Form/Form";
-import { FormInsertEvent } from "app/app/Form/Form";
+import { DynamicForm } from "app/DynamicForm";
+import { FormListener } from "app/Form/Form";
+import { FormInsertEvent } from "app/Form/Form";
 
 (function ($) {
     $.fn.dynamicForm = function ()

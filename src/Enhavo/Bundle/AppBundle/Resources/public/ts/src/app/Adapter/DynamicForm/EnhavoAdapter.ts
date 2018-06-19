@@ -1,6 +1,6 @@
-import { DynamicForm, DynamicFormConfig } from 'app/app/DynamicForm';
-import { FormListener } from "app/app/Form/Form";
-import { FormInsertEvent } from "app/app/Form/Form";
+import { DynamicForm, DynamicFormConfig } from 'app/DynamicForm';
+import { FormListener } from "app/Form/Form";
+import { FormInsertEvent } from "app/Form/Form";
 import * as form from 'app/Form'
 import { Media } from 'media/Media';
 

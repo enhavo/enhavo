@@ -1,4 +1,4 @@
-define(["require", "exports", "jquery", "app/app/DynamicForm", "app/app/Form/Form"], function (require, exports, jQuery, DynamicForm_1, Form_1) {
+define(["require", "exports", "jquery", "app/DynamicForm", "app/Form/Form"], function (require, exports, jQuery, DynamicForm_1, Form_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     (function ($) {

@@ -1,3 +1,5 @@
+import * as $ from 'jquery'
+
 export class FormInitializer
 {
     private html: string;
@@ -66,6 +68,11 @@ export class FormInitializer
         }
     }
 
+    public init()
+    {
+        this.release();
+    }
+
     public insert()
     {
         if(!this.inserted) {
@@ -77,7 +84,6 @@ export class FormInitializer
 
             let event = new FormInsertEvent(this.element);
             $('body').trigger('formInsert', event);
-            $(document).trigger('gridAddAfter', [this.element]);
             this.element = event.getElement()
         }
     }
@@ -155,4 +161,50 @@ export class FormReleaseEvent extends FormElementEvent
 export class FormInsertEvent extends FormElementEvent
 {
 
+}
+
+class Form
+{
+    protected $element: JQuery;
+
+    public constructor(element: HTMLElement)
+    {
+        this.$element = $(element);
+        this.init();
+    }
+
+    private init()
+    {
+
+    }
+}
+
+export abstract class FormElement
+{
+    protected $element: JQuery;
+
+    public constructor(element: HTMLElement)
+    {
+        this.$element = $(element);
+        this.init();
+    }
+
+    protected static findElements(element: HTMLElement, selector: string) : HTMLElement[]
+    {
+        let data = [];
+        
+        if($(element).is(selector)) {
+            data.push(element)
+        }
+        
+        $(element).find(selector).each(function(index: number, element: HTMLElement) {
+            data.push(element);
+        });
+        
+        return data;
+    }
+
+    protected abstract init();
+
+    public abstract apply(element: HTMLElement, form: Form) : FormElement[];
 }

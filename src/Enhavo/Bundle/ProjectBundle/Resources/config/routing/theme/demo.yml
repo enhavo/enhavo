@@ -27,3 +27,9 @@ enhavo_project_demo_application:
     defaults:
         _controller: EnhavoProjectBundle:Demo:application
         _method: GET
+
+enhavo_project_demo_form:
+    path: /form
+    defaults:
+        _controller: EnhavoProjectBundle:Demo:form
+        _method: GET

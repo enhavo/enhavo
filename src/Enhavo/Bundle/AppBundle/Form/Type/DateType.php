@@ -32,6 +32,9 @@ class DateType extends AbstractType
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy',
+            'attr' => [
+                'data-date-picker' => null
+            ]
         ));
     }
 } 

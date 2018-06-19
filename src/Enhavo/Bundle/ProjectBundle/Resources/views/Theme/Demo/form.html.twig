@@ -7,22 +7,20 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/dynamic-form.css') }}" >
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/vendor/jquery-ui/themes/base/jquery-ui.min.css') }}" >
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavogrid/css/style.css') }}" >
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/enhavo-iconfont.css') }}" >
 
         {{ require_js_configuration() }}
 
         <script type="text/javascript">
-          require(['jquery', 'app/Adapter/DynamicForm/JQueryAdapter'], function($) {
-            $(function() {
-              $('form').dynamicForm();
-            })
+          require(['jquery', 'app/Adapter/Form/JQueryAdapter'], function($, form) {
+            $('form').form();
           });
         </script>
     </head>
-
     <body>
-        <form method="post" action="{{ path('enhavo_project_demo_navigation') }}">
+        <form method="post" action="{{ path('enhavo_project_demo_media') }}">
             {{ form_widget(form) }}
             <button type="submit">Speichern</button>
         </form>

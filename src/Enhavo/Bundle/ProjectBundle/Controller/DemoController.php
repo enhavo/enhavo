@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ProjectBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\AppBundle\Form\Type\DateType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -80,6 +82,20 @@ class DemoController extends AbstractController
     {
         return $this->render('EnhavoProjectBundle:Theme/Demo:application.html.twig', [
 
+        ]);
+    }
+
+    public function formAction(Request $request)
+    {
+
+        $form = $this->createFormBuilder(null)
+            ->add('date', DateType::class, [])
+            ->add('datetime', DateTimeType::class, [])
+            ->getForm();
+
+
+        return $this->render('EnhavoProjectBundle:Theme/Demo:form.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

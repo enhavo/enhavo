@@ -2,9 +2,9 @@ import * as admin from 'app/Admin'
 import * as router from 'app/Router'
 import * as form from 'app/Form'
 import * as $ from 'jquery'
-import { FormListener } from "app/app/Form/Form";
-import { FormConvertEvent } from "app/app/Form/Form";
-import { FormInitializer } from "app/app/Form/Form";
+import { FormListener } from "app/Form/Form";
+import { FormConvertEvent } from "app/Form/Form";
+import { FormInitializer } from "app/Form/Form";
 
 export class DynamicFormConfig
 {
