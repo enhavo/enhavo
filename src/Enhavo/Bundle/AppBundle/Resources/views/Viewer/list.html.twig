@@ -1,0 +1,48 @@
+{% trans_default_domain translationDomain %}
+{% import _self as list %}
+
+<div>
+    <div class="row head-row level-1">
+        {% for column in columns %}
+            <div class="col-xs-{{ table_widget_width(column.type, column) }}">{{ table_widget_label(column.type, column)|nl2br }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
+        <div class="col-xs-{{ width }}" {% if sortable %} data-sortable-container data-move-after-route="{{ move_after_route }}"{% endif %}>
+            {% for item in data %}
+                {{ list.listItem(item, columns, 1) }}
+            {% else %}
+                <div class="no-data">
+                    {{ 'table.empty'|trans({},'EnhavoAppBundle')|nl2br }}
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+{% macro listItem(item, columns, level) %}
+    {% import _self as list %}
+
+    <div data-list-item class="list-item expand">
+        <div class="row entry-row level-{{ level }}" data-id="{{ item.id }}">
+            <div class="collapse-expand-button expand" data-collapse><a href="javascript: return false"><i class="icon icon-collapse"></i></a></div>
+            <div class="collapse-expand-button collapse" data-expand><a href="javascript: return false"><i class="icon icon-expand"></i></a></div>
+            {% for column in columns %}
+                <div class="col-xs-{{ table_widget_width(column.type, column) }}">
+                    {{ table_widget_render(column.type, column, item) }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div data-list-children class="children-container">
+            {% if item.children %}
+                {% for child in item.children %}
+                    {{ list.listItem(child, columns, level+1) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endmacro %}

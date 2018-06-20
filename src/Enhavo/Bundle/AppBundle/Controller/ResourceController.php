@@ -249,6 +249,26 @@ class ResourceController extends BaseController
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function listAction(Request $request)
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+
+        $viewer = $this->viewerFactory->create(
+            $configuration,
+            $this->metadata,
+            $resources,
+            null,
+            'list'
+        );
+
+        return $this->viewHandler->handle($configuration, $viewer->createView());
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
