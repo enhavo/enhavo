@@ -8,6 +8,15 @@ Enhavo\Bundle\PageBundle\Entity\Page:
             type: string
             nullable: true
 
+    manyToOne:
+        parent:
+            targetEntity: Enhavo\Bundle\PageBundle\Model\PageInterface
+
+    oneToMany:
+        children:
+            targetEntity: Enhavo\Bundle\PageBundle\Model\PageInterface
+            mappedBy: parent
+
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']

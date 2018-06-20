@@ -3,6 +3,11 @@ cmf_routing:
         controllers_by_class:
             Enhavo\Bundle\PageBundle\Entity\Page: enhavo_page.controller.page:showResourceAction
 
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\PageBundle\Model\PageInterface: Enhavo\Bundle\PageBundle\Entity\Page
+
 enhavo_app:
     route:
         url_resolver:

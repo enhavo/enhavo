@@ -2,14 +2,16 @@
 
 namespace Enhavo\Bundle\PageBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\PageBundle\Model\PageInterface;
 
 /**
  * Page
  */
-class Page extends Content
+class Page extends Content implements PageInterface
 {
     /**
      * @var GridInterface
@@ -20,6 +22,24 @@ class Page extends Content
      * @var string
      */
     private $code;
+
+    /**
+     * @var PageInterface
+     */
+    private $parent;
+
+    /**
+     * @var Collection
+     */
+    private $children;
+
+    /**
+     * Page constructor.
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     /**
      * Set content
@@ -65,5 +85,51 @@ class Page extends Content
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return PageInterface
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param PageInterface $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @param PageInterface $page
+     * @return PageInterface
+     */
+    public function addChild(PageInterface $page)
+    {
+        $page->setParent($this);
+        $this->children[] = $page;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param PageInterface $page
+     * @return PageInterface
+     */
+    public function removeChild(PageInterface $page)
+    {
+        $page->setParent(null);
+        $this->children->remove($page);
+        return $this;
     }
 }
