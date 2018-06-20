@@ -27,6 +27,7 @@ page:
     yearly: 'Jährlich'
     never: 'Nie'
     assigned: 'zugeordnet'
+    parent: 'Elternseite'
   batch:
     action:
       publish: 'Veröffentlichen'

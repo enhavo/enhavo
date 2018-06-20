@@ -42,6 +42,11 @@ services:
         tags:
             - { name: enhavo.viewer, alias: table }
 
+    enhavo_app.viewer.list:
+        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\ListViewer
+        tags:
+            - { name: enhavo.viewer, alias: list }
+
     enhavo_app.viewer.preview:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer
         tags:

@@ -29,3 +29,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.block, alias: chart }
+
+    enhavo_app.block.list:
+        class: Enhavo\Bundle\AppBundle\Block\Block\ListBlock
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: list }

@@ -7,6 +7,10 @@ enhavo_page_page_index:
             viewer:
                 title: page.label.page
                 translationDomain: EnhavoPageBundle
+                blocks:
+                    table:
+                        type: list
+                        list_route: enhavo_page_page_list
 
 enhavo_page_page_create:
     path: /enhavo/page/page/create
@@ -87,6 +91,30 @@ enhavo_page_page_table:
                     property: title
                     label: page.label.public
                     translationDomain: EnhavoPageBundle
+            viewer:
+                translationDomain: EnhavoPageBundle
+                columns:
+                    public:
+                        type: boolean
+                        label: page.label.public
+                        property: public
+                        width: 2
+                    title:
+                        type: text
+                        label: page.label.title
+                        property: title
+                        width: 10
+
+enhavo_page_page_list:
+    options:
+        expose: true
+    path: /enhavo/page/page/list
+    methods: [GET]
+    defaults:
+        _controller: enhavo_page.controller.page:listAction
+        _sylius:
+            criteria:
+                parent: null
             viewer:
                 translationDomain: EnhavoPageBundle
                 columns:
