@@ -47,9 +47,10 @@ class PageType extends AbstractType
             $data = $event->getData();
 
             $form->add('parent', EntityType::class, array(
-                'label' => 'form.label.parent',
+                'label' => 'page.label.parent',
                 'translation_domain' => 'EnhavoPageBundle',
                 'class' => $this->dataClass,
+                'placeholder' => '---',
                 'query_builder' => function (EntityRepository $er) use ($data) {
                     $query =  $er->createQueryBuilder('p');
                     if($data instanceof ResourceInterface && $data->getId()) {

@@ -27,6 +27,7 @@ page:
     yearly: 'Yearly'
     never: 'Never'
     assigned: 'assigned'
+    parent: 'Parent'
   batch:
     action:
       publish: 'Publish'

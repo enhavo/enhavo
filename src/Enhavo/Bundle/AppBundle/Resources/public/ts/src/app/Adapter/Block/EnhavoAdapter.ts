@@ -9,10 +9,19 @@ class EnhavoAdapter
 
     private static initFormListener(): void
     {
+        let lists : ListBlock[] = [];
+
         $('body').on('initBlock', function(event, data) {
             if(data.type == 'list') {
-                new ListBlock(data.block);
+                lists.push(new ListBlock(data.block));
             }
+        });
+
+        $(document).on('formSaveAfter', function () {
+            for(let list of lists) {
+                list.load();
+            }
+            //admin.closeLoadingOverlay();
         });
     }
 }

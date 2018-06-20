@@ -66,8 +66,10 @@
     position: relative;
     .list-item  {
       &.expand {
-        .collapse-expand-button.collapse {display: block}
-        .collapse-expand-button.expand {display: none}
+        > .entry-row {
+          .collapse-expand-button.collapse {display: block}
+          .collapse-expand-button.expand {display: none}
+        }
         > .children-container {display: block }
       }
       > .children-container {display: none }
