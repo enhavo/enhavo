@@ -87,6 +87,11 @@ class ListViewer extends AbstractViewer
         return 'list';
     }
 
+    protected function getExpand()
+    {
+        return $this->optionAccessor->get('expand');
+    }
+
     public function createView()
     {
         /** @var RequestConfiguration $configuration */
@@ -101,8 +106,7 @@ class ListViewer extends AbstractViewer
             'batches' => $this->getBatches(),
             'batch_route' => $this->getBatchRoute(),
             'width' => $this->optionAccessor->get('width'),
-            'move_after_route' => $this->optionAccessor->get('sorting.move_after_route'),
-            'move_to_page_route' => $this->optionAccessor->get('sorting.move_to_page_route'),
+            'expand' => $this->getExpand()
         ]));
         return $view;
     }
@@ -113,7 +117,8 @@ class ListViewer extends AbstractViewer
         $optionsAccessor->setDefaults([
             'width' => 12,
             'batch_route' => $this->getBatchRoute(),
-            'columns' => []
+            'columns' => [],
+            'expand' => true
         ]);
     }
 }

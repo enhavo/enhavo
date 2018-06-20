@@ -41,6 +41,8 @@ class PageFactory extends ContentFactory
         $newGrid = $this->gridFactory->duplicate($originalResource->getGrid());
         $newPage->setGrid($newGrid);
 
+        $newPage->setParent($originalResource->getParent());
+
         return $newPage;
     }
 }

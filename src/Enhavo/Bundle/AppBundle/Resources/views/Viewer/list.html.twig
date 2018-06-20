@@ -11,7 +11,7 @@
     <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
         <div class="col-xs-{{ width }}" {% if sortable %} data-sortable-container data-move-after-route="{{ move_after_route }}"{% endif %}>
             {% for item in data %}
-                {{ list.listItem(item, columns, 1) }}
+                {{ list.listItem(item, columns, 1, expand) }}
             {% else %}
                 <div class="no-data">
                     {{ 'table.empty'|trans({},'EnhavoAppBundle')|nl2br }}
@@ -21,10 +21,10 @@
     </div>
 </div>
 
-{% macro listItem(item, columns, level) %}
+{% macro listItem(item, columns, level, expand) %}
     {% import _self as list %}
 
-    <div data-list-item class="list-item expand">
+    <div data-list-item class="list-item {% if expand %}expand{% endif %}">
         <div class="row entry-row level-{{ level }}" data-item="{{ item.id }}">
             {% if item.children|length %}
                 <div class="collapse-expand-button expand" data-expand><a href="javascript: return false"><i class="icon icon-chevron-small-right"></i></a></div>
@@ -40,7 +40,7 @@
         <div data-list-children class="children-container">
             {% if item.children|length %}
                 {% for child in item.children %}
-                    {{ list.listItem(child, columns, level+1) }}
+                    {{ list.listItem(child, columns, level+1, expand) }}
                 {% endfor %}
             {% endif %}
         </div>
