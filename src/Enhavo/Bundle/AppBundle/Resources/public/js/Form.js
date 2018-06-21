@@ -286,8 +286,8 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
       };
 
       var setOrderForContainer = function (list) {
-        var orderby = list.attr('data-order');
-        list.find("." + orderby).each(function (index) {
+        var orderBy = list.data('order');
+        list.find("[data-position=" + orderBy+"]").each(function (index) {
           $(this).val(index + 1);
         });
       };

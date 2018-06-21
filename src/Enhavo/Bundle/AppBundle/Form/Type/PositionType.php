@@ -34,10 +34,13 @@ class PositionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'attr' => [
-                'class' => 'position',
-                'data-position' => true
-            ]
+            'property' => 'position'
         ));
+
+        $resolver->setNormalizer('attr', function ($options) {
+            return [
+                'data-position' => $options['property']
+            ];
+        });
     }
 } 
