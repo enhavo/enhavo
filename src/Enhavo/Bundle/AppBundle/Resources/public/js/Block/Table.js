@@ -48,6 +48,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
 
           // check if link
           var isLink = false;
+          var isInputField = false;
           $target.parentsUntil('[data-id]').each(function() {
             if($(this).is('a')) {
               isLink = true;
@@ -56,7 +57,10 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
           if($target.is('a')) {
             isLink = true;
           }
-          if(isLink) {
+          if($target.is('input')) {
+            isInputField = true;
+          }
+          if(isLink || isInputField) {
             return true;
           }
 
@@ -76,6 +80,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
 
         self.initSortable($table);
         self.initBatchActions(table);
+        $(document).trigger('enhavoTableLoaded', [$block]);
       }).fail(function () {
         admin.closeLoadingOverlay();
       });
@@ -104,6 +109,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
           if (callback) {
             callback();
           }
+          $(document).trigger('enhavoTableLoaded', [$block]);
         },
         error: function () {
           admin.closeLoadingOverlay();
