@@ -56,7 +56,7 @@ export class ListBlock
         let self = this;
 
         this.$container.html(html);
-        this.$container.find('[data-list-item]').each(function(index, element) {
+        this.$container.find('[data-list-item]').each(function(index, element:HTMLElement) {
             self.items.push(new ListItem(element, self.updateRoute, self.updateRouteParameters));
         });
     }
@@ -125,13 +125,12 @@ class ListItem
     {
         if(this.route) {
             let url = router.generate(this.route, this.routeParameters);
-            admin.ajaxOverlay(url);
+            admin.ajaxOverlay(url, {});
         }
     }
 
     public collapse()
     {
-        console.log('collapse');
         this.$element.removeClass('expand');
     }
 

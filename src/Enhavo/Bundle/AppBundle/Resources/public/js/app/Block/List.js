@@ -81,11 +81,10 @@ define(["require", "exports", "jquery", "app/Router", "app/Admin"], function (re
         ListItem.prototype.open = function () {
             if (this.route) {
                 var url = router.generate(this.route, this.routeParameters);
-                admin.ajaxOverlay(url);
+                admin.ajaxOverlay(url, {});
             }
         };
         ListItem.prototype.collapse = function () {
-            console.log('collapse');
             this.$element.removeClass('expand');
         };
         ListItem.prototype.expand = function () {

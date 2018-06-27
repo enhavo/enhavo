@@ -27,7 +27,7 @@
       "app/app/Adapter/DynamicForm/JQueryAdapter": ["src/app/Adapter/DynamicForm/JQueryAdapter"],
       "app/app/Adapter/Block/EnhavoAdapter": ["src/app/Adapter/Block/EnhavoAdapter"],
       "app/app/Form/Form": ["src/app/Form/Form"],
-      "app/app/Block/List": ["app/app/Block/List"]
+      "app/app/Block/List": ["src/app/Block/List"]
     }
   }
 }
