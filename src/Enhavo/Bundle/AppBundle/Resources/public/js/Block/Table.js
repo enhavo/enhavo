@@ -109,7 +109,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
           if (callback) {
             callback();
           }
-          $(document).trigger('enhavoTableLoaded', [$block]);
+          $(document).trigger('enhavoTableLoaded', [block]);
         },
         error: function () {
           admin.closeLoadingOverlay();
