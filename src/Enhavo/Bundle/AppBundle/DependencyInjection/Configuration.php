@@ -71,6 +71,7 @@ class Configuration implements ConfigurationInterface
 
             ->children()
                 ->arrayNode('roles')
+                    ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
                             ->scalarNode('role')->end()
