@@ -11,9 +11,7 @@ class EnhavoAdapter
 
     private static initFormListener(): void
     {
-        let listener = new FormListener();
-
-        listener.onInsert(function(event: FormInsertEvent) {
+        FormListener.onInsert(function(event: FormInsertEvent) {
             DatePicker.apply(event.getElement());
         });
     }

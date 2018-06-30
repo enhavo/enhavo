@@ -17,8 +17,9 @@
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
   *margin-right: .3em;
+  margin-left:0;
+  border-radius:50%;
   position: relative;
-}
 
   &.checked:before {
     content: "\e847";

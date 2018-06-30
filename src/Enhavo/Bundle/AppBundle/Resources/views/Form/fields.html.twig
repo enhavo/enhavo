@@ -74,13 +74,13 @@
 
 {% block enhavo_list_widget %}
     {% import _self as forms %}
-    <div data-list-container>
+    <div data-list class="list-type">
         <ul
                 data-list-container
                 {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
                 data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
                 data-prototype-name="{{ prototype_name }}"
-                class="list-fields enhavo_list
+                class="list-fields
         {% if border and sortable and allow_delete %}
             sortable-border-delete
         {% elseif sortable and allow_delete and not border %}
@@ -112,16 +112,16 @@
 {% endblock %}
 
 {% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
-    <li class="listElement">
+    <li class="listElement" data-list-item>
         {% if sortable or allow_delete %}
             {% spaceless %}
-                <ul class="buttons-container">
+                <ul class="buttons-container" data-list-item-buttons>
                     {% if sortable %}
-                        <li class="button button-up"><i class="fa fa-angle-up"></i></li>
-                        <li class="button button-down"><i class="fa fa-angle-down"></i></li>
+                        <li class="button button-up" data-list-item-up><i class="icon-chevron-up"></i></li>
+                        <li class="button button-down" data-list-item-down><i class="icon-chevron-down"></i></li>
                     {% endif %}
                     {% if allow_delete %}
-                        <li class="button button-delete">
+                        <li class="button button-delete" data-list-item-delete>
                             <i class="icon-cross"></i>
                         </li>
                     {% endif %}

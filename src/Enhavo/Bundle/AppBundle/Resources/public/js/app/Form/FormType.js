@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "app/Form/Form", "jquery", "tinymce", "jquery-ui-timepicker", "jquery-tinymce", "icheck", "select2"], function (require, exports, Form_1, $, tinymce) {
+define(["require", "exports", "app/Form/Form", "app/Form/Form", "jquery", "tinymce", "jquery-ui-timepicker", "jquery-tinymce", "icheck", "select2"], function (require, exports, Form_1, Form_2, $, tinymce) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var DatePickerType = /** @class */ (function (_super) {
@@ -207,136 +207,126 @@ define(["require", "exports", "app/Form/Form", "jquery", "tinymce", "jquery-ui-t
         }
         return WysiwygConfig;
     }());
+    var ListType = /** @class */ (function (_super) {
+        __extends(ListType, _super);
+        function ListType() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.placeholderIndex = 0;
+            return _this;
+        }
+        ListType.apply = function (element) {
+            var data = [];
+            var elements = Form_1.FormElement.findElements(element, '[data-list]');
+            for (var _i = 0, elements_6 = elements; _i < elements_6.length; _i++) {
+                element = elements_6[_i];
+                data.push(new ListType(element));
+            }
+            return data;
+        };
+        ListType.prototype.init = function () {
+            this.initItems();
+            this.initAddButton();
+        };
+        ListType.prototype.initItems = function () {
+            var self = this;
+            this.items = [];
+            this.$element.children('[data-list-container]').children().each(function (index, element) {
+                self.items.push(new ListItem(element, self));
+            });
+        };
+        ListType.prototype.initAddButton = function () {
+            var self = this;
+            this.$element.children('[data-add-button]').click(function (event) {
+                event.preventDefault();
+                var $listContainer = self.$element.children('[data-list-container]');
+                // grab the prototype template
+                var item = $listContainer.attr('data-prototype');
+                var prototype_name = $listContainer.attr('data-prototype-name');
+                // generate unique placeholder for reindexing service
+                var placeholder = '__name' + self.placeholderIndex + '__';
+                self.placeholderIndex++;
+                item = item.replace(new RegExp(prototype_name, 'g'), placeholder).trim();
+                var initializer = new Form_1.FormInitializer;
+                initializer.setHtml(item);
+                initializer.append($listContainer.get(0));
+                self.items.push(new ListItem(initializer.getElement(), self));
+                self.updatePosition();
+            });
+        };
+        ListType.prototype.removeItem = function (item) {
+            var index = this.items.indexOf(item);
+            this.items.splice(index, index);
+        };
+        ListType.prototype.moveItemUp = function (item) {
+            var index = this.$element.children('[data-list-container]').children().index(item.getElement());
+            console.log(index);
+            if (index > 0) {
+                Form_2.FormDispatcher.dispatchMove(item.getElement());
+                var before = this.$element.children('[data-list-container]').children().get(index - 1);
+                before.before(item.getElement());
+                Form_2.FormDispatcher.dispatchDrop(item.getElement());
+            }
+            this.updatePosition();
+        };
+        ListType.prototype.moveItemDown = function (item) {
+            var index = this.$element.children('[data-list-container]').children().index(item.getElement());
+            var size = this.$element.children('[data-list-container]').children().length;
+            if (index < (size - 1)) {
+                Form_2.FormDispatcher.dispatchMove(item.getElement());
+                var after = this.$element.children('[data-list-container]').children().get(index + 1);
+                after.after(item.getElement());
+                Form_2.FormDispatcher.dispatchDrop(item.getElement());
+            }
+            this.updatePosition();
+        };
+        ListType.prototype.updatePosition = function () {
+            var i = 0;
+            for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
+                var item = _a[_i];
+                i++;
+                item.setPosition(i);
+            }
+        };
+        return ListType;
+    }(Form_1.FormElement));
+    exports.ListType = ListType;
+    var ListItem = /** @class */ (function () {
+        function ListItem(element, list) {
+            this.$element = $(element);
+            this.$buttons = this.$element.children('[data-list-item-buttons]');
+            this.list = list;
+            this.initDeleteButton();
+            this.initUpButton();
+            this.initDownButton();
+        }
+        ListItem.prototype.initDeleteButton = function () {
+            var self = this;
+            this.$buttons.children('[data-list-item-delete]').click(function (event) {
+                self.$element.remove();
+            });
+        };
+        ListItem.prototype.initUpButton = function () {
+            var self = this;
+            this.$buttons.children('[data-list-item-up]').click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                self.list.moveItemUp(self);
+            });
+        };
+        ListItem.prototype.initDownButton = function () {
+            var self = this;
+            this.$buttons.children('[data-list-item-down]').click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                self.list.moveItemDown(self);
+            });
+        };
+        ListItem.prototype.getElement = function () {
+            return this.$element.get(0);
+        };
+        ListItem.prototype.setPosition = function (number) {
+            this.$element.find('[data-position]').val(number);
+        };
+        return ListItem;
+    }());
 });
-//
-// class List
-// {
-//     init() {
-//         this.initList = function (form) {
-//
-//             var initDeleteButton = function (item) {
-//                 $(item).first().find('.button-delete').click(function (e) {
-//                     e.preventDefault();
-//                     $(this).closest('.listElement').remove();
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var initAddButton = function (list) {
-//                 list.parents('[data-list-container]').first().children('[data-add-button]').click(function (e) {
-//                     e.preventDefault();
-//
-//                     var $formWidget = $(this).parents('[data-list-container]').first();
-//                     var $listContainer = $formWidget.children('[data-list-container]');
-//
-//                     // grab the prototype template
-//                     var item = $listContainer.attr('data-prototype');
-//                     var prototype_name = $listContainer.attr('data-prototype-name');
-//
-//                     // Generate unique placeholder for reindexing service
-//                     var placeholder = '__name' + placeholderIndex + '__';
-//                     placeholderIndex++;
-//
-//                     // replace prototype_name used in id and name with placeholder
-//                     item = item.replace(new RegExp(prototype_name, 'g'), placeholder);
-//                     item = $.parseHTML(item.trim());
-//
-//                     // Initialize sub-elements for reindexing
-//                     self.initReindexableItem(item, placeholder);
-//
-//                     $listContainer.append(item);
-//                     initItem(item);
-//                     $(document).trigger('formListAddItem', item);
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 })
-//             };
-//
-//             var initItem = function (item) {
-//                 initButtonUp(item);
-//                 initButtonDown(item);
-//                 initDeleteButton(item);
-//             };
-//
-//             var initButtonUp = function (item) {
-//                 $(item).on('click', '.button-up', function (event) {
-//                     event.preventDefault();
-//                     event.stopPropagation();
-//
-//                     var liElement = $(this).parent();
-//                     while (!liElement.hasClass('listElement')) {
-//                         liElement = liElement.parent();
-//                     }
-//                     var list = liElement.parent();
-//                     var index = list.children().index(liElement);
-//
-//                     if (index > 0) { // is not first element
-//                         if (liElement.find('[data-wysiwyg]').length) {
-//                             self.destroyWysiwyg(liElement);
-//                             $(list.children().get(index - 1)).before(liElement); //move element before last
-//                             self.initWysiwyg(liElement);
-//                         } else {
-//                             $(list.children().get(index - 1)).before(liElement); //move element before last
-//                         }
-//                     }
-//
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var initButtonDown = function (item) {
-//                 $(item).on('click', '.button-down', function (event) {
-//                     event.preventDefault();
-//                     event.stopPropagation();
-//
-//                     var liElement = $(this).parent();
-//                     while (!liElement.hasClass('listElement')) {
-//                         liElement = liElement.parent();
-//                     }
-//                     var list = liElement.parent();
-//                     var index = list.children().index(liElement);
-//                     var size = list.children().length;
-//
-//                     if (index < (size - 1)) { // is not last element
-//                         if (liElement.find('[data-wysiwyg]').length) {
-//                             self.destroyWysiwyg(liElement);
-//                             $(list.children().get(index + 1)).after(liElement); //move element after next
-//                             self.initWysiwyg(liElement);
-//                         } else {
-//                             $(list.children().get(index + 1)).after(liElement); //move element after next
-//                         }
-//                     }
-//
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var setOrderForContainer = function (list) {
-//                 var orderby = list.attr('data-order');
-//                 list.find("." + orderby).each(function (index) {
-//                     $(this).val(index + 1);
-//                 });
-//             };
-//
-//             (function (form) {
-//                 $(form).find('[data-list-container]').each(function () {
-//                     var list = $(this);
-//
-//                     if (typeof list.attr('data-reindexable') != 'undefined') {
-//                         // Save initial index
-//                         list.data('initial-list-index', list.children().length);
-//                     }
-//
-//                     $.each(list.children(), function (index, item) {
-//                         initItem($(item));
-//                     });
-//
-//                     setOrderForContainer(list);
-//                     initAddButton(list);
-//                 });
-//             })(form);
-//         };
-//     }
-// } 

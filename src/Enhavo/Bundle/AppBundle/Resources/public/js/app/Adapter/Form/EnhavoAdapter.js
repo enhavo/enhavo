@@ -6,8 +6,7 @@ define(["require", "exports", "app/Form/Form", "app/Form/Form"], function (requi
             EnhavoAdapter.initFormListener();
         }
         EnhavoAdapter.initFormListener = function () {
-            var listener = new Form_1.FormListener();
-            listener.onInsert(function (event) {
+            Form_1.FormListener.onInsert(function (event) {
                 Form_2.DatePicker.apply(event.getElement());
             });
         };

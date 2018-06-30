@@ -41,14 +41,18 @@ export class FormInitializer
         this.release();
     }
 
+    public append(element: HTMLElement)
+    {
+        this.insert();
+        $(element).append(this.element);
+    }
+
     public convert()
     {
         if(!this.converted) {
             this.converted = true;
             if(this.html) {
-                let event = new FormConvertEvent(this.html);
-                $('body').trigger('formConvert', event);
-                this.html = event.getHtml();
+                this.html = FormDispatcher.dispatchConvert(this.html).getHtml();
                 this.element = $($.parseHTML(this.html)).get(0);
             }
         }
@@ -62,9 +66,7 @@ export class FormInitializer
 
         if(!this.released) {
             this.released = true;
-            let event = new FormReleaseEvent(this.element);
-            $('body').trigger('formRelease', event);
-            this.element = event.getElement();
+            this.element = FormDispatcher.dispatchRelease(this.element).getElement();
         }
     }
 
@@ -82,32 +84,82 @@ export class FormInitializer
                 this.convert();
             }
 
-            let event = new FormInsertEvent(this.element);
-            $('body').trigger('formInsert', event);
-            this.element = event.getElement()
+            this.element = FormDispatcher.dispatchInsert(this.element).getElement();
         }
+    }
+}
+
+export class FormDispatcher
+{
+    public static dispatchMove(element: HTMLElement)
+    {
+        let event = new FormElementEvent(element);
+        $('body').trigger('formInsert', event);
+        return event;
+    }
+
+    public static dispatchDrop(element: HTMLElement)
+    {
+        let event = new FormElementEvent(element);
+        $('body').trigger('formInsert', event);
+        return event;
+    }
+
+    public static dispatchConvert(element: string)
+    {
+        let event = new FormConvertEvent(element);
+        $('body').trigger('formConvert', event);
+        return event;
+    }
+
+    public static dispatchInsert(element: HTMLElement)
+    {
+        let event = new FormInsertEvent(element);
+        $('body').trigger('formInsert', event);
+        return event;
+    }
+
+    public static dispatchRelease(element: HTMLElement)
+    {
+        let event = new FormReleaseEvent(element);
+        $('body').trigger('formRelease', event);
+        return event;
     }
 }
 
 export class FormListener
 {
-    public onConvert(callback: (event: FormConvertEvent) => void)
+    public static onConvert(callback: (event: FormConvertEvent) => void)
     {
         $('body').on('formConvert', function(event, formEvent: FormConvertEvent) {
             callback(formEvent);
         });
     }
 
-    public onInsert(callback: (event: FormInsertEvent) => void)
+    public static onInsert(callback: (event: FormInsertEvent) => void)
     {
         $('body').on('formInsert', function(event, formEvent: FormInsertEvent) {
             callback(formEvent);
         });
     }
 
-    public onRelease(callback: (event: FormReleaseEvent) => void)
+    public static onRelease(callback: (event: FormReleaseEvent) => void)
     {
         $('body').on('formRelease', function(event, formEvent: FormReleaseEvent) {
+            callback(formEvent);
+        });
+    }
+
+    public static onMove(callback: (event: FormReleaseEvent) => void)
+    {
+        $('body').on('formMove', function(event, formEvent: FormElementEvent) {
+            callback(formEvent);
+        });
+    }
+
+    public static onDrop(callback: (event: FormReleaseEvent) => void)
+    {
+        $('body').on('formDrop', function(event, formEvent: FormElementEvent) {
             callback(formEvent);
         });
     }

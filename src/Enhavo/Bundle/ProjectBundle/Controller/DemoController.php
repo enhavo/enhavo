@@ -10,12 +10,14 @@ namespace Enhavo\Bundle\ProjectBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\AppBundle\Form\Type\DateType;
+use Enhavo\Bundle\AppBundle\Form\Type\ListType;
 use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
+use Enhavo\Bundle\ProjectBundle\Form\Type\ContentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,9 +106,14 @@ class DemoController extends AbstractController
                 'multiple' => false,
                 'expanded' => false
             ])
+            ->add('list', ListType::class, [
+                'entry_type' => ContentType::class,
+                'sortable' => true,
+                'border' => true
+            ])
             ->getForm();
 
-
+        $form->handleRequest($request);
         return $this->render('EnhavoProjectBundle:Theme/Demo:form.html.twig', [
             'form' => $form->createView()
         ]);

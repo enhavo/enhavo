@@ -3,7 +3,6 @@
     "baseUrl": ".",
     "paths": {
       "app/Admin": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Admin"],
-      "app/Form": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Form"],
       "app/Router": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Router"],
       "app/Templating": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Templating"],
       "app/Translator": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Translator"],

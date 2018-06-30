@@ -1,4 +1,5 @@
-import { FormElement } from "app/Form/Form";
+import {FormElement, FormInitializer, FormListener} from "app/Form/Form";
+import { FormDispatcher } from "app/Form/Form";
 import * as $ from 'jquery'
 import * as tinymce from 'tinymce'
 import 'jquery-ui-timepicker'
@@ -56,7 +57,6 @@ export class DateTimePickerType extends FormElement
     }
 }
 
-
 export class CheckboxType extends FormElement
 {
     public static apply(element: HTMLElement)
@@ -95,7 +95,6 @@ export class SelectType extends FormElement
         this.$element.select2();
     }
 }
-
 
 export class WysiwygType extends FormElement
 {
@@ -208,136 +207,162 @@ class WysiwygConfig {
     content_css: string;
 }
 
+export class ListType extends FormElement
+{
+    private items : ListItem[];
 
-//
-// class List
-// {
-//     init() {
-//         this.initList = function (form) {
-//
-//             var initDeleteButton = function (item) {
-//                 $(item).first().find('.button-delete').click(function (e) {
-//                     e.preventDefault();
-//                     $(this).closest('.listElement').remove();
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var initAddButton = function (list) {
-//                 list.parents('[data-list-container]').first().children('[data-add-button]').click(function (e) {
-//                     e.preventDefault();
-//
-//                     var $formWidget = $(this).parents('[data-list-container]').first();
-//                     var $listContainer = $formWidget.children('[data-list-container]');
-//
-//                     // grab the prototype template
-//                     var item = $listContainer.attr('data-prototype');
-//                     var prototype_name = $listContainer.attr('data-prototype-name');
-//
-//                     // Generate unique placeholder for reindexing service
-//                     var placeholder = '__name' + placeholderIndex + '__';
-//                     placeholderIndex++;
-//
-//                     // replace prototype_name used in id and name with placeholder
-//                     item = item.replace(new RegExp(prototype_name, 'g'), placeholder);
-//                     item = $.parseHTML(item.trim());
-//
-//                     // Initialize sub-elements for reindexing
-//                     self.initReindexableItem(item, placeholder);
-//
-//                     $listContainer.append(item);
-//                     initItem(item);
-//                     $(document).trigger('formListAddItem', item);
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 })
-//             };
-//
-//             var initItem = function (item) {
-//                 initButtonUp(item);
-//                 initButtonDown(item);
-//                 initDeleteButton(item);
-//             };
-//
-//             var initButtonUp = function (item) {
-//                 $(item).on('click', '.button-up', function (event) {
-//                     event.preventDefault();
-//                     event.stopPropagation();
-//
-//                     var liElement = $(this).parent();
-//                     while (!liElement.hasClass('listElement')) {
-//                         liElement = liElement.parent();
-//                     }
-//                     var list = liElement.parent();
-//                     var index = list.children().index(liElement);
-//
-//                     if (index > 0) { // is not first element
-//                         if (liElement.find('[data-wysiwyg]').length) {
-//                             self.destroyWysiwyg(liElement);
-//                             $(list.children().get(index - 1)).before(liElement); //move element before last
-//                             self.initWysiwyg(liElement);
-//                         } else {
-//                             $(list.children().get(index - 1)).before(liElement); //move element before last
-//                         }
-//                     }
-//
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var initButtonDown = function (item) {
-//                 $(item).on('click', '.button-down', function (event) {
-//                     event.preventDefault();
-//                     event.stopPropagation();
-//
-//                     var liElement = $(this).parent();
-//                     while (!liElement.hasClass('listElement')) {
-//                         liElement = liElement.parent();
-//                     }
-//                     var list = liElement.parent();
-//                     var index = list.children().index(liElement);
-//                     var size = list.children().length;
-//
-//                     if (index < (size - 1)) { // is not last element
-//                         if (liElement.find('[data-wysiwyg]').length) {
-//                             self.destroyWysiwyg(liElement);
-//                             $(list.children().get(index + 1)).after(liElement); //move element after next
-//                             self.initWysiwyg(liElement);
-//                         } else {
-//                             $(list.children().get(index + 1)).after(liElement); //move element after next
-//                         }
-//                     }
-//
-//                     setOrderForContainer(list);
-//                     self.reindex();
-//                 });
-//             };
-//
-//             var setOrderForContainer = function (list) {
-//                 var orderby = list.attr('data-order');
-//                 list.find("." + orderby).each(function (index) {
-//                     $(this).val(index + 1);
-//                 });
-//             };
-//
-//             (function (form) {
-//                 $(form).find('[data-list-container]').each(function () {
-//                     var list = $(this);
-//
-//                     if (typeof list.attr('data-reindexable') != 'undefined') {
-//                         // Save initial index
-//                         list.data('initial-list-index', list.children().length);
-//                     }
-//
-//                     $.each(list.children(), function (index, item) {
-//                         initItem($(item));
-//                     });
-//
-//                     setOrderForContainer(list);
-//                     initAddButton(list);
-//                 });
-//             })(form);
-//         };
-//     }
-// }
+    private placeholderIndex : number = 0;
+
+    public static apply(element: HTMLElement)
+    {
+        let data = [];
+        let elements = FormElement.findElements(element, '[data-list]');
+        for(element of elements) {
+            data.push(new ListType(element));
+        }
+        return data;
+    }
+
+    protected init()
+    {
+        this.initItems();
+        this.initAddButton();
+    }
+
+    private initItems()
+    {
+        let self = this;
+        this.items = [];
+        this.$element.children('[data-list-container]').children().each(function(index, element) {
+            self.items.push(new  ListItem(element, self));
+        });
+    }
+
+    private initAddButton()
+    {
+        let self = this;
+        this.$element.children('[data-add-button]').click(function (event) {
+            event.preventDefault();
+
+            let $listContainer = self.$element.children('[data-list-container]');
+
+            // grab the prototype template
+            let item = $listContainer.attr('data-prototype');
+            let prototype_name = $listContainer.attr('data-prototype-name');
+
+            // generate unique placeholder for reindexing service
+            let placeholder = '__name' + self.placeholderIndex + '__';
+            self.placeholderIndex++;
+
+            item = item.replace(new RegExp(prototype_name, 'g'), placeholder).trim();
+            let initializer = new FormInitializer;
+            initializer.setHtml(item);
+            initializer.append($listContainer.get(0));
+            self.items.push(new ListItem(initializer.getElement(), self));
+            self.updatePosition();
+        })
+    }
+
+    public removeItem(item: ListItem)
+    {
+        let index = this.items.indexOf(item);
+        this.items.splice(index, index);
+    }
+
+    public moveItemUp(item: ListItem)
+    {
+        let index = this.$element.children('[data-list-container]').children().index(item.getElement());
+
+        console.log(index);
+
+        if (index > 0) { // is not first element
+            FormDispatcher.dispatchMove(item.getElement());
+            let before = this.$element.children('[data-list-container]').children().get(index - 1);
+            before.before(item.getElement());
+            FormDispatcher.dispatchDrop(item.getElement());
+        }
+
+        this.updatePosition();
+    }
+
+    public moveItemDown(item: ListItem)
+    {
+        let index = this.$element.children('[data-list-container]').children().index(item.getElement());
+        let size = this.$element.children('[data-list-container]').children().length;
+
+        if (index < (size - 1)) { // is not first element
+            FormDispatcher.dispatchMove(item.getElement());
+            let after = this.$element.children('[data-list-container]').children().get(index + 1);
+            after.after(item.getElement());
+            FormDispatcher.dispatchDrop(item.getElement());
+        }
+
+        this.updatePosition();
+    }
+
+    private updatePosition()
+    {
+        let i = 0;
+        for(let item of this.items) {
+            i++;
+            item.setPosition(i);
+        }
+    }
+}
+
+class ListItem
+{
+    private $element: JQuery;
+
+    private $buttons: JQuery;
+
+    private list: ListType;
+
+    constructor(element: HTMLElement, list: ListType)
+    {
+        this.$element = $(element);
+        this.$buttons = this.$element.children('[data-list-item-buttons]');
+        this.list = list;
+        this.initDeleteButton();
+        this.initUpButton();
+        this.initDownButton();
+    }
+
+    private initDeleteButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-delete]').click(function(event) {
+            self.$element.remove();
+        });
+    }
+
+    private initUpButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-up]').click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.list.moveItemUp(self);
+        });
+    }
+
+    private initDownButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-down]').click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.list.moveItemDown(self);
+        });
+    }
+
+    public getElement()
+    {
+        return this.$element.get(0);
+    }
+
+    public setPosition(number: number)
+    {
+        this.$element.find('[data-position]').val(number);
+    }
+}
