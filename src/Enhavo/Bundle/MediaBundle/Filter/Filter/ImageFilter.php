@@ -13,6 +13,7 @@ use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
+use Imagine\Imagick\Imagine as ImagickImagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Palette\RGB;
@@ -25,12 +26,25 @@ class ImageFilter extends AbstractFilter
         $content = $this->getContent($file);
 
         try {
-            $imagine = new Imagine();
-            $imagine = $imagine->load($content->getContent());
-            $imagine = $this->resize($imagine, $setting);
-            $imagine->save($content->getFilePath(), [
-                'format' => $this->getFormat($content, $setting)
-            ]);
+            $format = $this->getFormat($content, $setting);
+            if($format == 'gif' && class_exists('Imagick') && $this->isAnimatedGif($content->getContent())) {
+                $imagine = new ImagickImagine();
+                $image = $imagine->load($content->getContent());
+                $image->layers()->coalesce();
+                $resultImage = $image->copy();
+                $resultImage = $this->resize($resultImage, $setting);
+                $resultImage->save($content->getFilePath(), [
+                    'format' => $format,
+                    'animated' => true
+                ]);
+            } else {
+                $imagine = new Imagine();
+                $imagine = $imagine->load($content->getContent());
+                $imagine = $this->resize($imagine, $setting);
+                $imagine->save($content->getFilePath(), [
+                    'format' => $format
+                ]);
+            }
         } catch (RuntimeException $e) {
             // if image cant be created we make an empty file
             file_put_contents($content->getFilePath(), '');
@@ -226,6 +240,12 @@ class ImageFilter extends AbstractFilter
     {
         $height = $width / ($image->getSize()->getWidth() / $image->getSize()->getHeight());
         return $image->resize(new Box($width, $height));
+    }
+
+    private function isAnimatedGif($file)
+    {
+        $count = preg_match_all('#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $file, $m);
+        return $count >= 2;
     }
 
     public function getType()
