@@ -77,3 +77,17 @@ services:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'submenu' }
+
+    enhavo_navigation.item.configuration.node_configuration:
+        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_navigation.item, alias: 'node' }
+
+    enhavo_navigation.widget.navigation:
+        class: Enhavo\Bundle\NavigationBundle\Widget\NavigationWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: 'navigation' }

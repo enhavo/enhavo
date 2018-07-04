@@ -24,13 +24,7 @@ class LinkType extends AbstractType
             'translation_domain' => 'EnhavoNavigationBundle'
         ]);
 
-        $builder->add('target', ChoiceType::class, [
-            'label' => 'target',
-            'choices' => [
-                '_self' => 'self',
-                '_blank' => 'blank',
-            ]
-        ]);
+        $builder->add('target', TargetType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

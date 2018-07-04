@@ -34,6 +34,11 @@ class NavigationPageNodeType extends AbstractType
             'label' => 'page.label.page',
             'translation_domain' => 'EnhavoPageBundle'
         ]);
+
+        $builder->add('configuration', NavigationPageConfigurationType::class, [
+            'label' => 'page.label.configuration',
+            'translation_domain' => 'EnhavoPageBundle'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -50,6 +55,6 @@ class NavigationPageNodeType extends AbstractType
 
     public function getName()
     {
-        return 'enhavo_navigation_submenu';
+        return 'enhavo_page_navigation_page_node';
     }
 }

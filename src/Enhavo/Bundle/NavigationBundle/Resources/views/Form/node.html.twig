@@ -1,0 +1,6 @@
+{{ form_widget(form.position) }}
+{{ form_widget(form.type) }}
+{{ form_row(form.label) }}
+{% if form.children is defined %}
+    {{ form_row(form.children) }}
+{% endif %}

@@ -113,16 +113,6 @@ class NodeResolver implements ResolverInterface
         return $item->getTemplate();
     }
 
-    private function resolveContent($name)
-    {
-        $item = $this->resolveItem($name);
-        if($this->isContentClass($name)) {
-            $class = $item->getModel();
-            return new $class;
-        }
-        return null;
-    }
-
     private function isContentClass($name)
     {
         $item = $this->resolveItem($name);

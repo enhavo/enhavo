@@ -68,3 +68,8 @@ services:
         class: Enhavo\Bundle\AppBundle\Twig\Slugify
         tags:
             - { name: twig.extension }
+
+    enhavo_app.twig.spl_object:
+        class: Enhavo\Bundle\AppBundle\Twig\SplObject
+        tags:
+            - { name: twig.extension }
