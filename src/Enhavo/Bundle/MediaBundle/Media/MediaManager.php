@@ -105,9 +105,9 @@ class MediaManager
      */
     public function deleteFile(FileInterface $file)
     {
-        $this->provider->delete($file);
         $this->storage->deleteFile($file);
         $this->formatManager->deleteFormats($file);
+        $this->provider->delete($file);
     }
 
     /**
