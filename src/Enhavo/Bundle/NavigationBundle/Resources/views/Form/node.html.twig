@@ -1,6 +1,27 @@
-{{ form_widget(form.position) }}
-{{ form_widget(form.type) }}
-{{ form_row(form.label) }}
-{% if form.children is defined %}
-    {{ form_row(form.children) }}
-{% endif %}
+{% block form %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.type) }}
+    {{ form_row(form.label) }}
+
+    {% if form.content is defined %}
+        {% if form.content.children|length > 0 %}
+            {% for child in form.content.children %}
+                {{ form_row(child) }}
+            {% endfor %}
+        {% else %}
+            {{ form_row(form.content) }}
+        {% endif %}
+    {% endif %}
+
+    {% if form.configuration is defined %}
+        {% if form.configuration.children|length > 0 %}
+            {% for child in form.configuration.children %}
+                {{ form_row(child) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+    {% if form.offsetExists('children') %}
+        {{ form_row(form.offsetGet('children')) }}
+    {% endif %}
+{% endblock %}

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: gseidel
- * Date: 18.05.18
- * Time: 17:12
+ * Date: 23.04.18
+ * Time: 17:55
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
@@ -12,28 +12,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NodeContentType extends AbstractType
+class LinkConfigurationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', $options['form_type']);
+        $builder->add('target', TargetType::class, []);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'children' => false,
-            'form_type' => null
-        ]);
-    }
-
-    public function getParent()
-    {
-        return NodeType::class;
+        $resolver->setDefaults([]);
     }
 
     public function getName()
     {
-        return 'enhavo_navigation_node_content';
+        return 'enhavo_navigation_link_configuration';
     }
 }

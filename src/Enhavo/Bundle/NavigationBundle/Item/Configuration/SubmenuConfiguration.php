@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\NavigationBundle\Item\Configuration;
 
 use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Factory\SubmenuFactory;
 use Enhavo\Bundle\NavigationBundle\Form\Type\SubmenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,13 +20,11 @@ class SubmenuConfiguration extends AbstractConfiguration
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'model' => Node::class,
             'form' => SubmenuType::class,
             'label' => 'node.label.submenu',
             'translationDomain' => 'EnhavoNavigationBundle',
             'type' => 'submenu',
             'factory' => SubmenuFactory::class,
-            'template' => 'EnhavoNavigationBundle:Form:submenu.html.twig',
         ]);
     }
 

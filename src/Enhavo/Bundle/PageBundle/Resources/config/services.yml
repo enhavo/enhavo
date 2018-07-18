@@ -10,12 +10,17 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_page.form.type.navigation_page_node:
-        class: Enhavo\Bundle\PageBundle\Form\Type\NavigationPageNodeType
+    enhavo_page.form.type.navigation_page_configuation:
+        class: Enhavo\Bundle\PageBundle\Form\Type\NavigationPageConfigurationType
+        tags:
+            - { name: form.type }
+
+    enhavo_page.form.type.page_choice:
+        class: Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType
         arguments:
             - '%enhavo_page.model.page.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_page_page_choice' }
 
     enhavo_page.widget.page:
         class: Enhavo\Bundle\PageBundle\Widget\PageWidget

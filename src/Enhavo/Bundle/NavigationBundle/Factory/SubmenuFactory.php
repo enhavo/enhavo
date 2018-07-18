@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-class SubmenuFactory extends Factory
+class SubmenuFactory extends NodeFactory
 {
 
 }

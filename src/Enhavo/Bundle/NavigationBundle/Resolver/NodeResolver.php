@@ -10,13 +10,14 @@ namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
-use Enhavo\Bundle\NavigationBundle\Factory\Factory;
-use Enhavo\Bundle\NavigationBundle\Form\Type\NodeContentType;
+use Enhavo\Bundle\NavigationBundle\Exception\ResolverException;
+use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\NavigationBundle\Item\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface as SyliusFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -73,21 +74,16 @@ class NodeResolver implements ResolverInterface
     public function resolveForm($name, $data = null, $options = [])
     {
         $item = $this->resolveItem($name);
-        if($this->isContentClass($name)) {
-            $formOptions = [
-                'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
-                'data_class' => Node::class,
-                'form_type' => $item->getForm()
-            ];
-            $form = $this->formFactory->create(NodeContentType::class, $data, array_merge($formOptions, $options));
-        } else {
-            $formOptions = [
-                'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
-                'data_class' => Node::class,
-            ];
-            $form = $this->formFactory->create($item->getForm(), $data, array_merge($formOptions, $options));
-        }
 
+        $formOptions = [
+            'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
+            'data_class' => $item->getModel(),
+            'configuration_type' => $item->getConfigurationForm(),
+            'configuration_type_options' => [],
+            'content_type' => $item->getContentForm(),
+            'content_type_options' => [],
+        ];
+        $form = $this->formFactory->create($item->getForm(), $data, array_merge($formOptions, $options));
         return $form;
     }
 
@@ -95,32 +91,88 @@ class NodeResolver implements ResolverInterface
     {
         $item = $this->resolveItem($name);
 
-        if($this->isContentClass($name)) {
-            $factoryClass = $item->getFactory();
-            /** @var FactoryInterface $factory */
-            $factory = new $factoryClass($item->getModel());
-            $content = $factory->createNew();
-            return new Factory($this->getNodeClass(), $item->getName(), $content);
-        } else {
-            $factoryClass = $item->getFactory();
-            return new $factoryClass($item->getModel(), $item->getName(), null);
+        /** @var NodeFactory $factory */
+        $factory = $this->getFactory($item);
+        $factory->setContentFactory($this->getContentFactory($item));
+        $factory->setConfigurationFactory($this->getConfigurationFactory($item));
+        return $factory;
+    }
+
+    /**
+     * @param Item $item
+     * @throws ResolverException
+     * @return FactoryInterface
+     */
+    private function getContentFactory(Item $item)
+    {
+        $contentFactoryClass = $item->getContentFactory();
+        if($contentFactoryClass) {
+            if ($this->container->has($contentFactoryClass)) {
+                $contentFactory = $this->container->get($contentFactoryClass);
+            } else {
+                $contentFactory = new $contentFactoryClass($item->getContentModel());
+            }
+
+            if(!($contentFactory instanceof FactoryInterface || $contentFactory instanceof SyliusFactoryInterface)) {
+                throw new ResolverException(sprintf('Factory class "%s" not type of "%s" or "%s', get_class($contentFactory),FactoryInterface::class, SyliusFactoryInterface::class));
+            }
+
+            return $contentFactory;
         }
+        return null;
+    }
+
+    /**
+     * @param Item $item
+     * @throws ResolverException
+     * @return FactoryInterface
+     */
+    private function getConfigurationFactory(Item $item)
+    {
+        $configurationFactoryClass = $item->getConfigurationFactory();
+        if($configurationFactoryClass) {
+            if ($this->container->has($configurationFactoryClass)) {
+                $configurationFactory = $this->container->get($configurationFactoryClass);
+            } else {
+                $configurationFactory = new $configurationFactoryClass();
+            }
+
+            if(!$configurationFactory instanceof FactoryInterface) {
+                throw new ResolverException(sprintf('Factory class "%s" not type of "%s"', get_class($configurationFactory), FactoryInterface::class));
+            }
+
+            return $configurationFactory;
+        }
+        return null;
+    }
+
+    /**
+     * @param Item $item
+     * @return FactoryInterface
+     * @throws ResolverException
+     */
+    private function getFactory(Item $item)
+    {
+        $factoryClass = $item->getFactory();
+        if($factoryClass) {
+            if ($this->container->has($factoryClass)) {
+                $factory = $this->container->get($factoryClass);
+            } else {
+                $factory = new $factoryClass($item->getModel(), $item->getName());
+            }
+
+            if(!$factory instanceof FactoryInterface) {
+                throw new ResolverException(sprintf('Factory class "%s" not type of "%s"', get_class($factory), FactoryInterface::class));
+            }
+
+            return $factory;
+        }
+        throw new ResolverException(sprintf('Factory for type "%s" navigation is required', $item->getName()));
     }
 
     public function resolveFormTemplate($name)
     {
         $item = $this->resolveItem($name);
         return $item->getTemplate();
-    }
-
-    private function isContentClass($name)
-    {
-        $item = $this->resolveItem($name);
-        return !is_subclass_of($item->getModel(), NodeInterface::class);
-    }
-
-    private function getNodeClass()
-    {
-        return $this->container->getParameter('enhavo_navigation.model.node.class');
     }
 }

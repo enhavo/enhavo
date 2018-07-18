@@ -46,4 +46,29 @@ class Item extends AbstractItem
     {
         return $this->getConfiguration()->getTemplate($this->options);
     }
+
+    public function getContentModel()
+    {
+        return $this->getConfiguration()->getContentModel($this->options);
+    }
+
+    public function getContentFactory()
+    {
+        return $this->getConfiguration()->getContentFactory($this->options);
+    }
+
+    public function getContentForm()
+    {
+        return $this->getConfiguration()->getContentForm($this->options);
+    }
+
+    public function getConfigurationForm()
+    {
+        return $this->getConfiguration()->getConfigurationForm($this->options);
+    }
+
+    public function getConfigurationFactory()
+    {
+        return $this->getConfiguration()->getConfigurationFactory($this->options);
+    }
 }

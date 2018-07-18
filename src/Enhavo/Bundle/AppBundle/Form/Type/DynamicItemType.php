@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
 use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;

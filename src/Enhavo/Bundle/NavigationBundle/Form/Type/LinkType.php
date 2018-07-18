@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Link;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,8 +22,6 @@ class LinkType extends AbstractType
             'label' => 'link.label.link',
             'translation_domain' => 'EnhavoNavigationBundle'
         ]);
-
-        $builder->add('target', TargetType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
