@@ -9,9 +9,10 @@
 namespace Enhavo\Bundle\NavigationBundle\Item\Configuration;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Link;
+use Enhavo\Bundle\NavigationBundle\Form\Type\LinkConfigurationType;
+use Enhavo\Bundle\NavigationBundle\Form\Type\LinkType;
 use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\NavigationBundle\Factory\LinkFactory;
-use Enhavo\Bundle\NavigationBundle\Form\Type\LinkType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LinkConfiguration extends AbstractConfiguration
@@ -21,12 +22,12 @@ class LinkConfiguration extends AbstractConfiguration
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'model' => Link::class,
-            'form' => LinkType::class,
-            'factory' => LinkFactory::class,
+            'content_model' => Link::class,
+            'content_factory' => LinkFactory::class,
+            'content_form' => LinkType::class,
+            'configuration_form' => LinkConfigurationType::class,
             'label' => 'link.label.link',
             'translationDomain' => 'EnhavoNavigationBundle',
-            'template' => 'EnhavoNavigationBundle:Form:link.html.twig',
             'options' => []
         ]);
     }

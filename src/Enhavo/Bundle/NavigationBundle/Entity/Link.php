@@ -22,11 +22,6 @@ class Link
     private $link;
 
     /**
-     * @var string
-     */
-    private $target;
-
-    /**
      * @return string
      */
     public function getLink()
@@ -40,22 +35,6 @@ class Link
     public function setLink($link)
     {
         $this->link = $link;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTarget()
-    {
-        return $this->target;
-    }
-
-    /**
-     * @param string $target
-     */
-    public function setTarget($target)
-    {
-        $this->target = $target;
     }
 
     /**

@@ -2,38 +2,36 @@
 /**
  * Created by PhpStorm.
  * User: gseidel
- * Date: 18.05.18
- * Time: 17:12
+ * Date: 04.07.18
+ * Time: 11:29
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NodeContentType extends AbstractType
+class TargetType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('content', $options['form_type']);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'children' => false,
-            'form_type' => null
+            'label' => 'target',
+            'choices' => [
+                '_self' => 'self',
+                '_blank' => 'blank',
+            ]
         ]);
     }
 
     public function getParent()
     {
-        return NodeType::class;
+        return ChoiceType::class;
     }
 
     public function getName()
     {
-        return 'enhavo_navigation_node_content';
+        return 'enhavo_navigation_target';
     }
 }

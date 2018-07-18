@@ -34,7 +34,6 @@ class DynamicFormController extends Controller
             'item_full_name' => $formName
         ));
 
-
         return $this->render('EnhavoAppBundle:DynamicForm:form.html.twig', array(
             'form' => $form->createView()
         ));

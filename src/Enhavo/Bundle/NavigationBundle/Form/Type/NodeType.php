@@ -42,6 +42,14 @@ class NodeType extends AbstractType
             'translation_domain' => 'EnhavoNavigationBundle',
         ]);
 
+        if($options['configuration_type']) {
+            $builder->add('configuration',  $options['configuration_type'], $options['configuration_type_options']);
+        }
+
+        if($options['content_type']) {
+            $builder->add('content',  $options['content_type'], $options['content_type_options']);
+        }
+
         if($options['children']) {
             $builder->add('children', NodesType::class);
         }
@@ -53,7 +61,11 @@ class NodeType extends AbstractType
             'data_class' => Node::class,
             'children' => false,
             'block_name' => 'enhavo_dynamic_item',
-            'item_resolver' => 'enhavo_navigation.resolver.node_resolver'
+            'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
+            'configuration_type' => null,
+            'configuration_type_options' => [],
+            'content_type' => null,
+            'content_type_options' => [],
         ]);
     }
 

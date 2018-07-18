@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\NavigationBundle\Factory\NavigationFactory;
+use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
@@ -85,6 +86,20 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
 
+
+            ->children()
+                ->arrayNode('default')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('model')->defaultValue(Node::class)->end()
+                        ->scalarNode('form')->defaultValue(NodeType::class)->end()
+                        ->scalarNode('repository')->defaultValue(NodeRepository::class)->end()
+                        ->scalarNode('factory')->defaultValue(NodeFactory::class)->end()
+                        ->scalarNode('template')->defaultValue('@EnhavoNavigation/Form/node.html.twig')->end()
+                    ->end()
+                 ->end()
+            ->end()
+
             ->children()
                 ->arrayNode('items')
                     ->isRequired()
@@ -93,12 +108,16 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('model')->end()
                             ->scalarNode('form')->end()
+                            ->scalarNode('content_model')->end()
+                            ->scalarNode('configuration_form')->end()
+                            ->scalarNode('content_form')->end()
                             ->scalarNode('repository')->end()
                             ->scalarNode('label')->end()
                             ->scalarNode('translationDomain')->end()
                             ->scalarNode('type')->end()
                             ->scalarNode('parent')->end()
                             ->scalarNode('factory')->end()
+                            ->scalarNode('content_factory')->end()
                             ->scalarNode('template')->end()
                             ->arrayNode('options')->end()
                         ->end()

@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\NavigationBundle\Item;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\AbstractItem;
-use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
 
 class Item extends AbstractItem
 {
@@ -46,5 +45,30 @@ class Item extends AbstractItem
     public function getTemplate()
     {
         return $this->getConfiguration()->getTemplate($this->options);
+    }
+
+    public function getContentModel()
+    {
+        return $this->getConfiguration()->getContentModel($this->options);
+    }
+
+    public function getContentFactory()
+    {
+        return $this->getConfiguration()->getContentFactory($this->options);
+    }
+
+    public function getContentForm()
+    {
+        return $this->getConfiguration()->getContentForm($this->options);
+    }
+
+    public function getConfigurationForm()
+    {
+        return $this->getConfiguration()->getConfigurationForm($this->options);
+    }
+
+    public function getConfigurationFactory()
+    {
+        return $this->getConfiguration()->getConfigurationFactory($this->options);
     }
 }

@@ -25,6 +25,12 @@ class EnhavoNavigationExtension extends AbstractResourceExtension
 
         $container->setParameter('enhavo_navigation.items', $config['items']);
 
+        $container->setParameter('enhavo_navigation.default.model', $config['default']['model']);
+        $container->setParameter('enhavo_navigation.default.form', $config['default']['form']);
+        $container->setParameter('enhavo_navigation.default.repository', $config['default']['repository']);
+        $container->setParameter('enhavo_navigation.default.factory', $config['default']['factory']);
+        $container->setParameter('enhavo_navigation.default.template', $config['default']['template']);
+
         $configFiles = array(
             'services.yml',
         );

@@ -10,8 +10,6 @@ namespace Enhavo\Bundle\NavigationBundle\Item;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\NavigationBundle\Entity\Node;
-use Enhavo\Bundle\NavigationBundle\Factory\Factory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfiguration extends AbstractType implements ConfigurationInterface
@@ -56,22 +54,52 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['template'];
     }
 
+    public function getContentModel($options)
+    {
+        return $options['content_model'];
+    }
+
+    public function getContentFactory($options)
+    {
+        return $options['content_factory'];
+    }
+
+    public function getContentForm($options)
+    {
+        return $options['content_form'];
+    }
+
+    public function getConfigurationForm($options)
+    {
+        return $options['configuration_form'];
+    }
+
+    public function getConfigurationFactory($options)
+    {
+        return $options['configuration_factory'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'options' => [],
             'parent' => null,
             'translationDomain' => null,
-            'factory' => Factory::class,
-            'model' => Node::class
+            'factory' => $this->container->getParameter('enhavo_navigation.default.factory'),
+            'model' => $this->container->getParameter('enhavo_navigation.default.model'),
+            'template' => $this->container->getParameter('enhavo_navigation.default.template'),
+            'form' => $this->container->getParameter('enhavo_navigation.default.form'),
+            'repository' => $this->container->getParameter('enhavo_navigation.default.repository'),
+            'content_model' => null,
+            'content_factory' => null,
+            'content_form' => null,
+            'configuration_form' => null,
+            'configuration_factory' => null,
         ]);
 
         $resolver->setRequired([
-            'form',
             'label',
             'type',
-            'parent',
-            'template',
         ]);
     }
 }
