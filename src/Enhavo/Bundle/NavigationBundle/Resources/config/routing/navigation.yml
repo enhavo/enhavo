@@ -54,6 +54,7 @@ enhavo_navigation_navigation_table:
     defaults:
         _controller: enhavo_navigation.controller.navigation:tableAction
         _sylius:
+            paginate: 50
             viewer:
                 translationDomain: EnhavoNavigationBundle
                 columns:

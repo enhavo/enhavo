@@ -22,6 +22,8 @@ class PageChoiceType extends AbstractType
     {
         $resolver->setDefaults( array(
             'class' => $this->dataClass,
+            'label' => 'page.label.page',
+            'translation_domain' => 'EnhavoPageBundle'
         ));
     }
 
