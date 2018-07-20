@@ -132,4 +132,36 @@ class Page extends Content implements PageInterface
         $this->children->remove($page);
         return $this;
     }
+
+    /**
+     * @return Page[]
+     */
+    public function getParents()
+    {
+        $parents = [];
+        $parent = $this->getParent();
+        if($parent) {
+            $parents[] = $parent;
+            foreach($parents as $parent) {
+                $parents[] = $parent;
+            }
+        }
+        return $parents;
+    }
+
+    /**
+     * @return Page[]
+     */
+    public function getDescendants()
+    {
+        $descendants = [];
+        $children = $this->getChildren();
+        foreach($children as $child) {
+            $descendants[] = $child;
+            foreach($child->getDescendants() as $descendant) {
+                $descendants[] = $descendant;
+            }
+        }
+        return $descendants;
+    }
 }

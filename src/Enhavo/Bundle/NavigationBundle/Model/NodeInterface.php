@@ -58,6 +58,11 @@ interface NodeInterface
     public function getChildren();
 
     /**
+     * @return NodeInterface[]
+     */
+    public function getDescendants();
+
+    /**
      * Set parent
      *
      * @param NodeInterface $parent

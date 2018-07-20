@@ -27,7 +27,7 @@ class DynamicFormType extends AbstractType
         if(count($options['items'])) {
             $item = $resolver->resolveItem($options['items']);
             $items = [$item];
-        } elseif(count($options['item_group'])) {
+        } elseif(!empty($options['item_group'])) {
             $items = $resolver->resolveItemGroup($options['item_group']);
         } else {
             $items = $resolver->resolveDefaultItems();

@@ -20,12 +20,20 @@ class TypeCollector implements CollectorInterface
      */
     private $collection;
 
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
      * @var string
      */
     private $typeName;
+
+    /**
+     * @var TypeInterface[]
+     */
+    private $types;
 
     public function __construct(ContainerInterface $container, $typeName = 'Type')
     {
@@ -55,6 +63,18 @@ class TypeCollector implements CollectorInterface
             $alias,
             implode(', ', $this->getNames())
         ));
+    }
+
+    public function getTypes()
+    {
+        if($this->types === null) {
+            $this->types = [];
+            $names = $this->getNames();
+            foreach($names as $name) {
+                $this->types[] = $this->getType($name);
+            }
+        }
+        return $this->types;
     }
 
     protected function isTypeValid($type, $alias)

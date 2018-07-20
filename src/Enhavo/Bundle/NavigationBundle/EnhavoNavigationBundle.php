@@ -20,5 +20,9 @@ class EnhavoNavigationBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_navigation.item_collector', 'enhavo_navigation.item')
         );
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_navigation.voter_collector', 'enhavo_navigation.voter')
+        );
     }
 }

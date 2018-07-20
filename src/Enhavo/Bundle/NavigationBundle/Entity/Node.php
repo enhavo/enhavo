@@ -144,6 +144,24 @@ class Node implements NodeInterface
     }
 
     /**
+     * Get Descendants
+     *
+     * @return NodeInterface[]
+     */
+    public function getDescendants()
+    {
+        $descendants = [];
+        $children = $this->getChildren();
+        foreach($children as $child) {
+            $descendants[] = $child;
+            foreach($child->getDescendants() as $descendant) {
+                $descendants[] = $descendant;
+            }
+        }
+        return $descendants;
+    }
+
+    /**
      * Set parent
      *
      * @param \Enhavo\Bundle\NavigationBundle\Model\NodeInterface $parent
@@ -267,6 +285,9 @@ class Node implements NodeInterface
      */
     public function getConfiguration()
     {
+        if($this->configuration === null) {
+            return [];
+        }
         return $this->configuration;
     }
 

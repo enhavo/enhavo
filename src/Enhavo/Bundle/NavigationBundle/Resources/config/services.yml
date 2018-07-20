@@ -91,3 +91,46 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.theme_widget, alias: 'navigation' }
+
+    enhavo_navigation.node.manager:
+        class: Enhavo\Bundle\NavigationBundle\Node\NodeManager
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_navigation.voter_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'NavigationVoter'
+
+    enhavo_navigation.voter.link:
+        class: Enhavo\Bundle\NavigationBundle\Node\Voter\LinkVoter
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_navigation.voter, alias: 'link' }
+
+    enhavo_navigation.voter.link_hierarchy:
+        class: Enhavo\Bundle\NavigationBundle\Node\Voter\LinkHierarchyVoter
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_navigation.voter, alias: 'link_hierarchy' }
+
+    enhavo_navigation.voter.node_hierarchy:
+        class: Enhavo\Bundle\NavigationBundle\Node\Voter\NodeHierarchyVoter
+        arguments:
+            - '@enhavo_navigation.node.manager'
+        tags:
+            - { name: enhavo_navigation.voter, alias: 'node_hierarchy' }
+
+    enhavo_navigation.twig.extension:
+        class: Enhavo\Bundle\NavigationBundle\Twig\TwigExtension
+        tags:
+            - { name: twig.extension }
+        arguments:
+            - '@enhavo_navigation.node.manager'
+
+
+
+

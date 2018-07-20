@@ -65,3 +65,17 @@ services:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'page' }
+
+    enhavo_page.navigation.page_voter:
+        class: Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoter
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_navigation.voter, alias: 'page' }
+
+    enhavo_page.navigation.page_hierarchy_voter:
+        class: Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoter
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: enhavo_navigation.voter, alias: 'page_hierarchy' }
