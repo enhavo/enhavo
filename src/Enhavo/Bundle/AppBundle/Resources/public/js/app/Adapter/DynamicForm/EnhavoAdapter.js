@@ -10,7 +10,7 @@ define(["require", "exports", "app/app/DynamicForm", "app/app/Form/Form"], funct
                 DynamicForm_1.DynamicForm.apply(element);
             });
             $(document).on('gridAddAfter', function (event, element) {
-                DynamicForm_1.DynamicForm.apply(element);
+                //DynamicForm.apply(element);
             });
             var listener = new Form_1.FormListener();
             listener.onInsert(function (event) {

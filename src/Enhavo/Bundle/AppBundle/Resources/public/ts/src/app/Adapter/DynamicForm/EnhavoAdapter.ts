@@ -16,7 +16,7 @@ class EnhavoAdapter
         });
 
         $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            DynamicForm.apply(element);
+            //DynamicForm.apply(element);
         });
 
         let listener = new FormListener();
