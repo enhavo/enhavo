@@ -1,10 +1,13 @@
 <?php
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
+use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
+use Enhavo\Bundle\MediaBundle\Content\UrlContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\ProjectBundle\Entity\Content;
+use GuzzleHttp\Client;
+use function GuzzleHttp\Psr7\parse_header;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -97,6 +100,64 @@ class FileFactory extends Factory
         $file->setFilename($fileInfo['basename']);
         $file->setGarbage(true);
         $file->setContent(new PathContent($path));
+
+        return $file;
+    }
+
+    /**
+     * @param string $uri
+     * @param string $filename
+     * @return FileInterface
+     * @throws FileException
+     */
+    public function createFromUri($uri, $filename = null)
+    {
+        $client = new Client();
+        $response = $client->request('GET', $uri);
+        if($response->getStatusCode() != 200) {
+            throw new FileException(sprintf('File could not be download from uri "%s".', $uri));
+        }
+
+        /** @var FileInterface $file */
+        $file = $this->createNew();
+
+        $file->setMimeType('application/octet-stream');
+        $contentType = $response->getHeader('Content-Type');
+        if(!empty($contentType)) {
+            $parsedHeader = parse_header($contentType[count($contentType)-1]);
+            if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
+                $file->setMimeType($parsedHeader[0][0]);
+            }
+        }
+
+        if($filename === null) {
+            $contentDisposition = $response->getHeader('Content-Disposition');
+            if(!empty($contentDisposition)) {
+                $parsedHeader = parse_header($contentDisposition[count($contentDisposition)-1]);
+                if(!empty($parsedHeader) && $parsedHeader['filename']) {
+                    $filename = $parsedHeader['filename'];
+                }
+            } else {
+                $path = parse_url($uri, PHP_URL_PATH);
+                if($path !== null) {
+                    $basename = pathinfo($path, PATHINFO_BASENAME);
+                    if($basename !== null) {
+                        $filename = $basename;
+                    }
+                }
+            }
+        }
+
+        if($filename === null) {
+            throw new FileException(sprintf('Can\'t resolve filename from uri "%s".', $uri));
+        }
+
+        $file->setFilename($filename);
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $file->setExtension($extension);
+
+        $file->setGarbage(true);
+        $file->setContent(new Content((string)$response->getBody()));
 
         return $file;
     }

@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
