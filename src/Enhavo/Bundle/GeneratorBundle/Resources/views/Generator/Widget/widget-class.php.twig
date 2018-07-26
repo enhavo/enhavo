@@ -1,0 +1,21 @@
+<?php
+
+namespace {{ namespace }};
+
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+
+class {{ widget_name }}Widget extends AbstractType implements WidgetInterface
+{
+    public function render($options)
+    {
+        $template = $this->getOption('template', $options, '{{ template_file }}');
+
+        return $this->renderTemplate($template, []);
+    }
+
+    public function getType()
+    {
+        return '{{ widget_label }}';
+    }
+}

@@ -1,0 +1,6 @@
+    {{ bundle_name_snake_case_without_postfix }}.widget.{{ widget_label }}:
+        class: {{ bundle_namespace }}\Widget\{{ widget_name }}Widget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: '{{ widget_label }}' }
