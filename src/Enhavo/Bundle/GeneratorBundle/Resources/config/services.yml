@@ -15,3 +15,9 @@ services:
         arguments:
             - '@kernel'
             - '@templating'
+
+    enhavo_generator.generator.widget_generator:
+        class: Enhavo\Bundle\GeneratorBundle\Generator\WidgetGenerator
+        arguments:
+            - '@kernel'
+            - '@templating'

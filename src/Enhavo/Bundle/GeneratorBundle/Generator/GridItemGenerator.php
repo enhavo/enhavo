@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -17,19 +16,14 @@ class GridItemGenerator extends Generator
     protected $kernel;
 
     /**
-     * @var EngineInterface
-     */
-    protected $twigEngine;
-
-    /**
      * @var ConsoleOutputInterface
      */
     protected $output;
 
     public function __construct(KernelInterface $kernel, EngineInterface $twigEngine)
     {
+        parent::__construct($twigEngine);
         $this->kernel = $kernel;
-        $this->twigEngine = $twigEngine;
         $this->output = new ConsoleOutput();
     }
 
@@ -59,7 +53,7 @@ class GridItemGenerator extends Generator
             throw new \RuntimeException('Entity "' . $itemName . '" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $bundleNameSnakeCase = $this->camelCaseToSnakeCase($this->removeBundlePostFix($bundle->getName()));
+        $bundleNameSnakeCase = $this->camelCaseToSnakeCase($this->getBundleNameWithoutPostfix($bundle));
         $itemNameSnakeCase = $this->camelCaseToSnakeCase($itemName);
 
         if (!$this->renderFile(
@@ -182,42 +176,7 @@ class GridItemGenerator extends Generator
     protected function getFormTypeName(BundleInterface $bundle, $itemName)
     {
         return
-            $this->camelCaseToSnakeCase($this->removeBundlePostFix($bundle->getName()))
+            $this->camelCaseToSnakeCase($this->getBundleNameWithoutPostfix($bundle))
             . '_' . $this->camelCaseToSnakeCase($itemName);
-    }
-
-    protected function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
-    {
-        $lcCamelCaseName = lcfirst($camelCaseName);
-        $snakeCasedName = '';
-
-        if ($minusSeparator) {
-            $separator = '-';
-        } else {
-            $separator = '_';
-        }
-
-        $len = strlen($lcCamelCaseName);
-        for ($i = 0; $i < $len; ++$i) {
-            if (ctype_upper($lcCamelCaseName[$i])) {
-                $snakeCasedName .= $separator . strtolower($lcCamelCaseName[$i]);
-            } else {
-                $snakeCasedName .= strtolower($lcCamelCaseName[$i]);
-            }
-        }
-
-        return $snakeCasedName;
-    }
-
-    protected function removeBundlePostFix($bundleName)
-    {
-        return preg_replace('/Bundle$/', '', $bundleName);
-    }
-
-    protected function renderFile($template, $target, $parameters)
-    {
-        self::mkdir(dirname($target));
-
-        return self::dump($target, $this->twigEngine->render($template, $parameters));
     }
 }
