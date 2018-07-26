@@ -33,6 +33,7 @@ class Grid implements GridInterface
     public function __construct()
     {
         $this->containers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
