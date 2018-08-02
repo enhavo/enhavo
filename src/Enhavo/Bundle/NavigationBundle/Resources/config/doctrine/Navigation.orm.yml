@@ -25,6 +25,7 @@ Enhavo\Bundle\NavigationBundle\Entity\Navigation:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
             mappedBy: navigation
+            orphanRemoval: true
             orderBy:
                 position: ASC
 

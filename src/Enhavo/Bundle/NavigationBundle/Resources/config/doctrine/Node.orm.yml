@@ -50,6 +50,7 @@ Enhavo\Bundle\NavigationBundle\Entity\Node:
             cascade: ['persist']
             targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
             mappedBy: parent
+            orphanRemoval: true
             orderBy:
                 position: ASC
 
