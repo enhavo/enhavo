@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -72,36 +73,18 @@ class DoctrineReferenceListener implements EventSubscriber
     {
         return array(
             Events::postLoad,
+            Events::preFlush,
+            Events::onFlush,
             Events::prePersist,
             Events::preUpdate,
             Events::postPersist,
             Events::postUpdate,
-            Events::onFlush,
         );
     }
 
-    public function onFlush(OnFlushEventArgs $args)
-    {
-        // persist target class
-        $em = $args->getEntityManager();
-        $uow = $em->getUnitOfWork();
-
-        $result = $uow->getIdentityMap();
-        if(isset($result[$this->targetClass])) {
-            foreach ($result[$this->targetClass] as $entity) {
-                $propertyAccessor = PropertyAccess::createPropertyAccessor();
-                $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
-                if($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
-                    $em->persist($targetProperty);
-                    $this->referencesToUpdate[] = $entity; // if we need to persist, we have to update the reference (id) later
-                    $metaData = $em->getClassMetadata(get_class($targetProperty));
-                    $uow->computeChangeSet($metaData, $targetProperty);
-                }
-            }
-        }
-    }
-
     /**
+     * Insert target class on load
+     *
      * @param $args LifecycleEventArgs
      */
     public function postLoad(LifecycleEventArgs $args)
@@ -121,9 +104,88 @@ class DoctrineReferenceListener implements EventSubscriber
         }
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    /**
+     * Persist target class and check if need a reference update for already saved entities
+     *
+     * @param OnFlushEventArgs $args
+     */
+    public function onFlush(OnFlushEventArgs $args)
     {
-        $this->updateEntity($args->getObject());
+        $em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+
+        $result = $uow->getIdentityMap();
+        if(isset($result[$this->targetClass])) {
+            foreach ($result[$this->targetClass] as $entity) {
+                $change = false;
+
+                $updated = $this->updateEntity($entity);
+                if($updated) {
+                    $change = true;
+                }
+
+                $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
+                if($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+                    $em->persist($targetProperty);
+                    $change = true;
+                }
+
+                if($change) {
+                    $metaData = $em->getClassMetadata(get_class($targetProperty));
+                    $uow->computeChangeSet($metaData, $targetProperty);
+                }
+
+                if($targetProperty && $propertyAccessor->getValue($entity, $this->idProperty) === null) {
+                    $this->referencesToUpdate[] = $entity;
+                }
+            }
+        }
+    }
+
+    /**
+     * Persist target class and update entity and check if need a reference update for new entities
+     *
+     * @param PreFlushEventArgs $args
+     */
+    public function preFlush(PreFlushEventArgs $args)
+    {
+        $em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+        $result = $uow->getScheduledEntityInsertions();
+        foreach($result as $entity) {
+            if(get_class($entity) == $this->targetClass) {
+                $this->updateEntity($entity);
+                $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
+                if($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
+                    $em->persist($targetProperty);
+                }
+                if($targetProperty && $propertyAccessor->getValue($entity, $this->idProperty) === null) {
+                    $this->referencesToUpdate[] = $entity;
+                }
+            }
+        }
+    }
+
+    /**
+     * Guarantee update references if needed
+     *
+     * @param LifecycleEventArgs $args
+     */
+    public function postPersist(LifecycleEventArgs $args)
+    {
+        $this->updateReferences($args);
+    }
+
+    /**
+     * Guarantee update references if needed
+     *
+     * @param LifecycleEventArgs $args
+     */
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        $this->updateReferences($args);
     }
 
     public function preUpdate(LifecycleEventArgs $args)
@@ -131,16 +193,16 @@ class DoctrineReferenceListener implements EventSubscriber
         $this->updateEntity($args->getObject());
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args)
     {
-        $this->updateReferences($args);
+        $this->updateEntity($args->getObject());
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
-    {
-        $this->updateReferences($args);
-    }
-
+    /**
+     * Update references from references to update stack
+     *
+     * @param LifecycleEventArgs $args
+     */
     private function updateReferences(LifecycleEventArgs $args)
     {
         $flush = false;
@@ -157,11 +219,14 @@ class DoctrineReferenceListener implements EventSubscriber
     }
 
     /**
+     * Update entity values
+     *
      * @param object $entity
-     * @return void
+     * @return boolean
      */
     private function updateEntity($entity)
     {
+        $change = false;
         if(get_class($entity) == $this->targetClass) {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
@@ -172,6 +237,7 @@ class DoctrineReferenceListener implements EventSubscriber
                 $id = $propertyAccessor->getValue($targetProperty, 'id');
                 if($idProperty != $id) {
                     $propertyAccessor->setValue($entity, $this->idProperty, $id);
+                    $change = true;
                 }
 
                 // update class property
@@ -179,11 +245,21 @@ class DoctrineReferenceListener implements EventSubscriber
                 $class = $this->targetClassResolver->resolveClass($targetProperty);
                 if($classProperty != $class) {
                     $propertyAccessor->setValue($entity, $this->classProperty, $class);
+                    $change = true;
                 }
             } else {
-                $propertyAccessor->setValue($entity, $this->idProperty, null);
-                $propertyAccessor->setValue($entity, $this->classProperty, null);
+                if(null !== $propertyAccessor->getValue($entity, $this->idProperty)) {
+                    $propertyAccessor->setValue($entity, $this->idProperty, null);
+                    $change = true;
+                }
+
+                if(null !== $propertyAccessor->getValue($entity, $this->classProperty)) {
+                    $propertyAccessor->setValue($entity, $this->classProperty, null);
+                    $change = true;
+                }
+
             }
         }
+        return $change;
     }
 }
