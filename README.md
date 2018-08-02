@@ -3,24 +3,32 @@
 [![Scrutinizer](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
 [![Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
-[![Dependency Status](https://www.versioneye.com/user/projects/56aa8a367e03c700377df5b0/badge.svg)](https://www.versioneye.com/user/projects/56aa8a367e03c700377df5b0)
-[![Documentation Status](https://readthedocs.org/projects/enhavo/badge/?version=latest)](http://enhavo.readthedocs.org/en/latest/?badge=latest)
 
 
-
-enhavo
+Enhavo
 ------
 
 The enhavo CMS is a open source PHP project based on the fullstack Symfony framework and uses awesome Sylius components
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
 
-Quick Installation
-------------------
+Contribute
+----------
+
+This is the main repository of the enhavo project. If you want to contribute you need to checkout this repository.
+After checkout out just use the installer to create the database and the admin user.
 
 ```bash
-$ wget http://getcomposer.org/composer.phar
-$ php composer.phar create-project enhavo/enhavo-cms enhavo
+$ app/console enhavo:install
 ```
+
+Editions
+--------
+
+If you want to use enhavo CMS, we recommend to use one of the enhavo editions:
+
+* [Enhavo CMS](https://github.com/enhavo/enhavo-cms) Contians all CMS relavent feature
+* [Enhavo Shop](https://github.com/enhavo/enhavo-shop) Same as CMS but also contain Shop features
+* [Enhavo App](https://github.com/enhavo/enhavo-app) Contains only basic Admin features
 
 Demo
 ----
