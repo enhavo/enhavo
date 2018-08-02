@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
@@ -53,9 +52,9 @@ class DoctrineReferenceListener implements EventSubscriber
     private $targetClassResolver;
 
     /**
-     * @var boolean
+     * @var array
      */
-    private $flush;
+    private $referencesToUpdate = [];
 
     public function __construct($targetClass, $targetProperty, $classProperty, $idProperty, $targetClassResolver)
     {
@@ -94,6 +93,7 @@ class DoctrineReferenceListener implements EventSubscriber
                 $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
                 if($targetProperty && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED) {
                     $em->persist($targetProperty);
+                    $this->referencesToUpdate[] = $entity; // if we need to persist, we have to update the reference (id) later
                     $metaData = $em->getClassMetadata(get_class($targetProperty));
                     $uow->computeChangeSet($metaData, $targetProperty);
                 }
@@ -124,13 +124,11 @@ class DoctrineReferenceListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $this->updateEntity($args->getObject());
-        $this->flush = true;
     }
 
     public function preUpdate(LifecycleEventArgs $args)
     {
         $this->updateEntity($args->getObject());
-        $this->flush = true;
     }
 
     public function postPersist(LifecycleEventArgs $args)
@@ -145,37 +143,25 @@ class DoctrineReferenceListener implements EventSubscriber
 
     private function updateReferences(LifecycleEventArgs $args)
     {
-        if($this->flush)
-        {
-            $em = $args->getObjectManager();
-            $changes = false;
-            if($em instanceof EntityManagerInterface) {
-                $uow = $em->getUnitOfWork();
-                $result = $uow->getIdentityMap();
-                if(isset($result[$this->targetClass])) {
-                    foreach ($result[$this->targetClass] as $entity) {
-                        $change = $this->updateEntity($entity);
-                        if($change) {
-                            $changes = true;
-                        }
-                    }
-                }
-            }
+        $flush = false;
+        while(count($this->referencesToUpdate) > 0) {
+            $entity = array_pop($this->referencesToUpdate);
+            $this->updateEntity($entity);
+            $flush = true;
+        }
 
-            $this->flush = false;
-            if($changes) {
-                $em->flush();
-            }
+        if($flush) {
+            $em = $args->getObjectManager();
+            $em->flush();
         }
     }
 
     /**
      * @param object $entity
-     * @return bool
+     * @return void
      */
     private function updateEntity($entity)
     {
-        $change = false;
         if(get_class($entity) == $this->targetClass) {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
@@ -186,7 +172,6 @@ class DoctrineReferenceListener implements EventSubscriber
                 $id = $propertyAccessor->getValue($targetProperty, 'id');
                 if($idProperty != $id) {
                     $propertyAccessor->setValue($entity, $this->idProperty, $id);
-                    $change = true;
                 }
 
                 // update class property
@@ -194,11 +179,11 @@ class DoctrineReferenceListener implements EventSubscriber
                 $class = $this->targetClassResolver->resolveClass($targetProperty);
                 if($classProperty != $class) {
                     $propertyAccessor->setValue($entity, $this->classProperty, $class);
-                    $change = true;
                 }
+            } else {
+                $propertyAccessor->setValue($entity, $this->idProperty, null);
+                $propertyAccessor->setValue($entity, $this->classProperty, null);
             }
         }
-
-        return $change;
     }
 }
