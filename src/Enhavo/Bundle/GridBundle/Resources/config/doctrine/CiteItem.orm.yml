@@ -1,0 +1,16 @@
+Enhavo\Bundle\GridBundle\Entity\CiteItem:
+    type: entity
+    table: grid_item_cite
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        text:
+            type: text
+            nullable: true
+
+lifecycleCallbacks: {  }

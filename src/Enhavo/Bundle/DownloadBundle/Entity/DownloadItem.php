@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
 use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**

@@ -9,16 +9,12 @@ Enhavo\Bundle\GridBundle\Entity\Grid:
                 strategy: AUTO
 
     oneToMany:
-        containers:
-            targetEntity: Container
-            mappedBy: grid
-            cascade: ['persist', 'refresh', 'remove']
-
         items:
             targetEntity: Item
             mappedBy: grid
             cascade: ['persist', 'refresh', 'remove']
+            orphanRemoval: true
             orderBy:
-                order: ASC
+                position: ASC
 
     lifecycleCallbacks: {  }

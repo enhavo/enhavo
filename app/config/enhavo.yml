@@ -41,21 +41,15 @@ enhavo_grid:
     items:
         picture:
             type: picture
-        picture_picture:
-            type: picture_picture
-        three_picture:
-            type: three_picture
         gallery:
             type: gallery
         text:
             type: text
         text_picture:
             type: text_picture
-        text_text:
-            type: text_text
-        cite_text:
-            type: cite_text
-        download:
-            type: download
+        cite:
+            type: cite
+#        download:
+#            type: download
         video:
             type: video

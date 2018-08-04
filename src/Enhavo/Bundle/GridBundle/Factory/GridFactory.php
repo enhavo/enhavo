@@ -7,15 +7,9 @@ use Sylius\Component\Resource\Factory\Factory;
 
 class GridFactory extends Factory
 {
-    /**
-     * @var ItemTypeFactory
-     */
-    protected $itemTypeFactory;
-
-    public function __construct($className, ItemTypeFactory $itemTypeFactory)
+    public function __construct($className)
     {
         parent::__construct($className);
-        $this->itemTypeFactory = $itemTypeFactory;
     }
 
     /**

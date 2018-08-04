@@ -1,0 +1,35 @@
+Enhavo\Bundle\GridBundle\Entity\GalleryItem:
+    type: entity
+    table: grid_item_gallery
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        text:
+            type: text
+            nullable: true
+
+    manyToMany:
+        files:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orderBy: { 'order': 'ASC' }
+            joinTable:
+                name: grid_item_gallery_file
+                joinColumns:
+                    gallery_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+
+    lifecycleCallbacks: {  }

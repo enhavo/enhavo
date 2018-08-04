@@ -8,24 +8,28 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\Picture;
-use Enhavo\Bundle\GridBundle\Factory\PictureFactory;
-use Enhavo\Bundle\GridBundle\Form\Type\PictureType;
+use Enhavo\Bundle\GridBundle\Entity\PictureItem;
+use Enhavo\Bundle\GridBundle\Factory\PictureItemFactory;
+use Enhavo\Bundle\GridBundle\Form\Type\PictureItemType;
+use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureConfiguration extends BaseConfiguration
+class PictureConfiguration extends AbstractConfiguration
 {
-    public function configure($name, $options)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $options['model'] = $this->getOption('model', $options, Picture::class);
-        $options['parent'] = $this->getOption('parent', $options, Picture::class);
-        $options['form'] = $this->getOption('form', $options, PictureType::class);
-        $options['factory'] = $this->getOption('factory', $options, PictureFactory::class);
-        $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:Picture');
-        $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:picture.html.twig');
-        $options['label'] = $this->getOption('label', $options, 'picture.label.picture');
-        $options['translationDomain'] = $this->getOption('translationDomain', $options, 'EnhavoGridBundle');
+        parent::configureOptions($optionsResolver);
 
-        return parent::configure($name, $options);
+        $optionsResolver->setDefaults([
+            'model' => PictureItem::class,
+            'parent' => PictureItem::class,
+            'form' => PictureItemType::class,
+            'factory' => PictureItemFactory::class,
+            'repository' => 'EnhavoGridBundle:Picture',
+            'template' => 'EnhavoGridBundle:Item:picture.html.twig',
+            'label' => 'picture.label.picture',
+            'translationDomain' => 'EnhavoGridBundle',
+        ]);
     }
 
     public function getType()

@@ -2,15 +2,13 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
-use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
-use Enhavo\Bundle\GridBundle\Model\ItemInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 /**
  * Item
  */
-class Item implements ItemInterface
+class Item implements ItemTypeInterface
 {
     /**
      * @var integer
@@ -20,7 +18,7 @@ class Item implements ItemInterface
     /**
      * @var integer
      */
-    protected $order;
+    protected $position;
 
     /**
      * @var GridInterface
@@ -30,17 +28,17 @@ class Item implements ItemInterface
     /**
      * @var string
      */
-    protected $configuration;
-
-    /**
-     * @var ColumnInterface
-     */
-    protected $column;
-
-    /**
-     * @var string
-     */
     protected $type;
+
+    /**
+     * @var
+     */
+    protected $content;
+
+    /**
+     * @var ItemTypeInterface
+     */
+    protected $itemType;
 
     /**
      * @var integer
@@ -48,9 +46,9 @@ class Item implements ItemInterface
     protected $itemTypeId;
 
     /**
-     * @var ItemTypeInterface
+     * @var string
      */
-    protected $itemType;
+    protected $itemTypeClass;
 
     /**
      * Get id
@@ -60,74 +58,6 @@ class Item implements ItemInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set configuration
-     *
-     * @param string $configuration
-     * @return Item
-     */
-    public function setConfiguration($configuration)
-    {
-        $this->configuration = serialize($configuration);
-
-        return $this;
-    }
-
-    /**
-     * Get configuration
-     *
-     * @return Configuration
-     */
-    public function getConfiguration()
-    {
-        if(is_resource($this->configuration)) {
-            $stream = '';
-            while($byte = fgets($this->configuration, 4096)) {
-                $stream .= $byte;
-            }
-
-            $stream = str_replace("\x73\x3A\x35\x34\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x5F\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", "\x73\x3A\x35\x33\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", $stream);
-
-            $this->configuration = unserialize($stream);
-        }
-
-        if(is_string($this->configuration)) {
-
-            $this->configuration = str_replace("\x73\x3A\x35\x34\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x5F\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", "\x73\x3A\x35\x33\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", $this->configuration);
-
-            $this->configuration = unserialize($this->configuration);
-        }
-
-        if(is_null($this->configuration)) {
-            $this->configuration = new Configuration;
-        }
-
-        return $this->configuration;
-    }
-
-    /**
-     * Set column
-     *
-     * @param ColumnInterface $column
-     * @return Item
-     */
-    public function setColumn(ColumnInterface $column = null)
-    {
-        $this->column = $column;
-
-        return $this;
-    }
-
-    /**
-     * Get column
-     *
-     * @return ColumnInterface
-     */
-    public function getColumn()
-    {
-        return $this->column;
     }
 
     /**
@@ -151,29 +81,6 @@ class Item implements ItemInterface
     public function getGrid()
     {
         return $this->grid;
-    }
-
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Item
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer 
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 
     /**
@@ -236,5 +143,53 @@ class Item implements ItemInterface
     public function setItemType($item)
     {
         $this->itemType = $item;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemTypeClass()
+    {
+        return $this->itemTypeClass;
+    }
+
+    /**
+     * @param string $itemTypeClass
+     */
+    public function setItemTypeClass($itemTypeClass)
+    {
+        $this->itemTypeClass = $itemTypeClass;
     }
 }

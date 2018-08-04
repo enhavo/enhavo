@@ -1,0 +1,36 @@
+services:
+    enhavo_grid.grid_item.base:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: base }
+
+    enhavo_grid.grid_item.gallery:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: gallery }
+
+    enhavo_grid.grid_item.picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\PictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: picture }
+
+    enhavo_grid.grid_item.text:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextConfiguration
+        arguments:
+        tags:
+            - { name: enhavo.grid_item, alias: text }
+
+    enhavo_grid.grid_item.text_picture:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextPictureConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: text_picture }
+
+    enhavo_grid.grid_item.video:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\VideoConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: video }
+
+    enhavo_grid.grid_item.cite:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\CiteConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: cite }

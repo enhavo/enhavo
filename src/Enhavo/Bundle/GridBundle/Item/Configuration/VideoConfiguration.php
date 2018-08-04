@@ -8,24 +8,28 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\Video;
-use Enhavo\Bundle\GridBundle\Factory\VideoFactory;
-use Enhavo\Bundle\GridBundle\Form\Type\VideoType;
+use Enhavo\Bundle\GridBundle\Entity\VideoItem;
+use Enhavo\Bundle\GridBundle\Factory\VideoItemFactory;
+use Enhavo\Bundle\GridBundle\Form\Type\VideoItemType;
+use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VideoConfiguration extends BaseConfiguration
+class VideoConfiguration extends AbstractConfiguration
 {
-    public function configure($name, $options)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $options['model'] = $this->getOption('model', $options, Video::class);
-        $options['parent'] = $this->getOption('parent', $options, Video::class);
-        $options['form'] = $this->getOption('form', $options, VideoType::class);
-        $options['factory'] = $this->getOption('factory', $options, VideoFactory::class);
-        $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:Video');
-        $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:video.html.twig');
-        $options['label'] = $this->getOption('label', $options, 'video.label.video');
-        $options['translationDomain'] = $this->getOption('translationDomain', $options, 'EnhavoGridBundle');
+        parent::configureOptions($optionsResolver);
 
-        return parent::configure($name, $options);
+        $optionsResolver->setDefaults([
+            'model' => VideoItem::class,
+            'parent' => VideoItem::class,
+            'form' => VideoItemType::class,
+            'factory' => VideoItemFactory::class,
+            'repository' => 'EnhavoGridBundle:Video',
+            'template' => 'EnhavoGridBundle:Item:video.html.twig',
+            'label' => 'video.label.video',
+            'translationDomain' => 'EnhavoGridBundle'
+        ]);
     }
 
     public function getType()

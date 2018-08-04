@@ -12,9 +12,9 @@ use Enhavo\Bundle\AppBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Route\Routeable;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
-use Enhavo\Bundle\GridBundle\Entity\Picture;
-use Enhavo\Bundle\GridBundle\Entity\Text;
-use Enhavo\Bundle\GridBundle\Entity\TextPicture;
+use Enhavo\Bundle\GridBundle\Entity\PictureItem;
+use Enhavo\Bundle\GridBundle\Entity\TextItem;
+use Enhavo\Bundle\GridBundle\Entity\TextPictureItem;
 use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -173,18 +173,18 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     {
         switch($type) {
             case('text'):
-                /** @var $itemType Text */
+                /** @var $itemType TextItem */
                 $itemType->setText($fields['text']);
                 $itemType->setTitle($fields['title']);
                 break;
             case('picture'):
-                /** @var $itemType Picture */
+                /** @var $itemType PictureItem */
                 $itemType->setFile($this->createImage($fields['file']));
                 $itemType->setTitle($fields['title']);
                 $itemType->setCaption($fields['caption']);
                 break;
             case('text_picture'):
-                /** @var $itemType TextPicture */
+                /** @var $itemType TextPictureItem */
                 $itemType->setFile($this->createImage($fields['file']));
                 $itemType->setTitle($fields['title']);
                 $itemType->setCaption($fields['caption']);
