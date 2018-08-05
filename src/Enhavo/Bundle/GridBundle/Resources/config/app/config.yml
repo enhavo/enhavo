@@ -9,3 +9,8 @@ enhavo_media:
         enhavoGridFull:
             type: image
             width: 960
+
+twig:
+    form:
+        resources:
+            - 'EnhavoGridBundle:Form:grid.html.twig'

@@ -34,5 +34,6 @@ class EnhavoGridExtension extends Extension
         $loader->load('services/services.yml');
         $loader->load('services/factory.yml');
         $loader->load('services/items.yml');
+        $loader->load('services/form.yml');
     }
 }

@@ -1,9 +1,4 @@
 services:
-    enhavo_grid.grid_item.base:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration
-        tags:
-            - { name: enhavo.grid_item, alias: base }
-
     enhavo_grid.grid_item.gallery:
         class: Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration
         tags:

@@ -1,0 +1,16 @@
+{% block form %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.name) }}
+
+    {% if form.itemType.children|length > 0 %}
+        {% for child in form.itemType.children %}
+            {{ form_row(child) }}
+        {% endfor %}
+    {% else %}
+        {{ form_row(form.typeItem) }}
+    {% endif %}
+
+    {% if form.offsetExists('children') %}
+        {{ form_row(form.offsetGet('children')) }}
+    {% endif %}
+{% endblock %}

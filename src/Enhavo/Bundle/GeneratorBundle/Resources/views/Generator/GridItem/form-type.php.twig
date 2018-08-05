@@ -2,11 +2,12 @@
 
 namespace {{ namespace }};
 
-use Enhavo\Bundle\GridBundle\Item\ItemFormType;
+
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class {{ item_name }}Type extends ItemFormType
+class {{ item_name }}Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\GridBundle\Factory\ItemFactory;
+use Enhavo\Bundle\GridBundle\Factory\ItemTypeFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\ItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\GridBundle\Item\Item;
@@ -29,13 +30,19 @@ class ItemResolver implements ResolverInterface
     private $formFactory;
 
     /**
+     * @var ItemTypeFactory
+     */
+    private $itemTypeFactory;
+
+    /**
      * @var Item[]
      */
     private $items = [];
 
-    public function __construct(FormFactoryInterface $formFactory, TypeCollector $collector, $configurations)
+    public function __construct(FormFactoryInterface $formFactory, TypeCollector $collector, ItemTypeFactory $itemTypeFactory, $configurations)
     {
         $this->formFactory = $formFactory;
+        $this->itemTypeFactory = $itemTypeFactory;
 
         foreach($configurations as $name => $options) {
             /** @var AbstractConfiguration $configuration */
@@ -75,7 +82,9 @@ class ItemResolver implements ResolverInterface
 
         $formOptions = [
             'item_type_form' => $item->getForm(),
-            'item_type_parameters' => isset($options['item_type_parameters']) ?: []
+            'item_type_parameters' => isset($options['item_type_parameters']) ?: [],
+            'item_resolver' => 'enhavo_grid.resolver.item_resolver',
+            'item_property' => 'name',
         ];
 
         $form = $this->formFactory->create(ItemType::class, $data, array_merge($formOptions, $options));
@@ -85,36 +94,12 @@ class ItemResolver implements ResolverInterface
     public function resolveFactory($name)
     {
         $item = $this->resolveItem($name);
-        return new ItemFactory($this->getFactory($item));
-    }
-
-    /**
-     * @param Item $item
-     * @return FactoryInterface
-     * @throws ResolverException
-     */
-    private function getFactory(Item $item)
-    {
-        $factoryClass = $item->getFactory();
-        if($factoryClass) {
-            if ($this->container->has($factoryClass)) {
-                $factory = $this->container->get($factoryClass);
-            } else {
-                $factory = new $factoryClass($item->getModel(), $item->getName());
-            }
-
-            if(!$factory instanceof FactoryInterface) {
-                throw new ResolverException(sprintf('Factory class "%s" not type of "%s"', get_class($factory), FactoryInterface::class));
-            }
-
-            return $factory;
-        }
-        throw new ResolverException(sprintf('Factory for type "%s" navigation is required', $item->getName()));
+        return new ItemFactory($this->itemTypeFactory, $name);
     }
 
     public function resolveFormTemplate($name)
     {
         $item = $this->resolveItem($name);
-        return $item->getTemplate();
+        return $item->getFormTemplate();
     }
 }

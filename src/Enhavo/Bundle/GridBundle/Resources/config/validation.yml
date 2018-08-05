@@ -5,7 +5,7 @@ Enhavo\Bundle\GridBundle\Entity\Grid:
 
 Enhavo\Bundle\GridBundle\Entity\Item:
     properties:
-        content:
+        itemType:
             - Valid: ~
 
 Enhavo\Bundle\GridBundle\Entity\Video:

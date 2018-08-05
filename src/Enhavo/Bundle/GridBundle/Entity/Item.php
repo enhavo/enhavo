@@ -3,12 +3,13 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 /**
  * Item
  */
-class Item implements ItemTypeInterface
+class Item implements ItemInterface
 {
     /**
      * @var integer
@@ -28,12 +29,7 @@ class Item implements ItemTypeInterface
     /**
      * @var string
      */
-    protected $type;
-
-    /**
-     * @var
-     */
-    protected $content;
+    protected $name;
 
     /**
      * @var ItemTypeInterface
@@ -84,26 +80,19 @@ class Item implements ItemTypeInterface
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     * @return Item
+     * @return string
      */
-    public function setType($type)
+    public function getName()
     {
-        $this->type = $type;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get type
-     *
-     * @return string 
+     * @param string $name
      */
-    public function getType()
+    public function setName($name)
     {
-        return $this->type;
+        $this->name = $name;
     }
 
     /**
@@ -159,22 +148,6 @@ class Item implements ItemTypeInterface
     public function setPosition($position)
     {
         $this->position = $position;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param mixed $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
     }
 
     /**

@@ -19,30 +19,35 @@ class ItemFactory implements FactoryInterface
     use ContainerAwareTrait;
 
     /**
-     * @var FactoryInterface
+     * @var ItemTypeFactory
      */
     private $itemTypeFactory;
 
-    public function __construct(FactoryInterface $itemTypeFactory)
+    /**
+     * @var string
+     */
+    private $name;
+
+    public function __construct(ItemTypeFactory $itemTypeFactory, $name)
     {
         $this->itemTypeFactory = $itemTypeFactory;
+        $this->name = $name;
     }
 
     public function createNew()
     {
         $item = new Item();
-        $item->setItemType($this->itemTypeFactory->createNew());
+        $item->setItemType($this->itemTypeFactory->createNew($this->name));
+        $item->setName($this->name);
         return $item;
     }
 
-    /**
-     * @param ItemTypeInterface $itemType
-     * @return ItemTypeInterface
-     */
     public function duplicate(ItemTypeInterface $itemType)
     {
         $item = new Item();
-        $item->setItemType($this->itemTypeFactory->dupicate($itemType));
+        $item->setName($item->getName());
+        $item->setPosition($item->getPosition());
+        $item->setItemType($this->itemTypeFactory->duplicate($itemType, $item->getName()));
         return $item;
     }
 }

@@ -9,7 +9,7 @@ Enhavo\Bundle\GridBundle\Entity\Item:
                 strategy: AUTO
 
     fields:
-        type:
+        name:
             type: string
             length: 255
             nullable: true

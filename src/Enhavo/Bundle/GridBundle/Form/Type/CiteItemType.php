@@ -22,7 +22,7 @@ class CiteItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cite', 'textarea', array(
+        $builder->add('text', 'textarea', array(
             'label' => 'citeText.form.label.cite',
             'translation_domain' => 'EnhavoGridBundle',
             'translation' => $this->translation

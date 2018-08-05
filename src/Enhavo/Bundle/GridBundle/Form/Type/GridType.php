@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Item\Item;
+use Enhavo\Bundle\GridBundle\Entity\Item;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +25,8 @@ class GridType extends AbstractType
             'items' => null,
             'item_resolver' => 'enhavo_grid.resolver.item_resolver',
             'item_route' => 'enhavo_grid_item_form',
-            'item_class' => Item::class
+            'item_class' => Item::class,
+            'entry_type' => ItemType::class
         ]);
     }
 

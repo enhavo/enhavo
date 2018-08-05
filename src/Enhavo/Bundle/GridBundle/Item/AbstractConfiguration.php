@@ -54,29 +54,9 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['template'];
     }
 
-    public function getContentModel($options)
+    public function getFormTemplate($options)
     {
-        return $options['content_model'];
-    }
-
-    public function getContentFactory($options)
-    {
-        return $options['content_factory'];
-    }
-
-    public function getContentForm($options)
-    {
-        return $options['content_form'];
-    }
-
-    public function getConfigurationForm($options)
-    {
-        return $options['configuration_form'];
-    }
-
-    public function getConfigurationFactory($options)
-    {
-        return $options['configuration_factory'];
+        return $options['form_template'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -85,11 +65,7 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
             'options' => [],
             'parent' => null,
             'translationDomain' => null,
-            'content_model' => null,
-            'content_factory' => null,
-            'content_form' => null,
-            'configuration_form' => null,
-            'configuration_factory' => null,
+            'form_template' => 'EnhavoGridBundle:Form:item.html.twig',
         ]);
 
         $resolver->setRequired([

@@ -21,7 +21,7 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('position', PositionType::class);
-        $builder->add('type', HiddenType::class);
+        $builder->add('name', HiddenType::class);
         $builder->add('itemType', $options['item_type_form'], $options['item_type_parameters']);
     }
 
@@ -31,7 +31,7 @@ class ItemType extends AbstractType
             'data_class' => Item::class,
             'item_type_form' => null,
             'item_type_parameters' => [],
-            'item_property' => 'itemType',
+            'item_property' => 'name',
         ));
     }
 

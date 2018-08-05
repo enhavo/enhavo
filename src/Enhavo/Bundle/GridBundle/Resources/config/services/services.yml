@@ -1,55 +1,4 @@
 services:
-    enhavo_grid.form.grid:
-        class: Enhavo\Bundle\GridBundle\Form\Type\GridType
-        tags:
-            - { name: form.type, alias: enhavo_grid }
-
-    enhavo_grid.form.item:
-        class: Enhavo\Bundle\GridBundle\Form\Type\ItemType
-        tags:
-            - { name: form.type, alias: enhavo_grid_item }
-
-    enhavo_grid.form.cite:
-        class: Enhavo\Bundle\GridBundle\Form\Type\CiteItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_cite_item }
-
-    enhavo_grid.form.gallery:
-        class: Enhavo\Bundle\GridBundle\Form\Type\GalleryItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_gallery_item }
-
-    enhavo_grid.form.picture:
-        class: Enhavo\Bundle\GridBundle\Form\Type\PictureItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_picture_item }
-
-    enhavo_grid.form.text:
-        class: Enhavo\Bundle\GridBundle\Form\Type\TextItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_text_item }
-
-    enhavo_grid.form.text_picture:
-        class: Enhavo\Bundle\GridBundle\Form\Type\TextPictureItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_text_picture_item }
-
-    enhavo_grid.form.video:
-        class: Enhavo\Bundle\GridBundle\Form\Type\VideoItemType
-        arguments:
-            - '%enhavo_translation.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_grid_video_item }
 
     enhavo_grid.form.items:
         class: Enhavo\Bundle\GridBundle\Form\Type\ItemsType
@@ -79,6 +28,7 @@ services:
         arguments:
             - '@form.factory'
             - '@enhavo_grid.item_collector'
+            - '@enhavo_grid.factory.item_type'
             - '%enhavo_grid.items%'
 
     enhavo_grid.item_collector:
@@ -100,3 +50,6 @@ services:
           - 'itemTypeClass'
           - 'itemTypeId'
           - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }
+

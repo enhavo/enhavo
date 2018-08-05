@@ -8,7 +8,6 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\GridBundle\Entity\TextPictureItem;
-use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
