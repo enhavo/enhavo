@@ -1,6 +1,8 @@
 import { DynamicForm, DynamicFormConfig } from 'app/app/DynamicForm';
 import { FormListener } from "app/app/Form/Form";
 import { FormInsertEvent } from "app/app/Form/Form";
+import * as form from 'app/Form'
+import { Media } from 'media/Media';
 
 class EnhavoAdapter
 {
@@ -20,8 +22,14 @@ class EnhavoAdapter
         });
 
         let listener = new FormListener();
-        listener.onInsert(function(event: FormInsertEvent) {
-            DynamicForm.apply(event.getElement());
+        listener.onRelease(function(event: FormInsertEvent) {
+            // DynamicForm.apply();
+            form.initWysiwyg(event.getElement());
+            form.initRadioAndCheckbox(event.getElement());
+            form.initSelect(event.getElement());
+            form.initDataPicker(event.getElement());
+            form.initList(event.getElement());
+            Media.apply(event.getElement());
         });
     }
 }
