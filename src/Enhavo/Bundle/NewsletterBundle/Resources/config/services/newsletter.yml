@@ -6,6 +6,13 @@ services:
         tags:
             - { name: enhavo.button, alias: newsletter_send }
 
+    enhavo_newsletter.button.view:
+        class: Enhavo\Bundle\NewsletterBundle\Button\ViewButton
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.button, alias: newsletter_view }
+
     enhavo_newsletter.batch.send:
         class: Enhavo\Bundle\NewsletterBundle\Batch\SendBatch
         calls:

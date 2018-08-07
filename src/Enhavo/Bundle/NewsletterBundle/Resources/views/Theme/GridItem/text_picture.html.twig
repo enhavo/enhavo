@@ -1,0 +1,39 @@
+{% import _self as element %}
+
+{% macro text(data, layout = 0) %}
+    {% import _self as element %}
+    <td style="{% if layout == 0 %}width: 50%;{% endif %}{% if layout == 1 %}width: 33%;{% endif %}{% if layout == 2 %}width: 67%;{% endif %} padding: 10px;">
+        {% if data.title %}
+            <h2>{{ data.title }}</h2>
+        {% endif %}
+        {% if data.text %}
+            <p>{{ data.text|raw }}</p>
+        {% endif %}
+    </td>
+{% endmacro %}
+
+{% macro picture(data, layout = 0) %}
+    <td style="{% if layout == 0 %}width: 50%;{% endif %}{% if layout == 1 %}width: 33%;{% endif %}{% if layout == 2 %}width: 67%;{% endif %} padding: 10px;">
+        {% if data.file %}
+            <img src="{{ media_url(data.file, 'enhavoGridFull') }}" style="width:100%;">
+        {% endif %}
+        {% if data.caption %}
+            <p style="font-size: 13px;margin-top: 5px;">{{ data.caption }}</p>
+        {% endif %}
+    </td>
+{% endmacro %}
+
+
+<div style="padding-top: 10px; padding-bottom: 10px;">
+    <table border="0">
+        <tr>
+            {% if data.textLeft %}
+                {{ element.text(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
+                {{ element.picture(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
+            {% else %}
+                {{ element.picture(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
+                {{ element.text(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
+            {% endif %}
+        </tr>
+    </table>
+</div>

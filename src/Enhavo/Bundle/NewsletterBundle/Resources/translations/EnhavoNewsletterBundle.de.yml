@@ -6,12 +6,14 @@ newsletter:
       create: 'Newsletter erstellen'
       delete: 'Newsletter löschen'
       send: 'Newsletter verschicken'
+      view: 'Newsletter im Frontend anzeigen'
   action:
     sent:
       sent: 'Senden'
       success: 'Newsletter erfolgreich gesendet!'
       error: 'Newsletter konnte nicht gesendet werden!'
       again: 'Möchten Sie den Newsletter wirklich erneut senden?'
+    view: 'Anzeigen'
   label:
     sent: 'gesendet'
     id: 'ID'
@@ -21,6 +23,7 @@ newsletter:
     label:
       subject: 'Betreff'
       sent: 'gesendet'
+      slug: 'Slug'
   batch:
     action:
       send: 'Senden'

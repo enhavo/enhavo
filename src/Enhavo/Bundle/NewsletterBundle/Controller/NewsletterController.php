@@ -6,9 +6,24 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsletterController extends ResourceController
 {
+    public function showNewsletterAction($slug)
+    {
+        $contentDocument = $this->get('enhavo_newsletter.repository.newsletter')->findOneBy(array('slug' => $slug));
+
+        if (!$contentDocument) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('EnhavoNewsletterBundle:Theme:showNewsletter.html.twig', array(
+            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.base_template'),
+            'data' => $contentDocument
+        ));
+    }
+
     public function sendEmailAction(Request $request)
     {
         $id = $request->get('id');

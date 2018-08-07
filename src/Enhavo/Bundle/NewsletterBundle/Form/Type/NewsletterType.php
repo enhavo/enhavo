@@ -25,14 +25,19 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle'
         ) );
 
+        $builder->add('slug', 'text', array(
+            'label' => 'newsletter.form.label.slug',
+            'translation_domain' => 'EnhavoNewsletterBundle'
+        ) );
+
         $builder->add('subject', 'text', array(
             'label' => 'newsletter.form.label.subject',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ) );
 
-        $builder->add('text', 'enhavo_wysiwyg', array(
-            'label' => 'form.label.text',
-            'translation_domain' => 'EnhavoAppBundle'
+        $builder->add('grid', 'enhavo_grid', array(
+            'label' => 'form.label.content',
+            'translation_domain' => 'EnhavoAppBundle',
         ) );
     }
 

@@ -60,7 +60,26 @@ enhavo_app:
             label: newsletter.role.label.delete
             translationDomain: EnhavoNewsletterBundle
         enhavo_newsletter_newsletter_send:
-            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_send
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_SEND
             label: newsletter.role.label.send
             translationDomain: EnhavoNewsletterBundle
+        enhavo_newsletter_newsletter_view:
+            role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_VIEW
+            label: newsletter.role.label.view
+            translationDomain: EnhavoNewsletterBundle
 
+
+enhavo_grid:
+    render:
+        sets:
+            newsletter:
+                picture: EnhavoNewsletterBundle:Theme\GridItem:picture.html.twig
+                picture_picture: EnhavoNewsletterBundle:Theme\GridItem:picture_picture.html.twig
+                three_picture: EnhavoNewsletterBundle:Theme\GridItem:three_picture.html.twig
+                gallery: EnhavoNewsletterBundle:Theme\GridItem:gallery.html.twig
+                text: EnhavoNewsletterBundle:Theme\GridItem:text.html.twig
+                text_picture: EnhavoNewsletterBundle:Theme\GridItem:text_picture.html.twig
+                text_text: EnhavoNewsletterBundle:Theme\GridItem:text_text.html.twig
+                cite_text: EnhavoNewsletterBundle:Theme\GridItem:cite_text.html.twig
+                download: EnhavoNewsletterBundle:Theme\GridItem:download.html.twig
+                video: EnhavoNewsletterBundle:Theme\GridItem:video.html.twig
