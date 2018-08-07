@@ -6,12 +6,14 @@ newsletter:
       create: 'Newsletter create'
       delete: 'Newsletter delete'
       send: 'Newsletter send'
+      view: 'Newsletter view in frontend'
   action:
     sent:
-      sent: 'Sent'
+      sent: 'Send'
       success: 'Newsletter successfully sent!'
       error: 'An error occured!'
       again: 'Do you really want to sent the newsletter again?'
+    view: 'View'
   label:
     sent: 'sent'
     id: 'ID'
@@ -21,6 +23,7 @@ newsletter:
     label:
       subject: 'Subject'
       sent: 'sent'
+      slug: 'Slug'
   batch:
     action:
       send: 'Send'

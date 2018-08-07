@@ -14,13 +14,20 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             length: 255
             nullable: true
 
-        subject:
+        slug:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['title']
 
-        text:
-            type: text
+        subject:
+            type: string
+            length: 255
             nullable: true
 
         sent:
@@ -28,5 +35,10 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             nullable: true
             options:
                 default: false
+
+    oneToOne:
+        grid:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
     lifecycleCallbacks: {  }

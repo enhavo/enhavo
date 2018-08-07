@@ -26,6 +26,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_newsletter.newsletter.mail', $config['newsletter']['mail']);
+        $container->setParameter('enhavo_newsletter.newsletter.base_template', $config['newsletter']['base_template']);
 
         $container->setParameter('enhavo_newsletter.storage', $config['storage']['default']);
         $container->setParameter('enhavo_newsletter.strategy', $config['strategy']['default']);
@@ -38,7 +39,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         
         $this->setStrategySettings($config, $container);
         $this->setStorageSettings($config, $container);
-        
+
         $configFiles = array(
             'services/services.yml',
             'services/newsletter.yml',

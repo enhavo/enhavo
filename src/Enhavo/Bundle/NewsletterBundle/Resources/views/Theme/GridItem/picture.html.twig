@@ -1,0 +1,11 @@
+<div style="padding-top: 10px; padding-bottom: 10px;">
+    {% if data.title %}
+        <h2>{{ data.title|raw }}</h2>
+    {% endif %}
+    {% if data.file %}
+        <img src="{{ media_url(data.file, 'enhavoGridFull') }}" style="width:100%">
+    {% endif %}
+    {% if data.caption %}
+        <p style="font-size: 13px;margin-top: 5px;">{{ data.caption }}</p>
+    {% endif %}
+</div>

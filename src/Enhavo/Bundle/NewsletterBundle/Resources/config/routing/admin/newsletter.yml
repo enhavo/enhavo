@@ -7,6 +7,8 @@ enhavo_newsletter_newsletter_index:
         _controller: enhavo_newsletter.controller.newsletter:indexAction
         _sylius:
             viewer:
+                apps:
+                    - newsletter/NewsletterApp
                 title: newsletter.label.newsletter
                 translationDomain: EnhavoNewsletterBundle
 
@@ -42,6 +44,9 @@ enhavo_newsletter_newsletter_update:
                 buttons:
                     send:
                         type: newsletter_send
+                    view:
+                        type: newsletter_view
+                        route: enhavo_newsletter_newsletter_show
 
 enhavo_newsletter_newsletter_table:
     options:

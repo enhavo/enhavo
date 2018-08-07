@@ -1,12 +1,14 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Enhavo\Bundle\AppBundle\Route\Slugable;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Newsletter
  */
-class Newsletter implements ResourceInterface
+class Newsletter implements ResourceInterface, Slugable
 {
     /**
      * @var integer
@@ -21,17 +23,23 @@ class Newsletter implements ResourceInterface
     /**
      * @var string
      */
-    protected $subject;
+    protected $slug;
 
     /**
      * @var string
      */
-    protected $text;
+    protected $subject;
+
+    /**
+     * @var GridInterface
+     */
+    protected $grid;
 
     /**
      * @var boolean
      */
     protected $sent;
+
 
     /**
      * Get id
@@ -68,6 +76,25 @@ class Newsletter implements ResourceInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Newsletter
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
      * Set subject
      *
      * @param string $subject
@@ -92,27 +119,27 @@ class Newsletter implements ResourceInterface
     }
 
     /**
-     * Set text
+     * Set grid
      *
-     * @param string $text
+     * @param GridInterface $grid
      *
      * @return Newsletter
      */
-    public function setText($text)
+    public function setGrid(GridInterface $grid)
     {
-        $this->text = $text;
+        $this->grid = $grid;
 
         return $this;
     }
 
     /**
-     * Get text
+     * Get grid
      *
-     * @return string
+     * @return GridInterface
      */
-    public function getText()
+    public function getGrid()
     {
-        return $this->text;
+        return $this->grid;
     }
 
     /**
