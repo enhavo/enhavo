@@ -1,0 +1,7 @@
+enhavo_newsletter_newsletter_show:
+    options:
+        expose: true
+    path: /newsletter/show/{slug}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:showNewsletterAction

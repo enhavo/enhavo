@@ -114,6 +114,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('from')->end()
                             ->end()
                         ->end()
+                        ->scalarNode('base_template')->defaultValue('EnhavoNewsletterBundle:Theme:base.html.twig')->end()
                     ->end()
                 ->end()
 

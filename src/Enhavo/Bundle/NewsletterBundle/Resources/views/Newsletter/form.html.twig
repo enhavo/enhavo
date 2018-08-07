@@ -1,8 +1,6 @@
 {% if form.link is defined %}{{ form_row(form.link) }}{% endif %}
 {% if form.route is defined %}{{ form_row(form.route) }}{% endif %}
 {{ form_row(form.title) }}
+{% if form.slug is defined %}{{ form_row(form.slug) }}{% endif %}
 {{ form_row(form.subject) }}
-{{ form_row(form.text) }}
-
-
-
+{{ form_row(form.grid) }}
