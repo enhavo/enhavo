@@ -1,0 +1,13 @@
+{% block enhavo_grid_widget %}
+    {{ form_widget(form.items) }}
+{% endblock %}
+
+{% block enhavo_grid_column_widget %}
+    {{ form_widget(form.items) }}
+{% endblock %}
+
+{% block enhavo_grid_one_column_item_widget %}
+    <div class="dynamic-nested-container">
+        {{ form_widget(form.column) }}
+    </div>
+{% endblock %}

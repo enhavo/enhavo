@@ -53,3 +53,10 @@ enhavo_grid:
 #            type: download
         video:
             type: video
+        one_column:
+            type: one_column
+        two_column:
+            type: two_column
+        three_column:
+            type: three_column
+

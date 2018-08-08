@@ -2,16 +2,13 @@
   position: relative;
   .addItem {cursor: pointer;}
   .add-enhavo_dynamic-form-button {font-size:14px;line-height:19px;}
-
-  .dynamic-form-actions {
-
-  }
-
+  .dynamic-form-actions {}
   .dynamic-form-container {
-    .dynamic-form-item-add-button {
-
+    .dynamic-form-item-add-button {}
+    .dynamic-nested-container {
+      padding-left: 10px;
+      padding-right: 10px;
     }
-
     .dynamic-form-item {
       border:1px solid #eee;padding-bottom:15px;
       + .item {margin-top:15px;}

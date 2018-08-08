@@ -1,4 +1,9 @@
 services:
+    enhavo_grid.grid_item.base:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: base }
+
     enhavo_grid.grid_item.gallery:
         class: Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration
         tags:
@@ -29,3 +34,18 @@ services:
         class: Enhavo\Bundle\GridBundle\Item\Configuration\CiteConfiguration
         tags:
             - { name: enhavo.grid_item, alias: cite }
+
+    enhavo_grid.grid_item.one_column:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\OneColumnConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: one_column }
+
+    enhavo_grid.grid_item.two_column:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\TwoColumnConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: two_column }
+
+    enhavo_grid.grid_item.three_column:
+        class: Enhavo\Bundle\GridBundle\Item\Configuration\ThreeColumnConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: three_column }

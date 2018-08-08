@@ -8,8 +8,10 @@
 
 namespace Enhavo\Bundle\GridBundle\Renderer;
 
+use Enhavo\Bundle\GridBundle\Entity\Column;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Enhavo\Bundle\GridBundle\Resolver\ItemResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Templating\EngineInterface;
@@ -66,5 +68,15 @@ class GridRenderer
             }
         }
         return join('', $html);
+    }
+
+    public function renderItem(ItemInterface $item, $template)
+    {
+
+    }
+
+    public function renderColumn(Column $column, $set = null, $onlyRenderTypes = null)
+    {
+
     }
 }

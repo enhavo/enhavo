@@ -17,13 +17,9 @@ class EnhavoAdapter
             DynamicForm.apply(element);
         });
 
-        $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            //DynamicForm.apply(element);
-        });
-
         let listener = new FormListener();
         listener.onRelease(function(event: FormInsertEvent) {
-            // DynamicForm.apply();
+            DynamicForm.apply(event.getElement());
             form.initWysiwyg(event.getElement());
             form.initRadioAndCheckbox(event.getElement());
             form.initSelect(event.getElement());

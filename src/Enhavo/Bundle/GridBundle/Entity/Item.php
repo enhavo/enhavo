@@ -47,6 +47,11 @@ class Item implements ItemInterface
     protected $itemTypeClass;
 
     /**
+     * @var Column
+     */
+    protected $column;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -164,5 +169,21 @@ class Item implements ItemInterface
     public function setItemTypeClass($itemTypeClass)
     {
         $this->itemTypeClass = $itemTypeClass;
+    }
+
+    /**
+     * @return Column
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
+
+    /**
+     * @param Column $column
+     */
+    public function setColumn($column)
+    {
+        $this->column = $column;
     }
 }

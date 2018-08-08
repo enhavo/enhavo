@@ -1,0 +1,27 @@
+Enhavo\Bundle\GridBundle\Entity\ThreeColumnItem:
+    type: entity
+    table: grid_item_three_column
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        columnOne:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            joinColumn:
+                onDelete: CASCADE
+        columnTwo:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            joinColumn:
+                onDelete: CASCADE
+        columnThree:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

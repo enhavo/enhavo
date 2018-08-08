@@ -14,7 +14,7 @@ define(["require", "exports", "app/app/DynamicForm", "app/app/Form/Form", "app/F
             });
             var listener = new Form_1.FormListener();
             listener.onRelease(function (event) {
-                // DynamicForm.apply();
+                DynamicForm_1.DynamicForm.apply(event.getElement());
                 form.initWysiwyg(event.getElement());
                 form.initRadioAndCheckbox(event.getElement());
                 form.initSelect(event.getElement());

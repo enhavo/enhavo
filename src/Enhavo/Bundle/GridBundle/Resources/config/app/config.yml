@@ -13,4 +13,4 @@ enhavo_media:
 twig:
     form:
         resources:
-            - 'EnhavoGridBundle:Form:grid.html.twig'
+            - 'EnhavoGridBundle:Form:fields.html.twig'

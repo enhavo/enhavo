@@ -31,7 +31,7 @@ class ItemsType extends AbstractType
             'translation_domain' => 'EnhavoGridBundle',
             'item_resolver' => 'enhavo_grid.resolver.item_resolver',
             'item_route' => 'enhavo_grid_item_form',
-            'item_class' => $this->class
+            'item_class' => $this->class,
         ]);
     }
 

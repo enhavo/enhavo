@@ -1,0 +1,18 @@
+Enhavo\Bundle\GridBundle\Entity\OneColumnItem:
+    type: entity
+    table: grid_item_one_column
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        column:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

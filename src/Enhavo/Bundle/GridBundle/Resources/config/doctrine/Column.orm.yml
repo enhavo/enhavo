@@ -1,0 +1,20 @@
+Enhavo\Bundle\GridBundle\Entity\Column:
+    type: entity
+    table: grid_column
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToMany:
+        items:
+            targetEntity: Item
+            mappedBy: column
+            cascade: ['persist', 'refresh', 'remove']
+            orphanRemoval: true
+            orderBy:
+                position: ASC
+
+    lifecycleCallbacks: {  }
