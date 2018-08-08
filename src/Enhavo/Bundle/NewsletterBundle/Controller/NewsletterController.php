@@ -10,16 +10,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsletterController extends ResourceController
 {
-    public function showNewsletterAction($slug)
+    public function showNewsletterAction(Request $request, $slug)
     {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $contentDocument = $this->get('enhavo_newsletter.repository.newsletter')->findOneBy(array('slug' => $slug));
 
         if (!$contentDocument) {
             throw new NotFoundHttpException();
         }
 
-        return $this->render('EnhavoNewsletterBundle:Theme:showNewsletter.html.twig', array(
-            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.base_template'),
+        return $this->render($configuration->getTemplate($this->getParameter('enhavo_newsletter.newsletter.template.show')), array(
+            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.template.base'),
             'data' => $contentDocument
         ));
     }
