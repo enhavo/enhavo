@@ -2,19 +2,13 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Picture
  */
-class PictureItem implements ItemTypeInterface
+class PictureItem extends AbstractItem
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
     /**
      * @var string
      */
@@ -29,16 +23,6 @@ class PictureItem implements ItemTypeInterface
      * @var FileInterface
      */
     protected $file;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set title
@@ -83,12 +67,11 @@ class PictureItem implements ItemTypeInterface
      * Set file
      *
      * @param FileInterface|null $file
-     * @return Grid
+     * @return PictureItem
      */
     public function setFile(FileInterface $file = null)
     {
         $this->file = $file;
-
         return $this;
     }
 

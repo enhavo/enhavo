@@ -2,18 +2,11 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
-
 /**
  * Video
  */
-class VideoItem implements ItemTypeInterface
+class VideoItem extends AbstractItem
 {
-    /**
-     * @var integer
-     */
-    private $id;
-
     /**
      * @var string
      */
@@ -23,17 +16,6 @@ class VideoItem implements ItemTypeInterface
      * @var string
      */
     private $url;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set title

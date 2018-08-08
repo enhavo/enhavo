@@ -71,6 +71,12 @@ class Item implements ItemInterface
     {
         $this->grid = $grid;
 
+        if($grid === null) {
+            $this->setItemType(null);
+            $this->setItemTypeId(null);
+            $this->setItemTypeClass(null);
+        }
+
         return $this;
     }
 
@@ -124,7 +130,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * @return mixed
+     * @return ItemTypeInterface
      */
     public function getItemType()
     {
@@ -132,10 +138,18 @@ class Item implements ItemInterface
     }
 
     /**
-     * @param mixed $item
+     * @param ItemTypeInterface $item
      */
-    public function setItemType($item)
+    public function setItemType(ItemTypeInterface $item = null)
     {
+        if($this->itemType) {
+            $this->itemType->setItem(null);
+        }
+
+        if($item) {
+            $item->setItem($this);
+        }
+
         $this->itemType = $item;
     }
 
@@ -185,5 +199,11 @@ class Item implements ItemInterface
     public function setColumn($column)
     {
         $this->column = $column;
+
+        if($column === null) {
+            $this->setItemType(null);
+            $this->setItemTypeId(null);
+            $this->setItemTypeClass(null);
+        }
     }
 }

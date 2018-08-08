@@ -2,22 +2,16 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * TextPicture
  */
-class TextPictureItem implements ItemTypeInterface
+class TextPictureItem extends AbstractItem
 {
     const LAYOUT_1_1 = 0;
     const LAYOUT_1_2 = 1;
     const LAYOUT_2_1 = 2;
-
-    /**
-     * @var integer
-     */
-    protected $id;
 
     /**
      * @var string
@@ -53,16 +47,6 @@ class TextPictureItem implements ItemTypeInterface
      * @var integer
      */
     protected $layout;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set text

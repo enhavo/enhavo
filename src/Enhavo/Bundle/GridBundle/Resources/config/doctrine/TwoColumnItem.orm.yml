@@ -1,12 +1,6 @@
 Enhavo\Bundle\GridBundle\Entity\TwoColumnItem:
     type: entity
     table: grid_item_two_column
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
 
     manyToOne:
         columnOne:

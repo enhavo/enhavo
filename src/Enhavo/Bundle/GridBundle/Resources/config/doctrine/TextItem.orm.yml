@@ -1,12 +1,7 @@
 Enhavo\Bundle\GridBundle\Entity\TextItem:
     type: entity
     table: grid_item_text
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+
     fields:
         title:
             type: string

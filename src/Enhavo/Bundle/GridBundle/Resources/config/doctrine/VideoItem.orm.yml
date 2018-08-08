@@ -1,12 +1,7 @@
 Enhavo\Bundle\GridBundle\Entity\VideoItem:
     type: entity
     table: grid_item_video
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+
     fields:
         title:
             type: string

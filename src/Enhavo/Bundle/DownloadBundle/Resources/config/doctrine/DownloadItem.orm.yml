@@ -1,12 +1,6 @@
 Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
     type: entity
     table: download_item_download
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
 
     fields:
         title:

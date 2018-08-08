@@ -1,12 +1,7 @@
 Enhavo\Bundle\GridBundle\Entity\ThreeColumnItem:
     type: entity
     table: grid_item_three_column
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+
     manyToOne:
         columnOne:
             cascade: ['persist', 'remove', 'refresh']

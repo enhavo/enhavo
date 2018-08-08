@@ -2,15 +2,8 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
-
-class TwoColumnItem implements ItemTypeInterface
+class TwoColumnItem extends AbstractItem
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
     /**
      * @var Column
      */
@@ -20,16 +13,6 @@ class TwoColumnItem implements ItemTypeInterface
      * @var Column
      */
     private $columnTwo;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return Column

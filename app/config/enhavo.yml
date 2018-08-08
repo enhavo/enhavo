@@ -49,8 +49,8 @@ enhavo_grid:
             type: text_picture
         cite:
             type: cite
-#        download:
-#            type: download
+        download:
+            type: download
         video:
             type: video
         one_column:

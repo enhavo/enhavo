@@ -2,18 +2,11 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
-
 /**
  * Text
  */
-class TextItem implements ItemTypeInterface
+class TextItem extends AbstractItem
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
     /**
      * @var string
      */
@@ -23,16 +16,6 @@ class TextItem implements ItemTypeInterface
      * @var string
      */
     protected $text;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set title

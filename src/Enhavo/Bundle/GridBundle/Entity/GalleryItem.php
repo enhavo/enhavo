@@ -3,19 +3,13 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Gallery
  */
-class GalleryItem implements ItemTypeInterface
+class GalleryItem extends AbstractItem
 {
-    /**
-     * @var integer
-     */
-    protected $id;
-
     /**
      * @var string
      */
@@ -34,16 +28,6 @@ class GalleryItem implements ItemTypeInterface
     public function __construct()
     {
         $this->files = new ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

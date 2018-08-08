@@ -1,12 +1,7 @@
 Enhavo\Bundle\GridBundle\Entity\PictureItem:
     type: entity
     table: grid_item_picture
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+
     fields:
         title:
             type: string
