@@ -8,73 +8,36 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Item\ItemTypeResolver;
+use Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType;
+use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 
 class ItemType extends AbstractType
 {
-    /**
-     * @var ItemTypeResolver
-     */
-    protected $resolver;
-
-    public function __construct(ItemTypeResolver $itemTypeResolver)
-    {
-        $this->resolver = $itemTypeResolver;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', 'hidden', array(
-            'data' => 0
-        ));
-
-        $builder->add('type', 'hidden');
-
-        $resolver = $this->resolver;
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver){
-            $item = $event->getData();
-            $form = $event->getForm();
-            if(!empty($item) && isset($item['type'])) {
-                $form->add('itemType', $resolver->getFormType($item['type']));
-            }
-        });
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver){
-            $item = $event->getData();
-            $form = $event->getForm();
-            if(!empty($item) && $item->getType()) {
-                $form->add('itemType', $resolver->getFormType($item->getType()));
-            }
-        });
+        $builder->add('position', PositionType::class);
+        $builder->add('name', HiddenType::class);
+        $builder->add('itemType', $options['item_type_form'], $options['item_type_parameters']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $data = $form->getData();
-        if($data instanceof Item) {
-            $view->vars['label'] = $this->resolver->getLabel($data->getType());
-        }
-
-        return;
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\GridBundle\Entity\Item'
+            'data_class' => Item::class,
+            'item_type_form' => null,
+            'item_type_parameters' => [],
+            'item_property' => 'name',
         ));
+    }
+
+    public function getParent()
+    {
+        return DynamicItemType::class;
     }
 
     public function getName()

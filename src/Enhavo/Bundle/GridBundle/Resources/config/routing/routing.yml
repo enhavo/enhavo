@@ -1,6 +1,7 @@
-enhavo_grid_item:
-    pattern: /enhavo/grid/grid/item/{type}
+enhavo_grid_item_form:
+    path:  /enhavo/grid/form
     defaults:
-        _controller: EnhavoGridBundle:Grid:item
+        _controller: EnhavoAppBundle:DynamicForm:item
+        _resolver: enhavo_grid.resolver.item_resolver
     options:
-            expose: true
+        expose: true

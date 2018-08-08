@@ -79,6 +79,17 @@ video:
   form:
     label:
       url: 'URL'
-
+column:
+  label:
+    column: 'Column'
+one_column:
+  label:
+    one_column: 'One column'
+two_column:
+  label:
+    two_column: 'Two column'
+three_column:
+  label:
+    three_column: 'Three column'
 
 

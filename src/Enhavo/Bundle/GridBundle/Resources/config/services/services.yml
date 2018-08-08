@@ -1,0 +1,55 @@
+services:
+
+    enhavo_grid.form.items:
+        class: Enhavo\Bundle\GridBundle\Form\Type\ItemsType
+        arguments:
+            - Enhavo\Bundle\GridBundle\Entity\Item
+        tags:
+            - { name: form.type, alias: enhavo_grid_items }
+
+    enhavo_grid.twig.grid_extension:
+        class: Enhavo\Bundle\GridBundle\Twig\GridExtension
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: twig.extension }
+
+    enhavo_grid.renderer.grid_renderer:
+        class: Enhavo\Bundle\GridBundle\Renderer\GridRenderer
+        arguments:
+            - '@enhavo_grid.resolver.item_resolver'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_grid.resolver.item_resolver:
+        class: Enhavo\Bundle\GridBundle\Resolver\ItemResolver
+        calls:
+            - ['setContainer', ['@service_container']]
+        arguments:
+            - '@form.factory'
+            - '@enhavo_grid.item_collector'
+            - '@enhavo_grid.factory.item_type'
+            - '%enhavo_grid.items%'
+
+    enhavo_grid.item_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'GridItem'
+
+    validator.video_url_validator:
+        class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
+        tags:
+            - { name: validator.constraint_validator, alias: video_url }
+
+    enhavo_grid.event_listener.item_reference:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
+        arguments:
+          - 'Enhavo\Bundle\GridBundle\Entity\Item'
+          - 'itemType'
+          - 'itemTypeClass'
+          - 'itemTypeId'
+          - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }
+

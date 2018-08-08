@@ -8,29 +8,14 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\GridBundle\Item\ConfigurationInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemConfiguration;
+use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BaseConfiguration extends AbstractType implements ConfigurationInterface
+class BaseConfiguration extends AbstractConfiguration
 {
-    public function configure($name, $options)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $itemConfiguration = new ItemConfiguration();
-
-        $itemConfiguration->setName($name);
-        $itemConfiguration->setModel($this->getRequiredOption('model', $options));
-        $itemConfiguration->setLabel($this->getRequiredOption('label', $options));
-        $itemConfiguration->setForm($this->getRequiredOption('form', $options));
-        $itemConfiguration->setRepository($this->getRequiredOption('repository', $options));
-        $itemConfiguration->setTemplate($this->getRequiredOption('template', $options));
-        $itemConfiguration->setFactory($this->getRequiredOption('factory', $options));
-
-        $itemConfiguration->setParent($this->getOption('parent', $options));
-        $itemConfiguration->setTranslationDomain($this->getOption('translationDomain', $options));
-        $itemConfiguration->setOptions($this->getOption('options', $options, []));
-
-        return $itemConfiguration;
+        parent::configureOptions($optionsResolver);
     }
 
     public function getType()

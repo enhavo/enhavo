@@ -41,9 +41,6 @@ class GridItemGenerator extends Generator
         $this->output->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_grid -> items:</>');
         $this->output->writeln($this->generateEnhavoConfigCode($bundle, $itemName));
         $this->output->writeln('');
-        $this->output->writeln('<options=bold>Optional: To customize the backend form widget, add this to your form fields twig file:</>');
-        $this->output->writeln($this->generateFormWidgetCode($bundle, $itemName));
-        $this->output->writeln('');
     }
 
     protected function generateDoctrineOrmFile(BundleInterface $bundle, $itemName)
@@ -144,15 +141,6 @@ class GridItemGenerator extends Generator
         {
             throw new \RuntimeException('Error writing file "' . $filePath . '".');
         }
-    }
-
-    protected function generateFormWidgetCode(BundleInterface $bundle, $itemName)
-    {
-        $formTypeName = $this->getFormTypeName($bundle, $itemName);
-
-        return $this->twigEngine->render('@EnhavoGenerator/Generator/GridItem/form-widget-code.html.twig.twig', array(
-            'form_type_name' => $formTypeName
-        ));
     }
 
     protected function generateEnhavoConfigCode(BundleInterface $bundle, $itemName)

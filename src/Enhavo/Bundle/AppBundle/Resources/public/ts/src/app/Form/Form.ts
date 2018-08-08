@@ -29,12 +29,14 @@ export class FormInitializer
     {
         this.insert();
         $(this.element).insertBefore(element);
+        this.release();
     }
 
     public insertAfter(element: HTMLElement)
     {
         this.insert();
         $(this.element).insertAfter(element);
+        this.release();
     }
 
     public convert()

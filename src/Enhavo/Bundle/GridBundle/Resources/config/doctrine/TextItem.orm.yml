@@ -1,0 +1,15 @@
+Enhavo\Bundle\GridBundle\Entity\TextItem:
+    type: entity
+    table: grid_item_text
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        text:
+            type: text
+            nullable: true
+
+    lifecycleCallbacks: {  }

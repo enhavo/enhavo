@@ -2,8 +2,6 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\GridBundle\Model\ContainerInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
@@ -20,11 +18,6 @@ class Grid implements GridInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $containers;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
     protected $items;
 
     /**
@@ -32,7 +25,6 @@ class Grid implements GridInterface
      */
     public function __construct()
     {
-        $this->containers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -44,39 +36,6 @@ class Grid implements GridInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Add containers
-     *
-     * @param ContainerInterface $containers
-     * @return Grid
-     */
-    public function addContainer(ContainerInterface $containers)
-    {
-        $this->containers[] = $containers;
-
-        return $this;
-    }
-
-    /**
-     * Remove containers
-     *
-     * @param ContainerInterface $containers
-     */
-    public function removeContainer(ContainerInterface $containers)
-    {
-        $this->containers->removeElement($containers);
-    }
-
-    /**
-     * Get containers
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContainers()
-    {
-        return $this->containers;
     }
 
     /**

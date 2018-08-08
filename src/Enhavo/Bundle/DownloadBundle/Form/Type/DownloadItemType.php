@@ -4,13 +4,20 @@ namespace Enhavo\Bundle\DownloadBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Config\Condition;
 use Enhavo\Bundle\DownloadBundle\Entity\DownloadItem;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemFormType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DownloadItemType extends ItemFormType
+class DownloadItemType extends AbstractType
 {
+    private $translation;
+
+    public function __construct($translation)
+    {
+        $this->translation = $translation;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $condition = new Condition();
@@ -52,15 +59,15 @@ class DownloadItemType extends ItemFormType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\DownloadBundle\Entity\DownloadItem'
+            'data_class' => DownloadItem::class
         ));
     }
 
     public function getName()
     {
-        return 'enhavo_download_item_download';
+        return 'enhavo_download_download_item';
     }
 }

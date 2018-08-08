@@ -1,0 +1,20 @@
+Enhavo\Bundle\GridBundle\Entity\PictureItem:
+    type: entity
+    table: grid_item_picture
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        caption:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+    lifecycleCallbacks: {  }

@@ -9,30 +9,36 @@ Enhavo\Bundle\GridBundle\Entity\Item:
                 strategy: AUTO
 
     fields:
-        order:
-            type: integer
-            column: '`order`'
-            nullable: true
-        type:
+        name:
             type: string
+            length: 255
+            nullable: true
+
+        position:
+            type: integer
             nullable: true
 
         itemTypeId:
             type: integer
             nullable: true
 
-        configuration:
-            type: blob
+        itemTypeClass:
+            type: string
+            length: 255
             nullable: true
 
     manyToOne:
-        column:
-            targetEntity: Enhavo\Bundle\GridBundle\Model\ColumnInterface
+        grid:
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            mappedBy: items
             joinColumn:
                 onDelete: CASCADE
 
-        grid:
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+        column:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            mappedBy: items
             joinColumn:
                 onDelete: CASCADE
+
     lifecycleCallbacks: {  }

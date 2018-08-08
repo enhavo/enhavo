@@ -29,10 +29,12 @@ define(["require", "exports"], function (require, exports) {
         FormInitializer.prototype.insertBefore = function (element) {
             this.insert();
             $(this.element).insertBefore(element);
+            this.release();
         };
         FormInitializer.prototype.insertAfter = function (element) {
             this.insert();
             $(this.element).insertAfter(element);
+            this.release();
         };
         FormInitializer.prototype.convert = function () {
             if (!this.converted) {

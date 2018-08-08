@@ -31,3 +31,15 @@ services:
         arguments:
             - '%enhavo_download.model.download.class%'
             - '@enhavo_media.factory.file'
+
+    enhavo_download.item.download:
+        class: Enhavo\Bundle\DownloadBundle\Item\DownloadConfiguration
+        tags:
+            - { name: enhavo.grid_item, alias: download }
+
+    enhavo_download.form.download_item:
+        class: Enhavo\Bundle\DownloadBundle\Form\Type\DownloadItemType
+        arguments:
+            - '%enhavo_translation.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_download_download_item }

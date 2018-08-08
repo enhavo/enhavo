@@ -9,10 +9,11 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Item\ItemConfigurationCollection;
-use Enhavo\Bundle\GridBundle\Item\ItemFactoryInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Enhavo\Bundle\AppBundle\Exception\ResolverException;
+use Enhavo\Bundle\GridBundle\Item\Item;
+use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class ItemTypeFactory
@@ -20,55 +21,55 @@ class ItemTypeFactory
     use ContainerAwareTrait;
 
     /**
-     * @var array
-     */
-    protected $itemConfigurations;
-
-    public function __construct(ItemConfigurationCollection $itemConfigurations)
-    {
-        $this->itemConfigurations = $itemConfigurations;
-    }
-
-    /**
-     * @param string $type
      * @return ItemTypeInterface
      */
-    public function create($type)
+    public function createNew($name)
     {
-        foreach($this->itemConfigurations->getItemConfigurations() as $item) {
-            if($item->getName() == $type) {
-                $factoryClassName = $item->getFactory();
-                /** @var ItemFactoryInterface $factory */
-                $factory = new $factoryClassName($item->getModel());
-                if($factory instanceof ContainerAwareInterface) {
-                    $factory->setContainer($this->container);
-                }
-                return $factory->create();
-            }
-        }
-
-        throw new \InvalidArgumentException(sprintf('Item type "%s" does not exists', $type));
+        /** @var Item $item */
+        $item = $this->getResolver()->resolveItem($name);
+        $factory = $this->getFactory($item);
+        return $factory->createNew();
     }
 
     /**
      * @param ItemTypeInterface $itemType
      * @return ItemTypeInterface
      */
-    public function duplicate(ItemTypeInterface $itemType)
+    public function duplicate(ItemTypeInterface $itemType, $name)
     {
-        $className = get_class($itemType);
-        foreach($this->itemConfigurations->getItemConfigurations() as $item) {
-            if($item->getModel() == $className) {
-                $factoryClassName = $item->getFactory();
-                /** @var ItemFactoryInterface $factory */
-                $factory = new $factoryClassName($item->getModel());
-                if($factory instanceof ContainerAwareInterface) {
-                    $factory->setContainer($this->container);
-                }
-                return $factory->duplicate($itemType);
-            }
-        }
+        /** @var Item $item */
+        $item = $this->getResolver()->resolveItem($name);
+        $factory = $this->getFactory($item);
+        return $factory->duplicate($itemType);
+    }
 
-        throw new \InvalidArgumentException(sprintf('Item type for class "%s" not found', $className));
+    /**
+     * @return ResolverInterface
+     */
+    private function getResolver()
+    {
+        return $this->container->get('enhavo_grid.resolver.item_resolver');
+    }
+
+    /**
+     * @param Item $item
+     * @return FactoryInterface
+     * @throws ResolverException
+     */
+    private function getFactory(Item $item)
+    {
+        $factoryClass = $item->getFactory();
+        if($factoryClass) {
+            if ($this->container->has($factoryClass)) {
+                $factory = $this->container->get($factoryClass);
+            } else {
+                /** @var AbstractItemFactory $factory */
+                $factory = new $factoryClass($item->getModel());
+                $factory->setContainer($this->container);
+            }
+
+            return $factory;
+        }
+        throw new ResolverException(sprintf('Factory for grid item type "%s" is required', $item->getName()));
     }
 }

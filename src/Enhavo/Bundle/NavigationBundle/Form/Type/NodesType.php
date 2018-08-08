@@ -31,7 +31,7 @@ class NodesType extends AbstractType
             'translation_domain' => 'EnhavoNavigationBundle',
             'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
             'item_route' => 'enhavo_navigation_navigation_form',
-            'item_class' => $this->class
+            'item_class' => $this->class,
         ]);
     }
 

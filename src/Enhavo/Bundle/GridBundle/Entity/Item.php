@@ -2,10 +2,9 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
-use Enhavo\Bundle\GridBundle\Model\ColumnInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 /**
  * Item
@@ -20,7 +19,7 @@ class Item implements ItemInterface
     /**
      * @var integer
      */
-    protected $order;
+    protected $position;
 
     /**
      * @var GridInterface
@@ -30,17 +29,12 @@ class Item implements ItemInterface
     /**
      * @var string
      */
-    protected $configuration;
+    protected $name;
 
     /**
-     * @var ColumnInterface
+     * @var ItemTypeInterface
      */
-    protected $column;
-
-    /**
-     * @var string
-     */
-    protected $type;
+    protected $itemType;
 
     /**
      * @var integer
@@ -48,9 +42,14 @@ class Item implements ItemInterface
     protected $itemTypeId;
 
     /**
-     * @var ItemTypeInterface
+     * @var string
      */
-    protected $itemType;
+    protected $itemTypeClass;
+
+    /**
+     * @var Column
+     */
+    protected $column;
 
     /**
      * Get id
@@ -63,74 +62,6 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set configuration
-     *
-     * @param string $configuration
-     * @return Item
-     */
-    public function setConfiguration($configuration)
-    {
-        $this->configuration = serialize($configuration);
-
-        return $this;
-    }
-
-    /**
-     * Get configuration
-     *
-     * @return Configuration
-     */
-    public function getConfiguration()
-    {
-        if(is_resource($this->configuration)) {
-            $stream = '';
-            while($byte = fgets($this->configuration, 4096)) {
-                $stream .= $byte;
-            }
-
-            $stream = str_replace("\x73\x3A\x35\x34\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x5F\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", "\x73\x3A\x35\x33\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", $stream);
-
-            $this->configuration = unserialize($stream);
-        }
-
-        if(is_string($this->configuration)) {
-
-            $this->configuration = str_replace("\x73\x3A\x35\x34\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x5F\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", "\x73\x3A\x35\x33\x3A\x22\x00\x44\x6F\x63\x74\x72\x69\x6E\x65\x5C\x43\x6F\x6D\x6D\x6F\x6E\x5C\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x73\x5C\x41\x72\x72\x61\x79\x43\x6F\x6C\x6C\x65\x63\x74\x69\x6F\x6E\x00\x65\x6C\x65\x6D\x65\x6E\x74\x73\x22", $this->configuration);
-
-            $this->configuration = unserialize($this->configuration);
-        }
-
-        if(is_null($this->configuration)) {
-            $this->configuration = new Configuration;
-        }
-
-        return $this->configuration;
-    }
-
-    /**
-     * Set column
-     *
-     * @param ColumnInterface $column
-     * @return Item
-     */
-    public function setColumn(ColumnInterface $column = null)
-    {
-        $this->column = $column;
-
-        return $this;
-    }
-
-    /**
-     * Get column
-     *
-     * @return ColumnInterface
-     */
-    public function getColumn()
-    {
-        return $this->column;
-    }
-
-    /**
      * Set grid
      *
      * @param GridInterface $grid
@@ -139,6 +70,12 @@ class Item implements ItemInterface
     public function setGrid(GridInterface $grid = null)
     {
         $this->grid = $grid;
+
+        if($grid === null) {
+            $this->setItemType(null);
+            $this->setItemTypeId(null);
+            $this->setItemTypeClass(null);
+        }
 
         return $this;
     }
@@ -154,49 +91,19 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Item
+     * @return string
      */
-    public function setOrder($order)
+    public function getName()
     {
-        $this->order = $order;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get order
-     *
-     * @return integer 
+     * @param string $name
      */
-    public function getOrder()
+    public function setName($name)
     {
-        return $this->order;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Item
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
+        $this->name = $name;
     }
 
     /**
@@ -223,7 +130,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * @return mixed
+     * @return ItemTypeInterface
      */
     public function getItemType()
     {
@@ -231,10 +138,72 @@ class Item implements ItemInterface
     }
 
     /**
-     * @param mixed $item
+     * @param ItemTypeInterface $item
      */
-    public function setItemType($item)
+    public function setItemType(ItemTypeInterface $item = null)
     {
+        if($this->itemType) {
+            $this->itemType->setItem(null);
+        }
+
+        if($item) {
+            $item->setItem($this);
+        }
+
         $this->itemType = $item;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemTypeClass()
+    {
+        return $this->itemTypeClass;
+    }
+
+    /**
+     * @param string $itemTypeClass
+     */
+    public function setItemTypeClass($itemTypeClass)
+    {
+        $this->itemTypeClass = $itemTypeClass;
+    }
+
+    /**
+     * @return Column
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
+
+    /**
+     * @param Column $column
+     */
+    public function setColumn($column)
+    {
+        $this->column = $column;
+
+        if($column === null) {
+            $this->setItemType(null);
+            $this->setItemTypeId(null);
+            $this->setItemTypeClass(null);
+        }
     }
 }

@@ -8,24 +8,28 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\TextPicture;
-use Enhavo\Bundle\GridBundle\Factory\TextPictureFactory;
-use Enhavo\Bundle\GridBundle\Form\Type\TextPictureType;
+use Enhavo\Bundle\GridBundle\Entity\TextPictureItem;
+use Enhavo\Bundle\GridBundle\Factory\TextPictureItemFactory;
+use Enhavo\Bundle\GridBundle\Form\Type\TextPictureItemType;
+use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TextPictureConfiguration extends BaseConfiguration
+class TextPictureConfiguration extends AbstractConfiguration
 {
-    public function configure($name, $options)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $options['model'] = $this->getOption('model', $options, TextPicture::class);
-        $options['parent'] = $this->getOption('parent', $options, TextPicture::class);
-        $options['form'] = $this->getOption('form', $options, TextPictureType::class);
-        $options['factory'] = $this->getOption('factory', $options, TextPictureFactory::class);
-        $options['repository'] = $this->getOption('repository', $options, 'EnhavoGridBundle:TextPicture');
-        $options['template'] = $this->getOption('template', $options, 'EnhavoGridBundle:Item:text_picture.html.twig');
-        $options['label'] = $this->getOption('label', $options, 'textPicture.label.textPicture');
-        $options['translationDomain'] = $this->getOption('translationDomain', $options, 'EnhavoGridBundle');
+        parent::configureOptions($optionsResolver);
 
-        return parent::configure($name, $options);
+        $optionsResolver->setDefaults([
+            'model' => TextPictureItem::class,
+            'parent' => TextPictureItem::class,
+            'form' => TextPictureItemType::class,
+            'factory' => TextPictureItemFactory::class,
+            'repository' => 'EnhavoGridBundle:TextPicture',
+            'template' => 'EnhavoGridBundle:Item:text_picture.html.twig',
+            'label' => 'textPicture.label.textPicture',
+            'translationDomain' => 'EnhavoGridBundle',
+        ]);
     }
 
     public function getType()

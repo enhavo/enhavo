@@ -1,0 +1,16 @@
+Enhavo\Bundle\GridBundle\Entity\VideoItem:
+    type: entity
+    table: grid_item_video
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        url:
+            type: string
+            length: 255
+            nullable: true
+
+    lifecycleCallbacks: {  }

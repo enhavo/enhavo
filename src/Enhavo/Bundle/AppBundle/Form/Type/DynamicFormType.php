@@ -80,7 +80,6 @@ class DynamicFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'type' => 'enhavo_app_dynamic_item',
             'allow_delete' => true,
             'allow_add' => true,
             'by_reference' => false,
@@ -92,15 +91,6 @@ class DynamicFormType extends AbstractType
             'prototype' => false,
             'entry_type' => DynamicItemType::class
         ]);
-
-        // force to create a unique placeholder for each form type
-        $resolver->setNormalizer('prototype_name', function($options, $value) {
-            if($value == '__name__') {
-                return sprintf('__%s__', uniqid());
-            }
-            return $value;
-        });
-
 
         // force to create a unique placeholder for each form type
         $resolver->setNormalizer('prototype_name', function($options, $value) {

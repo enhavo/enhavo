@@ -1,0 +1,10 @@
+Enhavo\Bundle\GridBundle\Entity\CiteItem:
+    type: entity
+    table: grid_item_cite
+
+    fields:
+        text:
+            type: text
+            nullable: true
+
+lifecycleCallbacks: {  }

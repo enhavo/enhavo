@@ -3,21 +3,16 @@
 namespace Enhavo\Bundle\DownloadBundle\Entity;
 
 use Enhavo\Bundle\DownloadBundle\Model\DownloadInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * DownloadItem
  */
-class DownloadItem implements ItemTypeInterface
+class DownloadItem extends AbstractItem
 {
     const TYPE_FILE = 'file';
     const TYPE_DOWNLOAD = 'download';
-
-    /**
-     * @var integer
-     */
-    protected $id;
 
     /**
      * @var DownloadInterface
@@ -38,16 +33,6 @@ class DownloadItem implements ItemTypeInterface
      * @var string
      */
     private $downloadType = self::TYPE_FILE;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set download
@@ -129,7 +114,7 @@ class DownloadItem implements ItemTypeInterface
     /**
      * @param string $type
      */
-    public function setDownloadType(string $type)
+    public function setDownloadType($type)
     {
         $this->downloadType = $type;
     }

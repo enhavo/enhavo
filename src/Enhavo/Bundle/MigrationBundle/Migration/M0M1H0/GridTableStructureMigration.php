@@ -144,7 +144,7 @@ class GridTableStructureMigration extends AbstractMigration
 
     protected function migrateTextPicture($item, $itemType)
     {
-        $textPicture = new \Enhavo\Bundle\GridBundle\Entity\TextPicture();
+        $textPicture = new \Enhavo\Bundle\GridBundle\Entity\TextPictureItem();
         /** @var $itemType TextPicture */
         $textPicture->setText($itemType->getText());
         $textPicture->setFile($this->getSingleFile($itemType->getFiles()));

@@ -1,6 +1,8 @@
 import { DynamicForm, DynamicFormConfig } from 'app/app/DynamicForm';
 import { FormListener } from "app/app/Form/Form";
 import { FormInsertEvent } from "app/app/Form/Form";
+import * as form from 'app/Form'
+import { Media } from 'media/Media';
 
 class EnhavoAdapter
 {
@@ -15,13 +17,15 @@ class EnhavoAdapter
             DynamicForm.apply(element);
         });
 
-        $(document).on('gridAddAfter', function (event, element:HTMLElement) {
-            //DynamicForm.apply(element);
-        });
-
         let listener = new FormListener();
-        listener.onInsert(function(event: FormInsertEvent) {
+        listener.onRelease(function(event: FormInsertEvent) {
             DynamicForm.apply(event.getElement());
+            form.initWysiwyg(event.getElement());
+            form.initRadioAndCheckbox(event.getElement());
+            form.initSelect(event.getElement());
+            form.initDataPicker(event.getElement());
+            form.initList(event.getElement());
+            Media.apply(event.getElement());
         });
     }
 }

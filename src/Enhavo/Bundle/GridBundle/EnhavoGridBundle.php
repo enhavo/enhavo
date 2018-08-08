@@ -13,7 +13,7 @@ class EnhavoGridBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_grid.item_configuration_collector', 'enhavo.grid_item')
+            new TypeCompilerPass('enhavo_grid.item_collector', 'enhavo.grid_item')
         );
     }
 }

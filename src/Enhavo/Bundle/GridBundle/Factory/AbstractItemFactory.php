@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Item\ItemFactoryInterface;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-abstract class AbstractItemFactory implements ItemFactoryInterface, ContainerAwareInterface
+abstract class AbstractItemFactory implements ContainerAwareInterface, FactoryInterface
 {
     use ContainerAwareTrait;
 
@@ -24,7 +24,7 @@ abstract class AbstractItemFactory implements ItemFactoryInterface, ContainerAwa
         $this->dataClass = $dataClass;
     }
 
-    public function create()
+    public function createNew()
     {
         return new $this->dataClass;
     }
