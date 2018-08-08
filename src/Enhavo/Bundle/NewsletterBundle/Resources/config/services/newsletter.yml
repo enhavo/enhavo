@@ -40,3 +40,12 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
+
+    enhavo_newsletter.extend_listener.newsletter:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
+            - '%enhavo_newsletter.model.newsletter.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
