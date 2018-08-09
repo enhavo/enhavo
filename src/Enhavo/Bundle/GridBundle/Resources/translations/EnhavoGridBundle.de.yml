@@ -86,6 +86,9 @@ video:
 column:
   label:
     column: 'Spalte'
+    column_one: 'Spalte Eins'
+    column_two: 'Spalte Zwei'
+    column_three: 'Spalte Drei'
 one_column:
   label:
     one_column: 'Eine Spalte'

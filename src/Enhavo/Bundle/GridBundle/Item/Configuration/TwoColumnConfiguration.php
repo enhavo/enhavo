@@ -30,6 +30,7 @@ class TwoColumnConfiguration extends AbstractConfiguration
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'two_column.label.two_column',
             'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'layout']
         ]);
     }
 

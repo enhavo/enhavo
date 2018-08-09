@@ -79,6 +79,11 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['configuration_factory'];
     }
 
+    public function getGroups($options)
+    {
+        return $options['groups'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -95,6 +100,7 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
             'content_form' => null,
             'configuration_form' => null,
             'configuration_factory' => null,
+            'groups' => ['default'],
         ]);
 
         $resolver->setRequired([

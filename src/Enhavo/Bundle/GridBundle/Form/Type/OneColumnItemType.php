@@ -13,8 +13,9 @@ class OneColumnItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('column', ColumnType::class, [
-            'label' => 'grid.form.label.column',
-            'translation_domain' => 'EnhavoGridBundle'
+            'label' => 'column.label.column',
+            'translation_domain' => 'EnhavoGridBundle',
+            'item_groups' => ['content']
         ]);
     }
 

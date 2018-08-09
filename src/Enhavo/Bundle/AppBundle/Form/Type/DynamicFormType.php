@@ -24,13 +24,28 @@ class DynamicFormType extends AbstractType
     {
         $resolver = $this->getResolver($options);
 
-        if(count($options['items'])) {
-            $item = $resolver->resolveItem($options['items']);
-            $items = [$item];
-        } elseif(!empty($options['item_group'])) {
-            $items = $resolver->resolveItemGroup($options['item_group']);
-        } else {
+        $items = [];
+
+        if(empty($options['items']) && empty($options['item_groups'])) {
             $items = $resolver->resolveDefaultItems();
+        } else {
+            if(count($options['items'])) {
+                foreach($options['items'] as $item) {
+                    $item = $resolver->resolveItem($item);
+                    if(!in_array($item, $items)) {
+                        $items[] = $item;
+                    }
+                }
+            }
+
+            if(count($options['item_groups'])) {
+                $itemGroup = $resolver->resolveItemGroup($options['item_groups']);
+                foreach($itemGroup as $item) {
+                    if(!in_array($item, $items)) {
+                        $items[] = $item;
+                    }
+                }
+            }
         }
 
         $view->vars['items'] = $items;
@@ -84,7 +99,7 @@ class DynamicFormType extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'items' => [],
-            'item_group' => null,
+            'item_groups' => [],
             'item_resolver' => null,
             'item_route' => null,
             'item_class' => null,

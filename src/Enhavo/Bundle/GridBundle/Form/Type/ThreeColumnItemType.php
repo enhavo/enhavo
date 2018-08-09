@@ -13,15 +13,21 @@ class ThreeColumnItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('columnOne', ColumnType::class, [
-
+            'label' => 'column.label.column_one',
+            'translation_domain' => 'EnhavoGridBundle',
+            'item_groups' => ['content']
         ]);
 
         $builder->add('columnTwo', ColumnType::class, [
-
+            'label' => 'column.label.column_two',
+            'translation_domain' => 'EnhavoGridBundle',
+            'item_groups' => ['content']
         ]);
 
         $builder->add('columnThree', ColumnType::class, [
-
+            'label' => 'column.label.column_three',
+            'translation_domain' => 'EnhavoGridBundle',
+            'item_groups' => ['content']
         ]);
     }
 

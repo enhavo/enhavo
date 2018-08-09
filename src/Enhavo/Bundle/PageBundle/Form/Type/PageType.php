@@ -40,6 +40,7 @@ class PageType extends AbstractType
         $builder->add('grid', 'enhavo_grid', array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => ['layout'],
         ));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {

@@ -28,7 +28,7 @@ class LinkConfiguration extends AbstractConfiguration
             'configuration_form' => LinkConfigurationType::class,
             'label' => 'link.label.link',
             'translationDomain' => 'EnhavoNavigationBundle',
-            'options' => []
+            'options' => [],
         ]);
     }
 

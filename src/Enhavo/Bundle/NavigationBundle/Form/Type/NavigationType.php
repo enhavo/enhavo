@@ -13,6 +13,7 @@ use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NavigationType extends AbstractResourceType
 {
@@ -33,7 +34,17 @@ class NavigationType extends AbstractResourceType
             'translation_domain' => 'EnhavoNavigationBundle',
             'item_resolver' => 'enhavo_navigation.resolver.node_resolver',
             'item_route' => 'enhavo_navigation_navigation_form',
-            'item_class' => Node::class
+            'item_class' => Node::class,
+            'items' => $options['items'],
+            'item_groups' => $options['item_groups']
+        ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+           'items' => [],
+           'item_groups' => []
         ]);
     }
 

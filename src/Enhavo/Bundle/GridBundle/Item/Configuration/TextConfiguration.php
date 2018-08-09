@@ -28,7 +28,8 @@ class TextConfiguration extends AbstractConfiguration
             'repository' => 'EnhavoGridBundle:Text',
             'template' => 'EnhavoGridBundle:Item:text.html.twig',
             'label' => 'text.label.text',
-            'translationDomain' => 'EnhavoGridBundle'
+            'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'content']
         ]);
     }
 
