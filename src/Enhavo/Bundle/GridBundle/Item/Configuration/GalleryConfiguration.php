@@ -29,6 +29,7 @@ class GalleryConfiguration extends AbstractConfiguration
             'template' => 'EnhavoGridBundle:Item:gallery.html.twig',
             'label' => 'gallery.label.gallery',
             'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'content']
         ]);
     }
 

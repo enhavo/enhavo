@@ -19,7 +19,8 @@ class ColumnType extends AbstractType
     {
         $builder->add('items', ItemsType::class, [
             'entry_type' => ItemType::class,
-            'items' => $options['items']
+            'items' => $options['items'],
+            'item_groups' => $options['item_groups'],
         ]);
     }
 
@@ -27,7 +28,8 @@ class ColumnType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Column::class,
-            'items' => null,
+            'items' => [],
+            'item_groups' => []
         ));
     }
 

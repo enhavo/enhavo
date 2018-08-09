@@ -28,7 +28,8 @@ class VideoConfiguration extends AbstractConfiguration
             'repository' => 'EnhavoGridBundle:Video',
             'template' => 'EnhavoGridBundle:Item:video.html.twig',
             'label' => 'video.label.video',
-            'translationDomain' => 'EnhavoGridBundle'
+            'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'content']
         ]);
     }
 

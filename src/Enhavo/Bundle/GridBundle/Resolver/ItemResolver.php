@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\GridBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\AppBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\GridBundle\Factory\ItemFactory;
@@ -52,9 +53,23 @@ class ItemResolver implements ResolverInterface
         }
     }
 
-    public function resolveItemGroup($group)
+    /**
+     * @param string[] $groups
+     * @return ItemInterface[]
+     */
+    public function resolveItemGroup($groups = [])
     {
-        return array_values($this->items);
+        $items = [];
+        foreach($this->items as $item) {
+            foreach($groups as $group) {
+                if(in_array($group, $item->getGroups())) {
+                    if(!in_array($item, $items)) {
+                        $items[] = $item;
+                    }
+                }
+            }
+        }
+        return $items;
     }
 
     /**

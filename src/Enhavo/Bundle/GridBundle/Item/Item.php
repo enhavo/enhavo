@@ -76,4 +76,9 @@ class Item extends AbstractItem
     {
         return $this->getConfiguration()->getFormTemplate($this->options);
     }
+
+    public function getGroups()
+    {
+        return $this->getConfiguration()->getGroups($this->options);
+    }
 }

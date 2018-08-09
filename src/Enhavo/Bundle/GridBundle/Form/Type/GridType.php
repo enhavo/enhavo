@@ -21,7 +21,8 @@ class GridType extends AbstractType
     {
         $builder->add('items', ItemsType::class, [
             'entry_type' => ItemType::class,
-            'items' => null
+            'item_groups' => $options['item_groups'],
+            'items' => $options['items']
         ]);
     }
 
@@ -31,6 +32,8 @@ class GridType extends AbstractType
             'data_class' => Grid::class,
             'label' => 'grid.label.grid',
             'translation_domain' => 'EnhavoGridBundle',
+            'item_groups' => [],
+            'items' => []
         ));
     }
 

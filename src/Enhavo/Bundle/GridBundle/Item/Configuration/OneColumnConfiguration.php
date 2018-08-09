@@ -30,6 +30,7 @@ class OneColumnConfiguration extends AbstractConfiguration
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'one_column.label.one_column',
             'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'layout']
         ]);
     }
 

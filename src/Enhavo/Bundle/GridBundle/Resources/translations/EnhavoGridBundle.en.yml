@@ -82,6 +82,9 @@ video:
 column:
   label:
     column: 'Column'
+    column_one: 'Column one'
+    column_two: 'Column two'
+    column_three: 'Column three'
 one_column:
   label:
     one_column: 'One column'

@@ -30,6 +30,7 @@ class ThreeColumnConfiguration extends AbstractConfiguration
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'three_column.label.three_column',
             'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'layout']
         ]);
     }
 

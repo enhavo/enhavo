@@ -30,6 +30,7 @@ class CiteConfiguration extends AbstractConfiguration
             'template' => 'EnhavoGridBundle:Item:cite_text.html.twig',
             'label' =>  'citeText.label.citeText',
             'translationDomain' => 'EnhavoGridBundle',
+            'groups' => ['default', 'content']
         ]);
     }
 

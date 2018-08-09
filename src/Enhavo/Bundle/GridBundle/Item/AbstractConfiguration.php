@@ -59,6 +59,11 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['form_template'];
     }
 
+    public function getGroups($options)
+    {
+        return $options['groups'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -66,6 +71,7 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
             'parent' => null,
             'translationDomain' => null,
             'form_template' => 'EnhavoGridBundle:Form:item.html.twig',
+            'groups' => ['default']
         ]);
 
         $resolver->setRequired([
