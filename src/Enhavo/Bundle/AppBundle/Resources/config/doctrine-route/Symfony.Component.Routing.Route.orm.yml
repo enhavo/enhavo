@@ -1,0 +1,22 @@
+Symfony\Component\Routing\Route:
+    type: mappedSuperclass
+    fields:
+        host:
+            type: string
+            length: 255
+            nullable: true
+        schemes:
+            type: json_array
+            nullable: true
+        methods:
+            type: json_array
+            nullable: true
+        defaults:
+            type: json_array
+            nullable: true
+        requirements:
+            type: json_array
+            nullable: true
+        options:
+            type: json_array
+            nullable: true

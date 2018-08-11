@@ -3,12 +3,16 @@
 namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\KnpMenuCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\RouteContentCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
+use Doctrine\ORM\Mapping\Driver\YamlDriver;
+
 
 class EnhavoAppBundle extends Bundle
 {
@@ -59,6 +63,21 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new FilesystemCompilerPass()
+        );
+
+        $container->addCompilerPass($this->buildRouteCompilerPass());
+    }
+
+    private function buildRouteCompilerPass()
+    {
+        $arguments = array(array(realpath(__DIR__.'/Resources/config/doctrine-route')), '.orm.yml');
+        $locator = new Definition(DefaultFileLocator::class, $arguments);
+        $driver = new Definition(YamlDriver::class, array($locator));
+
+        return new DoctrineOrmMappingsPass(
+            $driver,
+            ['Symfony\Component\Routing'],
+            ['doctrine.default_entity_manager']
         );
     }
 }
