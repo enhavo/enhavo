@@ -3,12 +3,13 @@
 namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
 /**
  * Grid
  */
-class Grid implements GridInterface
+class Grid implements GridInterface, ItemAwareInterface
 {
     /**
      * @var integer

@@ -10,8 +10,10 @@ namespace Enhavo\Bundle\GridBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\GridBundle\Model\ItemAwareInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
-class Column
+class Column implements ItemAwareInterface
 {
     /**
      * @var integer
@@ -44,10 +46,10 @@ class Column
     /**
      * Add items
      *
-     * @param Item $item
+     * @param ItemInterface $item
      * @return Column
      */
-    public function addItem(Item $item)
+    public function addItem(ItemInterface $item)
     {
         $item->setColumn($this);
         $this->items[] = $item;
@@ -60,7 +62,7 @@ class Column
      *
      * @param Item $item
      */
-    public function removeItem(Item $item)
+    public function removeItem(ItemInterface $item)
     {
         $item->setColumn(null);
         $this->items->removeElement($item);
