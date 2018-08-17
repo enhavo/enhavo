@@ -6,11 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Route;
-
+namespace Enhavo\Bundle\AppBundle\Routing;
 
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 interface Routeable
 {
@@ -18,5 +16,10 @@ interface Routeable
      * @return RouteInterface
      */
     public function getRoute();
-    public function setRoute(RouteObjectInterface $route);
+
+    /**
+     * @param RouteInterface $route
+     * @return mixed
+     */
+    public function setRoute(RouteInterface $route);
 }

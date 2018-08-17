@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Route;
+namespace Enhavo\Bundle\AppBundle\Routing;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

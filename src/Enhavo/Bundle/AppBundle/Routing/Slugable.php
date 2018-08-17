@@ -6,14 +6,18 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Route;
-
-
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
-use Symfony\Component\Routing\RouterInterface;
+namespace Enhavo\Bundle\AppBundle\Routing;
 
 interface Slugable
 {
+    /**
+     * @return string
+     */
     public function getSlug();
+
+    /**
+     * @param string $slug
+     * @return void
+     */
     public function setSlug($slug);
 }

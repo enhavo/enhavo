@@ -12,5 +12,7 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 interface RouteInterface extends RouteObjectInterface
 {
+    public function getHost();
 
+    public function setHost($host);
 }

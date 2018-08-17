@@ -34,12 +34,12 @@ Enhavo\Bundle\AppBundle\Entity\Route:
             type: integer
             nullable: true
 
-        type:
+        contentClass:
             type: string
             length: 255
             nullable: true
 
-        typeId:
+        contentId:
             type: integer
             nullable: true
 

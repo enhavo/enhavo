@@ -1,18 +1,15 @@
 <?php
 /**
- * RouteGuesser.php
- *
- * @since 16/05/16
- * @author gseidel
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 12.08.18
+ * Time: 20:00
  */
 
-namespace Enhavo\Bundle\AppBundle\Route;
+namespace Enhavo\Bundle\AppBundle\Routing\Generator;
 
 
-use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-
-class RouteGuesser
+class GuessGenerator
 {
     public function guessUrl($model)
     {
@@ -40,7 +37,7 @@ class RouteGuesser
         return null;
     }
 
-    public function getContextProperties($model)
+    private function getContextProperties($model)
     {
         $possibleProperties = [];
         $checkProperties = [
@@ -60,7 +57,7 @@ class RouteGuesser
         return $possibleProperties;
     }
 
-    protected function slugify($context)
+    private function slugify($context)
     {
         $slugifier = new Slugifier();
         return sprintf('/%s', $slugifier->slugify($context));
