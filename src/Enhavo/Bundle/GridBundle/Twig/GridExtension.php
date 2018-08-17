@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\GridBundle\Twig;
 
 use Enhavo\Bundle\GridBundle\Entity\Column;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
+use Enhavo\Bundle\GridBundle\Model\Context;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -21,7 +22,8 @@ class GridExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('grid_render', array($this, 'render'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('grid_item_render', array($this, 'render'), array('is_safe' => array('html')))
+            new \Twig_SimpleFunction('grid_item_render', array($this, 'renderItem'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('grid_column_render', array($this, 'renderColumn'), array('is_safe' => array('html')))
         );
     }
 
@@ -34,18 +36,24 @@ class GridExtension extends \Twig_Extension
     }
 
 
-    public function renderItem(ItemInterface $item = null, $template = null)
+    public function renderItem(ItemInterface $item = null, Context $context = null, $template = null)
     {
         if($item) {
-            return $this->container->get('enhavo_grid.renderer.grid_renderer')->renderItem($item, $template);
+            if($context === null) {
+                $context = new Context();
+            }
+            return $this->container->get('enhavo_grid.renderer.grid_renderer')->renderItem($item, $context, $template);
         }
         return '';
     }
 
-    public function renderColumn(Column $column = null, $set = null, $onlyRenderTypes = null)
+    public function renderColumn(Column $column = null, Context $context = null, $set = null, $onlyRenderTypes = null)
     {
         if($column) {
-            return $this->container->get('enhavo_grid.renderer.grid_renderer')->renderColumn($column, $set, $onlyRenderTypes);
+            if($context === null) {
+                $context = new Context();
+            }
+            return $this->container->get('enhavo_grid.renderer.grid_renderer')->renderColumn($column, $context, $set, $onlyRenderTypes);
         }
         return '';
     }
