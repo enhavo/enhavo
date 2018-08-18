@@ -1,0 +1,2 @@
+# EnhavoDoctrineExtensionBundle
+[READ-ONLY] EnhavoDoctrineExtensionBundle
