@@ -1,7 +1,0 @@
-services:
-    enhavo_app.listener.routeable_listener:
-        class: Enhavo\Bundle\AppBundle\EventListener\RouteableListener
-        arguments:
-            - '@enhavo_app.routing.route_manager'
-        tags:
-            - { name: kernel.event_subscriber }

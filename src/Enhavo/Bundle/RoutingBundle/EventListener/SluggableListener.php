@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Slugifier;
+namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
-use \Gedmo\Sluggable\SluggableListener as GedmoSluggableListener;
+use Gedmo\Sluggable\SluggableListener as GedmoSluggableListener;
 
 class SluggableListener extends GedmoSluggableListener
 {

@@ -6,9 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
-
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+namespace Enhavo\Bundle\RoutingBundle\Model;
 
 interface Routeable
 {

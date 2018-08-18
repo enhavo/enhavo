@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
+namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

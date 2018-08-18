@@ -1,0 +1,3 @@
+services:
+    enhavo_routing.router:
+        class: Enhavo\Bundle\RoutingBundle\Router\Router

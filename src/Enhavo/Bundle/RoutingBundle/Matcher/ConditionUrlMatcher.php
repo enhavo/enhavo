@@ -6,7 +6,7 @@
  * Time: 00:30
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing\Matcher;
+namespace Enhavo\Bundle\RoutingBundle\Matcher;
 
 use Enhavo\Bundle\AppBundle\Routing\ConditionResolverInterface;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;

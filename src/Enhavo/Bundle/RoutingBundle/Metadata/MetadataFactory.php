@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Routing\Metadata;
+namespace Enhavo\Bundle\RoutingBundle\Metadata;
 
 use Enhavo\Bundle\AppBundle\Metadata\MetadataFactoryInterface;
 

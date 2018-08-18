@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
+namespace Enhavo\Bundle\RoutingBundle\Manager;
 
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 

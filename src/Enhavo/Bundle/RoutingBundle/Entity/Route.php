@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Entity;
+namespace Enhavo\Bundle\RoutingBundle\Entity;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route as RouteModel;
 
 class Route extends RouteModel implements RouteInterface

@@ -1,0 +1,22 @@
+services:
+    enhavo_routing.metadata.configuration:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
+        arguments:
+            - '%enhavo_app.route.auto_generator%'
+
+    enhavo_routing.metadata.metadata_factory:
+        class: Enhavo\Bundle\RoutingBundle\Metadata\MetadataFactory
+        arguments:
+            - '@kernel'
+
+    enhavo_routing.metadata.generator_parser:
+        class: Enhavo\Bundle\RoutingBundle\Metadata\GeneratorParser
+
+    enhavo_routing.metadata.repository:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
+        arguments:
+            - '@enhavo_app.routing.metadata.configuration'
+            - '@enhavo_app.routing.metadata.metadata_factory'
+        calls:
+            - [addParser, ['@enhavo_app.routing.metadata.generator_parser']]
+

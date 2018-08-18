@@ -23,6 +23,11 @@ class EnhavoRoutingExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services/cfm.yml');
+        $loader->load('services/form.yml');
+        $loader->load('services/general.yml');
+        $loader->load('services/generator.yml');
+        $loader->load('services/metadata.yml');
+        $loader->load('services/router.yml');
     }
 }

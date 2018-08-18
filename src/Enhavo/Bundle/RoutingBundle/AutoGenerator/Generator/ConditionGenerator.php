@@ -6,10 +6,11 @@
  * Time: 19:50
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing\Generator;
+namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Enhavo\Bundle\AppBundle\Routing\AbstractGenerator;
+
+use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConditionGenerator extends AbstractGenerator

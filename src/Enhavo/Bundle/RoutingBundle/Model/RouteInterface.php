@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Model;
+namespace Enhavo\Bundle\RoutingBundle\Model;
 
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 

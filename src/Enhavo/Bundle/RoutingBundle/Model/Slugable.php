@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
+namespace Enhavo\Bundle\RoutingBundle\Model;
 
 interface Slugable
 {

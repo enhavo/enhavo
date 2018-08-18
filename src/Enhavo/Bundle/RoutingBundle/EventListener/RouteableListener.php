@@ -6,10 +6,10 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\EventListener;
+namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
-use Enhavo\Bundle\AppBundle\Routing\RouteManager;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -6,7 +6,7 @@
  * Time: 00:47
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
+namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

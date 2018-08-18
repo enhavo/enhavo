@@ -6,7 +6,7 @@
  * Time: 01:12
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing;
+namespace Enhavo\Bundle\RoutingBundle\Condition;
 
 
 interface ConditionResolverInterface

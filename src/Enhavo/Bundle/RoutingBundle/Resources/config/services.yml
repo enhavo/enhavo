@@ -1,4 +1,0 @@
-services:
-#    enhavo_routing.example:
-#        class: Enhavo\Bundle\RoutingBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -6,16 +6,14 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\AppBundle\Form\Type;
+namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Validator\Constraints\Route as RouteConstraint;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 class RouteType extends AbstractType
 {

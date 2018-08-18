@@ -6,7 +6,7 @@
  * Time: 14:31
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing\Metadata;
+namespace Enhavo\Bundle\RoutingBundle\Metadata;
 
 use Enhavo\Bundle\AppBundle\Metadata\ParserInterface;
 

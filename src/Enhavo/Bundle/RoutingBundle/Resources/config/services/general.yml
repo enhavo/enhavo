@@ -1,0 +1,23 @@
+services:
+    enhavo_routing.manager.route:
+        class: Enhavo\Bundle\RoutingBundle\Manager\RouteManager
+        arguments:
+            - '@enhavo_app.routing.auto_generator'
+
+    enhavo_routung.listener.routeable_listener:
+        class: Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener
+        arguments:
+            - '@enhavo_app.routing.route_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    enhavo_app.event_listener.route_reference:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
+        arguments:
+          - 'Enhavo\Bundle\AppBundle\Entity\Route'
+          - 'content'
+          - 'contentClass'
+          - 'contentId'
+          - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }

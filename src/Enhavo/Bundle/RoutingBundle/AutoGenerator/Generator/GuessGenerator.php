@@ -6,12 +6,12 @@
  * Time: 20:00
  */
 
-namespace Enhavo\Bundle\AppBundle\Routing\Generator;
+namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Enhavo\Bundle\AppBundle\Routing\AbstractGenerator;
-use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GuessGenerator extends AbstractGenerator
