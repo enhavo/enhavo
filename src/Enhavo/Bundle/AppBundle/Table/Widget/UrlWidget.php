@@ -7,7 +7,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
+use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
 
 class UrlWidget extends AbstractTableWidget

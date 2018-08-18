@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
+use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 
 class UrlResolver extends \Twig_Extension
 {

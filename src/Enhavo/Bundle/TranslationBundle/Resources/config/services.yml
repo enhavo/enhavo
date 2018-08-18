@@ -36,25 +36,25 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
 
-    enhavo_translation.strategy.route_translation:
-        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
-        arguments:
-            - '%enhavo_translation.locales%'
-            - '@enhavo_translation.locale_resolver'
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_app.route_guesser'
-        calls:
-            - [ setContainer, ['@service_container']]
+#    enhavo_translation.strategy.route_translation:
+#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
+#        arguments:
+#            - '%enhavo_translation.locales%'
+#            - '@enhavo_translation.locale_resolver'
+#            - '@doctrine.orm.entity_manager'
+#            - '@enhavo_app.route_guesser'
+#        calls:
+#            - [ setContainer, ['@service_container']]
 
-    enhavo_translation.strategy.slug_translation:
-        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
-        arguments:
-            - '%enhavo_translation.locales%'
-            - '@enhavo_translation.locale_resolver'
-            - '@doctrine.orm.entity_manager'
-            - '@enhavo_app.route_guesser'
-        calls:
-            - [ setContainer, ['@service_container']]
+#    enhavo_translation.strategy.slug_translation:
+#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
+#        arguments:
+#            - '%enhavo_translation.locales%'
+#            - '@enhavo_translation.locale_resolver'
+#            - '@doctrine.orm.entity_manager'
+#            - '@enhavo_app.route_guesser'
+#        calls:
+#            - [ setContainer, ['@service_container']]
 
     enhavo_translation.doctrine_subscriber:
         class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslatorSubscriber
@@ -136,11 +136,11 @@ services:
         calls:
             - [ setContainer, ['@service_container']]
 
-    enhavo_translation.translation_route_manager:
-        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
-        arguments:
-            - '@enhavo_app.route_manager'
-            - '@doctrine.orm.entity_manager'
+#    enhavo_translation.translation_route_manager:
+#        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
+#        arguments:
+#            - '@enhavo_app.route_manager'
+#            - '@doctrine.orm.entity_manager'
 
     enhavo_translation.translate_string.translator:
         class: Enhavo\Bundle\TranslationBundle\TranslationString\TranslateStringTranslator

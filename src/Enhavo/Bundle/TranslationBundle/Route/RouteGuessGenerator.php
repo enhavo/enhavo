@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 

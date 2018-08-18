@@ -8,13 +8,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Exception\UrlResolverException;
-use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
-use Enhavo\Bundle\AppBundle\Route\Routing;
-use Enhavo\Bundle\AppBundle\Route\Slugable;
-use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Routing;
+use Enhavo\Bundle\AppBundle\Routing\Slugable;
+use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -90,31 +88,13 @@ class RoutingType extends AbstractType
                 }
             }
         });
-
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
-            if ($options['routing_strategy'] === Routing::STRATEGY_ROUTE) {
-                $data = $event->getData();
-                if($data instanceof Routeable) {
-                    $route = $data->getRoute();
-                    if($route instanceof Route && empty($route->getStaticPrefix())) {
-                        /** @var GeneratorInterface $generator */
-                        $generator = $this->container->get($options['routing_generator']);
-                        $url = $generator->generate($data);
-                        if($url !== null) {
-                            $route->setStaticPrefix($url);
-                        }
-                    }
-                }
-            }
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'routing_strategy' => null,
-            'routing_route' => null,
-            'routing_generator' => 'enhavo_app.route_guess_generator'
+            'routing_route' => null
         ));
     }
 

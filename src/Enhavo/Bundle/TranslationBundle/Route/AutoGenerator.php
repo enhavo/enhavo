@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
-use Enhavo\Bundle\AppBundle\Route\AutoGenerator as AppAutoGenerator;
-use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\AutoGenerator as AppAutoGenerator;
+use Enhavo\Bundle\AppBundle\Routing\GeneratorInterface;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 
 class AutoGenerator extends AppAutoGenerator

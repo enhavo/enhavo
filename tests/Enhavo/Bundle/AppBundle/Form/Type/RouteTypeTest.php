@@ -2,9 +2,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\RouteType;
-use Enhavo\Bundle\AppBundle\Mock\EntityMock;
-use Enhavo\Bundle\AppBundle\Mock\ParentRouteTypeMock;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 
@@ -21,27 +18,6 @@ class RouteTypeTest extends TypeTestCase
         $route = $form->getData();
 
         $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Entity\Route', $route);
-        $this->assertEquals('/hello', $route->getStaticPrefix());
-    }
-
-    public function testSetContent()
-    {
-        $formType = new ParentRouteTypeMock();
-        $form = $this->factory->create($formType);
-
-        $form->setData(new EntityMock());
-
-        $form->submit(['route' => [
-            'staticPrefix' => '/hello'
-        ]]);
-
-        $data = $form->getData();
-        /** @var Route $route */
-        $route = $data->getRoute();
-
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Entity\Route', $route);
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Mock\EntityMock', $route->getContent());
-        $this->assertTrue($data === $route->getContent());
         $this->assertEquals('/hello', $route->getStaticPrefix());
     }
 }

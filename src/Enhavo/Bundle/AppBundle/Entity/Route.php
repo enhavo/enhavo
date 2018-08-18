@@ -16,42 +16,42 @@ class Route extends RouteModel implements RouteInterface
     /**
      * @var string
      */
-    protected $type;
+    private $contentClass;
 
     /**
      * @var int
      */
-    protected $typeId;
-    
+    private $contentId;
+
     /**
-     * @return mixed
+     * @return string
      */
-    public function getType()
+    public function getContentClass()
     {
-        return $this->type;
+        return $this->contentClass;
     }
 
     /**
-     * @param mixed $type
+     * @param string $contentClass
      */
-    public function setType($type)
+    public function setContentClass($contentClass)
     {
-        $this->type = $type;
+        $this->contentClass = $contentClass;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getTypeId()
+    public function getContentId()
     {
-        return $this->typeId;
+        return $this->contentId;
     }
 
     /**
-     * @param mixed $typeId
+     * @param int $contentId
      */
-    public function setTypeId($typeId)
+    public function setContentId($contentId)
     {
-        $this->typeId = $typeId;
+        $this->contentId = $contentId;
     }
 }
