@@ -1,65 +1,30 @@
-parameters:
-    cmf_routing.route_entity.class: Enhavo\Bundle\AppBundle\Entity\Route
-    cmf_routing.orm_candidates.class: Symfony\Cmf\Component\Routing\Candidates\Candidates
-    cmf_routing.route_entity_provider: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
-    enhavo_app.doctrine_route_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteSubscriber
-    enhavo_app.doctrine_routeable_subscriber.class: Enhavo\Bundle\AppBundle\EventListener\DoctrineRouteableSubscriber
-    enhavo_app.form.route.class: Enhavo\Bundle\AppBundle\Form\Type\RouteType
-
 services:
     enhavo_app.orm_candidates:
-        class: '%cmf_routing.orm_candidates.class%'
+        class: Symfony\Cmf\Component\Routing\Candidates\Candidates
         arguments:
             - '%cmf_routing.dynamic.locales%'
             - '%cmf_routing.dynamic.limit_candidates%'
 
     enhavo_app.route_provider:
-        class: '%cmf_routing.route_entity_provider%'
+        class: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
         arguments:
             - '@doctrine'
             - '@enhavo_app.orm_candidates'
-            - '%cmf_routing.route_entity.class%'
+            - 'Enhavo\Bundle\AppBundle\Entity\Route'
         calls:
             - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]
 
-    enhavo_app.route_content_collector:
-        class: Enhavo\Bundle\AppBundle\Route\RouteContentCollector
-
-    enhavo_app.route_content_resolver:
-        class: Enhavo\Bundle\AppBundle\Route\RouteContentResolver
+    enhavo_app.routing.route_manager:
+        class: Enhavo\Bundle\AppBundle\Routing\RouteManager
         arguments:
-            - '@enhavo_app.route_content_collector'
-            - '@service_container'
+            - '@enhavo_app.routing.auto_generator'
 
-    enhavo_app.doctrine_route_subscriber:
-        class: '%enhavo_app.doctrine_route_subscriber.class%'
+    enhavo_app.listener.routeable_listener:
+        class: Enhavo\Bundle\AppBundle\EventListener\RouteableListener
         arguments:
-            - '@enhavo_app.route_content_resolver'
+            - '@enhavo_app.routing.route_manager'
         tags:
-            - { name: doctrine.event_subscriber, connection: default, priority: 100 }
-
-    enhavo_app.doctrine_routeable_subscriber:
-        class: '%enhavo_app.doctrine_routeable_subscriber.class%'
-        arguments:
-            - '@enhavo_app.route_manager'
-            - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onCreate }
-            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onUpdate }
-
-    enhavo_app.auto_route_generator_listener:
-        class: Enhavo\Bundle\AppBundle\EventListener\AutoRouteGeneratorListener
-        arguments:
-          - '@enhavo_app.route.auto_generator'
-          - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
-
-    enhavo_app.form.route:
-        class: '%enhavo_app.form.route.class%'
-        tags:
-            - { name: form.type, alias: 'enhavo_route' }
+            - { name: kernel.event_subscriber }
 
     enhavo_app.validator.unique_url:
         class: Enhavo\Bundle\AppBundle\Validator\Constraints\RouteValidator
@@ -68,8 +33,19 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: route }
 
-    enhavo_app.route_guesser:
-        class: Enhavo\Bundle\AppBundle\Route\RouteGuesser
+    enhavo_app.routing.auto_generator:
+        class: Enhavo\Bundle\AppBundle\Routing\AutoGenerator
+        arguments:
+            - '@enhavo_app.route_generator_collector'
+            - '@enhavo_app.routing.metadata.repository'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_app.route_generator_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'RouteGenerator'
 
     enhavo_routing:
         class: Enhavo\Bundle\AppBundle\Form\Type\RoutingType
@@ -85,22 +61,60 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_app.route_manager:
-        class: Enhavo\Bundle\AppBundle\Route\RouteManager
-        arguments:
-            - '@enhavo_app.route_content_resolver'
-            - '@doctrine.orm.entity_manager'
+    enhavo_app.form.route:
+        class: Enhavo\Bundle\AppBundle\Form\Type\RouteType
+        tags:
+            - { name: form.type, alias: 'enhavo_route' }
 
-    enhavo_app.route_guess_generator:
-        class: Enhavo\Bundle\AppBundle\Route\RouteGuessGenerator
-        arguments:
-            - '@enhavo_app.route_guesser'
-
-    enhavo_app.route.auto_generator:
-        class: Enhavo\Bundle\AppBundle\Route\AutoGenerator
+    enhavo_app.routing.metadata.configuration:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
         arguments:
             - '%enhavo_app.route.auto_generator%'
-            - '@enhavo_app.route_manager'
-            - '@doctrine.orm.entity_manager'
+
+    enhavo_app.routing.metadata.metadata_factory:
+        class: Enhavo\Bundle\AppBundle\Routing\Metadata\MetadataFactory
+        arguments:
+            - '@kernel'
+
+    enhavo_app.routing.metadata.generator_parser:
+        class: Enhavo\Bundle\AppBundle\Routing\Metadata\GeneratorParser
+
+    enhavo_app.routing.metadata.repository:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
+        arguments:
+            - '@enhavo_app.routing.metadata.configuration'
+            - '@enhavo_app.routing.metadata.metadata_factory'
+        calls:
+            - [addParser, ['@enhavo_app.routing.metadata.generator_parser']]
+
+    enhavo_app.routing.generator.property:
+        class: Enhavo\Bundle\AppBundle\Routing\Generator\PropertyGenerator
         calls:
             - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo.route_generator', alias: 'property' }
+
+    enhavo_app.routing.generator.condition:
+        class: Enhavo\Bundle\AppBundle\Routing\Generator\ConditionGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo.route_generator', alias: 'condition' }
+
+    enhavo_app.routing.generator.guess:
+        class: Enhavo\Bundle\AppBundle\Routing\Generator\PropertyGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo.route_generator', alias: 'guess' }
+
+    enhavo_app.event_listener.route_reference:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
+        arguments:
+          - 'Enhavo\Bundle\AppBundle\Entity\Route'
+          - 'content'
+          - 'contentClass'
+          - 'contentId'
+          - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }

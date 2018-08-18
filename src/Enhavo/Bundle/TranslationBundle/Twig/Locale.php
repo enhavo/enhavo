@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class Locale extends \Twig_Extension

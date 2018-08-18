@@ -9,13 +9,13 @@
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
 use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;
 use Sylius\Component\Taxation\Model\TaxRateInterface;
 use Sylius\Component\Shipping\Model\ShippingCategoryInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 class Product extends SyliusProduct implements ProductInterface, Routeable
 {
@@ -355,7 +355,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         return $this->route;
     }
 
-    public function setRoute(RouteObjectInterface $route)
+    public function setRoute(RouteInterface $route)
     {
         $this->route = $route;
     }

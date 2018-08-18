@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
-use Enhavo\Bundle\AppBundle\Route\GeneratorInterface;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\GeneratorInterface;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 
 interface LocaleGenerator extends GeneratorInterface
 {

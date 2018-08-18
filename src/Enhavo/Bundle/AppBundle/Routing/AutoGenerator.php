@@ -8,9 +8,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Routing;
 
+use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\AppBundle\Routing\Metadata\Metadata;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoGenerator
 {
@@ -22,25 +25,27 @@ class AutoGenerator
     protected $collector;
 
     /**
-     * @var array
+     * @var MetadataRepository
      */
-    private $autoGeneratorConfig;
+    private $metadataRepository;
 
-    public function __construct(CollectorInterface $collector, $autoGeneratorConfig)
+    public function __construct(CollectorInterface $collector, MetadataRepository $metadataRepository)
     {
         $this->collector = $collector;
-        $this->autoGeneratorConfig = $autoGeneratorConfig;
+        $this->metadataRepository = $metadataRepository;
     }
 
-    public function generate(RouteInterface $route, $type, $options = [])
+    public function generate(RouteInterface $route)
     {
-        if($type === null) {
-
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($route->getContent());
+        foreach($metadata->getGenerators() as $generatorConfig) {
+            /** @var GeneratorInterface $generator */
+            $generator = $this->collector->getType($generatorConfig->getType());
+            $optionsResolver = new OptionsResolver();
+            $generator->configureOptions($optionsResolver);
+            $options = $optionsResolver->resolve($generatorConfig->getOptions());
+            $generator->generate($route, $options);
         }
-
-
-        /** @var GeneratorInterface $type */
-        $type = $this->collector->getType($type);
-        $type->generate($route, $options);
     }
 }

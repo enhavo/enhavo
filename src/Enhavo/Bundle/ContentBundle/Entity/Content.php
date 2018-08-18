@@ -10,8 +10,8 @@
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
-use Enhavo\Bundle\AppBundle\Route\Slugable;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
@@ -303,7 +303,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * @param bool $noIndex
      */
-    public function setNoIndex(bool $noIndex)
+    public function setNoIndex($noIndex)
     {
         $this->noIndex = $noIndex;
     }
@@ -319,7 +319,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * @param bool $noFollow
      */
-    public function setNoFollow(bool $noFollow)
+    public function setNoFollow($noFollow)
     {
         $this->noFollow = $noFollow;
     }
@@ -333,12 +333,14 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     }
 
     /**
-     * @param RouteObjectInterface $route
+     * @param RouteInterface $route
+     * @return void
      */
-    public function setRoute(RouteObjectInterface $route)
+    public function setRoute(RouteInterface $route)
     {
         $this->route = $route;
     }
+
     /**
      * @var string
      */

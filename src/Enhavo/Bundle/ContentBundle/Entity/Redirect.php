@@ -5,7 +5,6 @@ namespace Enhavo\Bundle\ContentBundle\Entity;
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Redirect
@@ -96,14 +95,12 @@ class Redirect implements RedirectInterface, ResourceInterface
     /**
      * Set route
      *
-     * @param RouteObjectInterface $route
-     * @return Redirect
+     * @param RouteInterface $route
+     * @return void
      */
-    public function setRoute(RouteObjectInterface $route = null)
+    public function setRoute(RouteInterface $route = null)
     {
         $this->route = $route;
-
-        return $this;
     }
 
     /**

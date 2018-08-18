@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 
-use Enhavo\Bundle\AppBundle\Route\UrlResolverInterface;
+use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;

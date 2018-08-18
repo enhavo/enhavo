@@ -8,30 +8,31 @@
 
 namespace Enhavo\Bundle\AppBundle\Routing\Generator;
 
+
 use Enhavo\Bundle\AppBundle\Model\RouteInterface;
 use Enhavo\Bundle\AppBundle\Routing\AbstractGenerator;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConditionGenerator extends AbstractGenerator
+class PropertyGenerator extends AbstractGenerator
 {
     public function generate(RouteInterface $route, $options)
     {
-        if($options['resolve_property']) {
-
+        $value = $this->getProperty($route->getContent(), $options['property']);
+        if($value !== null) {
+            $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify($value)));
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'resolve_property' => null,
-            'condition' => 'resolver.resolve() == "%s"'
-        ]);
+        $resolver->setDefaults([]);
+        $resolver->setRequired(['property']);
     }
 
     public function getType()
     {
-        return 'condition';
+        return 'property';
     }
 }

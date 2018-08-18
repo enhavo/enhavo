@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\InstallerBundle\Fixtures;
 
 use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 use Enhavo\Bundle\GridBundle\Entity\PictureItem;
@@ -69,8 +69,6 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         }
 
         $this->manager->flush();
-
-        $this->postLoad($items);
     }
 
     /**
@@ -202,38 +200,6 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         $route->setContent($content);
         $this->translate($route);
         return $route;
-    }
-
-    protected function postLoad($items)
-    {
-        $resolver = $this->container->get('enhavo_app.route_content_resolver');
-
-        foreach($items as $item) {
-            if($item instanceof Routeable && $item->getRoute()) {
-                /** @var Route $route */
-                $route = $item->getRoute();
-                $route->setType($resolver->getType($item));
-                $route->setTypeId($item->getId());
-                $route->setName(sprintf('dynamic_route_%s', $route->getId()));
-            }
-
-            $this->index($item);
-        }
-
-        $this->reindex();
-
-        $this->manager->flush();
-        $this->container->get('enhavo_translation.translator')->postFlush();
-    }
-
-    protected function index($item)
-    {
-        $this->container->get('enhavo_search_index_engine')->index($item);
-    }
-
-    protected function reindex()
-    {
-        $this->container->get('enhavo_search_index_engine')->reindex();
     }
 
     protected function translate($entity)

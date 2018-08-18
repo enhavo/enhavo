@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Model;
 
-use Enhavo\Bundle\AppBundle\Route\Routeable;
+use Enhavo\Bundle\AppBundle\Routing\Routeable;
 
 interface RedirectInterface extends Routeable
 {

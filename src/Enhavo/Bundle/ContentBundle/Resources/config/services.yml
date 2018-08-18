@@ -73,7 +73,7 @@ services:
     enhavo_content.redirect.redirect_manager:
         class: Enhavo\Bundle\ContentBundle\Redirect\RedirectManager
         arguments:
-            - '@enhavo_app.route_manager'
+            - '@enhavo_app.routing.route_manager'
 
     enhavo_content.event_listener.redirect_subscriber:
         class: Enhavo\Bundle\ContentBundle\EventListener\RedirectSubscriber

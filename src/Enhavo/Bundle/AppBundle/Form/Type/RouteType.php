@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 use Enhavo\Bundle\AppBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Validator\Constraints\Route as RouteConstraint;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -23,19 +24,7 @@ class RouteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('staticPrefix', 'text');
-
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $data = $event->getData();
-            $form = $event->getForm();
-
-            if($data instanceof Route) {
-                if($form->getParent() && $form->getParent()->getData()) {
-                    $dataClass = $form->getParent()->getData();
-                    $data->setContent($dataClass);
-                }
-            }
-        });
+        $builder->add('staticPrefix', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -8,58 +8,65 @@
 
 namespace Enhavo\Bundle\AppBundle\Routing\Generator;
 
+use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\AppBundle\Routing\AbstractGenerator;
+use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GuessGenerator
+class GuessGenerator extends AbstractGenerator
 {
-    public function guessUrl($model)
+    public function generate(RouteInterface $route, $options)
     {
-        $context = $this->guessContext($model);
-        if($context !== null) {
-            return $this->slugify($context);
+        $value = $this->guessProperties($route->getContent(), $options);
+        if($value !== null) {
+            $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify($value)));
         }
-        return $context;
     }
 
-    public function guessContext($model)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $guesses = [];
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $properties = $this->getContextProperties($model);
-        foreach($properties as $property) {
-            $guesses[] = $accessor->getValue($model, $property);
-        }
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'properties' => [
+                'title',
+                'name',
+                'headline',
+                'slug'
+            ]
+        ]);
+    }
 
-        foreach($guesses as $guess) {
-            if(!empty($guess)) {
-                return $guess;
+    public function getType()
+    {
+        return 'guess';
+    }
+
+    private function guessProperties($model, $options)
+    {
+        $properties = $this->getContextProperties($model, $options);
+        foreach($properties as $property) {
+            $value = $this->getProperty($model, $property);
+            if($value !== null) {
+                return $value;
             }
         }
         return null;
     }
 
-    private function getContextProperties($model)
+    private function getContextProperties($model, $options)
     {
         $possibleProperties = [];
-        $checkProperties = [
-            'title',
-            'name',
-            'headline',
-            'slug'
-        ];
 
-        foreach($checkProperties as $property) {
-            $method = sprintf('get%s', ucfirst($property));
-            if(method_exists($model, $method)) {
+        foreach($options['properties'] as $property) {
+            try {
+                $this->getProperty($model, $property);
                 $possibleProperties[] = $property;
+            } catch (PropertyNotExistsException $e) {
+                continue;
             }
         }
 
         return $possibleProperties;
-    }
-
-    private function slugify($context)
-    {
-        $slugifier = new Slugifier();
-        return sprintf('/%s', $slugifier->slugify($context));
     }
 }

@@ -45,24 +45,24 @@ class RouteCompilerPass implements CompilerPassInterface
 
     protected function overwriteRouteGuesser(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('enhavo_app.route_guesser');
-        $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuesser');
+//        $definition = $container->getDefinition('enhavo_app.route_guesser');
+//        $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuesser');
     }
 
     protected function overwriteAutoGenerator(ContainerBuilder $container)
     {
-        if($container->getParameter('enhavo_translation.translate')) {
-            $definition = $container->getDefinition('enhavo_app.route.auto_generator');
-            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\AutoGenerator');
-        }
+//        if($container->getParameter('enhavo_translation.translate')) {
+//            $definition = $container->getDefinition('enhavo_app.route.auto_generator');
+//            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\AutoGenerator');
+//        }
     }
 
     protected function overwriteRouteGuessGenerator(ContainerBuilder $container)
     {
-        if($container->getParameter('enhavo_translation.translate')) {
-            $definition = $container->getDefinition('enhavo_app.route_guess_generator');
-            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuessGenerator');
-            $definition->addArgument($container->getDefinition('enhavo_translation.translator'));
-        }
+//        if($container->getParameter('enhavo_translation.translate')) {
+//            $definition = $container->getDefinition('enhavo_app.route_guess_generator');
+//            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuessGenerator');
+//            $definition->addArgument($container->getDefinition('enhavo_translation.translator'));
+//        }
     }
 }

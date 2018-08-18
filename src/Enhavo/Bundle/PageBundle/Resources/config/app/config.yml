@@ -15,6 +15,13 @@ enhavo_app:
                 model: enhavo_page.page
                 strategy: id
                 route: enhavo_page_page_update
+        auto_generator:
+            Enhavo\Bundle\PageBundle\Entity\Page:
+                generators:
+                    property:
+                        type: property
+                        property: title
+
     roles:
         page_index:
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX

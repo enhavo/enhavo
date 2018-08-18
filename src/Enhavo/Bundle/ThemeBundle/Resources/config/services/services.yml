@@ -12,7 +12,7 @@ services:
             - '%enhavo_theme.boxes%'
 
     enhavo_theme.url_resolver:
-        class: Enhavo\Bundle\AppBundle\Route\UrlResolver
+        class: Enhavo\Bundle\AppBundle\Routing\UrlResolver
         arguments:
           - '@router'
           - '%sylius.resources%'

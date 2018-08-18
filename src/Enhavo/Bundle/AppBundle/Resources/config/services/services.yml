@@ -46,7 +46,7 @@ services:
             - { name: security.voter }
 
     enhavo_app.url_resolver:
-        class: Enhavo\Bundle\AppBundle\Route\UrlResolver
+        class: Enhavo\Bundle\AppBundle\Routing\UrlResolver
         arguments:
           - '@router'
           - '%sylius.resources%'

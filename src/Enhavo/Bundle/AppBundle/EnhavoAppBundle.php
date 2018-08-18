@@ -58,6 +58,10 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.route_generator_collector', 'enhavo.route_generator')
+        );
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
 
