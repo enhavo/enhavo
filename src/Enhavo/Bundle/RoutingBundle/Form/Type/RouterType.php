@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class RoutingType extends AbstractType
+class RouterType extends AbstractType
 {
     use ContainerAwareTrait;
 
