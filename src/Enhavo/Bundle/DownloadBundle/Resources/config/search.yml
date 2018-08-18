@@ -1,5 +1,0 @@
-Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
-    properties:
-        title:
-            type: text
-            weight: 5

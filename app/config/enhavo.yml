@@ -13,8 +13,6 @@ enhavo_app:
             type: page
         category:
             type: category
-        download:
-            type: download
         slider:
             type: slider
         newsletter:

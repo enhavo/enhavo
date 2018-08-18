@@ -61,10 +61,6 @@ enhavo_page:
     resource: "@EnhavoPageBundle/Resources/config/routing/page.yml"
     prefix: /admin
 
-enhavo_download:
-    resource: "@EnhavoDownloadBundle/Resources/config/routing/download.yml"
-    prefix: /admin
-
 enhavo_slide:
     resource: "@EnhavoSliderBundle/Resources/config/routing/slide.yml"
     prefix: /admin

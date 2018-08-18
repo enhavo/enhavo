@@ -1,8 +1,0 @@
-Enhavo\Bundle\DownloadBundle\Entity\Download:
-    properties:
-        title:
-        text:
-
-Enhavo\Bundle\DownloadBundle\Entity\DownloadItem:
-    properties:
-        title:
