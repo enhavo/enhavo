@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Matcher;
 
-use Enhavo\Bundle\AppBundle\Routing\ConditionResolverInterface;
+use Enhavo\Bundle\RoutingBundle\Condition\ConditionResolverInterface;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
