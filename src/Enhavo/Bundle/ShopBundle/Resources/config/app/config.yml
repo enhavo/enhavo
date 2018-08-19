@@ -152,13 +152,19 @@ enhavo_shop:
             sender_name: '%mailer_name%'
             to: '%mailer_to%'
 
-enhavo_theme:
-    route:
-        url_resolver:
-            product:
-                model: sylius.product
-                strategy: route
-                route: ~
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\ShopBundle\Entity\Product:
+            router:
+                default:
+                    type: route
+                admin:
+                    type: id
+                    route: enhavo_shop_product_update
+            generators:
+                prefix:
+                    type: prefix
+                    property: title
 
 jms_serializer:
     metadata:

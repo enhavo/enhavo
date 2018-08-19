@@ -33,7 +33,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         arguments:
-            - '@enhavo_theme.url_resolver'
+            - '@enhavo_routing.router'
         tags:
             - { name: enhavo.sitemap_collector, alias: repository }
 
@@ -42,7 +42,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         arguments:
-            - '@enhavo_theme.url_resolver'
+            - '@enhavo_routing.router'
         tags:
             - { name: enhavo.sitemap_collector, alias: publish }
 
@@ -73,7 +73,7 @@ services:
     enhavo_content.redirect.redirect_manager:
         class: Enhavo\Bundle\ContentBundle\Redirect\RedirectManager
         arguments:
-            - '@enhavo_app.routing.route_manager'
+            - '@enhavo_routing.manager.route'
 
     enhavo_content.event_listener.redirect_subscriber:
         class: Enhavo\Bundle\ContentBundle\EventListener\RedirectSubscriber

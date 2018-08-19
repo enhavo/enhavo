@@ -1,0 +1,40 @@
+services:
+    enhavo_routing.router:
+        class: Enhavo\Bundle\RoutingBundle\Router\Router
+        arguments:
+            - '@enhavo_routing.router.strategy_collector'
+            - '@enhavo_routing.metadata.repository'
+
+    enhavo_routing.router.strategy_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'RouterStrategy'
+
+    enhavo_routing.router_strategy.id:
+        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'id' }
+
+    enhavo_routing.router_strategy.slug:
+        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'slug' }
+
+    enhavo_routing.router_strategy.slug_id:
+        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'slug_id' }
+
+    enhavo_routing.router_strategy.route:
+        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\RouteStrategy
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'route' }

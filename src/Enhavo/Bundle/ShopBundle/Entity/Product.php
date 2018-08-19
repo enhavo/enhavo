@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Product\Model\Product as SyliusProduct;

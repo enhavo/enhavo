@@ -1,0 +1,15 @@
+services:
+    enhavo_app.orm_candidates:
+        class: Symfony\Cmf\Component\Routing\Candidates\Candidates
+        arguments:
+            - '%cmf_routing.dynamic.locales%'
+            - '%cmf_routing.dynamic.limit_candidates%'
+
+    enhavo_app.route_provider:
+        class: Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteProvider
+        arguments:
+            - '@doctrine'
+            - '@enhavo_app.orm_candidates'
+            - 'Enhavo\Bundle\RoutingBundle\Entity\Route'
+        calls:
+            - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]

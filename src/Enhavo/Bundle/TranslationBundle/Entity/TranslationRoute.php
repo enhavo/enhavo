@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 
 /**
  * TranslationRoute

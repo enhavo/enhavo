@@ -10,17 +10,3 @@ services:
         class: Enhavo\Bundle\ThemeBundle\Box\BoxCollector
         arguments:
             - '%enhavo_theme.boxes%'
-
-    enhavo_theme.url_resolver:
-        class: Enhavo\Bundle\AppBundle\Routing\UrlResolver
-        arguments:
-          - '@router'
-          - '%sylius.resources%'
-          - '%enhavo_theme.route.url_resolver%'
-
-    enhavo_theme.twig.url_resolver:
-        class: Enhavo\Bundle\ThemeBundle\Twig\UrlResolver
-        arguments:
-            - '@enhavo_theme.url_resolver'
-        tags:
-            - { name: twig.extension }

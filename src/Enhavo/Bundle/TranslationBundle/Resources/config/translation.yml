@@ -2,7 +2,7 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
     properties:
         translationValue:
 
-Enhavo\Bundle\AppBundle\Entity\Route:
-    properties:
-        staticPrefix:
-            strategy: route_translation
+#Enhavo\Bundle\RoutingBundle\Entity\Route:
+#    properties:
+#        staticPrefix:
+#            strategy: route_translation

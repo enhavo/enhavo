@@ -2,12 +2,12 @@
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
-use Enhavo\Bundle\AppBundle\Routing\Slugable;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
-use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**

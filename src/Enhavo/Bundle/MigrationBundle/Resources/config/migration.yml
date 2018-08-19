@@ -1,8 +1,0 @@
-0.1.0:
-  - Enhavo\Bundle\MigrationBundle\Migration\M0M1H0\GridTableStructureMigration
-  - Enhavo\Bundle\MigrationBundle\Migration\M0M1H0\MediaSingleColumnMigration
-  - Enhavo\Bundle\MigrationBundle\Migration\M0M1H0\RenameGridTableMigration
-
-0.2.0:
-  - Enhavo\Bundle\MigrationBundle\Migration\M0M2H0\GridItemMigration
-  - Enhavo\Bundle\MigrationBundle\Migration\M0M2H0\RemoveMigrationDatabaseVersionMigration

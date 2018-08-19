@@ -123,8 +123,7 @@ class AppointmentType extends AbstractType
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,
-            'routing_strategy' => $this->routingStrategy,
-            'routing_route' => $this->route
+            'slugable' => true
         ));
     }
 

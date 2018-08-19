@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Node\Voter\VoterInterface;

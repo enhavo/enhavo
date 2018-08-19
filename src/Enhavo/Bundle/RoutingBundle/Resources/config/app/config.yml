@@ -1,0 +1,23 @@
+cmf_routing:
+    chain:
+        routers_by_id:
+            router.default: 200
+            cmf_routing.dynamic_router: 100
+    dynamic:
+        enabled: true
+        route_provider_service_id: enhavo_app.route_provider
+
+doctrine:
+    dbal:
+        mapping_types:
+            enum: string
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\RoutingBundle\Model\RouteInterface: Enhavo\Bundle\RoutingBundle\Entity\Route
+
+stof_doctrine_extensions:
+    class:
+        sluggable: Enhavo\Bundle\RoutingBundle\EventListener\SluggableListener
+
+enhavo_routing:
+    classes:

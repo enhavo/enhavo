@@ -25,22 +25,22 @@ class RouteCompilerPass implements CompilerPassInterface
 
     protected function overwriteRouteType(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('enhavo_app.form.route');
-        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\RouteType');
-        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
+//        $definition = $container->getDefinition('enhavo_app.form.route');
+//        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\RouteType');
+//        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
     }
 
     protected function overwriteSlugType(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('enhavo_slug');
-        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\SlugType');
-        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
+//        $definition = $container->getDefinition('enhavo_slug');
+//        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\SlugType');
+//        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
     }
 
     protected function overwriteRouteValidator(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('enhavo_app.validator.unique_url');
-        $definition->setClass('Enhavo\Bundle\TranslationBundle\Validator\Constraints\RouteValidator');
+//        $definition = $container->getDefinition('enhavo_app.validator.unique_url');
+//        $definition->setClass('Enhavo\Bundle\TranslationBundle\Validator\Constraints\RouteValidator');
     }
 
     protected function overwriteRouteGuesser(ContainerBuilder $container)

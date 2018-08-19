@@ -1,0 +1,24 @@
+services:
+    enhavo_routing.form.router:
+        class: Enhavo\Bundle\RoutingBundle\Form\Type\RouterType
+        tags:
+            - { name: form.type, alias: 'enhavo_routing_router' }
+        arguments:
+            - '@enhavo_routing.router'
+
+    enhavo_routing.form.slug:
+        class: Enhavo\Bundle\RoutingBundle\Form\Type\SlugType
+        tags:
+            - { name: form.type, alias: 'enhavo_routing_slug' }
+
+    enhavo_routing.form.route:
+        class: Enhavo\Bundle\RoutingBundle\Form\Type\RouteType
+        tags:
+            - { name: form.type, alias: 'enhavo_routing_route' }
+
+    enhavo_routing.validator.unique_url:
+        class: Enhavo\Bundle\RoutingBundle\Validator\Constraints\RouteValidator
+        arguments:
+          - '@router'
+        tags:
+            - { name: validator.constraint_validator, alias: route }

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
@@ -32,7 +32,7 @@ class Redirect implements RedirectInterface, ResourceInterface
     private $code;
 
     /**
-     * @var \Enhavo\Bundle\AppBundle\Entity\Route
+     * @var \Enhavo\Bundle\RoutingBundle\Entity\Route
      */
     private $route;
 

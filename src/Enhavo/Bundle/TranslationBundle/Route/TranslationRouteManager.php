@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
-use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Routing\RouteManager;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 
 class TranslationRouteManager

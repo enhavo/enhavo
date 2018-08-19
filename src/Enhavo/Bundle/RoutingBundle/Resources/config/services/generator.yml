@@ -1,0 +1,47 @@
+services:
+    enhavo_routing.auto_generator:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator
+        arguments:
+            - '@enhavo_routing.auto_generator.route_generator_collector'
+            - '@enhavo_routing.metadata.repository'
+
+    enhavo_routing.auto_generator.route_generator_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'AutoGenerator'
+
+    enhavo_routing.auto_generator.prefix:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'prefix' }
+
+    enhavo_routing.auto_generator.condition:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\ConditionGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'condition' }
+
+    enhavo_routing.auto_generator.guess_prefix:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\GuessPrefixGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'guess' }
+
+    enhavo_routing.auto_generator.slug:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\SlugGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'slug' }
+
+    enhavo_routing.auto_generator.route_name:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\RouteNameGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'route_name' }

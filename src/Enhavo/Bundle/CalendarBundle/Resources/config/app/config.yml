@@ -26,3 +26,17 @@ enhavo_app:
 
 enhavo_calendar:
     importer:
+
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\CalendarBundle\Entity\Appointment:
+            router:
+                default:
+                    type: slug
+                admin:
+                    type: id
+                    route: enhavo_calendar_appointment_update
+            generators:
+                slug:
+                    type: slug
+                    property: title

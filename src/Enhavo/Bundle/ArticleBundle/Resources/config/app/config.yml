@@ -5,14 +5,22 @@ enhavo_content:
                 type: publish
                 repository: enhavo_article.repository.article
 
-enhavo_app:
-    route:
-        url_resolver:
-            article:
-                model: enhavo_article.article
-                strategy: id
-                route: enhavo_article_article_update
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\ArticleBundle\Entity\Article:
+            router:
+                default:
+                    type: slug
+                    route: enhavo_article_theme_article_show
+                admin:
+                    type: id
+                    route: enhavo_article_article_update
+            generators:
+                slug:
+                    type: slug
+                    property: title
 
+enhavo_app:
     roles:
         enhavo_article_article_index:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
@@ -30,11 +38,3 @@ enhavo_app:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
             label: article.role.label.delete
             translationDomain: EnhavoArticleBundle
-
-enhavo_theme:
-    route:
-        url_resolver:
-            article:
-                model: enhavo_article.article
-                strategy: slug
-                route: ~

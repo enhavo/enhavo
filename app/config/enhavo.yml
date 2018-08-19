@@ -13,8 +13,6 @@ enhavo_app:
             type: page
         category:
             type: category
-        download:
-            type: download
         slider:
             type: slider
         newsletter:
@@ -49,8 +47,6 @@ enhavo_grid:
             type: text_picture
         cite:
             type: cite
-        download:
-            type: download
         video:
             type: video
         one_column:

@@ -36,8 +36,6 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.logo_path', $config['logo_path']);
         $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
         $container->setParameter('enhavo_app.template', $config[ 'template' ]);
-        $container->setParameter('enhavo_app.route.url_resolver', $config['route']['url_resolver']);
-        $container->setParameter('enhavo_app.route.auto_generator', $config['route']['auto_generator']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
         
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -47,7 +45,6 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/block.yml');
         $loader->load('services/button.yml');
         $loader->load('services/filter.yml');
-        $loader->load('services/routing.yml');
         $loader->load('services/form.yml');
         $loader->load('services/table.yml');
         $loader->load('services/action.yml');
