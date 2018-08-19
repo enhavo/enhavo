@@ -21,4 +21,8 @@ interface RouteInterface extends RouteObjectInterface
     public function setHost($host);
 
     public function setContent($content);
+
+    public function getCondition();
+
+    public function setCondition($condition);
 }

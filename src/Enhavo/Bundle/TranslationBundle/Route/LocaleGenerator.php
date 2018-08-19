@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
 use Enhavo\Bundle\AppBundle\Routing\GeneratorInterface;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 
 interface LocaleGenerator extends GeneratorInterface
 {

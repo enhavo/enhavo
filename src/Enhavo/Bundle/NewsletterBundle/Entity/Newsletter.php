@@ -1,7 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
-use Enhavo\Bundle\AppBundle\Routing\Slugable;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 

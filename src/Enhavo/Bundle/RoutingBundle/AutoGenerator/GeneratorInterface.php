@@ -15,11 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 interface GeneratorInterface extends TypeInterface
 {
     /**
-     * @param RouteInterface $route
-     * @param $options
+     * @param object $resource
+     * @param array $options
      * @return void
      */
-    public function generate(RouteInterface $route, $options);
+    public function generate($resource, $options = []);
 
     /**
      * @param OptionsResolver $resolver

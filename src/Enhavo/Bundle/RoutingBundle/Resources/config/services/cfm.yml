@@ -10,6 +10,6 @@ services:
         arguments:
             - '@doctrine'
             - '@enhavo_app.orm_candidates'
-            - 'Enhavo\Bundle\AppBundle\Entity\Route'
+            - 'Enhavo\Bundle\RoutingBundle\Entity\Route'
         calls:
             - [setRouteCollectionLimit, ['%cmf_routing.route_collection_limit%']]

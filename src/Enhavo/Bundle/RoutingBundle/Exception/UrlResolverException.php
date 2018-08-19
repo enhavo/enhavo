@@ -6,7 +6,7 @@
  * Time: 13:45
  */
 
-namespace Enhavo\Bundle\AppBundle\Exception;
+namespace Enhavo\Bundle\RoutingBundle\Exception;
 
 
 class UrlResolverException extends \Exception

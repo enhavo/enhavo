@@ -2,8 +2,8 @@ services:
     enhavo_routing.auto_generator:
         class: Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator
         arguments:
-            - '@enhavo_app.route_generator_collector'
-            - '@enhavo_app.routing.metadata.repository'
+            - '@enhavo_routing.auto_generator.route_generator_collector'
+            - '@enhavo_routing.metadata.repository'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -11,25 +11,32 @@ services:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
-            - 'RouteGenerator'
+            - 'AutoGenerator'
 
-    enhavo_routing.auto_generator.property:
-        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PropertyGenerator
+    enhavo_routing.auto_generator.prefix:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo.route_generator', alias: 'property' }
+            - { name: 'enhavo_route.generator', alias: 'property' }
 
     enhavo_routing.auto_generator.condition:
         class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\ConditionGenerator
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo.route_generator', alias: 'condition' }
+            - { name: 'enhavo_route.generator', alias: 'condition' }
 
-    enhavo_routing.auto_generator.guess:
-        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PropertyGenerator
+    enhavo_routing.auto_generator.guess_prefix:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\GuessPrefixGenerator
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo.route_generator', alias: 'guess' }
+            - { name: 'enhavo_route.generator', alias: 'guess' }
+
+    enhavo_routing.auto_generator.slug:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\SlugGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'slug' }

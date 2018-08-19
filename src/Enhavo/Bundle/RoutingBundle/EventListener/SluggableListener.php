@@ -6,9 +6,10 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\RoutingBundle\Slugifier;
+namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
 use Gedmo\Sluggable\SluggableListener as GedmoSluggableListener;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 
 class SluggableListener extends GedmoSluggableListener
 {

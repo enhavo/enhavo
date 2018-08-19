@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -36,8 +37,8 @@ class RouteableListener implements EventSubscriberInterface
     public function preSave(ResourceControllerEvent $event)
     {
         $resource = $event->getSubject();
-        if($resource instanceof Routeable) {
-            $this->routeManager->updateRouteable($resource);
+        if($resource instanceof Routeable || $resource instanceof Slugable) {
+            $this->routeManager->update($resource);
         }
     }
 }

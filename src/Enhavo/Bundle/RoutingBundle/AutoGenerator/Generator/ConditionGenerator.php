@@ -10,15 +10,23 @@ namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
 
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConditionGenerator extends AbstractGenerator
 {
-    public function generate(RouteInterface $route, $options)
+    public function generate($resource, $options = [])
     {
-        if($options['resolve_property']) {
-
+        $resolveValue = $this->getProperty($resource, $options['resolve_property']);
+        /** @var Route $route */
+        $route = $this->getProperty($resource, $options['route_property']);
+        if($route && $resolveValue) {
+            /** @var RouteInterface $route */
+            if(!$options['overwrite'] && $route->getCondition()) {
+                return;
+            }
+            $route->setCondition(sprintf($options['condition'], $resolveValue));
         }
     }
 
@@ -27,7 +35,9 @@ class ConditionGenerator extends AbstractGenerator
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'resolve_property' => null,
-            'condition' => 'resolver.resolve() == "%s"'
+            'route_property' => 'route',
+            'condition' => 'resolver.resolve() == "%s"',
+            'overwrite' => true
         ]);
     }
 

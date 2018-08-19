@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Validator\Constraints\Route as RouteConstraint;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,9 +30,6 @@ class RouteType extends AbstractType
             'label' => 'label.url',
             'translation_domain' => 'EnhavoAppBundle',
             'data_class' => Route::class,
-            'constraints' => array(
-                new RouteConstraint,
-            )
         ));
     }
 

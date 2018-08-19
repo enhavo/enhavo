@@ -45,13 +45,6 @@ services:
         tags:
             - { name: security.voter }
 
-    enhavo_app.url_resolver:
-        class: Enhavo\Bundle\AppBundle\Routing\UrlResolver
-        arguments:
-          - '@router'
-          - '%sylius.resources%'
-          - '%enhavo_app.route.url_resolver%'
-
     enhavo.sorting_manager:
         class: Enhavo\Bundle\AppBundle\Controller\SortingManager
         arguments:

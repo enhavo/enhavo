@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Router;
 
-
+use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Router
 {
     public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default') {
-
+        return '';
     }
 
     public function resolve($resource , $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -33,7 +33,7 @@ class Router
 
         if(empty($url)) {
             throw new UrlResolverException(
-                sprintf('Can\'t resolve route for class "%s". Maybe you need to add the class to url_resolver configuration', $className)
+                sprintf('Can\'t resolve route for class "%s". Maybe you need to add a resolver configuration', $className)
             );
         }
 

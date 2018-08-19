@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ContentBundle\Redirect;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Routing\RouteManager;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
 use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
 use League\Uri\Schemes\Http;
 
@@ -38,7 +38,7 @@ class RedirectManager
             $redirect->setRoute($route);
         }
         $route->setStaticPrefix($redirect->getFrom());
-        $this->routeManager->updateRouteable($redirect);
+        $this->routeManager->update($redirect);
     }
 
     public function checkFrom(RedirectInterface $redirect)

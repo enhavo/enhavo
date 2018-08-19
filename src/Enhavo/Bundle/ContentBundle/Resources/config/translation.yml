@@ -5,6 +5,6 @@ Enhavo\Bundle\ContentBundle\Entity\Content:
         pageTitle:
         openGraphTitle:
         openGraphDescription:
-        slug:
-            strategy: slug_translation
-            fields: title
+#        slug:
+#            strategy: slug_translation
+#            fields: title

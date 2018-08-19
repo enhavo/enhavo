@@ -7,17 +7,18 @@
 
 namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\RoutingBundle\Router\Router;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class UrlWidget extends AbstractTableWidget
 {
     public function render($options, $resource)
     {
-        $urlResolverName = $this->getOption('urlResolver', $options, 'enhavo_app.url_resolver');
-        /** @var UrlResolverInterface $urlResolver */
-        $urlResolver = $this->container->get($urlResolverName);
-        $url = $urlResolver->resolve($resource);
+        $resolverType = $this->getOption('resolver_type', $options, 'default');
+        /** @var Router $router */
+        $router = $this->container->get('enhavo_routing.router');
+        $url = $router->generate($resource, [], UrlGenerator::ABSOLUTE_PATH, $resolverType);
 
         $template = $this->getOption('template', $options, 'EnhavoAppBundle:TableWidget:url.html.twig');
         $target = $this->getOption('target', $options, '_blank');

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 
-use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
+use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;
@@ -23,13 +23,13 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
     protected $options;
 
     /**
-     * @var UrlResolverInterface
+     * @var Router
      */
-    protected $urlResolver;
+    protected $router;
 
-    public function __construct(UrlResolverInterface $urlResolver)
+    public function __construct(Router $router)
     {
-        $this->urlResolver = $urlResolver;
+        $this->router = $router;
     }
 
     public function setOptions($options)
@@ -62,7 +62,7 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
         $url->setChangeFrequency($resource->getChangeFrequency());
         $url->setLastModified($resource->getUpdated());
         $url->setPriority($resource->getPriority());
-        $url->setLocation($this->urlResolver->resolve($resource, UrlGeneratorInterface::ABSOLUTE_URL));
+        $url->setLocation($this->router->generate($resource, [], UrlGeneratorInterface::ABSOLUTE_URL));
 
         return $url;
     }

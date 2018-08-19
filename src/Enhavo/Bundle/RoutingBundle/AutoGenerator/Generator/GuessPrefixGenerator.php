@@ -14,12 +14,17 @@ use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GuessGenerator extends AbstractGenerator
+class GuessPrefixGenerator extends AbstractGenerator
 {
-    public function generate(RouteInterface $route, $options)
+    public function generate($resource, $options = [])
     {
-        $value = $this->guessProperties($route->getContent(), $options);
+        $value = $this->guessProperties($resource, $options);
         if($value !== null) {
+            /** @var RouteInterface $route */
+            $route = $this->getProperty($resource, $options['route_property']);
+            if(!$options['overwrite'] && $route->getStaticPrefix()) {
+                return;
+            }
             $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify($value)));
         }
     }
@@ -33,13 +38,15 @@ class GuessGenerator extends AbstractGenerator
                 'name',
                 'headline',
                 'slug'
-            ]
+            ],
+            'route_property' => 'route',
+            'overwrite' => false
         ]);
     }
 
     public function getType()
     {
-        return 'guess';
+        return 'guess_prefix';
     }
 
     private function guessProperties($model, $options)

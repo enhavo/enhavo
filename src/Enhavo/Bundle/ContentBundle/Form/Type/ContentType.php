@@ -2,6 +2,10 @@
 
 namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\SlugType;
+use Enhavo\Bundle\ContentBundle\EventListener\RouterSubscriber;
+use Enhavo\Bundle\RoutingBundle\Form\Type\RouterType;
+use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -115,23 +119,31 @@ class ContentType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle',
             'multiple' => false
         ));
+
+        if($options['slugable']) {
+            $builder->add('slug', SlugType::class, []);
+        }
+
+        if($options['routable']) {
+            $builder->add('route', RouteType::class, []);
+        }
+
+        if($options['router']) {
+            $builder->add('router_route', RouterType::class, []);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
-            'routing_strategy' => 'id',
-            'routing_route' => null
+            'slugable' => false,
+            'routable' => false,
+            'router' => false
         ));
     }
 
     public function getName()
     {
         return 'enhavo_content_content';
-    }
-
-    public function getParent()
-    {
-        return 'enhavo_routing';
     }
 }

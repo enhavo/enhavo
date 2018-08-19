@@ -17,4 +17,7 @@ doctrine:
 
 stof_doctrine_extensions:
     class:
-        sluggable: Enhavo\Bundle\RoutingBundle\Listener\SluggableListener
+        sluggable: Enhavo\Bundle\RoutingBundle\EventListener\SluggableListener
+
+enhavo_routing:
+    classes:

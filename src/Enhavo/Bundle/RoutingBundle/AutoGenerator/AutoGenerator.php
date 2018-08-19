@@ -35,17 +35,17 @@ class AutoGenerator
         $this->metadataRepository = $metadataRepository;
     }
 
-    public function generate(RouteInterface $route)
+    public function generate($resource)
     {
         /** @var Metadata $metadata */
-        $metadata = $this->metadataRepository->getMetadata($route->getContent());
+        $metadata = $this->metadataRepository->getMetadata($resource);
         foreach($metadata->getGenerators() as $generatorConfig) {
             /** @var GeneratorInterface $generator */
             $generator = $this->collector->getType($generatorConfig->getType());
             $optionsResolver = new OptionsResolver();
             $generator->configureOptions($optionsResolver);
             $options = $optionsResolver->resolve($generatorConfig->getOptions());
-            $generator->generate($route, $options);
+            $generator->generate($resource, $options);
         }
     }
 }

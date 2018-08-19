@@ -9,19 +9,6 @@ doctrine:
             Enhavo\Bundle\PageBundle\Model\PageInterface: Enhavo\Bundle\PageBundle\Entity\Page
 
 enhavo_app:
-    route:
-        url_resolver:
-            page:
-                model: enhavo_page.page
-                strategy: id
-                route: enhavo_page_page_update
-        auto_generator:
-            Enhavo\Bundle\PageBundle\Entity\Page:
-                generators:
-                    property:
-                        type: property
-                        property: title
-
     roles:
         page_index:
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX
@@ -40,13 +27,19 @@ enhavo_app:
             label: page.role.label.delete
             translationDomain: EnhavoPageBundle
 
-enhavo_theme:
-    route:
-        url_resolver:
-            page:
-                model: enhavo_page.page
-                strategy: route
-                route: ~
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            router:
+                default:
+                    type: route
+                admin:
+                    type: id
+                    route: enhavo_page_page_update
+            generators:
+                prefix:
+                    type: prefix
+                    property: title
 
 enhavo_content:
     sitemap:

@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\InstallerBundle\Fixtures;
 
-use Enhavo\Bundle\AppBundle\Entity\Route;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 use Enhavo\Bundle\GridBundle\Entity\PictureItem;

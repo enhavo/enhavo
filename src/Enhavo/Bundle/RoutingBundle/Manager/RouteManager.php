@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Manager;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\AutoGenerator\AutoGenerator;
 
 class RouteManager
 {
@@ -22,17 +24,8 @@ class RouteManager
         $this->autoGenerator = $autoGenerator;
     }
 
-    public function updateRoute(RouteInterface $route)
+    public function update($resource)
     {
-        $this->autoGenerator->generate($route);
-    }
-
-    public function updateRouteable(Routeable $routeable)
-    {
-        $route = $routeable->getRoute();
-        if($route) {
-            $route->setContent($routeable);
-            $this->updateRoute($route);
-        }
+        $this->autoGenerator->generate($resource);
     }
 }

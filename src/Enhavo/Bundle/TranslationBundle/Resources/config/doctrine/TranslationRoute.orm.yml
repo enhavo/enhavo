@@ -27,7 +27,7 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute:
     manyToOne:
         route:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\AppBundle\Model\RouteInterface
+            targetEntity: Enhavo\Bundle\RoutingBundle\Model\RouteInterface
             joinColumn:
                 onDelete: CASCADE
 

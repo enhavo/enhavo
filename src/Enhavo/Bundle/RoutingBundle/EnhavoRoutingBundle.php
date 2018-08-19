@@ -17,7 +17,7 @@ class EnhavoRoutingBundle extends Bundle
         $container->addCompilerPass($this->buildRouteCompilerPass());
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.route_generator_collector', 'enhavo.route_generator')
+            new TypeCompilerPass('enhavo_routing.auto_generator.route_generator_collector', 'enhavo_route.generator')
         );
     }
 

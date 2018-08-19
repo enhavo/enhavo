@@ -14,12 +14,17 @@ use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PropertyGenerator extends AbstractGenerator
+class PrefixGenerator extends AbstractGenerator
 {
-    public function generate(RouteInterface $route, $options)
+    public function generate($resource, $options = [])
     {
-        $value = $this->getProperty($route->getContent(), $options['property']);
+        $value = $this->getProperty($resource, $options['property']);
         if($value !== null) {
+            /** @var RouteInterface $route */
+            $route = $this->getProperty($resource, $options['route_property']);
+            if(!$options['overwrite'] && $route->getStaticPrefix()) {
+                return;
+            }
             $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify($value)));
         }
     }
@@ -27,12 +32,17 @@ class PropertyGenerator extends AbstractGenerator
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setDefaults([]);
-        $resolver->setRequired(['property']);
+        $resolver->setDefaults([
+            'route_property' => 'route',
+            'overwrite' => false
+        ]);
+        $resolver->setRequired([
+            'property'
+        ]);
     }
 
     public function getType()
     {
-        return 'property';
+        return 'prefix';
     }
 }

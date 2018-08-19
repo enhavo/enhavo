@@ -9,9 +9,9 @@
 namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\UrlResolverException;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\AppBundle\Routing\Routing;
-use Enhavo\Bundle\AppBundle\Routing\Slugable;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\AppBundle\Routing\UrlResolverInterface;
 use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;

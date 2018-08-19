@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;

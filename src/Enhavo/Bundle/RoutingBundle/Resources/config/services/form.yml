@@ -4,7 +4,7 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_routing_router' }
         arguments:
-            - '@enhavo_app.url_resolver'
+            - '@enhavo_routing.router'
 
     enhavo_routing.form.slug:
         class: Enhavo\Bundle\RoutingBundle\Form\Type\SlugType

@@ -9,15 +9,14 @@
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
-use Enhavo\Bundle\AppBundle\Model\RouteInterface;
-use Enhavo\Bundle\AppBundle\Routing\Routeable;
-use Enhavo\Bundle\AppBundle\Routing\Slugable;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, ResourceInterface
 {
