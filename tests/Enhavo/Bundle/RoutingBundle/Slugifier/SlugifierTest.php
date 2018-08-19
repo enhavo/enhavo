@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Slugifier;
+namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
 
 class SlugifierTest extends \PHPUnit_Framework_TestCase

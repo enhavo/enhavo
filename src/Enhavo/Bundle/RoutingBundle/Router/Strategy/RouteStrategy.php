@@ -9,33 +9,30 @@
 namespace Enhavo\Bundle\RoutingBundle\Router\Strategy;
 
 
-class RouteStrategy
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Router\AbstractStrategy;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+class RouteStrategy extends AbstractStrategy
 {
-    public function generate() {
-        if(!$resource instanceof Routeable) {
-            throw new UrlResolverException(
-                sprintf(
-                    'Class "%s" is not Routable',
-                    get_class($resource)
-                )
-            );
-        }
-        if(empty($resource->getRoute())) {
-            throw new UrlResolverException(
-                sprintf(
-                    'Can\'t resolve route for class "%s", object is Routable but the route is null for id "%s"',
-                    get_class($resource),
-                    $resource->getId()
-                )
-            );
-        }
-        try {
-            return $this->router->generate($resource->getRoute(), [], $referenceType);
-        } catch (InvalidParameterException $exception) {
-            throw new UrlResolverException(sprintf(
-                'Can\'t generate route: "%s"',
-                $exception->getMessage()
-            ));
-        }
+    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
+    {
+        /** @var RouteInterface $route */
+        $route = $this->getProperty($resource, $options['property']);
+        return $this->getRouter()->generate($route->getName(), $parameters, $referenceType);
+    }
+
+    public function getType()
+    {
+        return 'route';
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'property' => 'route'
+        ]);
     }
 }

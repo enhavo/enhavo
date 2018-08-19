@@ -9,6 +9,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -102,7 +103,7 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('route', 'enhavo_route');
+        $builder->add('route', RouteType::class);
 
         $builder->add('taxRate', 'entity', array(
             'class' => $this->taxRateClass,

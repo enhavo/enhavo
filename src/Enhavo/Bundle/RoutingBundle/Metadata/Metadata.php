@@ -22,6 +22,11 @@ class Metadata
     private $generators = [];
 
     /**
+     * @var Router[]
+     */
+    private $router = [];
+
+    /**
      * @return string
      */
     public function getClassName()
@@ -51,5 +56,21 @@ class Metadata
     public function setGenerators($generators)
     {
         $this->generators = $generators;
+    }
+
+    /**
+     * @return Router[]
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * @param Router[] $router
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
     }
 }

@@ -12,6 +12,9 @@ services:
     enhavo_routing.metadata.generator_parser:
         class: Enhavo\Bundle\RoutingBundle\Metadata\GeneratorParser
 
+    enhavo_routing.metadata.router_parser:
+        class: Enhavo\Bundle\RoutingBundle\Metadata\RouterParser
+
     enhavo_routing.metadata.repository:
         class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
         arguments:
@@ -19,4 +22,5 @@ services:
             - '@enhavo_routing.metadata.metadata_factory'
         calls:
             - [addParser, ['@enhavo_routing.metadata.generator_parser']]
+            - [addParser, ['@enhavo_routing.metadata.router_parser']]
 

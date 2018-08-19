@@ -8,44 +8,34 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Router\Strategy;
 
+use Enhavo\Bundle\RoutingBundle\Router\AbstractStrategy;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class IdStrategy
+class SlugIdStrategy extends AbstractStrategy
 {
-    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
-        if(!$resource instanceof Slugable) {
-            throw new UrlResolverException(sprintf(
-                'Strategy slug was configured, but class "%s" does not implement "%s"',
-                get_class($resource),
-                Slugable::class
-            ));
-        }
+        $id = $this->getProperty($resource, $options['id_property']);
+        $slug = $this->getProperty($resource, $options['slug_property']);
+        $parameters = array_merge($parameters, ['id' => $id, 'slug' => $slug]);
+        return $this->getRouter()->generate($options['router'], $parameters, $referenceType);
+    }
 
-        if(!$resource instanceof ResourceInterface) {
-            throw new UrlResolverException(sprintf(
-                'Strategy slug was configured, but class "%s" does not implement "%s"',
-                get_class($resource),
-                ResourceInterface::class
-            ));
-        }
+    public function getType()
+    {
+        return 'slug_id';
+    }
 
-        if(empty($route)) {
-            throw new UrlResolverException(sprintf(
-                'Strategy slug was configured for class "%s" , but no route was set',
-                get_class($resource)
-            ));
-        }
-
-        try {
-            return $this->router->generate($route, [
-                'slug' => $resource->getSlug(),
-                'id' => $resource->getId()
-            ], $referenceType);
-        } catch (InvalidParameterException $exception) {
-            throw new UrlResolverException(sprintf(
-                'Can\'t generate route: "%s"',
-                $exception->getMessage()
-            ));
-        }
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'slug_property' => 'slug',
+            'id_property' => 'id'
+        ]);
+        $optionsResolver->setRequired([
+            'route'
+        ]);
     }
 }

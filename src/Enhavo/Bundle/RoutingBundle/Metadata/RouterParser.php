@@ -11,19 +11,19 @@ namespace Enhavo\Bundle\RoutingBundle\Metadata;
 use Enhavo\Bundle\AppBundle\Metadata\ParserInterface;
 
 /**
- * GeneratorParser.php
+ * RouterParser.php
  *
- * @since 18/08/18
+ * @since 19/08/18
  * @author gseidel
  */
-class GeneratorParser implements ParserInterface
+class RouterParser implements ParserInterface
 {
     public function parse(array &$metadataArray, $configuration)
     {
-        if(isset($configuration['generators']) && is_array($configuration['generators'])) {
-            $data = $configuration['generators'];
+        if(isset($configuration['router']) && is_array($configuration['router'])) {
+            $data = $configuration['router'];
             foreach($data as $name => $value) {
-                $metadataArray['generators'][$name] = $value;
+                $metadataArray['router'][$name] = $value;
             }
         }
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Form\Type;
+namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
-use Enhavo\Bundle\AppBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 
 class RouteTypeTest extends TypeTestCase
 {
@@ -17,7 +17,7 @@ class RouteTypeTest extends TypeTestCase
         /** @var Route $route */
         $route = $form->getData();
 
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Entity\Route', $route);
+        $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('/hello', $route->getStaticPrefix());
     }
 }

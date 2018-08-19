@@ -26,7 +26,7 @@ class MetadataFactory implements MetadataFactoryInterface
 
         if(isset($configuration['generators'])) {
             $generators = [];
-            foreach($configuration['generators'] as $property => $config) {
+            foreach($configuration['generators'] as $config) {
                 $generator = new Generator();
                 $generator->setType($config['type']);
                 unset($config['type']);
@@ -34,6 +34,19 @@ class MetadataFactory implements MetadataFactoryInterface
                 $generators[] = $generator;
             }
             $metadata->setGenerators($generators);
+        }
+
+        if(isset($configuration['router'])) {
+            $routers = [];
+            foreach($configuration['router'] as $name => $config) {
+                $router = new Router();
+                $router->setType($config['type']);
+                $router->setName($name);
+                unset($config['type']);
+                $router->setOptions($config);
+                $routers[] = $router;
+            }
+            $metadata->setRouter($routers);
         }
 
         return $metadata;

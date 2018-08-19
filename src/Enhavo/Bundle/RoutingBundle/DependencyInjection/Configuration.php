@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('enhavo_routing');
         $rootNode
             ->children()
+                ->scalarNode('condition_resolver')->defaultValue(null)->end()
                 ->arrayNode('classes')
                     ->useAttributeAsKey('class')
                     ->prototype('array')

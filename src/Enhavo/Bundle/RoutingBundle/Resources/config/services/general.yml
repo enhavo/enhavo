@@ -4,14 +4,21 @@ services:
         arguments:
             - '@enhavo_routing.auto_generator'
 
-    enhavo_routung.listener.routeable_listener:
+    enhavo_routing.listener.routeable_listener:
         class: Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener
         arguments:
             - '@enhavo_routing.manager.route'
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_app.event_listener.route_reference:
+    enhavo_routing.twig.router_extension:
+        class: Enhavo\Bundle\RoutingBundle\Twig\RouterExtension
+        arguments:
+            - '@enhavo_routing.router'
+        tags:
+            - { name: twig.extension }
+
+    enhavo_routing.event_listener.route_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
           - 'Enhavo\Bundle\RoutingBundle\Entity\Route'

@@ -9,16 +9,12 @@
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
 
 use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
-use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoGenerator
 {
-    use ContainerAwareTrait;
-
     /**
      * @var CollectorInterface
      */

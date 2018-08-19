@@ -4,8 +4,6 @@ services:
         arguments:
             - '@enhavo_routing.auto_generator.route_generator_collector'
             - '@enhavo_routing.metadata.repository'
-        calls:
-            - [setContainer, ['@service_container']]
 
     enhavo_routing.auto_generator.route_generator_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -18,7 +16,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: 'enhavo_route.generator', alias: 'property' }
+            - { name: 'enhavo_route.generator', alias: 'prefix' }
 
     enhavo_routing.auto_generator.condition:
         class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\ConditionGenerator
@@ -40,3 +38,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'slug' }
+
+    enhavo_routing.auto_generator.route_name:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\RouteNameGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'route_name' }

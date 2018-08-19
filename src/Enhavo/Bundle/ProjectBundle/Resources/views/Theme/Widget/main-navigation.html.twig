@@ -9,7 +9,7 @@
             <li><a href="{{ path('enhavo_project_download_index') }}">Downloads</a></li>
             <li><a href="{{ path('enhavo_project_theme_shop_index') }}">Shop</a></li>
             {% for page in pages %}
-                <li><a href="{% if page.route %}{{ path(page.route.name) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
+                <li><a href="{% if page %}{{ router(page) }}{% else %}#{% endif %}">{{ page.title }}</a></li>
             {% endfor %}
             <a class="shopping-cart" href="{{ path('enhavo_shop_theme_cart_summary') }}" data-shopping-cart>
                 <i class="icon-shopping-cart"></i>
