@@ -48,6 +48,7 @@ class ItemResolver implements ResolverInterface
         foreach($configurations as $name => $options) {
             /** @var AbstractConfiguration $configuration */
             $configuration = $collector->getType($options['type']);
+            unset($options['type']);
             $item = new Item($configuration, $name, $options);
             $this->items[$name] = $item;
         }
