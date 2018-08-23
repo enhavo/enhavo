@@ -45,3 +45,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'route_name' }
+
+    enhavo_routing.auto_generator.hierarchy_prefix:
+        class: Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\HierarchyPrefixGenerator
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_route.generator', alias: 'hierarchy_prefix' }
