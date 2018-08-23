@@ -6,7 +6,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Entity\CiteItem;
+use Enhavo\Bundle\GridBundle\Model\Item\CiteItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

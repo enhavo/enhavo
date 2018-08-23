@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Model\Item;
 
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
@@ -12,17 +13,17 @@ class PictureItem extends AbstractItem
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $caption;
+    private $caption;
 
     /**
      * @var FileInterface
      */
-    protected $file;
+    private $file;
 
     /**
      * Set title

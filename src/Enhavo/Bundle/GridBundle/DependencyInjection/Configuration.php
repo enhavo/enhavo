@@ -35,6 +35,14 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->arrayNode('doctrine')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable_columns')->defaultValue(true)->end()
+                        ->scalarNode('enable_items')->defaultValue(true)->end()
+                    ->end()
+                ->end()
+
                 ->arrayNode('items')
                     ->isRequired()
                     ->useAttributeAsKey('name')

@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Model\Item;
 
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
@@ -13,17 +14,17 @@ class GalleryItem extends AbstractItem
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $text;
+    private $text;
 
     /**
      * @var ArrayCollection
      */
-    protected $files;
+    private $files;
 
     public function __construct()
     {

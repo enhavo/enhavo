@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Entity\TextPictureItem;
+use Enhavo\Bundle\GridBundle\Model\Item\TextPictureItem;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 class TextPictureItemFactory extends AbstractItemFactory

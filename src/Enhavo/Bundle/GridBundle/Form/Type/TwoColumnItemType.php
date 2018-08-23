@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 
-use Enhavo\Bundle\GridBundle\Entity\TwoColumnItem;
+use Enhavo\Bundle\GridBundle\Model\Column\TwoColumnItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

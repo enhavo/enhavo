@@ -30,6 +30,14 @@ class EnhavoGridExtension extends Extension
             $container->setParameter('enhavo_grid.render.sets', array());
         }
 
+        if($config['doctrine']['enable_columns']) {
+            $container->setParameter('enhavo_grid.doctrine.enable_columns', true);
+        }
+
+        if($config['doctrine']['enable_items']) {
+            $container->setParameter('enhavo_grid.doctrine.enable_items', true);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yml');
         $loader->load('services/factory.yml');

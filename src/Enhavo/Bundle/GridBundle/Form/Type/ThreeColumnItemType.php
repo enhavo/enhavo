@@ -2,8 +2,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-
-use Enhavo\Bundle\GridBundle\Entity\ThreeColumnItem;
+use Enhavo\Bundle\GridBundle\Model\Column\ThreeColumnItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

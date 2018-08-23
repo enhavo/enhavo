@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\TwoColumnItem;
+use Enhavo\Bundle\GridBundle\Model\Column\TwoColumnItem;
 use Enhavo\Bundle\GridBundle\Factory\TwoColumnItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\TwoColumnItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;

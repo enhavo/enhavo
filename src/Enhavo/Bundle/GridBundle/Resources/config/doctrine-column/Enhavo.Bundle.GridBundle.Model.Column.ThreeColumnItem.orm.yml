@@ -1,4 +1,4 @@
-Enhavo\Bundle\GridBundle\Entity\ThreeColumnItem:
+Enhavo\Bundle\GridBundle\Model\Column\ThreeColumnItem:
     type: entity
     table: grid_item_three_column
 

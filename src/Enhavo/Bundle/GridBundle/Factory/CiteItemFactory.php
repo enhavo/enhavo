@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Entity\CiteItem;
+use Enhavo\Bundle\GridBundle\Model\Item\CiteItem;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 class CiteItemFactory extends AbstractItemFactory

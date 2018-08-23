@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\VideoItem;
+use Enhavo\Bundle\GridBundle\Model\Item\VideoItem;
 use Enhavo\Bundle\GridBundle\Factory\VideoItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\VideoItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;

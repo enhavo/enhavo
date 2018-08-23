@@ -1,11 +1,13 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Model\Item;
+
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 
 /**
- * Video
+ * Text
  */
-class VideoItem extends AbstractItem
+class TextItem extends AbstractItem
 {
     /**
      * @var string
@@ -15,14 +17,13 @@ class VideoItem extends AbstractItem
     /**
      * @var string
      */
-    private $url;
+    private $text;
 
     /**
      * Set title
      *
      * @param string $title
-     *
-     * @return VideoItem
+     * @return TextItem
      */
     public function setTitle($title)
     {
@@ -34,7 +35,7 @@ class VideoItem extends AbstractItem
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -42,27 +43,25 @@ class VideoItem extends AbstractItem
     }
 
     /**
-     * Set url
+     * Set text
      *
-     * @param string $url
-     *
-     * @return VideoItem
+     * @param string $text
+     * @return TextItem
      */
-    public function setUrl($url)
+    public function setText($text)
     {
-        $this->url = $url;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
-     * Get url
+     * Get text
      *
-     * @return string
+     * @return string 
      */
-    public function getUrl()
+    public function getText()
     {
-        return $this->url;
+        return $this->text;
     }
 }
-

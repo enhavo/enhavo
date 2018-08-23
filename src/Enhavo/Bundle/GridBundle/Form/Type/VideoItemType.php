@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Entity\VideoItem;
+use Enhavo\Bundle\GridBundle\Model\Item\VideoItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

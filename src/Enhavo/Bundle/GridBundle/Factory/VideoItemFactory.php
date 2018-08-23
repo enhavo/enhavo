@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Entity\VideoItem;
+use Enhavo\Bundle\GridBundle\Model\Item\VideoItem;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 class VideoItemFactory extends AbstractItemFactory

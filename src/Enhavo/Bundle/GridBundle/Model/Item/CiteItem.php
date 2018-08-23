@@ -1,7 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Model\Item;
 
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 
 /**
  * CiteText
@@ -11,7 +12,7 @@ class CiteItem extends AbstractItem
     /**
      * @var string
      */
-    protected $text;
+    private $text;
 
     /**
      * @return string
