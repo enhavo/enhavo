@@ -27,9 +27,8 @@ services:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
-            - '@enhavo_grid.item_collector'
             - '@enhavo_grid.factory.item_type'
-            - '%enhavo_grid.items%'
+            - '@enhavo_grid.item.manager'
 
     enhavo_grid.item_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -52,4 +51,10 @@ services:
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
+
+    enhavo_grid.item.manager:
+        class: Enhavo\Bundle\GridBundle\Item\ItemManager
+        arguments:
+            - '@enhavo_grid.item_collector'
+            - '%enhavo_grid.items%'
 
