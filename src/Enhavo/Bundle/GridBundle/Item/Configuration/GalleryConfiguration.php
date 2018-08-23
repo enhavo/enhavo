@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\GalleryItem;
+use Enhavo\Bundle\GridBundle\Model\Item\GalleryItem;
 use Enhavo\Bundle\GridBundle\Factory\GalleryItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\GalleryItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;

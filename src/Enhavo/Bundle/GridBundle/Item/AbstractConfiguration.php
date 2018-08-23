@@ -76,7 +76,6 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
 
         $resolver->setRequired([
             'label',
-            'type',
             'factory',
             'model',
             'template',

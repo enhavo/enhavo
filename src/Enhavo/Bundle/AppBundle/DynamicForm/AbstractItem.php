@@ -33,7 +33,7 @@ abstract class AbstractItem implements ItemInterface
      * @param string $name
      * @param $options
      */
-    public function __construct(ConfigurationInterface $configuration, $name, $options)
+    public function __construct(ConfigurationInterface $configuration, $name, array $options)
     {
         $resolver = new OptionsResolver();
         $configuration->configureOptions($resolver);

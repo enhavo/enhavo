@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\CiteItem;
+use Enhavo\Bundle\GridBundle\Model\Item\CiteItem;
 use Enhavo\Bundle\GridBundle\Factory\CiteItemFactory;
-use Enhavo\Bundle\GridBundle\Factory\CiteTextFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\CiteItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
 use Symfony\Component\OptionsResolver\OptionsResolver;

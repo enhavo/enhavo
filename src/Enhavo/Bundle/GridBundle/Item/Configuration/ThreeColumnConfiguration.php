@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\ThreeColumnItem;
+use Enhavo\Bundle\GridBundle\Model\Column\ThreeColumnItem;
 use Enhavo\Bundle\GridBundle\Factory\ThreeColumnItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\ThreeColumnItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;

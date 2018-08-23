@@ -1,4 +1,4 @@
-Enhavo\Bundle\GridBundle\Entity\TextItem:
+Enhavo\Bundle\GridBundle\Model\Item\TextItem:
     type: entity
     table: grid_item_text
 

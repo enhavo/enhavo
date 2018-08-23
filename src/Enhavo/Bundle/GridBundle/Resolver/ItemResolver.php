@@ -18,6 +18,7 @@ use Enhavo\Bundle\GridBundle\Form\Type\ItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\GridBundle\Item\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Enhavo\Bundle\GridBundle\Item\ItemManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -40,17 +41,11 @@ class ItemResolver implements ResolverInterface
      */
     private $items = [];
 
-    public function __construct(FormFactoryInterface $formFactory, TypeCollector $collector, ItemTypeFactory $itemTypeFactory, $configurations)
+    public function __construct(FormFactoryInterface $formFactory, ItemTypeFactory $itemTypeFactory, ItemManager $itemManager)
     {
         $this->formFactory = $formFactory;
         $this->itemTypeFactory = $itemTypeFactory;
-
-        foreach($configurations as $name => $options) {
-            /** @var AbstractConfiguration $configuration */
-            $configuration = $collector->getType($options['type']);
-            $item = new Item($configuration, $name, $options);
-            $this->items[$name] = $item;
-        }
+        $this->items = $itemManager->getItems();
     }
 
     /**

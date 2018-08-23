@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Entity\GalleryItem;
+use Enhavo\Bundle\GridBundle\Model\Item\GalleryItem;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 
 class GalleryItemFactory extends AbstractItemFactory

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\TextItem;
+use Enhavo\Bundle\GridBundle\Model\Item\TextItem;
 use Enhavo\Bundle\GridBundle\Factory\TextItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\TextItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;

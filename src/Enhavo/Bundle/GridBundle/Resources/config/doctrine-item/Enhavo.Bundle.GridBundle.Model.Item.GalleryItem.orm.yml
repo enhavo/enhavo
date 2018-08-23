@@ -1,4 +1,4 @@
-Enhavo\Bundle\GridBundle\Entity\GalleryItem:
+Enhavo\Bundle\GridBundle\Model\Item\GalleryItem:
     type: entity
     table: grid_item_gallery
 

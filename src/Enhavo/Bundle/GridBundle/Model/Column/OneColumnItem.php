@@ -1,6 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Entity;
+namespace Enhavo\Bundle\GridBundle\Model\Column;
+
+use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
+use Enhavo\Bundle\GridBundle\Entity\Column;
 
 class OneColumnItem extends AbstractItem
 {

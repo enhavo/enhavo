@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Item\Configuration;
 
-use Enhavo\Bundle\GridBundle\Entity\OneColumnItem;
+use Enhavo\Bundle\GridBundle\Model\Column\OneColumnItem;
 use Enhavo\Bundle\GridBundle\Factory\OneColumnItemFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\OneColumnItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
