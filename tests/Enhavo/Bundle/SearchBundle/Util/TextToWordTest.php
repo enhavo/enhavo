@@ -30,5 +30,11 @@ class TextToWordTest extends \PHPUnit_Framework_TestCase
             'ipsum',
             'Dolor'
         ], $textToWord->split('Lorem ipsum   Dolor'));
+
+        $this->assertArraySubset([
+            'Lorem',
+            'ipsum',
+            'Dolor'
+        ], $textToWord->split('Lorem ipsum   Dolor'));
     }
 }
