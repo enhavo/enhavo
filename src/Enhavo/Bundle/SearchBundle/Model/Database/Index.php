@@ -1,8 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\SearchBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 /**
  * Index
@@ -25,19 +23,19 @@ class Index
     protected $locale;
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @var integer
      */
-    protected $score;
+    protected $weight;
 
     /**
-     * @var \Enhavo\Bundle\SearchBundle\Entity\Index
+     * @var float
      */
-    private $dataset;
+    protected $score = 0;
+
+    /**
+     * @var DataSet
+     */
+    private $dataSet;
 
     /**
      * @return int
@@ -88,23 +86,39 @@ class Index
     }
 
     /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param int $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * @return DataSet
+     */
+    public function getDataSet()
+    {
+        return $this->dataSet;
+    }
+
+    /**
+     * @param DataSet $dataSet
+     */
+    public function setDataSet($dataSet)
+    {
+        $this->dataSet = $dataSet;
+    }
+
+    /**
+     * @return float
      */
     public function getScore()
     {
@@ -112,34 +126,10 @@ class Index
     }
 
     /**
-     * @param int $score
+     * @param float $score
      */
     public function setScore($score)
     {
         $this->score = $score;
-    }
-
-    /**
-     * Set dataset
-     *
-     * @param \Enhavo\Bundle\SearchBundle\Entity\Dataset $dataset
-     *
-     * @return Dataset
-     */
-    public function setDataset(\Enhavo\Bundle\SearchBundle\Entity\Dataset $dataset = null)
-    {
-        $this->dataset = $dataset;
-
-        return $this;
-    }
-
-    /**
-     * Get dataset
-     *
-     * @return \Enhavo\Bundle\SearchBundle\Entity\Dataset
-     */
-    public function getDataset()
-    {
-        return $this->dataset;
     }
 }

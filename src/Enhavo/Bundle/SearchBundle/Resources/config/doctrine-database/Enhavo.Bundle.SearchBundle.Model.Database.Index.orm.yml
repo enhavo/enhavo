@@ -1,4 +1,4 @@
-Enhavo\Bundle\SearchBundle\Entity\Index:
+Enhavo\Bundle\SearchBundle\Model\Database\Index:
     type: entity
     table: search_index
     repositoryClass: Enhavo\Bundle\SearchBundle\Repository\IndexRepository
@@ -12,22 +12,21 @@ Enhavo\Bundle\SearchBundle\Entity\Index:
         word:
             type: string
             length: 255
-
+            nullable: true
         locale:
             type: string
             length: 255
-
-        type:
-            type: string
-            length: 255
-
+            nullable: true
+        weight:
+            type: integer
+            nullable: true
         score:
             type: float
-
+            nullable: true
     manyToOne:
-        dataset:
-            cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\SearchBundle\Entity\Dataset
+        dataSet:
+            targetEntity: Enhavo\Bundle\SearchBundle\Model\Database\DataSet
+            inversedBy: indexes
             joinColumn:
                 onDelete: CASCADE
 

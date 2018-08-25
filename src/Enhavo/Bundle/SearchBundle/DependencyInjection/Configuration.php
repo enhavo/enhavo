@@ -22,12 +22,19 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('doctrine')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable_database')->defaultValue(true)->end()
+                    ->end()
+                ->end()
+
                 ->arrayNode('search')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('indexing')->defaultValue(false)->end()
                         ->scalarNode('template')->defaultValue('EnhavoSearchBundle:Search:render.html.twig')->end()
-                        ->scalarNode('engine')->defaultValue('enhavo_search.engine.elastic_search_engine')->end()
+                        ->scalarNode('engine')->defaultValue('enhavo_search.engine.database_search_engine')->end()
                     ->end()
                 ->end()
                 ->arrayNode('elastica')

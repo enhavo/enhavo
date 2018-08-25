@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\SearchBundle\Entity;
+namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 /**
  * Total
@@ -21,7 +21,6 @@ class Total
      * @var float
      */
     private $count;
-
 
     /**
      * Get id

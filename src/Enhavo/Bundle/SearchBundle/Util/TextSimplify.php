@@ -151,6 +151,6 @@ class TextSimplify
         // marks, spacers, etc, to be a word boundary.
         $text = preg_replace('/[' . $this->getClassWordBoundary() . ']+/u', ' ', $text);
 
-        return $text;
+        return trim($text);
     }
 }

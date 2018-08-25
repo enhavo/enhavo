@@ -39,3 +39,6 @@ services:
 
     enhavo_search.util.text_simplify:
         class: Enhavo\Bundle\SearchBundle\Util\TextSimplify
+
+    enhavo_search.util.text_to_word:
+        class: Enhavo\Bundle\SearchBundle\Util\TextToWord

@@ -22,7 +22,7 @@ class ResultConverter
         $this->highlighter = $highlighter;
     }
 
-    public function convert(array $result)
+    public function convert($result)
     {
         $data = [];
         foreach($result as $resultItem) {
