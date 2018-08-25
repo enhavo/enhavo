@@ -31,6 +31,7 @@ services:
         class: Enhavo\Bundle\SearchBundle\Result\ResultConverter
         arguments:
             - '@enhavo_search.util.hightlighter'
+            - '@enhavo_search.extractor.extractor'
 
     enhavo_search.util.hightlighter:
         class: Enhavo\Bundle\SearchBundle\Util\Highlighter

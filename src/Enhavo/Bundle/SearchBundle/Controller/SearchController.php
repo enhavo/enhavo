@@ -33,7 +33,7 @@ class SearchController extends AppController
         $filter->setTerm($term);
 
         $results = $engine->searchPaginated($filter);
-        $results = $this->convertResults($results);
+        $results = $this->convertResults($results, $term);
 
         return $this->render($template, [
             'results' => $results,
@@ -56,9 +56,9 @@ class SearchController extends AppController
      * @param $results
      * @return mixed
      */
-    private function convertResults($results)
+    private function convertResults($results, $term)
     {
         $resultConverter = $this->get('enhavo_search.result.result_converter');
-        return $resultConverter->convert($results);
+        return $resultConverter->convert($results, $term);
     }
 }
