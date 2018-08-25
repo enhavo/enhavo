@@ -27,6 +27,11 @@ class EnhavoSearchExtension extends Extension
         $container->setParameter('enhavo_search.elastica.host', $config['elastica']['host']);
         $container->setParameter('enhavo_search.elastica.port', $config['elastica']['port']);
 
+        if($config['doctrine']['enable_database']) {
+            $container->setParameter('enhavo_search.doctrine.enable_database', true);
+        }
+
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/services.yml');
         $loader->load('services/general.yml');
@@ -34,5 +39,6 @@ class EnhavoSearchExtension extends Extension
         $loader->load('services/extractor.yml');
         $loader->load('services/indexer.yml');
         $loader->load('services/elastic_search.yml');
+        $loader->load('services/database.yml');
     }
 }

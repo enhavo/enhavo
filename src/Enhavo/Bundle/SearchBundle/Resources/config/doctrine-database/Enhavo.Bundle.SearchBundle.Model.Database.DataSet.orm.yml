@@ -1,0 +1,25 @@
+Enhavo\Bundle\SearchBundle\Model\Database\DataSet:
+    type: entity
+    table: search_data_set
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contentId:
+            type: integer
+            nullable: true
+        contentClass:
+            type: string
+            nullable: true
+
+    oneToMany:
+        indexes:
+            targetEntity: Enhavo\Bundle\SearchBundle\Model\Database\Index
+            cascade: ['persist', 'refresh', 'remove']
+            orphanRemoval: true
+            mappedBy: dataSet
+
+    lifecycleCallbacks: {  }
