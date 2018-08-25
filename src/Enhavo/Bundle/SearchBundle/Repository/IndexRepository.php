@@ -18,11 +18,22 @@ class IndexRepository extends EntityRepository
         return $query->getQuery()->getSingleResult();
     }
 
+    /**
+     * @param SearchFilter $filter
+     * @return array
+     */
     public function getSearchResults(SearchFilter $filter)
     {
-        $filter->getWords();
+        $query = $this->createSearchQuery($filter);
+        return $query->getQuery()->getResult();
+    }
 
-
+    /**
+     * @param SearchFilter $filter
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createSearchQuery(SearchFilter $filter)
+    {
         $query = $this->createQueryBuilder('i');
         $query->select(
             'd.contentId AS id',
@@ -31,7 +42,6 @@ class IndexRepository extends EntityRepository
         );
         $query->innerJoin(Total::class, 't', 'WITH', 'i.word = t.word');
         $query->innerJoin(DataSet::class, 'd', 'WITH', 'i.dataSet = d');
-
 
         $i = 0;
         foreach($filter->getWords() as  $word) {
@@ -42,7 +52,6 @@ class IndexRepository extends EntityRepository
 
         $query->groupBy('d.id');
         $query->orderBy('calculated_score', 'DESC');
-
-        return $query->getQuery()->getResult();
+        return $query;
     }
 }

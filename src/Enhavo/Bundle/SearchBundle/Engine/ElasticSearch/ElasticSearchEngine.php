@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
@@ -100,12 +101,12 @@ class ElasticSearchEngine implements EngineInterface
         $mapping->send();
     }
 
-    public function search(Filter $filter)
+    /**
+     * @param Filter $filter
+     * @return Query\BoolQuery
+     */
+    private function createQuery(Filter $filter)
     {
-        $search = new Search($this->client);
-        $search->addIndex(self::ELASTIC_SEARCH_INDEX);
-        $search->addType(self::ELASTIC_SEARCH_TYPE);
-
         $query = new Query\BoolQuery();
 
         for($i = 1; $i <= 100; $i++) {
@@ -125,7 +126,16 @@ class ElasticSearchEngine implements EngineInterface
             $query->addFilter($filterQuery);
         }
 
-        $search->setQuery($query);
+        return $query;
+    }
+
+    public function search(Filter $filter)
+    {
+        $search = new Search($this->client);
+        $search->addIndex(self::ELASTIC_SEARCH_INDEX);
+        $search->addType(self::ELASTIC_SEARCH_TYPE);
+
+        $search->setQuery($this->createQuery($filter));
 
         $result = [];
         foreach($search->search() as $document) {
@@ -139,7 +149,9 @@ class ElasticSearchEngine implements EngineInterface
 
     public function searchPaginated(Filter $filter)
     {
-
+        $type = $this->getType();
+        $query = new Query($this->createQuery($filter));
+        return new Pagerfanta(new ElasticaORMAdapter($type, $query, $this->em));
     }
 
     public function index($resource)
