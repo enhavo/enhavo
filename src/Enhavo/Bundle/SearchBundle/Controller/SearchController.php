@@ -32,7 +32,7 @@ class SearchController extends AppController
         $filter = new Filter();
         $filter->setTerm($term);
 
-        $results = $engine->search($filter);
+        $results = $engine->searchPaginated($filter);
         $results = $this->convertResults($results);
 
         return $this->render($template, [

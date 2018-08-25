@@ -22,6 +22,7 @@ use Enhavo\Bundle\SearchBundle\Repository\IndexRepository;
 use Enhavo\Bundle\SearchBundle\Repository\TotalRepository;
 use Enhavo\Bundle\SearchBundle\Util\TextSimplify;
 use Enhavo\Bundle\SearchBundle\Util\TextToWord;
+use Pagerfanta\Pagerfanta;
 
 class DatabaseSearchEngine implements EngineInterface
 {
@@ -80,6 +81,28 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function search(Filter $filter)
     {
+        $searchFilter = $this->createSearchFilter($filter);
+        $repository = $this->em->getRepository(Index::class);
+
+        $searchResults = $repository->getSearchResults($searchFilter);
+        $result = [];
+        foreach($searchResults as $searchResult) {
+            $result[] = $this->classResolver->find($searchResult['id'], $searchResult['class']);
+        }
+
+        return $result;
+    }
+
+    public function searchPaginated(Filter $filter)
+    {
+        $searchFilter = $this->createSearchFilter($filter);
+        $repository = $this->em->getRepository(Index::class);
+        $searchQuery = $repository->createSearchQuery($searchFilter);
+        return new Pagerfanta(new DatabaseSearchAdapter($searchQuery, $this->classResolver));
+    }
+
+    private function createSearchFilter(Filter $filter)
+    {
         $searchFilter = new SearchFilter();
 
         $words = $filter->getTerm();
@@ -92,19 +115,7 @@ class DatabaseSearchEngine implements EngineInterface
             $searchFilter->setContentClass($class);
         }
 
-        $repository = $this->em->getRepository(Index::class);
-        $searchResults = $repository->getSearchResults($searchFilter);
-        $result = [];
-        foreach($searchResults as $searchResult) {
-            $result[] = $this->classResolver->find($searchResult['id'], $searchResult['class']);
-        }
-
-        return $result;
-    }
-
-    public function searchPaginated(Filter $filter)
-    {
-
+        return $searchFilter;
     }
 
     public function index($resource, $locale = null)
@@ -227,7 +238,16 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function removeIndex($resource)
     {
+        $className = $this->classResolver->resolveClass($resource);
+        $dataSet = $this->em->getRepository(DataSet::class)->findOneBy([
+            'contentId' => $resource->getId(),
+            'contentClass' => $className
+        ]);
 
+        if($dataSet) {
+            $this->em->remove($dataSet);
+            $this->em->flush();
+        }
     }
 
     public function reindex()
@@ -237,6 +257,6 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function initialize()
     {
-
+        // nothing to do here
     }
 }

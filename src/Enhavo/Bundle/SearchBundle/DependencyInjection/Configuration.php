@@ -21,14 +21,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('enhavo_search');
 
         $rootNode
-            ->arrayNode('doctrine')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('enable_database')->defaultValue(true)->end()
-                ->end()
-            ->end()
-
             ->children()
+                ->arrayNode('doctrine')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable_database')->defaultValue(true)->end()
+                    ->end()
+                ->end()
+
                 ->arrayNode('search')
                     ->addDefaultsIfNotSet()
                     ->children()
