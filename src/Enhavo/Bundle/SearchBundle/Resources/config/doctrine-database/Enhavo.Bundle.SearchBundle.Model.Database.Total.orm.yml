@@ -1,4 +1,4 @@
-Enhavo\Bundle\SearchBundle\Entity\Total:
+Enhavo\Bundle\SearchBundle\Model\Database\Total:
     type: entity
     table: search_total
     repositoryClass: Enhavo\Bundle\SearchBundle\Repository\TotalRepository

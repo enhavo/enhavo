@@ -94,4 +94,4 @@ cmf_routing:
 
 enhavo_search:
     search:
-        indexing: false
+        indexing: true
