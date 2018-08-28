@@ -79,6 +79,11 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['configuration_factory'];
     }
 
+    public function getRenderTemplate($options)
+    {
+        return $options['render_template'];
+    }
+
     public function getGroups($options)
     {
         return $options['groups'];
@@ -100,6 +105,7 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
             'content_form' => null,
             'configuration_form' => null,
             'configuration_factory' => null,
+            'render_template' => null,
             'groups' => ['default'],
         ]);
 

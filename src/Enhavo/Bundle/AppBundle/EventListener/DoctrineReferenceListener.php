@@ -14,6 +14,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Doctrine\ORM\UnitOfWork;
@@ -82,15 +83,20 @@ class DoctrineReferenceListener implements EventSubscriber
     {
         $object = $args->getObject();
         if(get_class($object) === $this->targetClass) {
-            $propertyAccessor = PropertyAccess::createPropertyAccessor();
-            $id = $propertyAccessor->getValue($object, $this->idProperty);
-            $class = $propertyAccessor->getValue($object, $this->classProperty);
+            $this->loadEntity($object);
+        }
+    }
 
-            if($id && $class) {
-                $targetEntity = $this->targetClassResolver->find($id, $class);
-                if($targetEntity !== null) {
-                    $propertyAccessor->setValue($object, $this->targetProperty, $targetEntity);
-                }
+    private function loadEntity($entity)
+    {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $id = $propertyAccessor->getValue($entity, $this->idProperty);
+        $class = $propertyAccessor->getValue($entity, $this->classProperty);
+
+        if($id && $class) {
+            $targetEntity = $this->targetClassResolver->find($id, $class);
+            if($targetEntity !== null) {
+                $propertyAccessor->setValue($entity, $this->targetProperty, $targetEntity);
             }
         }
     }
@@ -157,6 +163,12 @@ class DoctrineReferenceListener implements EventSubscriber
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
+
+        // if entity state is still proxy, we try to load its entity to make sure that target property is correct
+        if($entity instanceof Proxy && $targetProperty === null) {
+            $this->loadEntity($entity);
+            $targetProperty = $propertyAccessor->getValue($entity, $this->targetProperty);
+        }
 
         if($targetProperty) {
             // update id property

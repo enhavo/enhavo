@@ -10,12 +10,11 @@ namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
 use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\AppBundle\DynamicForm\ItemInterface;
-use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
-use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\NavigationBundle\Item\Item;
 use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Enhavo\Bundle\NavigationBundle\Item\ItemManager;
 use Sylius\Component\Resource\Factory\FactoryInterface as SyliusFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -34,16 +33,10 @@ class NodeResolver implements ResolverInterface
      */
     private $items = [];
 
-    public function __construct(FormFactoryInterface $formFactory, TypeCollector $collector, $configurations)
+    public function __construct(FormFactoryInterface $formFactory, ItemManager $itemManager)
     {
         $this->formFactory = $formFactory;
-
-        foreach($configurations as $name => $options) {
-            /** @var AbstractConfiguration $configuration */
-            $configuration = $collector->getType($options['type']);
-            $item = new Item($configuration, $name, $options);
-            $this->items[$name] = $item;
-        }
+        $this->items = $itemManager->getItems();
     }
 
     /**
