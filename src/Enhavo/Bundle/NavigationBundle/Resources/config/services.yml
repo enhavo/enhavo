@@ -47,8 +47,8 @@ services:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
-            - '@enhavo_navigation.item_collector'
-            - '%enhavo_navigation.items%'
+            - '@enhavo_navigation.item.item_manager'
+
 
     enhavo_navigation.form.node_type:
         class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType
@@ -130,6 +130,21 @@ services:
             - { name: twig.extension }
         arguments:
             - '@enhavo_navigation.node.manager'
+            - '@enhavo_navigation.renderer.node_renderer'
+
+    enhavo_navigation.renderer.node_renderer:
+        class: Enhavo\Bundle\NavigationBundle\Renderer\NodeRenderer
+        calls:
+            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_navigation.item.item_manager'
+            - '%enhavo_navigation.render.sets%'
+
+    enhavo_navigation.item.item_manager:
+        class: Enhavo\Bundle\NavigationBundle\Item\ItemManager
+        arguments:
+            - '@enhavo_navigation.item_collector'
+            - '%enhavo_navigation.items%'
 
 
 
