@@ -102,6 +102,7 @@ class Configuration implements ConfigurationInterface
 
             ->children()
                 ->arrayNode('render')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('sets')
                         ->useAttributeAsKey('name')
