@@ -34,9 +34,15 @@ class DataSet
      */
     private $indexes;
 
+    /**
+     * @var ArrayCollection
+     */
+    private $filters;
+
     public function __construct()
     {
         $this->indexes = new ArrayCollection();
+        $this->filters = new ArrayCollection();
     }
 
     /**
@@ -130,5 +136,31 @@ class DataSet
             $index->setDataSet(null);
         }
         $this->indexes->clear();
+    }
+
+    /**
+     * @param Filter $filter
+     */
+    public function addFilter(Filter $filter)
+    {
+        $filter->setDataSet($this);
+        $this->filters->add($filter);
+    }
+
+    /**
+     * @param mixed $filter
+     */
+    public function removeFilter(Filter $filter)
+    {
+        $filter->setDataSet(null);
+        $this->filters->removeElement($filter);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }
