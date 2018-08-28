@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
+use Enhavo\Bundle\SearchBundle\Event\IndexEvent;
 use Enhavo\Bundle\SearchBundle\Model\Database\DataSet;
 use Enhavo\Bundle\SearchBundle\Model\Database\Index;
 use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
@@ -131,6 +132,16 @@ class DatabaseSearchEngine implements EngineInterface
                 $dataSet->addIndex($index);
                 $index->setLocale($locale);
             }
+
+            $dataSetIndexes = $this->createFilters();
+
+
+            $event = new IndexEvent($resource);
+            $event->setIndexes($indexes);
+            $event->setFilters($filter);
+            $this->eventDispatcher->dispatch(Events::INDEX_EVENT, $event);
+
+
 
             $this->em->flush();
             $this->updateTotals($dataSet);

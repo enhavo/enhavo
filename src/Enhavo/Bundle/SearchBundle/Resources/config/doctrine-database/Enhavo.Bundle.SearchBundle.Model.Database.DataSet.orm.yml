@@ -21,5 +21,9 @@ Enhavo\Bundle\SearchBundle\Model\Database\DataSet:
             cascade: ['persist', 'refresh', 'remove']
             orphanRemoval: true
             mappedBy: dataSet
-
+        filters:
+            targetEntity: Enhavo\Bundle\SearchBundle\Model\Database\Filter
+            cascade: ['persist', 'refresh', 'remove']
+            orphanRemoval: true
+            mappedBy: dataSet
     lifecycleCallbacks: {  }

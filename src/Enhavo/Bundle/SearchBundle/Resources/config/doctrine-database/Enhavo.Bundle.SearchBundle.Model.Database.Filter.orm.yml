@@ -1,0 +1,27 @@
+Enhavo\Bundle\SearchBundle\Model\Database\Filter:
+    type: entity
+    table: search_filter
+    repositoryClass: Enhavo\Bundle\SearchBundle\Repository\IndexRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        key:
+            type: string
+            length: 255
+            nullable: true
+        value:
+            type: string
+            length: 255
+            nullable: true
+    manyToOne:
+        dataSet:
+            targetEntity: Enhavo\Bundle\SearchBundle\Model\Database\DataSet
+            inversedBy: filters
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }
