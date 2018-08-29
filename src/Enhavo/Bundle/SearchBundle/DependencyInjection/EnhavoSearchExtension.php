@@ -40,5 +40,6 @@ class EnhavoSearchExtension extends Extension
         $loader->load('services/indexer.yml');
         $loader->load('services/elastic_search.yml');
         $loader->load('services/database.yml');
+        $loader->load('services/filter.yml');
     }
 }

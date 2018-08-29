@@ -9,4 +9,6 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
         grid:
             type: model
     filter:
-        permission: 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'
+        permission:
+            type: value
+            value: 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'

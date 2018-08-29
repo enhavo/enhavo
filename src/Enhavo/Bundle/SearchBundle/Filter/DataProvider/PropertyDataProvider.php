@@ -6,24 +6,27 @@
  * Time: 21:42
  */
 
-namespace Enhavo\Bundle\SearchBundle\Filter\Data;
+namespace Enhavo\Bundle\SearchBundle\Filter\DataProvider;
 
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\SearchBundle\Filter\Data;
+use Enhavo\Bundle\SearchBundle\Filter\DataProviderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PropertyData extends AbstractType
+class PropertyDataProvider extends AbstractType implements DataProviderInterface
 {
-    public function createData($resource, $options)
+    public function getData($resource, $options)
     {
         $value = $this->getProperty($resource, $options['property']);
         $data = new Data();
+        $data->setValue($value);
+        return $data;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
-
+        $optionsResolver->setRequired(['property']);
     }
 
     public function getType()

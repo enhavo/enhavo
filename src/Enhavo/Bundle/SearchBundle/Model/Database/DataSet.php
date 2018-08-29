@@ -163,4 +163,13 @@ class DataSet
     {
         return $this->filters;
     }
+
+    public function resetFilter()
+    {
+        /** @var Filter $filter */
+        foreach($this->filters as $filter) {
+            $filter->setDataSet(null);
+        }
+        $this->filters->clear();
+    }
 }
