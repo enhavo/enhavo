@@ -18,9 +18,13 @@ class TargetClassResolver implements TargetClassResolverInterface
 
     public function resolveClass($object)
     {
-        $className = get_class($object);
-        if($object instanceof Proxy) {
-            $className = get_parent_class($object);
+        if(is_object($object)) {
+            $className = get_class($object);
+            if($object instanceof Proxy) {
+                $className = get_parent_class($object);
+            }
+        } elseif(is_string($object)) {
+            $className = $object;
         }
 
         $class = $this->getClassFromSylius($className);
