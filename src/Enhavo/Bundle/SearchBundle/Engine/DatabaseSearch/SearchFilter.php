@@ -24,7 +24,17 @@ class SearchFilter
     /**
      * @var array
      */
-    private $filter = [];
+    private $queries = [];
+
+    /**
+     * @var string
+     */
+    private $orderBy;
+
+    /**
+     * @var string
+     */
+    private $orderDirection;
 
     /**
      * @return string[]
@@ -61,16 +71,48 @@ class SearchFilter
     /**
      * @return array
      */
-    public function getFilter()
+    public function getQueries()
     {
-        return $this->filter;
+        return $this->queries;
     }
 
     /**
-     * @param array $filter
+     * @param array $queries
      */
-    public function setFilter($filter)
+    public function setQueries($queries)
     {
-        $this->filter = $filter;
+        $this->queries = $queries;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderBy()
+    {
+        return $this->orderBy;
+    }
+
+    /**
+     * @param string $orderBy
+     */
+    public function setOrderBy($orderBy)
+    {
+        $this->orderBy = $orderBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderDirection()
+    {
+        return $this->orderDirection;
+    }
+
+    /**
+     * @param string $orderDirection
+     */
+    public function setOrderDirection($orderDirection)
+    {
+        $this->orderDirection = $orderDirection;
     }
 }
