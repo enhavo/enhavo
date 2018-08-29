@@ -13,7 +13,6 @@ use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
-use Enhavo\Bundle\SearchBundle\Event\IndexEvent;
 use Enhavo\Bundle\SearchBundle\Filter\FilterData;
 use Enhavo\Bundle\SearchBundle\Model\Database\DataSet;
 use Enhavo\Bundle\SearchBundle\Model\Database\Index;
@@ -24,7 +23,6 @@ use Enhavo\Bundle\SearchBundle\Repository\IndexRepository;
 use Enhavo\Bundle\SearchBundle\Repository\TotalRepository;
 use Enhavo\Bundle\SearchBundle\Util\TextSimplify;
 use Enhavo\Bundle\SearchBundle\Util\TextToWord;
-use JMS\Serializer\EventDispatcher\EventDispatcherInterface;
 use Pagerfanta\Pagerfanta;
 
 class DatabaseSearchEngine implements EngineInterface
@@ -124,6 +122,10 @@ class DatabaseSearchEngine implements EngineInterface
             $class = $this->classResolver->resolveClass($filter->getClass());
             $searchFilter->setContentClass($class);
         }
+
+        $searchFilter->setQueries($filter->getQueries());
+        $searchFilter->setOrderBy($filter->getOrderBy());
+        $searchFilter->setOrderDirection($filter->getOrderDirection());
 
         return $searchFilter;
     }

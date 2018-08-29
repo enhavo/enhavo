@@ -25,7 +25,7 @@ class Highlighter
 
     public function highlight($text, array $words, $textLength = 160, $startTag = '<span class"highlight">', $closeTag = '</span>', $concat = ' ... ')
     {
-        $textWords = explode(' ', $text);
+        $textWords = preg_split("/[\s]+/", $text);
         $searchWords = [];
         foreach($words as $word) {
             $searchWords[] = $this->textSimplify->simplify($word);
@@ -41,6 +41,10 @@ class Highlighter
                 $i += count($match->getForward());
                 $matches[] = $match;
             }
+        }
+
+        if(empty($match)) {
+            return '';
         }
 
         return $this->concatMatches($matches, $searchWords, $textLength, $startTag, $closeTag, $concat);
