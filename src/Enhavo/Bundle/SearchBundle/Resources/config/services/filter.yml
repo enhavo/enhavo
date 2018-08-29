@@ -1,0 +1,26 @@
+services:
+    enhavo_search.filter_provider_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'Search Filter Provider'
+
+    enhavo_search.filter.filter_data:
+        class: Enhavo\Bundle\SearchBundle\Filter\FilterData
+        arguments:
+            - '@enhavo_search.metadata.repository'
+            - '@enhavo_search.filter_provider_collector'
+
+    enhavo_search.filter.provider.value:
+        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\ValueDataProvider
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'value' }
+
+    enhavo_search.filter.provider.property:
+        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\PropertyDataProvider
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'property' }

@@ -13,6 +13,7 @@ Enhavo\Bundle\SearchBundle\Model\Database\Filter:
             type: string
             length: 255
             nullable: true
+            column: '`key`'
         value:
             type: string
             length: 255

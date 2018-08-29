@@ -3,11 +3,8 @@
 namespace Enhavo\Bundle\SearchBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\AppController;
-use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
-use Enhavo\Bundle\SearchBundle\Search\Filter\PermissionFilter;
-use Enhavo\Bundle\SearchBundle\Search\SearchEngineException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

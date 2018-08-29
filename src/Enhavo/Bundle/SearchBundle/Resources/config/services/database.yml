@@ -9,6 +9,7 @@ services:
             - '@enhavo_search.util.text_to_word'
             - '@enhavo_search.util.text_simplify'
             - '@enhavo_app.reference.target_class_resolver'
+            - '@enhavo_search.filter.filter_data'
 
     enhavo_search.event_listener.data_set_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener

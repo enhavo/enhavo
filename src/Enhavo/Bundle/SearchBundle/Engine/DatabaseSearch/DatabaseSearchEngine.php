@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Event\IndexEvent;
+use Enhavo\Bundle\SearchBundle\Filter\FilterData;
 use Enhavo\Bundle\SearchBundle\Model\Database\DataSet;
 use Enhavo\Bundle\SearchBundle\Model\Database\Index;
 use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
@@ -23,6 +24,7 @@ use Enhavo\Bundle\SearchBundle\Repository\IndexRepository;
 use Enhavo\Bundle\SearchBundle\Repository\TotalRepository;
 use Enhavo\Bundle\SearchBundle\Util\TextSimplify;
 use Enhavo\Bundle\SearchBundle\Util\TextToWord;
+use JMS\Serializer\EventDispatcher\EventDispatcherInterface;
 use Pagerfanta\Pagerfanta;
 
 class DatabaseSearchEngine implements EngineInterface
@@ -62,6 +64,11 @@ class DatabaseSearchEngine implements EngineInterface
      */
     private $classResolver;
 
+    /**
+     * @var FilterData
+     */
+    private $filterData;
+
     public function __construct(
         Indexer $indexer,
         MetadataRepository $metadataRepository,
@@ -69,7 +76,8 @@ class DatabaseSearchEngine implements EngineInterface
         Extractor $extractor,
         TextToWord $splitter,
         TextSimplify $simplifier,
-        TargetClassResolverInterface $classResolver
+        TargetClassResolverInterface $classResolver,
+        FilterData $filterData
     ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
@@ -78,6 +86,7 @@ class DatabaseSearchEngine implements EngineInterface
         $this->splitter = $splitter;
         $this->simplifier = $simplifier;
         $this->classResolver = $classResolver;
+        $this->filterData = $filterData;
     }
 
     public function search(Filter $filter)
@@ -124,24 +133,19 @@ class DatabaseSearchEngine implements EngineInterface
         if($this->metadataRepository->hasMetadata($resource)) {
             $dataSet = $this->findDataSetOrCreateNew($resource);
             $dataSet->resetIndex();
+            $dataSet->resetFilter();
             $indexes = $this->indexer->getIndexes($resource);
 
             $dataSetIndexes = $this->createIndexes($indexes);
-
             foreach($dataSetIndexes as $index) {
                 $dataSet->addIndex($index);
                 $index->setLocale($locale);
             }
 
-            $dataSetIndexes = $this->createFilters();
-
-
-            $event = new IndexEvent($resource);
-            $event->setIndexes($indexes);
-            $event->setFilters($filter);
-            $this->eventDispatcher->dispatch(Events::INDEX_EVENT, $event);
-
-
+            $filters = $this->createFilters($resource);
+            foreach($filters as $filter) {
+                $dataSet->addFilter($filter);
+            }
 
             $this->em->flush();
             $this->updateTotals($dataSet);
@@ -175,6 +179,19 @@ class DatabaseSearchEngine implements EngineInterface
             $this->updateIndexes($indexes);
         }
         return $dataSetIndexes;
+    }
+
+    private function createFilters($resource)
+    {
+        $results = [];
+        $filterData = $this->filterData->getData($resource);
+        foreach($filterData as $data) {
+            $filter = new \Enhavo\Bundle\SearchBundle\Model\Database\Filter();
+            $filter->setKey($data->getKey());
+            $filter->setValue($data->getValue());
+            $results[] = $filter;
+        }
+        return $results;
     }
 
     /**

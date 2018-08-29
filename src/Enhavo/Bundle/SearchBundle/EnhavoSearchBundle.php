@@ -37,6 +37,11 @@ class EnhavoSearchBundle extends Bundle
             new TypeCompilerPass('enhavo_search.indexer_collector', 'enhavo_search.indexer')
         );
 
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_search.filter_provider_collector', 'enhavo_search.filter_provider')
+        );
+
+
         $container->addCompilerPass(new ConfigCompilerPass($this->kernel, 'search', 'search_metadata'));
     }
 
