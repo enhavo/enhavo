@@ -31,17 +31,29 @@ class ResultConverter
         $this->extractor = $extractor;
     }
 
-    public function convert($result, $searchTerm)
+    public function convert($result, $searchTerm, ResultConfiguration $configuration = null)
     {
+        if($configuration === null) {
+            $configuration = new ResultConfiguration();
+        }
+
         $data = [];
         foreach($result as $resultItem) {
             $resultData = new Result();
 
             $text = $this->getText($resultItem);
-            $text = $this->highlighter->highlight($text, explode(' ', $searchTerm));
+
+            $text = $this->highlighter->highlight(
+                $text,
+                explode(' ', $searchTerm),
+                $configuration->getLength(),
+                $configuration->getStartTag(),
+                $configuration->getCloseTag(),
+                $configuration->getConcat()
+            );
 
             $resultData->setText($text);
-            $resultData->setTitle($this->guessTitle($resultData));
+            $resultData->setTitle($this->guessTitle($resultItem));
             $resultData->setSubject($resultItem);
 
             $data[] = $resultData;

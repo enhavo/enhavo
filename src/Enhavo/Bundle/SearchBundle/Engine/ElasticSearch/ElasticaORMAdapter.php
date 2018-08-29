@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Elastica\Query;
+use Elastica\Result;
 use Elastica\ResultSet;
 use Elastica\SearchableInterface;
 use Pagerfanta\Adapter\AdapterInterface;
@@ -90,9 +91,10 @@ class ElasticaORMAdapter implements AdapterInterface
     private function convertResultSet(ResultSet $resultSet)
     {
         $result = [];
+        /** @var Result $data */
         foreach($resultSet as $data) {
-            $id = $data['id'];
-            $className = $data['className'];
+            $id = $data->getDocument()->get('id');
+            $className = $data->getDocument()->get('className');
             $result[] = $this->em->getRepository($className)->find($id);
         }
         return $result;
