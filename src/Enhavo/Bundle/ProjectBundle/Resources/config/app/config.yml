@@ -101,3 +101,8 @@ cmf_routing:
 enhavo_search:
     search:
         indexing: true
+    index:
+        classes:
+            - Enhavo\Bundle\PageBundle\Entity\Page
+            - Enhavo\Bundle\ArticleBundle\Entity\Article
+            - Enhavo\Bundle\ShopBundle\Entity\Product

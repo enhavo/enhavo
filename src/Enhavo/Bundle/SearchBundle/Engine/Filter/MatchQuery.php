@@ -13,9 +13,10 @@ class MatchQuery implements QueryInterface
 {
     const OPERATOR_EQUAL = '=';
     const OPERATOR_GREATER = '>';
-    const OPERATOR_SMALLER = '<';
+    const OPERATOR_LESS = '<';
     const OPERATOR_GREATER_EQUAL = '>=';
-    const OPERATOR_SMALLER_EQUAL = '<=';
+    const OPERATOR_LESS_EQUAL = '<=';
+    const OPERATOR_NOT = '!=';
 
     /**
      * @var boolean

@@ -56,7 +56,7 @@ class MetadataFactory implements MetadataFactoryInterface
                 $filter->setOptions($options);
                 $filters[] = $filter;
             }
-            $metadata->setFilter($filters);
+            $metadata->setFilters($filters);
         }
 
         return $metadata;

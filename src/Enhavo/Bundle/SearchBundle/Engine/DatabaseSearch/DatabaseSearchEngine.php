@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Filter\FilterData;
+use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Enhavo\Bundle\SearchBundle\Model\Database\DataSet;
 use Enhavo\Bundle\SearchBundle\Model\Database\Index;
 use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
@@ -67,6 +68,11 @@ class DatabaseSearchEngine implements EngineInterface
      */
     private $filterData;
 
+    /**
+     * @var string[]
+     */
+    private $classes;
+
     public function __construct(
         Indexer $indexer,
         MetadataRepository $metadataRepository,
@@ -75,7 +81,8 @@ class DatabaseSearchEngine implements EngineInterface
         TextToWord $splitter,
         TextSimplify $simplifier,
         TargetClassResolverInterface $classResolver,
-        FilterData $filterData
+        FilterData $filterData,
+        $classes
     ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
@@ -85,6 +92,7 @@ class DatabaseSearchEngine implements EngineInterface
         $this->simplifier = $simplifier;
         $this->classResolver = $classResolver;
         $this->filterData = $filterData;
+        $this->classes = $classes;
     }
 
     public function search(Filter $filter)
@@ -132,7 +140,9 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function index($resource, $locale = null)
     {
-        if($this->metadataRepository->hasMetadata($resource)) {
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($resource);
+        if($metadata && in_array($metadata->getClassName(), $this->classes)) {
             $dataSet = $this->findDataSetOrCreateNew($resource);
             $dataSet->resetIndex();
             $dataSet->resetFilter();
@@ -282,7 +292,13 @@ class DatabaseSearchEngine implements EngineInterface
 
     public function reindex()
     {
-
+        foreach ($this->classes as $class) {
+            $repository = $this->em->getRepository($class);
+            $entities = $repository->findAll();
+            foreach($entities as $entity) {
+                $this->index($entity);
+            }
+        }
     }
 
     public function initialize()

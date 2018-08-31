@@ -7,7 +7,8 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.elastica.client'
             - '@enhavo_search.extractor.extractor'
-            - '@event_dispatcher'
+            - '@enhavo_search.filter.filter_data'
+            - '%enhavo_search.index.class%'
 
     enhavo_search.elastica.client:
         class: Elastica\Client

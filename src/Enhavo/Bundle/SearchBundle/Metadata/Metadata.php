@@ -39,7 +39,7 @@ class Metadata
     /**
      * @var array
      */
-    private $filter = [];
+    private $filters = [];
 
     /**
      * @return string
@@ -124,16 +124,16 @@ class Metadata
     /**
      * @return array
      */
-    public function getFilter()
+    public function getFilters()
     {
-        return $this->filter;
+        return $this->filters;
     }
 
     /**
      * @param array $filter
      */
-    public function setFilter($filter)
+    public function setFilters($filter)
     {
-        $this->filter = $filter;
+        $this->filters = $filter;
     }
 }

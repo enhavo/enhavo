@@ -46,7 +46,7 @@ class FilterData
 
         $result = [];
         /** @var Filter $filter */
-        foreach($metadata->getFilter() as $filter) {
+        foreach($metadata->getFilters() as $filter) {
             /** @var DataProviderInterface $dataProvider */
             $dataProvider = $this->collector->getType($filter->getType());
             $optionResolver = new OptionsResolver();
