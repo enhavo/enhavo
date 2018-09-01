@@ -259,8 +259,10 @@ class DatabaseSearchEngine implements EngineInterface
         /** @var Total[] $totalWords */
         $totalWords = $totalRepository->findWords(array_keys($words));
         foreach($totalWords as $totalWord) {
-            $totalWord->setCount($words[$totalWord->getWord()]);
-            unset($words[$totalWord->getWord()]);
+            if(isset($words[$totalWord->getWord()])) {
+                $totalWord->setCount($words[$totalWord->getWord()]);
+                unset($words[$totalWord->getWord()]);
+            }
         }
 
         foreach($words as $word => $count) {
