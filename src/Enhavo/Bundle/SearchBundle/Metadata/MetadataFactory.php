@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\SearchBundle\Metadata;
 
 use Enhavo\Bundle\AppBundle\Metadata\MetadataFactoryInterface;
-use Enhavo\Bundle\SearchBundle\Indexer\Filter;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -43,20 +42,21 @@ class MetadataFactory implements MetadataFactoryInterface
                 $propertyNode->setOptions($config);
                 $propertyNode->setProperty($property);
                 $properties[] = $propertyNode;
-
             }
             $metadata->setProperties($properties);
         }
 
         if(isset($configuration['filter'])) {
             $filters = [];
-            foreach($configuration['filter'] as $key => $value) {
+            foreach($configuration['filter'] as $key => $options) {
                 $filter = new Filter();
                 $filter->setKey($key);
-                $filter->setValue($value);
+                $filter->setType($options['type']);
+                unset($options['type']);
+                $filter->setOptions($options);
                 $filters[] = $filter;
             }
-            $metadata->setFilter($filters);
+            $metadata->setFilters($filters);
         }
 
         return $metadata;

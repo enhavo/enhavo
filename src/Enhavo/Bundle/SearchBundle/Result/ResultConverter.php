@@ -41,7 +41,7 @@ class ResultConverter
         foreach($result as $resultItem) {
             $resultData = new Result();
 
-            $text = $this->getText($resultItem);
+            $text = $this->getText($resultItem, $configuration);
 
             $text = $this->highlighter->highlight(
                 $text,
@@ -61,10 +61,10 @@ class ResultConverter
         return $data;
     }
 
-    private function getText($resultItem)
+    private function getText($resultItem, ResultConfiguration $configuration)
     {
         $text = $this->extractor->extract($resultItem);
-        $text = implode("\n", $text);
+        $text = implode($configuration->getConcat(), $text);
         return $text;
     }
 

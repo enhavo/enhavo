@@ -1,0 +1,9 @@
+Enhavo\Bundle\ShopBundle\Entity\Product:
+    properties:
+        title:
+            type: text
+            weight: 20
+    filter:
+        price:
+            type: property
+            property: price

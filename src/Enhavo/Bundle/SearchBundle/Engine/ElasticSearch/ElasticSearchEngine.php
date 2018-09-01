@@ -9,13 +9,15 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
+use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
+use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
+use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
+use Enhavo\Bundle\SearchBundle\Filter\FilterData;
+use Enhavo\Bundle\SearchBundle\Metadata\Filter as MetadataFilter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
-use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
-use Enhavo\Bundle\SearchBundle\Event\Events;
-use Enhavo\Bundle\SearchBundle\Event\IndexEvent;
 use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
 use Enhavo\Bundle\SearchBundle\Indexer\Indexer;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
@@ -56,18 +58,31 @@ class ElasticSearchEngine implements EngineInterface
     private $extractor;
 
     /**
-     * @var EventDispatcherInterface
+     * @var FilterData
      */
-    private $eventDispatcher;
+    private $filterData;
 
-    public function __construct(Indexer $indexer, MetadataRepository $metadataRepository, EntityManager $em, Client $client, Extractor $extractor, EventDispatcherInterface $eventDispatcher)
-    {
+    /**
+     * @var string[]
+     */
+    private $classes;
+
+    public function __construct(
+        Indexer $indexer,
+        MetadataRepository $metadataRepository,
+        EntityManager $em,
+        Client $client,
+        Extractor $extractor,
+        FilterData $filterData,
+        $classes
+    ) {
         $this->indexer = $indexer;
         $this->metadataRepository = $metadataRepository;
         $this->em = $em;
         $this->client = $client;
         $this->extractor = $extractor;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->filterData = $filterData;
+        $this->classes = $classes;
     }
 
     public function initialize()
@@ -77,28 +92,45 @@ class ElasticSearchEngine implements EngineInterface
             $index->create();
         }
 
-        $type = $this->getType();
-
         $mapping = new Mapping();
-        $mapping->setType($type);
+        $mapping->setType($this->getType());
 
         $indexData = [];
-        for($i = 0; $i <= 100; $i++) {
-            $indexData['value'.$i] = array('type' => 'text', 'boost' => $i);
+        for ($i = 0; $i <= 100; $i++) {
+            $indexData['value.' . $i] = array('type' => 'text', 'boost' => $i);
+        }
+
+        $filterData = [];
+        foreach($this->classes as $class) {
+            $metadata = $this->metadataRepository->getMetadata($class);
+            $filters = $metadata->getFilters();
+
+            /** @var MetadataFilter $filter */
+            foreach($filters as $filter) {
+                $filterData[$filter->getKey()] = array('type' => 'keyword');
+            }
         }
 
         $mapping->setProperties(array(
-            'className' => array('type' => 'text'),
+            'id' => array('type' => 'keyword'),
+            'className' => array('type' => 'keyword'),
             'indexData' => array(
                 'type' => 'object',
                 'properties' => $indexData
             ),
             'filterData' => array(
                 'type' => 'object',
+                'properties' => $filterData
             ),
         ));
 
         $mapping->send();
+    }
+
+    private function getType()
+    {
+        $type = $this->getIndex()->getType(self::ELASTIC_SEARCH_TYPE);
+        return $type;
     }
 
     /**
@@ -109,32 +141,72 @@ class ElasticSearchEngine implements EngineInterface
     {
         $query = new Query\BoolQuery();
 
-        for($i = 1; $i <= 100; $i++) {
-            $query->addShould(new Query\Match(sprintf('indexData.value%s', $i), $filter->getTerm()));
+        if($filter->getTerm()) {
+            for($i = 1; $i <= 100; $i++) {
+                $query->addShould(new Query\Match(sprintf('indexData.value.%s', $i), $filter->getTerm()));
+            }
+            $query->setMinimumShouldMatch(1);
         }
-        $query->setMinimumShouldMatch(1);
 
-        foreach($filter->getFilter() as $key => $value) {
+        foreach($filter->getQueries() as $key => $filterQuery) {
             $fieldName = sprintf('filterData.%s', $key);
-            $filterQuery = new Query\Term();
-            $filterQuery->setTerm($fieldName, $value);
-            $query->addFilter($filterQuery);
+            $query->addFilter($this->createFilterQuery($fieldName, $filterQuery));
         }
 
         if($filter->getClass()) {
-            $filterQuery = new Query\Match('className', $filter->getClass());
-            $query->addFilter($filterQuery);
+            $termQuery = new Query\Term();
+            $termQuery->setTerm('className', $filter->getClass());
+            $query->addFilter($termQuery);
         }
 
         return $query;
+    }
+
+    private function createFilterQuery($fieldName, $filterQuery)
+    {
+        if($filterQuery instanceof MatchQuery) {
+            if($filterQuery->getOperator() == MatchQuery::OPERATOR_EQUAL) {
+                $query = new Query\Term();
+                $query->setTerm($fieldName, $filterQuery->getValue());
+                return $query;
+            } elseif($filterQuery->getOperator() == MatchQuery::OPERATOR_NOT) {
+                $query = new Query\Term();
+                $query->setTerm($fieldName, $filterQuery->getValue());
+                $boolQuery = new Query\BoolQuery();
+                $boolQuery->addMustNot($query);
+                return $query;
+            } else {
+                $operatorMap = [
+                    MatchQuery::OPERATOR_GREATER => 'gt',
+                    MatchQuery::OPERATOR_GREATER_EQUAL => 'gte',
+                    MatchQuery::OPERATOR_LESS => 'lt',
+                    MatchQuery::OPERATOR_LESS_EQUAL => 'lte',
+                ];
+                $query = new Query\Range($fieldName, [$operatorMap[$filterQuery->getOperator()] => $filterQuery->getValue()]);
+                return $query;
+            }
+        } elseif($filterQuery instanceof BetweenQuery) {
+            $operatorFromMap = [
+                BetweenQuery::OPERATOR_THAN => 'gt',
+                BetweenQuery::OPERATOR_EQUAL_THAN => 'gte',
+            ];
+            $operatorToMap = [
+                BetweenQuery::OPERATOR_THAN => 'lt',
+                BetweenQuery::OPERATOR_EQUAL_THAN => 'lte',
+            ];
+            $query = new Query\Range($fieldName, [
+                $operatorFromMap[$filterQuery->getOperatorFrom()] => $filterQuery->getFrom(),
+                $operatorToMap[$filterQuery->getOperatorTo()] => $filterQuery->getTo()
+            ]);
+            return $query;
+        }
+        throw new FilterQueryNotSupportedException(sprintf('Filter query from type "%s" is not supported', get_class($filterQuery)));
     }
 
     public function search(Filter $filter)
     {
         $search = new Search($this->client);
         $search->addIndex(self::ELASTIC_SEARCH_INDEX);
-        $search->addType(self::ELASTIC_SEARCH_TYPE);
-
         $search->setQuery($this->createQuery($filter));
 
         $result = [];
@@ -149,14 +221,16 @@ class ElasticSearchEngine implements EngineInterface
 
     public function searchPaginated(Filter $filter)
     {
-        $type = $this->getType();
         $query = new Query($this->createQuery($filter));
-        return new Pagerfanta(new ElasticaORMAdapter($type, $query, $this->em));
+        $searchable = $this->getIndex();
+        return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em));
     }
 
     public function index($resource)
     {
-        if($this->metadataRepository->hasMetadata($resource)) {
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($resource);
+        if($metadata && in_array($metadata->getClassName(), $this->classes)) {
             $index = $this->getIndex();
             $document = $this->createDocument($resource);
             $type = $this->getType();
@@ -175,15 +249,6 @@ class ElasticSearchEngine implements EngineInterface
     }
 
     /**
-     * @return \Elastica\Type
-     */
-    private function getType()
-    {
-        $type = $this->client->getIndex(self::ELASTIC_SEARCH_INDEX)->getType(self::ELASTIC_SEARCH_TYPE);
-        return $type;
-    }
-
-    /**
      * @param $resource
      * @return Document
      */
@@ -192,15 +257,6 @@ class ElasticSearchEngine implements EngineInterface
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
         $indexes = $this->indexer->getIndexes($resource);
-        $filter = $metadata->getFilter();
-
-        $event = new IndexEvent($resource);
-        $event->setIndexes($indexes);
-        $event->setFilters($filter);
-        $this->eventDispatcher->dispatch(Events::INDEX_EVENT, $event);
-
-        $indexes = $event->getIndexes();
-        $filter = $event->getFilters();
 
         $id = $resource->getId();
         $className = $metadata->getClassName();
@@ -209,7 +265,7 @@ class ElasticSearchEngine implements EngineInterface
         $indexData = [];
         foreach($indexes as $index) {
             $weight = intval($index->getWeight());
-            $key = 'value'.$weight;
+            $key = 'value.'.$weight;
             if(!array_key_exists($key, $indexData)) {
                 $indexData[$key] = [];
             }
@@ -217,8 +273,8 @@ class ElasticSearchEngine implements EngineInterface
         }
 
         $filterData = [];
-        foreach($filter as $filterItem) {
-            $filterData[$filterItem->getKey()] = $filterItem->getValue();
+        foreach($this->filterData->getData($resource) as $data) {
+            $filterData[$data->getKey()] = $data->getValue();
         }
 
         $data = [
@@ -252,6 +308,14 @@ class ElasticSearchEngine implements EngineInterface
 
     public function reindex()
     {
-
+        $this->getIndex()->delete();
+        $this->initialize();
+        foreach ($this->classes as $class) {
+            $repository = $this->em->getRepository($class);
+            $entities = $repository->findAll();
+            foreach($entities as $entity) {
+                $this->index($entity);
+            }
+        }
     }
 }
