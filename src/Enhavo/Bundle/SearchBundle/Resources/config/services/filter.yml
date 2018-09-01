@@ -24,3 +24,10 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'property' }
+
+    enhavo_search.filter.provider.date:
+        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\DateDataProvider
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo_search.filter_provider, alias: 'date' }

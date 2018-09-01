@@ -101,4 +101,20 @@ class BetweenQuery implements QueryInterface
     {
         return $this->operatorTo;
     }
+
+    /**
+     * @param string $operatorFrom
+     */
+    public function setOperatorFrom($operatorFrom)
+    {
+        $this->operatorFrom = $operatorFrom;
+    }
+
+    /**
+     * @param string $operatorTo
+     */
+    public function setOperatorTo($operatorTo)
+    {
+        $this->operatorTo = $operatorTo;
+    }
 }
