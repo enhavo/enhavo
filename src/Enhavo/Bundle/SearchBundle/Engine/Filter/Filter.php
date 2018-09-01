@@ -110,7 +110,7 @@ class Filter
      * @param string $orderBy
      * @param string $orderDirection
      */
-    public function setOrderBy($orderBy, $orderDirection)
+    public function setOrderBy($orderBy, $orderDirection = null)
     {
         $this->orderDirection = $orderDirection;
         $this->orderBy = $orderBy;

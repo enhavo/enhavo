@@ -54,6 +54,13 @@ class IndexRepository extends EntityRepository
 
         $query->groupBy('d.id');
 
+        $i = 0;
+        foreach($filter->getWords() as  $word) {
+            $query->orWhere('i.word = :word_'.$i);
+            $query->setParameter('word_'.$i, $word);
+            $i++;
+        }
+
         if($filter->getQueries()) {
             $i = 0;
             foreach($filter->getQueries() as $key => $filerQuery) {
