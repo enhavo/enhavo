@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Pagerfanta\Adapter\AdapterInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 
 class DatabaseSearchAdapter implements AdapterInterface
 {
@@ -21,22 +21,22 @@ class DatabaseSearchAdapter implements AdapterInterface
     private $resolver;
 
     /**
-     * @var DoctrinePaginator
+     * @var QueryBuilder
      */
-    private $paginator;
+    private $queryBuilder;
 
     public function __construct(QueryBuilder $queryBuilder, TargetClassResolverInterface $resolver)
     {
-        $this->paginator = new DoctrinePaginator($queryBuilder, false);
-        $this->paginator->setUseOutputWalkers(null);
         $this->resolver = $resolver;
+        $this->queryBuilder = $queryBuilder;
     }
     /**
      * {@inheritdoc}
      */
     public function getNbResults()
     {
-        return count($this->paginator);
+        $queryBuilder = clone $this->queryBuilder;
+        return count($queryBuilder->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY));
     }
 
     /**
@@ -44,13 +44,14 @@ class DatabaseSearchAdapter implements AdapterInterface
      */
     public function getSlice($offset, $length)
     {
-        $this->paginator
-            ->getQuery()
-            ->setFirstResult($offset)
-            ->setMaxResults($length);
+        $queryBuilder = clone $this->queryBuilder;
+        $queryBuilder->setFirstResult($offset);
+        $queryBuilder->setMaxResults($length);
+
+        $rows = $queryBuilder->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
 
         $result = [];
-        foreach($this->paginator->getIterator() as $item) {
+        foreach($rows as $item) {
             $result[] = $this->resolver->find($item['id'], $item['class']);
         }
         return $result;
