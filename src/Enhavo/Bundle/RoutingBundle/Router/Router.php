@@ -14,6 +14,7 @@ use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Router
