@@ -41,18 +41,18 @@ class IndexRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('i');
         $query->select(
-            'd.contentId AS id',
-            'd.contentClass AS class',
+            'min(d.contentId) AS id',
+            'min(d.contentClass) AS class',
             'sum(i.score * t.count) AS calculated_score',
-            'f.value AS value',
-            'f.key AS key'
+            'min(f.value) AS value',
+            'min(f.key) AS key'
         );
 
         $query->innerJoin(Total::class, 't', 'WITH', 'i.word = t.word');
         $query->innerJoin(DataSet::class, 'd', 'WITH', 'i.dataSet = d');
         $query->leftJoin('d.filters', 'f');
 
-        $query->groupBy('d.id');
+        $query->groupBy('d.contentId');
 
         $i = 0;
         foreach($filter->getWords() as  $word) {
