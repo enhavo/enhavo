@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -208,7 +209,6 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $viewerFactory = $this->getViewerFactoryMock();
         $sortingManager = $this->getSortingManagerMock();
         $batchManager = $this->getBatchManagerMock();
-        $symfonyEventDispatcher = $this->getSymfonyEventDispatcherMock();
 
         $controller = new ResourceController(
             $metadata,
@@ -228,8 +228,7 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
             $stateMachine,
             $viewerFactory,
             $sortingManager,
-            $batchManager,
-            $symfonyEventDispatcher
+            $batchManager
         );
 
         return $controller;
@@ -283,6 +282,11 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $attributes = new ParameterBag();
+        $attributes->set('id', 1);
+
+        $request->attributes = $attributes;
 
         $response = $controller->previewAction($request);
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);

@@ -132,7 +132,8 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
         e.preventDefault();
         e.stopPropagation();
         var route = $(this).data('route');
-        var link = router.generate(route);
+        var routeParameters = $(this).data('route-parameters');
+        var link = router.generate(route, routeParameters);
 
         var data = {
           form: form,

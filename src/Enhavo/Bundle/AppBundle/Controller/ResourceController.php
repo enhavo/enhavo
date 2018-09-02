@@ -204,21 +204,26 @@ class ResourceController extends BaseController
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
 
         if($this->eventDispatcher instanceof EventDispatcher) {
             $this->eventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
         }
 
-        $newResource = $this->newResourceFactory->create($configuration, $this->factory);
-        $form = $this->resourceFormFactory->create($configuration, $newResource);
+        if($request->attributes->has('id')) {
+            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
+            $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
+        } else {
+            $resource = $this->newResourceFactory->create($configuration, $this->factory);
+            $this->isGrantedOr403($configuration, ResourceActions::CREATE);
+        }
 
+        $form = $this->resourceFormFactory->create($configuration, $resource);
         $form->handleRequest($request);
 
         $viewer = $this->viewerFactory->create(
             $configuration,
             $this->metadata,
-            $newResource,
+            $resource,
             $form,
             'preview'
         );

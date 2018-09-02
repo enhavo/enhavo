@@ -27,7 +27,8 @@ class PreviewButton extends AbstractType implements ButtonInterface
             'role' => isset($options['role']) ? $options['role'] : null,
             'label' => isset($options['label']) ? $options['label'] : 'label.preview',
             'translationDomain' => isset($options['translationDomain']) ? $options['translationDomain'] : 'EnhavoAppBundle',
-            'route' => $options['route']
+            'route' => $options['route'],
+            'routeParameters' => $this->getOption('routeParameters', $options, [])
         ]);
     }
 
