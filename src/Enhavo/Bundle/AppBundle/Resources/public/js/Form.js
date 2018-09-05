@@ -45,6 +45,32 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
       });
     };
 
+    this.initAutoComplete = function(form) {
+      console.log('init auto complete');
+      $(form).find('[data-auto-complete-entity]').each(function () {
+        var data = $(this).data('auto-complete-entity');
+        $(this).select2({
+          tags: data.multiple,
+          minimumInputLength: data.minimum_input_length,
+          ajax: {
+            url: data.url,
+            delay: 500,
+            data: function (searchTerm, page) {
+              return {
+                q: searchTerm,
+                page: page || 1
+              };
+            },
+            processResults: function (data) {
+              return data;
+            },
+            cache: true
+          }
+        });
+        $(this).select2('data', data.value);
+      });
+    };
+
     this.initWysiwyg = function (form) {
       var uuidv4 = function () {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -345,7 +371,7 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
           }
         }
       }
-    };
+    }
 
     this.reindex = function (item, initialize) {
       if (typeof item == 'undefined') {
@@ -420,6 +446,7 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
       $(item).find('[name]').each(function () {
         $(this).attr('data-form-name', $(this).attr('name')).attr('data-form-placeholder', placeholder);
       });
+
     };
 
     var init = function () {
@@ -432,6 +459,7 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
         self.initSorting(form);
         self.initInput(form);
         self.initList(form);
+        self.initAutoComplete(form);
       });
 
       $(document).on('formListAddItem', function (event, item) {
@@ -441,6 +469,7 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
         self.initInput(item);
         self.initWysiwyg(item);
         self.initList(item);
+        self.initAutoComplete(item);
       });
 
       $(document).on('formCloseAfter', function (event, content) {
