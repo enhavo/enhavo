@@ -84,3 +84,12 @@ services:
         class: Enhavo\Bundle\AppBundle\Form\Extension\ConditionTypeExtension
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    enhavo_app.form.auto_complete_entity:
+        class: Enhavo\Bundle\AppBundle\Form\Type\AutoCompleteEntityType
+        arguments:
+            - '@router'
+            - '@doctrine.orm.entity_manager'
+            - '@property_accessor'
+        tags:
+            - { name: form.type, alias: 'enhavo_auto_complete_entity' }
