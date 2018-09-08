@@ -2,6 +2,11 @@ Enhavo\Bundle\SearchBundle\Model\Database\Filter:
     type: entity
     table: search_filter
     repositoryClass: Enhavo\Bundle\SearchBundle\Repository\IndexRepository
+    indexes:
+        key_idx:
+            columns: [ key ]
+        value_idx:
+            columns: [ value ]
     id:
         id:
             type: integer
