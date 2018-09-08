@@ -27,10 +27,17 @@ class BillingGenerator implements GeneratorInterface
     
     public function generate(OrderInterface $order, $options = [])
     {
+        if(!array_key_exists('enable_tax_19', $options)) {
+            $options['enable_tax_19'] = true;
+        }
+
+        if(!array_key_exists('enable_tax_7', $options)) {
+            $options['enable_tax_7'] = true;
+        }
+
         $currencyFormatter = $this->container->get('enhavo_app.formatter.currency_formatter');
 
         $pdf = new BaseDocument();
-        $pdf->SetTitle("Rechnung");
 
         /**
          * @var OrderItem[] $items
@@ -74,7 +81,7 @@ class BillingGenerator implements GeneratorInterface
             $stdFont = "pdfahelvetica";
             $stdFontBold = "pdfahelveticab";
 
-            if($order->getState() == "cancelled") {
+            if($order->getState() == OrderInterface::STATE_CANCELLED) {
                 $subject = "Stornierung zu Rechnung " . $order->getNumber();
             } else {
                 $subject = "Rechnung";
@@ -209,7 +216,14 @@ class BillingGenerator implements GeneratorInterface
         $pdf->MultiCell($sumWidth,0,"Zwischensumme:",0,"R",false,1,$sumMarginLeft);
         $pdf->MultiCell($sumWidth,0,"Versandkosten:",0,"R",false,1,$sumMarginLeft);
 
-        $pdf->MultiCell($sumWidth,0,"19% gesetzl. USt.",0,"R",false,1,$sumMarginLeft);
+        if(isset($options['enable_tax_19']) && $options['enable_tax_19']) {
+            $pdf->MultiCell($sumWidth, 0, "19% gesetzl. USt.", 0, "R", false, 1, $sumMarginLeft);
+        }
+
+        if(isset($options['enable_tax_7']) && $options['enable_tax_7']) {
+            $pdf->MultiCell($sumWidth,0,"7% gesetzl. USt.",0,"R",false,1,$sumMarginLeft);
+        }
+
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumWidth,0,"Rechnungsbetrag:",0,"R",false,1,$sumMarginLeft);
@@ -217,7 +231,6 @@ class BillingGenerator implements GeneratorInterface
         $shippingNetSum = $currencyFormatter->getCurrency($order->getShippingTotal());
         $netSum = $currencyFormatter->getCurrency($order->getUnitTotal());
         // not available in order?
-        $shippingTaxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '19', true));
         $totalSum = $currencyFormatter->getCurrency($order->getTotal());
 
         $pdf->SetFont($stdFont);
@@ -226,7 +239,16 @@ class BillingGenerator implements GeneratorInterface
         $pdf->MultiCell($sumValueWidth,0,$netSum,0,"L",false,1,$sumValueMarginLeft);
         $pdf->MultiCell($sumValueWidth,0,$shippingNetSum,0,"L",false,1,$sumValueMarginLeft);
 
-        $pdf->MultiCell($sumValueWidth,0,$shippingTaxValue,0,"L",false,1,$sumValueMarginLeft);
+        if(isset($options['enable_tax_19']) && $options['enable_tax_19']) {
+            $taxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '19', true));
+            $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
+        }
+
+        if(isset($options['enable_tax_7']) && $options['enable_tax_7']) {
+            $taxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '7', true));
+            $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
+        }
+
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumValueWidth,0,$totalSum,0,"L",false,1,$sumValueMarginLeft);

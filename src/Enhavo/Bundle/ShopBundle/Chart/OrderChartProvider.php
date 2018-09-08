@@ -42,9 +42,11 @@ class OrderChartProvider extends AbstractType implements ChartProviderInterface
 
     public function getData($options = [])
     {
+        $months = $this->getOption('months', $options, 12);
+
         $to = new \DateTime();
         $from = clone $to;
-        $from->modify('-6 months');
+        $from->modify(sprintf('-%s months', $months));
         $from->modify('first day of this month');
         $from->setTime(0,0,0);
         $data = $this->getDataFromTo($from, $to);
