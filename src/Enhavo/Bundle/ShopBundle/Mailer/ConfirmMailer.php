@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Mailer;
 
+use Enhavo\Bundle\ShopBundle\Document\GeneratorInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Enhavo\Bundle\ShopBundle\Document\BillingGenerator;
 
 class ConfirmMailer extends AbstractMailer
 {
@@ -23,7 +23,10 @@ class ConfirmMailer extends AbstractMailer
         $attach = \Swift_Attachment::newInstance();
         $attach->setFilename('bill.pdf');
         $attach->setContentType('application/pdf');
-        $attach->setBody($this->getBillingGenerator()->generate($order));
+        $attach->setBody($this->getBillingGenerator()->generate(
+            $order,
+            $this->getBillingGeneratorOptions()
+        ));
 
         $message = $this->createMessage();
         $message->addFrom($this->from, $this->senderName);
@@ -36,10 +39,18 @@ class ConfirmMailer extends AbstractMailer
     }
 
     /**
-     * @return BillingGenerator
+     * @return GeneratorInterface
      */
     protected function getBillingGenerator()
     {
-        return $this->container->get($this->container->getParameter('enhavo_shop.document.billing')['generator']);
+        $generatorConfig = $this->container->getParameter('enhavo_shop.document.billing.generator');
+        /** @var GeneratorInterface $generator */
+        $generator = $this->container->get($generatorConfig);
+        return $generator;
+    }
+    
+    protected function getBillingGeneratorOptions()
+    {
+        return $this->container->getParameter('enhavo_shop.document.billing.options');
     }
 }
