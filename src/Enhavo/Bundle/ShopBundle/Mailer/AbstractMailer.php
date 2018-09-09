@@ -80,6 +80,9 @@ abstract class AbstractMailer implements MailerInterface
         return $template;
     }
 
+    /**
+     * @return \Swift_Message
+     */
     protected function createMessage()
     {
         return \Swift_Message::newInstance();

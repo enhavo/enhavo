@@ -30,8 +30,13 @@ class EnhavoShopExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_shop.mailer.notification', $config['mailer']['notification']);
         $container->setParameter('enhavo_shop.mailer.notification.service', $config['mailer']['notification']['service']);
 
-        $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']);
-        $container->setParameter('enhavo_shop.document.packing_slip', $config['document']['packing_slip']);
+        $container->setParameter('enhavo_shop.document.billing', $config['document']['billing']); //Todo: Can be removed in next version
+        $container->setParameter('enhavo_shop.document.billing.generator', $config['document']['billing']['generator']);
+        $container->setParameter('enhavo_shop.document.billing.options', $config['document']['billing']['options']);
+
+        $container->setParameter('enhavo_shop.document.packing_slip', $config['document']['packing_slip']); //Todo: Can be removed in next version
+        $container->setParameter('enhavo_shop.document.packing_slip.generator', $config['document']['packing_slip']['generator']);
+        $container->setParameter('enhavo_shop.document.packing_slip.options', $config['document']['packing_slip']['options']);
 
         $container->setParameter('enhavo_shop.payment.paypal.logo', $config['payment']['paypal']['logo']);
         $container->setParameter('enhavo_shop.payment.paypal.branding', $config['payment']['paypal']['branding']);
