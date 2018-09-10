@@ -70,6 +70,7 @@ order:
     packed: Packed
     shipped: Shipped
     cancelled: Cancelled
+    shippingMethod: Shipping type
 
   action:
     transfer: Transfer to cart
