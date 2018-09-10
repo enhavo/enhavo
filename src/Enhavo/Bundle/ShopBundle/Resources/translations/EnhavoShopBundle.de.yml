@@ -70,6 +70,7 @@ order:
     packed: Verpackt
     shipped: Versendet
     cancelled: Storniert
+    shippingMethod: Versandart
 
   action:
     transfer: In den Warenkorb
