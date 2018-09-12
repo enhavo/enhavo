@@ -46,11 +46,10 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
     };
 
     this.initAutoComplete = function(form) {
-      console.log('init auto complete');
       $(form).find('[data-auto-complete-entity]').each(function () {
         var data = $(this).data('auto-complete-entity');
-        $(this).select2({
-          tags: data.multiple,
+
+        var config = {
           minimumInputLength: data.minimum_input_length,
           ajax: {
             url: data.url,
@@ -62,11 +61,23 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
               };
             },
             processResults: function (data) {
+              console.log(data);
               return data;
             },
             cache: true
           }
-        });
+        };
+
+        if(data.multiple) {
+          config.tags = true;
+        }
+
+        if(data.placeholder) {
+          config.placeholder = data.placeholder;
+          config.allowClear = true
+        }
+
+        $(this).select2(config);
         $(this).select2('data', data.value);
       });
     };
