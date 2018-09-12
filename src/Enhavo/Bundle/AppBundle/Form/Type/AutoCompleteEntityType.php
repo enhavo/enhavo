@@ -130,7 +130,8 @@ class AutoCompleteEntityType extends AbstractType
             'route_parameters' => $options['route_parameters'],
             'value' => $view->vars['value'],
             'multiple' => $options['multiple'],
-            'minimum_input_length' => $options['minimum_input_length']
+            'minimum_input_length' => $options['minimum_input_length'],
+            'placeholder' => $options['placeholder'],
         ];
         $view->vars['multiple'] = $options['multiple'];
     }
@@ -147,7 +148,8 @@ class AutoCompleteEntityType extends AbstractType
             'route_parameters' => [],
             'compound' => false,
             'multiple' => false,
-            'minimum_input_length' => 0
+            'minimum_input_length' => 0,
+            'placeholder' => null
         ]);
         
         $resolver->setRequired([
