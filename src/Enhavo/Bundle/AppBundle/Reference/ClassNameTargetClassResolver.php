@@ -28,6 +28,10 @@ class ClassNameTargetClassResolver implements TargetClassResolverInterface
 
     public function find($id, $class)
     {
+        if(!class_exists($class)) {
+            return null;
+        }
+
         $repository = $this->getRepository($class);
         return $repository->find($id);
     }
