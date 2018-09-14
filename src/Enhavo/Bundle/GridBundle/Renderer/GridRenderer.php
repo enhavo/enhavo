@@ -8,12 +8,14 @@
 
 namespace Enhavo\Bundle\GridBundle\Renderer;
 
-use Enhavo\Bundle\GridBundle\Entity\Column;
-use Enhavo\Bundle\GridBundle\Entity\Grid;
+use Enhavo\Bundle\GridBundle\Context\ContextBuilder;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 use Enhavo\Bundle\GridBundle\Model\Context;
+use Enhavo\Bundle\GridBundle\Model\ContextAwareInterface;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Enhavo\Bundle\GridBundle\Resolver\ItemResolver;
+use Symfony\Component\Asset\Context\ContextInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class GridRenderer
@@ -25,9 +27,21 @@ class GridRenderer
      */
     private $resolver;
 
-    public function __construct(ItemResolver $resolver)
+    /**
+     * @var ContextBuilder
+     */
+    private $contextBuilder;
+
+    /**
+     * GridRenderer constructor.
+     *
+     * @param ItemResolver $resolver
+     * @param ContextBuilder $contextBuilder
+     */
+    public function __construct(ItemResolver $resolver, ContextBuilder $contextBuilder)
     {
         $this->resolver = $resolver;
+        $this->contextBuilder = $contextBuilder;
     }
 
     /**
@@ -42,55 +56,34 @@ class GridRenderer
     }
 
     /**
-     * @param Grid|null $grid
+     * @param GridInterface|ItemInterface $content
      * @param array|null $templateSet
      * @param array|null $onlyRenderTypes
+     * @param Context|null $parentContext
      * @return string
      */
-    public function render(Grid $grid = null, $templateSet = null, $onlyRenderTypes = null)
+    public function render($content = null, $templateSet = null, $onlyRenderTypes = null, Context $parentContext = null)
     {
-        if($grid === null) {
-            return '';
+        if($content instanceof ContextAwareInterface && empty($content->getContext())) {
+            $this->contextBuilder->build($content, $parentContext);
         }
 
-        /** @var ItemInterface[] $items */
-        $items = $grid->getItems();
-        $context = new Context();
-        $context->setData($grid);
-
-        return $this->renderItems($items, $context, $templateSet, $onlyRenderTypes);
-    }
-
-    /**
-     * @param Column $column
-     * @param Context $context
-     * @param string[]|null $templateSet
-     * @param string[]|null $onlyRenderTypes
-     * @return string
-     */
-    public function renderColumn(Column $column, Context $context, $templateSet = null, $onlyRenderTypes = null)
-    {
-        if($column === null) {
-            return '';
+        if($content instanceof GridInterface) {
+            return $this->renderItems($content->getItems(), $templateSet, $onlyRenderTypes);
         }
 
-        /** @var ItemInterface[] $items */
-        $items = $column->getItems();
-        $currentContext = new Context();
-        $currentContext->setData($column);
-        $currentContext->setParent($context);
-
-        return $this->renderItems($items, $currentContext, $templateSet, $onlyRenderTypes);
+        if($content instanceof ItemInterface) {
+            return $this->renderItems([$content], $templateSet, $onlyRenderTypes);
+        }
     }
 
     /**
      * @param ItemInterface[] $items
-     * @param Context $context
      * @param array|null $templateSet
      * @param array|null $onlyRenderTypes
      * @return string
      */
-    private function renderItems($items, Context $context, $templateSet = null, $onlyRenderTypes = null)
+    private function renderItems($items, $templateSet = null, $onlyRenderTypes = null)
     {
         $return = [];
         if($items) {
@@ -102,26 +95,12 @@ class GridRenderer
                 }
                 $toRenderItems[] = $item;
             }
-
-            /** @var Context[] $contextMap */
-            $contextMap = [];
-            for($i = 0; $i < count($toRenderItems); $i++) {
-                $contextMap[$i] = new Context();
-                $contextMap[$i]->setParent($context);
-                $contextMap[$i]->setData($item);
-                $item = $toRenderItems[$i];
-                if($i > 0) {
-                    $contextMap[$i-1]->setNext($contextMap[$i]);
-                    $contextMap[$i]->setBefore($contextMap[$i-1]);
-                }
-            }
-
-            for($i = 0; $i < count($toRenderItems); $i++) {
+            foreach($toRenderItems as $items) {
                 $template = null;
                 if(is_array($templateSet) && array_key_exists($item->getName(), $templateSet)) {
                     $template = $templateSet[$item->getName()];
                 }
-                $return[] = $this->renderItem($toRenderItems[$i], $contextMap[$i], $template);
+                $return[] = $this->renderItem($items, $template);
             }
         }
         return join('', $return);
@@ -129,17 +108,19 @@ class GridRenderer
 
     /**
      * @param ItemInterface $item
-     * @param Context $context
      * @param string $template
      * @return string
      */
-    public function renderItem(ItemInterface $item, Context $context, $template = null)
+    private function renderItem(ItemInterface $item, $template = null)
     {
         if($template === null) {
             $template = $this->resolver->resolveItem($item->getName())->getTemplate();
         }
 
-        $context->setData($item);
+        $context = null;
+        if($item instanceof ContextAwareInterface) {
+            $context = $item->getContext();
+        }
 
         return $this->renderTemplate($template, [
             'data' => $item->getItemType(),

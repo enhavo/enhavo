@@ -1,4 +1,6 @@
 services:
+    enhavo_grid.context.builder:
+        class: Enhavo\Bundle\GridBundle\Context\ContextBuilder
 
     enhavo_grid.form.items:
         class: Enhavo\Bundle\GridBundle\Form\Type\ItemsType
@@ -18,6 +20,7 @@ services:
         class: Enhavo\Bundle\GridBundle\Renderer\GridRenderer
         arguments:
             - '@enhavo_grid.resolver.item_resolver'
+            - '@enhavo_grid.context.builder'
         calls:
             - [ setContainer, ['@service_container']]
 

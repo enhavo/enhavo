@@ -5,17 +5,17 @@ Enhavo\Bundle\GridBundle\Model\Column\ThreeColumnItem:
     manyToOne:
         columnOne:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
             joinColumn:
                 onDelete: CASCADE
         columnTwo:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
             joinColumn:
                 onDelete: CASCADE
         columnThree:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
             joinColumn:
                 onDelete: CASCADE
 

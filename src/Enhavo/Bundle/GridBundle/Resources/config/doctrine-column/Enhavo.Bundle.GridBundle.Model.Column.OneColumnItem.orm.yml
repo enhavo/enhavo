@@ -5,7 +5,7 @@ Enhavo\Bundle\GridBundle\Model\Column\OneColumnItem:
     manyToOne:
         column:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
             joinColumn:
                 onDelete: CASCADE
 

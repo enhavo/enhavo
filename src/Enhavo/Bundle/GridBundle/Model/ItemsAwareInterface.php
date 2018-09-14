@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\GridBundle\Model;
 
 
-interface ItemAwareInterface
+interface ItemsAwareInterface
 {
     /**
      * AddItem

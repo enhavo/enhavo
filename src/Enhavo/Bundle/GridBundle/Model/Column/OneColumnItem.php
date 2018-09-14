@@ -3,17 +3,18 @@
 namespace Enhavo\Bundle\GridBundle\Model\Column;
 
 use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
-use Enhavo\Bundle\GridBundle\Entity\Column;
+use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
+use Enhavo\Bundle\GridBundle\Model\GridInterface;
 
-class OneColumnItem extends AbstractItem
+class OneColumnItem extends AbstractItem implements GridsAwareInterface
 {
     /**
-     * @var Column
+     * @var GridInterface
      */
     private $column;
 
     /**
-     * @return Column
+     * @return GridInterface
      */
     public function getColumn()
     {
@@ -21,10 +22,18 @@ class OneColumnItem extends AbstractItem
     }
 
     /**
-     * @param Column $column
+     * @param GridInterface $column
      */
     public function setColumn($column)
     {
         $this->column = $column;
+    }
+
+    public function getGrids()
+    {
+        if($this->column) {
+            return [$this->column];
+        }
+        return [];
     }
 }
