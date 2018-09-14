@@ -2,24 +2,30 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
+use Enhavo\Bundle\GridBundle\Model\Context;
+use Enhavo\Bundle\GridBundle\Model\ContextAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
-use Enhavo\Bundle\GridBundle\Model\ItemAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 
 /**
  * Grid
  */
-class Grid implements GridInterface, ItemAwareInterface
+class Grid implements GridInterface, ContextAwareInterface
 {
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $items;
+    private $items;
+
+    /**
+     * @var Context
+     */
+    private $context;
 
     /**
      * Constructor
@@ -72,5 +78,21 @@ class Grid implements GridInterface, ItemAwareInterface
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param Context $context
+     */
+    public function setContext(Context $context)
+    {
+        $this->context = $context;
     }
 }

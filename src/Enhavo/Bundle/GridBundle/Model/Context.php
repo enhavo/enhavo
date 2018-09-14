@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\GridBundle\Model;
 
-
 class Context
 {
     /**
@@ -27,9 +26,19 @@ class Context
     private $next;
 
     /**
-     * @var ItemTypeInterface|ItemAwareInterface
+     * @var ContextAwareInterface
      */
     private $data;
+
+    /**
+     * @var Context[]
+     */
+    private $children = [];
+
+    public function __construct($data = null)
+    {
+        $this->data = $data;
+    }
 
     /**
      * @return Context
@@ -45,6 +54,48 @@ class Context
     public function setParent($parent)
     {
         $this->parent = $parent;
+    }
+
+    /**
+     * @return Context[]
+     */
+    public function getParents()
+    {
+        $parents = [];
+        $parent = $this->getParent();
+        do {
+            if($parent) {
+                $parents[] = $parent;
+            } else {
+                break;
+            }
+        } while($parent = $parent->getParent());
+        return $parents;
+    }
+
+    /**
+     * @return Context
+     */
+    public function getRoot()
+    {
+        $parents = $this->getParents();
+        return array_pop($parents);
+    }
+
+    /**
+     * @return Context[]
+     */
+    public function getDescendants()
+    {
+        $data = [];
+        foreach($this->getChildren() as $child) {
+            $data[] = $child;
+            $descendants = $child->getDescendants();
+            foreach($descendants as $descendant) {
+                $data[] = $descendant;
+            }
+        }
+        return $data;
     }
 
     /**
@@ -80,7 +131,7 @@ class Context
     }
 
     /**
-     * @return ItemAwareInterface|ItemInterface
+     * @return ContextAwareInterface
      */
     public function getData()
     {
@@ -88,10 +139,89 @@ class Context
     }
 
     /**
-     * @param ItemAwareInterface|ItemInterface $data
+     * @param ContextAwareInterface $data
      */
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return  Context[]
+     */
+    public function getSiblings()
+    {
+        $return = [];
+        $siblings = array_reverse($this->getBeforeSiblings());
+        foreach($siblings as $sibling) {
+            $return[] = $sibling;
+        }
+
+        $siblings = $this->getNextSiblings();
+        foreach($siblings as $sibling) {
+            $return[] = $sibling;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return  Context[]
+     */
+    public function getNextSiblings()
+    {
+        $siblings = [];
+        $sibling = $this->getNext();
+        do {
+            if($sibling) {
+                $siblings[] = $sibling;
+            } else {
+                break;
+            }
+        } while($sibling = $sibling->getNext());
+        return $siblings;
+    }
+
+    /**
+     * @return  Context[]
+     */
+    public function getBeforeSiblings()
+    {
+        $siblings = [];
+        $sibling = $this->getBefore();
+        do {
+            if($sibling) {
+                $siblings[] = $sibling;
+            } else {
+                break;
+            }
+        } while($sibling = $sibling->getBefore());
+        return $siblings;
+    }
+
+    /**
+     * @param Context $children
+     */
+    public function addChild(Context $children)
+    {
+        $this->children[] = $children;
+    }
+
+    /**
+     * @param Context $children
+     */
+    public function removeChild(Context $children)
+    {
+        if (false !== $key = array_search($children, $this->children, true)) {
+            array_splice($this->children, $key, 1);
+        }
+    }
+
+    /**
+     * @return Context[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

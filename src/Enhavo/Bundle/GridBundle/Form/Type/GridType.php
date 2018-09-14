@@ -8,9 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Entity\Item;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

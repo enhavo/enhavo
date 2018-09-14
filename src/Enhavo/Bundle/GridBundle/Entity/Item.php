@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\GridBundle\Entity;
 
+use Enhavo\Bundle\GridBundle\Model\Context;
+use Enhavo\Bundle\GridBundle\Model\ContextAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
@@ -9,47 +11,47 @@ use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 /**
  * Item
  */
-class Item implements ItemInterface
+class Item implements ItemInterface, ContextAwareInterface
 {
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var integer
      */
-    protected $position;
+    private $position;
 
     /**
      * @var GridInterface
      */
-    protected $grid;
+    private $grid;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var ItemTypeInterface
      */
-    protected $itemType;
+    private $itemType;
 
     /**
      * @var integer
      */
-    protected $itemTypeId;
+    private $itemTypeId;
 
     /**
      * @var string
      */
-    protected $itemTypeClass;
+    private $itemTypeClass;
 
     /**
-     * @var Column
+     * @var Context
      */
-    protected $column;
+    private $context;
 
     /**
      * Get id
@@ -186,24 +188,18 @@ class Item implements ItemInterface
     }
 
     /**
-     * @return Column
+     * @return Context
      */
-    public function getColumn()
+    public function getContext()
     {
-        return $this->column;
+        return $this->context;
     }
 
     /**
-     * @param Column $column
+     * @param Context $context
      */
-    public function setColumn($column)
+    public function setContext(Context $context)
     {
-        $this->column = $column;
-
-        if($column === null) {
-            $this->setItemType(null);
-            $this->setItemTypeId(null);
-            $this->setItemTypeClass(null);
-        }
+        $this->context = $context;
     }
 }

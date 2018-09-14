@@ -56,14 +56,4 @@ interface ItemInterface
      * @param int $position
      */
     public function setPosition($position);
-
-    /**
-     * @return Column
-     */
-    public function getColumn();
-
-    /**
-     * @param Column $column
-     */
-    public function setColumn($column);
 }

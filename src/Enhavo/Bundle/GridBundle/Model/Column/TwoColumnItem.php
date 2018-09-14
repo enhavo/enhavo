@@ -3,22 +3,23 @@
 namespace Enhavo\Bundle\GridBundle\Model\Column;
 
 use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
-use Enhavo\Bundle\GridBundle\Entity\Column;
+use Enhavo\Bundle\GridBundle\Entity\Grid;
+use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
 
-class TwoColumnItem extends AbstractItem
+class TwoColumnItem extends AbstractItem implements GridsAwareInterface
 {
     /**
-     * @var Column
+     * @var Grid
      */
     private $columnOne;
 
     /**
-     * @var Column
+     * @var Grid
      */
     private $columnTwo;
 
     /**
-     * @return Column
+     * @return Grid
      */
     public function getColumnOne()
     {
@@ -26,7 +27,7 @@ class TwoColumnItem extends AbstractItem
     }
 
     /**
-     * @param Column $columnOne
+     * @param Grid $columnOne
      */
     public function setColumnOne($columnOne)
     {
@@ -34,7 +35,7 @@ class TwoColumnItem extends AbstractItem
     }
 
     /**
-     * @return Column
+     * @return Grid
      */
     public function getColumnTwo()
     {
@@ -42,10 +43,22 @@ class TwoColumnItem extends AbstractItem
     }
 
     /**
-     * @param Column $columnTwo
+     * @param Grid $columnTwo
      */
     public function setColumnTwo($columnTwo)
     {
         $this->columnTwo = $columnTwo;
+    }
+
+    public function getGrids()
+    {
+        $grids = [];
+        if($this->columnOne) {
+            $grids[] = $this->columnOne;
+        }
+        if($this->columnTwo) {
+            $grids[] = $this->columnOne;
+        }
+        return $grids;
     }
 }

@@ -9,7 +9,19 @@
 
 namespace Enhavo\Bundle\GridBundle\Model;
 
-interface GridInterface
+interface GridInterface extends ItemsAwareInterface
 {
+    /**
+     * AddItem
+     *
+     * @param ItemInterface $item
+     */
+    public function addItem(ItemInterface $item);
 
+    /**
+     * Remove items
+     *
+     * @param ItemInterface $item
+     */
+    public function removeItem(ItemInterface $item);
 }

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Entity\Column;
+use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +27,7 @@ class ColumnType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Column::class,
+            'data_class' => Grid::class,
             'items' => [],
             'item_groups' => []
         ));

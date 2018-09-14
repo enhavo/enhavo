@@ -34,11 +34,4 @@ Enhavo\Bundle\GridBundle\Entity\Item:
             joinColumn:
                 onDelete: CASCADE
 
-        column:
-            cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Entity\Column
-            mappedBy: items
-            joinColumn:
-                onDelete: CASCADE
-
     lifecycleCallbacks: {  }

@@ -3,7 +3,6 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
             Enhavo\Bundle\GridBundle\Model\ItemInterface: Enhavo\Bundle\GridBundle\Entity\Item
-            Enhavo\Bundle\GridBundle\Model\ColumnInterface: Enhavo\Bundle\GridBundle\Entity\Column
 
 enhavo_media:
     formats:
