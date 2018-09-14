@@ -15,7 +15,7 @@ use Enhavo\Bundle\GridBundle\Model\ContextAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Enhavo\Bundle\GridBundle\Resolver\ItemResolver;
-use Symfony\Component\Asset\Context\ContextInterface;
+use Enhavo\Bundle\NavigationBundle\Exception\RenderException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class GridRenderer
@@ -60,6 +60,7 @@ class GridRenderer
      * @param array|null $templateSet
      * @param array|null $onlyRenderTypes
      * @param Context|null $parentContext
+     * @throws RenderException
      * @return string
      */
     public function render($content = null, $templateSet = null, $onlyRenderTypes = null, Context $parentContext = null)
@@ -75,6 +76,8 @@ class GridRenderer
         if($content instanceof ItemInterface) {
             return $this->renderItems([$content], $templateSet, $onlyRenderTypes);
         }
+
+        throw new RenderException(sprintf('Content for render function must be type of "%s" or "%s"', GridInterface::class, ItemInterface::class));
     }
 
     /**
