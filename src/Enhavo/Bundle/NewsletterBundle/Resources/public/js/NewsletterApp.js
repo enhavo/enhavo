@@ -4,7 +4,6 @@ define(['jquery', 'app/Router'], function($, router) {
     var self = this;
 
     this.initViewButton = function (form) {
-      console.log('initViewButton');
       $(form).find('[data-button][data-type=newsletter_view]').click(function(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -13,8 +12,6 @@ define(['jquery', 'app/Router'], function($, router) {
           slug: $(this).data('slug')
         };
         var link = router.generate(route, parameters);
-
-        console.log('Link: ' + link);
 
         window.open(link,'_blank');
       });
