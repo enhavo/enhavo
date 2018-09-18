@@ -21,6 +21,12 @@ class Resize
 
                 $dst_w = $maxWidth;
                 $dst_h = $newHeight;
+            } elseif($oldHeight > $maxHeight) {
+                $factor = $maxHeight/$oldHeight;
+                $newWidth = $oldWidth*$factor;
+
+                $dst_w = $newWidth;
+                $dst_h = $maxHeight;
             } else {
                 copy($inputFile, $outputFile);
                 return;
@@ -34,6 +40,12 @@ class Resize
 
                 $dst_w = $newWidth;
                 $dst_h = $maxHeight;
+            } elseif($oldWidth > $maxWidth) {
+                $factor = $maxWidth/$oldWidth;
+                $newHeight = $oldHeight*$factor;
+
+                $dst_w = $maxWidth;
+                $dst_h = $newHeight;
             } else {
                 copy($inputFile, $outputFile);
                 return;
