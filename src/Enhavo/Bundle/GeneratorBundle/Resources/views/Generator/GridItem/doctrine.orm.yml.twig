@@ -1,4 +1,4 @@
-{{ bundle_namespace }}\Entity\{{ item_name }}:
+{{ bundle_namespace }}\Entity\{% if item_sub_directory %}{{ item_sub_directory }}\{% endif %}{{ item_name }}:
     type: entity
     table: {{ table_name }}
 
