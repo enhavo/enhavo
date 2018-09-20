@@ -13,6 +13,7 @@ use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
+use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterData;
 use Enhavo\Bundle\SearchBundle\Metadata\Filter as MetadataFilter;
 use Pagerfanta\Pagerfanta;
@@ -314,7 +315,16 @@ class ElasticSearchEngine implements EngineInterface
             $repository = $this->em->getRepository($class);
             $entities = $repository->findAll();
             foreach($entities as $entity) {
-                $this->index($entity);
+                try {
+                    $this->index($entity);
+                } catch (\Exception $e) {
+                    throw new IndexException(sprintf(
+                        'Can\'t index class "%s" with id "%s". Error: %s',
+                        get_class($entity),
+                        $entity->getId(),
+                        $e->getMessage()
+                    ));
+                }
             }
         }
     }
