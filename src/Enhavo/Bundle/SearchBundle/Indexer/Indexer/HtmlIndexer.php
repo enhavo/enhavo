@@ -37,7 +37,7 @@ class HtmlIndexer extends AbstractType implements IndexerInterface
                 $tagName = strtolower($tagName);
 
                 // Closing or opening tag?
-                if ($tagName[0] == '/') {
+                if (substr($tagName, 0,1) == '/') {
                     array_pop($tagStack);
                 } else {
                     $tagStack[] = $tagName;
