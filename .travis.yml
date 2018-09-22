@@ -5,8 +5,7 @@ php:
   - 7.1
 
 env:
-  - ENVIRONMENT=test
-  - DEBUG=true
+  - ENVIRONMENT=test DEBUG=true
 
 before_install:
     - composer self-update
