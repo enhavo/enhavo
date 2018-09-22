@@ -1,6 +1,4 @@
 parameters:
-    environment: dev
-    debug: true
     debug_toolbar: false
 
     database_driver:   pdo_mysql
