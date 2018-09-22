@@ -1,7 +1,7 @@
 .idea
 .settings
 .build
-.sass-cache
+.env
 /web/bundles/
 /www/bundles/
 /app/check.php

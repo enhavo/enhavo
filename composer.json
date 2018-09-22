@@ -66,7 +66,8 @@
     "johngrogg/ics-parser": "^2.0",
     "simshaun/recurr": "^2.2",
     "php-ffmpeg/php-ffmpeg": "^0.11.0",
-    "spatie/image-optimizer": "^1.0"
+    "spatie/image-optimizer": "^1.0",
+    "symfony/dotenv": "^3.3"
   },
   "replace": {
     "enhavo/app-bundle": "0.3",
