@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\EnhavoAppBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -36,15 +37,17 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->booleanNode('show_version')->defaultTrue()->end()
-            ->end()
-
-            ->children()
-                ->booleanNode('show_branding')->defaultTrue()->end()
-            ->end()
-
-            ->children()
-                ->scalarNode('logo_path')->defaultValue('@EnhavoAppBundle/Resources/public/img/enhavo_admin_logo.svg')->end()
+                ->arrayNode('branding')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable')->defaultValue(true)->end()
+                        ->scalarNode('enable_version')->defaultValue(true)->end()
+                        ->scalarNode('enable_created_by')->defaultValue(true)->end()
+                        ->scalarNode('logo')->defaultValue('@EnhavoAppBundle/Resources/public/img/enhavo_admin_logo.svg')->end()
+                        ->scalarNode('text')->defaultValue('enhavo is an open source<br/>content-management-system<br/>based on symfony and sylius.')->end()
+                        ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
+                    ->end()
+                ->end()
             ->end()
 
             ->children()

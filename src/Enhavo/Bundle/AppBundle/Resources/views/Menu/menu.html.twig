@@ -1,16 +1,22 @@
-<img src="{{ admin_asset(enhavo_logo_path()) }}" alt="Enhavo CMS Logo" class="menu-logo"/>
+<img src="{{ admin_asset(branding_logo()) }}" class="menu-logo"/>
 <ul id="menu-main" data-menu>
     {% for menu in menus %}
         {{ menu.render()|raw }}
     {% endfor %}
 
-    {% if showBranding() %}
+    {% if is_branding() %}
         <p class="desc" data-description-text>
-            enhavo is an open source <br/>
-            content-management-system <br/>
-            based on symfony and sylius. <br/>
-            <br/>
-            Created by <a href="https://www.xq-web.de" target="_blank">xq-web.de</a> {% if showVersion() %}(v{{ version() }}){% endif %}
+            {% if branding_text() %}
+                {{ branding_text() }} <br />
+            {% endif %}
+                <br />
+            {% if is_branding_version() and is_branding_created_by() %}
+                Created by <a href="https://www.xq-web.de" target="_blank">xq-web.de</a> ({{ branding_version() }})
+            {% elseif is_branding_version() %}
+                Version {{ branding_version() }}
+            {% elseif is_branding_created_by() %}
+                Created by <a href="https://www.xq-web.de" target="_blank">xq-web.de</a>
+            {% endif %}
         </p>
     {% endif %}
 </ul>

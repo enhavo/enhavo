@@ -8,9 +8,10 @@ use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-
 class EnhavoAppBundle extends Bundle
 {
+    const VERSION = '0.6.0';
+
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -51,7 +52,6 @@ class EnhavoAppBundle extends Bundle
             new TypeCompilerPass('enhavo_app.chart_provider_collector', 'enhavo.chart_provider')
         );
 
-
         $container->addCompilerPass(
             new SyliusCompilerPass()
         );
@@ -60,6 +60,4 @@ class EnhavoAppBundle extends Bundle
             new FilesystemCompilerPass()
         );
     }
-
-
 }

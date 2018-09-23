@@ -11,13 +11,13 @@
                         <div>{{ 'error.login'|trans|nl2br }}</div>
                     </div>
                 {% endif %}
-                {% if showVersion() %}
+                {% if is_branding() and is_branding_version() %}
                     <div class="ribbon">
-                        <span>{{ version() }}</span>
+                        <span>{{ branding_version() }}</span>
                     </div>
                 {% endif %}
                 <div class="logo">
-                    <img src="{{ asset('/bundles/enhavoapp/img/enhavo_admin_logo.svg') }}" alt="Enhavo CMS"/>
+                    <img src="{{ admin_asset(branding_logo()) }}" />
                 </div>
                 <form action="{{ path("enhavo_user_security_login_check") }}" method="post">
                     <input type="hidden" id="remember_me" name="_remember_me" value="on">
@@ -46,8 +46,8 @@
                 </form>
             </div>
             <p>
-                {% if showBranding() %}
-                    enhavo is an open source content-management-system based on symfony and sylius. <br/>
+                {% if is_branding() and branding_text() %}{{ branding_text() }} <br/>{% endif %}
+                {% if is_branding() and is_branding_created_by() %}
                     Created and launched by <a href="https://www.xq-web.de" target="_blank">xq-web.de</a>
                 {% endif %}
             </p>
