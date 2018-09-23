@@ -15,11 +15,6 @@ use Symfony\Component\DependencyInjection\Loader;
 class EnhavoAppExtension extends Extension
 {
     /**
-     * Enhavo Version
-     */
-    const VERSION = '0.5.0';
-
-    /**
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -27,18 +22,17 @@ class EnhavoAppExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        $container->setParameter('enhavo_app.stylesheets', $config[ 'stylesheets' ]);
-        $container->setParameter('enhavo_app.javascripts', $config[ 'javascripts' ]);
-        $container->setParameter('enhavo_app.apps', $config[ 'apps' ]);
-        $container->setParameter('enhavo_app.menu', $config[ 'menu' ]);
-        $container->setParameter('enhavo_app.show_version', $config[ 'show_version' ]);
-        $container->setParameter('enhavo_app.show_branding', $config[ 'show_branding' ]);
-        $container->setParameter('enhavo_app.logo_path', $config['logo_path']);
-        $container->setParameter('enhavo_app.login_redirect', $config[ 'login_redirect' ]);
-        $container->setParameter('enhavo_app.template', $config[ 'template' ]);
+        $container->setParameter('enhavo_app.stylesheets', $config['stylesheets']);
+        $container->setParameter('enhavo_app.javascripts', $config['javascripts']);
+        $container->setParameter('enhavo_app.apps', $config['apps']);
+        $container->setParameter('enhavo_app.menu', $config['menu']);
+        $container->setParameter('enhavo_app.branding', $config['branding']);
+        $container->setParameter('enhavo_app.login_redirect', $config['login_redirect']);
+        $container->setParameter('enhavo_app.template', $config['template']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
         
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
         $loader->load('services/services.yml');
         $loader->load('services/twig.yml');
         $loader->load('services/viewer.yml');

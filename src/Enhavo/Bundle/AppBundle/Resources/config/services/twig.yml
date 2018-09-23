@@ -1,7 +1,6 @@
 parameters:
     enhavo_app.twig.pagination_render.class: Enhavo\Bundle\AppBundle\Twig\PaginationRender
     enhavo_app.twig.pagination_render.template: 'EnhavoAppBundle:View:pagination.html.twig'
-
     enhavo_app.twig.admin_asset.class: Enhavo\Bundle\AppBundle\Twig\AdminAsset
 
 services:
@@ -17,17 +16,10 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.version.twig_extension:
-        class:  Enhavo\Bundle\AppBundle\Twig\Version
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: twig.extension }
-
     enhavo_app.branding.twig_extension:
         class:  Enhavo\Bundle\AppBundle\Twig\Branding
         arguments:
-            - '@service_container'
+            - '%enhavo_app.branding%'
         tags:
             - { name: twig.extension }
 
@@ -47,13 +39,6 @@ services:
         class: Enhavo\Bundle\AppBundle\Twig\Form
         arguments:
             - '@enhavo_app.form.error.resolver'
-        tags:
-            - { name: twig.extension }
-
-    enhavo_app.twig.logo_path:
-        class: Enhavo\Bundle\AppBundle\Twig\LogoPath
-        arguments:
-            - '@service_container'
         tags:
             - { name: twig.extension }
 
