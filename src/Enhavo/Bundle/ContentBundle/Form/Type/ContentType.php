@@ -27,8 +27,7 @@ class ContentType extends AbstractType
         $builder->add('title', 'text', array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation,
-            'help' => 'Das ist Hilfetext'
+            'translation' => $this->translation
         ));
 
         $builder->add('meta_description', 'textarea', array(
