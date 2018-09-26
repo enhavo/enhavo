@@ -61,11 +61,10 @@
 
 #menu-main-container {
   position: absolute;background:#072129;height: auto;min-height:100%;
-  .desc {
-    font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 0 0 20px; margin-top:25px;
+  .desc {font-size: 12px;line-height: 1.45em;color: #737677;padding: 0 20px 0 20px; margin-top:25px;
     a {color: #FFF;}
   }
-  .menu-logo{width: 155px;position: relative;left:13px;margin-bottom: 15px;margin-top: 40px;}
+  .menu-logo{width: 155px;position: relative;left:20px;margin-bottom:20px;margin-top:30px;}
 }
 
 .menu-icon-logout {
