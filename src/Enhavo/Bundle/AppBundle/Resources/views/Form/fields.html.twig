@@ -29,10 +29,11 @@
     {% spaceless %}
         <div class="row" data-form-row>
             <div class="col-md-2 text-right">
-                <div class="label-container">{{ form_label(form) }}  {% if help %}<i style="display: none" data-help-text class="help-icon icon icon-help-with-circle"></i>{% endif %}</div>
-                {% if help %}
-                    <div class="help-text" data-help-text style="display: none">{{ help }}</div>
-                {% endif %}
+                <div class="label-container{% if help %} has-help{% endif %}">{{ form_label(form) }}{% if help %}<i data-help-text class="help-icon icon icon-help-with-circle"></i>{% endif %}
+                    {% if help %}
+                        <div class="help-text" data-help-text>{{ help }}</div>
+                    {% endif %}
+                </div>
             </div>
             <div class="col-md-9">
                 <div class="formwidget-container" data-formwidget-container>
