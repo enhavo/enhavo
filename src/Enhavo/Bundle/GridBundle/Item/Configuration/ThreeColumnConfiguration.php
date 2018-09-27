@@ -26,7 +26,7 @@ class ThreeColumnConfiguration extends AbstractConfiguration
             'form' => ThreeColumnItemType::class,
             'factory' => ThreeColumnItemFactory::class,
             'repository' => 'EnhavoGridBundle:ThreeColumn',
-            'template' => 'EnhavoGridBundle:Item:three_column.html.twig',
+            'template' => 'EnhavoGridBundle:Item:three-column.html.twig',
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'three_column.label.three_column',
             'translationDomain' => 'EnhavoGridBundle',

@@ -26,7 +26,7 @@ class OneColumnConfiguration extends AbstractConfiguration
             'form' => OneColumnItemType::class,
             'factory' => OneColumnItemFactory::class,
             'repository' => 'EnhavoGridBundle:OneColumn',
-            'template' => 'EnhavoGridBundle:Item:one_column.html.twig',
+            'template' => 'EnhavoGridBundle:Item:one-column.html.twig',
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'one_column.label.one_column',
             'translationDomain' => 'EnhavoGridBundle',

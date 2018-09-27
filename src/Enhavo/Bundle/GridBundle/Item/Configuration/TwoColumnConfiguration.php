@@ -26,7 +26,7 @@ class TwoColumnConfiguration extends AbstractConfiguration
             'form' => TwoColumnItemType::class,
             'factory' => TwoColumnItemFactory::class,
             'repository' => 'EnhavoGridBundle:TwoColumn',
-            'template' => 'EnhavoGridBundle:Item:two_column.html.twig',
+            'template' => 'EnhavoGridBundle:Item:two-column.html.twig',
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'two_column.label.two_column',
             'translationDomain' => 'EnhavoGridBundle',
