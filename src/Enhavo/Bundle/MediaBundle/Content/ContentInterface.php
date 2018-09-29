@@ -14,4 +14,6 @@ interface ContentInterface
     public function getContent();
 
     public function getFilePath();
+
+    public function equals(ContentInterface $content);
 }

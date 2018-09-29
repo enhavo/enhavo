@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Content;
 
 
-class UrlContent implements ContentInterface
+class UrlContent extends AbstractContent
 {
     /**
      * @var

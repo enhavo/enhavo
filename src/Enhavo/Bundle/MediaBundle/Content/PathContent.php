@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\MediaBundle\Content;
 
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 
-class PathContent implements ContentInterface
+class PathContent extends AbstractContent
 {
     /**
      * @var
