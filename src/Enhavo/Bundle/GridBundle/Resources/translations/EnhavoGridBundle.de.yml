@@ -89,6 +89,9 @@ column:
     column_one: 'Spalte Eins'
     column_two: 'Spalte Zwei'
     column_three: 'Spalte Drei'
+    width:
+      full: 'Volle Breite'
+      container: 'Container Breite'
 one_column:
   label:
     one_column: 'Eine Spalte'
