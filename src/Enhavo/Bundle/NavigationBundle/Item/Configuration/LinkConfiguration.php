@@ -26,6 +26,7 @@ class LinkConfiguration extends AbstractConfiguration
             'content_factory' => LinkFactory::class,
             'content_form' => LinkType::class,
             'configuration_form' => LinkConfigurationType::class,
+            'render_template' => 'EnhavoNavigationBundle:Navigation:link.html.twig',
             'label' => 'link.label.link',
             'translationDomain' => 'EnhavoNavigationBundle',
             'options' => [],
