@@ -8,6 +8,7 @@
 
 {% block enhavo_grid_one_column_item_widget %}
     <div class="dynamic-nested-container">
+        {{ form_widget(form.width) }}
         {{ form_widget(form.column) }}
     </div>
 {% endblock %}

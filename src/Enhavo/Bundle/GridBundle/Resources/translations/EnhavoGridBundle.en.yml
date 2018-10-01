@@ -85,6 +85,9 @@ column:
     column_one: 'Column one'
     column_two: 'Column two'
     column_three: 'Column three'
+    width:
+      full: 'Full width'
+      container: 'Container width'
 one_column:
   label:
     one_column: 'One column'
