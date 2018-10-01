@@ -32,4 +32,11 @@ class Content extends AbstractContent
     {
         return $this->path;
     }
+
+    public function __destruct()
+    {
+        if(file_exists($this->path)) {
+            unlink($this->path);
+        }
+    }
 }
