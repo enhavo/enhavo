@@ -39,6 +39,7 @@ services:
             - '@enhavo_media.storage'
             - '@enhavo_media.provider'
             - '@enhavo_app.util.secure_url_token_generator'
+            - '@doctrine.orm.entity_manager'
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager

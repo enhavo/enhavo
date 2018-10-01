@@ -57,6 +57,7 @@ class UploadController extends Controller
                     throw new UploadException('Error in file upload');
                 }
                 $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
+                $file->setGarbage(true);
                 $this->mediaManager->saveFile($file);
                 $storedFiles[] = $file;
             } catch(StorageException $exception) {

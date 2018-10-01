@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('enable_version')->defaultValue(true)->end()
                         ->scalarNode('enable_created_by')->defaultValue(true)->end()
                         ->scalarNode('logo')->defaultValue('@EnhavoAppBundle/Resources/public/img/enhavo_admin_logo.svg')->end()
-                        ->scalarNode('text')->defaultValue('enhavo is an open source<br/>content-management-system<br/>based on symfony and sylius.')->end()
+                        ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony and sylius.')->end()
                         ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
                     ->end()
                 ->end()

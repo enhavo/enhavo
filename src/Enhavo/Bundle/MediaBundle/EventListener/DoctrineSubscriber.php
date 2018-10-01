@@ -31,7 +31,25 @@ class DoctrineSubscriber implements EventSubscriber
     {
         return array(
             'postLoad',
+            'postUpdate',
+            'postPersist',
         );
+    }
+
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        $object = $args->getObject();
+        if($object instanceof FileInterface) {
+            $this->storage->saveFile($object);
+        }
+    }
+
+    public function postPersist(LifecycleEventArgs $args)
+    {
+        $object = $args->getObject();
+        if($object instanceof FileInterface) {
+            $this->storage->saveFile($object);;
+        }
     }
 
     public function postLoad(LifecycleEventArgs $args)
