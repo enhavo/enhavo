@@ -29,6 +29,8 @@ enhavo_app:
             type: translation
         redirect:
             type: redirect
+        media_library:
+            type: media_library
         magazine:
             type: base
             route: enhavo_project_magazine_index

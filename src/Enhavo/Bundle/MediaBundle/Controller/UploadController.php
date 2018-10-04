@@ -22,6 +22,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UploadController extends Controller
 {
+    use FileControllerTrait;
+
     /**
      * @var FileFactory
      */
@@ -137,63 +139,5 @@ class UploadController extends Controller
         }
 
         return $uploadedFile;
-    }
-
-    private function getFileResponse($files)
-    {
-        $data = null;
-
-        if(is_array($files)) {
-            $data = [];
-            /** @var FileInterface $file */
-            foreach($files as $file) {
-                $data[] = [
-                    'id' => $file->getId(),
-                    'token' => $file->getToken(),
-                    'filename' => $file->getFilename(),
-                    'extension' => $file->getExtension(),
-                    'mimeType' => $file->getMimeType(),
-                    'md5Checksum' => $file->getMd5Checksum()
-                ];
-            }
-        }
-
-        if($files instanceof FileInterface) {
-            $data = [
-                'id' => $files->getId(),
-                'token' => $files->getToken(),
-                'filename' => $files->getFilename(),
-                'extension' => $files->getExtension(),
-                'mimeType' => $files->getMimeType(),
-                'md5Checksum' => $files->getMd5Checksum()
-            ];
-        }
-
-        return new JsonResponse($data);
-    }
-
-    /**
-     * @deprecated this function will be removed on 0.4
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function replaceCompatibleAction(Request $request)
-    {
-        $file = $this->mediaManager->findOneBy([
-            'id' => $request->get('id')
-        ]);
-
-        $uploadedFile = $this->getUploadedFile($request);
-
-        $newFile = $this->fileFactory->createFromUploadedFile($uploadedFile);
-
-        $file->setContent($newFile->getContent());
-        $file->setMimeType($newFile->getMimeType());
-        $file->setFilename($newFile->getFilename());
-        $file->setExtension($newFile->getExtension());
-
-        $this->mediaManager->saveFile($file);
-
-        return $this->getFileResponse($file);
     }
 }

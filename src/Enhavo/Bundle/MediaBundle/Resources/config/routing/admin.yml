@@ -1,0 +1,11 @@
+enhavo_media_image_cropper:
+    resource: "@EnhavoMediaBundle/Resources/config/routing/admin/image_cropper.yml"
+    prefix:   /
+
+enhavo_media_library:
+    resource: "@EnhavoMediaBundle/Resources/config/routing/admin/library.yml"
+    prefix:   /
+
+enhavo_media_upload:
+    resource: "@EnhavoMediaBundle/Resources/config/routing/admin/upload.yml"
+    prefix:   /

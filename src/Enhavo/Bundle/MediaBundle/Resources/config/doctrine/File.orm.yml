@@ -50,4 +50,11 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             type: datetime
             nullable: true
 
+        createdAt:
+            type: datetime
+            nullable: false
+            gedmo:
+                timestampable:
+                    on: create
+
     lifecycleCallbacks: {  }

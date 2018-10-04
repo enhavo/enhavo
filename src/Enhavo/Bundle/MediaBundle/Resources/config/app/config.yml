@@ -27,6 +27,7 @@ enhavo_app:
     apps:
         - 'media/Adapter/EnhavoAdapter'
         - 'media/Extension/ImageCropper'
+        - 'media/Extension/MediaLibrary'
 
 enhavo_assets:
     require_js:

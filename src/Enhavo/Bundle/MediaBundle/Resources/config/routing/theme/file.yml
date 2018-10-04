@@ -1,0 +1,41 @@
+enhavo_media_file_resolve:
+    path:  /file/resolve/{token}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media.controller.file:resolveAction
+    options:
+        expose: true
+
+enhavo_media_file_resolve_format:
+    path:  /file/resolve/{token}/{format}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_media.controller.file:resolveFormatAction
+    options:
+        expose: true
+
+enhavo_media_file_download:
+    path:  /file/download/{id}/{shortMd5Checksum}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:downloadAction
+        _method: GET
+        filename: ~
+
+enhavo_media_file_show:
+    path:  /file/show/{id}/{shortMd5Checksum}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showAction
+        width: ~
+        height: ~
+        filename: ~
+        _method: GET
+    options:
+        expose: true
+
+enhavo_media_file_format:
+    path:  /file/format/{id}/{format}/{shortMd5Checksum}/{filename}
+    defaults:
+        _controller: enhavo_media.controller.file:showFormatAction
+        _method: GET
+    options:
+        expose: true

@@ -102,8 +102,7 @@ services:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
         arguments:
             - '%enhavo_media.model.file.class%'
-            - '%kernel.root_dir%/media'
-            - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.media.media_manager'
 
     enhavo_media.factory.format:
         class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
@@ -153,3 +152,26 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_media.menu.library:
+        class: Enhavo\Bundle\MediaBundle\Menu\LibraryMenu
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: 'media_library' }
+
+    enhavo_media.controller.library:
+        class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@viewer.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_media.block.library:
+        class: Enhavo\Bundle\MediaBundle\Block\LibraryBlock
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: 'media_library' }

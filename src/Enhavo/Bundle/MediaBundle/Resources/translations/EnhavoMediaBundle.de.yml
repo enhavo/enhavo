@@ -1,4 +1,6 @@
 media:
+  label:
+    library: "Mediathek"
   form:
     label:
       title: "Titel"

@@ -1,0 +1,28 @@
+enhavo_media_library_index:
+    path:  /media/library/index
+    methods: [GET]
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_media.controller.library:indexAction
+        _sylius:
+            viewer:
+                blocks:
+                    media_library:
+                        type: media_library
+
+enhavo_media_library_upload:
+    path:  /media/library/upload
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_media.controller.library:uploadAction
+
+enhavo_media_library_list:
+    path:  /media/library/list
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_media.controller.library:listAction
