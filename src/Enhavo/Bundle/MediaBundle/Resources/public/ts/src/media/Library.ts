@@ -9,5 +9,3 @@ export class Library
         this.$element = $(element);
     }
 }
-
-export let library = new Library();

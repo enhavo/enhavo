@@ -2,6 +2,7 @@ import * as $ from 'jquery'
 import 'blueimp-file-upload'
 import 'jquery-ui'
 import * as router from 'app/Router'
+import * as admin from 'app/Admin'
 
 export class BlockInitializer
 {
@@ -9,7 +10,10 @@ export class BlockInitializer
     {
         $('body').on('initBlock', function(event, data) {
             if(data.type == 'media_library') {
-                new Block(data.block);
+                let block = new Block(data.block);
+                $(document).on('formSaveAfter', function () {
+                    block.refresh();
+                });
             }
         });
     }
@@ -25,6 +29,7 @@ export class Block
         this.stopLoading();
         this.initDropZone();
         this.initFileUpload();
+        this.refresh();
     }
 
     private initDropZone()
@@ -86,16 +91,25 @@ export class Block
 
     }
 
-    private setData(data)
+    private setData(data: string)
     {
-        console.log(data);
+        let self = this;
+        let html = $.parseHTML(data)[0];
+        $(html).find('[data-item]').each(function () {
+            new Item(this);
+        });
+        $(html).find('[data-page]').click(function () {
+            let page = $(this).data('page');
+            self.refresh(page);
+        });
+        this.$element.html(html);
     }
 
-    refresh()
+    refresh(page:number = 1)
     {
         this.startLoading();
         let self = this;
-        let url = router.generate('enhavo_media_library_list', {});
+        let url = router.generate('enhavo_media_library_list', {page: page});
         $.ajax({
             type: 'post',
             url: url,
@@ -124,6 +138,34 @@ export class Block
     hideDropZone() : void
     {
         this.$element.removeClass('drop-zone');
+    }
+}
+
+class Item
+{
+    private $element: JQuery;
+
+    private id: number;
+
+    constructor(element:HTMLElement)
+    {
+        this.$element = $(element);
+        this.id = this.$element.data('item');
+        this.initEvents();
+    }
+
+    private initEvents()
+    {
+        let self = this;
+        this.$element.on('click', function () {
+            self.open();
+        });
+    }
+
+    open()
+    {
+        let url = router.generate('enhavo_media_library_update', { id: this.id });
+        admin.ajaxOverlay(url, {});
     }
 }
 

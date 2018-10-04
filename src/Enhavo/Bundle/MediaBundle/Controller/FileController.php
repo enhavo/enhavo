@@ -2,36 +2,36 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Security\AuthorizationCheckerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FileController extends Controller
+class FileController extends ResourceController
 {
     /**
-     * @var MediaManager
+     * @return MediaManager
      */
-    private $mediaManager;
+    private function getMediaManager()
+    {
+        return $this->container->get('enhavo_media.media.media_manager');
+    }
 
     /**
-     * @var AuthorizationCheckerInterface
+     * @return AuthorizationCheckerInterface
      */
-    private $authorizationChecker;
-
-    public function __construct(MediaManager $mediaManager, AuthorizationCheckerInterface $authorizationChecker)
+    private function getAuthorizationChecker()
     {
-        $this->mediaManager = $mediaManager;
-        $this->authorizationChecker = $authorizationChecker;
+        return $this->container->get('enhavo_media.security.default_authorization_checker');
     }
 
     public function showAction(Request $request)
     {
         $file = $this->getFile($request);
 
-        if(!$this->authorizationChecker->isGranted($file)) {
+        if(!$this->getAuthorizationChecker()->isGranted($file)) {
             throw $this->createAccessDeniedException();
         }
 
@@ -53,7 +53,7 @@ class FileController extends Controller
         $filename = $request->get('filename');
         $shortChecksum = $request->get('shortMd5Checksum');
 
-        $file = $this->mediaManager->findOneBy([
+        $file = $this->getMediaManager()->findOneBy([
             'id' => $id,
             'filename' => $filename
         ]);
@@ -86,7 +86,7 @@ class FileController extends Controller
         $shortChecksum = $request->get('shortMd5Checksum');
         $format = $request->get('format');
 
-        $file = $this->mediaManager->findOneBy([
+        $file = $this->getMediaManager()->findOneBy([
             'id' => $id
         ]);
 
@@ -98,13 +98,13 @@ class FileController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $formatFile = $this->mediaManager->getFormat($file, $format);
+        $formatFile = $this->getMediaManager()->getFormat($file, $format);
 
         if(pathinfo($formatFile->getFilename())['filename'] !== pathinfo($filename)['filename']) {
             throw $this->createNotFoundException();
         }
 
-        if(!$this->authorizationChecker->isGranted($file)) {
+        if(!$this->getAuthorizationChecker()->isGranted($file)) {
             throw $this->createAccessDeniedException();
         }
 
@@ -130,11 +130,11 @@ class FileController extends Controller
     {
         $token = $request->get('token');
 
-        $file = $this->mediaManager->findOneBy([
+        $file = $this->getMediaManager()->findOneBy([
             'token' => $token
         ]);
 
-        return $this->redirectToRoute('enhavo_media_show', [
+        return $this->redirectToRoute('enhavo_media_file_show', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $file->getFilename(),
@@ -146,11 +146,11 @@ class FileController extends Controller
         $token = $request->get('token');
         $format = $request->get('format');
 
-        $file = $this->mediaManager->findOneBy([
+        $file = $this->getMediaManager()->findOneBy([
             'token' => $token
         ]);
 
-        return $this->redirectToRoute('enhavo_media_format', [
+        return $this->redirectToRoute('enhavo_media_file_format', [
             'id' => $file->getId(),
             'format' => $format,
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),

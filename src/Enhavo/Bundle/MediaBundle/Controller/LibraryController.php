@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use GuzzleHttp\Psr7\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,11 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 class LibraryController extends AppController
 {
     use FileControllerTrait;
-
-    public function libraryAction()
-    {
-
-    }
 
     public function uploadAction(Request $request)
     {
@@ -49,11 +45,6 @@ class LibraryController extends AppController
         return $this->getFileResponse($storedFiles);
     }
 
-    public function listAction()
-    {
-        return new JsonResponse([]);
-    }
-
     /**
      * @return MediaManager
      */
@@ -68,5 +59,14 @@ class LibraryController extends AppController
     private function getFileFactory()
     {
         return $this->container->get('enhavo_media.factory.file');
+    }
+
+
+    /**
+     * @return FileRepository
+     */
+    private function getRepository()
+    {
+        return $this->container->get('enhavo_media.repository.file');
     }
 }

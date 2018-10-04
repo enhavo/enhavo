@@ -8,5 +8,4 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
         return Library;
     }());
     exports.Library = Library;
-    exports.library = new Library();
 });

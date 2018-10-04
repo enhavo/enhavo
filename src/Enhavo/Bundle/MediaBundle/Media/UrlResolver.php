@@ -31,7 +31,7 @@ class UrlResolver
 
     public function getPublicUrl(FileInterface $file)
     {
-        return $this->router->generate('enhavo_media_show', [
+        return $this->router->generate('enhavo_media_file_show', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $file->getFilename()
@@ -40,7 +40,7 @@ class UrlResolver
     
     public function getPrivateUrl(FileInterface $file)
     {
-        return $this->router->generate('enhavo_media_resolve', [
+        return $this->router->generate('enhavo_media_file_resolve', [
             'token' => $file->getToken()
         ]);
     }
@@ -48,7 +48,7 @@ class UrlResolver
     public function getPublicFormatUrl(FileInterface $file, $format)
     {
         $formatObj = $this->mediaManager->getFormat($file, $format);
-        return $this->router->generate('enhavo_media_format', [
+        return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $formatObj->getFilename(),
@@ -59,7 +59,7 @@ class UrlResolver
     public function getPrivateFormatUrl(FileInterface $file, $format)
     {
         $formatObj = $this->mediaManager->getFormat($file, $format);
-        return $this->router->generate('enhavo_media_format', [
+        return $this->router->generate('enhavo_media_file_format', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $formatObj->getFilename(),

@@ -1,0 +1,15 @@
+<div>
+    <ul>
+        {% for item in data %}
+            <li data-item="{{ item.id }}">
+                {{ item.filename }}
+                {% if item.image %}
+                        <img src="{{ media_url(item, 'enhavoPreviewThumb') }}" />
+                {% else %}
+                        <i class="icon icon-file"></i>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination_render(data) }}
+</div>

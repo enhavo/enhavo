@@ -1,4 +1,4 @@
-define(["require", "exports", "jquery", "app/Router", "blueimp-file-upload", "jquery-ui"], function (require, exports, $, router) {
+define(["require", "exports", "jquery", "app/Router", "app/Admin", "blueimp-file-upload", "jquery-ui"], function (require, exports, $, router, admin) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BlockInitializer = /** @class */ (function () {
@@ -7,7 +7,10 @@ define(["require", "exports", "jquery", "app/Router", "blueimp-file-upload", "jq
         BlockInitializer.init = function () {
             $('body').on('initBlock', function (event, data) {
                 if (data.type == 'media_library') {
-                    new Block(data.block);
+                    var block_1 = new Block(data.block);
+                    $(document).on('formSaveAfter', function () {
+                        block_1.refresh();
+                    });
                 }
             });
         };
@@ -20,6 +23,7 @@ define(["require", "exports", "jquery", "app/Router", "blueimp-file-upload", "jq
             this.stopLoading();
             this.initDropZone();
             this.initFileUpload();
+            this.refresh();
         }
         Block.prototype.initDropZone = function () {
             var self = this;
@@ -70,12 +74,22 @@ define(["require", "exports", "jquery", "app/Router", "blueimp-file-upload", "jq
         Block.prototype.showUploadError = function () {
         };
         Block.prototype.setData = function (data) {
-            console.log(data);
+            var self = this;
+            var html = $.parseHTML(data)[0];
+            $(html).find('[data-item]').each(function () {
+                new Item(this);
+            });
+            $(html).find('[data-page]').click(function () {
+                var page = $(this).data('page');
+                self.refresh(page);
+            });
+            this.$element.html(html);
         };
-        Block.prototype.refresh = function () {
+        Block.prototype.refresh = function (page) {
+            if (page === void 0) { page = 1; }
             this.startLoading();
             var self = this;
-            var url = router.generate('enhavo_media_library_list', {});
+            var url = router.generate('enhavo_media_library_list', { page: page });
             $.ajax({
                 type: 'post',
                 url: url,
@@ -100,5 +114,23 @@ define(["require", "exports", "jquery", "app/Router", "blueimp-file-upload", "jq
         return Block;
     }());
     exports.Block = Block;
+    var Item = /** @class */ (function () {
+        function Item(element) {
+            this.$element = $(element);
+            this.id = this.$element.data('item');
+            this.initEvents();
+        }
+        Item.prototype.initEvents = function () {
+            var self = this;
+            this.$element.on('click', function () {
+                self.open();
+            });
+        };
+        Item.prototype.open = function () {
+            var url = router.generate('enhavo_media_library_update', { id: this.id });
+            admin.ajaxOverlay(url, {});
+        };
+        return Item;
+    }());
     BlockInitializer.init();
 });

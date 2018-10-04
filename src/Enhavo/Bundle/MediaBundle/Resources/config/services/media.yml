@@ -1,16 +1,10 @@
 parameters:
-    enhavo_media.form.files_type.class: Enhavo\Bundle\MediaBundle\Form\Type\FilesType
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
     enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
     enhavo_media.controller.file.class: Enhavo\Bundle\MediaBundle\Controller\FileController
     enhavo_media.controller.upload.class: Enhavo\Bundle\MediaBundle\Controller\UploadController
 
 services:
-    enhavo_media.form.files:
-        class: '%enhavo_media.form.files_type.class%'
-        tags:
-            - { name: form.type, alias: enhavo_files }
-
     enhavo_media.form.file:
         class: Enhavo\Bundle\MediaBundle\Form\Type\FileType
         arguments:
@@ -19,6 +13,15 @@ services:
             - '@enhavo_media.extension_manager'
         tags:
             - { name: form.type, alias: enhavo_file }
+
+    enhavo_media.form.library_file:
+        class: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
+        arguments:
+            - '%enhavo_media.model.file.class%'
+            - '@enhavo_media.media.url_resolver'
+        tags:
+            - { name: form.type, alias: enhavo_media_library_file }
+
 
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
@@ -108,14 +111,6 @@ services:
         class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
         arguments:
             - '%enhavo_media.model.format.class%'
-
-    enhavo_media.controller.file:
-        class: '%enhavo_media.controller.file.class%'
-        arguments:
-            - '@enhavo_media.media.media_manager'
-            - '@enhavo_media.security.default_authorization_checker'
-        calls:
-            - [setContainer, ['@service_container']]
 
     enhavo_media.controller.upload:
         class: '%enhavo_media.controller.upload.class%'

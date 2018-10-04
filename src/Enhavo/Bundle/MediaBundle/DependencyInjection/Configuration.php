@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
+use Enhavo\Bundle\MediaBundle\Controller\FileController;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -72,7 +73,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue('Enhavo\Bundle\MediaBundle\Entity\File')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
+                                        ->scalarNode('controller')->defaultValue(FileController::class)->end()
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\MediaBundle\Repository\FileRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Enhavo\Bundle\MediaBundle\Factory\FileFactory')->end()
                                         ->arrayNode('form')

@@ -25,4 +25,33 @@ enhavo_media_library_list:
     options:
         expose: true
     defaults:
-        _controller: enhavo_media.controller.library:listAction
+        _controller: enhavo_media.controller.file:tableAction
+        _sylius:
+            criteria:
+                library: true
+            sorting:
+                createdAt: desc
+            template: 'EnhavoMediaBundle:Block:list.html.twig'
+            viewer:
+
+enhavo_media_library_update:
+    options:
+        expose: true
+    path: /media/library/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_media.controller.file:updateAction
+        _sylius:
+            form: enhavo_media_library_file
+            viewer:
+                form:
+                    action: enhavo_media_library_update
+                    delete: enhavo_media_library_delete
+
+enhavo_media_library_delete:
+    options:
+        expose: true
+    path: /media/library/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_media.controller.file:deleteAction
