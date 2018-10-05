@@ -9,6 +9,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,7 +53,7 @@ class ProductType extends AbstractType
             'translation' => $this->translation
         ));
 
-        $builder->add('picture', 'enhavo_files', array(
+        $builder->add('picture', MediaType::class, array(
             'label' => 'product.label.picture',
             'translation_domain' => 'EnhavoShopBundle',
             'multiple' => false

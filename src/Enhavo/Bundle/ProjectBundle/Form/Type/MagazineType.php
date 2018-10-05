@@ -100,6 +100,13 @@ class MagazineType extends AbstractResourceType
             'allow_add' => $allowAdd
         ]);
 
+        $builder->add('cover', MediaType::class, [
+            'multiple' => false,
+            'formats' => [
+                'magazine_cover'
+            ]
+        ]);
+
         $builder->add('pictures', MediaType::class);
     }
 

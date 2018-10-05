@@ -1,4 +1,4 @@
-define(["require", "exports", "jquery", "cropperjs"], function (require, exports, $, Cropper) {
+define(["require", "exports", "jquery", "cropperjs", "app/Router"], function (require, exports, $, Cropper, router) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ImageCropper = /** @class */ (function () {
@@ -123,7 +123,10 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
         };
         ImageCropperOverlay.prototype.sendCropData = function (callback) {
             var data = this.cropper.getData();
-            var url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/crop';
+            var url = router.generate('enhavo_media_image_cropper_crop', {
+                token: this.item.getMeta().token,
+                format: this.format
+            });
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -141,7 +144,10 @@ define(["require", "exports", "jquery", "cropperjs"], function (require, exports
             });
         };
         ImageCropperOverlay.prototype.getFormatData = function (callback) {
-            var url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/data';
+            var url = router.generate('enhavo_media_image_cropper_data', {
+                token: this.item.getMeta().token,
+                format: this.format
+            });
             $.ajax({
                 url: url,
                 type: 'GET',

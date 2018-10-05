@@ -1,6 +1,7 @@
 import { MediaItem } from 'media/Media';
 import * as $ from 'jquery'
 import * as Cropper from 'cropperjs';
+import * as router from 'app/Router'
 
 export class ImageCropper
 {
@@ -169,7 +170,12 @@ export class ImageCropperOverlay
     private sendCropData(callback: () => void)
     {
         let data = this.cropper.getData();
-        let url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/crop';
+
+        let url = router.generate('enhavo_media_image_cropper_crop', {
+            token: this.item.getMeta().token,
+            format: this.format
+        });
+
         $.ajax({
             url: url,
             type: 'POST',
@@ -189,7 +195,11 @@ export class ImageCropperOverlay
 
     private getFormatData(callback: (data: FormatData) => void)
     {
-        let url = '/media/image/' + this.item.getMeta().token + '/' + this.format + '/cropper/data';
+        let url = router.generate('enhavo_media_image_cropper_data', {
+            token: this.item.getMeta().token,
+            format: this.format
+        });
+
         $.ajax({
             url: url,
             type: 'GET',

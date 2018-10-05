@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\SlugType;
 use Enhavo\Bundle\ContentBundle\EventListener\RouterSubscriber;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouterType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
@@ -114,7 +115,7 @@ class ContentType extends AbstractType
             'translation' => $this->translation
         ));
 
-        $builder->add('openGraphImage', 'enhavo_files', array(
+        $builder->add('openGraphImage', MediaType::class, array(
             'label' => 'form.label.openGraphImage',
             'translation_domain' => 'EnhavoContentBundle',
             'multiple' => false

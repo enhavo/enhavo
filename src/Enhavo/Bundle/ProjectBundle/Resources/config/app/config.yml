@@ -4,8 +4,11 @@ enhavo_media:
             type: image
             width: 350
             height: 350
-
         sliderHero:
+            type: image
+            width: 1300
+            height: 600
+        magazine_cover:
             type: image
             width: 1300
             height: 600

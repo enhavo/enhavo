@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ProjectBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -39,6 +40,11 @@ class Magazine implements ResourceInterface
      * @var \Doctrine\Common\Collections\Collection
      */
     private $pictures;
+
+    /**
+     * @var FileInterface
+     */
+    private $cover;
 
     /**
      * Constructor
@@ -186,5 +192,21 @@ class Magazine implements ResourceInterface
     public function getPictures()
     {
         return $this->pictures;
+    }
+
+    /**
+     * @return FileInterface
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @param FileInterface $cover
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
     }
 }
