@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -38,22 +39,30 @@ class MediaManager
     private $tokenGenerator;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
      * MediaManager constructor.
      * @param FormatManager $formatManager
      * @param StorageInterface $storage
      * @param ProviderInterface $provider
      * @param TokenGeneratorInterface $tokenGenerator
+     * @param EntityManagerInterface $em
      */
     public function __construct(
         FormatManager $formatManager,
         StorageInterface $storage,
         ProviderInterface $provider,
-        TokenGeneratorInterface $tokenGenerator
+        TokenGeneratorInterface $tokenGenerator,
+        EntityManagerInterface $em
     ) {
         $this->formatManager = $formatManager;
         $this->storage = $storage;
         $this->provider = $provider;
         $this->tokenGenerator = $tokenGenerator;
+        $this->em = $em;
     }
 
     /**
@@ -117,6 +126,10 @@ class MediaManager
      */
     public function saveFile(FileInterface $file)
     {
+        $this->em->persist($file);
+        $this->em->flush();
+
+
         $content = $file->getContent()->getContent();
         $file->setMd5Checksum(md5($content));
 
@@ -167,5 +180,15 @@ class MediaManager
             ]);
         } while($file !== null); //make sure token is unique
         return $token;
+    }
+
+    public function updateFile(FileInterface $file)
+    {
+        $content = $file->getContent()->getContent();
+        $file->setMd5Checksum(md5($content));
+
+        if($file->getToken() === null) {
+            $file->setToken($this->generateToken());
+        }
     }
 }

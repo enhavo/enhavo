@@ -6,6 +6,7 @@
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Model\Item\GalleryItem;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,7 +34,7 @@ class GalleryItemType extends AbstractType
             'translation' => $this->translation
         ));
 
-        $builder->add('files', 'enhavo_files', array(
+        $builder->add('files', MediaType::class, array(
             'label' => 'gallery.form.label.pictures',
             'translation_domain' => 'EnhavoGridBundle'
         ));

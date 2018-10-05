@@ -42,4 +42,9 @@ Enhavo\Bundle\ProjectBundle\Entity\Magazine:
                         referencedColumnName: id
                         onDelete: cascade
 
+    manyToOne:
+        cover:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
     lifecycleCallbacks: {  }

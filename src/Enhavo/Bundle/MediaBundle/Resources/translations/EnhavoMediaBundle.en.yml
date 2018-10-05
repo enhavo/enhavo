@@ -1,4 +1,6 @@
 media:
+  label:
+    library: "Media Library"
   form:
     label:
       title: "Title"

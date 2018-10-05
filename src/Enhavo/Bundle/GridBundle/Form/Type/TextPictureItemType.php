@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\GridBundle\Model\Item\TextPictureItem;
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,7 +42,7 @@ class TextPictureItemType extends AbstractType
             'translation' => $this->translation
         ));
 
-        $builder->add('file', 'enhavo_files', array(
+        $builder->add('file', MediaType::class, array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false

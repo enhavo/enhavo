@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -62,7 +63,7 @@ class SlideType extends AbstractType
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('image', 'enhavo_files', array(
+        $builder->add('image', MediaType::class, array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false

@@ -3,8 +3,8 @@ namespace Enhavo\Bundle\MediaBundle\Factory;
 
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
-use Enhavo\Bundle\MediaBundle\Content\UrlContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use GuzzleHttp\Client;
 use function GuzzleHttp\Psr7\parse_header;
@@ -16,6 +16,17 @@ use Symfony\Component\Finder\SplFileInfo;
 class FileFactory extends Factory
 {
     use GuessTrait;
+
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    public function __construct($className, MediaManager $mediaManager)
+    {
+        parent::__construct($className);
+        $this->mediaManager = $mediaManager;
+    }
 
     /**
      * @param FileInterface $originalResource
@@ -37,9 +48,7 @@ class FileFactory extends Factory
         $content = new PathContent($tempPath);
         $file->setContent($content);
 
-        $file->setGarbage(true);
-        $file->setGarbageTimestamp(new \DateTime());
-
+        $this->mediaManager->updateFile($file);
         return $file;
     }
 
@@ -55,9 +64,9 @@ class FileFactory extends Factory
         $file->setMimeType($uploadedFile->getMimeType());
         $file->setExtension($uploadedFile->guessClientExtension());
         $file->setFilename($uploadedFile->getClientOriginalName());
-        $file->setGarbage(true);
         $file->setContent(new PathContent($uploadedFile->getRealPath()));
 
+        $this->mediaManager->updateFile($file);
         return $file;
     }
 
@@ -98,9 +107,9 @@ class FileFactory extends Factory
         $file->setMimeType($this->guessMimeType($path));
         $file->setExtension(array_key_exists('extension', $fileInfo) ? $fileInfo['extension'] : $this->guessExtension($path));
         $file->setFilename($fileInfo['basename']);
-        $file->setGarbage(true);
         $file->setContent(new PathContent($path));
 
+        $this->mediaManager->updateFile($file);
         return $file;
     }
 
@@ -155,10 +164,9 @@ class FileFactory extends Factory
         $file->setFilename($filename);
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $file->setExtension($extension);
-
-        $file->setGarbage(true);
         $file->setContent(new Content((string)$response->getBody()));
 
+        $this->mediaManager->updateFile($file);
         return $file;
     }
 }

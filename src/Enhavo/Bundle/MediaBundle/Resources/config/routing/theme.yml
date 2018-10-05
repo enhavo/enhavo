@@ -1,0 +1,3 @@
+enhavo_media_file:
+    resource: "@EnhavoMediaBundle/Resources/config/routing/theme/file.yml"
+    prefix:   /

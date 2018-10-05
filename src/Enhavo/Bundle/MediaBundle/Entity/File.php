@@ -13,57 +13,67 @@ class File implements FileInterface
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $mimeType;
+    private $mimeType;
 
     /**
      * @var string
      */
-    protected $extension;
+    private $extension;
 
     /**
      * @var integer
      */
-    protected $order;
+    private $order;
 
     /**
      * @var string
      */
-    protected $filename;
+    private $filename;
 
     /**
      * @var array
      */
-    protected $parameters;
+    private $parameters;
 
     /**
      * @var bool
      */
-    protected $garbage;
+    private $garbage = false;
 
     /**
      * @var \DateTime
      */
-    protected $garbageTimestamp;
+    private $garbageTimestamp;
 
     /**
      * @var ContentInterface
      */
-    protected $content;
+    private $content;
 
     /**
      * @var string
      */
-    protected $token;
+    private $token;
 
     /**
      * @var string
      */
-    protected $md5Checksum;
+    private $md5Checksum;
+
+    /**
+     * @var bool
+     */
+    private $library;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
 
     /**
      * Get id
@@ -345,5 +355,37 @@ class File implements FileInterface
     public function setMd5Checksum($md5Checksum)
     {
         $this->md5Checksum = $md5Checksum;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLibrary()
+    {
+        return $this->library;
+    }
+
+    /**
+     * @param bool $library
+     */
+    public function setLibrary($library)
+    {
+        $this->library = $library;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 }

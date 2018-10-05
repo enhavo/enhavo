@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -51,14 +52,14 @@ class SettingType extends AbstractType
                 ));
             }
             if ($type === Setting::SETTING_TYPE_FILE) {
-                $form->add('file', 'enhavo_files', array(
+                $form->add('file', MediaType::class, array(
                     'label' => 'setting.label.file',
                     'translation_domain' => 'EnhavoSettingBundle',
                     'multiple' => false
                 ));
             }
             if ($type === Setting::SETTING_TYPE_FILES) {
-                $form->add('files', 'enhavo_files', array(
+                $form->add('files', MediaType::class, array(
                     'label' => 'setting.label.files',
                     'translation_domain' => 'EnhavoSettingBundle',
                     'multiple' => true

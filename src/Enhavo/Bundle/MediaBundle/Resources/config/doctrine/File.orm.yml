@@ -42,6 +42,10 @@ Enhavo\Bundle\MediaBundle\Entity\File:
             type: string
             nullable: true
 
+        library:
+            type: boolean
+            nullable: true
+
         garbage:
             type: boolean
             nullable: false
@@ -49,5 +53,12 @@ Enhavo\Bundle\MediaBundle\Entity\File:
         garbageTimestamp:
             type: datetime
             nullable: true
+
+        createdAt:
+            type: datetime
+            nullable: false
+            gedmo:
+                timestampable:
+                    on: create
 
     lifecycleCallbacks: {  }

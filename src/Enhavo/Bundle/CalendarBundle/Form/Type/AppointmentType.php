@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,7 +55,7 @@ class AppointmentType extends AbstractType
             'translation_domain' => 'EnhavoCalendarBundle',
         ));
 
-        $builder->add('picture', 'enhavo_files', array(
+        $builder->add('picture', MediaType::class, array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false

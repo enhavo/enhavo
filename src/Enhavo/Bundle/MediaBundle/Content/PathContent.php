@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Content;
 
-
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 
 class PathContent extends AbstractContent
