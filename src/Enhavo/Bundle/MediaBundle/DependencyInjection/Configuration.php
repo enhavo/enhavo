@@ -30,6 +30,15 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('parameters_type')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('filter')
                     ->addDefaultsIfNotSet()
                     ->children()
