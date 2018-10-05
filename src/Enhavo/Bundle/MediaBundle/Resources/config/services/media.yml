@@ -30,8 +30,15 @@ services:
         tags:
             - { name: form.type, alias: enhavo_media }
 
-    enhavo_media.form.media_extension:
+    enhavo_media.form.extension.image_cropper:
         class: Enhavo\Bundle\MediaBundle\Form\Extension\ImageCropperMediaExtension
+        tags:
+            - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
+
+    enhavo_media.form.extension.media:
+        class: Enhavo\Bundle\MediaBundle\Form\Extension\MediaExtension
+        arguments:
+            - '%enhavo_media.form%'
         tags:
             - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
 

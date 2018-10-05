@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\Form\AbstractType;
