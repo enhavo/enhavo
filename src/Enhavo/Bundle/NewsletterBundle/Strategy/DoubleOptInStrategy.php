@@ -68,25 +68,28 @@ class DoubleOptInStrategy extends AbstractStrategy
 
     private function notifySubscriber(SubscriberInterface $subscriber, $type)
     {
-        $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
-            'token' => $subscriber->getToken(),
-            'type' => $subscriber->getType()
-        ], true);
+        $notify = $this->getTypeOption('notify', $type, false);
+        if($notify) {
+            $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
+                'token' => $subscriber->getToken(),
+                'type' => $subscriber->getType()
+            ], true);
 
-        $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
-        $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
-        $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+            $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
+            $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($this->getSubject())
-            ->setFrom($from, $senderName)
-            ->setTo($subscriber->getEmail())
-            ->setBody($this->renderTemplate($template, [
-                'subscriber' => $subscriber,
-                'link' => $link
-            ]), 'text/html');
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->getSubject())
+                ->setFrom($from, $senderName)
+                ->setTo($subscriber->getEmail())
+                ->setBody($this->renderTemplate($template, [
+                    'subscriber' => $subscriber,
+                    'link' => $link
+                ]), 'text/html');
 
-        $this->sendMessage($message);
+            $this->sendMessage($message);
+        }
     }
 
     private function notifyAdmin(SubscriberInterface $subscriber, $type)
