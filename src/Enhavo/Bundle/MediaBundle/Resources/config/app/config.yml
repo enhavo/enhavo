@@ -45,4 +45,11 @@ enhavo_media:
             type: image
             width: 72
             height: 72
-
+        enhavoMediaLibraryThumb:
+            type: image
+            width: 150
+            height: 150
+        enhavoMediaLibrary:
+            type: image
+            maxWidth: 640
+            maxHeight: 480

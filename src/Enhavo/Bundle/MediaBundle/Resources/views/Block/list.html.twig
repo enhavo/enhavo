@@ -1,15 +1,23 @@
 <div>
-    <ul>
-        {% for item in data %}
-            <li data-item="{{ item.id }}">
-                {{ item.filename }}
-                {% if item.image %}
-                        <img src="{{ media_url(item, 'enhavoPreviewThumb') }}" />
-                {% else %}
-                        <i class="icon icon-file"></i>
-                {% endif %}
-            </li>
-        {% endfor %}
+    <ul class="media-library-file-list">
+        {% spaceless %}
+            {% for item in data %}
+                <li data-item="{{ item.id }}">
+                    <div class="filename">{{ item.filename }}</div>
+                    {% if item.image %}
+                        <img src="{{ media_url(item, 'enhavoMediaLibraryThumb') }}" />
+                    {% elseif item.extension == "pdf" %}
+                        <div class="icon-container">
+                            <i class="icon icon-file-pdf"></i>
+                        </div>
+                    {% else %}
+                        <div class="icon-container">
+                            <i class="icon icon-file-code"></i>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% endspaceless %}
     </ul>
     {{ pagination_render(data) }}
 </div>

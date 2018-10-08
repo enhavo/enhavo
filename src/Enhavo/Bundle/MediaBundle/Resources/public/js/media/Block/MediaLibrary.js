@@ -20,6 +20,7 @@ define(["require", "exports", "jquery", "app/Router", "app/Admin", "blueimp-file
     var Block = /** @class */ (function () {
         function Block(element) {
             this.$element = $(element);
+            this.$listElement = $('[data-file-list]', this.$element);
             this.stopLoading();
             this.initDropZone();
             this.initFileUpload();
@@ -30,7 +31,9 @@ define(["require", "exports", "jquery", "app/Router", "app/Admin", "blueimp-file
             $(document).bind('dragover', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                self.showDropZone();
+                if ($(e.originalEvent.srcElement).parents('[data-file-list]').length == 0) {
+                    self.showDropZone();
+                }
             });
             $(document).bind('dragleave drop', function (e) {
                 e.preventDefault();
@@ -83,7 +86,7 @@ define(["require", "exports", "jquery", "app/Router", "app/Admin", "blueimp-file
                 var page = $(this).data('page');
                 self.refresh(page);
             });
-            this.$element.html(html);
+            this.$listElement.html(html);
         };
         Block.prototype.refresh = function (page) {
             if (page === void 0) { page = 1; }
