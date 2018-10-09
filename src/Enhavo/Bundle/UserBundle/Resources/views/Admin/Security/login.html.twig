@@ -3,7 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-    <div id="background">
+    <div id="background" style="background-image: url({{ asset(branding_background_image()) }})">
         <div id="loginBox">
             <div class="loginContainer">
                 {% if error %}
