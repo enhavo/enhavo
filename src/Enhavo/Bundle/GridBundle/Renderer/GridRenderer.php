@@ -33,15 +33,21 @@ class GridRenderer
     private $contextBuilder;
 
     /**
+     * @var string[]
+     */
+    private $renderSets;
+
+    /**
      * GridRenderer constructor.
      *
      * @param ItemResolver $resolver
      * @param ContextBuilder $contextBuilder
      */
-    public function __construct(ItemResolver $resolver, ContextBuilder $contextBuilder)
+    public function __construct(ItemResolver $resolver, ContextBuilder $contextBuilder, $renderSets)
     {
         $this->resolver = $resolver;
         $this->contextBuilder = $contextBuilder;
+        $this->renderSets = $renderSets;
     }
 
     /**
@@ -98,12 +104,12 @@ class GridRenderer
                 }
                 $toRenderItems[] = $item;
             }
-            foreach($toRenderItems as $items) {
+            foreach($toRenderItems as $item) {
                 $template = null;
-                if(is_array($templateSet) && array_key_exists($item->getName(), $templateSet)) {
-                    $template = $templateSet[$item->getName()];
+                if(array_key_exists($templateSet, $this->renderSets) && isset($this->renderSets[$templateSet][$item->getName()])) {
+                    $template = $this->renderSets[$templateSet][$item->getName()];
                 }
-                $return[] = $this->renderItem($items, $template);
+                $return[] = $this->renderItem($item, $template);
             }
         }
         return join('', $return);

@@ -21,6 +21,7 @@ services:
         arguments:
             - '@enhavo_grid.resolver.item_resolver'
             - '@enhavo_grid.context.builder'
+            - '%enhavo_grid.render.sets%'
         calls:
             - [ setContainer, ['@service_container']]
 
