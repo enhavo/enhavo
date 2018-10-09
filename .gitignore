@@ -2,7 +2,7 @@
 .settings
 .build
 /web/bundles/
-/www/bundles/
+/web/build/*
 /app/check.php
 /app/SymfonyRequirements.php
 /app/bootstrap.php.cache
