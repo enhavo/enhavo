@@ -12,6 +12,10 @@ class Assetic
 {
     public static function convertPathToAsset($path)
     {
+        if(!preg_match('/^@/', $path)) {
+            return $path;
+        }
+
         $path = str_replace('@', '', $path);
         $pathArray = explode('/', $path);
         $bundle = str_replace('Bundle', '', array_shift($pathArray));

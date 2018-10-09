@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\EnhavoAppExtension;
+use Enhavo\Bundle\AppBundle\Util\Assetic;
 
 class Branding extends \Twig_Extension
 {
@@ -34,6 +35,7 @@ class Branding extends \Twig_Extension
             new \Twig_SimpleFunction('branding_text', array($this, 'getBrandingText'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('branding_logo', array($this, 'getBrandingLogo')),
             new \Twig_SimpleFunction('branding_version', array($this, 'getBrandingVersion')),
+            new \Twig_SimpleFunction('branding_background_image', array($this, 'getBackgroundImage')),
         );
     }
 
@@ -65,6 +67,11 @@ class Branding extends \Twig_Extension
     public function getBrandingVersion()
     {
         return $this->brandingParameters['version'];
+    }
+
+    public function getBackgroundImage()
+    {
+        return Assetic::convertPathToAsset($this->brandingParameters['background_image']);
     }
 
     public function getName()
