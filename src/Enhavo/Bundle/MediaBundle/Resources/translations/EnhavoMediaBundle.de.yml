@@ -1,5 +1,6 @@
 media:
   label:
+    drop_hint: "Ziehen Sie Dateien aus Ihrem Datei-Explorer / Finder auf diese Fläche."
     library: "Mediathek"
   form:
     label:

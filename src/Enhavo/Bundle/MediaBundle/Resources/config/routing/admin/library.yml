@@ -31,6 +31,7 @@ enhavo_media_library_list:
                 library: true
             sorting:
                 createdAt: desc
+            paginate: 30
             template: 'EnhavoMediaBundle:Block:list.html.twig'
             viewer:
 
@@ -47,6 +48,11 @@ enhavo_media_library_update:
                 form:
                     action: enhavo_media_library_update
                     delete: enhavo_media_library_delete
+                tabs:
+                    file:
+                        label: file.label.file
+                        template: 'EnhavoMediaBundle:Admin/Library:file.html.twig'
+
 
 enhavo_media_library_delete:
     options:

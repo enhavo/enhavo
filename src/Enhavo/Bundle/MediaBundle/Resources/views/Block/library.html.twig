@@ -4,4 +4,8 @@
     data-block-app="media/Block/MediaLibrary"
     data-block-type="media_library"
     class="block-app media-library loading"
-></div>
+>
+    <div class="media-library-block-title">{{ 'media.label.library'|trans({}, 'EnhavoMediaBundle') }}</div>
+    <div class="media-library-block-description">{{ 'media.label.drop_hint'|trans({}, 'EnhavoMediaBundle') }}</div>
+    <div data-file-list></div>
+</div>

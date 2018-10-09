@@ -1,5 +1,6 @@
 media:
   label:
+    drop_hint: "Drag files from your file explorer onto this area."
     library: "Media Library"
   form:
     label:

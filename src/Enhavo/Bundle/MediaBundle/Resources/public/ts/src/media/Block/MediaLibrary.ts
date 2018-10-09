@@ -22,10 +22,12 @@ export class BlockInitializer
 export class Block
 {
     private $element: JQuery;
+    private $listElement: JQuery;
 
     constructor(element:HTMLElement)
     {
         this.$element = $(element);
+        this.$listElement = $('[data-file-list]', this.$element);
         this.stopLoading();
         this.initDropZone();
         this.initFileUpload();
@@ -38,7 +40,9 @@ export class Block
         $(document).bind('dragover', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            self.showDropZone()
+            if($(e.originalEvent.srcElement).parents('[data-file-list]').length == 0) {
+                self.showDropZone()
+            }
         });
 
         $(document).bind('dragleave drop', function (e) {
@@ -102,7 +106,7 @@ export class Block
             let page = $(this).data('page');
             self.refresh(page);
         });
-        this.$element.html(html);
+        this.$listElement.html(html);
     }
 
     refresh(page:number = 1)
