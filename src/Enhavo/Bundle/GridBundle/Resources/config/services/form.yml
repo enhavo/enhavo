@@ -50,3 +50,23 @@ services:
             - '%enhavo_translation.translate%'
         tags:
             - { name: form.type, alias: enhavo_grid_video_item }
+
+    enhavo_grid.form.column:
+        class: Enhavo\Bundle\GridBundle\Form\Type\ColumnType
+        arguments:
+            - '%enhavo_grid.column.width_form%'
+            - '%enhavo_grid.column.style_form%'
+        tags:
+            - { name: form.type, alias: enhavo_grid_column }
+
+    enhavo_grid.form.style:
+        class: Enhavo\Bundle\GridBundle\Form\Type\StyleType
+        arguments:
+            - '%enhavo_grid.column.styles%'
+        tags:
+            - { name: form.type, alias: enhavo_grid_style }
+
+    enhavo_grid.form.width:
+        class: Enhavo\Bundle\GridBundle\Form\Type\WidthType
+        tags:
+            - { name: form.type, alias: enhavo_grid_width }

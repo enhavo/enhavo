@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\GridBundle\DependencyInjection;
 
+use Enhavo\Bundle\GridBundle\Form\Type\StyleType;
+use Enhavo\Bundle\GridBundle\Form\Type\WidthType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -26,9 +28,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('render')
                     ->children()
                         ->arrayNode('sets')
-                        ->useAttributeAsKey('name')
+                            ->useAttributeAsKey('name')
                             ->prototype('array')
-                                ->useAttributeAsKey('name')
                                 ->prototype('scalar')->end()
                             ->end()
                         ->end()
@@ -40,6 +41,23 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('enable_columns')->defaultValue(true)->end()
                         ->scalarNode('enable_items')->defaultValue(true)->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('column')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('style_form')->defaultValue(StyleType::class)->end()
+                        ->scalarNode('width_form')->defaultValue(WidthType::class)->end()
+                        ->arrayNode('styles')
+                            ->useAttributeAsKey('name')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('label')->end()
+                                    ->scalarNode('value')->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
 

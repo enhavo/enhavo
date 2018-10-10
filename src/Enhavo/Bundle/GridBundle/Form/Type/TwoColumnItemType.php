@@ -12,13 +12,13 @@ class TwoColumnItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('columnOne', ColumnType::class, [
+        $builder->add('columnOne', GridType::class, [
             'label' => 'column.label.column_one',
             'translation_domain' => 'EnhavoGridBundle',
             'item_groups' => ['content']
         ]);
 
-        $builder->add('columnTwo', ColumnType::class, [
+        $builder->add('columnTwo', GridType::class, [
             'label' => 'column.label.column_two',
             'translation_domain' => 'EnhavoGridBundle',
             'item_groups' => ['content']
@@ -30,6 +30,11 @@ class TwoColumnItemType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => TwoColumnItem::class
         ));
+    }
+
+    public function getParent()
+    {
+        return ColumnType::class;
     }
 
     public function getName()

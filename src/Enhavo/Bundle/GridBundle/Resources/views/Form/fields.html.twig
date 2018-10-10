@@ -3,12 +3,9 @@
 {% endblock %}
 
 {% block enhavo_grid_column_widget %}
-    {{ form_widget(form.items) }}
-{% endblock %}
-
-{% block enhavo_grid_one_column_item_widget %}
-    <div class="dynamic-nested-container">
-        {{ form_widget(form.width) }}
-        {{ form_widget(form.column) }}
-    </div>
+    {{ form_row(form.width) }}
+    {{ form_row(form.style) }}
+    {% for child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
 {% endblock %}

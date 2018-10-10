@@ -6,7 +6,7 @@ use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
 
-class ThreeColumnItem extends AbstractItem implements GridsAwareInterface
+class ThreeColumnItem extends Column
 {
     /**
      * @var Grid

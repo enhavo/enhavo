@@ -2,12 +2,6 @@ Enhavo\Bundle\GridBundle\Model\Column\OneColumnItem:
     type: entity
     table: grid_item_one_column
 
-    fields:
-        width:
-            type: string
-            length: 255
-            nullable: true
-
     manyToOne:
         column:
             cascade: ['persist', 'remove', 'refresh']
