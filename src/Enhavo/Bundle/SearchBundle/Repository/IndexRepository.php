@@ -79,6 +79,10 @@ class IndexRepository extends EntityRepository
             $query->orderBy('calculated_score', 'DESC');
         }
 
+        if($filter->getLimit() !== null) {
+            $query->setMaxResults(intval($filter->getLimit()));
+        }
+
         return $query;
     }
 

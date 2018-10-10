@@ -134,6 +134,7 @@ class DatabaseSearchEngine implements EngineInterface
         $searchFilter->setQueries($filter->getQueries());
         $searchFilter->setOrderBy($filter->getOrderBy());
         $searchFilter->setOrderDirection($filter->getOrderDirection());
+        $searchFilter->setLimit($filter->getLimit());
 
         return $searchFilter;
     }
