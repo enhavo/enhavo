@@ -40,6 +40,11 @@ class Filter
     private $orderDirection;
 
     /**
+     * @var integer
+     */
+    private $limit;
+
+    /**
      * @return string
      */
     public function getTerm()
@@ -130,5 +135,21 @@ class Filter
     public function setOrderDirection($orderDirection)
     {
         $this->orderDirection = $orderDirection;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
 }
