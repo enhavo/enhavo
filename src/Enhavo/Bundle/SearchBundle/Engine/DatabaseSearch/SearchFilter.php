@@ -37,6 +37,11 @@ class SearchFilter
     private $orderDirection;
 
     /**
+     * @var integer
+     */
+    private $limit;
+
+    /**
      * @return string[]
      */
     public function getWords()
@@ -114,5 +119,21 @@ class SearchFilter
     public function setOrderDirection($orderDirection)
     {
         $this->orderDirection = $orderDirection;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
 }

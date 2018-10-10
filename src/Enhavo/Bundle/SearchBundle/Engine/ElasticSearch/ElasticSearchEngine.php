@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
+use Enhavo\Bundle\SearchBundle\Engine\Filter\ContainsQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
@@ -136,7 +137,7 @@ class ElasticSearchEngine implements EngineInterface
 
     /**
      * @param Filter $filter
-     * @return Query\BoolQuery
+     * @return Query
      */
     private function createQuery(Filter $filter)
     {
@@ -160,7 +161,11 @@ class ElasticSearchEngine implements EngineInterface
             $query->addFilter($termQuery);
         }
 
-        return $query;
+        $masterQuery =  new Query($query);
+        if($filter->getLimit() !== null) {
+            $masterQuery->setSize(intval($filter->getLimit()));
+        }
+        return $masterQuery;
     }
 
     private function createFilterQuery($fieldName, $filterQuery)
@@ -200,6 +205,13 @@ class ElasticSearchEngine implements EngineInterface
                 $operatorToMap[$filterQuery->getOperatorTo()] => $filterQuery->getTo()
             ]);
             return $query;
+        } elseif($filterQuery instanceof ContainsQuery) {
+            $boolQuery = new Query\BoolQuery();
+            foreach ($filterQuery->getValues() as $value) {
+                $term = new Query\Term([$fieldName => $value]);
+                $boolQuery->addShould($term);
+            }
+            return $boolQuery;
         }
         throw new FilterQueryNotSupportedException(sprintf('Filter query from type "%s" is not supported', get_class($filterQuery)));
     }
@@ -222,7 +234,7 @@ class ElasticSearchEngine implements EngineInterface
 
     public function searchPaginated(Filter $filter)
     {
-        $query = new Query($this->createQuery($filter));
+        $query = $this->createQuery($filter);
         $searchable = $this->getIndex();
         return new Pagerfanta(new ElasticaORMAdapter($searchable, $query, $this->em));
     }
