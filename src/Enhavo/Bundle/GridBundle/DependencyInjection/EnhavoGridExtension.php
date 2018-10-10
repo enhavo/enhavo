@@ -24,10 +24,14 @@ class EnhavoGridExtension extends Extension
 
         $container->setParameter('enhavo_grid.items', $config['items']);
 
+        $container->setParameter('enhavo_grid.column.style_form', $config['column']['style_form']);
+        $container->setParameter('enhavo_grid.column.width_form', $config['column']['width_form']);
+        $container->setParameter('enhavo_grid.column.styles', $config['column']['styles']);
+
         if(isset($config['render']) && isset($config['render']['sets'])) {
             $container->setParameter('enhavo_grid.render.sets', $config['render']['sets']);
         } else {
-            $container->setParameter('enhavo_grid.render.sets', array());
+            $container->setParameter('enhavo_grid.render.sets', []);
         }
 
         if($config['doctrine']['enable_columns']) {

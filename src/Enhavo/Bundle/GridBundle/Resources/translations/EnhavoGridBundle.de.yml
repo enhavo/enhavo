@@ -90,8 +90,12 @@ column:
     column_two: 'Spalte Zwei'
     column_three: 'Spalte Drei'
     width:
+      label: 'Breite'
       full: 'Volle Breite'
       container: 'Container Breite'
+    style:
+      label: 'Style'
+      placeholder: '-- Style --'
 one_column:
   label:
     one_column: 'Eine Spalte'

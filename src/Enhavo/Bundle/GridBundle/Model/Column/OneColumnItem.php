@@ -2,24 +2,14 @@
 
 namespace Enhavo\Bundle\GridBundle\Model\Column;
 
-use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
-use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 
-class OneColumnItem extends AbstractItem implements GridsAwareInterface
+class OneColumnItem extends Column
 {
-    const WIDTH_FULL = 'full';
-    const WIDTH_CONTAINER = 'container';
-
     /**
      * @var GridInterface
      */
     private $column;
-
-    /**
-     * @var string
-     */
-    private $width = 'container';
 
     /**
      * @return GridInterface
@@ -43,21 +33,5 @@ class OneColumnItem extends AbstractItem implements GridsAwareInterface
             return [$this->column];
         }
         return [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @param string $width
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
     }
 }

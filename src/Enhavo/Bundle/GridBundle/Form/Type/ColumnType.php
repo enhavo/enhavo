@@ -8,29 +8,31 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ColumnType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @var string
+     */
+    private $styleForm;
+
+    /**
+     * @var string
+     */
+    private $widthForm;
+
+    public function __construct($widthForm, $styleForm)
     {
-        $builder->add('items', ItemsType::class, [
-            'entry_type' => ItemType::class,
-            'items' => $options['items'],
-            'item_groups' => $options['item_groups'],
-        ]);
+        $this->widthForm = $widthForm;
+        $this->styleForm = $styleForm;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Grid::class,
-            'items' => [],
-            'item_groups' => []
-        ));
+        $builder->add('width', $this->widthForm);
+        $builder->add('style', $this->styleForm);
     }
 
     public function getName()
