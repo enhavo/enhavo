@@ -8,7 +8,9 @@
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
 use Enhavo\Bundle\MediaBundle\Filter\FilterInterface;
@@ -16,6 +18,7 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
+use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 class FormatManager
@@ -31,9 +34,9 @@ class FormatManager
     private $storage;
 
     /**
-     * @var ProviderInterface
+     * @var FormatRepository
      */
-    private $provider;
+    private $formatRepository;
 
     /**
      * @var FormatFactory
@@ -45,13 +48,33 @@ class FormatManager
      */
     private $filterCollector;
 
-    public function __construct($formats, StorageInterface $storage, ProviderInterface $provider, FormatFactory $formatFactory, TypeCollector $filterCollector)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @var ProviderInterface
+     */
+    private $provider;
+
+    public function __construct(
+        $formats,
+        StorageInterface $storage,
+        FormatRepository $repository,
+        FormatFactory $formatFactory,
+        TypeCollector $filterCollector,
+        EntityManagerInterface $em,
+        ProviderInterface $provider
+    )
     {
         $this->formats = $formats;
         $this->storage = $storage;
-        $this->provider = $provider;
+        $this->formatRepository = $repository;
         $this->formatFactory = $formatFactory;
         $this->filterCollector = $filterCollector;
+        $this->em = $em;
+        $this->provider = $provider;
     }
 
     private function createFormat(FileInterface $file, $format, $parameters = [])
@@ -63,7 +86,11 @@ class FormatManager
 
     public function getFormat(FileInterface $file, $format, $parameters = [])
     {
-        $fileFormat = $this->provider->findFormat($file, $format);
+        $fileFormat = $this->formatRepository->findOneBy([
+            'name' => $format,
+            'file' => $file
+        ]);
+
         if($fileFormat === null) {
             return $this->createFormat($file, $format, $parameters);
         }
@@ -72,7 +99,12 @@ class FormatManager
 
     public function applyFormat(FileInterface $file, $format, $parameters = [])
     {
-        $fileFormat = $this->provider->findFormat($file, $format);
+        /** @var Format $fileFormat */
+        $fileFormat = $this->formatRepository->findOneBy([
+            'name' => $format,
+            'file' => $file
+        ]);
+
         if($fileFormat === null) {
             return $this->createFormat($file, $format, $parameters);
         }
@@ -82,7 +114,11 @@ class FormatManager
 
     public function applyFormats(FileInterface $file)
     {
-        $fileFormats = $this->provider->findAllFormats($file);
+        /** @var Format[] $fileFormats */
+        $fileFormats = $this->formatRepository->findBy([
+            'file' => $file
+        ]);
+
         foreach($fileFormats as $fileFormat) {
             $this->applyFormat($file, $fileFormat->getName());
         }
@@ -102,7 +138,8 @@ class FormatManager
             $filter->apply($fileFormat, $setting);
         }
 
-        $this->provider->saveFormat($fileFormat);
+        $this->em->persist($fileFormat);
+        $this->em->flush();
         $this->storage->saveFile($fileFormat);
 
         return $fileFormat;
@@ -110,7 +147,9 @@ class FormatManager
 
     public function deleteFormats(FileInterface $file)
     {
-        $formats = $this->provider->findAllFormats($file);
+        $formats = $this->formatRepository->findBy([
+            'file' => $file
+        ]);
         foreach($formats as $format) {
             $this->deleteFormat($format);
         }
@@ -118,13 +157,15 @@ class FormatManager
 
     public function saveFormat(FormatInterface $format)
     {
-        $this->provider->saveFormat($format);
+        $this->em->persist($format);
+        $this->em->flush();
         $this->storage->saveFile($format);
     }
 
     public function deleteFormat(FormatInterface $format)
     {
-        $this->provider->deleteFormat($format);
+        $this->em->remove($format);
+        $this->em->flush();
         $this->storage->deleteFile($format);
     }
 

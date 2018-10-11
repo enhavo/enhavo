@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
+use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -88,9 +89,7 @@ class FormatFactory extends Factory
         $format->setParameters($file->getParameters());
         $format->setFile($file);
 
-        $tempPath = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'Duplicate'), $format->getExtension());
-        file_put_contents($tempPath, $file->getContent()->getContent());
-        $content = new PathContent($tempPath);
+        $content = new Content($file->getContent()->getContent());
         $format->setContent($content);
 
         return $format;
