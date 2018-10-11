@@ -50,10 +50,6 @@
     </div>
 {% endblock %}
 
-{% block text_integer %}
-    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
-{% endblock %}
-
 {% block textarea_widget %}
     <div class="input-container">
         <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
@@ -152,6 +148,12 @@
 {% endblock %}
 
 {% block integer_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block number_widget %}
     <div class="input-container">
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
     </div>
