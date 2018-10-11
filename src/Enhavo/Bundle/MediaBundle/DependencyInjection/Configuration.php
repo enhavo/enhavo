@@ -19,13 +19,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_media')
+        $rootNode = $treeBuilder->root('enhavo_media');
+        $rootNode
             ->children()
                 ->arrayNode('formats')
                     ->useAttributeAsKey('name')
                     ->prototype('variable')->end()
                 ->end()
-                ->scalarNode('provider')->defaultValue('enhavo_media.provider.database_provider')->end()
+                ->scalarNode('provider')->defaultValue('enhavo_media.provider.default_provider')->end()
                 ->scalarNode('storage')->defaultValue('enhavo_media.storage.local_file_storage')->end()
             ->end()
 
@@ -118,8 +119,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-
-
         ;
         return $treeBuilder;
     }

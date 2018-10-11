@@ -47,18 +47,20 @@ services:
         arguments:
             - '@enhavo_media.media.format_manager'
             - '@enhavo_media.storage'
-            - '@enhavo_media.provider'
-            - '@enhavo_app.util.secure_url_token_generator'
+            - '@enhavo_media.repository.file'
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.provider'
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager
         arguments:
             - '%enhavo_media.formats%'
             - '@enhavo_media.storage'
-            - '@enhavo_media.provider'
+            - '@enhavo_media.repository.format'
             - '@enhavo_media.factory.format'
             - '@enhavo_media.filter_collector'
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.provider'
 
     enhavo_media.media.image_cropper_manager:
         class: Enhavo\Bundle\MediaBundle\Media\ImageCropperManager
@@ -71,12 +73,11 @@ services:
             - '%kernel.root_dir%/media'
             - '@filesystem'
 
-    enhavo_media.provider.database_provider:
-        class: Enhavo\Bundle\MediaBundle\Provider\DatabaseProvider
+    enhavo_media.provider.default_provider:
+        class: Enhavo\Bundle\MediaBundle\Provider\DefaultProvider
         arguments:
+            - '@enhavo_app.util.secure_url_token_generator'
             - '@enhavo_media.repository.file'
-            - '@enhavo_media.repository.format'
-            - '@doctrine.orm.entity_manager'
 
     enhavo_media.twig.media_extension:
         class: '%enhavo_media.twig_extension.class%'
@@ -112,7 +113,7 @@ services:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
         arguments:
             - '%enhavo_media.model.file.class%'
-            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.provider'
 
     enhavo_media.factory.format:
         class: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
