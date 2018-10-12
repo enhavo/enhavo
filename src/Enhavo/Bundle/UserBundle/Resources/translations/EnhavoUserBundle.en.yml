@@ -30,6 +30,7 @@ user:
       groups: 'Groups'
       password: 'Password'
       admin: 'Admin'
+      super_admin: 'Super Admin'
   label:
     username: 'Username'
     id: 'ID'
