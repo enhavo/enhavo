@@ -31,6 +31,8 @@ user:
       password: 'Passwort'
       admin: 'Admin'
       super_admin: 'Super Admin'
+    help:
+      admin: 'Nur wenn diese Feld gesetzt ist kann sich der User im Adminbereich einloggen'
   label:
     username: 'Benutzername'
     id: 'ID'

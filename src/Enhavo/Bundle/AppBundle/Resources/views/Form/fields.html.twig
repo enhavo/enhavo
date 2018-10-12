@@ -31,7 +31,7 @@
             <div class="col-md-2 text-right">
                 <div class="label-container{% if help %} has-help{% endif %}">{{ form_label(form) }}{% if help %}<i data-help-text class="help-icon icon icon-help-with-circle"></i>{% endif %}
                     {% if help %}
-                        <div class="help-text" data-help-text>{{ help }}</div>
+                        <div class="help-text" data-help-text>{{ help|trans({}, translation_domain) }}</div>
                     {% endif %}
                 </div>
             </div>

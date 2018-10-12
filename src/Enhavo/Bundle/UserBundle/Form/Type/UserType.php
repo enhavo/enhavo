@@ -66,6 +66,7 @@ class UserType extends AbstractType
         $builder->add('admin', BooleanType::class, array(
             'label' => 'user.form.label.admin',
             'translation_domain' => 'EnhavoUserBundle',
+            'help' => 'user.form.help.admin'
         ));
 
         if($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
