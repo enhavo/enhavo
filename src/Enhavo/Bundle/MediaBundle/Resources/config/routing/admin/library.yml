@@ -44,6 +44,7 @@ enhavo_media_library_update:
         _controller: enhavo_media.controller.file:updateAction
         _sylius:
             form: enhavo_media_library_file
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
             viewer:
                 form:
                     action: enhavo_media_library_update
