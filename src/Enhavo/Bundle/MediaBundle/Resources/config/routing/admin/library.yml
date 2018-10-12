@@ -27,6 +27,7 @@ enhavo_media_library_list:
     defaults:
         _controller: enhavo_media.controller.file:tableAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             criteria:
                 library: true
             sorting:
