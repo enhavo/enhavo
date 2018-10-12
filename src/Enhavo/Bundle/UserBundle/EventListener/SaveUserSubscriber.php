@@ -42,7 +42,5 @@ class SaveUserSubscriber implements EventSubscriberInterface
         }
 
         $this->userManager->updateCanonicalFields($user);
-
-        return;
     }
 }

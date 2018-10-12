@@ -1,10 +1,6 @@
-parameters:
-    security.authentication.voter.group_role_voter.class: Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter
-    enhavo_user.event.save_user.class: Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber
-
 services:
     enhavo_user.event.save_user:
-        class: '%enhavo_user.event.save_user.class%'
+        class: Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber
         arguments:
             - '@fos_user.user_manager'
         tags:
@@ -12,6 +8,9 @@ services:
 
     enhavo_user_user:
         class: '%enhavo_user.form.type.user.class%'
+        arguments:
+            - '%enhavo_user.model.user.class%'
+            - '@security.authorization_checker'
         tags:
             - { name: form.type }
 
@@ -37,8 +36,8 @@ services:
             - '%enhavo_user.model.user.class%'
 
     security.authentication.voter.group_role_voter:
-        class:      '%security.authentication.voter.group_role_voter.class%'
-        public:     false
+        class: Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter
+        public: false
         tags:
             - { name: security.voter }
 

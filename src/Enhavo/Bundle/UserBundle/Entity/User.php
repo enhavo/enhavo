@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
@@ -13,40 +12,34 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 class User extends BaseUser implements UserInterface, ResourceInterface
 {
-    const ROLE_ADMIN = 'ROLE_ADMIN';
     /**
-     * @var integer
+     * @var string
      */
-    protected $id;
+    private $firstName;
 
     /**
      * @var string
      */
-    protected $firstName;
+    private $lastName;
 
     /**
-     * @var string
-     */
-    protected $lastName;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected  $groups;
-
-    /**
-     * @var boolean
+     * @var bool
      */
     protected $enabled;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @var bool
      */
-    public function getId()
+    protected $groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->enabled = true;
     }
 
     /**
@@ -96,19 +89,9 @@ class User extends BaseUser implements UserInterface, ResourceInterface
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->enabled = true;
-    }
-
-    /**
      * Add groups
      *
-     * @param GroupInterface $groups
+     * @param GroupInterface $group
      * @return User
      */
     public function addGroup(GroupInterface $group)
@@ -120,6 +103,7 @@ class User extends BaseUser implements UserInterface, ResourceInterface
      * Remove groups
      *
      * @param GroupInterface $groups
+     * @return void
      */
     public function removeGroup(GroupInterface $groups)
     {
@@ -138,10 +122,7 @@ class User extends BaseUser implements UserInterface, ResourceInterface
 
     public function isAdmin()
     {
-        if($this->hasRole(static::ROLE_ADMIN) || $this->hasRole(static::ROLE_SUPER_ADMIN)){
-            return true;
-        }
-        return false;
+        return $this->hasRole(static::ROLE_ADMIN);
     }
 
     public function setAdmin($boolean)
@@ -151,13 +132,24 @@ class User extends BaseUser implements UserInterface, ResourceInterface
         } else {
             $this->removeRole(static::ROLE_ADMIN);
         }
-
         return $this;
     }
 
-    /**
-     * @param string $email
-     */
+    public function isSuperAdmin()
+    {
+        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+    }
+
+    public function setSuperAdmin($boolean)
+    {
+        if (true === $boolean) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
+        return $this;
+    }
+
     public function setEmail($email)
     {
         $this->setUsername($email);

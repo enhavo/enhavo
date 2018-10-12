@@ -1,3 +1,11 @@
+library:
+  role:
+    label:
+      index: 'Media library show'
+      update: 'Media library file update'
+      create: 'Media library file create'
+      delete: 'Media library file delete'
+
 media:
   label:
     drop_hint: "Drag files from your file explorer onto this area."

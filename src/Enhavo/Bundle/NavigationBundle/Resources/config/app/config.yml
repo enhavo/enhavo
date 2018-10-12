@@ -20,8 +20,6 @@ enhavo_app:
             label: navigation.role.label.delete
             translationDomain: EnhavoNavigationBundle
 
-
-
 doctrine:
     orm:
         resolve_target_entities:

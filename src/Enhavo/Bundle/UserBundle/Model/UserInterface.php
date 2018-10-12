@@ -13,6 +13,8 @@ use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
 
 interface UserInterface extends BaseUserInterface
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     /**
      * Set firstName
      *

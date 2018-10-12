@@ -168,4 +168,14 @@ interface FileInterface extends ResourceInterface
      * @param string $md5Checksum
      */
     public function setMd5Checksum($md5Checksum);
+
+    /**
+     * @return bool
+     */
+    public function isLibrary();
+
+    /**
+     * @param bool $library
+     */
+    public function setLibrary($library);
 }

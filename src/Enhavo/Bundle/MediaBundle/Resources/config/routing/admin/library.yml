@@ -21,12 +21,13 @@ enhavo_media_library_upload:
 
 enhavo_media_library_list:
     path:  /media/library/list
-    methods: [POST]
+    methods: [POST, GET]
     options:
         expose: true
     defaults:
         _controller: enhavo_media.controller.file:tableAction
         _sylius:
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_INDEX
             criteria:
                 library: true
             sorting:
@@ -44,6 +45,7 @@ enhavo_media_library_update:
         _controller: enhavo_media.controller.file:updateAction
         _sylius:
             form: enhavo_media_library_file
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
             viewer:
                 form:
                     action: enhavo_media_library_update
@@ -53,7 +55,6 @@ enhavo_media_library_update:
                         label: file.label.file
                         template: 'EnhavoMediaBundle:Admin/Library:file.html.twig'
 
-
 enhavo_media_library_delete:
     options:
         expose: true
@@ -61,3 +62,7 @@ enhavo_media_library_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_media.controller.file:deleteAction
+        _sylius:
+            redirect:
+                route: enhavo_media_library_list
+
