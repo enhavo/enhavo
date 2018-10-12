@@ -21,7 +21,7 @@ enhavo_media_library_upload:
 
 enhavo_media_library_list:
     path:  /media/library/list
-    methods: [POST]
+    methods: [POST, GET]
     options:
         expose: true
     defaults:
@@ -55,7 +55,6 @@ enhavo_media_library_update:
                         label: file.label.file
                         template: 'EnhavoMediaBundle:Admin/Library:file.html.twig'
 
-
 enhavo_media_library_delete:
     options:
         expose: true
@@ -63,3 +62,7 @@ enhavo_media_library_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_media.controller.file:deleteAction
+        _sylius:
+            redirect:
+                route: enhavo_media_library_list
+
