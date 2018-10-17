@@ -246,3 +246,31 @@
 {% block enhavo_auto_complete_entity_widget %}
     <input type="hidden" name="{{ full_name }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}" />
 {% endblock %}
+
+{% block entity_tree_widget %}
+    {% if expanded %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for choice in choice_tree_builder.choices %}
+                {{ _self.choice_view(choice, choice_translation_domain, children_container_class) }}
+            {% endfor %}
+        </div>
+    {% else %}
+        {{- block('choice_widget_collapsed') -}}
+    {% endif %}
+{% endblock %}
+
+{% macro choice_view(choice, choice_translation_domain, children_container_class) %}
+    <div>
+        <div>
+            {{ form_widget(choice.formView) }}
+            {{ form_label(choice.formView, null, {translation_domain: choice_translation_domain}) }}
+        </div>
+        {% if choice.children|length > 0 %}
+            <div class="{{ children_container_class }}">
+                {% for child in choice.children %}
+                    {{ _self.choice_view(child, choice_translation_domain, children_container_class) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
