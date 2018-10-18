@@ -32,6 +32,9 @@ class EntityTreeType extends AbstractType
         if($builder instanceof EntityTreeChoiceBuilder) {
             $builder->map($view);
         }
+        if(!$options['expanded']) {
+            $view->vars['choices'] = $builder->getChoiceViews();
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

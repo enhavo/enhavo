@@ -91,6 +91,25 @@ class EntityTreeChoiceBuilder
         }
     }
 
+    public function getChoiceViews()
+    {
+        $choiceViews = [];
+        foreach($this->choiceTree as $choice) {
+            $this->addToChoiceView($choice, $choiceViews, 0);
+        }
+        return $choiceViews;
+    }
+
+    private function addToChoiceView(EntityTreeChoice $choice, array &$choiceViews, $level)
+    {
+        $choiceView = $choice->getChoiceView();
+        $choiceView->level = $level;
+        $choiceViews[] = $choiceView;
+        foreach($choice->getChildren() as $child) {
+            $this->addToChoiceView($child, $choiceViews, $level + 1);
+        }
+    }
+
     /**
      * @return EntityTreeChoice[]
      */
