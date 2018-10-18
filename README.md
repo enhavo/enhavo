@@ -60,7 +60,7 @@ if (isset($response['id'])) {
 
 ```php
 // Delete a subscriber by group and email
-$response = $apiManager->getSubscriber('<GROUP_ID>', '<EMAIL>');
+$response = $apiManager->deleteSubscriber('<GROUP_ID>', '<EMAIL>');
 
 if ($response) {
     // Do whatever you want here...
