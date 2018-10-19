@@ -17,7 +17,7 @@ $httpAdapter = new HttpAdapter(
             'client_id' => '<CLIENT_ID>',
             'client_secret' => '<CLIENT_SECRET>',
         ],
-        'access_token' => '<ACCESS_TOKEN>'
+        'access_token' => '<ACCESS_TOKEN>',
     ]
 );
 
@@ -25,13 +25,22 @@ $httpAdapter = new HttpAdapter(
 $apiManager = new ApiManager($httpAdapter);
 ```
 
-**Create subscribers**
+**Get an access token**
 
 ```php
-// Create an activated subscriber by group, email and attributes
+$response = $apiManager->getAccessToken();
+
+if (isset($response['access_token'])) {
+    // This access token can be used during api manager initialization
+}
+```
+
+**Create a subscriber**
+
+```php
 $response = $apiManager->createSubscriber(
-    '<GROUP_ID>',
     '<EMAIL>',
+    '<GROUP_ID>',
     true,
     [
         'salutation' => 'Mr.',
@@ -41,28 +50,26 @@ $response = $apiManager->createSubscriber(
 );
 
 if (isset($response['id'])) {
-    // Do whatever you want here...
+    // ...
 }
 ```
 
-**Get subscribers**
+**Get a subscriber**
 
 ```php
-// Get a subscriber by group and email
-$response = $apiManager->getSubscriber('<GROUP_ID>', '<EMAIL>');
+$response = $apiManager->getSubscriber('<EMAIL>', '<GROUP_ID>');
 
 if (isset($response['id'])) {
-    // Do whatever you want here...
+    // ...
 }
 ```
 
-**Delete subscribers**
+**Delete a subscriber**
 
 ```php
-// Delete a subscriber by group and email
-$response = $apiManager->deleteSubscriber('<GROUP_ID>', '<EMAIL>');
+$response = $apiManager->deleteSubscriber('<EMAIL>', '<GROUP_ID>');
 
 if ($response) {
-    // Do whatever you want here...
+    // ...
 }
 ```

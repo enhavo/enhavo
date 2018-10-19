@@ -32,7 +32,7 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createSubscriber(int $groupId, string $email, bool $active = false, array $attributes = [])
+    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = [])
     {
         $now = time();
 
@@ -57,16 +57,24 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getSubscriber(int $groupId, string $email)
+    public function getSubscriber(string $email, int $groupId = null)
     {
-        return $this->httpAdapter->action('get', "/v3/groups.json/{$groupId}/receivers/{$email}");
+        if ($groupId) {
+            return $this->httpAdapter->action('get', "/v3/groups.json/{$groupId}/receivers/{$email}");
+        }
+
+        return $this->httpAdapter->action('get', "/v3/receivers.json/{$email}");
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteSubscriber(int $groupId, string $email)
+    public function deleteSubscriber(string $email, int $groupId = null)
     {
-        return $this->httpAdapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
+        if ($groupId) {
+            return $this->httpAdapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
+        }
+
+        return $this->httpAdapter->action('delete', "/v3/receivers.json/{$email}");
     }
 }

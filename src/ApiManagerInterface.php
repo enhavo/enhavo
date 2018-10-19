@@ -12,34 +12,34 @@ interface ApiManagerInterface
     public function getAccessToken();
 
     /**
-     * Creates a subscriber by group and email
+     * Creates a subscriber
      *
-     * @param int    $groupId
      * @param string $email
+     * @param int    $groupId
      * @param bool   $active
      * @param array  $attributes
      *
      * @return mixed
      */
-    public function createSubscriber(int $groupId, string $email, bool $active = false, array $attributes = []);
+    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = []);
 
     /**
-     * Returns a subscriber by group and email
+     * Returns a subscriber
      *
-     * @param int    $groupId
-     * @param string $email
+     * @param string   $email
+     * @param int|null $groupId
      *
      * @return mixed
      */
-    public function getSubscriber(int $groupId, string $email);
+    public function getSubscriber(string $email, int $groupId = null);
 
     /**
-     * Deletes a subscriber by group and email
+     * Deletes a subscriber
      *
-     * @param int    $groupId
-     * @param string $email
+     * @param string   $email
+     * @param int|null $groupId
      *
      * @return mixed
      */
-    public function deleteSubscriber(int $groupId, string $email);
+    public function deleteSubscriber(string $email, int $groupId = null);
 }

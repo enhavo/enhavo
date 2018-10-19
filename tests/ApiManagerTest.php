@@ -51,8 +51,8 @@ class ApiManagerTest extends TestCase
     public function testCreateSubscriber()
     {
         $response = self::$apiManager->createSubscriber(
-            self::$groupId,
             'john.doe@example.org',
+            self::$groupId,
             false,
             [
                 'salutation' => 'Mr.',
@@ -68,16 +68,16 @@ class ApiManagerTest extends TestCase
     public function testGetSubscriber()
     {
         $response = self::$apiManager->getSubscriber(
-            self::$groupId,
-            'john.doe@example.org'
+            'john.doe@example.org',
+            self::$groupId
         );
 
         $this->assertArrayHasKey('email', $response);
         $this->assertEquals('john.doe@example.org', $response['email']);
 
         $response = self::$apiManager->getSubscriber(
-            self::$groupId,
-            'jane.doe@example.org@example.org'
+            'jane.doe@example.org@example.org',
+            self::$groupId
         );
 
         $this->assertArrayHasKey('error', $response);
@@ -95,8 +95,8 @@ class ApiManagerTest extends TestCase
     public function testDeleteSubscriber()
     {
         $response = self::$apiManager->deleteSubscriber(
-            self::$groupId,
-            'john.doe@example.org'
+            'john.doe@example.org',
+            self::$groupId
         );
 
         $this->assertTrue($response);
