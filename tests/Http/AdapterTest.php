@@ -9,17 +9,9 @@ class AdapterTest extends TestCase
     {
         $adapter = new HttpAdapter(
             [
-                'credentials' => [
-                    'client_id' => 'CLIENT_ID',
-                    'client_secret' => 'CLIENT_SECRET',
-                ],
                 'access_token' => 'ACCESS_TOKEN',
             ]
         );
-
-        $this->assertArrayHasKey('credentials', $adapter->getConfig());
-        $this->assertArrayHasKey('client_id', $adapter->getConfig('credentials'));
-        $this->assertArrayHasKey('client_secret', $adapter->getConfig('credentials'));
 
         $this->assertArrayHasKey('access_token', $adapter->getConfig());
         $this->assertEquals('ACCESS_TOKEN', $adapter->getConfig('access_token'));

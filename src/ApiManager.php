@@ -9,24 +9,16 @@ class ApiManager implements ApiManagerInterface
     /**
      * @var HttpAdapter
      */
-    protected $httpAdapter;
+    protected $adapter;
 
     /**
      * ApiManager constructor.
      *
-     * @param HttpAdapter $httpAdapter
+     * @param HttpAdapter $adapter
      */
-    public function __construct(HttpAdapter $httpAdapter)
+    public function __construct(HttpAdapter $adapter)
     {
-        $this->httpAdapter = $httpAdapter;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAccessToken()
-    {
-        return $this->httpAdapter->authorize();
+        $this->adapter = $adapter;
     }
 
     /**
@@ -36,7 +28,7 @@ class ApiManager implements ApiManagerInterface
     {
         $now = time();
 
-        return $this->httpAdapter->action(
+        return $this->adapter->action(
             'post',
             "/v3/groups.json/{$groupId}/receivers",
             array_merge(
@@ -60,21 +52,29 @@ class ApiManager implements ApiManagerInterface
     public function getSubscriber(string $email, int $groupId = null)
     {
         if ($groupId) {
-            return $this->httpAdapter->action('get', "/v3/groups.json/{$groupId}/receivers/{$email}");
+            return $this->adapter->action('get', "/v3/groups.json/{$groupId}/receivers/{$email}");
         }
 
-        return $this->httpAdapter->action('get', "/v3/receivers.json/{$email}");
+        return $this->adapter->action('get', "/v3/receivers.json/{$email}");
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteSubscriber(string $email, int $groupId = null)
+    public function deleteSubscriber(string $email, int $groupId)
     {
         if ($groupId) {
-            return $this->httpAdapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
+            return $this->adapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
         }
+    }
 
-        return $this->httpAdapter->action('delete', "/v3/receivers.json/{$email}");
+    /**
+     * Returns the HTTP adapter
+     *
+     * @return HttpAdapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
     }
 }

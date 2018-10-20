@@ -5,11 +5,21 @@ namespace rdoepner\CleverReach\Http;
 interface AdapterInterface
 {
     /**
-     * Authorizes by credentials
+     * Creates a new access token
+     *
+     * @param string $clientId
+     * @param string $clientSecret
      *
      * @return mixed
      */
-    public function authorize();
+    public function authorize(string $clientId, string $clientSecret);
+
+    /**
+     * Returns the access token
+     *
+     * @return string|null
+     */
+    public function getAccessToken();
 
     /**
      * Returns the response data

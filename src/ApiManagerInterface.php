@@ -5,13 +5,6 @@ namespace rdoepner\CleverReach;
 interface ApiManagerInterface
 {
     /**
-     * Creates a new access token
-     *
-     * @return mixed
-     */
-    public function getAccessToken();
-
-    /**
      * Creates a subscriber
      *
      * @param string $email
@@ -36,10 +29,10 @@ interface ApiManagerInterface
     /**
      * Deletes a subscriber
      *
-     * @param string   $email
-     * @param int|null $groupId
+     * @param string $email
+     * @param int    $groupId
      *
      * @return mixed
      */
-    public function deleteSubscriber(string $email, int $groupId = null);
+    public function deleteSubscriber(string $email, int $groupId);
 }

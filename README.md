@@ -4,35 +4,38 @@ This library makes it easy to interact with the CleverReach REST API v3.
 
 ## Usage
 
-**General initialization**
+**Get an access token by authorizing your app**
 
 ```php
 use rdoepner\CleverReach\ApiManager;
 use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
 
-// Create the http client adapter
+// Create an HTTP adapter
+$httpAdapter = new HttpAdapter();
+
+// Authorize your app by credentials
+$response = $httpAdapter->authorize('<CLIENT_ID>', '<CLIENT_SECRET>');
+
+if (isset($response['access_token'])) {
+    // Persist the access token for later use...
+}
+```
+
+**Use the api manager**
+
+```php
+use rdoepner\CleverReach\ApiManager;
+use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
+
+// Create an HTTP adapter
 $httpAdapter = new HttpAdapter(
     [
-        'credentials' => [
-            'client_id' => '<CLIENT_ID>',
-            'client_secret' => '<CLIENT_SECRET>',
-        ],
         'access_token' => '<ACCESS_TOKEN>',
     ]
 );
 
 // Create the API manager
 $apiManager = new ApiManager($httpAdapter);
-```
-
-**Get an access token**
-
-```php
-$response = $apiManager->getAccessToken();
-
-if (isset($response['access_token'])) {
-    // This access token can be used during api manager initialization
-}
 ```
 
 **Create a subscriber**

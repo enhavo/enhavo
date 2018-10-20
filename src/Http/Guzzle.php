@@ -52,20 +52,16 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function authorize()
+    public function authorize(string $clientId, string $clientSecret)
     {
-        if (!isset($this->config['credentials']['client_id'], $this->config['credentials']['client_secret'])) {
-            throw new \InvalidArgumentException('The credentials are missing.');
-        }
-
         try {
             $response = $this->request(
                 'post',
                 '/oauth/token.php',
                 [
                     'auth' => [
-                        $this->config['credentials']['client_id'],
-                        $this->config['credentials']['client_secret'],
+                        $clientId,
+                        $clientSecret,
                     ],
                     'json' => [
                         'grant_type' => 'client_credentials',
@@ -90,17 +86,25 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
+    public function getAccessToken()
+    {
+        return $this->getConfig('access_token');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function action(string $method, string $path, array $data = [])
     {
         $this->log("Request via \"{$method}\" on \"{$path}\"", LogLevel::DEBUG);
 
-        if (!isset($this->config['access_token'])) {
+        if (!$accessToken = $this->getAccessToken()) {
             throw new \InvalidArgumentException('The access token is missing.');
         }
 
         $options = [
             'headers' => [
-                'Authorization' => "Bearer {$this->config['access_token']}",
+                'Authorization' => "Bearer {$accessToken}",
             ],
             'json' => $data,
         ];
@@ -173,10 +177,6 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
     private function configure(array $config)
     {
         $this->config = [
-            'credentials' => [
-                'client_id' => $config['credentials']['client_id'] ?? null,
-                'client_secret' => $config['credentials']['client_secret'] ?? null,
-            ],
             'access_token' => $config['access_token'] ?? null,
         ];
     }
