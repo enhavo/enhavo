@@ -67,6 +67,16 @@ if (isset($response['id'])) {
 }
 ```
 
+**Sets active status of a subscriber**
+
+```php
+$response = $apiManager->getSubscriber('<EMAIL>', '<GROUP_ID>', '<TRUE_OR_FALSE>');
+
+if (true === $response) {
+    // ...
+}
+```
+
 **Delete a subscriber**
 
 ```php

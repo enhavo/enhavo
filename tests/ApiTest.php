@@ -101,6 +101,41 @@ class ApiTest extends TestCase
         );
     }
 
+    public function testSetSubscriberStatus()
+    {
+        $response = self::$apiManager->setSubscriberStatus(
+            'john.doe@example.org',
+            getenv('GROUP_ID'),
+            true
+        );
+
+        $this->assertTrue($response);
+
+        $response = self::$apiManager->getSubscriber(
+            'john.doe@example.org',
+            getenv('GROUP_ID')
+        );
+
+        $this->assertArrayHasKey('active', $response);
+        $this->assertTrue($response['active']);
+
+        $response = self::$apiManager->setSubscriberStatus(
+            'john.doe@example.org',
+            getenv('GROUP_ID'),
+            false
+        );
+
+        $this->assertTrue($response);
+
+        $response = self::$apiManager->getSubscriber(
+            'john.doe@example.org',
+            getenv('GROUP_ID')
+        );
+
+        $this->assertArrayHasKey('active', $response);
+        $this->assertFalse($response['active']);
+    }
+
     public function testDeleteSubscriber()
     {
         $response = self::$apiManager->deleteSubscriber(

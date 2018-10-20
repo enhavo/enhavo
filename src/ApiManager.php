@@ -61,6 +61,18 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function setSubscriberStatus(string $email, int $groupId, $active = true)
+    {
+        if ($active) {
+            return $this->adapter->action('put', "/v3/groups.json/{$groupId}/receivers/{$email}/activate");
+        }
+
+        return $this->adapter->action('put', "/v3/groups.json/{$groupId}/receivers/{$email}/deactivate");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function deleteSubscriber(string $email, int $groupId)
     {
         return $this->adapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
