@@ -70,7 +70,7 @@ if (isset($response['success'])) {
 **Trigger Double-Opt-Out email for an active subscriber**
 
 ```php
-$response = $apiManager->triggerDoubleOptInEmail('<EMAIL>', '<FORM_ID>');
+$response = $apiManager->triggerDoubleOptOutEmail('<EMAIL>', '<FORM_ID>');
 
 if (isset($response['success'])) {
     // ...
