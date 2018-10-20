@@ -4,7 +4,7 @@ This library makes it easy to interact with the CleverReach REST API v3.
 
 ## Usage
 
-**Get an access token by authorizing your app**
+**Get an access token**
 
 ```php
 use rdoepner\CleverReach\ApiManager;
@@ -21,7 +21,7 @@ if (isset($response['access_token'])) {
 }
 ```
 
-**Use the api manager**
+**Initialize an API manager**
 
 ```php
 use rdoepner\CleverReach\ApiManager;
