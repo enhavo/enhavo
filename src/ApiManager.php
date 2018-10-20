@@ -73,6 +73,54 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function triggerDoubleOptInEmail(string $email, int $formId, array $options = [])
+    {
+        return $this->adapter->action(
+            'post',
+            "/v3/forms.json/{$formId}/send/activate",
+            array_merge(
+                [
+                    'email' => $email,
+                    'doidata' => array_merge(
+                        [
+                            'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
+                            'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
+                            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
+                        ],
+                        $options
+                    ),
+                ]
+            )
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function triggerDoubleOptOutEmail(string $email, int $formId, array $options = [])
+    {
+        return $this->adapter->action(
+            'post',
+            "/v3/forms.json/{$formId}/send/deactivate",
+            array_merge(
+                [
+                    'email' => $email,
+                    'doidata' => array_merge(
+                        [
+                            'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
+                            'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
+                            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
+                        ],
+                        $options
+                    ),
+                ]
+            )
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function deleteSubscriber(string $email, int $groupId)
     {
         return $this->adapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");

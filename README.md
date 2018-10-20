@@ -38,7 +38,7 @@ $httpAdapter = new HttpAdapter(
 $apiManager = new ApiManager($httpAdapter);
 ```
 
-**Create a subscriber**
+**Create an inactive subscriber**
 
 ```php
 $response = $apiManager->createSubscriber(
@@ -57,7 +57,27 @@ if (isset($response['id'])) {
 }
 ```
 
-**Get a subscriber**
+**Trigger Double-Opt-In email for an inactive subscriber**
+
+```php
+$response = $apiManager->triggerDoubleOptInEmail('<EMAIL>', '<FORM_ID>');
+
+if (isset($response['success'])) {
+    // ...
+}
+```
+
+**Trigger Double-Opt-Out email for an active subscriber**
+
+```php
+$response = $apiManager->triggerDoubleOptInEmail('<EMAIL>', '<FORM_ID>');
+
+if (isset($response['success'])) {
+    // ...
+}
+```
+
+**Get subscriber**
 
 ```php
 $response = $apiManager->getSubscriber('<EMAIL>', '<GROUP_ID>');
@@ -67,7 +87,7 @@ if (isset($response['id'])) {
 }
 ```
 
-**Sets active status of a subscriber**
+**Set active status of a subscriber**
 
 ```php
 $response = $apiManager->getSubscriber('<EMAIL>', '<GROUP_ID>', '<TRUE_OR_FALSE>');
@@ -77,7 +97,7 @@ if (true === $response) {
 }
 ```
 
-**Delete a subscriber**
+**Delete subscriber**
 
 ```php
 $response = $apiManager->deleteSubscriber('<EMAIL>', '<GROUP_ID>');

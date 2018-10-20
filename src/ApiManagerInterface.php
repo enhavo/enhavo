@@ -27,7 +27,7 @@ interface ApiManagerInterface
     public function getSubscriber(string $email, int $groupId = null);
 
     /**
-     * Sets active status of a subscriber
+     * Sets the active status of a subscriber
      *
      * @param string $email
      * @param int    $groupId
@@ -36,6 +36,28 @@ interface ApiManagerInterface
      * @return mixed
      */
     public function setSubscriberStatus(string $email, int $groupId, $active = true);
+
+    /**
+     * Triggers the Double-Opt-In email for a subscriber
+     *
+     * @param string $email
+     * @param int    $formId
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    public function triggerDoubleOptInEmail(string $email, int $formId, array $options = []);
+
+    /**
+     * Triggers the Double-Opt-Out email for a subscriber
+     *
+     * @param string $email
+     * @param int    $formId
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    public function triggerDoubleOptOutEmail(string $email, int $formId, array $options = []);
 
     /**
      * Deletes a subscriber
