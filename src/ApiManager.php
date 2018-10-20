@@ -63,9 +63,7 @@ class ApiManager implements ApiManagerInterface
      */
     public function deleteSubscriber(string $email, int $groupId)
     {
-        if ($groupId) {
-            return $this->adapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
-        }
+        return $this->adapter->action('delete', "/v3/groups.json/{$groupId}/receivers/{$email}");
     }
 
     /**

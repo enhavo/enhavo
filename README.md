@@ -44,7 +44,7 @@ $apiManager = new ApiManager($httpAdapter);
 $response = $apiManager->createSubscriber(
     '<EMAIL>',
     '<GROUP_ID>',
-    true,
+    false, // not activated
     [
         'salutation' => 'Mr.',
         'firstname' => 'John',
@@ -72,7 +72,7 @@ if (isset($response['id'])) {
 ```php
 $response = $apiManager->deleteSubscriber('<EMAIL>', '<GROUP_ID>');
 
-if ($response) {
+if (true === $response) {
     // ...
 }
 ```
