@@ -2,6 +2,12 @@
 
 This library makes it easy to interact with the CleverReach REST API v3.
 
+## Installation
+
+```bash
+composer require rdoepner/cleverreach
+```
+
 ## Usage
 
 **Get an access token**
