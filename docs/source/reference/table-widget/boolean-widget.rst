@@ -1,34 +1,31 @@
-DateTimeWidget
-==============
+BooleanWidget
+=============
 
-Show a formatted date time.
+Show a tick or cross for a boolean value.
 
 +-------------+--------------------------------------------------------------------+
-| type        | datetime                                                           |
+| type        | boolean                                                            |
 +-------------+--------------------------------------------------------------------+
 | require     | - property_                                                        |
 +-------------+--------------------------------------------------------------------+
-| option      | - format_                                                          |
-|             | - width_                                                           |
+| option      | - width_                                                           |
 |             | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\DateTimeWidget`  |
+| class       | :class:`Enhavo\\Bundle\\AppBundle\\Table\\Widget\\BooleanWidget`   |
 +-------------+--------------------------------------------------------------------+
 
 
 Require
 -------
 
-.. include:: /reference/tableWidget/option/property.rst
+.. include:: /reference/table-widget/option/property.rst
 
 Option
 ------
 
-.. include:: /reference/tableWidget/option/format.rst
+.. include:: /reference/table-widget/option/width.rst
 
-.. include:: /reference/tableWidget/option/width.rst
+.. include:: /reference/table-widget/option/label.rst
 
-.. include:: /reference/tableWidget/option/label.rst
-
-.. include:: /reference/tableWidget/option/translationDomain.rst
+.. include:: /reference/table-widget/option/translationDomain.rst

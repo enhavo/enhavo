@@ -21,18 +21,18 @@ Show a thumbnail
 Require
 -------
 
-.. include:: /reference/tableWidget/option/property.rst
+.. include:: /reference/table-widget/option/property.rst
 
 Option
 ------
 
-.. include:: /reference/tableWidget/option/width.rst
+.. include:: /reference/table-widget/option/width.rst
 
-.. include:: /reference/tableWidget/option/label.rst
+.. include:: /reference/table-widget/option/label.rst
 
-.. include:: /reference/tableWidget/option/translationDomain.rst
+.. include:: /reference/table-widget/option/translationDomain.rst
 
-.. include:: /reference/tableWidget/option/pictureWidth.rst
+.. include:: /reference/table-widget/option/pictureWidth.rst
 
-.. include:: /reference/tableWidget/option/pictureHeight.rst
+.. include:: /reference/table-widget/option/pictureHeight.rst
 

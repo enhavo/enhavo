@@ -20,16 +20,16 @@ Show a formatted date
 Require
 -------
 
-.. include:: /reference/tableWidget/option/property.rst
+.. include:: /reference/table-widget/option/property.rst
 
 Option
 ------
 
-.. include:: /reference/tableWidget/option/format.rst
+.. include:: /reference/table-widget/option/format.rst
 
-.. include:: /reference/tableWidget/option/width.rst
+.. include:: /reference/table-widget/option/width.rst
 
-.. include:: /reference/tableWidget/option/label.rst
+.. include:: /reference/table-widget/option/label.rst
 
-.. include:: /reference/tableWidget/option/translationDomain.rst
+.. include:: /reference/table-widget/option/translationDomain.rst
 

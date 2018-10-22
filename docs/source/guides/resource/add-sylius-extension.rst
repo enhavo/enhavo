@@ -18,7 +18,7 @@ and add the required parameters.
     /**
      * This is the class that loads and manages your bundle configuration
      *
-     * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+     * To learn more see {@link http://symfony.com/doc/current/guides/bundles/extension.html}
      */
     class AcmeProjectExtension extends AbstractResourceExtension
     {

@@ -40,10 +40,10 @@ Define a array of properties that should be displayed as list.
 Option
 ------
 
-.. include:: /reference/tableWidget/option/separator.rst
+.. include:: /reference/table-widget/option/separator.rst
 
-.. include:: /reference/tableWidget/option/width.rst
+.. include:: /reference/table-widget/option/width.rst
 
-.. include:: /reference/tableWidget/option/label.rst
+.. include:: /reference/table-widget/option/label.rst
 
-.. include:: /reference/tableWidget/option/translationDomain.rst
+.. include:: /reference/table-widget/option/translationDomain.rst
