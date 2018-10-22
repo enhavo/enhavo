@@ -21,8 +21,6 @@ Will submit the current form and close the overlay.
 Option
 ------
 
-.. _route:
-
 route
 ~~~~~
 

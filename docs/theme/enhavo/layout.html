@@ -3,6 +3,8 @@
 {# Do this so that bootstrap is included before the main css file #}
 {%- block htmltitle %}
   {% set script_files = script_files + ["_static/myscript.js"] %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/vendor/bootstrap.min.css', 1) }}" />
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/vendor/bootstrap-theme.min.css', 1) }}" />
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/icons.css', 1) }}" />

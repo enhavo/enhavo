@@ -174,6 +174,7 @@ out the part of the view and controller. Instead we add our model to the configu
 Instead of implementing a controller, we just create an empty class and extend AppBundles ResourceController.
 
 .. code-block:: php
+
     <?php
     // namespace/uses
     class BookController extends ResourceController

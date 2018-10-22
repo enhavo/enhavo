@@ -15,6 +15,6 @@ checkboxes and dropdown menu will not be visible.
         defaults:
             _controller: enhavo_page.controller.page:batchAction
 
-Only this one route is needed for any number of batch actions. `See Cookbook on how to add a custom batch action`_.
+Only this one route is needed for any number of batch actions. `See Guides on how to add a custom batch action`_.
 
-.. _See Cookbook on how to add a custom batch action: /cookbook/batchActions/add-batch-action.html
+.. _See guides on how to add a custom batch action: /guides/batchActions/add-batch-action.html

@@ -6,6 +6,7 @@ Action
 
     create-action
     category-action
+    download-action
 
 * :doc:`/reference/action/create-action`
 

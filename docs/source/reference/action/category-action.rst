@@ -6,21 +6,18 @@ The CategoryAction provide a small overlay to manage categories quickly.
 +-------------+--------------------------------------------------------------------+
 | type        | category                                                           |
 +-------------+--------------------------------------------------------------------+
-| option      | - label_                                                           |
-|             | - collection_                                                      |
-|             | - route_                                                           |
-|             | - icon_                                                            |
-|             | - translationDomain_                                               |
+| option      | - `label`_                                                         |
+|             | - `collection`_                                                    |
+|             | - `route`_                                                         |
+|             | - `icon`_                                                          |
+|             | - `translationDomain`_                                             |
 +-------------+--------------------------------------------------------------------+
 | class       | :class:`Enhavo\\Bundle\\CategoryBundle\\Action\\CategoryAction`    |
 +-------------+--------------------------------------------------------------------+
 
 
-
 Option
 ------
-
-.. _collection:
 
 collection
 ~~~~~~~~~~

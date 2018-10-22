@@ -6,4 +6,4 @@ Search
 
     installation
     strategies
-    search engines
+    search-engines

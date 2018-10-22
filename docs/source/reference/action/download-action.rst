@@ -1,5 +1,5 @@
 DownloadAction
-============
+==============
 
 The DownloadAction represents a button for a specific route to download its target
 
@@ -19,8 +19,6 @@ The DownloadAction represents a button for a specific route to download its targ
 
 Require
 -------
-
-.. _route:
 
 route
 ~~~~~

@@ -1,7 +1,5 @@
-.. _routeParameters:
-
 routeParameters
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 **type**: `array`
 

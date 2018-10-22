@@ -13,8 +13,6 @@ TableBlock
 Require
 -------
 
-.. _table_route:
-
 table_route
 ~~~~~~~~~~~
 
@@ -30,10 +28,8 @@ Define which route should be used for refreshing the table.
             route: my_table_route
             # ... further option
 
-.. _update_route:
-
 update_route
-~~~~~~~~~~~
+~~~~~~~~~~~~
 
 **type**: `string`
 

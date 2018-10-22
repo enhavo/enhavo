@@ -14,6 +14,8 @@ Book
     grid/index
     search/index
     newsletter/index
+    download/index
+    translation/index
 
 * **Installation**
 
@@ -78,4 +80,6 @@ Book
 
   * :doc:`/book/translation/index`
 
+* **Download**
 
+  * :doc:`/book/download/index`

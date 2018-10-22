@@ -1,7 +1,7 @@
 Strategies
 ==========
 
-For the indexing strategy you can choose between `index`, `index_new` and `reindex.
+For the indexing strategy you can choose between `index`, `index_new` and `reindex`.
 
 Index
 -----
