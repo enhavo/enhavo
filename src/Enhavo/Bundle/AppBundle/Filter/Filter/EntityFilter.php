@@ -20,7 +20,14 @@ class EntityFilter extends AbstractFilter
 
         $path = $this->getOption('path', $options);
 
-        $entities = $repository->findAll();
+        $method = $this->getOption('method', $options, 'findAll');
+        $arguments = $this->getOption('arguments', $options);
+        if(is_array($arguments)) {
+            $entities = call_user_func([$repository, $method], $arguments);
+        } else {
+            $entities = call_user_func([$repository, $method]);
+        }
+
         $selectOptions = [];
         foreach ($entities as $entity) {
             if ($path) {
