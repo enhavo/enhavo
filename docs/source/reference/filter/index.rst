@@ -9,10 +9,10 @@ Filter
     option-filter
     text-filter
 
-* :doc:`/reference/action/boolean-filter`
+* :doc:`/reference/filter/boolean-filter`
 
-* :doc:`/reference/action/entity-filter`
+* :doc:`/reference/filter/entity-filter`
 
-* :doc:`/reference/action/option-filter`
+* :doc:`/reference/filter/option-filter`
 
-* :doc:`/reference/action/text-filter`
+* :doc:`/reference/filter/text-filter`

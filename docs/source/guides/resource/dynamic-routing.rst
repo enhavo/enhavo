@@ -69,14 +69,14 @@ For this to work, we need to give the application some mapping information. This
 .. code-block:: yaml
 
     parameters:
-        enhavo_page.page.route_content_loader.class: enhavo\AdminBundle\Route\RouteContentLoader
+        enhavo_page.page.route_content_loader.class: Enhavo\AdminBundle\Route\RouteContentLoader
 
     services:
         enhavo_page.page.route_content_loader:
-            class: %enhavo_page.page.route_content_loader.class%
+            class: '%enhavo_page.page.route_content_loader.class%'
             arguments:
                 - 'enhavo_page.page'
-                - %enhavo_page.model.page.class%
+                - '%enhavo_page.model.page.class%'
                 - 'enhavo_page.repository.page'
             tags:
                 - { name: enhavo_route_content_loader }

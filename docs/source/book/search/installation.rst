@@ -3,7 +3,7 @@ Installation
 
 Just copy the following code into your ``enhavo.yml``
 
-.. code-block:: yml
+.. code-block:: yaml
 
     enhavo_search:
         search:

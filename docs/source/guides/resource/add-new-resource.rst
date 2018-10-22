@@ -90,7 +90,7 @@ For the FormType add a new class called ``ProjectType`` to ``ProjectBundle/Form/
 
 To use the form you have to add the service in the ``service.yml`` on your own.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     services:
         project.form.project:
@@ -107,7 +107,7 @@ You can do this in two different ways.
 
 Either you can do it in the ``config.yml`` in ``app/config``:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     sylius_resource:
         resources:
@@ -188,7 +188,7 @@ Copy the routes from the terminal into it.
 
 After you have done this, you have to tell the ``routing.yml`` in ``app/config`` where to find your new ``project.yml``
 
-.. code-block:: yml
+.. code-block:: yaml
 
     project_project:
         resource: "@ProjectBundle/Resources/config/routing/project.yml"
@@ -200,7 +200,7 @@ Add resource to menu
 
 First we add the new resource to the menu in ``app/config/enhavo.yml``
 
-.. code-block:: yml
+.. code-block:: yaml
 
     menu:
         project:

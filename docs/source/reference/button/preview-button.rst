@@ -22,8 +22,6 @@ Send the current state of the form to a preview route that will display the view
 Require
 -------
 
-.. _route:
-
 route
 ~~~~~
 

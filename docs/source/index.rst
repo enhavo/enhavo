@@ -17,7 +17,6 @@ Contents
    book/index
    guides/index
    reference/index
-   bundles/index
    contributing/index
 
 

@@ -12,7 +12,7 @@ So here we will see different ways of removing the default delete batch action, 
 The batch action *delete* is part of the default settings of the table routes setting *_viewer.table.batch_actions*.
 If we don't want the default setting, we just have to redefine this setting as empty.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     enhavo_page_page_table:
         ...

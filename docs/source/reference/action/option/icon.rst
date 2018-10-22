@@ -1,7 +1,5 @@
-.. _icon:
-
 icon
-~~~~~
+~~~~
 
 **type**: `string`
 

@@ -7,7 +7,7 @@ Add file
 
 First add the assets path to your configuration. This is needed to know where we can load your js files.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     enhavo_assets:
         require_js:
@@ -34,7 +34,7 @@ Include file
 
 To add your file in a block just add it to your route definition.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     route_name:
         defaults:

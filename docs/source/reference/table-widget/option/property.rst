@@ -1,5 +1,3 @@
-.. _property:
-
 property
 ~~~~~~~~
 

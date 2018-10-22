@@ -9,12 +9,14 @@ To add a property of type ``grid`` to your resource model, add a one-to-one asso
 and update your entity.
 
 .. code-block:: yaml
+
     oneToOne:
         grid:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
 .. code-block:: php
+
     <?php
 
     //...

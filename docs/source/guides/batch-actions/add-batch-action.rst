@@ -13,7 +13,7 @@ The section batch_actions already has the delete action defined by default. If w
 adding it to the route, the new setting will replace the default actions including delete. Therefore we also have to add
 the delete action again, or else it will disappear.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     enhavo_page_page_table:
         ...

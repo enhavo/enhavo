@@ -1,5 +1,5 @@
-guides
-========
+Guides
+======
 
 .. toctree::
     :hidden:
@@ -12,6 +12,10 @@ guides
     button/index
     block/index
     category/index
+    action/index
+    javascript/index
+    search/index
+    setting/index
 
 * **Package**
 
@@ -35,10 +39,6 @@ guides
 
   * :doc:`/guides/contact-form/add-your-customize-contact-form`
 
-* **Workflow**
-
-  * :doc:`/guides/workflow/add-new-workflow`
-
 * **Search**
 
   * :doc:`/guides/search/add-search-for-entity`
@@ -58,7 +58,7 @@ guides
 
 * **Category**
 
-  * :doc:`/guides/category/add-mulitple-categories`
+  * :doc:`/guides/category/add-multiple-categories`
 
 * **Setting**
 

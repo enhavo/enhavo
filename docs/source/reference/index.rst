@@ -9,7 +9,7 @@ Reference
     button/index
     filter/index
     icon/index
-    tableWidget/index
+    table-widget/index
 
 
 This section contains a short reference information to following types:
@@ -21,6 +21,6 @@ This section contains a short reference information to following types:
 
 * :doc:`/reference/button/index`
 
-* :doc:`/reference/tableWidget/index`
+* :doc:`/reference/table-widget/index`
 
 * :doc:`/reference/icon/index`

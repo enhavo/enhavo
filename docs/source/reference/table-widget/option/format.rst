@@ -1,7 +1,5 @@
-.. _format:
-
 format
-~~~~~
+~~~~~~
 
 **type**: `string`
 

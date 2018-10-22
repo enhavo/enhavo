@@ -6,7 +6,7 @@ Enhavo Search Engine
 
 Enhavo offers his own search and index engines which you have configured by default in the `enhavo.yml` under `enhavo_search`
 
-.. code-block:: yml
+.. code-block:: yaml
 
     search_engine: enhavo_search_search_engine
     index_engine: enhavo_search_index_engine
@@ -24,7 +24,7 @@ Elastic-Search
 
 If you don't want to use the enhavo search there is also the possibility to use elasic-search. Just change the ``search_engine`` and ``index_engine`` in the enhavo.yml.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     search_engine: enhavo_search_elasticsearch_engine
     index_engine: enhavo_search_index_elasticsearch_engine

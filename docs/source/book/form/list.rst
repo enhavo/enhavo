@@ -39,7 +39,7 @@ Add to your orm.yml
 
 Add the list type to your ``arme.orm.yml`` . If you added a doctrine type, just add a field with type ``array`` like this:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     tag:
         type: array
@@ -82,7 +82,7 @@ First you add ``sortable_property`` like you have done it with the border and so
 
 Then you add a ``order`` field to the orm.yml of the entity you have used in the ``enhavo_list``.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     order:
         column: '`order`'

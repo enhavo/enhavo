@@ -1,5 +1,3 @@
-.. _pictureWidth:
-
 pictureWidth
 ~~~~~~~~~~~~
 

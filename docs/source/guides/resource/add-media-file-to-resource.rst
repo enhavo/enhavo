@@ -16,7 +16,7 @@ To add a single attached file to our resource, first we have to add it to our Do
 the oneToOne relation, because this way we can use the *orphanRemoval* parameter to automatically clean up attached
 files if our resource gets deleted.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     oneToOne:
         file:
@@ -89,7 +89,7 @@ gets deleted.
     table, thus losing the loose coupling between ``File`` and its parents and potentially causing problems with other
     resources using ``File``.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     manyToMany:
         files:

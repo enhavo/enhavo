@@ -4,7 +4,7 @@ Add new setting
 First add a file in your config directory under Resources and name it ``setting.yml``. Each setting has a single key followed by
 configuration for this specific setting. You yaml file can look like following file:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     project.start_date
         label: project.label.start_date

@@ -40,9 +40,9 @@ Define the value, which should be filtered.
 Option
 ------
 
-.. include:: /reference/action/option/label.rst
+.. include:: /reference/filter/option/label.rst
 
-.. include:: /reference/action/option/translationDomain.rst
+.. include:: /reference/filter/option/translationDomain.rst
 
 
 

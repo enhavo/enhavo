@@ -3,7 +3,7 @@ Add search for an entity
 
 To make an entity searchable, just create a search.yml for your entity. Put the search.yml into ``AcmeBundle/Resource/config``.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     Acme\AcmeBundle\Entity\Acme:
         properties:
@@ -33,7 +33,7 @@ Under `properties` you can define the fields of your entity that should be index
 Under each field you tell the search engine what kind of content is in the current field.
 If you have just a plain text you choose ``Plain`` field:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     title:
         - Plain:
@@ -42,7 +42,7 @@ If you have just a plain text you choose ``Plain`` field:
 
 If there is a HTML text which contains HTML-tags, you should choose the ``Html`` field.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     text:
         - Html:
@@ -59,7 +59,7 @@ Attention: If you use elastic-search you can not define the weight for each HTML
 
 If your field is a ``Collection``, you can choose between to types.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     tag:
         - Collection:
@@ -75,7 +75,7 @@ The second one means that your collection consists of an other entity. In this c
 
 The last field is a ``Model``.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     grid:
         - Model

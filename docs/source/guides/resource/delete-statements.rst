@@ -18,7 +18,7 @@ in Symfony forms. Orphan removal don't have any effects if you just delete books
 the chapter entities still exists.
 
 
-.. code-block:: yml
+.. code-block:: yaml
 
     Book:
         oneToMany:
@@ -78,7 +78,7 @@ Cascade remove will call a doctrine remove on all child elements if it was calle
 remove on the parent entity. Normally you use it, if the child element only exists with a parent. So a chapter never
 exists alone, it will need a book.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     Book:
         oneToMany:
@@ -112,7 +112,7 @@ a mysql feature, doctrine won't take notice if the child will be deleted. Normal
 as you don't work with the child after you delete the parent. Like cascade remove, you use it if the child element
 only exists with a parent.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     Book:
         oneToMany:

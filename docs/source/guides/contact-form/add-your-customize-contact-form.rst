@@ -70,7 +70,7 @@ In the ``enhavo_contact`` section under ``forms`` you can define your new form. 
 defined be you. It's good to name it like the contact model, so if you have more contact forms in your application,
 its better to find which config is apply.
 
-.. code-block:: yml
+.. code-block:: yaml
 
     enhavo_contact:
         forms:

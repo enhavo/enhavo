@@ -71,21 +71,21 @@ as well (defaults: _sylius: paginate: x)
 
 .. code-block:: yaml
 
-enhavo_slider_slide_move_after:
-    options:
-        expose: true
-    path: /enhavo/slider/slide/move-after/{id}/{target}
-    methods: [POST]
-    defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
+    enhavo_slider_slide_move_after:
+        options:
+            expose: true
+        path: /enhavo/slider/slide/move-after/{id}/{target}
+        methods: [POST]
+        defaults:
+            _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
 
-enhavo_slider_slide_move_to_page:
-    options:
-        expose: true
-    path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
-    methods: [POST]
-    defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveDownAction
+    enhavo_slider_slide_move_to_page:
+        options:
+            expose: true
+        path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
+        methods: [POST]
+        defaults:
+            _controller: {{ app }}.controller.{{ resource }}:moveDownAction
 
 2. Modify table route
 ---------------------
