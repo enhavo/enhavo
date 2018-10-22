@@ -184,7 +184,7 @@ div.sphinxsidebar {
 }
 
 div.sphinxsidebar .panel-default > .panel-heading {
-    background-image: none;
+  background-image: none;
 }
 
 .sidebar-wrapper {
@@ -226,9 +226,9 @@ div.sphinxsidebar .sidebar-toc a {
 }
 
 .sidebar-toc > ul {
-    padding: 0 !important;
-    list-style-type: none;
-    margin: 0;
+  padding: 0 !important;
+  list-style-type: none;
+  margin: 0;
 }
 
 .sidebar-toc ul li a {
@@ -269,7 +269,7 @@ div.sphinxsidebar .sidebar-toc ul ul {
 }
 
 .sidebar-localtoc ul {
-    padding-left: 24px;
+  padding-left: 24px;
 }
 
 div.sphinxsidebar input {
@@ -303,27 +303,22 @@ div.sphinxsidebar input {
 }
 
 .sphinxsidebar > .sidebar-block:not(:last-child):after {
-    content: '';
-    display:block;
-    border-top: 1px solid #ccc;
-    margin: 24px 22px 0 22px;
+  content: '';
+  display:block;
+  border-top: 1px solid #ccc;
+  margin: 24px 22px 0 22px;
 }
 
-.text-logo {
-  font-size: 18px;
-  text-align: center;
+.logo {
   display: block;
   padding: 8px;
-  color: #fff;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0 0 20px 0;
-  font-weight: bold;
-  background-color: #337ab7;
   border-bottom: 1px solid #fff;
-}
-
-.text-logo:hover {
-  color: #fff;
+  height: 80px;
+  background-image: url('../image/logo.png');
+  background-repeat: no-repeat;
+  background-position: 46%;
+  background-color: #062129;
 }
 
 /* Left-nav search box
@@ -350,7 +345,6 @@ div.sphinxsidebar input {
 
 /* Two-pane table list
 -------------------------------------------------- */
-
 .table-bordered>thead>tr>th,
 .table-bordered>tbody>tr>th,
 .table-bordered>tfoot>tr>th,
@@ -361,7 +355,7 @@ table.two-column.table-bordered caption+thead tr:first-child th:first-child,
 table.two-column.table-bordered caption+tbody tr:first-child td:first-child,
 table.two-column.table-bordered colgroup+thead tr:first-child th:first-child,
 table.two-column.table-bordered colgroup+tbody tr:first-child td:first-child,
-table.two-column tbody td
+table.two-column tbody td {
   border: 0 0 1px 0 solid #eee;
   border-left: none;
   padding: 8px 4px;
@@ -599,13 +593,13 @@ p.topic-title {
 /* -- contents-------------------------------------------------------------- */
 
 div.topic.contents {
-    display: inline-block;
-    border-radius: 3px;
-    padding: 24px 36px 18px 36px;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 24px 36px 18px 36px;
 }
 
 div.topic.contents > ul {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 /* -- admonitions ----------------------------------------------------------- */
