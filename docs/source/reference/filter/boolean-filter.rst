@@ -12,7 +12,7 @@ The BooleanFilter filters a property for a specific value
 | option      | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\AppBundle\\Filter\\Filter\\BooleanFilter`          |
+| class       | `Enhavo\\AppBundle\\Filter\\Filter\\BooleanFilter`                 |
 +-------------+--------------------------------------------------------------------+
 
 
@@ -20,8 +20,6 @@ Required
 --------
 
 .. include:: /reference/filter/option/property.rst
-
-.. _equals:
 
 equals
 ~~~~~~

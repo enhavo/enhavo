@@ -1,6 +1,11 @@
 import sys
 import os
 import shlex
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
+
+lexers['php'] = PhpLexer(startinline=True, linenos=1)
+lexers['php-annotations'] = PhpLexer(startinline=True, linenos=1)
 
 extensions = [
     'sphinx.ext.autodoc',

@@ -4,14 +4,15 @@ OptionFilter
 The OptionFilter filters a property for specific options
 
 +-------------+--------------------------------------------------------------------+
-| type        | boolean                                                            |
+| type        | option                                                             |
 +-------------+--------------------------------------------------------------------+
 | required    | - property_                                                        |
+|             | - options_                                                         |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\AppBundle\\Filter\\Filter\\OptionFilter`           |
+| class       | `Enhavo\\AppBundle\\Filter\\Filter\\OptionFilter`                  |
 +-------------+--------------------------------------------------------------------+
 
 
@@ -19,6 +20,21 @@ Required
 --------
 
 .. include:: /reference/filter/option/property.rst
+
+options
+~~~~~~~
+
+**type**: `array`
+
+Define the options, which the use can choose
+
+.. code-block:: yaml
+
+    filter:
+        myFilter:
+            options:
+                Foo: Bar
+                Hello: World
 
 Option
 ------

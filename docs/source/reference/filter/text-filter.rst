@@ -4,14 +4,14 @@ TextFilter
 The TextFilter filters a property by user string
 
 +-------------+--------------------------------------------------------------------+
-| type        | boolean                                                            |
+| type        | text                                                               |
 +-------------+--------------------------------------------------------------------+
 | required    | - property_                                                        |
 +-------------+--------------------------------------------------------------------+
 | option      | - label_                                                           |
 |             | - translationDomain_                                               |
 +-------------+--------------------------------------------------------------------+
-| class       | :class:`Enhavo\\AppBundle\\Filter\\Filter\\TextFilter`             |
+| class       | `Enhavo\\AppBundle\\Filter\\Filter\\TextFilter`                    |
 +-------------+--------------------------------------------------------------------+
 
 Required
