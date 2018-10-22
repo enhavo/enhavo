@@ -18,7 +18,6 @@ Contents
    cookbook/index
    reference/index
    bundles/index
-   components/index
    contributing/index
 
 
