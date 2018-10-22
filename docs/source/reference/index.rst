@@ -7,8 +7,9 @@ Reference
     action/index
     block/index
     button/index
-    tableWidget/index
+    filter/index
     icon/index
+    tableWidget/index
 
 
 This section contains a short reference information to following types:
