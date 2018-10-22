@@ -16,6 +16,10 @@ gulp.task('sass', ['sass:compile']);
 gulp.task('sass:compile', function () {
   var directories = [
     {
+      from: 'docs/theme/enhavo/static/sass/*.scss',
+      to: 'docs/theme/enhavo/static/css'
+    },
+    {
       from: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/sass/*.scss',
       to: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/css'
     },

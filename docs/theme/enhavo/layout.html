@@ -3,8 +3,8 @@
 {# Do this so that bootstrap is included before the main css file #}
 {%- block htmltitle %}
   {% set script_files = script_files + ["_static/myscript.js"] %}
-  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}" />
-  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap-theme.min.css', 1) }}" />
+  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/vendor/bootstrap.min.css', 1) }}" />
+  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/vendor/bootstrap-theme.min.css', 1) }}" />
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/icons.css', 1) }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{ super() }}
@@ -78,16 +78,9 @@
 {%- macro guzzle_sidebar() %}
   <div id="left-column">
     <div class="sphinxsidebar">
-      {%- if sidebars != None %}
-        {#- new style sidebar: explicitly include/exclude templates #}
-        {%- for sidebartemplate in sidebars %}
-        {%- include sidebartemplate %}
-        {%- endfor %}
-      {% else %}
-        {% include "logo.html" %}
-        {% include "globaltoc.html" %}
-        {% include "searchbox.html" %}
-      {%- endif %}
+      {% include "logo.html" %}
+      {% include "globaltoc.html" %}
+      {% include "searchbox.html" %}
     </div>
   </div>
 {%- endmacro %}
