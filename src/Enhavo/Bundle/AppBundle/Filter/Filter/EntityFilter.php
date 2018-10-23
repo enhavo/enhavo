@@ -63,10 +63,10 @@ class EntityFilter extends AbstractFilter
 
     public function getRepository($repository)
     {
-        if (preg_match('#[:/]#', $repository)) {
-            return $this->container->get('doctrine.orm.entity_manager')->getRepository($repository);
+        if($this->container->has($repository)) {
+            return $this->container->get($repository);
         }
-        return $this->container->get($repository);
+        return $this->container->get('doctrine.orm.entity_manager')->getRepository($repository);
     }
 
     public function getType()
