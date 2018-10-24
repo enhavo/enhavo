@@ -111,6 +111,22 @@ class FileFactory extends Factory
         return $file;
     }
 
+    public function createFromContent($content)
+    {
+        /** @var FileInterface $file */
+        $file = $this->createNew();
+
+        $content = new Content($content);
+
+        $file->setFilename(basename($content->getFilePath()));
+        $file->setExtension($this->guessExtension($content->getFilePath()));
+        $file->setMimeType($this->guessMimeType($content->getFilePath()));
+        $file->setContent($content);
+
+        $this->provider->updateFile($file);
+        return $file;
+    }
+
     /**
      * @param string $uri
      * @param string $filename
