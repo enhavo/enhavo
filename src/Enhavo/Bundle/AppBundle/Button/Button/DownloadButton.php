@@ -16,13 +16,14 @@ class DownloadButton extends AbstractType implements ButtonInterface
 {
     public function render($options, $resource)
     {
-        return $this->renderTemplate('AppBundle:Button:download.html.twig', [
+        return $this->renderTemplate('EnhavoAppBundle:Button:download.html.twig', [
             'type' => $this->getType(),
-            'route' => $options['route'],
-            'icon' => 'download',
-            'display' => true,
-            'role' => null,
-            'label' => 'app.label.download',
+            'route' => $this->getRequiredOption('route', $options),
+            'routeParameters' => $this->getOption('routeParameters', $options, []),
+            'icon' => $this->getOption('icon', $options, 'download'),
+            'display' => $this->getOption('display', $options, true),
+            'role' => $this->getOption('role', $options),
+            'label' => $this->getOption('label', $options, 'app.label.download'),
             'translationDomain' => null
         ]);
     }
