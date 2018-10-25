@@ -244,7 +244,13 @@
 {% endmacro %}
 
 {% block enhavo_auto_complete_entity_widget %}
-    <input type="hidden" name="{{ full_name }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}" />
+    <div data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}">
+        <input type="hidden" name="{{ full_name }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
+        {% if create_route %}
+            <a href="{{ path(create_route) }}" data-auto-complete-create>+</a>
+        {% endif %}
+    </div>
+
 {% endblock %}
 
 {% block entity_tree_widget %}

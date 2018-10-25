@@ -1,4 +1,4 @@
-define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce', 'tinymce'], function(exports, $, templating, admin, translator, timepicker, jQueryTinymce, tinymce) {
+define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'jquery-ui-timepicker', 'jquery-tinymce', 'tinymce', 'app/app/Application'], function(exports, $, templating, admin, translator, timepicker, jQueryTinymce, tinymce, application) {
   "use strict";
   Object.defineProperty(exports, "__esModule", { value: true });
 
@@ -61,7 +61,6 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
               };
             },
             processResults: function (data) {
-              console.log(data);
               return data;
             },
             cache: true
@@ -77,8 +76,26 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
           config.allowClear = true
         }
 
-        $(this).select2(config);
-        $(this).select2('data', data.value);
+        var $input = $(this).find('[data-auto-complete-input]');
+        $input.select2(config);
+        $input.select2('data', data.value);
+
+        $(this).find('[data-auto-complete-create]').click(function (event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            application.default.pushOverlayView()
+              .closeSelector('[data-type="cancel"]')
+              .wait(function(callback, overlay) {
+                $.ajax({
+                  url: url,
+                  success: function (data) {
+                    overlay.setContent(data);
+                    callback();
+                  }
+                });
+              })
+            ;
+        });
       });
     };
 
