@@ -16,6 +16,8 @@ class LinkConfigurationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    	$builder->add('css', CssClassType::class, []);
+
         $builder->add('target', TargetType::class, []);
     }
 

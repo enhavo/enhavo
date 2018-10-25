@@ -1,1 +1,1 @@
-<a class="{% if navigation_node_is_active(node) %}active{% endif %}" target="{{ node.configuration.target }}" href="{{ node.content.link }}">{{ node.label }}</a>
+<a class="{% if navigation_node_is_active(node) %}active{% endif %} {% if node.configuration.css %}{{ node.configuration.css }}{% endif %}" target="{{ node.configuration.target }}" href="{{ node.content.link }}">{{ node.label }}</a>
