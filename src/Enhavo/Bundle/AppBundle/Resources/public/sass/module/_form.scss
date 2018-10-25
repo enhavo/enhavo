@@ -28,9 +28,9 @@
 .input-container textarea {font: 13px/1.6em "Open Sans";margin:0;background:transparent;border:0px;resize:none;width: 100%;}
 .input-container textarea {margin-right: 20px;}
 
-#overlayContent form > .row:last-of-type{padding: 20px 0;background: #f3f3f3;border-top: 1px solid #eee;border-radius: 0 0 2px 2px;}
+.overlay-content form > .row:last-of-type{padding: 20px 0;background: #f3f3f3;border-top: 1px solid #eee;border-radius: 0 0 2px 2px;}
 @media all and (max-width:991px) {
-    #overlayContent form > .row:last-of-type{padding: 25px 20px;}
+    .overlay-content form > .row:last-of-type{padding: 25px 20px;}
 }
 
 .form-message-box {padding: 10px;color: #fff;}

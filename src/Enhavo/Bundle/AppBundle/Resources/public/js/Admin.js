@@ -1,6 +1,6 @@
 define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 'select2'], function($, router, templating, translator, iCheck, select2) {
 
- var Admin = function() {
+  var Admin = function() {
     var self = this;
     var overlay = null;
     var overlayContent = null;
@@ -167,7 +167,6 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
           }
         });
       }
-
     };
 
     /**
@@ -240,25 +239,25 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       });
     };
 
-   this.initActions = function () {
-     $(document).on('click', '[data-action=""]', function (event) {
-       event.stopPropagation();
-       event.preventDefault();
-       var route = $(this).data('action-route');
-       var actionType = $(this).data('action-type');
-       var parameters = $(this).data('action-route-parameters');
-       if (!parameters) {
-         parameters = {};
-       }
-       if(actionType == 'overlay'){
-         var link = router.generate(route, parameters);
-         self.ajaxOverlay(link);
-       } else if(actionType == 'link'){
-         var url = router.generate(route);
-         window.location.href = url;
-       }
-     });
-   };
+    this.initActions = function () {
+      $(document).on('click', '[data-action=""]', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var route = $(this).data('action-route');
+        var actionType = $(this).data('action-type');
+        var parameters = $(this).data('action-route-parameters');
+        if (!parameters) {
+          parameters = {};
+        }
+        if(actionType == 'overlay'){
+          var link = router.generate(route, parameters);
+          self.ajaxOverlay(link);
+        } else if(actionType == 'link'){
+          var url = router.generate(route);
+          window.location.href = url;
+        }
+      });
+    };
 
     this.initTabs = function (selector) {
       $(selector + " .tabContainer a").each(function () {
@@ -399,26 +398,25 @@ define(['jquery', 'app/Router', 'app/Templating', 'app/Translator', 'icheck', 's
       }
     };
 
-   this.confirm = function(message, callback) {
-     var html = $('#confirmDialog').html();
-     html = html.replace('__message__', message);
-     self.overlay(html, {
-       init: function(html) {
-         $(html).find('[data-dialog-confirm]').click(function(event) {
-           event.preventDefault();
-           self.overlayClose();
-           callback();
-         });
-       }
-     });
-   };
+    this.confirm = function(message, callback) {
+      var html = $('#confirmDialog').html();
+      html = html.replace('__message__', message);
+      self.overlay(html, {
+        init: function(html) {
+          $(html).find('[data-dialog-confirm]').click(function(event) {
+            event.preventDefault();
+            self.overlayClose();
+            callback();
+          });
+        }
+      });
+    };
 
-   this.alert = function(message) {
-     var html = $('#alertDialog').html();
-     html = html.replace('__message__', message);
-     self.overlay(html);
-   };
-
+    this.alert = function(message) {
+      var html = $('#alertDialog').html();
+      html = html.replace('__message__', message);
+      self.overlay(html);
+    };
   };
 
   return new Admin;

@@ -1,4 +1,4 @@
-define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Form/Form", "app/app/Form/Form"], function (require, exports, admin, router, form, Form_1, Form_2) {
+define(["require", "exports", "app/Admin", "app/Router", "app/Form", "jquery", "app/app/Form/Form", "app/app/Form/Form"], function (require, exports, admin, router, form, $, Form_1, Form_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var DynamicFormConfig = /** @class */ (function () {
@@ -160,7 +160,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             if (callback === void 0) { callback = function () { }; }
             var index = this.$container.children('[data-dynamic-form-item]').index(item.getElement());
             var self = this;
-            if (index > 0) {
+            if (index > 0) { // is not first element
                 var buttonToMove_1 = $(this.$container.children('[data-dynamic-form-add-button]').get(index + 1));
                 var buttonTarget_1 = $(this.$container.children('[data-dynamic-form-add-button]').get(index - 1));
                 var domElementToMove_1 = $(item.getElement());
@@ -187,7 +187,7 @@ define(["require", "exports", "app/Admin", "app/Router", "app/Form", "app/app/Fo
             var index = this.$container.children('[data-dynamic-form-item]').index(item.getElement());
             var size = this.$container.children('[data-dynamic-form-item]').length;
             var self = this;
-            if (index < (size - 1)) {
+            if (index < (size - 1)) { // is not last element
                 var buttonToMove_2 = $(this.$container.children('[data-dynamic-form-add-button]').get(index + 1));
                 var buttonTarget_2 = $(this.$container.children('[data-dynamic-form-add-button]').get(index + 2));
                 var domElementToMove_2 = $(item.getElement());
