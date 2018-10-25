@@ -85,7 +85,11 @@ define(['exports', 'jquery', 'app/Templating', 'app/Admin', 'app/Translator', 'j
             var url = $(this).attr('href');
             application.default.pushOverlayView()
               .closeSelector('[data-type="cancel"]')
-              .wait(function(callback, overlay) {
+              .onInit(function (overlay) {
+                var form = $(overlay.getHtml()).find('form').get(0);
+                $(document).trigger('formOpenAfter', [form, overlay]);
+              })
+              .wait(function (callback, overlay) {
                 $.ajax({
                   url: url,
                   success: function (data) {
