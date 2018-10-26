@@ -85,7 +85,7 @@ class InstallCommand extends ContainerAwareCommand
         $question = new ConfirmationQuestion('<info>Is this information correct</info> [<comment>yes</comment>]?', true);
 
         if ($helper->ask($input, $output, $question)) {
-            $this->createUser($email, $email, $password);
+            $this->createUser($email, $password);
             $output->writeln('User created');
         } else {
             $output->writeln('Aborted');
