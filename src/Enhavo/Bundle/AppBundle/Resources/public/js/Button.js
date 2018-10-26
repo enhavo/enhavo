@@ -29,7 +29,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
-    this.initSave = function (form) {
+    this.initSave = function (form, overlay) {
       $(form).find('[data-button][data-type=save]').click(function (event) {
         event.preventDefault();
         $(this).trigger('formSaveBefore', form);
@@ -58,11 +58,19 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
           success: function () {
             admin.closeLoadingOverlay();
             if(!close) {
-              admin.overlayClose();
+              if(overlay) {
+                overlay.close();
+              } else {
+                admin.overlayClose();
+              }
               var url = $(form).attr('action');
               admin.ajaxOverlay(url);
             } else {
-              admin.overlayClose();
+              if(overlay) {
+                overlay.close();
+              } else {
+                admin.overlayClose();
+              }
             }
             $(document).trigger('formSaveAfter', form);
           },
@@ -209,8 +217,8 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
     };
 
     this.init = function () {
-      $(document).on('formOpenAfter', function (event, form) {
-        self.initSave(form);
+      $(document).on('formOpenAfter', function (event, form, overlay) {
+        self.initSave(form, overlay);
         self.initDelete(form);
         self.initPreview(form);
         self.initCancel(form);
