@@ -10,6 +10,7 @@ export class DynamicFormConfig
 {
     route: string;
     prototypeName: string;
+    collapsed: boolean;
 }
 
 export class DynamicForm
@@ -37,15 +38,17 @@ export class DynamicForm
         this.$element = $(element);
         this.$container = this.$element.children('[data-dynamic-form-container]');
         this.scope = scope;
-        this.initMenu();
-        this.initActions();
-        this.initItems();
-        this.initContainer();
+
         if(config == null) {
             this.config = this.$element.data('dynamic-config');
         } else {
             this.config = config;
         }
+
+        this.initMenu();
+        this.initActions();
+        this.initItems();
+        this.initContainer();
 
         this.formListener = new FormListener();
 
@@ -95,6 +98,7 @@ export class DynamicForm
     {
         let dynamicForm = this;
 
+        this.collapse = this.config.collapsed;
         if(this.collapse) {
             dynamicForm.collapseAll();
         } else {

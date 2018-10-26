@@ -51,7 +51,8 @@ class DynamicFormType extends AbstractType
         $view->vars['items'] = $items;
         $view->vars['dynamic_config'] = [
             'route' => $options['item_route'],
-            'prototypeName' => $options['prototype_name']
+            'prototypeName' => $options['prototype_name'],
+            'collapsed' => $options['collapsed']
         ];
     }
 
@@ -104,7 +105,8 @@ class DynamicFormType extends AbstractType
             'item_route' => null,
             'item_class' => null,
             'prototype' => false,
-            'entry_type' => DynamicItemType::class
+            'entry_type' => DynamicItemType::class,
+            'collapsed' => false
         ]);
 
         // force to create a unique placeholder for each form type
