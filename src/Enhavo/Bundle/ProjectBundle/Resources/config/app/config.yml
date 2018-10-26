@@ -14,7 +14,7 @@ enhavo_media:
             height: 600
 
 enhavo_translation:
-    translate: true
+    translate: false
     default_locale: '%locale%'
     locales:
         en:
