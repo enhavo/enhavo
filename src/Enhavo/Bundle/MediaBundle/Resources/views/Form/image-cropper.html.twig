@@ -1,8 +1,11 @@
 {% block enhavo_image_cropper_widget %}
+    {% trans_default_domain translation_domain %}
 
-    {% for format in formats %}
-        <div data-image-cropping-tool="{{ format }}">{{ format }}</div>
-    {% endfor %}
+    <div style="margin-top: 5px;">
+        {% for format,label in formats %}
+            <div data-image-cropping-tool="{{ format }}">{{ label }}</div>
+        {% endfor %}
+    </div>
 
     <div class="image-crop-modal-overlay-wrapper" data-image-cropping-overlay>
         <div class="image-crop-modal-overlay-background"></div>
@@ -50,5 +53,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

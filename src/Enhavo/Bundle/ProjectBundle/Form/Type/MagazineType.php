@@ -103,7 +103,7 @@ class MagazineType extends AbstractResourceType
         $builder->add('cover', MediaType::class, [
             'multiple' => false,
             'formats' => [
-                'magazine_cover'
+                'magazine_cover' => 'Magazin Cover'
             ]
         ]);
 
