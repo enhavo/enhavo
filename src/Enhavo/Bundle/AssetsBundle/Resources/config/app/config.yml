@@ -67,3 +67,6 @@ enhavo_assets:
 
             chartjs:
                 location: /bundles/enhavoassets/vendor/chart.js/dist/Chart.min
+
+            moment:
+                location: /bundles/enhavoassets/vendor/moment/min/moment-with-locales.min

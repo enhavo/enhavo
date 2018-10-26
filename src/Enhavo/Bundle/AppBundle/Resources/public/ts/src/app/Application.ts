@@ -37,7 +37,7 @@ export class OverlayOption
     closeSelector: string = '[data-overlay-close]';
 }
 
-class Overlay
+export class Overlay
 {
     private application: Application;
 
