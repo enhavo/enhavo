@@ -3,7 +3,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
   function Button() {
     var self = this;
 
-    this.initDelete = function (form) {
+    this.initDelete = function (form, overlay) {
       $(form).find('[data-button][data-type=delete]').click(function (event) {
         event.preventDefault();
         var url = $(form).data('delete');
@@ -17,7 +17,11 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
             url: url,
             success: function () {
               admin.closeLoadingOverlay();
-              admin.overlayClose();
+              if(overlay) {
+                overlay.close();
+              } else {
+                admin.overlayClose();
+              }
               $(document).trigger('formSaveAfter', form);
             },
             error: function () {
@@ -135,7 +139,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
-    this.initPreview = function (form) {
+    this.initPreview = function (form, overlay) {
       $(form).find('[data-button][data-type=preview]').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -157,7 +161,7 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
-    this.initDuplicate = function (form) {
+    this.initDuplicate = function (form, overlay) {
       $(form).find('[data-button][data-type=duplicate]').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -165,7 +169,11 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
 
         admin.confirm(translator.trans('message.duplicate.confirm'), function() {
           var link = router.generate(route, {id: $(form).data('id')});
-          admin.overlayClose();
+          if(overlay) {
+            overlay.close();
+          } else {
+            admin.overlayClose();
+          }
           admin.openLoadingOverlay();
           $.ajax({
             url: link,
@@ -187,14 +195,18 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       });
     };
 
-    this.initCancel = function (form) {
+    this.initCancel = function (form, overlay) {
       $(form).find('[data-button][data-type=cancel]').click(function (e) {
         e.preventDefault();
-        admin.overlayClose();
+        if(overlay) {
+          overlay.close();
+        } else {
+          admin.overlayClose();
+        }
       });
     };
 
-    this.initDownload = function (form) {
+    this.initDownload = function (form, overlay) {
       $(form).find('[data-button][data-type=download]').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -219,16 +231,16 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
     this.init = function () {
       $(document).on('formOpenAfter', function (event, form, overlay) {
         self.initSave(form, overlay);
-        self.initDelete(form);
-        self.initPreview(form);
-        self.initCancel(form);
-        self.initDuplicate(form);
-        self.initDownload(form);
+        self.initDelete(form, overlay);
+        self.initPreview(form, overlay);
+        self.initCancel(form, overlay);
+        self.initDuplicate(form, overlay);
+        self.initDownload(form, overlay);
       });
     };
 
     self.init();
-  };
+  }
 
   return new Button();
 });
