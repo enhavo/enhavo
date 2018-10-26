@@ -84,6 +84,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
         };
         return Overlay;
     }());
+    exports.Overlay = Overlay;
     var application = new Application(document.body);
     exports.default = application;
 });
