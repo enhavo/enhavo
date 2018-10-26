@@ -13,10 +13,35 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
       });
     };
 
+    this.getQueryParameters = function(variable)
+    {
+      var query = window.location.search.substring(1);
+      var vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+          return decodeURIComponent(pair[1]);
+        }
+      }
+    };
+
     this.initTable = function(block)
     {
       var $block = $(block);
 
+      // open if query is set
+      var id = this.getQueryParameters('id');
+      if(id) {
+        var updateRoute = $block.data('block-update-route');
+        var updateParameters = $block.data('block-update-route-parameters');
+        if(typeof updateParameters != 'object') {
+          updateParameters = {};
+        }
+        updateParameters.id = id;
+        admin.ajaxOverlay(router.generate(updateRoute, updateParameters));
+      }
+
+      // update table
       var route = $block.data('block-table-route');
       var parameters = $block.data('block-table-route-parameters');
       if(typeof parameters != 'object') {
@@ -74,6 +99,10 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
           parameters.id = id;
           if (route != undefined) {
             var url = router.generate(route, parameters);
+
+            var pageUrl = '?id=' + id;
+            window.history.pushState('', '', pageUrl);
+
             admin.ajaxOverlay(url);
           }
         });
