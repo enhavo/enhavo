@@ -55,7 +55,7 @@ enhavo_slider_slide_table:
                 public:
                     type: boolean
                     label: article.label.public
-                    translationDomain: EnhavoArticleBundle
+                    translation_domain: EnhavoArticleBundle
                     property: public
                     equals: true
             viewer:
