@@ -53,7 +53,7 @@ enhavo_translation_translation_string_table:
                 translationKey:
                     type: text
                     label: translation.label.translationKey
-                    translationDomain: EnhavoTranslationBundle
+                    translation_domain: EnhavoTranslationBundle
                     property: translationKey
             viewer:
                 translationDomain: EnhavoTranslationBundle

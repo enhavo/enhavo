@@ -10,32 +10,37 @@ namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BooleanFilter extends AbstractFilter
 {
-    public function render($options, $value)
+    public function render($options, $name)
     {
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:boolean.html.twig');
-
-        return $this->renderTemplate($template, [
+        return $this->renderTemplate($options['template'], [
             'type' => $this->getType(),
-            'value' => $value,
-            'label' => $this->getOption('label', $options, ''),
-            'translationDomain' => $this->getOption('translationDomain', $options, null),
-            'icon' => $this->getOption('icon', $options, ''),
-            'name' => $this->getRequiredOption('name', $options),
+            'label' => $options['label'],
+            'translationDomain' => $options['translation_domain'],
+            'name' => $name,
         ]);
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        $property = $this->getRequiredOption('property', $options);
-
+        $property = $options['property'];
         $value = (boolean)$value;
         if($value) {
-            $equals = $this->getRequiredOption('equals', $options);
+            $equals = $options['equals'];
             $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals);
         }
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'template' => 'EnhavoAppBundle:Filter:boolean.html.twig',
+            'equals' => true
+        ]);
     }
 
     public function getType()

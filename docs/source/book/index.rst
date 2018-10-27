@@ -4,7 +4,6 @@ Book
 .. toctree::
     :hidden:
 
-    installation/index
     app-bundle/index
     routing/index
     form/index
@@ -16,10 +15,6 @@ Book
     newsletter/index
     download/index
     translation/index
-
-* **Installation**
-
-  * :doc:`/book/installation/get-started`
 
 * **AppBundle**
 

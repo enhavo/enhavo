@@ -61,7 +61,7 @@ enhavo_newsletter_newsletter_table:
                     type: text
                     property: title
                     label: newsletter.label.title
-                    translationDomain: EnhavoNewsletterBundle
+                    translation_domain: EnhavoNewsletterBundle
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 batches:

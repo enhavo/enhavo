@@ -11,21 +11,18 @@ namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OptionFilter extends AbstractFilter
 {
-    public function render($options, $value)
+    public function render($options, $name)
     {
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:option.html.twig');
-
-        return $this->renderTemplate($template, [
+        return $this->renderTemplate($options['template'], [
             'type' => $this->getType(),
-            'value' => $value,
-            'label' => $this->getOption('label', $options, ''),
-            'translationDomain' => $this->getOption('translationDomain', $options, null),
-            'icon' => $this->getOption('icon', $options, ''),
-            'options' => $this->getRequiredOption('options', $options),
-            'name' => $this->getRequiredOption('name', $options),
+            'label' => $options['label'],
+            'translationDomain' => $options['translation_domain'],
+            'options' => $options['options'],
+            'name' => $name,
         ]);
     }
 
@@ -35,7 +32,7 @@ class OptionFilter extends AbstractFilter
             return;
         }
 
-        $possibleValues = $this->getRequiredOption('options', $options);
+        $possibleValues = $options['options'];
         $possibleValues = array_keys($possibleValues);
         $findPossibleValue = false;
         foreach($possibleValues as $possibleValue) {
@@ -49,8 +46,17 @@ class OptionFilter extends AbstractFilter
             throw new FilterException('Value does not exists in options');
         }
 
-        $property = $this->getRequiredOption('property', $options);
+        $property = $options['property'];
         $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'template' => 'EnhavoAppBundle:Filter:option.html.twig'
+        ]);
+        $optionsResolver->setRequired(['options']);
     }
 
     public function getType()

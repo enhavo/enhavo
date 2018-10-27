@@ -50,12 +50,12 @@ enhavo_slider_slide_table:
                 title:
                     type: text
                     label: article.label.title
-                    translationDomain: EnhavoArticleBundle
+                    translation_domain: EnhavoArticleBundle
                     property: title
                 public:
                     type: boolean
                     label: article.label.public
-                    translationDomain: EnhavoArticleBundle
+                    translation_domain: EnhavoArticleBundle
                     property: public
                     equals: true
             viewer:

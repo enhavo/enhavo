@@ -90,7 +90,7 @@ enhavo_page_page_table:
                     type: text
                     property: title
                     label: page.label.public
-                    translationDomain: EnhavoPageBundle
+                    translation_domain: EnhavoPageBundle
             viewer:
                 translationDomain: EnhavoPageBundle
                 columns:

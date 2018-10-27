@@ -89,7 +89,7 @@ enhavo_shop_product_table:
                     type: text
                     property: title
                     label: product.label.title
-                    translationDomain: EnhavoShopBundle
+                    translation_domain: EnhavoShopBundle
             viewer:
                 translationDomain: EnhavoShopBundle
                 columns:
