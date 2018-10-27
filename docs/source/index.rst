@@ -14,6 +14,7 @@ Contents
    :maxdepth: 3
 
 
+   get-started/index
    book/index
    guides/index
    reference/index

@@ -34,7 +34,7 @@ class EntityFilter extends AbstractFilter
             return;
         }
 
-        $property = $this->getRequiredOption('property', $options);
+        $property = $options['property'];
         $propertyPath = explode('.', $property);
         $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }

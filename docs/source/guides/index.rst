@@ -16,6 +16,7 @@ Guides
     javascript/index
     search/index
     setting/index
+    filter/index
 
 * **Package**
 
@@ -38,6 +39,10 @@ Guides
 * **Contact Form**
 
   * :doc:`/guides/contact-form/add-your-customize-contact-form`
+
+* **Filter**
+
+  * :doc:`/guides/filter/add-custom-filter`
 
 * **Search**
 
