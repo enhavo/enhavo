@@ -10,26 +10,23 @@ namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextFilter extends AbstractFilter
 {
-    public function render($options, $value)
+    public function render($options, $name)
     {
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:text.html.twig');
-
-        return $this->renderTemplate($template, [
+        return $this->renderTemplate($options['template'], [
             'type' => $this->getType(),
-            'value' => $value,
-            'label' => $this->getOption('label', $options, ''),
-            'translationDomain' => $this->getOption('translationDomain', $options, null),
-            'icon' => $this->getOption('icon', $options, ''),
-            'name' => $this->getRequiredOption('name', $options),
+            'label' => $options['label'],
+            'translationDomain' => $options['translation_domain'],
+            'name' => $name,
         ]);
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
     {
-        $property = $this->getRequiredOption('property', $options);
+        $property = $options['property'];
         $joinProperty = [];
         if(substr_count($property, '.') >= 1){
             $exploded = explode('.', $property);
@@ -42,11 +39,19 @@ class TextFilter extends AbstractFilter
             }
         }
         
-        $operator = $this->getOption('operator', $options, FilterQuery::OPERATOR_LIKE);
-        
+        $operator = $options['operator'];
         if($value) {
             $query->addWhere($property, $operator, $value, $joinProperty ? $joinProperty : null);
         }
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'template' => 'EnhavoAppBundle:Filter:text.html.twig',
+            'operator' => FilterQuery::OPERATOR_LIKE
+        ]);
     }
 
     public function getType()

@@ -10,24 +10,30 @@ namespace Enhavo\Bundle\AppBundle\Filter;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
-use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class FilterQueryBuilder
 {
     /**
-     * @var CollectorInterface
+     * @var FilterFactory
      */
-    protected $collector;
+    private $factory;
 
     /**
-     * AbstractRenderer constructor.
-     *
-     * @param CollectorInterface $collector
+     * @var FilterQueryFactory
      */
-    public function __construct(CollectorInterface $collector)
+    private $filterQueryFactory;
+
+    /**
+     * FilterQueryBuilder constructor.
+     *
+     * @param FilterFactory $filterFactory
+     * @param FilterQueryFactory $filterQueryFactory
+     */
+    public function __construct(FilterFactory $filterFactory, FilterQueryFactory $filterQueryFactory)
     {
-        $this->collector = $collector;
+        $this->factory = $filterFactory;
+        $this->filterQueryFactory = $filterQueryFactory;
     }
 
     public function buildQueryFromRequestConfiguration(RequestConfiguration $requestConfiguration)
@@ -35,7 +41,6 @@ class FilterQueryBuilder
         $request = $requestConfiguration->getRequest();
         $filters = $requestConfiguration->getFilters();
         $criteria = $requestConfiguration->getCriteria();
-
         $sorting = $requestConfiguration->getSorting();
 
         return $this->buildQueryFromRequest($request, $filters, $sorting, $criteria);
@@ -43,7 +48,7 @@ class FilterQueryBuilder
 
     public function buildQueryFromRequest(Request $request, $filters, $sorting = [], $criteria = [])
     {
-        $filterQuery = $this->createFilterQuery();
+        $filterQuery = $this->filterQueryFactory->create();
 
         foreach($sorting as $property => $order) {
             $filterQuery->addOrderBy($property, $order);
@@ -53,41 +58,35 @@ class FilterQueryBuilder
             $filterQuery->addWhere($property, FilterQuery::OPERATOR_EQUALS, $value);
         }
 
-        $requestFilters = $request->query->get('filters', null);
-        if($requestFilters === null) {
-            return $filterQuery;
-        }
-
-        $requestFilters = json_decode($requestFilters, true);
-        if(!is_array($requestFilters)) {
-            throw new FilterException('Filter was not a json array');
-        }
-
-        foreach($requestFilters as $filter) {
-            $name = $filter['name'];
-            $value = $filter['value'];
-            if(!array_key_exists($name, $filters)) {
-                throw new FilterException(sprintf('Filter was not defined'));
-            }
-            $filter = $filters[$name];
-            if(!array_key_exists('type', $filter)) {
-                throw new FilterException('Filter type was not defined');
-            }
-            $this->buildQuery($filter['type'], $value, $filter, $filterQuery);
+        $filterValues = $this->getRequestFilterValues($request);
+        $filterData = $this->factory->createFilters($filters);
+        foreach($filterData as $filter) {
+            $filter->buildQuery($filterQuery, $this->getValue($filter->getName(), $filterValues));
         }
 
         return $filterQuery;
     }
 
-    protected function buildQuery($type, $value, $options, FilterQuery $filterQuery)
+    private function getRequestFilterValues(Request $request)
     {
-        /** @var FilterInterface $filter */
-        $filter = $this->collector->getType($type);
-        $filter->buildQuery($filterQuery, $options, $value);
+        $filterValues = $request->query->get('filters', null);
+        if($filterValues !== null) {
+            $filterValues = json_decode($filterValues, true);
+            if(!is_array($filterValues)) {
+                throw new FilterException('Filter was not a json array');
+            }
+            return $filterValues;
+        }
+        return [];
     }
 
-    protected function createFilterQuery()
+    private function getValue($name, $filterValues)
     {
-        return new FilterQuery();
+        foreach($filterValues as $data) {
+            if(isset($data['name']) && isset($data['value']) && $data['name'] == $name) {
+                return $data['value'];
+            }
+        }
+        return null;
     }
 }

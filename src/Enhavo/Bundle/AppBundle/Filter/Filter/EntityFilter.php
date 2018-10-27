@@ -10,43 +10,21 @@ namespace Enhavo\Bundle\AppBundle\Filter\Filter;
 
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntityFilter extends AbstractFilter
 {
-    public function render($options, $value)
+    public function render($options, $name)
     {
-        $repository = $this->getRequiredOption('repository', $options);
-        $repository = $this->getRepository($repository);
+        $choices = $this->getChoices($options);
 
-        $path = $this->getOption('path', $options);
-
-        $method = $this->getOption('method', $options, 'findAll');
-        $arguments = $this->getOption('arguments', $options);
-        if(is_array($arguments)) {
-            $entities = call_user_func([$repository, $method], $arguments);
-        } else {
-            $entities = call_user_func([$repository, $method]);
-        }
-
-        $selectOptions = [];
-        foreach ($entities as $entity) {
-            if ($path) {
-                $selectOptions[$this->getProperty($entity, 'id')] = $this->getProperty($entity, $path);
-            } else {
-                $selectOptions[$this->getProperty($entity, 'id')] = (string)$entity;
-            }
-        }
-
-        $template = $this->getOption('template', $options, 'EnhavoAppBundle:Filter:option.html.twig');
-
-        return $this->renderTemplate($template, [
+        return $this->renderTemplate($options['template'], [
             'type' => $this->getType(),
-            'value' => $value,
-            'label' => $this->getOption('label', $options, ''),
-            'translationDomain' => $this->getOption('translationDomain', $options, null),
-            'icon' => $this->getOption('icon', $options, ''),
-            'options' => $selectOptions,
-            'name' => $this->getRequiredOption('name', $options),
+            'label' => $options['label'],
+            'translationDomain' => $options['translation_domain'],
+            'options' => $choices,
+            'name' => $name,
         ]);
     }
 
@@ -61,12 +39,69 @@ class EntityFilter extends AbstractFilter
         $query->addWhere('id', FilterQuery::OPERATOR_EQUALS, $value, $propertyPath);
     }
 
-    public function getRepository($repository)
+    private function getChoices($options)
     {
-        if($this->container->has($repository)) {
-            return $this->container->get($repository);
+        $repository = $this->getRepository($options);
+
+        $method = $options['method'];
+        $arguments =  $options['arguments'];
+
+        if(is_array($arguments)) {
+            $entities = call_user_func([$repository, $method], $arguments);
+        } else {
+            $entities = call_user_func([$repository, $method]);
         }
-        return $this->container->get('doctrine.orm.entity_manager')->getRepository($repository);
+
+
+        $path = $this->getOption('path', $options);
+        $choices = [];
+        foreach ($entities as $entity) {
+            if ($path) {
+                $choices[$this->getProperty($entity, 'id')] = $this->getProperty($entity, $path);
+            } else {
+                $choices[$this->getProperty($entity, 'id')] = (string)$entity;
+            }
+        }
+        return $choices;
+    }
+
+    /**
+     * @param array $options
+     * @return EntityRepository
+     */
+    private function getRepository($options)
+    {
+        $repository = null;
+        if($this->container->has($options['repository'])) {
+            $repository =  $this->container->get($options['repository']);
+        } else {
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $repository = $em->getRepository($options['repository']);
+        }
+
+        if(!$repository instanceof EntityRepository) {
+            throw new \InvalidArgumentException(sprintf(
+                'Repository should to be type of "%s", but got "%s"',
+                EntityRepository::class,
+                get_class($repository)
+            ));
+        }
+        return $repository;
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'method' => 'findAll',
+            'arguments' => null,
+            'template' => 'EnhavoAppBundle:Filter:option.html.twig',
+            'path' => null
+        ]);
+
+        $optionsResolver->setRequired([
+            'repository'
+        ]);
     }
 
     public function getType()

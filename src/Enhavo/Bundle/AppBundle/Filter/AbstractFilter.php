@@ -8,13 +8,26 @@
 
 namespace Enhavo\Bundle\AppBundle\Filter;
 
-
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractFilter extends AbstractType implements FilterInterface
 {
     public function getPermission($options)
     {
-        return null;
+        return $options['permission'];
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver->setDefaults([
+            'translation_domain' => null,
+            'permission' => null
+        ]);
+
+        $optionsResolver->setRequired([
+            'label',
+            'property'
+        ]);
     }
 }

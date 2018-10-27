@@ -149,9 +149,23 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
 
     this.initFilter = function (block) {
 
-      $(block).find('[data-filters]').each(function(index, element) {
+      $(block).find('[data-filter-select]').each(function(index, element) {
         form.initSelect(element);
+      });
+
+      $(block).find('[data-filter-checkbox]').each(function(index, element) {
         form.initRadioAndCheckbox(element);
+      });
+
+      $(block).find('[data-filter-auto-complete-entity]').each(function(index, element) {
+        form.initAutoComplete(element);
+      });
+
+      $(block).find('[data-filter-text] input[type=text]').keyup(function(event) {
+        event.preventDefault();
+        if(event.keyCode == 13){
+          self.applyFilter($(block));
+        }
       });
 
       $(block).find('[data-filter-show]').click(function() {
@@ -168,13 +182,6 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
         }
       });
 
-      $(block).find('[data-filters] input[type=text]').keyup(function(event) {
-        event.preventDefault();
-        if(event.keyCode == 13){
-          self.applyFilter($(block));
-        }
-      });
-
       $(block).find('[data-filter-apply]').click(function(event) {
         event.preventDefault();
         self.applyFilter($(block));
@@ -186,7 +193,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
       self.loadTable($block);
 
       var filterActive = false;
-      $block.find('[data-filter]').each(function(index, element) {
+      $block.find('[data-filter] [data-filter-input]').each(function(index, element) {
         if($(element).is('input[type=checkbox]')) {
           if($(element).prop('checked')) {
             filterActive = true;
@@ -210,7 +217,7 @@ define(['jquery', 'app/Admin', 'app/Router', 'app/Translator', 'urijs/URI', 'app
     this.applyFilterOnUrl = function(block, url) {
 
       var filters = [];
-      block.find('[data-filter]').each(function() {
+      block.find('[data-filter] [data-filter-input]').each(function() {
         var $input = $(this);
         if($input.attr('type') == 'checkbox') {
           filters.push({

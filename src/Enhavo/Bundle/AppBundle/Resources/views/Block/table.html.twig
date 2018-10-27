@@ -33,7 +33,7 @@
             <div class="row hide filter-row {% if loop.last %}last-row{% endif %}" data-filters>
                 {% for filter in row %}
                     <div class="col-md-{{ filterRowSize }} filter-cell">
-                        {{ filter_render(filter.type, filter, filter.value) }}
+                        {{ filter.render()|raw }}
                     </div>
                 {% endfor %}
             </div>

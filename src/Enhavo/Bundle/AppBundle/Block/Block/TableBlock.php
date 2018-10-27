@@ -9,8 +9,6 @@
 namespace Enhavo\Bundle\AppBundle\Block\Block;
 
 use Enhavo\Bundle\AppBundle\Block\BlockInterface;
-use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
-use Enhavo\Bundle\AppBundle\Filter\FilterInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
 class TableBlock extends AbstractType implements BlockInterface
@@ -21,11 +19,7 @@ class TableBlock extends AbstractType implements BlockInterface
         $tableRoute = $this->getRequiredOption('table_route', $parameters);
         $template = $this->getOption('template', $parameters, 'EnhavoAppBundle:Block:table.html.twig');
 
-        if(!isset($parameters['filters'])) {
-            $filters = $this->getFiltersFromRoute($tableRoute, $translationDomain);
-        } else {
-            $filters = $this->getFilters($this->getOption('filters', $parameters, []), $translationDomain);
-        }
+        $filters = $this->getFilters($parameters);
 
         return $this->renderTemplate($template, [
             'app' => $this->getOption('app', $parameters, 'app/Block/Table'),
@@ -39,17 +33,17 @@ class TableBlock extends AbstractType implements BlockInterface
         ]);
     }
 
-    protected function getFiltersFromRoute($route, $translationDomain)
+    private function getFiltersFromRoute($route)
     {
         $route = $this->container->get('router')->getRouteCollection()->get($route);
         $sylius = $route->getDefault('_sylius');
         if(is_array($sylius)&& isset($sylius['filters'])) {
-            return $this->getFilters($sylius['filters'], $translationDomain);
+            return $this->getFilters($sylius['filters']);
         }
         return [];
     }
 
-    protected function calcFilterRowSize($filters)
+    private function calcFilterRowSize($filters)
     {
         $amount = count($filters);
         if($amount == 1) {
@@ -64,7 +58,7 @@ class TableBlock extends AbstractType implements BlockInterface
         return 3;
     }
 
-    protected function convertToFilterRows($filters)
+    private function convertToFilterRows($filters)
     {
         $rows = [];
         $i = 0;
@@ -86,33 +80,21 @@ class TableBlock extends AbstractType implements BlockInterface
         return $rows;
     }
 
-    protected function getFilters(array $filters, $translationDomain = null)
+    private function getFilters(array $parameters)
     {
-        $collector = $this->container->get('enhavo_app.filter_collector');
-        $authorizationChecker = $this->container->get('security.authorization_checker');
+        $filterFactory = $this->container->get('enhavo_app.factory.filter');
 
-        $filterData = [];
-
-        // check permission
-        foreach($filters as $name => &$options) {
-            if(!isset($options['type'])) {
-                throw new TypeMissingException(sprintf('No type was set for filter "%s"', $name));
-            }
-            /** @var FilterInterface $filter */
-            $filter = $collector->getType($options['type']);
-            $permission = $filter->getPermission($options);
-            if(!empty($permission) && !$authorizationChecker->isGranted($permission)) {
-                continue;
-            }
-            $filterData[$name] = $options;
+        $tableRoute = $this->getRequiredOption('table_route', $parameters);
+        if(!isset($parameters['filters'])) {
+            $filterData = $filterFactory->createFiltersFromRoute($tableRoute);
+        } else {
+            $filterData = $filterFactory->createFilters($this->getOption('filters', $parameters, []));
         }
 
-        // set default values
-        foreach($filterData as $name => &$options) {
-            $options['value'] = '';
-            $options['name'] = $name;
-            if(!array_key_exists('translationDomain', $options)) {
-                $options['translationDomain'] = $translationDomain;
+        $authorizationChecker = $this->container->get('security.authorization_checker');
+        foreach($filterData as $name => $filter) {
+            if($filter->getPermission() && !$authorizationChecker->isGranted($filter->getPermission())) {
+                unset($filterData[$name]);
             }
         }
 
