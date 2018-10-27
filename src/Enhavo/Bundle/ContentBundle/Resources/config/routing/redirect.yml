@@ -45,12 +45,12 @@ enhavo_content_redirect_table:
                     type: text
                     property: from
                     label: form.label.from
-                    translationDomain: EnhavoContentBundle
+                    translation_domain: EnhavoContentBundle
                 to:
                     type: text
                     property: to
                     label: form.label.to
-                    translationDomain: EnhavoContentBundle
+                    translation_domain: EnhavoContentBundle
                 code:
                     type: option
                     property: code

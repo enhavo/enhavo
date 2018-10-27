@@ -59,7 +59,7 @@ enhavo_user_group_table:
                     type: text
                     property: name
                     label: group.label.name
-                    translationDomain: EnhavoUserBundle
+                    translation_domain: EnhavoUserBundle
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:

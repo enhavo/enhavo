@@ -67,7 +67,7 @@ enhavo_shop_order_table:
                     type: text
                     property: number
                     label: order.label.number
-                    translationDomain: EnhavoShopBundle
+                    translation_domain: EnhavoShopBundle
             sorting:
                 orderedAt: desc
             criteria:

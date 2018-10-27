@@ -44,12 +44,12 @@ enhavo_newsletter_subscriber_table:
                     type: text
                     property: email
                     label: subscriber.label.email
-                    translationDomain: EnhavoNewsletterBundle
+                    translation_domain: EnhavoNewsletterBundle
                 active:
                     type: boolean
                     property: active
                     label: subscriber.label.active
-                    translationDomain: EnhavoNewsletterBundle
+                    translation_domain: EnhavoNewsletterBundle
                     equals: true
             viewer:
                 translationDomain: EnhavoNewsletterBundle

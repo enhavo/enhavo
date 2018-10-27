@@ -45,14 +45,14 @@ enhavo_user_user_table:
                     type: text
                     property: email
                     label: user.label.email
-                    translationDomain: EnhavoUserBundle
+                    translation_domain: EnhavoUserBundle
                 group:
                     type: entity
                     property: groups
                     path: name
                     label: group.label.group
                     repository: enhavo_user.repository.group
-                    translationDomain: EnhavoUserBundle
+                    translation_domain: EnhavoUserBundle
             viewer:
                 translationDomain: EnhavoUserBundle
                 columns:

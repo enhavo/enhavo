@@ -65,7 +65,7 @@ enhavo_calendar_appointment_table:
                     type: text
                     property: title
                     label: appointment.label.title
-                    translationDomain: EnhavoCalendarBundle
+                    translation_domain: EnhavoCalendarBundle
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 columns:
