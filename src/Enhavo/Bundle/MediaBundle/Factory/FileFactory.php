@@ -28,6 +28,22 @@ class FileFactory extends Factory
         $this->provider = $provider;
     }
 
+    public function createTemp()
+    {
+        /** @var FileInterface $file */
+        $file = $this->createNew();
+
+        $file->setMimeType('application/octet-stream');
+        $file->setExtension(null);
+        $file->setFilename(tempnam(sys_get_temp_dir(), 'Content'));
+
+        $content = new Content('');
+        $file->setContent($content);
+
+        $this->provider->updateFile($file);
+        return $file;
+    }
+
     /**
      * @param FileInterface $originalResource
      * @return FileInterface
