@@ -50,3 +50,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: entity }
+
+    enhavo_app.filter.auto_complete_entity:
+        class: Enhavo\Bundle\AppBundle\Filter\Filter\AutoCompleteEntityFilter
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.filter, alias: auto_complete_entity }
