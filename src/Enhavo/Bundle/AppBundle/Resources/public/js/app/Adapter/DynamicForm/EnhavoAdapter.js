@@ -17,6 +17,7 @@ define(["require", "exports", "app/app/DynamicForm", "app/app/Form/Form", "app/F
                 form.initSelect(event.getElement());
                 form.initDataPicker(event.getElement());
                 form.initList(event.getElement());
+                form.initAutoComplete(event.getElement());
                 Media_1.Media.apply(event.getElement());
             });
         };

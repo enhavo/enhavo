@@ -25,6 +25,7 @@ class EnhavoAdapter
             form.initSelect(event.getElement());
             form.initDataPicker(event.getElement());
             form.initList(event.getElement());
+            form.initAutoComplete(event.getElement());
             Media.apply(event.getElement());
         });
     }
