@@ -27,6 +27,11 @@ class Filter
     private $options;
 
     /**
+     * @var string
+     */
+    private $dataType;
+
+    /**
      * @return string
      */
     public function getKey()
@@ -56,6 +61,22 @@ class Filter
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataType()
+    {
+        return $this->dataType;
+    }
+
+    /**
+     * @param string $dataType
+     */
+    public function setDataType($dataType)
+    {
+        $this->dataType = $dataType;
     }
 
     /**

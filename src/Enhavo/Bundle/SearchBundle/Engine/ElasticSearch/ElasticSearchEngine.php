@@ -109,7 +109,9 @@ class ElasticSearchEngine implements EngineInterface
 
             /** @var MetadataFilter $filter */
             foreach($filters as $filter) {
-                $filterData[$filter->getKey()] = array('type' => 'keyword');
+                $filterData[$filter->getKey()] = [
+                    'type' => $this->mapDataType($filter->getDataType())
+                ];
             }
         }
 
@@ -127,6 +129,15 @@ class ElasticSearchEngine implements EngineInterface
         ));
 
         $mapping->send();
+    }
+
+    private function mapDataType($type)
+    {
+        if($type == null) {
+            return 'keyword';
+        }
+
+        return $type;
     }
 
     private function getType()
@@ -165,6 +176,14 @@ class ElasticSearchEngine implements EngineInterface
         if($filter->getLimit() !== null) {
             $masterQuery->setSize(intval($filter->getLimit()));
         }
+        if($filter->getOrderBy() !== null) {
+            $direction = $filter->getOrderDirection();
+            if(empty($direction)) {
+                $direction = 'ASC';
+            }
+            $masterQuery->addSort([sprintf('filterData.%s', $filter->getOrderBy()) => $direction]);
+        }
+
         return $masterQuery;
     }
 
