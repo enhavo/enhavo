@@ -113,7 +113,7 @@ class BillingGenerator implements GeneratorInterface
             }
 
             $pdf->MultiCell($addressWidth,0,$order->getBillingAddress()->getStreet(),0,"L",false,1,$marginLeft);
-            $pdf->MultiCell($addressWidth,0,$order->getBillingAddress()->getCity(),0,"L",false,1,$marginLeft);
+            $pdf->MultiCell($addressWidth,0,$order->getBillingAddress()->getPostcode().' '.$order->getBillingAddress()->getCity(),0,"L",false,1,$marginLeft);
             $pdf->MultiCell($addressWidth,0,Intl::getRegionBundle()->getCountryName($order->getBillingAddress()->getCountryCode()),0,"L",false,1,$marginLeft);
             if(!$order->getBillingAddress()->getCompany()) {
                 $pdf->MultiCell($addressWidth,0,"",0,"L",false,1,$marginLeft);
