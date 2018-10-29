@@ -135,6 +135,7 @@ class AutoCompleteEntityType extends AbstractType
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['create_route'] = $options['create_route'];
+        $view->vars['create_button_label'] = $options['create_button_label'];
     }
 
     /**
@@ -151,7 +152,8 @@ class AutoCompleteEntityType extends AbstractType
             'multiple' => false,
             'minimum_input_length' => 0,
             'placeholder' => null,
-            'create_route' => null
+            'create_route' => null,
+            'create_button_label' => null
         ]);
         
         $resolver->setRequired([
