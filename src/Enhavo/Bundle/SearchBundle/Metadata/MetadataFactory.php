@@ -53,6 +53,10 @@ class MetadataFactory implements MetadataFactoryInterface
                 $filter->setKey($key);
                 $filter->setType($options['type']);
                 unset($options['type']);
+                if(isset($options['data_type'])) {
+                    $filter->setDataType($options['data_type']);
+                    unset($options['data_type']);
+                }
                 $filter->setOptions($options);
                 $filters[] = $filter;
             }
