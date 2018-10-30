@@ -15,6 +15,14 @@ promotion:
         code: Code
       action:
         redeem: Einlösen
+        cancel: Entfernen
+
+voucher:
+    label:
+        voucher: Gutschein
+        code: Code
+        amount: Betrag
+        availableAmount: Verfügbar
 
 label:
   product: Produkt

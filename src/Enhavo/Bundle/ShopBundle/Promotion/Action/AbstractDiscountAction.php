@@ -64,7 +64,6 @@ abstract class AbstractDiscountAction implements PromotionActionInterface
         $adjustment = $this->adjustmentFactory->createNew();
         $adjustment->setOriginId($promotion->getOriginId());
         $adjustment->setOriginType($promotion->getOriginType());
-
         return $adjustment;
     }
 

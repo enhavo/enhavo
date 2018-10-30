@@ -54,6 +54,13 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop_product_option }
 
+    enhavo_shop.menu.voucher:
+        class: Enhavo\Bundle\ShopBundle\Menu\VoucherMenu
+        calls:
+          - [ 'setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.menu, alias: shop_voucher }
+
     enhavo_shop.menu.shop:
         class: Enhavo\Bundle\ShopBundle\Menu\ShopMenu
         calls:
@@ -115,5 +122,22 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@viewer.factory'
             - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_shop.factory.voucher:
+        class: '%enhavo_shop.factory.voucher.class%'
+        arguments:
+            - '%enhavo_shop.model.voucher.class%'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_shop.manager.voucher_manager:
+        class: Enhavo\Bundle\ShopBundle\Manager\VoucherManager
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_shop.manager.coupon:
+        class: Enhavo\Bundle\ShopBundle\Manager\CouponManager
         calls:
             - [setContainer, ['@service_container']]

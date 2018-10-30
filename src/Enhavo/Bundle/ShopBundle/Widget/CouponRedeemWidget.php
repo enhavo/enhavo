@@ -36,6 +36,7 @@ class CouponRedeemWidget extends AbstractType implements WidgetInterface
         $form = $formFactory->create($formType , $options['order']);
 
         return $this->renderTemplate($template, [
+            'order' => $options['order'],
             'form' => $form->createView()
         ]);
     }

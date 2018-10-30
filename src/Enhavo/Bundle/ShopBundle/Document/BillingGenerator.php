@@ -224,6 +224,10 @@ class BillingGenerator implements GeneratorInterface
             $pdf->MultiCell($sumWidth,0,"7% gesetzl. USt.",0,"R",false,1,$sumMarginLeft);
         }
 
+        if($order->getDiscountTotal() != 0) {
+            $pdf->MultiCell($sumWidth,0,"Ermäßigt:",0,"R",false,1,$sumMarginLeft);
+        }
+
         $pdf->SetFont($stdFontBold);
         $pdf->SetFontSize($sumSize);
         $pdf->MultiCell($sumWidth,0,"Rechnungsbetrag:",0,"R",false,1,$sumMarginLeft);
@@ -246,6 +250,11 @@ class BillingGenerator implements GeneratorInterface
 
         if(isset($options['enable_tax_7']) && $options['enable_tax_7']) {
             $taxValue = $currencyFormatter->getCurrency($this->getTaxByCode($order, '7', true));
+            $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
+        }
+
+        if($order->getDiscountTotal() != 0) {
+            $taxValue = $currencyFormatter->getCurrency($order->getDiscountTotal());
             $pdf->MultiCell($sumValueWidth, 0, $taxValue, 0, "L", false, 1, $sumValueMarginLeft);
         }
 

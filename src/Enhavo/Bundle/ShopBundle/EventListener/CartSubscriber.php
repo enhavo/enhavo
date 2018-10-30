@@ -99,7 +99,6 @@ class CartSubscriber implements EventSubscriberInterface
 
     public function add(GenericEvent $event)
     {
-        $item = $event->getSubject();
-        //$this->taxProcessor->processItem($item);
+        // nothing to do yet
     }
 }
