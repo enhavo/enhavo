@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Mailer\MailerInterface;
+use Enhavo\Bundle\ShopBundle\Manager\CouponManager;
+use Enhavo\Bundle\ShopBundle\Manager\VoucherManager;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
@@ -45,12 +47,18 @@ class OrderConfirmProcessor implements ProcessorInterface
      */
     protected $orderAddressProvider;
 
+    /**
+     * @var CouponManager
+     */
+    protected $couponManager;
+
     public function __construct(
         CartProviderInterface $cartProvider,
         MailerInterface $confirmMailer,
         MailerInterface $notificationMailer,
         OrderNumberGeneratorInterface $numberGenerator,
-        OrderAddressProvider $orderAddressProvider
+        OrderAddressProvider $orderAddressProvider,
+        CouponManager $couponManager
     )
     {
         $this->cartProvider = $cartProvider;
@@ -58,6 +66,7 @@ class OrderConfirmProcessor implements ProcessorInterface
         $this->notificationMailer = $notificationMailer;
         $this->numberGenerator = $numberGenerator;
         $this->orderAddressProvider = $orderAddressProvider;
+        $this->couponManager = $couponManager;
     }
 
     public function process(OrderInterface $order)
@@ -67,6 +76,7 @@ class OrderConfirmProcessor implements ProcessorInterface
         $order->setPaymentState(PaymentInterface::STATE_PENDING);
         $order->setState(OrderInterface::STATE_CONFIRMED);
         $order->setOrderedAt(new \DateTime);
+        $this->couponManager->update($order);
         if($order->getNumber() === null) {
             $order->setNumber($this->numberGenerator->generate());
         }
@@ -77,6 +87,4 @@ class OrderConfirmProcessor implements ProcessorInterface
         $this->notificationMailer->sendMail($order);
         $this->cartProvider->abandonCart();
     }
-
-
 }

@@ -4,6 +4,9 @@ enhavo_shop_product_admin:
 enhavo_shop_order_admin:
     resource: "@EnhavoShopBundle/Resources/config/routing/admin/order.yml"
 
+enhavo_shop_voucher_admin:
+    resource: "@EnhavoShopBundle/Resources/config/routing/admin/voucher.yml"
+
 enhavo_shop_product_option_admin:
     resource: "@EnhavoShopBundle/Resources/config/routing/admin/product-option.yml"
 

@@ -35,6 +35,7 @@ services:
             - '@enhavo_shop.mailer.notification_mailer'
             - '@enhavo_shop.order.number_generator'
             - '@enhavo_shop.order.order_address_provider'
+            - '@enhavo_shop.manager.coupon'
 
     enhavo_shop.order.number_generator:
         class: Enhavo\Bundle\ShopBundle\Order\OrderNumberGenerator
@@ -126,6 +127,16 @@ services:
             - '@sylius.factory.adjustment'
         tags:
             - { name: sylius.promotion_action, type: free_shipping_discount, label: "Free shipping discount" }
+
+    enhavo.promotion_action.order_voucher_discount:
+        class: Enhavo\Bundle\ShopBundle\Promotion\Action\OrderVoucherDiscountAction
+        arguments:
+            - '@sylius.originator'
+            - '@sylius.factory.adjustment'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: sylius.promotion_action, type: order_voucher_discount, label: "Free shipping discount" }
 
     enhavo_shop.validator.order_addressing:
         class:  Enhavo\Bundle\ShopBundle\Validator\Constraints\OrderAddressingValidator
