@@ -1,21 +1,25 @@
 {% trans_default_domain "EnhavoAppBundle" %}
 {% block buttons %}
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 close"> {{ 'label.cancel'|trans|nl2br }}</button>
-    </div>
-    <div class="col-md-push-2 col-md-2">
-        <button class="btn col-md-12 save" type="submit"> {{ 'label.save'|trans|nl2br }}</button>
-    </div>
+    <li>
+        <button class="btn close"> {{ 'label.cancel'|trans|nl2br }}</button>
+    <li>
+    <li>
+        <button class="btn save" type="submit"> {{ 'label.save'|trans|nl2br }}</button>
+    </li>
 
     {% if showDeleteButton is defined %}
-        <div class="col-md-push-2 col-md-2">
-            <button class="btn col-md-12 delete"> {{ 'label.delete'|trans|nl2br }}</button>
-        </div>
+        <li>
+            <button class="btn delete"> {{ 'label.delete'|trans|nl2br }}</button>
+        </li>
     {% endif %}
 {%- endblock -%}
 
 {% block buttonRow %}
-    <div class="row">
-        {{ block('buttons') }}
+    <div class="action-buttons-row">
+        <ul class="action-buttons">
+            {% spaceless %}
+                {{ block('buttons') }}
+            {% endspaceless %}
+        </ul>
     </div>
 {% endblock %}

@@ -56,20 +56,7 @@ img {max-width:100%;}
 h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;margin-left: -10px;text-align: left;}
 
 #overlay {position:fixed;top:0;left:0;width:100%;height:100%;background:#072129;opacity:0.8;z-index:99;display:none;}
-.overlay-content {position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:100;display:none;
-    form {
-        > .row {
-            &:last-of-type {
-                .col-md-2 {
-                    .btn {
-                        &.save {
-                            &:before{font-family: "enhavo-iconfont";font-size: 22px;vertical-align: text-bottom;position: relative;top: 4px;}
-                        }
-                    }
-                }
-            }
-        }
-    }
+.overlay-content {position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:100;display:none;padding-bottom:100px;
     .choice-list {
         .choice-input-with-label {margin-bottom:0;
             + .choice-input-with-label {margin-top:7px;}
@@ -186,6 +173,19 @@ input[type="checkbox"]:checked  + span{background: url("../img/checkbox.png") -2
 :-ms-input-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;font-weight: 600;}
 
+.action-buttons-row {position:fixed;bottom:0;left:0;width:100%;padding:10px 20px;background: #f3f3f3;border-top: 1px solid #eee;
+  ul {margin:0 -13px;text-align:center;display:flex;flex-direction:row;justify-content:center;flex-wrap:wrap;
+    li {margin:0 13px;vertical-align:top;max-width:200px;text-align:left;
+      .btn {color:#7f7f7f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:8px 5px;
+        &[data-type="save"] {color:$primaryColor;
+          &:hover {color:#4ea2e0;}
+        }
+        &:hover {color:#666;}
+      }
+    }
+  }
+}
+
 .action-row {margin-bottom:45px;}
 .action-row [class*=col-]:first-child {padding-left:0;}
 .autocomplete-create-button {display:inline-block;margin-top:3px;@extend .btn;
@@ -211,15 +211,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .btn.dropdown.clicked:before{font-family: "enhavo-iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d9';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
 
 .bullList {list-style:disc;padding-left:20px;}
-
-.button-row {
-    .btn {color:#7f7f7f;
-        &[data-type="save"] {color:$primaryColor;
-            &:hover {color:#4ea2e0;}
-        }
-        &:hover {color:#666;}
-    }
-}
 
 .container {width: 1020px;}
 
@@ -287,13 +278,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .pagination a.drag-active{border-radius: 0;}
 .pagination a.drag-active.drag-over{background: #85cbff;}
 
-.small-dialog {
-    width: 465px;
-    .button-row{
-        margin-left:0;
-        [class*=col-md-], [class*=col-sm-], [class*=col-xs-] {width:auto;}
-    }
-}
+.small-dialog {width: 465px;}
 .table-headline {color:#fff;margin-top:20px;margin-bottom:10px;}
 
 .tabContainer {margin-top: -10px;
@@ -434,7 +419,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 @media all and (max-width:991px) {
-    .overlay-content .form-container form > .row:last-of-type{padding: 25px 20px;}
     .formwidget-container .enhavo_gridForm .menu { margin-left:0;}
     .formwidget-container .enhavo_gridForm .menu .triangle-up { margin-left:0; left:9px;}
     .formwidget-container .enhavo_gridForm .menu .triangle-down { margin-left:0; left:9px;}
@@ -467,7 +451,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     .btn{width:100%;}
     .label-container {padding: 0px 5px 2px 5px;}
     .label-container label {margin-left: 5px;display: inline-block;}
-    .tabContainer a:after{position: relative;}
+    .tabContainer a:after{content:none;}
     .tabContainer a {padding-left: 17px;}
     .overlay-content .btn{ padding:12px 0;}
 
