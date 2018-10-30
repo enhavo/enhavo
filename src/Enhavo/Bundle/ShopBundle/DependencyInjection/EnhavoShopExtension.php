@@ -22,7 +22,8 @@ class EnhavoShopExtension extends AbstractResourceExtension
     {
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        
+        $this->registerResources('enhavo_shop', $config['driver'], $config['resources'], $container);
+
         $container->setParameter('enhavo_shop.mailer.confirm', $config['mailer']['confirm']);
         $container->setParameter('enhavo_shop.mailer.confirm.service', $config['mailer']['confirm']['service']);
         $container->setParameter('enhavo_shop.mailer.tracking', $config['mailer']['tracking']);

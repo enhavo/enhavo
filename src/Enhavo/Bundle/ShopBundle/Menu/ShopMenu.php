@@ -27,6 +27,9 @@ class ShopMenu extends ListMenu
                 ],
                 'product' => [
                     'type' => 'shop_product'
+                ],
+                'voucher' => [
+                    'type' => 'shop_voucher'
                 ]
             ]
         ]);
