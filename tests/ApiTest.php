@@ -85,7 +85,7 @@ class ApiTest extends TestCase
         $this->assertEquals('john.doe@example.org', $response['email']);
 
         $response = self::$apiManager->getSubscriber(
-            'jane.doe@example.org@example.org',
+            'jane.doe@example.org',
             getenv('GROUP_ID')
         );
 

@@ -4,12 +4,9 @@ namespace rdoepner\CleverReach\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Middleware;
-use Psr\Http\Message\MessageInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 
 class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
 {
@@ -68,19 +65,31 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                     ],
                 ]
             );
-            $payload = $response->getBody()->getContents();
+            $data = json_decode(
+                $response->getBody()->getContents(),
+                true
+            );
         } catch (ClientException $e) {
-            $payload = $e->getResponse()->getBody()->getContents();
-            $this->log($payload, LogLevel::ERROR);
-        }
+            $data = json_decode(
+                $e->getResponse()->getBody()->getContents(),
+                true
+            );
 
-        if ($decoded = json_decode($payload, true)) {
-            if (isset($decoded['access_token'])) {
-                $this->config['access_token'] = $decoded['access_token'];
+            if ($this->logger) {
+                $this->logger->error(
+                    'Response data.',
+                    [
+                        'body' => $data,
+                    ]
+                );
             }
         }
 
-        return $decoded;
+        if (isset($data['access_token'])) {
+            $this->config['access_token'] = $data['access_token'];
+        }
+
+        return $data;
     }
 
     /**
@@ -96,7 +105,9 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
      */
     public function action(string $method, string $path, array $data = [])
     {
-        $this->log("Request via \"{$method}\" on \"{$path}\"", LogLevel::DEBUG);
+        if ($this->logger) {
+            $this->logger->info("Request via \"{$method}\" on \"{$path}\"");
+        }
 
         if (!$accessToken = $this->getAccessToken()) {
             throw new \InvalidArgumentException('The access token is missing.');
@@ -109,32 +120,48 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
             'json' => $data,
         ];
 
-        if ($this->logger && !empty($data)) {
-            $tapMiddleware = Middleware::tap(
-                function (MessageInterface $request) {
-                    $this->log($request->getBody()->getContents(), LogLevel::DEBUG);
-                }
-            );
-            $options = array_merge(
-                $options,
+        if (!empty($data) && $this->logger) {
+            $this->logger->info(
+                'Request data.',
                 [
-                    'handler' => $tapMiddleware(
-                        $this->getConfig('handler')
-                    ),
+                    'body' => $data,
                 ]
             );
         }
 
         try {
             $response = $this->request($method, $path, $options);
-            $payload = $response->getBody()->getContents();
-            $this->log($payload, LogLevel::INFO);
+
+            $data = json_decode(
+                $response->getBody()->getContents(),
+                true
+            );
+
+            if ($this->logger) {
+                $this->logger->info(
+                    'Response data.',
+                    [
+                        'body' => $data,
+                    ]
+                );
+            }
         } catch (ClientException $e) {
-            $payload = $e->getResponse()->getBody()->getContents();
-            $this->log($payload, LogLevel::ERROR);
+            $data = json_decode(
+                $e->getResponse()->getBody()->getContents(),
+                true
+            );
+
+            if ($this->logger) {
+                $this->logger->error(
+                    'Response data.',
+                    [
+                        'body' => $data,
+                    ]
+                );
+            }
         }
 
-        return json_decode($payload, true);
+        return $data;
     }
 
     /**
@@ -156,19 +183,6 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                 self::ADAPTER_CONFIG_KEY => parent::getConfig(),
             ]
         );
-    }
-
-    /**
-     * @param string $message
-     * @param string $type
-     */
-    protected function log(string $message, string $type = LogLevel::INFO)
-    {
-        if ($this->logger) {
-            if (method_exists($this->logger, $type)) {
-                $this->logger->$type($message);
-            }
-        }
     }
 
     /**
