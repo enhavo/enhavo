@@ -245,7 +245,17 @@
 
 {% block enhavo_auto_complete_entity_widget %}
     <div data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}">
-        <input type="hidden" name="{{ full_name }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
+        {% set valueString = '' %}
+        {% if value is iterable %}
+            {% set valueValues = [] %}
+            {% for arr in value %}
+                {% set valueValues = valueValues|merge([arr.id]) %}
+            {% endfor %}
+            {% set valueString = valueValues|join(",") %}
+        {% else %}
+            {% set valueString = value %}
+        {% endif %}
+        <input type="hidden" name="{{ full_name }}" value="{{ valueString }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
         {% if create_route %}
             <a href="{{ path(create_route) }}" data-auto-complete-create class="autocomplete-create-button">{% if create_button_label %}{{ create_button_label }}{% endif %}</a>
         {% endif %}
