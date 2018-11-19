@@ -5,7 +5,7 @@ namespace rdoepner\CleverReach;
 interface ApiManagerInterface
 {
     /**
-     * Creates a subscriber
+     * Creates a subscriber.
      *
      * @param string $email
      * @param int    $groupId
@@ -17,7 +17,7 @@ interface ApiManagerInterface
     public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = []);
 
     /**
-     * Returns a subscriber
+     * Returns a subscriber.
      *
      * @param string   $email
      * @param int|null $groupId
@@ -27,7 +27,7 @@ interface ApiManagerInterface
     public function getSubscriber(string $email, int $groupId = null);
 
     /**
-     * Sets the active status of a subscriber
+     * Sets the active status of a subscriber.
      *
      * @param string $email
      * @param int    $groupId
@@ -38,7 +38,7 @@ interface ApiManagerInterface
     public function setSubscriberStatus(string $email, int $groupId, $active = true);
 
     /**
-     * Triggers the Double-Opt-In email for a subscriber
+     * Triggers the Double-Opt-In email for a subscriber.
      *
      * @param string $email
      * @param int    $formId
@@ -49,7 +49,7 @@ interface ApiManagerInterface
     public function triggerDoubleOptInEmail(string $email, int $formId, array $options = []);
 
     /**
-     * Triggers the Double-Opt-Out email for a subscriber
+     * Triggers the Double-Opt-Out email for a subscriber.
      *
      * @param string $email
      * @param int    $formId
@@ -60,7 +60,7 @@ interface ApiManagerInterface
     public function triggerDoubleOptOutEmail(string $email, int $formId, array $options = []);
 
     /**
-     * Deletes a subscriber
+     * Deletes a subscriber.
      *
      * @param string $email
      * @param int    $groupId

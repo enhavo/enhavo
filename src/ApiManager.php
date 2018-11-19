@@ -127,7 +127,7 @@ class ApiManager implements ApiManagerInterface
     }
 
     /**
-     * Returns the HTTP adapter
+     * Returns the HTTP adapter.
      *
      * @return HttpAdapter
      */

@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
 {
@@ -74,15 +75,13 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                 $e->getResponse()->getBody()->getContents(),
                 true
             );
-
-            if ($this->logger) {
-                $this->logger->error(
-                    'Response data.',
-                    [
-                        'body' => $data,
-                    ]
-                );
-            }
+            $this->log(
+                'Response data.',
+                [
+                    'response' => $data,
+                ],
+                LogLevel::ERROR
+            );
         }
 
         if (isset($data['access_token'])) {
@@ -105,60 +104,50 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
      */
     public function action(string $method, string $path, array $data = [])
     {
-        if ($this->logger) {
-            $this->logger->info("Request via \"{$method}\" on \"{$path}\"");
-        }
+        $this->log("Request via \"{$method}\" on \"{$path}\"");
 
-        if (!$accessToken = $this->getAccessToken()) {
-            throw new \InvalidArgumentException('The access token is missing.');
-        }
-
-        $options = [
-            'headers' => [
-                'Authorization' => "Bearer {$accessToken}",
-            ],
-            'json' => $data,
-        ];
-
-        if (!empty($data) && $this->logger) {
-            $this->logger->info(
+        if (!empty($data)) {
+            $this->log(
                 'Request data.',
                 [
-                    'body' => $data,
+                    'request' => $data,
                 ]
             );
         }
 
         try {
-            $response = $this->request($method, $path, $options);
-
+            $response = $this->request(
+                $method,
+                $path,
+                [
+                    'headers' => [
+                        'Authorization' => "Bearer {$this->getAccessToken()}",
+                    ],
+                    'json' => $data,
+                ]
+            );
             $data = json_decode(
                 $response->getBody()->getContents(),
                 true
             );
-
-            if ($this->logger) {
-                $this->logger->info(
-                    'Response data.',
-                    [
-                        'body' => $data,
-                    ]
-                );
-            }
+            $this->log(
+                'Response data.',
+                [
+                    'response' => $data,
+                ]
+            );
         } catch (ClientException $e) {
             $data = json_decode(
                 $e->getResponse()->getBody()->getContents(),
                 true
             );
-
-            if ($this->logger) {
-                $this->logger->error(
-                    'Response data.',
-                    [
-                        'body' => $data,
-                    ]
-                );
-            }
+            $this->log(
+                'Response data.',
+                [
+                    'response' => $data,
+                ],
+                LogLevel::ERROR
+            );
         }
 
         return $data;
@@ -186,6 +175,22 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
     }
 
     /**
+     * Log message.
+     *
+     * @param string $message
+     * @param array  $data
+     * @param string $type
+     */
+    protected function log(string $message, array $data = [], $type = LogLevel::INFO)
+    {
+        if ($this->logger) {
+            $this->logger->$type($message, $data);
+        }
+    }
+
+    /**
+     * Configure defaults.
+     *
      * @param array $config
      */
     private function configure(array $config)

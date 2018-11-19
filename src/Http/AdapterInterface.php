@@ -5,7 +5,7 @@ namespace rdoepner\CleverReach\Http;
 interface AdapterInterface
 {
     /**
-     * Creates a new access token
+     * Creates a new access token.
      *
      * @param string $clientId
      * @param string $clientSecret
@@ -15,14 +15,14 @@ interface AdapterInterface
     public function authorize(string $clientId, string $clientSecret);
 
     /**
-     * Returns the access token
+     * Returns the access token.
      *
      * @return string|null
      */
     public function getAccessToken();
 
     /**
-     * Returns the response data
+     * Returns the response data.
      *
      * @param string $method
      * @param string $path
@@ -33,7 +33,7 @@ interface AdapterInterface
     public function action(string $method, string $path, array $data = []);
 
     /**
-     * Returns the adapter config
+     * Returns the adapter config.
      *
      * @param string|null $key
      *
