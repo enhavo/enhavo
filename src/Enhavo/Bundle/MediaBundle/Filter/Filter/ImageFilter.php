@@ -33,22 +33,44 @@ class ImageFilter extends AbstractFilter
                 $image->layers()->coalesce();
                 $resultImage = $image->copy();
                 $resultImage = $this->resize($resultImage, $setting);
-                $resultImage->save($content->getFilePath(), [
-                    'format' => $format,
-                    'animated' => true
-                ]);
+                $options = $this->getSaveOptions($format, $setting);
+                $options['animated'] = true;
+                $resultImage->save($content->getFilePath(), $options);
             } else {
                 $imagine = new Imagine();
                 $imagine = $imagine->load($content->getContent());
                 $imagine = $this->resize($imagine, $setting);
-                $imagine->save($content->getFilePath(), [
-                    'format' => $format
-                ]);
+                $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
             }
         } catch (RuntimeException $e) {
             // if image cant be created we make an empty file
             file_put_contents($content->getFilePath(), '');
         }
+    }
+
+    /**
+     * @param $format
+     * @param FilterSetting $setting
+     * @return array
+     */
+    private function getSaveOptions($format, FilterSetting $setting)
+    {
+        $options = [];
+
+        $options['format'] = $format;
+        if($setting->hasSetting('format')) {
+            $options['format'] = $setting->getSetting('format');
+        }
+
+        if($setting->hasSetting('jpeg_quality')) {
+            $options['jpeg_quality'] = $setting->getSetting('jpeg_quality');
+        }
+
+        if($setting->hasSetting('png_compression_level')) {
+            $options['png_compression_level'] = $setting->getSetting('png_compression_level');
+        }
+
+        return $options;
     }
 
     private function getFormat(ContentInterface $content, FilterSetting $setting)

@@ -64,4 +64,9 @@ class FilterSetting
     {
         $this->settings[$name] = $value;
     }
+
+    public function hasSetting($name)
+    {
+        return isset($this->settings[$name]);
+    }
 }
