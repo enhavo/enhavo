@@ -25,7 +25,10 @@ class RouteStrategy extends AbstractStrategy
         try {
             return $this->getRouter()->generate($route->getName(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
-            throw new UrlResolverException($e->getMessage());
+            if($options['error']) {
+                throw new UrlResolverException($e->getMessage());
+            }
+            return '#';
         }
     }
 
@@ -38,7 +41,8 @@ class RouteStrategy extends AbstractStrategy
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'property' => 'route'
+            'property' => 'route',
+            'error' => true,
         ]);
     }
 }
