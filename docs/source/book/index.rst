@@ -4,77 +4,77 @@ Book
 .. toctree::
     :hidden:
 
+    architecture/index
     app-bundle/index
-    routing/index
-    form/index
-    block/index
-    configuration/index
-    menu/index
-    grid/index
-    search/index
-    newsletter/index
-    download/index
-    translation/index
+    form-bundle/index
+    grid-bundle/index
+    search-bundle/index
+    newsletter-bundle/index
+    download-bundle/index
+    translation-bundle/index
+
+.. rubric:: How to read the book?
+
+The book give you an overview about all components and bundles and how they work and interact together.
+
+
+* **Architecture**
+
+  * :doc:`/book/architecture/introduction`
 
 * **AppBundle**
 
   * :doc:`/book/app-bundle/introduction`
   * :doc:`/book/app-bundle/viewer`
 
-* **Routing**
+  * **Routing**
 
-  * :doc:`/book/routing/app-route`
-  * :doc:`/book/routing/index-route`
-  * :doc:`/book/routing/create-route`
-  * :doc:`/book/routing/update-route`
-  * :doc:`/book/routing/delete-route`
-  * :doc:`/book/routing/batch-action-route`
-  * :doc:`/book/routing/table-route`
-  * :doc:`/book/routing/sorting-routes`
-  * :doc:`/book/routing/route-generator`
+      * :doc:`/book/app-bundle/routing/app-route`
+      * :doc:`/book/app-bundle/routing/index-route`
+      * :doc:`/book/app-bundle/routing/create-route`
+      * :doc:`/book/app-bundle/routing/update-route`
+      * :doc:`/book/app-bundle/routing/delete-route`
+      * :doc:`/book/app-bundle/routing/batch-action-route`
+      * :doc:`/book/app-bundle/routing/table-route`
+      * :doc:`/book/app-bundle/routing/sorting-routes`
+      * :doc:`/book/app-bundle/routing/route-generator`
 
-* **Form**
+  * **Block**
+
+      * :doc:`/book/app-bundle/block/introduction`
+
+  * **Configuration**
+
+      * :doc:`/book/app-bundle/configuration/app-bundle`
+
+  * **Menu**
+
+      * :doc:`/book/app-bundle/menu/menu`
+
+* **FormBundle**
 
   * :doc:`/book/form/wysiwyg`
   * :doc:`/book/form/boolean`
   * :doc:`/book/form/list`
 
-* **Block**
-
-  * :doc:`/book/block/introduction`
-
-* **Configuration**
-
-  * :doc:`/book/configuration/app-bundle`
-
-* **Hook**
-
-* **Menu**
-
-  * :doc:`/book/menu/menu`
-
-* **Grid**
+* **GridBundle**
 
   * :doc:`/book/grid/introduction`
   * :doc:`/book/grid/use-grid`
   * :doc:`/book/grid/rendering`
 
-* **Search**
+* **SearchBundle**
 
   * :doc:`/book/search/installation`
   * :doc:`/book/search/strategies`
   * :doc:`/book/search/search-engines`
 
-* **Newsletter**
+* **NewsletterBundle**
 
   * :doc:`/book/newsletter/general`
   * :doc:`/book/newsletter/strategies`
   * :doc:`/book/newsletter/storages`
 
-* **Translation**
+* **TranslationBundle**
 
   * :doc:`/book/translation/index`
-
-* **Download**
-
-  * :doc:`/book/download/index`
