@@ -1,5 +1,5 @@
-Search
-======
+SearchBundle
+============
 
 .. toctree::
     :maxdepth: 2

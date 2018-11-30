@@ -17,6 +17,7 @@ Guides
     search/index
     setting/index
     filter/index
+    media-filter/index
 
 * **Package**
 

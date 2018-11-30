@@ -32,9 +32,9 @@ template.
 
 .. code-block:: yaml
 
-    enhavo_content:
+    enhavo_grid:
         render:
             sets:
                 page:
-                    picture: enhavoProjectBundle:ItemType:page/picture.html.twig
-                    text: enhavoProjectBundle:ItemType:page/text.html.twig
+                    picture: ProjectBundle:Item:page/picture.html.twig
+                    text: ProjectBundle:Item:page/text.html.twig
