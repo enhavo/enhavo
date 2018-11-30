@@ -1,5 +1,5 @@
-Newsletter
-==========
+NewsletterBundle
+================
 
 .. toctree::
     :maxdepth: 2
