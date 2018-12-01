@@ -6,8 +6,8 @@ doctrine:
 
 fos_user:
     from_email:
-        address: '%mailer_from%'
-        sender_name: '%mailer_name%'
+        address: '%env(MAILER_FROM)%'
+        sender_name: '%env(MAILER_NAME)%'
     db_driver: orm
     firewall_name: main
     user_class: Enhavo\Bundle\UserBundle\Entity\User

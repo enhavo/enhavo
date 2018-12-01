@@ -79,9 +79,9 @@ enhavo_theme:
 enhavo_contact:
     forms:
         contact:
-            recipient: '%mailer_to%'
-            from: '%mailer_from%'
-            sender_name: '%mailer_name%'
+            recipient: '%env(MAILER_TO)%'
+            from: '%env(MAILER_FROM)%'
+            sender_name: '%env(MAILER_NAME)%'
 
 enhavo_newsletter:
     forms:

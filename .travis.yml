@@ -1,8 +1,8 @@
 language: php
 
 php:
-  - 7.0
-  - 7.1
+  - 7.2
+  - 7.3
 
 env:
   - ENVIRONMENT=test DEBUG=true
@@ -21,7 +21,6 @@ before_script:
     - app/console cache:warmup --env=test --no-debug
     - app/console doctrine:schema:create --env=test
     - app/console assets:install --env=test --no-debug
-    - app/console assetic:dump --env=test --no-debug
 
     - php -v
     - php -i | grep -v GITHUB_OAUTH_TOKEN
