@@ -9,8 +9,8 @@ services:
     viewer.factory:
         class: Enhavo\Bundle\AppBundle\Viewer\ViewerFactory
         arguments:
-            - @service_container
-            - @enhavo_app.viewer_collector
+            - '@service_container'
+            - '@enhavo_app.viewer_collector'
 
     enhavo_app.viewer.index:
         class: Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer

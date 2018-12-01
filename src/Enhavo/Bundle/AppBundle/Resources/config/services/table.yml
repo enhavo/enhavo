@@ -4,15 +4,15 @@ parameters:
 
 services:
     enhavo_app.table_widget_collector:
-        class: %enhavo_app.twig.table_widget_collector.class%
+        class: '%enhavo_app.twig.table_widget_collector.class%'
         arguments:
           - '@service_container'
           - 'TableWidget'
 
     enhavo_app.twig.table_widget_renderer:
-        class: %enhavo_app.twig.table_widget_render.class%
+        class: '%enhavo_app.twig.table_widget_render.class%'
         arguments:
-            - @enhavo_app.table_widget_collector
+            - '@enhavo_app.table_widget_collector'
         tags:
             - { name: twig.extension }
 
