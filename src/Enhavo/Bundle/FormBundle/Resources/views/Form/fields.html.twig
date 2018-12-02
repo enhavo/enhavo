@@ -1,0 +1,246 @@
+{% extends '@EnhavoApp/Form/form_div_layout_multiline_translations.html.twig' %}
+
+{% block enhavo_datetime_widget -%}
+    <div class="input-container">
+        <input class="datetimepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{%- endblock %}
+
+{% block enhavo_date_widget -%}
+    <div class="input-container">
+        <input class="datepicker" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{%- endblock %}
+
+{% block choice_widget_expanded %}
+    {% if list %}<div class="choice-list">{% endif %}
+        <div class="choice-input-container" {{ block('widget_container_attributes') }}>
+            {%- for child in form %}
+                <span class="choice-input-with-label">
+                {{- form_widget(child) -}}
+                {{- form_label(child) -}}
+            </span>
+            {% endfor -%}
+        </div>
+    {% if list %}</div>{% endif %}
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="row" data-form-row>
+            <div class="col-md-2 text-right">
+                <div class="label-container{% if help %} has-help{% endif %}">{{ form_label(form) }}{% if help %}<i data-help-text class="help-icon icon icon-help-with-circle"></i>{% endif %}
+                    {% if help %}
+                        <div class="help-text" data-help-text>{{ help }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="formwidget-container" data-formwidget-container>
+                    {{ form_widget(form) }}
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block text_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block text_integer %}
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+{% endblock %}
+
+{% block textarea_widget %}
+    <div class="input-container">
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
+{% endblock %}
+
+{% block password_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="password" />
+    </div>
+{% endblock %}
+
+{% block enhavo_wysiwyg_widget %}
+    <div class="wysiwyg-container">
+        <textarea data-wysiwyg data-config="{{ config|e }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
+{% endblock %}
+
+{% block enhavo_route_widget %}
+    {{ form_widget(form.staticPrefix) }}
+{% endblock %}
+
+{% block enhavo_list_widget %}
+    {% import _self as forms %}
+    <div data-list-container>
+        <ul
+                data-list-container
+                {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
+                data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
+                data-prototype-name="{{ prototype_name }}"
+                class="list-fields enhavo_list
+        {% if border and sortable and allow_delete %}
+            sortable-border-delete
+        {% elseif sortable and allow_delete and not border %}
+            sortable-delete
+        {% elseif border and allow_delete and not sortable %}
+            border-delete
+        {% elseif allow_delete and not sortable and not border %}
+            delete
+        {% elseif border and not allow_delete and not sortable %}
+            border
+        {% elseif sortable and not border and not allow_delete %}
+            sortable
+        {% elseif sortable and border and not allow_delete %}
+            sortable-border
+        {% endif %}"
+                data-reindexable
+                {{ block('widget_attributes') }}>
+            {% for item in form.children %}
+                {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
+            {% endfor %}
+        </ul>
+
+        {% if allow_add %}
+            <div class="btnsmall" data-add-button>
+                <i class="icon-circle-with-plus"></i>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% macro input(sortable, border, allow_delete, block_name, name, form_widget) %}
+    <li class="listElement">
+        {% if sortable or allow_delete %}
+            {% spaceless %}
+                <ul class="buttons-container">
+                    {% if sortable %}
+                        <li class="button button-up"><i class="fa fa-angle-up"></i></li>
+                        <li class="button button-down"><i class="fa fa-angle-down"></i></li>
+                    {% endif %}
+                    {% if allow_delete %}
+                        <li class="button button-delete">
+                            <i class="icon-cross"></i>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endspaceless %}
+        {% endif %}
+        {% if block_name or name %}
+            <div class="block-name">{% if block_name %}{{ block_name|nl2br }}{% else %}{{ name|nl2br }}{% endif %}</div>
+        {% endif %}
+        {{ form_widget|raw }}
+    </li>
+{% endmacro %}
+
+{% block enhavo_message_widget %}
+    <div class="form-message-box type-{{ type }}">
+        {{ message|nl2br }}
+    </div>
+{% endblock %}
+
+{% block email_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block integer_widget %}
+    <div class="input-container">
+        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+    </div>
+{% endblock %}
+
+{% block enhavo_dynamic_form_widget %}
+    {% import _self as helper %}
+    
+    <div class="mb1 enhavo-dynamic-form"
+         data-dynamic-form
+         data-dynamic-form-name="{{ full_name }}"
+         data-dynamic-form-add-button-template="{{ helper.addButton()|e }}"
+         data-dynamic-config="{{ dynamic_config|json_encode|e }}"
+    >
+
+        <div class="dynamic-form-actions" data-dynamic-form-action>
+            <div data-dynamic-form-action-collapse-all>
+                <i class="icon-collapse"></i>
+            </div>
+            <div data-dynamic-form-action-expand-all>
+                <i class="icon-expand"></i>
+            </div>
+        </div>
+
+        <div class="dynamic-form-menu" data-dynamic-form-menu>
+            <div class="triangle-up"></div>
+            <div class="triangle-down"></div>
+            <ul>
+                {% for item in items %}
+                    <li class="addItem" data-dynamic-form-menu-item="{{ item.name }}">
+                        {{ item.label|trans({}, item.translationDomain)|nl2br }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
+            {{ helper.addButton() }}
+            {% for item in form %}
+                {{ form_widget(item) }}
+                {{ helper.addButton() }}
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block enhavo_dynamic_item_widget %}
+    <div class="dynamic-form-item" data-dynamic-form-item>
+        <div class="button-container" data-dynamic-form-item-action>
+            <div class="button button-up" data-dynamic-form-item-action-up>
+                <i class="icon-chevron-up"></i>
+            </div>
+            <div class="button button-down" data-dynamic-form-item-action-down>
+                <i class="icon-chevron-down"></i>
+            </div>
+            <div class="button button-delete" data-dynamic-form-item-action-remove>
+                <i class="icon-cross"></i>
+            </div>
+            <div class="button button-collapse" data-dynamic-form-item-action-collapse>
+                <i class="icon-collapse"></i>
+            </div>
+            <div class="button button-expand" data-dynamic-form-item-action-expand>
+                <i class="icon-expand"></i>
+            </div>
+            <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
+        </div>
+
+        <div data-dynamic-form-item-container>
+            {% if item_template %}
+                {% include item_template %}
+            {% else %}
+                {% for child in form %}
+                    <div class="clearfix" data-form-row>
+                        <div class="col-md-2 label-container">{{ form_label(child) }}</div>
+                        <div class="col-md-10">{{ form_widget(child) }}</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro addButton() %}
+    <div class="dynamic-form-item-add-button" data-dynamic-form-add-button>
+        <i class="icon-circle-with-plus btnsmall"></i>
+    </div>
+{% endmacro %}
+
+{% block enhavo_auto_complete_entity_widget %}
+    <input type="hidden" name="{{ full_name }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-entity="{{ auto_complete_data|json_encode|e }}" />
+{% endblock %}

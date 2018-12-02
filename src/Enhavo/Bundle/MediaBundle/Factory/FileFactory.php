@@ -194,6 +194,8 @@ class FileFactory extends Factory
         $file->setFilename($filename);
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $file->setExtension($extension);
+
+        $file->setGarbage(true);
         $file->setContent(new Content((string)$response->getBody()));
 
         $this->provider->updateFile($file);

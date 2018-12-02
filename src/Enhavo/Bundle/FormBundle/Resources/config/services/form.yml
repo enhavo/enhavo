@@ -1,0 +1,94 @@
+services:
+    enhavo_message:
+        class: Enhavo\Bundle\FormBundle\Form\Type\MessageType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@translator'
+
+    enhavo_list:
+        class: Enhavo\Bundle\FormBundle\Form\Type\ListType
+        tags:
+            - { name: form.type }
+
+    enhavo_date:
+        class: Enhavo\Bundle\FormBundle\Form\Type\DateType
+        tags:
+            - { name: form.type }
+
+    enhavo_datetime:
+        class: Enhavo\Bundle\FormBundle\Form\Type\DateTimeType
+        tags:
+            - { name: form.type }
+
+    enhavo_app.form.enhavo_boolean:
+        class: Enhavo\Bundle\FormBundle\Form\Type\BooleanType
+        arguments:
+            - '@translator'
+        tags:
+            - { name: form.type, alias: 'enhavo_boolean' }
+
+    enhavo_app.form.enhavo_position:
+        class: Enhavo\Bundle\FormBundle\Form\Type\PositionType
+        tags:
+            - { name: form.type, alias: 'enhavo_position' }
+
+    enhavo_app.form.wysiwyg:
+        class: Enhavo\Bundle\FormBundle\Form\Type\WysiwygType
+        arguments:
+            - '@enhavo_app.form.config.wysiwyg'
+        tags:
+            - { name: form.type, alias: 'enhavo_wysiwyg' }
+
+    enhavo_app.form.dynamic_form:
+        class: Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: form.type, alias: 'enhavo_dynamic_form' }
+
+    enhavo_app.form.dynamic_item:
+        class: Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: form.type, alias: 'enhavo_app_dynamic_item' }
+
+    enhavo_app.form.config.wysiwyg:
+        class: Enhavo\Bundle\FormBundle\Form\Config\WysiwygConfig
+        arguments:
+            - '%kernel.root_dir%/config/wysiwyg.yml'
+
+    enhavo_app.form.error.resolver:
+        class: Enhavo\Bundle\FormBundle\Form\Error\FormErrorResolver
+        arguments:
+            - '@translator'
+
+    enhavo_app.form.extension.choice_type_extension:
+        class: Enhavo\Bundle\FormBundle\Form\Extension\ChoiceTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
+
+    enhavo_app.form.extension.entity_type_extension:
+        class: Enhavo\Bundle\FormBundle\Form\Extension\EntityTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
+    enhavo_app.form.extension.condition_type_extension:
+        class: Enhavo\Bundle\FormBundle\Form\Extension\ConditionTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    enhavo_app.form.extension.help_extension:
+        class: Enhavo\Bundle\FormBundle\Form\Extension\HelpExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    enhavo_app.form.auto_complete_entity:
+        class: Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType
+        arguments:
+            - '@router'
+            - '@doctrine.orm.entity_manager'
+            - '@property_accessor'
+        tags:
+            - { name: form.type, alias: 'enhavo_auto_complete_entity' }
