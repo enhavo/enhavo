@@ -24,8 +24,13 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = [], array $globalAttributes = [])
-    {
+    public function createSubscriber(
+        string $email,
+        int $groupId,
+        bool $active = false,
+        array $attributes = [],
+        array $globalAttributes = []
+    ) {
         $now = time();
 
         return $this->adapter->action(
