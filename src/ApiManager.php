@@ -24,25 +24,20 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = [])
+    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = [], array $globalAttributes)
     {
         $now = time();
 
         return $this->adapter->action(
             'post',
             "/v3/groups.json/{$groupId}/receivers",
-            array_merge(
-                [
-                    'email' => $email,
-                ],
-                [
-                    'registered' => $now,
-                    'activated' => $active ? $now : 0,
-                ],
-                [
-                    'attributes' => $attributes,
-                ]
-            )
+            [
+                'email' => $email,
+                'registered' => $now,
+                'activated' => $active ? $now : 0,
+                'attributes' => $attributes,
+                'global_attributes' => $globalAttributes,
+            ]
         );
     }
 
