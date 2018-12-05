@@ -24,25 +24,25 @@ class ApiManager implements ApiManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = [])
-    {
+    public function createSubscriber(
+        string $email,
+        int $groupId,
+        bool $active = false,
+        array $attributes = [],
+        array $globalAttributes = []
+    ) {
         $now = time();
 
         return $this->adapter->action(
             'post',
             "/v3/groups.json/{$groupId}/receivers",
-            array_merge(
-                [
-                    'email' => $email,
-                ],
-                [
-                    'registered' => $now,
-                    'activated' => $active ? $now : 0,
-                ],
-                [
-                    'attributes' => $attributes,
-                ]
-            )
+            [
+                'email' => $email,
+                'registered' => $now,
+                'activated' => $active ? $now : 0,
+                'attributes' => $attributes,
+                'global_attributes' => $globalAttributes,
+            ]
         );
     }
 
@@ -78,19 +78,17 @@ class ApiManager implements ApiManagerInterface
         return $this->adapter->action(
             'post',
             "/v3/forms.json/{$formId}/send/activate",
-            array_merge(
-                [
-                    'email' => $email,
-                    'doidata' => array_merge(
-                        [
-                            'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
-                            'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
-                            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
-                        ],
-                        $options
-                    ),
-                ]
-            )
+            [
+                'email' => $email,
+                'doidata' => array_merge(
+                    [
+                        'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
+                        'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
+                        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
+                    ],
+                    $options
+                ),
+            ]
         );
     }
 
@@ -102,19 +100,17 @@ class ApiManager implements ApiManagerInterface
         return $this->adapter->action(
             'post',
             "/v3/forms.json/{$formId}/send/deactivate",
-            array_merge(
-                [
-                    'email' => $email,
-                    'doidata' => array_merge(
-                        [
-                            'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
-                            'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
-                            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
-                        ],
-                        $options
-                    ),
-                ]
-            )
+            [
+                'email' => $email,
+                'doidata' => array_merge(
+                    [
+                        'user_ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1',
+                        'referer' => $_SERVER['HTTP_REFERER'] ?? 'http://localhost',
+                        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'FakeAgent/2.0 (Ubuntu/Linux)',
+                    ],
+                    $options
+                ),
+            ]
         );
     }
 
