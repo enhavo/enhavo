@@ -11,10 +11,17 @@ interface ApiManagerInterface
      * @param int    $groupId
      * @param bool   $active
      * @param array  $attributes
+     * @param array  $globalAttributes
      *
      * @return mixed
      */
-    public function createSubscriber(string $email, int $groupId, bool $active = false, array $attributes = []);
+    public function createSubscriber(
+        string $email,
+        int $groupId,
+        bool $active = false,
+        array $attributes = [],
+        array $globalAttributes = []
+    );
 
     /**
      * Returns a subscriber.
