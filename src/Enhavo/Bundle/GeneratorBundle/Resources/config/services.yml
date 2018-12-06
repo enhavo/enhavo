@@ -2,13 +2,13 @@ services:
     enhavo_generator.generator.route_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\RoutingGenerator
         arguments:
-            - @templating
+            - '@templating'
 
     enhavo_generator.generator.extend_form_type_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\ExtendFormTypeGenerator
         arguments:
-            - @templating
-            - @kernel
+            - '@templating'
+            - '@kernel'
 
     enhavo_generator.generator.grid_item_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\GridItemGenerator

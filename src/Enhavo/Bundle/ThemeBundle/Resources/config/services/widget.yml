@@ -12,7 +12,7 @@ services:
     enhavo_theme.twig.widget_renderer:
         class: Enhavo\Bundle\ThemeBundle\Widget\WidgetRendererExtension
         arguments:
-            - @enhavo_theme.theme_widget_collector
+            - '@enhavo_theme.theme_widget_collector'
         tags:
             - { name: twig.extension }
 

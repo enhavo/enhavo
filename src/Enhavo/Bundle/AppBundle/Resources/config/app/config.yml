@@ -26,9 +26,7 @@ services:
     pdo:
         class: PDO
         arguments:
-            - "mysql:host=%database_host%;dbname=%database_name%"
-            - "%database_user%"
-            - "%database_password%"
+            - '%env(DATABASE_URL)%'
         calls:
             - [setAttribute, [3, 2]]
 
