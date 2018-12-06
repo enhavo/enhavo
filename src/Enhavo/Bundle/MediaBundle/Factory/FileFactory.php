@@ -8,7 +8,7 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use GuzzleHttp\Client;
 use function GuzzleHttp\Psr7\parse_header;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Finder\SplFileInfo;

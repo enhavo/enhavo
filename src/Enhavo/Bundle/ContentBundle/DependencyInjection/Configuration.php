@@ -7,7 +7,7 @@ use Enhavo\Bundle\ContentBundle\Controller\RedirectController;
 use Enhavo\Bundle\ContentBundle\Entity\Redirect;
 use Enhavo\Bundle\ContentBundle\Form\Type\RedirectType;
 use Enhavo\Bundle\ContentBundle\Repository\RedirectRepository;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

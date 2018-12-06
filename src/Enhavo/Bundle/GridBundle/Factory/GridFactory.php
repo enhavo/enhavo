@@ -3,7 +3,7 @@ namespace Enhavo\Bundle\GridBundle\Factory;
 
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Entity\Item;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class GridFactory extends Factory

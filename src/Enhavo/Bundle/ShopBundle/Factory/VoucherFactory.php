@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Factory;
 
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
 use Sylius\Component\Promotion\Model\Coupon;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class VoucherFactory extends Factory
