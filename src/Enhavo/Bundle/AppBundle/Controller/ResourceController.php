@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -102,7 +103,7 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
@@ -134,7 +135,7 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
@@ -162,7 +163,7 @@ class ResourceController extends BaseController
         return $this->viewHandler->handle($configuration, $viewer->createView());
     }
 
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
@@ -181,7 +182,7 @@ class ResourceController extends BaseController
         return $this->redirectHandler->redirectToResource($configuration, $newResource);
     }
 
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -200,7 +201,7 @@ class ResourceController extends BaseController
         return $this->viewHandler->handle($configuration, $view);
     }
 
-    public function previewAction(Request $request)
+    public function previewAction(Request $request): Response
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
@@ -236,7 +237,7 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function tableAction(Request $request)
+    public function tableAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
@@ -256,7 +257,7 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
@@ -277,7 +278,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function batchAction(Request $request)
+    public function batchAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
@@ -289,7 +290,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveAfterAction(Request $request)
+    public function moveAfterAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
@@ -302,7 +303,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveToPageAction(Request $request)
+    public function moveToPageAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
@@ -322,7 +323,7 @@ class ResourceController extends BaseController
      *
      * @throws AccessDeniedException
      */
-    protected function isGrantedOr403(SyliusRequestConfiguration $configuration, $permission)
+    protected function isGrantedOr403(SyliusRequestConfiguration $configuration, string $permission): void
     {
         if (!$configuration->hasPermission()) {
             $permission = $this->getRoleName($permission);
@@ -340,7 +341,7 @@ class ResourceController extends BaseController
         return;
     }
 
-    private function getRoleName($permission)
+    private function getRoleName(string $permission): string
     {
         $name = $this->metadata->getHumanizedName();
         $name = str_replace(' ', '_', $name);
