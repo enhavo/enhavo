@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
+use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,8 +23,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             // Driver used by the resource bundle
+            ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+                ->scalarNode('driver')->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)->end()
             ->end()
 
             ->children()

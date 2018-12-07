@@ -5,6 +5,8 @@ framework:
     session:
         cookie_lifetime: 25920000
         handler_id: session.handler.pdo
+    templating:
+        engines: twig
 
 doctrine:
     dbal:

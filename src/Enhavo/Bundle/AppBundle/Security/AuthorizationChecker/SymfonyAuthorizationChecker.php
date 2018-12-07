@@ -25,7 +25,7 @@ class SymfonyAuthorizationChecker implements AuthorizationCheckerInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function isGranted(RequestConfiguration $configuration, $permission)
+    public function isGranted(RequestConfiguration $configuration, string $permission): bool
     {
         if(is_string($permission)) {
             return $this->authorizationChecker->isGranted($permission);
