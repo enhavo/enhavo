@@ -23,7 +23,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'contact' }
+            - { name: enhavo.widget, alias: 'contact' }
 
     enhavo_contact.mailer:
         class: Enhavo\Bundle\ContactBundle\Mailer\ContactMailer

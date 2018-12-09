@@ -16,13 +16,13 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: search }
+            - { name: enhavo.widget, alias: search }
 
     enhavo_search.controller.search:
         class: Enhavo\Bundle\SearchBundle\Controller\SearchController
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]

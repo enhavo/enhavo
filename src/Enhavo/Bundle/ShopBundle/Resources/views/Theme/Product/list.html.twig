@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block javascripts %}
     <script src="{{ asset('/bundles/enhavoshop/js/Shop.js') }}" type="text/javascript"></script>
@@ -6,7 +6,7 @@
 
 {% block main %}
     <section>
-        {{ theme_widget_render('shop_product_list') }}
+        {{ widget_render('shop_product_list') }}
     </section>
     <a href="{{ path('enhavo_shop_theme_cart_summary') }}">Cart</a>
 {% endblock %}

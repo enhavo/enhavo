@@ -3,22 +3,22 @@ parameters:
     enhavo_app.twig.block_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
 
 services:
-    enhavo_theme.theme_widget_collector:
+    enhavo_app.theme_widget_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
             - 'ThemeWidget'
 
-    enhavo_theme.twig.widget_renderer:
-        class: Enhavo\Bundle\ThemeBundle\Widget\WidgetRendererExtension
+    enhavo_app.twig.widget_renderer:
+        class: Enhavo\Bundle\AppBundle\Widget\WidgetRendererExtension
         arguments:
-            - '@enhavo_theme.theme_widget_collector'
+            - '@enhavo_app.theme_widget_collector'
         tags:
             - { name: twig.extension }
 
-    enhavo_theme.widget.template:
-        class: Enhavo\Bundle\ThemeBundle\Widget\Widget\TemplateWidget
+    enhavo_app.widget.template:
+        class: Enhavo\Bundle\AppBundle\Widget\Widget\TemplateWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: template}
+            - { name: enhavo.widget, alias: template }

@@ -167,7 +167,7 @@ services:
         class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]

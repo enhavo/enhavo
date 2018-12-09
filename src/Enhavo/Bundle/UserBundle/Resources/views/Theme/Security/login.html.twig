@@ -1,7 +1,7 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block main %}
-    {{ theme_widget_render('login', {
+    {{ widget_render('login', {
         error: error,
         csrf_token: csrf_token,
         last_username: last_username

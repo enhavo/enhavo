@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('base')->defaultValue('EnhavoAppBundle::base.html.twig')->end()
                         ->scalarNode('dialog')->defaultValue('EnhavoAppBundle::dialog.html.twig')->end()
+                        ->scalarNode('theme_base')->defaultValue('EnhavoAppBundle:Theme:base.html.twig')->end()
                     ->end()
                 ->end()
             ->end()

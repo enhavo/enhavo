@@ -90,7 +90,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'navigation' }
+            - { name: enhavo.widget, alias: 'navigation' }
 
     enhavo_navigation.node.manager:
         class: Enhavo\Bundle\NavigationBundle\Node\NodeManager

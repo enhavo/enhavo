@@ -1,7 +1,7 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% trans_default_domain 'EnhavoShopBundle' %}
 
 {% block main %}
-    {{ theme_widget_render('shop_user_address') }}
+    {{ widget_render('shop_user_address') }}
 {% endblock %}

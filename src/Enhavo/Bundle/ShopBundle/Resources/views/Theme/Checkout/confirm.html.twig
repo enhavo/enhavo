@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -12,11 +12,11 @@
     <h1>Confirm</h1>
 
     <div>
-        {{ theme_widget_render('shop_coupon_redeem', {order: order}) }}
+        {{ widget_render('shop_coupon_redeem', {order: order}) }}
     </div>
 
     <div>
-        {{ theme_widget_render('shop_cart_summary', {immutable: true, cart: order}) }}
+        {{ widget_render('shop_cart_summary', {immutable: true, cart: order}) }}
     </div>
 
     <div>

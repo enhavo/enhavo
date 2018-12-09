@@ -42,7 +42,7 @@ class WidgetGenerator extends Generator
         $this->output->writeln($this->generateServiceConfigCode($bundle, $cleanedWidgetName));
         $this->output->writeln('');
         $this->output->writeln('<options=bold>To render your widget, add this code in a twig file:</>');
-        $this->output->writeln('{{ theme_widget_render(\'' . $this->camelCaseToSnakeCase($cleanedWidgetName) . '\', {}) }}');
+        $this->output->writeln('{{ widget_render(\'' . $this->camelCaseToSnakeCase($cleanedWidgetName) . '\', {}) }}');
         $this->output->writeln('');
     }
 

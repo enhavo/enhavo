@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block bodyclass %}light{% endblock %}
 
@@ -15,12 +15,12 @@
         <h2>Confirm</h2>
         <p>Falls Sie einen Gutscheincode besitzen, geben Sie ihn hier ein.</p>
         <div class="redeem">
-            {{ theme_widget_render('shop_coupon_redeem', {
+            {{ widget_render('shop_coupon_redeem', {
                 template: 'EnhavoProjectBundle:Theme/Widget:coupon-redeem.html.twig',
                 order: order}) }}
         </div>
         <div>
-            {{ theme_widget_render('shop_cart_summary', {
+            {{ widget_render('shop_cart_summary', {
                 template: 'EnhavoProjectBundle:Theme/Widget:cart-summary.html.twig',
                 immutable: true, cart: order}) }}
         </div>

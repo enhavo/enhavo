@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ThemeBundle\Widget;
+namespace Enhavo\Bundle\AppBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 

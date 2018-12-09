@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block javascripts %}
     <script src="{{ asset('/bundles/enhavoshop/js/Shop.js') }}" type="text/javascript"></script>
@@ -6,5 +6,5 @@
 
 {% block main %}
     <h1>{{ product.title }}</h1>
-    {{ theme_widget_render('shop_product_configurator', { product: product }) }}
+    {{ widget_render('shop_product_configurator', { product: product }) }}
 {% endblock %}

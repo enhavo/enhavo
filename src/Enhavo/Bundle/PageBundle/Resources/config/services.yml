@@ -27,7 +27,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: page }
+            - { name: enhavo.widget, alias: page }
 
     enhavo_page.extend_listener.page:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -46,8 +46,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_page.menu.page:
-        class: Enhavo\Bundle\PageBundle\Menu\PageMenu
+    Enhavo\Bundle\PageBundle\Menu\PageMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

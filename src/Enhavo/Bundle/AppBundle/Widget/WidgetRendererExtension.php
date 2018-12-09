@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ThemeBundle\Widget;
+namespace Enhavo\Bundle\AppBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractRenderer;
 
@@ -15,6 +15,6 @@ class WidgetRendererExtension extends AbstractRenderer
 
     public function getName()
     {
-        return 'theme_widget_render';
+        return 'widget_render';
     }
 }

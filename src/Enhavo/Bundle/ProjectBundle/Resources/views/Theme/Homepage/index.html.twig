@@ -1,7 +1,7 @@
 {% extends 'EnhavoProjectBundle:Theme:base.html.twig' %}
 
 {% block hero %}
-    {{ theme_widget_render('slider', {template:'EnhavoProjectBundle:Theme:Widget/slider.html.twig'}) }}
+    {{ widget_render('slider', {template:'EnhavoProjectBundle:Theme:Widget/slider.html.twig'}) }}
 {% endblock %}
 
 
@@ -85,5 +85,5 @@
         </div>
     </section>
 
-    {{ theme_widget_render('contact',  { template: 'EnhavoProjectBundle:Theme:Widget/contact-form.html.twig'}) }}
+    {{ widget_render('contact',  { template: 'EnhavoProjectBundle:Theme:Widget/contact-form.html.twig'}) }}
 {% endblock %}

@@ -156,7 +156,7 @@ services:
         class: '%enhavo_shop.controller.checkout.class%'
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
@@ -165,7 +165,7 @@ services:
         class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
@@ -201,42 +201,42 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'shop_product_list' }
+            - { name: enhavo.widget, alias: 'shop_product_list' }
 
     enhavo_shop.widget.user_address:
         class: Enhavo\Bundle\ShopBundle\Widget\UserAddressWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'shop_user_address' }
+            - { name: enhavo.widget, alias: 'shop_user_address' }
 
     enhavo_shop.widget.cart_summary:
         class: Enhavo\Bundle\ShopBundle\Widget\CartSummaryWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget,  alias: 'shop_cart_summary' }
+            - { name: enhavo.widget,  alias: 'shop_cart_summary' }
 
     enhavo_shop.widget.coupon_redeem:
         class: Enhavo\Bundle\ShopBundle\Widget\CouponRedeemWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget,  alias: 'shop_coupon_redeem' }
+            - { name: enhavo.widget,  alias: 'shop_coupon_redeem' }
 
     enhavo_shop.widget.product_configurator:
         class: Enhavo\Bundle\ShopBundle\Widget\ProductConfiguratorWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget,  alias: 'shop_product_configurator' }
+            - { name: enhavo.widget,  alias: 'shop_product_configurator' }
 
     enhavo_shop.widget.order_history:
         class: Enhavo\Bundle\ShopBundle\Widget\OrderHistoryWidget
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget,  alias: 'shop_order_history' }
+            - { name: enhavo.widget,  alias: 'shop_order_history' }
 
     enhavo_shop.document.billing_generator:
         class: Enhavo\Bundle\ShopBundle\Document\BillingGenerator

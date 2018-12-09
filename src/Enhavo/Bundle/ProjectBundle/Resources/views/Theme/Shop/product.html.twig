@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block bodyclass %}light{% endblock %}
 
@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row shop-product">
                 <div class="col-md-6 col-sm-7">
-                    {{ theme_widget_render('shop_product_configurator', {
+                    {{ widget_render('shop_product_configurator', {
                         product: product,
                         template: 'EnhavoProjectBundle:Theme/Widget:product-configurator.html.twig'
                     }) }}

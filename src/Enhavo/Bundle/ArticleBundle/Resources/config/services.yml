@@ -14,7 +14,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: article_category }
+            - { name: enhavo.widget, alias: article_category }
 
     enhavo_article.extend_listener.article:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener

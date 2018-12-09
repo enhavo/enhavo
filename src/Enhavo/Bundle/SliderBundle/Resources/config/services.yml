@@ -29,7 +29,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: slider }
+            - { name: enhavo.widget, alias: slider }
 
 
     enhavo_slider.extend_listener.slider:
@@ -50,8 +50,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_slider.menu.slider:
-        class: Enhavo\Bundle\SliderBundle\Menu\SliderMenu
+    Enhavo\Bundle\SliderBundle\Menu\SliderMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
