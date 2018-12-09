@@ -1,5 +1,5 @@
 web_profiler:
-    toolbar: true
+    toolbar: '%env(resolve:APP_DEBUG_TOOLBAR)%'
     intercept_redirects: false
 
 framework:
