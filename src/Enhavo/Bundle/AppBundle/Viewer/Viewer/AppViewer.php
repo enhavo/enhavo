@@ -8,50 +8,47 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AppViewer extends BaseViewer
 {
-    public function getBlocks()
-    {
-        return $this->optionAccessor->get('blocks');
-    }
-
-    public function getActions()
-    {
-        return $this->optionAccessor->get('actions');
-    }
-
-    public function getTitle()
-    {
-        return $this->optionAccessor->get('title');
-    }
-
     public function getType()
     {
         return 'app';
     }
 
-    public function createView()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:app.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'blocks' => $this->getBlocks(),
-            'actions' => $this->getActions(),
-            'title' => $this->getTitle()
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+
+        $parameters->set('blocks', $this->mergeConfigArray([
+            $options['blocks'],
+            $this->getViewerOption('blocks', $requestConfiguration)
         ]));
-        return $view;
+
+        $parameters->set('actions', $this->mergeConfigArray([
+            $options['actions'],
+            $this->getViewerOption('actions', $requestConfiguration)
+        ]));
+
+        $parameters->set('title', $this->mergeConfig([
+            $options['title'],
+            $this->getViewerOption('title', $requestConfiguration)
+        ]));
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+
+        $optionsResolver->setDefaults([
             'title' => '',
             'blocks' => [],
             'actions' => [],
-            'app' => 'app/Index'
+            'app' => 'app/Index',
+            'template' => 'EnhavoAppBundle:Viewer:app.html.twig'
         ]);
     }
 }

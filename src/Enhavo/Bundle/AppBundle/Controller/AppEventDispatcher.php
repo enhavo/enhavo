@@ -9,25 +9,23 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Event\PreviewEvent;
-use Sylius\Bundle\ResourceBundle\Controller\EventDispatcher as SyliusEventDispatcher;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EventDispatcher extends SyliusEventDispatcher
+class AppEventDispatcher
 {
     /**
-     * @var SymfonyEventDispatcherInterface
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
-     * @param SymfonyEventDispatcherInterface $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(SymfonyEventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        parent::__construct($eventDispatcher);
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -38,7 +36,6 @@ class EventDispatcher extends SyliusEventDispatcher
     {
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
         $this->eventDispatcher->dispatch(sprintf('enhavo_app.pre_%s', $eventName), new ResourceControllerEvent($resource));
-        return parent::dispatchPreEvent($eventName, $requestConfiguration, $resource);;
     }
 
     /**
@@ -48,7 +45,6 @@ class EventDispatcher extends SyliusEventDispatcher
     {
         $eventName = $requestConfiguration->getEvent() ?: $eventName;
         $this->eventDispatcher->dispatch(sprintf('enhavo_app.post_%s', $eventName), new ResourceControllerEvent($resource));
-        return parent::dispatchPostEvent($eventName, $requestConfiguration, $resource);
     }
 
     public function dispatchInitEvent($eventName, RequestConfiguration $requestConfiguration)

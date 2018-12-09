@@ -8,133 +8,71 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
-use FOS\RestBundle\View\View;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateViewer extends AbstractViewer
 {
-    public function getTabs()
-    {
-        $tabs = $this->optionAccessor->get('tabs');
-        return $tabs;
-    }
-
-    public function getDefaultTab()
-    {
-        return [
-            $this->getUnderscoreName() => [
-                'label' => sprintf('%s.label.%s', $this->getUnderscoreName(), $this->getUnderscoreName()),
-                'template' => 'EnhavoAppBundle:Tab:default.html.twig'
-            ]
-        ];
-    }
-
-    public function getButtons()
-    {
-        $buttons = $this->optionAccessor->get('buttons');
-
-        foreach($buttons as $button) {
-            if(!array_key_exists('type', $button)) {
-                throw new TypeNotFoundException(sprintf('button type is not defined'));
-            }
-        }
-
-        return $buttons;
-    }
-
-    public function getFormTemplate()
-    {
-        return $this->optionAccessor->get('form.template');
-    }
-
-    public function getFormAction()
-    {
-        $action = $this->optionAccessor->get('form.action');
-        if($action == null) {
-            return null;
-        }
-
-        $parameters = $this->optionAccessor->get('form.action_parameters');
-        if($parameters === null) {
-            $parameters = [];
-        }
-
-        return $this->container->get('router')->generate($action, $parameters);
-    }
-
-    public function getActionRoute()
-    {
-        return sprintf(
-            '%s_%s_create',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
-    }
-
-    public function getDefaultFormTemplate()
-    {
-        return 'EnhavoAppBundle:View:tab.html.twig';
-    }
-
     public function getType()
     {
         return 'create';
     }
 
-    protected function isValidationError()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        if($this->form->isSubmitted()) {
-            return !$this->form->isValid();
-        }
-        return false;
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-    protected function createValidationView()
-    {
-        $view = View::create($this->form, 400);
-        $view->setFormat('json');
-        return $view;
-    }
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
 
-    public function createView()
-    {
-        if($this->isValidationError() && $this->configuration->isAjaxRequest()) {
-            return $this->createValidationView();
-        }
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:create.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'buttons' => $this->getButtons(),
-            'form' => $this->getForm()->createView(),
-            'tabs' => $this->getTabs(),
-            'form_template' => $this->getFormTemplate(),
-            'form_action' => $this->getFormAction(),
-            'data' => $this->resource
+        $parameters->set('form', $this->mergeConfig([
+            $options['form'],
+            $requestConfiguration->getFormType()
         ]));
-        return $view;
+
+        $parameters->set('tabs', $this->mergeConfigArray([
+            [
+                'general' => [
+                    'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
+                    'template' => 'EnhavoAppBundle:Tab:default.html.twig'
+                ],
+            ],
+            $options['tabs'],
+            $this->getViewerOption('tabs', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_template', $this->mergeConfigArray([
+            $options['form_template'],
+            $this->getViewerOption('form.template', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_action', $this->mergeConfig([
+            sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['form_action'],
+            $this->getViewerOption('form.action', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_action_parameters', $this->mergeConfigArray([
+            $options['form_action_parameters'],
+            $this->getViewerOption('form.action_parameters', $requestConfiguration)
+        ]));
+
+        $parameters->set('data', $options['resource']);
     }
 
-
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
-            'buttons' => [
-                'cancel' => [
-                    'type' => 'cancel',
-                ],
-                'save' => [
-                    'type' => 'save',
-                ]
-            ],
-            'form' => [
-                'template' => $this->getDefaultFormTemplate(),
-                'action' => $this->getActionRoute(),
-                'action_parameters' => null,
-            ],
-            'tabs' => $this->getDefaultTab()
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'tabs' => [],
+            'buttons' => [],
+            'form' => [],
+            'form_action' => [],
+            'form_action_parameters' => [],
+            'form_template' => 'EnhavoAppBundle:View:tab.html.twig'
         ]);
     }
 }

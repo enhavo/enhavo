@@ -5,7 +5,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 
-interface DuplicateResourceFactoryInterface extends NewResourceFactoryInterface
+interface DuplicateResourceFactoryInterface
 {
     /**
      * @param RequestConfiguration $requestConfiguration
@@ -14,5 +14,5 @@ interface DuplicateResourceFactoryInterface extends NewResourceFactoryInterface
      *
      * @return ResourceInterface
      */
-    public function duplicate(RequestConfiguration $requestConfiguration, FactoryInterface $factory, ResourceInterface $originalResource);
+    public function duplicate(\Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration $requestConfiguration, FactoryInterface $factory, ResourceInterface $originalResource);
 }

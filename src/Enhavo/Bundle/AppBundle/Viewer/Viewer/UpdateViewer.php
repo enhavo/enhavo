@@ -9,6 +9,8 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use FOS\RestBundle\View\View;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateViewer extends CreateViewer
 {
@@ -68,12 +70,12 @@ class UpdateViewer extends CreateViewer
         return 'update';
     }
 
-    public function createView()
+    public function createView($options = []): View
     {
         if($this->isValidationError() && $this->configuration->isAjaxRequest()) {
             return parent::createView();
         }
-        $view = parent::createView();
+        $view = parent::createView($options);
         $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:update.html.twig'));
         $view->setTemplateData(array_merge($view->getTemplateData(), [
             'form_action' => $this->getFormAction(),
@@ -82,10 +84,10 @@ class UpdateViewer extends CreateViewer
         return $view;
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
             'buttons' => [
                 'cancel' => [
                     'type' => 'cancel',

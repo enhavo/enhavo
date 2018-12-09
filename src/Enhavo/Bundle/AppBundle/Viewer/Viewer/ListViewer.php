@@ -9,21 +9,39 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ListViewer extends AbstractViewer
 {
-    protected function getColumns()
+    public function getType()
     {
-        $columns = $this->optionAccessor->get('columns');
+        return 'list';
+    }
+
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    {
+        $parameters->set('data', $options['resources']);
+
+        $parameters->set('sortable', $this->mergeConfig([
+            $requestConfiguration->isSortable(),
+            $options['sortable']
+        ]));
+
+        $parameters->set('columns', $this->getColumns($requestConfiguration));
+        $parameters->set('batches', $this->getBatches($requestConfiguration));
+        $parameters->set('batch_route', $this->getBatches($requestConfiguration));
+        $parameters->set('width', $this->getViewerOption('width', $requestConfiguration));
+        $parameters->set('expand', $this->getExpand());
+    }
+
+    protected function getColumns(RequestConfiguration $requestConfiguration)
+    {
+        $columns = $this->getViewerOption('columns', $requestConfiguration);
 
         if(empty($columns)) {
-            /** @var RequestConfiguration $configuration */
-            $configuration = $this->configuration;
-
-            if ($configuration->isSortable()) {
+            if ($requestConfiguration->isSortable()) {
                 $columns = array(
                     'id' => array(
                         'label' => 'id',
@@ -51,19 +69,18 @@ class ListViewer extends AbstractViewer
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('translationDomain', $column)) {
-                $column['translationDomain'] = $this->optionAccessor->get('translationDomain');
+                $column['translationDomain'] = $this->getViewerOption('translationDomain', $requestConfiguration);
             }
         }
 
         return $columns;
     }
     
-    protected function getBatches()
+    protected function getBatches(RequestConfiguration $requestConfiguration, $options)
     {
         $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');
         $router = $this->container->get('router');
-        /** @var RequestConfigurationInterface $configuration */
-        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $this->metadata, $router);
+        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $options['metadata'], $router);
         if($configuration === null) {
             return [];
         }
@@ -82,39 +99,15 @@ class ListViewer extends AbstractViewer
         return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->getUnderscoreName()));
     }
 
-    public function getType()
-    {
-        return 'list';
-    }
-
     protected function getExpand()
     {
         return $this->optionAccessor->get('expand');
     }
 
-    public function createView()
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        /** @var RequestConfiguration $configuration */
-        $configuration = $this->configuration;
-
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:list.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'data' => $this->resource,
-            'sortable' => $configuration->isSortable(),
-            'columns' => $this->getColumns(),
-            'batches' => $this->getBatches(),
-            'batch_route' => $this->getBatchRoute(),
-            'width' => $this->optionAccessor->get('width'),
-            'expand' => $this->getExpand()
-        ]));
-        return $view;
-    }
-
-    public function configureOptions(OptionAccessor $optionsAccessor)
-    {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
             'width' => 12,
             'batch_route' => $this->getBatchRoute(),
             'columns' => [],

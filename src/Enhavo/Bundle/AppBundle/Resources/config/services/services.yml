@@ -1,11 +1,10 @@
 parameters:
     security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
-    enhavo.simple_request_configuration_factory.request_configuration.class: Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfiguration
 
 services:
     cache:
         class: Doctrine\Common\Cache\PhpFileCache
-        arguments: ['%kernel.cache_dir%']
+        arguments: ['%kernel.cache_dir%/cache']
 
     security.roles.provider:
         class: '%security.roles.provider.class%'
@@ -15,12 +14,17 @@ services:
 
     enhavo_app.controller.app:
         class: Enhavo\Bundle\AppBundle\Controller\AppController
+        public: true
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_app.event_dispatcher:
+        class: Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher
+        arguments:
+            - '@event_dispatcher'
 
     enhavo_app.controller.auto_complete:
         class: Enhavo\Bundle\AppBundle\Controller\AutoCompleteController

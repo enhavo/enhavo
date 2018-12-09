@@ -8,8 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseViewer extends AbstractViewer
 {
@@ -18,59 +20,48 @@ class BaseViewer extends AbstractViewer
         return 'base';
     }
 
-    /**
-     * @return string[]
-     */
-    public function getStylesheets()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        $stylesheets = $this->container->getParameter('enhavo_app.stylesheets');
-        return array_merge($stylesheets, $this->optionAccessor->get('stylesheets'));
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-    /**
-     * @return string[]
-     */
-    public function getJavascripts()
-    {
-        $javascripts = $this->container->getParameter('enhavo_app.javascripts');
-        return array_merge($javascripts, $this->optionAccessor->get('javascripts'));
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getApps()
-    {
-        $apps = $this->container->getParameter('enhavo_app.apps');
-        return array_merge($apps, $this->optionAccessor->get('apps'));
-    }
-
-    public function getApp()
-    {
-        return $this->optionAccessor->get('app');
-    }
-
-    public function createView()
-    {
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:base.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'javascripts' => $this->getJavascripts(),
-            'stylesheets' => $this->getStylesheets(),
-            'requireJsApps' => $this->getApps(),
-            'requireJsApp' => $this->getApp()
+        $parameters->set('stylesheets', $this->mergeConfigArray([
+            $this->container->getParameter('enhavo_app.stylesheets'),
+            $options['stylesheets'],
+            $this->getViewerOption('stylesheets', $requestConfiguration)
         ]));
-        return $view;
+
+        $parameters->set('javascripts', $this->mergeConfigArray([
+            $this->container->getParameter('enhavo_app.javascripts'),
+            $options['javascripts'],
+            $this->getViewerOption('stylesheets', $requestConfiguration)
+        ]));
+
+        $parameters->set('requireJsApps', $this->mergeConfigArray([
+            $this->container->getParameter('enhavo_app.apps'),
+            $options['apps'],
+            $this->getViewerOption('apps', $requestConfiguration)
+        ]));
+
+        $parameters->set('translationDomain', $this->mergeConfig([
+            $options['translation_domain'],
+            $this->getViewerOption('translationDomain', $requestConfiguration)
+        ]));
+
+        foreach($options['parameters'] as $key => $value) {
+            $parameters->set($key, $value);
+        }
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
             'javascripts' => [],
             'stylesheets' => [],
             'apps' => [],
-            'app' => null
+            'translation_domain' => null,
+            'template' => 'EnhavoAppBundle:Viewer:base.html.twig',
+            'parameters' => []
         ]);
     }
 }

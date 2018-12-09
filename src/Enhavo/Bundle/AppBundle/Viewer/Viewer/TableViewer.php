@@ -12,6 +12,8 @@ use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use FOS\RestBundle\View\View;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableViewer extends AbstractViewer
 {
@@ -96,12 +98,12 @@ class TableViewer extends AbstractViewer
         return 'table';
     }
 
-    public function createView()
+    public function createView($options = []): View
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->configuration;
 
-        $view = parent::createView();
+        $view = parent::createView($options);
         $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:table.html.twig'));
         $view->setTemplateData(array_merge($view->getTemplateData(), [
             'data' => $this->resource,
@@ -116,10 +118,10 @@ class TableViewer extends AbstractViewer
         return $view;
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
             'width' => 12,
             'sorting' => [
                 'move_after_route' => $this->getDefaultMoveAfterRoute(),

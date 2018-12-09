@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -16,9 +17,9 @@ class SyliusCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $this->overwriteTargetResolver($container);
+        $this->overwriteRequestConfigurationFactory($container);
+        $this->overwriteController($container);
 
-//        $this->overwriteRequestConfigurationFactory($container);
-//        $this->overwriteController($container);
 //        $this->overwriteEventDispatcher($container);
 //        $this->overwriteResourceResolver($container);
 //        $this->overwriteViewHandler($container);
@@ -34,9 +35,7 @@ class SyliusCompilerPass implements CompilerPassInterface
     protected function overwriteRequestConfigurationFactory(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('sylius.resource_controller.request_configuration_factory');
-        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\RequestConfigurationFactory');
-        $definition->replaceArgument(1, 'Enhavo\Bundle\AppBundle\Controller\RequestConfiguration');
-        $definition->addArgument('Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfiguration');
+        $definition->replaceArgument(1, RequestConfiguration::class);
     }
 
     protected function overwriteController(ContainerBuilder $container)
@@ -52,9 +51,11 @@ class SyliusCompilerPass implements CompilerPassInterface
         foreach($controllerDefinitionIds as $definitionName) {
             if($container->hasDefinition($definitionName)) {
                 $definition = $container->getDefinition($definitionName);
-                $definition->addArgument($container->getDefinition('viewer.factory'));
+                $definition->addArgument($container->getDefinition('view.factory'));
                 $definition->addArgument($container->getDefinition('enhavo.sorting_manager'));
                 $definition->addArgument($container->getDefinition('enhavo_app.batch_manager'));
+                $definition->addArgument($container->getDefinition('enhavo_app.factory.duplicate_resource_factory'));
+                $definition->addArgument($container->getDefinition('enhavo_app.event_dispatcher'));
             }
         }
     }

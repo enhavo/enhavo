@@ -2,52 +2,86 @@
 
 services:
     enhavo_app.viewer_collector:
+        public: true
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
 
-    viewer.factory:
-        class: Enhavo\Bundle\AppBundle\Viewer\ViewerFactory
+    view.factory:
+        public: true
+        class: Enhavo\Bundle\AppBundle\Viewer\ViewFactory
         arguments:
             - '@service_container'
             - '@enhavo_app.viewer_collector'
 
-    enhavo_app.viewer.index:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: index }
 
-    enhavo_app.viewer.create:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: create }
 
-    enhavo_app.viewer.update:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: update }
 
-    enhavo_app.viewer.app:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: app }
 
-    enhavo_app.viewer.base:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: base }
 
-    enhavo_app.viewer.table:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: table }
 
-    enhavo_app.viewer.list:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\ListViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\ListViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: list }
 
-    enhavo_app.viewer.preview:
-        class: Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+        calls:
+            - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: preview }
