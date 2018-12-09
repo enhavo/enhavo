@@ -11,8 +11,9 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use PHPUnit\Framework\TestCase;
 
-class OrderTest extends \PHPUnit_Framework_TestCase
+class OrderTest extends TestCase
 {
     /**
      * @param int $type

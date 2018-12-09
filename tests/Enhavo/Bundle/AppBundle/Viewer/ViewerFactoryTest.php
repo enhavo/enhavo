@@ -4,8 +4,9 @@ namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
+use PHPUnit\Framework\TestCase;
 
-class ViewerFactoryTest extends \PHPUnit_Framework_TestCase
+class ViewerFactoryTest extends TestCase
 {
     function testCreate()
     {

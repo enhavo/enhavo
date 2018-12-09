@@ -5,8 +5,9 @@ namespace spec\Enhavo\Bundle\AppBundle\Viewer\Viewer;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use PHPUnit\Framework\TestCase;
 
-class UpdateViewerTest extends \PHPUnit_Framework_TestCase
+class UpdateViewerTest extends TestCase
 {
     function testInitialize()
     {

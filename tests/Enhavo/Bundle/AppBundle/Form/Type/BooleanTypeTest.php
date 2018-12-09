@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
 
-class BooleanTypeTest extends TypeTestCase
+class BooleanTypeTest extends TestCase
 {
     protected function createForm($options = [])
     {

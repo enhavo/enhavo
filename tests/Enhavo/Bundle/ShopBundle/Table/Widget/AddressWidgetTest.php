@@ -5,8 +5,9 @@ namespace Enhavo\Bundle\ShopBundle\Table\Widget;
 use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget;
 use Sylius\Component\Addressing\Model\Address;
+use PHPUnit\Framework\TestCase;
 
-class AddressWidgetTest extends \PHPUnit_Framework_TestCase
+class AddressWidgetTest extends TestCase
 {
     public function testInitialize()
     {

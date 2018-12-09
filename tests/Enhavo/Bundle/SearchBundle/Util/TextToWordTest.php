@@ -7,8 +7,9 @@
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
+use PHPUnit\Framework\TestCase;
 
-class TextToWordTest extends \PHPUnit_Framework_TestCase
+class TextToWordTest extends TestCase
 {
     public function testSplit()
     {

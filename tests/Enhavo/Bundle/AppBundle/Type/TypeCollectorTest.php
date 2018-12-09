@@ -3,8 +3,9 @@
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
-class TypeCollectorTest extends \PHPUnit_Framework_TestCase
+class TypeCollectorTest extends TestCase
 {
 
     private function getContainerMock()

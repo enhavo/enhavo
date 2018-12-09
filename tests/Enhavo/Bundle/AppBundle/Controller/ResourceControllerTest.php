@@ -8,8 +8,9 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\TestCase;
 
-class ResourceControllerTest extends \PHPUnit_Framework_TestCase
+class ResourceControllerTest extends TestCase
 {
     private function getEntityMock()
     {

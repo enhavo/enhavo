@@ -9,8 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
+use PHPUnit\Framework\TestCase;
 
-class ActionRendererTest extends \PHPUnit_Framework_TestCase
+class ActionRendererTest extends TestCase
 {
     private function getTypeInterfaceMock()
     {

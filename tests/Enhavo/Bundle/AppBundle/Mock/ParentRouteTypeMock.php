@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use PHPUnit\Framework\TestCase;
 
 class ParentRouteTypeMock extends AbstractType
 {

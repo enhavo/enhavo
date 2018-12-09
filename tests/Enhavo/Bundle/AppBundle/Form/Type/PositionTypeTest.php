@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
+use PHPUnit\Framework\TestCase;
 
-class PositionTypeTest extends TypeTestCase
+class PositionTypeTest extends TestCase
 {
     protected function createForm($options = [])
     {

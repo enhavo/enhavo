@@ -15,8 +15,9 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Symfony\Component\HttpKernel\KernelInterface;
+use PHPUnit\Framework\TestCase;
 
-class DatabaseProviderTest extends \PHPUnit_Framework_TestCase
+class DatabaseProviderTest extends TestCase
 {
 
     private function getKernelMock()

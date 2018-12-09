@@ -9,8 +9,9 @@
 namespace Enhavo\Bundle\SearchBundle\Indexer\Indexer;
 
 use Enhavo\Bundle\SearchBundle\Indexer\Index;
+use PHPUnit\Framework\TestCase;
 
-class HtmlIndexerTest extends \PHPUnit_Framework_TestCase
+class HtmlIndexerTest extends TestCase
 {
     public function testGetIndexes()
     {

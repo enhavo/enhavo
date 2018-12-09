@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SerializerBundle\Mock;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\TestCase;
 
 class Resource
 {

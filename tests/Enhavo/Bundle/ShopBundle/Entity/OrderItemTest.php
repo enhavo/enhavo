@@ -12,8 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\ShopBundle\Entity\OrderItem;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemUnitInterface;
+use PHPUnit\Framework\TestCase;
 
-class OrderItemTest extends \PHPUnit_Framework_TestCase
+class OrderItemTest extends TestCase
 {
     /**
      * @param $tax

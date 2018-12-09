@@ -12,6 +12,7 @@ namespace Enhavo\Bundle\SerializerBundle\Mock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use PHPUnit\Framework\TestCase;
 
 class ResourceType extends AbstractType
 {

@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\MultiplePropertyWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class MultipleWidgetTest extends \PHPUnit_Framework_TestCase
+class MultipleWidgetTest extends TestCase
 {
     function testInitialize()
     {

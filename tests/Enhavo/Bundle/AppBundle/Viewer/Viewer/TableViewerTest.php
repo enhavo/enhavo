@@ -5,8 +5,9 @@ namespace spec\Enhavo\Bundle\AppBundle\Viewer;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer;
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use PHPUnit\Framework\TestCase;
 
-class TableViewerTest extends \PHPUnit_Framework_TestCase
+class TableViewerTest extends TestCase
 {
     function testInitialize()
     {

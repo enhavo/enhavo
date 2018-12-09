@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Mock;
 
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use PHPUnit\Framework\TestCase;
 
 class EventSubscriberMock implements EventSubscriberInterface
 {

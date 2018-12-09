@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\ListType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
 
-class ListTypeTest extends TypeTestCase
+class ListTypeTest extends TestCase
 {
     public function testSubmitValidData()
     {

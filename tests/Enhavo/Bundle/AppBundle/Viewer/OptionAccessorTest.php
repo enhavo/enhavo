@@ -3,8 +3,9 @@
 namespace Enhavo\Bundle\AppBundle\Test\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use PHPUnit\Framework\TestCase;
 
-class OptionAccessorTest extends \PHPUnit_Framework_TestCase
+class OptionAccessorTest extends TestCase
 {
     /**
      * Test if ConfigParser can be initialize

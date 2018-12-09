@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer;
+use PHPUnit\Framework\TestCase;
 
-class IndexViewerTest extends \PHPUnit_Framework_TestCase
+class IndexViewerTest extends TestCase
 {
     function testInitialize()
     {

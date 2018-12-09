@@ -4,8 +4,9 @@ namespace Enhavo\Bundles\AppBundle\Security\Roles;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class RoleUtilTest extends \PHPUnit_Framework_TestCase
+class RoleUtilTest extends TestCase
 {
     public function testGetRoleNames()
     {

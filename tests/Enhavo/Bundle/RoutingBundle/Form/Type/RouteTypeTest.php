@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use PHPUnit\Framework\TestCase;
 
-class RouteTypeTest extends TypeTestCase
+class RouteTypeTest extends TestCase
 {
     public function testSubmitValidData()
     {

@@ -3,8 +3,9 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer;
+use PHPUnit\Framework\TestCase;
 
-class AppViewerTest extends \PHPUnit_Framework_TestCase
+class AppViewerTest extends TestCase
 {
     function testInitialize()
     {

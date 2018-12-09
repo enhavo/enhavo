@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Enhavo\Bundle\ShopBundle\Modifier\OrderItemQuantityModifier;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
+use PHPUnit\Framework\TestCase;
 
-class ItemResolverTest extends \PHPUnit_Framework_TestCase
+class ItemResolverTest extends TestCase
 {
     public function testResolve()
     {

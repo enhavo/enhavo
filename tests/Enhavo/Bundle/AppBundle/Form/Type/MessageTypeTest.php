@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\MessageType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
 
-class MessageTypeTest extends TypeTestCase
+class MessageTypeTest extends TestCase
 {
     protected function createForm($options = [])
     {

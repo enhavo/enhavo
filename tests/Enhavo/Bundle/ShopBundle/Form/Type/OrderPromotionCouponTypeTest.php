@@ -15,8 +15,9 @@ use Sylius\Bundle\PromotionBundle\Form\Type\CouponToCodeType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Sylius\Component\Core\Model\Coupon;
 use Symfony\Component\Form\PreloadedExtension;
+use PHPUnit\Framework\TestCase;
 
-class OrderPromotionCouponTest extends TypeTestCase
+class OrderPromotionCouponTest extends TestCase
 {
     public function testSubmitData()
     {

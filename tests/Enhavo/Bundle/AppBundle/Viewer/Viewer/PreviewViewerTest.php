@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\TestCase;
 
-class PreviewViewerTest extends \PHPUnit_Framework_TestCase
+class PreviewViewerTest extends TestCase
 {
     function testInitialize()
     {

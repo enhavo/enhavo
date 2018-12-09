@@ -10,8 +10,9 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
+use PHPUnit\Framework\TestCase;
 
-class ArticleTest extends \PHPUnit_Framework_TestCase
+class ArticleTest extends TestCase
 {
     public function testCreated()
     {

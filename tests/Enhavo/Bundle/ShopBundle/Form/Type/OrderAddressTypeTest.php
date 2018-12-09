@@ -10,8 +10,9 @@ use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
 use Symfony\Component\Form\PreloadedExtension;
 use Enhavo\Bundle\ShopBundle\Entity\Order;
 use Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType;
+use PHPUnit\Framework\TestCase;
 
-class OrderAddressTypeTest extends TypeTestCase
+class OrderAddressTypeTest extends TestCase
 {
     public function testSubmitWithDifferentBillingAddress()
     {

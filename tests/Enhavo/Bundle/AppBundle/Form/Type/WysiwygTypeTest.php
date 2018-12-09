@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
 
-class WysiwygTypeTest extends TypeTestCase
+class WysiwygTypeTest extends TestCase
 {
     public function testSubmitValidData()
     {

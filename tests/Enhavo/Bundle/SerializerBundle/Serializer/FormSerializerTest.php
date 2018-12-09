@@ -14,8 +14,9 @@ use Enhavo\Bundle\SerializerBundle\Serializer\FormSerializer;
 use Enhavo\Bundle\SerializerBundle\Mock\Resource;
 use Enhavo\Bundle\SerializerBundle\Mock\ResourceType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
 
-class FormSerializerTest extends TypeTestCase
+class FormSerializerTest extends TestCase
 {
     public function testSerializeScalarField()
     {

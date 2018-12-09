@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class TemplateWidgetTest extends \PHPUnit_Framework_TestCase
+class TemplateWidgetTest extends TestCase
 {
     function testInitialize()
     {
