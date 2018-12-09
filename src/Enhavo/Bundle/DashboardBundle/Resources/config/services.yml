@@ -1,6 +1,6 @@
 services:
-    enhavo_dashvoard.menu.dashboard:
-        class: Enhavo\Bundle\DashboardBundle\Menu\DashboardMenu
+    Enhavo\Bundle\DashboardBundle\Menu\DashboardMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -12,8 +12,8 @@ services:
           - '@service_container'
           - 'Statistic'
 
-    enhavo_dashboard.block.statistic:
-        class: Enhavo\Bundle\DashboardBundle\Block\StatisticBlock
+    Enhavo\Bundle\DashboardBundle\Block\StatisticBlock:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

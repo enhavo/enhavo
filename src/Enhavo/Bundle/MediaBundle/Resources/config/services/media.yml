@@ -156,8 +156,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_media.menu.library:
-        class: Enhavo\Bundle\MediaBundle\Menu\LibraryMenu
+    Enhavo\Bundle\MediaBundle\Menu\LibraryMenu:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -172,8 +172,8 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_media.block.library:
-        class: Enhavo\Bundle\MediaBundle\Block\LibraryBlock
+    Enhavo\Bundle\MediaBundle\Block\LibraryBlock:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

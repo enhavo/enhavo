@@ -9,10 +9,34 @@
 namespace Enhavo\Bundle\AppBundle\Block\Block;
 
 use Enhavo\Bundle\AppBundle\Block\BlockInterface;
+use Enhavo\Bundle\AppBundle\Filter\FilterFactory;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class TableBlock extends AbstractType implements BlockInterface
 {
+    /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
+
+    /**
+     * @var FilterFactory
+     */
+    private $filterFactory;
+
+    /**
+     * TableBlock constructor.
+     *
+     * @param AuthorizationChecker $authorizationChecker
+     * @param FilterFactory $filterFactory
+     */
+    public function __construct(AuthorizationChecker $authorizationChecker, FilterFactory $filterFactory)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->filterFactory = $filterFactory;
+    }
+
     public function render($parameters)
     {
         $translationDomain = $this->getOption('translationDomain', $parameters, null);
@@ -31,16 +55,6 @@ class TableBlock extends AbstractType implements BlockInterface
             'filters' => $this->convertToFilterRows($filters),
             'filterRowSize' => $this->calcFilterRowSize($filters)
         ]);
-    }
-
-    private function getFiltersFromRoute($route)
-    {
-        $route = $this->container->get('router')->getRouteCollection()->get($route);
-        $sylius = $route->getDefault('_sylius');
-        if(is_array($sylius)&& isset($sylius['filters'])) {
-            return $this->getFilters($sylius['filters']);
-        }
-        return [];
     }
 
     private function calcFilterRowSize($filters)
@@ -82,18 +96,15 @@ class TableBlock extends AbstractType implements BlockInterface
 
     private function getFilters(array $parameters)
     {
-        $filterFactory = $this->container->get('enhavo_app.factory.filter');
-
         $tableRoute = $this->getRequiredOption('table_route', $parameters);
         if(!isset($parameters['filters'])) {
-            $filterData = $filterFactory->createFiltersFromRoute($tableRoute);
+            $filterData = $this->filterFactory->createFiltersFromRoute($tableRoute);
         } else {
-            $filterData = $filterFactory->createFilters($this->getOption('filters', $parameters, []));
+            $filterData = $this->filterFactory->createFilters($this->getOption('filters', $parameters, []));
         }
 
-        $authorizationChecker = $this->container->get('security.authorization_checker');
         foreach($filterData as $name => $filter) {
-            if($filter->getPermission() && !$authorizationChecker->isGranted($filter->getPermission())) {
+            if($filter->getPermission() && !$this->authorizationChecker->isGranted($filter->getPermission())) {
                 unset($filterData[$name]);
             }
         }

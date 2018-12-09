@@ -9,15 +9,17 @@ services:
             - '@service_container'
             - 'Menu'
 
-    enhavo_app.menu.base:
-        class: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+    Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: base }
 
-    enhavo_app.menu.list:
-        class: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+    Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu:
+        public: true
+        arguments:
+            - '@enhavo_app.menu.factory'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

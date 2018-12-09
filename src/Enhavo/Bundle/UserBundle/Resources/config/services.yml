@@ -59,24 +59,26 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_user.menu.user:
-        class: Enhavo\Bundle\UserBundle\Menu\UserMenu
+    Enhavo\Bundle\UserBundle\Menu\UserMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user_user }
 
-    enhavo_user.menu.group:
-        class: Enhavo\Bundle\UserBundle\Menu\GroupMenu
+    Enhavo\Bundle\UserBundle\Menu\GroupMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user_group }
 
-    enhavo_user.menu.user_main:
-        class: Enhavo\Bundle\UserBundle\Menu\UserMainMenu
+    Enhavo\Bundle\UserBundle\Menu\UserMainMenu:
+        public: true
+        arguments:
+            - '@enhavo_app.menu.factory'
         calls:
-          - [ 'setContainer', ['@service_container']]
+            - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user }
 
@@ -85,13 +87,13 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: login }
+            - { name: enhavo.widget, alias: login }
 
     enhavo_user.controller.security:
+        public: true
         class: Enhavo\Bundle\UserBundle\Controller\SecurityController
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
             - '@security.csrf.token_manager'
         calls:

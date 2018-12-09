@@ -33,36 +33,38 @@ services:
         arguments:
             - '@sylius.repository.country'
 
-    enhavo_shop.menu.product:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductMenu
+    Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_product }
 
-    enhavo_shop.menu.order:
-        class: Enhavo\Bundle\ShopBundle\Menu\OrderMenu
+    Enhavo\Bundle\ShopBundle\Menu\OrderMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_order }
 
-    enhavo_shop.menu.product_option:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu
+    Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_product_option }
 
-    enhavo_shop.menu.voucher:
-        class: Enhavo\Bundle\ShopBundle\Menu\VoucherMenu
+    Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_voucher }
 
-    enhavo_shop.menu.shop:
-        class: Enhavo\Bundle\ShopBundle\Menu\ShopMenu
+    Enhavo\Bundle\ShopBundle\Menu\ShopMenu:
+        public: true
+        arguments:
+          - '@enhavo_app.menu.factory'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

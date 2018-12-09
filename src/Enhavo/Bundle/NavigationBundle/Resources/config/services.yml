@@ -1,6 +1,6 @@
 services:
-    enhavo_navigation.menu.navigation:
-        class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu
+    Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

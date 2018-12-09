@@ -34,8 +34,8 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_newsletter.menu.newsletter:
-        class: Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu
+    Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

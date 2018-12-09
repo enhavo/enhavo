@@ -50,8 +50,8 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_category.action.category:
-        class: Enhavo\Bundle\CategoryBundle\Action\CategoryAction
+    Enhavo\Bundle\CategoryBundle\Action\CategoryAction:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -66,8 +66,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_category.menu.category:
-        class: Enhavo\Bundle\CategoryBundle\Menu\CategoryMenu
+    Enhavo\Bundle\CategoryBundle\Menu\CategoryMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

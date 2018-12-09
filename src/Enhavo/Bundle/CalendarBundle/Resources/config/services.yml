@@ -25,8 +25,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_calendar.menu.calendar:
-        class: Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu
+    Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

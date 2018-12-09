@@ -8,8 +8,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_newsletter.menu.subscriber:
-        class: Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu
+    Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

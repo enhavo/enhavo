@@ -23,36 +23,36 @@ services:
             - '@enhavo_app.factory.filter'
             - '@enhavo_app.factory.filter_query'
 
-    enhavo_app.filter.text:
-        class: Enhavo\Bundle\AppBundle\Filter\Filter\TextFilter
+    Enhavo\Bundle\AppBundle\Filter\Filter\TextFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: text }
 
-    enhavo_app.filter.boolean:
-        class: Enhavo\Bundle\AppBundle\Filter\Filter\BooleanFilter
+    Enhavo\Bundle\AppBundle\Filter\Filter\BooleanFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: boolean }
 
-    enhavo_app.filter.option:
-        class: Enhavo\Bundle\AppBundle\Filter\Filter\OptionFilter
+    Enhavo\Bundle\AppBundle\Filter\Filter\OptionFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: option }
 
-    enhavo_app.filter.entity:
-        class: Enhavo\Bundle\AppBundle\Filter\Filter\EntityFilter
+    Enhavo\Bundle\AppBundle\Filter\Filter\EntityFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: entity }
 
-    enhavo_app.filter.auto_complete_entity:
-        class: Enhavo\Bundle\AppBundle\Filter\Filter\AutoCompleteEntityFilter
+    Enhavo\Bundle\AppBundle\Filter\Filter\AutoCompleteEntityFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

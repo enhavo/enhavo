@@ -16,15 +16,15 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.action.create:
-        class: Enhavo\Bundle\AppBundle\Action\Action\CreateAction
+    Enhavo\Bundle\AppBundle\Action\Action\CreateAction:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.action, alias: create }
 
-    enhavo_app.action.download:
-        class:  Enhavo\Bundle\AppBundle\Action\Action\DownloadAction
+    Enhavo\Bundle\AppBundle\Action\Action\DownloadAction:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
