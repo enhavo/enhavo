@@ -25,7 +25,6 @@ return [
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
-
     Enhavo\Bundle\AppBundle\EnhavoAppBundle::class => ['all' => true],
     Enhavo\Bundle\UserBundle\EnhavoUserBundle::class => ['all' => true],
     Enhavo\Bundle\AssetsBundle\EnhavoAssetsBundle::class => ['all' => true],
