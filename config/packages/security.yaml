@@ -1,24 +1,73 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+
     providers:
-        in_memory: { memory: ~ }
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin:
+            pattern:  ^/admin/.*
+            context: user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login/check
+                failure_path:   /admin/login
+                default_target_path: /admin/enhavo/dashboard
+            logout:
+                path:   /admin/logout
+                target: /admin/login
+            anonymous:  true
+
+        user:
+            pattern: ^/user/.*
+            context: user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /user/login
+                use_forward:    false
+                check_path:     /user/login/check
+                failure_path:   /user/login
+                default_target_path: /user/profile
+            logout:
+                path:   /user/logout
+                target: /user/login
+            anonymous:  true
+
         main:
-            anonymous: true
+            pattern: .*
+            context: user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                default_target_path: /user/profile
+            logout:
+                path:   /logout
+                target: /
+            anonymous:  true
 
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/check-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/registration$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/, role: ROLE_USER }

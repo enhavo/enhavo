@@ -8,49 +8,43 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\SimpleRequestConfigurationFactoryInterface;
-use Enhavo\Bundle\AppBundle\Controller\ViewHandler;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
-use FOS\RestBundle\View\ViewHandler as FOSViewHandler;
+use FOS\RestBundle\View\ViewHandler;
 use FOS\UserBundle\Controller\SecurityController as FOSSecurityController;
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class SecurityController extends FOSSecurityController
 {
     /**
-     * @var SimpleRequestConfigurationFactoryInterface
+     * @var ViewFactory
      */
-    protected $requestConfigurationFactory;
-
-    /**
-     * @var ViewerFactory
-     */
-    protected $viewerFactory;
+    private $viewFactory;
 
     /**
      * @var ViewHandler
      */
-    protected $viewHandler;
+    private $viewHandler;
 
     public function __construct(
-        SimpleRequestConfigurationFactoryInterface $requestConfigurationFactory,
-        ViewerFactory $viewerFactory,
-        FOSViewHandler $viewHandler,
+        ViewFactory $viewFactory,
+        ViewHandler $viewHandler,
         CsrfTokenManagerInterface $tokenManager
     ) {
         parent::__construct($tokenManager);
-        $this->viewerFactory = $viewerFactory;
+        $this->viewFactory = $viewFactory;
         $this->viewHandler = $viewHandler;
-        $this->requestConfigurationFactory = $requestConfigurationFactory;
     }
 
     public function renderLogin(array $data)
     {
         $request = $this->get('request_stack')->getCurrentRequest();
-        $configuration = $this->requestConfigurationFactory->createSimple($request);
-        return $this->render(
-            $configuration->getTemplate('EnhavoUserBundle:Theme:Security/login.html.twig'),
-            $data
-        );
+
+        $view = $this->viewFactory->create('base', [
+            'template' => 'EnhavoUserBundle:Theme:Security/login.html.twig',
+            'request' => $request,
+            'parameters' => $data,
+        ]);
+
+        return $this->viewHandler->handle($view);
     }
 }
