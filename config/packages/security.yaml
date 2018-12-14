@@ -23,7 +23,7 @@ security:
                 use_forward:    false
                 check_path:     /admin/login/check
                 failure_path:   /admin/login
-                default_target_path: /admin/enhavo/dashboard
+                default_target_path: /admin
             logout:
                 path:   /admin/logout
                 target: /admin/login

@@ -23,7 +23,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('login_redirect')->defaultValue('enhavo_dashboard_index')->end()
+                ->arrayNode('login')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('route')->defaultValue('enhavo_dashboard_index')->end()
+                        ->scalarNode('route_parameters')->defaultValue([])->end()
+                    ->end()
+                ->end()
             ->end()
 
             ->children()

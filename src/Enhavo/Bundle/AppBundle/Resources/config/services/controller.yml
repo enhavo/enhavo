@@ -1,0 +1,8 @@
+services:
+    Enhavo\Bundle\AppBundle\Controller\LoginController:
+        arguments:
+            - '@router'
+            - '%enhavo_app.login.route%'
+            - '%enhavo_app.login.route_parameters%'
+        tags:
+            - { name: controller.service_arguments }
