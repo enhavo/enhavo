@@ -102,8 +102,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_media.table.picture_widget:
-        class: Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget
+    Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

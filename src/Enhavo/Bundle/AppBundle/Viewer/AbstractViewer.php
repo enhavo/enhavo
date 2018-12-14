@@ -13,28 +13,31 @@ use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractViewer extends AbstractType implements ViewerInterface
 {
-    use ContainerAwareTrait;
-
     /**
      * @var RequestConfigurationFactory
      */
     private $requestConfigurationFactory;
 
     /**
+     * @var ViewerUtil
+     */
+    protected $util;
+
+    /**
      * AbstractViewer constructor.
      *
      * @param RequestConfigurationFactory $requestConfigurationFactory
      */
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory)
+    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util)
     {
         $this->requestConfigurationFactory = $requestConfigurationFactory;
+        $this->util = $util;
     }
 
     /**
@@ -103,6 +106,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
         $optionsResolver->setDefaults([
             'translation_domain' => null,
             'resource' => null,
+            'resources' => null,
             'metadata' => null,
             'template' => null,
             'request_configuration' => null,
@@ -119,7 +123,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-
+        $parameters->set('translationDomain', $options['translation_domain']);
     }
 
     protected function mergeConfigArray($configs)

@@ -47,7 +47,7 @@ class AppViewer extends BaseViewer
             'title' => '',
             'blocks' => [],
             'actions' => [],
-            'app' => 'app/Index',
+            'apps' => ['app/Index'],
             'template' => 'EnhavoAppBundle:Viewer:app.html.twig'
         ]);
     }

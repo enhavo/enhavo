@@ -62,7 +62,7 @@ class RequestConfiguration extends SyliusRequestConfiguration
 
     public function getBatches()
     {
-        return $this->getBatches()->get('batches', []);
+        return $this->getParameters()->get('batches', []);
     }
 
     public function getBatchOptions($type)

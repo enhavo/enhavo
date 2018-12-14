@@ -9,22 +9,24 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
 use FOS\RestBundle\View\View;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableViewer extends AbstractViewer
 {
-    protected function getColumns()
+    public function getType()
     {
-        $columns = $this->optionAccessor->get('columns');
+        return 'table';
+    }
+
+    private function getColumns(RequestConfiguration $configuration, $defaultTranslationDomain = null)
+    {
+        $columns = $this->getViewerOption('columns', $configuration);
 
         if(empty($columns)) {
-            /** @var RequestConfiguration $configuration */
-            $configuration = $this->configuration;
-
             if ($configuration->isSortable()) {
                 $columns = array(
                     'id' => array(
@@ -53,69 +55,59 @@ class TableViewer extends AbstractViewer
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('translationDomain', $column)) {
-                $column['translationDomain'] = $this->optionAccessor->get('translationDomain');
+                $column['translationDomain'] = $defaultTranslationDomain;
             }
         }
 
         return $columns;
     }
     
-    protected function getBatches()
+    private function getBatches($batchRoute)
     {
-        $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');
-        $router = $this->container->get('router');
-        /** @var RequestConfigurationInterface $configuration */
-        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $this->metadata, $router);
-        if($configuration === null) {
-            return [];
-        }
+        $configuration = $this->util->createConfigurationFromRoute($batchRoute);
         $batches = $configuration->getBatches();
         return $batches;
     }
 
-    protected function getDefaultMoveAfterRoute()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        return sprintf('%s_%s_move_after', $this->metadata->getApplicationName(), $this->getUnderscoreName());
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-    protected function getDefaultMoveToPageRoute()
-    {
-        return sprintf('%s_%s_move_to_page', $this->metadata->getApplicationName(), $this->getUnderscoreName());
-    }
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
 
-    protected function getBatchRoute()
-    {
-        return sprintf('%s_%s_batch', $this->metadata->getApplicationName(), $this->getUnderscoreName());
-    }
+        $parameters->set('data',  $options['resources']);
 
-    protected function getPermissionRole()
-    {
-        return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->getUnderscoreName()));
-    }
-
-    public function getType()
-    {
-        return 'table';
-    }
-
-    public function createView($options = []): View
-    {
-        /** @var RequestConfiguration $configuration */
-        $configuration = $this->configuration;
-
-        $view = parent::createView($options);
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:table.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'data' => $this->resource,
-            'sortable' => $configuration->isSortable(),
-            'columns' => $this->getColumns(),
-            'batches' => $this->getBatches(),
-            'batch_route' => $this->getBatchRoute(),
-            'width' => $this->optionAccessor->get('width'),
-            'move_after_route' => $this->optionAccessor->get('sorting.move_after_route'),
-            'move_to_page_route' => $this->optionAccessor->get('sorting.move_to_page_route'),
+        $parameters->set('sortable', $this->mergeConfig([
+            $options['sortable'],
+            $requestConfiguration->isSortable(),
         ]));
-        return $view;
+
+        $parameters->set('columns', $this->mergeConfigArray([
+            $options['columns'],
+            $this->getColumns($requestConfiguration, $parameters->get('translationDomain'))
+        ]));
+
+        $parameters->set('batch_route', $this->mergeConfig([
+            sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['batch_route'],
+        ]));
+
+        $parameters->set('batches', $this->getBatches($parameters->get('batch_route')));
+
+        $parameters->set('width', $this->mergeConfig([
+            $options['width']
+        ]));
+
+        $parameters->set('move_after_route', $this->mergeConfig([
+            sprintf('%s_%s_move_after', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['move_after_route']
+        ]));
+
+        $parameters->set('move_to_page_route', $this->mergeConfig([
+            sprintf('%s_%s_move_to_page', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['move_to_page_route']
+        ]));
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -123,12 +115,12 @@ class TableViewer extends AbstractViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'width' => 12,
-            'sorting' => [
-                'move_after_route' => $this->getDefaultMoveAfterRoute(),
-                'move_to_page_route' => $this->getDefaultMoveToPageRoute()
-            ],
-            'batch_route' => $this->getBatchRoute(),
-            'columns' => []
+            'move_after_route' => null,
+            'move_to_page_route' => null,
+            'batch_route' => null,
+            'columns' => [],
+            'sortable' => false,
+            'template' => 'EnhavoAppBundle:Viewer:table.html.twig'
         ]);
     }
 }

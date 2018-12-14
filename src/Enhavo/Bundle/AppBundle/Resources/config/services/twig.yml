@@ -8,6 +8,8 @@ services:
         class: '%enhavo_app.twig.pagination_render.class%'
         arguments:
             - '%enhavo_app.twig.pagination_render.template%'
+        calls:
+            - [ setEngine, ['@templating']]
         tags:
             - { name: twig.extension }
 

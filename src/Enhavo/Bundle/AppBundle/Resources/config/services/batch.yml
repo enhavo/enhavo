@@ -18,8 +18,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.batch.delete:
-        class: Enhavo\Bundle\AppBundle\Batch\Batch\DeleteBatch
+    Enhavo\Bundle\AppBundle\Batch\Batch\DeleteBatch:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
