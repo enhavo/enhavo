@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\UserBundle\Form\Type;
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,7 +47,7 @@ class UserType extends AbstractType
         ));
 
         $builder->add('plainPassword', RepeatedType::class, array(
-            'type' => 'password',
+            'type' => PasswordType::class,
             'options' => array('translation_domain' => 'FOSUserBundle'),
             'first_options' => array('label' => 'form.password'),
             'second_options' => array('label' => 'form.password_confirmation'),
@@ -78,7 +79,7 @@ class UserType extends AbstractType
 
         $builder->add('groups', EntityType::class, array(
             'class' => 'EnhavoUserBundle:Group',
-            'property' => 'name',
+            'choice_label' => 'name',
             'multiple' => true,
             'expanded' => true,
             'list' => true,

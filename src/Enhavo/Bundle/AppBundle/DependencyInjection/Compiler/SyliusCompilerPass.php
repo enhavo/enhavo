@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Controller\ResourcesResolver;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -19,11 +20,7 @@ class SyliusCompilerPass implements CompilerPassInterface
         $this->overwriteTargetResolver($container);
         $this->overwriteRequestConfigurationFactory($container);
         $this->overwriteController($container);
-
-//        $this->overwriteEventDispatcher($container);
-//        $this->overwriteResourceResolver($container);
-//        $this->overwriteViewHandler($container);
-//        $this->overwriteNewResourceFactory($container);
+        $this->overwriteResourceResolver($container);
     }
 
     private function overwriteTargetResolver(ContainerBuilder $container)
@@ -60,28 +57,10 @@ class SyliusCompilerPass implements CompilerPassInterface
         }
     }
 
-    protected function overwriteEventDispatcher(ContainerBuilder $container)
-    {
-        $definition = $container->getDefinition('sylius.resource_controller.event_dispatcher');
-        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\EventDispatcher');
-    }
-
     protected function overwriteResourceResolver(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('sylius.resource_controller.resources_resolver');
-        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ResourcesResolver');
+        $definition->setClass(ResourcesResolver::class);
         $definition->addArgument($container->getDefinition('enhavo_app.filter.filer_query_builder'));
-    }
-
-    protected function overwriteViewHandler(ContainerBuilder $container)
-    {
-        $definition = $container->getDefinition('sylius.resource_controller.view_handler');
-        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\ViewHandler');
-    }
-
-    protected function overwriteNewResourceFactory(ContainerBuilder $container)
-    {
-        $definition = $container->getDefinition('sylius.resource_controller.new_resource_factory');
-        $definition->setClass('Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory');
     }
 }

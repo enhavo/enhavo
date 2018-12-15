@@ -22,7 +22,6 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface as SyliusRequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
@@ -161,7 +160,8 @@ class ResourceController extends BaseController
         $form = $this->resourceFormFactory->create($configuration, $resource);
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
-            if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()) {
                 $resource = $form->getData();
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);

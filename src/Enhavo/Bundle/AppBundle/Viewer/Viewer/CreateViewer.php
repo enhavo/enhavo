@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,11 +28,10 @@ class CreateViewer extends AbstractViewer
 
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
+        /** @var Form $form */
+        $form = $options['form'];
 
-        $parameters->set('form', $this->mergeConfig([
-            $options['form'],
-            $requestConfiguration->getFormType()
-        ]));
+        $parameters->set('form', $form->createView());
 
         $parameters->set('tabs', $this->mergeConfigArray([
             [
@@ -44,7 +44,7 @@ class CreateViewer extends AbstractViewer
             $this->getViewerOption('tabs', $requestConfiguration)
         ]));
 
-        $parameters->set('form_template', $this->mergeConfigArray([
+        $parameters->set('form_template', $this->mergeConfig([
             $options['form_template'],
             $this->getViewerOption('form.template', $requestConfiguration)
         ]));
@@ -60,6 +60,19 @@ class CreateViewer extends AbstractViewer
             $this->getViewerOption('form.action_parameters', $requestConfiguration)
         ]));
 
+        $parameters->set('buttons', $this->mergeConfigArray([
+            'buttons' => [
+                'cancel' => [
+                    'type' => 'cancel',
+                ],
+                'save' => [
+                    'type' => 'save',
+                ]
+            ],
+            $options['buttons'],
+            $this->getViewerOption('buttons', $requestConfiguration)
+        ]));
+
         $parameters->set('data', $options['resource']);
     }
 
@@ -69,10 +82,11 @@ class CreateViewer extends AbstractViewer
         $optionsResolver->setDefaults([
             'tabs' => [],
             'buttons' => [],
-            'form' => [],
-            'form_action' => [],
+            'form' => null,
+            'form_action' => null,
             'form_action_parameters' => [],
-            'form_template' => 'EnhavoAppBundle:View:tab.html.twig'
+            'form_template' => 'EnhavoAppBundle:View:tab.html.twig',
+            'template' => 'EnhavoAppBundle:Resource:create.html.twig'
         ]);
     }
 }

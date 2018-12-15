@@ -19,43 +19,43 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_app.button.delete:
-        class: Enhavo\Bundle\AppBundle\Button\Button\DeleteButton
+    Enhavo\Bundle\AppBundle\Button\Button\DeleteButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: delete }
 
-    enhavo_app.button.cancel:
-        class: Enhavo\Bundle\AppBundle\Button\Button\CancelButton
+    Enhavo\Bundle\AppBundle\Button\Button\CancelButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: cancel }
 
-    enhavo_app.button.preview:
-        class: Enhavo\Bundle\AppBundle\Button\Button\PreviewButton
+    Enhavo\Bundle\AppBundle\Button\Button\PreviewButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: preview }
 
-    enhavo_app.button.save:
-        class: Enhavo\Bundle\AppBundle\Button\Button\SaveButton
+    Enhavo\Bundle\AppBundle\Button\Button\SaveButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: save }
 
-    enhavo_app.button.duplicate:
-        class: Enhavo\Bundle\AppBundle\Button\Button\DuplicateButton
+    Enhavo\Bundle\AppBundle\Button\Button\DuplicateButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: duplicate }
 
-    enhavo_app.button.download:
-        class: Enhavo\Bundle\AppBundle\Button\Button\DownloadButton
+    Enhavo\Bundle\AppBundle\Button\Button\DownloadButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

@@ -76,11 +76,11 @@ class RequestConfiguration extends SyliusRequestConfiguration
 
     public function getFilters()
     {
-        return $this->getFilters()->get('filters', []);
+        return $this->getParameters()->get('filters', []);
     }
 
     public function hasFilters()
     {
-        return $this->getFilters()->has('filters');
+        return $this->getParameters()->has('filters');
     }
 }
