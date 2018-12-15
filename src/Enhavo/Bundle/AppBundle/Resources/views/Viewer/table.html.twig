@@ -8,10 +8,10 @@
 
     <div class="row row-container{% if sortable %} sortable-droptarget{% endif %}">
         <div class="col-xs-{{ width }}"
-                {% if sortable %}
-        data-sortable-container data-move-after-route="{{ move_after_route }}"
-            data-move-to-page-route="{{ move_to_page_route }}"
-                {% endif %}>
+            {% if sortable %}
+                data-sortable-container data-move-after-route="{{ move_after_route }}"
+                data-move-to-page-route="{{ move_to_page_route }}"
+            {% endif %}>
             {% for item in data %}
                 <div class="row entry-row{% if batches %} has-batch-actions{% endif %}" data-id="{{ item.id }}"{% if sortable %} data-sortable-row{% endif %}>
                     {% if batches %}

@@ -123,7 +123,10 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        $parameters->set('translationDomain', $options['translation_domain']);
+        $parameters->set('translationDomain', $this->mergeConfig([
+            $options['translation_domain'],
+            $this->getViewerOption('translationDomain', $requestConfiguration)
+        ]));
     }
 
     protected function mergeConfigArray($configs)

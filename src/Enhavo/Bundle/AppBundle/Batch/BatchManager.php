@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -22,7 +23,7 @@ class BatchManager
         $this->collector = $collector;
     }
 
-    public function executeBatch($resources, RequestConfigurationInterface $requestConfiguration)
+    public function executeBatch($resources, RequestConfiguration $requestConfiguration)
     {
         $type = $requestConfiguration->getBatchType();
         if($type == null) {
