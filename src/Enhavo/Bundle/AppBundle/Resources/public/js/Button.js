@@ -7,14 +7,15 @@ define(['jquery', 'app/Admin', 'app/Form', 'app/Router', 'app/Translator'], func
       $(form).find('[data-button][data-type=delete]').click(function (event) {
         event.preventDefault();
         var url = $(form).data('delete');
+        var csrfToken = $(form).data('csrf-token');
         if (confirm(translator.trans('form.delete.question'))) {
           admin.openLoadingOverlay();
           $.ajax({
-            type: 'POST',
-            data: {
-              _method: 'DELETE'
-            },
+            type: 'DELETE',
             url: url,
+            data: {
+              _csrf_token: csrfToken
+            },
             success: function () {
               admin.closeLoadingOverlay();
               if(overlay) {

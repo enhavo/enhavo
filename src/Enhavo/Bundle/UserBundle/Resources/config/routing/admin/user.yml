@@ -75,6 +75,7 @@ enhavo_user_user_delete:
     methods: [DELETE]
     defaults:
         _controller: enhavo_user.controller.user:deleteAction
+        _format: json
 
 enhavo_user_user_batch:
     options:

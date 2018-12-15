@@ -1,9 +1,10 @@
 {% extends template('dialog') %}
 
 {% trans_default_domain "EnhavoAppBundle" %}
+{% form_theme form 'EnhavoAppBundle:Form:fields.html.twig' %}
 
 {% block content %}
-    <form method="POST" action="{{ path(form_action, form_action_parameters) }} {% if form_delete %}data-delete="{{ path(form_delete, form_delete_parameters) }}"{% endif %} data-id="{{ data.id }}">
+    <form method="POST" action="{{ path(form_action, form_action_parameters) }}" data-csrf-token="{{ csrf_token }}" {% if form_delete %}data-delete="{{ path(form_delete, form_delete_parameters) }}"{% endif %} data-id="{{ data.id }}">
         {% block form %}
             {% include form_template %}
         {% endblock %}

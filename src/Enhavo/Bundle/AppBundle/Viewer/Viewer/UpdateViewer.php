@@ -43,7 +43,7 @@ class UpdateViewer extends CreateViewer
         ]));
 
         $parameters->set('form_delete', $this->mergeConfig([
-            sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             $options['form_delete'],
             $this->getViewerOption('form.delete', $requestConfiguration)
         ]));
@@ -53,6 +53,8 @@ class UpdateViewer extends CreateViewer
             $options['form_delete_parameters'],
             $this->getViewerOption('form.delete_parameters', $requestConfiguration)
         ]));
+
+        $parameters->set('csrf_token', $this->container->get('security.csrf.token_manager')->getToken((string)$resource->getId())->getValue());
 
         $parameters->set('buttons', $this->mergeConfigArray([
             'buttons' => [
@@ -79,6 +81,7 @@ class UpdateViewer extends CreateViewer
         $optionsResolver->setDefaults([
             'form_delete' => null,
             'form_delete_parameters' => [],
+            'template' => 'EnhavoAppBundle:Resource:update.html.twig',
         ]);
     }
 }

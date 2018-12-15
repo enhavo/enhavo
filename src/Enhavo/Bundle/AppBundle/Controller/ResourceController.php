@@ -296,7 +296,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveAfterAction(Request $request): Response
+    public function moveAfterAction(Request $request): JsonResponse
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
@@ -309,18 +309,13 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveToPageAction(Request $request): Response
+    public function moveToPageAction(Request $request): JsonResponse
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
         $this->sortingManger->moveToPage($configuration, $this->metadata, $resource, $this->repository, $request->get('page'), $request->get('top'));
 
         return new JsonResponse();
-    }
-
-    protected function getPermissionRole($type, MetadataInterface $metadata)
-    {
-        return strtoupper(sprintf('ROLE_%s_%s_%s', $metadata->getApplicationName(), $metadata->getHumanizedName(), $type));
     }
 
     /**
