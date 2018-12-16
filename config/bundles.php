@@ -31,7 +31,7 @@ return [
     Enhavo\Bundle\AssetsBundle\EnhavoAssetsBundle::class => ['all' => true],
     Enhavo\Bundle\MediaBundle\EnhavoMediaBundle::class => ['all' => true],
     Enhavo\Bundle\SearchBundle\EnhavoSearchBundle::class => ['all' => true],
-    Enhavo\Bundle\SerializerBundle\EnhavoSerializerBundle::class => ['all' => true],
+    Enhavo\Bundle\FormBundle\EnhavoFormBundle::class => ['all' => true],
     Enhavo\Bundle\DashboardBundle\EnhavoDashboardBundle::class => ['all' => true],
     Enhavo\Bundle\InstallerBundle\EnhavoInstallerBundle::class => ['all' => true],
     Enhavo\Bundle\GeneratorBundle\EnhavoGeneratorBundle::class => ['all' => true],

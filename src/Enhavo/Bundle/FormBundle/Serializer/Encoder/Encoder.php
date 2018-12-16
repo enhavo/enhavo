@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Encoder;
+namespace Enhavo\Bundle\FormBundle\Serializer\Encoder;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 

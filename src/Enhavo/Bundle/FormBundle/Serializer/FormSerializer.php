@@ -7,9 +7,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Serializer;
+namespace Enhavo\Bundle\FormBundle\Serializer;
 
-use Enhavo\Bundle\SerializerBundle\Encoder\Encoder;
+use Enhavo\Bundle\FormBundle\Serializer\Encoder\Encoder;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;

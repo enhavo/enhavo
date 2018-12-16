@@ -7,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Encoder;
+namespace Enhavo\Bundle\FormBundle\Serializer\Encoder;
 
 class JsonEncoder implements EncoderInterface
 {
