@@ -6,30 +6,29 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_user_user:
-        class: Enhavo\Bundle\UserBundle\Form\Type\UserType
+    Enhavo\Bundle\UserBundle\Form\Type\UserType:
         arguments:
             - '%enhavo_user.model.user.class%'
+            - [default]
             - '@security.authorization_checker'
         tags:
             - { name: form.type }
 
-    enhavo_user_profile:
-        class: Enhavo\Bundle\UserBundle\Form\Type\ProfileType
+    Enhavo\Bundle\UserBundle\Form\Type\ProfileType:
         arguments:
             - '%enhavo_user.model.user.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_user_profile' }
 
-    enhavo_user_group:
-        class: Enhavo\Bundle\UserBundle\Form\Type\GroupType
+    Enhavo\Bundle\UserBundle\Form\Type\GroupType:
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_user_group' }
         arguments:
+            - '%enhavo_user.model.group.class%'
+            - [default]
             - '@security.roles.provider'
 
-    enhavo_user_change_email:
-        class: Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailType
+    Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailType:
         tags:
             - { name: form.type }
         arguments:

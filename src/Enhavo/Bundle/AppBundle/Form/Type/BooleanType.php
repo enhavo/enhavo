@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanType extends AbstractType
 {
@@ -17,7 +17,10 @@ class BooleanType extends AbstractType
     const VALUE_FALSE = 'false';
     const VALUE_NULL = 'null';
 
-    protected $translator;
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
 
     public function __construct(TranslatorInterface $translator)
     {
@@ -74,9 +77,11 @@ class BooleanType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                self::VALUE_TRUE => $this->translator->trans('label.yes', array(), 'EnhavoAppBundle'),
-                self::VALUE_FALSE => $this->translator->trans('label.no', array(), 'EnhavoAppBundle')
+                $this->translator->trans('label.yes', [], 'EnhavoAppBundle') => self::VALUE_TRUE,
+                $this->translator->trans('label.no', [], 'EnhavoAppBundle') => self::VALUE_FALSE
             ),
+            'choice_translation_domain' => 'EnhavoAppBundle',
+            'translation_domain' => 'EnhavoAppBundle',
             'expanded' => true,
             'multiple' => false,
             'default' => null

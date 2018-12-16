@@ -9,37 +9,40 @@
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider;
-use Enhavo\Bundle\AppBundle\Security\Roles\RolesProvider;
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
-class GroupType extends AbstractType
+class GroupType extends AbstractResourceType
 {
     /**
      * @var AdminRolesProvider
      */
-    protected $rolesProvider;
+    private $rolesProvider;
 
     /**
      * GroupType constructor.
      *
+     * @param string $dataClass
+     * @param array $validationGroups
      * @param AdminRolesProvider $rolesProvider
      */
-    public function __construct(AdminRolesProvider $rolesProvider)
+    public function __construct(string $dataClass, array $validationGroups = [], AdminRolesProvider $rolesProvider)
     {
+        parent::__construct($dataClass, $validationGroups);
         $this->rolesProvider = $rolesProvider;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'label' => 'group.form.label.name',
             'translation_domain' => 'EnhavoUserBundle'
 
         ));
 
-        $builder->add('roles', 'choice', array(
+        $builder->add('roles', ChoiceType::class, array(
             'label' => 'group.form.label.roles',
             'translation_domain' => 'EnhavoUserBundle',
             'choices' => $this->rolesProvider->getRoles(),
@@ -47,13 +50,6 @@ class GroupType extends AbstractType
             'expanded' => true,
             'list' => true
         ));
-    }
-
-    public function getDefaultOptions()
-    {
-        return array(
-            'data_class' => 'enhavo/UserBundle/Entity/Group'
-        );
     }
 
     public function getName()

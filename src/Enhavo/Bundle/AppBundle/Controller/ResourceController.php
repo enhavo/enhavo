@@ -159,9 +159,9 @@ class ResourceController extends BaseController
 
         $form = $this->resourceFormFactory->create($configuration, $resource);
 
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
-            $form->handleRequest($request);
-            if($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
+            if($form->isValid()) {
                 $resource = $form->getData();
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);

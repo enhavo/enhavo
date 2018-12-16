@@ -65,7 +65,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
         return $view;
     }
 
-    private function create($options): View
+    protected function create($options): View
     {
         $view = null;
         if(isset($options['resource'])) {

@@ -10,8 +10,10 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,6 +22,23 @@ class CreateViewer extends AbstractViewer
     public function getType()
     {
         return 'create';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function create($options): View
+    {
+        /** @var FormInterface $form */
+        $form = $options['form'];
+
+        if($form->isSubmitted()) {
+            $view = View::create($form, $form->isValid() ? 200 : 400);
+            $view->setFormat('json');
+            return $view;
+        }
+
+        return parent::create($options);
     }
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
@@ -35,7 +54,7 @@ class CreateViewer extends AbstractViewer
 
         $parameters->set('tabs', $this->mergeConfigArray([
             [
-                'general' => [
+                'main' => [
                     'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
                     'template' => 'EnhavoAppBundle:Tab:default.html.twig'
                 ],

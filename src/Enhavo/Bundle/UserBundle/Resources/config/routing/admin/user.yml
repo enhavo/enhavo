@@ -18,6 +18,9 @@ enhavo_user_user_create:
     defaults:
         _controller: enhavo_user.controller.user:createAction
         _sylius:
+            form:
+                options:
+                    validation_groups: [create]
             viewer:
                 translationDomain: EnhavoUserBundle
 
