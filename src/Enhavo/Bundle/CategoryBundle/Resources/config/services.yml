@@ -21,11 +21,10 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_category'}
 
-    enhavo_category_category:
-        class: '%enhavo_category.form.type.category.class%'
+    Enhavo\Bundle\CategoryBundle\Form\Type\CategoryType:
         arguments:
             - '%enhavo_category.model.category.class%'
-            - '%enhavo_translation.translate%'
+            - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: 'enhavo_category_category'}
 

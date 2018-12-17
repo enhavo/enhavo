@@ -10,7 +10,6 @@ enhavo_media:
             type: image
             width: 960
 
-twig:
-    form:
-        resources:
-            - 'EnhavoGridBundle:Form:fields.html.twig'
+enhavo_app:
+    form_themes:
+        - 'EnhavoGridBundle:Form:fields.html.twig'

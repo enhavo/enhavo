@@ -27,12 +27,11 @@ services:
           - '@mailer'
           - '%enhavo_newsletter.newsletter.mail%'
 
-    enhavo_newsletter_newsletter:
-        class: '%enhavo_newsletter.form.type.newsletter.class%'
+    Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType:
         arguments:
             - '%enhavo_newsletter.model.newsletter.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_newsletter_newsletter }
 
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu:
         public: true

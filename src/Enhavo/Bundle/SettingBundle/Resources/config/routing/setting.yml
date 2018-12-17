@@ -33,7 +33,6 @@ enhavo_setting_setting_update:
                         label: setting.label.setting
                         template: EnhavoSettingBundle:Setting:setting.html.twig
 
-
 enhavo_setting_setting_table:
     options:
         expose: true
@@ -53,6 +52,6 @@ enhavo_setting_setting_table:
                         width: 6
                     value:
                         type: text
-                        type: setting
+                        property: setting
                         label: setting.label.value
                         width: 6

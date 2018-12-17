@@ -27,14 +27,14 @@ class RouteCompilerPass implements CompilerPassInterface
     {
 //        $definition = $container->getDefinition('enhavo_app.form.route');
 //        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\RouteType');
-//        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
+//        $definition->addArgument($container->getParameter('enhavo_app.translate'));
     }
 
     protected function overwriteSlugType(ContainerBuilder $container)
     {
 //        $definition = $container->getDefinition('enhavo_slug');
 //        $definition->setClass('Enhavo\Bundle\TranslationBundle\Form\Type\SlugType');
-//        $definition->addArgument($container->getParameter('enhavo_translation.translate'));
+//        $definition->addArgument($container->getParameter('enhavo_app.translate'));
     }
 
     protected function overwriteRouteValidator(ContainerBuilder $container)
@@ -51,7 +51,7 @@ class RouteCompilerPass implements CompilerPassInterface
 
     protected function overwriteAutoGenerator(ContainerBuilder $container)
     {
-//        if($container->getParameter('enhavo_translation.translate')) {
+//        if($container->getParameter('enhavo_app.translate')) {
 //            $definition = $container->getDefinition('enhavo_app.route.auto_generator');
 //            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\AutoGenerator');
 //        }
@@ -59,7 +59,7 @@ class RouteCompilerPass implements CompilerPassInterface
 
     protected function overwriteRouteGuessGenerator(ContainerBuilder $container)
     {
-//        if($container->getParameter('enhavo_translation.translate')) {
+//        if($container->getParameter('enhavo_app.translate')) {
 //            $definition = $container->getDefinition('enhavo_app.route_guess_generator');
 //            $definition->setClass('Enhavo\Bundle\TranslationBundle\Route\RouteGuessGenerator');
 //            $definition->addArgument($container->getDefinition('enhavo_translation.translator'));

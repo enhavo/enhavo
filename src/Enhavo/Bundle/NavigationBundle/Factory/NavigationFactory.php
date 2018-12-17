@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Sylius\Component\Resource\Factory\Factory as SyliusFactory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 
-class NavigationFactory extends SyliusFactory
+class NavigationFactory extends Factory
 {
 
 }

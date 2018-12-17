@@ -23,6 +23,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('translate')->defaultValue(false)->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('login')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -40,6 +44,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('dialog')->defaultValue('EnhavoAppBundle::dialog.html.twig')->end()
                         ->scalarNode('theme_base')->defaultValue('EnhavoAppBundle:Theme:base.html.twig')->end()
                     ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('form_themes')
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
 

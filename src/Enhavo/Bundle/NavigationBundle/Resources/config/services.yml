@@ -64,22 +64,22 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_navigation_nodes' }
 
-    enhavo_navigation.item.configuration.link_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'link' }
 
-    enhavo_navigation.item.configuration.submenu_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'submenu' }
 
-    enhavo_navigation.item.configuration.node_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:

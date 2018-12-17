@@ -16,7 +16,6 @@ page:
     id: 'ID'
     public: 'public'
     title: 'Title'
-    page: 'Page'
     content: 'Content'
     seo: 'SEO'
     always: 'Always'

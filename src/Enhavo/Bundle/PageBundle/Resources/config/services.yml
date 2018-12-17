@@ -1,14 +1,13 @@
 parameters:
 
 services:
-    enhavo_page_page:
-        class: '%enhavo_page.form.type.page.class%'
+    Enhavo\Bundle\PageBundle\Form\Type\PageType:
         arguments:
             - '%enhavo_page.model.page.class%'
             - '%enhavo_page.routing.page.strategy%'
             - '%enhavo_page.routing.page.route%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_page_page }
 
     enhavo_page.form.type.navigation_page_configuation:
         class: Enhavo\Bundle\PageBundle\Form\Type\NavigationPageConfigurationType
@@ -59,8 +58,8 @@ services:
             - '%enhavo_page.model.page.class%'
             - '@enhavo_grid.factory.grid'
 
-    enhavo_page.navigation.page_configuration:
-        class: Enhavo\Bundle\PageBundle\Navigation\PageConfiguration
+    Enhavo\Bundle\PageBundle\Navigation\PageConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:

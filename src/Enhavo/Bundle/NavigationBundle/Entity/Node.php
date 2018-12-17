@@ -9,8 +9,9 @@
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Node implements NodeInterface
+class Node implements NodeInterface, ResourceInterface
 {
     /**
      * @var integer

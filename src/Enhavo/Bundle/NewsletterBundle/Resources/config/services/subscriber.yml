@@ -15,11 +15,9 @@ services:
         tags:
             - { name: enhavo.menu, alias: newsletter_subscriber }
 
-
-    enhavo_newsletter_subscriber:
-        class: '%enhavo_newsletter.form.type.subscriber.class%'
+    Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_newsletter_subscriber }
 
     enhavo_newsletter_subscribe:
         class: Enhavo\Bundle\NewsletterBundle\Form\Type\SubscribeType

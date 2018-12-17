@@ -105,7 +105,7 @@ services:
     enhavo_translation_translation_string:
         class: '%enhavo_translation.form.type.translation_string.class%'
         arguments:
-            - '%enhavo_translation.translate%'
+            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
