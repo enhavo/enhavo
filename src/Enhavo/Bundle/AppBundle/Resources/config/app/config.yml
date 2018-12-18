@@ -4,7 +4,6 @@ framework:
         enabled: true
     session:
         cookie_lifetime: 25920000
-        handler_id: session.handler.pdo
     templating:
         engines: twig
 
@@ -14,27 +13,6 @@ doctrine:
             enum: string
             json: string
             json_array: string
-
-parameters:
-    pdo.db_options:
-        db_table: app_session
-        db_id_col: id
-        db_data_col: value
-        db_time_col: time
-        db_lifetime_col: lifetime
-        gc_maxlifetime: 3600
-
-services:
-    pdo:
-        class: PDO
-        arguments:
-            - '%env(DATABASE_URL)%'
-        calls:
-            - [setAttribute, [3, 2]]
-
-    session.handler.pdo:
-        class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
-        arguments: ["@pdo", "%pdo.db_options%"]
 
 stof_doctrine_extensions:
     default_locale: "%locale%"
