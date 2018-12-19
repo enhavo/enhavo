@@ -195,6 +195,9 @@ services:
             - '@sylius.order_item_quantity_modifier'
             - '@sylius.factory.order_item'
             - '@event_dispatcher'
+            - '@session'
+        calls:
+            - [setContainer, ['@service_container']]
 
     enhavo_shop.widget.product_list:
         class: Enhavo\Bundle\ShopBundle\Widget\ProductListWidget
