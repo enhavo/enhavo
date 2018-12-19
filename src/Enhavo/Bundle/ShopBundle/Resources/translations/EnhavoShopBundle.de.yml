@@ -131,4 +131,8 @@ product:
     weight: Gewicht
     volume: Volumen
     taxRate: Umsatzsteuer
+  message:
+    error:
+      not_found: 'Die Ware konnte nicht gefunden werden.'
+
 
