@@ -18,9 +18,14 @@ use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Component\Cart\Event\CartItemEvent;
 use Sylius\Component\Cart\SyliusCartEvents;
 use Sylius\Component\Resource\Event\FlashEvent;
+use Sylius\Component\Cart\Model\CartItemInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class CartTransfer
 {
+    use ContainerAwareTrait;
+
     /**
      * @var OrderItemQuantityModifierInterface
      */
@@ -37,6 +42,11 @@ class CartTransfer
     protected $eventDispatcher;
 
     /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
      * ItemResolver constructor.
      *
      * @param OrderItemQuantityModifierInterface $modifier
@@ -44,11 +54,13 @@ class CartTransfer
     public function __construct(
         OrderItemQuantityModifierInterface $modifier,
         Factory $orderItemFactory,
-        EventDispatcherInterface $eventDispatcher)
+        EventDispatcherInterface $eventDispatcher,
+        Session $session)
     {
         $this->modifier = $modifier;
         $this->orderItemFactory = $orderItemFactory;
         $this->eventDispatcher = $eventDispatcher;
+        $this->session = $session;
     }
 
     public function transfer(OrderInterface $from, OrderInterface $to)
@@ -58,7 +70,9 @@ class CartTransfer
                 $product = $item->getProduct();
                 $quantity = $item->getQuantity();
                 if($product) {
-                    $this->addItem($product, $quantity, $to);
+                    if ($this->isValid($product, $quantity)) {
+                        $this->addItem($product, $quantity, $to);
+                    }
                 }
             }
         }
@@ -78,5 +92,15 @@ class CartTransfer
         $this->eventDispatcher->dispatch(SyliusCartEvents::CART_CHANGE, new GenericEvent($cart));
         $this->eventDispatcher->dispatch(SyliusCartEvents::CART_SAVE_INITIALIZE, $event);
         $this->eventDispatcher->dispatch(SyliusCartEvents::ITEM_ADD_COMPLETED, new FlashEvent());
+    }
+
+    protected function isValid(ProductInterface $product, $quantity)
+    {
+        if ($product === null) {
+            $message = $this->container->get('translator')->trans('product.message.error.not_found', [], 'EnhavoShopBundle');
+            $this->session->getFlashBag()->add('error', $message);
+            return false;
+        }
+        return true;
     }
 }
