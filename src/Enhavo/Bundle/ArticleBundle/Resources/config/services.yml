@@ -2,8 +2,7 @@ services:
     Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType:
         arguments:
             - '%enhavo_article.model.article.class%'
-            - '%enhavo_article.routing.article.strategy%'
-            - '%enhavo_article.routing.article.route%'
+            - [default]
             - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: enhavo_article_article }

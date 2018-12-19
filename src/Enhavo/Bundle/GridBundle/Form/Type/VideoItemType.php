@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 
 use Enhavo\Bundle\GridBundle\Model\Item\VideoItem;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,13 +19,13 @@ class VideoItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('url', 'text', array(
+        $builder->add('url', TextType::class, array(
             'label' => 'video.form.label.url',
             'translation_domain' => 'EnhavoGridBundle'
         ));

@@ -8,8 +8,10 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,11 +49,11 @@ class OrderItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quantity', 'text', [
+            ->add('quantity', TextType::class, [
                 'label' => 'order_item.form.label.quantity',
                 'translation_domain' => 'EnhavoShopBundle'
             ])
-            ->add('product', 'entity', [
+            ->add('product', EntityType::class, [
                 'class' => $this->productClass,
                 'choice_name' => 'title',
                 'label' => 'order_item.form.label.product',

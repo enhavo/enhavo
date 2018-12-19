@@ -70,7 +70,7 @@ services:
     enhavo_media.storage.local_file_storage:
         class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
         arguments:
-            - '%kernel.root_dir%/media'
+            - '%kernel.project_dir%/var/media'
             - '@filesystem'
 
     enhavo_media.provider.default_provider:

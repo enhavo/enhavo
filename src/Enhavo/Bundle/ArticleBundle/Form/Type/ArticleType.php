@@ -2,44 +2,31 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
+use Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType;
+use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
+use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleType extends AbstractType
+class ArticleType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    protected $dataClass;
-
-    /**
-     * @var string
-     */
-    protected $route;
-
-    /**
-     * @var bool
-     */
-    protected $routingStrategy;
-
     /**
      * @var boolean
      */
-    protected $translation;
+    private $translation;
 
-    public function __construct($dataClass, $routingStrategy, $route, $translation)
+    public function __construct($dataClass, $validationGroups, $translation)
     {
-        $this->dataClass = $dataClass;
-        $this->route = $route;
-        $this->routingStrategy = $routingStrategy;
+        parent::__construct($dataClass, $validationGroups);
         $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('teaser', 'textarea', array(
+        $builder->add('teaser', TextareaType::class, array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
@@ -51,15 +38,15 @@ class ArticleType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('grid', 'enhavo_grid', array(
+        $builder->add('grid', GridType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        $builder->add('categories', 'enhavo_category');
+        $builder->add('categories', CategoryEntityType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,
@@ -69,7 +56,7 @@ class ArticleType extends AbstractType
 
     public function getParent()
     {
-        return 'enhavo_content_content';
+        return ContentType::class;
     }
 
     public function getName()

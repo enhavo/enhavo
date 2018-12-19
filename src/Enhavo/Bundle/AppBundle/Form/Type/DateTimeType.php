@@ -19,7 +19,7 @@ class DateTimeType extends AbstractType
 
     public function getParent()
     {
-        return 'datetime';
+        return DateType::class;
     }
 
     /**

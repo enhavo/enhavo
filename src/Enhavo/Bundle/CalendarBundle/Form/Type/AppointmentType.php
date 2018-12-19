@@ -2,8 +2,13 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
+use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,18 +44,18 @@ class AppointmentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('teaser', 'textarea', array(
+        $builder->add('teaser', TextareaType::class, array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('dateFrom', 'enhavo_datetime', array(
+        $builder->add('dateFrom', DateTimeType::class, array(
             'label' => 'appointment.form.label.dateFrom',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('dateTo', 'enhavo_datetime', array(
+        $builder->add('dateTo', DateTimeType::class, array(
             'label' => 'appointment.form.label.dateTo',
             'translation_domain' => 'EnhavoCalendarBundle',
         ));
@@ -61,61 +66,61 @@ class AppointmentType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('grid', 'enhavo_grid', array(
+        $builder->add('grid', GridType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        $builder->add('externalId', 'text', array(
+        $builder->add('externalId', TextType::class, array(
             'label' => 'appointment.form.label.externalId',
             'translation_domain' => 'EnhavoCalendarBundle',
-            'read_only' => true
+            //'read_only' => true
         ));
 
-        $builder->add('locationLongitude', 'text', array(
+        $builder->add('locationLongitude', TextType::class, array(
             'label' => 'appointment.form.label.locationLongitude',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationLatitude', 'text', array(
+        $builder->add('locationLatitude', TextType::class, array(
             'label' => 'appointment.form.label.locationLatitude',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationName', 'text', array(
+        $builder->add('locationName', TextType::class, array(
             'label' => 'appointment.form.label.locationName',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationCity', 'text', array(
+        $builder->add('locationCity', TextType::class, array(
             'label' => 'appointment.form.label.locationCity',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationCountry', 'text', array(
+        $builder->add('locationCountry', TextType::class, array(
             'label' => 'appointment.form.label.locationCountry',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationStreet', 'text', array(
+        $builder->add('locationStreet', TextType::class, array(
             'label' => 'appointment.form.label.locationStreet',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('locationZip', 'text', array(
+        $builder->add('locationZip', TextType::class, array(
             'label' => 'appointment.form.label.locationZip',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('repeatRule', 'text', array(
+        $builder->add('repeatRule', TextType::class, array(
             'label' => 'appointment.form.label.repeatRule',
             'translation_domain' => 'EnhavoCalendarBundle'
         ));
 
-        $builder->add('importerName', 'text', array(
+        $builder->add('importerName', TextType::class, array(
             'label' => 'appointment.form.label.importerName',
             'translation_domain' => 'EnhavoCalendarBundle',
-            'read_only' => true
+            //'read_only' => true
         ));
 
     }
@@ -130,7 +135,7 @@ class AppointmentType extends AbstractType
 
     public function getParent()
     {
-        return 'enhavo_content_content';
+        return ContentType::class;
     }
 
     public function getName()

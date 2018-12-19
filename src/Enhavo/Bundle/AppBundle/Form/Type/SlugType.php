@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SlugType extends AbstractType
@@ -28,6 +29,6 @@ class SlugType extends AbstractType
 
     public function getParent()
     {
-        return 'text';
+        return TextType::class;
     }
 }

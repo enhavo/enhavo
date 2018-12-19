@@ -8,9 +8,14 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\AppBundle\Form\Type\DateType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SlideType extends AbstractType
@@ -30,35 +35,35 @@ class SlideType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('url', 'text', array(
+        $builder->add('url', TextType::class, array(
             'label' => 'slide.form.label.url',
             'translation_domain' => 'EnhavoSliderBundle',
             'attr' => array('class' => 'link-type-external'),
         ));
 
-        $builder->add('text', 'textarea', array(
+        $builder->add('text', TextareaType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('publicationDate', 'enhavo_date', array(
+        $builder->add('publicationDate', DateType::class, array(
             'label' => 'form.label.publication_date',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('publishedUntil', 'enhavo_date', array(
+        $builder->add('publishedUntil', DateType::class, array(
             'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('public', 'enhavo_boolean', array(
+        $builder->add('public', BooleanType::class, array(
             'label' => 'form.label.public',
             'translation_domain' => 'EnhavoContentBundle'
         ));
@@ -70,7 +75,7 @@ class SlideType extends AbstractType
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'data_class' => $this->class

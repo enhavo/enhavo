@@ -11,7 +11,9 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,7 +49,7 @@ class ProductType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'product.label.title',
             'translation_domain' => 'EnhavoShopBundle',
             'translation' => $this->translation
@@ -59,12 +61,12 @@ class ProductType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('code', 'text', array(
+        $builder->add('code', TextType::class, array(
             'label' => 'product.label.code',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('price', 'enhavo_currency', array(
+        $builder->add('price', CurrencyType::class, array(
             'label' => 'product.label.price',
             'translation_domain' => 'EnhavoShopBundle',
         ));
@@ -74,46 +76,46 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('width', 'text', array(
+        $builder->add('width', TextType::class, array(
             'label' => 'product.label.width',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('height', 'text', array(
+        $builder->add('height', TextType::class, array(
             'label' => 'product.label.height',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('depth', 'text', array(
+        $builder->add('depth', TextType::class, array(
             'label' => 'product.label.depth',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('weight', 'text', array(
+        $builder->add('weight', TextType::class, array(
             'label' => 'product.label.weight',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('volume', 'text', array(
+        $builder->add('volume', TextType::class, array(
             'label' => 'product.label.volume',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('volume', 'text', array(
+        $builder->add('volume', TextType::class, array(
             'label' => 'product.label.volume',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
         $builder->add('route', RouteType::class);
 
-        $builder->add('taxRate', 'entity', array(
+        $builder->add('taxRate', EntityType::class, array(
             'class' => $this->taxRateClass,
             'choice_label' => 'name',
             'label' => 'product.label.taxRate',
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('options', 'entity', array(
+        $builder->add('options', EntityType::class, array(
             'class' => $this->optionClass,
             'choice_label' => 'code',
             'label' => 'label.options',

@@ -114,7 +114,7 @@ class FileType extends AbstractType
                     'data-media-item-id' => $data instanceof FileInterface ? $data->getId() : true
                 ],
                 'mapped' => false,
-                'read_only' => true
+                //'read_only' => true
             ]);
         });
 

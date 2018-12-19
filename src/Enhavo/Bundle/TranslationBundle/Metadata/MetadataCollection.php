@@ -111,9 +111,10 @@ class MetadataCollection
     private function getMetadataArray()
     {
         if($this->metadataArray === null) {
-            $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), MetadataCollection::CACHE_FILE_NAME);
-            $content = file_get_contents($cacheFilePath);
-            $this->metadataArray = json_decode($content, true);
+//            $cacheFilePath = sprintf('%s/%s', $this->kernel->getCacheDir(), MetadataCollection::CACHE_FILE_NAME);
+//            $content = file_get_contents($cacheFilePath);
+//            $this->metadataArray = json_decode($content, true);
+            $this->metadataArray = [];
         }
         return $this->metadataArray;
     }

@@ -2,12 +2,17 @@
 
 namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\AppBundle\Form\Type\SlugType;
 use Enhavo\Bundle\ContentBundle\EventListener\RouterSubscriber;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouterType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,91 +30,91 @@ class ContentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoContentBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('meta_description', 'textarea', array(
+        $builder->add('meta_description', TextareaType::class, array(
             'label' => 'form.label.meta_description',
             'translation_domain' => 'EnhavoContentBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('page_title', 'text', array(
+        $builder->add('page_title', TextType::class, array(
             'label' => 'form.label.page_title',
             'translation_domain' => 'EnhavoContentBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('public', 'enhavo_boolean', array(
+        $builder->add('public', BooleanType::class, array(
             'label' => 'form.label.public',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('priority', 'choice', array(
+        $builder->add('priority', ChoiceType::class, array(
             'label' => 'form.label.priority',
             'translation_domain' => 'EnhavoContentBundle',
             'choices'   => array(
-                '0.1' => '1',
-                '0.2' => '2',
-                '0.3' => '3',
-                '0.4' => '4',
-                '0.5' => '5',
-                '0.6' => '6',
-                '0.7' => '7',
-                '0.8' => '8',
-                '0.9' => '9',
-                '1' => '10'
+                '1' => '0.1',
+                '2' => '0.2',
+                '3' => '0.3',
+                '4' => '0.4',
+                '5' => '0.5',
+                '6' => '0.6',
+                '7' => '0.7',
+                '8' => '0.8',
+                '9' => '0.9',
+                '10' => '1'
             ),
             'expanded' => false,
             'multiple' => false
         ));
 
-        $builder->add('change_frequency', 'choice', array(
+        $builder->add('change_frequency', ChoiceType::class, array(
             'label' => 'form.label.change_frequency',
             'translation_domain' => 'EnhavoContentBundle',
             'choices'   => array(
-                'always' => 'form.label.always',
-                'hourly' => 'form.label.hourly',
-                'daily' => 'form.label.daily',
-                'weekly' => 'form.label.weekly',
-                'monthly' => 'form.label.monthly',
-                'yearly' => 'form.label.yearly',
-                'never' => 'form.label.never',
+                'form.label.always' => 'always',
+                'form.label.hourly' => 'hourly',
+                'form.label.daily' => 'daily',
+                'form.label.weekly' => 'weekly',
+                'form.label.monthly' => 'monthly',
+                'form.label.yearly' => 'yearly',
+                'form.label.never' => 'never',
             ),
             'expanded' => false,
             'multiple' => false
         ));
 
-        $builder->add('noIndex', 'enhavo_boolean', array(
+        $builder->add('noIndex', BooleanType::class, array(
             'label' => 'form.label.no_index',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('noFollow', 'enhavo_boolean', array(
+        $builder->add('noFollow', BooleanType::class, array(
             'label' => 'form.label.no_follow',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('publication_date', 'enhavo_datetime', array(
+        $builder->add('publication_date', DateTimeType::class, array(
             'label' => 'form.label.publication_date',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('published_until', 'enhavo_datetime', array(
+        $builder->add('published_until', DateTimeType::class, array(
             'label' => 'form.label.published_until',
             'translation_domain' => 'EnhavoContentBundle'
         ));
 
-        $builder->add('openGraphTitle', 'text', array(
+        $builder->add('openGraphTitle', TextType::class, array(
             'label' => 'form.label.openGraphTitle',
             'translation_domain' => 'EnhavoContentBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('openGraphDescription', 'text', array(
+        $builder->add('openGraphDescription', TextType::class, array(
             'label' => 'form.label.openGraphDescription',
             'translation_domain' => 'EnhavoContentBundle',
             'translation' => $this->translation
@@ -134,7 +139,7 @@ class ContentType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults( array(
             'slugable' => false,

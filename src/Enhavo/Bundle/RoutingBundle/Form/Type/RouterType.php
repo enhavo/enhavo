@@ -48,7 +48,7 @@ class RouterType extends AbstractType
             $form->add($options['name'], TextType::class, [
                 'mapped' => false,
                 'data' => $url,
-                'read_only' => true
+                //'read_only' => true
             ]);
         });
     }

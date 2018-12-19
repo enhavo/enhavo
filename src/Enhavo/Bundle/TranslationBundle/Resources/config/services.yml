@@ -102,12 +102,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: translation }
 
-    enhavo_translation_translation_string:
-        class: '%enhavo_translation.form.type.translation_string.class%'
+    Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_translation_string }
 
     enhavo_translation.listener.locale_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener

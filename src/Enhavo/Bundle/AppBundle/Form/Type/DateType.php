@@ -17,9 +17,14 @@ class DateType extends AbstractType
         return 'enhavo_date';
     }
 
+    public function getBlockPrefix()
+    {
+        return 'enhavo_date';
+    }
+
     public function getParent()
     {
-        return 'date';
+        return \Symfony\Component\Form\Extension\Core\Type\DateType::class;
     }
 
     /**
