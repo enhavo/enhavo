@@ -8,12 +8,9 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
-use Enhavo\Bundle\NewsletterBundle\CleverReach\Client;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
-use Enhavo\Bundle\NewsletterBundle\Group\GroupManager;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
-use Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer;
 use GuzzleHttp\Exception\GuzzleException;
 
 class MailChimpStorage implements StorageInterface
