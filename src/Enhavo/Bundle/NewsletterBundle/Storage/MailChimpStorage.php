@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage;
 
-use Bundle\MarketplaceBundle\Entity\Grid\StoreItem;
 use Enhavo\Bundle\NewsletterBundle\CleverReach\Client;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Group\GroupManager;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer;
+use GuzzleHttp\Exception\GuzzleException;
 
 class MailChimpStorage implements StorageInterface
 {
@@ -44,9 +44,16 @@ class MailChimpStorage implements StorageInterface
         $this->apiKey = $credentials['api_key'];
         $this->dataCenter = substr($this->apiKey, strpos($this->apiKey, '-') + 1);
         $this->mapping = $mapping;
-        $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => Client::REST_BASE_URI]);
+        $this->guzzleClient = new \GuzzleHttp\Client([
+            'base_uri' => $baseUri = 'https://' . $this->dataCenter . '.api.mailchimp.com/3.0/lists/',
+        ]);
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @throws GuzzleException
+     * @throws NoGroupException
+     */
     public function saveSubscriber(SubscriberInterface $subscriber)
     {
         if (count($subscriber->getGroups()) === 0) {
@@ -55,28 +62,27 @@ class MailChimpStorage implements StorageInterface
 
         /** @var Group $group */
         foreach($subscriber->getGroups() as $group) {
-            $url = 'https://' . $this->dataCenter . '.api.mailchimp.com/3.0/lists/' . $this->mapping[$group->getCode()] . '/members';
-
-            $data = json_encode([
-                'email_address' => $subscriber->getEmail(),
-                'status' => 'subscribed',
+            $this->guzzleClient->request('POST', $this->mapping[$group->getCode()] . '/members', [
+                'auth' => [
+                    'user',
+                    $this->apiKey,
+                ],
+                'headers' => [
+                    'content-type' => 'application/json'
+                ],
+                'body' => json_encode([
+                    'email_address' => $subscriber->getEmail(),
+                    'status' => 'subscribed',
+                ]),
             ]);
-
-            // send a HTTP POST request with curl
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $this->apiKey);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['content-type: application/json']);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            $result = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
         }
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @return bool
+     * @throws GuzzleException
+     */
     public function exists(SubscriberInterface $subscriber)
     {
         if (count($subscriber->getGroups()) === 0) {
@@ -86,20 +92,16 @@ class MailChimpStorage implements StorageInterface
         /** @var Group $group */
         foreach ($subscriber->getGroups() as $group) {
             $memberID = md5(strtolower($subscriber->getEmail()));
-            $url = 'https://' . $this->dataCenter . '.api.mailchimp.com/3.0/lists/' . $this->mapping[$group->getCode()] . '/members/' . $memberID;
 
-            // send a HTTP POST request with curl
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $this->apiKey);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $result = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
+            $response = $this->guzzleClient->request('GET', $this->mapping[$group->getCode()] . '/members/' . $memberID, [
+                'http_errors' => false,
+                'auth' => [
+                    'user',
+                    $this->apiKey,
+                ]
+            ]);
 
-            if($httpCode == '404') {
+            if($response->getStatusCode() == 404) {
                 return false;
             }
         }
