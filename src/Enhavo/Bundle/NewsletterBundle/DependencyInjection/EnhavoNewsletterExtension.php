@@ -92,5 +92,17 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         } else {
             $container->setParameter('enhavo_newsletter.cleverreach.mapping', []);
         }
+
+        if(isset($config['storage']['settings']['mailchimp']['credentials'])) {
+            $container->setParameter('enhavo_newsletter.mailchimp.credentials', $config['storage']['settings']['mailchimp']['credentials']);
+        } else {
+            $container->setParameter('enhavo_newsletter.mailchimp.credentials', []);
+        }
+
+        if(isset($config['storage']['settings']['mailchimp']['groups']['mapping'])){
+            $container->setParameter('enhavo_newsletter.mailchimp.mapping', $config['storage']['settings']['mailchimp']['groups']['mapping']);
+        } else {
+            $container->setParameter('enhavo_newsletter.mailchimp.mapping', []);
+        }
     }
 }
