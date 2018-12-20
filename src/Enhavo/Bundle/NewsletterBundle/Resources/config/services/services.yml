@@ -24,8 +24,8 @@ services:
     enhavo_newsletter.storage.mailchimp:
         class: Enhavo\Bundle\NewsletterBundle\Storage\MailChimpStorage
         arguments:
-            - '%marketplace.newsletter.api_key%'
-            - '%marketplace.newsletter.list_id%'
+            - '%enhavo_newsletter.mailchimp.credentials%'
+            - '%enhavo_newsletter.mailchimp.mapping%'
         tags:
             - { name: enhavo.newsletter_storage, alias: mailchimp }
 
