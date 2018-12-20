@@ -21,6 +21,14 @@ services:
         tags:
             - { name: enhavo.newsletter_storage, alias: cleverreach}
 
+    enhavo_newsletter.storage.mailchimp:
+        class: Enhavo\Bundle\NewsletterBundle\Storage\MailChimpStorage
+        arguments:
+            - '%marketplace.newsletter.api_key%'
+            - '%marketplace.newsletter.list_id%'
+        tags:
+            - { name: enhavo.newsletter_storage, alias: mailchimp }
+
     enhavo_newsletter.cleverreach_client:
         class: Enhavo\Bundle\NewsletterBundle\CleverReach\Client
         arguments:
