@@ -68,7 +68,7 @@ class DoubleOptInStrategy extends AbstractStrategy
 
     private function notifySubscriber(SubscriberInterface $subscriber, $type)
     {
-        $notify = $this->getTypeOption('notify', $type, false);
+        $notify = $this->getTypeOption('notify', $type, true);
         if($notify) {
             $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
                 'token' => $subscriber->getToken(),
