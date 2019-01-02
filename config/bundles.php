@@ -51,7 +51,7 @@ return [
     Enhavo\Bundle\RoutingBundle\EnhavoRoutingBundle::class => ['all' => true],
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
     Enhavo\Bundle\ProjectBundle\EnhavoProjectBundle::class => ['all' => true],
+    Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
 
     //Enhavo\Bundle\ShopBundle\EnhavoShopBundle::class => ['all' => true],
-    //Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
 ];
