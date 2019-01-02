@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\PageBundle\Form\Type;
 
+use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
+use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +39,7 @@ class PageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('grid', 'enhavo_grid', array(
+        $builder->add('grid', GridType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
             'item_groups' => ['layout'],
@@ -74,10 +76,10 @@ class PageType extends AbstractType
 
     public function getParent()
     {
-        return 'enhavo_content_content';
+        return ContentType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_page_page';
     }

@@ -34,9 +34,4 @@ class FileParametersType extends AbstractType
     {
         return 'enhavo_file_parameters';
     }
-
-    public function getName()
-    {
-        return 'enhavo_file_parameters';
-    }
 }

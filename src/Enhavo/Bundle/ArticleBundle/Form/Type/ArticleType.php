@@ -59,7 +59,7 @@ class ArticleType extends AbstractResourceType
         return ContentType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_article_article';
     }

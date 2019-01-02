@@ -37,7 +37,7 @@ class CiteItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_cite_item';
     }

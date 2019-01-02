@@ -12,11 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateType extends AbstractType
 {
-    public function getName()
-    {
-        return 'enhavo_date';
-    }
-
     public function getBlockPrefix()
     {
         return 'enhavo_date';

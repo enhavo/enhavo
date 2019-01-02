@@ -35,7 +35,7 @@ class ColumnType extends AbstractType
         $builder->add('style', $this->styleForm);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_column';
     }

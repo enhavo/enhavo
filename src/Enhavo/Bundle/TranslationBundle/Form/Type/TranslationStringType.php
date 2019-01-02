@@ -45,7 +45,7 @@ class TranslationStringType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_translation_translation_string';
     }

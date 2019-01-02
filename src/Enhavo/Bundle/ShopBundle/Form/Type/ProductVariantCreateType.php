@@ -56,7 +56,7 @@ class ProductVariantCreateType extends AbstractType
         $builder->add('code', TextType::class);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_product_variant_create';
     }

@@ -93,7 +93,7 @@ class ListType extends AbstractType
         $view->vars['prototype_name'] = $options['prototype_name'];
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_list';
     }

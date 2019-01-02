@@ -73,7 +73,7 @@ class OrderItemType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_order_item';
     }

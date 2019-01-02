@@ -35,7 +35,7 @@ class SlideOrderType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_slider_slide_order';
     }

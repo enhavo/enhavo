@@ -20,17 +20,9 @@ use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
 class WysiwygType extends AbstractType
 {
     /**
-     * Sometimes uniqid() does npt provide a unique id (see enhavo ticket #160)
-     * So we use this number as a prefix and increase it every time to ensure uniqueness
-     *
-     * @var int
-     */
-    private static $uniqueIdPrefix = 0;
-
-    /**
      * @var WysiwygConfig
      */
-    protected $config;
+    private $config;
 
     public function __construct(WysiwygConfig $config)
     {
@@ -67,7 +59,7 @@ class WysiwygType extends AbstractType
         return TextareaType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_wysiwyg';
     }

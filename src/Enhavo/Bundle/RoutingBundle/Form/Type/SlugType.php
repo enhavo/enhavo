@@ -19,7 +19,7 @@ class SlugType extends AbstractType
         return TextType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_routing_slug';
     }

@@ -40,7 +40,7 @@ class NavigationType extends AbstractResourceType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
            'items' => [],
@@ -48,7 +48,7 @@ class NavigationType extends AbstractResourceType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_navigation';
     }

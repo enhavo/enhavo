@@ -37,7 +37,7 @@ class RedirectType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_content_redirect';
     }

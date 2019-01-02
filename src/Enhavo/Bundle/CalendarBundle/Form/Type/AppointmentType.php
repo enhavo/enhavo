@@ -138,7 +138,7 @@ class AppointmentType extends AbstractType
         return ContentType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_calendar_appointment';
     }

@@ -38,7 +38,7 @@ class VideoItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_video_item';
     }

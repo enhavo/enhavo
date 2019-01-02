@@ -148,7 +148,7 @@ class ContentType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_content_content';
     }

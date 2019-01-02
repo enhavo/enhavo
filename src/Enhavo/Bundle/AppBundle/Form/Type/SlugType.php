@@ -22,7 +22,7 @@ class SlugType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_slug';
     }

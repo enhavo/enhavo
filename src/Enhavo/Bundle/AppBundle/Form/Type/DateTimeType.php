@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateTimeType extends AbstractType
 {
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_datetime';
     }

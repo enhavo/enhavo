@@ -132,7 +132,7 @@ class ProductType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_product';
     }

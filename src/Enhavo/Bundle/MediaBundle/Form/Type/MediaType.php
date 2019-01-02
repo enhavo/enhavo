@@ -129,11 +129,6 @@ class MediaType extends AbstractType
         return 'enhavo_media';
     }
 
-    public function getName()
-    {
-        return 'enhavo_media';
-    }
-
     public function getParent()
     {
         return CollectionType::class;

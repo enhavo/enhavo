@@ -79,7 +79,7 @@ class UserType extends AbstractResourceType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_user_user';
     }

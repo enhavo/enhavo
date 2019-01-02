@@ -17,14 +17,11 @@ class NavigationPageConfigurationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('anker', TextType::class, [
-
-        ]);
-
+        $builder->add('anker', TextType::class, []);
         $builder->add('target', TargetType::class, []);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_page_navigation_page_configuration';
     }

@@ -50,7 +50,7 @@ class ProfileType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_user_profile';
     }

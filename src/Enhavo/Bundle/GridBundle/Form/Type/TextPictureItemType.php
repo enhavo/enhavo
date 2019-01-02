@@ -87,7 +87,7 @@ class TextPictureItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_text_picture_item';
     }
