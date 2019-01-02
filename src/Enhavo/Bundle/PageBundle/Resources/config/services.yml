@@ -21,8 +21,8 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_page_page_choice' }
 
-    enhavo_page.widget.page:
-        class: Enhavo\Bundle\PageBundle\Widget\PageWidget
+    Enhavo\Bundle\PageBundle\Widget\PageWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

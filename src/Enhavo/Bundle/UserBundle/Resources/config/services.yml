@@ -81,8 +81,8 @@ services:
         tags:
             - { name: enhavo.menu, alias: user }
 
-    enhavo_user.widget.login:
-        class: Enhavo\Bundle\UserBundle\Widget\LoginWidget
+    Enhavo\Bundle\UserBundle\Widget\LoginWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

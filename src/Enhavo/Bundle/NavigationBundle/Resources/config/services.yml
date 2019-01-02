@@ -92,8 +92,8 @@ services:
         tags:
             - { name: enhavo_navigation.item, alias: 'node' }
 
-    enhavo_navigation.widget.navigation:
-        class: Enhavo\Bundle\NavigationBundle\Widget\NavigationWidget
+    Enhavo\Bundle\NavigationBundle\Widget\NavigationWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

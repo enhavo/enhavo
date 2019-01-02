@@ -22,8 +22,8 @@ services:
         tags:
             - { name: form.type, alias: enhavo_slider_slider }
 
-    enhavo_slider_slider.widget.slider:
-        class: Enhavo\Bundle\SliderBundle\Widget\SliderWidget
+    Enhavo\Bundle\SliderBundle\Widget\SliderWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

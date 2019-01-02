@@ -11,8 +11,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_search.widget.search:
-        class: Enhavo\Bundle\SearchBundle\Widget\SearchWidget
+    Enhavo\Bundle\SearchBundle\Widget\SearchWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

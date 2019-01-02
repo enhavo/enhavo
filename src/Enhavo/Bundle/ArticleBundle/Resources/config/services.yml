@@ -7,8 +7,8 @@ services:
         tags:
             - { name: form.type, alias: enhavo_article_article }
 
-    enhavo_article_article.widget.article_category:
-        class: Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget
+    Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

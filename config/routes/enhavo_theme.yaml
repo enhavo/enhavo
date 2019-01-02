@@ -45,3 +45,7 @@ enhavo_sitemap:
 enhavo_newsletter_subscribe:
     resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
     prefix: /
+
+enhavo_project_theme:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
+    prefix: /

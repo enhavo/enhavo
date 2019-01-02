@@ -15,8 +15,8 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_contact.widget.contact:
-        class: Enhavo\Bundle\ContactBundle\Widget\ContactWidget
+    Enhavo\Bundle\ContactBundle\Widget\ContactWidget:
+        public: true
         arguments:
             - '@enhavo_contact.configuration.factory'
             - '@form.factory'

@@ -1,3 +1,0 @@
-index:
-    path: /
-    controller: Enhavo\Controller::indexAction
