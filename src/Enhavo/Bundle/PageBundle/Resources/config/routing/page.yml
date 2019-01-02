@@ -48,7 +48,8 @@ enhavo_page_page_preview:
         _controller: enhavo_page.controller.page:previewAction
         _sylius:
             viewer:
-                service: enhavo_page.controller.page:showResourceAction
+                strategy_options:
+                    service: enhavo_page.controller.page:showResourceAction
 
 enhavo_page_page_update:
     options:

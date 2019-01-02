@@ -8,38 +8,66 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Preview\StrategyResolver;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use FOS\RestBundle\View\View;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PreviewViewer extends AbstractViewer
 {
-    protected function getResponse()
+    /**
+     * @var StrategyResolver
+     */
+    private $strategyResolver;
+
+    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, StrategyResolver $strategyResolver)
     {
-        $strategyName = $this->optionAccessor->get('strategy');
-        $strategy = $this->container->get('enhavo_app.preview.strategy_resolver')->getStrategy($strategyName);
-        $response = $strategy->getPreviewResponse($this->resource, $this->optionAccessor->toArray());
+        parent::__construct($requestConfigurationFactory, $util);
+        $this->strategyResolver = $strategyResolver;
+    }
+
+    public function getType()
+    {
+        return 'preview';
+    }
+
+    private function createResponse(array $options): Response
+    {
+        $strategyName = $this->mergeConfig([
+            $options['strategy'],
+            $this->getViewerOption('strategy', $options['request_configuration'])
+        ]);
+
+        $strategyOptions = $this->mergeConfigArray([
+            ['service' => 'enhavo_app.preview.default_renderer:render'],
+            $options['strategy_options'],
+            $this->getViewerOption('strategy_options', $options['request_configuration'])
+        ]);
+
+        $strategy = $this->strategyResolver->getStrategy($strategyName);
+        $response = $strategy->getPreviewResponse($options['resource'], $strategyOptions);
+
         return $response;
     }
 
     public function createView($options = []): View
     {
         $view = View::create();
-        $view->setResponse($this->getResponse());
+        $view->setResponse($this->createResponse($options));
+        $view->setFormat('preview');
         return $view;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
+        parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'strategy' => 'service',
-            'service' => 'enhavo_app.preview.default_renderer:renderTest'
+            'strategy_options' => null
         ]);
-    }
-
-    public function getType()
-    {
-        return 'preview';
+        $optionsResolver->setRequired(['request_configuration', 'request', 'form']);
     }
 }

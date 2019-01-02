@@ -12,7 +12,6 @@ namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Enhavo\Bundle\AppBundle\Preview\StrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class ServiceStrategy implements StrategyInterface

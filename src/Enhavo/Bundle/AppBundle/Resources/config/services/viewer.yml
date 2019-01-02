@@ -1,5 +1,3 @@
-
-
 services:
     enhavo_app.viewer_collector:
         public: true
@@ -98,7 +96,10 @@ services:
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@enhavo_app.preview.strategy_resolver'
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: preview }
+
+    Enhavo\Bundle\AppBundle\Viewer\PreviewViewHandler:

@@ -33,6 +33,7 @@ services:
 
     enhavo_app.preview.default_renderer:
         class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
+        public: true
 
     enhavo_app.preview.strategy_resolver:
         class: Enhavo\Bundle\AppBundle\Preview\StrategyResolver
@@ -41,11 +42,13 @@ services:
 
     enhavo_app.preview.strategy.dynamic:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\DynamicStrategy
+        public: true
         arguments:
             - '@service_container'
 
     enhavo_app.preview.strategy.service:
         class: Enhavo\Bundle\AppBundle\Preview\Strategy\ServiceStrategy
+        public: true
         arguments:
             - '@service_container'
 

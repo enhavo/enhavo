@@ -10,7 +10,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 
-use Enhavo\Bundle\AppBundle\Config\ConfigParser;
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

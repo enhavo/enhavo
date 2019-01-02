@@ -22,9 +22,6 @@ stof_doctrine_extensions:
             timestampable: true
 
 sylius_resource:
-#    translation:
-#        default_locale: "%locale%"
-#        locale_provider: enhavo.translation.locale_provider.contextual
     authorization_checker: enhavo_app.security.default_authorization_checker
 
 enhavo_assets:
