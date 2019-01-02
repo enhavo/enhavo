@@ -10,7 +10,6 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -65,8 +64,11 @@ class TableViewer extends AbstractViewer
     private function getBatches($batchRoute)
     {
         $configuration = $this->util->createConfigurationFromRoute($batchRoute);
-        $batches = $configuration->getBatches();
-        return $batches;
+        if($configuration) {
+            $batches = $configuration->getBatches();
+            return $batches;
+        }
+        return [];
     }
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)

@@ -1,9 +1,8 @@
 services:
-    Enhavo\Bundle\CalendarBundle\Form\Type\AppointementType:
+    Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType:
         arguments:
             - '%enhavo_calendar.model.appointment.class%'
-            - '%enhavo_calendar.routing.appointment.strategy%'
-            - '%enhavo_calendar.routing.appointment.route%'
+            - [default]
             - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: enhavo_calendar_appointment }

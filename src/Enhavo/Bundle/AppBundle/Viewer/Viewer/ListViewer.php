@@ -20,28 +20,12 @@ class ListViewer extends AbstractViewer
         return 'list';
     }
 
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    private function getColumns(RequestConfiguration $configuration, $defaultTranslationDomain = null)
     {
-        $parameters->set('data', $options['resources']);
-
-        $parameters->set('sortable', $this->mergeConfig([
-            $requestConfiguration->isSortable(),
-            $options['sortable']
-        ]));
-
-        $parameters->set('columns', $this->getColumns($requestConfiguration));
-        $parameters->set('batches', $this->getBatches($requestConfiguration));
-        $parameters->set('batch_route', $this->getBatches($requestConfiguration));
-        $parameters->set('width', $this->getViewerOption('width', $requestConfiguration));
-        $parameters->set('expand', $this->getExpand());
-    }
-
-    protected function getColumns(RequestConfiguration $requestConfiguration)
-    {
-        $columns = $this->getViewerOption('columns', $requestConfiguration);
+        $columns = $this->getViewerOption('columns', $configuration);
 
         if(empty($columns)) {
-            if ($requestConfiguration->isSortable()) {
+            if ($configuration->isSortable()) {
                 $columns = array(
                     'id' => array(
                         'label' => 'id',
@@ -69,39 +53,34 @@ class ListViewer extends AbstractViewer
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('translationDomain', $column)) {
-                $column['translationDomain'] = $this->getViewerOption('translationDomain', $requestConfiguration);
+                $column['translationDomain'] = $defaultTranslationDomain;
             }
         }
 
         return $columns;
     }
-    
-    protected function getBatches(RequestConfiguration $requestConfiguration, $options)
-    {
-        $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');
-        $router = $this->container->get('router');
-        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $options['metadata'], $router);
-        if($configuration === null) {
-            return [];
-        }
-        $batches = $configuration->getBatches();
-        return $batches;
-    }
 
-
-    protected function getBatchRoute()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        return sprintf('%s_%s_batch', $this->metadata->getApplicationName(), $this->getUnderscoreName());
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-    protected function getPermissionRole()
-    {
-        return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->getUnderscoreName()));
-    }
+        $parameters->set('data',  $options['resources']);
 
-    protected function getExpand()
-    {
-        return $this->optionAccessor->get('expand');
+        $parameters->set('sortable', $this->mergeConfig([
+            $options['sortable'],
+            $requestConfiguration->isSortable(),
+        ]));
+
+        $parameters->set('columns', $this->mergeConfigArray([
+            $options['columns'],
+            $this->getColumns($requestConfiguration, $parameters->get('translationDomain'))
+        ]));
+
+        $parameters->set('width', $this->mergeConfig([
+            $options['width']
+        ]));
+
+        $parameters->set('expand', $options['expand']);
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -109,9 +88,10 @@ class ListViewer extends AbstractViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'width' => 12,
-            'batch_route' => $this->getBatchRoute(),
             'columns' => [],
-            'expand' => true
+            'expand' => true,
+            'sortable' => false,
+            'template' => 'EnhavoAppBundle:Viewer:list.html.twig'
         ]);
     }
 }

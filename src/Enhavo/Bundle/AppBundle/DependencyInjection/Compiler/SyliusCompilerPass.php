@@ -17,16 +17,9 @@ class SyliusCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $this->overwriteTargetResolver($container);
         $this->overwriteRequestConfigurationFactory($container);
         $this->overwriteController($container);
         $this->overwriteResourceResolver($container);
-    }
-
-    private function overwriteTargetResolver(ContainerBuilder $container)
-    {
-        $resolveTargetEntityListener = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
-        $resolveTargetEntityListener->setPublic(true);
     }
 
     protected function overwriteRequestConfigurationFactory(ContainerBuilder $container)

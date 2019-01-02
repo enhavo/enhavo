@@ -21,7 +21,7 @@ enhavo_category_category_create:
             viewer:
                 translationDomain: EnhavoCategoryBundle
                 tabs:
-                    category:
+                    main:
                         label: category.label.category
                         template: EnhavoCategoryBundle:Tab:category.html.twig
 

@@ -14,14 +14,12 @@ services:
         tags:
             - { name: form.type, alias: enhavo_file }
 
-    enhavo_media.form.library_file:
-        class: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
+    Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType:
         arguments:
             - '%enhavo_media.model.file.class%'
             - '@enhavo_media.media.url_resolver'
         tags:
-            - { name: form.type, alias: enhavo_media_library_file }
-
+            - { name: form.type }
 
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
@@ -85,6 +83,7 @@ services:
         arguments:
             - '@service_container'
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.media.url_resolver'
         tags:
             - { name: twig.extension }
 
@@ -112,6 +111,7 @@ services:
 
     enhavo_media.factory.file:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
+        public: true
         arguments:
             - '%enhavo_media.model.file.class%'
             - '@enhavo_media.provider'
@@ -168,10 +168,10 @@ services:
 
     enhavo_media.controller.library:
         class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
+        public: true
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
             - '@view.factory'
-            - '@fos_rest.view_handler'
+            - '@fos_rest.view_handler.default'
         calls:
             - [setContainer, ['@service_container']]
 

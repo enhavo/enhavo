@@ -71,4 +71,31 @@ class ViewerUtil
 
         return new $this->configurationClass($metadata, $request, new Parameters($parameters));
     }
+
+    public function getConfigValue($key, $config)
+    {
+        $keyArray = preg_split('/\./', $key);
+        $value = $this->getByKeyArray($config, $keyArray);
+        return $value;
+    }
+
+    private function getByKeyArray($config, $keyArray)
+    {
+        if(empty($keyArray)) {
+            return null;
+        }
+
+        if(is_array($keyArray)) {
+            $key = array_shift($keyArray);
+            if(isset($config[$key])) {
+                if(count($keyArray) == 0) {
+                    return $config[$key];
+                } else {
+                    return $this->getByKeyArray($config[$key], $keyArray);
+                }
+            }
+        }
+
+        return null;
+    }
 }

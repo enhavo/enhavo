@@ -42,8 +42,8 @@ services:
             - '@service_container'
             - 'NewsletterStrategy'
 
-    enhavo_newsletter.strategy.notify:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.notify.settings%'
             - '%enhavo_newsletter.forms%'
@@ -54,8 +54,8 @@ services:
         tags:
             - { name: enhavo.newsletter_strategy, alias: notify }
 
-    enhavo_newsletter.strategy.double_opt_in:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.double_opt_in.settings%'
             - '%enhavo_newsletter.forms%'
@@ -67,8 +67,8 @@ services:
         tags:
             - { name: enhavo.newsletter_strategy, alias: double_opt_in }
 
-    enhavo_newsletter.strategy.accept:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.accept.settings%'
             - '%enhavo_newsletter.forms%'

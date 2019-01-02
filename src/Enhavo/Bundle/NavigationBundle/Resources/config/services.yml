@@ -6,6 +6,13 @@ services:
         tags:
             - { name: enhavo.menu, alias: navigation }
 
+    Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType:
+        arguments:
+            - '%enhavo_navigation.model.navigation.class%'
+            - [default]
+        tags:
+            - { name: form.type }
+
     enhavo_navigation.extend_listener.navigation:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
@@ -43,12 +50,12 @@ services:
 
     enhavo_navigation.resolver.node_resolver:
         class: Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
             - '@enhavo_navigation.item.item_manager'
-
 
     enhavo_navigation.form.node_type:
         class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType

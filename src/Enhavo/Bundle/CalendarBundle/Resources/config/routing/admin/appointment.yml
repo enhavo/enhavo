@@ -21,7 +21,7 @@ enhavo_calendar_appointment_create:
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 tabs:
-                    appointment:
+                    main:
                         label: appointment.label.appointment
                         template: EnhavoCalendarBundle:Tab:appointment.html.twig
                     content:
@@ -42,7 +42,7 @@ enhavo_calendar_appointment_update:
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 tabs:
-                    appointment:
+                    main:
                         label: appointment.label.appointment
                         template: EnhavoCalendarBundle:Tab:appointment.html.twig
                     content:

@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
+use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -19,7 +20,7 @@ class MediaExtension extends \Twig_Extension
     /**
      * @var EngineInterface
      */
-    protected $engine;
+    private $engine;
 
     /**
      * @var ContainerInterface
@@ -29,12 +30,18 @@ class MediaExtension extends \Twig_Extension
     /**
      * @var EntityManager
      */
-    protected $em;
+    private $em;
 
-    public function __construct($container, $em)
+    /**
+     * @var UrlResolver
+     */
+    private $resolver;
+
+    public function __construct($container, $em, UrlResolver $resolver)
     {
         $this->container = $container;
         $this->em = $em;
+        $this->resolver = $resolver;
     }
 
     public function getFunctions()
@@ -63,9 +70,9 @@ class MediaExtension extends \Twig_Extension
     public function getMediaUrl(File $file, $format = null)
     {
         if($format) {
-            return $this->container->get('enhavo_media.media.url_resolver')->getPublicFormatUrl($file, $format);
+            return $this->resolver->getPublicFormatUrl($file, $format);
         } else {
-            return $this->container->get('enhavo_media.media.url_resolver')->getPublicUrl($file);
+            return $this->resolver->getPublicUrl($file);
         }
     }
 

@@ -11,6 +11,7 @@ enhavo_setting_setting_index:
                 translationDomain: EnhavoSettingBundle
                 actions:
                     create:
+                        type: create
                         display: false
 
 enhavo_setting_setting_update:
@@ -29,7 +30,7 @@ enhavo_setting_setting_update:
                     delete:
                         display: false
                 tabs:
-                    setting:
+                    main:
                         label: setting.label.setting
                         template: EnhavoSettingBundle:Setting:setting.html.twig
 

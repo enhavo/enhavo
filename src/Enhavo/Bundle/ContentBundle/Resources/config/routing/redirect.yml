@@ -58,7 +58,7 @@ enhavo_content_redirect_table:
                         - 301
                         - 302
                     label: form.label.code
-                    translationDomain: EnhavoContentBundle
+                    translation_domain: EnhavoContentBundle
 
             viewer:
                 translationDomain: EnhavoContentBundle

@@ -6,39 +6,22 @@ use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
-use Symfony\Component\Form\AbstractType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AppointmentType extends AbstractType
+class AppointmentType extends AbstractResourceType
 {
     /**
      * @var string
      */
-    protected $dataClass;
+    private $translation;
 
-    /**
-     * @var string
-     */
-    protected $route;
-
-    /**
-     * @var bool
-     */
-    protected $routingStrategy;
-
-    /**
-     * @var string
-     */
-    protected $translation;
-
-    public function __construct($dataClass, $routingStrategy, $route, $translation)
+    public function __construct($dataClass, $validationGroups, $translation)
     {
-        $this->dataClass = $dataClass;
-        $this->route = $route;
-        $this->routingStrategy = $routingStrategy;
+        parent::__construct($dataClass, $validationGroups);
         $this->translation = $translation;
     }
 
@@ -122,13 +105,12 @@ class AppointmentType extends AbstractType
             'translation_domain' => 'EnhavoCalendarBundle',
             //'read_only' => true
         ));
-
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults( array(
-            'data_class' => $this->dataClass,
+        parent::configureOptions($resolver);
+        $resolver->setDefaults(array(
             'slugable' => true
         ));
     }

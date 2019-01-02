@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;

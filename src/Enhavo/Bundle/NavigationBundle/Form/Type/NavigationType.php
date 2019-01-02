@@ -17,6 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NavigationType extends AbstractResourceType
 {
+    public function __construct($dataClass, $validationGroups = [])
+    {
+        parent::__construct($dataClass, $validationGroups);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [

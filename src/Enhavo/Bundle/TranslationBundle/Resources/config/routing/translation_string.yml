@@ -21,7 +21,7 @@ enhavo_translation_translation_string_create:
             viewer:
                 translationDomain: EnhavoTranslationBundle
                 tabs:
-                    translation_string:
+                    main:
                         label: translation.label.translationString
 
 enhavo_translation_translation_string_update:
@@ -35,7 +35,7 @@ enhavo_translation_translation_string_update:
             viewer:
                 translationDomain: EnhavoTranslationBundle
                 tabs:
-                    translation_string:
+                    main:
                         label: translation.label.translationString
 
 enhavo_translation_translation_string_table:

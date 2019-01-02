@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ImageCropperController extends Controller
+class ImageCropperController extends AbstractController
 {
     public function cropAction(Request $request)
     {

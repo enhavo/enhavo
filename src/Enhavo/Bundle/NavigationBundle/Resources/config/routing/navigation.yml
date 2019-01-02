@@ -21,7 +21,7 @@ enhavo_navigation_navigation_create:
             viewer:
                 translationDomain: EnhavoNavigationBundle
                 tabs:
-                    navigation:
+                    main:
                         label: navigation.label.navigation
                         template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
                     nodes:
@@ -39,7 +39,7 @@ enhavo_navigation_navigation_update:
             viewer:
                 translationDomain: EnhavoNavigationBundle
                 tabs:
-                    navigation:
+                    main:
                         label: navigation.label.navigation
                         template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
                     nodes:

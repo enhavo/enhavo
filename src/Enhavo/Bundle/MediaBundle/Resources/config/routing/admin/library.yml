@@ -44,14 +44,15 @@ enhavo_media_library_update:
     defaults:
         _controller: enhavo_media.controller.file:updateAction
         _sylius:
-            form: enhavo_media_library_file
+            form: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
             viewer:
+                translationDomain: EnhavoMediaBundle
                 form:
                     action: enhavo_media_library_update
                     delete: enhavo_media_library_delete
                 tabs:
-                    file:
+                    main:
                         label: file.label.file
                         template: 'EnhavoMediaBundle:Admin/Library:file.html.twig'
 

@@ -154,9 +154,6 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
     protected function getViewerOption($key, RequestConfiguration $requestConfiguration)
     {
         $options = $requestConfiguration->getViewerOptions();
-        if(isset($options[$key])) {
-            return $options[$key];
-        }
-        return null;
+        return $this->util->getConfigValue($key, $options);
     }
 }
