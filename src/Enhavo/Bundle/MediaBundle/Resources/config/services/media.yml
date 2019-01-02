@@ -43,6 +43,7 @@ services:
             - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
 
     enhavo_media.media.media_manager:
+        public: true
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
         arguments:
             - '@enhavo_media.media.format_manager'
@@ -121,6 +122,7 @@ services:
             - '%enhavo_media.model.format.class%'
 
     enhavo_media.controller.upload:
+        public: true
         class: '%enhavo_media.controller.upload.class%'
         arguments:
             - '@enhavo_media.factory.file'
@@ -130,6 +132,7 @@ services:
             - [setContainer, ['@service_container']]
 
     enhavo_media.security.default_authorization_checker:
+        public: true
         class: Enhavo\Bundle\MediaBundle\Security\DefaultAuthorizationChecker
 
     enhavo_media.media.url_resolver:

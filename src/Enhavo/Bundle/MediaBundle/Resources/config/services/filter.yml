@@ -5,36 +5,36 @@ services:
           - '@service_container'
           - 'MediaFilter'
 
-    enhavo_media.filter.image:
-        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageFilter
+    Enhavo\Bundle\MediaBundle\Filter\Filter\ImageFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image }
 
-    enhavo_media.filter.background:
-        class: Enhavo\Bundle\MediaBundle\Filter\Filter\BackgroundFilter
+    Enhavo\Bundle\MediaBundle\Filter\Filter\BackgroundFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: background }
 
-    enhavo_media.filter.pdf_image:
-        class: Enhavo\Bundle\MediaBundle\Filter\Filter\PDFImageFilter
+    Enhavo\Bundle\MediaBundle\Filter\Filter\PDFImageFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: pdf_image }
 
-    enhavo_media.filter.video_image:
-        class: Enhavo\Bundle\MediaBundle\Filter\Filter\VideoImageFilter
+    Enhavo\Bundle\MediaBundle\Filter\Filter\VideoImageFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: video_image }
 
-    enhavo_media.filter.image_compression:
-        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageCompressionFilter
+    Enhavo\Bundle\MediaBundle\Filter\Filter\ImageCompressionFilter:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
