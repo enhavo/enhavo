@@ -1,7 +1,7 @@
 {% extends template('dialog') %}
 
 {% trans_default_domain "EnhavoAppBundle" %}
-{% form_theme form 'EnhavoAppBundle:Form:fields.html.twig' %}
+{% form_theme form with form_themes %}
 
 {% block content %}
     <form method="POST" action="{{ path(form_action, form_action_parameters) }}">

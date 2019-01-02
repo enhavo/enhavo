@@ -36,6 +36,7 @@ services:
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '%enhavo_app.form_themes%'
         calls:
             - ['setContainer', ['@service_container']]
         tags:
@@ -46,6 +47,7 @@ services:
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '%enhavo_app.form_themes%'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

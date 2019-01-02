@@ -10,7 +10,9 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use FOS\RestBundle\View\View;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -19,6 +21,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateViewer extends AbstractViewer
 {
+    /**
+     * @var string[]
+     */
+    private $formThemes;
+
+    /**
+     * CreateViewer constructor.
+     * @param RequestConfigurationFactory $requestConfigurationFactory
+     * @param ViewerUtil $util
+     */
+    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, array $formThemes)
+    {
+        parent::__construct($requestConfigurationFactory, $util);
+        $this->formThemes = $formThemes;
+    }
+
     public function getType()
     {
         return 'create';
@@ -79,6 +97,12 @@ class CreateViewer extends AbstractViewer
             $this->getViewerOption('form.action_parameters', $requestConfiguration)
         ]));
 
+        $parameters->set('form_themes', $this->mergeConfigArray([
+            $this->formThemes,
+            $options['form_themes'],
+            $this->getViewerOption('form.themes', $requestConfiguration)
+        ]));
+
         $parameters->set('buttons', $this->mergeConfigArray([
             'buttons' => [
                 'cancel' => [
@@ -102,6 +126,7 @@ class CreateViewer extends AbstractViewer
             'tabs' => [],
             'buttons' => [],
             'form' => null,
+            'form_themes' => [],
             'form_action' => null,
             'form_action_parameters' => [],
             'form_template' => 'EnhavoAppBundle:View:tab.html.twig',

@@ -42,3 +42,5 @@ enhavo_app:
       - 'app/app/Menu'
       - 'app/app/ConditionType'
       - 'app/app/Adapter/DynamicForm/EnhavoAdapter'
+    form_themes:
+      - 'EnhavoAppBundle:Form:fields.html.twig'

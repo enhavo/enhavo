@@ -92,7 +92,7 @@ class DynamicItemType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'enhavo_app_dynamic_item';
+        return 'enhavo_dynamic_item';
     }
 
     /**
