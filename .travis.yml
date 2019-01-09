@@ -1,8 +1,9 @@
 language: php
 
+dist: trusty
+
 php:
   - 7.2
-  - 7.3
 
 env:
   - ENVIRONMENT=test DEBUG=true
