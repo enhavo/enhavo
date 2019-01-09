@@ -4,17 +4,14 @@ namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use PHPUnit\Framework\TestCase;
 
-class RouteTypeTest extends TestCase
+class RouteTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
-        $formType = new RouteType();
-        $form = $this->factory->create($formType);
+        $form = $this->factory->create(RouteType::class);
 
         $form->submit(['staticPrefix' => '/hello']);
-        $view = $form->createView();
         /** @var Route $route */
         $route = $form->getData();
 

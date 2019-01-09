@@ -7,16 +7,14 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Serializer;
+namespace Enhavo\Bundle\FormBundle\Serializer;
 
-use Enhavo\Bundle\SerializerBundle\Encoder\Encoder;
-use Enhavo\Bundle\SerializerBundle\Serializer\FormSerializer;
-use Enhavo\Bundle\SerializerBundle\Mock\Resource;
-use Enhavo\Bundle\SerializerBundle\Mock\ResourceType;
+use Enhavo\Bundle\FormBundle\Serializer\Encoder\Encoder;
+use Enhavo\Bundle\FormBundle\Serializer\Mock\Resource;
+use Enhavo\Bundle\FormBundle\Serializer\Mock\ResourceType;
 use Symfony\Component\Form\Test\TypeTestCase;
-use PHPUnit\Framework\TestCase;
 
-class FormSerializerTest extends TestCase
+class FormSerializerTest extends TypeTestCase
 {
     public function testSerializeScalarField()
     {
@@ -25,7 +23,7 @@ class FormSerializerTest extends TestCase
 
         $formSerializer = new FormSerializer($this->factory, new Encoder());
 
-        $serializeData = $formSerializer->serialize($data, new ResourceType(), 'array');
+        $serializeData = $formSerializer->serialize($data, ResourceType::class, 'array');
         $this->assertArrayHasKey('name', $serializeData);
         $this->assertEquals('testName', $serializeData['name']);
     }
@@ -39,7 +37,7 @@ class FormSerializerTest extends TestCase
 
         $formSerializer = new FormSerializer($this->factory, new Encoder());
 
-        $serializeData = $formSerializer->serialize($data, new ResourceType(), 'array');
+        $serializeData = $formSerializer->serialize($data, ResourceType::class, 'array');
         $this->assertArrayHasKey('resources', $serializeData);
         $this->assertCount(1, $serializeData['resources']);
         $this->assertArrayHasKey('name', $serializeData['resources'][0]);

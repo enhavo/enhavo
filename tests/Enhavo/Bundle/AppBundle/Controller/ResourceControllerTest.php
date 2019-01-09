@@ -3,11 +3,10 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
-use Enhavo\Bundle\AppBundle\View\ViewFactory;
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Response;
 use PHPUnit\Framework\TestCase;

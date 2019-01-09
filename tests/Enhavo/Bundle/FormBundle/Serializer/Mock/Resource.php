@@ -6,10 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\SerializerBundle\Mock;
+namespace Enhavo\Bundle\FormBundle\Serializer\Mock;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit\Framework\TestCase;
 
 class Resource
 {
