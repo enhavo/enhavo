@@ -45,7 +45,7 @@ class EntityTreeType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'entity_tree';
     }

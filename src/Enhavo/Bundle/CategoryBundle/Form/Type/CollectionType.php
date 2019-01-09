@@ -37,7 +37,7 @@ class CollectionType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_category_collection';
     }

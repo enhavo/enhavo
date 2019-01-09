@@ -21,7 +21,7 @@ enhavo_article_article_create:
             viewer:
                 translationDomain: EnhavoArticleBundle
                 tabs:
-                    article:
+                    main:
                         label: article.label.article
                         template: EnhavoArticleBundle:Tab:article.html.twig
                     content:
@@ -46,7 +46,7 @@ enhavo_article_article_update:
             viewer:
                 translationDomain: EnhavoArticleBundle
                 tabs:
-                    article:
+                    main:
                         label: article.label.article
                         template: EnhavoArticleBundle:Tab:article.html.twig
                     content:
@@ -135,4 +135,5 @@ enhavo_article_article_preview:
         _controller: enhavo_article.controller.article:previewAction
         _sylius:
             viewer:
-                service: enhavo_article.controller.article:showResourceAction
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction

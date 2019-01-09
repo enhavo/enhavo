@@ -60,7 +60,7 @@ class OrderType extends AbstractType
         $builder->add('payment', 'enhavo_shop_payment');
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_order';
     }

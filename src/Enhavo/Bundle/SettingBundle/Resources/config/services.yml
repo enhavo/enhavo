@@ -26,15 +26,15 @@ services:
         arguments:
             - '@service_container'
 
-    enhavo_setting.table.setting:
-        class: Enhavo\Bundle\SettingBundle\Table\Widget\SettingWidget
+    Enhavo\Bundle\SettingBundle\Table\Widget\SettingWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget, alias: setting }
 
-    enhavo_setting.menu.setting:
-        class: Enhavo\Bundle\SettingBundle\Menu\SettingMenu
+    Enhavo\Bundle\SettingBundle\Menu\SettingMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

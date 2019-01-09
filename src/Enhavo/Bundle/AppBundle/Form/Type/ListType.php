@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -92,14 +93,14 @@ class ListType extends AbstractType
         $view->vars['prototype_name'] = $options['prototype_name'];
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_list';
     }
 
     public function getParent()
     {
-        return 'collection';
+        return CollectionType::class;
     }
 
     /**

@@ -8,18 +8,16 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_newsletter.menu.subscriber:
-        class: Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu
+    Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: newsletter_subscriber }
 
-
-    enhavo_newsletter_subscriber:
-        class: '%enhavo_newsletter.form.type.subscriber.class%'
+    Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_newsletter_subscriber }
 
     enhavo_newsletter_subscribe:
         class: Enhavo\Bundle\NewsletterBundle\Form\Type\SubscribeType
@@ -44,8 +42,8 @@ services:
             - '@service_container'
             - 'NewsletterStrategy'
 
-    enhavo_newsletter.strategy.notify:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.notify.settings%'
             - '%enhavo_newsletter.forms%'
@@ -56,8 +54,8 @@ services:
         tags:
             - { name: enhavo.newsletter_strategy, alias: notify }
 
-    enhavo_newsletter.strategy.double_opt_in:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.double_opt_in.settings%'
             - '%enhavo_newsletter.forms%'
@@ -69,8 +67,8 @@ services:
         tags:
             - { name: enhavo.newsletter_strategy, alias: double_opt_in }
 
-    enhavo_newsletter.strategy.accept:
-        class: Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy
+    Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy:
+        public: true
         arguments:
             - '%enhavo_newsletter.strategy.accept.settings%'
             - '%enhavo_newsletter.forms%'

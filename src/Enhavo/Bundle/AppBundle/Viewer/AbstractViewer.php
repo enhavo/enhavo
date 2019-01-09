@@ -10,123 +10,150 @@ namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\Form;
 use FOS\RestBundle\View\View;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractViewer extends AbstractType implements ViewerInterface
 {
     /**
-     * @var ContainerInterface
+     * @var RequestConfigurationFactory
      */
-    protected $container;
+    private $requestConfigurationFactory;
 
     /**
-     * @var mixed
+     * @var ViewerUtil
      */
-    protected $resource;
+    protected $util;
 
     /**
-     * @var Form
+     * AbstractViewer constructor.
+     *
+     * @param RequestConfigurationFactory $requestConfigurationFactory
      */
-    protected $form;
-
-    /**
-     * @var MetadataInterface
-     */
-    protected $metadata;
-
-    /**
-     * @var RequestConfiguration
-     */
-    protected $configuration;
-
-    /**
-     * @var OptionAccessor
-     */
-    protected $optionAccessor;
-
-    /**
-     * @param mixed $container
-     */
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util)
     {
-        $this->container = $container;
+        $this->requestConfigurationFactory = $requestConfigurationFactory;
+        $this->util = $util;
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getForm()
+    public function createView($options = []): View
     {
-        return $this->form;
-    }
+        $view = $this->create($options);
+        $requestConfiguration = $this->getRequestConfiguration($options);
 
-    /**
-     * @param mixed $form
-     */
-    public function setForm(Form $form)
-    {
-        $this->form = $form;
-    }
+        // set template data
+        $parameters = new ParameterBag();
+        $this->buildTemplateParameters($parameters, $requestConfiguration, $options);
+        $templateVars = [];
+        foreach($parameters as $key => $value) {
+            $templateVars[$key] = $value;
+        }
+        $view->setTemplateData($templateVars);
 
-    /**
-     * @param $resource
-     */
-    public function setResource($resource)
-    {
-        $this->resource = $resource;
-    }
+        // set template
+        if(isset($options['template'])) {
+            $view->setTemplate($this->resolveTemplate($requestConfiguration, $options));
+        }
 
-    /**
-     * @param RequestConfigurationInterface $configuration
-     */
-    public function setConfiguration(RequestConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
-    /**
-     * @param MetadataInterface $metadata
-     */
-    public function setMetadata(MetadataInterface $metadata)
-    {
-        $this->metadata = $metadata;
-    }
-
-    /**
-     * @param OptionAccessor $options
-     */
-    public function setOptionAccessor(OptionAccessor $optionAccessor)
-    {
-        $this->optionAccessor = $optionAccessor;
-    }
-
-    /**
-     * @return View
-     */
-    public function createView()
-    {
-        $view = View::create($this->resource, 200);
-        $view->setTemplateData([
-            'translationDomain' => $this->optionAccessor->get('translationDomain')
-        ]);
         return $view;
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    protected function create($options): View
     {
-        $optionsAccessor->setDefaults([
-            'translationDomain' => null
+        $view = null;
+        if(isset($options['resource'])) {
+            $view = View::create($options['resource'], 200);
+        } elseif(isset($options['resources'])) {
+            $view = View::create($options['resources'], 200);
+        } else {
+            $view = View::create(null, 200);
+        }
+        return $view;
+    }
+
+    private function getRequestConfiguration(array $options): RequestConfiguration
+    {
+        $requestConfiguration = $options['request_configuration'];
+        if($requestConfiguration instanceof RequestConfiguration) {
+            return $requestConfiguration;
+        } else {
+            /** @var Request $request */
+            $request = $options['request'];
+            $metadata = new DummyMetadata();
+            /** @var RequestConfiguration $requestConfiguration */
+            $requestConfiguration = $this->requestConfigurationFactory->create($metadata, $request);
+            return $requestConfiguration;
+        }
+    }
+
+    private function resolveTemplate(RequestConfiguration $requestConfiguration, array $options)
+    {
+        return $requestConfiguration->getTemplate($options['template']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver->setDefaults([
+            'translation_domain' => null,
+            'resource' => null,
+            'resources' => null,
+            'metadata' => null,
+            'template' => null,
+            'request_configuration' => null,
+            'request' => null,
         ]);
     }
 
-    protected function getUnderscoreName()
+    protected function getUnderscoreName(MetadataInterface $metadata)
     {
-        $name = $this->metadata->getHumanizedName();
+        $name = $metadata->getHumanizedName();
         $name = str_replace(' ', '_', $name);
         return $name;
+    }
+
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
+    {
+        $parameters->set('translationDomain', $this->mergeConfig([
+            $options['translation_domain'],
+            $this->getViewerOption('translationDomain', $requestConfiguration)
+        ]));
+    }
+
+    protected function mergeConfigArray($configs)
+    {
+        $data = [];
+        foreach($configs as $config) {
+            if(is_array($config)) {
+                $data = array_merge($data, $config);
+            }
+        }
+        return $data;
+    }
+
+    protected function mergeConfig($configs)
+    {
+        $data = null;
+        foreach($configs as $config) {
+            if($config != null) {
+                $data = $config;
+            }
+        }
+        return $data;
+    }
+
+    protected function getViewerOption($key, RequestConfiguration $requestConfiguration)
+    {
+        $options = $requestConfiguration->getViewerOptions();
+        return $this->util->getConfigValue($key, $options);
     }
 }

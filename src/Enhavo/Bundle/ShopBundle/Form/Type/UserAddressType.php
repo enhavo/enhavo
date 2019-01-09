@@ -54,7 +54,7 @@ class UserAddressType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_user_address';
     }

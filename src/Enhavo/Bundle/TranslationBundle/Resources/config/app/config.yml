@@ -1,8 +1,3 @@
-twig:
-    form:
-        resources:
-            - 'EnhavoTranslationBundle:Form:fields.html.twig'
-
 enhavo_translation:
     default_locale: '%locale%'
     locales:
@@ -19,7 +14,8 @@ enhavo_app:
       - '@EnhavoTranslationBundle/Resources/public/css/translation.css'
     javascripts:
       - '@EnhavoTranslationBundle/Resources/public/js/translation.js'
-
+    form_themes:
+      - 'EnhavoTranslationBundle:Form:fields.html.twig'
     roles:
         enhavo_translation_translation_string_index:
             role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX

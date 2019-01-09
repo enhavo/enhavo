@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\PageBundle\Navigation;
 
 use Enhavo\Bundle\NavigationBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\PageBundle\Form\Type\NavigationPageConfigurationType;
+use Enhavo\Bundle\PageBundle\Form\Type\PageChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageConfiguration extends AbstractConfiguration
@@ -22,7 +23,7 @@ class PageConfiguration extends AbstractConfiguration
             'label' => 'page.label.page',
             'translationDomain' => 'EnhavoPageBundle',
             'configuration_form' => NavigationPageConfigurationType::class,
-            'content_form' => 'enhavo_page_page_choice',
+            'content_form' => PageChoiceType::class,
             'render_template' => 'EnhavoPageBundle:Navigation:page.html.twig',
             'content_factory' => null
         ]);

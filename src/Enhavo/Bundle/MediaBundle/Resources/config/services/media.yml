@@ -14,14 +14,12 @@ services:
         tags:
             - { name: form.type, alias: enhavo_file }
 
-    enhavo_media.form.library_file:
-        class: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
+    Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType:
         arguments:
             - '%enhavo_media.model.file.class%'
             - '@enhavo_media.media.url_resolver'
         tags:
-            - { name: form.type, alias: enhavo_media_library_file }
-
+            - { name: form.type }
 
     enhavo_media.form.media:
         class: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
@@ -43,6 +41,7 @@ services:
             - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
 
     enhavo_media.media.media_manager:
+        public: true
         class: Enhavo\Bundle\MediaBundle\Media\MediaManager
         arguments:
             - '@enhavo_media.media.format_manager'
@@ -70,7 +69,7 @@ services:
     enhavo_media.storage.local_file_storage:
         class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
         arguments:
-            - '%kernel.root_dir%/media'
+            - '%kernel.project_dir%/var/media'
             - '@filesystem'
 
     enhavo_media.provider.default_provider:
@@ -84,6 +83,7 @@ services:
         arguments:
             - '@service_container'
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_media.media.url_resolver'
         tags:
             - { name: twig.extension }
 
@@ -102,8 +102,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_media.table.picture_widget:
-        class: Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget
+    Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -111,6 +111,7 @@ services:
 
     enhavo_media.factory.file:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
+        public: true
         arguments:
             - '%enhavo_media.model.file.class%'
             - '@enhavo_media.provider'
@@ -121,6 +122,7 @@ services:
             - '%enhavo_media.model.format.class%'
 
     enhavo_media.controller.upload:
+        public: true
         class: '%enhavo_media.controller.upload.class%'
         arguments:
             - '@enhavo_media.factory.file'
@@ -130,6 +132,7 @@ services:
             - [setContainer, ['@service_container']]
 
     enhavo_media.security.default_authorization_checker:
+        public: true
         class: Enhavo\Bundle\MediaBundle\Security\DefaultAuthorizationChecker
 
     enhavo_media.media.url_resolver:
@@ -156,8 +159,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_media.menu.library:
-        class: Enhavo\Bundle\MediaBundle\Menu\LibraryMenu
+    Enhavo\Bundle\MediaBundle\Menu\LibraryMenu:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -165,15 +168,15 @@ services:
 
     enhavo_media.controller.library:
         class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
+        public: true
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
-            - '@fos_rest.view_handler'
+            - '@view.factory'
+            - '@fos_rest.view_handler.default'
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_media.block.library:
-        class: Enhavo\Bundle\MediaBundle\Block\LibraryBlock
+    Enhavo\Bundle\MediaBundle\Block\LibraryBlock:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

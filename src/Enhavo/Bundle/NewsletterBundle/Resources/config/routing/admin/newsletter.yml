@@ -23,7 +23,7 @@ enhavo_newsletter_newsletter_create:
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 tabs:
-                    newsletter:
+                    main:
                         label: newsletter.label.newsletter
                         template: EnhavoNewsletterBundle:Newsletter:form.html.twig
 
@@ -38,7 +38,7 @@ enhavo_newsletter_newsletter_update:
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 tabs:
-                    newsletter:
+                    main:
                         label: newsletter.label.newsletter
                         template: EnhavoNewsletterBundle:Newsletter:form.html.twig
                 buttons:

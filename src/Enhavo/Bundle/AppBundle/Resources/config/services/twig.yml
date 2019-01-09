@@ -1,53 +1,43 @@
-parameters:
-    enhavo_app.twig.pagination_render.class: Enhavo\Bundle\AppBundle\Twig\PaginationRender
-    enhavo_app.twig.pagination_render.template: 'EnhavoAppBundle:View:pagination.html.twig'
-    enhavo_app.twig.admin_asset.class: Enhavo\Bundle\AppBundle\Twig\AdminAsset
-
 services:
-    enhavo_app.twig.pagination_render:
-        class: '%enhavo_app.twig.pagination_render.class%'
+    Enhavo\Bundle\AppBundle\Twig\PaginationRender:
         arguments:
-            - '%enhavo_app.twig.pagination_render.template%'
+            - 'EnhavoAppBundle:View:pagination.html.twig'
+        calls:
+            - [ setEngine, ['@templating']]
         tags:
             - { name: twig.extension }
 
-    enhavo_app.twig.admin_asset:
-        class: '%enhavo_app.twig.admin_asset.class%'
+    Enhavo\Bundle\AppBundle\Twig\AdminAsset:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.branding.twig_extension:
-        class:  Enhavo\Bundle\AppBundle\Twig\Branding
+    Enhavo\Bundle\AppBundle\Twig\Branding:
         arguments:
             - '%enhavo_app.branding%'
         tags:
             - { name: twig.extension }
 
-    enhavo_app.twig.template:
-        class:  Enhavo\Bundle\AppBundle\Twig\Template
+    Enhavo\Bundle\AppBundle\Twig\Template:
         arguments:
             - '@service_container'
         tags:
             - { name: twig.extension }
 
-    enhavo_app.url_beautifier.twig_extension:
-        class: Enhavo\Bundle\AppBundle\Twig\UrlBeautifier
+    Enhavo\Bundle\AppBundle\Twig\UrlBeautifier:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.twig.form:
-        class: Enhavo\Bundle\AppBundle\Twig\Form
+    Enhavo\Bundle\AppBundle\Twig\Form:
         arguments:
+            - '%enhavo_app.form_themes%'
             - '@enhavo_app.form.error.resolver'
         tags:
             - { name: twig.extension }
 
-    enhavo_app.twig.slugify:
-        class: Enhavo\Bundle\AppBundle\Twig\Slugify
+    Enhavo\Bundle\AppBundle\Twig\Slugify:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.twig.spl_object:
-        class: Enhavo\Bundle\AppBundle\Twig\SplObject
+    Enhavo\Bundle\AppBundle\Twig\SplObject:
         tags:
             - { name: twig.extension }

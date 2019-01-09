@@ -2,20 +2,33 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class WysiwygTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    private $config;
+
+    protected function setUp()
     {
-        $config = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig')
+        $this->config = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig')
             ->disableOriginalConstructor()
             ->getMock();
-        $config->method('getData')->willReturn('config');
+        $this->config->method('getData')->willReturn('config');
+        parent::setUp();
+    }
 
-        $formType = new WysiwygType($config);
-        $form = $this->factory->create($formType);
+    protected function getExtensions()
+    {
+        $type = new WysiwygType($this->config);
+        return array(
+            new PreloadedExtension(array($type), array()),
+        );
+    }
+
+    public function testSubmitValidData()
+    {
+        $form = $this->factory->create(WysiwygType::class);
 
         $form->setData('old text');
         $form->submit('new text');

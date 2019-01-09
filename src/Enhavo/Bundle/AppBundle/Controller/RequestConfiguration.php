@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 
-class RequestConfiguration extends SyliusRequestConfiguration implements RequestConfigurationInterface
+class RequestConfiguration extends SyliusRequestConfiguration
 {
     public function getViewerOptions()
     {
-        $attributes = $this->parameters->get('viewer', []);
+        $attributes = $this->getParameters()->get('viewer', []);
         if(isset($attributes['type'])) {
             unset($attributes['type']);
         }
@@ -23,7 +23,7 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
 
     public function getViewerType()
     {
-        $attributes = $this->parameters->get('viewer', []);
+        $attributes = $this->getParameters()->get('viewer', []);
         if(isset($attributes['type'])) {
             return $attributes['type'];
         }
@@ -36,7 +36,7 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
             return $name;
         }
 
-        $templatesNamespace = $this->metadata->getTemplatesNamespace();
+        $templatesNamespace = $this->getMetadata()->getTemplatesNamespace();
 
         if (false !== strpos($templatesNamespace, ':')) {
             return sprintf('%s:%s.%s', $templatesNamespace ?: ':', $name, 'twig');
@@ -47,22 +47,22 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
 
     public function isAjaxRequest()
     {
-        return $this->request->isXmlHttpRequest();
+        return $this->getRequest()->isXmlHttpRequest();
     }
 
     public function getSortingStrategy()
     {
-        return $this->parameters->get('sorting_strategy', 'asc_first');
+        return $this->getParameters()->get('sorting_strategy', 'asc_first');
     }
 
     public function getBatchType()
     {
-        return $this->request->get('type');
+        return $this->getRequest()->get('type');
     }
 
     public function getBatches()
     {
-        return $this->parameters->get('batches', []);
+        return $this->getParameters()->get('batches', []);
     }
 
     public function getBatchOptions($type)
@@ -76,11 +76,11 @@ class RequestConfiguration extends SyliusRequestConfiguration implements Request
 
     public function getFilters()
     {
-        return $this->parameters->get('filters', []);
+        return $this->getParameters()->get('filters', []);
     }
 
     public function hasFilters()
     {
-        return $this->parameters->has('filters');
+        return $this->getParameters()->has('filters');
     }
 }

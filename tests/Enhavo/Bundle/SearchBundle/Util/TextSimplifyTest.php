@@ -7,8 +7,9 @@
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
+use PHPUnit\Framework\TestCase;
 
-class TextSimplifyTest extends \PHPUnit_Framework_TestCase
+class TextSimplifyTest extends TestCase
 {
     public function testSimplify()
     {

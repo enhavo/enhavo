@@ -8,7 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IndexViewer extends AppViewer
 {
@@ -17,50 +20,57 @@ class IndexViewer extends AppViewer
         return 'index';
     }
 
-    public function getTableRoute()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        return sprintf(
-            '%s_%s_table',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
+
+
+        $parameters->set('blocks', $this->mergeConfigArray([
+            $this->createBlock($options),
+            $options['blocks'],
+            $this->getViewerOption('blocks', $requestConfiguration)
+        ]));
+
+        $parameters->set('actions', $this->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->getViewerOption('actions', $requestConfiguration)
+        ]));
     }
 
-    public function getUpdateRoute()
+    private function createBlock($options)
     {
-        return sprintf(
-            '%s_%s_update',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
-    }
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
 
-    public function getCreateRoute()
-    {
-        return sprintf(
-            '%s_%s_create',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
-    }
-
-    public function configureOptions(OptionAccessor $optionsAccessor)
-    {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
-            'blocks' => [
-                'table' => [
-                    'type' => 'table',
-                    'table_route' => $this->getTableRoute(),
-                    'update_route' => $this->getUpdateRoute(),
-                ]
-            ],
-            'actions' => [
-                'create' => [
-                    'type' => 'create',
-                    'route' => $this->getCreateRoute(),
-                ]
+        $default = [
+            'table' => [
+                'type' => 'table',
+                'table_route' => sprintf('%s_%s_table', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+                'update_route' => sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             ]
-        ]);
+        ];
+
+        return $default;
+    }
+
+    private function createActions($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+
+        $default = [
+            'create' => [
+                'type' => 'create',
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            ]
+        ];
+
+        return $default;
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
     }
 }

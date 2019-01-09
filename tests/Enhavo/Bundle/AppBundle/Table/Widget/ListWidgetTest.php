@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\ListWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class ListWidgetTest extends \PHPUnit_Framework_TestCase
+class ListWidgetTest extends TestCase
 {
     function testInitialize()
     {

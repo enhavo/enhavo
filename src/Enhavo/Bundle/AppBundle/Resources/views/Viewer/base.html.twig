@@ -8,12 +8,6 @@
         <script type="text/javascript" src="{{ asset(admin_asset(javascript)) }}"></script>
     {% endfor %}
 
-    {% if requireJsApp %}
-        <script type="text/javascript">
-            require(['{{ requireJsApp }}'], function(app) {});
-        </script>
-    {% endif %}
-
     {% for requireJsApp in requireJsApps %}
         <script type="text/javascript">
             require(['{{ requireJsApp }}'], function(app) {});

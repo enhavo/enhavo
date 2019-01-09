@@ -37,7 +37,7 @@ enhavo_shop_order_update:
                     action: enhavo_shop_order_update
                     delete: enhavo_shop_order_delete
                 tabs:
-                    order:
+                    main:
                         label: order.label.order
                         template: EnhavoShopBundle:Admin:Order/Tab/order.html.twig
                     address:

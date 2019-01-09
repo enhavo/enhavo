@@ -7,8 +7,9 @@ namespace Enhavo\Bundle\MediaBundle\Entity;
  *
  * @since 29/12/16
  * @author gseidel
- */
-class FileTest extends \PHPUnit_Framework_TestCase
+ */use PHPUnit\Framework\TestCase;
+
+class FileTest extends TestCase
 {
     public function testSetParameters()
     {

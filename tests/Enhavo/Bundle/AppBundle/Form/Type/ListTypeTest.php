@@ -2,15 +2,13 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\ListType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class ListTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
-        $formType = new ListType();
-        $form = $this->factory->create($formType);
+        $form = $this->factory->create(ListType::class);
 
         $form->setData([
             0 => 'A',
@@ -33,8 +31,7 @@ class ListTypeTest extends TypeTestCase
 
     public function testOrderOfArray()
     {
-        $formType = new ListType();
-        $form = $this->factory->create($formType, null);
+        $form = $this->factory->create(ListType::class, null);
 
         $form->setData([
             0 => 'A',

@@ -8,9 +8,10 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 class SlideOrderType extends AbstractType
@@ -24,21 +25,17 @@ class SlideOrderType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('order', 'hidden', array(
-            'attr' => array(
-                'data-sort-order' => ''
-            )
-        ));
+        $builder->add('order', PositionType::class);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults( array(
             'data_class' => $this->class
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_slider_slide_order';
     }

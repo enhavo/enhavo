@@ -88,11 +88,6 @@ class DynamicFormType extends AbstractType
         return 'enhavo_dynamic_form';
     }
 
-    public function getName()
-    {
-        return 'enhavo_dynamic_form';
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

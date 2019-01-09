@@ -1,7 +1,6 @@
 .idea
 .settings
 .build
-.env
 /web/bundles/
 /www/bundles/
 /app/check.php
@@ -13,8 +12,6 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /build/
-/vendor/
-/bin/
 /composer.phar
 /test
 /app/media/*
@@ -27,3 +24,12 @@
 /var
 /elasticsearch
 /docs/build
+/.env.local
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+/.web-server-pid
+.phpunit
+/phpunit.xml
+behat.yml

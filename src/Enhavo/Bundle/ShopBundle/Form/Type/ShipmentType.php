@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,7 +42,7 @@ class ShipmentType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('method', 'entity', [
+            ->add('method', EntityType::class, [
                 'class' => $this->shipmentClass,
                 'expanded' => true
             ])
@@ -55,7 +56,7 @@ class ShipmentType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_shipment';
     }

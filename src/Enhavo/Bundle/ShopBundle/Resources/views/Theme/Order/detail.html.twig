@@ -1,9 +1,9 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% trans_default_domain 'EnhavoShopBundle' %}
 
 {% block main %}
-    {{ theme_widget_render('shop_cart_summary', {cart: order, immutable: true}) }}
+    {{ widget_render('shop_cart_summary', {cart: order, immutable: true}) }}
     <form method="POST" action="{{ path('enhavo_shop_theme_user_order_transfer', {id: order.id}) }}">
         <button type="submit">{{ 'order.action.transfer'|trans }}</button>
     </form>

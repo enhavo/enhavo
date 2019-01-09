@@ -2,14 +2,16 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use FOS\RestBundle\View\View;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\TestCase;
 
-class ResourceControllerTest extends \PHPUnit_Framework_TestCase
+class ResourceControllerTest extends TestCase
 {
     private function getEntityMock()
     {
@@ -30,26 +32,21 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         return $mock;
     }
 
-    private function getViewerFactoryMock()
+    private function getViewFactoryMock()
     {
-        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\ViewerFactory')
+        $mock = $this->getMockBuilder(ViewFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mock->method('create')->willReturn($this->getViewerMock());
-        return $mock;
-    }
-
-    private function getViewerMock()
-    {
-        $mock = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Viewer\ViewerInterface')->getMock();
-        $mock->method('createView')->willReturn($this->getViewMock());
+        $mock->method('create')->willReturn($this->getViewMock());
         return $mock;
     }
 
     private function getViewMock()
     {
-        $mock = $this->getMockBuilder('FOS\RestBundle\View\View')->getMock();
+        $mock = $this->getMockBuilder(View::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         return $mock;
     }
 
@@ -80,7 +77,6 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
     private function getMetadataMock()
     {
         $mock = $this->getMockBuilder('Sylius\Component\Resource\Metadata\MetadataInterface')->getMock();
-        $mock->method('createNew')->willReturn($this->getEntityMock());
         return $mock;
     }
 
@@ -182,12 +178,33 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         return $mock;
     }
 
-    private function getSymfonyEventDispatcherMock()
+    private function getResourceUpdateHandlerMock()
     {
-        $mock = $this->getMockBuilder(EventDispatcher::class)->getMock();
+        $mock = $this->getMockBuilder(ResourceUpdateHandlerInterface::class)->getMock();
         return $mock;
     }
 
+    private function getResourceDeleteHandlerMock()
+    {
+        $mock = $this->getMockBuilder(ResourceDeleteHandlerInterface::class)->getMock();
+        return $mock;
+    }
+
+    private function getDuplicateResourceFactoryMock()
+    {
+        $mock = $this->getMockBuilder(DuplicateResourceFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        return $mock;
+    }
+
+    private function getAppEventDispatcherMock()
+    {
+        $mock = $this->getMockBuilder(AppEventDispatcher::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        return $mock;
+    }
 
     protected function createResourceController()
     {
@@ -206,9 +223,13 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
         $authorizationChecker = $this->getAuthorizationCheckerMock();
         $eventDispatcher = $this->getEventDispatcherMock();
         $stateMachine = $this->getStateMachineMock();
-        $viewerFactory = $this->getViewerFactoryMock();
+        $viewFactory = $this->getViewFactoryMock();
         $sortingManager = $this->getSortingManagerMock();
         $batchManager = $this->getBatchManagerMock();
+        $resourceUpdateHandler = $this->getResourceUpdateHandlerMock();
+        $resourceDeleteHandler = $this->getResourceDeleteHandlerMock();
+        $duplicateResourceFactory  = $this->getDuplicateResourceFactoryMock();
+        $appEventDispatcher  = $this->getAppEventDispatcherMock();
 
         $controller = new ResourceController(
             $metadata,
@@ -226,9 +247,13 @@ class ResourceControllerTest extends \PHPUnit_Framework_TestCase
             $authorizationChecker,
             $eventDispatcher,
             $stateMachine,
-            $viewerFactory,
+            $resourceUpdateHandler,
+            $resourceDeleteHandler,
+            $viewFactory,
             $sortingManager,
-            $batchManager
+            $batchManager,
+            $duplicateResourceFactory,
+            $appEventDispatcher
         );
 
         return $controller;

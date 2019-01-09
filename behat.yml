@@ -1,6 +1,10 @@
 default:
     extensions:
-        Behat\Symfony2Extension: ~
+        Behat\Symfony2Extension:
+          kernel:
+            class: Enhavo\Kernel
+            bootstrap: features/bootstrap/bootstrap.php
+
         Behat\MinkExtension:
           sessions:
             default:

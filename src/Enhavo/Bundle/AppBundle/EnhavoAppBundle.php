@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -53,11 +54,20 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.widget_collector', 'enhavo.widget')
+        );
+
+
+        $container->addCompilerPass(
             new SyliusCompilerPass()
         );
 
         $container->addCompilerPass(
             new FilesystemCompilerPass()
+        );
+
+        $container->addCompilerPass(
+            new FOSRestCompilerPass()
         );
     }
 }

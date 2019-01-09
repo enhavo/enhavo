@@ -1,8 +1,10 @@
 {% extends template('dialog') %}
 
 {% trans_default_domain "EnhavoAppBundle" %}
+{% form_theme form with form_themes %}
+
 {% block content %}
-    <form method="POST" action="{{ form_action }}">
+    <form method="POST" action="{{ path(form_action, form_action_parameters) }}">
         {% block form %}
             {% include form_template %}
         {% endblock %}

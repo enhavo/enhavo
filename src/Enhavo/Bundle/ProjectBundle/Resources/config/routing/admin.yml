@@ -1,0 +1,3 @@
+enhavo_project_dashboard:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/admin/dashboard.yml"
+    prefix:   /admin

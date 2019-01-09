@@ -9,11 +9,9 @@ class RouteTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
-        $formType = new RouteType();
-        $form = $this->factory->create($formType);
+        $form = $this->factory->create(RouteType::class);
 
         $form->submit(['staticPrefix' => '/hello']);
-        $view = $form->createView();
         /** @var Route $route */
         $route = $form->getData();
 

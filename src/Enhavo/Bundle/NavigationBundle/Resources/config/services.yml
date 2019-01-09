@@ -1,10 +1,17 @@
 services:
-    enhavo_navigation.menu.navigation:
-        class: Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu
+    Enhavo\Bundle\NavigationBundle\Menu\NavigationMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: navigation }
+
+    Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType:
+        arguments:
+            - '%enhavo_navigation.model.navigation.class%'
+            - [default]
+        tags:
+            - { name: form.type }
 
     enhavo_navigation.extend_listener.navigation:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -43,12 +50,12 @@ services:
 
     enhavo_navigation.resolver.node_resolver:
         class: Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
             - '@enhavo_navigation.item.item_manager'
-
 
     enhavo_navigation.form.node_type:
         class: Enhavo\Bundle\NavigationBundle\Form\Type\NodeType
@@ -64,33 +71,33 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_navigation_nodes' }
 
-    enhavo_navigation.item.configuration.link_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\LinkConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'link' }
 
-    enhavo_navigation.item.configuration.submenu_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\SubmenuConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'submenu' }
 
-    enhavo_navigation.item.configuration.node_configuration:
-        class: Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration
+    Enhavo\Bundle\NavigationBundle\Item\Configuration\NodeConfiguration:
+        public: true
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo_navigation.item, alias: 'node' }
 
-    enhavo_navigation.widget.navigation:
-        class: Enhavo\Bundle\NavigationBundle\Widget\NavigationWidget
+    Enhavo\Bundle\NavigationBundle\Widget\NavigationWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'navigation' }
+            - { name: enhavo.widget, alias: 'navigation' }
 
     enhavo_navigation.node.manager:
         class: Enhavo\Bundle\NavigationBundle\Node\NodeManager

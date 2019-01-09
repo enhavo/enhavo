@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\GridBundle\Form\Type;
 use Enhavo\Bundle\GridBundle\Model\Item\PictureItem;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +26,7 @@ class PictureItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
@@ -37,7 +38,7 @@ class PictureItemType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('caption', 'text', array(
+        $builder->add('caption', TextType::class, array(
             'label' => 'picture.form.label.caption',
             'translation_domain' => 'EnhavoGridBundle',
             'translation' => $this->translation
@@ -51,7 +52,7 @@ class PictureItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_item_picture';
     }

@@ -40,7 +40,7 @@ class NodesType extends AbstractType
         return DynamicFormType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_nodes';
     }

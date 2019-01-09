@@ -16,22 +16,25 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_app.block.table:
-        class: Enhavo\Bundle\AppBundle\Block\Block\TableBlock
+    Enhavo\Bundle\AppBundle\Block\Block\TableBlock:
+        public: true
+        arguments:
+            - '@security.authorization_checker'
+            - '@enhavo_app.factory.filter'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.block, alias: table }
 
-    enhavo_app.block.chart:
-        class: Enhavo\Bundle\AppBundle\Block\Block\ChartBlock
+    Enhavo\Bundle\AppBundle\Block\Block\ChartBlock:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.block, alias: chart }
 
-    enhavo_app.block.list:
-        class: Enhavo\Bundle\AppBundle\Block\Block\ListBlock
+    Enhavo\Bundle\AppBundle\Block\Block\ListBlock:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:

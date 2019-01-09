@@ -10,8 +10,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\DateWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class DateWidgetTest extends \PHPUnit_Framework_TestCase
+class DateWidgetTest extends TestCase
 {
     function testDefaultFormatDate()
     {

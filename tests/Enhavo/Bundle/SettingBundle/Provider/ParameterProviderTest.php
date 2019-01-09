@@ -10,8 +10,9 @@ namespace Enhavo\Bundle\SettingBundle\Provider;
 
 use Enhavo\Bundle\SettingBundle\Provider\ParameterProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
-class ParameterProviderTest extends \PHPUnit_Framework_TestCase
+class ParameterProviderTest extends TestCase
 {
     private function getContainerMock()
     {

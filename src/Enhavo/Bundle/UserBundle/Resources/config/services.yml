@@ -6,30 +6,29 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_user_user:
-        class: '%enhavo_user.form.type.user.class%'
+    Enhavo\Bundle\UserBundle\Form\Type\UserType:
         arguments:
             - '%enhavo_user.model.user.class%'
+            - [default]
             - '@security.authorization_checker'
         tags:
             - { name: form.type }
 
-    enhavo_user_profile:
-        class: Enhavo\Bundle\UserBundle\Form\Type\ProfileType
+    Enhavo\Bundle\UserBundle\Form\Type\ProfileType:
         arguments:
             - '%enhavo_user.model.user.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_user_profile' }
 
-    enhavo_user_group:
-        class: '%enhavo_user.form.type.group.class%'
+    Enhavo\Bundle\UserBundle\Form\Type\GroupType:
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: 'enhavo_user_group' }
         arguments:
+            - '%enhavo_user.model.group.class%'
+            - [default]
             - '@security.roles.provider'
 
-    enhavo_user_change_email:
-        class: Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailType
+    Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailType:
         tags:
             - { name: form.type }
         arguments:
@@ -59,39 +58,41 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_user.menu.user:
-        class: Enhavo\Bundle\UserBundle\Menu\UserMenu
+    Enhavo\Bundle\UserBundle\Menu\UserMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user_user }
 
-    enhavo_user.menu.group:
-        class: Enhavo\Bundle\UserBundle\Menu\GroupMenu
+    Enhavo\Bundle\UserBundle\Menu\GroupMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user_group }
 
-    enhavo_user.menu.user_main:
-        class: Enhavo\Bundle\UserBundle\Menu\UserMainMenu
+    Enhavo\Bundle\UserBundle\Menu\UserMainMenu:
+        public: true
+        arguments:
+            - '@enhavo_app.menu.factory'
         calls:
-          - [ 'setContainer', ['@service_container']]
+            - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: user }
 
-    enhavo_user.widget.login:
-        class: Enhavo\Bundle\UserBundle\Widget\LoginWidget
+    Enhavo\Bundle\UserBundle\Widget\LoginWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: login }
+            - { name: enhavo.widget, alias: login }
 
     enhavo_user.controller.security:
+        public: true
         class: Enhavo\Bundle\UserBundle\Controller\SecurityController
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
             - '@security.csrf.token_manager'
         calls:

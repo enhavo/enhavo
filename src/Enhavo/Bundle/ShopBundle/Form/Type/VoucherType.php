@@ -27,7 +27,7 @@ class VoucherType extends AbstractResourceType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_voucher';
     }

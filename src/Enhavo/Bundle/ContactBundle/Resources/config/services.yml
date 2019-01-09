@@ -15,15 +15,15 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_contact.widget.contact:
-        class: Enhavo\Bundle\ContactBundle\Widget\ContactWidget
+    Enhavo\Bundle\ContactBundle\Widget\ContactWidget:
+        public: true
         arguments:
             - '@enhavo_contact.configuration.factory'
             - '@form.factory'
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'contact' }
+            - { name: enhavo.widget, alias: 'contact' }
 
     enhavo_contact.mailer:
         class: Enhavo\Bundle\ContactBundle\Mailer\ContactMailer

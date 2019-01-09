@@ -7,7 +7,7 @@ use Enhavo\Bundle\ShopBundle\Entity\Voucher;
 use Enhavo\Bundle\ShopBundle\Factory\VoucherFactory;
 use Enhavo\Bundle\ShopBundle\Form\Type\VoucherType;
 use Enhavo\Bundle\ShopBundle\Repository\VoucherRepository;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -125,12 +125,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(VoucherRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(VoucherFactory::class)->end()
-                                        ->arrayNode('form')
-                                            ->addDefaultsIfNotSet()
-                                            ->children()
-                                                ->scalarNode('default')->defaultValue(VoucherType::class)->cannotBeEmpty()->end()
-                                            ->end()
-                                        ->end()
+                                        ->scalarNode('form')->defaultValue(VoucherType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

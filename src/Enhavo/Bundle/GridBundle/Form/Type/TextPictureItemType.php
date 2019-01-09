@@ -6,6 +6,9 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\GridBundle\Model\Item\TextPictureItem;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -24,19 +27,19 @@ class TextPictureItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('text', 'enhavo_wysiwyg', array(
+        $builder->add('text', WysiwygType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('caption', 'text', array(
+        $builder->add('caption', TextType::class, array(
             'label' => 'textPicture.form.label.caption',
             'translation_domain' => 'EnhavoGridBundle',
             'translation' => $this->translation
@@ -48,7 +51,7 @@ class TextPictureItemType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('textLeft', 'enhavo_boolean', array(
+        $builder->add('textLeft', BooleanType::class, array(
             'label' => 'textPicture.form.label.position',
             'translation_domain' => 'EnhavoGridBundle',
             'choices' => array(
@@ -59,19 +62,19 @@ class TextPictureItemType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('float', 'enhavo_boolean', array(
+        $builder->add('float', BooleanType::class, array(
             'label' => 'textPicture.form.label.float',
             'translation_domain' => 'EnhavoGridBundle'
         ));
 
-        $builder->add('layout', 'choice', array(
+        $builder->add('layout', ChoiceType::class, array(
             'label' => 'textText.form.label.layout',
             'translation_domain' => 'EnhavoGridBundle',
-            'choices'   => array(
-                TextPictureItem::LAYOUT_1_1 => 'textPicture.form.label.1_1',
-                TextPictureItem::LAYOUT_1_2 => 'textPicture.form.label.1_2',
-                TextPictureItem::LAYOUT_2_1 => 'textPicture.form.label.2_1'
-            ),
+            'choices' => [
+                'textPicture.form.label.1_1' => TextPictureItem::LAYOUT_1_1,
+                'textPicture.form.label.1_2' => TextPictureItem::LAYOUT_1_2,
+                'textPicture.form.label.2_1' => TextPictureItem::LAYOUT_2_1
+            ],
             'expanded' => true,
             'multiple' => false
         ));
@@ -84,7 +87,7 @@ class TextPictureItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_text_picture_item';
     }

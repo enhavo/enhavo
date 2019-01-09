@@ -1,4 +1,11 @@
+parameters:
+    enhavo_serializer.form_serializer.class: Enhavo\Bundle\FormBundle\Serializer\FormSerializer
+    enhavo_serializer.encoder.class: Enhavo\Bundle\FormBundle\Encoder\Encoder
+
 services:
-#    enhavo_form.example:
-#        class: Enhavo\Bundle\FormBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    Enhavo\Bundle\FormBundle\Encoder\Encoder:
+
+    Enhavo\Bundle\FormBundle\Serializer\FormSerializer:
+        arguments:
+          - '@form.factory'
+          - '@Enhavo\Bundle\FormBundle\Encoder\Encoder'

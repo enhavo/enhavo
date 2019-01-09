@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block bodyclass %}light{% endblock %}
 
@@ -10,7 +10,7 @@
 {% block main %}
     <div class="login-form">
         <h2>Login</h2>
-        {{ theme_widget_render('login', {failurePath: 'enhavo_shop_theme_checkout_login'}) }}
+        {{ widget_render('login', {failurePath: 'enhavo_shop_theme_checkout_login'}) }}
         <div class="no-account">
             <p>Sie haben noch kein Konto?</p>
             <a class="btn rounded" href="{{ path('enhavo_user_theme_user_register') }}">Registrieren</a>

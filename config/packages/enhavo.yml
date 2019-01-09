@@ -1,0 +1,75 @@
+parameters:
+    locale: en
+
+imports:
+    - { resource: '@EnhavoArticleBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoCalendarBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoCategoryBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoContactBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoContentBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoGridBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoNewsletterBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoPageBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSettingBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoNavigationBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoRoutingBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoProjectBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
+enhavo_app:
+    menu:
+        dashboard:
+            type: dashboard
+        user:
+            type: user
+        article:
+            type: article
+        page:
+            type: page
+        category:
+            type: category
+        slider:
+            type: slider
+        newsletter:
+            type: newsletter
+        calendar:
+            type: calendar
+#        shop:
+#            type: shop
+        setting:
+            type: setting
+        navigation:
+            type: navigation
+#        translation_strings:
+#            type: translation
+        redirect:
+            type: redirect
+        media_library:
+            type: media_library
+#        magazine:
+#            type: base
+#            route: enhavo_project_magazine_index
+#            icon: open-book
+#            label: Magazine
+
+enhavo_grid:
+    items:
+        picture:
+            type: picture
+        gallery:
+            type: gallery
+        text:
+            type: text
+        text_picture:
+            type: text_picture
+        cite:
+            type: cite
+        video:
+            type: video
+        one_column:
+            type: one_column
+        two_column:
+            type: two_column
+        three_column:
+            type: three_column
+

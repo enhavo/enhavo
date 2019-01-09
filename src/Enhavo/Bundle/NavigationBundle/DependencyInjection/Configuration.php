@@ -11,7 +11,7 @@ use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NodeType;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
 use Enhavo\Bundle\NavigationBundle\Repository\NodeRepository;
-use Sylius\Component\Resource\Factory\Factory;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -51,12 +51,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(NavigationRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(NavigationFactory::class)->end()
-                                        ->arrayNode('form')
-                                            ->addDefaultsIfNotSet()
-                                            ->children()
-                                                ->scalarNode('default')->defaultValue(NavigationType::class)->cannotBeEmpty()->end()
-                                            ->end()
-                                        ->end()
+                                        ->scalarNode('form')->defaultValue(NavigationType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -72,12 +67,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(NodeRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->arrayNode('form')
-                                            ->addDefaultsIfNotSet()
-                                            ->children()
-                                                ->scalarNode('default')->defaultValue(NodeType::class)->cannotBeEmpty()->end()
-                                            ->end()
-                                        ->end()
+                                        ->scalarNode('form')->defaultValue(NodeType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

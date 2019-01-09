@@ -10,15 +10,18 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\ResourceActions;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface as SyliusRequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
@@ -30,34 +33,39 @@ use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
 use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerFactory;
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration as SyliusRequestConfiguration;
 
 class ResourceController extends BaseController
 {
     /**
-     * @var ViewerFactory
+     * @var ViewFactory
      */
-    protected $viewerFactory;
+    private $viewFactory;
 
     /**
      * @var SortingManager
      */
-    protected $sortingManger;
+    private $sortingManger;
 
     /**
      * @var BatchManager
      */
-    protected $batchManager;
+    private $batchManager;
 
     /**
      * @var DuplicateResourceFactoryInterface
      */
-    protected $duplicateResourceFactory;
+    private $duplicateResourceFactory;
+
+    /**
+     * @var AppEventDispatcher
+     */
+    private $appEventDispatcher;
 
     public function __construct(
         MetadataInterface $metadata,
-        SyliusRequestConfigurationFactoryInterface $requestConfigurationFactory,
+        RequestConfigurationFactoryInterface $requestConfigurationFactory,
         ViewHandlerInterface $viewHandler,
         RepositoryInterface $repository,
         FactoryInterface $factory,
@@ -71,9 +79,13 @@ class ResourceController extends BaseController
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         StateMachineInterface $stateMachine,
-        ViewerFactory $viewerFactory,
+        ResourceUpdateHandlerInterface $resourceUpdateHandler,
+        ResourceDeleteHandlerInterface $resourceDeleteHandler,
+        ViewFactory $viewFactory,
         SortingManager $sortingManager,
-        BatchManager $batchManager
+        BatchManager $batchManager,
+        DuplicateResourceFactory $duplicateResourceFactory,
+        AppEventDispatcher $appEventDispatcher
     )
     {
         parent::__construct(
@@ -91,18 +103,22 @@ class ResourceController extends BaseController
             $flashHelper,
             $authorizationChecker,
             $eventDispatcher,
-            $stateMachine
+            $stateMachine,
+            $resourceUpdateHandler,
+            $resourceDeleteHandler
         );
 
-        $this->viewerFactory = $viewerFactory;
+        $this->viewFactory = $viewFactory;
         $this->sortingManger = $sortingManager;
         $this->batchManager = $batchManager;
+        $this->appEventDispatcher = $appEventDispatcher;
+        $this->duplicateResourceFactory = $duplicateResourceFactory;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
@@ -113,28 +129,29 @@ class ResourceController extends BaseController
         if ($request->isMethod('POST')) {
             if($form->handleRequest($request)->isValid()) {
                 $newResource = $form->getData();
+                $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
                 $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
+                $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
             }
         }
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            $newResource,
-            $form,
-            'create'
-        );
+        $view = $this->viewFactory->create('create', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resource' => $newResource,
+            'form' => $form
+        ]);
 
-        return $this->viewHandler->handle($configuration, $viewer->createView());
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
@@ -142,27 +159,29 @@ class ResourceController extends BaseController
 
         $form = $this->resourceFormFactory->create($configuration, $resource);
 
-        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
-            if($form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        $form->handleRequest($request);
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->isSubmitted()) {
+            if($form->isValid()) {
                 $resource = $form->getData();
+                $this->appEventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->manager->flush();
+                $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
             }
         }
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            $resource,
-            $form,
-            'update'
-        );
+        $view = $this->viewFactory->create('update', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resource' => $resource,
+            'form' => $form
+        ]);
 
-        return $this->viewHandler->handle($configuration, $viewer->createView());
+        return $this->viewHandler->handle($configuration, $view);
     }
 
-    public function duplicateAction(Request $request)
+    public function duplicateAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
@@ -173,41 +192,36 @@ class ResourceController extends BaseController
         }
 
         $newResource = $this->newResourceFactory->duplicate($configuration, $this->factory, $resource);
+        $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->repository->add($newResource);
         $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
+        $this->appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
 
         return $this->redirectHandler->redirectToResource($configuration, $newResource);
     }
 
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            null,
-            null,
-            'index'
-        );
-
-        $view = $viewer->createView();
+        $view = $this->viewFactory->create('index', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+        ]);
 
         return $this->viewHandler->handle($configuration, $view);
     }
 
-    public function previewAction(Request $request)
+    public function previewAction(Request $request): Response
     {
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
-        if($this->eventDispatcher instanceof EventDispatcher) {
-            $this->eventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
-        }
+        $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
         if($request->attributes->has('id')) {
             $resource = $this->singleResourceProvider->get($configuration, $this->repository);
@@ -220,15 +234,12 @@ class ResourceController extends BaseController
         $form = $this->resourceFormFactory->create($configuration, $resource);
         $form->handleRequest($request);
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            $resource,
-            $form,
-            'preview'
-        );
-
-        $view = $viewer->createView();
+        $view = $this->viewFactory->create('preview', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resource' => $resource,
+            'form' => $form
+        ]);
 
         return $this->viewHandler->handle($configuration, $view);
     }
@@ -236,48 +247,44 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function tableAction(Request $request)
+    public function tableAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            $resources,
-            null,
-            'table'
-        );
+        $view = $this->viewFactory->create('table', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resources' => $resources,
+        ]);
 
-        return $this->viewHandler->handle($configuration, $viewer->createView());
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            $this->metadata,
-            $resources,
-            null,
-            'list'
-        );
+        $view = $this->viewFactory->create('list', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resources' => $resources,
+        ]);
 
-        return $this->viewHandler->handle($configuration, $viewer->createView());
+        return $this->viewHandler->handle($configuration, $view);
     }
 
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function batchAction(Request $request)
+    public function batchAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
@@ -289,7 +296,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveAfterAction(Request $request)
+    public function moveAfterAction(Request $request): JsonResponse
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
@@ -302,7 +309,7 @@ class ResourceController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function moveToPageAction(Request $request)
+    public function moveToPageAction(Request $request): JsonResponse
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resource = $this->findOr404($configuration);
@@ -311,18 +318,13 @@ class ResourceController extends BaseController
         return new JsonResponse();
     }
 
-    protected function getPermissionRole($type, MetadataInterface $metadata)
-    {
-        return strtoupper(sprintf('ROLE_%s_%s_%s', $metadata->getApplicationName(), $metadata->getHumanizedName(), $type));
-    }
-
     /**
      * @param SyliusRequestConfiguration $configuration
      * @param string $permission
      *
      * @throws AccessDeniedException
      */
-    protected function isGrantedOr403(SyliusRequestConfiguration $configuration, $permission)
+    protected function isGrantedOr403(SyliusRequestConfiguration $configuration, string $permission): void
     {
         if (!$configuration->hasPermission()) {
             $permission = $this->getRoleName($permission);
@@ -340,7 +342,7 @@ class ResourceController extends BaseController
         return;
     }
 
-    private function getRoleName($permission)
+    private function getRoleName(string $permission): string
     {
         $name = $this->metadata->getHumanizedName();
         $name = str_replace(' ', '_', $name);

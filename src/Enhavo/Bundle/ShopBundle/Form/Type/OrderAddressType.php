@@ -89,7 +89,7 @@ class OrderAddressType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_order_address';
     }

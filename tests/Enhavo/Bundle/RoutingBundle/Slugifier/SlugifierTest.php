@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
+use PHPUnit\Framework\TestCase;
 
-class SlugifierTest extends \PHPUnit_Framework_TestCase
+class SlugifierTest extends TestCase
 {
     public function testSlugify()
     {

@@ -25,7 +25,7 @@ class SubmenuType extends AbstractType
         return NodeType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_submenu';
     }

@@ -3,28 +3,35 @@
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Pagerfanta\Pagerfanta;
-use Twig_Environment;
+use Symfony\Component\Templating\EngineInterface;
 
 class PaginationRender extends \Twig_Extension
 {
     /**
-     * @var $templateEngine Twig_Environment
+     * @var EngineInterface
      */
-    protected $twigEnvironment;
+    private $engine;
 
     /**
      * @var string
      */
-    protected $template = '';
+    private $template;
 
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->twigEnvironment = $environment;
-    }
-
-    public function __construct($template)
+    /**
+     * PaginationRender constructor.
+     * @param string $template
+     */
+    public function __construct(string $template)
     {
         $this->template = $template;
+    }
+
+    /**
+     * @param EngineInterface $engine
+     */
+    public function setEngine(EngineInterface $engine)
+    {
+        $this->engine = $engine;
     }
 
     public function getFunctions()
@@ -34,9 +41,11 @@ class PaginationRender extends \Twig_Extension
         );
     }
 
-    public function render(Pagerfanta $pagination,$cssClass='pagination',$dataSelector=null)
+    public function render(Pagerfanta $pagination, array $parameters = [])
     {
-        return $this->twigEnvironment->render($this->template, array('pagination' => $pagination,'cssClass' => $cssClass,'dataSelector' => $dataSelector));
+        return $this->engine->render($this->template, array_merge([
+            'pagination' => $pagination
+        ], $parameters));
     }
 
     public function getName()

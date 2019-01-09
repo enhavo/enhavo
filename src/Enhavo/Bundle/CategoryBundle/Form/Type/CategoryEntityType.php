@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -65,10 +66,10 @@ class CategoryEntityType extends AbstractType
 
     public function getParent()
     {
-        return 'entity';
+        return EntityType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_category';
     }

@@ -110,9 +110,7 @@ class MagazineType extends AbstractResourceType
         $builder->add('pictures', MediaType::class);
     }
 
-
-
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_project_magazine';
     }

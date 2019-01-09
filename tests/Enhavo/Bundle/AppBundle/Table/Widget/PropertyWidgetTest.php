@@ -11,8 +11,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 
 use Enhavo\Bundle\AppBundle\Table\Widget\PropertyWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class PropertyWidgetTest extends \PHPUnit_Framework_TestCase
+class PropertyWidgetTest extends TestCase
 {
     /**
      * Test if the function getProperty works well

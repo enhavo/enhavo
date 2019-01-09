@@ -1,0 +1,51 @@
+enhavo_theme_search:
+    resource: "@EnhavoSearchBundle/Resources/config/routing/theme.yml"
+    prefix: /
+
+#enhavo_shop_theme:
+#    resource: "@EnhavoShopBundle/Resources/config/routing/theme.yml"
+#    prefix: /
+
+enhavo_user_theme:
+    resource: "@EnhavoUserBundle/Resources/config/routing/theme.yml"
+    prefix: /
+
+enhavo_contact:
+    resource: "@EnhavoContactBundle/Resources/config/routing.yml"
+    prefix: /
+
+enhavo_article_theme:
+    resource: "@EnhavoArticleBundle/Resources/config/routing/theme/article.yml"
+    prefix: /
+
+enhavo_newsletter_theme:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/theme/newsletter.yml"
+    prefix: /
+
+enhavo_navigation_form:
+    resource: "@EnhavoNavigationBundle/Resources/config/routing/form.yml"
+    prefix: /
+
+enhavo_comment:
+    resource: "@EnhavoCommentBundle/Resources/config/routing.yml"
+    prefix: /
+
+enhavo_calendar_export:
+    resource: "@EnhavoCalendarBundle/Resources/config/routing/theme/export.yml"
+    prefix: /
+
+enhavo_media_theme:
+    resource: "@EnhavoMediaBundle/Resources/config/routing/theme.yml"
+    prefix: /
+
+enhavo_sitemap:
+    resource: "@EnhavoContentBundle/Resources/config/routing/sitemap.yml"
+    prefix: /
+
+enhavo_newsletter_subscribe:
+    resource: "@EnhavoNewsletterBundle/Resources/config/routing/subscribe.yml"
+    prefix: /
+
+enhavo_project_theme:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
+    prefix: /

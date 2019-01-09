@@ -9,11 +9,22 @@
 namespace Enhavo\Bundle\GridBundle\Twig;
 
 use Enhavo\Bundle\GridBundle\Entity\Grid;
+use Enhavo\Bundle\GridBundle\Renderer\GridRenderer;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class GridExtension extends \Twig_Extension
 {
     use ContainerAwareTrait;
+
+    /**
+     * @var GridRenderer
+     */
+    private $renderer;
+
+    public function __construct(GridRenderer $renderer)
+    {
+        $this->renderer = $renderer;
+    }
 
     public function getFunctions()
     {
@@ -25,7 +36,7 @@ class GridExtension extends \Twig_Extension
     public function render(Grid $grid = null, $set = null, $onlyRenderTypes = null)
     {
         if($grid) {
-            return $this->container->get('enhavo_grid.renderer.grid_renderer')->render($grid, $set, $onlyRenderTypes);
+            return $this->renderer->render($grid, $set, $onlyRenderTypes);
         }
         return '';
     }

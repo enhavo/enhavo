@@ -1,13 +1,11 @@
 services:
-    enhavo_calendar_appointment:
-        class: '%enhavo_calendar.form.type.appointment.class%'
+    Enhavo\Bundle\CalendarBundle\Form\Type\AppointmentType:
         arguments:
             - '%enhavo_calendar.model.appointment.class%'
-            - '%enhavo_calendar.routing.appointment.strategy%'
-            - '%enhavo_calendar.routing.appointment.route%'
-            - '%enhavo_translation.translate%'
+            - [default]
+            - '%enhavo_app.translate%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_calendar_appointment }
 
     validator.appointment_date:
         class:  Enhavo\Bundle\CalendarBundle\Validator\Constraints\AppointmentDateValidator
@@ -25,8 +23,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_calendar.menu.calendar:
-        class: Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu
+    Enhavo\Bundle\CalendarBundle\Menu\CalendarMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

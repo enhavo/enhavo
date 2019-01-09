@@ -5,8 +5,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 use Enhavo\Bundle\AppBundle\Table\Widget\PositionWidget;
 use Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class PositionWidgetTest extends \PHPUnit_Framework_TestCase
+class PositionWidgetTest extends TestCase
 {
     function testInitialize()
     {

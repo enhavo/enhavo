@@ -16,13 +16,19 @@ use Symfony\Component\Form\FormErrorIterator;
 class Form extends \Twig_Extension
 {
     /**
+     * @var string[]
+     */
+    private $formThemes;
+
+    /**
      * @var FormErrorResolver
      */
     private $formErrorResolver;
     
-    public function __construct(FormErrorResolver $formErrorResolver)
+    public function __construct(array $formThemes, FormErrorResolver $formErrorResolver)
     {
         $this->formErrorResolver = $formErrorResolver;
+        $this->formThemes = $formThemes;
     }
 
     public function getName()
@@ -37,7 +43,13 @@ class Form extends \Twig_Extension
             new \Twig_SimpleFunction('form_has_errors', array($this, 'hasErrors')),
             new \Twig_SimpleFunction('form_is_submitted', array($this, 'isSubmitted')),
             new \Twig_SimpleFunction('form_is_successful', array($this, 'isSuccessful')),
+            new \Twig_SimpleFunction('form_themes', array($this, 'getFormThemes')),
         );
+    }
+
+    public function getFormThemes()
+    {
+        return $this->formThemes;
     }
 
     public function getErrorRecursive(FormView $formView, $translationDomain = null)

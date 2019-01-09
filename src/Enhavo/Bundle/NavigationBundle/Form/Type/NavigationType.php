@@ -17,6 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NavigationType extends AbstractResourceType
 {
+    public function __construct($dataClass, $validationGroups = [])
+    {
+        parent::__construct($dataClass, $validationGroups);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
@@ -40,7 +45,7 @@ class NavigationType extends AbstractResourceType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
            'items' => [],
@@ -48,7 +53,7 @@ class NavigationType extends AbstractResourceType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_navigation';
     }

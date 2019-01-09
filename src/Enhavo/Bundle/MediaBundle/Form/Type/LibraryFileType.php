@@ -64,7 +64,7 @@ class LibraryFileType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_media_library_file';
     }

@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Mock;
 
+use PHPUnit\Framework\TestCase;
 
 class ModelMock
 {

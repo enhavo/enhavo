@@ -40,7 +40,7 @@ class ItemsType extends AbstractType
         return DynamicFormType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_items';
     }

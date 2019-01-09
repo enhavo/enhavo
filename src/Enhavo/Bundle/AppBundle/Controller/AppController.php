@@ -8,30 +8,45 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use FOS\RestBundle\View\ViewHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AppController extends Controller
+class AppController extends AbstractController
 {
-    use AppControllerTrait;
+    /**
+     * @var ViewHandlerInterface
+     */
+    private $viewHandler;
+
+    /**
+     * @var ViewFactory
+     */
+    private $viewFactory;
+
+    public function __construct(
+        ViewFactory $viewFactory,
+        ViewHandlerInterface $viewHandler
+    ) {
+        $this->viewFactory = $viewFactory;
+        $this->viewHandler = $viewHandler;
+    }
 
     public function indexAction(Request $request)
     {
-        $configuration = $this->requestConfigurationFactory->createSimple($request);
-        $viewer = $this->viewerFactory->createType($configuration, 'app');
-        return $this->viewHandler->handle($viewer->createView());
+        $view = $this->viewFactory->create('app', [
+            'request' => $request
+        ]);
+        return $this->viewHandler->handle($view);
     }
 
     public function showAction($contentDocument, Request $request)
     {
-        $configuration = $this->requestConfigurationFactory->createSimple($request);
-        $viewer = $this->viewerFactory->create(
-            $configuration,
-            null,
-            $contentDocument,
-            null,
-            'base'
-        );
-        return $this->viewHandler->handle($viewer->createView());
+        $view = $this->viewFactory->create('base', [
+            'request' => $request,
+            'resource' => $contentDocument
+        ]);
+        return $this->viewHandler->handle($view);
     }
 }

@@ -14,13 +14,6 @@ use Doctrine\ORM\Mapping\Driver\YamlDriver;
 
 class EnhavoSearchBundle extends Bundle
 {
-    protected $kernel;
-
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass($this->buildDoctrineItemCompilerPass(
@@ -42,7 +35,8 @@ class EnhavoSearchBundle extends Bundle
         );
 
 
-        $container->addCompilerPass(new ConfigCompilerPass($this->kernel, 'search', 'search_metadata'));
+        //ToDo: Need to fix get meta information in symfony 4
+        //$container->addCompilerPass(new ConfigCompilerPass('search', 'search_metadata'));
     }
 
     private function buildDoctrineItemCompilerPass($configDir, $namespace, $enableParameter = false)

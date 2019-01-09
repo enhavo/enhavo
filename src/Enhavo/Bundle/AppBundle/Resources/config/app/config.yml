@@ -4,12 +4,8 @@ framework:
         enabled: true
     session:
         cookie_lifetime: 25920000
-        handler_id: session.handler.pdo
-
-twig:
-    form:
-        resources:
-            - 'EnhavoAppBundle:Form:fields.html.twig'
+    templating:
+        engines: twig
 
 doctrine:
     dbal:
@@ -17,29 +13,6 @@ doctrine:
             enum: string
             json: string
             json_array: string
-
-parameters:
-    pdo.db_options:
-        db_table: app_session
-        db_id_col: id
-        db_data_col: value
-        db_time_col: time
-        db_lifetime_col: lifetime
-        gc_maxlifetime: 3600
-
-services:
-    pdo:
-        class: PDO
-        arguments:
-            - "mysql:host=%database_host%;dbname=%database_name%"
-            - "%database_user%"
-            - "%database_password%"
-        calls:
-            - [setAttribute, [3, 2]]
-
-    session.handler.pdo:
-        class:     Enhavo\Bundle\AppBundle\Session\PdoSessionHandler
-        arguments: ["@pdo", "%pdo.db_options%"]
 
 stof_doctrine_extensions:
     default_locale: "%locale%"
@@ -49,9 +22,6 @@ stof_doctrine_extensions:
             timestampable: true
 
 sylius_resource:
-    translation:
-        default_locale: "%locale%"
-        locale_provider: enhavo.translation.locale_provider.contextual
     authorization_checker: enhavo_app.security.default_authorization_checker
 
 enhavo_assets:
@@ -69,3 +39,5 @@ enhavo_app:
       - 'app/app/Menu'
       - 'app/app/ConditionType'
       - 'app/app/Adapter/DynamicForm/EnhavoAdapter'
+    form_themes:
+      - 'EnhavoAppBundle:Form:fields.html.twig'

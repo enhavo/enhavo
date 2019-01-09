@@ -11,6 +11,8 @@ services:
 
     enhavo_grid.twig.grid_extension:
         class: Enhavo\Bundle\GridBundle\Twig\GridExtension
+        arguments:
+            - '@enhavo_grid.renderer.grid_renderer'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
@@ -26,6 +28,7 @@ services:
             - [ setContainer, ['@service_container']]
 
     enhavo_grid.resolver.item_resolver:
+        public: true
         class: Enhavo\Bundle\GridBundle\Resolver\ItemResolver
         calls:
             - ['setContainer', ['@service_container']]

@@ -9,27 +9,25 @@ services:
         tags:
             - { name: form.type }
 
-    enhavo_slider_slide:
-        class: '%enhavo_slider.form.type.slide.class%'
+    Enhavo\Bundle\SliderBundle\Form\Type\SlideType:
         arguments:
             - '%enhavo_slider.model.slide.class%'
-            - '%enhavo_translation.translate%'
+            - '%enhavo_app.translate%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_slider_slide }
 
-    enhavo_slider_slider:
-        class: '%enhavo_slider.form.type.slider.class%'
+    Enhavo\Bundle\SliderBundle\Form\Type\SliderType:
         arguments:
             - '%enhavo_slider.model.slider.class%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_slider_slider }
 
-    enhavo_slider_slider.widget.slider:
-        class: Enhavo\Bundle\SliderBundle\Widget\SliderWidget
+    Enhavo\Bundle\SliderBundle\Widget\SliderWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: slider }
+            - { name: enhavo.widget, alias: slider }
 
 
     enhavo_slider.extend_listener.slider:
@@ -50,8 +48,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_slider.menu.slider:
-        class: Enhavo\Bundle\SliderBundle\Menu\SliderMenu
+    Enhavo\Bundle\SliderBundle\Menu\SliderMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

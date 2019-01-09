@@ -13,10 +13,10 @@ use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class DemoController extends Controller
+class DemoController extends AbstractController
 {
     public function indexAction(Request $request)
     {

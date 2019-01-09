@@ -90,9 +90,9 @@ class DynamicItemType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
-        return 'enhavo_app_dynamic_item';
+        return 'enhavo_dynamic_item';
     }
 
     /**
@@ -115,10 +115,5 @@ class DynamicItemType extends AbstractType
         }
 
         return $resolver;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_dynamic_item';
     }
 } 

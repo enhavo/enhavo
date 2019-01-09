@@ -27,13 +27,17 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.apps', $config['apps']);
         $container->setParameter('enhavo_app.menu', $config['menu']);
         $container->setParameter('enhavo_app.branding', $config['branding']);
-        $container->setParameter('enhavo_app.login_redirect', $config['login_redirect']);
+        $container->setParameter('enhavo_app.login.route', $config['login']['route']);
+        $container->setParameter('enhavo_app.login.route_parameters', $config['login']['route_parameters']);
         $container->setParameter('enhavo_app.template', $config['template']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
-        
+        $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
+        $container->setParameter('enhavo_app.translate', $config[ 'translate' ]);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/services.yml');
+        $loader->load('services/controller.yml');
         $loader->load('services/twig.yml');
         $loader->load('services/viewer.yml');
         $loader->load('services/block.yml');
@@ -47,5 +51,6 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/chart.yml');
         $loader->load('services/reference.yml');
         $loader->load('services/metadata.yml');
+        $loader->load('services/widget.yml');
     }
 }

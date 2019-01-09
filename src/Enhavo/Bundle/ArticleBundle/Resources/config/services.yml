@@ -1,20 +1,18 @@
 services:
-    enhavo_article_article:
-        class: '%enhavo_article.form.type.article.class%'
+    Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType:
         arguments:
             - '%enhavo_article.model.article.class%'
-            - '%enhavo_article.routing.article.strategy%'
-            - '%enhavo_article.routing.article.route%'
-            - '%enhavo_translation.translate%'
+            - [default]
+            - '%enhavo_app.translate%'
         tags:
-            - { name: form.type }
+            - { name: form.type, alias: enhavo_article_article }
 
-    enhavo_article_article.widget.article_category:
-        class: Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget
+    Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: article_category }
+            - { name: enhavo.widget, alias: article_category }
 
     enhavo_article.extend_listener.article:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -25,8 +23,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_article.menu.article:
-        class: Enhavo\Bundle\ArticleBundle\Menu\ArticleMenu
+    Enhavo\Bundle\ArticleBundle\Menu\ArticleMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

@@ -17,6 +17,16 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ListMenu extends AbstractMenu
 {
+    /**
+     * @var TypeFactory
+     */
+    private $factory;
+
+    public function __construct(TypeFactory $factory)
+    {
+        $this->factory = $factory;
+    }
+
     public function render(array $options)
     {
         $template = $options['template'];
@@ -55,14 +65,6 @@ class ListMenu extends AbstractMenu
     }
 
     /**
-     * @return TypeFactory
-     */
-    private function getFactory()
-    {
-        return $this->container->get('enhavo_app.menu.factory');
-    }
-
-    /**
      * @return AuthorizationCheckerInterface
      */
     private function getSecurityChecker()
@@ -80,7 +82,7 @@ class ListMenu extends AbstractMenu
         $menus = [];
         foreach($menuConfig as $name => $options) {
             /** @var Menu $menu */
-            $menu = $this->getFactory()->create($options);
+            $menu = $this->factory->create($options);
 
             if($menu->isHidden()) {
                 continue;

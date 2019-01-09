@@ -5,8 +5,9 @@ namespace Enhavo\Bundle\AppBundle\Table\Widget;
 use Enhavo\Bundle\AppBundle\Table\Widget\BooleanWidget;
 use Enhavo\Bundle\AppBundle\Table\Widget\TemplateWidget;
 use Enhavo\Bundle\AppBundle\Mock\EntityMock;
+use PHPUnit\Framework\TestCase;
 
-class BooleanWidgetTest extends \PHPUnit_Framework_TestCase
+class BooleanWidgetTest extends TestCase
 {
     function testInitialize()
     {

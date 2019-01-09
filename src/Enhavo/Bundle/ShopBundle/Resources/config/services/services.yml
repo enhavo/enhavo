@@ -7,22 +7,22 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    enhavo_shop.table.shop_address_widget:
-        class: Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget
+    Enhavo\Bundle\ShopBundle\Table\Widget\AddressWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget, alias: shop_address }
 
-    enhavo_shop.table.shop_product_variant_widget:
-        class: Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget
+    Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.table_widget, alias: shop_product_variant }
 
-    enhavo_shop.table.order_state_widget:
-        class: Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget
+    Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -33,36 +33,38 @@ services:
         arguments:
             - '@sylius.repository.country'
 
-    enhavo_shop.menu.product:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductMenu
+    Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_product }
 
-    enhavo_shop.menu.order:
-        class: Enhavo\Bundle\ShopBundle\Menu\OrderMenu
+    Enhavo\Bundle\ShopBundle\Menu\OrderMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_order }
 
-    enhavo_shop.menu.product_option:
-        class: Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu
+    Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_product_option }
 
-    enhavo_shop.menu.voucher:
-        class: Enhavo\Bundle\ShopBundle\Menu\VoucherMenu
+    Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: shop_voucher }
 
-    enhavo_shop.menu.shop:
-        class: Enhavo\Bundle\ShopBundle\Menu\ShopMenu
+    Enhavo\Bundle\ShopBundle\Menu\ShopMenu:
+        public: true
+        arguments:
+          - '@enhavo_app.menu.factory'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -71,15 +73,15 @@ services:
     enhavo.token_generator:
         class: Sylius\Component\User\Security\Generator\TokenGenerator
 
-    enhavo_shop.button.billing:
-        class: Enhavo\Bundle\ShopBundle\Button\BillingButton
+    Enhavo\Bundle\ShopBundle\Button\BillingButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.button, alias: shop_billing }
 
-    enhavo_shop.button.packing_slip:
-        class: Enhavo\Bundle\ShopBundle\Button\PackingSlipButton
+    Enhavo\Bundle\ShopBundle\Button\PackingSlipButton:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -120,7 +122,7 @@ services:
         class: '%enhavo_shop.controller.user.class%'
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
-            - '@viewer.factory'
+            - '@view.factory'
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]

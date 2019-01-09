@@ -4,8 +4,9 @@ namespace Enhavo\Bundle\AppBundle\Config;
 
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption;
+use PHPUnit\Framework\TestCase;
 
-class WysiwygConfigTest extends \PHPUnit_Framework_TestCase
+class WysiwygConfigTest extends TestCase
 {
     public function testInitialize()
     {

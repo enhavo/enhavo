@@ -3,11 +3,11 @@
         <button
             data-button
             data-type="{{ type }}"
-            {{ block('button_attributes') }}
+            {% block button_attributes %}{% endblock %}
             class="btn">
             <i class="button-icon icon-{{ icon }}"></i>
             {{ label|trans({},  translationDomain)|nl2br }}
         </button>
-        {{ block('additional') }}
+        {% block additional %}{% endblock %}
     </li>
 {% endif %}

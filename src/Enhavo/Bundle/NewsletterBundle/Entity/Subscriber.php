@@ -33,7 +33,7 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     /**
      * @var bool
      */
-    private $active;
+    private $active = false;
 
     /**
      * @var \DateTime

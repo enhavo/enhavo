@@ -27,7 +27,7 @@ class FileController extends ResourceController
         return $this->container->get('enhavo_media.security.default_authorization_checker');
     }
 
-    public function showAction(Request $request)
+    public function showAction(Request $request): Response
     {
         $file = $this->getFile($request);
 
@@ -47,7 +47,7 @@ class FileController extends ResourceController
      * @param Request $request
      * @return FileInterface
      */
-    private function getFile(Request $request)
+    private function getFile(Request $request): FileInterface
     {
         $id = $request->get('id');
         $filename = $request->get('filename');
@@ -69,7 +69,7 @@ class FileController extends ResourceController
         return $file;
     }
 
-    public function downloadAction(Request $request)
+    public function downloadAction(Request $request): Response
     {
         $filename = $request->get('filename');
 
@@ -79,7 +79,7 @@ class FileController extends ResourceController
         return $response;
     }
 
-    public function showFormatAction(Request $request)
+    public function showFormatAction(Request $request): Response
     {
         $id = $request->get('id');
         $filename = $request->get('filename');
@@ -116,7 +116,7 @@ class FileController extends ResourceController
         return $response;
     }
 
-    public function downloadFormatAction(Request $request)
+    public function downloadFormatAction(Request $request): Response
     {
         $filename = $request->get('filename');
 
@@ -126,7 +126,7 @@ class FileController extends ResourceController
         return $response;
     }
 
-    public function resolveAction(Request $request)
+    public function resolveAction(Request $request): Response
     {
         $token = $request->get('token');
 
@@ -141,7 +141,7 @@ class FileController extends ResourceController
         ]);
     }
 
-    public function resolveFormatAction(Request $request)
+    public function resolveFormatAction(Request $request): Response
     {
         $token = $request->get('token');
         $format = $request->get('format');

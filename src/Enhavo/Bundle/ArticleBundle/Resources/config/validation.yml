@@ -1,6 +1,6 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
     properties:
         title:
-            - NotBlank: ~
+            - NotBlank: { groups: [default] }
         grid:
-            - Valid: ~
+            - Valid: { groups: [default] }

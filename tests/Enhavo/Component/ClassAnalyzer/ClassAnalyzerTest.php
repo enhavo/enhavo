@@ -3,8 +3,9 @@
 namespace Enhavo\Component\ClassAnalyzer\Tests;
 
 use Enhavo\Component\ClassAnalyzer\ClassAnalyzer;
+use PHPUnit\Framework\TestCase;
 
-class ClassAnalyzerTest extends \PHPUnit_Framework_TestCase
+class ClassAnalyzerTest extends TestCase
 {
     function testInitialize()
     {

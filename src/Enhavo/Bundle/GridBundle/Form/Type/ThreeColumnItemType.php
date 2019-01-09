@@ -42,7 +42,7 @@ class ThreeColumnItemType extends AbstractType
         return ColumnType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_three_column_item';
     }

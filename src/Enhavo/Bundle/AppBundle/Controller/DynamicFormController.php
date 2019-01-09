@@ -8,14 +8,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemResolverInterface;
 use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Enhavo\Bundle\GridBundle\Item\ItemFormType;
 
-class DynamicFormController extends Controller
+class DynamicFormController extends AbstractController
 {
     public function itemAction(Request $request)
     {

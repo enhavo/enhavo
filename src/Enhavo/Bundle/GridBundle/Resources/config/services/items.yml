@@ -1,51 +1,51 @@
 services:
-    enhavo_grid.grid_item.base:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\BaseConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: base }
 
-    enhavo_grid.grid_item.gallery:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\GalleryConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: gallery }
 
-    enhavo_grid.grid_item.picture:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\PictureConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\PictureConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: picture }
 
-    enhavo_grid.grid_item.text:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\TextConfiguration:
+        public: true
         arguments:
         tags:
             - { name: enhavo.grid_item, alias: text }
 
-    enhavo_grid.grid_item.text_picture:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\TextPictureConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\TextPictureConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: text_picture }
 
-    enhavo_grid.grid_item.video:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\VideoConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\VideoConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: video }
 
-    enhavo_grid.grid_item.cite:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\CiteConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\CiteConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: cite }
 
-    enhavo_grid.grid_item.one_column:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\OneColumnConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\OneColumnConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: one_column }
 
-    enhavo_grid.grid_item.two_column:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\TwoColumnConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\TwoColumnConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: two_column }
 
-    enhavo_grid.grid_item.three_column:
-        class: Enhavo\Bundle\GridBundle\Item\Configuration\ThreeColumnConfiguration
+    Enhavo\Bundle\GridBundle\Item\Configuration\ThreeColumnConfiguration:
+        public: true
         tags:
             - { name: enhavo.grid_item, alias: three_column }

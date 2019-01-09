@@ -2,6 +2,7 @@
 
 namespace Enhavo\Behat\Context;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Behat\Gherkin\Node\TableNode;
 use Enhavo\Bundle\UserBundle\Entity\User;
@@ -57,14 +58,11 @@ class UserContext extends KernelContext
     /**
      * @Given no active session
      */
-    public function clearSessions()
+    public function clearSession()
     {
-        $em = $this->getManager();
-        $sessions = $em->getRepository('EnhavoAppBundle:Session')->findAll();
-        foreach($sessions as $session) {
-            $em->remove($session);
-        }
-        $em->flush();
+        /** @var Session $session */
+        $session = $this->get('session');
+        $session->invalidate();
     }
 
     /**

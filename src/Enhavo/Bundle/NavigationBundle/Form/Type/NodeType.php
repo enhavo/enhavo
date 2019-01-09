@@ -69,7 +69,7 @@ class NodeType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_node';
     }

@@ -32,7 +32,7 @@ enhavo_shop_product_create:
                 form:
                     action: enhavo_shop_product_create
                 tabs:
-                    product:
+                    main:
                         label: product.label.product
                         template: EnhavoShopBundle:Admin:Product/Tab/product.html.twig
                     dimension:
@@ -61,7 +61,7 @@ enhavo_shop_product_update:
                     action: enhavo_shop_product_update
                     delete: enhavo_shop_product_delete
                 tabs:
-                    product:
+                    main:
                         label: product.label.product
                         template: EnhavoShopBundle:Admin:Product/Tab/product.html.twig
                     dimension:

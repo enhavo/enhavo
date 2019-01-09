@@ -2,7 +2,6 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
-            Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
 
 enhavo_assets:
     require_js:

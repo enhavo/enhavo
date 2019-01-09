@@ -3,8 +3,9 @@
 namespace Enhavo\Bundle\AppBundle\Config;
 
 use Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption;
+use PHPUnit\Framework\TestCase;
 
-class WysiwygOptionTest extends \PHPUnit_Framework_TestCase
+class WysiwygOptionTest extends TestCase
 {
     public function testInitialize()
     {

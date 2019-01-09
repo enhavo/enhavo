@@ -5,9 +5,11 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Model\Item\GalleryItem;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,13 +24,13 @@ class GalleryItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
         ));
 
-        $builder->add('text', 'enhavo_wysiwyg', array(
+        $builder->add('text', WysiwygType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation
@@ -47,7 +49,7 @@ class GalleryItemType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_item_gallery';
     }

@@ -8,84 +8,55 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateViewer extends CreateViewer
 {
-    public function getActionRoute()
-    {
-        return sprintf(
-            '%s_%s_update',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
-    }
-
-    public function getFormDelete()
-    {
-        $route = $this->optionAccessor->get('form.delete');
-        if($route == null) {
-            return null;
-        }
-
-        $parameters = $this->optionAccessor->get('form.delete_parameters');
-        if($parameters === null) {
-            $parameters = [
-                'id' => $this->resource->getId()
-            ];
-        }
-
-        return $this->container->get('router')->generate($route, $parameters);
-    }
-
-    public function getFormAction()
-    {
-        $route = $this->optionAccessor->get('form.action');
-        if($route == null) {
-            return null;
-        }
-
-        $parameters = $this->optionAccessor->get('form.action_parameters');
-        if($parameters === null) {
-            $parameters = [
-                'id' => $this->resource->getId()
-            ];
-        }
-        return $this->container->get('router')->generate($route, $parameters);
-    }
-
-    public function getDeleteRoute()
-    {
-        return sprintf(
-            '%s_%s_delete',
-            $this->metadata->getApplicationName(),
-            $this->getUnderscoreName()
-        );
-    }
-
     public function getType()
     {
         return 'update';
     }
 
-    public function createView()
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        if($this->isValidationError() && $this->configuration->isAjaxRequest()) {
-            return parent::createView();
-        }
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Resource:update.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'form_action' => $this->getFormAction(),
-            'form_delete' => $this->getFormDelete(),
-        ]));
-        return $view;
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
-    {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+        /** @var ResourceInterface $resource */
+        $resource = $options['resource'];
+
+        $parameters->set('form_action', $this->mergeConfig([
+            sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['form_action'],
+            $this->getViewerOption('form.action', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_action_parameters', $this->mergeConfigArray([
+            [ 'id' => $resource->getId() ],
+            $options['form_action_parameters'],
+            $this->getViewerOption('form.action_parameters', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_delete', $this->mergeConfig([
+            sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['form_delete'],
+            $this->getViewerOption('form.delete', $requestConfiguration)
+        ]));
+
+        $parameters->set('form_delete_parameters', $this->mergeConfigArray([
+            [ 'id' => $resource->getId() ],
+            $options['form_delete_parameters'],
+            $this->getViewerOption('form.delete_parameters', $requestConfiguration)
+        ]));
+
+        $parameters->set('csrf_token', $this->container->get('security.csrf.token_manager')->getToken((string)$resource->getId())->getValue());
+
+        $parameters->set('buttons', $this->mergeConfigArray([
             'buttons' => [
                 'cancel' => [
                     'type' => 'cancel',
@@ -97,12 +68,20 @@ class UpdateViewer extends CreateViewer
                     'type' => 'delete'
                 ],
             ],
-            'form' => array(
-                'template' => 'EnhavoAppBundle:View:tab.html.twig',
-                'action' => $this->getActionRoute(),
-                'delete' => $this->getDeleteRoute(),
-                'delete_parameters' => null
-            )
+            $options['buttons'],
+            $this->getViewerOption('buttons', $requestConfiguration)
+        ]));
+
+        $parameters->set('data', $options['resource']);
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
+            'form_delete' => null,
+            'form_delete_parameters' => [],
+            'template' => 'EnhavoAppBundle:Resource:update.html.twig',
         ]);
     }
 }

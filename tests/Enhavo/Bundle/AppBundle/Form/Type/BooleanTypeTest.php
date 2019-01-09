@@ -2,65 +2,72 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\PreloadedExtension;
 
 class BooleanTypeTest extends TypeTestCase
 {
-    protected function createForm($options = [])
+    private $translator;
+
+    protected function setUp()
     {
-        $translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')->getMock();
-        $translator->method('trans')->willReturn('translation');
+        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator->method('trans')->willReturnCallback(function($id) {
+            return $id;
+        });
+        parent::setUp();
+    }
 
-        $formType = new BooleanType($translator);
-        $form = $this->factory->create($formType, null, $options);
-
-        return $form;
+    protected function getExtensions()
+    {
+        $type = new BooleanType($this->translator);
+        return array(
+            new PreloadedExtension(array($type), array()),
+        );
     }
 
     public function testSubmitValidDataToTrue()
     {
-        $form = $this->createForm();
+        $form = $this->factory->create(BooleanType::class, null, []);
 
         $form->setData(false);
         $form->submit('true');
-        $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertTrue($form->isValid());
-        $this->assertTrue(true === $form->getData());
+        $data = $form->getData();
+        $this->assertTrue(true === $data);
     }
 
     public function testSubmitValidDataToFalse()
     {
-        $form = $this->createForm();
+        $form = $this->factory->create(BooleanType::class, null, []);
 
         $form->setData(true);
         $form->submit('false');
         $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertTrue($form->isValid());
         $this->assertTrue(false === $form->getData());
     }
 
     public function testDefaultOptionValueWithTrue()
     {
-        $form = $this->createForm(['default' => true]);
+        $form = $this->factory->create(BooleanType::class, null, ['default' => true]);
         $view = $form->createView();
         $this->assertEquals(BooleanType::VALUE_TRUE, $view->vars['value']);
     }
 
     public function testDefaultOptionValueWithFalse()
     {
-        $form = $this->createForm(['default' => false]);
+        $form = $this->factory->create(BooleanType::class, null, ['default' => false]);
         $view = $form->createView();
         $this->assertEquals(BooleanType::VALUE_FALSE, $view->vars['value']);
     }
 
     public function testDefaultOptionValueWithNull()
     {
-        $form = $this->createForm(['default' => null]);
+        $form = $this->factory->create(BooleanType::class, null, ['default' => null]);
         $view = $form->createView();
         $this->assertEquals(BooleanType::VALUE_NULL, $view->vars['value']);
     }

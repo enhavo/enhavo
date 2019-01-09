@@ -24,7 +24,7 @@ class LinkConfigurationType extends AbstractType
         $resolver->setDefaults([]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_navigation_link_configuration';
     }

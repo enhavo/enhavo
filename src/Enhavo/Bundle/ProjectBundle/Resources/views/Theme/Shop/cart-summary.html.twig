@@ -1,4 +1,4 @@
-{% extends theme_template('base') %}
+{% extends template('theme_base') %}
 
 {% block bodyclass %}light{% endblock %}
 
@@ -9,7 +9,7 @@
 {% block main %}
     <section>
         <div class="container">
-            {{ theme_widget_render('shop_cart_summary', {
+            {{ widget_render('shop_cart_summary', {
                 template: 'EnhavoProjectBundle:Theme/Widget:cart-summary.html.twig'
             }) }}
             <a class="btn rounded aubergine checkout" href="{{ path('enhavo_shop_theme_checkout') }}">Checkout</a>

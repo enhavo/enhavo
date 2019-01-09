@@ -7,8 +7,9 @@
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
+use PHPUnit\Framework\TestCase;
 
-class HighlighterTest extends \PHPUnit_Framework_TestCase
+class HighlighterTest extends TestCase
 {
     public function testHighlightSimple()
     {

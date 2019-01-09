@@ -9,7 +9,9 @@
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProfileType extends AbstractType
 {
@@ -30,25 +32,25 @@ class ProfileType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName', 'text', array(
+        $builder->add('firstName', TextType::class, array(
             'label' => 'user.form.label.firstName',
             'translation_domain' => 'EnhavoUserBundle'
         ));
 
-        $builder->add('lastName', 'text', array(
+        $builder->add('lastName', TextType::class, array(
             'label' => 'user.form.label.lastName',
             'translation_domain' => 'EnhavoUserBundle'
         ));
     }
 
-    public function getDefaultOptions()
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        return array(
+        $optionsResolver->setDefaults([
             'data_class' => $this->dataClass
-        );
+        ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_user_profile';
     }

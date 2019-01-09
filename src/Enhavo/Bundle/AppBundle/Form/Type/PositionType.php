@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PositionType extends AbstractType
@@ -16,14 +17,14 @@ class PositionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_position';
     }
 
     public function getParent()
     {
-        return 'hidden';
+        return HiddenType::class;
     }
 
     /**

@@ -39,7 +39,7 @@
             {% block header %}
                 {% block hero %}{% endblock %}
                 {% block main_navigation %}
-                    {{ theme_widget_render('page', { template: 'EnhavoProjectBundle:Theme:Widget/main-navigation.html.twig' }) }}
+                    {{ widget_render('page', { template: 'EnhavoProjectBundle:Theme:Widget/main-navigation.html.twig' }) }}
                 {% endblock %}
             {% endblock %}
         </header>
@@ -47,8 +47,6 @@
         <main>
             {% block main %}{% endblock %}
         </main>
-
-        {{ theme_box_render('footer') }}
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq05BnATUjF7WNO5UtKlhLtgmY7KH5o8w" type="text/javascript"></script>
         <script src="{{ asset('/bundles/enhavoproject/js/jquery.min.js') }}" type="text/javascript"></script>

@@ -5,12 +5,12 @@ services:
     enhavo_content_content:
         class: '%enhavo_content.form.type.content.class%'
         arguments:
-            - '%enhavo_translation.translate%'
+            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
-    enhavo_content_content.batch.publish:
-        class: Enhavo\Bundle\ContentBundle\Batch\PublishBatch
+    Enhavo\Bundle\ContentBundle\Batch\PublishBatch:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -56,15 +56,15 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_content.widget.pagination:
-        class: Enhavo\Bundle\ContentBundle\Widget\PaginationWidget
+    Enhavo\Bundle\ContentBundle\Widget\PaginationWidget:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.theme_widget, alias: 'pagination' }
+            - { name: enhavo.widget, alias: 'pagination' }
 
-    enhavo_content.menu.redirect:
-        class: Enhavo\Bundle\ContentBundle\Menu\RedirectMenu
+    Enhavo\Bundle\ContentBundle\Menu\RedirectMenu:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

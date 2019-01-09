@@ -23,7 +23,17 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('login_redirect')->defaultValue('enhavo_dashboard_index')->end()
+                ->scalarNode('translate')->defaultValue(false)->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('login')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('route')->defaultValue('enhavo_dashboard_index')->end()
+                        ->scalarNode('route_parameters')->defaultValue([])->end()
+                    ->end()
+                ->end()
             ->end()
 
             ->children()
@@ -32,7 +42,14 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('base')->defaultValue('EnhavoAppBundle::base.html.twig')->end()
                         ->scalarNode('dialog')->defaultValue('EnhavoAppBundle::dialog.html.twig')->end()
+                        ->scalarNode('theme_base')->defaultValue('EnhavoAppBundle:Theme:base.html.twig')->end()
                     ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('form_themes')
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
 

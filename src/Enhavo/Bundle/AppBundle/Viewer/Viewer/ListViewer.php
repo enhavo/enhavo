@@ -9,20 +9,22 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\OptionAccessor;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ListViewer extends AbstractViewer
 {
-    protected function getColumns()
+    public function getType()
     {
-        $columns = $this->optionAccessor->get('columns');
+        return 'list';
+    }
+
+    private function getColumns(RequestConfiguration $configuration, $defaultTranslationDomain = null)
+    {
+        $columns = $this->getViewerOption('columns', $configuration);
 
         if(empty($columns)) {
-            /** @var RequestConfiguration $configuration */
-            $configuration = $this->configuration;
-
             if ($configuration->isSortable()) {
                 $columns = array(
                     'id' => array(
@@ -51,74 +53,45 @@ class ListViewer extends AbstractViewer
 
         foreach($columns as $key => &$column) {
             if(!array_key_exists('translationDomain', $column)) {
-                $column['translationDomain'] = $this->optionAccessor->get('translationDomain');
+                $column['translationDomain'] = $defaultTranslationDomain;
             }
         }
 
         return $columns;
     }
-    
-    protected function getBatches()
+
+    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
     {
-        $requestFactory = $this->container->get('sylius.resource_controller.request_configuration_factory');
-        $router = $this->container->get('router');
-        /** @var RequestConfigurationInterface $configuration */
-        $configuration = $requestFactory->createFromRoute($this->getBatchRoute(), $this->metadata, $router);
-        if($configuration === null) {
-            return [];
-        }
-        $batches = $configuration->getBatches();
-        return $batches;
-    }
+        parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
+        $parameters->set('data',  $options['resources']);
 
-    protected function getBatchRoute()
-    {
-        return sprintf('%s_%s_batch', $this->metadata->getApplicationName(), $this->getUnderscoreName());
-    }
-
-    protected function getPermissionRole()
-    {
-        return strtoupper(sprintf('ROLE_%s_%s_DELETE', $this->metadata->getApplicationName(), $this->getUnderscoreName()));
-    }
-
-    public function getType()
-    {
-        return 'list';
-    }
-
-    protected function getExpand()
-    {
-        return $this->optionAccessor->get('expand');
-    }
-
-    public function createView()
-    {
-        /** @var RequestConfiguration $configuration */
-        $configuration = $this->configuration;
-
-        $view = parent::createView();
-        $view->setTemplate($this->configuration->getTemplate('EnhavoAppBundle:Viewer:list.html.twig'));
-        $view->setTemplateData(array_merge($view->getTemplateData(), [
-            'data' => $this->resource,
-            'sortable' => $configuration->isSortable(),
-            'columns' => $this->getColumns(),
-            'batches' => $this->getBatches(),
-            'batch_route' => $this->getBatchRoute(),
-            'width' => $this->optionAccessor->get('width'),
-            'expand' => $this->getExpand()
+        $parameters->set('sortable', $this->mergeConfig([
+            $options['sortable'],
+            $requestConfiguration->isSortable(),
         ]));
-        return $view;
+
+        $parameters->set('columns', $this->mergeConfigArray([
+            $options['columns'],
+            $this->getColumns($requestConfiguration, $parameters->get('translationDomain'))
+        ]));
+
+        $parameters->set('width', $this->mergeConfig([
+            $options['width']
+        ]));
+
+        $parameters->set('expand', $options['expand']);
     }
 
-    public function configureOptions(OptionAccessor $optionsAccessor)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        parent::configureOptions($optionsAccessor);
-        $optionsAccessor->setDefaults([
+        parent::configureOptions($optionsResolver);
+        $optionsResolver->setDefaults([
             'width' => 12,
-            'batch_route' => $this->getBatchRoute(),
             'columns' => [],
-            'expand' => true
+            'expand' => true,
+            'sortable' => false,
+            'template' => 'EnhavoAppBundle:Viewer:list.html.twig'
         ]);
     }
 }

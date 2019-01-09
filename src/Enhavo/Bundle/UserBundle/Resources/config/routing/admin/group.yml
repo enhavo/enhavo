@@ -21,12 +21,12 @@ enhavo_user_group_create:
             viewer:
                 translationDomain: EnhavoUserBundle
                 tabs:
-                    group:
-                      template: EnhavoUserBundle:Admin/Group:group.html.twig
-                      label: group.label.group
+                    main:
+                        template: EnhavoUserBundle:Admin/Group:group.html.twig
+                        label: group.label.group
                     permission:
-                      template: EnhavoUserBundle:Admin/Group:permission.html.twig
-                      label: group.label.permission
+                        template: EnhavoUserBundle:Admin/Group:permission.html.twig
+                        label: group.label.permission
 
 enhavo_user_group_update:
     options:
@@ -39,7 +39,7 @@ enhavo_user_group_update:
             viewer:
                 translationDomain: EnhavoUserBundle
                 tabs:
-                   group:
+                   main:
                        template: EnhavoUserBundle:Admin/Group:group.html.twig
                        label: group.label.group
                    permission:
@@ -76,6 +76,7 @@ enhavo_user_group_delete:
     methods: [POST, DELETE]
     defaults:
         _controller: enhavo_user.controller.group:deleteAction
+        _format: json
 
 enhavo_user_group_batch:
     options:

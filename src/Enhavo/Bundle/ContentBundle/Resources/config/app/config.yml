@@ -1,12 +1,8 @@
-twig:
-    form:
-        resources:
-            - 'EnhavoContentBundle:Form:fields.html.twig'
-
 enhavo_app:
+    form_themes:
+        - 'EnhavoContentBundle:Form:fields.html.twig'
     stylesheets:
-      - '@EnhavoContentBundle/Resources/public/css/style.css'
-
+        - '@EnhavoContentBundle/Resources/public/css/style.css'
     roles:
         enhavo_content_redirect_index:
             role: ROLE_ENHAVO_CONTENT_REDIRECT_INDEX

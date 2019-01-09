@@ -37,7 +37,7 @@ class TwoColumnItemType extends AbstractType
         return ColumnType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_grid_two_column_item';
     }

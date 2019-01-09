@@ -2,11 +2,12 @@
 
 namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
+use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryType extends AbstractType
 {
@@ -25,11 +26,11 @@ class CategoryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'translation' => $this->translation
         ));
 
-        $builder->add('text', 'enhavo_wysiwyg', array(
+        $builder->add('text', WysiwygType::class, array(
             'translation' => $this->translation
         ));
 
@@ -39,20 +40,20 @@ class CategoryType extends AbstractType
             'multiple' => false
         ));
 
-        $builder->add('slug', 'text', array(
+        $builder->add('slug', TextType::class, array(
             'label' => 'form.label.slug',
             'translation_domain' => 'EnhavoAppBundle'
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_category_category';
     }

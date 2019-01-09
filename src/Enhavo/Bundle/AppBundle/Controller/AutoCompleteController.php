@@ -9,13 +9,13 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class AutoCompleteController extends Controller
+class AutoCompleteController extends AbstractController
 {
     public function searchAction(Request $request)
     {

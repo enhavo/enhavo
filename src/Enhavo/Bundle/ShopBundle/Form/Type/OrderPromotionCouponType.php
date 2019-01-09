@@ -43,7 +43,7 @@ class OrderPromotionCouponType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enhavo_shop_order_promotion_coupon';
     }

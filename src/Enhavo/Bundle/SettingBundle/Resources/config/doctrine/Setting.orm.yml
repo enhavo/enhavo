@@ -14,7 +14,7 @@ Enhavo\Bundle\SettingBundle\Entity\Setting:
         key:
             type: string
             length: 255
-            column: `key`
+            column: '`key`'
             nullable: true
         type:
             type: text

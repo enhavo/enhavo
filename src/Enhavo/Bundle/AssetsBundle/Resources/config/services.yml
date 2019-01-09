@@ -4,13 +4,13 @@ services:
     enhavo_assets.require_js.configuration:
         class: Enhavo\Bundle\AssetsBundle\RequireJS\Configuration
         arguments:
-            - %enhavo_assets.require_js%
-            - @templating.helper.assets
+            - '%enhavo_assets.require_js%'
+#            - '@templating.helper.assets'
 
     enhavo_assets.require_js.configuration_renderer:
         class: Enhavo\Bundle\AssetsBundle\RequireJS\ConfigurationRenderer
         arguments:
-            - @enhavo_assets.require_js.configuration
-            - @service_container
+            - '@enhavo_assets.require_js.configuration'
+            - '@service_container'
         tags:
             - { name: twig.extension }
