@@ -3,15 +3,12 @@
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
-use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
-use PHPUnit\Framework\TestCase;
 
-class PositionTypeTest extends TestCase
+class PositionTypeTest extends TypeTestCase
 {
     protected function createForm($options = [])
     {
-        $formType = new PositionType();
-        $form = $this->factory->create($formType, null, $options);
+        $form = $this->factory->create(PositionType::class, null, $options);
         return $form;
     }
 
@@ -24,6 +21,5 @@ class PositionTypeTest extends TestCase
         $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertTrue($form->isValid());
     }
 }

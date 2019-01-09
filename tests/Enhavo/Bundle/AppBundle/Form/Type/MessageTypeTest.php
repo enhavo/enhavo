@@ -2,21 +2,39 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\MessageType;
+use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class MessageTypeTest extends TestCase
+class MessageTypeTest extends TypeTestCase
 {
+    private $translator;
+
+    protected function setUp()
+    {
+        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator->method('trans')->willReturnCallback(function($id) {
+            return $id;
+        });
+        parent::setUp();
+    }
+
+    protected function getExtensions()
+    {
+        $type = new MessageType($this->translator);
+        return array(
+            new PreloadedExtension(array($type), array()),
+        );
+    }
+
     protected function createForm($options = [])
     {
-        $translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')->getMock();
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturnCallback(function($message) {
             return $message;
         });
 
-        $formType = new MessageType($translator);
-        $form = $this->factory->create($formType, null, $options);
+        $form = $this->factory->create(MessageType::class, null, $options);
 
         return $form;
     }
@@ -32,7 +50,6 @@ class MessageTypeTest extends TestCase
         $formView = $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertTrue($form->isValid());
         $this->assertEquals('testMessage', $formView->vars['message']);
         $this->assertEquals(MessageType::MESSAGE_TYPE_INFO, $formView->vars['type']);
     }
@@ -49,7 +66,6 @@ class MessageTypeTest extends TestCase
         $formView = $form->createView();
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertTrue($form->isValid());
         $this->assertEquals('testMessage', $formView->vars['message']);
         $this->assertEquals(MessageType::MESSAGE_TYPE_WARNING, $formView->vars['type']);
     }
