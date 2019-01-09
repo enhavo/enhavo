@@ -18,9 +18,9 @@ install:
     - composer install --no-interaction
 
 before_script:
-    - app/console cache:warmup --env=test --no-debug
-    - app/console doctrine:schema:create --env=test
-    - app/console assets:install --env=test --no-debug
+    - bin/console cache:warmup --env=test --no-debug
+    - bin/console doctrine:schema:create --env=test
+    - bin/console assets:install --env=test --no-debug
 
     - php -v
     - php -i | grep -v GITHUB_OAUTH_TOKEN
