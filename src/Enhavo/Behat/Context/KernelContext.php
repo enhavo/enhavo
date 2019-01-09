@@ -33,7 +33,7 @@ class KernelContext extends RawMinkContext implements Context, KernelAwareContex
      */
     public function getContainer()
     {
-        return $this->kernel->getContainer();
+        return $this->kernel->getContainer()->get('test.service_container');
     }
 
     /**
