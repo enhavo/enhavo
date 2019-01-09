@@ -2,14 +2,14 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Sylius\Component\Cart\Model\CartItem;
+use Sylius\Component\Order\Model\OrderItem as SyliusOrderItem;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class OrderItem extends CartItem implements OrderItemInterface
+class OrderItem extends SyliusOrderItem implements OrderItemInterface
 {
     /**
      * @var Product
@@ -37,7 +37,7 @@ class OrderItem extends CartItem implements OrderItemInterface
         $this->product = $product;
     }
 
-    public function equals(SyliusOrderItemInterface $item)
+    public function equals(SyliusOrderItemInterface $item): bool
     {
         /** @var $item OrderItem */
         if($this->product instanceof ResourceInterface) {

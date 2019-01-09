@@ -11,16 +11,15 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
-use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
+use Sylius\Component\Order\Model\Order as SyliusOrder;
 
-class Order extends Cart implements OrderInterface
+class Order extends SyliusOrder implements OrderInterface
 {
     /**
      * @var string

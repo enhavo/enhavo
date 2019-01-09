@@ -3,14 +3,15 @@
 namespace Enhavo\Bundle\ShopBundle\Model;
 
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Cart\Model\CartInterface;
-use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
-use Sylius\Component\Promotion\Model\CouponInterface;
-use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
-use Sylius\Component\Promotion\Model\PromotionCountableSubjectInterface;
-use Sylius\Component\Promotion\Model\PromotionCouponAwareSubjectInterface;
+use Sylius\Component\Order\Model\OrderInterface as SyliusOrderInterface;
+use Sylius\Component\Promotion\Model\PromotionCoupon;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface;
+use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
+
+
+
 
 /**
  * OrderInterface.php
@@ -18,11 +19,7 @@ use Sylius\Component\Promotion\Model\PromotionCouponAwareSubjectInterface;
  * @since 15/08/16
  * @author gseidel
  */
-interface OrderInterface extends
-    BaseOrderInterface,
-    PromotionCountableSubjectInterface,
-    PromotionCouponAwareSubjectInterface,
-    CartInterface
+interface OrderInterface extends SyliusOrderInterface, PromotionSubjectInterface
 {
     /**
      * Set checkoutState
@@ -75,16 +72,16 @@ interface OrderInterface extends
     /**
      * Set promotionCoupon
      *
-     * @param CouponInterface $promotionCoupon
+     * @param PromotionCouponInterface $promotionCoupon
      *
      * @return OrderInterface
      */
-    public function setPromotionCoupon(CouponInterface $promotionCoupon = null);
+    public function setPromotionCoupon(PromotionCouponInterface $promotionCoupon = null);
 
     /**
      * Get promotionCoupon
      *
-     * @return CouponInterface
+     * @return PromotionCoupon
      */
     public function getPromotionCoupon();
 
