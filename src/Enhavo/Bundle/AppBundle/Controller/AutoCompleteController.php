@@ -43,7 +43,7 @@ class AutoCompleteController extends Controller
 
         if($configuration->getRepositoryArguments()) {
             $arguments = $configuration->getRepositoryArguments();
-            $expressionLanguage = new ExpressionLanguage();
+            $expressionLanguage = $this->container->get('sylius.expression_language');
             foreach($arguments as &$argument) {
                 $argument = $expressionLanguage->evaluate($argument, [
                     'request' => $request,
