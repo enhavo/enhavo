@@ -24,9 +24,10 @@
     "@types/jquery.fileupload": "^5.40.36",
     "@types/jqueryui": "^1.11.36",
     "@types/select2": "4.0.37",
+    "@types/icheck": "^0.8.29",
+    "@types/tinymce": "^4.5.16",
     "async": "^2.4.1",
     "compass-importer": "^0.4.1",
-    "copy-webpack-plugin": "^4.5.2",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-decompress": "^2.0.1",
@@ -35,11 +36,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-shell": "^0.6.3",
     "gulp-typescript": "^3.1.6",
-    "ts-loader": "^5.2.1",
-    "typescript": "^3.1.1",
-    "webpack": "4.20.2",
-    "webpack-cli": "^3.1.2",
-    "@types/icheck": "^0.8.29",
-    "@types/tinymce": "^4.5.16"
+    "ts-loader": "^3.0",
+    "typescript": "^3.1.1"
   }
 }
