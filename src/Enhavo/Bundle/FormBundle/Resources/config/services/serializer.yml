@@ -1,7 +1,3 @@
-parameters:
-    enhavo_serializer.form_serializer.class: Enhavo\Bundle\FormBundle\Serializer\FormSerializer
-    enhavo_serializer.encoder.class: Enhavo\Bundle\FormBundle\Encoder\Encoder
-
 services:
     Enhavo\Bundle\FormBundle\Encoder\Encoder:
 

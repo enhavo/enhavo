@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Item;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\AbstractItem;
+use Enhavo\Bundle\FormBundle\DynamicForm\AbstractItem;
 
 class Item extends AbstractItem
 {

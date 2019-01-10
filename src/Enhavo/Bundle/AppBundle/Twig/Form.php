@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Form\Error\FormErrorResolver;
+use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormErrorIterator;

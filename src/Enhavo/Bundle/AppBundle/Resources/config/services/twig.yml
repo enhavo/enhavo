@@ -30,7 +30,7 @@ services:
     Enhavo\Bundle\AppBundle\Twig\Form:
         arguments:
             - '%enhavo_app.form_themes%'
-            - '@enhavo_app.form.error.resolver'
+            - '@enhavo_form.error.error.resolver'
         tags:
             - { name: twig.extension }
 

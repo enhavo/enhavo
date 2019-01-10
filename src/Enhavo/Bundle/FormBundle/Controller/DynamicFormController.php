@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
