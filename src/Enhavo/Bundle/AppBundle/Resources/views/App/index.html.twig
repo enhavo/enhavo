@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <title>{% block title %}enhavo CMS{% endblock %}</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="robots" content="noindex, nofollow">
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/app.css') }}">
+        {% block stylesheets %}{% endblock %}
+
+        <script type="text/javascript" src="/build/enhavo/app.js"></script>
+        <script type="text/javascript" src="/build/enhavo/view.js"></script>
+
+        {% block javascripts %}{% endblock %}
+    </head>
+
+    <body>
+        <div class="enhavo-app">
+            <div class="menu"></div>
+            <div class="toolbar"></div>
+            <div class="view-stack" data-view-stack></div>
+        </div>
+    </body>
+</html>
