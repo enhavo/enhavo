@@ -4,16 +4,12 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var compass = require('compass-importer');
 var exec = require('child_process').exec;
-var ts = require("gulp-typescript");
 var options = require('gulp-options');
-var async = require('async');
 var download = require("gulp-download");
 var decompress = require('gulp-decompress');
 var clean = require('gulp-clean');
 
-gulp.task('sass', ['sass:compile']);
-
-gulp.task('sass:compile', function () {
+gulp.task('sass:compile', function (next) {
   var directories = [
     {
       from: 'docs/theme/enhavo/static/sass/*.scss',
@@ -88,6 +84,7 @@ gulp.task('sass:compile', function () {
         sourceMapEmbed: sourceMapEmbed
       }).on('error', sass.logError))
       .pipe(gulp.dest(directories[i].to))
+      .on('end', next)
     );
   }
   return streams;
@@ -99,6 +96,8 @@ gulp.task('sass:watch', function () {
     'src/Enhavo/Bundle/*Bundle/Resources/public/sass/**/*.scss'
   ], ['sass']);
 });
+
+gulp.task('sass', gulp.series('sass:compile'));
 
 gulp.task('changelog', function (cb) {
   exec('bundler exec github_changelog_generator enhavo/enhavo', function (err, stdout, stderr) {
@@ -122,68 +121,24 @@ gulp.task('docs:watch', function () {
   ], ['docs']);
 });
 
-gulp.task("tsc", ["tsc:compile"]);
 
-gulp.task("tsc:compile", function () {
-  gulp.start(['tsc:compile:app']);
-  gulp.start(['tsc:compile:media']);
-  gulp.start(['tsc:compile:grid']);
+gulp.task("elastic:download", function(next) {
+  download('https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.0.0.zip')
+    .pipe(gulp.dest("."))
+    .on('end', next);
 });
 
-gulp.task("tsc:compile:media", function () {
-  var tsProject = ts.createProject("src/Enhavo/Bundle/MediaBundle/Resources/public/ts/tsconfig.json");
-  return tsProject.src()
-    .pipe(tsProject())
-    .js.pipe(gulp.dest("src/Enhavo/Bundle/MediaBundle/Resources/public/js"));
+gulp.task("elastic:decompress", function(next) {
+  gulp.src('./elasticsearch-6.0.0.zip')
+    .pipe(decompress({strip: 1}))
+    .pipe(gulp.dest('./elasticsearch'))
+    .on('end', next);
 });
 
-gulp.task("tsc:compile:app", function () {
-  var tsProject = ts.createProject("src/Enhavo/Bundle/AppBundle/Resources/public/ts/tsconfig.json");
-  return tsProject.src()
-    .pipe(tsProject())
-    .js.pipe(gulp.dest("src/Enhavo/Bundle/AppBundle/Resources/public/js"));
+gulp.task("elastic:clean", function(next) {
+  gulp.src('./elasticsearch-6.0.0.zip', {read: false})
+    .pipe(clean())
+    .on('end', next);
 });
 
-gulp.task("tsc:compile:grid", function () {
-  var tsProject = ts.createProject("src/Enhavo/Bundle/GridBundle/Resources/public/ts/tsconfig.json");
-  return tsProject.src()
-    .pipe(tsProject())
-    .js.pipe(gulp.dest("src/Enhavo/Bundle/GridBundle/Resources/public/js"));
-});
-
-gulp.task("tsc:watch", function () {
-  gulp.start(['tsc:compile']);
-  gulp.watch([
-    'src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/*',
-    'src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/**/*'
-  ], ['tsc:compile:media']);
-  gulp.watch([
-    'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/*',
-    'src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/**/*'
-  ], ['tsc:compile:app']);
-  gulp.watch([
-    'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/*',
-    'src/Enhavo/Bundle/GridBundle/Resources/public/ts/src/**/*'
-  ], ['tsc:compile:grid']);
-});
-
-gulp.task("elastic:install", function(callback) {
-  async.series([
-    function (next) {
-      download('https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.0.0.zip')
-        .pipe(gulp.dest("."))
-        .on('end', next);
-    },
-    function (next) {
-      gulp.src('./elasticsearch-6.0.0.zip')
-        .pipe(decompress({strip: 1}))
-        .pipe(gulp.dest('./elasticsearch'))
-        .on('end', next);
-    },
-    function (next) {
-      gulp.src('./elasticsearch-6.0.0.zip', {read: false})
-        .pipe(clean())
-        .on('end', next);
-    }
-  ], callback);
-});
+gulp.task("elastic:install", gulp.series("elastic:download", "elastic:decompress", "elastic:clean"));
