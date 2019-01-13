@@ -1,11 +1,12 @@
 <template>
-    <div>
-        Hello
+    <div class="view-stack">
+        ViewStack
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+
 @Component
 export default class ViewStack extends Vue {
     name: 'view-stack';
@@ -13,9 +14,13 @@ export default class ViewStack extends Vue {
 </script>
 
 <style lang="scss">
-    .greeting {
-        font-size: 20px;
-    }
+.view-stack {
+    width: 100%; height: calc(100% - 50px); margin-left: 200px; background-color: green;
+}
 </style>
+
+
+
+
 
 
