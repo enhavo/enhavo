@@ -1,4 +1,4 @@
-import { ListBlock } from '@enhavo/app-assets/Block/List';
+import { ListBlock } from '../../Block/List';
 
 class EnhavoAdapter
 {

@@ -1,4 +1,4 @@
-import {View} from "@enhavo/app-assets/View/View";
+import {View} from "./View";
 
 export class IFrameView extends View
 {

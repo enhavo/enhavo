@@ -1,0 +1,6 @@
+{
+  "name": "@enhavo/form",
+  "license": "MIT",
+  "types": "index.ts",
+  "version": "0.7.0"
+}

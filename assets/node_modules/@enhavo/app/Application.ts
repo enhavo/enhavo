@@ -120,6 +120,3 @@ export class Overlay
         this.application.handleRemoveOverlay();
     }
 }
-
-let application = new Application(document.body);
-export default application;

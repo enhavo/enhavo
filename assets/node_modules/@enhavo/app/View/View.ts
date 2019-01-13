@@ -1,40 +1,18 @@
 
-export abstract class View
+export class View
 {
-    private _parent: View;
+    private parent: View;
 
-    private _childen: View[] = [];
+    private children: View[] = [];
 
-    private _name: string;
+    private name: string;
 
-    private _id: string;
+    private id: string;
 
-    get parent(): View {
-        return this._parent;
-    }
-
-    set parent(value: View) {
-        this._parent = value;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    set name(value: string) {
-        this._name = value;
-    }
-
-    get id(): string {
-        return this._id;
-    }
-
-    set id(value: string) {
-        this._id = value;
-    }
-
-    protected createViewElement(element: HTMLElement)
-    {
-
+    constructor(parent: View, children: View[], name: string, id: string) {
+        this.parent = parent;
+        this.children = children;
+        this.name = name;
+        this.id = id;
     }
 }

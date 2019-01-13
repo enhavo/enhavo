@@ -1,4 +1,4 @@
-import { IFrameView } from '@enhavo/app-assets/View/IFrameView';
+import { IFrameView } from './IFrameView';
 
 export class ViewFactory
 {

@@ -1,4 +1,4 @@
-import { ViewManager } from "@enhavo/app-assets/View/ViewManager";
+import { ViewManager } from "./ViewManager";
 
 export class ViewSubscriber
 {
