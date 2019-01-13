@@ -16,7 +16,15 @@ class AppController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->render('EnhavoAppBundle:App:index.html.twig', [
-
+            'data' => [
+                'menu' => [
+                    [
+                        'label' => 'test',
+                        'url' => '/test',
+                        'icon' => 'book'
+                    ]
+                ]
+            ]
         ]);
     }
 }

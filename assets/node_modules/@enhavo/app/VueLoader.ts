@@ -1,21 +1,34 @@
 import Vue from "vue";
-import App from "./Components/App.vue";
+import AppComponent from "./Components/App.vue";
+import { App } from "./App";
+
 export class VueLoader
 {
-    private selector: string;
+    private id: string;
 
     private vue: Vue;
 
-    constructor(selector: string)
+    private app: App;
+
+    constructor(id: string, app: App)
     {
-        this.selector = selector;
+        this.id = id;
+        this.app = app;
     }
 
     load() {
+        Vue.component('app', AppComponent);
+        let self = this;
         this.vue = new Vue({
-            el: this.selector,
-            data: {},
-            render: h => h(App),
+            el: '#' + this.id,
+            data: this.app.getData(),
+            render: function(createElement) {
+                return createElement(AppComponent, {
+                    'props': {
+                        'menu': self.app.getData().menu
+                    }
+                })
+            }
         });
 
         return this.vue;

@@ -16,16 +16,8 @@ gulp.task('sass:compile', function (next) {
       to: 'docs/theme/enhavo/static/css'
     },
     {
-      from: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/sass/*.scss',
-      to: 'src/Enhavo/Bundle/ThemeBundle/Resources/public/css'
-    },
-    {
       from: 'src/Enhavo/Bundle/SliderBundle/Resources/public/sass/*.scss',
       to: 'src/Enhavo/Bundle/SliderBundle/Resources/public/css'
-    },
-    {
-      from: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/sass/*.scss',
-      to: 'src/Enhavo/Bundle/DownloadBundle/Resources/public/css'
     },
     {
       from: 'src/Enhavo/Bundle/AppBundle/Resources/public/sass/*.scss',

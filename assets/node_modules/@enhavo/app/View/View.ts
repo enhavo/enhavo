@@ -7,12 +7,23 @@ export class View
 
     private name: string;
 
-    private id: string;
+    private id: number;
 
-    constructor(parent: View, children: View[], name: string, id: string) {
+    constructor(id: number, name: string, parent: View, children: View[])
+    {
         this.parent = parent;
         this.children = children;
         this.name = name;
         this.id = id;
+    }
+
+    addChild(view: View)
+    {
+        this.children.push(view);
+    }
+
+    getParent(): View
+    {
+        return this.parent;
     }
 }

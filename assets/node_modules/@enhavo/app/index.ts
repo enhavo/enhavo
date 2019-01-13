@@ -1,11 +1,9 @@
-import { ViewManager } from './View/ViewManager';
-import { ViewStack } from './View/ViewStack';
-import { ViewSubscriber } from './View/ViewSubscriber';
 import { VueLoader } from './VueLoader';
+import { DataLoader } from './DataLoader';
+import { App } from './App';
 
 export {
-    ViewManager,
-    ViewStack,
-    ViewSubscriber,
-    VueLoader
+    VueLoader,
+    DataLoader,
+    App
 };
