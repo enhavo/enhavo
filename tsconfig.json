@@ -6,7 +6,8 @@
     "allowJs": true,
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "sourceMap": true
   },
   "include": [
     "./assets/**/*"
