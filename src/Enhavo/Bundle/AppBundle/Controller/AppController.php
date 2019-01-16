@@ -23,7 +23,24 @@ class AppController extends AbstractController
                         'url' => '/test',
                         'icon' => 'book'
                     ]
+                ],
+                'views' => [
+                    [
+                        'id' => 1,
+                        'name' => 'test',
+                        'type' => 'iframe',
+                        'url' => '/admin/view'
+                    ]
                 ]
+            ]
+        ]);
+    }
+
+    public function viewAction()
+    {
+        return $this->render('EnhavoAppBundle:App:view.html.twig', [
+            'data' => [
+
             ]
         ]);
     }

@@ -5,6 +5,7 @@ Encore
   .setOutputPath('public/build/')
   .setPublicPath('/build')
   .addEntry('enhavo/app', './assets/app')
+  .addEntry('enhavo/view', './assets/view')
   .autoProvidejQuery()
 ;
 

@@ -1,41 +1,23 @@
-<div class="window" data-window>
-    <div class="window-navigation-menu" data-window>
-        <div class="window">
-            <div class="window-content-full" data-application-window>
-                <div class="navigation"></div>
-            </div>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{% block title %}enhavo CMS{% endblock %}</title>
 
-    <div class="window-navigation-content">
-        <div class="window">
-            <div class="window-overlay" data-window>
-                <div class="window">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
 
-                </div>
-            </div>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/app.css') }}">
 
+    <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
 
-            <div class="window-bar" data-application-window>
-                <div class="bar"></div>
-            </div>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
 
-            <div class="window-bar-content" data-application-window>
-                <div class="window">
-                    <div class="window-content-full" data-application-window>
-                        <div class="window">
-                            <div class="window-content-full" data-application-window>
-                                <div class="content"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="window-hidden" data-application-window>
-                        <div class="window-content-full" data-application-window>
-                            <div class="preview"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<body>
+<div id="app"></div>
+</body>
+<script type="text/javascript" src="{{ asset('build/enhavo/view.js') }}"></script>
+</html>

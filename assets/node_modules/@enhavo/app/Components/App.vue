@@ -2,7 +2,7 @@
     <div class="app">
         <app-menu v-bind:menu="menu"></app-menu>
         <toolbar></toolbar>
-        <view-stack></view-stack>
+        <view-stack v-bind:views="views"></view-stack>
     </div>
 </template>
 
@@ -16,7 +16,9 @@ import Toolbar from "./Toolbar.vue"
 export default class App extends Vue {
     name = 'app';
     @Prop()
-    menu: object;
+    menu: array;
+    @Prop()
+    views: array;
 }
 
 Vue.component('app-menu', Menu);
