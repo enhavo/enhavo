@@ -1,0 +1,40 @@
+services:
+    enhavo_user.event.save_user:
+        class: Enhavo\Bundle\UserBundle\EventListener\SaveUserSubscriber
+        arguments:
+            - '@fos_user.user_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    security.authentication.voter.group_role_voter:
+        class: Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter
+        public: false
+        tags:
+            - { name: security.voter }
+
+    enhavo_user.extend_listener.user:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\UserBundle\Entity\User
+            - '%enhavo_user.model.user.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_user.extend_listener.group:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\UserBundle\Entity\Group
+            - '%enhavo_user.model.group.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    Enhavo\Bundle\UserBundle\Widget\LoginWidget:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.widget, alias: login }
+
+

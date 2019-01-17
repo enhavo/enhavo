@@ -11,29 +11,29 @@ services:
             - '@service_container'
             - 'RouterStrategy'
 
-    enhavo_routing.router_strategy.id:
-        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'id' }
 
-    enhavo_routing.router_strategy.slug:
-        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug' }
 
-    enhavo_routing.router_strategy.slug_id:
-        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug_id' }
 
-    enhavo_routing.router_strategy.route:
-        class: Enhavo\Bundle\RoutingBundle\Router\Strategy\RouteStrategy
+    Enhavo\Bundle\RoutingBundle\Router\Strategy\RouteStrategy:
+        public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
