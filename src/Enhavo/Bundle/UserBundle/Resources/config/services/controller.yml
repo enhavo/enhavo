@@ -1,0 +1,60 @@
+services:
+    enhavo_user.controller.change_email:
+        class: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController
+        public: true
+        arguments:
+            - '@session'
+            - '@fos_user.user_manager'
+            - '@fos_rest.view_handler'
+            - '@fos_user.change_password.form.factory'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.reset_password:
+        class: Enhavo\Bundle\UserBundle\Controller\ResetPasswordController
+        public: true
+        arguments:
+            - '@fos_user.user_manager'
+            - '@fos_user.resetting.form.factory'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.registration:
+        class: Enhavo\Bundle\UserBundle\Controller\RegistrationController
+        public: true
+        arguments:
+            - '@enhavo_user.factory.user'
+            - '@fos_user.user_manager'
+            - '@event_dispatcher'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.change_password:
+        class: Enhavo\Bundle\UserBundle\Controller\ChangePasswordController
+        public: true
+        arguments:
+            - '@fos_rest.view_handler'
+            - '@fos_user.user_manager'
+            - '@fos_user.change_password.form.factory'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.profile:
+        class: Enhavo\Bundle\UserBundle\Controller\ProfileController
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_user.controller.security:
+        class: Enhavo\Bundle\UserBundle\Controller\SecurityController
+        public: true
+        arguments:
+            - '@view.factory'
+            - '@fos_rest.view_handler'
+            - '@security.csrf.token_manager'
+        calls:
+            - [setContainer, ['@service_container']]

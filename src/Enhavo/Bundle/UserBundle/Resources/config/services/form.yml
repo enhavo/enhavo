@@ -1,0 +1,28 @@
+services:
+    Enhavo\Bundle\UserBundle\Form\Type\UserType:
+        arguments:
+            - '%enhavo_user.model.user.class%'
+            - [default]
+            - '@security.authorization_checker'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\UserBundle\Form\Type\ProfileType:
+        arguments:
+            - '%enhavo_user.model.user.class%'
+        tags:
+            - { name: form.type, alias: 'enhavo_user_profile' }
+
+    Enhavo\Bundle\UserBundle\Form\Type\GroupType:
+        tags:
+            - { name: form.type, alias: 'enhavo_user_group' }
+        arguments:
+            - '%enhavo_user.model.group.class%'
+            - [default]
+            - '@security.roles.provider'
+
+    Enhavo\Bundle\UserBundle\Form\Type\ChangeEmailType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%enhavo_user.model.user.class%'

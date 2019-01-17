@@ -44,7 +44,7 @@
     "friendsofsymfony/user-bundle": "^2.1",
     "friendsofsymfony/jsrouting-bundle": "2.2.*",
     "willdurand/js-translation-bundle" : "2.6.*",
-    "memio/memio": "^1.1",
+    "memio/memio": "^2.0",
     "stof/doctrine-extensions-bundle": "^1.2",
     "ruflin/elastica": "^6.0",
     "tecnickcom/tcpdf": "^6.2",

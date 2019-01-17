@@ -1,27 +1,3 @@
-enhavo_user_theme_user_reset_password:
-    options:
-        expose: true
-    path: /reset-password
-    methods: [GET, POST]
-    defaults:
-        _controller: enhavo_user.controller.user:resetPasswordAction
-        _sylius:
-            template: EnhavoUserBundle:Theme:User/reset-password.html.twig
-            viewer:
-                mailTemplate: ~
-                confirmRoute: enhavo_user_theme_user_reset_password_confirm
-
-enhavo_user_theme_user_reset_password_confirm:
-    options:
-        expose: true
-    path: /reset-password/{token}/confirm
-    methods: [GET, POST]
-    defaults:
-        _controller: enhavo_user.controller.user:resetPasswordConfirmAction
-        _sylius:
-            template: EnhavoUserBundle:Theme:User/reset-password-confirm.html.twig
-            redirect: enhavo_user_theme_user_profile
-
 enhavo_user_theme_user_change_password:
     options:
         expose: true
@@ -64,7 +40,7 @@ enhavo_user_theme_user_register:
         _sylius:
             viewer:
                 mailTemplate: ~
-                confirmRoute: enhavo_user_user_reset_password_confirm
+                confirmRoute: enhavo_user_reset_password_confirm
 
 fos_user_registration_confirm:
     path: /confirm/{token}
