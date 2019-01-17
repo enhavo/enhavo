@@ -136,6 +136,15 @@ class AutoCompleteEntityType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['create_route'] = $options['create_route'];
         $view->vars['create_button_label'] = $options['create_button_label'];
+
+        if ($options['multiple'] === false) {
+            $value = $view->vars['value'];
+            if (is_object($value) && method_exists($value, 'getId')) {
+                $view->vars['value'] = $value->getId();
+            } elseif (is_array($value) && isset($value['id'])) {
+                $view->vars['value'] = $value['id'];
+            }
+        }
     }
 
     /**
