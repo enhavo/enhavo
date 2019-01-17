@@ -45,7 +45,7 @@ class UserConfiguration
      * @param $default
      * @return string
      */
-    public function getTemplate($default = null): string
+    public function getTemplate($default = null): ?string
     {
         if($this->template !== null) {
             return $this->template;
@@ -65,7 +65,7 @@ class UserConfiguration
      * @param $default
      * @return string
      */
-    public function getMailTemplate($default = null): string
+    public function getMailTemplate($default = null): ?string
     {
         if($this->mailTemplate !== null) {
             return $this->mailTemplate;
@@ -84,7 +84,7 @@ class UserConfiguration
     /**
      * @return string
      */
-    public function getConfirmRoute($default = null): string
+    public function getConfirmRoute($default = null): ?string
     {
         if($this->confirmRoute !== null) {
             return $this->confirmRoute;
@@ -103,7 +103,7 @@ class UserConfiguration
     /**
      * @return string
      */
-    public function getRedirectRoute($default = null): string
+    public function getRedirectRoute($default = null): ?string
     {
         if($this->redirectRoute !== null) {
             return $this->redirectRoute;
@@ -122,7 +122,7 @@ class UserConfiguration
     /**
      * @return string
      */
-    public function getForm($default = null): string
+    public function getForm($default = null): ?string
     {
         if($this->form !== null) {
             return $this->form;
@@ -141,7 +141,7 @@ class UserConfiguration
     /**
      * @return string
      */
-    public function getConfirmedRoute($default = null): string
+    public function getConfirmedRoute($default = null): ?string
     {
         if($this->confirmedRoute !== null) {
             return $this->confirmedRoute;

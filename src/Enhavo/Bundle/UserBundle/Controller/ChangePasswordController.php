@@ -14,7 +14,6 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChangePasswordController extends AbstractController
@@ -40,9 +39,9 @@ class ChangePasswordController extends AbstractController
      * ChangePasswordController constructor.
      * @param ViewHandler $viewHandler
      * @param UserManager $userManager
-     * @param FormFactory $formFactory
+     * @param FactoryInterface $formFactory
      */
-    public function __construct(ViewHandler $viewHandler, UserManager $userManager, FormFactory $formFactory)
+    public function __construct(ViewHandler $viewHandler, UserManager $userManager, FactoryInterface $formFactory)
     {
         $this->viewHandler = $viewHandler;
         $this->userManager = $userManager;

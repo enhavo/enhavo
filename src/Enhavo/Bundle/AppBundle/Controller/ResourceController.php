@@ -41,22 +41,22 @@ class ResourceController extends BaseController
     /**
      * @var ViewFactory
      */
-    private $viewFactory;
+    protected $viewFactory;
 
     /**
      * @var SortingManager
      */
-    private $sortingManger;
+    protected $sortingManger;
 
     /**
      * @var BatchManager
      */
-    private $batchManager;
+    protected $batchManager;
 
     /**
      * @var DuplicateResourceFactoryInterface
      */
-    private $duplicateResourceFactory;
+    protected $duplicateResourceFactory;
 
     /**
      * @var AppEventDispatcher

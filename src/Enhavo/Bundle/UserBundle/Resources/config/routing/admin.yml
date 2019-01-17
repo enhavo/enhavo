@@ -9,3 +9,11 @@ enhavo_user_group:
 enhavo_user_security:
     resource: "@EnhavoUserBundle/Resources/config/routing/admin/security.yml"
     prefix: /
+
+enhavo_user_change_passord:
+    resource: "@EnhavoUserBundle/Resources/config/routing/admin/change-password.yml"
+    prefix: /
+
+enhavo_user_reset_password:
+    resource: "@EnhavoUserBundle/Resources/config/routing/admin/reset-password.yml"
+    prefix: /

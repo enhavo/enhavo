@@ -13,6 +13,7 @@ use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ResetPasswordController extends AbstractController
 {
@@ -69,6 +70,11 @@ class ResetPasswordController extends AbstractController
 
         $token = $request->get('token');
         $user = $this->userManager->findUserByConfirmationToken($token);
+
+        if($user === null) {
+            throw new NotFoundHttpException();
+        }
+
         $form = $this->formFactory->createForm();
         $form->setData($user);
         $error = null;
@@ -79,8 +85,8 @@ class ResetPasswordController extends AbstractController
                 $user->setConfirmationToken(null);
                 $user->setPasswordRequestedAt(null);
                 $this->userManager->updateUser($user);
-                $url = $this->generateUrl($configuration->getRedirectRoute());
 
+                $url = $this->generateUrl($configuration->getRedirectRoute('enhavo_app_index'));
                 $response = new RedirectResponse($url);
                 $this->userManager->authenticateUser($user, $response);
                 return $response;
@@ -91,7 +97,7 @@ class ResetPasswordController extends AbstractController
             }
         }
 
-        return $this->render($configuration->getTemplate('EnhavoUserBundle:Admin:User/change-password.html.twig'), array(
+        return $this->render($configuration->getTemplate('EnhavoUserBundle:Admin:User/reset-password-confirm.html.twig'), array(
             'token' => $token,
             'error' => $error,
             'form' => $form->createView(),

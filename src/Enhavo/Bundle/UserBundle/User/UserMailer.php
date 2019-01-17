@@ -20,7 +20,7 @@ class UserMailer extends FOSMailer
         }
 
         if($route === null) {
-            $route = 'enhavo_user_user_reset_password_confirm';
+            $route = 'enhavo_user_reset_password_confirm';
         }
 
         $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), true);
@@ -38,7 +38,7 @@ class UserMailer extends FOSMailer
         }
 
         if($route === null) {
-            $route = 'enhavo_user_theme_user_registration_confirmed';
+            $route = 'enhavo_user_registration_confirmed';
         }
 
         $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), true);
