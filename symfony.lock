@@ -209,24 +209,6 @@
     "league/uri": {
         "version": "4.2.2"
     },
-    "memio/linter": {
-        "version": "v1.0.2"
-    },
-    "memio/memio": {
-        "version": "v1.1.1"
-    },
-    "memio/model": {
-        "version": "v1.4.1"
-    },
-    "memio/pretty-printer": {
-        "version": "v1.0.3"
-    },
-    "memio/twig-template-engine": {
-        "version": "v1.2.7"
-    },
-    "memio/validator": {
-        "version": "v1.0.2"
-    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
