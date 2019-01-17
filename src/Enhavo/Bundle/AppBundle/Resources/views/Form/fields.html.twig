@@ -253,7 +253,7 @@
             {% endfor %}
             {% set valueString = valueValues|join(",") %}
         {% else %}
-            {% set valueString = value.id %}
+            {% set valueString = value %}
         {% endif %}
         <input type="hidden" name="{{ full_name }}" value="{{ valueString }}" {% if multiple %}multiple="multiple"{% endif %} data-auto-complete-input />
         {% if create_route %}
