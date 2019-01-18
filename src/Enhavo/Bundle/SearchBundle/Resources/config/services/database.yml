@@ -1,6 +1,7 @@
 services:
     enhavo_search.engine.database_search_engine:
         class: Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\DatabaseSearchEngine
+        public: true
         arguments:
             - '@enhavo_search.indexer.indexer'
             - '@enhavo_search.metadata.repository'

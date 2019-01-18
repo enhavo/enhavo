@@ -1,6 +1,7 @@
 services:
     enhavo_routing.manager.route:
         class: Enhavo\Bundle\RoutingBundle\Manager\RouteManager
+        public: true
         arguments:
             - '@enhavo_routing.auto_generator'
 

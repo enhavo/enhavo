@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Node;
 
+use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Node\Voter\VoterInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -22,6 +23,20 @@ class NodeManager
      */
     private $voters;
 
+    /**
+     * @var CollectorInterface
+     */
+    private $collector;
+
+    /**
+     * NodeManager constructor.
+     * @param CollectorInterface $collector
+     */
+    public function __construct(CollectorInterface $collector)
+    {
+        $this->collector = $collector;
+    }
+    
     /**
      * @param NodeInterface $node
      * @param array $options
@@ -58,8 +73,7 @@ class NodeManager
     private function getVoters($voters = null, $exclude = [])
     {
         if($this->voters === null) {
-            $collector = $this->container->get('enhavo_navigation.voter_collector');
-            $this->voters = $collector->getTypes();
+            $this->voters = $this->collector->getTypes();
         }
 
         $usedVoters = $this->voters;
