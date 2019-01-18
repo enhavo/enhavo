@@ -101,6 +101,8 @@ services:
 
     enhavo_navigation.node.manager:
         class: Enhavo\Bundle\NavigationBundle\Node\NodeManager
+        arguments:
+            - '@enhavo_navigation.voter_collector'
         calls:
             - [setContainer, ['@service_container']]
 
@@ -110,22 +112,22 @@ services:
             - '@service_container'
             - 'NavigationVoter'
 
-    enhavo_navigation.voter.link:
-        class: Enhavo\Bundle\NavigationBundle\Node\Voter\LinkVoter
+    Enhavo\Bundle\NavigationBundle\Node\Voter\LinkVoter:
+        public: true
         arguments:
             - '@request_stack'
         tags:
             - { name: enhavo_navigation.voter, alias: 'link' }
 
-    enhavo_navigation.voter.link_hierarchy:
-        class: Enhavo\Bundle\NavigationBundle\Node\Voter\LinkHierarchyVoter
+    Enhavo\Bundle\NavigationBundle\Node\Voter\LinkHierarchyVoter:
+        public: true
         arguments:
             - '@request_stack'
         tags:
             - { name: enhavo_navigation.voter, alias: 'link_hierarchy' }
 
-    enhavo_navigation.voter.node_hierarchy:
-        class: Enhavo\Bundle\NavigationBundle\Node\Voter\NodeHierarchyVoter
+    Enhavo\Bundle\NavigationBundle\Node\Voter\NodeHierarchyVoter:
+        public: true
         arguments:
             - '@enhavo_navigation.node.manager'
         tags:

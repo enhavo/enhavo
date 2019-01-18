@@ -65,15 +65,15 @@ services:
         tags:
             - { name: enhavo_navigation.item, alias: 'page' }
 
-    enhavo_page.navigation.page_voter:
-        class: Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoter
+    Enhavo\Bundle\PageBundle\Navigation\Voter\PageVoter:
+        public: true
         arguments:
             - '@request_stack'
         tags:
             - { name: enhavo_navigation.voter, alias: 'page' }
 
-    enhavo_page.navigation.page_hierarchy_voter:
-        class: Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoter
+    Enhavo\Bundle\PageBundle\Navigation\Voter\PageHierarchyVoter:
+        public: true
         arguments:
             - '@request_stack'
         tags:

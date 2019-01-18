@@ -13,7 +13,7 @@ use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class Indexer
+class Indexer implements IndexerInterface
 {
     /**
      * @var MetadataRepository
@@ -41,7 +41,7 @@ class Indexer
      * @param $resource
      * @return Index[]
      */
-    public function getIndexes($resource)
+    public function getIndexes($resource, array $options = [])
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);

@@ -10,5 +10,10 @@ namespace Enhavo\Bundle\SearchBundle\Indexer;
 
 interface IndexerInterface
 {
+    /**
+     * @param $data
+     * @param array $options
+     * @return Index[]
+     */
     public function getIndexes($data, array $options = []);
 }

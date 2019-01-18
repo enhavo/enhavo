@@ -8,11 +8,12 @@
 
 namespace Enhavo\Bundle\AppBundle\Form\Error;
 
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormInterface;
 
-class FormErrorResolver {
-
+class FormErrorResolver
+{
     /**
      * @var TranslatorInterface
      */
@@ -25,7 +26,7 @@ class FormErrorResolver {
 
     /**
      * @param FormInterface $form
-     * @return array
+     * @return FormError[]
      */
     public function getErrors(FormInterface $form)
     {
