@@ -263,10 +263,11 @@
 {% endblock %}
 
 {% block entity_tree_widget %}
+    {% import _self as forms %}
     {% if expanded %}
         <div {{ block('widget_container_attributes') }}>
             {% for choice in choice_tree_builder.choices %}
-                {{ _self.choice_view(choice, choice_translation_domain, children_container_class) }}
+                {{ forms.choice_view(choice, choice_translation_domain, children_container_class) }}
             {% endfor %}
         </div>
     {% else %}
@@ -275,6 +276,7 @@
 {% endblock %}
 
 {% macro choice_view(choice, choice_translation_domain, children_container_class) %}
+    {% import _self as forms %}
     <div>
         <div>
             {{ form_widget(choice.formView) }}
@@ -283,7 +285,7 @@
         {% if choice.children|length > 0 %}
             <div class="{{ children_container_class }}">
                 {% for child in choice.children %}
-                    {{ _self.choice_view(child, choice_translation_domain, children_container_class) }}
+                    {{ forms.choice_view(child, choice_translation_domain, children_container_class) }}
                 {% endfor %}
             </div>
         {% endif %}
