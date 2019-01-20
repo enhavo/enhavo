@@ -64,4 +64,5 @@ return [
     Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle::class => ['all' => true],
     Sylius\Bundle\InventoryBundle\SyliusInventoryBundle::class => ['all' => true],
     Sylius\Bundle\TaxationBundle\SyliusTaxationBundle::class => ['all' => true],
+    Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
 ];

@@ -29,6 +29,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "clue/stream-filter": {
+        "version": "v1.4.0"
+    },
     "container-interop/container-interop": {
         "version": "1.2.0"
     },
@@ -176,9 +179,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jeremykendall/php-domain-parser": {
-        "version": "3.0.0"
-    },
     "jms/metadata": {
         "version": "1.7.0"
     },
@@ -209,6 +209,24 @@
     "league/uri": {
         "version": "4.2.2"
     },
+    "league/uri-components": {
+        "version": "1.8.2"
+    },
+    "league/uri-hostname-parser": {
+        "version": "1.1.1"
+    },
+    "league/uri-interfaces": {
+        "version": "1.1.1"
+    },
+    "league/uri-manipulations": {
+        "version": "1.5.0"
+    },
+    "league/uri-parser": {
+        "version": "1.4.1"
+    },
+    "league/uri-schemes": {
+        "version": "1.2.1"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -236,6 +254,18 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+    "payum/core": {
+        "version": "1.5.1"
+    },
+    "payum/iso4217": {
+        "version": "1.0.1"
+    },
+    "payum/offline": {
+        "version": "1.5.1"
+    },
+    "payum/payum-bundle": {
+        "version": "2.3.2"
+    },
     "phar-io/manifest": {
         "version": "1.0.3"
     },
@@ -244,6 +274,21 @@
     },
     "php-ffmpeg/php-ffmpeg": {
         "version": "v0.13"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
+    },
+    "php-http/httplug": {
+        "version": "v2.0.0"
+    },
+    "php-http/message": {
+        "version": "1.7.2"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
     },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
@@ -291,6 +336,9 @@
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/http-client": {
         "version": "1.0.0"
     },
     "psr/http-message": {
