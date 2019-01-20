@@ -29,6 +29,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "clue/stream-filter": {
+        "version": "v1.4.0"
+    },
     "container-interop/container-interop": {
         "version": "1.2.0"
     },
@@ -176,9 +179,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jeremykendall/php-domain-parser": {
-        "version": "3.0.0"
-    },
     "jms/metadata": {
         "version": "1.7.0"
     },
@@ -209,6 +209,24 @@
     "league/uri": {
         "version": "4.2.2"
     },
+    "league/uri-components": {
+        "version": "1.8.2"
+    },
+    "league/uri-hostname-parser": {
+        "version": "1.1.1"
+    },
+    "league/uri-interfaces": {
+        "version": "1.1.1"
+    },
+    "league/uri-manipulations": {
+        "version": "1.5.0"
+    },
+    "league/uri-parser": {
+        "version": "1.4.1"
+    },
+    "league/uri-schemes": {
+        "version": "1.2.1"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -236,6 +254,18 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+    "payum/core": {
+        "version": "1.5.1"
+    },
+    "payum/iso4217": {
+        "version": "1.0.1"
+    },
+    "payum/offline": {
+        "version": "1.5.1"
+    },
+    "payum/payum-bundle": {
+        "version": "2.3.2"
+    },
     "phar-io/manifest": {
         "version": "1.0.3"
     },
@@ -244,6 +274,21 @@
     },
     "php-ffmpeg/php-ffmpeg": {
         "version": "v0.13"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
+    },
+    "php-http/httplug": {
+        "version": "v2.0.0"
+    },
+    "php-http/message": {
+        "version": "1.7.2"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
     },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
@@ -293,6 +338,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-client": {
+        "version": "1.0.0"
+    },
     "psr/http-message": {
         "version": "1.0.1"
     },
@@ -307,6 +355,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "ramsey/uuid": {
+        "version": "3.8.0"
     },
     "react/promise": {
         "version": "v2.7.0"
@@ -359,6 +410,9 @@
     "simshaun/recurr": {
         "version": "v2.2.3"
     },
+    "sonata-project/intl-bundle": {
+        "version": "2.5.0"
+    },
     "spatie/image-optimizer": {
         "version": "1.1.3"
     },
@@ -374,6 +428,63 @@
     "swiftmailer/swiftmailer": {
         "version": "v6.1.3"
     },
+    "sylius/addressing": {
+        "version": "v1.3.2"
+    },
+    "sylius/addressing-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/attribute": {
+        "version": "v1.3.2"
+    },
+    "sylius/attribute-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/currency": {
+        "version": "v1.3.2"
+    },
+    "sylius/currency-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/inventory": {
+        "version": "v1.3.2"
+    },
+    "sylius/inventory-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/locale": {
+        "version": "v1.3.2"
+    },
+    "sylius/locale-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/money-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/order": {
+        "version": "v1.3.2"
+    },
+    "sylius/order-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/payment": {
+        "version": "v1.3.2"
+    },
+    "sylius/payment-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/product": {
+        "version": "v1.3.2"
+    },
+    "sylius/product-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/promotion": {
+        "version": "v1.3.2"
+    },
+    "sylius/promotion-bundle": {
+        "version": "v1.3.2"
+    },
     "sylius/registry": {
         "version": "v1.3.2"
     },
@@ -381,6 +492,18 @@
         "version": "v1.3.2"
     },
     "sylius/resource-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/shipping": {
+        "version": "v1.3.2"
+    },
+    "sylius/shipping-bundle": {
+        "version": "v1.3.2"
+    },
+    "sylius/taxation": {
+        "version": "v1.3.2"
+    },
+    "sylius/taxation-bundle": {
         "version": "v1.3.2"
     },
     "symfony-cmf/routing": {
@@ -533,6 +656,9 @@
     "symfony/polyfill-ctype": {
         "version": "v1.10.0"
     },
+    "symfony/polyfill-iconv": {
+        "version": "v1.10.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.10.0"
     },
@@ -572,16 +698,7 @@
             "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
         }
     },
-    "symfony/security-core": {
-        "version": "v4.2.1"
-    },
     "symfony/security-csrf": {
-        "version": "v4.2.1"
-    },
-    "symfony/security-guard": {
-        "version": "v4.2.1"
-    },
-    "symfony/security-http": {
         "version": "v4.2.1"
     },
     "symfony/serializer": {

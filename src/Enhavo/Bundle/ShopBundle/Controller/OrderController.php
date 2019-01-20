@@ -41,7 +41,7 @@ class OrderController extends ResourceController
         ]);
     }
 
-    public function showAction(Request $request)
+    public function showAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 

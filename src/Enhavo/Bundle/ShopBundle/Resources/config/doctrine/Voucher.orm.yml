@@ -32,7 +32,7 @@ Enhavo\Bundle\ShopBundle\Entity\Voucher:
 
     oneToOne:
         coupon:
-            targetEntity: Sylius\Component\Promotion\Model\CouponInterface
+            targetEntity: Sylius\Component\Promotion\Model\PromotionCouponInterface
             cascade: ['persist', 'remove', 'refresh']
 
 

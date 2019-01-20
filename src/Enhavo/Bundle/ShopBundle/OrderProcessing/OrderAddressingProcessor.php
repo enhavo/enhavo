@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Sylius\Component\Core\OrderCheckoutStates;
+use Enhavo\Bundle\ShopBundle\Order\OrderCheckoutStates;
 
 class OrderAddressingProcessor implements ProcessorInterface
 {

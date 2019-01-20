@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Widget;
 
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
 class ProductListWidget extends AbstractType implements WidgetInterface

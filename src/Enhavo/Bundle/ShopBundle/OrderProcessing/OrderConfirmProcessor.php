@@ -15,10 +15,9 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\ShopBundle\Order\OrderAddressProvider;
 use Enhavo\Bundle\ShopBundle\Order\OrderNumberGeneratorInterface;
-use Sylius\Component\Cart\Provider\CartProviderInterface;
-use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
+use Enhavo\Bundle\ShopBundle\Order\OrderCheckoutStates;
 
 class OrderConfirmProcessor implements ProcessorInterface
 {

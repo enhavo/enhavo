@@ -11,16 +11,16 @@ namespace Enhavo\Bundle\ShopBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\Cart\Model\Cart;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ShipmentInterface;
 use Sylius\Component\Addressing\Model\AddressInterface;
 use Enhavo\Bundle\ShopBundle\Model\AdjustmentInterface;
-use Sylius\Component\Promotion\Model\CouponInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
+use Sylius\Component\Order\Model\Order as SyliusOrder;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
-class Order extends Cart implements OrderInterface
+class Order extends SyliusOrder implements OrderInterface
 {
     /**
      * @var string
@@ -38,7 +38,7 @@ class Order extends Cart implements OrderInterface
     private $shippingState;
 
     /**
-     * @var CouponInterface
+     * @var PromotionCouponInterface
      */
     private $promotionCoupon;
 
@@ -183,11 +183,11 @@ class Order extends Cart implements OrderInterface
     /**
      * Set promotionCoupon
      *
-     * @param CouponInterface $promotionCoupon
+     * @param PromotionCouponInterface $promotionCoupon
      *
      * @return Order
      */
-    public function setPromotionCoupon(CouponInterface $promotionCoupon = null)
+    public function setPromotionCoupon(?PromotionCouponInterface $promotionCoupon = null)
     {
         $this->promotionCoupon = $promotionCoupon;
 
@@ -197,9 +197,9 @@ class Order extends Cart implements OrderInterface
     /**
      * Get promotionCoupon
      *
-     * @return CouponInterface
+     * @return PromotionCouponInterface
      */
-    public function getPromotionCoupon()
+    public function getPromotionCoupon(): ?PromotionCouponInterface
     {
         return $this->promotionCoupon;
     }
@@ -245,7 +245,7 @@ class Order extends Cart implements OrderInterface
     /**
      * Get billingAddress
      *
-     * @return \Sylius\Component\Addressing\Model\Address
+     * @return \Sylius\Component\Addressing\Model\AddressInterface
      */
     public function getBillingAddress()
     {
@@ -359,11 +359,9 @@ class Order extends Cart implements OrderInterface
      * @param PromotionInterface $promotions
      * @return Order
      */
-    public function addPromotion(PromotionInterface $promotions)
+    public function addPromotion(PromotionInterface $promotions): void
     {
         $this->promotions[] = $promotions;
-
-        return $this;
     }
 
     /**
@@ -371,7 +369,7 @@ class Order extends Cart implements OrderInterface
      *
      * @param PromotionInterface $promotions
      */
-    public function removePromotion(PromotionInterface $promotions)
+    public function removePromotion(PromotionInterface $promotions): void
     {
         $this->promotions->removeElement($promotions);
     }
@@ -381,7 +379,7 @@ class Order extends Cart implements OrderInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPromotions()
+    public function getPromotions(): Collection
     {
         return $this->promotions;
     }
@@ -389,7 +387,7 @@ class Order extends Cart implements OrderInterface
     /**
      * @inheritdoc
      */
-    public function getPromotionSubjectTotal()
+    public function getPromotionSubjectTotal(): int
     {
         return $this->getItemsTotal();
     }
@@ -397,7 +395,7 @@ class Order extends Cart implements OrderInterface
     /**
      * @inheritdoc
      */
-    public function hasPromotion(PromotionInterface $promotion)
+    public function hasPromotion(PromotionInterface $promotion): bool
     {
        return $this->promotions->contains($promotion);
     }

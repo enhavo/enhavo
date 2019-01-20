@@ -38,7 +38,7 @@ class OrderItemQuantityModifier implements OrderItemQuantityModifierInterface
     /**
      * {@inheritdoc}
      */
-    public function modify(OrderItemInterface $orderItem, $targetQuantity)
+    public function modify(OrderItemInterface $orderItem, int $targetQuantity): void
     {
         $currentQuantity = $orderItem->getQuantity();
         if (0 >= $targetQuantity || $currentQuantity === $targetQuantity) {

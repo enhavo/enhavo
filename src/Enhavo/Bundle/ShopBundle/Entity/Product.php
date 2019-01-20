@@ -342,7 +342,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
         return $this->getTax() + $this->getPrice();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if($this->title === null) {
             return '';
@@ -363,20 +363,20 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getTitle();
     }
 
-    public function setName($name)
+    public function setName(?string $name): void
     {
-        return $this->setTitle($name);
+        $this->setTitle($name);
     }
 
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -384,7 +384,7 @@ class Product extends SyliusProduct implements ProductInterface, Routeable
     /**
      * @param string $slug
      */
-    public function setSlug($slug = null)
+    public function setSlug(?string $slug = null): void
     {
         $this->slug = $slug;
     }

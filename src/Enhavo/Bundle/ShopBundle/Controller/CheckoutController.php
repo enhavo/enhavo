@@ -10,23 +10,20 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\AppController;
 use Enhavo\Bundle\ShopBundle\Model\CheckoutContext;
-use Sylius\Component\Cart\SyliusCartEvents;
+use Sylius\Component\Order\SyliusCartEvents;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sylius\Component\Order\Context\CartContext;
 
 class CheckoutController extends AppController
 {
-    /**
-     * @return CartProviderInterface
-     */
     protected function getCartProvider()
     {
         return $this->get('sylius.cart_provider');

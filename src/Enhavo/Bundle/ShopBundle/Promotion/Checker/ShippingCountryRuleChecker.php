@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\ShopBundle\Promotion\Checker;
 
 use Enhavo\Bundle\ShopBundle\Locale\CountryResolverInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
-use Sylius\Component\Promotion\Checker\RuleCheckerInterface;
+use Sylius\Component\Promotion\Checker\Rule\RuleCheckerInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Sylius\Component\Promotion\Exception\UnsupportedTypeException;
 

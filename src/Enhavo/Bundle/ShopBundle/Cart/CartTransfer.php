@@ -15,10 +15,7 @@ use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
-use Sylius\Component\Cart\Event\CartItemEvent;
-use Sylius\Component\Cart\SyliusCartEvents;
-use Sylius\Component\Resource\Event\FlashEvent;
-use Sylius\Component\Cart\Model\CartItemInterface;
+use Sylius\Component\Order\SyliusCartEvents;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 

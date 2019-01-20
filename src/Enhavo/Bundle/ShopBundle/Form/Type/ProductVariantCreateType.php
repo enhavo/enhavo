@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ShopBundle\Form\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
-use Sylius\Component\Variation\Model\VariantInterface;
+use Sylius\Component\Product\Model\ProductVariantInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
@@ -41,7 +41,7 @@ class ProductVariantCreateType extends AbstractType
             $form = $event->getForm();
 
             $options = [];
-            if($variant instanceof VariantInterface) {
+            if($variant instanceof ProductVariantInterface) {
                 $product = $variant->getObject();
                 if($product instanceof ProductInterface) {
                     $options = $product->getOptions();

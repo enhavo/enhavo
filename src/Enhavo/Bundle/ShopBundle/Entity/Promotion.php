@@ -8,10 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Sylius\Component\Originator\Model\OriginAwareInterface;
 use Sylius\Component\Promotion\Model\Promotion as SyliusPromotion;
 
-class Promotion extends SyliusPromotion implements OriginAwareInterface
+class Promotion extends SyliusPromotion
 {
     public function getOriginId()
     {

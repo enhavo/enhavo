@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
-use Sylius\Component\Core\Model\AdjustmentInterface as CoreAdjustmentInterface;
+use Sylius\Component\Order\Model\AdjustmentInterface as SyliusAdjustmentInterface;
 
-interface AdjustmentInterface extends CoreAdjustmentInterface
+interface AdjustmentInterface extends SyliusAdjustmentInterface
 {
     const TAX_PROMOTION_ADJUSTMENT = 'tax_promotion';
 }

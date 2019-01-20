@@ -2,10 +2,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\Model;
 
-use Sylius\Component\Cart\Model\CartItemInterface;
 use Sylius\Component\Order\Model\OrderItemInterface as SyliusOrderItemInterface;
 
-interface OrderItemInterface extends SyliusOrderItemInterface, CartItemInterface
+interface OrderItemInterface extends SyliusOrderItemInterface
 {
     /**
      * @param ProductInterface $product
