@@ -47,18 +47,4 @@ Enhavo\Bundle\ShopBundle\Entity\Product:
             targetEntity: Enhavo\Bundle\RoutingBundle\Model\RouteInterface
             orphanRemoval: true
 
-    manyToMany:
-        options:
-            targetEntity: Sylius\Component\Variation\Model\OptionInterface
-            joinTable:
-                name: shop_product_options
-                joinColumns:
-                  product_id:
-                    referencedColumnName: id
-                    onDelete: CASCADE
-                inverseJoinColumns:
-                  option_id:
-                    referencedColumnName: id
-                    onDelete: CASCADE
-
     lifecycleCallbacks: {  }

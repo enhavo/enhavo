@@ -1,13 +1,3 @@
 Enhavo\Bundle\ShopBundle\Entity\ProductAssociation:
     type: entity
     table: shop_product_association
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
-
-    manyToOne:
-        owner:
-            targetEntity: Enhavo\Bundle\ShopBundle\Model\ProductInterface
