@@ -21,4 +21,39 @@ class OrderFixedDiscountAction extends AbstractDiscountAction
 
         return $adjustment;
     }
+
+    public function getType(): ?string
+    {
+        // TODO: Implement getType() method.
+    }
+
+    public function getConfiguration(): array
+    {
+        // TODO: Implement getConfiguration() method.
+    }
+
+    public function getPromotion(): ?PromotionInterface
+    {
+        // TODO: Implement getPromotion() method.
+    }
+
+    public function setType(?string $type): void
+    {
+        // TODO: Implement setType() method.
+    }
+
+    public function setConfiguration(array $configuration): void
+    {
+        // TODO: Implement setConfiguration() method.
+    }
+
+    public function setPromotion(?PromotionInterface $promotion): void
+    {
+        // TODO: Implement setPromotion() method.
+    }
+
+    public function getId()
+    {
+        // TODO: Implement getId() method.
+    }
 }

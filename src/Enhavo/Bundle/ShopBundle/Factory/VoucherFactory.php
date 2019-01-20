@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\Factory;
 
 use Enhavo\Bundle\ShopBundle\Entity\Voucher;
-use Sylius\Component\Promotion\Model\Coupon;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -33,7 +33,7 @@ class VoucherFactory extends Factory
 
     private function createCoupon()
     {
-        /** @var Coupon $coupon */
+        /** @var PromotionCouponInterface $coupon */
         $coupon = $this->container->get('sylius.factory.promotion_coupon')->createNew();
         $promotion = $this->container->get('sylius.repository.promotion')->findOneBy([
             'code' => 'voucher'

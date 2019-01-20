@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sylius\Component\Cart\Event\CartEvent;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sylius\Component\Resource\Event\FlashEvent;
-use Sylius\Component\Cart\SyliusCartEvents;
+use Sylius\Component\Order\SyliusCartEvents;
 
 class PromotionController extends Controller
 {

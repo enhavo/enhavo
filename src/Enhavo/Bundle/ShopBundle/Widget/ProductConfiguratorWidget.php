@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ShopBundle\Widget;
 
 use Enhavo\Bundle\ShopBundle\Entity\Product;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
 class ProductConfiguratorWidget extends AbstractType implements WidgetInterface

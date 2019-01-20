@@ -16,6 +16,7 @@ imports:
     - { resource: '@EnhavoRoutingBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoProjectBundle/Resources/config/app/config.yml' }
     - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
+    - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
 enhavo_app:
     menu:
         dashboard:

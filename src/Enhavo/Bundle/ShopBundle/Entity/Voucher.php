@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ShopBundle\Entity;
 
-use Sylius\Component\Promotion\Model\Coupon;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Voucher implements ResourceInterface

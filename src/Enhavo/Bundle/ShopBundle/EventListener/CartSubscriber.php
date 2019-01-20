@@ -13,7 +13,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderShipmentProcessor;
 use Enhavo\Bundle\ShopBundle\OrderProcessing\OrderTaxProcessor;
-use Sylius\Component\Cart\SyliusCartEvents;
+use Sylius\Component\Order\SyliusCartEvents;
 use Sylius\Component\Promotion\Processor\PromotionProcessorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;

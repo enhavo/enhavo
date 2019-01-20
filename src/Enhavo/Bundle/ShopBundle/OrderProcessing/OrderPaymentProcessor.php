@@ -8,10 +8,9 @@
 
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
-
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
-use Sylius\Component\Core\OrderCheckoutStates;
+use Enhavo\Bundle\ShopBundle\Order\OrderCheckoutStates;
 
 class OrderPaymentProcessor implements ProcessorInterface
 {

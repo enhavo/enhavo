@@ -13,7 +13,7 @@ use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderItemInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Order\Model\AdjustmentInterface;
 use Doctrine\Common\Proxy\Proxy;
 
 class OrderTaxProcessor implements ProcessorInterface, ItemProcessorInterface

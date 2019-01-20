@@ -16,7 +16,7 @@ use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Sylius\Component\Cart\SyliusCartEvents;
+use Sylius\Component\Order\SyliusCartEvents;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class UserCartProvider implements CartProviderInterface

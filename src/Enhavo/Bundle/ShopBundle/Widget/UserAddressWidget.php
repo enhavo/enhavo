@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\ShopBundle\Widget;
 
-
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 
 class UserAddressWidget extends AbstractType implements WidgetInterface
 {

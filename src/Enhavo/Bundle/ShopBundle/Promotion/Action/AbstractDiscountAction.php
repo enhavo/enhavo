@@ -10,9 +10,7 @@ namespace Enhavo\Bundle\ShopBundle\Promotion\Action;
 
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Sylius\Component\Order\Model\AdjustmentInterface;
-use Sylius\Component\Originator\Model\OriginAwareInterface;
-use Sylius\Component\Originator\Originator\OriginatorInterface;
-use Sylius\Component\Promotion\Action\PromotionActionInterface;
+use Sylius\Component\Promotion\Model\PromotionActionInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;

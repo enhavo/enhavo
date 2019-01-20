@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\ShopBundle\OrderProcessing;
 
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ShopBundle\Model\OrderInterface;
 use Enhavo\Bundle\ShopBundle\Model\ProcessorInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Sylius\Component\User\Security\Generator\TokenGenerator;
-use Sylius\Component\Core\OrderCheckoutStates;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class OrderInitProcessor implements ProcessorInterface
@@ -27,7 +26,7 @@ class OrderInitProcessor implements ProcessorInterface
      */
     private $tokenStorage;
 
-    public function __construct(TokenGenerator $tokenGenerator, TokenStorage $tokenStorage)
+    public function __construct(TokenGeneratorInterface $tokenGenerator, TokenStorage $tokenStorage)
     {
         $this->tokenGenerator = $tokenGenerator;
         $this->tokenStorage = $tokenStorage;
