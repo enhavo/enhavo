@@ -308,10 +308,11 @@ class ResourceControllerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $attributes = new ParameterBag();
-        $attributes->set('id', 1);
+        $query = new ParameterBag();
+        $query->set('id', 1);
 
-        $request->attributes = $attributes;
+        $request->attributes = new ParameterBag();
+        $request->query = $query;
 
         $response = $controller->previewAction($request);
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
