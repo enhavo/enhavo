@@ -28,6 +28,9 @@ services:
 
     enhavo_app.controller.auto_complete:
         class: Enhavo\Bundle\AppBundle\Controller\AutoCompleteController
+        arguments:
+            - '@sylius.expression_language'
+        public: true
         calls:
             - [setContainer, ['@service_container']]
 

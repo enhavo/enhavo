@@ -40,6 +40,7 @@ services:
 
     enhavo_contact.controller.contact:
         class: Enhavo\Bundle\ContactBundle\Controller\ContactController
+        public: true
         arguments:
             - '@translator'
             - '@enhavo_contact.mailer'
