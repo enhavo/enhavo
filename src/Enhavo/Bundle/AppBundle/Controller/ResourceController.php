@@ -223,7 +223,8 @@ class ResourceController extends BaseController
 
         $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
-        if($request->attributes->has('id')) {
+        if($request->query->has('id')) {
+            $request->attributes->set('id', $request->query->get('id'));
             $resource = $this->singleResourceProvider->get($configuration, $this->repository);
             $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
         } else {
