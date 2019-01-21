@@ -8,15 +8,27 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Command;
 
-
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\CalendarBundle\Import\ImportManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class ImportCommand extends ContainerAwareCommand
+class ImportCommand extends Command
 {
-    use ContainerAwareTrait;
+    /**
+     * @var ImportManager
+     */
+    private $manager;
+
+    /**
+     * ImportCommand constructor.
+     * @param ImportManager $manager
+     */
+    public function __construct(ImportManager $manager)
+    {
+        $this->manager = $manager;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -27,7 +39,6 @@ class ImportCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $importer = $this->getContainer()->get('enhavo_calendar.import_manager');
-        $importer->import();
+        $this->manager->import();
     }
 }

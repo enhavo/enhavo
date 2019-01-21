@@ -2,7 +2,7 @@
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 /*
  * This command does the reindexing
  */
-class ReindexCommand extends ContainerAwareCommand
+class ReindexCommand extends Command
 {
     use ContainerAwareTrait;
 

@@ -8,13 +8,44 @@
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-class CleanUpCommand extends ContainerAwareCommand
+class CleanUpCommand extends Command
 {
+    /**
+     * @var Filesystem
+     */
+    private $fs;
+
+    /**
+     * @var string
+     */
+    private $mediaPath;
+
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    /**
+     * CleanUpCommand constructor.
+     * @param Filesystem $fs
+     * @param string $mediaPath
+     * @param MediaManager $mediaManager
+     */
+    public function __construct(Filesystem $fs, string $mediaPath, MediaManager $mediaManager)
+    {
+        $this->fs = $fs;
+        $this->mediaPath = $mediaPath;
+        $this->mediaManager = $mediaManager;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -25,19 +56,14 @@ class CleanUpCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mediaManager = $this->getContainer()->get('enhavo_media.media.media_manager');
-
-        $mediaPath = sprintf('%s/media', $this->getContainer()->getParameter('kernel.root_dir'));
-        $fs = $this->getContainer()->get('filesystem');
-
         $finder = new Finder();
-        $finder->files()->in($mediaPath);
+        $finder->files()->in($this->mediaPath);
         foreach ($finder as $file) {
             $name = $file->getFilename();
             if(preg_match('#^[0-9]+$#', $name)) {
-                $meta = $mediaManager->find($name);
+                $meta = $this->mediaManager->find($name);
                 if($meta === null) {
-                    $fs->remove($file->getRealPath());
+                    $this->fs->remove($file->getRealPath());
                 }
             }
         }

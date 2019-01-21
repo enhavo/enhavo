@@ -8,17 +8,87 @@
 
 namespace Enhavo\Bundle\InstallerBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;
 use Enhavo\Bundle\UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\UserBundle\User\UserManager;
+use Sylius\Component\Resource\Factory\FactoryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class InstallCommand extends ContainerAwareCommand
+class InstallCommand extends Command
 {
+    /**
+     * @var EntityRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+
+    /**
+     * @var FactoryInterface
+     */
+    private $userFactory;
+
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
+     * @var string
+     */
+    private $projectPath;
+
+    /**
+     * @var EngineInterface
+     */
+    private $template;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * InstallCommand constructor.
+     * @param EntityRepositoryInterface $userRepository
+     * @param UserManager $userManager
+     * @param FactoryInterface $userFactory
+     * @param ValidatorInterface $validator
+     * @param string $projectPath
+     * @param EngineInterface $template
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(
+        EntityRepositoryInterface $userRepository,
+        UserManager $userManager,
+        FactoryInterface $userFactory,
+        ValidatorInterface $validator,
+        string $projectPath,
+        EngineInterface $template,
+        EntityManagerInterface $em
+    ) {
+        $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
+        $this->userFactory = $userFactory;
+        $this->validator = $validator;
+        $this->projectPath = $projectPath;
+        $this->template = $template;
+        $this->em = $em;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,7 +117,6 @@ class InstallCommand extends ContainerAwareCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws \Symfony\Component\Console\Exception\ExceptionInterface
      */
     private function installDatabase(InputInterface $input, OutputInterface $output)
     {
@@ -103,8 +172,7 @@ class InstallCommand extends ContainerAwareCommand
         $question = new Question('<question>Admin email:</question> ');
         $email = $helper->ask($input, $output, $question);
 
-        $repository = $this->getContainer()->get('enhavo_user.repository.user');
-        $user = $repository->findOneBy(['email' => $email]);
+        $user = $this->userRepository->findOneBy(['email' => $email]);
         if(!empty($user)) {
             $output->writeln('<error>Email already exists!</error>');
             return $this->askForEmail($input, $output);
@@ -125,14 +193,12 @@ class InstallCommand extends ContainerAwareCommand
      */
     private function isEmailValid($email)
     {
-        $validator = $this->getContainer()->get('validator');
-
         $constraints = array(
             new \Symfony\Component\Validator\Constraints\Email(),
             new \Symfony\Component\Validator\Constraints\NotBlank()
         );
 
-        $errors = $validator->validate($email, $constraints);
+        $errors = $this->validator->validate($email, $constraints);
         return count($errors) === 0;
     }
 
@@ -160,19 +226,16 @@ class InstallCommand extends ContainerAwareCommand
      */
     protected function createUser($email, $password)
     {
-        $manager = $this->getContainer()->get('fos_user.user_manager');
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $factory = $this->getContainer()->get('enhavo_user.factory.user');
         /** @var User $user */
-        $user = $factory->createNew();
+        $user = $this->userFactory->createNew();
         $user->setUsername($email);
         $user->setEmail($email);
         $user->setPlainPassword($password);
         $user->addRole('ROLE_SUPER_ADMIN');
-        $manager->updateCanonicalFields($user);
-        $manager->updatePassword($user);
-        $em->persist($user);
-        $em->flush();
+        $this->userManager->updateCanonicalFields($user);
+        $this->userManager->updatePassword($user);
+        $this->em->persist($user);
+        $this->em->flush();
     }
 
     private function createBundle(InputInterface $input, OutputInterface $output)
@@ -182,7 +245,7 @@ class InstallCommand extends ContainerAwareCommand
             return;
         }
 
-        $srcDir = sprintf('%s/../src', $this->getContainer()->getParameter('kernel.root_dir'));
+        $srcDir = sprintf('%s/src', $this->projectPath);
         $projectBundleDir = sprintf('%s/ProjectBundle', $srcDir);
 
         if(file_exists($projectBundleDir)) {
@@ -211,15 +274,13 @@ class InstallCommand extends ContainerAwareCommand
 
     private function overwriteProjectBundle($projectBundleDir)
     {
-        $templateEngine = $this->getContainer()->get('templating');
-
-        $defaultControllerContent = $templateEngine->render('EnhavoInstallerBundle:generate:DefaultController.php.twig');
+        $defaultControllerContent = $this->template->render('EnhavoInstallerBundle:generate:DefaultController.php.twig');
         file_put_contents(sprintf('%s/Controller/DefaultController.php', $projectBundleDir), $defaultControllerContent);
 
-        $routingContent = $templateEngine->render('EnhavoInstallerBundle:generate:routing.yml.twig');
+        $routingContent = $this->template->render('EnhavoInstallerBundle:generate:routing.yml.twig');
         file_put_contents(sprintf('%s/Resources/config/routing.yml', $projectBundleDir), $routingContent);
 
-        $indexContent = $templateEngine->render('EnhavoInstallerBundle:generate:index.html.twig');
+        $indexContent = $this->template->render('EnhavoInstallerBundle:generate:index.html.twig');
         file_put_contents(sprintf('%s/Resources/views/Default/index.html.twig', $projectBundleDir), $indexContent);
     }
 }

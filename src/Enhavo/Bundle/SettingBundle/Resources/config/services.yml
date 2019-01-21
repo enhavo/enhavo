@@ -39,3 +39,9 @@ services:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: setting }
+
+    Enhavo\Bundle\SettingBundle\Command\InitSettingCommand:
+        arguments:
+            - '@enhavo_setting.provider.database_provider'
+        tags:
+            - { name: console.command, command: 'enhavo:setting:init' }

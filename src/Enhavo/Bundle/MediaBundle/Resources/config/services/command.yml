@@ -1,0 +1,25 @@
+services:
+    Enhavo\Bundle\MediaBundle\Command\CleanUpCommand:
+        arguments:
+            - '@filesystem'
+            - '%kernel.project_dir%/var/media'
+            - '@enhavo_media.media.media_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:media:clean-up' }
+
+    Enhavo\Bundle\MediaBundle\Command\RefreshFormatCommand:
+        arguments:
+            - '@enhavo_media.repository.format'
+            - '@enhavo_media.repository.file'
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.media.format_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:media:refresh-format' }
+
+    Enhavo\Bundle\MediaBundle\Command\UpdateFileCommand:
+        arguments:
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_app.util.secure_url_token_generator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:media:update' }

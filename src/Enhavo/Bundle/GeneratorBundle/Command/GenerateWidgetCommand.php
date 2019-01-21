@@ -2,13 +2,29 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\GeneratorBundle\Generator\WidgetGenerator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateWidgetCommand extends ContainerAwareCommand
+class GenerateWidgetCommand extends Command
 {
+    /**
+     * @var WidgetGenerator
+     */
+    private $generator;
+
+    /**
+     * GenerateWidgetCommand constructor.
+     * @param WidgetGenerator $generator
+     */
+    public function __construct(WidgetGenerator $generator)
+    {
+        $this->generator = $generator;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -30,8 +46,6 @@ class GenerateWidgetCommand extends ContainerAwareCommand
     {
         $bundleName = $input->getArgument('bundleName');
         $widgetName = $input->getArgument('widgetName');
-
-        $generator = $this->getContainer()->get('enhavo_generator.generator.widget_generator');
-        $generator->generateWidget($bundleName, $widgetName);
+        $this->generator->generateWidget($bundleName, $widgetName);
     }
 }

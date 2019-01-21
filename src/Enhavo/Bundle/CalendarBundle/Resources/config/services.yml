@@ -46,3 +46,9 @@ services:
         class: Enhavo\Bundle\CalendarBundle\Provider\AppointmentProvider
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    Enhavo\Bundle\CalendarBundle\Command\ImportCommand:
+        arguments:
+            - '@enhavo_calendar.import_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:calendar:import' }

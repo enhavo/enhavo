@@ -146,3 +146,13 @@ services:
         arguments:
             - '@enhavo_translation.repository.translation_string'
 
+    Enhavo\Bundle\TranslationBundle\Command\UpdateTranslationStringsCommand:
+        arguments:
+            - '@enhavo_translation.factory.translation_string'
+            - '@enhavo_translation.repository.translation_string'
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_translation.translation_strings%'
+        tags:
+            - { name: console.command, command: 'enhavo:translation:update' }
+
+
