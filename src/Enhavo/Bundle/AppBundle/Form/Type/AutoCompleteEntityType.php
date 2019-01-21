@@ -5,10 +5,12 @@ namespace Enhavo\Bundle\AppBundle\Form\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Bridge\Doctrine\Form\EventListener\MergeDoctrineCollectionListener;
+use Enhavo\Bundle\AppBundle\Form\Listener\MergeDoctrineCollectionListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -48,7 +50,6 @@ class AutoCompleteEntityType extends AbstractType
         $propertyAccessor = $this->propertyAccessor;
 
         if($options['multiple'] === true) {
-            $builder->addEventSubscriber(new MergeDoctrineCollectionListener());
             $builder->addModelTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
                     $collection = new ArrayCollection();

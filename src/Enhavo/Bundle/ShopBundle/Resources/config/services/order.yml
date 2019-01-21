@@ -120,6 +120,7 @@ services:
 
     enhavo_shop.controller.checkout:
         class: '%enhavo_shop.controller.checkout.class%'
+        public: true
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@view.factory'
@@ -129,6 +130,7 @@ services:
 
     enhavo_shop.controller.payment:
         class: Enhavo\Bundle\ShopBundle\Controller\PaymentController
+        public: true
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@view.factory'
