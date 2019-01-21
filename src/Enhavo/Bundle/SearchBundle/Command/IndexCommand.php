@@ -9,12 +9,12 @@
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\EngineInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class IndexCommand extends ContainerAwareCommand
+class IndexCommand extends Command
 {
     use ContainerAwareTrait;
 

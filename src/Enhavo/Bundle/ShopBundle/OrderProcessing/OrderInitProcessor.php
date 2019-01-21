@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 class OrderInitProcessor implements ProcessorInterface
 {
     /**
-     * @var TokenGenerator
+     * @var TokenGeneratorInterface
      */
     private $tokenGenerator;
 
@@ -38,7 +38,7 @@ class OrderInitProcessor implements ProcessorInterface
         $order->setUser($this->getUser());
 
         if($order->getToken() === null) {
-            $order->setToken($this->tokenGenerator->generate(40));
+            $order->setToken($this->tokenGenerator->generateToken(40));
         }
     }
 

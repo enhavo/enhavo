@@ -70,9 +70,6 @@ services:
         tags:
             - { name: enhavo.menu, alias: shop }
 
-    enhavo.token_generator:
-        class: Sylius\Component\User\Security\Generator\TokenGenerator
-
     Enhavo\Bundle\ShopBundle\Button\BillingButton:
         public: true
         calls:

@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
-use Sensio\Bundle\GeneratorBundle\Generator\Generator as SensioGenerator;
+use Symfony\Bundle\MakerBundle\Generator as SensioGenerator;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 

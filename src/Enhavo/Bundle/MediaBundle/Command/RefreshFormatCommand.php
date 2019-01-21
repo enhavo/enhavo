@@ -9,14 +9,58 @@
 namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Enhavo\Bundle\MediaBundle\Entity\Format;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\MediaBundle\Media\FormatManager;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-class RefreshFormatCommand extends ContainerAwareCommand
+class RefreshFormatCommand extends Command
 {
+    /**
+     * @var RepositoryInterface
+     */
+    private $formatRepository;
+
+    /**
+     * @var RepositoryInterface
+     */
+    private $fileRepository;
+
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    /**
+     * @var FormatManager
+     */
+    private $formatManager;
+
+    /**
+     * RefreshFormatCommand constructor.
+     *
+     * @param RepositoryInterface $formatRepository
+     * @param RepositoryInterface $fileRepository
+     * @param MediaManager $mediaManager
+     * @param FormatManager $formatManager
+     */
+    public function __construct(
+        RepositoryInterface $formatRepository,
+        RepositoryInterface $fileRepository,
+        MediaManager $mediaManager,
+        FormatManager $formatManager
+    ) {
+        $this->formatRepository = $formatRepository;
+        $this->fileRepository = $fileRepository;
+        $this->mediaManager = $mediaManager;
+        $this->formatManager = $formatManager;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -41,20 +85,18 @@ class RefreshFormatCommand extends ContainerAwareCommand
         $id = $input->getOption('id');
         if(!empty($id)) {
             $id = $input->getOption('id');
-            $options['file'] = $this->getContainer()->get('enhavo_media.repository.file')->find($id);
+            $options['file'] = $this->fileRepository->find($id);
         }
 
-        $formatManager = $this->getContainer()->get('enhavo_media.media.format_manager');
-        $repository = $this->getContainer()->get('enhavo_media.repository.format');
         /** @var Format[] $formats */
-        $formats = $repository->findBy($options);
+        $formats = $this->formatRepository->findBy($options);
 
         $progressBar = new ProgressBar($output, count($formats));
         $progressBar->start();
 
         foreach($formats as $format) {
             $progressBar->advance();
-            $formatManager->applyFormat($format->getFile(), $format->getName());
+            $this->formatManager->applyFormat($format->getFile(), $format->getName());
         }
 
         $progressBar->finish();

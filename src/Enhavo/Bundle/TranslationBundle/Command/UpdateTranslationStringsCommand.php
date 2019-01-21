@@ -2,13 +2,57 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationString;
-use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpdateTranslationStringsCommand extends ContainerAwareCommand
+class UpdateTranslationStringsCommand extends Command
 {
+    /**
+     * @var FactoryInterface
+     */
+    private $factory;
+
+    /**
+     * @var RepositoryInterface
+     */
+    private $repository;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @var array
+     */
+    private $translationStrings;
+
+    /**
+     * UpdateTranslationStringsCommand constructor.
+     * @param FactoryInterface $factory
+     * @param RepositoryInterface $repository
+     * @param EntityManagerInterface $em
+     * @param array $translationStrings
+     */
+    public function __construct(
+        FactoryInterface $factory,
+        RepositoryInterface $repository,
+        EntityManagerInterface $em,
+        array $translationStrings
+    ) {
+        $this->factory = $factory;
+        $this->repository = $repository;
+        $this->em = $em;
+        $this->translationStrings = $translationStrings;
+        parent::__construct();
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -25,33 +69,28 @@ class UpdateTranslationStringsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $translationStringEntityFactory = $this->getContainer()->get('enhavo_translation.factory.translation_string');
-        $translationStringEntityRepository = $this->getContainer()->get('enhavo_translation.repository.translation_string');
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $translationStrings = $this->getContainer()->getParameter('enhavo_translation.translation_strings');
         $alreadyInDatabase = 0;
         $addedToDatabase = 0;
 
-        foreach($translationStrings as $translationString) {
-            $exists = $translationStringEntityRepository->findBy(array(
+        foreach($this->translationStrings as $translationString) {
+            $exists = $this->repository->findBy(array(
                 'translationKey' => $translationString
             ));
             if ($exists) {
                 $alreadyInDatabase++;
             } else {
-                /** @var TranslationString $newTranslationStringEntity */
-                $newTranslationStringEntity = $translationStringEntityFactory->createNew();
-                $newTranslationStringEntity->setTranslationKey($translationString);
-                $newTranslationStringEntity->setTranslationValue('');
-                $entityManager->persist($newTranslationStringEntity);
+                /** @var TranslationString $newEntity */
+                $newEntity = $this->factory->createNew();
+                $newEntity->setTranslationKey($translationString);
+                $newEntity->setTranslationValue('');
+                $this->em->persist($newEntity);
                 $addedToDatabase++;
             }
         }
         if ($addedToDatabase > 0) {
-            $entityManager->flush();
+            $this->em->flush();
         }
-        if (count($translationStrings) == 0) {
+        if (count($this->translationStrings) == 0) {
             $output->writeln('No translation strings defined in configuration files.');
         } else {
             $output->writeln($addedToDatabase . ' new translation strings added to database, ' . $alreadyInDatabase . ' already set.');

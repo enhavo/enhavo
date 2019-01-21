@@ -4,3 +4,21 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@service_container'
+            -
+    Enhavo\Bundle\InstallerBundle\Command\FixturesLoadCommand:
+        arguments:
+            - '@enhavo_migration.demo_fixtures'
+        tags:
+            - { name: console.command, command: 'enhavo:install:fixtures' }
+
+    Enhavo\Bundle\InstallerBundle\Command\InstallCommand:
+        arguments:
+            - '@enhavo_user.repository.user'
+            - '@fos_user.user_manager'
+            - '@enhavo_user.factory.user'
+            - '@validator'
+            - '%kernel.project_dir%'
+            - '@templating'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:install' }

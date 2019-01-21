@@ -45,7 +45,7 @@ services:
     enhavo.order_processing.init_processor:
         class: Enhavo\Bundle\ShopBundle\OrderProcessing\OrderInitProcessor
         arguments:
-            - '@enhavo.token_generator'
+            - '@enhavo_app.util.secure_url_token_generator'
             - '@security.token_storage'
 
     enhavo.order_processing.tracking_processor:

@@ -43,3 +43,15 @@ services:
 
     enhavo_search.util.text_to_word:
         class: Enhavo\Bundle\SearchBundle\Util\TextToWord
+
+    Enhavo\Bundle\SearchBundle\Command\IndexCommand:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: console.command, command: 'enhavo:search:index' }
+
+    Enhavo\Bundle\SearchBundle\Command\ReindexCommand:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: console.command, command: 'enhavo:search:reindex' }

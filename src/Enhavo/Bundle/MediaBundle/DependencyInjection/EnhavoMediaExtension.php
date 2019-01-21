@@ -31,6 +31,7 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_media.form', $config['form']);
 
         $configFiles = array(
+            'services/command.yml',
             'services/media.yml',
             'services/extension.yml',
             'services/filter.yml',

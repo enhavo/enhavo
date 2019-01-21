@@ -2,13 +2,30 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\GeneratorBundle\Generator\GridItemGenerator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateGridItemCommand extends ContainerAwareCommand
+class GenerateGridItemCommand extends Command
 {
+    /**
+     * @var GridItemGenerator
+     */
+    private $generator;
+
+    /**
+     * GenerateGridItemCommand constructor.
+     *
+     * @param GridItemGenerator $generator
+     */
+    public function __construct(GridItemGenerator $generator)
+    {
+        $this->generator = $generator;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -30,8 +47,6 @@ class GenerateGridItemCommand extends ContainerAwareCommand
     {
         $bundleName = $input->getArgument('bundleName');
         $itemName = $input->getArgument('itemName');
-
-        $generator = $this->getContainer()->get('enhavo_generator.generator.grid_item_generator');
-        $generator->generateGridItem($bundleName, $itemName);
+        $this->generator->generateGridItem($bundleName, $itemName);
     }
 }

@@ -15,3 +15,21 @@ services:
         arguments:
             - '@kernel'
             - '@templating'
+
+    Enhavo\Bundle\GeneratorBundle\Command\GenerateGridItemCommand:
+        arguments:
+            - '@enhavo_generator.generator.grid_item_generator'
+        tags:
+            - { name: console.command, command: 'enhavo:generate:grid-item' }
+
+    Enhavo\Bundle\GeneratorBundle\Command\GenerateRoutingCommand:
+        arguments:
+            - '@enhavo_generator.generator.route_generator'
+        tags:
+            - { name: console.command, command: 'enhavo:generate:routing' }
+
+    Enhavo\Bundle\GeneratorBundle\Command\GenerateWidgetCommand:
+        arguments:
+            - '@enhavo_generator.generator.widget_generator'
+        tags:
+            - { name: console.command, command: 'enhavo:generate:widget' }

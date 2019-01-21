@@ -8,14 +8,30 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Enhavo\Bundle\GeneratorBundle\Generator\RoutingGenerator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateRoutingCommand extends ContainerAwareCommand
+class GenerateRoutingCommand extends Command
 {
+    /**
+     * @var RoutingGenerator
+     */
+    private $generator;
+
+    /**
+     * GenerateRoutingCommand constructor.
+     * @param RoutingGenerator $generator
+     */
+    public function __construct(RoutingGenerator $generator)
+    {
+        $this->generator = $generator;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -45,10 +61,7 @@ class GenerateRoutingCommand extends ContainerAwareCommand
         $app = $input->getArgument('app');
         $resource = $input->getArgument('resource');
         $sorting = $input->getOption('sorting');
-
-        $generator = $this->getContainer()->get('enhavo_generator.generator.route_generator');
-        $outputCode = $generator->generate($app, $resource, $sorting);
-
+        $outputCode = $this->generator->generate($app, $resource, $sorting);
         $output->writeln($outputCode);
     }
 }

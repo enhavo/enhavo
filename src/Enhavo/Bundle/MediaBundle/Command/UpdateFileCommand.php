@@ -8,26 +8,58 @@
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpdateFileCommand extends ContainerAwareCommand
+class UpdateFileCommand extends Command
 {
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    /**
+     * @var TokenGeneratorInterface
+     */
+    private $tokenGenerator;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * UpdateFileCommand constructor.
+     * @param MediaManager $mediaManager
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(
+        MediaManager $mediaManager,
+        TokenGeneratorInterface $tokenGenerator,
+        EntityManagerInterface $em
+    ) {
+        $this->mediaManager = $mediaManager;
+        $this->tokenGenerator = $tokenGenerator;
+        $this->em = $em;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
-            ->setName('enhavo:media:clean-up')
+            ->setName('enhavo:media:update')
             ->setDescription('Delete files from system without meta')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mediaManager = $this->getContainer()->get('enhavo_media.media.media_manager');
-
-        $files = $mediaManager->findBy();
-        $tokenGenerator = $this->getContainer()->get('enhavo.token_generator');
+        $files = $this->mediaManager->findBy();
 
         foreach($files as $file)
         {
@@ -36,11 +68,11 @@ class UpdateFileCommand extends ContainerAwareCommand
             }
 
             if(!$file->getToken()) {
-                $file->setToken($tokenGenerator->generate(10));
+                $file->setToken($this->tokenGenerator->generateToken(10));
             }
         }
 
-        $this->getContainer()->get('doctrine.orm.default_entity_manager')->flush();
+        $this->em->flush();
         $output->writeln('Files updated');
     }
 }
