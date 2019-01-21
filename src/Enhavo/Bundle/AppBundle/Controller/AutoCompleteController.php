@@ -17,6 +17,20 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AutoCompleteController extends AbstractController
 {
+    /**
+     * @var ExpressionLanguage
+     */
+    private $expressionLanguage;
+
+    /**
+     * AutoCompleteController constructor.
+     * @param ExpressionLanguage $expressionLanguage
+     */
+    public function __construct(ExpressionLanguage $expressionLanguage)
+    {
+        $this->expressionLanguage = $expressionLanguage;
+    }
+
     public function searchAction(Request $request)
     {
         $configuration = $this->createConfiguration($request);
@@ -43,9 +57,8 @@ class AutoCompleteController extends AbstractController
 
         if($configuration->getRepositoryArguments()) {
             $arguments = $configuration->getRepositoryArguments();
-            $expressionLanguage = $this->container->get('sylius.expression_language');
             foreach($arguments as &$argument) {
-                $argument = $expressionLanguage->evaluate($argument, [
+                $argument = $this->expressionLanguage->evaluate($argument, [
                     'request' => $request,
                     'configuration' => $configuration
                 ]);
@@ -55,7 +68,7 @@ class AutoCompleteController extends AbstractController
             $arguments[] = $configuration->getLimit();
         }
 
-        $repository = $this->get('doctrine.orm.entity_manager')->getRepository($configuration->getClass());
+        $repository = $this->getDoctrine()->getRepository($configuration->getClass());
         $result = call_user_func_array([$repository, $configuration->getRepositoryMethod()], $arguments);
         return $result;
     }
