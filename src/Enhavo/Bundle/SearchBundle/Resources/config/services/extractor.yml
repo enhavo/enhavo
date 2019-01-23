@@ -11,29 +11,29 @@ services:
             - '@enhavo_search.metadata.repository'
             - '@enhavo_search.extractor_collector'
 
-    enhavo_search.extractor.property_extractor.model_extractor:
-        class: Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\ModelExtractor
+    Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\ModelExtractor:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: model }
 
-    enhavo_search.extractor.property_extractor.collection_extractor:
-        class: Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\CollectionExtractor
+    Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\CollectionExtractor:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: collection }
 
-    enhavo_search.extractor.property_extractor.html_extractor:
-        class: Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\HtmlExtractor
+    Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\HtmlExtractor:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.extractor, alias: html }
 
-    enhavo_search.extractor.property_extractor.text_extractor:
-        class: Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\TextExtractor
+    Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\TextExtractor:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
