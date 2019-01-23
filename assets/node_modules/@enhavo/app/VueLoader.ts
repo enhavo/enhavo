@@ -26,7 +26,8 @@ export class VueLoader
                 return createElement(AppComponent, {
                     'props': {
                         'menu': self.app.getData().menu,
-                        'views': self.app.getData().views
+                        'views': self.app.getData().views,
+                        'quick_menu': self.app.getData().quick_menu
                     }
                 })
             }

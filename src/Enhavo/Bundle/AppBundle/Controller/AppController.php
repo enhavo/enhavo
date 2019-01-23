@@ -31,6 +31,31 @@ class AppController extends AbstractController
                         'type' => 'iframe',
                         'url' => '/admin/view'
                     ]
+                ],
+                'quick_menu' => [
+                    'user' => [
+                        'name' => 'Johnny Doe'
+                    ],
+                    'items' => array(
+                        [
+                            'id' => 1,
+                            'name' => 'Test #1',
+                            'type' => 'iframe',
+                            'url' => '/admin/view'
+                        ], 
+                        [
+                            'id' => 2,
+                            'name' => 'Test #2',
+                            'type' => 'iframe',
+                            'url' => '/admin/view'
+                        ],
+                        [
+                            'id' => 3,
+                            'name' => 'Test #3',
+                            'type' => 'iframe',
+                            'url' => '/admin/view'
+                        ]
+                    )
                 ]
             ]
         ]);

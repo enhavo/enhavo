@@ -1,0 +1,73 @@
+<template>
+    <div class="toolbar-dropdown">
+        <div class="toolbar-dropdown-title" v-on:click="toggle">
+            {{ data.user.name }}
+        </div>
+        <div class="toolbar-dropdown-menu" v-show="isOpen">
+            <template v-for="item in data.items">
+                <toolbar-dropdown-item v-bind:data="item"></toolbar-dropdown-item>
+            </template>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Prop } from "vue-property-decorator";
+import DropdownItem from "./ToolbarDropdownItem.vue"
+import { QuickMenu } from "../Models/QuickMenu"
+
+@Component
+export default class ToolbarDropdown extends Vue {
+    name: 'toolbar-dropdown';
+
+    @Prop()
+    data: QuickMenu;
+
+    data () {
+        return {
+            isOpen: false
+        }
+    }
+    open(): void {
+        console.log('open dropdown');
+    }
+    close(): void {
+        console.log('close dropdown');
+    }
+    toggle (): void {
+        this.isOpen = !this.isOpen;
+        console.log('toggle dropdown');
+    }
+    get myComputedProp(): string {
+        return 'test';
+    }
+}
+
+Vue.component('toolbar-dropdown-item', DropdownItem);
+</script>
+
+<style lang="scss" scoped>
+    $toolbar-height: 50px;
+    
+    .toolbar-dropdown {
+        
+        .toolbar-dropdown-title {
+            height: $toolbar-height;
+            padding: 10px 20px; 
+            box-sizing: border-box; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .toolbar-dropdown-menu {
+
+        }
+    }
+</style>
+
+
+
+
+
+
