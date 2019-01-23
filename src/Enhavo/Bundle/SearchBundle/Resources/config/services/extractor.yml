@@ -13,6 +13,8 @@ services:
 
     Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\ModelExtractor:
         public: true
+        arguments:
+            - '@enhavo_search.extractor.extractor'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -20,6 +22,8 @@ services:
 
     Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor\CollectionExtractor:
         public: true
+        arguments:
+            - '@enhavo_search.extractor.extractor'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

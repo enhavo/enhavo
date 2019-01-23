@@ -9,13 +9,28 @@
 namespace Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractor;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\SearchBundle\Extractor\Extractor;
 use Enhavo\Bundle\SearchBundle\Extractor\PropertyExtractorInterface;
 
 class ModelExtractor extends AbstractType implements PropertyExtractorInterface
 {
+    /**
+     * @var Extractor
+     */
+    private $extractor;
+
+    /**
+     * ModelExtractor constructor.
+     * @param Extractor $extractor
+     */
+    public function __construct(Extractor $extractor)
+    {
+        $this->extractor = $extractor;
+    }
+
     public function extract($value, $options = [])
     {
-        return $this->container->get('enhavo_search.extractor.extractor')->extract($value);
+        return $this->extractor->extract($value);
     }
 
     public function getType()
