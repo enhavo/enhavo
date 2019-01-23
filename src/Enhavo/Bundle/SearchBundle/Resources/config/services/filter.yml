@@ -5,8 +5,8 @@ services:
             - '@service_container'
             - 'Search Filter Provider'
 
-    Enhavo\Bundle\SearchBundle\Filter\FilterData:
-        public: true
+    enhavo_search.filter.filter_data:
+        class: Enhavo\Bundle\SearchBundle\Filter\FilterData
         arguments:
             - '@enhavo_search.metadata.repository'
             - '@enhavo_search.filter_provider_collector'
