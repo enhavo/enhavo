@@ -1,0 +1,9 @@
+enhavo_search:
+    metadata:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            properties:
+                title:
+                    type: text
+                    weight: 5
+                grid:
+                    type: model

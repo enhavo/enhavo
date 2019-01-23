@@ -27,6 +27,7 @@ class EnhavoSearchExtension extends Extension
         $container->setParameter('enhavo_search.elastica.host', $config['elastica']['host']);
         $container->setParameter('enhavo_search.elastica.port', $config['elastica']['port']);
         $container->setParameter('enhavo_search.index.class', $config['index']['classes']);
+        $container->setParameter('enhavo_search.metadata', $config['metadata']);
 
         if($config['doctrine']['enable_database']) {
             $container->setParameter('enhavo_search.doctrine.enable_database', true);

@@ -1,10 +1,8 @@
 services:
     enhavo_search.metadata.configuration:
-        class: Enhavo\Bundle\AppBundle\Metadata\MetadataCacheConfiguration
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
         arguments:
-            - '@kernel'
-            - '@filesystem'
-            - 'search_metadata'
+            - '%enhavo_search.metadata%'
 
     enhavo_search.metadata.metadata_factory:
         class: Enhavo\Bundle\SearchBundle\Metadata\MetadataFactory
