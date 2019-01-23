@@ -20,6 +20,7 @@ services:
 
     enhavo_search.controller.search:
         class: Enhavo\Bundle\SearchBundle\Controller\SearchController
+        public: true
         arguments:
             - '@enhavo_search.result.result_converter'
             - '@enhavo_search.search.engine'

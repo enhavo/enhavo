@@ -1,0 +1,16 @@
+enhavo_search:
+    metadata:
+        Enhavo\Bundle\ArticleBundle\Entity\Article:
+            properties:
+                title:
+                    type: text
+                    weight: 10
+                teaser:
+                    type: text
+                    weight: 8
+                grid:
+                    type: model
+            filter:
+                permission:
+                    type: value
+                    value: 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'

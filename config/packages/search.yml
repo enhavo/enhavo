@@ -1,0 +1,5 @@
+imports:
+    - { resource: '@EnhavoArticleBundle/Resources/config/app/search.yml' }
+    - { resource: '@EnhavoPageBundle/Resources/config/app/search.yml' }
+    - { resource: '@EnhavoShopBundle/Resources/config/app/search.yml' }
+    - { resource: '@EnhavoGridBundle/Resources/config/app/search.yml' }

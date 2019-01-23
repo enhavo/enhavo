@@ -35,12 +35,7 @@ class EnhavoSearchBundle extends Bundle
             new TypeCompilerPass('enhavo_search.filter_provider_collector', 'enhavo_search.filter_provider')
         );
 
-        $container->addCompilerPass(
-            new SearchEngineCompilerPass()
-        );
-
-        //ToDo: Need to fix get meta information in symfony 4
-        //$container->addCompilerPass(new ConfigCompilerPass('search', 'search_metadata'));
+        $container->addCompilerPass(new SearchEngineCompilerPass());
     }
 
     private function buildDoctrineItemCompilerPass($configDir, $namespace, $enableParameter = false)
