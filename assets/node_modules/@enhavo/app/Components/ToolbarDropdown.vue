@@ -55,7 +55,7 @@ Vue.component('toolbar-dropdown-item', DropdownItem);
         background-color: #1c353b;
         
         .toolbar-dropdown-title { 
-            height: $toolbar-height; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;cursor: pointer;
+            height: $toolbar-height; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer;
             i { margin-right: 10px; margin-left: 10px; }
         }
 

@@ -19,9 +19,40 @@ class AppController extends AbstractController
             'data' => [
                 'menu' => [
                     [
-                        'label' => 'test',
+                        'label' => 'Test #1',
                         'url' => '/test',
-                        'icon' => 'book'
+                        'icon' => 'book',
+                        'component' => 'menu-item'
+                    ],
+                    [
+                        'label' => 'Test #2',
+                        'url' => '/test',
+                        'icon' => 'book',
+                        'component' => 'menu-list',
+                        'items' => [
+                            [
+                                'label' => 'Test #2.1',
+                                'url' => '/test',
+                                'icon' => 'book',
+                                'component' => 'menu-item'
+                            ],
+                            [
+                                'label' => 'Test #2.2',
+                                'url' => '/test',
+                                'icon' => 'book',
+                                'component' => 'menu-dropdown',
+                                'choices' => array([
+                                    'hello' => 'world',
+                                    'test' => 'test'
+                                ])
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Test #3',
+                        'url' => '/test',
+                        'icon' => 'book',
+                        'component' => 'menu-dropdown'
                     ]
                 ],
                 'views' => [
@@ -36,7 +67,7 @@ class AppController extends AbstractController
                     'user' => [
                         'name' => 'Johnny Doe'
                     ],
-                    'items' => array(
+                    'items' => [
                         [
                             'id' => 1,
                             'name' => 'Test #1',
@@ -55,7 +86,7 @@ class AppController extends AbstractController
                             'type' => 'iframe',
                             'url' => '/admin/view'
                         ]
-                    )
+                    ]
                 ]
             ]
         ]);

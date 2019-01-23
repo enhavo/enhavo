@@ -1,28 +1,24 @@
 <template>
-    <div class="menu-item" @click="openView()">
+    <div class="menu-dropdown">
         {{ data.label }}
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    
+
     @Component
-    export default class MenuItem extends Vue {
-        name: string = 'menu-item';
+    export default class MenuDropdown extends Vue {
+        name: string = 'menu-dropdown';
 
         @Prop()
         data: object;
-
-        openView() {
-            console.log('open view');
-        }
     }
 </script>
 
 <style lang="scss" scoped>
-    .menu-item { 
-        height: 50px; cursor: pointer; 
+    .menu-dropdown {
+        height: 50px; background-color: #0b97c4;
     }
 </style>
 
