@@ -1,7 +1,9 @@
 <template>
     <div class="toolbar-dropdown">
         <div class="toolbar-dropdown-title" v-on:click="toggle">
-            {{ data.user.name }}
+            <i class="fa fa-user" aria-hidden="true"></i>
+            {{ data.user.name }} 
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
             <template v-for="item in data.items">
@@ -50,19 +52,14 @@ Vue.component('toolbar-dropdown-item', DropdownItem);
     $toolbar-height: 50px;
     
     .toolbar-dropdown {
+        background-color: #1c353b;
         
-        .toolbar-dropdown-title {
-            height: $toolbar-height;
-            padding: 10px 20px; 
-            box-sizing: border-box; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+        .toolbar-dropdown-title { 
+            height: $toolbar-height; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;cursor: pointer;
+            i { margin-right: 10px; margin-left: 10px; }
         }
 
-        .toolbar-dropdown-menu {
-
-        }
+        .toolbar-dropdown-menu { background-color: inherit; }
     }
 </style>
 
