@@ -5,28 +5,28 @@ services:
             - '@service_container'
             - 'Search Filter Provider'
 
-    enhavo_search.filter.filter_data:
-        class: Enhavo\Bundle\SearchBundle\Filter\FilterData
+    Enhavo\Bundle\SearchBundle\Filter\FilterData:
+        public: true
         arguments:
             - '@enhavo_search.metadata.repository'
             - '@enhavo_search.filter_provider_collector'
 
-    enhavo_search.filter.provider.value:
-        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\ValueDataProvider
+    Enhavo\Bundle\SearchBundle\Filter\DataProvider\ValueDataProvider:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'value' }
 
-    enhavo_search.filter.provider.property:
-        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\PropertyDataProvider
+    Enhavo\Bundle\SearchBundle\Filter\DataProvider\PropertyDataProvider:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo_search.filter_provider, alias: 'property' }
 
-    enhavo_search.filter.provider.date:
-        class: Enhavo\Bundle\SearchBundle\Filter\DataProvider\DateDataProvider
+    Enhavo\Bundle\SearchBundle\Filter\DataProvider\DateDataProvider:
+        public: true
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
