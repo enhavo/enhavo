@@ -52,6 +52,7 @@ services:
 
     enhavo_media.media.format_manager:
         class: Enhavo\Bundle\MediaBundle\Media\FormatManager
+        public: true
         arguments:
             - '%enhavo_media.formats%'
             - '@enhavo_media.storage'
@@ -127,6 +128,15 @@ services:
         arguments:
             - '@enhavo_media.factory.file'
             - '@enhavo_media.factory.format'
+            - '@enhavo_media.media.media_manager'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_media.controller.image_cropper:
+        public: true
+        class: Enhavo\Bundle\MediaBundle\Controller\ImageCropperController
+        arguments:
+            - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
         calls:
             - [setContainer, ['@service_container']]

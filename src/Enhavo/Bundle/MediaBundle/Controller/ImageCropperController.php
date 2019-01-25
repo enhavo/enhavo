@@ -8,12 +8,35 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ImageCropperController extends AbstractController
 {
+    /**
+     * @var ImageCropperManager
+     */
+    private $imageCropperManager;
+
+    /**
+     * @var MediaManager
+     */
+    private $mediaManager;
+
+    /**
+     * ImageCropperController constructor.
+     * @param ImageCropperManager $imageCropperManager
+     * @param MediaManager $mediaManager
+     */
+    public function __construct(ImageCropperManager $imageCropperManager, MediaManager $mediaManager)
+    {
+        $this->imageCropperManager = $imageCropperManager;
+        $this->mediaManager = $mediaManager;
+    }
+    
     public function cropAction(Request $request)
     {
         $height = intval($request->get('height'));
@@ -50,8 +73,7 @@ class ImageCropperController extends AbstractController
     {
         $format = $this->getFormat($request);
         $parameters = $format->getParameters();
-        $imageCropperManager = $this->get('enhavo_media.media.image_cropper_manager');
-        $ratio = $imageCropperManager->getFormatRatio($format);
+        $ratio = $this->imageCropperManager->getFormatRatio($format);
 
         if(is_array($parameters)) {
             if(array_key_exists('cropHeight', $parameters) &&
@@ -87,11 +109,11 @@ class ImageCropperController extends AbstractController
         $token = $request->get('token');
         $format = $request->get('format');
 
-        $file = $this->get('enhavo_media.media.media_manager')->findOneBy([
+        $file = $this->mediaManager->findOneBy([
             'token' => $token
         ]);
 
-        $format = $this->get('enhavo_media.media.media_manager')->getFormat($file, $format);
+        $format = $this->mediaManager->getFormat($file, $format);
         return $format;
     }
 }
