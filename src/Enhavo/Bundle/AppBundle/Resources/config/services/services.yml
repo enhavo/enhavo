@@ -2,7 +2,7 @@ parameters:
     security.roles.provider.class: Enhavo\Bundle\AppBundle\Security\Roles\AdminRolesProvider
 
 services:
-    cache:
+    enhavo_app.cache:
         class: Doctrine\Common\Cache\PhpFileCache
         arguments: ['%kernel.cache_dir%/cache']
 
