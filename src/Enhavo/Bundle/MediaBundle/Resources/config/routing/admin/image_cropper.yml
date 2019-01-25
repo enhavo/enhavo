@@ -2,7 +2,7 @@ enhavo_media_image_cropper_crop:
     path:  /media/image/{token}/{format}/cropper/crop
     methods: [POST]
     defaults:
-        _controller: EnhavoMediaBundle:ImageCropper:crop
+        _controller: enhavo_media.controller.image_cropper:cropAction
     options:
         expose: true
 
@@ -10,6 +10,6 @@ enhavo_media_image_cropper_data:
     path:  /media/image/{token}/{format}/cropper/data
     methods: [GET]
     defaults:
-        _controller: EnhavoMediaBundle:ImageCropper:data
+        _controller: enhavo_media.controller.image_cropper:dataAction
     options:
         expose: true
