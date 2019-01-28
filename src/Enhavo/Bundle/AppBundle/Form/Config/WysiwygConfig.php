@@ -12,15 +12,14 @@ use Symfony\Component\Yaml\Yaml;
 
 class WysiwygConfig
 {
-    protected $configPath;
+    /**
+     * @var array
+     */
+    private $config;
 
-    protected $config;
-
-    public function __construct($configPath = null)
+    public function __construct($config = null)
     {
-        if(file_exists($configPath)) {
-            $this->config = Yaml::parse($configPath);
-        }
+        $this->config = $config;
     }
 
     public function getData(WysiwygOption $option)
@@ -37,7 +36,7 @@ class WysiwygConfig
         return json_encode($data);
     }
 
-    protected function getConfig($name, $default = null)
+    private function getConfig($name, $default = null)
     {
         if(isset($this->config[$name])) {
             return $this->config[$name];
