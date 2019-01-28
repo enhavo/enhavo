@@ -91,7 +91,7 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
-                ->variableNode('wysiwyg')->end()
+                ->variableNode('wysiwyg')->defaultValue([])->end()
             ->end()
 
             ->children()
