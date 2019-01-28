@@ -91,6 +91,10 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->variableNode('wysiwyg')->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('roles')
                     ->useAttributeAsKey('name')
                     ->prototype('array')

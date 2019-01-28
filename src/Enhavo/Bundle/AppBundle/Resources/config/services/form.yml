@@ -63,7 +63,7 @@ services:
     enhavo_app.form.config.wysiwyg:
         class: '%enhavo_app.form.config.wysiwyg.class%'
         arguments:
-            - '%kernel.root_dir%/config/wysiwyg.yml'
+            - '%enhavo_app.wysiwyg%'
 
     enhavo_app.form.error.resolver:
         class: Enhavo\Bundle\AppBundle\Form\Error\FormErrorResolver
