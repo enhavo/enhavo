@@ -689,6 +689,9 @@
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
     },
+    "symfony/security": {
+        "version": "v4.2.2"
+    },
     "symfony/security-bundle": {
         "version": "3.3",
         "recipe": {

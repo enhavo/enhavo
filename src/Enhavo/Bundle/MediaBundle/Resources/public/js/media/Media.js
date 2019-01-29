@@ -61,7 +61,8 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                             self.setProgress(progress);
                         }
                     },
-                    dropZone: this.$element.find('[data-media-drop-zone]')
+                    dropZone: this.$element.find('[data-media-drop-zone]'),
+                    pasteZone: null
                 });
             }
         };
