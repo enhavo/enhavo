@@ -69,7 +69,8 @@ define(["require", "exports", "jquery", "app/Router", "app/Admin", "blueimp-file
                         self.setProgress(progress);
                     }
                 },
-                dropZone: this.$element
+                dropZone: this.$element,
+                pasteZone: null
             });
         };
         Block.prototype.setProgress = function (percent) {
