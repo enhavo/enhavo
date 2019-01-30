@@ -81,7 +81,8 @@ export class Block
                     self.setProgress(progress);
                 }
             },
-            dropZone: this.$element
+            dropZone: this.$element,
+            pasteZone: null
         });
     }
 
