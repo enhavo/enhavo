@@ -3,7 +3,7 @@
         <div class="toolbar-dropdown-title" v-on:click="toggle">
             <i class="fa fa-user" aria-hidden="true"></i>
             {{ data.user.name }} 
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
+            <i v-bind:class="['open-indicator', 'fa fa-caret-down', {'fa-flip-vertical': isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
             <template v-for="item in data.items">
@@ -25,23 +25,11 @@ export default class ToolbarDropdown extends Vue {
     @Prop()
     data: QuickMenu;
 
-    data () {
-        return {
-            isOpen: false
-        }
-    }
-    open(): void {
-        console.log('open dropdown');
-    }
-    close(): void {
-        console.log('close dropdown');
-    }
+    isOpen: boolean = false;
+
     toggle (): void {
         this.isOpen = !this.isOpen;
         console.log('toggle dropdown');
-    }
-    get myComputedProp(): string {
-        return 'test';
     }
 }
 
