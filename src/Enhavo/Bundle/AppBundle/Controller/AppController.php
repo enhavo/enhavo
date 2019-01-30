@@ -59,8 +59,9 @@ class AppController extends AbstractController
                     [
                         'id' => 1,
                         'name' => 'test',
-                        'type' => 'iframe',
-                        'url' => '/admin/view'
+                        'component' => 'iframe-view',
+                        'url' => '/admin/view',
+                        'width' => '400'
                     ]
                 ],
                 'quick_menu' => [

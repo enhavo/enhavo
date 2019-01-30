@@ -9,7 +9,7 @@ export class View
 
     private id: number;
 
-    constructor(id: number, name: string, parent: View, children: View[])
+    constructor(id: number, name: string, parent: View = null, children: View[] = [])
     {
         this.parent = parent;
         this.children = children;

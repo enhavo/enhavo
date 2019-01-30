@@ -1,29 +1,18 @@
 <template>
-    <div class="view">
-        <iframe :src="url"></iframe>
-    </div>
+    <iframe :src="data.url"></iframe>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
-export default class ViewStack extends Vue {
+export default class IFrameView extends Vue {
     name: 'iframe-view';
     @Prop()
-    url: string;
+    data: object;
 }
 </script>
 
-<style lang="scss">
-.view {
-    width: 50%; height: 100%;
+<style lang="scss" scoped>
     iframe { border: 0; height: 100%; width: 100%; }
-}
 </style>
-
-
-
-
-
-
