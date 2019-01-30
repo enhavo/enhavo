@@ -1,5 +1,6 @@
 <template>
-    <div class="menu-item" @click="openView()">
+    <div class="menu-child-title menu-item" @click="openView()">
+        <i v-bind:class="['fa', data.icon]" aria-hidden="true"></i>
         {{ data.label }}
     </div>
 </template>
@@ -14,7 +15,7 @@
         @Prop()
         data: object;
 
-        openView() {
+        openView(): void {
             console.log('open view');
         }
     }

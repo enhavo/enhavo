@@ -1,8 +1,9 @@
 <template>
     <div class="menu">
-        <div v-for="item in menu">
-            <menu-item v-bind:label="item.label"></menu-item>
-        </div>
+
+        <template v-for="item in menu">
+            <component class="menu-child" v-bind:is="item.component" v-bind:data="item"></component>
+        </template>
 
     </div>
 </template>
@@ -10,6 +11,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import MenuItem from "./MenuItem.vue"
+import MenuList from "./MenuList.vue"
+import MenuDropdown from "./MenuDropdown.vue"
 
 @Component
 export default class Menu extends Vue {
@@ -19,11 +22,29 @@ export default class Menu extends Vue {
 }
 
 Vue.component('menu-item', MenuItem);
+Vue.component('menu-list', MenuList);
+Vue.component('menu-dropdown', MenuDropdown);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .menu {
-    width: 200px; height: 100%; float: left;  background-color: red;
+    width: 200px; height: 100%; float: left;  background-color: brown;
+
+    .menu-child {
+        padding-left: 10px; padding-right: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start; font-size: 16px; font-weight: 500; border-bottom: 2px solid yellowgreen;
+    }
+}
+</style>
+
+<style lang="scss">
+.menu-child-title {
+    i {
+        margin-right: 10px;
+
+        &.open-indicator {
+            position: absolute; right: 10px; margin-right: initial;
+        }
+    }
 }
 </style>
 

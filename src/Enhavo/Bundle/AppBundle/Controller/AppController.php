@@ -21,38 +21,48 @@ class AppController extends AbstractController
                     [
                         'label' => 'Test #1',
                         'url' => '/test',
-                        'icon' => 'book',
+                        'icon' => 'fa-book',
                         'component' => 'menu-item'
                     ],
                     [
                         'label' => 'Test #2',
                         'url' => '/test',
-                        'icon' => 'book',
+                        'icon' => 'fa-cube',
                         'component' => 'menu-list',
                         'items' => [
                             [
                                 'label' => 'Test #2.1',
                                 'url' => '/test',
-                                'icon' => 'book',
+                                'icon' => 'fa-university',
                                 'component' => 'menu-item'
                             ],
                             [
                                 'label' => 'Test #2.2',
                                 'url' => '/test',
+                                'icon' => 'fa-beer',
+                                'component' => 'menu-item'
+                            ],
+                            [
+                                'label' => 'Test #2.3',
+                                'url' => '/test',
                                 'icon' => 'book',
                                 'component' => 'menu-dropdown',
-                                'choices' => array([
+                                'choices' => [
                                     'hello' => 'world',
                                     'test' => 'test'
-                                ])
+                                ]
                             ]
                         ]
                     ],
                     [
                         'label' => 'Test #3',
                         'url' => '/test',
-                        'icon' => 'book',
-                        'component' => 'menu-dropdown'
+                        'icon' => 'align-left',
+                        'component' => 'menu-dropdown',
+                        'choices' => [
+                            'hello' => 'world',
+                            'test' => 'test'
+                        ]
                     ]
                 ],
                 'views' => [
