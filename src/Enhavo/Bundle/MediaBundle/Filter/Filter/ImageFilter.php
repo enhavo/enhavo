@@ -36,6 +36,12 @@ class ImageFilter extends AbstractFilter
                 $options = $this->getSaveOptions($format, $setting);
                 $options['animated'] = true;
                 $resultImage->save($content->getFilePath(), $options);
+            } elseif($format == 'bmp' && class_exists('Imagick') ) {
+                $imagine = new ImagickImagine();
+                $image = $imagine->load($content->getContent());
+                $resultImage = $image->copy();
+                $resultImage = $this->resize($resultImage, $setting);
+                $resultImage->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
             } else {
                 $imagine = new Imagine();
                 $imagine = $imagine->load($content->getContent());
@@ -85,6 +91,8 @@ class ImageFilter extends AbstractFilter
                     return 'jpg';
                 case(IMAGETYPE_PNG):
                     return 'png';
+                case(IMAGETYPE_BMP):
+                    return 'bmp';
             }
             return 'png';
         }
