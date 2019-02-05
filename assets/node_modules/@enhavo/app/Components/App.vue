@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewStack from "./ViewStack.vue"
-import Menu from "./Menu.vue"
+import Menu from "./Menu/Menu.vue"
 import Toolbar from "./Toolbar.vue"
 import { QuickMenu } from "../Models/QuickMenu"
 

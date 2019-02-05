@@ -1,11 +1,13 @@
 <template>
     <div class="menu-dropdown">
-        <div class="menu-dropdown-child menu-dropdown-label">
-            {{ data.label }} 
+        <div class="menu-child-title menu-dropdown-child menu-dropdown-label">
+            <i v-bind:class="['fa', icon]" aria-hidden="true"></i>
+            {{ label }} 
+            <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
         </div>
         <div class="menu-dropdown-child menu-dropdown-input">
             <select v-model="selected" v-on:change="onChange">
-                <option v-for="(choiceLabel, choiceValue) in data.choices" v-bind:value="choiceValue">
+                <option v-for="(choiceLabel, choiceValue) in choices" v-bind:value="choiceValue">
                     {{ choiceLabel }}
                 </option>
             </select>
@@ -25,6 +27,22 @@
         data: object;
 
         selected: string = '';
+
+        get label(): string {
+            return (this.data && this.data.label) ? this.data.label : false;
+        }
+
+        get icon(): string {
+            return (this.data && this.data.icon) ? this.data.icon : false;
+        }
+
+        get notification(): object {
+            return (this.data && this.data.notification) ? this.data.notification : false;
+        }
+
+        get choices(): array {
+            return (this.data && this.data.choices) ? this.data.choices : false;
+        }
 
         onChange(): string {
             // --> fire change event

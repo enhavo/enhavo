@@ -13,6 +13,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import MenuItem from "./MenuItem.vue"
 import MenuList from "./MenuList.vue"
 import MenuDropdown from "./MenuDropdown.vue"
+import MenuNotification from "./MenuNotification.vue"
 
 @Component
 export default class Menu extends Vue {
@@ -24,6 +25,7 @@ export default class Menu extends Vue {
 Vue.component('menu-item', MenuItem);
 Vue.component('menu-list', MenuList);
 Vue.component('menu-dropdown', MenuDropdown);
+Vue.component('menu-notification', MenuNotification);
 </script>
 
 <style lang="scss" scoped>

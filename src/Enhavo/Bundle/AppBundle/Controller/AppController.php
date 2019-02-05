@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppController extends AbstractController
@@ -22,18 +23,30 @@ class AppController extends AbstractController
                         'label' => 'Test #1',
                         'url' => '/test',
                         'icon' => 'fa-book',
-                        'component' => 'menu-item'
+                        'notification' => [
+                            'class' => 'notification blue',
+                            'label' => '120'
+                        ],
+                        'component' => 'menu-item',
                     ],
                     [
                         'label' => 'Test #2',
                         'url' => '/test',
                         'icon' => 'fa-cube',
+                        'notification' => [
+                            'class' => 'notification red',
+                            'label' => '343'
+                        ],
                         'component' => 'menu-list',
                         'items' => [
                             [
                                 'label' => 'Test #2.1',
                                 'url' => '/test',
                                 'icon' => 'fa-university',
+                                'notification' => [
+                                    'class' => 'success',
+                                    'label' => '3'
+                                ],
                                 'component' => 'menu-item'
                             ],
                             [
@@ -57,7 +70,7 @@ class AppController extends AbstractController
                     [
                         'label' => 'Test #3',
                         'url' => '/test',
-                        'icon' => 'align-left',
+                        'icon' => 'fa-cube',
                         'component' => 'menu-dropdown',
                         'choices' => [
                             'hello' => 'world',
@@ -181,24 +194,22 @@ class AppController extends AbstractController
 
     public function tableAction()
     {
-        return $this->render('EnhavoAppBundle:App:view.html.twig', [
-            'data' => [
-                [
-                    'id' => 1,
-                    'title' => [
-                        'title' => 'Lorem Ipsum',
-                        'update' => 'Last Update at'
-                    ],
-                    'date' => 'Date'
+        return new JsonResponse([
+            [
+                'id' => 1,
+                'title' => [
+                    'title' => 'Lorem Ipsum',
+                    'update' => 'Last Update at'
                 ],
-                [
-                    'id' => 2,
-                    'title' => [
-                        'title' => 'Lorem Ipsum2',
-                        'update' => 'Last Update at2'
-                    ],
-                    'date' => 'Date2'
-                ]
+                'date' => 'Date'
+            ],
+            [
+                'id' => 2,
+                'title' => [
+                    'title' => 'Lorem Ipsum2',
+                    'update' => 'Last Update at2'
+                ],
+                'date' => 'Date2'
             ]
         ]);
     }
