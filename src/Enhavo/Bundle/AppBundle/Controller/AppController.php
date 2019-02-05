@@ -107,7 +107,98 @@ class AppController extends AbstractController
     {
         return $this->render('EnhavoAppBundle:App:view.html.twig', [
             'data' => [
+                'page' => 1,
+                'pagination' => 100,
+                'pagination_steps' => [
+                    5, 10, 50, 100, 500
+                ],
+                'filters' => [
+                    [
+                        'key' => 'title',
+                        'label' => 'Title',
+                        'component' => 'Search',
+                        'width' => 3,
+                        'row' => 1
+                    ],
+                    [
+                        'key' => 'id',
+                        'label' => 'id',
+                        'component' => 'Text',
+                        'width' => 3,
+                        'row' => 1
+                    ]
+                ],
+                'sortable' => true,
+                'columns' => [
+                    [
+                        'sortable' => true,
+                        'key' => 'title',
+                        'label' => 'id',
+                        'component' => 'row-column',
+                        'rows' => [
+                            [
+                                'component' => 'text-column',
+                                'key' => 'title',
+                                'style' => ['bold']
+                            ],
+                            [
+                                'component' => 'text-column',
+                                'key' => 'update',
+                                'style' => 'grey'
+                            ]
+                        ],
+                        'width' => 3
+                    ],
+                    [
+                        'key' => 'id',
+                        'label' => 'Id',
+                        'component' => 'Text',
+                        'width' => 3,
+                    ],
+                    [
+                        'key' => 'date',
+                        'label' => 'Date',
+                        'component' => 'Text',
+                        'width' => 3,
+                    ]
+                ],
+                'batch' => 'publish',
+                'batches' => [
+                    [
+                        'key' => 'delete',
+                        'label' => 'Delete',
+                        'uri' => '/action'
+                    ],
+                    [
+                        'key' => 'publish',
+                        'label' => 'Publish',
+                        'uri' => '/action'
+                    ]
+                ]
+            ]
+        ]);
+    }
 
+    public function tableAction()
+    {
+        return $this->render('EnhavoAppBundle:App:view.html.twig', [
+            'data' => [
+                [
+                    'id' => 1,
+                    'title' => [
+                        'title' => 'Lorem Ipsum',
+                        'update' => 'Last Update at'
+                    ],
+                    'date' => 'Date'
+                ],
+                [
+                    'id' => 2,
+                    'title' => [
+                        'title' => 'Lorem Ipsum2',
+                        'update' => 'Last Update at2'
+                    ],
+                    'date' => 'Date2'
+                ]
             ]
         ]);
     }
