@@ -10,15 +10,16 @@ namespace Enhavo\Bundle\ShopBundle\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
+use Symfony\Component\HttpFoundation\Response;
 
 trait CartSummaryTrait
 {
-    protected function getCartSummaryRoute()
+    protected function getCartSummaryRoute(): string
     {
         return 'enhavo_shop_theme_cart_summary';
     }
 
-    protected function redirectToCartSummary(RequestConfiguration $configuration)
+    protected function redirectToCartSummary(RequestConfiguration $configuration): Response
     {
         $format = $configuration->getRequest()->getRequestFormat('html');
         $defaultParams = [

@@ -155,15 +155,15 @@ enhavo_app:
 enhavo_shop:
     mailer:
         confirm:
-            from: '%env(MAILER_FROM)%'
-            sender_name: '%env(MAILER_NAME)%'
+            from: '%env(string:MAILER_FROM)%'
+            sender_name: '%env(string:MAILER_NAME)%'
         tracking:
-            from: '%env(MAILER_FROM)%'
-            sender_name: '%env(MAILER_NAME)%'
+            from: '%env(string:MAILER_FROM)%'
+            sender_name: '%env(string:MAILER_NAME)%'
         notification:
-            from: '%env(MAILER_FROM)%'
-            sender_name: '%env(MAILER_NAME)%'
-            to: '%env(MAILER_TO)%'
+            from: '%env(string:MAILER_FROM)%'
+            sender_name: '%env(string:MAILER_NAME)%'
+            to: '%env(string:MAILER_TO)%'
 
 enhavo_routing:
     classes:

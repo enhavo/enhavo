@@ -62,7 +62,7 @@ class UrlContent extends AbstractContent
         file_put_contents($this->getFilePath(), $response->getBody()->getContents());
     }
 
-    public function __unset()
+    public function __unset($reference)
     {
         if($this->loaded) {
             unlink($this->path);

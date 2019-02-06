@@ -8,17 +8,17 @@ enhavo_newsletter:
     strategy:
         settings:
             notify:
-                from: '%env(MAILER_FROM)%'
-                admin_email: '%env(MAILER_TO)%'
-                sender_name: '%env(MAILER_NAME)%'
+                from: '%env(string:MAILER_FROM)%'
+                admin_email: '%env(string:MAILER_TO)%'
+                sender_name: '%env(string:MAILER_NAME)%'
             accept:
-                from: '%env(MAILER_FROM)%'
-                admin_email: '%env(MAILER_TO)%'
-                sender_name: '%env(MAILER_NAME)%'
+                from: '%env(string:MAILER_FROM)%'
+                admin_email: '%env(string:MAILER_TO)%'
+                sender_name: '%env(string:MAILER_NAME)%'
             double_opt_in:
-                from: '%env(MAILER_FROM)%'
-                admin_email: '%env(MAILER_TO)%'
-                sender_name: '%env(MAILER_NAME)%'
+                from: '%env(string:MAILER_FROM)%'
+                admin_email: '%env(string:MAILER_TO)%'
+                sender_name: '%env(string:MAILER_NAME)%'
     forms:
         default:
             type: enhavo_newsletter_subscribe
