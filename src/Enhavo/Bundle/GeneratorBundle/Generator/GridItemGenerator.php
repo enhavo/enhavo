@@ -136,7 +136,7 @@ class GridItemGenerator
 
     private function generateTemplateFile(BundleInterface $bundle, $itemName, $itemSubDirectory)
     {
-        $filePath = $bundle->getPath() . '/Resources/views/Theme/Grid/' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $this->camelCaseToSnakeCase($itemName, true) . '.html.twig';
+        $filePath = $bundle->getPath() . '/Resources/views/Theme/Grid/' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $this->generator->camelCaseToSnakeCase($itemName, true) . '.html.twig';
         $this->createPathToFileIfNotExists($filePath);
         if (file_exists($filePath)) {
             throw new \RuntimeException('Frontend template file "' . $filePath . '" already exists.');
@@ -155,7 +155,7 @@ class GridItemGenerator
     {
         $itemNameSpace = $this->getNameSpace($bundle, '\\Entity', $itemSubDirectory) . '\\' . $itemName;
         $formTypeNamespace = $this->getNameSpace($bundle, '\\Form\\Type', $itemSubDirectory) . '\\' .$itemName . 'Type';
-        $template = $bundle->getName() . ':Theme/Grid' . ($itemSubDirectory ? '/' . $itemSubDirectory : '') . ':' . $this->camelCaseToSnakeCase($itemName, true) . '.html.twig';
+        $template = $bundle->getName() . ':Theme/Grid' . ($itemSubDirectory ? '/' . $itemSubDirectory : '') . ':' . $this->generator->camelCaseToSnakeCase($itemName, true) . '.html.twig';
         $factoryNamespace = $this->getNameSpace($bundle, '\\Factory', $itemSubDirectory) . '\\' . $itemName . 'Factory';
 
         return $this->generator->render('@EnhavoGenerator/Generator/GridItem/enhavo_config_entry.yml.twig', array(

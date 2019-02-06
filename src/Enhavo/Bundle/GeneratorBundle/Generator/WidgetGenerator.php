@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
