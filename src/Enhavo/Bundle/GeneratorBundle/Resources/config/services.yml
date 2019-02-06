@@ -1,35 +1,41 @@
 services:
+    enhavo_generator.generator.generator:
+        class: Enhavo\Bundle\GeneratorBundle\Generator\Generator
+        arguments:
+            - '@templating'
+            - '@filesystem'
+
     enhavo_generator.generator.route_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\RoutingGenerator
         arguments:
-            - '@templating'
+            - '@enhavo_generator.generator.generator'
 
     enhavo_generator.generator.grid_item_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\GridItemGenerator
         arguments:
             - '@kernel'
-            - '@templating'
+            - '@enhavo_generator.generator.generator'
 
     enhavo_generator.generator.widget_generator:
         class: Enhavo\Bundle\GeneratorBundle\Generator\WidgetGenerator
         arguments:
             - '@kernel'
-            - '@templating'
+            - '@enhavo_generator.generator.generator'
 
     Enhavo\Bundle\GeneratorBundle\Command\GenerateGridItemCommand:
         arguments:
             - '@enhavo_generator.generator.grid_item_generator'
         tags:
-            - { name: console.command, command: 'enhavo:generate:grid-item' }
+            - { name: console.command, command: 'make:enhavo:grid-item' }
 
     Enhavo\Bundle\GeneratorBundle\Command\GenerateRoutingCommand:
         arguments:
             - '@enhavo_generator.generator.route_generator'
         tags:
-            - { name: console.command, command: 'enhavo:generate:routing' }
+            - { name: console.command, command: 'make:enhavo:routing' }
 
     Enhavo\Bundle\GeneratorBundle\Command\GenerateWidgetCommand:
         arguments:
             - '@enhavo_generator.generator.widget_generator'
         tags:
-            - { name: console.command, command: 'enhavo:generate:widget' }
+            - { name: console.command, command: 'make:enhavo:widget' }
