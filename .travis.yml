@@ -16,7 +16,7 @@ before_install:
 install:
     - sudo apt-get install -y --force-yes php5-mysql
     - mysql -e 'create database enhavo_test'
-    - composer install --no-interaction
+    - composer install --no-interaction --optimize-autoloader --prefer-dist
 
 before_script:
     - bin/console cache:warmup --env=test --no-debug
@@ -30,3 +30,4 @@ script:
   - composer validate
   - bin/behat --strict
   - bin/phpunit --stop-on-failure
+  - vendor/bin/phplint
