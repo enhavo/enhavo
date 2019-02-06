@@ -51,9 +51,9 @@ enhavo_page:
 enhavo_contact:
     forms:
         contact:
-            recipient: '%env(MAILER_TO)%'
-            from: '%env(MAILER_FROM)%'
-            sender_name: '%env(MAILER_NAME)%'
+            recipient: '%env(string:MAILER_TO)%'
+            from: '%env(string:MAILER_FROM)%'
+            sender_name: '%env(string:MAILER_NAME)%'
 
 enhavo_newsletter:
     forms:
