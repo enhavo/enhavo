@@ -139,7 +139,7 @@ class ImageFilter extends AbstractFilter
             $image = $this->resizeWithFixHeightAndWidth(
                 $image, $setting->getSetting('width'),
                 $setting->getSetting('height'),
-                $setting->getSetting('mode', ImageInterface::THUMBNAIL_OUTBOUND)
+                $this->mapResizeMode($setting->getSetting('mode', ImageInterface::THUMBNAIL_OUTBOUND))
             );
         }
 
@@ -276,6 +276,18 @@ class ImageFilter extends AbstractFilter
     {
         $count = preg_match_all('#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $file, $m);
         return $count >= 2;
+    }
+
+    private function mapResizeMode($mode)
+    {
+        switch ($mode) {
+            case 'inset':
+                return ImageInterface::THUMBNAIL_INSET;
+            case ImageInterface::THUMBNAIL_INSET:
+                return ImageInterface::THUMBNAIL_INSET;
+            default:
+                return ImageInterface::THUMBNAIL_OUTBOUND;
+        }
     }
 
     public function getType()
