@@ -8,20 +8,25 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-
 class RoutingGenerator
 {
-    protected $templateEngine;
+    /**
+     * @var Generator
+     */
+    private $generator;
 
-    public function __construct(EngineInterface $templateEngine)
+    /**
+     * RoutingGenerator constructor.
+     * @param Generator $generator
+     */
+    public function __construct(Generator $generator)
     {
-        $this->templateEngine = $templateEngine;
+        $this->generator = $generator;
     }
 
     public function generate($appName, $resourceName, $sorting = null)
     {
-        return $this->templateEngine->render('EnhavoGeneratorBundle:Generator:routing.yml.twig',
+        return $this->generator->render('EnhavoGeneratorBundle:Generator:routing.yml.twig',
             array(
                 'app' => $appName,
                 'resource' => $resourceName,
@@ -32,7 +37,7 @@ class RoutingGenerator
         );
     }
 
-    protected function getUrl($input)
+    private function getUrl($input)
     {
         return preg_replace('/_/', '/', $input);
     }

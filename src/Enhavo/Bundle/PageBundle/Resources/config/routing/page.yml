@@ -115,6 +115,7 @@ enhavo_page_page_list:
     defaults:
         _controller: enhavo_page.controller.page:listAction
         _sylius:
+            paginate: 10000000 # fix to never show pagination
             criteria:
                 parent: null
             viewer:

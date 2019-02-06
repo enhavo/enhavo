@@ -28,8 +28,8 @@ class GenerateWidgetCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:generate:widget')
-            ->setDescription('Generate new widget')
+            ->setName('make:enhavo:widget')
+            ->setDescription('Creates a new widget')
             ->addArgument(
                 'bundleName',
                 InputArgument::REQUIRED,

@@ -16,10 +16,24 @@ use Enhavo\Bundle\SearchBundle\Indexer\IndexerInterface;
  */
 class ModelIndexer extends AbstractType implements IndexerInterface
 {
+    /**
+     * @var IndexerInterface
+     */
+    private $indexer;
+
+    /**
+     * ModelIndexer constructor.
+     * @param IndexerInterface $indexer
+     */
+    public function __construct(IndexerInterface $indexer)
+    {
+        $this->indexer = $indexer;
+    }
+
     public function getIndexes($value, array $options = [])
     {
         if($value !== null) {
-            return $this->container->get('enhavo_search.indexer.indexer')->getIndexes($value);
+            return $this->indexer->getIndexes($value);
         }
         return [];
     }

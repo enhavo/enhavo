@@ -14,6 +14,20 @@ use Enhavo\Bundle\SearchBundle\Indexer\IndexerInterface;
 
 class CollectionIndexer extends AbstractType implements IndexerInterface
 {
+    /**
+     * @var IndexerInterface
+     */
+    private $indexer;
+
+    /**
+     * CollectionIndexer constructor.
+     * @param IndexerInterface $indexer
+     */
+    public function __construct(IndexerInterface $indexer)
+    {
+        $this->indexer = $indexer;
+    }
+
     public function getIndexes($value, array $options = [])
     {
         $data = [];
@@ -25,7 +39,7 @@ class CollectionIndexer extends AbstractType implements IndexerInterface
                     $index->setValue(trim($value));
                     $data[] = $index;
                 } elseif(is_object($value)) {
-                    $indexes = $this->container->get('enhavo_search.indexer.indexer')->getIndexes($item);
+                    $indexes = $this->indexer->getIndexes($item);
                     foreach($indexes as $index) {
                         $data[] = $index;
                     }

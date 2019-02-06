@@ -2,23 +2,34 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
-use Symfony\Bundle\MakerBundle\Generator as SensioGenerator;
+use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
-class Generator extends SensioGenerator
+class Generator
 {
     /**
      * @var EngineInterface
      */
-    protected $twigEngine;
+    private $twigEngine;
 
-    public function __construct(EngineInterface $twigEngine)
+    /**
+     * @var Filesystem
+     */
+    private $fs;
+
+    /**
+     * Generator constructor.
+     * @param EngineInterface $twigEngine
+     * @param Filesystem $fs
+     */
+    public function __construct(EngineInterface $twigEngine, Filesystem $fs)
     {
         $this->twigEngine = $twigEngine;
+        $this->fs = $fs;
     }
 
-    protected function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
+    public function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
     {
         $lcCamelCaseName = lcfirst($camelCaseName);
         $snakeCasedName = '';
@@ -41,7 +52,7 @@ class Generator extends SensioGenerator
         return $snakeCasedName;
     }
 
-    protected function snakeCaseToCamelCase($snakeCaseName, $minusSeparator = false)
+    public function snakeCaseToCamelCase($snakeCaseName, $minusSeparator = false)
     {
         $ucSnakeCaseName = ucfirst($snakeCaseName);
         $camelCasedName = '';
@@ -70,7 +81,7 @@ class Generator extends SensioGenerator
         return $camelCasedName;
     }
 
-    protected function getBundleNameWithoutPostfix(BundleInterface $bundle)
+    public function getBundleNameWithoutPostfix(BundleInterface $bundle)
     {
         $result = $bundle->getName();
         $matches = [];
@@ -80,10 +91,14 @@ class Generator extends SensioGenerator
         return $result;
     }
 
-    protected function renderFile($template, $target, $parameters)
+    public function renderFile($template, $target, $parameters)
     {
-        self::mkdir(dirname($target));
+        $this->fs->mkdir(dirname($target));
+        $this->fs->dumpFile($target, $this->twigEngine->render($template, $parameters));
+    }
 
-        return self::dump($target, $this->twigEngine->render($template, $parameters));
+    public function render($template, $parameters)
+    {
+        return $this->twigEngine->render($template, $parameters);
     }
 }

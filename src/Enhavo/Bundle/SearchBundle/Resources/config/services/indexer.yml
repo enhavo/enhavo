@@ -13,6 +13,8 @@ services:
 
     Enhavo\Bundle\SearchBundle\Indexer\Indexer\ModelIndexer:
         public: true
+        arguments:
+            - '@enhavo_search.indexer.indexer'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
@@ -20,6 +22,8 @@ services:
 
     Enhavo\Bundle\SearchBundle\Indexer\Indexer\CollectionIndexer:
         public: true
+        arguments:
+            - '@enhavo_search.indexer.indexer'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:

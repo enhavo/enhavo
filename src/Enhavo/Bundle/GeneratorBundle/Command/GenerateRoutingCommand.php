@@ -35,8 +35,8 @@ class GenerateRoutingCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:generate:routing')
-            ->setDescription('Create default routing')
+            ->setName('make:enhavo:routing')
+            ->setDescription('Creates a new routing')
             ->addArgument(
                 'app',
                 InputArgument::REQUIRED,

@@ -29,8 +29,8 @@ class GenerateGridItemCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:generate:grid-item')
-            ->setDescription('Generate templates for new grid item')
+            ->setName('make:enhavo:grid-item')
+            ->setDescription('Creates a new grid item')
             ->addArgument(
                 'bundleName',
                 InputArgument::REQUIRED,
