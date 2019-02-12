@@ -4,9 +4,12 @@ var VueLoaderPlugin = require('vue-loader/lib/plugin');
 Encore
   .setOutputPath('public/build/')
   .setPublicPath('/build')
+  .enableSingleRuntimeChunk()
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .autoProvidejQuery()
   .addEntry('enhavo/app', './assets/app')
   .addEntry('enhavo/view', './assets/view')
-  .autoProvidejQuery()
 ;
 
 var config = Encore.getWebpackConfig();
