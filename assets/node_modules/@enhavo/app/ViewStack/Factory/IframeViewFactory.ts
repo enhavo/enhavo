@@ -1,0 +1,17 @@
+import ViewFactory from "./ViewFactory";
+import IframeView from "../Model/IframeView";
+
+export default class IframeViewFactory extends ViewFactory
+{
+    createFromData(data: object): IframeView
+    {
+        let view = <IframeView>super.createFromData(data);
+        let object = <IframeView>data;
+        view.url = object.url;
+        return view;
+    }
+
+    createNew(): IframeView {
+        return new IframeView()
+    }
+}

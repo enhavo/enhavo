@@ -1,9 +1,9 @@
 import { VueLoader } from './VueLoader';
 import { VueViewLoader } from './VueViewLoader';
 import { DataLoader } from './DataLoader';
-import { App } from './App';
+import App from './App';
 import { AppView } from './View';
-import eventDispatcher from './event-dispatcher';
+
 
 export {
     VueLoader,
@@ -11,5 +11,4 @@ export {
     App,
     AppView,
     VueViewLoader,
-    eventDispatcher
 };

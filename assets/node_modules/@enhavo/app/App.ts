@@ -1,24 +1,26 @@
+import { EventDispatcher } from '@enhavo/core';
 import { DataLoader } from './DataLoader';
-import { EventDispatcher } from './Event/EventDispatcher';
-import { ViewStack } from './View/ViewStack';
+import ViewStack from './ViewStack/ViewStack';
 
-export class App
+
+export default class App
 {
     private data: any;
-
-    private eventDispatcher: EventDispatcher;
-
     private viewStack: ViewStack;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher)
+    constructor(loader: DataLoader)
     {
         this.data = loader.load();
-        this.eventDispatcher = eventDispatcher;
-        this.viewStack = new ViewStack(this.data.views, eventDispatcher);
+        this.viewStack = new ViewStack(this.data.views);
     }
 
     getData(): any
     {
         return this.data;
+    }
+
+    getViewStack(): ViewStack
+    {
+        return this.viewStack;
     }
 }

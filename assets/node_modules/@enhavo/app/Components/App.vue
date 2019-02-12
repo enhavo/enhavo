@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import ViewStack from "./ViewStack.vue"
+import ViewStack from "../ViewStack/Components/ViewStack.vue"
 import Menu from "./Menu/Menu.vue"
 import Toolbar from "./Toolbar.vue"
 import { QuickMenu } from "../Models/QuickMenu"
@@ -24,6 +24,8 @@ export default class App extends Vue {
 
     @Prop()
     quick_menu: QuickMenu;
+
+    app: App;
 }
 
 Vue.component('app-menu', Menu);

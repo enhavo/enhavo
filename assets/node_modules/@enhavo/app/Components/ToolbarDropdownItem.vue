@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import eventDispatcher from  '../event-dispatcher';
-import { Event } from  '../Event/Event';
+import CreateEvent from  '../ViewStack/Event/CreateEvent';
+import dispatcher from '../ViewStack/dispatcher';
 
 @Component
 export default class ToolbarDropdownItem extends Vue {
@@ -15,13 +15,15 @@ export default class ToolbarDropdownItem extends Vue {
 
     @Prop()
     data: Object;
+    app: App;
 
     open()
     {
-        console.log('open');
-        let event = new Event;
-        event.name = 'open-view';
-        eventDispatcher.dispatch(event);
+        dispatcher.dispatch(new CreateEvent({
+            label: 'table',
+            component: 'iframe-view',
+            url: '/admin/view'
+        }));
     }
 }
 </script>

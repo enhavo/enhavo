@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-child-title menu-item" @click="openView()">
+    <div class="menu-child-title menu-item" @click="open()">
         <i v-bind:class="['fa', data.icon]" aria-hidden="true"></i>
         {{ label }}
         <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
@@ -8,7 +8,9 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    
+    import CreateEvent from  '../../ViewStack/Event/CreateEvent';
+    import dispatcher from '../../ViewStack/dispatcher';
+
     @Component
     export default class MenuItem extends Vue {
         name: string = 'menu-item';
@@ -28,8 +30,12 @@
             return (this.data && this.data.notification) ? this.data.notification : false;
         }
 
-        openView(): void {
-            console.log('open view');
+        open(): void {
+            dispatcher.dispatch(new CreateEvent({
+                label: 'table',
+                component: 'iframe-view',
+                url: '/admin/view'
+            }));
         }
     }
 </script>

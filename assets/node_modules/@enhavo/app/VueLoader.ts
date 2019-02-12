@@ -1,6 +1,6 @@
 import Vue from "vue";
 import AppComponent from "./Components/App.vue";
-import { App } from "./App";
+import App from "./App";
 
 export class VueLoader
 {
@@ -28,7 +28,7 @@ export class VueLoader
                         'menu': self.app.getData().menu,
                         'views': self.app.getData().views,
                         'quick_menu': self.app.getData().quick_menu
-                    }
+                    },
                 })
             }
         });

@@ -1,15 +1,16 @@
 <template>
     <div class="view-stack">
         <div class="view-container" v-for="view in views">
-            <view-container v-bind:data="view"></view-container>
+            <view-component v-bind:data="view"></view-component>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import IFrameView from "./IFrameView.vue"
-import ViewContainer from "./ViewContainer.vue"
+import ViewComponent from './ViewComponent.vue'
+
+Vue.component('view-component', ViewComponent);
 
 @Component
 export default class ViewStack extends Vue {
@@ -17,9 +18,6 @@ export default class ViewStack extends Vue {
     @Prop()
     views: array;
 }
-
-Vue.component('view-container', ViewContainer);
-Vue.component('iframe-view', IFrameView);
 </script>
 
 <style lang="scss" scoped>
