@@ -1,4 +1,4 @@
-import ViewFactoryInterface from "@enhavo/app/ViewStack/ViewFactoryInterface";
+import ViewFactoryInterface from "../ViewFactoryInterface";
 import View from "../Model/View";
 
 export default class ViewFactory implements ViewFactoryInterface
@@ -8,7 +8,7 @@ export default class ViewFactory implements ViewFactoryInterface
         let view = this.createNew();
         let object = <View>data;
         view.id = object.id;
-        view.name = object.name;
+        view.label = object.label;
         view.component = object.component;
         return view;
     }

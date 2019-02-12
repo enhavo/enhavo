@@ -2,7 +2,7 @@
     <div class="app">
         <app-menu v-bind:menu="menu"></app-menu>
         <toolbar v-bind:quick_menu="quick_menu"></toolbar>
-        <view-stack v-bind:views="views"></view-stack>
+        <view-stack v-bind:data="view_stack"></view-stack>
     </div>
 </template>
 
@@ -11,6 +11,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewStack from "../ViewStack/Components/ViewStack.vue"
 import Menu from "./Menu/Menu.vue"
 import Toolbar from "./Toolbar.vue"
+import ViewStackData from "../ViewStack/ViewStackData"
 import { QuickMenu } from "../Models/QuickMenu"
 
 @Component
@@ -20,12 +21,10 @@ export default class App extends Vue {
     menu: array;
 
     @Prop()
-    views: array;
+    view_stack: ViewStackData;
 
     @Prop()
     quick_menu: QuickMenu;
-
-    app: App;
 }
 
 Vue.component('app-menu', Menu);

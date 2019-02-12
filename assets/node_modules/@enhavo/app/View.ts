@@ -1,5 +1,5 @@
 import { DataLoader } from '@enhavo/app/DataLoader';
-import { EventDispatcher } from '@enhavo/app/Event/EventDispatcher';
+import EventDispatcher from '@enhavo/core/Event/EventDispatcher';
 
 export class AppView
 {

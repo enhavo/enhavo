@@ -6,6 +6,7 @@ import LoadedEvent from "./Event/LoadedEvent";
 import CloseEvent from "./Event/CloseEvent";
 import dispatcher from "./dispatcher";
 import registry from "./registry";
+import ViewStackData from "./ViewStackData";
 import * as _ from 'lodash';
 
 export default class ViewStack
@@ -15,17 +16,17 @@ export default class ViewStack
     private readonly registry: ViewRegistry;
     private nextId: number = 1;
 
-    constructor(data: ComponentAwareInterface[])
+    constructor(data: ViewStackData)
     {
         this.dispatcher = dispatcher;
         this.registry = registry;
 
-        for(let i in data) {
-            let view = registry.getFactory(data[i].component).createFromData(data[i]);
+        for(let i in data.views) {
+            let view = registry.getFactory(data.views[i].component).createFromData(data.views[i]);
             view.id = this.nextId++;
-            _.extend(data[i], view);
+            _.extend(data.views[i], view);
         }
-        this.views = <ViewInterface[]>data;
+        this.views = <ViewInterface[]>data.views;
         this.arrange();
 
         this.addCloseListener();

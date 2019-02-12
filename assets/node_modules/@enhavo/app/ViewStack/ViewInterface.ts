@@ -1,12 +1,15 @@
 import { ComponentAwareInterface } from "@enhavo/core/index";
 
-export default interface ViewInterface extends ComponentAwareInterface {
+export default interface ViewInterface extends ComponentAwareInterface
+{
     id: number;
-    name: string;
+    label: string;
     children: ViewInterface[];
     parent: ViewInterface;
     loaded: boolean;
     width: number;
+    minimize: boolean;
+    priority: number;
 
     finish(): void;
 }

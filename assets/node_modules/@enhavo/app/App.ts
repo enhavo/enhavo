@@ -1,4 +1,3 @@
-import { EventDispatcher } from '@enhavo/core';
 import { DataLoader } from './DataLoader';
 import ViewStack from './ViewStack/ViewStack';
 
@@ -11,7 +10,7 @@ export default class App
     constructor(loader: DataLoader)
     {
         this.data = loader.load();
-        this.viewStack = new ViewStack(this.data.views);
+        this.viewStack = new ViewStack(this.data.view_stack);
     }
 
     getData(): any

@@ -1,6 +1,6 @@
 <template>
-    <div class="view-stack">
-        <div class="view-container" v-for="view in views">
+    <div class="view-stack" id="view-stack">
+        <div class="view-container" v-for="view in data.views">
             <view-component v-bind:data="view"></view-component>
         </div>
     </div>
@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewComponent from './ViewComponent.vue'
+import ViewStackData from '../ViewStackData'
 
 Vue.component('view-component', ViewComponent);
 
@@ -16,7 +17,11 @@ Vue.component('view-component', ViewComponent);
 export default class ViewStack extends Vue {
     name: 'view-stack';
     @Prop()
-    views: array;
+    data: ViewStackData;
+
+    mounted() {
+        console.log(this.$refs);
+    }
 }
 </script>
 

@@ -78,14 +78,16 @@ class AppController extends AbstractController
                         ]
                     ]
                 ],
-                'views' => [
-                    [
-                        'id' => 1,
-                        'name' => 'test',
-                        'component' => 'iframe-view',
-                        'url' => '/admin/view',
-                        'width' => '400'
-                    ]
+                'view_stack' => [
+                    'width' => 0,
+                    'views' => [
+                        [
+                            'name' => 'Dashboard',
+                            'component' => 'iframe-view',
+                            'url' => '/admin/view',
+                            'loaded' => false
+                        ]
+                    ],
                 ],
                 'quick_menu' => [
                     'user' => [
