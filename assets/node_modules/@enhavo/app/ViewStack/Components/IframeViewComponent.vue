@@ -1,12 +1,12 @@
 <template>
-    <iframe :src="url"></iframe>
+    <iframe :src="url" ref="iframe"></iframe>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import dispatcher from '../dispatcher';
-import LoadedEvent from '../Event/LoadedEvent';
 import IframeView from '../Model/IframeView';
+import * as URI from 'urijs';
 
 @Component
 export default class IframeViewComponent extends Vue {
@@ -14,16 +14,19 @@ export default class IframeViewComponent extends Vue {
     @Prop()
     data: IframeView;
 
-    mounted(): void
-    {
-        let self = this;
-        window.setTimeout(function () {
-            dispatcher.dispatch(new LoadedEvent(self.data.id));
-        }, 3000);
+    get url() {
+        let uri = new URI(this.data.url);
+        return uri.addQuery('view_id', this.data.id)
     }
 
-    get url() {
-        return this.data.url;
+    mounted() {
+        let iframeEl = this.$refs.iframe;
+        dispatcher.all((event) => {
+            if(event.origin != this.data.id && iframeEl.contentWindow != null) {
+                let data = 'view_stack_event|'+JSON.stringify(event);
+                iframeEl.contentWindow.postMessage(data, '*');
+            }
+        });
     }
 }
 </script>

@@ -5,12 +5,9 @@ export class AppView
 {
     private data: any;
 
-    private eventDispatcher: EventDispatcher;
-
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher)
+    constructor(loader: DataLoader)
     {
         this.data = loader.load();
-        this.eventDispatcher = eventDispatcher;
     }
 
     getData(): any
