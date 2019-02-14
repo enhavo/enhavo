@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Dropdown from "./ToolbarDropdown.vue"
-import { QuickMenu } from "../Models/QuickMenu"
+import QuickMenu from "../QuickMenu"
 
 @Component
 export default class Toolbar extends Vue {

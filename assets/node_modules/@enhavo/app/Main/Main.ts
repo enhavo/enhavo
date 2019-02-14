@@ -1,8 +1,7 @@
-import { DataLoader } from './DataLoader';
-import ViewStack from './ViewStack/ViewStack';
+import DataLoader from '../DataLoader';
+import ViewStack from '../ViewStack/ViewStack';
 
-
-export default class App
+export default class Main
 {
     private data: any;
     private viewStack: ViewStack;

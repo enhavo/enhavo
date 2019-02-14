@@ -7,7 +7,7 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import dispatcher from "../../ViewStack/dispatcher";
-    import CreateEvent from  '../../ViewStack/Event/CreateEvent';
+    import CreateEvent from '../../ViewStack/Event/CreateEvent';
 
     @Component
     export default class Row extends Vue {

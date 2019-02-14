@@ -21,8 +21,8 @@
     import registry from '../registry';
     import dispatcher from '../dispatcher';
     import CloseEvent from  '../Event/CloseEvent';
-    import OverlayContainer from "@enhavo/app/Components/OverlayContainer.vue";
-    import LoadingScreen from "@enhavo/app/Components/LoadingScreen.vue";
+    import OverlayContainer from "../../Main/Components/OverlayContainer.vue";
+    import LoadingScreen from "../../Main/Components/LoadingScreen.vue";
     import ViewInterface from "../ViewInterface";
 
     Vue.component('overlay-container', OverlayContainer);

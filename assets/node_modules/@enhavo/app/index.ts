@@ -1,8 +1,8 @@
 import { VueLoader } from './VueLoader';
 import { VueViewLoader } from './VueViewLoader';
 import { DataLoader } from './DataLoader';
-import App from './App';
-import { AppView } from './View';
+import App from './Main/App';
+import { AppView } from './Table/View';
 
 
 export {

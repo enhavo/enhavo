@@ -1,5 +1,4 @@
 import Event from './Event';
-import Subscriber from './Subscriber';
 
 export default class EventDispatcher
 {
@@ -45,4 +44,11 @@ export default class EventDispatcher
         subscriber.callback = callback;
         this.dispatchSubscriber.push(subscriber);
     }
+}
+
+
+class Subscriber
+{
+    eventName: string;
+    callback: (event: Event) => void;
 }

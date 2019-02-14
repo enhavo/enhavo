@@ -1,15 +1,16 @@
-import { VueViewLoader } from '@enhavo/app';
-import { DataLoader } from '@enhavo/app';
-import { AppView } from '@enhavo/app';
-import View from '@enhavo/app/ViewStack/View';
+import VueLoader from '@enhavo/app/VueLoader';
+import DataLoader from '@enhavo/app/DataLoader';
+import Main from '@enhavo/app/Table/View';
+import AppView from '@enhavo/app/Table/Components/AppView.vue';
 import dispatcher from '@enhavo/app/ViewStack/dispatcher';
 import LoadedEvent from '@enhavo/app/ViewStack/Event/LoadedEvent';
 import CloseEvent from '@enhavo/app/ViewStack/Event/LoadedEvent';
 import RemoveEvent from '@enhavo/app/ViewStack/Event/RemoveEvent';
+import View from '@enhavo/app/ViewStack/View';
 
-let data = new DataLoader('data');
-let app = new AppView(data);
-let v = new VueViewLoader('app', app);
+const data = new DataLoader('data');
+const main = new Main(data);
+const v = new VueLoader('app', main, AppView);
 v.load();
 
 

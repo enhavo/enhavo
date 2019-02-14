@@ -8,13 +8,19 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import ViewStack from "../ViewStack/Components/ViewStack.vue"
-import Menu from "./Menu/Menu.vue"
-import Toolbar from "./Toolbar.vue"
-import ViewStackData from "../ViewStack/ViewStackData"
-import { QuickMenu } from "../Models/QuickMenu"
+import ViewStack from "../../ViewStack/Components/ViewStack.vue"
+import Menu from "../../Menu/Components/Menu.vue"
+import Toolbar from "../../Toolbar/Components/Toolbar.vue"
+import ViewStackData from "../../ViewStack/ViewStackData"
+import QuickMenu from "../../Toolbar/QuickMenu"
 
-@Component
+@Component({
+    components: {
+        'app-menu': Menu,
+        'toolbar': Toolbar,
+        'view-stack': ViewStack
+    }
+})
 export default class App extends Vue {
     name = 'app';
     @Prop()
@@ -27,9 +33,7 @@ export default class App extends Vue {
     quick_menu: QuickMenu;
 }
 
-Vue.component('app-menu', Menu);
-Vue.component('toolbar', Toolbar);
-Vue.component('view-stack', ViewStack);
+
 </script>
 
 <style lang="scss">

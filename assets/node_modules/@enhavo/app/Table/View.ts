@@ -1,7 +1,6 @@
-import { DataLoader } from '@enhavo/app/DataLoader';
-import EventDispatcher from '@enhavo/core/Event/EventDispatcher';
+import DataLoader from '@enhavo/app/DataLoader';
 
-export class AppView
+export default class AppView
 {
     private data: any;
 

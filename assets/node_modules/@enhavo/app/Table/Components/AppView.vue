@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Table from "./Table/Table.vue"
-import Row from "./Table/Row.vue"
+import Table from "./Table.vue"
+import Row from "./Row.vue"
 
 @Component
 export default class AppView extends Vue {

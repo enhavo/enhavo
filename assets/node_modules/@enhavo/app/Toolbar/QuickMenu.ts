@@ -1,5 +1,5 @@
 
-export interface Quickmenu  {
+export default interface Quickmenu  {
     user: User;
     items: Item[];
 }

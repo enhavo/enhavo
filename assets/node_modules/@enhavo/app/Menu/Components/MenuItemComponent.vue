@@ -8,13 +8,13 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import CreateEvent from  '../../ViewStack/Event/CreateEvent';
-    import ClearEvent from  '../../ViewStack/Event/ClearEvent';
-    import ClearedEvent from  '../../ViewStack/Event/ClearedEvent';
+    import CreateEvent from '../../ViewStack/Event/CreateEvent';
+    import ClearEvent from '../../ViewStack/Event/ClearEvent';
+    import ClearedEvent from '../../ViewStack/Event/ClearedEvent';
     import dispatcher from '../../ViewStack/dispatcher';
 
     @Component
-    export default class MenuItem extends Vue {
+    export default class MenuItemComponent extends Vue {
         name: string = 'menu-item';
 
         @Prop()

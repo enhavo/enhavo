@@ -1,5 +1,5 @@
 
-export class DataLoader
+export default class DataLoader
 {
     private id: string;
 

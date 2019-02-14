@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import CreateEvent from  '../ViewStack/Event/CreateEvent';
-import dispatcher from '../ViewStack/dispatcher';
+import CreateEvent from '../../ViewStack/Event/CreateEvent';
+import dispatcher from '../../ViewStack/dispatcher';
 
 @Component
 export default class ToolbarDropdownItem extends Vue {

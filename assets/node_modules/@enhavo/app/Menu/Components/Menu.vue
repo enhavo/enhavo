@@ -10,9 +10,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import MenuItem from "./MenuItem.vue"
-import MenuList from "./MenuList.vue"
-import MenuDropdown from "./MenuDropdown.vue"
+import MenuItem from "./MenuItemComponent.vue"
+import MenuList from "./MenuListComponent.vue"
+import MenuDropdown from "./MenuDropdownComponent.vue"
 import MenuNotification from "./MenuNotification.vue"
 
 @Component

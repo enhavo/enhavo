@@ -4,7 +4,6 @@ import FactoryInterface from './FactoryInterface';
 import ComponentAwareInterface from './ComponentAwareInterface';
 import Event from './Event/Event';
 import EventDispatcher from './Event/EventDispatcher';
-import Subscriber from './Event/Subscriber';
 
 export {
     Registry,
@@ -13,5 +12,4 @@ export {
     ComponentAwareInterface,
     Event,
     EventDispatcher,
-    Subscriber
 };

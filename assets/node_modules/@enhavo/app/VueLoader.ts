@@ -1,34 +1,28 @@
-import Vue from "vue";
-import AppComponent from "./Components/App.vue";
-import App from "./App";
+import Vue, {VueConstructor} from "vue";
+import AppInterface from "./AppInterface";
 
-export class VueLoader
+export default class VueLoader
 {
     private id: string;
-
     private vue: Vue;
+    private component: VueConstructor;
+    private app: AppInterface;
 
-    private app: App;
-
-    constructor(id: string, app: App)
+    constructor(id: string, app: AppInterface, component: VueConstructor)
     {
         this.id = id;
         this.app = app;
+        this.component = component;
     }
 
     load() {
-        Vue.component('app', AppComponent);
         let self = this;
         this.vue = new Vue({
             el: '#' + this.id,
             data: this.app.getData(),
             render: function(createElement) {
-                return createElement(AppComponent, {
-                    'props': {
-                        'menu': self.app.getData().menu,
-                        'view_stack': self.app.getData().view_stack,
-                        'quick_menu': self.app.getData().quick_menu
-                    },
+                return createElement(self.component, {
+                    'props': self.app.getData(),
                 })
             }
         });
