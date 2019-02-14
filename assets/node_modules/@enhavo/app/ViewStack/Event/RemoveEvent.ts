@@ -1,6 +1,6 @@
-import {ComponentAwareInterface, Event} from "@enhavo/core";
+import {Event} from "@enhavo/core";
 
-export default class CreateEvent extends Event
+export default class RemoveEvent extends Event
 {
     id: number;
 

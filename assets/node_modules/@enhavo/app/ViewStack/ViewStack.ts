@@ -8,8 +8,11 @@ import RemoveEvent from "./Event/RemoveEvent";
 import dispatcher from "./dispatcher";
 import registry from "./registry";
 import ViewStackData from "./ViewStackData";
+import RemovedEvent from "./Event/RemovedEvent";
+import ClearEvent from "./Event/ClearEvent";
+import ClearedEvent from "./Event/ClearedEvent";
 import * as _ from 'lodash';
-import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
+
 export default class ViewStack
 {
     private readonly views: ViewInterface[];
@@ -34,6 +37,7 @@ export default class ViewStack
         this.addRemoveListener();
         this.addLoadedListener();
         this.addOpenListener();
+        this.addClearListener();
     }
 
     private addRemoveListener()
@@ -72,6 +76,21 @@ export default class ViewStack
             let view = this.registry.getFactory(event.data.component).createFromData(event.data);
             view.id = this.generateId();
             this.push(view);
+        });
+    }
+
+    private addClearListener()
+    {
+        this.dispatcher.on('clear', (event: ClearEvent) => {
+            for(let view of this.views) {
+                this.close(view);
+            }
+            for(let view of this.views) {
+                this.dispatcher.dispatch(new CloseEvent(view.id));
+            }
+            if(this.views.length == 0) {
+                this.dispatcher.dispatch(new ClearedEvent(event.uuid));
+            }
         });
     }
 
@@ -124,11 +143,5 @@ export default class ViewStack
     getDispatcher()
     {
         return this.dispatcher;
-    }
-
-    clear() {
-        for(let view of this.views) {
-            this.close(view);
-        }
     }
 }
