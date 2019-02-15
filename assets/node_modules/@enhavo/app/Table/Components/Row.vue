@@ -1,6 +1,15 @@
 <template>
     <div class="view-table-row" @click="open()">
-        Row
+
+        <template v-for="column in columns">
+            <component class="view-table-col" 
+                v-bind:is="column.component" 
+                :key="column.key" 
+                v-bind:width="calculateWidth(column.width)"
+                v-bind:rows="column.rows"
+                v-bind:label="column.label"></component>
+        </template>
+
     </div>
 </template>
 
@@ -8,13 +17,16 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
     import dispatcher from "../../ViewStack/dispatcher";
     import CreateEvent from '../../ViewStack/Event/CreateEvent';
+    import ColumnText from "./ColumnText.vue"
+    import ColumnDate from "./ColumnDate.vue"
+    import ColumnSub from "./ColumnSub.vue"
 
     @Component
     export default class Row extends Vue {
         name: string = 'view-table-row';
-
+    
         @Prop()
-        data: object;
+        columns: Array<object>;
 
         open() {
             dispatcher.dispatch(new CreateEvent({
@@ -23,14 +35,21 @@
                 url: '/admin/view'
             }));
         }
+
+        calculateWidth(parts: number): string {
+            return (100 / 12 * parts) + '%';
+        }
     }
+
+
+    Vue.component('view-table-col-text', ColumnText);
+    Vue.component('view-table-col-date', ColumnDate);
+    Vue.component('view-table-col-sub', ColumnSub);
 </script>
 
 <style lang="scss" scoped>
     .view-table-row { 
-        height: 50px;
-        color: #FFF;
-        background-color: midnightblue;
+        margin-top: 10px; margin-bottom: 10px; color: #FFF; background-color: midnightblue; display: flex;
     }
 </style>
 

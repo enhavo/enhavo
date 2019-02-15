@@ -7,7 +7,8 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
-    "sourceMap": true
+    "sourceMap": true,
+    "experimentalDecorators": true,
   },
   "include": [
     "./assets/**/*"

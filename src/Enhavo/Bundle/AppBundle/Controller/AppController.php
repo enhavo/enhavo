@@ -148,16 +148,16 @@ class AppController extends AbstractController
                     [
                         'sortable' => true,
                         'key' => 'title',
-                        'label' => 'id',
-                        'component' => 'row-column',
+                        'label' => 'Title',
+                        'component' => 'view-table-col-sub',
                         'rows' => [
                             [
-                                'component' => 'text-column',
+                                'component' => 'view-table-col-text',
                                 'key' => 'title',
                                 'style' => ['bold']
                             ],
                             [
-                                'component' => 'text-column',
+                                'component' => 'view-table-col-text',
                                 'key' => 'update',
                                 'style' => 'grey'
                             ]
@@ -167,13 +167,13 @@ class AppController extends AbstractController
                     [
                         'key' => 'id',
                         'label' => 'Id',
-                        'component' => 'Text',
-                        'width' => 3,
+                        'component' => 'view-table-col-text',
+                        'width' => 6,
                     ],
                     [
                         'key' => 'date',
                         'label' => 'Date',
-                        'component' => 'Text',
+                        'component' => 'view-table-col-date',
                         'width' => 3,
                     ]
                 ],
