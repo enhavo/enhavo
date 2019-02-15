@@ -10,7 +10,6 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
     import CreateEvent from '../../ViewStack/Event/CreateEvent';
     import ClearEvent from '../../ViewStack/Event/ClearEvent';
-    import ClearedEvent from '../../ViewStack/Event/ClearedEvent';
     import dispatcher from '../../ViewStack/dispatcher';
 
     @Component
@@ -19,22 +18,6 @@
 
         @Prop()
         data: object;
-
-        uuid: string = null;
-
-        created()
-        {
-            dispatcher.on('cleared', (event: ClearedEvent) => {
-                console.log('cleared');
-                if(event.uuid == this.uuid) {
-                    dispatcher.dispatch(new CreateEvent({
-                        label: 'table',
-                        component: 'iframe-view',
-                        url: '/admin/view'
-                    }));
-                }
-            });
-        }
 
         get label(): string {
             return (this.data && this.data.label) ? this.data.label : false;
@@ -49,19 +32,17 @@
         }
 
         open(): void {
-            let clearEvent = new ClearEvent();
-
-            clearEvent
-                .on('cleared', () => {
-
+            dispatcher.dispatch(new ClearEvent())
+                .then(() => {
+                    dispatcher.dispatch(new CreateEvent({
+                        label: 'table',
+                        component: 'iframe-view',
+                        url: '/admin/view'
+                    }));
                 })
-                .on('reject', () => {
+                .catch(() => {})
+            ;
 
-                })
-                .on('confirm');
-
-            this.uuid = clearEvent.uuid;
-            dispatcher.dispatch(clearEvent);
         }
     }
 </script>

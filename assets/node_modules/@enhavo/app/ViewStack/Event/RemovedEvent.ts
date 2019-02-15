@@ -1,4 +1,4 @@
-import {Event} from "@enhavo/core";
+import Event from "./Event"
 
 export default class RemovedEvent extends Event
 {

@@ -1,4 +1,4 @@
-import {Event} from "@enhavo/core";
+import Event from "./Event"
 
 export default class RemoveEvent extends Event
 {
@@ -7,6 +7,6 @@ export default class RemoveEvent extends Event
     constructor(id: number)
     {
         super('remove');
-        this.id = id
+        this.id = id;
     }
 }

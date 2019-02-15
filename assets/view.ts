@@ -21,6 +21,9 @@ dispatcher.on('close', (event: CloseEvent) => {
     if(view.getId() === event.id) {
         if(window.confirm("close?")) {
             dispatcher.dispatch(new RemoveEvent(view.getId()));
+            event.resolve();
+        } else {
+            event.reject();
         }
     }
 });

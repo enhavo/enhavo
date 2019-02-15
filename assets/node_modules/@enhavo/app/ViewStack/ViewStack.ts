@@ -1,4 +1,4 @@
-import { EventDispatcher } from '@enhavo/core';
+import EventDispatcher from './EventDispatcher';
 import ViewInterface from './ViewInterface';
 import ViewRegistry from './ViewRegistry';
 import CreateEvent from "./Event/CreateEvent";
@@ -12,6 +12,7 @@ import RemovedEvent from "./Event/RemovedEvent";
 import ClearEvent from "./Event/ClearEvent";
 import ClearedEvent from "./Event/ClearedEvent";
 import * as _ from 'lodash';
+import * as async from 'async';
 
 export default class ViewStack
 {
@@ -82,15 +83,40 @@ export default class ViewStack
     private addClearListener()
     {
         this.dispatcher.on('clear', (event: ClearEvent) => {
-            for(let view of this.views) {
-                this.close(view);
-            }
-            for(let view of this.views) {
-                this.dispatcher.dispatch(new CloseEvent(view.id));
-            }
+
             if(this.views.length == 0) {
+                event.resolve();
                 this.dispatcher.dispatch(new ClearedEvent(event.uuid));
             }
+
+            let parallels = [];
+            for(let view of this.views) {
+                parallels.push((callback: (err: any) => void) => {
+                    if(this.close(view)) {
+                        callback(null);
+                    }
+                    this.dispatcher.dispatch(new CloseEvent(view.id))
+                        .then(() => {
+                            callback(null);
+                        })
+                        .catch(() => {
+                            callback('reject')
+                        });
+                });
+
+            }
+
+            async.parallel(parallels, (err) => {
+                if(err) {
+                    event.reject();
+                } else {
+                    for(let view of this.views) {
+                        this.remove(view);
+                    }
+                    event.resolve();
+                    this.dispatcher.dispatch(new ClearedEvent(event.uuid));
+                }
+            });
         });
     }
 
@@ -133,11 +159,13 @@ export default class ViewStack
         this.arrange();
     }
 
-    close(view: ViewInterface)
+    close(view: ViewInterface): boolean
     {
         if(!view.loaded) {
             this.remove(view);
+            return true;
         }
+        return false;
     }
 
     getDispatcher()
