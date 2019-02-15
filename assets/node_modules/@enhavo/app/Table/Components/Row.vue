@@ -4,7 +4,7 @@
         <template v-for="column in columns">
             <component class="view-table-col" 
                 v-bind:is="column.component" 
-                :key="column.key" 
+                v-bind:key="column.key" 
                 v-bind:width="calculateWidth(column.width)"
                 v-bind:rows="column.rows"
                 v-bind:label="column.label"></component>
@@ -27,7 +27,7 @@
     
         @Prop()
         columns: Array<object>;
-
+    
         open() {
             dispatcher.dispatch(new CreateEvent({
                 label: 'table',
