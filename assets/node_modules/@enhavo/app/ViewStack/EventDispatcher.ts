@@ -48,7 +48,18 @@ export default class EventDispatcher
             subscriber.callback(event);
         });
 
-        return new Promise((resolve, reject) => {
+        if(event.ttl == 0) {
+            return;
+        }
+        event.ttl--;
+
+        if(this.isDebug()) {
+            console.groupCollapsed('dispatch event ('+ event.name+') on ' + this.view.getId());
+            console.dir(event);
+            console.groupEnd();
+        }
+
+        const promise = new Promise((resolve, reject) => {
             if(event.origin == this.view.getId()) {
                 if(event.name != 'reject' && event.name != 'resolve') {
                     this.events.push(new EventStore(event, resolve, reject));
@@ -65,35 +76,61 @@ export default class EventDispatcher
                 subscriber.callback(event);
             });
         });
+        // set empty function to prevent "Uncaught (in promise)" error
+        promise.then((data:object) => {}, (data:object) => {});
+        return promise;
     }
 
-    public on(eventName: string, callback: (event: Event) => void)
+    public on(eventName: string, callback: (event: Event) => void): Subscriber
     {
         let subscriber = new Subscriber();
         subscriber.eventName = eventName;
         subscriber.callback = callback;
         this.subscribers.push(subscriber);
+        return subscriber;
     }
 
-    public all(callback: (event: Event) => void)
+    public all(callback: (event: Event) => void): Subscriber
     {
         let subscriber = new Subscriber();
         subscriber.eventName = null;
         subscriber.callback = callback;
         this.allSubscriber.push(subscriber);
+        return subscriber;
     }
 
-    public onDispatch(callback: (event: Event) => void)
+    public onDispatch(callback: (event: Event) => void): Subscriber
     {
         let subscriber = new Subscriber();
         subscriber.eventName = null;
         subscriber.callback = callback;
         this.dispatchSubscriber.push(subscriber);
+        return subscriber;
+    }
+
+    public remove(subscriber: Subscriber)
+    {
+        this.removeFromArray(subscriber, this.subscribers);
+        this.removeFromArray(subscriber, this.dispatchSubscriber);
+        this.removeFromArray(subscriber, this.allSubscriber);
+    }
+
+    private removeFromArray(subscriber: Subscriber, subscribers: Subscriber[])
+    {
+        const index = subscribers.indexOf(subscriber);
+        if(index >= 0) {
+            subscribers.splice(index, 1);
+        }
+    }
+
+    public isDebug()
+    {
+        return false;
     }
 }
 
 
-class Subscriber
+export class Subscriber
 {
     eventName: string = null;
     callback: (event: Event) => void;

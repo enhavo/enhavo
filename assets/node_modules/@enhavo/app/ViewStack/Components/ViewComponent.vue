@@ -21,6 +21,7 @@
     import registry from '../registry';
     import dispatcher from '../dispatcher';
     import CloseEvent from  '../Event/CloseEvent';
+    import ArrangeEvent from  '../Event/ArrangeEvent';
     import OverlayContainer from "../../Main/Components/OverlayContainer.vue";
     import LoadingScreen from "../../Main/Components/LoadingScreen.vue";
     import ViewInterface from "../ViewInterface";
@@ -36,6 +37,14 @@
 
         @Prop({ type: Object })
         data: ViewInterface;
+
+        created() {
+            dispatcher.dispatch(new ArrangeEvent());
+        }
+
+        destroyed() {
+            dispatcher.dispatch(new ArrangeEvent());
+        }
 
         close() {
             dispatcher.dispatch(new CloseEvent(this.data.id));

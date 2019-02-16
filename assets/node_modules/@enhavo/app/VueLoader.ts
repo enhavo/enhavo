@@ -17,6 +17,8 @@ export default class VueLoader
 
     load() {
         let self = this;
+        Vue.config.devtools = false;
+        Vue.config.productionTip = false;
         this.vue = new Vue({
             el: '#' + this.id,
             data: this.app.getData(),
@@ -26,7 +28,6 @@ export default class VueLoader
                 })
             }
         });
-
         return this.vue;
     }
 }

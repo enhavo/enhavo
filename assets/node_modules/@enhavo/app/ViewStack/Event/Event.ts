@@ -8,6 +8,7 @@ export default class Event
     target: any;
     history: string[] = [];
     uuid: string;
+    ttl: number;
 
     constructor(name: string)
     {

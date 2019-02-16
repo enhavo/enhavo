@@ -11,6 +11,9 @@ dispatcher.onDispatch((event: Event) => {
         event.origin = view.getId();
     }
     event.history.push(window.location.href);
+    if(event.ttl == null) {
+        event.ttl = view.isRoot() ? 2 : 3;
+    }
 });
 
 // receive message events
@@ -22,6 +25,13 @@ window.addEventListener("message", (event) => {
         let eventData = JSON.parse(data);
         let newEvent = new Event('');
         _.extend(newEvent, eventData);
+
+        if(dispatcher.isDebug()) {
+            console.groupCollapsed('receive event ('+ newEvent.name+') on ' + view.getId());
+            console.dir(newEvent);
+            console.groupEnd();
+        }
+
         dispatcher.dispatch(newEvent);
     }
 }, false);

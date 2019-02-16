@@ -5,6 +5,7 @@ import CreateEvent from "./Event/CreateEvent";
 import LoadedEvent from "./Event/LoadedEvent";
 import CloseEvent from "./Event/CloseEvent";
 import RemoveEvent from "./Event/RemoveEvent";
+import ArrangeEvent from "./Event/ArrangeEvent";
 import dispatcher from "./dispatcher";
 import registry from "./registry";
 import ViewStackData from "./ViewStackData";
@@ -19,6 +20,7 @@ export default class ViewStack
     private readonly views: ViewInterface[];
     private readonly dispatcher: EventDispatcher;
     private readonly registry: ViewRegistry;
+    private data: ViewStackData;
     private nextId: number = 1;
 
     constructor(data: ViewStackData)
@@ -32,13 +34,14 @@ export default class ViewStack
             _.extend(data.views[i], view);
         }
         this.views = <ViewInterface[]>data.views;
-        this.arrange();
+        this.data = data;
 
         this.addCloseListener();
         this.addRemoveListener();
         this.addLoadedListener();
         this.addOpenListener();
         this.addClearListener();
+        this.addArrangeListener();
     }
 
     private addRemoveListener()
@@ -77,6 +80,13 @@ export default class ViewStack
             let view = this.registry.getFactory(event.data.component).createFromData(event.data);
             view.id = this.generateId();
             this.push(view);
+        });
+    }
+
+    private addArrangeListener()
+    {
+        this.dispatcher.on('arrange', (event: ArrangeEvent) => {
+            this.arrange();
         });
     }
 
@@ -121,21 +131,21 @@ export default class ViewStack
     }
 
     private remove(view: ViewInterface) {
-        for(let i in this.views) {
-            if(view.id == this.views[i].id) {
-                this.views.splice(parseInt(i), 1);
-                this.dispatcher.dispatch(new RemovedEvent(view.id));
-                return;
-            }
+        const index = this.views.indexOf(view);
+        if(index >= 0) {
+            this.views.splice(index, 1);
+            this.dispatcher.dispatch(new RemovedEvent(view.id));
         }
-        this.arrange();
     }
 
     private arrange()
     {
+        let width = 0;
         for(let view of this.views) {
-            view.width = 200;
+            view.width = (this.data.width/this.views.length);
+            width += view.width;
         }
+        this.views[0].width += this.data.width - width;
     }
 
     private generateId(): number
@@ -156,7 +166,6 @@ export default class ViewStack
     push(view: ViewInterface)
     {
         this.views.push(view);
-        this.arrange();
     }
 
     close(view: ViewInterface): boolean
