@@ -3,6 +3,7 @@
         <div class="toolbar">
             <i @click="close()">X</i>
             <i @click="minimize()"><</i>
+            <strong>{{ data.id }}</strong>
         </div>
         <div class="view-component-inner">
             <overlay-container v-if="!loaded">

@@ -118,10 +118,13 @@ class AppController extends AbstractController
         ]);
     }
 
-    public function viewAction()
+    public function viewAction(Request $request)
     {
+        $id = $request->get('view_id');
+
         return $this->render('EnhavoAppBundle:App:view.html.twig', [
             'data' => [
+                'view_id' => $id,
                 'page' => 1,
                 'pagination' => 100,
                 'pagination_steps' => [

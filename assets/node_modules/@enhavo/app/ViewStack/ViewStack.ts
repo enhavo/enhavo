@@ -113,7 +113,6 @@ export default class ViewStack
                             callback('reject')
                         });
                 });
-
             }
 
             async.parallel(parallels, (err) => {
@@ -134,6 +133,7 @@ export default class ViewStack
         const index = this.views.indexOf(view);
         if(index >= 0) {
             this.views.splice(index, 1);
+            //delete this.views[index];
             this.dispatcher.dispatch(new RemovedEvent(view.id));
         }
     }
@@ -142,7 +142,7 @@ export default class ViewStack
     {
         let width = 0;
         for(let view of this.views) {
-            view.width = (this.data.width/this.views.length);
+            view.width = Math.floor(this.data.width/this.views.length);
             width += view.width;
         }
         this.views[0].width += this.data.width - width;

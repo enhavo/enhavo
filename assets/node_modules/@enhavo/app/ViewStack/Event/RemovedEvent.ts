@@ -6,7 +6,7 @@ export default class RemovedEvent extends Event
 
     constructor(id: number)
     {
-        super('remove');
+        super('removed');
         this.id = id
     }
 }

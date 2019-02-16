@@ -1,6 +1,7 @@
 <template>
     <div class="app-view">
-        {{ uuid }}
+        <div>{{ view_id }}</div>
+        <div>{{ uuid }}</div>
         <view-table v-bind:columns="columns"></view-table>
     </div>
 </template>
@@ -13,6 +14,9 @@ import * as uuidv4 from "uuid/v4";
 @Component
 export default class AppView extends Vue {
     name = 'app-view';
+
+    @Prop()
+    view_id: number;
 
     @Prop()
     columns: Array<object>;
