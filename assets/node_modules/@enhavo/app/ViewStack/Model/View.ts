@@ -11,6 +11,7 @@ export default class View implements ViewInterface
     width: number = 0;
     loaded: boolean = false;
     minimize: boolean = false;
+    removed: boolean = false;
 
     finish(): void {
         this.loaded = true;

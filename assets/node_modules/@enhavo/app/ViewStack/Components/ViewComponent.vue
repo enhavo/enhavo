@@ -2,10 +2,11 @@
     <div class="view-component" :style="{width: width}">
         <div class="toolbar">
             <i @click="close()">X</i>
-            <i @click="minimize()"><</i>
+            <i @click="minimize()" v-if="!data.minimize"><</i>
+            <i @click="maximize()" v-if="data.minimize">></i>
             <strong>{{ data.id }}</strong>
         </div>
-        <div class="view-component-inner">
+        <div class="view-component-inner" v-show="!data.minimize">
             <overlay-container v-if="!loaded">
                 <slot>
                     <loading-screen></loading-screen>
@@ -13,7 +14,6 @@
             </overlay-container>
             <component v-bind:is="data.component" v-bind:data="data"></component>
         </div>
-
     </div>
 </template>
 
@@ -52,7 +52,13 @@
         }
 
         minimize() {
-            console.log('minimize');
+            this.data.minimize = true;
+            dispatcher.dispatch(new ArrangeEvent());
+        }
+
+        maximize() {
+            this.data.minimize = false;
+            dispatcher.dispatch(new ArrangeEvent());
         }
 
         get width(): string

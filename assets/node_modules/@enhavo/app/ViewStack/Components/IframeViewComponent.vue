@@ -1,5 +1,5 @@
 <template>
-    <div class="iframe-container" ref="container"></div>
+    <iframe :src="url" v-once ref="frame"></iframe>
 </template>
 
 <script lang="ts">
@@ -7,6 +7,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import iframeStorage from '../frame-storage';
 import dispatcher from '../dispatcher';
 import IframeView from '../Model/IframeView';
+import * as URI from 'urijs';
 
 @Component
 export default class IframeViewComponent extends Vue {
@@ -15,29 +16,22 @@ export default class IframeViewComponent extends Vue {
     data: IframeView;
 
     mounted() {
-        let element = iframeStorage.create(this.data.id, this.data.url);
-        let container = <HTMLElement>this.$refs.container;
-        container.appendChild(element);
+        let frame = <HTMLIFrameElement>this.$refs.frame;
+        iframeStorage.add(this.data.id, frame);
 
         dispatcher.on('removed', () => {
             this.$forceUpdate();
         });
     }
 
-    updated()
+    get url()
     {
-        let element = iframeStorage.get(this.data.id);
-        let container = <HTMLElement>this.$refs.container;
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-        container.appendChild(element);
+        let uri = new URI(this.data.url);
+        return uri.addQuery('view_id', this.data.id) + '';
     }
 }
 </script>
 
 <style lang="scss">
-    .iframe-container { height: 100%; width: 100%;
-        iframe { border: 0; height: 100%; width: 100%; }
-    }
+    iframe { border: 0; height: 100%; width: 100%; }
 </style>

@@ -1,6 +1,5 @@
 import dispatcher from './dispatcher';
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
-import * as URI from 'urijs';
 
 export class FrameStorage
 {
@@ -28,11 +27,8 @@ export class FrameStorage
         });
     }
 
-    create(id: number, url: string)
+    add(id: number, element: HTMLIFrameElement)
     {
-        let uri = new URI(url);
-        let element = <HTMLIFrameElement>document.createElement('iframe');
-        element.src = uri.addQuery('view_id', id) + '';
         this.frames.push(new Frame(id, element));
         return element;
     }

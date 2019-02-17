@@ -1,7 +1,7 @@
 <template>
     <div class="view-stack" id="view-stack" ref="container">
         <div class="view-container" v-for="view in data.views">
-            <view-component v-bind:data="view"></view-component>
+            <view-component v-bind:data="view" v-if="!view.removed"></view-component>
         </div>
     </div>
 </template>

@@ -129,12 +129,17 @@ export default class ViewStack
         });
     }
 
-    private remove(view: ViewInterface) {
-        const index = this.views.indexOf(view);
-        if(index >= 0) {
-            this.views.splice(index, 1);
-            //delete this.views[index];
-            this.dispatcher.dispatch(new RemovedEvent(view.id));
+    private remove(view: ViewInterface)
+    {
+        /**
+         * We can't delete views by splice or using Vue.delete, because the view can contain an iframe.
+         * And because of reload iframe issues with vue and general in dom trees, it is best practise to delete only
+         * the last element. Other elements will just hide until it is the last of the array.
+         */
+        view.removed = true;
+        this.dispatcher.dispatch(new RemovedEvent(view.id));
+        while(this.views[this.views.length-1].removed) {
+            this.views.pop();
         }
     }
 
@@ -142,10 +147,13 @@ export default class ViewStack
     {
         let width = 0;
         for(let view of this.views) {
-            view.width = Math.floor(this.data.width/this.views.length);
+            if(view.minimize) {
+                view.width = 50;
+            } else {
+                view.width = Math.floor(this.data.width/this.views.length);
+            }
             width += view.width;
         }
-        this.views[0].width += this.data.width - width;
     }
 
     private generateId(): number
