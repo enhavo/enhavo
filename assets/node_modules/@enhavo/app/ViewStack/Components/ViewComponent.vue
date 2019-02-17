@@ -1,5 +1,5 @@
 <template>
-    <div class="view-component" :style="{width: width}">
+    <div class="view-component" :style="{width: width, left: position}">
         <div class="toolbar">
             <i @click="close()">X</i>
             <i @click="minimize()" v-if="!data.minimize"><</i>
@@ -66,6 +66,11 @@
             return this.data.width + 'px';
         }
 
+        get position(): string
+        {
+            return this.data.position + 'px';
+        }
+
         get loaded(): boolean
         {
             return this.data.loaded;
@@ -76,7 +81,8 @@
 
 <style lang="scss" scoped>
     .view-component {
-        height: 100%; background-color: yellow; position: relative;
+        height: 100%; background-color: yellow; position: absolute; top: 0;
+        transition: width 0.1s, transform;
         .toolbar { height: 20px; background-color: blue }
         .view-component-inner { height: calc(100% - 20px); position: relative }
     }

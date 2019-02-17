@@ -1,7 +1,9 @@
 <template>
     <div class="view-stack" id="view-stack" ref="container">
-        <div class="view-container" v-for="view in data.views">
-            <view-component v-bind:data="view" v-if="!view.removed"></view-component>
+        <div class="view-container">
+            <template v-for="view in data.views">
+                <view-component v-bind:data="view" v-if="!view.removed"></view-component>
+            </template>
         </div>
     </div>
 </template>
@@ -40,7 +42,7 @@ export default class ViewStack extends Vue {
 <style lang="scss" scoped>
 .view-stack {
     width: calc(100% - 200px); height: calc(100% - 50px); margin-left: 200px; background-color: green;
-    .view-container { float: left; height: 100% }
+    .view-container { height: 100%; position: relative }
 }
 </style>
 

@@ -12,6 +12,7 @@ import ViewStackData from "./ViewStackData";
 import RemovedEvent from "./Event/RemovedEvent";
 import ClearEvent from "./Event/ClearEvent";
 import ClearedEvent from "./Event/ClearedEvent";
+import ArrangeManager from "./ArrangeManager";
 import * as _ from 'lodash';
 import * as async from 'async';
 
@@ -22,6 +23,7 @@ export default class ViewStack
     private readonly registry: ViewRegistry;
     private data: ViewStackData;
     private nextId: number = 1;
+    private arrangeManager: ArrangeManager;
 
     constructor(data: ViewStackData)
     {
@@ -35,6 +37,8 @@ export default class ViewStack
         }
         this.views = <ViewInterface[]>data.views;
         this.data = data;
+
+        this.arrangeManager = new ArrangeManager(this.views, data);
 
         this.addCloseListener();
         this.addRemoveListener();
@@ -145,15 +149,7 @@ export default class ViewStack
 
     private arrange()
     {
-        let width = 0;
-        for(let view of this.views) {
-            if(view.minimize) {
-                view.width = 50;
-            } else {
-                view.width = Math.floor(this.data.width/this.views.length);
-            }
-            width += view.width;
-        }
+        this.arrangeManager.arrange();
     }
 
     private generateId(): number

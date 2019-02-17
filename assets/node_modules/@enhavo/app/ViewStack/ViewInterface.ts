@@ -11,6 +11,7 @@ export default interface ViewInterface extends ComponentAwareInterface
     minimize: boolean;
     priority: number;
     removed: boolean;
+    position: number;
 
     finish(): void;
 }
