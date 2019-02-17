@@ -8,14 +8,13 @@
         <meta name="robots" content="noindex, nofollow">
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoapp/css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('build/enhavo/app.css') }}">
 
         <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
 
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}{% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>

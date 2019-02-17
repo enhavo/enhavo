@@ -22,7 +22,7 @@ class AppController extends AbstractController
                     [
                         'label' => 'Test #1',
                         'url' => '/test',
-                        'icon' => 'fa-book',
+                        'icon' => 'language',
                         'notification' => [
                             'class' => 'notification blue',
                             'label' => '120'
@@ -32,7 +32,7 @@ class AppController extends AbstractController
                     [
                         'label' => 'Test #2',
                         'url' => '/test',
-                        'icon' => 'fa-cube',
+                        'icon' => 'bookmark',
                         'notification' => [
                             'class' => 'notification red',
                             'label' => '343'
@@ -42,7 +42,7 @@ class AppController extends AbstractController
                             [
                                 'label' => 'Test #2.1',
                                 'url' => '/test',
-                                'icon' => 'fa-university',
+                                'icon' => 'camera',
                                 'notification' => [
                                     'class' => 'success',
                                     'label' => '3'
@@ -52,13 +52,13 @@ class AppController extends AbstractController
                             [
                                 'label' => 'Test #2.2',
                                 'url' => '/test',
-                                'icon' => 'fa-beer',
+                                'icon' => 'card_giftcard',
                                 'component' => 'menu-item'
                             ],
                             [
                                 'label' => 'Test #2.3',
                                 'url' => '/test',
-                                'icon' => 'book',
+                                'icon' => 'clear',
                                 'component' => 'menu-dropdown',
                                 'choices' => [
                                     'hello' => 'world',
@@ -70,7 +70,7 @@ class AppController extends AbstractController
                     [
                         'label' => 'Test #3',
                         'url' => '/test',
-                        'icon' => 'fa-cube',
+                        'icon' => 'control_point',
                         'component' => 'menu-dropdown',
                         'choices' => [
                             'hello' => 'world',

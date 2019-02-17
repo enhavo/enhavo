@@ -8,7 +8,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "include": [
     "./assets/**/*"

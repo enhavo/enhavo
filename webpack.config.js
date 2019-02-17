@@ -8,49 +8,26 @@ Encore
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(!Encore.isProduction())
   .autoProvidejQuery()
+  .enableVueLoader()
+  .enableSassLoader()
+  .enableTypeScriptLoader()
+
   .addEntry('enhavo/app', './assets/app')
   .addEntry('enhavo/view', './assets/view')
 ;
 
 var config = Encore.getWebpackConfig();
 
-config.resolve = {
-  extensions: [".js", ".ts", ".tsx"]
-};
-
-config.module = {
-  rules: [
-    {
-      test: /\.vue$/,
-      loader: "vue-loader"
-    },
-    {
-      test: /\.tsx?$/,
-      loader: "ts-loader",
-      options: {
-        allowTsInNodeModules: true,
-        transpileOnly: true,
-        appendTsSuffixTo: [/\.vue$/]
+config.module.rules.forEach(function(rule) {
+  if(".ts".match(rule.test)) {
+    delete rule.exclude;
+    rule.use.forEach(function(loader) {
+      if(loader.loader == 'ts-loader') {
+        loader.options.allowTsInNodeModules = true;
+        loader.options.transpileOnly = true;
       }
-    },
-    {
-      test: /\.scss$/,
-      use: [
-        'vue-style-loader',
-        'css-loader',
-        'sass-loader'
-      ]
-    },
-    {
-      test: /\.css$/,
-      use: [
-        'vue-style-loader',
-        'css-loader'
-      ]
-    }
-  ]
-};
-
-config.plugins.push(new VueLoaderPlugin());
+    });
+  }
+});
 
 module.exports = config;

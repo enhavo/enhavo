@@ -1,7 +1,7 @@
 <template>
     <div class="menu-dropdown">
         <div class="menu-child-title menu-dropdown-child menu-dropdown-label">
-            <i v-bind:class="['fa', icon]" aria-hidden="true"></i>
+            <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
             {{ label }} 
             <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
         </div>
@@ -33,7 +33,7 @@
         }
 
         get icon(): string {
-            return (this.data && this.data.icon) ? this.data.icon : false;
+            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : false;
         }
 
         get notification(): object {
