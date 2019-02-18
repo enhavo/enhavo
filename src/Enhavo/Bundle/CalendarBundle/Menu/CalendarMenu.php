@@ -18,9 +18,9 @@ class CalendarMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'calendar-1',
+            'icon' => 'event',
             'label' => 'label.calendar',
-            'translationDomain' => 'EnhavoCalendarBundle',
+            'translation_domain' => 'EnhavoCalendarBundle',
             'route' => 'enhavo_calendar_appointment_index',
             'role' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
         ]);

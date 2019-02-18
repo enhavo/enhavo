@@ -20,8 +20,8 @@ class ShopMenu extends ListMenu
         $resolver->setDefaults([
             'icon' => 'shopping-cart',
             'label' => 'label.shop',
-            'translationDomain' => 'EnhavoShopBundle',
-            'menu' => [
+            'translation_domain' => 'EnhavoShopBundle',
+            'children' => [
                 'order' => [
                     'type' => 'shop_order'
                 ],

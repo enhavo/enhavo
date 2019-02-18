@@ -18,9 +18,9 @@ class GroupMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'users',
+            'icon' => 'people_outline',
             'label' => 'group.label.group',
-            'translationDomain' => 'EnhavoUserBundle',
+            'translation_domain' => 'EnhavoUserBundle',
             'route' => 'enhavo_user_group_index',
             'role' => 'ROLE_ENHAVO_USER_GROUP_INDEX',
         ]);

@@ -34,39 +34,27 @@ services:
             - '@sylius.repository.country'
 
     Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_product }
 
     Enhavo\Bundle\ShopBundle\Menu\OrderMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_order }
 
     Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_product_option }
 
     Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop_voucher }
 
     Enhavo\Bundle\ShopBundle\Menu\ShopMenu:
-        public: true
-        arguments:
-          - '@enhavo_app.menu.factory'
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: shop }
 

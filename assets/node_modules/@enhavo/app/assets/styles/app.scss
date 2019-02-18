@@ -1,3 +1,5 @@
+@import "~compass-mixins/lib/_animate.scss";
+@import "~compass-mixins/lib/_compass.scss";
 @import "~@enhavo/font/dist/enhavo-icons.css";
 @import "~@ibm/plex/css/ibm-plex.css";
 @import "variables";
@@ -30,7 +32,6 @@ body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;}
   }
 }
 
-
 .window {
   overflow-x: hidden; width: 100%; min-height: 100%; position: relative;
   &:after { content: ""; display: table; clear: both; }
@@ -45,7 +46,7 @@ body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;}
 }
 
 .navigation {
-  background-color: red; height: 3000px; width: 100%;
+  background-color: greenyellow; height: 3000px; width: 100%;
 }
 
 .content {

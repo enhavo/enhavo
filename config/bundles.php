@@ -50,6 +50,7 @@ return [
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
     Enhavo\Bundle\ProjectBundle\EnhavoProjectBundle::class => ['all' => true],
     Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Enhavo\Bundle\ShopBundle\EnhavoShopBundle::class => ['all' => true],
     Sylius\Bundle\PaymentBundle\SyliusPaymentBundle::class => ['all' => true],
     Sylius\Bundle\MoneyBundle\SyliusMoneyBundle::class => ['all' => true],

@@ -18,10 +18,10 @@ class NewsletterMainMenu extends ListMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'newsletter',
+            'icon' => 'markunread',
             'label' => 'newsletter.label.newsletter',
-            'translationDomain' => 'EnhavoNewsletterBundle',
-            'menu' => [
+            'translation_domain' => 'EnhavoNewsletterBundle',
+            'children' => [
                 'newsletter' => [
                     'type' => 'newsletter_newsletter'
                 ],

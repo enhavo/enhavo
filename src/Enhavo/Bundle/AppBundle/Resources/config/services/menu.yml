@@ -11,36 +11,47 @@ services:
 
     Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu:
         public: true
+        arguments:
+          - '@translator'
+          - '@router'
+          - '@enhavo_app.menu.manager'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: base }
 
+    Enhavo\Bundle\AppBundle\Menu\Menu\DropdownMenu:
+      public: true
+      arguments:
+        - '@translator'
+        - '@router'
+      calls:
+        - [ 'setContainer', ['@service_container']]
+      tags:
+        - { name: enhavo.menu, alias: dropdown }
+
+
     Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu:
         public: true
         arguments:
-            - '@enhavo_app.menu.factory'
+            - '@translator'
+            - '@enhavo_app.menu.manager'
         calls:
           - [ 'setContainer', ['@service_container']]
         tags:
             - { name: enhavo.menu, alias: list }
 
-    enhavo_app.twig.menu.render:
-        class: Enhavo\Bundle\AppBundle\Twig\MenuRender
-        arguments:
-          - "@enhavo_app.menu.factory"
-          - "@security.authorization_checker"
-          - "%enhavo_app.main_menu_renderer.template%"
-          - "%enhavo_app.menu%"
-        calls:
-          - [ 'setContainer', ['@service_container']]
-        tags:
-            - { name: twig.extension }
-
     enhavo_app.menu.factory:
         class: Enhavo\Bundle\AppBundle\Type\TypeFactory
         arguments:
           - 'Enhavo\Bundle\AppBundle\Menu\Menu'
-          - "@enhavo_app.menu_collector"
+          - '@enhavo_app.menu_collector'
         tags:
             - { name: knp_menu.renderer, alias: main_menu }
+
+    enhavo_app.menu.manager:
+      class: Enhavo\Bundle\AppBundle\Menu\MenuManager
+      arguments:
+        - '@enhavo_app.menu.factory'
+        - '@security.authorization_checker'
+        - '%enhavo_app.menu%'

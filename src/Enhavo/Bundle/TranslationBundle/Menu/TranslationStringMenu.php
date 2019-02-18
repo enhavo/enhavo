@@ -20,7 +20,7 @@ class TranslationStringMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'exchange',
             'label' => 'translation.label.translationString',
-            'translationDomain' => 'EnhavoTranslationBundle',
+            'translation_domain' => 'EnhavoTranslationBundle',
             'route' => 'enhavo_translation_translation_string_index',
             'role' => 'ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX',
         ]);

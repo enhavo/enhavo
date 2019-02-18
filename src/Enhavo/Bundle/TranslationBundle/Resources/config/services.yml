@@ -96,9 +96,7 @@ services:
             - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
 
     Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: translation }
 

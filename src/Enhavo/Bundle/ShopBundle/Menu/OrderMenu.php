@@ -20,7 +20,7 @@ class OrderMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'shopping-cart',
             'label' => 'label.order',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_order_index',
             'role' => 'ROLE_ENHAVO_SHOP_ORDER_INDEX',
         ]);

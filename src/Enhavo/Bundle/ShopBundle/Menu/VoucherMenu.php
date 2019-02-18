@@ -21,7 +21,7 @@ class VoucherMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'gift',
             'label' =>  'voucher.label.voucher',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_voucher_index',
             'role' => 'ROLE_ENHAVO_SHOP_VOUCHER_INDEX',
         ]);

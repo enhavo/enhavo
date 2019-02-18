@@ -9,9 +9,7 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\NewsletterBundle\Menu\SubscriberMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: newsletter_subscriber }
 

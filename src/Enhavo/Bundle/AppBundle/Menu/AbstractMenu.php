@@ -31,12 +31,23 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
         return $currentRoute == $route;
     }
 
+    public function createViewData(array $options)
+    {
+        return [
+            'component' => $options['component']
+        ];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'route' => null,
             'role' => null,
             'hidden' => false,
+        ]);
+
+        $resolver->setRequired([
+            'component'
         ]);
     }
 }

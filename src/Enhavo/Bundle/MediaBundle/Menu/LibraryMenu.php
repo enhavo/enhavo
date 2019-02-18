@@ -18,9 +18,9 @@ class LibraryMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'docs',
+            'icon' => 'image',
             'label' => 'media.label.library',
-            'translationDomain' => 'EnhavoMediaBundle',
+            'translation_domain' => 'EnhavoMediaBundle',
             'route' => 'enhavo_media_library_index',
             'role' => 'ROLE_ENHAVO_MEDIA_LIBRARY_INDEX',
         ]);

@@ -49,8 +49,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     Enhavo\Bundle\SliderBundle\Menu\SliderMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: slider }

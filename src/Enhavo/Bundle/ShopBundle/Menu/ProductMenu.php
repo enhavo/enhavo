@@ -21,7 +21,7 @@ class ProductMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'box',
             'label' =>  'label.product',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_product_index',
             'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_INDEX',
         ]);

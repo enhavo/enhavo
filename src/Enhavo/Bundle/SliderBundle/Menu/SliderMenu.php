@@ -18,9 +18,9 @@ class SliderMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'images',
+            'icon' => 'slideshow',
             'label' => 'slider.label.slider',
-            'translationDomain' => 'EnhavoSliderBundle',
+            'translation_domain' => 'EnhavoSliderBundle',
             'route' => 'enhavo_slider_slide_index',
             'role' => 'ROLE_ENHAVO_SLIDER_SLIDE_INDEX'
         ]);

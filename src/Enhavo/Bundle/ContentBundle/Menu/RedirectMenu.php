@@ -18,9 +18,9 @@ class RedirectMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'arrow-long-right',
+            'icon' => 'compare_arrows',
             'label' => 'redirect.label.redirect',
-            'translationDomain' => 'EnhavoContentBundle',
+            'translation_domain' => 'EnhavoContentBundle',
             'route' => 'enhavo_content_redirect_index',
             'role' => 'ROLE_ENHAVO_CONTENT_REDIRECT_INDEX',
         ]);

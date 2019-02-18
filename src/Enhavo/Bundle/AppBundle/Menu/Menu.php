@@ -22,6 +22,11 @@ class Menu
      */
     private $options;
 
+    /**
+     * Menu constructor.
+     * @param MenuInterface $menu
+     * @param $options
+     */
     public function __construct(MenuInterface $menu, $options)
     {
         $this->menu = $menu;
@@ -30,28 +35,23 @@ class Menu
         $this->options = $resolver->resolve($options);
     }
 
-    public function render(array $options = [])
+    public function getPermission()
     {
-        return $this->menu->render($this->merge($this->options, $options));
+        return $this->menu->getPermission($this->options);
     }
 
-    public function getPermission(array $options = [])
+    public function isHidden()
     {
-        return $this->menu->getPermission($this->merge($this->options, $options));
+        return $this->menu->isHidden($this->options);
     }
 
-    public function isHidden(array $options = [])
+    public function isActive()
     {
-        return $this->menu->isHidden($this->merge($this->options, $options));
+        return $this->menu->isActive($this->options);
     }
 
-    public function isActive(array $options = [])
+    public function createViewData()
     {
-        return $this->menu->isActive($this->merge($this->options, $options));
-    }
-
-    private function merge($optionsOne, $optionTwo)
-    {
-        return array_merge($optionsOne, $optionTwo);
+        return $this->menu->createViewData($this->options);
     }
 }

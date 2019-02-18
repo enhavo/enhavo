@@ -18,9 +18,9 @@ class ArticleMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'open-book',
+            'icon' => 'book',
             'label' => 'article.label.article',
-            'translationDomain' => 'EnhavoArticleBundle',
+            'translation_domain' => 'EnhavoArticleBundle',
             'route' => 'enhavo_article_article_index',
             'role' => 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'
         ]);

@@ -18,9 +18,9 @@ class PageMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'news',
+            'icon' => 'pages',
             'label' => 'page.label.page',
-            'translationDomain' => 'EnhavoPageBundle',
+            'translation_domain' => 'EnhavoPageBundle',
             'route' => 'enhavo_page_page_index',
             'role' => 'ROLE_ENHAVO_PAGE_PAGE_INDEX',
         ]);

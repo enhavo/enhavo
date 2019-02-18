@@ -18,10 +18,10 @@ class UserMainMenu extends ListMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'user',
+            'icon' => 'people',
             'label' => 'user.label.user',
-            'translationDomain' => 'EnhavoUserBundle',
-            'menu' => [
+            'translation_domain' => 'EnhavoUserBundle',
+            'children' => [
                 'user' => [
                     'type' => 'user_user'
                 ],

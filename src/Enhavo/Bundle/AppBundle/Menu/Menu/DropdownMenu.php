@@ -1,9 +1,9 @@
 <?php
 /**
- * BaseMenuBuilder.php
- *
- * @since 20/09/16
- * @author gseidel
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 2019-02-18
+ * Time: 17:43
  */
 
 namespace Enhavo\Bundle\AppBundle\Menu\Menu;
@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BaseMenu extends AbstractMenu
+class DropdownMenu extends AbstractMenu
 {
     /**
      * @var TranslatorInterface
@@ -40,19 +40,8 @@ class BaseMenu extends AbstractMenu
     public function createViewData(array $options)
     {
         $data = [
-            'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
-            'url' => $this->router->generate($options['route']),
-            'icon' => $options['icon'],
-            'component' => $options['component'],
-            'class' => $options['class'],
-            'active' => $this->isActive($options),
             'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
-            'notification' => [
-                'class' => $options['notification_class'],
-                'label' => $this->translator->trans($options['notification_label'], [], $options['translation_domain']),
-                'icon' => $options['notification_icon'],
-                'info' => $this->translator->trans($options['notification_info'], [], $options['translation_domain']),
-            ],
+            'choices' => $options['choices']
         ];
 
         $parentData = parent::createViewData($options);
@@ -65,20 +54,15 @@ class BaseMenu extends AbstractMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'menu-item',
             'translation_domain' => null,
             'icon' => null,
-            'class' => null,
+            'class' => '',
+            'component' => 'menu-dropdown',
             'info' => null,
-            'notification_class' => null,
-            'notification_label' => null,
-            'notification_icon' => null,
-            'notification_info' => null
         ]);
 
         $resolver->setRequired([
-            'label',
-            'route'
+            'choices',
         ]);
     }
 

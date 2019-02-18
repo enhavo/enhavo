@@ -38,7 +38,7 @@ class AppController extends AbstractController
                             'label' => '343'
                         ],
                         'component' => 'menu-list',
-                        'items' => [
+                        'children' => [
                             [
                                 'label' => 'Test #2.1',
                                 'url' => '/test',

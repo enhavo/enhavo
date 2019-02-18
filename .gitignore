@@ -19,4 +19,6 @@
 /.web-server-pid
 .phpunit
 /phpunit.xml
-behat.yml
+/behat.yml
+/npm-debug.log
+/yarn-error.log

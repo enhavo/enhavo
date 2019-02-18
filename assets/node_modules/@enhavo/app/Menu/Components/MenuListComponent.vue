@@ -8,7 +8,7 @@
                 {{ label }}
             </div>
             <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
-            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': isOpen,'icon-keyboard_arrow_down':!isOpen }]" aria-hidden="true"></i>
+            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': isOpen }, {'icon-keyboard_arrow_down': !isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="menu-list-child menu-list-items" v-show="isOpen">
             <template v-for="item in items">
@@ -44,7 +44,7 @@
         }
 
         get items(): array {
-            return (this.data && this.data.items) ? this.data.items : false;
+            return (this.data && this.data.children) ? this.data.children : false;
         }
 
         toggle (): void {
