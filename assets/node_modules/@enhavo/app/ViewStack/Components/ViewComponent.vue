@@ -1,10 +1,12 @@
 <template>
-    <div class="view-component" :style="{width: width, left: position}">
+    <div class="view-component" :style="{order: position}" :class="{minimized: data.minimize}">
         <div class="toolbar">
-            <i @click="close()">X</i>
-            <i @click="minimize()" v-if="!data.minimize"><</i>
-            <i @click="maximize()" v-if="data.minimize">></i>
-            <strong>{{ data.id }}</strong>
+            <strong v-if="!data.minimize">{{ data.id }}</strong>
+            <div class="actions">
+                <div @click="close()" v-if="!data.minimize" class="action"><span class="icon icon-close"></span></div>
+                <div @click="minimize()" v-if="!data.minimize" class="action"><span class="icon icon-keyboard_arrow_left"></span></div>
+                <div @click="maximize()" v-if="data.minimize" class="action"><span class="icon icon-keyboard_arrow_right"></span></div>
+            </div>
         </div>
         <div class="view-component-inner" v-show="!data.minimize">
             <overlay-container v-if="!loaded">
@@ -66,9 +68,9 @@
             return this.data.width + 'px';
         }
 
-        get position(): string
+        get position(): number
         {
-            return this.data.position + 'px';
+            return this.data.position;
         }
 
         get loaded(): boolean
@@ -80,10 +82,15 @@
 </script>
 
 <style lang="scss" scoped>
-    .view-component {
-        height: 100%; background-color: yellow; position: absolute; top: 0;
-        transition: width 0.1s, transform;
-        .toolbar { height: 20px; background-color: blue }
-        .view-component-inner { height: calc(100% - 20px); position: relative }
+    .view-component {height:100%;flex:1 0 0;
+        &.minimized {flex:0;}
+        .toolbar {height:30px;line-height:30px;position:relative;display:flex;
+            .actions {display:flex;margin-left:auto;align-items:center;
+                .action {padding:5px;cursor:pointer;}
+            }
+        }
+        .view-component-inner {height:calc(100% - 30px);position:relative;
+            iframe {display:block;}
+        }
     }
 </style>

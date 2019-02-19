@@ -1,8 +1,12 @@
 <template>
     <div class="app">
-        <app-menu v-bind:menu="menu"></app-menu>
-        <toolbar v-bind:quick_menu="quick_menu"></toolbar>
-        <view-stack v-bind:data="view_stack"></view-stack>
+        <div class="sidebar">
+            <app-menu v-bind:menu="menu"></app-menu>
+        </div>
+        <div class="toolbar-viewstack-container">
+            <toolbar v-bind:quick_menu="quick_menu"></toolbar>
+            <view-stack v-bind:data="view_stack"></view-stack>
+        </div>
     </div>
 </template>
 
@@ -37,8 +41,9 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-.app {
-    height: 100%;
+.app {height:100vh;display:flex;
+    .sidebar {width:260px;}
+    .toolbar-viewstack-container {width:calc(100% - 260px);display:flex;flex-direction:column;}
 }
 </style>
 

@@ -2,6 +2,7 @@
   "name": "enhavo",
   "license": "MIT",
   "dependencies": {
+    "@ibm/plex": "^1.2.3",
     "@types/async": "^2.4.1",
     "@types/urijs": "^1.15.38",
     "@types/uuid": "^3.4.4",

@@ -29,11 +29,9 @@ Vue.component('menu-notification', MenuNotification);
 </script>
 
 <style lang="scss" scoped>
-.menu {
-    width: 200px; height: 100%; float: left;  background-color: brown;
-
-    .menu-child {
-        padding-left: 10px; padding-right: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start; font-size: 16px; font-weight: 500; border-bottom: 2px solid yellowgreen;
+.menu {height:100%;
+    /deep/ .menu-child,/deep/ .menu-item {padding:0 10px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;
+        .symbol-container {width:26px;}
     }
 }
 </style>
@@ -41,10 +39,8 @@ Vue.component('menu-notification', MenuNotification);
 <style lang="scss">
 .menu-child-title {
     i {
-        margin-right: 10px;
-
         &.open-indicator {
-            position: absolute; right: 10px; margin-right: initial;
+            position:absolute;right:10px;
         }
     }
 }

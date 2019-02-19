@@ -1,0 +1,15 @@
+@keyframes loadingAnimation {
+  0%, 100% {@include transform(scale(0));}
+  50% {@include transform(scale(1));}
+}
+
+@keyframes configurator-loading {
+  0% {
+    top: 6px;
+    height: 40px;
+  }
+  50%, 100% {
+    top: 19px;
+    height: 20px;
+  }
+}

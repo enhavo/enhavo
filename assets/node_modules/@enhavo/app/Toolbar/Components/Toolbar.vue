@@ -29,10 +29,9 @@ Vue.component('toolbar-dropdown', Dropdown);
 </script>
 
 <style lang="scss" scoped>
-    $toolbar-height: 50px;
+    $toolbar-height:57px;
 
-    .toolbar {
-        height: $toolbar-height; background-color: #28434b; color: #9da9ad; font-size: 16px; font-weight: 500; display: flex; justify-content: space-between;
+    .toolbar {height: $toolbar-height; background-color: #28434b; color: #9da9ad; font-size: 16px; font-weight: 500; display: flex; justify-content: space-between;
         .toolbar-item { height: 100%; display: flex; align-items: flex-start; justify-content: flex-start; background-color: inherit; }
     }
 </style>

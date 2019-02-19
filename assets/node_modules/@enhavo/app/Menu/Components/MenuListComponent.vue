@@ -1,11 +1,14 @@
 <template>
     <div class="menu-list">
-
         <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle">
-            <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
-            {{ label }} 
+            <div class="symbol-container">
+                <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
+            </div>
+            <div class="label-container">
+                {{ label }}
+            </div>
             <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
-            <i v-bind:class="['open-indicator', 'fa fa-caret-down', {'fa-flip-vertical': isOpen }]" aria-hidden="true"></i>
+            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': isOpen,'icon-keyboard_arrow_down':!isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="menu-list-child menu-list-items" v-show="isOpen">
             <template v-for="item in items">
@@ -65,10 +68,7 @@
         .menu-list-items {
             width: 100%; padding-left: 20px; box-sizing: border-box;
 
-            .menu-item {
-                border-left: 2px solid white;
-                margin-bottom: 2px;
-            }
+            .menu-item {margin-bottom: 2px;}
         }
     }
 </style>

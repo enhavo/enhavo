@@ -7,6 +7,8 @@ url("enhavo-icons.woff?2b592228fbedba4e8628dc1a2a79e3f1") format("woff");
 
 .icon {
 	line-height: 1;
+	display: inline-block;
+	font-size:1rem;
 }
 
 .icon:before {

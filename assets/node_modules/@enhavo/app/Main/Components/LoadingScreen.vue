@@ -1,6 +1,10 @@
 <template>
     <div class="loading-screen">
-        Loading...
+        <div class="loading-indicator">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 </template>
 
@@ -14,7 +18,7 @@
 </script>
 
 <style scoped>
-    .loading-screen {
+    .loading-screen {position:absolute;top:0;left:0;width:100%;height:100%;
 
     }
 </style>

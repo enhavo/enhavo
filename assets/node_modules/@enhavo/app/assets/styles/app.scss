@@ -1,9 +1,34 @@
 @import "~@enhavo/font/dist/enhavo-icons.css";
+@import "~@ibm/plex/css/ibm-plex.css";
+@import "variables";
+@import "reset";
+@import "~compass-mixins/lib/_animate.scss";
+@import "blueprints";
+@import "custom_animations";
 
-html, body {
-  overflow-x: hidden; height: 100%; margin: 0; padding: 0;
+html {font-size:$fontSize;line-height:$lineHeight;}
+body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;}
+
+.app {
+  .sidebar {background:$color2;
+    .menu {
+      .menu-child {background:$color2b;color:$grey2;
+        + .menu-child {border-top:1px solid $color2;}
+      }
+    }
+  }
+  .toolbar-viewstack-container {background:#fff;
+    .view-component {transition:all 100ms, transform;
+      &.minimized {
+        .toolbar {padding:0;}
+      }
+      .loading-screen {background:rgba($color2,0.5);
+        .loading-indicator {@extend %loadingIndicator;}
+      }
+      .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;}
+    }
+  }
 }
-
 
 
 .window {

@@ -22,11 +22,11 @@ export default class ArrangeManager
         }
 
         let width = 0;
+        let position = 0;
         let minimized = 0;
         for(let view of views) {
             if(view.minimize) {
-                view.width = 50;
-                view.position = width;
+                view.position = position++;
                 width = width + view.width;
                 minimized++;
             }
@@ -37,7 +37,7 @@ export default class ArrangeManager
         for(let view of views) {
             if(!view.minimize) {
                 view.width = sizePerView;
-                view.position = width;
+                view.position = position++;
                 width = width + view.width;
             }
         }

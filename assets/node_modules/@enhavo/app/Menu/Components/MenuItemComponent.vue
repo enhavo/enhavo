@@ -1,7 +1,11 @@
 <template>
     <div class="menu-child-title menu-item" @click="open()">
-        <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
-        {{ label }}
+        <div class="symbol-container">
+            <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
+        </div>
+        <div class="label-container">
+            {{ label }}
+        </div>
         <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
     </div>
 </template>
@@ -24,7 +28,7 @@
         }
 
         get icon(): string {
-            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : false;
+            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : '';
         }
 
         get notification(): object {
@@ -48,8 +52,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .menu-item { 
-        height: 50px; cursor: pointer; 
+    .menu-item {
     }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="view-stack" id="view-stack" ref="container">
+    <div class="view-stack" ref="container">
         <div class="view-container">
             <template v-for="view in data.views">
                 <view-component v-bind:data="view" v-if="!view.removed"></view-component>
@@ -40,9 +40,8 @@ export default class ViewStack extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.view-stack {
-    width: calc(100% - 200px); height: calc(100% - 50px); margin-left: 200px; background-color: green;
-    .view-container { height: 100%; position: relative }
+.view-stack {width:100%;flex:1 0 0;
+    .view-container {height:100%;display:flex;}
 }
 </style>
 
