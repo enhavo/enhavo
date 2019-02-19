@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-col-date" v-bind:style="{ width: width }">
-        {{ label }}
+        {{ data }}
     </div>
 </template>
 
@@ -17,7 +17,7 @@
         width: string;
 
         @Prop()
-        label: string;
+        data: any;
     }
 </script>
 

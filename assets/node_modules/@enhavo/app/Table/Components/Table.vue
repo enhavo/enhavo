@@ -1,10 +1,13 @@
 <template>
     <div class="view-table">
-        <template v-for="entry in apiData">
-            <view-table-row v-bind:columns="columns" v-bind:data="entry" v-bind:key="entry.id"></view-table-row>
+        <template v-if="!loading">
+            <template v-for="row in rows">
+                <view-table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="row.id"></view-table-row>
+            </template>
         </template>
-
-        <button v-on:click="getTableData">Get Data from API</button>
+        <template v-else>
+            Fetching data...
+        </template>
     </div>
 </template>
 
@@ -20,11 +23,16 @@
         @Prop()
         columns: any;
 
-        apiData: any = [];
+        loading: boolean = false;
+        rows: any = [];
         apiUrl: string = '/admin/table';
+
+        mounted() {
+            this.rows = this.retrieveRowData(this.apiUrl);
+        }
     
         get columnLabels(): Array<string> {
-            let labels = [];
+            let labels = []
 
             for (let column of this.columns) {
                 labels.push(column.label);
@@ -33,17 +41,21 @@
             return labels;
         }
 
-        getTableData(): Array<object> {
+        retrieveRowData(apiUrl: string): void {
+            this.loading = true;
 
             axios
-                .get(this.apiUrl)
-                .then(response => (
-                    this.apiData = response.data
-                ))
-
-            return this.apiData;
+                .get(apiUrl)
+                .then(response => {
+                    this.rows = response.data
+                })
+                .catch(error => {
+                    
+                })
+                .then(() => {
+                    this.loading = false;
+                })
         }
-
         
     }
 

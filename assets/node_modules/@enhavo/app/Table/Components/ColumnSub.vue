@@ -4,8 +4,8 @@
             <component 
                 class="view-table-col-child" 
                 v-bind:is="row.component" 
-                :key="row.key"
-                v-bind:label="label"></component>
+                v-bind:key="row.key"
+                v-bind:data="getRowData(row.key)"></component>
         </template>
     </div>
 </template>
@@ -23,10 +23,18 @@
         width: string;
 
         @Prop()
-        label: string;
+        rows: Array<object>;
 
         @Prop()
-        rows: Array<object>;
+        data: any;
+
+        getRowData(row: string): any {
+            if( this.data.hasOwnProperty(row) ) {
+                return this.data[row];
+            } else {
+                return null;
+            }
+        }
     }
 </script>
 

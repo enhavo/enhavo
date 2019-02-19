@@ -7,7 +7,8 @@
                 v-bind:key="column.key" 
                 v-bind:width="calculateWidth(column.width)"
                 v-bind:rows="column.rows"
-                v-bind:label="column.label"></component>
+                v-bind:data="getColumnData(column.key)"
+            ></component>
         </template>
 
     </div>
@@ -27,6 +28,9 @@
     
         @Prop()
         columns: Array<object>;
+
+        @Prop()
+        data: any;
     
         open() {
             dispatcher.dispatch(new CreateEvent({
@@ -38,6 +42,14 @@
 
         calculateWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
+        }
+
+        getColumnData(column: string): any {
+            if( this.data.hasOwnProperty(column) ) {
+                return this.data[column];
+            } else {
+                return null;
+            }
         }
     }
 

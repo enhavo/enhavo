@@ -149,6 +149,12 @@ class AppController extends AbstractController
                 'sortable' => true,
                 'columns' => [
                     [
+                        'key' => 'id',
+                        'label' => 'Id',
+                        'component' => 'view-table-col-text',
+                        'width' => 2,
+                    ],
+                    [
                         'sortable' => true,
                         'key' => 'title',
                         'label' => 'Title',
@@ -165,13 +171,7 @@ class AppController extends AbstractController
                                 'style' => 'grey'
                             ]
                         ],
-                        'width' => 3
-                    ],
-                    [
-                        'key' => 'id',
-                        'label' => 'Id',
-                        'component' => 'view-table-col-text',
-                        'width' => 6,
+                        'width' => 7
                     ],
                     [
                         'key' => 'date',
