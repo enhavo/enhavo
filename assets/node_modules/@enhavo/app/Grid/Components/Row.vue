@@ -68,7 +68,7 @@
 
 <style lang="scss" scoped>
     .view-table-row { 
-        margin-top: 10px; margin-bottom: 10px; color: #FFF; background-color: midnightblue; display: flex;
+        margin-top: 10px; margin-bottom: 10px; color: #FFF; background-color: lightgray; display: flex;
     }
 </style>
 

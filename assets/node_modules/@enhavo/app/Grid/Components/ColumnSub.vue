@@ -43,7 +43,15 @@
 
 <style lang="scss" scoped>
     .view-table-col-sub { 
-        color: #FFF; background-color: seagreen;
+        background-color: seagreen;
+
+        .view-table-col-child {
+            margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 </style>
 

@@ -23,7 +23,7 @@
 
 <style lang="scss" scoped>
     .view-table-col-text { 
-        padding: 10px; margin: 10px; color: #FFF; background-color: cadetblue;
+        background-color: cadetblue;
     }
 </style>
 

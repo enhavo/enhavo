@@ -23,7 +23,7 @@
 
 <style lang="scss" scoped>
     .view-table-col-date { 
-        padding: 10px; margin: 10px; color: #FFF; background-color: cornflowerblue;
+        background-color: cornflowerblue;
     }
 </style>
 
