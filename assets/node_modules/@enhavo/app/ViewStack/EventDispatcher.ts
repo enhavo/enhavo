@@ -142,7 +142,8 @@ class EventStore
     resolve: (data: object) => void;
     reject: (data: object) => void;
 
-    constructor(event: Event, resolve: (data: object) => void, reject: (data: object) => void) {
+    constructor(event: Event, resolve: (data: object) => void, reject: (data: object) => void)
+    {
         this.event = event;
         this.resolve = resolve;
         this.reject = reject;

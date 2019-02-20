@@ -108,14 +108,15 @@ export default class ViewStack
                 parallels.push((callback: (err: any) => void) => {
                     if(this.close(view)) {
                         callback(null);
+                    } else {
+                        this.dispatcher.dispatch(new CloseEvent(view.id))
+                            .then(() => {
+                                callback(null);
+                            })
+                            .catch(() => {
+                                callback('reject');
+                            })
                     }
-                    this.dispatcher.dispatch(new CloseEvent(view.id))
-                        .then(() => {
-                            callback(null);
-                        })
-                        .catch(() => {
-                            callback('reject')
-                        });
                 });
             }
 
@@ -142,7 +143,7 @@ export default class ViewStack
          */
         view.removed = true;
         this.dispatcher.dispatch(new RemovedEvent(view.id));
-        while(this.views[this.views.length-1].removed) {
+        while(this.views.length > 0 && this.views[this.views.length-1].removed) {
             this.views.pop();
         }
     }
