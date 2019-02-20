@@ -16,7 +16,9 @@
     import Row from "./Row.vue"
     import axios from 'axios';
 
-    @Component
+    @Component({
+        components: {'view-table-row': Row}
+    })
     export default class Table extends Vue {
         name: string = 'view-table';
     
@@ -28,16 +30,14 @@
         apiUrl: string = '/admin/table';
 
         mounted() {
-            this.rows = this.retrieveRowData(this.apiUrl);
+            this.retrieveRowData(this.apiUrl);
         }
 
         get columnLabels(): Array<string> {
             let labels = []
-
             for (let column of this.columns) {
                 labels.push(column.label);
             }
-
             return labels;
         }
 
@@ -46,20 +46,21 @@
 
             axios
                 .get(apiUrl)
+                // executed on success
                 .then(response => {
                     this.rows = response.data
                 })
+                // executed on error
                 .catch(error => {
 
                 })
+                // always executed
                 .then(() => {
                     this.loading = false;
                 })
         }
 
     }
-
-    Vue.component('view-table-row', Row);
 </script>
 
 <style lang="scss" scoped>

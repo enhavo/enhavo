@@ -1,5 +1,5 @@
 <template>
-    <div class="view-table-col-sub" v-bind:style="{ width: width }">
+    <div class="view-table-col-sub">
         <template v-for="row in rows">
             <component 
                 class="view-table-col-child" 
@@ -20,20 +20,23 @@
         name: string = 'view-table-col-date';
 
         @Prop()
-        width: string;
-
-        @Prop()
-        rows: Array<object>;
-
-        @Prop()
         data: any;
 
-        getRowData(row: string): any {
-            if( this.data.hasOwnProperty(row) ) {
-                return this.data[row];
-            } else {
-                return null;
+        @Prop()
+        column: any;
+
+        get rows(): object {
+            if( this.column.hasOwnProperty('rows') ) {
+                return this.column['rows'];
             }
+            return null;
+        }
+
+        getRowData(row: string): any {
+            if( this.data.hasOwnProperty(row) ) { // TODO check if clause
+                return this.data[row];
+            }
+            return null;
         }
     }
 </script>

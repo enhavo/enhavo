@@ -153,6 +153,10 @@ class AppController extends AbstractController
                         'label' => 'Id',
                         'component' => 'view-table-col-text',
                         'width' => 2,
+                        'style' => [
+                            'color' => 'red',
+                            'background-color' => 'purple'
+                        ]
                     ],
                     [
                         'sortable' => true,

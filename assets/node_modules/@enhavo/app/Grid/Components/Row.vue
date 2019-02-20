@@ -2,13 +2,13 @@
     <div class="view-table-row" @click="open()">
 
         <template v-for="column in columns">
-            <component class="view-table-col" 
+            <component 
+                class="view-table-col" 
                 v-bind:is="column.component" 
                 v-bind:key="column.key" 
-                v-bind:width="calculateWidth(column.width)"
-                v-bind:rows="column.rows"
-                v-bind:data="getColumnData(column.key)"
-            ></component>
+                v-bind:column="column" 
+                v-bind:style="getColumnStyle(column)" 
+                v-bind:data="getColumnData(column.key)"></component>
         </template>
 
     </div>
@@ -21,6 +21,10 @@
     import ColumnText from "./ColumnText.vue"
     import ColumnDate from "./ColumnDate.vue"
     import ColumnSub from "./ColumnSub.vue"
+
+    Vue.component('view-table-col-text', ColumnText);
+    Vue.component('view-table-col-date', ColumnDate);
+    Vue.component('view-table-col-sub', ColumnSub);
 
     @Component
     export default class Row extends Vue {
@@ -40,22 +44,26 @@
             }));
         }
 
-        calculateWidth(parts: number): string {
+        calcColumnWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
         }
 
-        getColumnData(column: string): any {
+        getColumnStyle(column: any): object {
+            let styles: object = Object.assign( 
+                {}, 
+                column.style, 
+                {width: this.calcColumnWidth(column.width)} );
+
+            return styles;
+        }
+
+        getColumnData(column: string): object {
             if( this.data.hasOwnProperty(column) ) {
                 return this.data[column];
-            } else {
-                return null;
             }
+            return null;
         }
     }
-
-    Vue.component('view-table-col-text', ColumnText);
-    Vue.component('view-table-col-date', ColumnDate);
-    Vue.component('view-table-col-sub', ColumnSub);
 </script>
 
 <style lang="scss" scoped>
