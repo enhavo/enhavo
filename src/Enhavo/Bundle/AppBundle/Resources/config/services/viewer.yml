@@ -20,10 +20,10 @@ services:
             - '@router'
 
     Enhavo\Bundle\AppBundle\Viewer\Viewer\IndexViewer:
+        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\AppViewer
         public: true
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@enhavo_app.action_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

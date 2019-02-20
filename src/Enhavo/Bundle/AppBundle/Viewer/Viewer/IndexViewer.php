@@ -8,13 +8,27 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IndexViewer extends AppViewer
 {
+    /**
+     * @var ActionManager
+     */
+    private $actionManager;
+
+    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, ActionManager $actionManager)
+    {
+        parent::__construct($requestConfigurationFactory, $util);
+        $this->actionManager = $actionManager;
+    }
+
     public function getType()
     {
         return 'index';
@@ -24,34 +38,15 @@ class IndexViewer extends AppViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-
-        $parameters->set('blocks', $this->mergeConfigArray([
-            $this->createBlock($options),
-            $options['blocks'],
-            $this->getViewerOption('blocks', $requestConfiguration)
-        ]));
-
-        $parameters->set('actions', $this->mergeConfigArray([
+        $actions = $this->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
-        ]));
-    }
+        ]);
 
-    private function createBlock($options)
-    {
-        /** @var MetadataInterface $metadata */
-        $metadata = $options['metadata'];
-
-        $default = [
-            'table' => [
-                'type' => 'table',
-                'table_route' => sprintf('%s_%s_table', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-                'update_route' => sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            ]
-        ];
-
-        return $default;
+        $parameters->set('data', [
+            'actions' => $this->actionManager->createActionsViewData($actions)
+        ]);
     }
 
     private function createActions($options)
@@ -72,5 +67,15 @@ class IndexViewer extends AppViewer
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);
+
+        $optionsResolver->setDefaults([
+            'javascripts' => [
+                'enhavo/index'
+            ],
+            'stylesheets' => [
+                'enhavo/index'
+            ],
+            'actions' => []
+        ]);
     }
 }

@@ -35,10 +35,15 @@ label:
   changePassword: 'Change password'
   goToPage: 'Go to Page'
   greeting: 'Hello username'
+  ok: 'Ok'
 message:
   duplicate:
     confirm: 'Warning: This form will be closed without saving. Do you really want to continue?'
     success: 'The element has been duplicated successfully'
+  delete:
+    confirm: 'Warning: Do you really want to delete this document?'
+  close:
+    confirm: 'Warning: You made changes on this document. Do you really want to quit without saving?'
 tab:
   label:
     category: 'Category'

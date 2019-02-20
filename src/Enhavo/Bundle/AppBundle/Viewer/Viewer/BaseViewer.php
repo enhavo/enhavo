@@ -36,15 +36,9 @@ class BaseViewer extends AbstractViewer
             $this->getViewerOption('stylesheets', $requestConfiguration)
         ]));
 
-        $parameters->set('requireJsApps', $this->mergeConfigArray([
-            $this->container->getParameter('enhavo_app.apps'),
-            $options['apps'],
-            $this->getViewerOption('apps', $requestConfiguration)
-        ]));
-
-        $parameters->set('translationDomain', $this->mergeConfig([
+        $parameters->set('translation_domain', $this->mergeConfig([
             $options['translation_domain'],
-            $this->getViewerOption('translationDomain', $requestConfiguration)
+            $this->getViewerOption('translation_domain', $requestConfiguration)
         ]));
 
         foreach($options['parameters'] as $key => $value) {
@@ -58,7 +52,6 @@ class BaseViewer extends AbstractViewer
         $optionsResolver->setDefaults([
             'javascripts' => [],
             'stylesheets' => [],
-            'apps' => [],
             'translation_domain' => null,
             'template' => 'EnhavoAppBundle:Viewer:base.html.twig',
             'parameters' => []

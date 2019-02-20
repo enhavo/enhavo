@@ -5,5 +5,5 @@ enhavo_app:
             label: dashboard.role.label.index
             translationDomain: EnhavoDashboardBundle
 
-    stylesheets:
-      - '@EnhavoDashboardBundle/Resources/public/css/dashboard.css'
+#    stylesheets:
+#      - '@EnhavoDashboardBundle/Resources/public/css/dashboard.css'

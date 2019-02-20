@@ -42,6 +42,7 @@ label:
   changePassword: 'Passwort ändern'
   goToPage: 'Zur Seite'
   greeting: 'Hallo username'
+  ok: 'Ok'
 message:
   confirm:
     batch:
@@ -52,6 +53,10 @@ message:
   duplicate:
     confirm: 'Warnung: Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?'
     success: 'Das Element wurde erfolgreich dupliziert'
+  delete:
+    confirm: 'Warnung: Wollen Sie dieses Doument wirklich löschen?'
+  close:
+    confirm: 'Warning: Sie dieses Doument wirklich schließen? Alle Änderungen gehen verloren'
 tab:
   label:
     category: 'Kategorie'

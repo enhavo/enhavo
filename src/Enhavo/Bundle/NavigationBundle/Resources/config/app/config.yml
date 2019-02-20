@@ -1,6 +1,6 @@
 enhavo_app:
-    stylesheets:
-      - '@EnhavoNavigationBundle/Resources/public/css/style.css'
+#    stylesheets:
+#      - '@EnhavoNavigationBundle/Resources/public/css/style.css'
       
     roles:
         enhavo_navigation_navigation_index:

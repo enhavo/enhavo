@@ -12,7 +12,7 @@ enhavo_setting_setting_index:
                 actions:
                     create:
                         type: create
-                        display: false
+                        hidden: true
 
 enhavo_setting_setting_update:
     options:
