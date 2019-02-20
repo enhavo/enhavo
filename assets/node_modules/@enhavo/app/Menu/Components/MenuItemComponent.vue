@@ -41,7 +41,7 @@
                     dispatcher.dispatch(new CreateEvent({
                         label: 'table',
                         component: 'iframe-view',
-                        url: '/admin/view'
+                        url: this.data.url
                     }));
                 })
                 .catch(() => {})

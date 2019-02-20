@@ -1,15 +1,4 @@
-@import "~compass-mixins/lib/_animate.scss";
-@import "~compass-mixins/lib/_compass.scss";
-@import "~@enhavo/font/dist/enhavo-icons.css";
-@import "~@ibm/plex/css/ibm-plex.css";
-@import "variables";
-@import "reset";
-@import "~compass-mixins/lib/_animate.scss";
-@import "blueprints";
-@import "custom_animations";
-
-html {font-size:$fontSize;line-height:$lineHeight;}
-body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;}
+@import "base";
 
 .app {
   .sidebar {background:$color2;
@@ -30,19 +19,6 @@ body {font-family:$fontFamily;font-weight:$fontRegular;margin:0;padding:0;}
       .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;}
     }
   }
-}
-
-.window {
-  overflow-x: hidden; width: 100%; min-height: 100%; position: relative;
-  &:after { content: ""; display: table; clear: both; }
-  .window-navigation-menu { width: 200px; min-height: 100%; float: left;}
-  .window-navigation-content { width: calc(100% - 200px) ; min-height: 100%; float: left}
-  .window-content-full { width: 100%; float: left}
-  .window-content-half { width: 50%; min-height: 100%; float: left}
-  .window-hidden { display: none }
-  .window-overlay { position: absolute; top: 0; left: 0; width: 100%; min-height: 100%; background-color: rgba(0, 0, 0, 0.3)}
-  .window-bar { width: 100%; height: 50px; position: absolute; top: 0; }
-  .window-bar-content { width: 100%; height: calc(100% - 50px); margin-top: 50px;}
 }
 
 .navigation {

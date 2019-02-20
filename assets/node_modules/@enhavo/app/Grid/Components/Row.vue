@@ -53,7 +53,6 @@
         }
     }
 
-
     Vue.component('view-table-col-text', ColumnText);
     Vue.component('view-table-col-date', ColumnDate);
     Vue.component('view-table-col-sub', ColumnSub);

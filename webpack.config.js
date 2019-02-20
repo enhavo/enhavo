@@ -1,5 +1,4 @@
 var Encore = require('@symfony/webpack-encore');
-var VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 Encore
   .setOutputPath('public/build/')
@@ -7,12 +6,14 @@ Encore
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(!Encore.isProduction())
+  .splitEntryChunks()
   .autoProvidejQuery()
   .enableVueLoader()
   .enableSassLoader()
   .enableTypeScriptLoader()
 
-  .addEntry('enhavo/app', './assets/app')
+  .addEntry('enhavo/main', './assets/main')
+  .addEntry('enhavo/index', './assets/index')
   .addEntry('enhavo/view', './assets/view')
 ;
 

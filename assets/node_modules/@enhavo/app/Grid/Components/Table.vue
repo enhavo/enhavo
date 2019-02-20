@@ -30,7 +30,7 @@
         mounted() {
             this.rows = this.retrieveRowData(this.apiUrl);
         }
-    
+
         get columnLabels(): Array<string> {
             let labels = []
 
@@ -50,13 +50,13 @@
                     this.rows = response.data
                 })
                 .catch(error => {
-                    
+
                 })
                 .then(() => {
                     this.loading = false;
                 })
         }
-        
+
     }
 
     Vue.component('view-table-row', Row);
