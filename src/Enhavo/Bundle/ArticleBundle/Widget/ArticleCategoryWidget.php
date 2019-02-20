@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ArticleBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 
 class ArticleCategoryWidget extends AbstractType implements WidgetInterface
 {

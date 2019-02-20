@@ -10,7 +10,7 @@
 namespace Enhavo\Bundle\UserBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 

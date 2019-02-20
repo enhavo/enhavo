@@ -5,7 +5,7 @@
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 
 
-Enhavo
+![alt text](assets/images/enhavo.svg "enhavo")
 ------
 
 The enhavo CMS is a open source PHP project based on the fullstack Symfony framework and uses awesome Sylius components
@@ -33,7 +33,7 @@ If you want to use enhavo CMS, we recommend to use one of the enhavo editions:
 Demo
 ----
 
-Use username **admin** with password **admin** to log in into the backend.
+Use username **admin@enhavo.com** with password **admin** to log in into the backend.
 
 [demo.enhavo.com](http://demo.enhavo.com/admin/login)
 

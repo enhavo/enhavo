@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ContentBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PaginationWidget extends AbstractType implements WidgetInterface
