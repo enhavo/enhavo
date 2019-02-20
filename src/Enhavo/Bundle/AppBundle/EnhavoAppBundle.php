@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnhavoAppBundle extends Bundle
 {
-    const VERSION = '0.6.0';
+    const VERSION = '0.7.0';
 
     public function build(ContainerBuilder $container)
     {

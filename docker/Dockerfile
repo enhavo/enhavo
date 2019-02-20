@@ -4,6 +4,7 @@ WORKDIR /var/www/
 
 RUN apt-get update && \
     apt-get -y install git && \
+    a2enmod rewrite && \
     rm -r -f /var/www/html && \
     git clone https://github.com/enhavo/enhavo.git /var/www && \
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
