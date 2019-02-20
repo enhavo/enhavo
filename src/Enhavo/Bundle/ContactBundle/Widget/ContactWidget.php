@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ContactBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContactBundle\Configuration\ConfigurationFactory;
-use Enhavo\Bundle\ThemeBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class ContactWidget extends AbstractType implements WidgetInterface
