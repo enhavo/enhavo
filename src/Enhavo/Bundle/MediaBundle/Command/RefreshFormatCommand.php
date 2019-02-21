@@ -13,8 +13,8 @@ use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -66,8 +66,8 @@ class RefreshFormatCommand extends Command
         $this
             ->setName('enhavo:media:refresh-format')
             ->setDescription('Recreate Format')
-            ->addOption('format', 'format', InputArgument::OPTIONAL, 'format to refresh')
-            ->addOption('id', 'id', InputArgument::OPTIONAL, 'refresh only id')
+            ->addOption('format', 'format', InputOption::VALUE_OPTIONAL, 'format to refresh')
+            ->addOption('id', 'id', InputOption::VALUE_OPTIONAL, 'refresh only id')
         ;
     }
 
