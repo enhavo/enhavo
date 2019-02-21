@@ -1,12 +1,14 @@
+![alt text](assets/images/enhavo.svg "enhavo")
+<br/>
+<br/>
+
 [![License](https://img.shields.io/packagist/l/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
-[![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg)](https://travis-ci.org/enhavo/enhavo)
+[![Build status...](https://api.travis-ci.org/enhavo/enhavo.svg?branch=master)](https://travis-ci.org/enhavo/enhavo)
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/gseidel/enhavo%2Fenhavo%2Fenhavo?type=cf-1)]( https://g.codefresh.io/public/accounts/gseidel/pipelines/enhavo/enhavo/enhavo)
 [![Scrutinizer](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
 [![Coverage](https://scrutinizer-ci.com/g/enhavo/enhavo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/enhavo/enhavo)
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 
-
-![alt text](assets/images/enhavo.svg "enhavo")
-------
 
 The enhavo CMS is a open source PHP project based on the fullstack Symfony framework and uses awesome Sylius components
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
@@ -18,7 +20,7 @@ This is the main repository of the enhavo project. If you want to contribute you
 After checkout out just use the installer to create the database and the admin user.
 
 ```bash
-$ app/console enhavo:install
+$ bin/console enhavo:install
 ```
 
 Editions
@@ -36,6 +38,15 @@ Demo
 Use username **admin@enhavo.com** with password **admin** to log in into the backend.
 
 [demo.enhavo.com](http://demo.enhavo.com/admin/login)
+
+Docker
+------
+
+To run the demo with docker you can use following command
+
+```bash
+$ docker run -d -e DATABASE_URL='mysql://root:root@mysql:3306/enhavo' --link 'mysql:mysql' -p '80:80' enhavo/enhavo:master
+```
 
 Documentation
 -------------
