@@ -3,6 +3,7 @@ parameters:
     enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
     enhavo_media.controller.file.class: Enhavo\Bundle\MediaBundle\Controller\FileController
     enhavo_media.controller.upload.class: Enhavo\Bundle\MediaBundle\Controller\UploadController
+    enhavo_media.file_storage_path: '%kernel.project_dir%/var/media'
 
 services:
     enhavo_media.form.file:
@@ -70,7 +71,7 @@ services:
     enhavo_media.storage.local_file_storage:
         class: Enhavo\Bundle\MediaBundle\Storage\LocalFileStorage
         arguments:
-            - '%kernel.project_dir%/var/media'
+            - '%enhavo_media.file_storage_path%'
             - '@filesystem'
 
     enhavo_media.provider.default_provider:
