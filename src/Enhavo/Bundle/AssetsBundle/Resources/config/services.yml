@@ -5,7 +5,7 @@ services:
         class: Enhavo\Bundle\AssetsBundle\RequireJS\Configuration
         arguments:
             - '%enhavo_assets.require_js%'
-#            - '@templating.helper.assets'
+            - '@assets.packages'
 
     enhavo_assets.require_js.configuration_renderer:
         class: Enhavo\Bundle\AssetsBundle\RequireJS\ConfigurationRenderer

@@ -3,7 +3,7 @@
 
 namespace Enhavo\Bundle\AssetsBundle\RequireJS;
 
-use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+use Symfony\Component\Asset\Packages;
 
 /**
  * Configuration.php
@@ -19,13 +19,14 @@ class Configuration
     private $configuration;
 
     /**
-     * @var AssetsHelper
+     * @var Packages
      */
-    private $assetsHelper;
+    private $packages;
 
-    public function __construct($configuration)
+    public function __construct($configuration, Packages $packages)
     {
         $this->configuration = $configuration;
+        $this->packages = $packages;
     }
 
     public function getConfiguration()
@@ -52,10 +53,9 @@ class Configuration
             }
         }
 
-        #ToDo get asset helper for version
-//        if($this->assetsHelper->getVersion()) {
-//            $config['urlArgs'] = $this->assetsHelper->getVersion();
-//        }
+        if($this->packages->getVersion('')) {
+            $config['urlArgs'] = $this->packages->getVersion('');
+        }
 
         return $config;
     }
