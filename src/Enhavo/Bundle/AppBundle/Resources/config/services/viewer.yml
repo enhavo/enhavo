@@ -30,11 +30,11 @@ services:
             - { name: enhavo.viewer, alias: index }
 
     Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer:
+        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer
         public: true
         arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
             - '%enhavo_app.form_themes%'
+            - '@enhavo_app.action_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

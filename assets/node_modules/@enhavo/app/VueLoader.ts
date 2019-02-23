@@ -1,6 +1,7 @@
 import Vue, {VueConstructor} from "vue";
 import AppInterface from "./AppInterface";
 
+
 export default class VueLoader
 {
     private id: string;

@@ -14,7 +14,7 @@ const index = new Index(data);
 const v = new VueLoader('app', index, IndexComponent);
 v.load();
 
-let view = new View();
+let view = new View(dispatcher);
 dispatcher.dispatch(new LoadedEvent(view.getId()));
 
 dispatcher.on('close', (event: CloseEvent) => {

@@ -9,7 +9,7 @@ import Index from '@enhavo/app/Index/Index';
 import IndexComponent from '@enhavo/app/Index/Components/IndexComponent.vue';
 import VueLoader from "@enhavo/app/VueLoader";
 
-let view = new View();
+let view = new View(dispatcher);
 dispatcher.dispatch(new LoadedEvent(view.getId()));
 
 dispatcher.on('close', (event: CloseEvent) => {

@@ -35,7 +35,7 @@ class CloseActionType extends AbstractActionType implements ActionTypeInterface
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'cancel-action',
+            'component' => 'close-action',
             'label' => 'label.close',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'close',

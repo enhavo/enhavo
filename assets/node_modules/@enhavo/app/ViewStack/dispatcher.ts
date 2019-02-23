@@ -3,8 +3,9 @@ import Event from "./Event/Event";
 import View from "./View"
 import * as _ from 'lodash';
 
-let view = new View();
-let dispatcher = new EventDispatcher(view);
+let dispatcher = new EventDispatcher();
+let view = new View(dispatcher);
+dispatcher.setView(view);
 
 dispatcher.onDispatch((event: Event) => {
     if(event.origin == null) {

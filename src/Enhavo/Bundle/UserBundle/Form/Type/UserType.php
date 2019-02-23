@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

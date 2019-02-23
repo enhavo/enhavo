@@ -15,6 +15,7 @@ Encore
   .addEntry('enhavo/main', './assets/main')
   .addEntry('enhavo/index', './assets/index')
   .addEntry('enhavo/view', './assets/view')
+  .addEntry('enhavo/form', './assets/form')
 ;
 
 var config = Encore.getWebpackConfig();

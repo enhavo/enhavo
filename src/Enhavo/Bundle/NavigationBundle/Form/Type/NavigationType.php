@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
+use Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Media\ExtensionManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;

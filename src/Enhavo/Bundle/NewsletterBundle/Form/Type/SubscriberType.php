@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

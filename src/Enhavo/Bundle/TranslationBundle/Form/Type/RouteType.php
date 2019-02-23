@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\RouteType as AppRouteType;
+use Enhavo\Bundle\FormBundle\Form\Type\RouteType as AppRouteType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RouteType extends AppRouteType

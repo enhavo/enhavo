@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ProjectBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

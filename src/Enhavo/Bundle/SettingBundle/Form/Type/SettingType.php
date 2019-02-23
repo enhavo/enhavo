@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\SettingBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
-use Enhavo\Bundle\AppBundle\Form\Type\DateType;
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Enhavo\Bundle\ShopBundle\Form\Type\CurrencyType;

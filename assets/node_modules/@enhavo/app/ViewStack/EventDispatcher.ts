@@ -9,10 +9,8 @@ export default class EventDispatcher
     private events: EventStore[] = [];
     private view: View;
 
-    constructor(view: View)
+    constructor()
     {
-        this.view = view;
-
         this.on('reject', (event: RejectEvent) => {
             this.events.forEach((eventStore: EventStore) => {
                 if(eventStore.event.uuid == event.uuid) {
@@ -30,6 +28,11 @@ export default class EventDispatcher
                 }
             });
         });
+    }
+
+    public setView(view: View)
+    {
+        this.view = view;
     }
 
     private removeEvent(eventStore: EventStore)

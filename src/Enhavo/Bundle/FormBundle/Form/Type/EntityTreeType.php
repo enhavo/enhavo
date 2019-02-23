@@ -6,7 +6,7 @@
  * Time: 23:45
  */
 
-namespace Enhavo\Bundle\AppBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Form\Helper\EntityTreeChoiceBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

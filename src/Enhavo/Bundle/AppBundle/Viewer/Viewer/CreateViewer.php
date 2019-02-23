@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateViewer extends AbstractViewer
+class CreateViewer extends BaseViewer
 {
     /**
      * @var string[]
@@ -27,14 +27,27 @@ class CreateViewer extends AbstractViewer
     private $formThemes;
 
     /**
+     * @var ActionManager
+     */
+    private $actionManager;
+
+    /**
      * CreateViewer constructor.
      * @param RequestConfigurationFactory $requestConfigurationFactory
      * @param ViewerUtil $util
+     * @param array $formThemes
+     * @param ActionManager $actionManager
      */
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, array $formThemes)
+    public function __construct(
+        RequestConfigurationFactory $requestConfigurationFactory,
+        ViewerUtil $util,
+        array $formThemes,
+        ActionManager $actionManager
+    )
     {
         parent::__construct($requestConfigurationFactory, $util);
         $this->formThemes = $formThemes;
+        $this->actionManager = $actionManager;
     }
 
     public function getType()
@@ -70,6 +83,16 @@ class CreateViewer extends AbstractViewer
 
         $parameters->set('form', $form->createView());
 
+        $actions = $this->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->getViewerOption('actions', $requestConfiguration)
+        ]);
+
+        $parameters->set('data', [
+            'actions' => $this->actionManager->createActionsViewData($actions)
+        ]);
+
         $parameters->set('tabs', $this->mergeConfigArray([
             [
                 'main' => [
@@ -103,20 +126,29 @@ class CreateViewer extends AbstractViewer
             $this->getViewerOption('form.themes', $requestConfiguration)
         ]));
 
-        $parameters->set('buttons', $this->mergeConfigArray([
-            'buttons' => [
-                'cancel' => [
-                    'type' => 'cancel',
-                ],
-                'save' => [
-                    'type' => 'save',
-                ]
-            ],
-            $options['buttons'],
-            $this->getViewerOption('buttons', $requestConfiguration)
-        ]));
+        $parameters->set('data', [
+            'actions' => $this->actionManager->createActionsViewData($actions)
+        ]);
 
-        $parameters->set('data', $options['resource']);
+        $parameters->set('resource', $options['resource']);
+    }
+
+    private function createActions($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+
+        $default = [
+            'save' => [
+                'type' => 'save',
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            ],
+            'close' => [
+                'type' => 'close'
+            ]
+        ];
+
+        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -124,13 +156,19 @@ class CreateViewer extends AbstractViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'tabs' => [],
-            'buttons' => [],
+            'javascripts' => [
+                'enhavo/form'
+            ],
+            'stylesheets' => [
+                'enhavo/form'
+            ],
+            'actions' => [],
             'form' => null,
             'form_themes' => [],
             'form_action' => null,
             'form_action_parameters' => [],
             'form_template' => 'EnhavoAppBundle:View:tab.html.twig',
-            'template' => 'EnhavoAppBundle:Resource:create.html.twig'
+            'template' => 'EnhavoAppBundle:Viewer:form.html.twig'
         ]);
     }
 }

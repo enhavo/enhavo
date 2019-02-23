@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\ProjectBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
-use Enhavo\Bundle\AppBundle\Form\Type\DateType;
-use Enhavo\Bundle\AppBundle\Form\Type\ListType;
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateType;
+use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Entity\Grid;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;

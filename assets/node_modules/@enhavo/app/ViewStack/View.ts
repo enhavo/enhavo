@@ -1,11 +1,14 @@
-
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
 export default class View
 {
-    private id: number|null;
+    private readonly id: number|null;
+    private dispatcher: EventDispatcher;
 
-    constructor() {
+    constructor(dispatcher: EventDispatcher)
+    {
         this.id = this.getIdFromUrl();
+        this.dispatcher = dispatcher;
     }
 
     private getIdFromUrl(): number|null
