@@ -1,9 +1,7 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 
-export default class PreviewAction implements ActionInterface
+export default class PreviewAction extends AbstractAction
 {
-    component: string;
-
     execute(): void
     {
         console.log('preview');

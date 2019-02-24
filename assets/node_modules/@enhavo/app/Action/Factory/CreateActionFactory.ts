@@ -1,6 +1,7 @@
 import CreateAction from "@enhavo/app/Action/Model/CreateAction";
+import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
 
-export default class CreateActionFactory
+export default class CreateActionFactory extends AbstractFactory
 {
     createFromData(data: object): CreateAction
     {
@@ -13,6 +14,6 @@ export default class CreateActionFactory
     }
 
     createNew(): CreateAction {
-        return new CreateAction()
+        return new CreateAction(this.application);
     }
 }

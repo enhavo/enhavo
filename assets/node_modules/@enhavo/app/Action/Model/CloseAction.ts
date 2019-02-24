@@ -1,11 +1,11 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
+import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 
-export default class CloseAction implements ActionInterface
+export default class CloseAction extends AbstractAction
 {
-    component: string;
-
     execute(): void
     {
-        console.log('close');
+        let id = this.application.getView().getId();
+        this.application.getEventDispatcher().dispatch(new CloseEvent(id));
     }
 }

@@ -1,6 +1,7 @@
 import CloseAction from "@enhavo/app/Action/Model/CloseAction";
+import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
 
-export default class CloseActionFactory
+export default class CloseActionFactory extends AbstractFactory
 {
     createFromData(data: object): CloseAction
     {
@@ -11,6 +12,6 @@ export default class CloseActionFactory
     }
 
     createNew(): CloseAction {
-        return new CloseAction()
+        return new CloseAction(this.application)
     }
 }

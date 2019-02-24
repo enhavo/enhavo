@@ -1,6 +1,7 @@
 import FilterAction from "@enhavo/app/Action/Model/FilterAction";
+import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
 
-export default class FilterActionFactory
+export default class FilterActionFactory extends AbstractFactory
 {
     createFromData(data: object): FilterAction
     {
@@ -11,6 +12,6 @@ export default class FilterActionFactory
     }
 
     createNew(): FilterAction {
-        return new FilterAction()
+        return new FilterAction(this.application);
     }
 }

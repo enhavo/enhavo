@@ -1,9 +1,7 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 
-export default class FilterAction implements ActionInterface
+export default class FilterAction extends AbstractAction
 {
-    component: string;
-
     execute(): void
     {
         console.log('filter');

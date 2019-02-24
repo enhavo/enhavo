@@ -1,15 +1,15 @@
 import DataLoader from '../DataLoader';
 import ViewStack from '../ViewStack/ViewStack';
 
-export default class Main
+export default class MainApp
 {
     private data: any;
     private viewStack: ViewStack;
 
-    constructor(loader: DataLoader)
+    constructor(loader: DataLoader, viewStack: ViewStack)
     {
         this.data = loader.load();
-        this.viewStack = new ViewStack(this.data.view_stack);
+        this.viewStack = viewStack;
     }
 
     getData(): any

@@ -1,9 +1,7 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 
-export default class DeleteAction implements ActionInterface
+export default class DeleteAction extends AbstractAction
 {
-    component: string;
-
     execute(): void
     {
         console.log('delete');

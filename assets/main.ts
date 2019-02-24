@@ -1,9 +1,4 @@
-import VueLoader from '@enhavo/app/VueLoader';
-import DataLoader from '@enhavo/app/DataLoader';
-import Main from '@enhavo/app/Main/Main';
-import App from '@enhavo/app/Main/Components/MainComponent.vue';
-import "@enhavo/app/assets/styles/app.scss"
-const data = new DataLoader('data');
-const main = new Main(data);
-const v = new VueLoader('app', main, App);
-v.load();
+import Application from "@enhavo/app/Main/MainApplication";
+import MainComponent from "@enhavo/app/Main/Components/MainComponent.vue";
+
+Application.getVueLoader().load(MainComponent);

@@ -1,16 +1,14 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
-import dispatcher from '../../ViewStack/dispatcher';
 import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 
-export default class CreateAction implements ActionInterface
+export default class CreateAction extends AbstractAction
 {
-    component: string;
     label: string;
     url: string;
 
     execute(): void
     {
-        dispatcher.dispatch(new CreateEvent({
+        this.application.getEventDispatcher().dispatch(new CreateEvent({
             label: 'edit',
             component: 'iframe-view',
             url: this.url

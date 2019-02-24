@@ -13,10 +13,13 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import registry from "@enhavo/app/Action/registry"
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
+
+    let application = <ActionAwareApplication>ApplicationBag.getApplication();
 
     @Component({
-        components: registry.getComponents()
+        components: application.getActionRegistry().getComponents()
     })
     export default class ActionBar extends Vue {
         @Prop()

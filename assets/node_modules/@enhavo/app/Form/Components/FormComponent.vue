@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
+import '@enhavo/app/assets/styles/base.scss'
 import Table from "../../Grid/Components/Table.vue"
 import * as uuidv4 from "uuid/v4";
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";

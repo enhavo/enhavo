@@ -1,9 +1,7 @@
-import ActionInterface from "@enhavo/app/Action/ActionInterface";
+import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 
-export default class DropdownAction implements ActionInterface
+export default class DropdownAction extends AbstractAction
 {
-    component: string;
-
     execute(): void
     {
         console.log('dropdown');

@@ -1,5 +1,4 @@
-import Application from "@enhavo/app/Form/Application";
-import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
+import Application from "@enhavo/app/Form/FormApplication";
+import FormComponent from "@enhavo/app/Form/Components/FormComponent.vue";
 
-Application.getVueLoader().load();
-Application.getDispatcher().dispatch(new LoadedEvent(Application.getView().getId()));
+Application.getVueLoader().load(FormComponent);

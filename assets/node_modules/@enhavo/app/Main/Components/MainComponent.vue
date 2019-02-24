@@ -17,6 +17,7 @@ import Menu from "../../Menu/Components/Menu.vue"
 import Toolbar from "../../Toolbar/Components/Toolbar.vue"
 import ViewStackData from "../../ViewStack/ViewStackData"
 import QuickMenu from "../../Toolbar/QuickMenu"
+import '@enhavo/app/assets/styles/app.scss'
 
 @Component({
     components: {

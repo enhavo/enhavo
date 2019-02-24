@@ -1,5 +1,6 @@
 import Event, {ResolveEvent, RejectEvent} from './Event/Event';
 import View from './View';
+import * as _ from 'lodash';
 
 export default class EventDispatcher
 {
@@ -9,8 +10,51 @@ export default class EventDispatcher
     private events: EventStore[] = [];
     private view: View;
 
-    constructor()
+    constructor(view: View)
     {
+        this.view = view;
+
+        this.onDispatch((event: Event) => {
+            if(event.origin == null) {
+                event.origin = this.view.getId();
+            }
+            event.history.push(window.location.href);
+            if(event.ttl == null) {
+                event.ttl = view.isRoot() ? 2 : 3;
+            }
+        });
+
+        // receive message events
+        let regex = new RegExp('^view_stack_event');
+        window.addEventListener("message", (event) => {
+            let data = event.data;
+            if(typeof data == 'string' && regex.test(data)) {
+                data = data.substring(17);
+                let eventData = JSON.parse(data);
+                let newEvent = new Event('');
+                _.extend(newEvent, eventData);
+
+                if(this.isDebug()) {
+                    console.groupCollapsed('receive event ('+ newEvent.name+') on ' + view.getId());
+                    console.dir(newEvent);
+                    console.groupEnd();
+                }
+
+                this.dispatch(newEvent);
+            }
+        }, false);
+
+        // send event to parent window
+        if(window.parent && !view.isRoot()) {
+            this.all(function (event: Event) {
+                if(event.origin == view.getId()) {
+                    let serializeEvent = 'view_stack_event|'+JSON.stringify(event);
+                    window.parent.postMessage(serializeEvent, '*');
+                }
+            });
+        }
+
+
         this.on('reject', (event: RejectEvent) => {
             this.events.forEach((eventStore: EventStore) => {
                 if(eventStore.event.uuid == event.uuid) {
@@ -28,11 +72,6 @@ export default class EventDispatcher
                 }
             });
         });
-    }
-
-    public setView(view: View)
-    {
-        this.view = view;
     }
 
     private removeEvent(eventStore: EventStore)
@@ -80,7 +119,7 @@ export default class EventDispatcher
             });
         });
         // set empty function to prevent "Uncaught (in promise)" error
-        promise.then((data:object) => {}, (data:object) => {});
+        promise.catch( (data:object) => {});
         return promise;
     }
 

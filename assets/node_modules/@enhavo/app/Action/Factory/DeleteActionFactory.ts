@@ -1,6 +1,7 @@
 import DeleteAction from "@enhavo/app/Action/Model/DeleteAction";
+import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
 
-export default class DeleteActionFactory
+export default class DeleteActionFactory extends AbstractFactory
 {
     createFromData(data: object): DeleteAction
     {
@@ -11,6 +12,6 @@ export default class DeleteActionFactory
     }
 
     createNew(): DeleteAction {
-        return new DeleteAction()
+        return new DeleteAction(this.application);
     }
 }
