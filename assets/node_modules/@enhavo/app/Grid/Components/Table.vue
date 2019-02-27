@@ -1,6 +1,8 @@
 <template>
     <div class="view-table">
 
+        <view-table-pagination v-bind:page="page"></view-table-pagination>
+
         <div class="view-table-head">
             <div 
                 v-for="column in columns" 
@@ -22,22 +24,29 @@
             Fetching data...
         </template>
 
+        <view-table-pagination></view-table-pagination>
+
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import Row from "./Row.vue"
+    import Pagination from "./Pagination.vue"
     import axios from 'axios';
 
-    @Component({
-        components: {'view-table-row': Row}
-    })
+    Vue.component('view-table-row', Row);
+    Vue.component('view-table-pagination', Pagination);
+
+    @Component
     export default class Table extends Vue {
         name: string = 'view-table';
     
         @Prop()
-        columns: any;
+        columns: Array<object>;
+    
+        @Prop()
+        page: Array<object>;
 
         loading: boolean = false;
         rows: any = [];

@@ -125,10 +125,13 @@ class AppController extends AbstractController
         return $this->render('EnhavoAppBundle:App:view.html.twig', [
             'data' => [
                 'view_id' => $id,
-                'page' => 1,
-                'pagination' => 100,
-                'pagination_steps' => [
-                    5, 10, 50, 100, 500
+                'page' => [
+                    'current' => 1,
+                    'last' => 96,
+                    'pagination' => 100,
+                    'pagination_steps' => [
+                        5, 10, 50, 100, 500
+                    ]
                 ],
                 'filters' => [
                     [
