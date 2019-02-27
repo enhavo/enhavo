@@ -23,6 +23,12 @@ class BatchManager
         $this->collector = $collector;
     }
 
+    public function createBatchesViewData(array $configuration)
+    {
+        $data = [];
+        return $data;
+    }
+
     public function executeBatch($resources, RequestConfiguration $requestConfiguration)
     {
         $type = $requestConfiguration->getBatchType();

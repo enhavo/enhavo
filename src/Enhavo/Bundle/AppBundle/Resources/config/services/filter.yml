@@ -23,6 +23,9 @@ services:
             - '@enhavo_app.factory.filter'
             - '@enhavo_app.factory.filter_query'
 
+    enhavo_app.filter_manager:
+        class: Enhavo\Bundle\AppBundle\Filter\FilterManager
+
     Enhavo\Bundle\AppBundle\Filter\Filter\TextFilter:
         public: true
         calls:

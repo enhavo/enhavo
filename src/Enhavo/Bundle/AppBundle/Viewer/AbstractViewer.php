@@ -33,6 +33,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
      * AbstractViewer constructor.
      *
      * @param RequestConfigurationFactory $requestConfigurationFactory
+     * @param ViewerUtil $util
      */
     public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util)
     {

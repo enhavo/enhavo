@@ -24,6 +24,9 @@ services:
         public: true
         arguments:
             - '@enhavo_app.action_manager'
+            - '@enhavo_app.batch_manager'
+            - '@enhavo_app.filter_manager'
+            - '@enhavo_app.column_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

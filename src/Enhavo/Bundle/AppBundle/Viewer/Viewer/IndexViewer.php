@@ -9,11 +9,15 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
+use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Filter\FilterManager;
+use Enhavo\Bundle\AppBundle\Table\ColumnManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IndexViewer extends AppViewer
@@ -23,10 +27,35 @@ class IndexViewer extends AppViewer
      */
     private $actionManager;
 
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, ActionManager $actionManager)
-    {
+    /**
+     * @var BatchManager
+     */
+    private $batchManager;
+
+    /**
+     * @var FilterManager
+     */
+    private $filterManager;
+
+    /**
+     * @var ColumnManager
+     */
+    private $columnManager;
+
+
+    public function __construct(
+        RequestConfigurationFactory $requestConfigurationFactory,
+        ViewerUtil $util,
+        ActionManager $actionManager,
+        BatchManager $batchManager,
+        FilterManager $filterManager,
+        ColumnManager $columnManager
+    ) {
         parent::__construct($requestConfigurationFactory, $util);
         $this->actionManager = $actionManager;
+        $this->batchManager = $batchManager;
+        $this->filterManager = $filterManager;
+        $this->columnManager = $columnManager;
     }
 
     public function getType()
@@ -44,9 +73,58 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('actions', $requestConfiguration)
         ]);
 
-        $parameters->set('data', [
-            'actions' => $this->actionManager->createActionsViewData($actions)
+        $tableRoute = $this->mergeConfig([
+            $this->getTableRoute($options),
+            $options['table_route'],
+            $this->getViewerOption('table_route', $requestConfiguration)
         ]);
+
+        $tableConfiguration = $this->util->createConfigurationFromRoute($tableRoute);
+
+        $filterData = $tableConfiguration->getFilters();
+        $columnData = $this->getViewerOption('columns', $tableConfiguration);
+
+        $batchRoute = $this->mergeConfig([
+            $this->getBatchRoute($options),
+            $options['batch_route'],
+            $this->getViewerOption('batch_route', $requestConfiguration)
+        ]);
+
+        $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
+        $batchData = $batchConfiguration->getBatches();
+
+        /** @var Request $request */
+        $request = $requestConfiguration->getRequest();
+
+        $parameters->set('data', [
+            'actions' => $this->actionManager->createActionsViewData($actions),
+            'batches' => $this->batchManager->createBatchesViewData($batchData),
+            'columns' => $this->columnManager->createColumnsViewData($columnData),
+            'filters' => $this->filterManager->createFiltersViewData($filterData),
+            'view_id' => $request->get('view_id', null),
+            'batch' => null,
+            'page' => $request->get('page', 1),
+            'pagination' => 100,
+            'pagination_steps' => [
+                5, 10, 50, 100, 500
+            ],
+        ]);
+
+        return;
+    }
+
+    private function getTableRoute($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+        return sprintf('%s_%s_table', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+    }
+
+    private function getBatchRoute($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+        return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
     }
 
     private function createActions($options)
@@ -75,7 +153,9 @@ class IndexViewer extends AppViewer
             'stylesheets' => [
                 'enhavo/index'
             ],
-            'actions' => []
+            'actions' => [],
+            'table_route' => null,
+            'batch_route' => null
         ]);
     }
 }

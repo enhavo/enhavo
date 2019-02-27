@@ -16,6 +16,9 @@ services:
         tags:
             - { name: twig.extension }
 
+    enhavo_app.column_manager:
+        class: Enhavo\Bundle\AppBundle\Table\ColumnManager
+
     Enhavo\Bundle\AppBundle\Table\Widget\ListWidget:
         public: true
         calls:
