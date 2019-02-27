@@ -9,7 +9,7 @@
                 v-bind:class="['view-table-col', {'sortable': column.sortable}]"
                 v-on:click="clickHeadColumn(column)">
                 {{ column.label }}
-                <i v-if="column.sortable" v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': !sort_direction_desc}, {'icon-keyboard_arrow_down': sort_direction_desc}]" aria-hidden="true"></i>
+                <i v-if="isColumnSortVisible(column)" v-bind:class="['icon', {'icon-keyboard_arrow_up': !sort_direction_desc}, {'icon-keyboard_arrow_down': sort_direction_desc}, {'sortable': column.sortable}]" aria-hidden="true"></i>
             </div>
         </div>
 
@@ -96,6 +96,13 @@
             return styles;
         }
 
+        isColumnSortVisible(column: any): boolean {
+            if(column.sortable === true && this.sort_column_key == column.key) {
+                return true;
+            }
+            return false;
+        }
+
         clickHeadColumn(column: any) {
             // revert the sort order if 
             if(this.sort_column_key == column.key) {
@@ -128,7 +135,7 @@
             background-color: burlywood;
 
             &.sortable {
-                text-decoraction: underline;
+                text-decoration: underline;
                 cursor: pointer;
             }
         }
