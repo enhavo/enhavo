@@ -3,33 +3,45 @@
 
         <div class="pagination-select">
             Ergebnisse pro Seite: 
-            <select v-model="pagination">
+            <select v-model="paginationValue">
                 <option 
                     v-for="(step, index) in paginationSteps"
-                    v-bind:key="index" v-bind:value="step">
+                    v-bind:key="index" 
+                    v-bind:value="step"
+                    >
                         {{ step }}
                 </option>
             </select>
+
+            <span>Selected: {{ pagination }}</span>
         </div>
 
         <div class="pagination-nav">
-
             <div v-on:click="clickPrev" v-bind:class="['pagination-nav-item', 'button', 'button--prev', {'disabled': !hasPrevPage}]">
                 <i class="icon icon-navigate_before"></i>
             </div>
 
-            <div class="pagination-nav-item number" v-on:click="clickFirst">1</div>
-            <div class="pagination-nav-item spacer">...</div>
+            <template v-if="!isFirstSegment">
+                <div class="pagination-nav-item number" v-on:click="clickFirst">1</div>
+                <div class="pagination-nav-item spacer">...</div>
+            </template>
 
-            <div class="pagination-nav-item number active">{{ currentPage }}</div>
+            <div 
+                v-for="page in pages" 
+                v-bind:key="page"
+                v-bind:class="['pagination-nav-item', 'number', {active: currentPage == page}]" 
+                v-on:click="clickPage(page)">
+                {{ page }}
+            </div>
 
-            <div class="pagination-nav-item spacer">...</div>
-            <div class="pagination-nav-item number" v-on:click="clickLast">{{ lastPage }}</div>
+            <template v-if="!isLastSegment">
+                <div class="pagination-nav-item spacer">...</div>
+                <div class="pagination-nav-item number" v-on:click="clickLast">{{ lastPage }}</div>
+            </template>
 
             <div v-on:click="clickNext" v-bind:class="['pagination-nav-item', 'button', 'button--next', {'disabled': !hasNextPage}]">
                 <i class="icon icon-navigate_next"></i>
             </div>
-
         </div>
 
     </div>
@@ -45,6 +57,7 @@
         @Prop()
         page: Array<object>;
 
+        paginationValue: number = 0; 
         itemsAround: number = 2;
 
         get paginationSteps(): Array<number> {
@@ -75,6 +88,14 @@
             return null;
         }
 
+        get isFirstPage(): boolean {
+            return this.currentPage == 1;
+        }
+
+        get isLastPage(): boolean {
+            return this.currentPage == this.lastPage;
+        }
+
         get hasPrevPage(): boolean {
             if( this.currentPage == 1 ) {
                 return false;
@@ -89,29 +110,54 @@
             return true;
         }
 
-        get itemsBefore(): Array<number> {
+        get segmentLength(): number {
+            return this.itemsAround * 2 + 1; // 2 items each side plus the current page
+        }
 
+        get isFirstSegment(): boolean {
+            return this.currentPage <= this.segmentLength;
+        }
+
+        get isLastSegment(): boolean {
+            return this.currentPage > (this.lastPage - this.segmentLength);
+        }
+
+        get pages(): Array<number> {
+
+            const firstPage: number = 1;
             let items: Array<number> = [];
 
-            let loop: number = this.itemsAround;
-            while (
-                this.currentPage > 1 && 
-                this.currentPage - this.itemsAround > 1 && 
-                loop > 0 && 
-                loop < this.currentPage
-            ) {
-                items.push(this.currentPage - loop);
-                loop--;
-                console.log("Loop: ", loop, this.currentPage);
+            if(this.isFirstSegment) {
+
+                let loop: number = firstPage;
+                while (this.segmentLength > items.length) {
+                    items.push(loop);
+                    loop++;
+                }
+
+                return items;
+            } 
+            else if(this.isLastSegment) {
+                
+                let loop: number = this.lastPage;
+                while (this.segmentLength > items.length) {
+                    items.unshift(loop);
+                    loop--;
+                }
+                
+                return items;
             }
 
-            console.log("itemsBefore: ", items);
+            let loop: number = this.currentPage - this.itemsAround;
+            while (this.segmentLength > items.length) {
+                items.push(loop);
+                loop++
+            }
 
             return items;
         }
 
         clickPage(page: number): void {
-            console.log("Click page: ", page);
             this.page['current'] = page;
         }
 
@@ -132,23 +178,14 @@
 
         clickNext(): void {
             let page = this.currentPage;
-            if(page < this.lastPage {
+            if(page < this.lastPage) {
                 this.clickPage(page + 1);
             }
         }
 
-        /*
-
-        wenn seite kleiner als (MIN + items around)
-        ==> zeige current + 2x items around
-
-        wenn seite größer als (MAX - items around)
-        ==> zeige letzte seiten komplett
-
-        wenn seite größer items around
-        ==> zeige itemsAround + current + itemsAround
-
-        */
+        changePagination(data: any): void {
+            console.log(data);
+        }
 
         mounted() {
         }
@@ -192,9 +229,3 @@
     }
 }
 </style>
-
-
-
-
-
-
