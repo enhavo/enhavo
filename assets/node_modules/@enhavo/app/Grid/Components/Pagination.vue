@@ -14,23 +14,20 @@
 
         <div class="pagination-nav">
 
-            <div class="pagination-nav-item button button--prev">
-                <i class="icon navigate_before"></i>
+            <div v-on:click="clickPrev" v-bind:class="['pagination-nav-item', 'button', 'button--prev', {'disabled': !hasPrevPage}]">
+                <i class="icon icon-navigate_before"></i>
             </div>
-            <div class="pagination-nav-item number">1</div>
+
+            <div class="pagination-nav-item number" v-on:click="clickFirst">1</div>
             <div class="pagination-nav-item spacer">...</div>
 
-            <div class="pagination-nav-item number">3</div>
-            <div class="pagination-nav-item number">4</div>
-            <div class="pagination-nav-item number number--active">5</div>
-            <div class="pagination-nav-item number">6</div>
-            <div class="pagination-nav-item number">7</div>
+            <div class="pagination-nav-item number active">{{ currentPage }}</div>
 
             <div class="pagination-nav-item spacer">...</div>
-            <div class="pagination-nav-item number">{{ lastPage }}</div>
+            <div class="pagination-nav-item number" v-on:click="clickLast">{{ lastPage }}</div>
 
-            <div class="pagination-nav-item button button--next">
-                <i class="icon navigate_next"></i>
+            <div v-on:click="clickNext" v-bind:class="['pagination-nav-item', 'button', 'button--next', {'disabled': !hasNextPage}]">
+                <i class="icon icon-navigate_next"></i>
             </div>
 
         </div>
@@ -47,6 +44,8 @@
     
         @Prop()
         page: Array<object>;
+
+        itemsAround: number = 2;
 
         get paginationSteps(): Array<number> {
             if( this.page && this.page.hasOwnProperty('pagination_steps') ) {
@@ -76,6 +75,81 @@
             return null;
         }
 
+        get hasPrevPage(): boolean {
+            if( this.currentPage == 1 ) {
+                return false;
+            }
+            return true;
+        }
+
+        get hasNextPage(): boolean {
+            if( this.lastPage == this.currentPage ) {
+                return false;
+            }
+            return true;
+        }
+
+        get itemsBefore(): Array<number> {
+
+            let items: Array<number> = [];
+
+            let loop: number = this.itemsAround;
+            while (
+                this.currentPage > 1 && 
+                this.currentPage - this.itemsAround > 1 && 
+                loop > 0 && 
+                loop < this.currentPage
+            ) {
+                items.push(this.currentPage - loop);
+                loop--;
+                console.log("Loop: ", loop, this.currentPage);
+            }
+
+            console.log("itemsBefore: ", items);
+
+            return items;
+        }
+
+        clickPage(page: number): void {
+            console.log("Click page: ", page);
+            this.page['current'] = page;
+        }
+
+        clickFirst(): void {
+            this.clickPage(1);
+        }
+
+        clickLast(): void {
+            this.clickPage(this.page['last']);
+        }
+
+        clickPrev(): void {
+            let page = this.currentPage;
+            if(page > 1) {
+                this.clickPage(page - 1);
+            }
+        }
+
+        clickNext(): void {
+            let page = this.currentPage;
+            if(page < this.lastPage {
+                this.clickPage(page + 1);
+            }
+        }
+
+        /*
+
+        wenn seite kleiner als (MIN + items around)
+        ==> zeige current + 2x items around
+
+        wenn seite größer als (MAX - items around)
+        ==> zeige letzte seiten komplett
+
+        wenn seite größer items around
+        ==> zeige itemsAround + current + itemsAround
+
+        */
+
         mounted() {
         }
     }
@@ -98,7 +172,22 @@
             min-width: 20px;
             margin: 0 15px;
             color: white;
-            background-color: firebrick;
+            background-color: green;
+
+            &.number,
+            &.button {
+                cursor: pointer;
+            }
+
+            &.active {
+                background-color: yellowgreen;
+                cursor: default;
+            }
+
+            &.disabled {
+                background-color: gray;
+                color: black;
+            }
         }
     }
 }

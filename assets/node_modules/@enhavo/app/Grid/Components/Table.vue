@@ -24,7 +24,7 @@
             Fetching data...
         </template>
 
-        <view-table-pagination></view-table-pagination>
+        <view-table-pagination v-bind:page="page"></view-table-pagination>
 
     </div>
 </template>
