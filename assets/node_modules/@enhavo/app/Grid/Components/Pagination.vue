@@ -3,7 +3,7 @@
 
         <div class="pagination-select">
             Ergebnisse pro Seite: 
-            <select v-model="paginationValue">
+            <select v-model="pagination">
                 <option 
                     v-for="(step, index) in paginationSteps"
                     v-bind:key="index" 
@@ -72,6 +72,11 @@
                 return this.page['pagination'];
             }
             return null;
+        }
+        set pagination(value: number) {
+            if( this.page && this.page.hasOwnProperty('pagination') ) {
+                this.page['pagination'] = value;
+            }
         }
 
         get currentPage(): number {
