@@ -3,7 +3,7 @@
         <action-bar v-bind:data="actions"></action-bar>
         <div>{{ view_id }}</div>
         <div>{{ uuid }}</div>
-        <view-table v-bind:columns="columns" v-bind:page="page"></view-table>
+        <view-table v-bind:columns="columns" v-bind:page="page" v-bind:filters="filters"></view-table>
     </div>
 </template>
 
@@ -31,6 +31,9 @@ export default class AppView extends Vue {
 
     @Prop()
     page: Array<object>;
+
+    @Prop()
+    filters: Array<object>;
 
     get uuid() {
         return uuidv4();

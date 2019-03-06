@@ -137,14 +137,21 @@ class AppController extends AbstractController
                     [
                         'key' => 'title',
                         'label' => 'Title',
-                        'component' => 'Search',
+                        'component' => 'view-table-filter-search',
                         'width' => 3,
                         'row' => 1
                     ],
                     [
                         'key' => 'id',
-                        'label' => 'id',
-                        'component' => 'Text',
+                        'label' => 'ID',
+                        'component' => 'view-table-filter-boolean',
+                        'width' => 3,
+                        'row' => 1
+                    ],
+                    [
+                        'key' => 'published',
+                        'label' => 'Published',
+                        'component' => 'view-table-filter-boolean',
                         'width' => 3,
                         'row' => 1
                     ]

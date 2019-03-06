@@ -1,6 +1,8 @@
 <template>
     <div class="view-table">
 
+        <view-table-filters v-bind:filters="filters" v-bind:filterBy="filter_by"></view-table-filters>
+
         <view-table-pagination v-bind:page="page"></view-table-pagination>
 
         <div class="view-table-head">
@@ -33,8 +35,10 @@
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import Row from "./Row.vue"
     import Pagination from "./Pagination.vue"
+    import FilterBar from "./FilterBar.vue"
     import axios from 'axios';
 
+    Vue.component('view-table-filters', FilterBar);
     Vue.component('view-table-row', Row);
     Vue.component('view-table-pagination', Pagination);
 
@@ -47,6 +51,9 @@
     
         @Prop()
         page: Array<object>;
+    
+        @Prop()
+        filters: Array<object>;
 
         loading: boolean = false;
         rows: any = [];
@@ -54,6 +61,8 @@
 
         sort_column_key: string = null;
         sort_direction_desc: boolean = false;
+
+        filter_by: object = {};
 
         mounted() {
             this.retrieveRowData(this.apiUrl);
@@ -92,7 +101,7 @@
                 })
         }
 
-        calcColumnWidth(parts: number): string {
+        calcWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
         }
 
@@ -100,7 +109,7 @@
             let styles: object = Object.assign( 
                 {}, 
                 column.style, 
-                {width: this.calcColumnWidth(column.width)} );
+                {width: this.calcWidth(column.width)} );
 
             return styles;
         }
