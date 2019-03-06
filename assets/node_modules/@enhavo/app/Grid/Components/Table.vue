@@ -69,7 +69,7 @@
             this.loading = true;
 
             let requestParams = {
-                sort_direction: this.sort_direction_desc ? 'DESC' : 'ASC';
+                sort_direction: this.sort_direction_desc ? 'DESC' : 'ASC'
             };
 
             if(this.sort_column_key) {
