@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\GridBundle\Command\CleanUpCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:grid:clean-up' }

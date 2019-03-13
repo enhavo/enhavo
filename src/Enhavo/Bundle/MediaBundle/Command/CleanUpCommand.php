@@ -64,6 +64,9 @@ class CleanUpCommand extends Command
      * @param Filesystem $fs
      * @param string $mediaPath
      * @param MediaManager $mediaManager
+     * @param EntityManagerInterface $entityManager
+     * @param FileRepository $fileRepository
+     * @param FormatRepository $formatRepository
      */
     public function __construct(Filesystem $fs, string $mediaPath, MediaManager $mediaManager, EntityManagerInterface $entityManager, FileRepository $fileRepository, FormatRepository $formatRepository)
     {
@@ -133,7 +136,7 @@ class CleanUpCommand extends Command
             try {
                 $isReferenced = $this->isReferenced($file->getId(), $references);
             } catch (\Exception $exception) {
-                throw new \Exception('Exception occured while checking references for file #' . $file->getId() . ': ' . $exception->getMessage());
+                throw new \Exception('Exception occurred while checking references for file #' . $file->getId() . ': ' . $exception->getMessage());
             }
 
             if (!$isReferenced) {
