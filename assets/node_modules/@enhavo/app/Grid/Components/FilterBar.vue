@@ -8,7 +8,8 @@
                 v-bind:key="filter.key" 
                 v-bind:label="filter.label" 
                 v-bind:id="filter.key" 
-                v-bind:filter="filterBy"
+                v-bind:filterBy="filterBy"
+                v-bind:filter="filter"
                 v-bind:style="getFilterStyle(filter)"></component>
         </template>
 
@@ -19,9 +20,11 @@
   import { Vue, Component, Prop, Watch } from "vue-property-decorator";
   import FilterSearch from "./FilterSearch.vue"
   import FilterBoolean from "./FilterBoolean.vue"
+  import FilterDropdown from "./FilterDropdown.vue"
 
   Vue.component('view-table-filter-search', FilterSearch);
   Vue.component('view-table-filter-boolean', FilterBoolean);
+  Vue.component('view-table-filter-dropdown', FilterDropdown);
 
   @Component
   export default class FilterBar extends Vue {

@@ -154,6 +154,18 @@ class AppController extends AbstractController
                         'component' => 'view-table-filter-boolean',
                         'width' => 3,
                         'row' => 1
+                    ],
+                    [
+                        'key' => 'category',
+                        'label' => 'Category',
+                        'component' => 'view-table-filter-dropdown',
+                        'width' => 3,
+                        'row' => 1,
+                        'choices' => [
+                            'hello' => 'Hello',
+                            'world' => 'World',
+                            'test' => 'Test'
+                        ]
                     ]
                 ],
                 'sortable' => true,

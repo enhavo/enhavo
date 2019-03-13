@@ -1,6 +1,10 @@
 <template>
-    <div class="view-table-filter-search">
-        <input v-model="value">
+    <div v-bind:class="name">
+        <select v-model="value">
+            <option v-for="(choiceLabel, choiceValue) in choices" v-bind:value="choiceValue" v-bind:key="choiceValue">
+                {{ choiceLabel }}
+            </option>
+        </select>
     </div>
 </template>
 
@@ -8,8 +12,8 @@
     import { Vue, Component, Prop, Watch} from "vue-property-decorator";
 
     @Component
-    export default class FilterSearch extends Vue {
-        name: string = 'view-table-filter-search';
+    export default class FilterDropdown extends Vue {
+        name: string = 'view-table-filter-dropdown';
 
         @Prop()
         id: string;
@@ -22,22 +26,16 @@
 
         @Prop()
         filterBy: object;
-        
+
         value: string = '';
 
         @Watch('value', { immediate: false })
         onValueChanged(newValue: string, oldValue: string): void {
             this.filter = Object.assign(this.filter, {value: newValue});
         }
-        
-        setFilterValue(value: any) {
-            if(value === null || value === '') {
-                this.value = '';
-                delete this.filterBy[this.id];
-            } else {
-                this.value = value;
-                this.filterBy = Object.assign(this.filterBy, {[this.id]: value});
-            }
+
+        get choices(): Array<string> {
+            return (this.filter && this.filter['choices']) ? this.filter['choices'] : null;
         }
     }
 </script>
