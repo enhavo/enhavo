@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-filter-boolean">
-        <h1 v-on:click="addFilter">Bool: {{ label }}</h1>
-        <h1 v-on:click="removeFilter">Bool remove: {{ label }}</h1>
+        <input type="checkbox" id="checkbox" v-model="value">
+        <span v-on:click="addFilter">+</span> // <span v-on:click="removeFilter">-</span>
     </div>
 </template>
 
@@ -21,6 +21,9 @@
         @Prop()
         filter: Object;
 
+        value: boolean = false;
+
+        // MA@2019-03-13: not responsive working right now
         get handleFilter(): any {
             if( this.filter && this.filter.hasOwnProperty(this.id) ) {
                 return this.filter[this.id]; 
@@ -29,18 +32,20 @@
         }
         set handleFilter(value: any) {
             if(value === null || value === false) {
+                this.value = false;
                 delete this.filter[this.id];
             } else {
-                this.filter[this.id] = value;
+                this.value = value;
+                this.filter = Object.assign(this.filter, {[this.id]: value});
             }
         }
 
         addFilter(): void {
-            this.handleFilter = 'test';
+            this.handleFilter = true;
         }
 
         removeFilter(): void {
-            this.handleFilter = null;
+            this.handleFilter = false;
         }
     }
 </script>
@@ -48,6 +53,10 @@
 <style lang="scss" scoped>
     .view-table-filter-boolean { 
         background-color: chocolate;
+
+        span {
+            cursor: pointer;
+        }
     }
 </style>
 
