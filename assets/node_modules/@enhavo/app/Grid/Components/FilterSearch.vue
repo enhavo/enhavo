@@ -1,12 +1,11 @@
 <template>
     <div class="view-table-filter-search">
-        <h1 v-on:click="addFilter">Search: {{ label }}</h1>
-        <h1 v-on:click="removeFilter">Search remove: {{ label }}</h1>
+        <input v-model="value">
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+    import { Vue, Component, Prop, Watch} from "vue-property-decorator";
 
     @Component
     export default class FilterSearch extends Vue {
@@ -21,26 +20,21 @@
         @Prop()
         filter: Object;
 
-        get handleFilter(): any {
-            if( this.filter && this.filter.hasOwnProperty(this.id) ) {
-                return this.filter[this.id]; 
-            }
-            return null;
+        @Watch('value', { immediate: false })
+        onValueChanged(newValue: boolean, oldValue: boolean): void {
+            this.setFilterValue(newValue);
         }
-        set handleFilter(value: any) {
-            if(value === null || value === false) {
+
+        value: string = '';
+        
+        setFilterValue(value: any) {
+            if(value === null || value === '') {
+                this.value = '';
                 delete this.filter[this.id];
             } else {
-                this.filter[this.id] = value;
+                this.value = value;
+                this.filter = Object.assign(this.filter, {[this.id]: value});
             }
-        }
-
-        addFilter(): void {
-            this.handleFilter = 'test';
-        }
-
-        removeFilter(): void {
-            this.handleFilter = null;
         }
     }
 </script>

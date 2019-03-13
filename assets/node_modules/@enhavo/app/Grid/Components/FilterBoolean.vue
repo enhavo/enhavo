@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+    import { Vue, Component, Prop, Watch} from "vue-property-decorator";
 
     @Component
     export default class FilterBoolean extends Vue {
@@ -19,18 +19,16 @@
         label: string;
 
         @Prop()
-        filter: Object;
+        filter: object;
+
+        @Watch('value', { immediate: true, deep: true })
+        onValueChanged(newValue: boolean, oldValue: boolean): void {
+            this.setFilterValue(newValue);
+        }
 
         value: boolean = false;
-
-        // MA@2019-03-13: not responsive working right now
-        get handleFilter(): any {
-            if( this.filter && this.filter.hasOwnProperty(this.id) ) {
-                return this.filter[this.id]; 
-            }
-            return null;
-        }
-        set handleFilter(value: any) {
+        
+        setFilterValue(value: any) {
             if(value === null || value === false) {
                 this.value = false;
                 delete this.filter[this.id];
@@ -41,11 +39,11 @@
         }
 
         addFilter(): void {
-            this.handleFilter = true;
+            this.setFilterValue(true);
         }
 
         removeFilter(): void {
-            this.handleFilter = false;
+            this.setFilterValue(false);
         }
     }
 </script>
