@@ -1,6 +1,7 @@
 <template>
     <div v-bind:class="name">
-        <select v-model="value">
+        <select v-model="value" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
+            <option v-if="placeholder" value="" v-bind:checked="!hasValue" v-bind:disabled="hasValue">{{ placeholder }}</option>
             <option v-for="(choiceLabel, choiceValue) in choices" v-bind:value="choiceValue" v-bind:key="choiceValue">
                 {{ choiceLabel }}
             </option>
@@ -31,18 +32,38 @@
 
         @Watch('value', { immediate: false })
         onValueChanged(newValue: string, oldValue: string): void {
-            this.filter = Object.assign(this.filter, {value: newValue});
+             this.$emit('filter-change-params', {
+                filter: this.id,
+                value: newValue
+            });
+        }
+
+        get hasValue(): boolean {
+            return this.value.length ? true : false;
         }
 
         get choices(): Array<string> {
             return (this.filter && this.filter['choices']) ? this.filter['choices'] : null;
         }
+
+        get placeholder(): string {
+            return (this.filter && this.filter['placeholder']) ? this.filter['placeholder'] : null;
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-    .view-table-filter-search { 
-        background-color: burlywood;
+    .view-table-filter-dropdown { 
+        background-color: darkblue;
+
+        .filter-form-field {
+            outline: none;
+            border: 1px solid darkorange;
+
+            &.has-value {
+                border-color: darkgreen;
+            }
+        }
     }
 </style>
 

@@ -137,27 +137,15 @@ class AppController extends AbstractController
                     [
                         'key' => 'title',
                         'label' => 'Title',
+                        'placeholder' => 'Suchen...',
                         'component' => 'view-table-filter-search',
-                        'width' => 3,
-                        'row' => 1
-                    ],
-                    [
-                        'key' => 'id',
-                        'label' => 'ID',
-                        'component' => 'view-table-filter-boolean',
-                        'width' => 3,
-                        'row' => 1
-                    ],
-                    [
-                        'key' => 'published',
-                        'label' => 'Published',
-                        'component' => 'view-table-filter-boolean',
                         'width' => 3,
                         'row' => 1
                     ],
                     [
                         'key' => 'category',
                         'label' => 'Category',
+                        'placeholder' => 'Bitte wählen...',
                         'component' => 'view-table-filter-dropdown',
                         'width' => 3,
                         'row' => 1,
@@ -166,6 +154,20 @@ class AppController extends AbstractController
                             'world' => 'World',
                             'test' => 'Test'
                         ]
+                        ],
+                    [
+                        'key' => 'id',
+                        'label' => 'ID',
+                        'component' => 'view-table-filter-boolean',
+                        'width' => 1,
+                        'row' => 1
+                    ],
+                    [
+                        'key' => 'published',
+                        'label' => 'Published',
+                        'component' => 'view-table-filter-boolean',
+                        'width' => 1,
+                        'row' => 1
                     ]
                 ],
                 'sortable' => true,

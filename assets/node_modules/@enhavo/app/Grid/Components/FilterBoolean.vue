@@ -28,7 +28,10 @@
 
         @Watch('value', { immediate: true, deep: true })
         onValueChanged(newValue: boolean, oldValue: boolean): void {
-            this.filter = Object.assign(this.filter, {value: newValue});
+            this.$emit('filter-change-params', {
+                filter: this.id,
+                value: newValue
+            });
         }
         
         setFilterValue(value: any) {

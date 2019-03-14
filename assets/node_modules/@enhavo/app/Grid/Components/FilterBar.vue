@@ -52,5 +52,7 @@
 </script>
 
 <style scoped>
-
+.view-table-filters {
+    display: flex; margin-bottom: 30px;
+}
 </style>

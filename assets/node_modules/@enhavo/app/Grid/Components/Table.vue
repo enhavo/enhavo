@@ -132,7 +132,6 @@
                 this.sort_column_key = column.key;
             }
         }
-
     }
 </script>
 
