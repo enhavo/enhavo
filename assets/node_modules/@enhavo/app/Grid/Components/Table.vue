@@ -1,11 +1,12 @@
 <template>
-    <div class="view-table">
+    <div v-bind:class="name">
 
         <view-table-filters v-bind:filters="filters" v-bind:filterBy="filter_by"></view-table-filters>
 
         <view-table-pagination v-bind:page="page"></view-table-pagination>
 
         <div class="view-table-head">
+            <input type="checkbox" v-on:click="selectAll" v-bind:checked="allSelected" />
             <div 
                 v-for="column in columns" 
                 v-bind:key="column.key" 
@@ -19,12 +20,25 @@
 
         <template v-if="!loading">
             <template v-for="row in rows">
-                <view-table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="row.id"></view-table-row>
+                <input type="checkbox" v-model="selected" v-bind:id="row.id" v-bind:value="row.id" v-bind:key="'checkbox-'+row.id" />
+                <view-table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="'row-'+row.id"></view-table-row>
             </template>
         </template>
         <template v-else>
             Fetching data...
         </template>
+
+
+        <div class="batch-action">
+            <select v-model="batchAction">
+                <option v-for="(batch, index) in batches" v-bind:value="batch.key" v-bind:key="'batch-'+index">
+                    {{ batch.label }}
+                </option>
+            </select>
+            <span v-on:click="sendBatchAction">Abschicken</span>
+        </div>
+
+
 
         <view-table-pagination v-bind:page="page"></view-table-pagination>
 
@@ -55,6 +69,12 @@
         @Prop()
         filters: Array<object>;
 
+        @Prop()
+        batch: string;
+
+        @Prop()
+        batches: Array<object>;
+
         loading: boolean = false;
         rows: any = [];
         apiUrl: string = '/admin/table';
@@ -63,6 +83,10 @@
         sort_direction_desc: boolean = false;
 
         filter_by: object = {};
+
+        // batch actions
+        selected: Array<number> = []; // selected items
+        batchAction: string = this.batch; // selected action in dropdown
 
         mounted() {
             this.retrieveRowData(this.apiUrl);
@@ -130,6 +154,40 @@
             // click column the first time to sort asc
             if(this.sort_column_key != column.key) {
                 this.sort_column_key = column.key;
+            }
+        }
+
+        get allSelected(): boolean {
+            return this.selected.length == this.rows.length;
+        }
+
+        selectAll(): void {
+            // check boxes if some are unchecked
+            if (this.rows.length && !this.allSelected) {
+                for (let row of this.rows) {
+                    this.selected.push(row.id);
+                }
+                return;
+            }
+
+            // remove checked state on all boxes if they are checked
+            this.selected.splice(0, this.selected.length);
+        }
+
+        sendBatchAction(): void {
+            if(this.selected.length) {
+                let currentBatch = this.batches.find(
+                    batch => batch.key === this.batchAction
+                );
+                let batchUri = currentBatch.uri;
+
+                axios.post(batchUri, this.selected)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }

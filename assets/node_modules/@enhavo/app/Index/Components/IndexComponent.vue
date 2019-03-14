@@ -3,7 +3,14 @@
         <action-bar v-bind:data="actions"></action-bar>
         <div>{{ view_id }}</div>
         <div>{{ uuid }}</div>
-        <view-table v-bind:columns="columns" v-bind:page="page" v-bind:filters="filters"></view-table>
+
+        <view-table 
+            v-bind:columns="columns" 
+            v-bind:page="page" 
+            v-bind:filters="filters" 
+            v-bind:batch="batch"
+            v-bind:batches="batches">
+        </view-table>
     </div>
 </template>
 
@@ -34,6 +41,12 @@ export default class AppView extends Vue {
 
     @Prop()
     filters: Array<object>;
+
+    @Prop()
+    batch: string;
+
+    @Prop()
+    batches: Array<object>;
 
     get uuid() {
         return uuidv4();
