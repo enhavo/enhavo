@@ -61,6 +61,9 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                         $clientId,
                         $clientSecret,
                     ],
+                    'headers' => [
+                        'Accept' => 'application/json',
+                    ],
                     'json' => [
                         'grant_type' => 'client_credentials',
                     ],
@@ -94,25 +97,12 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getAccessToken()
-    {
-        return $this->getConfig('access_token');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function action(string $method, string $path, array $data = [])
     {
         $this->log("Request via \"{$method}\" on \"{$path}\"");
 
         if (!empty($data)) {
-            $this->log(
-                'Request data.',
-                [
-                    'request' => $data,
-                ]
-            );
+            $this->log('Request data.', ['request' => $data]);
         }
 
         try {
@@ -122,6 +112,7 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                 [
                     'headers' => [
                         'Authorization' => "Bearer {$this->getAccessToken()}",
+                        'Accept' => 'application/json',
                     ],
                     'json' => $data,
                 ]
@@ -130,12 +121,7 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
                 $response->getBody()->getContents(),
                 true
             );
-            $this->log(
-                'Response data.',
-                [
-                    'response' => $data,
-                ]
-            );
+            $this->log('Response data.', ['response' => $data]);
         } catch (ClientException $e) {
             $data = json_decode(
                 $e->getResponse()->getBody()->getContents(),
@@ -151,6 +137,14 @@ class Guzzle extends Client implements AdapterInterface, LoggerAwareInterface
         }
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAccessToken()
+    {
+        return $this->getConfig('access_token');
     }
 
     /**

@@ -15,13 +15,6 @@ interface AdapterInterface
     public function authorize(string $clientId, string $clientSecret);
 
     /**
-     * Returns the access token.
-     *
-     * @return string|null
-     */
-    public function getAccessToken();
-
-    /**
      * Returns the response data.
      *
      * @param string $method
@@ -31,6 +24,13 @@ interface AdapterInterface
      * @return mixed
      */
     public function action(string $method, string $path, array $data = []);
+
+    /**
+     * Returns the access token.
+     *
+     * @return string|null
+     */
+    public function getAccessToken();
 
     /**
      * Returns the adapter config.
