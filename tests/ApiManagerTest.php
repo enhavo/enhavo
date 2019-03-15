@@ -8,60 +8,43 @@ use PHPUnit\Framework\TestCase;
 use rdoepner\CleverReach\ApiManager;
 use rdoepner\CleverReach\Http\Guzzle as HttpAdapter;
 
-class ApiTest extends TestCase
+class ApiManagerTest extends TestCase
 {
-    /**
-     * @var HttpAdapter
-     */
-    protected static $httpAdapter;
-
     /**
      * @var ApiManager
      */
     protected static $apiManager;
 
+    /**
+     * @var string
+     */
+    protected static $groupId;
+
     public static function setUpBeforeClass()
     {
-        self::$httpAdapter = new HttpAdapter(
+        $httpAdapter = new HttpAdapter(
             [
-                'access_token' => 'ACCESS_TOKEN',
+                'access_token' => getenv('GROUP_ID'),
             ],
             (new Logger('debug'))->pushHandler(
-                new StreamHandler(__DIR__.'/../var/log/api.log')
+                new StreamHandler(dirname(__DIR__) . '/var/log/api.log')
             )
         );
 
-        self::$apiManager = new ApiManager(self::$httpAdapter);
-    }
-
-    public function testConfig()
-    {
-        $this->assertArrayHasKey('access_token', self::$httpAdapter->getConfig());
-        $this->assertEquals('ACCESS_TOKEN', self::$httpAdapter->getConfig('access_token'));
-        $this->assertArrayHasKey('base_uri', self::$httpAdapter->getConfig('adapter_config'));
-        $this->assertEquals('https://rest.cleverreach.com', self::$httpAdapter->getConfig('base_uri'));
-    }
-
-    public function testAuthorize()
-    {
-        $response = self::$httpAdapter->authorize(
+        $httpAdapter->authorize(
             getenv('CLIENT_ID'),
             getenv('CLIENT_SECRET')
         );
 
-        $this->assertArrayHasKey('access_token', $response);
-    }
-
-    public function testGetAccessToken()
-    {
-        $this->assertNotEquals('ACCESS_TOKEN', self::$httpAdapter->getAccessToken());
+        self::$apiManager = new ApiManager($httpAdapter);
+        self::$groupId = getenv('GROUP_ID');
     }
 
     public function testCreateSubscriber()
     {
         $response = self::$apiManager->createSubscriber(
             'john.doe@example.org',
-            getenv('GROUP_ID'),
+            self::$groupId,
             false,
             [
                 'salutation' => 'Mr.',
@@ -78,7 +61,7 @@ class ApiTest extends TestCase
     {
         $response = self::$apiManager->getSubscriber(
             'john.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertArrayHasKey('email', $response);
@@ -86,7 +69,7 @@ class ApiTest extends TestCase
 
         $response = self::$apiManager->getSubscriber(
             'jane.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertArrayHasKey('error', $response);
@@ -105,7 +88,7 @@ class ApiTest extends TestCase
     {
         $response = self::$apiManager->setSubscriberStatus(
             'john.doe@example.org',
-            getenv('GROUP_ID'),
+            self::$groupId,
             true
         );
 
@@ -113,7 +96,7 @@ class ApiTest extends TestCase
 
         $response = self::$apiManager->getSubscriber(
             'john.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertArrayHasKey('active', $response);
@@ -121,7 +104,7 @@ class ApiTest extends TestCase
 
         $response = self::$apiManager->setSubscriberStatus(
             'john.doe@example.org',
-            getenv('GROUP_ID'),
+            self::$groupId,
             false
         );
 
@@ -129,7 +112,7 @@ class ApiTest extends TestCase
 
         $response = self::$apiManager->getSubscriber(
             'john.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertArrayHasKey('active', $response);
@@ -140,14 +123,14 @@ class ApiTest extends TestCase
     {
         $response = self::$apiManager->deleteSubscriber(
             'john.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertTrue($response);
 
         $response = self::$apiManager->deleteSubscriber(
             'jane.doe@example.org',
-            getenv('GROUP_ID')
+            self::$groupId
         );
 
         $this->assertArrayHasKey('error', $response);
