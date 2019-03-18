@@ -8,9 +8,9 @@
             </option>
         </select>
 
-        <button v-on:click="sendRequest" v-bind:disabled="!hasSelection || !hasValue">Batch it!</button>
+        <button v-on:click="sendRequest" v-bind:disabled="!isButtonActive">Batch it!</button>
         <br />
-        <button v-on:click="clearSelection">Clear selection</button>
+        <button v-on:click="clearSelection" v-bind:disabled="!isButtonActive">Clear selection</button>
 
     </div>
 </template>
@@ -49,6 +49,10 @@
 
         get hasValue(): boolean {
             return this.value && this.value.length > 0;
+        }
+
+        get isButtonActive(): boolean {
+            return this.hasSelection && this.hasValue;
         }
 
         sendRequest(): void {
