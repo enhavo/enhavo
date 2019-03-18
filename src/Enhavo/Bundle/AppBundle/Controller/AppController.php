@@ -208,19 +208,22 @@ class AppController extends AbstractController
                         'width' => 3,
                     ]
                 ],
-                'batch' => 'publish',
-                'batches' => [
-                    [
-                        'key' => 'delete',
-                        'label' => 'Delete',
-                        'uri' => '/action'
-                    ],
-                    [
-                        'key' => 'publish',
-                        'label' => 'Publish',
-                        'uri' => '/action'
+                'batch' => [
+                    'current' => 'publish',
+                    'placeholder' => 'Bitte wählen...',
+                    'actions' => [
+                        [
+                            'key' => 'delete',
+                            'label' => 'Delete',
+                            'uri' => '/action'
+                        ],
+                        [
+                            'key' => 'publish',
+                            'label' => 'Publish',
+                            'uri' => '/action'
+                        ]
                     ]
-                ]
+                ],
             ]
         ]);
     }

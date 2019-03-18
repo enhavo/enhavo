@@ -2,19 +2,21 @@
     <div v-bind:class="name">
 
         <view-table-filters v-bind:filters="filters" v-bind:filterBy="filter_by"></view-table-filters>
-
         <view-table-pagination v-bind:page="page"></view-table-pagination>
 
         <div class="view-table-head">
-            <input type="checkbox" v-on:click="selectAll" v-bind:checked="allSelected" />
+            <input type="checkbox" v-on:click="toggleSelectAll" v-bind:checked="allSelected" />
             <div 
                 v-for="column in columns" 
                 v-bind:key="column.key" 
                 v-bind:style="getColumnStyle(column)" 
                 v-bind:class="['view-table-col', {'sortable': column.sortable}]"
                 v-on:click="clickHeadColumn(column)">
-                {{ column.label }}
-                <i v-if="isColumnSortVisible(column)" v-bind:class="['icon', {'icon-keyboard_arrow_up': !sort_direction_desc}, {'icon-keyboard_arrow_down': sort_direction_desc}, {'sortable': column.sortable}]" aria-hidden="true"></i>
+                    {{ column.label }}
+                    <i 
+                        v-if="isColumnSortVisible(column)" 
+                        v-bind:class="['icon', {'icon-keyboard_arrow_up': !sort_direction_desc}, {'icon-keyboard_arrow_down': sort_direction_desc}, {'sortable': column.sortable}]" 
+                        aria-hidden="true"></i>
             </div>
         </div>
 
@@ -28,17 +30,7 @@
             Fetching data...
         </template>
 
-
-        <div class="batch-action">
-            <select v-model="batchAction">
-                <option v-for="(batch, index) in batches" v-bind:value="batch.key" v-bind:key="'batch-'+index">
-                    {{ batch.label }}
-                </option>
-            </select>
-            <span v-on:click="sendBatchAction">Abschicken</span>
-        </div>
-
-
+        <view-table-batches v-bind:batch="batch" v-bind:selected="selected"></view-table-batches>
 
         <view-table-pagination v-bind:page="page"></view-table-pagination>
 
@@ -50,11 +42,13 @@
     import Row from "./Row.vue"
     import Pagination from "./Pagination.vue"
     import FilterBar from "./FilterBar.vue"
+    import Batches from "./Batches.vue"
     import axios from 'axios';
 
     Vue.component('view-table-filters', FilterBar);
     Vue.component('view-table-row', Row);
     Vue.component('view-table-pagination', Pagination);
+    Vue.component('view-table-batches', Batches);
 
     @Component
     export default class Table extends Vue {
@@ -70,23 +64,21 @@
         filters: Array<object>;
 
         @Prop()
-        batch: string;
-
-        @Prop()
-        batches: Array<object>;
+        batch: Array<object>;
 
         loading: boolean = false;
         rows: any = [];
         apiUrl: string = '/admin/table';
 
+        // sort
         sort_column_key: string = null;
         sort_direction_desc: boolean = false;
 
+        // filters
         filter_by: object = {};
 
-        // batch actions
+        // batch
         selected: Array<number> = []; // selected items
-        batchAction: string = this.batch; // selected action in dropdown
 
         mounted() {
             this.retrieveRowData(this.apiUrl);
@@ -95,7 +87,22 @@
         @Watch('sort_column_key')
         @Watch('sort_direction_desc')
         onSortChanged(val: string, oldVal: string) {
+            console.log("table: sort changed");
             this.retrieveRowData(this.apiUrl);
+        }
+
+        @Watch('selected', { immediate: false })
+        onSelectionChanged(newValue: boolean, oldValue: boolean): void {
+            console.log("table: selected changed");
+        }
+
+        @Watch('filter_by', { immediate: false, deep: true })
+        onFilterByChanged(newValue: boolean, oldValue: boolean): void {
+            console.log("table: filterBy changed");
+        }
+
+        get allSelected(): boolean {
+            return this.selected.length == this.rows.length;
         }
 
         retrieveRowData(apiUrl: string): void {
@@ -157,11 +164,7 @@
             }
         }
 
-        get allSelected(): boolean {
-            return this.selected.length == this.rows.length;
-        }
-
-        selectAll(): void {
+        toggleSelectAll(): void {
             // check boxes if some are unchecked
             if (this.rows.length && !this.allSelected) {
                 for (let row of this.rows) {
@@ -172,23 +175,6 @@
 
             // remove checked state on all boxes if they are checked
             this.selected.splice(0, this.selected.length);
-        }
-
-        sendBatchAction(): void {
-            if(this.selected.length) {
-                let currentBatch = this.batches.find(
-                    batch => batch.key === this.batchAction
-                );
-                let batchUri = currentBatch.uri;
-
-                axios.post(batchUri, this.selected)
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            }
         }
     }
 </script>

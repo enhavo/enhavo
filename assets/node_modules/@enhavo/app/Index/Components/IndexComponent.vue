@@ -8,8 +8,7 @@
             v-bind:columns="columns" 
             v-bind:page="page" 
             v-bind:filters="filters" 
-            v-bind:batch="batch"
-            v-bind:batches="batches">
+            v-bind:batch="batch">
         </view-table>
     </div>
 </template>
@@ -43,10 +42,7 @@ export default class AppView extends Vue {
     filters: Array<object>;
 
     @Prop()
-    batch: string;
-
-    @Prop()
-    batches: Array<object>;
+    batch: Array<object>;
 
     get uuid() {
         return uuidv4();
