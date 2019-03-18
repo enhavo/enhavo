@@ -26,30 +26,32 @@
 
         value: boolean = false;
 
-        @Watch('value', { immediate: true, deep: true })
+        @Watch('value', { immediate: false })
         onValueChanged(newValue: boolean, oldValue: boolean): void {
             this.$emit('filter-change-params', {
                 filter: this.id,
                 value: newValue
             });
+
+            this.setFilterByValue(newValue);
         }
         
-        setFilterValue(value: any) {
+        setFilterByValue(value: any) {
             if(value === null || value === false) {
-                this.value = false;
                 delete this.filterBy[this.id];
             } else {
-                this.value = value;
                 this.filterBy = Object.assign(this.filterBy, {[this.id]: value});
             }
         }
-
+        
         addFilter(): void {
-            this.setFilterValue(true);
+            this.value = true;
+            this.setFilterByValue(true);
         }
 
         removeFilter(): void {
-            this.setFilterValue(false);
+            this.value = false;
+            this.setFilterByValue(false);
         }
     }
 </script>

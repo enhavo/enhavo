@@ -36,6 +36,8 @@
                 filter: this.id,
                 value: newValue
             });
+
+            this.setFilterByValue(newValue);
         }
 
         get hasValue(): boolean {
@@ -48,6 +50,14 @@
 
         get placeholder(): string {
             return (this.filter && this.filter['placeholder']) ? this.filter['placeholder'] : null;
+        }
+        
+        setFilterByValue(value: any) {
+            if(value === null || value === '') {
+                delete this.filterBy[this.id];
+            } else {
+                this.filterBy = Object.assign(this.filterBy, {[this.id]: value});
+            }
         }
     }
 </script>

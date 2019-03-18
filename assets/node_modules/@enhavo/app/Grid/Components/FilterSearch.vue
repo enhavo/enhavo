@@ -31,6 +31,8 @@
                 filter: this.id,
                 value: newValue
             });
+
+            this.setFilterByValue(newValue);
         }
 
         get hasValue(): boolean {
@@ -41,12 +43,10 @@
             return (this.filter && this.filter['placeholder']) ? this.filter['placeholder'] : null;
         }
         
-        setFilterValue(value: any) {
+        setFilterByValue(value: any) {
             if(value === null || value === '') {
-                this.value = '';
                 delete this.filterBy[this.id];
             } else {
-                this.value = value;
                 this.filterBy = Object.assign(this.filterBy, {[this.id]: value});
             }
         }
