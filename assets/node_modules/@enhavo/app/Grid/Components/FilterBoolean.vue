@@ -37,11 +37,12 @@
         }
         
         setFilterByValue(value: any) {
-            if(value === null || value === false) {
-                delete this.filterBy[this.id];
-            } else {
-                this.filterBy = Object.assign(this.filterBy, {[this.id]: value});
+            if(!value) {
+                this.$delete(this.filterBy, this.id);
+                return; 
             }
+
+            this.$set(this.filterBy, this.id, value);
         }
         
         addFilter(): void {

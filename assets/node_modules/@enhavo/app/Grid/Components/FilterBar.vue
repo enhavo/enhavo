@@ -1,5 +1,5 @@
 <template>
-    <div class="view-table-filters">
+    <div v-bind:class="name">
 
         <template v-for="filter in filters">
             <component 
@@ -51,7 +51,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .view-table-filters {
     display: flex; margin-bottom: 30px;
 }
