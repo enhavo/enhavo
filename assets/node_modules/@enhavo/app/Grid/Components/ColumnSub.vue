@@ -16,8 +16,8 @@
     import CreateEvent from '../../ViewStack/Event/CreateEvent';
 
     @Component
-    export default class ColumnDate extends Vue {
-        name: string = 'view-table-col-date';
+    export default class ColumnSub extends Vue {
+        name: string = 'view-table-col-sub';
 
         @Prop()
         data: any;
