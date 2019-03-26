@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Filter
 {
     /**
-     * @var FilterInterface
+     * @var FilterTypeInterface
      */
     private $filter;
 
@@ -30,11 +30,11 @@ class Filter
     /**
      * Filter constructor.
      *
-     * @param FilterInterface $filter
+     * @param FilterTypeInterface $filter
      * @param $options
      * @param $name
      */
-    public function __construct(FilterInterface $filter, $options, $name)
+    public function __construct(FilterTypeInterface $filter, $options, $name)
     {
         $this->filter = $filter;
 
@@ -42,11 +42,6 @@ class Filter
         $this->filter->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
         $this->name = $name;
-    }
-
-    public function render()
-    {
-        return $this->filter->render($this->options, $this->getName());
     }
 
     public function buildQuery(FilterQuery $query, $value)
@@ -57,6 +52,16 @@ class Filter
     public function getPermission()
     {
         return $this->filter->getPermission($this->options);
+    }
+
+    public function isHidden()
+    {
+        return $this->filter->isHidden($this->options);
+    }
+
+    public function createViewData()
+    {
+        return $this->filter->createViewData($this->options, $this->name);
     }
 
     /**

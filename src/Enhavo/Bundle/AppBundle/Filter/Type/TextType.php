@@ -6,22 +6,24 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Filter\Filter;
+namespace Enhavo\Bundle\AppBundle\Filter\Type;
 
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TextFilter extends AbstractFilter
+class TextType extends AbstractFilterType
 {
-    public function render($options, $name)
+    public function createViewData($options, $name)
     {
-        return $this->renderTemplate($options['template'], [
+        $data = [
             'type' => $this->getType(),
-            'label' => $options['label'],
-            'translationDomain' => $options['translation_domain'],
             'name' => $name,
-        ]);
+            'component' => $options['component'],
+            'label' => $this->getLabel($options),
+        ];
+
+        return $data;
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
@@ -49,8 +51,8 @@ class TextFilter extends AbstractFilter
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Filter:text.html.twig',
-            'operator' => FilterQuery::OPERATOR_LIKE
+            'operator' => FilterQuery::OPERATOR_LIKE,
+            'component' => ''
         ]);
     }
 

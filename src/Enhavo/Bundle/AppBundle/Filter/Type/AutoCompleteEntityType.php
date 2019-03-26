@@ -6,21 +6,25 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Filter\Filter;
+namespace Enhavo\Bundle\AppBundle\Filter\Type;
 
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AutoCompleteEntityFilter extends AbstractFilter
+class AutoCompleteEntityType extends AbstractFilterType
 {
-    public function render($options, $name)
+    public function createViewData($options, $name)
     {
-        return $this->renderTemplate($options['template'], [
+        $data = [
             'type' => $this->getType(),
             'auto_complete_data' => $this->getAutoCompleteData($options),
             'name' => $name,
-        ]);
+            'component' => $options['component'],
+            'label' => $this->getLabel($options)
+        ];
+        
+        return $data;
     }
 
     private function getAutoCompleteData($options)
@@ -29,8 +33,6 @@ class AutoCompleteEntityFilter extends AbstractFilter
         $translator = $this->container->get('translator');
         return [
             'url' => $router->generate($options['route'], $options['route_parameters']),
-            'route' => $options['route'],
-            'route_parameters' => $options['route_parameters'],
             'value' => null,
             'multiple' => false,
             'minimum_input_length' => $options['minimum_input_length'],
@@ -53,9 +55,9 @@ class AutoCompleteEntityFilter extends AbstractFilter
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Filter:auto_complete_entity.html.twig',
             'route_parameters' => [],
-            'minimum_input_length' => 3
+            'minimum_input_length' => 3,
+            'component' => ''
         ]);
 
         $optionsResolver->setRequired([

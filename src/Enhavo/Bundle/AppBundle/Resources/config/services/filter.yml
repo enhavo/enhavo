@@ -25,36 +25,52 @@ services:
 
     enhavo_app.filter_manager:
         class: Enhavo\Bundle\AppBundle\Filter\FilterManager
+        arguments:
+            - '@security.authorization_checker'
+            - '@enhavo_app.factory.filter'
 
-    Enhavo\Bundle\AppBundle\Filter\Filter\TextFilter:
+    Enhavo\Bundle\AppBundle\Filter\AbstractFilterType:
+        abstract: true
+        public: true
+        arguments:
+            - '@translator'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\AppBundle\Filter\Type\TextType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: text }
 
-    Enhavo\Bundle\AppBundle\Filter\Filter\BooleanFilter:
+    Enhavo\Bundle\AppBundle\Filter\Type\BooleanType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: boolean }
 
-    Enhavo\Bundle\AppBundle\Filter\Filter\OptionFilter:
+    Enhavo\Bundle\AppBundle\Filter\Type\OptionType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: option }
 
-    Enhavo\Bundle\AppBundle\Filter\Filter\EntityFilter:
+    Enhavo\Bundle\AppBundle\Filter\Type\EntityType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.filter, alias: entity }
 
-    Enhavo\Bundle\AppBundle\Filter\Filter\AutoCompleteEntityFilter:
+    Enhavo\Bundle\AppBundle\Filter\Type\AutoCompleteEntityType:
+        parent: Enhavo\Bundle\AppBundle\Filter\AbstractFilterType
         public: true
         calls:
             - [setContainer, ['@service_container']]

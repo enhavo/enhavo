@@ -6,24 +6,26 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Filter\Filter;
+namespace Enhavo\Bundle\AppBundle\Filter\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\FilterException;
-use Enhavo\Bundle\AppBundle\Filter\AbstractFilter;
+use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OptionFilter extends AbstractFilter
+class OptionType extends AbstractFilterType
 {
-    public function render($options, $name)
+    public function createViewData($options, $name)
     {
-        return $this->renderTemplate($options['template'], [
+        $data = [
             'type' => $this->getType(),
-            'label' => $options['label'],
-            'translationDomain' => $options['translation_domain'],
             'options' => $options['options'],
             'name' => $name,
-        ]);
+            'component' => $options['component'],
+            'label' => $this->getLabel($options),
+        ];
+
+        return $data;
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)
@@ -54,7 +56,7 @@ class OptionFilter extends AbstractFilter
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Filter:option.html.twig'
+            'component' => ''
         ]);
         $optionsResolver->setRequired(['options']);
     }
