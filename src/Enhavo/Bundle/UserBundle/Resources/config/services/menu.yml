@@ -1,23 +1,15 @@
 services:
     Enhavo\Bundle\UserBundle\Menu\UserMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: user_user }
 
     Enhavo\Bundle\UserBundle\Menu\GroupMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: user_group }
 
     Enhavo\Bundle\UserBundle\Menu\UserMainMenu:
-        public: true
-        arguments:
-            - '@enhavo_app.menu.factory'
-        calls:
-            - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
             - { name: enhavo.menu, alias: user }
