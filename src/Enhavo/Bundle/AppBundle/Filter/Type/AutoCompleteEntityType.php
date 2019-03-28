@@ -19,7 +19,8 @@ class AutoCompleteEntityType extends AbstractFilterType
         $data = [
             'type' => $this->getType(),
             'auto_complete_data' => $this->getAutoCompleteData($options),
-            'name' => $name,
+            'key' => $name,
+            'value' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options)
         ];
@@ -57,7 +58,7 @@ class AutoCompleteEntityType extends AbstractFilterType
         $optionsResolver->setDefaults([
             'route_parameters' => [],
             'minimum_input_length' => 3,
-            'component' => ''
+            'component' => 'filter-autocomplete-entity'
         ]);
 
         $optionsResolver->setRequired([

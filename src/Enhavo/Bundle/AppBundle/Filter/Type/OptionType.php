@@ -19,8 +19,9 @@ class OptionType extends AbstractFilterType
     {
         $data = [
             'type' => $this->getType(),
-            'options' => $options['options'],
-            'name' => $name,
+            'choices' => $options['options'],
+            'key' => $name,
+            'value' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
         ];
@@ -56,7 +57,7 @@ class OptionType extends AbstractFilterType
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'component' => ''
+            'component' => 'filter-option'
         ]);
         $optionsResolver->setRequired(['options']);
     }

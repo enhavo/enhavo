@@ -52,7 +52,7 @@
 
     @Component
     export default class Pagination extends Vue {
-        name: string = 'view-table-pagination';
+        name: string = 'table-pagination';
     
         @Prop()
         page: Array<object>;

@@ -18,7 +18,8 @@ class BooleanType extends AbstractFilterType
     {
         $data = [
             'type' => $this->getType(),
-            'name' => $name,
+            'key' => $name,
+            'value' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
         ];
@@ -41,7 +42,7 @@ class BooleanType extends AbstractFilterType
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'equals' => true,
-            'component' => ''
+            'component' => 'filter-boolean'
         ]);
     }
 

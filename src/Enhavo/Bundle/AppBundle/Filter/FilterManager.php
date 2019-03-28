@@ -43,7 +43,7 @@ class FilterManager
                 continue;
             }
 
-            $filters[] = $filter;
+            $filters[] = $filter->createViewData();
         }
 
         return $filters;

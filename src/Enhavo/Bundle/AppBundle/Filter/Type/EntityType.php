@@ -21,8 +21,9 @@ class EntityType extends AbstractFilterType
 
         $data = [
             'type' => $this->getType(),
-            'options' => $choices,
-            'name' => $name,
+            'choices' => $choices,
+            'key' => $name,
+            'value' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
         ];
@@ -98,7 +99,7 @@ class EntityType extends AbstractFilterType
             'method' => 'findAll',
             'arguments' => null,
             'path' => null,
-            'component' => ''
+            'component' => 'filter-entity'
         ]);
 
         $optionsResolver->setRequired([

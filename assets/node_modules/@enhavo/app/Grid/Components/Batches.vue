@@ -21,8 +21,11 @@
 
     @Component
     export default class Batches extends Vue {
-        name: string = "view-table-batches";
-    
+        name: string = "table-batches";
+
+        @Prop()
+        data: object;
+
         @Prop()
         batch: Array<object>;
 
@@ -32,11 +35,11 @@
         value: string = '';
 
         get placeholder(): string {
-            return this.batch['placeholder'];
+            return (this.data && this.data['placeholder']) ? this.data['placeholder'] : null;
         }
             
         get actions(): Array<object> {
-            return this.batch['actions'];
+            return (this.data && this.data['actions']) ? this.data['actions'] : null;
         }
 
         get current(): string {

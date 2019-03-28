@@ -1,14 +1,14 @@
 <template>
     <div v-bind:class="name">
 
-        <view-table-filters v-bind:filters="filters" v-bind:filterBy="filter_by"></view-table-filters>
-        <view-table-pagination v-bind:page="page"></view-table-pagination>
+        <filter-bar v-bind:filters="filters"></filter-bar>
+        <table-pagination v-bind:page="page"></table-pagination>
 
         <div class="view-table-head">
             <input type="checkbox" v-on:click="toggleSelectAll" v-bind:checked="allSelected" />
             <div 
                 v-for="column in columns" 
-                v-bind:key="column.key" 
+                v-bind:key="column.key"
                 v-bind:style="getColumnStyle(column)" 
                 v-bind:class="['view-table-col', {'sortable': column.sortable}]"
                 v-on:click="clickHeadColumn(column)">
@@ -23,16 +23,16 @@
         <template v-if="!loading">
             <template v-for="row in rows">
                 <input type="checkbox" v-model="selected" v-bind:id="row.id" v-bind:value="row.id" v-bind:key="'checkbox-'+row.id" />
-                <view-table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="'row-'+row.id"></view-table-row>
+                <table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="'row-'+row.id"></table-row>
             </template>
         </template>
         <template v-else>
             Fetching data...
         </template>
 
-        <view-table-batches v-bind:batch="batch" v-bind:selected="selected"></view-table-batches>
+        <table-batches v-bind:batch="batch" v-bind:selected="selected"></table-batches>
 
-        <view-table-pagination v-bind:page="page"></view-table-pagination>
+        <table-pagination v-bind:page="page"></table-pagination>
 
     </div>
 </template>
@@ -41,16 +41,18 @@
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import Row from "./Row.vue"
     import Pagination from "./Pagination.vue"
-    import FilterBar from "./FilterBar.vue"
+    import FilterBar from "@enhavo/app/Grid/Filter/Components/FilterBar.vue"
     import Batches from "./Batches.vue"
     import axios from 'axios';
 
-    Vue.component('view-table-filters', FilterBar);
-    Vue.component('view-table-row', Row);
-    Vue.component('view-table-pagination', Pagination);
-    Vue.component('view-table-batches', Batches);
-
-    @Component
+    @Component({
+        components: {
+            'filter-bar': FilterBar,
+            'table-row': Row,
+            'table-pagination': Pagination,
+            'table-batches': Batches
+        }
+    })
     export default class Table extends Vue {
         name: string = 'view-table';
     
@@ -201,7 +203,6 @@
             }
         }
     }
-
 }
 </style>
 

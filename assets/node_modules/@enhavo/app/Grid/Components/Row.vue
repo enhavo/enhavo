@@ -28,7 +28,7 @@
 
     @Component
     export default class Row extends Vue {
-        name: string = 'view-table-row';
+        name: string = 'table-row';
     
         @Prop()
         columns: Array<object>;

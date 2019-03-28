@@ -21,8 +21,7 @@ export default class VueLoader
     }
 
     load(component: VueConstructor, loadOnMount: boolean = true) {
-        let self = this;
-        Vue.config.devtools = false;
+        Vue.config.devtools = true;
         Vue.config.productionTip = false;
         this.vue = new Vue({
             el: '#' + this.id,

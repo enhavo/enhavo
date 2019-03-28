@@ -18,7 +18,8 @@ class TextType extends AbstractFilterType
     {
         $data = [
             'type' => $this->getType(),
-            'name' => $name,
+            'key' => $name,
+            'value' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
         ];
@@ -52,7 +53,7 @@ class TextType extends AbstractFilterType
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'operator' => FilterQuery::OPERATOR_LIKE,
-            'component' => ''
+            'component' => 'filter-text'
         ]);
     }
 

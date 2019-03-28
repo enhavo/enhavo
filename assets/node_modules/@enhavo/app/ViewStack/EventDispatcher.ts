@@ -171,7 +171,6 @@ export default class EventDispatcher
     }
 }
 
-
 export class Subscriber
 {
     eventName: string = null;
