@@ -18,7 +18,7 @@ class EnhavoAppBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.table_widget_collector', 'enhavo.table_widget')
+            new TypeCompilerPass('enhavo_app.column_collector', 'enhavo.column')
         );
 
         $container->addCompilerPass(

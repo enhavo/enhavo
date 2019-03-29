@@ -2,18 +2,25 @@
 
 namespace Enhavo\Bundle\ShopBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
 use Sylius\Component\Addressing\Model\AddressInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressWidget extends AbstractTableWidget
+class AddressWidget extends AbstractColumnType
 {
-    public function render($options, $item)
+    public function createResourceViewData(array $options, $resource)
     {
-        $address = $this->getProperty($item, $options['property']);
+        $address = $this->getProperty($resource, $options['property']);
         if($address instanceof AddressInterface) {
             return sprintf('%s %s', $address->getFirstName(), $address->getLastName());
         }
         return '';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([]);
+        $resolver->setRequired(['property']);
     }
     
     public function getType()

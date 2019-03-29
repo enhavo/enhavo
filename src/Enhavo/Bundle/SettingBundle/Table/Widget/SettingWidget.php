@@ -8,12 +8,10 @@
 
 namespace Enhavo\Bundle\SettingBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
-use Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget;
+use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SettingWidget extends AbstractTableWidget
+class SettingWidget extends AbstractColumnType
 {
     /**
      * @param array $options
@@ -21,7 +19,7 @@ class SettingWidget extends AbstractTableWidget
      *
      * @return mixed
      */
-    public function render($options, $item)
+    public function createResourceViewData(array $options, $item)
     {
         if ($item->getType() === Setting::SETTING_TYPE_TEXT) {
             return $item->getValue();
@@ -30,19 +28,19 @@ class SettingWidget extends AbstractTableWidget
         if ($item->getType() === Setting::SETTING_TYPE_BOOLEAN) {
             $booleanWidget = $this->container->get('enhavo_app.table.boolean');
             $options['property'] = 'value';
-            return $booleanWidget->render($options, $item);
+            return $booleanWidget->createResourceViewData($options, $item);
         }
 
         if ($item->getType() === Setting::SETTING_TYPE_FILE) {
             $pictureWidget = $this->container->get('enhavo_media.table.picture_widget');
             $options['property'] = 'file';
-            return $pictureWidget->render($options, $item);
+            return $pictureWidget->createResourceViewData($options, $item);
         }
 
         if ($item->getType() === Setting::SETTING_TYPE_FILES) {
             $pictureWidget = $this->container->get('enhavo_media.table.picture_widget');
             $options['property'] = 'files';
-            return $pictureWidget->render($options, $item);
+            return $pictureWidget->createResourceViewData($options, $item);
         }
 
         if ($item->getType() === Setting::SETTING_TYPE_WYSIWYG) {

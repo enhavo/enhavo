@@ -12,7 +12,7 @@ use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Batch\BatchManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Filter\FilterManager;
-use Enhavo\Bundle\AppBundle\Table\ColumnManager;
+use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
@@ -96,6 +96,11 @@ class IndexViewer extends AppViewer
         /** @var Request $request */
         $request = $requestConfiguration->getRequest();
 
+        $viewerOptions = $requestConfiguration->getViewerOptions();
+        if(isset($viewerOptions['translationDomain'])) {
+            $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
+        }
+
         $parameters->set('data', [
             'actions' => $this->actionManager->createActionsViewData($actions),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
@@ -111,6 +116,15 @@ class IndexViewer extends AppViewer
         ]);
 
         return;
+    }
+
+    private function addTranslationDomain(&$configuration, $translationDomain)
+    {
+        foreach($configuration as &$config) {
+            if(!isset($config['translation_domain'])) {
+                $config['translation_domain'] = $translationDomain;
+            }
+        }
     }
 
     private function getTableRoute($options)

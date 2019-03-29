@@ -2,12 +2,12 @@
 
 namespace Enhavo\Bundle\ShopBundle\Table\Widget;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
 use Enhavo\Bundle\ShopBundle\Model\ProductInterface;
 
-class ProductVariantWidget extends AbstractTableWidget
+class ProductVariantWidget extends AbstractColumnType
 {
-    public function render($options, $resource)
+    public function createResourceViewData(array $options, $resource)
     {
         if(!$resource instanceof ProductInterface) {
             return '';
@@ -17,9 +17,7 @@ class ProductVariantWidget extends AbstractTableWidget
             'productId' => $resource->getId()
         ]);
 
-        return $this->renderTemplate('EnhavoShopBundle:Admin:Table/product-variant-widget.html.twig', [
-            'path' => $path
-        ]);
+        return $path;
     }
 
     public function getType()

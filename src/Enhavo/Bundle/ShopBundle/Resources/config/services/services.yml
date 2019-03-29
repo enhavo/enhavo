@@ -12,21 +12,21 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget, alias: shop_address }
+            - { name: enhavo.column, alias: shop_address }
 
     Enhavo\Bundle\ShopBundle\Table\Widget\ProductVariantWidget:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget, alias: shop_product_variant }
+            - { name: enhavo.column, alias: shop_product_variant }
 
     Enhavo\Bundle\ShopBundle\Table\Widget\OrderStateWidget:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget, alias: order_state }
+            - { name: enhavo.column, alias: order_state }
 
     enhavo_shop.locale.country_resolver:
         class: Enhavo\Bundle\ShopBundle\Locale\CountryResolver

@@ -9,17 +9,18 @@
 namespace Enhavo\Bundle\MediaBundle\Table\Widget;
 
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureWidget extends AbstractTableWidget
+class PictureWidget extends AbstractColumnType
 {
-    public function render($options, $item)
+    public function createResourceViewData(array $options, $item)
     {
-        $property = $this->getRequiredOption('property', $options);
-        $format = $this->getOption('format', $options, 'enhavoTableThumb');
-        $height = $this->getOption('height', $options, '60');
+        $property = $options['property'];
+        $format = $options['format'];
+        $height = $options['height'];
 
         $file = $this->getProperty($item, $property);
 
@@ -46,11 +47,21 @@ class PictureWidget extends AbstractTableWidget
             ));
         }
 
-        return $this->renderTemplate('EnhavoMediaBundle:TableWidget:picture.html.twig', array(
-            'file' => $file,
-            'format' => $format,
-            'height' => $height
-        ));
+        $url = $this->container->get('enhavo_media.media.url_resolver')->getPublicFormatUrl($file, $format);
+
+        return [
+            'height' => $height,
+            'url' => $url
+        ];
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'height' => 60,
+            'format' => 'enhavoTableThumb'
+        ]);
+        $resolver->setRequired(['property']);
     }
 
     public function getType()
