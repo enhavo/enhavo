@@ -35,7 +35,7 @@ class BooleanType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'format' => 'd.m.Y H:i',
-            'component' => ''
+            'component' => 'column-boolean'
         ]);
         $resolver->setRequired(['property']);
     }

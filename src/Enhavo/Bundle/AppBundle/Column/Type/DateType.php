@@ -38,7 +38,7 @@ class DateType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'format' => 'd.m.Y',
-            'component' => ''
+            'component' => 'column-date'
         ]);
         $resolver->setRequired(['property']);
     }

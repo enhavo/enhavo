@@ -40,7 +40,7 @@ class LabelType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => ''
+            'component' => 'column-label'
         ]);
         $resolver->setRequired(['property']);
     }

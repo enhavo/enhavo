@@ -33,7 +33,7 @@ class PositionType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => '',
+            'component' => 'column-position',
         ]);
     }
 

@@ -32,15 +32,28 @@ class ColumnManager
         $data = [];
         foreach($configuration as $name => $options) {
             $column = $this->createColumn($options);
-            $data[] = $column->createColumnViewData();
+            $columnData = $column->createColumnViewData();
+            $columnData['key'] = $name;
+            $data[] = $columnData;
         }
 
         return $data;
     }
 
-    public function createResourcesViewData(array $configuration)
+    public function createResourcesViewData(array $configuration, $resources)
     {
         $data = [];
+        foreach($resources as $resource) {
+            $columnData = [
+                'id' => $resource->getId(),
+                'data' => null,
+            ];
+            foreach($configuration as $name => $options) {
+                $column = $this->createColumn($options);
+                $columnData['data'][$name] = $column->createResourceViewData($resource);
+            }
+            $data[] = $columnData;
+        }
         return $data;
     }
 

@@ -43,7 +43,7 @@ class ListType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => '',
+            'component' => 'column-list',
             'separator' => ','
         ]);
         $resolver->setRequired(['property', 'item_property']);

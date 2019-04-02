@@ -39,7 +39,7 @@ class UrlType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => '',
+            'component' => 'column-url',
             'icon' => 'link',
             'target' => '_blank',
             'resolver_type' => 'default'
