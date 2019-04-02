@@ -1,27 +1,19 @@
 <template>
     <div class="app-view">
         <action-bar v-bind:data="actions"></action-bar>
-        <div>{{ view_id }}</div>
-        <div>{{ uuid }}</div>
-
-        <view-table 
-            v-bind:columns="columns" 
-            v-bind:page="page" 
-            v-bind:filters="filters" 
-            v-bind:batch="batch">
-        </view-table>
+        <grid-grid v-bind:data="grid"></grid-grid>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import Table from "../../Grid/Components/Table.vue"
-import * as uuidv4 from "uuid/v4";
+import Grid from "@enhavo/app/Grid/Components/Grid.vue";
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
+import * as uuidv4 from "uuid/v4";
 import '@enhavo/app/assets/styles/base.scss'
 
 @Component({
-    components: {ActionBar, 'view-table': Table}
+    components: {ActionBar, 'grid-grid': Grid}
 })
 export default class AppView extends Vue {
     name = 'app-view';
@@ -33,20 +25,7 @@ export default class AppView extends Vue {
     actions: Array<object>;
 
     @Prop()
-    columns: Array<object>;
-
-    @Prop()
-    page: Array<object>;
-
-    @Prop()
-    filters: Array<object>;
-
-    @Prop()
-    batch: Array<object>;
-
-    get uuid() {
-        return uuidv4();
-    }
+    grid: Array<object>;
 }
 </script>
 

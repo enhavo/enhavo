@@ -1,9 +1,5 @@
 <template>
     <div v-bind:class="name">
-
-        <filter-bar v-bind:filters="filters"></filter-bar>
-        <table-pagination v-bind:page="page"></table-pagination>
-
         <div class="view-table-head">
             <input type="checkbox" v-on:click="toggleSelectAll" v-bind:checked="allSelected" />
             <div 
@@ -22,35 +18,24 @@
 
         <template v-if="!loading">
             <template v-for="row in rows">
-                <input type="checkbox" v-model="selected" v-bind:id="row.id" v-bind:value="row.id" v-bind:key="'checkbox-'+row.id" />
-                <table-row v-bind:columns="columns" v-bind:data="row" v-bind:key="'row-'+row.id"></table-row>
+                <input type="checkbox" v-model="selected" v-bind:id="row.id" v-bind:data="row.id" v-bind:key="'checkbox-'+row.id" />
+                <table-row v-bind:columns="columns" v-bind:data="row.data" v-bind:key="'row-'+row.id"></table-row>
             </template>
         </template>
         <template v-else>
             Fetching data...
         </template>
-
-        <table-batches v-bind:batch="batch" v-bind:selected="selected"></table-batches>
-
-        <table-pagination v-bind:page="page"></table-pagination>
-
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-    import Row from "./Row.vue"
-    import Pagination from "./Pagination.vue"
-    import FilterBar from "@enhavo/app/Grid/Filter/Components/FilterBar.vue"
-    import Batches from "./Batches.vue"
+    import Row from "../Column/Components/Row.vue"
     import axios from 'axios';
 
     @Component({
         components: {
-            'filter-bar': FilterBar,
             'table-row': Row,
-            'table-pagination': Pagination,
-            'table-batches': Batches
         }
     })
     export default class Table extends Vue {
@@ -58,32 +43,18 @@
     
         @Prop()
         columns: Array<object>;
-    
-        @Prop()
-        page: Array<object>;
-    
-        @Prop()
-        filters: Array<object>;
 
         @Prop()
-        batch: Array<object>;
+        rows: Array<any>;
 
-        loading: boolean = false;
-        rows: any = [];
-        apiUrl: string = '/admin/table';
-
-        // sort
-        sort_column_key: string = null;
-        sort_direction_desc: boolean = false;
-
-        // filters
-        filter_by: object = {};
+        @Prop()
+        loading: boolean;
 
         // batch
         selected: Array<number> = []; // selected items
 
         mounted() {
-            this.retrieveRowData(this.apiUrl);
+            //this.retrieveRowData(this.apiUrl);
         }
 
         @Watch('sort_column_key')
@@ -98,40 +69,8 @@
             console.log("table: selected changed");
         }
 
-        @Watch('filter_by', { immediate: false, deep: true })
-        onFilterByChanged(newValue: boolean, oldValue: boolean): void {
-            console.log("table: filterBy changed");
-        }
-
         get allSelected(): boolean {
-            return this.selected.length == this.rows.length;
-        }
-
-        retrieveRowData(apiUrl: string): void {
-            this.loading = true;
-
-            let requestParams = {
-                sort_direction: this.sort_direction_desc ? 'DESC' : 'ASC'
-            };
-
-            if(this.sort_column_key) {
-                requestParams['sort_column_key'] = this.sort_column_key;
-            }
-
-            axios
-                .get(apiUrl, {params: requestParams})
-                // executed on success
-                .then(response => {
-                    this.rows = response.data
-                })
-                // executed on error
-                .catch(error => {
-
-                })
-                // always executed
-                .then(() => {
-                    this.loading = false;
-                })
+            //return this.selected.length == this.rows.length;
         }
 
         calcWidth(parts: number): string {
@@ -168,12 +107,12 @@
 
         toggleSelectAll(): void {
             // check boxes if some are unchecked
-            if (this.rows.length && !this.allSelected) {
-                for (let row of this.rows) {
-                    this.selected.push(row.id);
-                }
-                return;
-            }
+            // if (this.rows.length && !this.allSelected) {
+            //     for (let row of this.rows) {
+            //         this.selected.push(row.id);
+            //     }
+            //     return;
+            // }
 
             // remove checked state on all boxes if they are checked
             this.selected.splice(0, this.selected.length);

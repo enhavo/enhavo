@@ -3,7 +3,7 @@
 
         <div class="pagination-select">
             Ergebnisse pro Seite: 
-            <select v-model="pagination">
+            <select v-model="paginationValue">
                 <option 
                     v-for="(step, index) in paginationSteps"
                     v-bind:key="index" 
@@ -49,41 +49,30 @@
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    const application = <IndexApplication>ApplicationBag.getApplication();
 
     @Component
     export default class Pagination extends Vue {
         name: string = 'table-pagination';
     
         @Prop()
-        page: Array<object>;
+        page: number;
 
-        paginationValue: number = 0; 
+        @Prop()
+        paginationSteps: Array<number>;
+
+        @Prop()
+        count: number;
+
+        @Prop()
+        pagination: number;
+
         itemsAround: number = 2;
 
-        get paginationSteps(): Array<number> {
-            if( this.page && this.page.hasOwnProperty('pagination_steps') ) {
-                return this.page['pagination_steps'];
-            }
-            return null;
-        }
-
-        get pagination(): number {
-            if( this.page && this.page.hasOwnProperty('pagination') ) {
-                return this.page['pagination'];
-            }
-            return null;
-        }
-        set pagination(value: number) {
-            if( this.page && this.page.hasOwnProperty('pagination') ) {
-                this.page['pagination'] = value;
-            }
-        }
-
         get currentPage(): number {
-            if( this.page && this.page.hasOwnProperty('current') ) {
-                return this.page['current'];
-            }
-            return null;
+            return this.page;
         }
 
         get lastPage(): number {
@@ -162,10 +151,6 @@
             return items;
         }
 
-        clickPage(page: number): void {
-            this.page['current'] = page;
-        }
-
         clickFirst(): void {
             this.clickPage(1);
         }
@@ -188,8 +173,16 @@
             }
         }
 
-        changePagination(data: any): void {
-            console.log(data);
+        get paginationValue() {
+            return this.pagination;
+        }
+
+        set paginationValue(number: number) {
+            application.getGrid().changePagination(number);
+        }
+
+        clickPage(page: number): void {
+            application.getGrid().changePage(page);
         }
 
         mounted() {

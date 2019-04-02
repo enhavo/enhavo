@@ -1,6 +1,5 @@
 <template>
     <div class="view-table-row" @click="open()">
-
         <template v-for="column in columns">
             <component 
                 class="view-table-col" 
@@ -10,23 +9,19 @@
                 v-bind:style="getColumnStyle(column)" 
                 v-bind:data="getColumnData(column.key)"></component>
         </template>
-
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import dispatcher from "../../ViewStack/dispatcher";
-    import CreateEvent from '../../ViewStack/Event/CreateEvent';
-    import ColumnText from "./ColumnText.vue"
-    import ColumnDate from "./ColumnDate.vue"
-    import ColumnSub from "./ColumnSub.vue"
+    import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    const application = <IndexApplication>ApplicationBag.getApplication();
 
-    Vue.component('view-table-col-text', ColumnText);
-    Vue.component('view-table-col-date', ColumnDate);
-    Vue.component('view-table-col-sub', ColumnSub);
-
-    @Component
+    @Component({
+        components: application.getColumnRegistry().getComponents()
+    })
     export default class Row extends Vue {
         name: string = 'table-row';
     
@@ -37,7 +32,7 @@
         data: any;
     
         open() {
-            dispatcher.dispatch(new CreateEvent({
+            application.getEventDispatcher().dispatch(new CreateEvent({
                 label: 'table',
                 component: 'iframe-view',
                 url: '/admin/view'

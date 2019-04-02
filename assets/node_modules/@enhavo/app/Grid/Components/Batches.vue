@@ -24,22 +24,19 @@
         name: string = "table-batches";
 
         @Prop()
-        data: object;
-
-        @Prop()
         batch: Array<object>;
 
         @Prop()
         selected: Array<number>;
 
-        value: string = '';
+        @Prop()
+        value: Array<number>;
+
+        @Prop()
+        actions: Array<number>;
 
         get placeholder(): string {
-            return (this.data && this.data['placeholder']) ? this.data['placeholder'] : null;
-        }
-            
-        get actions(): Array<object> {
-            return (this.data && this.data['actions']) ? this.data['actions'] : null;
+            return '';
         }
 
         get current(): string {
@@ -47,15 +44,15 @@
         }
 
         get hasSelection(): boolean {
-            return this.selected.length > 0;
-        }
-
-        get hasValue(): boolean {
-            return this.value && this.value.length > 0;
+            if( this.selected) {
+                return this.selected.length > 0;
+            }
+            return false;
         }
 
         get isButtonActive(): boolean {
-            return this.hasSelection && this.hasValue;
+            //return this.hasSelection && this.hasValue;
+            return false;
         }
 
         sendRequest(): void {

@@ -7,6 +7,8 @@ import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Grid from "@enhavo/app/Grid/Grid";
 import FilterManager from "@enhavo/app/Grid/Filter/FilterManager";
 import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
+import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
+import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 
 export class IndexApplication extends AbstractApplication implements ActionAwareApplication
 {
@@ -15,6 +17,8 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     protected grid: Grid;
     protected filterManager: FilterManager;
     protected filterRegistry: FilterRegistry;
+    protected columnManager: ColumnManager;
+    protected columnRegistry: ColumnRegistry;
 
     constructor()
     {
@@ -49,7 +53,7 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     public getGrid(): Grid
     {
         if(this.grid == null) {
-            this.grid = new Grid(this.getFilterManager());
+            this.grid = new Grid(this.getFilterManager(), this.getColumnManager(), this.getRouter(), this.getDataLoader().load().grid);
         }
         return this.grid;
     }
@@ -69,6 +73,23 @@ export class IndexApplication extends AbstractApplication implements ActionAware
             this.filterRegistry.load(this);
         }
         return this.filterRegistry;
+    }
+
+    public getColumnManager(): ColumnManager
+    {
+        if(this.columnManager == null) {
+            this.columnManager = new ColumnManager(this.getDataLoader().load().grid.columns, this.getColumnRegistry());
+        }
+        return this.columnManager;
+    }
+
+    public getColumnRegistry(): ColumnRegistry
+    {
+        if(this.columnRegistry == null) {
+            this.columnRegistry = new ColumnRegistry();
+            this.columnRegistry.load(this);
+        }
+        return this.columnRegistry;
     }
 }
 
