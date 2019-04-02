@@ -134,3 +134,11 @@ gulp.task("elastic:clean", function(next) {
 });
 
 gulp.task("elastic:install", gulp.series("elastic:download", "elastic:decompress", "elastic:clean"));
+
+gulp.task('routes:dump', function (cb) {
+    exec('bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
