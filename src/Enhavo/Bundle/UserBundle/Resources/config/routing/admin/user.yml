@@ -43,6 +43,7 @@ enhavo_user_user_table:
     defaults:
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
+            paginate: $pagination
             filters:
                 username:
                     type: text

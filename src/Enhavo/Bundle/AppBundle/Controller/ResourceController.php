@@ -258,9 +258,12 @@ class ResourceController extends BaseController
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resources' => $resources,
+            'request' => $request,
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        $response = $this->viewHandler->handle($configuration, $view);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**

@@ -101,18 +101,24 @@ class IndexViewer extends AppViewer
             $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
         }
 
-        $parameters->set('data', [
-            'actions' => $this->actionManager->createActionsViewData($actions),
+        $grid = [
+            'tableRoute' => $tableRoute,
+            'batchRoute' => $batchRoute,
+            'batch' => null,
+            'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),
             'filters' => $this->filterManager->createFiltersViewData($filterData),
-            'view_id' => $request->get('view_id', null),
-            'batch' => null,
-            'page' => $request->get('page', 1),
             'pagination' => 100,
-            'pagination_steps' => [
+            'paginationSteps' => [
                 5, 10, 50, 100, 500
             ],
+        ];
+        
+        $parameters->set('data', [
+            'grid' => $grid,
+            'actions' => $this->actionManager->createActionsViewData($actions),
+            'view_id' => $request->get('view_id', null),
         ]);
 
         return;

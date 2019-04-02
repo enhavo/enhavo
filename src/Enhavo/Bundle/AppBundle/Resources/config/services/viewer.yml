@@ -79,6 +79,7 @@ services:
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@enhavo_app.column_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:
