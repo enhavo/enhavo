@@ -41,6 +41,12 @@ class BaseViewer extends AbstractViewer
             $this->getViewerOption('translation_domain', $requestConfiguration)
         ]));
 
+        $parameters->set('routes', $this->mergeConfig([
+            $options['translation_domain'],
+            $this->getViewerOption('translation_domain', $requestConfiguration)
+        ]));
+        $parameters->set('routes', $this->getRoutes());
+
         foreach($options['parameters'] as $key => $value) {
             $parameters->set($key, $value);
         }
@@ -56,5 +62,14 @@ class BaseViewer extends AbstractViewer
             'template' => 'EnhavoAppBundle:Viewer:base.html.twig',
             'parameters' => []
         ]);
+    }
+
+    private function getRoutes()
+    {
+        $file = $this->container->getParameter('kernel.project_dir').'/public/js/fos_js_routes.json';
+        if(file_exists($file)) {
+            return file_get_contents($file);
+        }
+        return null;
     }
 }

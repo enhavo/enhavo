@@ -5,6 +5,7 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import AppInterface from "@enhavo/app/AppInterface";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
+import Router from "@enhavo/core/Router";
 
 export default abstract class AbstractApplication implements ApplicationInterface
 {
@@ -13,6 +14,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected view: View;
     protected eventDispatcher: EventDispatcher;
     protected app: AppInterface;
+    protected router: Router;
 
     constructor()
     {
@@ -51,5 +53,14 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.view = new View();
         }
         return this.view;
+    }
+
+    public getRouter(): Router
+    {
+        if(this.router == null) {
+            this.router = new Router();
+            this.router.setRoutingData((new DataLoader('routes')).load());
+        }
+        return this.router;
     }
 }
