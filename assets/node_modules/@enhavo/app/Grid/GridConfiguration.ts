@@ -12,4 +12,5 @@ export default class GridConfiguration
     public pagination: number;
     public paginationSteps: number;
     public batch: string;
+    public selectAll: boolean = false;
 }

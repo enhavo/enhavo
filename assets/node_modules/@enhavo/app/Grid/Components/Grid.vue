@@ -11,6 +11,7 @@
             v-bind:columns="data.columns"
             v-bind:rows="data.rows"
             v-bind:loading="data.loading"
+            v-bind:selectAll="data.selectAll"
         ></grid-table>
         <table-batches v-bind:batch="data.batch" v-bind:selected="data.selected"></table-batches>
         <table-pagination

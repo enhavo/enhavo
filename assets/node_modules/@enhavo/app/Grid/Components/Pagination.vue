@@ -76,10 +76,10 @@
         }
 
         get lastPage(): number {
-            if( this.page && this.page.hasOwnProperty('last') ) {
-                return this.page['last'];
+            if(!this.count || !this.pagination) {
+                return 1;
             }
-            return null;
+            return Math.ceil(this.count/this.pagination);
         }
 
         get isFirstPage(): boolean {
@@ -116,38 +116,37 @@
             return this.currentPage > (this.lastPage - this.segmentLength);
         }
 
-        get pages(): Array<number> {
-
+        get pages(): Array<number>
+        {
             const firstPage: number = 1;
             let items: Array<number> = [];
 
-            if(this.isFirstSegment) {
-
+            if(this.segmentLength > this.lastPage) {
+                let loop: number = firstPage;
+                while (this.lastPage > items.length) {
+                    items.push(loop);
+                    loop++;
+                }
+            } else if(this.isFirstSegment) {
                 let loop: number = firstPage;
                 while (this.segmentLength > items.length) {
                     items.push(loop);
                     loop++;
                 }
-
-                return items;
-            } 
-            else if(this.isLastSegment) {
+            } else if(this.isLastSegment) {
                 
                 let loop: number = this.lastPage;
                 while (this.segmentLength > items.length) {
                     items.unshift(loop);
                     loop--;
                 }
-                
-                return items;
+            } else {
+                let loop: number = this.currentPage - this.itemsAround;
+                while (this.segmentLength > items.length) {
+                    items.push(loop);
+                    loop++
+                }
             }
-
-            let loop: number = this.currentPage - this.itemsAround;
-            while (this.segmentLength > items.length) {
-                items.push(loop);
-                loop++
-            }
-
             return items;
         }
 

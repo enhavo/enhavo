@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="name">
         <div class="view-table-head">
-            <input type="checkbox" v-on:click="toggleSelectAll" v-bind:checked="allSelected" />
+            <input type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
             <div 
                 v-for="column in columns" 
                 v-bind:key="column.key"
@@ -18,8 +18,7 @@
 
         <template v-if="!loading">
             <template v-for="row in rows">
-                <input type="checkbox" v-model="selected" v-bind:id="row.id" v-bind:data="row.id" v-bind:key="'checkbox-'+row.id" />
-                <table-row v-bind:columns="columns" v-bind:data="row.data" v-bind:key="'row-'+row.id"></table-row>
+                <table-row v-bind:selected="row.selected" v-bind:columns="columns" v-bind:data="row"></table-row>
             </template>
         </template>
         <template v-else>
@@ -31,7 +30,9 @@
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import Row from "../Column/Components/Row.vue"
-    import axios from 'axios';
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    const application = <IndexApplication>ApplicationBag.getApplication();
 
     @Component({
         components: {
@@ -50,11 +51,11 @@
         @Prop()
         loading: boolean;
 
-        // batch
-        selected: Array<number> = []; // selected items
+        @Prop()
+        selectAll: boolean;
 
-        mounted() {
-            //this.retrieveRowData(this.apiUrl);
+        changeSelectAll() {
+            application.getGrid().changeSelectAll(!this.selectAll);
         }
 
         @Watch('sort_column_key')
@@ -62,11 +63,6 @@
         onSortChanged(val: string, oldVal: string) {
             console.log("table: sort changed");
             this.retrieveRowData(this.apiUrl);
-        }
-
-        @Watch('selected', { immediate: false })
-        onSelectionChanged(newValue: boolean, oldValue: boolean): void {
-            console.log("table: selected changed");
         }
 
         get allSelected(): boolean {
@@ -103,19 +99,6 @@
             if(this.sort_column_key != column.key) {
                 this.sort_column_key = column.key;
             }
-        }
-
-        toggleSelectAll(): void {
-            // check boxes if some are unchecked
-            // if (this.rows.length && !this.allSelected) {
-            //     for (let row of this.rows) {
-            //         this.selected.push(row.id);
-            //     }
-            //     return;
-            // }
-
-            // remove checked state on all boxes if they are checked
-            this.selected.splice(0, this.selected.length);
         }
     }
 </script>

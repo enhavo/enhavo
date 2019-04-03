@@ -1,20 +1,24 @@
 <template>
-    <div class="view-table-row" @click="open()">
-        <template v-for="column in columns">
-            <component 
-                class="view-table-col" 
-                v-bind:is="column.component" 
-                v-bind:key="column.key" 
-                v-bind:column="column" 
-                v-bind:style="getColumnStyle(column)" 
-                v-bind:data="getColumnData(column.key)"></component>
-        </template>
+    <div>
+        <input type="checkbox" v-on:change="changeSelect" :checked="selected" />
+        <div class="view-table-row" @click="open()">
+            <template v-for="column in columns">
+                <component
+                    class="view-table-col"
+                    v-bind:is="column.component"
+                    v-bind:key="column.key"
+                    v-bind:column="column"
+                    v-bind:style="getColumnStyle(column)"
+                    v-bind:data="getColumnData(column.key)"></component>
+            </template>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+    import RowData from "@enhavo/app/Grid/Column/RowData";
     import ApplicationBag from "@enhavo/app/ApplicationBag";
     import IndexApplication from "@enhavo/app/Index/IndexApplication";
     const application = <IndexApplication>ApplicationBag.getApplication();
@@ -29,8 +33,15 @@
         columns: Array<object>;
 
         @Prop()
-        data: any;
-    
+        data: RowData;
+
+        @Prop()
+        selected: boolean;
+
+        changeSelect() {
+            application.getGrid().changeSelect(this.data, !this.data.selected);
+        }
+
         open() {
             application.getEventDispatcher().dispatch(new CreateEvent({
                 label: 'table',
@@ -53,8 +64,8 @@
         }
 
         getColumnData(column: string): object {
-            if( this.data.hasOwnProperty(column) ) {
-                return this.data[column];
+            if( this.data.data.hasOwnProperty(column) ) {
+                return this.data.data[column];
             }
             return null;
         }
