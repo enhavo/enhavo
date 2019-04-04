@@ -6,6 +6,7 @@ import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import AppInterface from "@enhavo/app/AppInterface";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import Router from "@enhavo/core/Router";
+import Translator from "@enhavo/core/Translator";
 
 export default abstract class AbstractApplication implements ApplicationInterface
 {
@@ -15,6 +16,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected eventDispatcher: EventDispatcher;
     protected app: AppInterface;
     protected router: Router;
+    protected translator: Translator;
 
     constructor()
     {
@@ -62,5 +64,14 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.router.setRoutingData((new DataLoader('routes')).load());
         }
         return this.router;
+    }
+
+    public getTranslator(): Translator
+    {
+        if(this.translator == null) {
+            this.translator = new Translator();
+            this.translator.setData((new DataLoader('translations')).load());
+        }
+        return this.translator;
     }
 }
