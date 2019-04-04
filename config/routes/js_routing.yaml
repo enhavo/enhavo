@@ -1,5 +1,2 @@
-bazinga_js_translation:
-    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
-
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
