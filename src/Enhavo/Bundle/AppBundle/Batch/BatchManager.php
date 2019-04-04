@@ -8,42 +8,98 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Controller\RequestConfigurationInterface;
+use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class BatchManager
 {
-    protected $collector;
+    /**
+     * @var TypeCollector
+     */
+    private $collector;
 
-    public function __construct(TypeCollector $collector)
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $checker;
+
+    /**
+     * ActionManager constructor.
+     * @param TypeCollector $collector
+     * @param AuthorizationCheckerInterface $checker
+     */
+    public function __construct(TypeCollector $collector, AuthorizationCheckerInterface $checker)
     {
         $this->collector = $collector;
+        $this->checker = $checker;
     }
 
     public function createBatchesViewData(array $configuration)
     {
         $data = [];
+        $actions = $this->getBatches($configuration);
+        foreach($actions as $key => $action) {
+            $viewData = $action->createViewData();
+            $viewData['key'] = $key;
+            $data[] = $viewData;
+        }
         return $data;
     }
 
-    public function executeBatch($resources, RequestConfiguration $requestConfiguration)
+    /**
+     * @param array $configuration
+     * @return Batch[]
+     */
+    public function getBatches(array $configuration)
     {
-        $type = $requestConfiguration->getBatchType();
-        if($type == null) {
-            throw new NotFoundHttpException;
+        $batches = [];
+        foreach($configuration as $name => $options) {
+            $batch = $this->createAction($options);
+
+            if($batch->isHidden()) {
+                continue;
+            }
+
+            if($batch->getPermission() !== null && !$this->checker->isGranted($batch->getPermission())) {
+                continue;
+            }
+
+            $batches[$name] = $batch;
         }
-        $options  = $requestConfiguration->getBatchOptions($type);
-        /** @var BatchInterface $batch */
-        $batch = $this->collector->getType($type);
-        $batch = clone $batch;
-        $batch->setOptions($options);
-        if($batch->isGranted()) {
-            $batch->execute($resources);
-        } else {
-            throw new AccessDeniedHttpException;
+
+        return $batches;
+    }
+
+    public function getBatch($type, array $configuration)
+    {
+        $batches = $this->getBatches($configuration);
+        if(isset($batches[$type])) {
+            return $batches[$type];
         }
+        return null;
+    }
+
+    /**
+     * @param $options
+     * @return Batch
+     * @throws TypeMissingException
+     */
+    private function createAction($options)
+    {
+        if(!isset($options['type'])) {
+            throw new TypeMissingException(sprintf('No type was given to create "%s"', Action::class));
+        }
+
+        /** @var BatchTypeInterface $type */
+        $type = $this->collector->getType($options['type']);
+        unset($options['type']);
+        $batch = new Batch($type, $options);
+        return $batch;
+    }
+
+    public function executeBatch(Batch $batch, $resources)
+    {
+        $batch->execute($resources);
     }
 }

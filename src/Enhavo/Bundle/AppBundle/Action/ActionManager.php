@@ -59,7 +59,7 @@ class ActionManager
                 continue;
             }
 
-            $actions[] = $action;
+            $actions[$name] = $action;
         }
 
         return $actions;

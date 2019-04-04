@@ -9,7 +9,7 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\ContentBundle\Batch\PublishBatch:
+    Enhavo\Bundle\ContentBundle\Batch\PublishType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

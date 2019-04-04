@@ -1,85 +1,41 @@
 <template>
     <div v-bind:class="name">
-
-        <select v-model="value">
-            <option v-if="placeholder" value="" v-bind:checked="!value.length" v-bind:disabled="value.length">{{ placeholder }}</option>
-            <option v-for="(action, index) in actions" v-bind:value="action.key" v-bind:key="'action-'+index">
-                {{ action.label }}
+        <select v-bind:value="value" @change="change">
+            <option value="" selected>{{ translator.trans('batch.placeholder') }}</option>
+            <option v-for="batch in batches" v-bind:value="batch.key" v-bind:key="batch.key">
+                {{ batch.label }}
             </option>
         </select>
-
-        <button v-on:click="sendRequest" v-bind:disabled="!isButtonActive">Batch it!</button>
-        <br />
-        <button v-on:click="clearSelection" v-bind:disabled="!isButtonActive">Clear selection</button>
-
+        <button v-on:click="execute" v-bind:disabled="!value">{{ translator.trans('batch.execute') }}</button>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-    import axios from 'axios';
+    import { Vue, Component, Prop } from "vue-property-decorator";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    const application = <IndexApplication>ApplicationBag.getApplication();
 
     @Component
     export default class Batches extends Vue {
         name: string = "table-batches";
 
         @Prop()
-        batch: Array<object>;
+        batches: Array<object>;
 
         @Prop()
-        selected: Array<number>;
+        value: string;
 
-        @Prop()
-        value: Array<number>;
-
-        @Prop()
-        actions: Array<number>;
-
-        get placeholder(): string {
-            return '';
+        get translator() {
+            return application.getTranslator();
         }
 
-        get current(): string {
-            return this.batch['current'];
+        execute() {
+            application.getGrid().executeBatch();
         }
 
-        get hasSelection(): boolean {
-            if( this.selected) {
-                return this.selected.length > 0;
-            }
-            return false;
-        }
-
-        get isButtonActive(): boolean {
-            //return this.hasSelection && this.hasValue;
-            return false;
-        }
-
-        sendRequest(): void {
-            if(this.hasSelection) {
-                let currentBatch = this.actions.find(
-                    action => action['key'] === this.value
-                );
-                let batchUri = currentBatch['uri'];
-
-                axios.post(batchUri, this.selected)
-                // executed on success
-                .then(response => {
-                })
-                // executed on error
-                .catch(error => {
-                })
-                // always executed
-                .then(() => {
-                    this.clearSelection();
-                })
-
-            }
-        }
-
-        clearSelection(): void {
-            this.value = '';
-            this.selected.splice(0, this.selected.length);
+        change(event) {
+            application.getGrid().changeBatch(event.target.value);
         }
   }
 </script>

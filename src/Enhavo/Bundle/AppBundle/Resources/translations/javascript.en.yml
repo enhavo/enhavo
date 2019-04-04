@@ -1,0 +1,3 @@
+batch:
+    placeholder: 'Choose Batch'
+    execute: 'Execute'

@@ -1,10 +1,12 @@
 import FilterManager from "@enhavo/app/Grid/Filter/FilterManager";
 import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import RowData from "@enhavo/app/Grid/Column/RowData";
+import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
 import Router from "@enhavo/core/Router";
 import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 import axios from 'axios';
 import * as _ from "lodash";
+import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 
 export default class Grid
 {
@@ -13,7 +15,7 @@ export default class Grid
     private router: Router;
     private configuration: GridConfiguration;
 
-    constructor(filterManager: FilterManager, columnManager: ColumnManager, router: Router, configuration: GridConfiguration)
+    constructor(filterManager: FilterManager, columnManager: ColumnManager, batchManager: BatchManager, router: Router, configuration: GridConfiguration)
     {
         this.filterManager = filterManager;
         this.columnManager = columnManager;
@@ -51,6 +53,54 @@ export default class Grid
         this.configuration.selectAll = value;
         for(let row of this.configuration.rows) {
             row.selected = value;
+        }
+    }
+
+    public changeBatch(value: string)
+    {
+        this.configuration.batch = value;
+    }
+
+    public executeBatch()
+    {
+        // sendRequest(): void {
+        //     if(this.hasSelection) {
+        //         let currentBatch = this.actions.find(
+        //             action => action['key'] === this.value
+        //         );
+        //         let batchUri = currentBatch['uri'];
+        //
+        //         axios.post(batchUri, this.selected)
+        //         // executed on success
+        //         .then(response => {
+        //         })
+        //         // executed on error
+        //         .catch(error => {
+        //         })
+        //         // always executed
+        //         .then(() => {
+        //             this.clearSelection();
+        //         })
+        //     }
+        // }
+    }
+
+    public changeSortDirection(column: ColumnInterface)
+    {
+        if(column.sortable) {
+            for(let otherColumns of this.configuration.columns) {
+                if(otherColumns != column) {
+                    otherColumns.directionDesc = null;
+                }
+            }
+
+            if(column.directionDesc === false) {
+                column.directionDesc = null
+            } else {
+                column.directionDesc = !column.directionDesc;
+            }
+
+            this.loadTable();
         }
     }
 

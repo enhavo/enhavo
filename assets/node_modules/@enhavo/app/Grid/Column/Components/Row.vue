@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="checkbox" v-on:change="changeSelect" :checked="selected" />
+        <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelect" :checked="selected" />
         <div class="view-table-row" @click="open()">
             <template v-for="column in columns">
                 <component
@@ -37,6 +37,9 @@
 
         @Prop()
         selected: boolean;
+
+        @Prop()
+        batches: Array<object>;
 
         changeSelect() {
             application.getGrid().changeSelect(this.data, !this.data.selected);

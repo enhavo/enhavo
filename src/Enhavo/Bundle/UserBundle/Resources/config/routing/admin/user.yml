@@ -65,12 +65,14 @@ enhavo_user_user_table:
                         label: user.label.email
                         property: email
                         width: 6
+                        sortable: true
                     groups:
                         type: list
                         label: group.label.group
                         property: groups
                         item_property: name
                         width: 6
+                        sortable: true
 
 enhavo_user_user_delete:
     options:

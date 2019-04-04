@@ -104,7 +104,6 @@ class IndexViewer extends AppViewer
         $grid = [
             'tableRoute' => $tableRoute,
             'batchRoute' => $batchRoute,
-            'batch' => null,
             'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),

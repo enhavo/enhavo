@@ -13,7 +13,7 @@ services:
 #        tags:
 #            - { name: enhavo.button, alias: newsletter_view }
 
-    Enhavo\Bundle\NewsletterBundle\Batch\SendBatch:
+    Enhavo\Bundle\NewsletterBundle\Batch\SendType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

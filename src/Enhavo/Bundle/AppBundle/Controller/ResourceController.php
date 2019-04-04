@@ -290,9 +290,19 @@ class ResourceController extends BaseController
      */
     public function batchAction(Request $request): Response
     {
+        /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
-        $this->batchManager->executeBatch($resources, $configuration);
+
+        $batchConfiguration = $configuration->getBatches();
+        $type = $configuration->getBatchType();
+
+        $batch = $this->batchManager->getBatch($type, $batchConfiguration);
+        if($batch === null) {
+            throw $this->createNotFoundException();
+        }
+        $this->batchManager->executeBatch($batch, $resources);
+
         return new JsonResponse();
     }
 

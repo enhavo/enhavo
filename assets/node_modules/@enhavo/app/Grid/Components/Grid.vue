@@ -8,12 +8,13 @@
             v-bind:pagination="data.pagination"
         ></table-pagination>
         <grid-table
+            v-bind:batches="data.batches"
             v-bind:columns="data.columns"
             v-bind:rows="data.rows"
             v-bind:loading="data.loading"
             v-bind:selectAll="data.selectAll"
         ></grid-table>
-        <table-batches v-bind:batch="data.batch" v-bind:selected="data.selected"></table-batches>
+        <table-batches v-if="data.batches.length > 0" v-bind:value="data.batch" v-bind:batches="data.batches"></table-batches>
         <table-pagination
             v-bind:page="data.page"
             v-bind:count="data.count"
