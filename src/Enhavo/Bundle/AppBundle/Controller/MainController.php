@@ -34,7 +34,7 @@ class MainController extends AbstractController
                     [
                         'name' => 'Dashboard',
                         'component' => 'iframe-view',
-                        'url' => '/admin/view',
+                        'url' => '/admin/enhavo/dashboard',
                         'loaded' => false
                     ]
                 ],

@@ -93,7 +93,7 @@ class CreateViewer extends BaseViewer
             'actions' => $this->actionManager->createActionsViewData($actions)
         ]);
 
-        $parameters->set('tabs', $this->mergeConfigArray([
+        $tabs = $this->mergeConfigArray([
             [
                 'main' => [
                     'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
@@ -102,7 +102,8 @@ class CreateViewer extends BaseViewer
             ],
             $options['tabs'],
             $this->getViewerOption('tabs', $requestConfiguration)
-        ]));
+        ]);
+        $parameters->set('tabs', $tabs);
 
         $parameters->set('form_template', $this->mergeConfig([
             $options['form_template'],
@@ -127,10 +128,23 @@ class CreateViewer extends BaseViewer
         ]));
 
         $parameters->set('data', [
-            'actions' => $this->actionManager->createActionsViewData($actions)
+            'actions' => $this->actionManager->createActionsViewData($actions),
+            'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain'))
         ]);
 
         $parameters->set('resource', $options['resource']);
+    }
+
+    protected function createTabViewData($configuration, $translationDomain)
+    {
+        $data = [];
+        foreach($configuration as $key => $tab) {
+            $tabData = [];
+            $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], $translationDomain);
+            $tabData['key'] = $key;
+            $data[] = $tabData;
+        }
+        return $data;
     }
 
     private function createActions($options)

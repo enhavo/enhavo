@@ -1,44 +1,52 @@
 <template>
     <div class="app-view">
         <action-bar v-bind:data="actions"></action-bar>
-        <div>{{ view_id }}</div>
-        <div>{{ uuid }}</div>
+        <div class="tab-header">
+            <template v-for="tab in tabs">
+                <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
+            </template>
+        </div>
+        <form>
+            <template v-for="tab in tabs">
+                <tab-container v-show="isCurrentTab(tab)" v-bind:tab="tab"></tab-container>
+            </template>
+        </form>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import '@enhavo/app/assets/styles/base.scss'
-import Table from "../../Grid/Components/Table.vue"
-import * as uuidv4 from "uuid/v4";
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
+import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
+import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";
 
 @Component({
-    components: {ActionBar, 'view-table': Table}
+    components: {ActionBar, TabContainer, TabHead}
 })
 export default class AppView extends Vue {
     name = 'app-view';
 
     @Prop()
-    view_id: number;
-
-    @Prop()
     actions: Array<object>;
 
-    get uuid() {
-        return uuidv4();
-    }
+    @Prop()
+    tabs: Array<object>;
 
-    constructor()
+    @Prop()
+    tab: string;
+
+    isCurrentTab(tab: Tab): boolean
     {
-        super.constructor();
+        return tab.key == this.tab;
     }
 }
 </script>
 
 <style lang="scss">
-.app {
-    height: 100%;
+.tab-header {
+    height: 100px;
+    background-color: dimgrey;
 }
 </style>
 
