@@ -7,7 +7,7 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import Tab from "@enhavo/app/Form/Tab";
-    import * as $ from 'jquery';
+    import FormInitializer from "@enhavo/form/FormInitializer";
 
     @Component()
     export default class AppView extends Vue {
@@ -17,7 +17,9 @@
         tab: Tab;
 
         mounted() {
-            $(this.$refs.container).append(this.tab.element);
+            let initializer = new FormInitializer();
+            initializer.setElement(this.tab.element);
+            initializer.append(this.$refs.container);
         }
     }
 </script>

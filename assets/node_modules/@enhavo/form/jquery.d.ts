@@ -1,7 +1,11 @@
 interface JQuery {
-    datetimepicker: (config: DateTimePickerConfig) => void
+    datetimepicker(object: object): JQuery
     datetime: (config: DateTimePickerConfig) => void
-    iCheck
+}
+
+interface DateTimePicker
+{
+    setLocale(locale: string): void;
 }
 
 interface DateTimePickerConfig

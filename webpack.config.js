@@ -1,4 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
+var path = require('path');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 Encore
   .setOutputPath('public/build/')
@@ -16,6 +19,12 @@ Encore
   .addEntry('enhavo/index', './assets/index')
   .addEntry('enhavo/view', './assets/view')
   .addEntry('enhavo/form', './assets/form')
+  .addEntry('enhavo/editor', './assets/editor')
+
+  .addPlugin(new CopyWebpackPlugin([
+    { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
+    { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
+  ]))
 ;
 
 var config = Encore.getWebpackConfig();
@@ -31,5 +40,7 @@ config.module.rules.forEach(function(rule) {
     });
   }
 });
+
+config.resolve.alias.jquery = path.join(__dirname, 'node_modules/jquery/src/jquery');
 
 module.exports = config;

@@ -1,0 +1,59 @@
+import * as $ from "jquery";
+import ListType from "@enhavo/form/Type/ListType";
+
+export default class ListItem
+{
+    private $element: JQuery;
+
+    private $buttons: JQuery;
+
+    private list: ListType;
+
+    constructor(element: HTMLElement, list: ListType)
+    {
+        this.$element = $(element);
+        this.$buttons = this.$element.children('[data-list-item-buttons]');
+        this.list = list;
+        this.initDeleteButton();
+        this.initUpButton();
+        this.initDownButton();
+    }
+
+    private initDeleteButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-delete]').click(function(event) {
+            self.$element.remove();
+        });
+    }
+
+    private initUpButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-up]').click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.list.moveItemUp(self);
+        });
+    }
+
+    private initDownButton()
+    {
+        let self = this;
+        this.$buttons.children('[data-list-item-down]').click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            self.list.moveItemDown(self);
+        });
+    }
+
+    public getElement(): HTMLElement
+    {
+        return <HTMLElement>this.$element.get(0);
+    }
+
+    public setPosition(number: number)
+    {
+        this.$element.find('[data-position]').val(number);
+    }
+}

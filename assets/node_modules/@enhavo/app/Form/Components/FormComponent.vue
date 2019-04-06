@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import '@enhavo/app/assets/styles/base.scss'
+import '@enhavo/form/assets/styles/form.scss'
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
 import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
 import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";

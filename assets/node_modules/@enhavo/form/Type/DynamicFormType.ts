@@ -1,22 +1,16 @@
-import * as admin from 'app/Admin'
-import * as router from 'app/Router'
-import * as form from 'app/Form'
 import * as $ from 'jquery'
-import { FormListener } from "app/Form/Form";
-import { FormConvertEvent } from "app/Form/Form";
-import { FormInitializer } from "app/Form/Form";
+import Router from "@enhavo/core/Router";
+import FormListener from "@enhavo/form/FormListener";
+import FormConvertEvent from "@enhavo/form/Event/FormConvertEvent";
+import FormInitializer from "@enhavo/form/FormInitializer";
+import DynamicFormItem from "@enhavo/form/Type/DynamicFormItem";
+import DynamicFormMenu from "@enhavo/form/Type/DynamicFormMenu";
+import DynamicFormConfig from "@enhavo/form/Type/DynamicFormConfig";
+import DynamicFormItemAddButton from "@enhavo/form/Type/DynamicFormItemAddButton";
+import FormType from "@enhavo/form/FormType";
 
-export class DynamicFormConfig
+export default class DynamicFormType extends FormType
 {
-    route: string;
-    prototypeName: string;
-    collapsed: boolean;
-}
-
-export class DynamicForm
-{
-    private $element: JQuery;
-
     private items: DynamicFormItem[] = [];
 
     private menu: DynamicFormMenu;
@@ -31,11 +25,12 @@ export class DynamicForm
 
     private scope: HTMLElement;
 
-    private formListener: FormListener;
+    private router: Router;
 
-    constructor(element: HTMLElement, config: DynamicFormConfig|null = null, scope: HTMLElement = null)
+    constructor(element: HTMLElement, router: Router, config: DynamicFormConfig|null = null, scope: HTMLElement = null)
     {
-        this.$element = $(element);
+        super(element);
+
         this.$container = this.$element.children('[data-dynamic-form-container]');
         this.scope = scope;
 
@@ -50,10 +45,8 @@ export class DynamicForm
         this.initItems();
         this.initContainer();
 
-        this.formListener = new FormListener();
-
         let self = this;
-        this.formListener.onConvert(function(event: FormConvertEvent) {
+        FormListener.onConvert(function(event: FormConvertEvent) {
             let html = event.getHtml();
             html = html.replace(new RegExp(self.config.prototypeName, 'g'), String(self.placeholderIndex));
             event.setHtml(html);
@@ -62,11 +55,9 @@ export class DynamicForm
         this.placeholderIndex = this.$container.children('[data-dynamic-form-item]').length - 1;
     }
 
-    public static apply(element: HTMLElement)
+    protected init()
     {
-        $(element).find('[data-dynamic-form]').each(function() {
-            new DynamicForm(this);
-        });
+
     }
 
     private initItems()
@@ -146,7 +137,7 @@ export class DynamicForm
 
     private initMenu()
     {
-        let element :HTMLElement = this.$element.children('[data-dynamic-form-menu]').get(0);
+        let element: HTMLElement = <HTMLElement>this.$element.children('[data-dynamic-form-menu]').get(0);
         this.menu = new DynamicFormMenu(element, this);
     }
 
@@ -162,7 +153,7 @@ export class DynamicForm
 
     public addItem(type: string, button: DynamicFormItemAddButton)
     {
-        let url = router.generate(this.config.route, {
+        let url = this.router.generate(this.config.route, {
             type: type
         });
 
@@ -213,12 +204,14 @@ export class DynamicForm
 
     public startLoading()
     {
-        admin.openLoadingOverlay();
+        console.log('open loading');
+        //admin.openLoadingOverlay();
     }
 
     public endLoading()
     {
-        admin.closeLoadingOverlay();
+        console.log('end loading');
+        //admin.closeLoadingOverlay();
     }
 
     public moveItemUp(item: DynamicFormItem, callback: () => void = function() {})
@@ -289,213 +282,5 @@ export class DynamicForm
         if (index > -1) {
             this.items.splice(index, 1);
         }
-    }
-}
-
-export class DynamicFormMenu
-{
-    private $element: JQuery;
-
-    private dynamicForm: DynamicForm;
-
-    private button: DynamicFormItemAddButton;
-
-    constructor(element: HTMLElement, dynamicForm: DynamicForm)
-    {
-        this.dynamicForm = dynamicForm;
-        this.$element = $(element);
-        this.initActions();
-    }
-
-    private initActions()
-    {
-        let menu = this;
-        this.$element.find('[data-dynamic-form-menu-item]').click(function () {
-            let name = $(this).data('dynamic-form-menu-item');
-            menu.dynamicForm.addItem(name, menu.button);
-            menu.hide();
-        });
-    }
-
-    public show(button: DynamicFormItemAddButton)
-    {
-        if(this.button === button) {
-            this.hide();
-            return;
-        }
-
-        this.button = button;
-
-        let position = $(button.getElement()).position();
-        let dropDown = true;
-
-        let scope:HTMLElement;
-        scope = this.dynamicForm.getScope();
-        if(scope == null) {
-            scope = $('body').get(0);
-        }
-
-        let topOffset = this.topToElement(button.getElement(), scope, 0);
-        let center = $(button.getElement()).height()/2 + topOffset;
-        let halfHeight = $(scope).height()/2;
-
-        if(halfHeight < center) {
-            dropDown = false;
-        }
-
-        if (dropDown) {
-            this.$element.addClass('topTriangle');
-            this.$element.css('top', 35 + position.top + 'px');
-        } else {
-            this.$element.addClass('bottomTriangle');
-            this.$element.css('top', -1 * this.$element.height() - 25 + position.top + 'px');
-        }
-        this.$element.css('left', position.left + 'px');
-
-        this.$element.show();
-    }
-
-    private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0): number
-    {
-        let parent = $(element).offsetParent().get(0);
-        if(parent == $('html').get(0)) {
-            return top;
-        }
-        let topOffset = $(element).position().top;
-        if(toElement == parent) {
-            return top + topOffset;
-        }
-        return this.topToElement(parent, toElement, top + topOffset)
-    }
-
-    public hide()
-    {
-        this.button = null;
-        this.$element.hide();
-    }
-}
-
-export class DynamicFormItem
-{
-    private $element: JQuery;
-
-    private dynamicForm: DynamicForm;
-
-    constructor(element: HTMLElement, dynamicForm: DynamicForm)
-    {
-        this.dynamicForm = dynamicForm;
-        this.$element = $(element);
-        this.initActions();
-        if(dynamicForm.isCollapse()) {
-            this.collapse();
-        } else {
-            this.expand();
-        }
-    }
-
-    private initActions()
-    {
-        let dynamicForm = this;
-
-        let $actions =  this.$element.children('[data-dynamic-form-item-action]');
-
-        $actions.find('[data-dynamic-form-item-action-up]').click(function () {
-            dynamicForm.up();
-        });
-
-        $actions.find('[data-dynamic-form-item-action-down]').click(function () {
-            dynamicForm.down();
-        });
-
-        $actions.find('[data-dynamic-form-item-action-remove]').click(function () {
-            dynamicForm.remove();
-        });
-
-        $actions.find('[data-dynamic-form-item-action-collapse]').click(function () {
-            dynamicForm.collapse();
-        });
-
-        $actions.find('[data-dynamic-form-item-action-expand]').click(function () {
-            dynamicForm.expand();
-        });
-    }
-
-    public getElement(): HTMLElement
-    {
-        return this.$element.get(0);
-    }
-
-    public collapse()
-    {
-        let $actions =  this.$element.children('[data-dynamic-form-item-action]');
-
-        $actions.find('[data-dynamic-form-item-action-expand]').show();
-        $actions.find('[data-dynamic-form-item-action-collapse]').hide();
-        this.$element.children('[data-dynamic-form-item-container]').hide();
-    }
-
-    public expand()
-    {
-        let $actions =  this.$element.children('[data-dynamic-form-item-action]');
-
-        $actions.find('[data-dynamic-form-item-action-expand]').hide();
-        $actions.find('[data-dynamic-form-item-action-collapse]').show();
-        this.$element.children('[data-dynamic-form-item-container]').show();
-    }
-
-    public up()
-    {
-        let wyswigs = this.$element.find('[data-wysiwyg]');
-        let self = this;
-        if (wyswigs.length) {
-            form.destroyWysiwyg(this.$element);
-            this.dynamicForm.moveItemUp(this,function() {
-                form.initWysiwyg(self.getElement());
-            });
-        } else {
-            this.dynamicForm.moveItemUp(this);
-        }
-    }
-
-    public down()
-    {
-        let wyswigs = this.$element.find('[data-wysiwyg]');
-        let self = this;
-        if (wyswigs.length) {
-            form.destroyWysiwyg(this.$element);
-            this.dynamicForm.moveItemDown(this,function() {
-                form.initWysiwyg(self.getElement());
-            });
-        } else {
-            this.dynamicForm.moveItemDown(this);
-        }
-    }
-
-    public remove()
-    {
-        this.dynamicForm.removeItem(this);
-    }
-}
-
-export class DynamicFormItemAddButton
-{
-    private $element: JQuery;
-
-    private dynamicForm: DynamicForm;
-
-    constructor(element: HTMLElement, dynamicForm: DynamicForm)
-    {
-        this.dynamicForm = dynamicForm;
-        this.$element = $(element);
-        let that = this;
-
-        this.$element.click(function() {
-            dynamicForm.getMenu().show(that)
-        });
-    }
-
-    public getElement() : HTMLElement
-    {
-        return this.$element.get(0);
     }
 }
