@@ -135,6 +135,13 @@ class ResourceController extends BaseController
                 $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+
+                $route = $configuration->getRedirectRoute(null);
+                return $this->redirectToRoute($route, [
+                    'id' => $newResource->getId(),
+                    'tab' => $request->get('tab'),
+                    'view_id' => $request->get('view_id')
+                ]);
             }
         }
 

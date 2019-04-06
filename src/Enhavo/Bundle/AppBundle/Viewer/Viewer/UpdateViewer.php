@@ -54,25 +54,38 @@ class UpdateViewer extends CreateViewer
             $this->getViewerOption('form.delete_parameters', $requestConfiguration)
         ]));
 
-        $parameters->set('csrf_token', $this->container->get('security.csrf.token_manager')->getToken((string)$resource->getId())->getValue());
 
-        $parameters->set('buttons', $this->mergeConfigArray([
-            'buttons' => [
-                'cancel' => [
-                    'type' => 'cancel',
-                ],
-                'save' => [
-                    'type' => 'save',
-                ],
-                'delete' => [
-                    'type' => 'delete'
-                ],
+        $actions = $this->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->getViewerOption('actions', $requestConfiguration)
+        ]);
+
+        $data = $parameters->get('data');
+        $data['actions'] = $this->actionManager->createActionsViewData($actions, $options['resource']);
+        $parameters->set('data', $data);
+    }
+
+    private function createActions($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+
+        $default = [
+            'save' => [
+                'type' => 'save',
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             ],
-            $options['buttons'],
-            $this->getViewerOption('buttons', $requestConfiguration)
-        ]));
+            'delete' => [
+                'type' => 'delete',
+                'route' => sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            ],
+            'close' => [
+                'type' => 'close'
+            ]
+        ];
 
-        $parameters->set('data', $options['resource']);
+        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -81,7 +94,6 @@ class UpdateViewer extends CreateViewer
         $optionsResolver->setDefaults([
             'form_delete' => null,
             'form_delete_parameters' => [],
-            'template' => 'EnhavoAppBundle:Resource:update.html.twig',
         ]);
     }
 }

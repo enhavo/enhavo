@@ -34,6 +34,7 @@ enhavo_article_article_create:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
+            redirect: enhavo_article_article_update
 
 enhavo_article_article_update:
     options:

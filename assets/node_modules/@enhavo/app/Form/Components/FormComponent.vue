@@ -6,7 +6,7 @@
                 <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
             </template>
         </div>
-        <form>
+        <form method="POST">
             <template v-for="tab in tabs">
                 <tab-container v-show="isCurrentTab(tab)" v-bind:tab="tab"></tab-container>
             </template>

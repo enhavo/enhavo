@@ -35,12 +35,12 @@ class ActionManager
         $this->checker = $checker;
     }
 
-    public function createActionsViewData(array $configuration)
+    public function createActionsViewData(array $configuration, $resource = null)
     {
         $data = [];
         $actions = $this->getActions($configuration);
         foreach($actions as $action) {
-            $data[] = $action->createViewData();
+            $data[] = $action->createViewData($resource);
         }
         return $data;
     }

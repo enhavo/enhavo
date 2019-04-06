@@ -28,6 +28,7 @@ services:
             - [ setContainer, ['@service_container']]
 
     enhavo_translation.strategy.translation_table:
+        public: true
         class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\TranslationTableStrategy
         arguments:
             - '%enhavo_translation.locales%'

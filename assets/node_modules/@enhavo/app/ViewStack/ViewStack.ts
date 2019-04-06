@@ -15,6 +15,7 @@ import ClearedEvent from "./Event/ClearedEvent";
 import ArrangeManager from "./ArrangeManager";
 import * as _ from 'lodash';
 import * as async from 'async';
+import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 
 export default class ViewStack
 {
@@ -46,6 +47,7 @@ export default class ViewStack
         this.addOpenListener();
         this.addClearListener();
         this.addArrangeListener();
+        this.addLoadingListener();
     }
 
     private addRemoveListener()
@@ -64,6 +66,16 @@ export default class ViewStack
             let view = this.get(event.id);
             if(view) {
                 view.finish();
+            }
+        });
+    }
+
+    private addLoadingListener()
+    {
+        this.dispatcher.on('loading', (event: LoadingEvent) => {
+            let view = this.get(event.id);
+            if(view) {
+                view.loaded = false;
             }
         });
     }

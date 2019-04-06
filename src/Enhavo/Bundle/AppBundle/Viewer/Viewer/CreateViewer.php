@@ -11,11 +11,9 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +27,7 @@ class CreateViewer extends BaseViewer
     /**
      * @var ActionManager
      */
-    private $actionManager;
+    protected $actionManager;
 
     /**
      * CreateViewer constructor.
@@ -53,23 +51,6 @@ class CreateViewer extends BaseViewer
     public function getType()
     {
         return 'create';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function create($options): View
-    {
-        /** @var FormInterface $form */
-        $form = $options['form'];
-
-        if($form->isSubmitted()) {
-            $view = View::create($form, $form->isValid() ? 200 : 400);
-            $view->setFormat('json');
-            return $view;
-        }
-
-        return parent::create($options);
     }
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)

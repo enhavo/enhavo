@@ -17,7 +17,7 @@ abstract class AbstractUrlActionType extends AbstractActionType
     /**
      * @var RouterInterface
      */
-    private $router;
+    protected $router;
 
     /**
      * CreateAction constructor.
@@ -35,13 +35,13 @@ abstract class AbstractUrlActionType extends AbstractActionType
         $data = parent::createViewData($options);
 
         $data = array_merge($data, [
-            'url' => $this->getUrl($options)
+            'url' => $this->getUrl($options, $resource)
         ]);
 
         return $data;
     }
 
-    protected function getUrl(array $options)
+    protected function getUrl(array $options, $resource = null)
     {
         return $this->router->generate($options['route'], $options['route_parameters']);
     }

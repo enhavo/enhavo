@@ -45,12 +45,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer:
         public: true
-        arguments:
-            - '@sylius.resource_controller.request_configuration_factory'
-            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
-            - '%enhavo_app.form_themes%'
-        calls:
-            - ['setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer
         tags:
             - { name: enhavo.viewer, alias: update }
 

@@ -27,6 +27,13 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
         return $data;
     }
 
+    protected function getUrl(array $options, $resource = null)
+    {
+        return $this->router->generate($options['route'], array_merge_recursive([
+            'id' => $resource->getId(),
+        ], $options['route_parameters']));
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
