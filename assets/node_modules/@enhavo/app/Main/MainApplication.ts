@@ -4,10 +4,12 @@ import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
 import {VueConstructor} from "vue";
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
+import MenuManager from "@enhavo/app/Menu/MenuManager";
 
 export class MainApplication extends AbstractApplication
 {
     protected viewStack: ViewStack;
+    protected menuManager: MenuManager;
 
     public getApp(): AppInterface
     {
@@ -25,9 +27,17 @@ export class MainApplication extends AbstractApplication
     public getViewStack()
     {
         if(this.viewStack == null) {
-            this.viewStack = new ViewStack(this.getDataLoader().load().view_stack);
+            this.viewStack = new ViewStack(this.getDataLoader().load().view_stack, this.getMenuManager());
         }
         return this.viewStack;
+    }
+
+    public getMenuManager()
+    {
+        if(this.menuManager == null) {
+            this.menuManager = new MenuManager(this.getDataLoader().load().menu);
+        }
+        return this.menuManager;
     }
 }
 

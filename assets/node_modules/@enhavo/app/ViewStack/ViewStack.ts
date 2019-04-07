@@ -16,6 +16,7 @@ import ArrangeManager from "./ArrangeManager";
 import * as _ from 'lodash';
 import * as async from 'async';
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
+import MenuManager from "@enhavo/app/Menu/MenuManager";
 
 export default class ViewStack
 {
@@ -26,7 +27,7 @@ export default class ViewStack
     private nextId: number = 1;
     private arrangeManager: ArrangeManager;
 
-    constructor(data: ViewStackData)
+    constructor(data: ViewStackData, menuManager: MenuManager)
     {
         this.dispatcher = dispatcher;
         this.registry = registry;
@@ -39,7 +40,7 @@ export default class ViewStack
         this.views = <ViewInterface[]>data.views;
         this.data = data;
 
-        this.arrangeManager = new ArrangeManager(this.views, data);
+        this.arrangeManager = new ArrangeManager(this.views, data, menuManager);
 
         this.addCloseListener();
         this.addRemoveListener();

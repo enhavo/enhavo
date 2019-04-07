@@ -1,15 +1,18 @@
 import ViewInterface from "./ViewInterface";
 import ViewStackData from "./ViewStackData";
+import MenuManager from "@enhavo/app/Menu/MenuManager";
 
 export default class ArrangeManager
 {
     private views: ViewInterface[];
     private data: ViewStackData;
+    private menuManager: MenuManager;
 
-    constructor(views: ViewInterface[], data: ViewStackData)
+    constructor(views: ViewInterface[], data: ViewStackData, menuManager: MenuManager)
     {
         this.views = views;
         this.data = data;
+        this.menuManager = menuManager;
     }
 
     arrange()
@@ -40,6 +43,10 @@ export default class ArrangeManager
                 view.position = position++;
                 width = width + view.width;
             }
+        }
+
+        if(views.length > 1) {
+            this.menuManager.close();
         }
     }
 }

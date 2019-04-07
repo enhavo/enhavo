@@ -1,7 +1,7 @@
 <template>
     <div class="toolbar">
 
-        <div class="toolbar-item">
+        <div class="toolbar-item" @click="$emit('toogle-menu')">
             Hamburger
         </div>
         <div class="toolbar-item">
@@ -23,6 +23,9 @@ export default class Toolbar extends Vue {
     
     @Prop()
     quick_menu: QuickMenu;
+
+    @Prop()
+    open: boolean;
 }
 
 Vue.component('toolbar-dropdown', Dropdown);
