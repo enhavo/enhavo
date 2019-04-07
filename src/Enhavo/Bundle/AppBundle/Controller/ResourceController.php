@@ -135,6 +135,7 @@ class ResourceController extends BaseController
                 $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+                $this->flashHelper->addSuccessFlash($configuration, ResourceActions::CREATE, $newResource);
 
                 $route = $configuration->getRedirectRoute(null);
                 return $this->redirectToRoute($route, [
@@ -175,6 +176,7 @@ class ResourceController extends BaseController
                 $this->manager->flush();
                 $this->appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
+                $this->flashHelper->addSuccessFlash($configuration, ResourceActions::UPDATE, $resource);
             }
         }
 

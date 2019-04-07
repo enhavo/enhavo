@@ -38,6 +38,7 @@ services:
         arguments:
             - '%enhavo_app.form_themes%'
             - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

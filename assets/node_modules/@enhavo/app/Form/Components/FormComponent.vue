@@ -1,5 +1,6 @@
 <template>
     <div class="app-view">
+        <flash-messages v-bind:messages="messages"></flash-messages>
         <action-bar v-bind:data="actions"></action-bar>
         <div class="tab-header">
             <template v-for="tab in tabs">
@@ -21,9 +22,10 @@ import '@enhavo/form/assets/styles/form.scss'
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
 import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
 import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";
+import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
 
 @Component({
-    components: {ActionBar, TabContainer, TabHead}
+    components: {FlashMessages, ActionBar, TabContainer, TabHead}
 })
 export default class AppView extends Vue {
     name = 'app-view';
@@ -36,6 +38,9 @@ export default class AppView extends Vue {
 
     @Prop()
     tab: string;
+
+    @Prop()
+    messages: Array<object>;
 
     isCurrentTab(tab: Tab): boolean
     {

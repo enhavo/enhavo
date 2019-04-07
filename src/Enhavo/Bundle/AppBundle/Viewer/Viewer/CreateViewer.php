@@ -15,6 +15,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateViewer extends BaseViewer
@@ -30,22 +31,30 @@ class CreateViewer extends BaseViewer
     protected $actionManager;
 
     /**
+     * @var FlashBag
+     */
+    protected $flashBag;
+
+    /**
      * CreateViewer constructor.
      * @param RequestConfigurationFactory $requestConfigurationFactory
      * @param ViewerUtil $util
      * @param array $formThemes
      * @param ActionManager $actionManager
+     * @param FlashBag $flashBag
      */
     public function __construct(
         RequestConfigurationFactory $requestConfigurationFactory,
         ViewerUtil $util,
         array $formThemes,
-        ActionManager $actionManager
+        ActionManager $actionManager,
+        FlashBag $flashBag
     )
     {
         parent::__construct($requestConfigurationFactory, $util);
         $this->formThemes = $formThemes;
         $this->actionManager = $actionManager;
+        $this->flashBag = $flashBag;
     }
 
     public function getType()
@@ -68,10 +77,6 @@ class CreateViewer extends BaseViewer
             $this->createActions($options),
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
-        ]);
-
-        $parameters->set('data', [
-            'actions' => $this->actionManager->createActionsViewData($actions)
         ]);
 
         $tabs = $this->mergeConfigArray([
@@ -110,7 +115,8 @@ class CreateViewer extends BaseViewer
 
         $parameters->set('data', [
             'actions' => $this->actionManager->createActionsViewData($actions),
-            'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain'))
+            'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain')),
+            'messages' => $this->getFlashMessages()
         ]);
 
         $parameters->set('resource', $options['resource']);
@@ -144,6 +150,18 @@ class CreateViewer extends BaseViewer
         ];
 
         return $default;
+    }
+
+    private function getFlashMessages()
+    {
+        $messages = [];
+        foreach($this->flashBag->get('success') as $message) {
+            $messages[] = [
+                'message' => $message['message'],
+                'type' => 'success'
+            ];
+        }
+        return $messages;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)

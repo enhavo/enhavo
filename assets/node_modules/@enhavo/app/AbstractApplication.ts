@@ -7,6 +7,7 @@ import AppInterface from "@enhavo/app/AppInterface";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import Router from "@enhavo/core/Router";
 import Translator from "@enhavo/core/Translator";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 
 export default abstract class AbstractApplication implements ApplicationInterface
 {
@@ -17,6 +18,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected app: AppInterface;
     protected router: Router;
     protected translator: Translator;
+    protected flashMessenger: FlashMessenger;
 
     constructor()
     {
@@ -73,5 +75,13 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.translator.setData((new DataLoader('translations')).load());
         }
         return this.translator;
+    }
+
+    public getFlashMessenger(): FlashMessenger
+    {
+        if(this.flashMessenger == null) {
+            this.flashMessenger = new FlashMessenger(this.getDataLoader().load()['messages']);
+        }
+        return this.flashMessenger;
     }
 }
