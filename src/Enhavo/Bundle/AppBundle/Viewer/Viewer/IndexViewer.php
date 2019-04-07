@@ -90,6 +90,12 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('batch_route', $requestConfiguration)
         ]);
 
+        $updateRoute = $this->mergeConfig([
+            $this->geUpdateRoute($options),
+            $options['update_route'],
+            $this->getViewerOption('update_route', $requestConfiguration)
+        ]);
+
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
         $batchData = $batchConfiguration->getBatches();
 
@@ -104,6 +110,7 @@ class IndexViewer extends AppViewer
         $grid = [
             'tableRoute' => $tableRoute,
             'batchRoute' => $batchRoute,
+            'updateRoute' => $updateRoute,
             'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),
@@ -146,6 +153,13 @@ class IndexViewer extends AppViewer
         return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
     }
 
+    private function geUpdateRoute($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+        return sprintf('%s_%s_update', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
+    }
+
     private function createActions($options)
     {
         /** @var MetadataInterface $metadata */
@@ -174,7 +188,8 @@ class IndexViewer extends AppViewer
             ],
             'actions' => [],
             'table_route' => null,
-            'batch_route' => null
+            'batch_route' => null,
+            'update_route' => null
         ]);
     }
 }

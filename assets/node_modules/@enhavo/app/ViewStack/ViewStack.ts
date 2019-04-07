@@ -85,7 +85,10 @@ export default class ViewStack
         this.dispatcher.on('close', (event: CloseEvent) => {
             let view = this.get(event.id);
             if(view) {
-                this.close(view);
+                let closed = this.close(view);
+                if(closed) {
+                    event.resolve();
+                }
             }
         });
     }
@@ -95,6 +98,7 @@ export default class ViewStack
         this.dispatcher.on('create', (event: CreateEvent) => {
             let view = this.registry.getFactory(event.data.component).createFromData(event.data);
             view.id = this.generateId();
+            event.resolve(view);
             this.push(view);
         });
     }

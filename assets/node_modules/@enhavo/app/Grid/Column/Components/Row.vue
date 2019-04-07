@@ -46,11 +46,7 @@
         }
 
         open() {
-            application.getEventDispatcher().dispatch(new CreateEvent({
-                label: 'table',
-                component: 'iframe-view',
-                url: '/admin/view'
-            }));
+            application.getGrid().open(this.data);
         }
 
         calcColumnWidth(parts: number): string {

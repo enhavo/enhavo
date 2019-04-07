@@ -55,7 +55,15 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     public getGrid(): Grid
     {
         if(this.grid == null) {
-            this.grid = new Grid(this.getFilterManager(), this.getColumnManager(), this.getBatchManager(), this.getRouter(), this.getDataLoader().load().grid);
+            this.grid = new Grid(
+                this.getFilterManager(),
+                this.getColumnManager(),
+                this.getBatchManager(),
+                this.getRouter(),
+                this.getEventDispatcher(),
+                this.getDataLoader().load().grid,
+                this.getView()
+            );
         }
         return this.grid;
     }

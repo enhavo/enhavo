@@ -7,6 +7,7 @@ export default class GridConfiguration
 {
     public batchRoute: string;
     public tableRoute: string;
+    public updateRoute: string;
     public rows: Array<RowData>;
     public columns: Array<ColumnInterface>;
     public batchPlaceholder: string;
@@ -18,4 +19,5 @@ export default class GridConfiguration
     public pagination: number;
     public paginationSteps: number;
     public selectAll: boolean = false;
+    public editView: number;
 }

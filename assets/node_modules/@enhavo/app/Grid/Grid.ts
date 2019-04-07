@@ -7,22 +7,56 @@ import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 import axios from 'axios';
 import * as _ from "lodash";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+import View from "@enhavo/app/ViewStack/View";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
+import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
+import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 
 export default class Grid
 {
     private filterManager: FilterManager;
     private columnManager: ColumnManager;
     private router: Router;
+    private eventDispatcher: EventDispatcher;
     private configuration: GridConfiguration;
+    private view: View;
 
-    constructor(filterManager: FilterManager, columnManager: ColumnManager, batchManager: BatchManager, router: Router, configuration: GridConfiguration)
-    {
+    constructor(
+        filterManager: FilterManager,
+        columnManager: ColumnManager,
+        batchManager: BatchManager,
+        router: Router,
+        eventDispatcher: EventDispatcher,
+        configuration: GridConfiguration,
+        view: View
+    ) {
         this.filterManager = filterManager;
         this.columnManager = columnManager;
         this.router = router;
+        this.eventDispatcher = eventDispatcher;
+        this.view = view;
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
+        this.initListener();
+    }
+
+    private initListener()
+    {
+        this.eventDispatcher.on('removed', (event: RemovedEvent) => {
+            if(event.id == this.configuration.editView) {
+                this.configuration.editView = null;
+            }
+        });
+
+        this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
+            if(event.id == this.configuration.editView) {
+                this.loadTable();
+            }
+        });
     }
 
     public load()
@@ -59,6 +93,50 @@ export default class Grid
     public changeBatch(value: string)
     {
         this.configuration.batch = value;
+    }
+
+    public changeEditView(id: number|null)
+    {
+        this.configuration.editView = id;
+    }
+
+    public open(row: RowData)
+    {
+        if(this.configuration.editView != null) {
+            this.eventDispatcher.dispatch(new CloseEvent(this.configuration.editView))
+                .then(() => {
+                    this.openView(row);
+                })
+                .catch(() => {})
+            ;
+        } else {
+            this.openView(row);
+        }
+    }
+
+    protected openView(row: RowData)
+    {
+        let url = this.router.generate(this.configuration.updateRoute, {
+            id: row.id
+        });
+
+        this.eventDispatcher.dispatch(new CreateEvent({
+            label: 'table',
+            component: 'iframe-view',
+            url: url
+        }, this.view.getId())).then((view: ViewInterface) => {
+            this.configuration.editView = view.id;
+        }).catch(() => {});
+    }
+
+    public setEditView(id: number)
+    {
+        this.configuration.editView = id;
+    }
+
+    public getEditView(): number
+    {
+        return this.configuration.editView;
     }
 
     public executeBatch()
@@ -127,7 +205,7 @@ export default class Grid
             })
             // always executed
             .then(() => {
-                //this.loading = false;
+                this.configuration.loading = false;
             })
     }
 
