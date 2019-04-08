@@ -45,7 +45,7 @@ export default class ViewStack
         this.addCloseListener();
         this.addRemoveListener();
         this.addLoadedListener();
-        this.addOpenListener();
+        this.addCreateListener();
         this.addClearListener();
         this.addArrangeListener();
         this.addLoadingListener();
@@ -94,7 +94,7 @@ export default class ViewStack
         });
     }
     
-    private addOpenListener()
+    private addCreateListener()
     {
         this.dispatcher.on('create', (event: CreateEvent) => {
             let view = this.registry.getFactory(event.data.component).createFromData(event.data);
@@ -187,7 +187,15 @@ export default class ViewStack
 
     push(view: ViewInterface)
     {
-        this.views.push(view);
+        /**
+         * Delay pushing a new view, so vue can update with a new tick.
+         * A new tick is needed, because iframe render only once (v-once) and vue need
+         * time to destroy the iframe, otherwise the pushed view keeps the iframe from the
+         * popped view before.
+         */
+        setTimeout(() => {
+            this.views.push(view);
+        }, 10);
     }
 
     close(view: ViewInterface): boolean
