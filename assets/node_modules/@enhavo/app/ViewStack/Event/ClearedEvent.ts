@@ -1,5 +1,4 @@
 import Event from "./Event"
-import * as uuidv4 from "uuid/v4";
 
 export default class ClearedEvent extends Event
 {
