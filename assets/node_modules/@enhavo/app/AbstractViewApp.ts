@@ -6,17 +6,25 @@ import DataLoader from "@enhavo/app/DataLoader";
 
 export default class AbstractViewApp
 {
-    private data: any;
+    protected data: any;
+    protected eventDispatcher: EventDispatcher;
+    protected view: View;
 
     constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View)
     {
         this.data = loader.load();
+        this.eventDispatcher = eventDispatcher;
+        this.view = view;
+        this.addCloseListener()
+    }
 
-        eventDispatcher.on('close', (event: CloseEvent) => {
-            if(view.getId() === event.id) {
+    protected addCloseListener()
+    {
+        this.eventDispatcher.on('close', (event: CloseEvent) => {
+            if(this.view.getId() === event.id) {
                 event.resolve();
-                let id = view.getId();
-                eventDispatcher.dispatch(new RemoveEvent(id));
+                let id = this.view.getId();
+                this.eventDispatcher.dispatch(new RemoveEvent(id));
             }
         });
     }

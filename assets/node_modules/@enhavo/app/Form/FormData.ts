@@ -4,4 +4,5 @@ export default class FormData
 {
     public tabs: Array<Tab>;
     public tab: string;
+    public formChanged: boolean = false;
 }

@@ -23,6 +23,9 @@ import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
 import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
 import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";
 import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import FormApplication from "@enhavo/app/Form/FormApplication";
+const application = <FormApplication>ApplicationBag.getApplication();
 
 @Component({
     components: {FlashMessages, ActionBar, TabContainer, TabHead}
@@ -41,6 +44,12 @@ export default class AppView extends Vue {
 
     @Prop()
     messages: Array<object>;
+
+    mounted() {
+        $(document).on('change', ':input', () => {
+            application.getForm().changeForm();
+        })
+    }
 
     isCurrentTab(tab: Tab): boolean
     {

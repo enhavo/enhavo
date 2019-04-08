@@ -51,4 +51,9 @@ export default class Form
     {
         this.data.tab = key;
     }
+
+    public changeForm()
+    {
+        this.data.formChanged = true;
+    }
 }
