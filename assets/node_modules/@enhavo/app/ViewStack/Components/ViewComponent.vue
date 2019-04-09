@@ -81,17 +81,3 @@
     }
 
 </script>
-
-<style lang="scss" scoped>
-    .view-component {height:100%;flex:1 0 0;
-        &.minimized {flex:0;}
-        .toolbar {height:30px;line-height:30px;position:relative;display:flex;
-            .actions {display:flex;margin-left:auto;align-items:center;
-                .action {padding:5px;cursor:pointer;}
-            }
-        }
-        .view-component-inner {height:calc(100% - 30px);position:relative;
-            iframe {display:block;}
-        }
-    }
-</style>

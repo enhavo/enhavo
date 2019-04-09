@@ -37,13 +37,11 @@ Vue.component('toolbar-dropdown-item', DropdownItem);
 </script>
 
 <style lang="scss" scoped>
-    $toolbar-height: 50px;
+    @import '~@enhavo/app/assets/styles/_variables.scss';
     
-    .toolbar-dropdown {
-        background-color: #1c353b;
-        
+    .toolbar-dropdown {background-color:$color2b;position:relative;z-index:1;
         .toolbar-dropdown-title { 
-            height: $toolbar-height; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer;
+            height: $toolbarHeight; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer;
             i { margin-right: 10px; margin-left: 10px; }
         }
 

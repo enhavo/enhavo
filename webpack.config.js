@@ -38,6 +38,13 @@ config.module.rules.forEach(function(rule) {
         loader.options.transpileOnly = true;
       }
     });
+  } else if(".scss".match(rule.test)) {
+     rule.use.forEach(function(loader) {
+      if(loader.loader == 'sass-loader') {
+        loader.options.data = '@import "custom";';
+        loader.options.includePaths = [path.join(__dirname, 'assets/styles/enhavo')];
+      }
+    });
   }
 });
 

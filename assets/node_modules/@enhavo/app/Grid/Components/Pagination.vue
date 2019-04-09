@@ -1,8 +1,7 @@
 <template>
     <div class="view-table-pagination">
-
         <div class="pagination-select">
-            Ergebnisse pro Seite: 
+            <div class="label">Ergebnisse pro Seite:</div>
             <select v-model="paginationValue">
                 <option 
                     v-for="(step, index) in paginationSteps"
@@ -12,8 +11,6 @@
                         {{ step }}
                 </option>
             </select>
-
-            <span>Selected: {{ pagination }}</span>
         </div>
 
         <div class="pagination-nav">
@@ -188,41 +185,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-.view-table-pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 60px;
-
-    .pagination-select {
-
-    }
-
-    .pagination-nav {
-        display: flex;
-
-        .pagination-nav-item {
-            min-width: 20px;
-            margin: 0 15px;
-            color: white;
-            background-color: green;
-
-            &.number,
-            &.button {
-                cursor: pointer;
-            }
-
-            &.active {
-                background-color: yellowgreen;
-                cursor: default;
-            }
-
-            &.disabled {
-                background-color: gray;
-                color: black;
-            }
-        }
-    }
-}
-</style>

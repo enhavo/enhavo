@@ -6,7 +6,7 @@
                 {{ batch.label }}
             </option>
         </select>
-        <button v-on:click="execute" v-bind:disabled="!value">{{ translator.trans('batch.execute') }}</button>
+        <button v-on:click="execute" v-bind:disabled="!value" class="apply-button"><i class="icon icon-play_arrow"></i></button>
     </div>
 </template>
 

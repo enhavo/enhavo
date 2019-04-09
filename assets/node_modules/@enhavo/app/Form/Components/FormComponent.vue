@@ -1,18 +1,22 @@
 <template>
     <div class="app-view">
-        <view-view v-bind:data="view"></view-view>
-        <flash-messages v-bind:messages="messages"></flash-messages>
-        <action-bar v-bind:data="actions"></action-bar>
-        <div class="tab-header">
-            <template v-for="tab in tabs">
-                <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
-            </template>
+        <div class="form-view">
+            <view-view v-bind:data="view"></view-view>
+            <flash-messages v-bind:messages="messages"></flash-messages>
+            <action-bar v-bind:data="actions"></action-bar>
+            <div class="tab-header">
+                <template v-for="tab in tabs">
+                    <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
+                </template>
+            </div>
+            <div class="form-container">
+                <form method="POST">
+                    <template v-for="tab in tabs">
+                        <tab-container v-show="isCurrentTab(tab)" v-bind:tab="tab"></tab-container>
+                    </template>
+                </form>
+            </div>
         </div>
-        <form method="POST">
-            <template v-for="tab in tabs">
-                <tab-container v-show="isCurrentTab(tab)" v-bind:tab="tab"></tab-container>
-            </template>
-        </form>
     </div>
 </template>
 
@@ -28,6 +32,7 @@ import ViewData from "@enhavo/app/View/ViewData";
 import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import FormApplication from "@enhavo/app/Form/FormApplication";
+import '@enhavo/app/assets/styles/view.scss';
 const application = <FormApplication>ApplicationBag.getApplication();
 
 @Component({
@@ -63,12 +68,5 @@ export default class AppView extends Vue {
     }
 }
 </script>
-
-<style lang="scss">
-.tab-header {
-    height: 100px;
-    background-color: dimgrey;
-}
-</style>
 
 

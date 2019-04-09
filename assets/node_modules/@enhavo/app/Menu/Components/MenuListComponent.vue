@@ -53,26 +53,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .menu-list {
-        flex-wrap: wrap;
-
-        .menu-list-child {
-            flex-basis: 100%;
-        }
-
-        .menu-list-title {
-            width: 100%; height: 50px; cursor: pointer; display: flex; align-items: center; flex-wrap: nowrap; position: relative;
-        }
-
-        .menu-list-items {
-            width: 100%; padding-left: 20px; box-sizing: border-box;
-
-            .menu-item {margin-bottom: 2px;}
-        }
-    }
-</style>
-
 
 
 

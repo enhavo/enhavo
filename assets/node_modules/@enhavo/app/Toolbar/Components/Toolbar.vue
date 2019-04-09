@@ -2,7 +2,12 @@
     <div class="toolbar">
 
         <div class="toolbar-item" @click="$emit('toogle-menu')">
-            Hamburger
+            <div v-if="menu_open" class="menu-toggle">
+                <span class="icon icon-chevron_left"></span>
+            </div>
+            <div v-if="!menu_open" class="menu-toggle">
+                <span class="icon icon-chevron_right"></span>
+            </div>
         </div>
         <div class="toolbar-item">
             <toolbar-dropdown v-bind:data="quick_menu"></toolbar-dropdown>
@@ -25,20 +30,11 @@ export default class Toolbar extends Vue {
     quick_menu: QuickMenu;
 
     @Prop()
-    open: boolean;
+    menu_open: boolean;
 }
 
 Vue.component('toolbar-dropdown', Dropdown);
 </script>
-
-<style lang="scss" scoped>
-    $toolbar-height:57px;
-
-    .toolbar {height: $toolbar-height; background-color: #28434b; color: #9da9ad; font-size: 16px; font-weight: 500; display: flex; justify-content: space-between;
-        .toolbar-item { height: 100%; display: flex; align-items: flex-start; justify-content: flex-start; background-color: inherit; }
-    }
-</style>
-
 
 
 

@@ -19,12 +19,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .view-table-col-text { 
-        background-color: cadetblue;
-    }
-</style>
-
 
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="grid">
         <filter-bar v-bind:filters="data.filters"></filter-bar>
         <table-pagination
             v-bind:page="data.page"
@@ -32,6 +32,7 @@
     import Batches from "@enhavo/app/Grid/Components/Batches.vue"
     import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 
+
     @Component({
         components: {
             'grid-table': Table,
@@ -47,15 +48,3 @@
         data: GridConfiguration;
     }
 </script>
-
-<style lang="scss" scoped>
-.view-table {
-    width: 100%; padding: 15px; background-color: darkseagreen;
-}
-</style>
-
-
-
-
-
-

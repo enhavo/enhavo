@@ -27,16 +27,4 @@
     }
 </script>
 
-<style lang="scss">
-.tab-head {
-    height: 100px;
-    padding: 30px;
-    background-color: lightgrey;
-    float: left;
-    &.selected {
-        font-weight: bold;
-    }
-}
-</style>
-
 

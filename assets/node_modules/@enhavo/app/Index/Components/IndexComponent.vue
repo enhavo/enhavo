@@ -10,7 +10,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Grid from "@enhavo/app/Grid/Components/Grid.vue";
 import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
-import '@enhavo/app/assets/styles/base.scss'
+import '@enhavo/app/assets/styles/view.scss'
 import ViewData from "@enhavo/app/View/ViewData";
 import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 
@@ -30,11 +30,5 @@ export default class AppView extends Vue {
     grid: Array<object>;
 }
 </script>
-
-<style lang="scss">
-.app {
-    height: 100%;
-}
-</style>
 
 

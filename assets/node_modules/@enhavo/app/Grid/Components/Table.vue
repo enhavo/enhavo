@@ -1,21 +1,27 @@
 <template>
     <div v-bind:class="name">
         <div class="view-table-head">
-            <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
-            <div 
-                v-for="column in columns" 
-                v-bind:key="column.key"
-                v-bind:style="getColumnStyle(column)" 
-                v-bind:class="['view-table-col', {'sortable': column.sortable}]"
-                v-on:click="changeSortDirection(column)">
-                    {{ column.label }}
-                    <i 
-                        v-if="column.sortable && column.directionDesc !== null"
-                        v-bind:class="['icon', {'icon-keyboard_arrow_up': !column.directionDesc}, {'icon-keyboard_arrow_down': column.directionDesc}, {'sortable': column.sortable}]"
-                        aria-hidden="true">
-                    </i>
+            <div class="checkbox-container">
+                <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
+                <span></span>
+            </div>
+            <div class="view-table-head-columns">
+                <div
+                    v-for="column in columns"
+                    v-bind:key="column.key"
+                    v-bind:style="getColumnStyle(column)"
+                    v-bind:class="['view-table-col', {'sortable': column.sortable}]"
+                    v-on:click="changeSortDirection(column)">
+                        {{ column.label }}
+                        <i
+                            v-if="column.sortable && column.directionDesc !== null"
+                            v-bind:class="['icon', {'icon-keyboard_arrow_up': !column.directionDesc}, {'icon-keyboard_arrow_down': column.directionDesc}, {'sortable': column.sortable}]"
+                            aria-hidden="true">
+                        </i>
+                </div>
             </div>
         </div>
+
 
         <template v-if="!loading">
             <template v-for="row in rows">
@@ -23,7 +29,13 @@
             </template>
         </template>
         <template v-else>
-            Fetching data...
+            <div class="loading-placeholder">
+                <div class="loading-indicator">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
         </template>
     </div>
 </template>
@@ -60,21 +72,21 @@
         @Prop()
         batches: Array<object>;
 
-        changeSelectAll() {
-            application.getGrid().changeSelectAll(!this.selectAll);
-        }
-
-        calcWidth(parts: number): string {
+        calcColumnWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
         }
 
         getColumnStyle(column: any): object {
-            let styles: object = Object.assign( 
-                {}, 
-                column.style, 
-                {width: this.calcWidth(column.width)} );
+            let styles: object = Object.assign(
+                {},
+                column.style,
+                {width: this.calcColumnWidth(column.width)} );
 
             return styles;
+        }
+
+        changeSelectAll() {
+            application.getGrid().changeSelectAll(!this.selectAll);
         }
 
         changeSortDirection(column: any) {
@@ -82,31 +94,6 @@
         }
     }
 </script>
-
-<style lang="scss">
-.view-table-col {
-    padding: 10px; margin: 10px; color: #FFF; 
-}
-</style>
-
-<style lang="scss" scoped>
-.view-table {
-    width: 100%; padding: 15px; background-color: darkseagreen;
-
-    .view-table-head {
-        display: flex; background-color: lightslategrey; margin-bottom: 30px;
-
-        .view-table-col {
-            background-color: burlywood;
-
-            &.sortable {
-                text-decoration: underline;
-                cursor: pointer;
-            }
-        }
-    }
-}
-</style>
 
 
 

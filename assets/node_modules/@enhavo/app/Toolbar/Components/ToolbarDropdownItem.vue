@@ -30,13 +30,6 @@ export default class ToolbarDropdownItem extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-    $toolbar-height: 50px;
-        
-    .toolbar-dropdown-item { height: $toolbar-height; padding: 10px 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start; }
-</style>
-
-
 
 
 

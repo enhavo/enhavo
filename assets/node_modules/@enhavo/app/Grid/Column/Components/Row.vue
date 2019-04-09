@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelect" :checked="selected" />
-        <div class="view-table-row" @click="open()">
+    <div class="view-table-row" @click="open()">
+        <div class="checkbox-container">
+            <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="selected" />
+            <span></span>
+        </div>
+        <div class="view-table-row-columns">
             <template v-for="column in columns">
                 <component
                     class="view-table-col"
@@ -70,12 +73,6 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .view-table-row { 
-        margin-top: 10px; margin-bottom: 10px; color: #FFF; background-color: lightgray; display: flex;
-    }
-</style>
 
 
 

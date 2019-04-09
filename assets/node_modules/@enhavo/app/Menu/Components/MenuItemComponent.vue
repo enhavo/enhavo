@@ -52,11 +52,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .menu-item {
-    }
-</style>
-
 
 
 

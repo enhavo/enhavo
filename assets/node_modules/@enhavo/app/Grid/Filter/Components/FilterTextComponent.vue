@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-filter-search">
-        <input v-model="data.value" v-bind:placeholder="placeholder" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
+        <input type="text" v-model="data.value" v-bind:placeholder="data.placeholder" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
     </div>
 </template>
 
@@ -38,22 +38,6 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .view-table-filter-search { 
-        background-color: burlywood;
-
-        .filter-form-field {
-            outline: none;
-            border: 1px solid darkorange;
-
-            &.has-value {
-                border-color: darkgreen;
-            }
-        }
-    }
-</style>
-
 
 
 

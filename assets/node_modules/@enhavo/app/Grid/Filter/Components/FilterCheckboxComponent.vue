@@ -1,6 +1,9 @@
 <template>
     <div v-bind:class="name">
-        <input type="checkbox" id="checkbox" v-model="data.value">
+        <div class="checkbox-container">
+            <input type="checkbox" id="checkbox" v-model="data.value">
+            <span></span>
+        </div>
     </div>
 </template>
 

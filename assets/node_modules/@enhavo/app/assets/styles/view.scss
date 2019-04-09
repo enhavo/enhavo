@@ -1,0 +1,16 @@
+@import "base";
+@import "components";
+.app-view {padding-top:60px;
+  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;
+    .action {
+      &:hover {color:$color1;
+        .action-icon {color:$color1;}
+      }
+      .action-icon {color:$grey4;
+        .icon {font-size:1.5rem;}
+      }
+      .label {font-size:0.75rem;line-height:1em;font-family:$fontFamily2;font-weight:600;}
+    }
+  }
+  .checkbox-container {@extend %checkboxContainer;}
+}

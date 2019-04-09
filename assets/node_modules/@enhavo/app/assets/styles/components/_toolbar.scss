@@ -1,0 +1,7 @@
+.toolbar {height: $toolbarHeight; background-color:$color2; color: #9da9ad; font-size:1rem; font-weight: 500; display: flex; justify-content: space-between;
+  .menu-toggle {height:100%;width:30px;position:relative;color:#fff;font-size:2rem;cursor:pointer;
+    &:hover {background:$color2b;}
+    * {position:absolute;top:50%;left:50%;@include transform(translate(-50%,-50%));}
+  }
+  .toolbar-item { height: 100%; display: flex; align-items: flex-start; justify-content: flex-start; background-color: inherit; }
+}

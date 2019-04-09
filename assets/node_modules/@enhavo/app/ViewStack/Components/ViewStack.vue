@@ -41,7 +41,6 @@ export default class ViewStack extends Vue {
     }
 }
 </script>
-
 <style lang="scss" scoped>
 .view-stack {width:100%;flex:1 0 0;
     .view-container {height:100%;display:flex;}

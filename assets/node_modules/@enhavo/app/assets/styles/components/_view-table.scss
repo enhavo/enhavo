@@ -1,0 +1,38 @@
+.table-batches {margin-bottom:20px;
+  .apply-button {@extend %iconButton;line-height:30px;width:30px;border-radius:15px;}
+}
+.view-table {margin:40px 0;
+  .loading-placeholder {position:relative;height:64px;
+    .loading-indicator {@extend %loadingIndicator;height:64px;top:0;width:140px;padding-left:68px;
+      &:after {content:"loading ... ";position:absolute;top:22px;color:$grey4;}
+      div {background:$grey4;}
+    }
+  }
+  .view-table-head {display:flex;padding:12px 10px;border-bottom:1px solid $grey5;align-items:center;
+    .view-table-head-columns {display:flex;flex:1 0 auto;padding:0 15px 0 25px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;
+      .view-table-col {
+        &.sortable {text-decoration: underline;cursor: pointer;}
+      }
+    }
+  }
+
+  .view-table-row {display:flex;align-items:center;padding:0 10px;cursor:pointer;@include transition(all 300ms);
+    &:hover {background:$grey5;}
+    + .view-table-row {border-top:1px solid $grey5;}
+    .view-table-row-columns {display:flex;flex:1 0 auto;padding:15px 15px 15px 25px;}
+  }
+}
+
+.view-table-pagination {display: flex;justify-content: space-between;font-weight:600;font-size:0.875rem;line-height:1.1em;align-items: center;
+  .pagination-nav {display: flex;margin-left:auto;
+    .pagination-nav-item {min-width:30px;line-height:30px;border-radius:15px;text-align:center;margin: 0 5px;padding:0 7px;
+      &.active {background-color:$color1;color:#fff;}
+      &.button {cursor: pointer;background:$grey1;}
+      &.disabled {}
+      &.number {cursor: pointer;}
+    }
+  }
+  .pagination-select {display:flex;align-items: center;
+    .label {margin-right:20px;}
+  }
+}

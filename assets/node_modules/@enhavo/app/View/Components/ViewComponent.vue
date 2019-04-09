@@ -17,6 +17,7 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
+    import ViewData from "@enhavo/app/View/ViewData";
 
     @Component()
     export default class ViewComponent extends Vue {
@@ -26,7 +27,3 @@
         data: ViewData;
     }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

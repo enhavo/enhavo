@@ -9,7 +9,7 @@
                 </component>
             </template>
         </template>
-        <button v-on:click="apply()"><i class="icon icon-refresh"></i></button>
+        <button v-on:click="apply()" class="apply-button"><i class="icon icon-refresh"></i></button>
     </div>
 </template>
 
@@ -38,9 +38,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-.view-table-filters {
-    display: flex; margin-bottom: 30px;
-}
-</style>

@@ -27,23 +27,4 @@ export default class Menu extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.menu {height:100%;
-    /deep/ .menu-child,/deep/ .menu-item {padding:0 10px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;
-        .symbol-container {width:26px;}
-    }
-}
-</style>
-
-<style lang="scss">
-.menu-child-title {
-    i {
-        &.open-indicator {
-            position:absolute;right:10px;
-        }
-    }
-}
-</style>
-
-
 

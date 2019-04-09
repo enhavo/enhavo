@@ -1,0 +1,8 @@
+.actions {width: 100%;display:flex;
+  .primary-actions {display:flex;}
+  .secondary-actions {margin-left:auto;}
+}
+
+.app-view {
+  .actions {border-bottom:1px solid $grey5;}
+}

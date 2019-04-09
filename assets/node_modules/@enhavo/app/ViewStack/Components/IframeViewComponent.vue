@@ -31,7 +31,6 @@ export default class IframeViewComponent extends Vue {
     }
 }
 </script>
-
 <style lang="scss" scoped>
     iframe { border: 0; height: 100%; width: 100%; }
 </style>
