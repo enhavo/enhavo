@@ -59,7 +59,19 @@ export default class AppView extends Vue {
     mounted() {
         $(document).on('change', ':input', () => {
             application.getForm().changeForm();
-        })
+        });
+        $(document).on('focus','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
+            $(this).parents('[data-field-with-label]').addClass('focused');
+        }).on('blur','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
+            $(this).parents('[data-field-with-label]').removeClass('focused');
+        });
+        $(document).on('keyup','[data-field-with-label] input[type="text"],[data-field-with-label] textarea', function() {
+            if($(this).val().length > 0) {
+                $(this).parents('[data-field-with-label]').addClass('filled');
+            } else {
+                $(this).parents('[data-field-with-label]').removeClass('filled');
+            }
+        });
     }
 
     isCurrentTab(tab: Tab): boolean

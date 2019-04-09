@@ -1,5 +1,6 @@
 @import '~compass-mixins/lib/_compass.scss';
-@import 'module/vars';
+@import '~@enhavo/app/assets/styles/_variables.scss';
+@import 'blueprints';
 @import 'module/icheck';
 @import 'module/list';
 @import 'module/select2';

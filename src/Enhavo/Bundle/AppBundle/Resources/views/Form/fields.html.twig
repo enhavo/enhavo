@@ -27,32 +27,29 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="row" data-form-row>
-            <div class="col-md-2 text-right">
-                <div class="label-container{% if help %} has-help{% endif %}">{{ form_label(form) }}{% if help %}<i data-help-text class="help-icon icon icon-help-with-circle"></i>{% endif %}
-                    {% if help %}
-                        <div class="help-text" data-help-text>{{ help|trans({}, translation_domain) }}</div>
-                    {% endif %}
-                </div>
+        <div data-form-row>
+            <div class="formwidget-container" data-formwidget-container>
+                {{ form_widget(form) }}
             </div>
-            <div class="col-md-9">
-                <div class="formwidget-container" data-formwidget-container>
-                    {{ form_widget(form) }}
-                </div>
-            </div>
+            {% if help %}
+                <i data-help-text class="help-icon icon icon-help"></i>
+                <div class="help-text" data-help-text>{{ help|trans({}, translation_domain) }}</div>
+            {% endif %}
         </div>
     {% endspaceless %}
 {% endblock %}
 
 {% block text_widget %}
-    <div class="input-container">
+    <div class="field-with-label{% if value|length > 0 %} filled{% endif %}" data-field-with-label>
         <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
+        <div class="label">{{ label|trans({}, translation_domain) }}</div>
     </div>
 {% endblock %}
 
 {% block textarea_widget %}
-    <div class="input-container">
+    <div class="field-with-label{% if value|length > 0 %} filled{% endif %}" data-field-with-label>
         <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+        <div class="label">{{ label|trans({}, translation_domain) }}</div>
     </div>
 {% endblock %}
 
@@ -178,23 +175,18 @@
             </div>
         </div>
 
-        <div class="dynamic-form-menu" data-dynamic-form-menu>
-            <div class="triangle-up"></div>
-            <div class="triangle-down"></div>
-            <ul>
-                {% for item in items %}
-                    <li class="addItem" data-dynamic-form-menu-item="{{ item.name }}">
-                        {{ item.label|trans({}, item.translationDomain)|nl2br }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+        {{ helper.addDialogue(items) }}
 
         <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
+
             {{ helper.addButton() }}
             {% for item in form %}
                 {{ form_widget(item) }}
-                {{ helper.addButton() }}
+                {% if loop.last %}
+                    {{ helper.addDialogue(items) }}
+                {% else %}
+                    {{ helper.addButton() }}
+                {% endif %}
             {% endfor %}
         </div>
 
@@ -205,19 +197,19 @@
     <div class="dynamic-form-item" data-dynamic-form-item>
         <div class="button-container" data-dynamic-form-item-action>
             <div class="button button-up" data-dynamic-form-item-action-up>
-                <i class="icon-chevron-up"></i>
+                <i class="icon icon-keyboard_arrow_up"></i>
             </div>
             <div class="button button-down" data-dynamic-form-item-action-down>
-                <i class="icon-chevron-down"></i>
+                <i class="icon icon-keyboard_arrow_down"></i>
             </div>
             <div class="button button-delete" data-dynamic-form-item-action-remove>
-                <i class="icon-cross"></i>
+                <i class="icon icon-close"></i>
             </div>
             <div class="button button-collapse" data-dynamic-form-item-action-collapse>
-                <i class="icon-collapse"></i>
+                <i class="icon icon-visibility_off"></i>
             </div>
             <div class="button button-expand" data-dynamic-form-item-action-expand>
-                <i class="icon-expand"></i>
+                <i class="icon icon-visibility"></i>
             </div>
             <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
         </div>
@@ -239,7 +231,20 @@
 
 {% macro addButton() %}
     <div class="dynamic-form-item-add-button" data-dynamic-form-add-button>
-        <i class="icon-circle-with-plus btnsmall"></i>
+        <i class="icon icon-add_circle"></i>
+    </div>
+{% endmacro %}
+
+{% macro addDialogue(items) %}
+    <div class="dynamic-form-menu-dialogue" data-dynamic-form-menu>
+        <div class="label">+ Neues Modul</div>
+        <ul class="item-list">
+            {% for item in items %}
+                <li data-dynamic-form-menu-item="{{ item.name }}">
+                    {{ item.label|trans({}, item.translationDomain)|nl2br }}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endmacro %}
 

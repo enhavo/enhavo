@@ -1,5 +1,4 @@
-.enhavo-dynamic-form {
-  position: relative;
+.enhavo-dynamic-form {position: relative;
   .addItem {cursor: pointer;}
   .add-enhavo_dynamic-form-button {font-size:14px;line-height:19px;}
   .dynamic-form-actions {}
@@ -15,7 +14,7 @@
       .button-container {
         background-color: #eee;border-bottom: 1px solid #eee;padding-left:85px;position: relative;line-height:25px;margin-bottom:15px;
         .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;
-          &:hover {color:#fff;background:$primaryColor;}
+          &:hover {color:#fff;background:$color1;}
         }
         .button-delete {right:0;}
         .button-down {left:34px;}
@@ -27,8 +26,16 @@
     }
   }
 
-  .dynamic-form-menu {
-    display: none;position: absolute;color: #000;z-index: 1000;padding: 1px;margin-top: 10px;@include transform(translateX(-50%));background-color:transparent;font-size:12px;line-height:16px;margin-left:19px;@include box-shadow(0px 0px 3px rgba(#4395d1,0.12));
+  .dynamic-form-menu-dialogue {background:#fff;
+    .item-list {display:flex;flex-wrap:wrap;border-top:1px solid $grey1;border-left:1px solid $grey1;
+      li {width:150px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:15px 10px;text-align:center;cursor:pointer;border-bottom:1px solid $grey1;border-right:1px solid $grey1;flex:1 1 auto;
+        &:hover {background:$grey1;}
+      }
+    }
+    .label {font-weight:600;padding:10px;}
+  }
+
+  .dynamic-form-menu {display: none;position: absolute;color: #000;z-index: 1000;padding: 1px;margin-top: 10px;@include transform(translateX(-50%));background-color:transparent;font-size:12px;line-height:16px;margin-left:19px;@include box-shadow(0px 0px 3px rgba(#4395d1,0.12));
     &.bottomTriangle {
       .triangle-up {display: none;}
     }
@@ -39,7 +46,7 @@
       &:first-child {border-radius:2px 2px 0 0;}
       &:last-child {border-radius:0 0 2px 2px;}
       &:nth-child(2n) {background:#FFF;}
-      &:hover {background-color: $primaryColor;color:#fff;}
+      &:hover {background-color:$color1;color:#fff;}
     }
     .triangle-down {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-top: 10px solid #eee;position: absolute;bottom: -9px;left: 50%;@include transform(translateX(-50%));}
     .triangle-up {width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 10px solid #eee;position: absolute;top: -9px;left:50%;@include transform(translateX(-50%));}
