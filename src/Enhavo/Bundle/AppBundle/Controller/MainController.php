@@ -27,6 +27,9 @@ class MainController extends AbstractController
     public function indexAction(Request $request)
     {
         $data = [
+            'view' => [
+                'id' => null,
+            ],
             'menu' => [
                 'items' => $this->menuManager->createMenuViewData(),
                 'open' => true

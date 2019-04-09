@@ -58,9 +58,6 @@ export default class ListType extends FormType
     public moveItemUp(item: ListItem)
     {
         let index = this.$element.children('[data-list-container]').children().index(item.getElement());
-
-        console.log(index);
-
         if (index > 0) { // is not first element
             FormDispatcher.dispatchMove(item.getElement());
             let before = this.$element.children('[data-list-container]').children().get(index - 1);

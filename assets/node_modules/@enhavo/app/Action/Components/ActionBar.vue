@@ -15,7 +15,6 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
     import ApplicationBag from "@enhavo/app/ApplicationBag";
     import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
-
     let application = <ActionAwareApplication>ApplicationBag.getApplication();
 
     @Component({

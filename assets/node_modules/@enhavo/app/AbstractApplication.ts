@@ -1,6 +1,6 @@
 import DataLoader from "@enhavo/app/DataLoader";
 import VueLoader from '@enhavo/app/VueLoader';
-import View from '@enhavo/app/ViewStack/View';
+import View from '@enhavo/app/View/View';
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import AppInterface from "@enhavo/app/AppInterface";
@@ -54,7 +54,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     public getView(): View
     {
         if(this.view == null) {
-            this.view = new View();
+            this.view = new View(this.getDataLoader().load()['view']);
         }
         return this.view;
     }

@@ -1,22 +1,20 @@
-import EventDispatcher from './EventDispatcher';
-import ViewInterface from './ViewInterface';
-import ViewRegistry from './ViewRegistry';
-import CreateEvent from "./Event/CreateEvent";
-import LoadedEvent from "./Event/LoadedEvent";
-import CloseEvent from "./Event/CloseEvent";
-import RemoveEvent from "./Event/RemoveEvent";
-import ArrangeEvent from "./Event/ArrangeEvent";
-import dispatcher from "./dispatcher";
-import registry from "./registry";
-import ViewStackData from "./ViewStackData";
-import RemovedEvent from "./Event/RemovedEvent";
-import ClearEvent from "./Event/ClearEvent";
-import ClearedEvent from "./Event/ClearedEvent";
-import ArrangeManager from "./ArrangeManager";
-import * as _ from 'lodash';
-import * as async from 'async';
+import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
+import ViewInterface from '@enhavo/app/ViewStack//ViewInterface';
+import ViewRegistry from '@enhavo/app/ViewStack//ViewRegistry';
+import CreateEvent from "@enhavo/app/ViewStack//Event/CreateEvent";
+import LoadedEvent from "@enhavo/app/ViewStack//Event/LoadedEvent";
+import CloseEvent from "@enhavo/app/ViewStack//Event/CloseEvent";
+import RemoveEvent from "@enhavo/app/ViewStack//Event/RemoveEvent";
+import ArrangeEvent from "@enhavo/app/ViewStack//Event/ArrangeEvent";
+import ViewStackData from "@enhavo/app/ViewStack//ViewStackData";
+import RemovedEvent from "@enhavo/app/ViewStack//Event/RemovedEvent";
+import ClearEvent from "@enhavo/app/ViewStack//Event/ClearEvent";
+import ClearedEvent from "@enhavo/app/ViewStack//Event/ClearedEvent";
+import ArrangeManager from "@enhavo/app/ViewStack/ArrangeManager";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
+import * as _ from 'lodash';
+import * as async from 'async';
 
 export default class ViewStack
 {
@@ -27,13 +25,17 @@ export default class ViewStack
     private nextId: number = 1;
     private arrangeManager: ArrangeManager;
 
-    constructor(data: ViewStackData, menuManager: MenuManager)
-    {
+    constructor(
+        data: ViewStackData,
+        menuManager: MenuManager,
+        dispatcher: EventDispatcher,
+        viewRegistry: ViewRegistry
+    ) {
         this.dispatcher = dispatcher;
-        this.registry = registry;
+        this.registry = viewRegistry;
 
         for(let i in data.views) {
-            let view = registry.getFactory(data.views[i].component).createFromData(data.views[i]);
+            let view = viewRegistry.getFactory(data.views[i].component).createFromData(data.views[i]);
             view.id = this.nextId++;
             _.extend(data.views[i], view);
         }

@@ -2,7 +2,7 @@ import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
 import AbstractViewApp from "@enhavo/app/AbstractViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 
 export default class IndexApp extends AbstractViewApp
 {

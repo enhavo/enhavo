@@ -9,7 +9,7 @@ import * as _ from "lodash";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";

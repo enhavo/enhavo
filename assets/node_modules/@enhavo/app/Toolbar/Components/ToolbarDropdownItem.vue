@@ -6,8 +6,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import CreateEvent from '../../ViewStack/Event/CreateEvent';
-import dispatcher from '../../ViewStack/dispatcher';
+import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+let application = <ApplicationInterface>ApplicationBag.getApplication();
 
 @Component
 export default class ToolbarDropdownItem extends Vue {
@@ -19,7 +21,7 @@ export default class ToolbarDropdownItem extends Vue {
 
     open()
     {
-        dispatcher.dispatch(new CreateEvent({
+        application.getEventDispatcher().dispatch(new CreateEvent({
             label: 'table',
             component: 'iframe-view',
             url: '/admin/view'

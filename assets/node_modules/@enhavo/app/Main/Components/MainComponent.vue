@@ -1,5 +1,6 @@
 <template>
     <div class="app">
+        <view-view v-bind:data="view"></view-view>
         <div class="sidebar" v-show="menu.open">
             <app-menu v-bind:menu="menu"></app-menu>
         </div>
@@ -12,19 +13,22 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import ViewStack from "../../ViewStack/Components/ViewStack.vue"
-import Menu from "../../Menu/Components/Menu.vue"
-import Toolbar from "../../Toolbar/Components/Toolbar.vue"
-import ViewStackData from "../../ViewStack/ViewStackData"
-import QuickMenu from "../../Toolbar/QuickMenu"
+import ViewStack from "@enhavo/app/ViewStack/Components/ViewStack.vue"
+import Menu from "@enhavo/app/Menu/Components/Menu.vue"
+import Toolbar from "@enhavo/app/Toolbar/Components/Toolbar.vue"
+import ViewStackData from "@enhavo/app/ViewStack/ViewStackData"
+import QuickMenu from "@enhavo/app/Toolbar/QuickMenu"
 import '@enhavo/app/assets/styles/app.scss'
 import MenuData from "@enhavo/app/Menu/MenuData";
+import ViewData from "@enhavo/app/View/ViewData";
+import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 
 @Component({
     components: {
         'app-menu': Menu,
         'toolbar': Toolbar,
-        'view-stack': ViewStack
+        'view-stack': ViewStack,
+        'view-view': ViewComponent
     }
 })
 export default class App extends Vue {
@@ -32,6 +36,9 @@ export default class App extends Vue {
 
     @Prop()
     menu: MenuData;
+
+    @Prop()
+    view: ViewData;
 
     @Prop()
     view_stack: ViewStackData;

@@ -1,5 +1,6 @@
 <template>
     <div class="app-view">
+        <view-view v-bind:data="view"></view-view>
         <flash-messages v-bind:messages="messages"></flash-messages>
         <action-bar v-bind:data="actions"></action-bar>
         <div class="tab-header">
@@ -23,15 +24,20 @@ import ActionBar from "@enhavo/app/Action/Components/ActionBar.vue";
 import TabHead from "@enhavo/app/Form/Components/TabHead.vue";
 import TabContainer from "@enhavo/app/Form/Components/TabContainer.vue";
 import FlashMessages from "@enhavo/app/FlashMessage/Components/FlashMessages.vue";
+import ViewData from "@enhavo/app/View/ViewData";
+import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import FormApplication from "@enhavo/app/Form/FormApplication";
 const application = <FormApplication>ApplicationBag.getApplication();
 
 @Component({
-    components: {FlashMessages, ActionBar, TabContainer, TabHead}
+    components: {FlashMessages, ActionBar, TabContainer, TabHead, 'view-view': ViewComponent}
 })
 export default class AppView extends Vue {
     name = 'app-view';
+
+    @Prop()
+    view: ViewData;
 
     @Prop()
     actions: Array<object>;

@@ -12,7 +12,7 @@
     const application = <FormApplication>ApplicationBag.getApplication();
 
     @Component()
-    export default class AppView extends Vue {
+    export default class TabHead extends Vue {
         name = 'tab-head';
 
         @Prop()

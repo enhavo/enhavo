@@ -1,5 +1,5 @@
 import Event, {ResolveEvent, RejectEvent} from './Event/Event';
-import View from './View';
+import View from '../View/View';
 import * as _ from 'lodash';
 
 export default class EventDispatcher
@@ -53,7 +53,6 @@ export default class EventDispatcher
                 }
             });
         }
-
 
         this.on('reject', (event: RejectEvent) => {
             this.events.forEach((eventStore: EventStore) => {

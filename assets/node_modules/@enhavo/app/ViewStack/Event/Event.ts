@@ -1,5 +1,8 @@
 import * as uuidv4 from "uuid/v4";
-import dispatcher from "../dispatcher";
+import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+const application = <ApplicationInterface>ApplicationBag.getApplication();
 
 export default class Event
 {
@@ -9,6 +12,7 @@ export default class Event
     history: string[] = [];
     uuid: string;
     ttl: number;
+    dispatcher: EventDispatcher;
 
     constructor(name: string)
     {
@@ -18,12 +22,14 @@ export default class Event
 
     resolve(data: object = {})
     {
-        dispatcher.dispatch(new ResolveEvent(this.uuid, data));
+        let application = <ApplicationInterface>ApplicationBag.getApplication();
+        application.getEventDispatcher().dispatch(new ResolveEvent(this.uuid, data));
     }
 
     reject(data: object = {})
     {
-        dispatcher.dispatch(new RejectEvent(this.uuid, data));
+        let application = <ApplicationInterface>ApplicationBag.getApplication();
+        application.getEventDispatcher().dispatch(new RejectEvent(this.uuid, data));
     }
 }
 

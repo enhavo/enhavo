@@ -124,7 +124,9 @@ class IndexViewer extends AppViewer
         $parameters->set('data', [
             'grid' => $grid,
             'actions' => $this->actionManager->createActionsViewData($actions),
-            'view_id' => $request->get('view_id', null),
+            'view' => [
+                'id' => null,
+            ]
         ]);
 
         return;

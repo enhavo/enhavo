@@ -1,11 +1,11 @@
-import dispatcher from './dispatcher';
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 
-export class FrameStorage
+export default class FrameStorage
 {
     private frames: Frame[] = [];
 
-    constructor() {
+    constructor(dispatcher: EventDispatcher) {
         dispatcher.all((event) => {
             for(let frame of this.frames) {
                 if(event.origin != frame.id && frame.element.contentWindow != null) {
@@ -69,6 +69,3 @@ class Frame
         this.id = id;
     }
 }
-
-const storage = new FrameStorage();
-export default storage;

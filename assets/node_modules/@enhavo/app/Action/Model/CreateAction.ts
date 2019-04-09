@@ -3,7 +3,7 @@ import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 import Grid from "@enhavo/app/Grid/Grid";
 import {IndexApplication} from "@enhavo/app/Index/IndexApplication";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 
 export default class CreateAction extends AbstractAction

@@ -12,9 +12,11 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import CreateEvent from '../../ViewStack/Event/CreateEvent';
-    import ClearEvent from '../../ViewStack/Event/ClearEvent';
-    import dispatcher from '../../ViewStack/dispatcher';
+    import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
+    import ClearEvent from '@enhavo/app/ViewStack/Event/ClearEvent';
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+    let application = <ApplicationInterface>ApplicationBag.getApplication();
 
     @Component
     export default class MenuItemComponent extends Vue {
@@ -36,9 +38,9 @@
         }
 
         open(): void {
-            dispatcher.dispatch(new ClearEvent())
+            application.getEventDispatcher().dispatch(new ClearEvent())
                 .then(() => {
-                    dispatcher.dispatch(new CreateEvent({
+                    application.getEventDispatcher().dispatch(new CreateEvent({
                         label: 'table',
                         component: 'iframe-view',
                         url: this.data.url
@@ -46,7 +48,6 @@
                 })
                 .catch(() => {})
             ;
-
         }
     }
 </script>

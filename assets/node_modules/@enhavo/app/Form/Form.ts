@@ -6,7 +6,7 @@ import FormRegistry from "@enhavo/form/FormRegistry";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 
 export default class Form
 {

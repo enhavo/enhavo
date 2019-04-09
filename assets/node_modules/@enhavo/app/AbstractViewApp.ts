@@ -1,7 +1,7 @@
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 import DataLoader from "@enhavo/app/DataLoader";
 
 export default class AbstractViewApp

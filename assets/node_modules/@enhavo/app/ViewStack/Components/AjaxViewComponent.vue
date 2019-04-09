@@ -4,7 +4,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import dispatcher from '../dispatcher';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+const application = <ApplicationInterface>ApplicationBag.getApplication();
+
 import LoadedEvent from '../Event/LoadedEvent';
 
 @Component
@@ -16,8 +19,7 @@ export default class AjaxViewComponent extends Vue {
     created(): void
     {
         window.setTimeout(function () {
-            dispatcher.dispatch(new LoadedEvent('asd'));
-            console.log('finish loading');
+            application.getEventDispatcher().dispatch(new LoadedEvent());
         }, 3000);
     }
 }

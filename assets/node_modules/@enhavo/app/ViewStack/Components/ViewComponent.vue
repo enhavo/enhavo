@@ -21,19 +21,20 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import registry from '../registry';
-    import dispatcher from '../dispatcher';
-    import CloseEvent from  '../Event/CloseEvent';
-    import ArrangeEvent from  '../Event/ArrangeEvent';
-    import OverlayContainer from "../../Main/Components/OverlayContainer.vue";
-    import LoadingScreen from "../../Main/Components/LoadingScreen.vue";
-    import ViewInterface from "../ViewInterface";
+    import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
+    import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
+    import OverlayContainer from "@enhavo/app/Main/Components/OverlayContainer.vue";
+    import LoadingScreen from "@enhavo/app/Main/Components/LoadingScreen.vue";
+    import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import MainApplication from "@enhavo/app/Main/MainApplication";
+    let application = <MainApplication>ApplicationBag.getApplication();
 
     Vue.component('overlay-container', OverlayContainer);
     Vue.component('loading-screen', LoadingScreen);
 
     @Component({
-        components: registry.getComponents()
+        components: application.getViewRegistry().getComponents()
     })
     export default class ViewComponent extends Vue {
         name: 'view-component';
@@ -42,25 +43,25 @@
         data: ViewInterface;
 
         created() {
-            dispatcher.dispatch(new ArrangeEvent());
+            application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
         destroyed() {
-            dispatcher.dispatch(new ArrangeEvent());
+            application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
         close() {
-            dispatcher.dispatch(new CloseEvent(this.data.id));
+            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id));
         }
 
         minimize() {
             this.data.minimize = true;
-            dispatcher.dispatch(new ArrangeEvent());
+            application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
         maximize() {
             this.data.minimize = false;
-            dispatcher.dispatch(new ArrangeEvent());
+            application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
         get width(): string

@@ -1,15 +1,17 @@
 import MainApp from "@enhavo/app/Main/MainApp";
-import MainComponent from "@enhavo/app/Main/Components/MainComponent.vue";
 import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
-import {VueConstructor} from "vue";
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
+import FrameStorage from "@enhavo/app/ViewStack/FrameStorage";
+import ViewRegistry from "@enhavo/app/ViewStack/ViewRegistry";
 
 export class MainApplication extends AbstractApplication
 {
     protected viewStack: ViewStack;
     protected menuManager: MenuManager;
+    protected frameStorage: FrameStorage;
+    protected viewRegistry: ViewRegistry;
 
     public getApp(): AppInterface
     {
@@ -19,28 +21,44 @@ export class MainApplication extends AbstractApplication
         return this.app;
     }
 
-    public getAppComponent(): VueConstructor
-    {
-        return MainComponent;
-    }
-
-    public getViewStack()
+    public getViewStack(): ViewStack
     {
         if(this.viewStack == null) {
-            this.viewStack = new ViewStack(this.getDataLoader().load().view_stack, this.getMenuManager());
+            this.viewStack = new ViewStack(
+                this.getDataLoader().load().view_stack,
+                this.getMenuManager(),
+                this.getEventDispatcher(),
+                this.getViewRegistry()
+            );
         }
         return this.viewStack;
     }
 
-    public getMenuManager()
+    public getMenuManager(): MenuManager
     {
         if(this.menuManager == null) {
             this.menuManager = new MenuManager(this.getDataLoader().load().menu);
         }
         return this.menuManager;
     }
-}
 
+    public getFrameStorage(): FrameStorage
+    {
+        if(this.frameStorage == null) {
+            this.frameStorage = new FrameStorage(this.getEventDispatcher());
+        }
+        return this.frameStorage;
+    }
+
+    public getViewRegistry(): ViewRegistry
+    {
+        if(this.viewRegistry == null) {
+            this.viewRegistry = new ViewRegistry();
+            this.viewRegistry.load();
+        }
+        return this.viewRegistry;
+    }
+}
 
 let application = new MainApplication();
 export default application;

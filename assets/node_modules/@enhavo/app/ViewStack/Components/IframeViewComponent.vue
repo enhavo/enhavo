@@ -4,10 +4,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import iframeStorage from '../frame-storage';
-import dispatcher from '../dispatcher';
-import IframeView from '../Model/IframeView';
+import IframeView from '@enhavo/app/ViewStack/Model/IframeView';
 import * as URI from 'urijs';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import MainApplication from "@enhavo/app/MainApplication";
 
 @Component
 export default class IframeViewComponent extends Vue {
@@ -16,10 +16,10 @@ export default class IframeViewComponent extends Vue {
     data: IframeView;
 
     mounted() {
+        let application = <MainApplication>ApplicationBag.getApplication();
         let frame = <HTMLIFrameElement>this.$refs.frame;
-        iframeStorage.add(this.data.id, frame);
-
-        dispatcher.on('removed', () => {
+        application.getFrameStorage().add(this.data.id, frame);
+        application.getEventDispatcher().on('removed', () => {
             this.$forceUpdate();
         });
     }

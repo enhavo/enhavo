@@ -1,8 +1,8 @@
 import Vue, {VueConstructor} from "vue";
-import AppInterface from "./AppInterface";
-import EventDispatcher from "./ViewStack/EventDispatcher";
+import AppInterface from "@enhavo/app/AppInterface";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
-import View from "@enhavo/app/ViewStack/View";
+import View from "@enhavo/app/View/View";
 
 export default class VueLoader
 {
