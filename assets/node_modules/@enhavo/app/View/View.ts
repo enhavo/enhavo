@@ -1,11 +1,14 @@
 import ViewData from "@enhavo/app/View/ViewData";
 import Confirm from "@enhavo/app/View/Confirm";
 import * as _ from 'lodash';
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
 
 export default class View
 {
     private readonly id: number|null;
     private data: ViewData;
+    private eventDispatcher: EventDispatcher;
 
     constructor(data: ViewData)
     {
@@ -23,6 +26,17 @@ export default class View
             return id
         }
         return 0;
+    }
+
+    setEventDispatcher(eventDispatcher: EventDispatcher)
+    {
+        this.eventDispatcher = eventDispatcher;
+    }
+
+    load() {
+        window.addEventListener('click', () => {
+            this.eventDispatcher.dispatch(new ClickEvent(this.id));
+        });
     }
 
     getId(): number|null

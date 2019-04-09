@@ -24,6 +24,7 @@ import MenuData from "@enhavo/app/Menu/MenuData";
 import ViewData from "@enhavo/app/View/ViewData";
 import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 
+
 @Component({
     components: {
         'app-menu': Menu,

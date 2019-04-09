@@ -55,6 +55,8 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     {
         if(this.view == null) {
             this.view = new View(this.getDataLoader().load()['view']);
+            this.view.setEventDispatcher(this.getEventDispatcher());
+            this.view.load();
         }
         return this.view;
     }

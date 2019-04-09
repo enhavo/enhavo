@@ -3,6 +3,8 @@ import AppInterface from "@enhavo/app/AppInterface";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import View from "@enhavo/app/View/View";
+import ClickOutside from "@enhavo/app/ClickOutside";
+
 
 export default class VueLoader
 {
@@ -23,6 +25,8 @@ export default class VueLoader
     load(component: VueConstructor, loadOnMount: boolean = true) {
         Vue.config.devtools = true;
         Vue.config.productionTip = false;
+        Vue.directive('click-outside', new ClickOutside(this.dispatcher, this.view));
+
         this.vue = new Vue({
             el: '#' + this.id,
             data: this.app.getData(),

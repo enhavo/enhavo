@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-list">
+    <div class="menu-list" v-click-outside="outside">
         <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle">
             <div class="symbol-container">
                 <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
@@ -49,6 +49,10 @@
 
         toggle (): void {
             this.isOpen = !this.isOpen;
+        }
+
+        outside(): void {
+            this.isOpen = false
         }
     }
 </script>
