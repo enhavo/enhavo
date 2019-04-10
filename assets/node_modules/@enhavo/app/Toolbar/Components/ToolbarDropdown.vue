@@ -1,5 +1,5 @@
 <template>
-    <div class="toolbar-dropdown">
+    <div class="toolbar-dropdown" v-click-outside="close">
         <div class="toolbar-dropdown-title" v-on:click="toggle">
             <i class="fa fa-user" aria-hidden="true"></i>
             {{ data.user.name }} 
@@ -29,7 +29,10 @@ export default class ToolbarDropdown extends Vue {
 
     toggle (): void {
         this.isOpen = !this.isOpen;
-        console.log('toggle dropdown');
+    }
+
+    close(): void {
+        this.isOpen = false;
     }
 }
 
