@@ -27,7 +27,3 @@ sylius_resource:
 jms_serializer:
     metadata:
         auto_detection: false
-
-enhavo_app:
-    form_themes:
-      - 'EnhavoAppBundle:Form:fields.html.twig'

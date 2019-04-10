@@ -27,19 +27,13 @@ export default class DynamicFormType extends FormType
 
     private router: Router;
 
-    constructor(element: HTMLElement, router: Router, config: DynamicFormConfig|null = null, scope: HTMLElement = null)
+    constructor(element: HTMLElement, router: Router, config: DynamicFormConfig, scope: HTMLElement = null)
     {
         super(element);
-
+        this.router = router;
         this.$container = this.$element.children('[data-dynamic-form-container]');
         this.scope = scope;
-
-        if(config == null) {
-            this.config = this.$element.data('dynamic-config');
-        } else {
-            this.config = config;
-        }
-
+        this.config = config;
         this.initMenu();
         this.initActions();
         this.initItems();
@@ -204,14 +198,16 @@ export default class DynamicFormType extends FormType
 
     public startLoading()
     {
-        console.log('open loading');
-        //admin.openLoadingOverlay();
+        if(this.config.startLoading) {
+            this.config.startLoading();
+        }
     }
 
     public endLoading()
     {
-        console.log('end loading');
-        //admin.closeLoadingOverlay();
+        if(this.config.endLoading) {
+            this.config.endLoading();
+        }
     }
 
     public moveItemUp(item: DynamicFormItem, callback: () => void = function() {})

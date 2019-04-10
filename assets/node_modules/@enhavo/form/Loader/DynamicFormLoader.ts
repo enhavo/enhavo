@@ -1,16 +1,18 @@
-import * as $ from "jquery";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import FormType from "@enhavo/form/FormType";
 import DynamicFormType from "@enhavo/form/Type/DynamicFormType";
-import Router from "@enhavo/core/Router";
+import DynamicFormConfig from "@enhavo/form/Type/DynamicFormConfig";
+import * as $ from "jquery";
+import * as _ from "lodash";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
 export default class DynamicFormLoader extends AbstractLoader
 {
-    private router: Router;
+    private application: ApplicationInterface;
 
-    constructor(router: Router) {
+    constructor(application: ApplicationInterface) {
         super();
-        this.router = router;
+        this.application = application;
     }
 
     public load(element: HTMLElement, selector: string): FormType[]
@@ -18,7 +20,15 @@ export default class DynamicFormLoader extends AbstractLoader
         let data = [];
         let elements = this.findElements(element, selector);
         for(element of elements) {
-            data.push(new DynamicFormType(element,  this.router));
+            let config = <DynamicFormConfig>$(element).data('dynamic-config');
+            _.extend(config, new DynamicFormConfig);
+            config.startLoading = () => {
+                this.application.getView().loading();
+            };
+            config.endLoading = () => {
+                this.application.getView().loaded();
+            };
+            data.push(new DynamicFormType(element,  this.application.getRouter(), config));
         }
         return data;
     }

@@ -6,7 +6,7 @@
  * Time: 19:12
  */
 
-namespace Enhavo\Bundle\AppBundle\Controller;
+namespace Enhavo\Bundle\FormBundle\Controller;
 
 
 class AutoCompleteConfiguration

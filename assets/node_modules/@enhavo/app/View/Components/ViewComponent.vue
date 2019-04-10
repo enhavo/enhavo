@@ -11,7 +11,7 @@
             <div @click="data.alert = null">Ok</div>
         </div>
 
-        <div v-if="data.loading"></div>
+        <div v-if="data.loading">Loading</div>
     </div>
 </template>
 

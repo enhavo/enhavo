@@ -1,12 +1,12 @@
 <?php
 /**
- * GridController.php
+ * DynamicFormController.php
  *
  * @since 23/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\AppBundle\Controller;
+namespace Enhavo\Bundle\FormBundle\Controller;
 
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +32,7 @@ class DynamicFormController extends AbstractController
             'item_full_name' => $formName
         ));
 
-        return $this->render('EnhavoAppBundle:DynamicForm:form.html.twig', array(
+        return $this->render('EnhavoFormBundle:DynamicForm:form.html.twig', array(
             'form' => $form->createView()
         ));
     }

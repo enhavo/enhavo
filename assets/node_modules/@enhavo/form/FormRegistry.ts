@@ -10,15 +10,15 @@ import WysiwygLoader from "@enhavo/form/Loader/WysiwygLoader";
 import ListLoader from "@enhavo/form/Loader/ListLoader";
 import DynamicFormLoader from "@enhavo/form/Loader/DynamicFormLoader";
 import MediaLoader from "@enhavo/media/Loader/MediaLoader";
-import Router from "@enhavo/core/Router";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
 export default class FormRegistry
 {
-    private router: Router;
+    private application: ApplicationInterface;
 
-    constructor(router: Router)
+    constructor(application: ApplicationInterface)
     {
-        this.router = router;
+        this.application = application;
     }
 
     public static INSERT = 'insert';
@@ -44,7 +44,7 @@ export default class FormRegistry
         this.addType(new DateLoader(), '[data-date-picker]', FormRegistry.INSERT);
         this.addType(new WysiwygLoader(), '[data-wysiwyg]', FormRegistry.RELEASE);
         this.addType(new ListLoader(), '[data-list]', FormRegistry.INSERT);
-        this.addType(new DynamicFormLoader(this.router), '[data-dynamic-form]', FormRegistry.INSERT);
+        this.addType(new DynamicFormLoader(this.application), '[data-dynamic-form]', FormRegistry.INSERT);
         this.addType(new MediaLoader(), '[data-media-type]', FormRegistry.INSERT);
     }
 }

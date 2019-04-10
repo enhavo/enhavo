@@ -6,7 +6,7 @@
  * Time: 18:18
  */
 
-namespace Enhavo\Bundle\AppBundle\Controller;
+namespace Enhavo\Bundle\FormBundle\Controller;
 
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
