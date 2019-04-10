@@ -9,6 +9,7 @@ import DateLoader from "@enhavo/form/Loader/DateLoader";
 import WysiwygLoader from "@enhavo/form/Loader/WysiwygLoader";
 import ListLoader from "@enhavo/form/Loader/ListLoader";
 import DynamicFormLoader from "@enhavo/form/Loader/DynamicFormLoader";
+import MediaLoader from "@enhavo/media/Loader/MediaLoader";
 import Router from "@enhavo/core/Router";
 
 export default class FormRegistry
@@ -44,5 +45,6 @@ export default class FormRegistry
         this.addType(new WysiwygLoader(), '[data-wysiwyg]', FormRegistry.RELEASE);
         this.addType(new ListLoader(), '[data-list]', FormRegistry.INSERT);
         this.addType(new DynamicFormLoader(this.router), '[data-dynamic-form]', FormRegistry.INSERT);
+        this.addType(new MediaLoader(), '[data-media-type]', FormRegistry.INSERT);
     }
 }

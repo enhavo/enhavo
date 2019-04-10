@@ -1,6 +1,6 @@
 import * as $ from 'jquery'
 
-export class Library
+export default class Library
 {
     private $element: JQuery;
 
