@@ -1,7 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
 var path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 Encore
   .setOutputPath('public/build/')
@@ -25,6 +25,7 @@ Encore
     { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
     { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
   ]))
+  .addPlugin(new HardSourceWebpackPlugin())
 ;
 
 var config = Encore.getWebpackConfig();
@@ -38,7 +39,8 @@ config.module.rules.forEach(function(rule) {
         loader.options.transpileOnly = true;
       }
     });
-  } else if(".scss".match(rule.test)) {
+  }
+  if(".scss".match(rule.test)) {
      rule.use.forEach(function(loader) {
       if(loader.loader == 'sass-loader') {
         loader.options.data = '@import "custom";';
@@ -48,6 +50,7 @@ config.module.rules.forEach(function(rule) {
   }
 });
 
-config.resolve.alias.jquery = path.join(__dirname, 'node_modules/jquery/src/jquery');
+config.resolve.alias['jquery'] = path.join(__dirname, 'node_modules/jquery/src/jquery');
+config.resolve.alias['jquery.ui.widget'] = path.join(__dirname, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
 
 module.exports = config;

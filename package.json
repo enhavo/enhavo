@@ -3,9 +3,12 @@
   "license": "MIT",
   "dependencies": {
     "@ibm/plex": "^1.2.3",
+    "async": "^2.6.2",
     "axios": "^0.18.0",
     "blueimp-file-upload": "~8.9.0",
     "chart.js": "^2.4.0",
+    "compass-mixins": "^0.12.10",
+    "copy-webpack-plugin": "^4.5.2",
     "cropperjs": "~1.2.2",
     "icheck": "~1.0.2",
     "jquery": "~3.1.0",
@@ -16,21 +19,19 @@
     "sass-loader": "^7.1.0",
     "select2": "~3.5.1",
     "tinymce": "~5.0.3",
+    "ts-loader": "^5.3",
+    "typescript": "^3.1.1",
     "urijs": "^1.19.1",
     "uuid": "^3.3.2",
     "vue": "^2.5.22",
+    "vue-loader": "^15.5.1",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1",
-    "compass-mixins": "^0.12.10",
-    "async": "^2.6.2",
-    "ts-loader": "^5.3",
-    "typescript": "^3.1.1",
-    "vue-loader": "^15.5.1",
-    "vue-template-compiler": "^2.5.22",
-    "copy-webpack-plugin": "^4.5.2"
+    "vue-template-compiler": "^2.5.22"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "0.22.4",
+    "@types/async": "^2.4.1",
     "@types/cropperjs": "^1.1.1",
     "@types/icheck": "^0.8.29",
     "@types/jquery": "^2.0.45",
@@ -39,7 +40,6 @@
     "@types/lodash": "^4.14.120",
     "@types/select2": "4.0.37",
     "@types/tinymce": "^4.5.16",
-    "@types/async": "^2.4.1",
     "@types/urijs": "^1.15.38",
     "@types/uuid": "^3.4.4",
     "gulp": "^4.0.0",
@@ -48,6 +48,7 @@
     "gulp-download": "^0.0.1",
     "gulp-options": "^1.1.1",
     "gulp-sass": "^4.0.2",
+    "hard-source-webpack-plugin": "^0.13.1",
     "webfonts-generator": "^0.4.0"
   }
 }
