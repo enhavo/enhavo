@@ -12,8 +12,7 @@
     position:absolute; top:0; left:0; right:0;
     .bar { height: 5px; background: #49a4e5; }
   }
-  .media-row {
-    min-height: 82px; margin: 0; padding: 0; width: 82px; background-color: #f3f3f3; @include clearfix;
+  .media-row {min-height: 82px; margin:0 0 5px 0; padding: 0; width: 82px; background-color: #f5f5f5; @include clearfix;border-radius:3px;
     .media-item {
       width: 82px; height: 82px; position:relative; list-style: none;
       .thumb {
@@ -95,6 +94,6 @@
     display: none
   }
   .upload-button {
-    &:before {content: '\e817';font-family: "enhavo-iconfont";}
+    &:after {content: '\f230';font-family: "enhavo-icons";position:relative;top:2px;left:2px;}
   }
 }

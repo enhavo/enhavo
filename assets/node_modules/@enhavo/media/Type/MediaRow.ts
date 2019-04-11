@@ -26,7 +26,7 @@ export default class MediaRow
         this.media = media;
         this.$element = $(element);
         this.items = [];
-        this.initSortable();
+        //this.initSortable();
 
         let self = this;
         this.$element.children('[data-media-item]').each(function (index, element) {

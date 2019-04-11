@@ -1,4 +1,24 @@
-.choice-list {
+.form-row {
+    + .form-row {margin-top:15px;}
+    .formwidget-container {
+        input[type="file"] {border:0;background:transparent;}
+        input[type="text"] {@extend %textfield;}
+        textarea {@extend %textarea;}
+        .select2-container {width: 100%;
+            .select2-choice {border-radius: 0;}
+        }
+    }
+    .label-help-container {font-size:0.85rem;line-height:1.1em;padding-left:2px;margin-bottom:1px;
+        .label {
+            + .help-container {margin-left:12px;}
+        }
+        .help-container {display:inline-block;position:relative;
+            .help-text {position:absolute;top:0;left:0;min-width:250px;}
+        }
+    }
+}
+
+/*.choice-list {
     .choice-input-container {
         .choice-input-with-label {display: block; margin-bottom: 3px;}
     }
@@ -16,13 +36,7 @@
 
 .field-with-label {@extend %fieldWithLabel;}
 
-/* input container */
 
-.formwidget-container input[type=file] {border:0;background:transparent;}
-.formwidget-container label {margin-top: 8px;padding-left: 2px;}
-.formwidget-container .icheckbox-enhavo {margin-top: 0px;}
-.formwidget-container .select2-container {width: 100%;}
-.formwidget-container .select2-container .select2-choice {border-radius: 0;}
 
 .input-container {display:inline-block;padding:5px 6px;color: #000;background:#eee;width:100%;}
 .input-container.disabled {background:#ddd;}
@@ -36,4 +50,4 @@
 .form-headline {font-weight: bold; margin-left: 17%; text-transform: uppercase; margin-top: 15px; display: block;}
 @media all and (max-width:991px) {
     .form-headline {margin-left: 0}
-}
+}*/

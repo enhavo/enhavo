@@ -22,10 +22,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .action {text-align:center;flex:0 1 100px;min-width:60px;padding:8px 13px;cursor:pointer;
-        .action-icon {margin-bottom:6px;}
-        label {white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
-    }
-</style>

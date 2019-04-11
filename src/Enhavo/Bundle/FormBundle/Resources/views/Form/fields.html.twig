@@ -27,30 +27,29 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div data-form-row>
+        <div class="form-row" data-form-row>
+            <div class="label-help-container">
+                <div class="label">{{ form_label(form) }}</div>
+                {% if help %}
+                    <div class="help-container">
+                        <i data-help-text class="help-icon icon icon-help"></i>
+                        <div class="help-text" data-help-text>{{ help|trans({}, translation_domain) }}</div>
+                    </div>
+                {% endif %}
+            </div>
             <div class="formwidget-container" data-formwidget-container>
                 {{ form_widget(form) }}
             </div>
-            {% if help %}
-                <i data-help-text class="help-icon icon icon-help"></i>
-                <div class="help-text" data-help-text>{{ help|trans({}, translation_domain) }}</div>
-            {% endif %}
         </div>
     {% endspaceless %}
 {% endblock %}
 
 {% block text_widget %}
-    <div class="field-with-label{% if value|length > 0 %} filled{% endif %}" data-field-with-label>
-        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
-        <div class="label">{{ label|trans({}, translation_domain) }}</div>
-    </div>
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} type="text" />
 {% endblock %}
 
 {% block textarea_widget %}
-    <div class="field-with-label{% if value|length > 0 %} filled{% endif %}" data-field-with-label>
-        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-        <div class="label">{{ label|trans({}, translation_domain) }}</div>
-    </div>
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endblock %}
 
 {% block password_widget %}

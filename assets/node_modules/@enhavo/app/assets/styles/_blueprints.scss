@@ -1,3 +1,5 @@
+%btn {border-radius:3px;background:$color1;color:#fff;font-family:inherit;margin:0;padding:4px 15px;border:0;cursor:pointer;}
+
 %checkboxContainer {width: 20px;height: 20px;position:relative;cursor:pointer;
   input[type="checkbox"] {opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;z-index:1;margin:0;padding:0;
     &:checked {
@@ -22,4 +24,4 @@
   }
 }
 
-%textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;box-shadow:none;border:0;padding:6px 14px;font-size:1rem;line-height:28px;@include placeholder {color:$grey3;}}
+%textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;box-shadow:none;padding:6px 14px;font-size:1rem;line-height:28px;@include placeholder {color:$grey3;}}
