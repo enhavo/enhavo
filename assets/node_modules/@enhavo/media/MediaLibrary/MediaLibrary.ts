@@ -1,177 +1,62 @@
-import * as $ from 'jquery'
-import 'blueimp-file-upload'
-import 'jquery-ui'
-import * as router from 'app/Router'
-import * as admin from 'app/Admin'
+import Router from "@enhavo/core/Router";
+import MediaData from "@enhavo/media/MediaLibrary/MediaData";
+import MediaItem from "@enhavo/media/MediaLibrary/MediaItem";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import axios from 'axios';
+import * as _ from "lodash";
+import View from "@enhavo/app/View/View";
 
-export class BlockInitializer
+export default class MediaLibrary
 {
-    static init()
-    {
-        $('body').on('initBlock', function(event, data) {
-            if(data.type == 'media_library') {
-                let block = new Block(data.block);
-                $(document).on('formSaveAfter', function () {
-                    block.refresh();
-                });
-            }
-        });
-    }
-}
+    private data: MediaData;
+    private router: Router;
+    private eventDispatcher: EventDispatcher;
+    private view: View;
 
-export class Block
-{
-    private $element: JQuery;
-    private $listElement: JQuery;
-
-    constructor(element:HTMLElement)
+    constructor(data: MediaData, router: Router, eventDispatcher: EventDispatcher, view: View)
     {
-        this.$element = $(element);
-        this.$listElement = $('[data-file-list]', this.$element);
-        this.stopLoading();
-        this.initDropZone();
-        this.initFileUpload();
+        this.data = data;
+        this.data = data;
+        this.eventDispatcher = eventDispatcher;
+        this.view = view;
+
         this.refresh();
     }
 
-    private initDropZone()
+    setProgress(value: number)
     {
-        let self = this;
-        $(document).bind('dragover', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if($(e.originalEvent.srcElement).parents('[data-file-list]').length == 0) {
-                self.showDropZone()
-            }
+        this.data.progress = value;
+    }
+
+    refresh()
+    {
+        this.data.loading = true;
+        let url = this.router.generate('enhavo_media_library_list', {
+            page: this.data.page
         });
 
-        $(document).bind('dragleave drop', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            self.hideDropZone()
-        });
+        axios
+            .get(url, {params: []})
+            .then(response => {
+                this.data.items = this.createRowData(response.data.resources);
+                this.data.count = parseInt(response.data.pages.count);
+                this.data.page = parseInt(response.data.pages.page);
+                this.data.loading = false;
+            })
+            .catch(error => {
+                this.view.alert('error');
+            })
+            .then(() => {
+                this.data.loading = false;
+            })
     }
 
-    private initFileUpload()
+    private createRowData(objects: object[]): MediaItem[]
     {
-        let self = this;
-
-        this.$element.fileupload({
-            dataType: 'json',
-            paramName: 'files',
-            done: function (event, data) {
-                $.each(data.result, function (index, meta) {
-                    self.refresh();
-                });
-            },
-            fail: function (event, data) {
-                self.showUploadError();
-                self.stopLoading();
-            },
-            add: function (event, data) {
-                data.url = router.generate('enhavo_media_library_upload', {});
-                data.submit();
-                self.startLoading();
-            },
-            progressall: function (event, data) {
-                let progress = data.loaded / data.total * 100;
-                if (progress >= 100) {
-                    self.setProgress(0);
-                } else {
-                    self.setProgress(progress);
-                }
-            },
-            dropZone: this.$element,
-            pasteZone: null
-        });
-    }
-
-    private setProgress(percent: number)
-    {
-
-    }
-
-    private showUploadError()
-    {
-
-    }
-
-    private setData(data: string)
-    {
-        let self = this;
-        let html = $.parseHTML(data)[0];
-        $(html).find('[data-item]').each(function () {
-            new Item(this);
-        });
-        $(html).find('[data-page]').click(function () {
-            let page = $(this).data('page');
-            self.refresh(page);
-        });
-        this.$listElement.html(html);
-    }
-
-    refresh(page:number = 1)
-    {
-        this.startLoading();
-        let self = this;
-        let url = router.generate('enhavo_media_library_list', {page: page});
-        $.ajax({
-            type: 'post',
-            url: url,
-            success: function (data) {
-                self.setData(data);
-                self.stopLoading();
-            }
-        });
-    }
-
-    stopLoading() : void
-    {
-        this.$element.removeClass('loading');
-    }
-
-    startLoading() : void
-    {
-        this.$element.addClass('loading');
-    }
-
-    showDropZone() : void
-    {
-        this.$element.addClass('drop-zone');
-    }
-
-    hideDropZone() : void
-    {
-        this.$element.removeClass('drop-zone');
+        let data = [];
+        for(let item of objects) {
+            data.push(_.extend(new MediaItem(), item));
+        }
+        return data;
     }
 }
-
-class Item
-{
-    private $element: JQuery;
-
-    private id: number;
-
-    constructor(element:HTMLElement)
-    {
-        this.$element = $(element);
-        this.id = this.$element.data('item');
-        this.initEvents();
-    }
-
-    private initEvents()
-    {
-        let self = this;
-        this.$element.on('click', function () {
-            self.open();
-        });
-    }
-
-    open()
-    {
-        let url = router.generate('enhavo_media_library_update', { id: this.id });
-        admin.ajaxOverlay(url, {});
-    }
-}
-
-BlockInitializer.init();

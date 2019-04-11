@@ -157,6 +157,16 @@ services:
         tags:
             - { name: enhavo.viewer, alias: image_cropper }
 
+    Enhavo\Bundle\MediaBundle\Viewer\MediaLibraryViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: media_library }
+
     enhavo_media.security.default_authorization_checker:
         public: true
         class: Enhavo\Bundle\MediaBundle\Security\DefaultAuthorizationChecker
@@ -191,11 +201,9 @@ services:
             - { name: enhavo.menu, alias: 'media_library' }
 
     enhavo_media.controller.library:
+        parent: Enhavo\Bundle\AppBundle\Controller\AbstractViewController
         class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
         public: true
-        arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler.default'
         calls:
             - [setContainer, ['@service_container']]
 

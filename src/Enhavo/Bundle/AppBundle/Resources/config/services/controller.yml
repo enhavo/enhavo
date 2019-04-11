@@ -12,3 +12,11 @@ services:
             - '@enhavo_app.menu.manager'
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
+        abstract: true
+        arguments:
+            - '@view.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]

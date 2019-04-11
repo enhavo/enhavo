@@ -35,7 +35,10 @@ class ArticleType extends AbstractResourceType
         $builder->add('picture', MediaType::class, array(
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
-            'multiple' => false
+            'multiple' => false,
+            'formats' => [
+                'articleThumbnail' => 'Article Thumbnail'
+            ]
         ));
 
         $builder->add('grid', GridType::class, array(

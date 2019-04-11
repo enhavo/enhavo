@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Action\ActionManager;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerInterface;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
@@ -19,14 +19,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageCropperViewer implements ViewerInterface
+class ImageCropperViewer extends AbstractActionViewer
 {
     use ContainerAwareTrait;
-
-    /**
-     * @var ActionManager
-     */
-    private $actionManager;
 
     /**
      * @var FlashBag
@@ -63,7 +58,7 @@ class ImageCropperViewer implements ViewerInterface
         MediaManager $mediaManager,
         UrlResolver $urlResolver
     ) {
-        $this->actionManager = $actionManager;
+        parent::__construct($actionManager);
         $this->flashBag = $flashBag;
         $this->imageCropperManager = $imageCropperManager;
         $this->mediaManager = $mediaManager;
@@ -80,24 +75,10 @@ class ImageCropperViewer implements ViewerInterface
      */
     public function createView($options = []): View
     {
-        $view = View::create($options['format'], 200);
-        $templateVars = [];
-
-        $templateVars['stylesheets'] = ['enhavo/image-cropper'];
-        $templateVars['javascripts'] = ['enhavo/image-cropper'];
-
-        $templateVars['translations'] = $this->getTranslations();
-        $templateVars['routes'] = $this->getRoutes();
-
-        $data = [];
-        $data['actions'] = $this->actionManager->createActionsViewData($this->createActions($options));
-        $data['format'] = $this->createFormatData($options['format']);
-        $data['view'] = ['view_id' => null];
-        $templateVars['data'] = $data;
-
+        $view = parent::createView($options);
+        $templateVars = $view->getTemplateData();
+        $templateVars['data']['format'] = $this->createFormatData($options['format']);
         $view->setTemplateData($templateVars);
-        $view->setTemplate('EnhavoMediaBundle:ImageCropper:index.html.twig');
-
         return $view;
     }
 
@@ -134,7 +115,7 @@ class ImageCropperViewer implements ViewerInterface
         ];
     }
 
-    private function createActions($options)
+    protected function createActions($options)
     {
         $default = [
             'save' => [
@@ -180,25 +161,9 @@ class ImageCropperViewer implements ViewerInterface
         return $default;
     }
 
-    private function getRoutes()
-    {
-        $file = $this->container->getParameter('kernel.project_dir').'/public/js/fos_js_routes.json';
-        if(file_exists($file)) {
-            return file_get_contents($file);
-        }
-        return null;
-    }
-
-    private function getTranslations()
-    {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $dumper = $this->container->get('enhavo_app.translation.translation_dumper');
-        $translations = $dumper->getTranslations('javascript', $request->getLocale());
-        return $translations;
-    }
-
     public function configureOptions(OptionsResolver $optionsResolver)
     {
+        parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'javascripts' => [
                 'enhavo/image-cropper'
@@ -206,6 +171,7 @@ class ImageCropperViewer implements ViewerInterface
             'stylesheets' => [
                 'enhavo/image-cropper'
             ],
+            'template' => 'EnhavoMediaBundle:ImageCropper:index.html.twig',
         ]);
         $optionsResolver->setRequired('format');
     }
