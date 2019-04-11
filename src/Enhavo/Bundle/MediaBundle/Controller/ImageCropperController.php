@@ -8,8 +8,10 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use FOS\RestBundle\View\ViewHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,17 +29,50 @@ class ImageCropperController extends AbstractController
     private $mediaManager;
 
     /**
+     * @var ViewFactory
+     */
+    private $viewFactory;
+
+    /**
+     * @var ViewHandler
+     */
+    private $viewHandler;
+
+    /**
      * ImageCropperController constructor.
      * @param ImageCropperManager $imageCropperManager
      * @param MediaManager $mediaManager
+     * @param ViewFactory $viewFactory
+     * @param ViewHandler $viewHandler
      */
-    public function __construct(ImageCropperManager $imageCropperManager, MediaManager $mediaManager)
-    {
+    public function __construct(
+        ImageCropperManager $imageCropperManager,
+        MediaManager $mediaManager,
+        ViewFactory $viewFactory,
+        ViewHandler $viewHandler
+    ) {
         $this->imageCropperManager = $imageCropperManager;
         $this->mediaManager = $mediaManager;
+        $this->viewFactory = $viewFactory;
+        $this->viewHandler = $viewHandler;
+    }
+
+    public function indexAction(Request $request)
+    {
+        $format = $this->getFormat($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            $this->cropFormat($request);
+        }
+
+        $view = $this->viewFactory->create('image_cropper', [
+            'format' => $format,
+        ]);
+
+        return $this->viewHandler->handle($view);
     }
     
-    public function cropAction(Request $request)
+    private function cropFormat(Request $request)
     {
         $height = intval($request->get('height'));
         $width = intval($request->get('width'));
@@ -60,44 +95,6 @@ class ImageCropperController extends AbstractController
 
         $formatManager = $this->get('enhavo_media.media.format_manager');
         $formatManager->applyFormat($format->getFile(), $format->getName(), $parameters);
-
-        return new JsonResponse([
-            'height' => $height,
-            'width' => $width,
-            'x' => $x,
-            'y' => $y,
-        ]);
-    }
-    
-    public function dataAction(Request $request)
-    {
-        $format = $this->getFormat($request);
-        $parameters = $format->getParameters();
-        $ratio = $this->imageCropperManager->getFormatRatio($format);
-
-        if(is_array($parameters)) {
-            if(array_key_exists('cropHeight', $parameters) &&
-                array_key_exists('cropWidth', $parameters) &&
-                array_key_exists('cropX', $parameters) &&
-                array_key_exists('cropY', $parameters))
-            {
-                return new JsonResponse([
-                    'height' => $parameters['cropHeight'],
-                    'width' => $parameters['cropWidth'],
-                    'x' => $parameters['cropX'],
-                    'y' =>$parameters['cropY'],
-                    'ratio' => $ratio
-                ]);
-            }
-        }
-
-        return new JsonResponse([
-            'height' => null,
-            'width' => null,
-            'x' => null,
-            'y' => null,
-            'ratio' => $ratio
-        ]);
     }
 
     /**

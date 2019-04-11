@@ -1,15 +1,7 @@
-enhavo_media_image_cropper_crop:
-    path:  /media/image/{token}/{format}/cropper/crop
-    methods: [POST]
+enhavo_media_image_cropper_index:
+    path:  /media/image/cropper/{token}/{format}/index
+    methods: [GET, POST]
     defaults:
-        _controller: enhavo_media.controller.image_cropper:cropAction
-    options:
-        expose: true
-
-enhavo_media_image_cropper_data:
-    path:  /media/image/{token}/{format}/cropper/data
-    methods: [GET]
-    defaults:
-        _controller: enhavo_media.controller.image_cropper:dataAction
+        _controller: enhavo_media.controller.image_cropper:indexAction
     options:
         expose: true

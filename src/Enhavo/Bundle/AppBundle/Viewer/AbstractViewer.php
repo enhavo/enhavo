@@ -79,7 +79,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
         return $view;
     }
 
-    private function getRequestConfiguration(array $options): RequestConfiguration
+    protected function getRequestConfiguration(array $options): ?RequestConfiguration
     {
         $requestConfiguration = $options['request_configuration'];
         if($requestConfiguration instanceof RequestConfiguration) {

@@ -20,7 +20,6 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
     import RowData from "@enhavo/app/Grid/Column/RowData";
     import ApplicationBag from "@enhavo/app/ApplicationBag";
     import IndexApplication from "@enhavo/app/Index/IndexApplication";

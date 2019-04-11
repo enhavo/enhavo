@@ -139,8 +139,23 @@ services:
         arguments:
             - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
+            - '@view.factory'
+            - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\MediaBundle\Viewer\ImageCropperViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '@enhavo_media.media.image_cropper_manager'
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.media.url_resolver'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: image_cropper }
 
     enhavo_media.security.default_authorization_checker:
         public: true

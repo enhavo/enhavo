@@ -45,6 +45,6 @@ export default class FormRegistry
         this.addType(new WysiwygLoader(), '[data-wysiwyg]', FormRegistry.RELEASE);
         this.addType(new ListLoader(), '[data-list]', FormRegistry.INSERT);
         this.addType(new DynamicFormLoader(this.application), '[data-dynamic-form]', FormRegistry.INSERT);
-        this.addType(new MediaLoader(), '[data-media-type]', FormRegistry.INSERT);
+        this.addType(new MediaLoader(this.application), '[data-media-type]', FormRegistry.INSERT);
     }
 }

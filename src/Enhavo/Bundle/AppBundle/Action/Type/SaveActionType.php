@@ -9,11 +9,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
+use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SaveActionType extends AbstractUrlActionType implements ActionTypeInterface
+class SaveActionType extends AbstractActionType implements ActionTypeInterface
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -23,7 +23,8 @@ class SaveActionType extends AbstractUrlActionType implements ActionTypeInterfac
             'component' => 'save-action',
             'label' => 'label.save',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'save'
+            'icon' => 'save',
+            'route' => null
         ]);
     }
 

@@ -67,3 +67,9 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: duplicate }
+
+    Enhavo\Bundle\AppBundle\Action\Type\EventActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: event }

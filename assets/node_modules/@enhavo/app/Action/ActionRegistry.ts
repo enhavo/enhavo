@@ -7,6 +7,7 @@ import DropdownActionFactory from "@enhavo/app/Action/Factory/DropdownActionFact
 import FilterActionFactory from "@enhavo/app/Action/Factory/FilterActionFactory";
 import PreviewActionFactory from "@enhavo/app/Action/Factory/PreviewActionFactory";
 import SaveActionFactory from "@enhavo/app/Action/Factory/SaveActionFactory";
+import EventActionFactory from "@enhavo/app/Action/Factory/EventActionFactory";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import DropdownActionComponent from './Components/DropdownActionComponent.vue'
 import ActionComponent from './Components/ActionComponent.vue'
@@ -30,5 +31,6 @@ export default class ActionRegistry extends Registry
         this.register('filter-action', ActionComponent, new FilterActionFactory(application));
         this.register('preview-action', ActionComponent, new PreviewActionFactory(application));
         this.register('save-action', ActionComponent, new SaveActionFactory(application));
+        this.register('event-action', ActionComponent, new EventActionFactory(application));
     }
 }
