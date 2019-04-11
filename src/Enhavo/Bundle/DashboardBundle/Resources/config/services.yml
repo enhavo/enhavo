@@ -16,3 +16,21 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.block, alias: statistic }
+
+    enhavo_dashboard.controller.dashboard:
+        class: Enhavo\Bundle\DashboardBundle\Controller\DashboardController
+        arguments:
+            - '@view.factory'
+            - '@fos_rest.view_handler'
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\DashboardBundle\Viewer\DashboardViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: dashboard }

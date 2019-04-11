@@ -42,6 +42,7 @@
     "@types/tinymce": "^4.5.16",
     "@types/urijs": "^1.15.38",
     "@types/uuid": "^3.4.4",
+    "@types/chart.js": "^2.7.50",
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-decompress": "^2.0.2",
