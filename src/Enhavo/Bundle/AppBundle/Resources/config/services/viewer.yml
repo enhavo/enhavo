@@ -91,12 +91,21 @@ services:
         tags:
             - { name: enhavo.viewer, alias: list }
 
-    Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer:
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\ResourcePreviewViewer:
         public: true
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
             - '@enhavo_app.preview.strategy_resolver'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: resource_preview }
+
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\PreviewViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

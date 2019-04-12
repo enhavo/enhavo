@@ -30,7 +30,7 @@ enhavo_article_article_create:
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
-                buttons:
+                actions:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
@@ -56,7 +56,7 @@ enhavo_article_article_update:
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
-                buttons:
+                actions:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
@@ -131,9 +131,21 @@ enhavo_article_article_preview:
     options:
         expose: true
     path: /enhavo/article/article/preview
-    methods: [POST]
+    methods: [GET]
     defaults:
         _controller: enhavo_article.controller.article:previewAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+
+enhavo_article_article_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/article/article/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_article.controller.article:previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

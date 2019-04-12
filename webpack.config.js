@@ -23,6 +23,7 @@ Encore
   .addEntry('enhavo/image-cropper', './assets/image-cropper')
   .addEntry('enhavo/media-library', './assets/media-library')
   .addEntry('enhavo/dashboard', './assets/dashboard')
+  .addEntry('enhavo/preview', './assets/preview')
 
   .addPlugin(new CopyWebpackPlugin([
     { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },

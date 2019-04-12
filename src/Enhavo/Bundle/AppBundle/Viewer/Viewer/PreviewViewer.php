@@ -2,72 +2,83 @@
 /**
  * PreviewViewer.php
  *
- * @since 18/11/15
+ * @since 12/04/19
  * @author gseidel
  */
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
-use Enhavo\Bundle\AppBundle\Preview\StrategyResolver;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
-use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use FOS\RestBundle\View\View;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
-use Symfony\Component\HttpFoundation\Response;
+use Sylius\Component\Resource\Metadata\Metadata;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PreviewViewer extends AbstractViewer
+class PreviewViewer extends AbstractActionViewer
 {
-    /**
-     * @var StrategyResolver
-     */
-    private $strategyResolver;
-
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, StrategyResolver $strategyResolver)
-    {
-        parent::__construct($requestConfigurationFactory, $util);
-        $this->strategyResolver = $strategyResolver;
-    }
-
     public function getType()
     {
         return 'preview';
     }
 
-    private function createResponse(array $options): Response
-    {
-        $strategyName = $this->mergeConfig([
-            $options['strategy'],
-            $this->getViewerOption('strategy', $options['request_configuration'])
-        ]);
-
-        $strategyOptions = $this->mergeConfigArray([
-            ['service' => 'enhavo_app.preview.default_renderer:render'],
-            $options['strategy_options'],
-            $this->getViewerOption('strategy_options', $options['request_configuration'])
-        ]);
-
-        $strategy = $this->strategyResolver->getStrategy($strategyName);
-        $response = $strategy->getPreviewResponse($options['resource'], $strategyOptions);
-
-        return $response;
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function createView($options = []): View
     {
-        $view = View::create();
-        $view->setResponse($this->createResponse($options));
-        $view->setFormat('preview');
+        $view = parent::createView($options);
+        $templateVars = $view->getTemplateData();
+        $templateVars['data']['url'] = $this->container->get('router')->generate($this->getResourcePreviewUrl($options));
+        $templateVars['data']['inputs'] = [];
+        $view->setTemplateData($templateVars);
         return $view;
+    }
+
+    private function getResourcePreviewUrl($options)
+    {
+        /** @var Metadata $metadata */
+        $metadata = $options['metadata'];
+        $name = $metadata->getHumanizedName();
+        $name = str_replace(' ', '_', $name);
+        return sprintf('%s_%s_resource_preview', $metadata->getApplicationName(), $name);
+    }
+
+    protected function createActions($options)
+    {
+        $default = [
+            'desktop' => [
+                'type' => 'event',
+                'label' => 'Desktop',
+                'icon' => 'desktop_windows',
+                'event' => 'desktop'
+            ],
+            'mobile' => [
+                'type' => 'event',
+                'label' => 'Mobile',
+                'icon' => 'phone_iphone',
+                'event' => 'mobile'
+            ],
+            'tablet' => [
+                'type' => 'event',
+                'label' => 'Tablet',
+                'icon' => 'tablet_mac',
+                'event' => 'tablet'
+            ],
+        ];
+
+        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'strategy' => 'service',
-            'strategy_options' => null
+            'javascripts' => [
+                'enhavo/preview'
+            ],
+            'stylesheets' => [
+                'enhavo/preview'
+            ],
         ]);
-        $optionsResolver->setRequired(['request_configuration', 'request', 'form']);
+        $optionsResolver->setRequired(['metadata']);
     }
 }

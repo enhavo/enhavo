@@ -230,6 +230,18 @@ class ResourceController extends BaseController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        $view = $this->viewFactory->create('preview', [
+            'metadata' => $this->metadata
+        ]);
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
+
+    public function previewResourceAction(Request $request): Response
+    {
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
         if($request->query->has('id')) {
@@ -244,7 +256,7 @@ class ResourceController extends BaseController
         $form = $this->resourceFormFactory->create($configuration, $resource);
         $form->handleRequest($request);
 
-        $view = $this->viewFactory->create('preview', [
+        $view = $this->viewFactory->create('resource_preview', [
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resource' => $resource,

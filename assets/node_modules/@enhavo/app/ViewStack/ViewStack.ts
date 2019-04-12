@@ -51,6 +51,17 @@ export default class ViewStack
         this.addClearListener();
         this.addArrangeListener();
         this.addLoadingListener();
+        this.addExistsListener();
+    }
+
+    private addExistsListener()
+    {
+        this.dispatcher.on('exists', (event: RemoveEvent) => {
+            let view = this.get(event.id);
+            event.resolve({
+                exists: !!view
+            });
+        });
     }
 
     private addRemoveListener()
