@@ -1,7 +1,7 @@
 <template>
     <div class="menu">
         <template v-for="item in menu.items">
-            <component class="menu-child" v-bind:is="item.component" v-bind:data="item" v-on:select:="select"></component>
+            <component class="menu-child" v-bind:is="item.component" v-bind:data="item"></component>
         </template>
     </div>
 </template>
