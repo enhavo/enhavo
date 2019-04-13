@@ -1,6 +1,6 @@
 <template>
-    <div class="menu-list" v-click-outside="outside">
-        <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle">
+    <div v-bind:class="{'menu-list': true, 'select': data.selected}" v-click-outside="outside">
+        <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle" >
             <div class="symbol-container">
                 <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
             </div>
@@ -11,23 +11,30 @@
             <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': isOpen }, {'icon-keyboard_arrow_down': !isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="menu-list-child menu-list-items" v-show="isOpen">
-            <template v-for="item in items">
+            <template v-for="item in data.children()">
                 <component v-bind:is="item.component" v-bind:data="item"></component>
             </template>
         </div>
-
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
+    import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
+    import MenuList from '@enhavo/app/Menu/Model/MenuList';
+    import * as _ from "lodash";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import MenuAwareApplication from "@enhavo/app/Menu/MenuAwareApplication";
+    let application = <MenuAwareApplication>ApplicationBag.getApplication();
 
-    @Component
-    export default class MenuList extends Vue {
+    @Component({
+        components: _.extend({'menu-notification': MenuNotificationComponent}, application.getMenuRegistry().getComponents())
+    })
+    export default class MenuListComponent extends Vue {
         name: string = 'menu-list';
 
         @Prop()
-        data: object;
+        data: MenuList;
 
         isOpen: boolean = false;
 
@@ -43,12 +50,14 @@
             return (this.data && this.data.notification) ? this.data.notification : false;
         }
 
-        get items(): array {
-            return (this.data && this.data.children) ? this.data.children : false;
-        }
-
         toggle (): void {
             this.isOpen = !this.isOpen;
+            if(this.isOpen) {
+                this.data.open();
+            } else {
+                this.data.close();
+            }
+
         }
 
         outside(): void {

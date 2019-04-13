@@ -3,6 +3,7 @@ import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
+import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
 import FrameStorage from "@enhavo/app/ViewStack/FrameStorage";
 import ViewRegistry from "@enhavo/app/ViewStack/ViewRegistry";
 
@@ -12,11 +13,12 @@ export class MainApplication extends AbstractApplication
     protected menuManager: MenuManager;
     protected frameStorage: FrameStorage;
     protected viewRegistry: ViewRegistry;
+    protected menuRegistry: MenuRegistry;
 
     public getApp(): AppInterface
     {
         if(this.app == null) {
-            this.app = new MainApp(this.getDataLoader(), this.getViewStack());
+            this.app = new MainApp(this.getDataLoader(), this.getViewStack(), this.getMenuManager());
         }
         return this.app;
     }
@@ -37,9 +39,18 @@ export class MainApplication extends AbstractApplication
     public getMenuManager(): MenuManager
     {
         if(this.menuManager == null) {
-            this.menuManager = new MenuManager(this.getDataLoader().load().menu);
+            this.menuManager = new MenuManager(this.getDataLoader().load().menu, this.getMenuRegistry());
         }
         return this.menuManager;
+    }
+
+    public getMenuRegistry(): MenuRegistry
+    {
+        if(this.menuRegistry == null) {
+            this.menuRegistry = new MenuRegistry();
+            this.menuRegistry.load(this);
+        }
+        return this.menuRegistry;
     }
 
     public getFrameStorage(): FrameStorage

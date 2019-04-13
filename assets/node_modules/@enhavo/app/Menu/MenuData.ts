@@ -1,7 +1,7 @@
-
+import MenuInterface from "@enhavo/app/Menu/MenuInterface";
 
 export default class MenuData
 {
-    public items: Array<object>;
+    public items: Array<MenuInterface>;
     public open: boolean;
 }

@@ -6,9 +6,9 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    
-    @Component
-    export default class MenuNotification extends Vue {
+
+    @Component()
+    export default class MenuNotificationComponent extends Vue {
         name: string = 'menu-notification';
 
         @Prop()

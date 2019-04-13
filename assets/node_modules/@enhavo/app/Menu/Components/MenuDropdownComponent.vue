@@ -17,10 +17,13 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+    import { Vue, Component, Prop } from "vue-property-decorator";
+    import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
 
-    @Component
-    export default class MenuDropdown extends Vue {
+    @Component({
+        components: {'menu-notification': MenuNotificationComponent}
+    })
+    export default class MenuDropdownComponent extends Vue {
         name: string = 'menu-dropdown';
 
         @Prop()
@@ -46,7 +49,6 @@
 
         onChange(): string {
             // --> fire change event
-            
             return this.selected;
         }
     }

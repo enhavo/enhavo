@@ -1,15 +1,18 @@
-import DataLoader from '../DataLoader';
-import ViewStack from '../ViewStack/ViewStack';
+import DataLoader from '@enhavo/app/DataLoader';
+import ViewStack from '@enhavo/app/ViewStack/ViewStack';
+import MenuManager from '@enhavo/app/Menu/MenuManager';
 
 export default class MainApp
 {
     private data: any;
     private viewStack: ViewStack;
+    private menuManager: MenuManager;
 
-    constructor(loader: DataLoader, viewStack: ViewStack)
+    constructor(loader: DataLoader, viewStack: ViewStack, menuManager: MenuManager)
     {
         this.data = loader.load();
         this.viewStack = viewStack;
+        this.menuManager = menuManager;
     }
 
     getData(): any

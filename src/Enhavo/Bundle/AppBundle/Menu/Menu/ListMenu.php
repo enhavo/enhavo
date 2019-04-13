@@ -54,7 +54,7 @@ class ListMenu extends AbstractMenu
             'component' => $options['component'],
             'class' => $options['class'],
             'active' => $active,
-            'children' => $children
+            'items' => $children
         ];
 
         $parentData = parent::createViewData($options);
