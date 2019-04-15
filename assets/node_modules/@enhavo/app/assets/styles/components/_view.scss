@@ -1,10 +1,14 @@
-.view-component {transition:all 100ms, transform;height:100%;flex:1 0 0;
+.view-component {transition:all 100ms, transform;height:100%;flex:1 0 0;position:relative;
+  &:last-child {
+    .view-resizer {display:none;}
+  }
   &.minimized {flex:0;height:100%;
     .toolbar {padding:0;height:100%;
       .actions {align-items:initial;
         .action {padding-top:0;}
       }
     }
+    .view-resizer {display:none;}
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;
     .actions {display:flex;margin-left:auto;align-items:center;flex:0;
@@ -14,4 +18,5 @@
   .view-component-inner {height:calc(100% - 30px);position:relative;
     iframe {display:block;}
   }
+  .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);background:$grey1;border-left:1px solid $grey5;border-right:1px solid $grey5;cursor:col-resize;}
 }

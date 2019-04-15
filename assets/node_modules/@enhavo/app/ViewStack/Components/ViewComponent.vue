@@ -16,6 +16,7 @@
             </overlay-container>
             <component v-bind:is="data.component" v-bind:data="data"></component>
         </div>
+        <div class="view-resizer"></div>
     </div>
 </template>
 

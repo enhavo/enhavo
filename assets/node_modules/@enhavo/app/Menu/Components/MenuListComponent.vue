@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="{'menu-list': true, 'select': data.selected}" v-click-outside="outside">
+    <div v-bind:class="{'menu-list': true, 'selected': data.selected}" v-click-outside="outside">
         <div class="menu-child-title menu-list-child menu-list-title" v-on:click="toggle" >
             <div class="symbol-container">
                 <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
@@ -57,7 +57,6 @@
             } else {
                 this.data.close();
             }
-
         }
 
         outside(): void {

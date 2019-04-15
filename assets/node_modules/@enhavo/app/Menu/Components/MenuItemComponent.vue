@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="{'menu-child-title menu-item': true, 'select': data.selected}" @click="open()">
+    <div v-bind:class="{'menu-child-title menu-item': true, 'selected': data.selected}" @click="open()">
         <div class="symbol-container">
             <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
         </div>

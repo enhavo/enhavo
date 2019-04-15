@@ -2,8 +2,8 @@
   display: inline-block;
   vertical-align: middle;
   border: none;
-  background: #eee;
-  color: #454545;
+  background:$grey1;
+  color:$color1;
   padding: 3px 3px 3px 3px;
   height: 22px;
   width: 22px;
@@ -11,17 +11,15 @@
   line-height: 16px;
   cursor: pointer;
   text-align:center;
-  font-family: "enhavo-iconfont";
+  font-family: "enhavo-icons";
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
-  *margin-right: .3em;
-  margin-left:0;
   border-radius:50%;
   position: relative;
 
   &.checked:before {
-    content: "\e847";
+    content: "\f1a7";
   }
 }

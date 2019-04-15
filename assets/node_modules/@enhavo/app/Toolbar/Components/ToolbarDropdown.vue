@@ -1,9 +1,8 @@
 <template>
-    <div class="toolbar-dropdown" v-click-outside="close">
+    <div class="toolbar-dropdown" v-click-outside="close" v-bind:class="{'selected': isOpen}">
         <div class="toolbar-dropdown-title" v-on:click="toggle">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            {{ data.user.name }} 
-            <i v-bind:class="['open-indicator', 'fa fa-caret-down', {'fa-flip-vertical': isOpen }]" aria-hidden="true"></i>
+            <i class="icon icon-person"></i>
+            <i v-bind:class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
             <template v-for="item in data.items">
@@ -38,19 +37,6 @@ export default class ToolbarDropdown extends Vue {
 
 Vue.component('toolbar-dropdown-item', DropdownItem);
 </script>
-
-<style lang="scss" scoped>
-    @import '~@enhavo/app/assets/styles/_variables.scss';
-    
-    .toolbar-dropdown {background-color:$color2b;position:relative;z-index:1;
-        .toolbar-dropdown-title { 
-            height: $toolbarHeight; padding: 10px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer;
-            i { margin-right: 10px; margin-left: 10px; }
-        }
-
-        .toolbar-dropdown-menu { background-color: inherit; }
-    }
-</style>
 
 
 

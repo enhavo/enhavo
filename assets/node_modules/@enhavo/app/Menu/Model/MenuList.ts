@@ -9,11 +9,7 @@ export default class MenuList extends AbstractMenu
         return this.items;
     }
 
-    open() {
-        this.select();
-    }
+    open() {}
 
-    close() {
-        this.unselect();
-    }
+    close() {}
 }

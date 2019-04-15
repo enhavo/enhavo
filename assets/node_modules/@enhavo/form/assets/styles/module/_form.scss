@@ -1,12 +1,17 @@
 .form-row {
     + .form-row {margin-top:15px;}
+
+    .choice-input-container {padding-top:3px;
+        .choice-input-with-label {display: inline-block;white-space:nowrap;margin-right:20px;}
+        .icheckbox {
+            + label {margin-left:10px;}
+        }
+    }
+
     .formwidget-container {
         input[type="file"] {border:0;background:transparent;}
         input[type="text"] {@extend %textfield;}
         textarea {@extend %textarea;}
-        .select2-container {width: 100%;
-            .select2-choice {border-radius: 0;}
-        }
     }
     .label-help-container {font-size:0.85rem;line-height:1.1em;padding-left:2px;margin-bottom:1px;
         .label {
@@ -22,12 +27,6 @@
     .choice-input-container {
         .choice-input-with-label {display: block; margin-bottom: 3px;}
     }
-}
-
-.choice-input-container {
-    padding-top:3px;
-    label {padding-right:10px;}
-    .choice-input-with-label {display: inline-block;white-space:nowrap;}
 }
 
 .entity-tree-children {
