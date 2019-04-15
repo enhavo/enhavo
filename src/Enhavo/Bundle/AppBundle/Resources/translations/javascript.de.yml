@@ -1,3 +1,6 @@
-batch:
-    placeholder: 'Batch wählen'
-    execute: 'Ausführen'
+enhavo_app:
+    edit: 'Bearbeiten'
+    preview: 'Vorschau'
+    batch:
+        placeholder: 'Batch wählen'
+        execute: 'Ausführen'

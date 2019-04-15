@@ -9,7 +9,7 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/core": "^0.1.1",
+    "@enhavo/core": "^0.1.2",
     "blueimp-file-upload": "~8.9.0",
     "cropperjs": "~1.2.2",
     "jquery": "~3.1.0",

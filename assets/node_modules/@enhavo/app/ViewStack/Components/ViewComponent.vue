@@ -1,7 +1,7 @@
 <template>
     <div class="view-component" :style="{order: position}" :class="{minimized: data.minimize}">
         <div class="toolbar">
-            <strong v-if="!data.minimize">{{ data.id }}</strong>
+            <strong v-if="!data.minimize">{{ data.label }}</strong>
             <div class="actions">
                 <div @click="close()" v-if="!data.minimize" class="action"><span class="icon icon-close"></span></div>
                 <div @click="minimize()" v-if="!data.minimize" class="action"><span class="icon icon-keyboard_arrow_left"></span></div>

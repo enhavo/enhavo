@@ -62,7 +62,8 @@ export class IndexApplication extends AbstractApplication implements ActionAware
                 this.getRouter(),
                 this.getEventDispatcher(),
                 this.getDataLoader().load().grid,
-                this.getView()
+                this.getView(),
+                this.getTranslator()
             );
         }
         return this.grid;

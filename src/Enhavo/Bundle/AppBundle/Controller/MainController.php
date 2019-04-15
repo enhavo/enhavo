@@ -36,14 +36,8 @@ class MainController extends AbstractController
             ],
             'view_stack' => [
                 'width' => 0,
-                'views' => [
-                    [
-                        'name' => 'Dashboard',
-                        'component' => 'iframe-view',
-                        'url' => '/admin/enhavo/article/article/index',
-                        'loaded' => false
-                    ]
-                ],
+                'views' => [],
+
             ],
             'quick_menu' => [
                 'user' => [

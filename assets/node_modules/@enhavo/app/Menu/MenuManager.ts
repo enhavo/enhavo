@@ -37,4 +37,12 @@ export default class MenuManager
             item.unselect();
         }
     }
+
+    start() {
+        if(this.data.items.length > 0) {
+            this.clearSelections();
+            this.data.items[0].select();
+            this.data.items[0].open();
+        }
+    }
 }

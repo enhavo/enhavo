@@ -54,7 +54,7 @@ export default class PreviewAction extends AbstractAction
     private openView()
     {
         this.application.getEventDispatcher().dispatch(new CreateEvent({
-            label: 'preview',
+            label: this.application.getTranslator().trans('enhavo_app.preview'),
             component: 'iframe-view',
             url: this.url
         }, this.getView().getId()))

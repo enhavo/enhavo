@@ -6,6 +6,7 @@ import MenuAwareApplication from "@enhavo/app/Menu/MenuAwareApplication";
 export default abstract class AbstractMenu implements MenuInterface
 {
     public component: string;
+    public label: string;
     public selected: boolean = false;
     protected application: ApplicationInterface;
     private parentItem: MenuInterface;

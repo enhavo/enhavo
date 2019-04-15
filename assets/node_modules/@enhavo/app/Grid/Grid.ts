@@ -14,6 +14,7 @@ import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import Translator from "@enhavo/core/Translator";
 
 export default class Grid
 {
@@ -23,6 +24,7 @@ export default class Grid
     private eventDispatcher: EventDispatcher;
     private configuration: GridConfiguration;
     private view: View;
+    private translator: Translator;
 
     constructor(
         filterManager: FilterManager,
@@ -31,13 +33,15 @@ export default class Grid
         router: Router,
         eventDispatcher: EventDispatcher,
         configuration: GridConfiguration,
-        view: View
+        view: View,
+        translator: Translator
     ) {
         this.filterManager = filterManager;
         this.columnManager = columnManager;
         this.router = router;
         this.eventDispatcher = eventDispatcher;
         this.view = view;
+        this.translator = translator;
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
@@ -121,7 +125,7 @@ export default class Grid
         });
 
         this.eventDispatcher.dispatch(new CreateEvent({
-            label: 'table',
+            label: this.translator.trans('enhavo_app.edit'),
             component: 'iframe-view',
             url: url
         }, this.view.getId())).then((view: ViewInterface) => {

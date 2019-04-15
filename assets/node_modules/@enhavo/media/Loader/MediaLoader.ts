@@ -73,7 +73,7 @@ export default class MediaLoader extends AbstractLoader
                 });
                 this.application.getEventDispatcher().dispatch(new CreateEvent(
                     {
-                        label: 'edit',
+                        label: this.application.getTranslator().trans('enhavo_media.cropping'),
                         component: 'iframe-view',
                         url: url
                     }, this.application.getView().getId())
