@@ -11,6 +11,7 @@ import ListLoader from "@enhavo/form/Loader/ListLoader";
 import DynamicFormLoader from "@enhavo/form/Loader/DynamicFormLoader";
 import MediaLoader from "@enhavo/media/Loader/MediaLoader";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import AutoCompleteLoader from "@enhavo/form/Loader/AutoCompleteLoader";
 
 export default class FormRegistry
 {
@@ -46,5 +47,6 @@ export default class FormRegistry
         this.addType(new ListLoader(), '[data-list]', FormRegistry.INSERT);
         this.addType(new DynamicFormLoader(this.application), '[data-dynamic-form]', FormRegistry.INSERT);
         this.addType(new MediaLoader(this.application), '[data-media-type]', FormRegistry.INSERT);
+        this.addType(new AutoCompleteLoader(this.application), '[data-auto-complete-entity]', FormRegistry.INSERT);
     }
 }
