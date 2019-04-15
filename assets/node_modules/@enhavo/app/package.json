@@ -2,5 +2,23 @@
   "name": "@enhavo/app",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.1.1"
+  "version": "0.1.2",
+  "homepage": "https://www.enhavo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enhavo/enhavo.git"
+  },
+  "dependencies": {
+    "@ibm/plex": "^1.2.3",
+    "@enhavo/core": "^0.1.1",
+    "async": "^2.6.2",
+    "axios": "^0.18.0",
+    "compass-mixins": "^0.12.10",
+    "jquery": "~3.1.0",
+    "lodash": "^4.17.11",
+    "urijs": "^1.19.1",
+    "uuid": "^3.3.2",
+    "vue": "^2.5.22",
+    "vue-property-decorator": "^6.0.0"
+  }
 }

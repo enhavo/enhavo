@@ -2,7 +2,6 @@ import * as uuidv4 from "uuid/v4";
 import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-const application = <ApplicationInterface>ApplicationBag.getApplication();
 
 export default class Event
 {
