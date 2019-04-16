@@ -3,12 +3,24 @@
     .view-resizer {display:none;}
   }
   &.minimized {flex:0;height:100%;
-    .toolbar {padding:0;height:100%;
+    &:last-child {
+      .view-resizer {display:block;}
+    }
+    .toolbar {padding:0;height:100%;position:relative;width:20px;
       .actions {align-items:initial;
-        .action {padding-top:0;}
+        .action {padding:0 2px;}
       }
     }
-    .view-resizer {display:none;}
+    .view-resizer {width:100%;border:0;cursor:pointer;@extend .icon-play_arrow;
+      &:hover {
+        &:before {color:$grey2;}
+        .view-label {display:block;}
+      }
+      &:before {color:$grey4;left:-2px;font-size:1.3rem;}
+      .view-label {display:none;position:absolute;top:50%;left:calc(100% + 10px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$grey1;color:$grey2;border-radius:3px;
+        &:before {content:"";position:absolute;left:-8px;top:calc(50% - 9px);border-right:8px solid;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right-color:$grey1;}
+      }
+    }
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;
     .actions {display:flex;margin-left:auto;align-items:center;flex:0;
@@ -18,5 +30,7 @@
   .view-component-inner {height:calc(100% - 30px);position:relative;
     iframe {display:block;}
   }
-  .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);background:$grey1;border-left:1px solid $grey5;border-right:1px solid $grey5;cursor:col-resize;}
+  .view-resizer {position:absolute;top:30px;right:0;width:10px;height:calc(100% - 30px);background:$grey1;border-left:1px solid $grey5;border-right:1px solid $grey5;cursor:col-resize;@extend .icon-grapheq;
+    &:before {font-family:"enhavo-icons";position:absolute;top:50%;transform:translateY(-50%);color:$grey2;font-size:0.6rem;left:0;}
+  }
 }

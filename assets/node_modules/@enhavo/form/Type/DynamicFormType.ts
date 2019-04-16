@@ -169,7 +169,11 @@ export default class DynamicFormType extends FormType
 
                 let form = new FormInitializer();
                 form.setHtml(data);
-                form.insertAfter(button.getElement());
+                if(button && button.getElement()) {
+                    form.insertAfter(button.getElement());
+                } else {
+                    form.append(dynamicForm.$container);
+                }
 
                 dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));
                 let newButton = dynamicForm.createAddButton();

@@ -16,7 +16,9 @@
             </overlay-container>
             <component v-bind:is="data.component" v-bind:data="data"></component>
         </div>
-        <div class="view-resizer"></div>
+        <div class="view-resizer" @click="data.minimize ? maximize() : null">
+            <div class="view-label" v-if="data.minimize">{{ data.label }}</div>
+        </div>
     </div>
 </template>
 

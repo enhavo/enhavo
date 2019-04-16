@@ -21,6 +21,17 @@
             .help-text {position:absolute;top:0;left:0;min-width:250px;}
         }
     }
+    .wysiwyg-container {
+        .tox {
+            .tox-edit-area {border-color:$grey5;}
+            .tox-statusbar {padding:0px 6px 2px 6px;border-color:$grey5;}
+            .tox-tbtn {
+                svg {fill:$grey2;}
+            }
+            .tox-toolbar__group {border-color:$grey5;}
+        }
+        .tox-tinymce {border-radius:3px;border-color:$grey5;}
+    }
 }
 
 /*.choice-list {

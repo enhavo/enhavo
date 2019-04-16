@@ -35,34 +35,7 @@ export default class DynamicFormMenu
         }
 
         this.button = button;
-
-        let position = $(button.getElement()).position();
-        let dropDown = true;
-
-        let scope:HTMLElement;
-        scope = this.dynamicForm.getScope();
-        if(scope == null) {
-            scope = <HTMLElement>$('body').get(0);
-        }
-
-        let topOffset = this.topToElement(button.getElement(), scope, 0);
-        let center = $(button.getElement()).height()/2 + topOffset;
-        let halfHeight = $(scope).height()/2;
-
-        if(halfHeight < center) {
-            dropDown = false;
-        }
-
-        if (dropDown) {
-            this.$element.addClass('topTriangle');
-            this.$element.css('top', 35 + position.top + 'px');
-        } else {
-            this.$element.addClass('bottomTriangle');
-            this.$element.css('top', -1 * this.$element.height() - 25 + position.top + 'px');
-        }
-        this.$element.css('left', position.left + 'px');
-
-        this.$element.show();
+        this.$element.insertAfter(this.button.getElement()).show();
     }
 
     private topToElement(element:HTMLElement, toElement:HTMLElement, top: number = 0): number

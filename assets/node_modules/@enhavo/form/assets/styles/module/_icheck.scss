@@ -19,7 +19,5 @@
   border-radius:50%;
   position: relative;
 
-  &.checked:before {
-    content: "\f1a7";
-  }
+  &.checked{@extend .icon-check;}
 }

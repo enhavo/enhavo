@@ -1,7 +1,7 @@
 @import "base";
 @import "components";
 .app-view {padding-top:60px;
-  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;
+  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;z-index:1;
     .action {text-align:center;flex:1 1 100px;min-width:85px;padding:8px 5px;cursor:pointer;
       &:hover {color:$color1;
         .action-icon {color:$color1;}

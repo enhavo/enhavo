@@ -1,4 +1,4 @@
-.app {height:100vh;display:flex;
+.app {min-height:100vh;display:flex;
   .sidebar {width:260px;background:$color2;@include transition(width 300ms);
     &.menu-collapsed {width:$collapsedMenuWidth;
       .branding-container {background-position:8px 52%;}

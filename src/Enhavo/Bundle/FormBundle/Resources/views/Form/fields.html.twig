@@ -158,7 +158,7 @@
 {% block enhavo_dynamic_form_widget %}
     {% import _self as helper %}
     
-    <div class="mb1 enhavo-dynamic-form"
+    <div class="enhavo-dynamic-form"
          data-dynamic-form
          data-dynamic-form-name="{{ full_name }}"
          data-dynamic-form-add-button-template="{{ helper.addButton()|e }}"
@@ -166,26 +166,21 @@
     >
 
         <div class="dynamic-form-actions" data-dynamic-form-action>
-            <div data-dynamic-form-action-collapse-all>
-                <i class="icon-collapse"></i>
+            <div class="button" data-dynamic-form-action-collapse-all>
+                <i class="icon icon-unfold_less"></i>
             </div>
-            <div data-dynamic-form-action-expand-all>
-                <i class="icon-expand"></i>
+            <div class="button" data-dynamic-form-action-expand-all>
+                <i class="icon icon-unfold_more"></i>
             </div>
         </div>
 
         {{ helper.addDialogue(items) }}
 
         <div class="dynamic-form-container" data-reindexable data-dynamic-form-container>
-
             {{ helper.addButton() }}
             {% for item in form %}
                 {{ form_widget(item) }}
-                {% if loop.last %}
-                    {{ helper.addDialogue(items) }}
-                {% else %}
-                    {{ helper.addButton() }}
-                {% endif %}
+                {{ helper.addButton() }}
             {% endfor %}
         </div>
 
@@ -205,15 +200,15 @@
                 <i class="icon icon-close"></i>
             </div>
             <div class="button button-collapse" data-dynamic-form-item-action-collapse>
-                <i class="icon icon-visibility_off"></i>
+                <i class="icon icon-unfold_less"></i>
             </div>
             <div class="button button-expand" data-dynamic-form-item-action-expand>
-                <i class="icon icon-visibility"></i>
+                <i class="icon icon-unfold_more"></i>
             </div>
             <div class="label">{{ label|trans({}, translation_domain)|nl2br }}</div>
         </div>
 
-        <div data-dynamic-form-item-container>
+        <div class="dynamic-form-item-content-container" data-dynamic-form-item-container>
             {% if item_template %}
                 {% include item_template %}
             {% else %}
@@ -229,14 +224,13 @@
 {% endblock %}
 
 {% macro addButton() %}
-    <div class="dynamic-form-item-add-button" data-dynamic-form-add-button>
-        <i class="icon icon-add_circle"></i>
+    <div class="dynamic-form-item-add-button-row" data-dynamic-form-add-button>
+        <div class="label"><i class="icon icon-add_box"></i> hinzufügen</div>
     </div>
 {% endmacro %}
 
 {% macro addDialogue(items) %}
     <div class="dynamic-form-menu-dialogue" data-dynamic-form-menu>
-        <div class="label">+ Neues Modul</div>
         <ul class="item-list">
             {% for item in items %}
                 <li data-dynamic-form-menu-item="{{ item.name }}">

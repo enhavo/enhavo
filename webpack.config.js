@@ -29,7 +29,7 @@ Encore
     { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },
     { from: 'node_modules/tinymce/plugins', to: 'enhavo/plugins' }
   ]))
-  .addPlugin(new HardSourceWebpackPlugin())
+  //.addPlugin(new HardSourceWebpackPlugin())
 ;
 
 var config = Encore.getWebpackConfig();

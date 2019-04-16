@@ -7,7 +7,7 @@
     > .menu-child {
       &:hover {position:relative;
         > .menu-child-title,&.menu-child-title {
-          > .label-container {display:block;position:absolute;top:50%;left:calc(100% + 13px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$color2;
+          > .label-container {display:block;position:absolute;top:50%;left:calc(100% + 13px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$color2;border-radius:3px;
             &:before {content:"";position:absolute;left:-8px;top:calc(50% - 9px);border-right:8px solid;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right-color:$color2;}
           }
         }
@@ -18,11 +18,19 @@
         }
       }
     }
+    .menu-item {
+      &.selected {border-left:0;background:$color1b;}
+    }
+    .menu-list {
+      &.selected {
+        .menu-list-title {background:$color1b;}
+      }
+    }
   }
-  .menu-child {color:$grey2;}
+  .menu-child {color:$grey4;}
 
   .menu-item {
-    &.selected {background:$color1;color:#fff;}
+    &.selected {color:#fff;border-left:4px solid $color1b;}
   }
 
   .menu-child-title {padding:0 10px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;position:relative;
@@ -36,8 +44,7 @@
 
   .menu-list {flex-wrap: wrap;
     &.selected {
-      .menu-list-items {background:$color1b;color:#fff;}
-      .menu-list-title {background:$color1b;color:#fff;}
+      .menu-list-title {color:#fff;}
     }
     .menu-list-child {flex-basis: 100%;}
     .menu-list-title {width: 100%;min-height:46px; cursor: pointer; display: flex; align-items: center; flex-wrap: nowrap;}
