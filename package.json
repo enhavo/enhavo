@@ -27,11 +27,13 @@
     "vue-loader": "^15.5.1",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1",
+    "vue-select": "^3.0.0",
     "vue-template-compiler": "^2.5.22"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "0.22.4",
     "@types/async": "^2.4.1",
+    "@types/chart.js": "^2.7.50",
     "@types/cropperjs": "^1.1.1",
     "@types/icheck": "^0.8.29",
     "@types/jquery": "^2.0.45",
@@ -42,7 +44,7 @@
     "@types/tinymce": "^4.5.16",
     "@types/urijs": "^1.15.38",
     "@types/uuid": "^3.4.4",
-    "@types/chart.js": "^2.7.50",
+    "@types/vue-select": "^2.5.0",
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-decompress": "^2.0.2",

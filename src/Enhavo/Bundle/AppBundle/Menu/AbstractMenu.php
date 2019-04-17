@@ -34,7 +34,7 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
     public function createViewData(array $options)
     {
         return [
-            'component' => $options['component']
+            'component' => $options['component'],
         ];
     }
 

@@ -1,24 +1,15 @@
 <template>
     <div class="menu-dropdown">
-        <div class="menu-child-title menu-dropdown-child menu-dropdown-label">
-            <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
-            {{ label }} 
-            <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
-        </div>
         <div class="menu-dropdown-child menu-dropdown-input">
-            <select v-model="selected" v-on:change="onChange">
-                <option v-for="(choiceLabel, choiceValue) in choices" v-bind:value="choiceValue">
-                    {{ choiceLabel }}
-                </option>
-            </select>
+            <v-select @input="change" :placeholder="data.label" :value="data.value" :options="data.choices"></v-select>
         </div>
-
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import MenuNotificationComponent from '@enhavo/app/Menu/Components/MenuNotificationComponent';
+    import MenuDropdown from '@enhavo/app/Menu/Model/MenuDropdown';
 
     @Component({
         components: {'menu-notification': MenuNotificationComponent}
@@ -27,29 +18,10 @@
         name: string = 'menu-dropdown';
 
         @Prop()
-        data: object;
+        data: MenuDropdown;
 
-        selected: string = '';
-
-        get label(): string {
-            return (this.data && this.data.label) ? this.data.label : false;
-        }
-
-        get icon(): string {
-            return (this.data && this.data.icon) ? 'icon-' + this.data.icon : false;
-        }
-
-        get notification(): object {
-            return (this.data && this.data.notification) ? this.data.notification : false;
-        }
-
-        get choices(): array {
-            return (this.data && this.data.choices) ? this.data.choices : false;
-        }
-
-        onChange(): string {
-            // --> fire change event
-            return this.selected;
+        change(value): string {
+            this.data.change(value);
         }
     }
 </script>

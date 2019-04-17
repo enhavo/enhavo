@@ -41,7 +41,9 @@ class DropdownMenu extends AbstractMenu
     {
         $data = [
             'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
-            'choices' => $options['choices']
+            'choices' => $this->formatChoices($options['choices'], $options['translation_domain']),
+            'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
+            'value' => $this->getValue($options),
         ];
 
         $parentData = parent::createViewData($options);
@@ -49,18 +51,37 @@ class DropdownMenu extends AbstractMenu
         return $data;
     }
 
+    private function formatChoices(array $choices, $translationDomain)
+    {
+        $data = [];
+        foreach($choices as $value => $label) {
+            $data[] = [
+                'label' => $this->translator->trans($label, [], $translationDomain),
+                'code' => $value,
+            ];
+        }
+        return $data;
+    }
+
+    protected function getValue(array $options)
+    {
+        return $options['value'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
+            'label' => '',
             'translation_domain' => null,
-            'icon' => null,
             'class' => '',
             'component' => 'menu-dropdown',
             'info' => null,
+            'value' => null
         ]);
 
+        $resolver->remove(['icon']);
         $resolver->setRequired([
             'choices',
         ]);
@@ -68,6 +89,6 @@ class DropdownMenu extends AbstractMenu
 
     public function getType()
     {
-        return 'base';
+        return 'dropdown';
     }
 }

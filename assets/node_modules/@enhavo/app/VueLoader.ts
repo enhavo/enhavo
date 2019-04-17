@@ -4,7 +4,8 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import View from "@enhavo/app/View/View";
 import ClickOutside from "@enhavo/app/ClickOutside";
-
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
 export default class VueLoader
 {
@@ -26,6 +27,7 @@ export default class VueLoader
         Vue.config.devtools = true;
         Vue.config.productionTip = false;
         Vue.directive('click-outside', new ClickOutside(this.dispatcher, this.view));
+        Vue.component('v-select', vSelect);
 
         this.vue = new Vue({
             el: '#' + this.id,
