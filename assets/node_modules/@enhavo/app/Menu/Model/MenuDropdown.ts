@@ -5,6 +5,7 @@ export default class MenuDropdown extends AbstractMenu
     public value: string;
 
     change(value: any) {
-        console.log(value)
+        this.value = value.label;
+        $(document).trigger('dropdown', [this.value])
     }
 }

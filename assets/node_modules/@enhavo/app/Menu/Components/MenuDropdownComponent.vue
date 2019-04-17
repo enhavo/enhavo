@@ -1,7 +1,7 @@
 <template>
     <div class="menu-dropdown">
         <div class="menu-dropdown-child menu-dropdown-input">
-            <v-select @input="change" :placeholder="data.label" :value="data.value" :options="data.choices"></v-select>
+            <v-select clearable @input="change" label="label" :placeholder="data.label" :value="data.value" :options="data.choices"></v-select>
         </div>
     </div>
 </template>
@@ -20,7 +20,7 @@
         @Prop()
         data: MenuDropdown;
 
-        change(value): string {
+        change(value): any {
             this.data.change(value);
         }
     }
