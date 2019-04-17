@@ -14,6 +14,9 @@
 
 <body>
     <div id="app"></div>
+    <script id="routes" type="application/json">{{ routes|raw }}</script>
+    <script id="translations" type="application/json">{{ translations|json_encode|raw }}</script>
+
     {% block javascripts %}
         {{ encore_entry_script_tags('enhavo/main') }}
     {% endblock %}

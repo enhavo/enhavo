@@ -10,6 +10,7 @@ services:
     Enhavo\Bundle\AppBundle\Controller\MainController:
         arguments:
             - '@enhavo_app.menu.manager'
+            - '%kernel.project_dir%'
         tags:
             - { name: controller.service_arguments }
 

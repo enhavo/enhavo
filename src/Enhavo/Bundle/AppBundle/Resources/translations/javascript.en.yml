@@ -1,7 +1,6 @@
-batch:
-    placeholder: 'Choose Batch'
-    execute: 'Execute'
 enhavo_app:
+    logout: 'Logout'
+    change_password: 'Passwort ändern'
     edit: 'Edit'
     preview: 'Preview'
     batch:

@@ -1,4 +1,6 @@
 enhavo_app:
+    logout: 'Logout'
+    change_password: 'Change Password'
     edit: 'Bearbeiten'
     preview: 'Vorschau'
     batch:

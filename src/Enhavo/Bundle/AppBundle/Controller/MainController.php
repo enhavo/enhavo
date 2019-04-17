@@ -19,9 +19,15 @@ class MainController extends AbstractController
      */
     private $menuManager;
 
-    public function __construct(MenuManager $menuManager)
+    /**
+     * @var string
+     */
+    private $projectDir;
+
+    public function __construct(MenuManager $menuManager, $projectDir)
     {
         $this->menuManager = $menuManager;
+        $this->projectDir = $projectDir;
     }
 
     public function indexAction(Request $request)
@@ -37,37 +43,30 @@ class MainController extends AbstractController
             'view_stack' => [
                 'width' => 0,
                 'views' => [],
-
-            ],
-            'quick_menu' => [
-                'user' => [
-                    'name' => 'Johnny Doe'
-                ],
-                'items' => [
-                    [
-                        'id' => 1,
-                        'name' => 'Test #1',
-                        'type' => 'iframe',
-                        'url' => '/admin/view'
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'Test #2',
-                        'type' => 'iframe',
-                        'url' => '/admin/view'
-                    ],
-                    [
-                        'id' => 3,
-                        'name' => 'Test #3',
-                        'type' => 'iframe',
-                        'url' => '/admin/view'
-                    ]
-                ]
             ]
         ];
 
         return $this->render('EnhavoAppBundle:Main:index.html.twig', [
-            'data' => $data
+            'data' => $data,
+            'routes' => $this->getRoutes(),
+            'translations' => $this->getTranslations(),
         ]);
+    }
+
+    private function getRoutes()
+    {
+        $file = $this->projectDir.'/public/js/fos_js_routes.json';
+        if(file_exists($file)) {
+            return file_get_contents($file);
+        }
+        return null;
+    }
+
+    private function getTranslations()
+    {
+        $request = $this->get('request_stack')->getCurrentRequest();
+        $dumper = $this->get('enhavo_app.translation.translation_dumper');
+        $translations = $dumper->getTranslations('javascript', $request->getLocale());
+        return $translations;
     }
 }

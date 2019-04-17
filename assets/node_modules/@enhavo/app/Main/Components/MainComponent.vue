@@ -6,7 +6,7 @@
             <app-menu v-bind:menu="menu" v-bind:class="{ 'menu-collapsed':!menu.open}"></app-menu>
         </div>
         <div class="toolbar-viewstack-container">
-            <toolbar v-bind:quick_menu="quick_menu" v-bind:menu_open="menu.open" v-on:toogle-menu="toogleMenu"></toolbar>
+            <toolbar v-bind:menu_open="menu.open" v-on:toogle-menu="toogleMenu"></toolbar>
             <view-stack v-bind:data="view_stack"></view-stack>
         </div>
     </div>
@@ -18,7 +18,6 @@ import ViewStack from "@enhavo/app/ViewStack/Components/ViewStack.vue"
 import Menu from "@enhavo/app/Menu/Components/Menu.vue"
 import Toolbar from "@enhavo/app/Toolbar/Components/Toolbar.vue"
 import ViewStackData from "@enhavo/app/ViewStack/ViewStackData"
-import QuickMenu from "@enhavo/app/Toolbar/QuickMenu"
 import '@enhavo/app/assets/styles/app.scss'
 import MenuData from "@enhavo/app/Menu/MenuData";
 import ViewData from "@enhavo/app/View/ViewData";
@@ -44,9 +43,6 @@ export default class App extends Vue {
 
     @Prop()
     view_stack: ViewStackData;
-
-    @Prop()
-    quick_menu: QuickMenu;
 
     toogleMenu()
     {

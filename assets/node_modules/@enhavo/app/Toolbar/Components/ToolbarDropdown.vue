@@ -5,24 +5,25 @@
             <i v-bind:class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
-            <template v-for="item in data.items">
-                <toolbar-dropdown-item v-bind:data="item"></toolbar-dropdown-item>
-            </template>
+            <toolbar-dropdown-item v-on:click="logout" :label="label('enhavo_app.logout')"></toolbar-dropdown-item>
+            <toolbar-dropdown-item v-on:click="changePassword" :label="label('enhavo_app.change_password')"></toolbar-dropdown-item>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import DropdownItem from "./ToolbarDropdownItem.vue"
-import { QuickMenu } from "../QuickMenu"
+import DropdownItem from "@enhavo/app/Toolbar/Components/ToolbarDropdownItem.vue"
+import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
+import ClearEvent from '@enhavo/app/ViewStack/Event/ClearEvent';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
-@Component
+@Component({
+    components: {'toolbar-dropdown-item': DropdownItem}
+})
 export default class ToolbarDropdown extends Vue {
     name: 'toolbar-dropdown';
-
-    @Prop()
-    data: QuickMenu;
 
     isOpen: boolean = false;
 
@@ -30,12 +31,43 @@ export default class ToolbarDropdown extends Vue {
         this.isOpen = !this.isOpen;
     }
 
+    label(value): void
+    {
+        return this.getApplication().getTranslator().trans(value);
+    }
+
     close(): void {
         this.isOpen = false;
     }
-}
 
-Vue.component('toolbar-dropdown-item', DropdownItem);
+    logout(): void
+    {
+        window.location.href = this.getApplication().getRouter().generate('enhavo_user_security_logout');
+    }
+
+    changePassword(): void
+    {
+        this.getApplication().getEventDispatcher().dispatch(new ClearEvent())
+            .then(() => {
+                this.getApplication().getEventDispatcher()
+                    .dispatch(new CreateEvent({
+                        label: this.label('enhavo_app.change_password'),
+                        component: 'iframe-view',
+                        url: this.getApplication().getRouter().generate('enhavo_user_change_password_change')
+                    }))
+                    .then(() => {
+                        this.getApplication().getMenuManager().clearSelections();
+                    });
+            })
+            .catch(() => {})
+        ;
+    }
+
+    private getApplication(): ApplicationInterface
+    {
+        return <ApplicationInterface>ApplicationBag.getApplication();
+    }
+}
 </script>
 
 
