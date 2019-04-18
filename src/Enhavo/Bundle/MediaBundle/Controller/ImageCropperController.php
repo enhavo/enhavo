@@ -63,6 +63,7 @@ class ImageCropperController extends AbstractController
 
         if($request->getMethod() == Request::METHOD_POST) {
             $this->cropFormat($request);
+            $this->addFlash('success', $this->get('translator')->trans('media.image_cropper.message.save', [], 'EnhavoMediaBundle'));
         }
 
         $view = $this->viewFactory->create('image_cropper', [

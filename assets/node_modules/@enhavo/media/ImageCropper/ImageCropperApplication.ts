@@ -13,7 +13,7 @@ export class ImageCropperApplication extends AbstractApplication implements Acti
     public getApp(): AppInterface
     {
         if(this.app == null) {
-            this.app = new ImageCropperApp(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager());
+            this.app = new ImageCropperApp(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager(), this.getFlashMessenger());
         }
         return this.app;
     }

@@ -33,3 +33,5 @@ media:
       tooltip_zoom_in: "Einzoomen"
       tooltip_zoom_out: "Auszoomen"
       tooltip_reset: "Zurücksetzen"
+    message:
+      save: 'Erfolgreich gespeichert'

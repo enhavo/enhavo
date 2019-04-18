@@ -78,8 +78,24 @@ class ImageCropperViewer extends AbstractActionViewer
         $view = parent::createView($options);
         $templateVars = $view->getTemplateData();
         $templateVars['data']['format'] = $this->createFormatData($options['format']);
+        $templateVars['data']['messages'] = $this->getFlashMessages();
         $view->setTemplateData($templateVars);
         return $view;
+    }
+
+    private function getFlashMessages()
+    {
+        $messages = [];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($this->flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => is_array($message) ? $message['message'] : $message,
+                    'type' => $type
+                ];
+            }
+        }
+        return $messages;
     }
 
     private function createFormatData(Format $format)

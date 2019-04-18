@@ -14,6 +14,7 @@ import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
+import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -22,6 +23,8 @@ export default class MediaLoader extends AbstractLoader
     private application: ApplicationInterface;
 
     private static cropperViewId: number = null;
+
+    private static cropperMediaItem: MediaItem = null;
 
     constructor(application: ApplicationInterface) {
         super();
@@ -34,6 +37,12 @@ export default class MediaLoader extends AbstractLoader
                     MediaLoader.cropperViewId = data.id;
                 }
             });
+
+        this.application.getEventDispatcher().on('updated', (event: UpdatedEvent) => {
+            if(event.id == MediaLoader.cropperViewId && MediaLoader.cropperMediaItem != null) {
+                // hook for updated by cropper
+            }
+        });
     }
 
     public load(element: HTMLElement, selector: string): FormType[]
@@ -117,6 +126,7 @@ export default class MediaLoader extends AbstractLoader
         )
             .then((view: ViewInterface) => {
                 MediaLoader.cropperViewId = view.id;
+                MediaLoader.cropperMediaItem = media;
                 this.application.getEventDispatcher().dispatch(new SaveDataEvent(cropperStorageKey, {
                     id: view.id
                 }));
