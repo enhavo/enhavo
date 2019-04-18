@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-head" @click="changeTab" :class="{'selected': selected}">
+    <div class="tab-head" @click="changeTab" :class="{'selected': selected, 'has-error': tab.error}">
         {{ tab.label }}
     </div>
 </template>

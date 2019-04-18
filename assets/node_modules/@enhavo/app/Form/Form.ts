@@ -43,7 +43,9 @@ export default class Form
             if(!this.data.tab) {
                 this.data.tab = tab.key;
             }
-            tab.element = <HTMLElement>$('[data-tab-container]').find('[data-tab='+tab.key+']')[0];
+            let $tab = $('[data-tab-container]').find('[data-tab='+tab.key+']');
+            tab.error = $tab.find('[data-form-error]').length > 0;
+            tab.element = <HTMLElement>$tab[0];
         }
     }
 

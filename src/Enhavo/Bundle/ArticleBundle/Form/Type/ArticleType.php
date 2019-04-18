@@ -54,6 +54,7 @@ class ArticleType extends AbstractResourceType
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass,
             'slugable' => true,
+            'validation_groups' => ['default']
         ));
     }
 

@@ -16,6 +16,9 @@ form:
     picture: 'Picture'
     text: 'Text'
     content: 'Content'
+  message:
+      error: 'An error occurred while saving'
+      success: 'Save successful'
 label:
   logout: 'Logout'
   id: 'ID'

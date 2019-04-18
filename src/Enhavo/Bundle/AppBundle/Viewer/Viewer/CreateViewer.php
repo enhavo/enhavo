@@ -158,11 +158,14 @@ class CreateViewer extends BaseViewer
     private function getFlashMessages()
     {
         $messages = [];
-        foreach($this->flashBag->get('success') as $message) {
-            $messages[] = [
-                'message' => $message['message'],
-                'type' => 'success'
-            ];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($this->flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => is_array($message) ? $message['message'] : $message,
+                    'type' => $type
+                ];
+            }
         }
         return $messages;
     }
