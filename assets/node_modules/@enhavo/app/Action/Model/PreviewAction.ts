@@ -18,7 +18,6 @@ export default class PreviewAction extends AbstractAction
     loadListener()
     {
         this.application.getEventDispatcher().on('loaded', (event: LoadedEvent) => {
-
             if(event.id == this.previewView) {
                 this.sendData();
             }
