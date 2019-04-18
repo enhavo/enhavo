@@ -15,12 +15,14 @@ import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as _ from 'lodash';
 import * as async from 'async';
+import DataStorage from "@enhavo/app/ViewStack/DataStorage";
 
 export default class ViewStack
 {
     private readonly views: ViewInterface[];
     private readonly dispatcher: EventDispatcher;
     private readonly registry: ViewRegistry;
+    private readonly dataStorage: DataStorage;
     private data: ViewStackData;
     private nextId: number = 1;
     private arrangeManager: ArrangeManager;
@@ -43,6 +45,7 @@ export default class ViewStack
         this.data = data;
 
         this.arrangeManager = new ArrangeManager(this.views, data, menuManager);
+        this.dataStorage = new DataStorage(this.dispatcher);
 
         this.addCloseListener();
         this.addRemoveListener();

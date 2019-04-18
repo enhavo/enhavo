@@ -7,6 +7,8 @@ import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
+import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
+import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 
 export default class PreviewAction extends AbstractAction
 {
@@ -21,6 +23,14 @@ export default class PreviewAction extends AbstractAction
                 this.sendData();
             }
         });
+
+        let key = this.getPreviewKey();
+        this.application.getEventDispatcher().dispatch(new LoadDataEvent(key))
+            .then((data: PreviewData) => {
+                if(data.id) {
+                    this.previewView = data.id;
+                }
+            });
     }
 
     execute(): void
@@ -59,9 +69,23 @@ export default class PreviewAction extends AbstractAction
             url: this.url
         }, this.getView().getId()))
         .then((view: ViewInterface) => {
-            this.previewView = view.id;
+            this.setPreviewView(view.id);
         })
         .catch(() => {});
+    }
+
+    private setPreviewView(id: number)
+    {
+        this.previewView = id;
+        let key = this.getPreviewKey();
+        this.application.getEventDispatcher().dispatch(new SaveDataEvent(key, {
+            id: id
+        }));
+    }
+
+    private getPreviewKey()
+    {
+        return 'preview-view-' + this.application.getView().getId();
     }
 
     private getView(): View
@@ -73,4 +97,8 @@ export default class PreviewAction extends AbstractAction
     {
         return $('form').serializeArray();
     }
+}
+
+interface PreviewData {
+    id: number;
 }
