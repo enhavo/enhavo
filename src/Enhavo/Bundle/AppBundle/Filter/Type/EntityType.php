@@ -55,15 +55,18 @@ class EntityType extends AbstractFilterType
             $entities = call_user_func([$repository, $method]);
         }
 
-
         $path = $this->getOption('path', $options);
         $choices = [];
         foreach ($entities as $entity) {
             if ($path) {
-                $choices[$this->getProperty($entity, 'id')] = $this->getProperty($entity, $path);
+                $label = $this->getProperty($entity, $path);
             } else {
-                $choices[$this->getProperty($entity, 'id')] = (string)$entity;
+                $label = (string)$entity;
             }
+            $choices[] = [
+                'label' => $label,
+                'value' => $this->getProperty($entity, 'id')
+            ];
         }
         return $choices;
     }

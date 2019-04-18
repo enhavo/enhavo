@@ -143,6 +143,11 @@ export default class Grid
         return this.configuration.editView;
     }
 
+    public applyFilter()
+    {
+        this.loadTable();
+    }
+
     public executeBatch()
     {
         // sendRequest(): void {
@@ -194,8 +199,11 @@ export default class Grid
             page: this.configuration.page,
             pagination: this.configuration.pagination
         });
+
         axios
-            .get(url, {params: []})
+            .post(url, {
+                filters: this.filterManager.getFilterParameters()
+            })
             // executed on success
             .then(response => {
                 this.configuration.rows = this.createRowData(response.data.resources);

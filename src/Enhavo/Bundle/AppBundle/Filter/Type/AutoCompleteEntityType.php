@@ -1,6 +1,6 @@
 <?php
 /**
- * TextFilter.php
+ * AutoCompleteEntityType.php
  *
  * @since 19/01/17
  * @author gseidel
@@ -18,27 +18,23 @@ class AutoCompleteEntityType extends AbstractFilterType
     {
         $data = [
             'type' => $this->getType(),
-            'auto_complete_data' => $this->getAutoCompleteData($options),
             'key' => $name,
             'value' => null,
             'component' => $options['component'],
-            'label' => $this->getLabel($options)
+            'label' => $this->getLabel($options),
+            'url' => $this->getUrl($options),
+            'multiple' => false,
+            'minimumInputLength' => $options['minimum_input_length'],
         ];
         
         return $data;
     }
 
-    private function getAutoCompleteData($options)
+    private function getUrl($options)
     {
         $router = $this->container->get('router');
-        $translator = $this->container->get('translator');
-        return [
-            'url' => $router->generate($options['route'], $options['route_parameters']),
-            'value' => null,
-            'multiple' => false,
-            'minimum_input_length' => $options['minimum_input_length'],
-            'placeholder' => sprintf('-- %s --', $translator->trans($options['label'], [], $options['translation_domain']))
-        ];
+        $url = $router->generate($options['route'], $options['route_parameters']);
+        return $url;
     }
 
     public function buildQuery(FilterQuery $query, $options, $value)

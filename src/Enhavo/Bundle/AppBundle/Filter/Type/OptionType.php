@@ -19,13 +19,25 @@ class OptionType extends AbstractFilterType
     {
         $data = [
             'type' => $this->getType(),
-            'choices' => $options['options'],
+            'choices' => $this->formatChoices($options),
             'key' => $name,
             'value' => null,
             'component' => $options['component'],
-            'label' => $this->getLabel($options),
+            'label' => $this->getLabel($options)
         ];
 
+        return $data;
+    }
+
+    private function formatChoices($options)
+    {
+        $data = [];
+        foreach($options['options'] as $value => $label) {
+            $data[] = [
+                'label' => $this->translator->trans($label, [], $options['translation_domain']),
+                'code' => $value,
+            ];
+        }
         return $data;
     }
 

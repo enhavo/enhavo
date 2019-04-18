@@ -69,13 +69,9 @@ class FilterQueryBuilder
 
     private function getRequestFilterValues(Request $request)
     {
-        $filterValues = $request->query->get('filters', null);
-        if($filterValues !== null) {
-            $filterValues = json_decode($filterValues, true);
-            if(!is_array($filterValues)) {
-                throw new FilterException('Filter was not a json array');
-            }
-            return $filterValues;
+        $data = json_decode($request->getContent(), true);
+        if(isset($data['filters'])) {
+            return $data['filters'];
         }
         return [];
     }

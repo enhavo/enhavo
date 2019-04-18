@@ -7,6 +7,7 @@ export default abstract class AbstractFilter implements FilterInterface
     component: string;
     value: string;
     key: string;
+    label: string;
 
     constructor(application: ApplicationInterface)
     {

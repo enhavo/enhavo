@@ -17,15 +17,15 @@ export default class FilterManager
         this.filters = filters;
     }
 
-    public apply()
+    public getFilterParameters()
     {
-        console.log('apply');
-    }
-
-    public change(filter: FilterInterface)
-    {
-        console.log('change');
-        console.log(filter.getKey());
-        console.log(filter.getValue());
+        let data = [];
+        for(let filter of this.filters) {
+            data.push({
+                name: filter.getKey(),
+                value: filter.getValue(),
+            });
+        }
+        return data;
     }
 }

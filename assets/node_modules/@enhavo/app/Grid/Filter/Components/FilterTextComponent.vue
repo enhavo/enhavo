@@ -1,14 +1,12 @@
 <template>
     <div class="view-table-filter-search">
-        <input type="text" v-model="data.value" v-bind:placeholder="data.placeholder" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
+        <input type="text" v-model="data.value" :placeholder="data.label" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+    import { Vue, Component, Prop } from "vue-property-decorator";
     import AbstractFilter from "@enhavo/app/Grid/Filter/Model/AbstractFilter";
-    import ApplicationBag from "@enhavo/app/ApplicationBag";
-    import IndexApplication from "@enhavo/app/Index/IndexApplication";
 
     @Component
     export default class FilterTextComponent extends Vue {
@@ -16,12 +14,6 @@
 
         @Prop()
         data: AbstractFilter;
-
-        @Watch('data.value', { immediate: false })
-        change() {
-            const application = <IndexApplication>ApplicationBag.getApplication();
-            application.getFilterManager().change(this.data);
-        }
 
         get hasValue(): boolean {
             if(this.data.value == "") {

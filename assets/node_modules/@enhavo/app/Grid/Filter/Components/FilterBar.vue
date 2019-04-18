@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="name">
         <template v-for="filter in filters">
-            <template v-bind:class="{ width: calcWidth(filter) }">
+            <template>
                 <component
                     class="view-table-filter"
                     v-bind:is="filter.component"
@@ -34,7 +34,7 @@
 
     apply() {
         const application = <IndexApplication>ApplicationBag.getApplication();
-        application.getFilterManager().apply();
+        application.getGrid().applyFilter();
     }
   }
 </script>

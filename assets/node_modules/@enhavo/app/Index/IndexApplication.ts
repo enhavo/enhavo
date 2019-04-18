@@ -72,7 +72,7 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     public getFilterManager(): FilterManager
     {
         if(this.filterManager == null) {
-            this.filterManager = new FilterManager(this.getDataLoader().load().filters, this.getFilterRegistry());
+            this.filterManager = new FilterManager(this.getDataLoader().load().grid.filters, this.getFilterRegistry());
         }
         return this.filterManager;
     }
