@@ -202,7 +202,8 @@ export default class Grid
 
         axios
             .post(url, {
-                filters: this.filterManager.getFilterParameters()
+                filters: this.filterManager.getFilterParameters(),
+                sorting: this.columnManager.getSortingParameters()
             })
             // executed on success
             .then(response => {

@@ -91,16 +91,19 @@ enhavo_article_article_table:
                         property: public
                         width: 2
                         type: boolean
+                        sortable: true
                     title:
                         type: text
                         label: article.label.title
                         property: title
                         width: 7
+                        sortable: true
                     publicationDate:
                         label: article.label.publicationDate
                         property: publicationDate
                         type: date
                         width: 3
+                        sortable: true
 
 enhavo_article_article_delete:
     options:

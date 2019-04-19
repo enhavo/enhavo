@@ -74,4 +74,17 @@ class RequestConfiguration extends SyliusRequestConfiguration
     {
         return $this->getParameters()->has('filters');
     }
+
+    public function getSorting(array $sorting = [])
+    {
+        $data = json_decode($this->getRequest()->getContent(), true);
+        if($data['sorting']) {
+            foreach($data['sorting'] as $sort) {
+                $sorting[$sort['property']] = $sort['direction'];
+            }
+            return $sorting;
+        }
+
+        return parent::getSorting($sorting);
+    }
 }

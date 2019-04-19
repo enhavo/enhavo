@@ -5,4 +5,5 @@ export default interface ColumnInterface extends ComponentAwareInterface
     sortable: boolean;
     directionDesc: boolean;
     key: string;
+    property?: string;
 }

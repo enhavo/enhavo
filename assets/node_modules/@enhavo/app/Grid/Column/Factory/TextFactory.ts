@@ -1,14 +1,14 @@
 import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
 import TextColumn from "@enhavo/app/Grid/Column/Model/TextColumn";
+import * as _ from "lodash";
 
 export default class TextFactory extends AbstractFactory
 {
     createFromData(data: object): TextColumn
     {
         let column = this.createNew();
-        let object = <TextColumn>data;
-        column.component = object.component;
-        return column;
+        _.extend(data, column);
+        return <TextColumn>data;
     }
 
     createNew(): TextColumn {

@@ -27,7 +27,7 @@ class DateType extends AbstractColumnType
         $data = parent::createColumnViewData($options);
 
         $data = array_merge($data, [
-
+            'property' => $options['property']
         ]);
 
         return $data;

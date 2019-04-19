@@ -16,4 +16,18 @@ export default class ColumnManager
         }
         this.columns = columns;
     }
+
+    getSortingParameters()
+    {
+        let parameters = [];
+        for(let column of this.columns) {
+            if(column.directionDesc != null) {
+                parameters.push({
+                   property: column.property,
+                   direction:  column.directionDesc ? 'desc' : 'asc'
+                });
+            }
+        }
+        return parameters;
+    }
 }
