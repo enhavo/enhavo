@@ -122,6 +122,7 @@ class IndexViewer extends AppViewer
         ];
         
         $parameters->set('data', [
+            'messages' => [],
             'grid' => $grid,
             'actions' => $this->actionManager->createActionsViewData($actions),
             'view' => [

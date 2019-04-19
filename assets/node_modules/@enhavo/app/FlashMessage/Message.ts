@@ -10,4 +10,13 @@ export default class Message
     public message: string;
     public type: string;
     public ttl: number = 5;
+
+    constructor(type: string = null, message: string = null) {
+        if(type) {
+            this.type = type;
+        }
+        if(message) {
+            this.message = message;
+        }
+    }
 }

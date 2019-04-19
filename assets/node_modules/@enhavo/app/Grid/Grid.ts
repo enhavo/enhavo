@@ -15,6 +15,10 @@ import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
+import Confirm from "@enhavo/app/View/Confirm";
+import Batch from "@enhavo/app/Grid/Batch/Batch";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import Message from "@enhavo/app/FlashMessage/Message";
 
 export default class Grid
 {
@@ -26,6 +30,7 @@ export default class Grid
     private view: View;
     private translator: Translator;
     private source: CancelTokenSource;
+    private flashMessenger: FlashMessenger;
 
     constructor(
         filterManager: FilterManager,
@@ -35,7 +40,8 @@ export default class Grid
         eventDispatcher: EventDispatcher,
         configuration: GridConfiguration,
         view: View,
-        translator: Translator
+        translator: Translator,
+        flashMessenger: FlashMessenger
     ) {
         this.filterManager = filterManager;
         this.columnManager = columnManager;
@@ -43,6 +49,7 @@ export default class Grid
         this.eventDispatcher = eventDispatcher;
         this.view = view;
         this.translator = translator;
+        this.flashMessenger = flashMessenger;
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
@@ -150,28 +157,69 @@ export default class Grid
         this.loadTable();
     }
 
+    private getCurrentBatch(): Batch
+    {
+        for(let batch of this.configuration.batches) {
+            if(batch.key == this.configuration.batch) {
+                return batch;
+            }
+        }
+        return null;
+    }
+
     public executeBatch()
     {
-        // sendRequest(): void {
-        //     if(this.hasSelection) {
-        //         let currentBatch = this.actions.find(
-        //             action => action['key'] === this.value
-        //         );
-        //         let batchUri = currentBatch['uri'];
-        //
-        //         axios.post(batchUri, this.selected)
-        //         // executed on success
-        //         .then(response => {
-        //         })
-        //         // executed on error
-        //         .catch(error => {
-        //         })
-        //         // always executed
-        //         .then(() => {
-        //             this.clearSelection();
-        //         })
-        //     }
-        // }
+        let batch = this.getCurrentBatch();
+
+        if(batch == null) {
+            this.view.alert(this.translator.trans('enhavo_app.batch.message.no_batch_select'));
+            return;
+        }
+
+        if(this.getSelectedIds().length == 0) {
+            this.view.alert(this.translator.trans('enhavo_app.batch.message.no_row_select'));
+            return;
+        }
+
+        let uri = this.router.generate(this.configuration.batchRoute, {
+            type: batch.key,
+            ids: this.getSelectedIds()
+        });
+
+        this.view.confirm(new Confirm(
+            batch.confirmMessage,
+            () => {
+                this.view.loading();
+                axios.post(uri)
+                .then((response) => {
+                    this.view.loaded();
+                    this.configuration.page = 1;
+                    this.loadTable();
+                    this.flashMessenger.addMessage(new Message(
+                        'success',
+                        this.translator.trans('enhavo_app.batch.message.success')
+                    ))
+                })
+                .catch((error) => {
+                    this.view.loaded();
+                    this.flashMessenger.addMessage(new Message(
+                        'error',
+                        this.translator.trans('enhavo_app.batch.message.error')
+                    ))
+                })
+            }
+        ))
+    }
+
+    private getSelectedIds()
+    {
+        let ids = [];
+        for(let row of this.configuration.rows) {
+            if(row.selected) {
+                ids.push(row.id)
+            }
+        }
+        return ids;
     }
 
     public changeSortDirection(column: ColumnInterface)

@@ -16,7 +16,3 @@
         message: Message;
     }
 </script>
-
-<style lang="scss">
-
-</style>

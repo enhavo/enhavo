@@ -4,5 +4,11 @@ enhavo_app:
     edit: 'Bearbeiten'
     preview: 'Vorschau'
     batch:
-        placeholder: 'Batch wählen'
-        execute: 'Ausführen'
+        label:
+            placeholder: 'Batch wählen'
+            execute: 'Ausführen'
+        message:
+            success: 'Batch erfolgreich ausgeführt'
+            error: 'Ein Fehler beim ausführen ist aufgetreten'
+            no_batch_select: 'Keine Aktion ausgewählt'
+            no_row_select: 'Keine Einträge ausgewählt'

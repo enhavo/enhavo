@@ -21,7 +21,3 @@
         messages: Message[];
     }
 </script>
-
-<style lang="scss">
-
-</style>

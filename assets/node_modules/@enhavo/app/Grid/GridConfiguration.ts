@@ -10,7 +10,6 @@ export default class GridConfiguration
     public updateRoute: string;
     public rows: Array<RowData>;
     public columns: Array<ColumnInterface>;
-    public batchPlaceholder: string;
     public batches: Array<Batch>;
     public batch: string = '';
     public loading: boolean = true;

@@ -1,11 +1,6 @@
 <template>
     <div v-bind:class="name">
-        <select v-bind:value="value" @change="change">
-            <option value="" selected>{{ translator.trans('batch.placeholder') }}</option>
-            <option v-for="batch in batches" v-bind:value="batch.key" v-bind:key="batch.key">
-                {{ batch.label }}
-            </option>
-        </select>
+        <v-select :placeholder="placeholder" @input="change" :options="options"></v-select>
         <button v-on:click="execute" v-bind:disabled="!value" class="apply-button"><i class="icon icon-play_arrow"></i></button>
     </div>
 </template>
@@ -26,29 +21,31 @@
         @Prop()
         value: string;
 
-        get translator() {
-            return application.getTranslator();
+        get options() {
+            let options = [];
+            for(let batch of this.batches) {
+                options.push({
+                    label: batch.label,
+                    code: batch.key
+                })
+            }
+            return options;
+        }
+
+        get placeholder() {
+            return application.getTranslator().trans('enhavo_app.batch.label.placeholder')
         }
 
         execute() {
             application.getGrid().executeBatch();
         }
 
-        change(event) {
-            application.getGrid().changeBatch(event.target.value);
+        change(value) {
+            let key = null;
+            if(value != null) {
+                key = value.code
+            }
+            application.getGrid().changeBatch(key);
         }
   }
 </script>
-
-<style lang="scss" scoped>
-    .view-table-batches {
-        display: flex;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        background-color: salmon;
-
-        & > * {
-            margin-right: 10px;
-        }
-    }
-</style>

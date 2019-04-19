@@ -2,15 +2,7 @@
     <div class="view-table-pagination">
         <div class="pagination-select">
             <div class="label">Ergebnisse pro Seite:</div>
-            <select v-model="paginationValue">
-                <option 
-                    v-for="(step, index) in paginationSteps"
-                    v-bind:key="index" 
-                    v-bind:value="step"
-                    >
-                        {{ step }}
-                </option>
-            </select>
+            <v-select @input="changePagination" :value="pagination" :options="options" :clearable="false"></v-select>
         </div>
 
         <div class="pagination-nav">
@@ -67,6 +59,21 @@
         pagination: number;
 
         itemsAround: number = 2;
+
+        changePagination(value) {
+            application.getGrid().changePagination(value.code);
+        }
+
+        get options() {
+            let steps = [];
+            for(let step of this.paginationSteps) {
+                steps.push({
+                    label: step,
+                    code: step
+                })
+            }
+            return steps;
+        }
 
         get currentPage(): number {
             return this.page;
@@ -169,19 +176,10 @@
             }
         }
 
-        get paginationValue() {
-            return this.pagination;
-        }
 
-        set paginationValue(number: number) {
-            application.getGrid().changePagination(number);
-        }
 
         clickPage(page: number): void {
             application.getGrid().changePage(page);
-        }
-
-        mounted() {
         }
     }
 </script>
