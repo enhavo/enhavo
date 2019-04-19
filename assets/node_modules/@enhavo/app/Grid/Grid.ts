@@ -207,7 +207,10 @@ export default class Grid
                         this.translator.trans('enhavo_app.batch.message.error')
                     ))
                 })
-            }
+            },
+            () => {},
+            this.translator.trans('enhavo_app.view.label.cancel'),
+            this.translator.trans('enhavo_app.view.label.ok'),
         ))
     }
 

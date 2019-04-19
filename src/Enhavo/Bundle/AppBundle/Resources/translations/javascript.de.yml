@@ -12,3 +12,9 @@ enhavo_app:
             error: 'Ein Fehler beim ausführen ist aufgetreten'
             no_batch_select: 'Keine Aktion ausgewählt'
             no_row_select: 'Keine Einträge ausgewählt'
+    view:
+        message:
+            not_saved: 'Schließen ohne zu speichern?'
+        label:
+            ok: 'Ok'
+            cancel: 'Abbruch'

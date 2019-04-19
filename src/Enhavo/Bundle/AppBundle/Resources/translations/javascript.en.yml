@@ -12,3 +12,9 @@ enhavo_app:
             error: 'Error occures while executing batch'
             no_batch_select: 'No batch action selected'
             no_row_select: 'No rows selected'
+    view:
+        message:
+            not_saved: 'Close without saving?'
+        label:
+            ok: 'Ok'
+            cancel: 'Cancel'

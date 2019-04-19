@@ -19,7 +19,7 @@ export class FormApplication extends AbstractApplication implements ActionAwareA
     public getApp(): AppInterface
     {
         if(this.app == null) {
-            this.app = new FormApp(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager());
+            this.app = new FormApp(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager(), this.getTranslator());
         }
         return this.app;
     }
