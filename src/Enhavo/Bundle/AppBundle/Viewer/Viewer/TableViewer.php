@@ -140,15 +140,9 @@ class TableViewer extends AbstractViewer
 
         $resources = $options['resources'];
         if($resources instanceof Pagerfanta) {
-            /** @var Request $request */
-            $request = $options['request'];
-            $page = $request->get('page', 1);
-            $pagination = $request->get('pagination', $requestConfiguration->getPaginationMaxPerPage());
-            $resources->setMaxPerPage($pagination);
-            $resources->setCurrentPage($page);
             $parameters->set('pages', [
                 'count' => $resources->count(),
-                'page' => $page
+                'page' => $resources->getCurrentPage()
             ]);
         }
         $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));

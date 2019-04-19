@@ -78,7 +78,7 @@ class RequestConfiguration extends SyliusRequestConfiguration
     public function getSorting(array $sorting = [])
     {
         $data = json_decode($this->getRequest()->getContent(), true);
-        if($data['sorting']) {
+        if(is_array($data) && isset($data['sorting'])) {
             foreach($data['sorting'] as $sort) {
                 $sorting[$sort['property']] = $sort['direction'];
             }

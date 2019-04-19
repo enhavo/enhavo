@@ -4,7 +4,7 @@ import RowData from "@enhavo/app/Grid/Column/RowData";
 import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
 import Router from "@enhavo/core/Router";
 import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
-import axios from 'axios';
+import axios, {CancelTokenSource} from 'axios';
 import * as _ from "lodash";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
@@ -25,6 +25,7 @@ export default class Grid
     private configuration: GridConfiguration;
     private view: View;
     private translator: Translator;
+    private source: CancelTokenSource;
 
     constructor(
         filterManager: FilterManager,
@@ -145,6 +146,7 @@ export default class Grid
 
     public applyFilter()
     {
+        this.configuration.page = 1;
         this.loadTable();
     }
 
@@ -197,16 +199,24 @@ export default class Grid
         this.configuration.loading = true;
         let url = this.router.generate(this.configuration.tableRoute, {
             page: this.configuration.page,
-            pagination: this.configuration.pagination
+            limit: this.configuration.pagination
         });
 
+
+        if(this.source != null) {
+            this.source.cancel();
+        }
+        this.source = axios.CancelToken.source();
         axios
             .post(url, {
                 filters: this.filterManager.getFilterParameters(),
                 sorting: this.columnManager.getSortingParameters()
+            }, {
+                cancelToken: this.source.token
             })
             // executed on success
             .then(response => {
+                this.source = null;
                 this.configuration.rows = this.createRowData(response.data.resources);
                 this.configuration.count = parseInt(response.data.pages.count);
                 this.configuration.page = parseInt(response.data.pages.page);
@@ -215,10 +225,6 @@ export default class Grid
             // executed on error
             .catch(error => {
 
-            })
-            // always executed
-            .then(() => {
-                this.configuration.loading = false;
             })
     }
 
