@@ -28,7 +28,7 @@ export default class CreateAction extends AbstractAction
     private openView()
     {
         this.application.getEventDispatcher().dispatch(new CreateEvent({
-            label: 'edit',
+            label: this.label,
             component: 'iframe-view',
             url: this.url
         }, this.getView().getId())).then((view: ViewInterface) => {

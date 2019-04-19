@@ -77,8 +77,8 @@ class BooleanType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                $this->translator->trans('label.yes', [], 'EnhavoFormBundle') => self::VALUE_TRUE,
-                $this->translator->trans('label.no', [], 'EnhavoFormBundle') => self::VALUE_FALSE
+                $this->translator->trans('label.yes', [], 'EnhavoAppBundle') => self::VALUE_TRUE,
+                $this->translator->trans('label.no', [], 'EnhavoAppBundle') => self::VALUE_FALSE
             ),
             'choice_translation_domain' => 'EnhavoAppBundle',
             'translation_domain' => 'EnhavoAppBundle',
