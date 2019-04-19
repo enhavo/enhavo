@@ -34,7 +34,7 @@ class PropertyType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => 'column-property',
+            'component' => 'column-text',
         ]);
         $resolver->setRequired(['property']);
     }

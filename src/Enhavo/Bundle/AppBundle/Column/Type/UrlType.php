@@ -28,8 +28,12 @@ class UrlType extends AbstractColumnType
         $data = parent::createColumnViewData($options);
 
         $data = array_merge($data, [
-            'icon' => $options['icon'],
-            'target' => $options['target']
+            'action' => [
+                'component' => 'open-action',
+                'target' => $options['target'],
+                'icon' => $options['icon'],
+            ],
+            'mapping' => 'url'
         ]);
 
         return $data;
@@ -39,12 +43,11 @@ class UrlType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => 'column-url',
+            'component' => 'column-action',
             'icon' => 'link',
             'target' => '_blank',
             'resolver_type' => 'default'
         ]);
-        $resolver->setRequired(['property']);
     }
 
     public function getType()

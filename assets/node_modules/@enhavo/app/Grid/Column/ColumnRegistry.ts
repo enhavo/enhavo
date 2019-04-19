@@ -1,8 +1,10 @@
 import { Registry } from "@enhavo/core";
 import ColumnFactoryInterface from "@enhavo/app/Grid/Column/ColumnFactoryInterface";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import BooleanFactory from "@enhavo/app/Grid/Column/Factory/BooleanFactory";
 import TextFactory from "@enhavo/app/Grid/Column/Factory/TextFactory";
-import ColumnTextComponent from "@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue";
+import ActionFactory from "@enhavo/app/Grid/Column/Factory/ActionFactory";
+import SubFactory from "@enhavo/app/Grid/Column/Factory/SubFactory";
 
 export default class ColumnRegistry extends Registry
 {
@@ -16,16 +18,9 @@ export default class ColumnRegistry extends Registry
 
     load(application: ApplicationInterface)
     {
-        // this.register('column-boolean', FilterAutoCompleteComponent, new AutoCompleteEntityFactory(application));
-        // this.register('column-date', FilterCheckboxComponent, new BooleanFactory(application));
-        // this.register('column-date-time', FilterDropdownComponent, new EntityFactory(application));
-        // this.register('column-label', FilterDropdownComponent, new OptionFactory(application));
-        // this.register('column-list', FilterTextComponent, new TextFactory(application));
-        // this.register('column-multiple-property', FilterTextComponent, new TextFactory(application));
-        // this.register('column-position', FilterTextComponent, new TextFactory(application));
-        // this.register('column-property', FilterTextComponent, new TextFactory(application));
-        // this.register('column-template', FilterTextComponent, new TextFactory(application));
-        this.register('column-text', ColumnTextComponent, new TextFactory(application));
-        // this.register('column-url', FilterTextComponent, new TextFactory(application));
+        this.register('column-boolean', () => import("@enhavo/app/Grid/Column/Components/ColumnBooleanComponent.vue"), new BooleanFactory(application));
+        this.register('column-text', () => import("@enhavo/app/Grid/Column/Components/ColumnTextComponent.vue"), new TextFactory(application));
+        this.register('column-action', () => import("@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue"), new ActionFactory(application));
+        this.register('column-sub', () => import("@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue"), new SubFactory(application));
     }
 }

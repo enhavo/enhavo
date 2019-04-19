@@ -1,6 +1,7 @@
 services:
     enhavo_routing.router:
         class: Enhavo\Bundle\RoutingBundle\Router\Router
+        public: true
         arguments:
             - '@enhavo_routing.router.strategy_collector'
             - '@enhavo_routing.metadata.repository'

@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-pagination">
         <div class="pagination-select">
-            <div class="label">Ergebnisse pro Seite:</div>
+            <div class="label">{{ entryPerPage }}:</div>
             <v-select @input="changePagination" :value="pagination" :options="options" :clearable="false"></v-select>
         </div>
 
@@ -62,6 +62,11 @@
 
         changePagination(value) {
             application.getGrid().changePagination(value.code);
+        }
+
+        get entryPerPage()
+        {
+            return application.getTranslator().trans('enhavo_app.grid.label.entry_per_page')
         }
 
         get options() {

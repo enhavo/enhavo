@@ -33,7 +33,7 @@ class TemplateType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => 'column-template',
+            'component' => 'column-text',
         ]);
         $resolver->setRequired(['property']);
     }

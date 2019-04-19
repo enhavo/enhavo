@@ -14,6 +14,7 @@ Encore
   .enableVueLoader()
   .enableSassLoader()
   .enableTypeScriptLoader()
+  .enableBuildNotifications()
 
   .addEntry('enhavo/main', './assets/main')
   .addEntry('enhavo/index', './assets/index')

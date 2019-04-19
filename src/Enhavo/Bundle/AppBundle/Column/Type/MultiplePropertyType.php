@@ -37,7 +37,7 @@ class MultiplePropertyType extends AbstractColumnType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'component' => 'column-multiple-property',
+            'component' => 'column-text',
             'separator' => ','
         ]);
         $resolver->setRequired(['properties']);

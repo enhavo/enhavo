@@ -1,17 +1,17 @@
 import AbstractFactory from "@enhavo/app/Grid/Column/Factory/AbstractFactory";
-import UrlColumn from "@enhavo/app/Grid/Column/Model/UrlColumn";
+import SubColumn from "@enhavo/app/Grid/Column/Model/SubColumn";
 
 export default class UrlFactory extends AbstractFactory
 {
-    createFromData(data: object): UrlColumn
+    createFromData(data: object): SubColumn
     {
         let column = this.createNew();
-        let object = <UrlColumn>data;
+        let object = <SubColumn>data;
         column.component = object.component;
         return column;
     }
 
-    createNew(): UrlColumn {
-        return new UrlColumn();
+    createNew(): SubColumn {
+        return new SubColumn();
     }
 }
