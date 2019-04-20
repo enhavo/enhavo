@@ -40,6 +40,8 @@ services:
               
     Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        arguments:
+            - '@security.csrf.token_manager'
         public: true
         tags:
             - { name: enhavo.action, alias: delete }

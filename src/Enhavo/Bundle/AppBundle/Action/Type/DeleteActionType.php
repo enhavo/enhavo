@@ -10,9 +10,23 @@ namespace Enhavo\Bundle\AppBundle\Action\Type;
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterface
 {
+    /**
+     * @var CsrfTokenManager
+     */
+    private $tokenManager;
+
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, CsrfTokenManager $tokenManager)
+    {
+        parent::__construct($translator, $router);
+        $this->tokenManager = $tokenManager;
+    }
+
     public function createViewData(array $options, $resource = null)
     {
         $data = parent::createViewData($options, $resource);
@@ -22,6 +36,7 @@ class DeleteActionType extends AbstractUrlActionType implements ActionTypeInterf
             'confirm_message' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
             'confirm_label_ok' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
             'confirm_label_cancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
+            'token' => $this->tokenManager->getToken($resource->getId())->getValue()
         ]);
 
         return $data;

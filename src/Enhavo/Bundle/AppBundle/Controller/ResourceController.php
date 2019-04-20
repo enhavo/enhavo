@@ -14,6 +14,7 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface
 use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -312,6 +313,21 @@ class ResourceController extends BaseController
         ]);
 
         return $this->viewHandler->handle($configuration, $view);
+    }
+
+    public function deleteAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $response = parent::deleteAction($request);
+        if($response instanceof RedirectResponse) {
+            $view = $this->viewFactory->create('delete', [
+                'metadata' => $this->metadata,
+                'request_configuration' => $configuration,
+                'request' => $request
+            ]);
+            return $this->viewHandler->handle($configuration, $view);
+        }
+        return $response;
     }
 
     /**

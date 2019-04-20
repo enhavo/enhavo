@@ -25,6 +25,7 @@ Encore
   .addEntry('enhavo/media-library', './assets/media-library')
   .addEntry('enhavo/dashboard', './assets/dashboard')
   .addEntry('enhavo/preview', './assets/preview')
+  .addEntry('enhavo/delete', './assets/delete')
 
   .addPlugin(new CopyWebpackPlugin([
     { from: 'node_modules/tinymce/skins', to: 'enhavo/skins' },

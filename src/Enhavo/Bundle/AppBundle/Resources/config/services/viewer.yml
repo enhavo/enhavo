@@ -70,6 +70,17 @@ services:
         tags:
             - { name: enhavo.viewer, alias: base }
 
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\DeleteViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@session.flash_bag'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: delete }
+
     Enhavo\Bundle\AppBundle\Viewer\Viewer\TableViewer:
         public: true
         arguments:

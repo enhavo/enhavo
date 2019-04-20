@@ -21,3 +21,11 @@ enhavo_app:
     grid:
         label:
             entry_per_page: 'Entries per page'
+    delete:
+        message:
+            question: 'Do you really want to delete this resource?'
+            success: 'Resource successfully deleted'
+        label:
+            delete: 'Delete'
+            cancel: 'Cancel'
+            close: 'Close'
