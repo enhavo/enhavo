@@ -4,16 +4,17 @@ import AppInterface from "@enhavo/app/AppInterface";
 import AbstractViewApp from "@enhavo/app/AbstractViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
+import MediaLibrary from "@enhavo/media/MediaLibrary/MediaLibrary";
 
 export default class MediaLibraryApp extends AbstractViewApp implements AppInterface
 {
     private actionManager: ActionManager;
-    protected data: FormatData;
+    private mediaLibrary: MediaLibrary;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager)
+    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, mediaLibrary: MediaLibrary)
     {
         super(loader, eventDispatcher, view);
-        //loader.load().format = _.extend(loader.load().format, new FormatData);
         this.actionManager = actionManager;
+        this.mediaLibrary = mediaLibrary;
     }
 }

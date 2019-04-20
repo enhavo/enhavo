@@ -1,5 +1,6 @@
 
 export default class MediaItem
 {
-    name: string;
+    id: number;
+    data: object
 }

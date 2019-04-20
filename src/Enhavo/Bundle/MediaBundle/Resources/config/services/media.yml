@@ -104,12 +104,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget:
+    Enhavo\Bundle\MediaBundle\Column\MediaColumn:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.column, alias: picture }
+            - { name: enhavo.column, alias: media }
 
     enhavo_media.factory.file:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
@@ -173,6 +173,7 @@ services:
 
     enhavo_media.media.url_resolver:
         class: Enhavo\Bundle\MediaBundle\Media\UrlResolver
+        public: true
         arguments:
             - '@enhavo_media.media.media_manager'
             - '@router'

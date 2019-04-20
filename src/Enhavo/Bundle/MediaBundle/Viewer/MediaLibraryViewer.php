@@ -49,7 +49,11 @@ class MediaLibraryViewer extends AbstractActionViewer
     {
         $view = parent::createView($options);
         $templateVars = $view->getTemplateData();
-        $templateVars['data']['items'] = [];
+        $templateVars['data']['media'] = [
+            'items' => [],
+            'page' => 1,
+            'loadding' => false
+        ];
         $view->setTemplateData($templateVars);
         return $view;
     }
@@ -57,8 +61,11 @@ class MediaLibraryViewer extends AbstractActionViewer
     protected function createActions($options)
     {
         $default = [
-            'save' => [
-                'type' => 'save'
+            'upload' => [
+                'type' => 'event',
+                'event' => 'upload',
+                'icon' => 'cloud_upload',
+                'label' => $this->container->get('translator')->trans('library.label.upload', [], 'EnhavoMediaBundle')
             ],
         ];
 
@@ -75,6 +82,8 @@ class MediaLibraryViewer extends AbstractActionViewer
             'stylesheets' => [
                 'enhavo/media-library'
             ],
+            'translations' => true,
+            'routes' => true,
         ]);
     }
 }

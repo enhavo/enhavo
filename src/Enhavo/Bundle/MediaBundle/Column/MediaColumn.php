@@ -6,7 +6,7 @@
  * Time: 09:15
  */
 
-namespace Enhavo\Bundle\MediaBundle\Table\Widget;
+namespace Enhavo\Bundle\MediaBundle\Column;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
@@ -14,7 +14,7 @@ use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureWidget extends AbstractColumnType
+class MediaColumn extends AbstractColumnType
 {
     public function createResourceViewData(array $options, $item)
     {
@@ -59,13 +59,14 @@ class PictureWidget extends AbstractColumnType
     {
         $resolver->setDefaults([
             'height' => 60,
-            'format' => 'enhavoTableThumb'
+            'format' => 'enhavoTableThumb',
+            'label' => ''
         ]);
         $resolver->setRequired(['property']);
     }
 
     public function getType()
     {
-        return 'picture';
+        return 'media';
     }
 }

@@ -34,8 +34,17 @@ enhavo_media_library_list:
             viewer:
                 columns:
                     name:
-                        property: name
+                        type: property
+                        property: filename
                         label: name
+                    extension:
+                        type: property
+                        property: extension
+                        label: extension
+                    media:
+                        type: media
+                        property: _self
+                        label: url
 
 enhavo_media_library_update:
     options:

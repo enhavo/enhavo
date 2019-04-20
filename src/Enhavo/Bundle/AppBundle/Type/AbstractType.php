@@ -28,6 +28,10 @@ abstract class AbstractType implements ContainerAwareInterface, TypeInterface
      */
     protected function getProperty($resource, $property)
     {
+        if($property == '_self') {
+            return $resource;
+        }
+
         $propertyPath = explode('.', $property);
 
         if(count($propertyPath) > 1) {

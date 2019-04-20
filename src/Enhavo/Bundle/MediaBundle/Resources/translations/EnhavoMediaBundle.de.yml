@@ -1,4 +1,6 @@
 library:
+  label:
+    upload: 'Upload'
   role:
     label:
       index: 'Mediathek anzeigen'

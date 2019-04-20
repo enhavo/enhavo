@@ -3,7 +3,7 @@
         <view-view v-bind:data="view"></view-view>
         <flash-messages v-bind:messages="messages"></flash-messages>
         <action-bar v-bind:data="actions"></action-bar>
-        <media-library></media-library>
+        <media-library :data="media"></media-library>
     </div>
 </template>
 
@@ -29,6 +29,9 @@ export default class ApplicationComponent extends Vue
 
     @Prop()
     messages: Array<object>;
+
+    @Prop()
+    media: object;
 }
 </script>
 
