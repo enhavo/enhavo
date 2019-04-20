@@ -5,6 +5,12 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import axios from 'axios';
 import * as _ from "lodash";
 import View from "@enhavo/app/View/View";
+import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
+import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import Translator from "@enhavo/core/Translator";
+import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
+import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 
 export default class MediaLibrary
 {
@@ -12,16 +18,30 @@ export default class MediaLibrary
     private router: Router;
     private eventDispatcher: EventDispatcher;
     private view: View;
+    private translator: Translator;
 
-    constructor(data: MediaData, router: Router, eventDispatcher: EventDispatcher, view: View)
+    constructor(data: MediaData, router: Router, eventDispatcher: EventDispatcher, view: View, translator: Translator)
     {
         _.extend(data, new MediaData());
         this.data = data;
         this.eventDispatcher = eventDispatcher;
         this.view = view;
         this.router = router;
+        this.translator = translator;
 
         this.refresh();
+
+        this.eventDispatcher.on('removed', (event: RemovedEvent) => {
+            if(event.id == this.data.editView) {
+                this.data.editView = null;
+            }
+        });
+
+        this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
+            if(event.id == this.data.editView) {
+                this.refresh();
+            }
+        });
     }
 
     setProgress(value: number)
@@ -83,7 +103,33 @@ export default class MediaLibrary
         }
     }
 
-    open(item: MediaItem) {
-        console.log(item)
+    public open(item: MediaItem)
+    {
+        if(this.data.editView != null) {
+            this.eventDispatcher.dispatch(new CloseEvent(this.data.editView))
+                .then(() => {
+                    this.openView(item);
+                })
+                .catch(() => {})
+            ;
+        } else {
+            this.openView(item);
+        }
     }
+
+    protected openView(item: MediaItem)
+    {
+        let url = this.router.generate(this.data.updateRoute, {
+            id: item.id
+        });
+
+        this.eventDispatcher.dispatch(new CreateEvent({
+            label: this.translator.trans('enhavo_app.edit'),
+            component: 'iframe-view',
+            url: url
+        }, this.view.getId())).then((view: ViewInterface) => {
+            this.data.editView = view.id;
+        }).catch(() => {});
+    }
+
 }

@@ -52,7 +52,8 @@ class MediaLibraryViewer extends AbstractActionViewer
         $templateVars['data']['media'] = [
             'items' => [],
             'page' => 1,
-            'loadding' => false
+            'loading' => false,
+            'updateRoute' => 'enhavo_media_library_update'
         ];
         $view->setTemplateData($templateVars);
         return $view;

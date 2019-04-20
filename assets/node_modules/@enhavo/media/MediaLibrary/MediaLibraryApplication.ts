@@ -40,7 +40,7 @@ export class MediaLibraryApplication extends AbstractApplication implements Acti
     public getMediaLibrary(): MediaLibrary
     {
         if(this.mediaLibrary == null) {
-            this.mediaLibrary = new MediaLibrary(this.getDataLoader().load().media, this.getRouter(), this.getEventDispatcher(), this.getView());
+            this.mediaLibrary = new MediaLibrary(this.getDataLoader().load().media, this.getRouter(), this.getEventDispatcher(), this.getView(), this.getTranslator());
         }
         return this.mediaLibrary;
     }

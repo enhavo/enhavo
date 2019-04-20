@@ -8,4 +8,6 @@ export default class MediaData
     loading: boolean = false;
     page: number = 1;
     count: number;
+    editView: number = null;
+    updateRoute: string;
 }

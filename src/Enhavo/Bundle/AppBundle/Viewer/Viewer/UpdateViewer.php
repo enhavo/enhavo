@@ -42,21 +42,8 @@ class UpdateViewer extends CreateViewer
             $this->getViewerOption('form.action_parameters', $requestConfiguration)
         ]));
 
-        $parameters->set('form_delete', $this->mergeConfig([
-            sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            $options['form_delete'],
-            $this->getViewerOption('form.delete', $requestConfiguration)
-        ]));
-
-        $parameters->set('form_delete_parameters', $this->mergeConfigArray([
-            [ 'id' => $resource->getId() ],
-            $options['form_delete_parameters'],
-            $this->getViewerOption('form.delete_parameters', $requestConfiguration)
-        ]));
-
-
         $actions = $this->mergeConfigArray([
-            $this->createActions($options),
+            $this->createActions($options, $requestConfiguration, $resource),
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
         ]);
@@ -66,10 +53,22 @@ class UpdateViewer extends CreateViewer
         $parameters->set('data', $data);
     }
 
-    private function createActions($options)
+    private function createActions($options, $requestConfiguration, $resource)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
+
+        $formDelete = $this->mergeConfig([
+            sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            $options['form_delete'],
+            $this->getViewerOption('form.delete', $requestConfiguration)
+        ]);
+
+        $formDeleteParameters = $this->mergeConfigArray([
+            [ 'id' => $resource->getId() ],
+            $options['form_delete_parameters'],
+            $this->getViewerOption('form.delete_parameters', $requestConfiguration)
+        ]);
 
         $default = [
             'save' => [
@@ -78,7 +77,8 @@ class UpdateViewer extends CreateViewer
             ],
             'delete' => [
                 'type' => 'delete',
-                'route' => sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+                'route' => $formDelete,
+                'route_parameters' => $formDeleteParameters
             ],
             'close' => [
                 'type' => 'close'
