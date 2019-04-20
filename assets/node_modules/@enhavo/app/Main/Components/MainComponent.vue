@@ -2,7 +2,7 @@
     <div class="app">
         <view-view v-bind:data="view"></view-view>
         <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menu.open}">
-            <div class="branding-container"></div>
+            <div class="branding-container" v-bind:style="brandingImageStyles"></div>
             <app-menu v-bind:menu="menu" v-bind:class="{ 'menu-collapsed':!menu.open}"></app-menu>
         </div>
         <div class="toolbar-viewstack-container">
@@ -21,8 +21,8 @@ import ViewStackData from "@enhavo/app/ViewStack/ViewStackData"
 import '@enhavo/app/assets/styles/app.scss'
 import MenuData from "@enhavo/app/Menu/MenuData";
 import ViewData from "@enhavo/app/View/ViewData";
-import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
-
+import ViewComponent from "@enhavo/app/View/Components/ViewComponent.vue";
+import Branding from "@enhavo/app/Main/Branding";
 
 @Component({
     components: {
@@ -36,6 +36,9 @@ export default class App extends Vue {
     name = 'app';
 
     @Prop()
+    branding: Branding;
+
+    @Prop()
     menu: MenuData;
 
     @Prop()
@@ -47,6 +50,15 @@ export default class App extends Vue {
     toogleMenu()
     {
         this.menu.open = !this.menu.open;
+    }
+
+    get brandingImageStyles() {
+        if(this.branding.logo) {
+            return {
+                backgroundImage: 'url(' + this.branding.logo + ')',
+            }
+        }
+        return {};
     }
 }
 </script>

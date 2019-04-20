@@ -11,6 +11,7 @@ services:
         arguments:
             - '@enhavo_app.menu.manager'
             - '%kernel.project_dir%'
+            - '%enhavo_app.branding%'
         tags:
             - { name: controller.service_arguments }
 

@@ -24,10 +24,16 @@ class MainController extends AbstractController
      */
     private $projectDir;
 
-    public function __construct(MenuManager $menuManager, $projectDir)
+    /**
+     * @var array
+     */
+    private $brandingConfig;
+
+    public function __construct(MenuManager $menuManager, $projectDir, $brandingConfig)
     {
         $this->menuManager = $menuManager;
         $this->projectDir = $projectDir;
+        $this->brandingConfig = $brandingConfig;
     }
 
     public function indexAction(Request $request)
@@ -38,11 +44,20 @@ class MainController extends AbstractController
             ],
             'menu' => [
                 'items' => $this->menuManager->createMenuViewData(),
-                'open' => true
+                'open' => true,
             ],
             'view_stack' => [
                 'width' => 0,
                 'views' => [],
+            ],
+            'branding' => [
+                'logo' => $this->brandingConfig['logo'],
+                'enable' => $this->brandingConfig['enable'],
+                'enableVersion' => $this->brandingConfig['enable_version'],
+                'enableCreatedBy' => $this->brandingConfig['enable_created_by'],
+                'text' => $this->brandingConfig['text'],
+                'version' => $this->brandingConfig['version'],
+                'backgroundImage' => $this->brandingConfig['background_image']
             ]
         ];
 
