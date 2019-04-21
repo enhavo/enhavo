@@ -81,6 +81,8 @@ class MainController extends AbstractController
             return $default;
         }
         $state = $request->query->get('state');
+        $state = base64_decode($state);
+        $state = gzuncompress($state);
         $state = json_decode($state, true);
         if($state === null) {
             return $default;

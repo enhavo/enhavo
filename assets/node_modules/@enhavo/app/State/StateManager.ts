@@ -1,6 +1,7 @@
 import * as URI from 'urijs';
 import View from "@enhavo/app/ViewStack/Model/View";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import * as pako from "pako";
 
 export default class StateManager
 {
@@ -39,8 +40,10 @@ export default class StateManager
 
     private generateUrl(stateObject: object): string
     {
+        let dataArray = pako.deflate(JSON.stringify(stateObject));
+        let b64encoded = btoa(String.fromCharCode.apply(null, dataArray));
         let uri = new URI(this.baseUrl);
-        return uri.setQuery('state',  JSON.stringify(stateObject)) + '';
+        return uri.setQuery('state',  b64encoded) + '';
     }
 
     private createStateObject(): object
