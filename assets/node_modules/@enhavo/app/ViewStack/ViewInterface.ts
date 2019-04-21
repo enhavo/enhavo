@@ -12,6 +12,7 @@ export default interface ViewInterface extends ComponentAwareInterface
     priority: number;
     removed: boolean;
     position: number;
+    url: string;
 
     finish(): void;
 }

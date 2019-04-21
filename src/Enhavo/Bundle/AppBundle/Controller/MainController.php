@@ -38,7 +38,9 @@ class MainController extends AbstractController
 
     public function indexAction(Request $request)
     {
+        $state = $this->getState($request);
         $data = [
+            'storage' => $state['storage'],
             'view' => [
                 'id' => null,
             ],
@@ -48,7 +50,7 @@ class MainController extends AbstractController
             ],
             'view_stack' => [
                 'width' => 0,
-                'views' => [],
+                'views' => $state['views'],
             ],
             'branding' => [
                 'logo' => $this->brandingConfig['logo'],
@@ -66,6 +68,32 @@ class MainController extends AbstractController
             'routes' => $this->getRoutes(),
             'translations' => $this->getTranslations(),
         ]);
+    }
+
+    private function getState(Request $request)
+    {
+        $default = [
+            'views' => [],
+            'storage' => [],
+        ];
+
+        if(!$request->query->has('state')) {
+            return $default;
+        }
+        $state = $request->query->get('state');
+        $state = json_decode($state, true);
+        if($state === null) {
+            return $default;
+        }
+        $views = $state['views'];
+        foreach($views as &$view) {
+            $view['component'] = 'iframe-view';
+            $view['loaded'] = false;
+        }
+        return [
+            'views' => $views,
+            'storage' => isset($state['storage']) ? $state['storage'] : [],
+        ];
     }
 
     private function getRoutes()

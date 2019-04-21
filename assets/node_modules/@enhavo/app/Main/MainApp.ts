@@ -13,7 +13,9 @@ export default class MainApp
         this.data = loader.load();
         this.viewStack = viewStack;
         this.menuManager = menuManager;
-        this.menuManager.start();
+        if(!this.viewStack.hasViews()) {
+            this.menuManager.start();
+        }
     }
 
     getData(): any

@@ -2,7 +2,7 @@
     <div class="app">
         <view-view v-bind:data="view"></view-view>
         <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menu.open}">
-            <div class="branding-container" v-bind:style="brandingImageStyles"></div>
+            <div class="branding-container" v-bind:style="brandingImageStyles" @click="home"></div>
             <app-menu v-bind:menu="menu" v-bind:class="{ 'menu-collapsed':!menu.open}"></app-menu>
         </div>
         <div class="toolbar-viewstack-container">
@@ -59,6 +59,10 @@ export default class App extends Vue {
             }
         }
         return {};
+    }
+
+    home() {
+        window.location.href = '/admin/'
     }
 }
 </script>

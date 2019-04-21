@@ -1,21 +1,22 @@
 import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
-import ViewInterface from '@enhavo/app/ViewStack//ViewInterface';
-import ViewRegistry from '@enhavo/app/ViewStack//ViewRegistry';
-import CreateEvent from "@enhavo/app/ViewStack//Event/CreateEvent";
-import LoadedEvent from "@enhavo/app/ViewStack//Event/LoadedEvent";
-import CloseEvent from "@enhavo/app/ViewStack//Event/CloseEvent";
-import RemoveEvent from "@enhavo/app/ViewStack//Event/RemoveEvent";
-import ArrangeEvent from "@enhavo/app/ViewStack//Event/ArrangeEvent";
-import ViewStackData from "@enhavo/app/ViewStack//ViewStackData";
-import RemovedEvent from "@enhavo/app/ViewStack//Event/RemovedEvent";
-import ClearEvent from "@enhavo/app/ViewStack//Event/ClearEvent";
-import ClearedEvent from "@enhavo/app/ViewStack//Event/ClearedEvent";
+import ViewInterface from '@enhavo/app/ViewStack/ViewInterface';
+import ViewRegistry from '@enhavo/app/ViewStack/ViewRegistry';
+import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
+import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
+import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
+import ArrangeEvent from "@enhavo/app/ViewStack/Event/ArrangeEvent";
+import ViewStackData from "@enhavo/app/ViewStack/ViewStackData";
+import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
+import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
+import ClearedEvent from "@enhavo/app/ViewStack/Event/ClearedEvent";
 import ArrangeManager from "@enhavo/app/ViewStack/ArrangeManager";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as _ from 'lodash';
 import * as async from 'async';
 import DataStorage from "@enhavo/app/ViewStack/DataStorage";
+import StateManager from "@enhavo/app/State/StateManager";
 
 export default class ViewStack
 {
@@ -26,26 +27,34 @@ export default class ViewStack
     private data: ViewStackData;
     private nextId: number = 1;
     private arrangeManager: ArrangeManager;
+    private stateManager: StateManager;
 
     constructor(
         data: ViewStackData,
         menuManager: MenuManager,
         dispatcher: EventDispatcher,
-        viewRegistry: ViewRegistry
+        viewRegistry: ViewRegistry,
+        stateManager: StateManager,
+        dataStorage: DataStorage,
     ) {
         this.dispatcher = dispatcher;
         this.registry = viewRegistry;
+        this.stateManager = stateManager;
 
         for(let i in data.views) {
             let view = viewRegistry.getFactory(data.views[i].component).createFromData(data.views[i]);
-            view.id = this.nextId++;
+            if(view.id > this.nextId) {
+                this.nextId = view.id + 1;
+            }
             _.extend(data.views[i], view);
         }
         this.views = <ViewInterface[]>data.views;
         this.data = data;
 
         this.arrangeManager = new ArrangeManager(this.views, data, menuManager);
-        this.dataStorage = new DataStorage(this.dispatcher);
+        this.dataStorage = dataStorage;
+
+        stateManager.setViews(this.views);
 
         this.addCloseListener();
         this.addRemoveListener();
@@ -179,6 +188,7 @@ export default class ViewStack
         while(this.views.length > 0 && this.views[this.views.length-1].removed) {
             this.views.pop();
         }
+        this.stateManager.updateViews(this.views);
     }
 
     private arrange()
@@ -211,6 +221,7 @@ export default class ViewStack
          */
         setTimeout(() => {
             this.views.push(view);
+            this.stateManager.updateViews(this.views);
         }, 10);
     }
 
@@ -221,6 +232,11 @@ export default class ViewStack
             return true;
         }
         return false;
+    }
+
+    hasViews()
+    {
+        return this.views.length > 0;
     }
 
     getDispatcher()

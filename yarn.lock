@@ -657,10 +657,10 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/urijs@^1.15.38":
-  version "1.15.38"
-  resolved "https://registry.yarnpkg.com/@types/urijs/-/urijs-1.15.38.tgz#733ff7f18d42de60d0cdba40d8e92673b27cd5a4"
-  integrity sha512-5VWXqu6V2IxXsPuSXYwCZHbh25U7pE+UJTFtKnNQRJLZA7o0D7fOQRJdgwBTMLNY0uc5F9GsFSang1VwNcPguA==
+"@types/urijs@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@types/urijs/-/urijs-1.19.0.tgz#ada57aed9c1ff35b05bd1287e1190773dea98c8d"
+  integrity sha512-36Db0SoaGTG2bSEoNjuTfUn9HIvK72yQvS8CjHSwiCsgABWMI605FrgZoXhheInh5NuiacAuGYImxII3vr5hCw==
   dependencies:
     "@types/jquery" "*"
 

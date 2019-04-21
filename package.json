@@ -26,7 +26,6 @@
     "vue": "^2.5.22",
     "vue-loader": "^15.5.1",
     "vue-property-decorator": "^6.0.0",
-    "vue-router": "^3.0.1",
     "vue-select": "^3.0.0",
     "vue-template-compiler": "^2.5.22"
   },
@@ -43,7 +42,7 @@
     "@types/lodash": "^4.14.120",
     "@types/select2": "4.0.37",
     "@types/tinymce": "^4.5.16",
-    "@types/urijs": "^1.15.38",
+    "@types/urijs": "^1.19.0",
     "@types/uuid": "^3.4.4",
     "@types/vue-select": "^2.5.0",
     "gulp": "^4.0.0",

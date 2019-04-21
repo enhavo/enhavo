@@ -5,6 +5,7 @@ import VueLoader from "@enhavo/app/VueLoader";
 import View from "@enhavo/app/View/View";
 import Router from "@enhavo/core/Router";
 import Translator from "@enhavo/core/Translator";
+import StateManager from "@enhavo/app/State/StateManager";
 
 export default interface ApplicationInterface
 {
@@ -21,4 +22,6 @@ export default interface ApplicationInterface
     getRouter(): Router
 
     getTranslator(): Translator
+
+    getStateManager(): StateManager
 }

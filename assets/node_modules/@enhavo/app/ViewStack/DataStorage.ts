@@ -2,16 +2,19 @@ import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
 import DataStorageEntry from '@enhavo/app/ViewStack/DataStorageEntry';
 import SaveDataEvent from '@enhavo/app/ViewStack/Event/SaveDataEvent';
 import LoadDataEvent from '@enhavo/app/ViewStack/Event/LoadDataEvent';
+import StateManager from "@enhavo/app/State/StateManager";
 
 export default class DataStorage
 {
     private eventDispatcher: EventDispatcher;
+    private stateManager: StateManager;
+    private entries: DataStorageEntry[];
 
-    private entries: DataStorageEntry[] = [];
-
-    constructor(eventDispatcher: EventDispatcher)
+    constructor(entries: DataStorageEntry[], eventDispatcher: EventDispatcher, stateManager: StateManager)
     {
         this.eventDispatcher = eventDispatcher;
+        this.stateManager = stateManager;
+        this.entries = entries;
 
         this.eventDispatcher.on('save-data', (event: SaveDataEvent) => {
             this.set(event.key, event.value)
@@ -25,6 +28,7 @@ export default class DataStorage
         this.eventDispatcher.on('remove-data', (event: LoadDataEvent) => {
             this.delete(event.key);
         });
+        this.stateManager.setStorage(this.entries);
     }
 
     private get(key: string): DataStorageEntry
@@ -46,6 +50,7 @@ export default class DataStorage
             this.entries.push(entry);
         }
         entry.value = value;
+        this.stateManager.updateStorage(this.entries);
     }
 
     private delete(key: string): boolean
@@ -56,6 +61,7 @@ export default class DataStorage
             this.entries.splice(index,1);
             return true;
         }
+        this.stateManager.updateStorage(this.entries);
         return false;
     }
 }

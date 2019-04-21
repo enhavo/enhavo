@@ -13,6 +13,7 @@ export default class View implements ViewInterface
     minimize: boolean = false;
     removed: boolean = false;
     position: number = 0;
+    url: string;
 
     finish(): void {
         this.loaded = true;

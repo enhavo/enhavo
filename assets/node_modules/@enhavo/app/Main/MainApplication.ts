@@ -6,6 +6,7 @@ import MenuManager from "@enhavo/app/Menu/MenuManager";
 import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
 import FrameStorage from "@enhavo/app/ViewStack/FrameStorage";
 import ViewRegistry from "@enhavo/app/ViewStack/ViewRegistry";
+import DataStorage from "@enhavo/app/ViewStack/DataStorage";
 
 export class MainApplication extends AbstractApplication
 {
@@ -14,6 +15,7 @@ export class MainApplication extends AbstractApplication
     protected frameStorage: FrameStorage;
     protected viewRegistry: ViewRegistry;
     protected menuRegistry: MenuRegistry;
+    protected dataStorage: DataStorage;
 
     public getApp(): AppInterface
     {
@@ -30,10 +32,20 @@ export class MainApplication extends AbstractApplication
                 this.getDataLoader().load().view_stack,
                 this.getMenuManager(),
                 this.getEventDispatcher(),
-                this.getViewRegistry()
+                this.getViewRegistry(),
+                this.getStateManager(),
+                this.getDataStorage()
             );
         }
         return this.viewStack;
+    }
+
+    public getDataStorage(): DataStorage
+    {
+        if(this.dataStorage == null) {
+            this.dataStorage = new DataStorage(this.getDataLoader().load().storage, this.getEventDispatcher(), this.getStateManager());
+        }
+        return this.dataStorage;
     }
 
     public getMenuManager(): MenuManager

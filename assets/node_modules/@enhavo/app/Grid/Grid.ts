@@ -19,6 +19,10 @@ import Confirm from "@enhavo/app/View/Confirm";
 import Batch from "@enhavo/app/Grid/Batch/Batch";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import Message from "@enhavo/app/FlashMessage/Message";
+import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
+import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
+import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
+import ExistsData from "@enhavo/app/ViewStack/ExistsData";
 
 export default class Grid
 {
@@ -54,6 +58,14 @@ export default class Grid
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
         this.initListener();
+
+        let key = this.getEditKey();
+        this.eventDispatcher.dispatch(new LoadDataEvent(key))
+            .then((data: EditViewData) => {
+                if(data.id) {
+                    this.configuration.editView = data.id;
+                }
+            });
     }
 
     private initListener()
@@ -115,12 +127,18 @@ export default class Grid
     public open(row: RowData)
     {
         if(this.configuration.editView != null) {
-            this.eventDispatcher.dispatch(new CloseEvent(this.configuration.editView))
-                .then(() => {
+            this.eventDispatcher.dispatch(new ExistsEvent(this.getEditView())).then((data: ExistsData) => {
+                if(data.exists) {
+                    this.eventDispatcher.dispatch(new CloseEvent(this.configuration.editView))
+                        .then(() => {
+                            this.openView(row);
+                        })
+                        .catch(() => {})
+                    ;
+                } else {
                     this.openView(row);
-                })
-                .catch(() => {})
-            ;
+                }
+            });
         } else {
             this.openView(row);
         }
@@ -137,13 +155,22 @@ export default class Grid
             component: 'iframe-view',
             url: url
         }, this.view.getId())).then((view: ViewInterface) => {
-            this.configuration.editView = view.id;
+            this.setEditView(view.id);
         }).catch(() => {});
     }
 
-    public setEditView(id: number)
+    private setEditView(id: number)
     {
         this.configuration.editView = id;
+        let key = this.getEditKey();
+        this.eventDispatcher.dispatch(new SaveDataEvent(key, {
+            id: id
+        }));
+    }
+
+    private getEditKey()
+    {
+        return 'edit-view-' + this.view.getId();
     }
 
     public getEditView(): number
@@ -288,4 +315,8 @@ export default class Grid
         }
         return data;
     }
+}
+
+interface EditViewData {
+    id: number;
 }
