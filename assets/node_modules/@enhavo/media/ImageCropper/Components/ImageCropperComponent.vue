@@ -2,7 +2,7 @@
     <div class="app-view">
         <view-view v-bind:data="view"></view-view>
         <flash-messages v-bind:messages="messages"></flash-messages>
-        <action-bar v-bind:data="actions"></action-bar>
+        <action-bar v-bind:primary="actions"></action-bar>
         <image-cropper-stage v-bind:data="format"></image-cropper-stage>
     </div>
 </template>

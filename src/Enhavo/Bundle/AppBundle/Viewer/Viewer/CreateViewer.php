@@ -79,6 +79,11 @@ class CreateViewer extends BaseViewer
             $this->getViewerOption('actions', $requestConfiguration)
         ]);
 
+        $actionsSecondary = $this->mergeConfigArray([
+            $options['actions_secondary'],
+            $this->getViewerOption('actions_secondary', $requestConfiguration)
+        ]);
+
         $tabs = $this->mergeConfigArray([
             [
                 'main' => [
@@ -115,6 +120,7 @@ class CreateViewer extends BaseViewer
 
         $parameters->set('data', [
             'actions' => $this->actionManager->createActionsViewData($actions),
+            'actionsSecondary' => $this->actionManager->createActionsViewData($actionsSecondary),
             'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain')),
             'messages' => $this->getFlashMessages(),
             'view' => [
@@ -147,9 +153,6 @@ class CreateViewer extends BaseViewer
                 'type' => 'save',
                 'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             ],
-            'close' => [
-                'type' => 'close'
-            ]
         ];
 
         return $default;
@@ -182,6 +185,7 @@ class CreateViewer extends BaseViewer
                 'enhavo/form'
             ],
             'actions' => [],
+            'actions_secondary' => [],
             'form' => null,
             'form_themes' => [],
             'form_action' => null,

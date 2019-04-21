@@ -1,8 +1,11 @@
 <template>
     <div class="actions">
         <div class="primary-actions">
-            <template v-for="action in data">
+            <template v-for="action in primary">
                 <component class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
+            </template>
+            <template v-for="action in secondary">
+                <component style="background-color: grey" class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
             </template>
         </div>
         <div class="secondary-actions">
@@ -21,6 +24,9 @@
     })
     export default class ActionBar extends Vue {
         @Prop()
-        data: object;
+        primary: object;
+
+        @Prop()
+        secondary: object;
     }
 </script>

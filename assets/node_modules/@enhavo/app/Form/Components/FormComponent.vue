@@ -3,7 +3,7 @@
         <div class="form-view">
             <view-view v-bind:data="view"></view-view>
             <flash-messages v-bind:messages="messages"></flash-messages>
-            <action-bar v-bind:data="actions"></action-bar>
+            <action-bar v-bind:primary="actions" v-bind:secondary="actionsSecondary"></action-bar>
             <div class="tab-header">
                 <template v-for="tab in tabs">
                     <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
@@ -46,6 +46,9 @@ export default class AppView extends Vue {
 
     @Prop()
     actions: Array<object>;
+
+    @Prop()
+    actionsSecondary: Array<object>;
 
     @Prop()
     tabs: Array<object>;

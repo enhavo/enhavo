@@ -42,18 +42,18 @@ class UpdateViewer extends CreateViewer
             $this->getViewerOption('form.action_parameters', $requestConfiguration)
         ]));
 
-        $actions = $this->mergeConfigArray([
-            $this->createActions($options, $requestConfiguration, $resource),
-            $options['actions'],
-            $this->getViewerOption('actions', $requestConfiguration)
+        $actionsSecondary = $this->mergeConfigArray([
+            $this->createActionsSecondary($options, $requestConfiguration, $resource),
+            $options['actions_secondary'],
+            $this->getViewerOption('actions_secondary', $requestConfiguration)
         ]);
 
         $data = $parameters->get('data');
-        $data['actions'] = $this->actionManager->createActionsViewData($actions, $options['resource']);
+        $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
         $parameters->set('data', $data);
     }
 
-    private function createActions($options, $requestConfiguration, $resource)
+    private function createActionsSecondary($options, $requestConfiguration, $resource)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
@@ -71,17 +71,10 @@ class UpdateViewer extends CreateViewer
         ]);
 
         $default = [
-            'save' => [
-                'type' => 'save',
-                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            ],
             'delete' => [
                 'type' => 'delete',
                 'route' => $formDelete,
                 'route_parameters' => $formDeleteParameters
-            ],
-            'close' => [
-                'type' => 'close'
             ]
         ];
 

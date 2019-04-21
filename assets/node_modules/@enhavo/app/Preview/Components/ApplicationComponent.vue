@@ -2,7 +2,7 @@
     <div class="app-view">
         <view-view v-bind:data="view"></view-view>
         <flash-messages v-bind:messages="messages"></flash-messages>
-        <action-bar v-bind:data="actions"></action-bar>
+        <action-bar v-bind:primary="actions"></action-bar>
         <div v-bind:class="{'preview-view': true, 'tablet': iframeClass === 'tablet', 'mobile': iframeClass === 'mobile', 'desktop': iframeClass === 'desktop'}">
             <iframe class="iframe" name="preview" v-once></iframe>
         </div>
