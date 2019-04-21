@@ -14,7 +14,7 @@
     @Component({
         components: application.getActionRegistry().getComponents()
     })
-    export default class ColumnAction extends Vue {
+    export default class ColumnActionComponent extends Vue {
         name: string = 'column-action';
 
         @Prop()

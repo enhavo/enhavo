@@ -1,7 +1,6 @@
 <template>
     <div class="view-table-col-text">
-        <i class="icon icon-done" v-if="data"></i>
-        <i class="icon icon-close" v-if="!data"></i>
+        <img :style="{height: data.height + 'px'}" :src="data.url" />
     </div>
 </template>
 
@@ -9,8 +8,8 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
 
     @Component
-    export default class ColumnBooleanComponent extends Vue {
-        name: string = 'column-boolean';
+    export default class ColumnMediaComponent extends Vue {
+        name: string = 'column-media';
 
         @Prop()
         data: string;

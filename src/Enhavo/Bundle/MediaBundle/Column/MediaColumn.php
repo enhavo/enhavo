@@ -57,12 +57,14 @@ class MediaColumn extends AbstractColumnType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'height' => 60,
             'format' => 'enhavoTableThumb',
-            'label' => ''
+            'component' => 'column-media',
         ]);
         $resolver->setRequired(['property']);
+        $resolver->remove(['sortable']);
     }
 
     public function getType()

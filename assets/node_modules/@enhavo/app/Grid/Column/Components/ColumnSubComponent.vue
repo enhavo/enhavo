@@ -14,8 +14,8 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
 
     @Component
-    export default class ColumnSub extends Vue {
-        name: string = 'view-table-col-sub';
+    export default class ColumnSubComponent extends Vue {
+        name: string = 'column-sub';
 
         @Prop()
         data: any;

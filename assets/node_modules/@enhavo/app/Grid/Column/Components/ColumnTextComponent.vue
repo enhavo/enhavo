@@ -8,8 +8,8 @@
     import { Vue, Component, Prop } from "vue-property-decorator";
 
     @Component
-    export default class ColumnText extends Vue {
-        name: string = 'view-table-col-text';
+    export default class ColumnTextComponent extends Vue {
+        name: string = 'column-text';
 
         @Prop()
         data: string;
