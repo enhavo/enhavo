@@ -3,6 +3,7 @@ enhavo_app:
     change_password: 'Change Password'
     edit: 'Bearbeiten'
     preview: 'Vorschau'
+    open_homepage: 'Zur Startseite'
     batch:
         label:
             placeholder: 'Batch wählen'

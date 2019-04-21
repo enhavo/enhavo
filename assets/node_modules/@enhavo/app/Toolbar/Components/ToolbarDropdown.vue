@@ -7,6 +7,7 @@
         <div class="toolbar-dropdown-menu" v-show="isOpen">
             <toolbar-dropdown-item v-on:click="logout" :label="label('enhavo_app.logout')"></toolbar-dropdown-item>
             <toolbar-dropdown-item v-on:click="changePassword" :label="label('enhavo_app.change_password')"></toolbar-dropdown-item>
+            <toolbar-dropdown-item v-on:click="openHomepage" :label="label('enhavo_app.open_homepage')"></toolbar-dropdown-item>
         </div>
     </div>
 </template>
@@ -61,6 +62,11 @@ export default class ToolbarDropdown extends Vue {
             })
             .catch(() => {})
         ;
+    }
+
+    openHomepage()
+    {
+        window.open('/', '_blank');
     }
 
     private getApplication(): ApplicationInterface
