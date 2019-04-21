@@ -39,7 +39,6 @@ enhavo_user_user_table:
     options:
         expose: true
     path: /enhavo/user/user/table
-    methods: [GET]
     defaults:
         _controller: enhavo_user.controller.user:tableAction
         _sylius:

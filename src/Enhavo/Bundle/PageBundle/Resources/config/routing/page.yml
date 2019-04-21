@@ -83,7 +83,6 @@ enhavo_page_page_table:
     options:
         expose: true
     path: /enhavo/page/page/table
-    methods: [GET]
     defaults:
         _controller: enhavo_page.controller.page:tableAction
         _sylius:

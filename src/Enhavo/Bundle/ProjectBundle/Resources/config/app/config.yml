@@ -33,6 +33,7 @@ sylius_resource:
                 repository: Enhavo\Bundle\ProjectBundle\Repository\MagazineRepository
                 factory: Sylius\Component\Resource\Factory\Factory
                 form: Enhavo\Bundle\ProjectBundle\Form\Type\MagazineType
+
 enhavo_article:
     resources:
         article:

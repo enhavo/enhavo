@@ -18,7 +18,7 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
             'label' => $this->getLabel($options),
             'width' => $this->getWidth($options),
             'component' => $options['component'],
-            'sortable' => $options['sortable'],
+            'sortable' => isset($options['sortable']) ? $options['sortable'] : false,
         ];
 
         return $data;

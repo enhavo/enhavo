@@ -67,7 +67,6 @@ enhavo_shop_product_variant_table:
     options:
         expose: true
     path: /enhavo/shop/product/{productId}/variant/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: sylius.controller.product_variant:tableAction

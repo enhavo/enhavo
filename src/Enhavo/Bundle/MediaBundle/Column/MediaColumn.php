@@ -24,6 +24,13 @@ class MediaColumn extends AbstractColumnType
 
         $file = $this->getProperty($item, $property);
 
+        if($file == null) {
+            return [
+                'height' => $height,
+                'url' => null
+            ];
+        }
+
         if ($file instanceof Collection && $file->first() instanceof FileInterface) {
             $files = $file->toArray();
             usort($files, function($a, $b) {

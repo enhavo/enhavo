@@ -52,7 +52,6 @@ enhavo_newsletter_newsletter_table:
     options:
         expose: true
     path: /enhavo/newsletter/newsletter/table
-    methods: [GET]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:tableAction
         _sylius:

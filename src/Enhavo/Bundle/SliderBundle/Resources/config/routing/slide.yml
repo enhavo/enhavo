@@ -39,11 +39,9 @@ enhavo_slider_slide_table:
     options:
         expose: true
     path: /enhavo/slider/slide/table
-    methods: [GET]
     defaults:
         _controller: enhavo_slider.controller.slide:tableAction
         _sylius:
-            sortable: true
             sorting:
                 position: desc
             filters:
@@ -65,17 +63,14 @@ enhavo_slider_slide_table:
                     move_to_page_route: enhavo_slider_slide_move_to_page
                 columns:
                     picture:
-                        type: picture
+                        type: media
                         property: image
                         width: 2
-                        label:
                     title:
                         type: text
                         label: slide.label.title
                         property: title
-                        width: 9
-                    position:
-                        type: position
+                        width: 10
 
 enhavo_slider_slide_delete:
     options:

@@ -79,7 +79,6 @@ enhavo_shop_product_table:
     options:
         expose: true
     path: /enhavo/shop/product/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: sylius.controller.product:tableAction

@@ -34,7 +34,6 @@ enhavo_newsletter_subscriber_table:
     options:
         expose: true
     path: /enhavo/newsletter/subscriber/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: enhavo_newsletter.controller.subscriber:tableAction

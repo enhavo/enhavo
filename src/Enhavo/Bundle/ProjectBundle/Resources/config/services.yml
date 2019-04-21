@@ -1,5 +1,1 @@
 services:
-    enhavo_project.form.content:
-        class: Enhavo\Bundle\ProjectBundle\Form\Type\ContentType
-        tags:
-            - { name: form.type, alias: enhavo_project_content }

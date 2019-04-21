@@ -13,6 +13,7 @@ enhavo_setting_setting_index:
                     create:
                         type: create
                         hidden: true
+                        route: ~
 
 enhavo_setting_setting_update:
     options:
@@ -38,7 +39,6 @@ enhavo_setting_setting_table:
     options:
         expose: true
     path: /enhavo/setting/setting/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: enhavo_setting.controller.setting:tableAction

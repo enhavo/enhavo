@@ -65,7 +65,6 @@ enhavo_article_article_table:
     options:
         expose: true
     path: /enhavo/article/article/table
-    methods: [GET, POST]
     defaults:
         _controller: enhavo_article.controller.article:tableAction
         _sylius:

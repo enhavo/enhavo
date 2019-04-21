@@ -56,7 +56,6 @@ enhavo_calendar_appointment_table:
     options:
         expose: true
     path: /enhavo/calendar/appointment/table
-    methods: [GET]
     defaults:
         _controller: enhavo_calendar.controller.appointment:tableAction
         _sylius:

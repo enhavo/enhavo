@@ -97,7 +97,7 @@ class IndexViewer extends AppViewer
         ]);
 
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
-        $batchData = $batchConfiguration->getBatches();
+        $batchData = !empty($batchConfiguration) ? $batchConfiguration->getBatches() : [];
 
         /** @var Request $request */
         $request = $requestConfiguration->getRequest();

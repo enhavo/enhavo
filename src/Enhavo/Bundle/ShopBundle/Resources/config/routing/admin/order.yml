@@ -57,7 +57,6 @@ enhavo_shop_order_table:
     options:
         expose: true
     path: /enhavo/shop/order/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: sylius.controller.order:tableAction
