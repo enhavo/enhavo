@@ -29,10 +29,6 @@ export default class ViewStack extends Vue {
     mounted() {
         this.data.width = this.getWidth();
         application.getEventDispatcher().dispatch(new ArrangeEvent());
-        $(window).resize(() => {
-            this.data.width = this.getWidth();
-            application.getEventDispatcher().dispatch(new ArrangeEvent());
-        });
     }
 
     private getWidth(): number

@@ -8,9 +8,10 @@ export default class View implements ViewInterface
     parent: ViewInterface = null;
     component: string;
     priority: number = 0;
-    width: number = 0;
+    width: string = null;
     loaded: boolean = false;
     minimize: boolean = false;
+    customMinimized: boolean = false;
     removed: boolean = false;
     position: number = 0;
     url: string;

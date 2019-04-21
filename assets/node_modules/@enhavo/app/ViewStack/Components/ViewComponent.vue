@@ -1,5 +1,5 @@
 <template>
-    <div class="view-component" :style="{order: position}" :class="{minimized: data.minimize}">
+    <div class="view-component" :style="{order: position, maxWidth: data.width}" :class="{minimized: data.minimize}">
         <div class="toolbar">
             <strong v-if="!data.minimize">{{ data.label }}</strong>
             <div class="actions">
@@ -42,7 +42,7 @@
     export default class ViewComponent extends Vue {
         name: 'view-component';
 
-        @Prop({ type: Object })
+        @Prop()
         data: ViewInterface;
 
         created() {
@@ -59,17 +59,14 @@
 
         minimize() {
             this.data.minimize = true;
+            this.data.customMinimized = true;
             application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
         maximize() {
             this.data.minimize = false;
+            this.data.customMinimized = true;
             application.getEventDispatcher().dispatch(new ArrangeEvent());
-        }
-
-        get width(): string
-        {
-            return this.data.width + 'px';
         }
 
         get position(): number

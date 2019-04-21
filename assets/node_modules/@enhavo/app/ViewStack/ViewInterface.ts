@@ -7,12 +7,13 @@ export default interface ViewInterface extends ComponentAwareInterface
     children: ViewInterface[];
     parent: ViewInterface;
     loaded: boolean;
-    width: number;
+    width: string;
     minimize: boolean;
     priority: number;
     removed: boolean;
     position: number;
     url: string;
+    customMinimized: boolean;
 
     finish(): void;
 }
