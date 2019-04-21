@@ -4,11 +4,11 @@
             <template v-for="action in primary">
                 <component class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
             </template>
-            <template v-for="action in secondary">
-                <component style="background-color: grey" class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
-            </template>
         </div>
         <div class="secondary-actions">
+            <template v-for="action in secondary">
+                <component class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
+            </template>
         </div>
     </div>
 </template>
