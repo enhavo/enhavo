@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Config;
+namespace Enhavo\Bundle\FormBundle\Config;
 
-use Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig;
-use Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption;
+use Enhavo\Bundle\FormBundle\Form\Config\WysiwygConfig;
+use Enhavo\Bundle\FormBundle\Form\Config\WysiwygOption;
 use PHPUnit\Framework\TestCase;
 
 class WysiwygConfigTest extends TestCase
@@ -11,7 +11,7 @@ class WysiwygConfigTest extends TestCase
     public function testInitialize()
     {
         $config = new WysiwygConfig();
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig', $config);
+        $this->assertInstanceOf('Enhavo\Bundle\FormBundle\Form\Config\WysiwygConfig', $config);
     }
 
     public function testGetData()

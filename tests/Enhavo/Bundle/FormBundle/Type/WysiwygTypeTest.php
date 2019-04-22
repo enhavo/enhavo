@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -11,7 +11,7 @@ class WysiwygTypeTest extends TypeTestCase
 
     protected function setUp()
     {
-        $this->config = $this->getMockBuilder('Enhavo\Bundle\AppBundle\Form\Config\WysiwygConfig')
+        $this->config = $this->getMockBuilder('Enhavo\Bundle\FormBundle\Form\Config\WysiwygConfig')
             ->disableOriginalConstructor()
             ->getMock();
         $this->config->method('getData')->willReturn('config');

@@ -1,8 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Config;
+namespace Enhavo\Bundle\FormBundle\Config;
 
-use Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption;
+use Enhavo\Bundle\FormBundle\Form\Config\WysiwygOption;
 use PHPUnit\Framework\TestCase;
 
 class WysiwygOptionTest extends TestCase
@@ -10,7 +10,7 @@ class WysiwygOptionTest extends TestCase
     public function testInitialize()
     {
         $option = new WysiwygOption();
-        $this->assertInstanceOf('Enhavo\Bundle\AppBundle\Form\Config\WysiwygOption', $option);
+        $this->assertInstanceOf('Enhavo\Bundle\FormBundle\Form\Config\WysiwygOption', $option);
     }
 
     public function testFormats()
@@ -70,16 +70,5 @@ class WysiwygOptionTest extends TestCase
 
         $option->setToolbar2('other toolbar');
         $this->assertEquals('other toolbar', $option->getToolbar2());
-    }
-
-    public function testGetAndSetContentCss()
-    {
-        $option = new WysiwygOption();
-
-        $this->assertArraySubset(array('/bundles/enhavoapp/css/editor.css', '/bundles/path/'), $option->getContentCss('path'));
-        $this->assertArraySubset(array('/bundles/enhavoapp/css/editor.css'),$option->getContentCss());
-
-        $option->setContentCss(['path1', 'path2']);
-        $this->assertArraySubset(['/bundles/enhavoapp/css/editor.css','/bundles/path1/', '/bundles/path2/'], $option->getContentCss());
     }
 }
