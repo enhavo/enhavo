@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Column;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ColumnManager
 {
@@ -19,12 +20,18 @@ class ColumnManager
     private $collector;
 
     /**
+     * @var \Symfony\Component\PropertyAccess\PropertyAccessor
+     */
+    private $propertyAccessor;
+
+    /**
      * ActionManager constructor.
      * @param TypeCollector $collector
      */
     public function __construct(TypeCollector $collector)
     {
         $this->collector = $collector;
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     public function createColumnsViewData(array $configuration)
@@ -40,17 +47,38 @@ class ColumnManager
         return $data;
     }
 
-    public function createResourcesViewData(array $configuration, $resources)
+    public function createResourcesViewData(array $configuration, $resources, $childrenProperty = null, $positionProperty = null)
+    {
+        $columns = [];
+        foreach($configuration as $name => $options) {
+            $columns[$name] = $this->createColumn($options);
+        }
+
+        return $this->fetch($columns, $resources, $childrenProperty, $positionProperty);
+    }
+
+    /**
+     * @param Column[] $columns
+     * @param $resources
+     * @param $childrenProperty
+     * @return array
+     */
+    public function fetch(array $columns, $resources, $childrenProperty, $positionProperty)
     {
         $data = [];
         foreach($resources as $resource) {
             $columnData = [
                 'id' => $resource->getId(),
-                'data' => null,
             ];
-            foreach($configuration as $name => $options) {
-                $column = $this->createColumn($options);
+            foreach($columns as $name => $column) {
                 $columnData['data'][$name] = $column->createResourceViewData($resource);
+                if($positionProperty) {
+                    $columnData['position'] = $this->propertyAccessor->getValue($resource, $positionProperty);
+                }
+                if($childrenProperty) {
+                    $children = $this->propertyAccessor->getValue($resource, $childrenProperty);
+                    $columnData['children'] = $this->fetch($columns, $children, $childrenProperty, $positionProperty);
+                }
             }
             $data[] = $columnData;
         }

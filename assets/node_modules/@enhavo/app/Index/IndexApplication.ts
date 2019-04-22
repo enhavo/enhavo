@@ -10,6 +10,7 @@ import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
 import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
+import Editable from "@enhavo/app/Action/Editable";
 
 export class IndexApplication extends AbstractApplication implements ActionAwareApplication
 {
@@ -110,6 +111,11 @@ export class IndexApplication extends AbstractApplication implements ActionAware
             this.batchManager = new BatchManager(this.getDataLoader().load().grid.batches);
         }
         return this.batchManager;
+    }
+
+    public getEditable(): Editable
+    {
+        return this.getGrid();
     }
 }
 

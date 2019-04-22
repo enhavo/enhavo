@@ -2,16 +2,11 @@ enhavo_page_page_index:
     path: /enhavo/page/page/index
     methods: [GET]
     defaults:
-        _controller: enhavo_page.controller.page:indexAction
+        _controller: enhavo_page.controller.page:listAction
         _sylius:
             viewer:
                 title: page.label.page
                 translationDomain: EnhavoPageBundle
-                blocks:
-                    table:
-                        type: list
-                        list_route: enhavo_page_page_list
-                        update_route: enhavo_page_page_update
 
 enhavo_page_page_create:
     path: /enhavo/page/page/create
@@ -79,46 +74,18 @@ enhavo_page_page_update:
                         type: duplicate
                         route: enhavo_page_page_duplicate
 
-enhavo_page_page_table:
+enhavo_page_page_data:
     options:
         expose: true
-    path: /enhavo/page/page/table
+    path: /enhavo/page/page/data
     defaults:
-        _controller: enhavo_page.controller.page:tableAction
+        _controller: enhavo_page.controller.page:listDataAction
         _sylius:
-            filters:
-                title:
-                    type: text
-                    property: title
-                    label: page.label.public
-                    translation_domain: EnhavoPageBundle
-            viewer:
-                translationDomain: EnhavoPageBundle
-                columns:
-                    public:
-                        type: boolean
-                        label: page.label.public
-                        property: public
-                        width: 2
-                    title:
-                        type: text
-                        label: page.label.title
-                        property: title
-                        width: 10
-
-enhavo_page_page_list:
-    options:
-        expose: true
-    path: /enhavo/page/page/list
-    methods: [GET]
-    defaults:
-        _controller: enhavo_page.controller.page:listAction
-        _sylius:
-            paginate: 10000000 # fix to never show pagination
             criteria:
                 parent: null
             viewer:
                 translationDomain: EnhavoPageBundle
+                children_property: children
                 columns:
                     public:
                         type: boolean

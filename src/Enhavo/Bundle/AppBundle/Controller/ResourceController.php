@@ -298,21 +298,41 @@ class ResourceController extends BaseController
     }
 
     /**
-     * {@inheritdoc}
-     */
+ * {@inheritdoc}
+ */
     public function listAction(Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
-        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
         $view = $this->viewFactory->create('list', [
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
-            'resources' => $resources,
         ]);
 
         return $this->viewHandler->handle($configuration, $view);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function listDataAction(Request $request): Response
+    {
+        $request->query->set('limit', 1000000); // never show pagination
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+
+        $view = $this->viewFactory->create('list_data', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
+            'resources' => $resources,
+            'request' => $request,
+        ]);
+
+        $response = $this->viewHandler->handle($configuration, $view);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     public function deleteAction(Request $request): Response

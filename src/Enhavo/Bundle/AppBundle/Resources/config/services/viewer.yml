@@ -97,10 +97,23 @@ services:
         arguments:
             - '@sylius.resource_controller.request_configuration_factory'
             - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@enhavo_app.action_manager'
+            - '@enhavo_app.column_manager'
         calls:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.viewer, alias: list }
+
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\ListDataViewer:
+        public: true
+        arguments:
+            - '@sylius.resource_controller.request_configuration_factory'
+            - '@Enhavo\Bundle\AppBundle\Viewer\ViewerUtil'
+            - '@enhavo_app.column_manager'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: list_data }
 
     Enhavo\Bundle\AppBundle\Viewer\Viewer\ResourcePreviewViewer:
         public: true

@@ -32,7 +32,6 @@
     import Batches from "@enhavo/app/Grid/Components/Batches.vue"
     import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 
-
     @Component({
         components: {
             'grid-table': Table,

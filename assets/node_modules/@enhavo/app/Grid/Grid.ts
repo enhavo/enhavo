@@ -23,8 +23,9 @@ import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
 import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
+import Editable from "@enhavo/app/Action/Editable";
 
-export default class Grid
+export default class Grid implements Editable
 {
     private filterManager: FilterManager;
     private columnManager: ColumnManager;
@@ -58,14 +59,6 @@ export default class Grid
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
         this.initListener();
-
-        let key = this.getEditKey();
-        this.eventDispatcher.dispatch(new LoadDataEvent(key))
-            .then((data: EditViewData) => {
-                if(data.id) {
-                    this.configuration.editView = data.id;
-                }
-            });
     }
 
     private initListener()
@@ -81,6 +74,14 @@ export default class Grid
                 this.loadTable();
             }
         });
+
+        let key = this.getEditKey();
+        this.eventDispatcher.dispatch(new LoadDataEvent(key))
+            .then((data: EditViewData) => {
+                if(data.id) {
+                    this.configuration.editView = data.id;
+                }
+            });
     }
 
     public load()
@@ -159,7 +160,7 @@ export default class Grid
         }).catch(() => {});
     }
 
-    private setEditView(id: number)
+    public setEditView(id: number)
     {
         this.configuration.editView = id;
         let key = this.getEditKey();

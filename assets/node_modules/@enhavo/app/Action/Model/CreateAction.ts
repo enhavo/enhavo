@@ -1,10 +1,10 @@
 import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
 import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import Grid from "@enhavo/app/Grid/Grid";
 import {IndexApplication} from "@enhavo/app/Index/IndexApplication";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
+import Editable from "@enhavo/app/Action/Editable";
 
 export default class CreateAction extends AbstractAction
 {
@@ -13,8 +13,8 @@ export default class CreateAction extends AbstractAction
 
     execute(): void
     {
-        if(this.getGrid().getEditView() != null) {
-            this.application.getEventDispatcher().dispatch(new CloseEvent(this.getGrid().getEditView()))
+        if(this.getEditable().getEditView() != null) {
+            this.application.getEventDispatcher().dispatch(new CloseEvent(this.getEditable().getEditView()))
                 .then(() => {
                     this.openView();
                 })
@@ -32,13 +32,13 @@ export default class CreateAction extends AbstractAction
             component: 'iframe-view',
             url: this.url
         }, this.getView().getId())).then((view: ViewInterface) => {
-            this.getGrid().setEditView(view.id);
+            this.getEditable().setEditView(view.id);
         }).catch(() => {});
     }
 
-    private getGrid(): Grid
+    private getEditable(): Editable
     {
-        return (<IndexApplication>this.application).getGrid();
+        return (<IndexApplication>this.application).getEditable();
     }
 
     private getView(): View
