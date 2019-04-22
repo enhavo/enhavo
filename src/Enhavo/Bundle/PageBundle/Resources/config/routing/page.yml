@@ -16,6 +16,7 @@ enhavo_page_page_create:
     defaults:
         _controller: enhavo_page.controller.page:createAction
         _sylius:
+            redirect: enhavo_page_page_update
             viewer:
                 translationDomain: EnhavoPageBundle
                 type: create
