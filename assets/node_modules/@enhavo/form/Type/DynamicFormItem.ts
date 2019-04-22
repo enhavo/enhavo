@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import DynamicFormType from "@enhavo/form/Type/DynamicFormType";
+import FormDispatcher from "@enhavo/form/FormDispatcher";
 
 export default class DynamicFormItem
 {
@@ -71,30 +72,18 @@ export default class DynamicFormItem
 
     public up()
     {
-        let wyswigs = this.$element.find('[data-wysiwyg]');
-        let self = this;
-        if (wyswigs.length) {
-            form.destroyWysiwyg(this.$element);
-            this.dynamicForm.moveItemUp(this,function() {
-                form.initWysiwyg(self.getElement());
-            });
-        } else {
-            this.dynamicForm.moveItemUp(this);
-        }
+        FormDispatcher.dispatchMove(this.getElement());
+        this.dynamicForm.moveItemUp(this,() => {
+            FormDispatcher.dispatchDrop(this.getElement());
+        });
     }
 
     public down()
     {
-        let wyswigs = this.$element.find('[data-wysiwyg]');
-        let self = this;
-        if (wyswigs.length) {
-            form.destroyWysiwyg(this.$element);
-            this.dynamicForm.moveItemDown(this,function() {
-                form.initWysiwyg(self.getElement());
-            });
-        } else {
-            this.dynamicForm.moveItemDown(this);
-        }
+        FormDispatcher.dispatchMove(this.getElement());
+        this.dynamicForm.moveItemDown(this,() => {
+            FormDispatcher.dispatchDrop(this.getElement());
+        });
     }
 
     public remove()

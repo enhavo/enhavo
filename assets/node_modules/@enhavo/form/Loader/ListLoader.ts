@@ -1,16 +1,13 @@
-import FormType from "@enhavo/form/FormType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import ListType from "@enhavo/form/Type/ListType";
 
 export default class ListLoader extends AbstractLoader
 {
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, '[data-list]');
         for(element of elements) {
-            data.push(new ListType(element));
+            new ListType(element);
         }
-        return data;
     }
 }

@@ -1,6 +1,5 @@
 import * as $ from "jquery";
 import MediaType from "@enhavo/media/Type/MediaType";
-import FormType from "@enhavo/form/FormType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import "@enhavo/media/assets/styles/style.scss";
 import ImageCropperExtension from "@enhavo/media/Extension/ImageCropperExtension";
@@ -45,18 +44,15 @@ export default class MediaLoader extends AbstractLoader
         });
     }
 
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
         this.bindDragAndDrop();
         this.initImageCropper();
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, '[data-media-type]');
         for(element of elements) {
             let type = new MediaType(element);
-            data.push(type);
             MediaType.mediaTypes.push(type);
         }
-        return data;
     }
 
     private bindDragAndDrop()

@@ -9,14 +9,14 @@ export default class FormDispatcher
     public static dispatchMove(element: HTMLElement)
     {
         let event = new FormElementEvent(element);
-        $('body').trigger('formInsert', event);
+        $('body').trigger('formMove', event);
         return event;
     }
 
     public static dispatchDrop(element: HTMLElement)
     {
         let event = new FormElementEvent(element);
-        $('body').trigger('formInsert', event);
+        $('body').trigger('formDrop', event);
         return event;
     }
 

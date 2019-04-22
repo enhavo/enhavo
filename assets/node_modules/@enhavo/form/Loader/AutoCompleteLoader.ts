@@ -1,6 +1,5 @@
 import AutoCompleteType from "@enhavo/form/Type/AutoCompleteType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
-import FormType from "@enhavo/form/FormType";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
@@ -14,10 +13,9 @@ export default class DynamicFormLoader extends AbstractLoader
         this.application = application;
     }
 
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, '[data-auto-complete-entity]');
         for(element of elements) {
             let config = new AutoCompleteConfig();
             config.create = (type: AutoCompleteType, url: string) => {
@@ -28,8 +26,7 @@ export default class DynamicFormLoader extends AbstractLoader
                         url: url
                     }))
             };
-            data.push(new AutoCompleteType(element, config));
+           new AutoCompleteType(element, config);
         }
-        return data;
     }
 }

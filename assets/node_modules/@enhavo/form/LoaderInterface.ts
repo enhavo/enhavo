@@ -1,6 +1,10 @@
-import FormType from "@enhavo/form/FormType";
-
 export default interface LoaderInterface
 {
-    load(element: HTMLElement, selector: string): FormType[]
+    insert(element: HTMLElement): void;
+
+    release(element: HTMLElement): void;
+
+    drop(element: HTMLElement): void;
+
+    move(element: HTMLElement): void;
 }

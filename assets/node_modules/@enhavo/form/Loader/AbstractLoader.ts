@@ -1,6 +1,7 @@
 import * as $ from "jquery";
+import LoaderInterface from "@enhavo/form/LoaderInterface";
 
-export default abstract class AbstractLoader
+export default abstract class AbstractLoader implements LoaderInterface
 {
     protected findElements(element: HTMLElement, selector: string) : HTMLElement[]
     {
@@ -15,5 +16,25 @@ export default abstract class AbstractLoader
         });
 
         return data;
+    }
+
+    insert(element: HTMLElement): void
+    {
+
+    }
+
+    release(element: HTMLElement): void
+    {
+
+    }
+
+    drop(element: HTMLElement): void
+    {
+
+    }
+
+    move(element: HTMLElement): void
+    {
+
     }
 }

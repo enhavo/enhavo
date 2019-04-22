@@ -1,16 +1,30 @@
-import FormType from "@enhavo/form/FormType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import WysiwygType from "@enhavo/form/Type/WysiwygType";
+import * as tinymce from "tinymce";
 
 export default class WysiwygLoader extends AbstractLoader
 {
-    public load(element: HTMLElement, selector: string): FormType[]
+    public release(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, '[data-wysiwyg]');
         for(element of elements) {
-            data.push(new WysiwygType(element));
+            new WysiwygType(element);
         }
-        return data;
+    }
+
+    public move(element: HTMLElement): void
+    {
+        let elements = this.findElements(element, '[data-wysiwyg]');
+        for(element of elements) {
+            tinymce.EditorManager.remove('#'+element.id);
+        }
+    }
+
+    public drop(element: HTMLElement): void
+    {
+        let elements = this.findElements(element, '[data-wysiwyg]');
+        for(element of elements) {
+            new WysiwygType(element);
+        }
     }
 }

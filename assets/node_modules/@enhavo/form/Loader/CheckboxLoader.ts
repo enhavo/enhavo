@@ -1,16 +1,13 @@
-import FormType from "@enhavo/form/FormType";
 import CheckboxType from "@enhavo/form/Type/CheckboxType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 
 export default class CheckboxLoader extends AbstractLoader
 {
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element,'input[type=radio],input[type=checkbox]');
         for(element of elements) {
-            data.push(new CheckboxType(element));
+            new CheckboxType(element);
         }
-        return data;
     }
 }

@@ -172,7 +172,7 @@ export default class DynamicFormType extends FormType
                 if(button && button.getElement()) {
                     form.insertAfter(button.getElement());
                 } else {
-                    form.append(dynamicForm.$container);
+                    form.append(<HTMLElement>dynamicForm.$container.get(0));
                 }
 
                 dynamicForm.items.push(new DynamicFormItem(form.getElement(), dynamicForm));

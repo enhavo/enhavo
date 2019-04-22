@@ -25,28 +25,34 @@ export default class FormRegistry
     public static INSERT = 'insert';
     public static RELEASE = 'release';
 
-    addType(loader: LoaderInterface, selector: string, on: string = FormRegistry.INSERT)
+    addLoader(loader: LoaderInterface)
     {
-        if (on == FormRegistry.INSERT) {
-            FormListener.onInsert((event: FormInsertEvent) => {
-                loader.load(event.getElement(), selector);
-            });
-        } else if (on == FormRegistry.RELEASE) {
-            FormListener.onRelease((event: FormReleaseEvent) => {
-                loader.load(event.getElement(), selector);
-            });
-        }
+        FormListener.onInsert((event: FormInsertEvent) => {
+            loader.insert(event.getElement());
+        });
+
+        FormListener.onRelease((event: FormReleaseEvent) => {
+            loader.release(event.getElement());
+        });
+
+        FormListener.onMove((event: FormReleaseEvent) => {
+            loader.move(event.getElement());
+        });
+
+        FormListener.onDrop((event: FormReleaseEvent) => {
+            loader.drop(event.getElement());
+        });
     }
 
     load() {
-        this.addType(new CheckboxLoader(), 'input[type=radio],input[type=checkbox]', FormRegistry.INSERT);
-        this.addType(new SelectLoader(), 'select', FormRegistry.INSERT);
-        this.addType(new DateTimeLoader(), '[data-date-time-picker]', FormRegistry.INSERT);
-        this.addType(new DateLoader(), '[data-date-picker]', FormRegistry.INSERT);
-        this.addType(new WysiwygLoader(), '[data-wysiwyg]', FormRegistry.RELEASE);
-        this.addType(new ListLoader(), '[data-list]', FormRegistry.INSERT);
-        this.addType(new DynamicFormLoader(this.application), '[data-dynamic-form]', FormRegistry.INSERT);
-        this.addType(new MediaLoader(this.application), '[data-media-type]', FormRegistry.INSERT);
-        this.addType(new AutoCompleteLoader(this.application), '[data-auto-complete-entity]', FormRegistry.INSERT);
+        this.addLoader(new CheckboxLoader());
+        this.addLoader(new SelectLoader());
+        this.addLoader(new DateTimeLoader());
+        this.addLoader(new DateLoader());
+        this.addLoader(new WysiwygLoader());
+        this.addLoader(new ListLoader());
+        this.addLoader(new DynamicFormLoader(this.application));
+        this.addLoader(new MediaLoader(this.application));
+        this.addLoader(new AutoCompleteLoader(this.application));
     }
 }

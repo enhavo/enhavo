@@ -1,16 +1,13 @@
-import FormType from "@enhavo/form/FormType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import DateTimeType from "@enhavo/form/Type/DateTimeType";
 
 export default class DateTimeLoader extends AbstractLoader
 {
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, '[data-date-time-picker]');
         for(element of elements) {
-            data.push(new DateTimeType(element));
+            new DateTimeType(element);
         }
-        return data;
     }
 }

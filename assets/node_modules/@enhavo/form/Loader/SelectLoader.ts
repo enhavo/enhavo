@@ -1,16 +1,13 @@
-import FormType from "@enhavo/form/FormType";
 import AbstractLoader from "@enhavo/form/Loader/AbstractLoader";
 import SelectType from "@enhavo/form/Type/SelectType";
 
-export default class CheckboxLoader extends AbstractLoader
+export default class SelectLoader extends AbstractLoader
 {
-    public load(element: HTMLElement, selector: string): FormType[]
+    public insert(element: HTMLElement): void
     {
-        let data = [];
-        let elements = this.findElements(element, selector);
+        let elements = this.findElements(element, 'select');
         for(element of elements) {
-            data.push(new SelectType(element));
+           new SelectType(element);
         }
-        return data;
     }
 }

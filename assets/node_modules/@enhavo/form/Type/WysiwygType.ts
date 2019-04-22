@@ -89,10 +89,6 @@ export default class WysiwygType extends FormType
             options.content_css = config.content_css
         }
 
-        tinymce.init(options);
-    }
-
-    public destroy() {
-        tinymce.remove(this);
+        tinymce.EditorManager.init(options);
     }
 }
