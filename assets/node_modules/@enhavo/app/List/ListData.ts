@@ -9,4 +9,5 @@ export default class ListData
     public items: Array<Item>;
     public loading: boolean = false;
     public editView: number = null;
+    public token: string;
 }

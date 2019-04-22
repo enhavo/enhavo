@@ -3,12 +3,7 @@
         <view-view v-bind:data="view"></view-view>
         <flash-messages v-bind:messages="messages"></flash-messages>
         <action-bar v-bind:primary="actions"></action-bar>
-        <list-list
-            v-bind:columns="list.columns"
-            v-bind:items="list.items"
-            v-bind:loading="list.loading"
-        >
-        </list-list>
+        <list-list v-bind:data="list"></list-list>
     </div>
 </template>
 

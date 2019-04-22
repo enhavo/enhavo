@@ -4,7 +4,7 @@
             <div class="view-table-head">
                 <div class="view-table-head-columns">
                     <div
-                        v-for="column in columns"
+                        v-for="column in data.columns"
                         v-bind:key="column.key"
                         v-bind:style="getColumnStyle(column)"
                         class="view-table-col"
@@ -14,10 +14,12 @@
                 </div>
             </div>
 
-            <template v-if="!loading">
-                <template v-for="item in items">
-                    <list-item v-bind:columns="columns" v-bind:data="item"></list-item>
-                </template>
+            <template v-if="!data.loading">
+                <draggable group="list" v-model="data.items" v-on:change="save($event, null)">
+                    <template v-for="item in data.items">
+                        <list-item v-bind:columns="data.columns" v-bind:data="item" :key="item.id"></list-item>
+                    </template>
+                </draggable>
             </template>
 
             <template v-else>
@@ -35,22 +37,22 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
-    import Item from "@enhavo/app/List/Components/ItemComponent.vue";
+    import ItemComponent from "@enhavo/app/List/Components/ItemComponent.vue";
+    import ListData from "@enhavo/app/List/ListData";
+    import * as draggable from 'vuedraggable';
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    import ListApplication from "@enhavo/app/List/ListApplication";
+    const application = <ListApplication>ApplicationBag.getApplication();
 
-    Vue.component('list-item', Item);
+    Vue.component('draggable', draggable);
+    Vue.component('list-item', ItemComponent);
 
     @Component()
     export default class ListView extends Vue {
         name = 'list-list';
 
         @Prop()
-        columns: Array<object>;
-
-        @Prop()
-        items: Array<object>;
-
-        @Prop()
-        loading: boolean;
+        data: ListData;
 
         calcColumnWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
@@ -63,6 +65,15 @@
                 {width: this.calcColumnWidth(column.width)}
             );
 
+        }
+
+        save(event, parent)
+        {
+            if(event.added) {
+                application.getList().save(parent);
+            } else if(event.moved) {
+                application.getList().save(parent);
+            }
         }
     }
 </script>

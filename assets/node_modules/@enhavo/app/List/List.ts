@@ -18,6 +18,8 @@ import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import Translator from "@enhavo/core/Translator";
 import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import Message from "@enhavo/app/FlashMessage/Message";
 
 export default class List implements Editable
 {
@@ -27,9 +29,17 @@ export default class List implements Editable
     private data: ListData;
     private view: View;
     private translator: Translator;
+    private flashMessenger: FlashMessenger;
 
-    constructor(data: ListData, eventDispatcher: EventDispatcher, view: View, columnManager: ColumnManager, router: Router, translator: Translator)
-    {
+    constructor(
+        data: ListData,
+        eventDispatcher: EventDispatcher,
+        view: View,
+        columnManager: ColumnManager,
+        router: Router,
+        translator: Translator,
+        flashMessenger: FlashMessenger
+    ) {
         _.extend(data, new ListData);
         this.data = data;
         this.eventDispatcher = eventDispatcher;
@@ -37,6 +47,7 @@ export default class List implements Editable
         this.view = view;
         this.router = router;
         this.translator = translator;
+        this.flashMessenger = flashMessenger;
 
         let key = this.getEditKey();
         this.eventDispatcher.dispatch(new LoadDataEvent(key))
@@ -64,10 +75,11 @@ export default class List implements Editable
         let url = this.router.generate(this.data.dataRoute);
         this.data.loading = true;
         axios
-            .post(url)
+            .get(url)
             // executed on success
             .then(response => {
                 this.data.items = this.createItemsData(response.data.resources);
+                this.data.token = response.data.token;
                 this.data.loading = false;
             })
             // executed on error
@@ -139,6 +151,46 @@ export default class List implements Editable
         }, this.view.getId())).then((view: ViewInterface) => {
             this.setEditView(view.id);
         }).catch(() => {});
+    }
+
+    save(parent: Item)
+    {
+        let items: Item[] = null;
+        if(parent === null) {
+            items = this.data.items
+        } else {
+            items = parent.children;
+        }
+
+        let ids = [];
+        for(let item of items) {
+            ids.push(item.id);
+        }
+
+        let data = {
+            parent: parent ? parent.id : null,
+            items: ids
+        };
+
+        let url = this.router.generate(this.data.dataRoute, {
+            _csrf_token: this.data.token,
+        });
+        axios
+            .post(url, data)
+            // executed on success
+            .then(response => {
+                this.flashMessenger.addMessage(new Message(
+                    'success',
+                    this.translator.trans('enhavo_app.list.message.save')
+                ))
+            })
+            // executed on error
+            .catch(error => {
+                this.flashMessenger.addMessage(new Message(
+                    'success',
+                    this.translator.trans('enhavo_app.list.message.error')
+                ))
+            })
     }
 }
 

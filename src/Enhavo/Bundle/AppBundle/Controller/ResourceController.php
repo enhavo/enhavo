@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -133,7 +134,6 @@ class ResourceController extends BaseController
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
-                $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
@@ -214,7 +214,6 @@ class ResourceController extends BaseController
         $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->repository->add($newResource);
-        $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
         $this->appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
 
@@ -321,8 +320,16 @@ class ResourceController extends BaseController
         $request->query->set('limit', 1000000); // never show pagination
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
-        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
+        if(in_array($request->getMethod(), ['POST'])) {
+            if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
+                throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
+            }
+            $this->sortingManger->handleSort($request, $configuration, $this->repository);
+            return new JsonResponse();
+        }
+
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
         $view = $this->viewFactory->create('list_data', [
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
@@ -368,32 +375,6 @@ class ResourceController extends BaseController
             throw $this->createNotFoundException();
         }
         $this->batchManager->executeBatch($batch, $resources);
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function moveAfterAction(Request $request): JsonResponse
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $resource = $this->findOr404($configuration);
-        $this->sortingManger->moveAfter($configuration, $this->metadata, $resource, $this->repository, $request->get('target'));
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function moveToPageAction(Request $request): JsonResponse
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $resource = $this->findOr404($configuration);
-        $this->sortingManger->moveToPage($configuration, $this->metadata, $resource, $this->repository, $request->get('page'), $request->get('top'));
 
         return new JsonResponse();
     }

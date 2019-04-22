@@ -22,6 +22,10 @@ enhavo_app:
     grid:
         label:
             entry_per_page: 'Entries per page'
+    list:
+        message:
+            save: 'Successfully saved'
+            error: 'Error occurred'
     delete:
         message:
             question: 'Do you really want to delete this resource?'

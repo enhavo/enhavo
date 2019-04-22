@@ -86,6 +86,7 @@ enhavo_page_page_data:
             viewer:
                 translationDomain: EnhavoPageBundle
                 children_property: children
+                parent_property: parent
                 columns:
                     public:
                         type: boolean

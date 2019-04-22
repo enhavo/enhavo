@@ -57,6 +57,7 @@ export class ListApplication extends AbstractApplication implements ActionAwareA
                 this.getColumnManager(),
                 this.getRouter(),
                 this.getTranslator(),
+                this.getFlashMessenger()
             )
         }
         return this.list;

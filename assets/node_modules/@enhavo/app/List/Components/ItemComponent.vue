@@ -15,9 +15,11 @@
             </div>
         </div>
         <div style="margin-left: 10px" v-if="data.expand">
-            <template v-for="item in data.children">
-                <list-item v-bind:columns="columns" v-bind:data="item"></list-item>
-            </template>
+            <draggable group="list" v-model="data.children" v-on:change="save($event, data)">
+                <template v-for="item in data.children">
+                    <list-item v-bind:columns="columns" v-bind:data="item" :key="item.id"></list-item>
+                </template>
+            </draggable>
         </div>
     </div>
 </template>
@@ -68,6 +70,15 @@
                 return this.data.data[column];
             }
             return null;
+        }
+
+        save(event, parent)
+        {
+            if(event.added) {
+                application.getList().save(parent);
+            } else if(event.moved) {
+                application.getList().save(parent);
+            }
         }
     }
 </script>

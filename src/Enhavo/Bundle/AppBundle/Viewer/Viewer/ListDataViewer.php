@@ -53,6 +53,8 @@ class ListDataViewer extends AbstractViewer
             $this->getViewerOption('position_property', $requestConfiguration)
         ]);
 
+        $token = $this->container->get('security.csrf.token_manager')->getToken('list_data');
+        $parameters->set('token', $token->getValue());
         $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources'], $childrenProperty, $positionProperty));
     }
 
