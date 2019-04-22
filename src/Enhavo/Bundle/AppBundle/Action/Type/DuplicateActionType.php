@@ -13,12 +13,22 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
 
         $data = array_merge($data, [
             'confirm' => $options['confirm'],
-            'confirm_message' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
-            'confirm_label_ok' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
-            'confirm_label_cancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
+            'confirmMessage' => $this->translator->trans($options['confirm_message'], [], $options['translation_domain']),
+            'confirmLabelOk' => $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']),
+            'confirmLabelCancel' => $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']),
         ]);
 
         return $data;
+    }
+
+    protected function getUrl(array $options, $resource = null)
+    {
+        $parameters = [];
+        if(!isset($options['route_parameters']['id'])) {
+            $parameters['id'] = $resource->getId();
+        }
+        $parameters = array_merge_recursive($parameters, $options['route_parameters']);
+        return $this->router->generate($options['route'], $parameters);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -27,7 +37,7 @@ class DuplicateActionType extends AbstractUrlActionType implements ActionTypeInt
 
         $resolver->setDefaults([
             'component' => 'duplicate-action',
-            'label' => 'label.download',
+            'label' => 'label.duplicate',
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'content_copy',
             'confirm' => true,

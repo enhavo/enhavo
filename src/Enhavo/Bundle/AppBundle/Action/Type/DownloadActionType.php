@@ -2,11 +2,11 @@
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
+use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DownloadActionType extends AbstractActionType implements ActionTypeInterface
+class DownloadActionType extends AbstractUrlActionType implements ActionTypeInterface
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -16,7 +16,7 @@ class DownloadActionType extends AbstractActionType implements ActionTypeInterfa
             'component' => 'download-action',
             'label' => 'label.download',
             'translation_domain' => 'EnhavoAppBundle',
-            'icon' => 'delete'
+            'icon' => 'file_download'
         ]);
     }
 

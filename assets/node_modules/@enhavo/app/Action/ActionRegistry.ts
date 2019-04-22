@@ -9,6 +9,8 @@ import PreviewActionFactory from "@enhavo/app/Action/Factory/PreviewActionFactor
 import SaveActionFactory from "@enhavo/app/Action/Factory/SaveActionFactory";
 import EventActionFactory from "@enhavo/app/Action/Factory/EventActionFactory";
 import OpenActionFactory from "@enhavo/app/Action/Factory/OpenActionFactory";
+import DuplicateActionFactory from "@enhavo/app/Action/Factory/DuplicateActionFactory";
+import DownloadActionFactory from "@enhavo/app/Action/Factory/DownloadActionFactory";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import DropdownActionComponent from './Components/DropdownActionComponent.vue'
 import ActionComponent from './Components/ActionComponent.vue'
@@ -34,5 +36,7 @@ export default class ActionRegistry extends Registry
         this.register('save-action', ActionComponent, new SaveActionFactory(application));
         this.register('event-action', ActionComponent, new EventActionFactory(application));
         this.register('open-action', ActionComponent, new OpenActionFactory(application));
+        this.register('duplicate-action', ActionComponent, new DuplicateActionFactory(application));
+        this.register('download-action', ActionComponent, new DownloadActionFactory(application));
     }
 }
