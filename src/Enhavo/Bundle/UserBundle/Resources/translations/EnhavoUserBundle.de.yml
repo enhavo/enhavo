@@ -49,6 +49,10 @@ reset:
     login: Zur Anmeldung
   message:
     email: Die Email wurde vesendet.
+change_password:
+  message:
+    success: 'Passwort erfolgreich geändert'
+    error: 'Fehler beim speichern'
 confirm:
   form:
     label:

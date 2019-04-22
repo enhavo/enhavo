@@ -1,6 +1,6 @@
 enhavo_app:
     logout: 'Logout'
-    change_password: 'Passwort ändern'
+    change_password: 'Change password'
     edit: 'Edit'
     preview: 'Preview'
     open_homepage: 'Open Homepage'

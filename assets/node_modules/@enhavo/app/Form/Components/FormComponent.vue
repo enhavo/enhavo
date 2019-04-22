@@ -4,7 +4,7 @@
             <view-view v-bind:data="view"></view-view>
             <flash-messages v-bind:messages="messages"></flash-messages>
             <action-bar v-bind:primary="actions" v-bind:secondary="actionsSecondary"></action-bar>
-            <div class="tab-header">
+            <div class="tab-header" v-if="tabs.length > 1">
                 <template v-for="tab in tabs">
                     <tab-head v-bind:selected="isCurrentTab(tab)" v-bind:tab="tab"></tab-head>
                 </template>

@@ -35,6 +35,7 @@ services:
         public: true
         arguments:
             - '@fos_rest.view_handler'
+            - '@view.factory'
             - '@fos_user.user_manager'
             - '@fos_user.change_password.form.factory'
         calls:

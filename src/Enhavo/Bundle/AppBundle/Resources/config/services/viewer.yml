@@ -32,6 +32,17 @@ services:
         tags:
             - { name: enhavo.viewer, alias: index }
 
+    Enhavo\Bundle\AppBundle\Viewer\Viewer\FormViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '%enhavo_app.form_themes%'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: form }
+
     Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer:
         parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\BaseViewer
         public: true

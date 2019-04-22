@@ -49,6 +49,10 @@ reset:
     login: Login
   message:
       email: An email was sent.
+change_password:
+    message:
+        success: 'Password saved successfully'
+        error: 'Error while saving'
 confirm:
   form:
     label:
