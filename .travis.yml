@@ -22,6 +22,7 @@ before_script:
     - bin/console cache:warmup --env=test --no-debug
     - bin/console doctrine:schema:create --env=test
     - bin/console assets:install --env=test --no-debug
+    - bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 
     - php -v
     - php -i | grep -v GITHUB_OAUTH_TOKEN
