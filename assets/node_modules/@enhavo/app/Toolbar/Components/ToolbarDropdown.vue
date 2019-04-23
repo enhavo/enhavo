@@ -5,9 +5,9 @@
             <i v-bind:class="['open-indicator', 'icon icon-keyboard_arrow_down', {'icon-keyboard_arrow_up': isOpen }]" aria-hidden="true"></i>
         </div>
         <div class="toolbar-dropdown-menu" v-show="isOpen">
-            <toolbar-dropdown-item v-on:click="logout" :label="label('enhavo_app.logout')"></toolbar-dropdown-item>
-            <toolbar-dropdown-item v-on:click="changePassword" :label="label('enhavo_app.change_password')"></toolbar-dropdown-item>
-            <toolbar-dropdown-item v-on:click="openHomepage" :label="label('enhavo_app.open_homepage')"></toolbar-dropdown-item>
+            <toolbar-dropdown-item v-on:click="logout();close();" :label="label('enhavo_app.logout')"></toolbar-dropdown-item>
+            <toolbar-dropdown-item v-on:click="changePassword();close();" :label="label('enhavo_app.change_password')"></toolbar-dropdown-item>
+            <toolbar-dropdown-item v-on:click="openHomepage();close();" :label="label('enhavo_app.open_homepage')"></toolbar-dropdown-item>
         </div>
     </div>
 </template>

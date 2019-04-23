@@ -1,6 +1,6 @@
-.filter-bar {display:flex;align-items:center;margin-bottom:70px;
+.filter-bar {display:flex;align-items:baseline;margin-bottom:60px;flex-wrap:wrap;
   .apply-button {@extend %iconButton;}
-  .view-table-filter {margin-right:20px;
+  .view-table-filter {margin-right:20px;margin-bottom:10px;
     + &:last-child {margin-right:0;}
     input[type="text"] {@extend %textfield;
       &.has-value {border-color:$color1;}

@@ -312,7 +312,7 @@ export default class Grid implements Editable
         let data = [];
         for(let row of objects) {
             let rowData = new RowData();
-            data.push(_.extend(rowData, row));
+            data.push(_.extend(row, rowData));
         }
         return data;
     }

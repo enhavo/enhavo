@@ -6,9 +6,9 @@
             <div @click="data.confirm.deny()">{{ data.confirm.denyText }}</div>
         </div>
 
-        <div v-if="data.alert">
-            {{ data.alert }}
-            <div @click="data.alert = null">Ok</div>
+        <div v-if="data.alert" class="alert-box">
+            <div class="text">{{ data.alert }}</div>
+            <div @click="data.alert = null" class="btn">Ok</div>
         </div>
 
         <div v-if="data.loading">Loading</div>

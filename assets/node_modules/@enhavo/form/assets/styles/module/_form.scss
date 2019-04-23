@@ -10,7 +10,7 @@
 
     .formwidget-container {
         input[type="file"] {border:0;background:transparent;}
-        input[type="text"] {@extend %textfield;}
+        input[type="text"],input[type="password"] {@extend %textfield;}
         textarea {@extend %textarea;}
     }
     .label-help-container {font-size:0.85rem;line-height:1.1em;padding-left:2px;margin-bottom:1px;

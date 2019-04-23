@@ -25,7 +25,7 @@
 
         <template v-if="!loading">
             <template v-for="row in rows">
-                <table-row v-bind:batches="batches"  v-bind:columns="columns" v-bind:data="row"></table-row>
+                <table-row v-bind:batches="batches" :selected="row.selected" v-bind:columns="columns" v-bind:data="row"></table-row>
             </template>
         </template>
         <template v-else>

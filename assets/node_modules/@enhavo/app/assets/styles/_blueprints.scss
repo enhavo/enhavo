@@ -1,6 +1,6 @@
 %btn {border-radius:3px;background:$color1;color:#fff;font-family:inherit;margin:0;padding:4px 15px;border:0;cursor:pointer;}
 
-%checkboxContainer {width: 20px;height: 20px;position:relative;cursor:pointer;
+%checkboxContainer {position:relative;cursor:pointer;padding-left:20px;min-height:20px;min-width:20px;cursor:pointer;
   input[type="checkbox"] {opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;z-index:1;margin:0;padding:0;
     &:checked {
       + span {background:$color1;border-color:$color1;@extend .icon-check;
@@ -9,10 +9,11 @@
     }
   }
 
-  span {border-radius: 2px;border:1px solid $grey3;width:100%;height:100%;position:absolute;top:0;left:0;display:block;}
+  span {border-radius: 2px;border:1px solid $grey3;width: 20px;height: 20px;position:absolute;top:0;left:0;display:block;}
+  .label {margin-left:10px;display:inline-block;padding-top:3px;}
 }
 
-%iconButton {width:40px;line-height:40px;border-radius:20px;color:#fff;background:$color1;border:0;padding:0;cursor:pointer;
+%iconButton {width:30px;line-height:30px;border-radius:15px;color:#fff;background:$color1;border:0;padding:0;cursor:pointer;
   i {line-height:inherit;}
 }
 

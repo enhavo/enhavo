@@ -3,7 +3,7 @@
     &.menu-collapsed {width:$collapsedMenuWidth;
       .branding-container {background-position:8px 52%;}
     }
-    .branding-container {height:$toolbarHeight;background:url('../images/enhavo_white.svg');background-size:auto 50%;background-position:10px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);}
+    .branding-container {height:$toolbarHeight;background:url('../images/enhavo_white.svg');background-size:auto 50%;background-position:10px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
   }
   .toolbar-viewstack-container {width:100%;display:flex;flex-direction:column;background:#fff;@include transition(width 300ms);}
 }

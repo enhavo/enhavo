@@ -17,8 +17,8 @@
         .view-label {display:block;}
       }
       &:before {color:$grey4;left:-2px;font-size:1.3rem;}
-      .view-label {display:none;position:absolute;top:50%;left:calc(100% + 10px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$grey1;color:$grey2;border-radius:3px;
-        &:before {content:"";position:absolute;left:-8px;top:calc(50% - 9px);border-right:8px solid;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right-color:$grey1;}
+      .view-label {display:none;position:absolute;top:50%;left:calc(100% + 10px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$color1b;color:#fff;border-radius:3px;
+        &:before {content:"";position:absolute;left:-8px;top:calc(50% - 9px);border-right:8px solid;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right-color:$color1b;}
       }
     }
   }

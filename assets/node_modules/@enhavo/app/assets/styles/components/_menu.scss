@@ -34,6 +34,7 @@
   }
 
   .menu-child-title {padding:0 10px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;position:relative;
+    &:hover {color:#fff;}
     i {
       &.open-indicator {
         position:absolute;right:10px;
@@ -41,6 +42,25 @@
     }
     .symbol-container {width:26px;}
   }
+
+  .menu-dropdown {
+      .menu-dropdown-child {margin:0 6px;
+          .v-select {background:$color2b;color:$grey5;border-radius:10px;
+            &.vs--open {border-bottom-left-radius:0;border-bottom-right-radius:0;}
+            .vs__actions {padding:0 6px 0 3px;}
+            .vs__dropdown-toggle {border:0;border-radius:0;padding:5px 10px;}
+            .vs__search {@include placeholder{color:$grey4;};margin:0;border:0;padding:0;}
+            .vs__selected {color:#fff;padding:0;margin:0;border:0;}
+            .vs__selected-options {padding:0;}
+            .vs__open-indicator {fill:$grey4;}
+            .vs__dropdown-menu {border:0;background:$color2b;color:$grey4;border-bottom-right-radius:10px;border-bottom-left-radius:10px;box-shadow:none;
+              .vs__dropdown-option {color:$grey4;padding:4px 10px;margin:0 1px;
+                &:hover,&.vs__dropdown-option--highlight {background:$color2;color:$grey5;}
+              }
+            }
+          }
+      }
+    }
 
   .menu-list {flex-wrap: wrap;
     &.selected {
