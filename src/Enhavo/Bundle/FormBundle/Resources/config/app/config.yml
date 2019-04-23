@@ -1,0 +1,3 @@
+enhavo_app:
+    form_themes:
+        - 'EnhavoFormBundle:Form:fields.html.twig'

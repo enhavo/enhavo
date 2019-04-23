@@ -36,7 +36,6 @@ enhavo_content_redirect_table:
     options:
         expose: true
     path: /enhavo/content/redirect/table
-    methods: [GET]
     defaults:
         _controller: enhavo_content.controller.redirect:tableAction
         _sylius:

@@ -32,11 +32,15 @@ enhavo_project_magazine_table:
     options:
         expose: true
     path: /enhavo/project/magazine/table
-    methods: [GET]
     defaults:
         _controller: enhavo_project.controller.magazine:tableAction
         _sylius:
             viewer:
+                columns:
+                    name:
+                        type: property
+                        property: name
+                        label: Name
 
 enhavo_project_magazine_delete:
     options:

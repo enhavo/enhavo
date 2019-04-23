@@ -21,7 +21,7 @@ class ProductOptionMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'sound-mix',
             'label' => 'product.label.product_option',
-            'translationDomain' => 'EnhavoShopBundle',
+            'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_product_option_index',
             'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_OPTION_INDEX',
         ]);

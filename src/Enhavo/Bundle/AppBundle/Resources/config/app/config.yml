@@ -24,20 +24,6 @@ stof_doctrine_extensions:
 sylius_resource:
     authorization_checker: enhavo_app.security.default_authorization_checker
 
-enhavo_assets:
-    require_js:
-        paths:
-            app:
-                location: /bundles/enhavoapp/js
-
 jms_serializer:
     metadata:
         auto_detection: false
-
-enhavo_app:
-    apps:
-      - 'app/app/Menu'
-      - 'app/app/ConditionType'
-      - 'app/app/Adapter/DynamicForm/EnhavoAdapter'
-    form_themes:
-      - 'EnhavoAppBundle:Form:fields.html.twig'

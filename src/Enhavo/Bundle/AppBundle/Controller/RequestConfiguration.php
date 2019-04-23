@@ -65,15 +65,6 @@ class RequestConfiguration extends SyliusRequestConfiguration
         return $this->getParameters()->get('batches', []);
     }
 
-    public function getBatchOptions($type)
-    {
-        $batches = $this->getBatches();
-        if(isset($batches[$type])) {
-            return $batches[$type];
-        }
-        return null;
-    }
-
     public function getFilters()
     {
         return $this->getParameters()->get('filters', []);
@@ -82,5 +73,18 @@ class RequestConfiguration extends SyliusRequestConfiguration
     public function hasFilters()
     {
         return $this->getParameters()->has('filters');
+    }
+
+    public function getSorting(array $sorting = [])
+    {
+        $data = json_decode($this->getRequest()->getContent(), true);
+        if(is_array($data) && isset($data['sorting'])) {
+            foreach($data['sorting'] as $sort) {
+                $sorting[$sort['property']] = $sort['direction'];
+            }
+            return $sorting;
+        }
+
+        return parent::getSorting($sorting);
     }
 }

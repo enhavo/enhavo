@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var FormInitializer = /** @class */ (function () {
@@ -36,13 +36,15 @@ define(["require", "exports"], function (require, exports) {
             $(this.element).insertAfter(element);
             this.release();
         };
+        FormInitializer.prototype.append = function (element) {
+            this.insert();
+            $(element).append(this.element);
+        };
         FormInitializer.prototype.convert = function () {
             if (!this.converted) {
                 this.converted = true;
                 if (this.html) {
-                    var event_1 = new FormConvertEvent(this.html);
-                    $('body').trigger('formConvert', event_1);
-                    this.html = event_1.getHtml();
+                    this.html = FormDispatcher.dispatchConvert(this.html).getHtml();
                     this.element = $($.parseHTML(this.html)).get(0);
                 }
             }
@@ -53,10 +55,11 @@ define(["require", "exports"], function (require, exports) {
             }
             if (!this.released) {
                 this.released = true;
-                var event_2 = new FormReleaseEvent(this.element);
-                $('body').trigger('formRelease', event_2);
-                this.element = event_2.getElement();
+                this.element = FormDispatcher.dispatchRelease(this.element).getElement();
             }
+        };
+        FormInitializer.prototype.init = function () {
+            this.release();
         };
         FormInitializer.prototype.insert = function () {
             if (!this.inserted) {
@@ -64,30 +67,68 @@ define(["require", "exports"], function (require, exports) {
                 if (!this.converted) {
                     this.convert();
                 }
-                var event_3 = new FormInsertEvent(this.element);
-                $('body').trigger('formInsert', event_3);
-                $(document).trigger('gridAddAfter', [this.element]);
-                this.element = event_3.getElement();
+                this.element = FormDispatcher.dispatchInsert(this.element).getElement();
             }
         };
         return FormInitializer;
     }());
     exports.FormInitializer = FormInitializer;
+    var FormDispatcher = /** @class */ (function () {
+        function FormDispatcher() {
+        }
+        FormDispatcher.dispatchMove = function (element) {
+            var event = new FormElementEvent(element);
+            $('body').trigger('formInsert', event);
+            return event;
+        };
+        FormDispatcher.dispatchDrop = function (element) {
+            var event = new FormElementEvent(element);
+            $('body').trigger('formInsert', event);
+            return event;
+        };
+        FormDispatcher.dispatchConvert = function (element) {
+            var event = new FormConvertEvent(element);
+            $('body').trigger('formConvert', event);
+            return event;
+        };
+        FormDispatcher.dispatchInsert = function (element) {
+            var event = new FormInsertEvent(element);
+            $('body').trigger('formInsert', event);
+            return event;
+        };
+        FormDispatcher.dispatchRelease = function (element) {
+            var event = new FormReleaseEvent(element);
+            $('body').trigger('formRelease', event);
+            return event;
+        };
+        return FormDispatcher;
+    }());
+    exports.FormDispatcher = FormDispatcher;
     var FormListener = /** @class */ (function () {
         function FormListener() {
         }
-        FormListener.prototype.onConvert = function (callback) {
+        FormListener.onConvert = function (callback) {
             $('body').on('formConvert', function (event, formEvent) {
                 callback(formEvent);
             });
         };
-        FormListener.prototype.onInsert = function (callback) {
+        FormListener.onInsert = function (callback) {
             $('body').on('formInsert', function (event, formEvent) {
                 callback(formEvent);
             });
         };
-        FormListener.prototype.onRelease = function (callback) {
+        FormListener.onRelease = function (callback) {
             $('body').on('formRelease', function (event, formEvent) {
+                callback(formEvent);
+            });
+        };
+        FormListener.onMove = function (callback) {
+            $('body').on('formMove', function (event, formEvent) {
+                callback(formEvent);
+            });
+        };
+        FormListener.onDrop = function (callback) {
+            $('body').on('formDrop', function (event, formEvent) {
                 callback(formEvent);
             });
         };
@@ -136,4 +177,31 @@ define(["require", "exports"], function (require, exports) {
         return FormInsertEvent;
     }(FormElementEvent));
     exports.FormInsertEvent = FormInsertEvent;
+    var Form = /** @class */ (function () {
+        function Form(element) {
+            this.$element = $(element);
+            this.init();
+        }
+        Form.prototype.init = function () {
+        };
+        return Form;
+    }());
+    var FormElement = /** @class */ (function () {
+        function FormElement(element) {
+            this.$element = $(element);
+            this.init();
+        }
+        FormElement.findElements = function (element, selector) {
+            var data = [];
+            if ($(element).is(selector)) {
+                data.push(element);
+            }
+            $(element).find(selector).each(function (index, element) {
+                data.push(element);
+            });
+            return data;
+        };
+        return FormElement;
+    }());
+    exports.FormElement = FormElement;
 });

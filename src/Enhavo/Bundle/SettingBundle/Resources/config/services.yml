@@ -31,12 +31,10 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget, alias: setting }
+            - { name: enhavo.column, alias: setting }
 
     Enhavo\Bundle\SettingBundle\Menu\SettingMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: setting }
 

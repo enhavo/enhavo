@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\CategoryBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;

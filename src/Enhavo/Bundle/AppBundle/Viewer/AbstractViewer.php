@@ -33,6 +33,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
      * AbstractViewer constructor.
      *
      * @param RequestConfigurationFactory $requestConfigurationFactory
+     * @param ViewerUtil $util
      */
     public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util)
     {
@@ -78,7 +79,7 @@ abstract class AbstractViewer extends AbstractType implements ViewerInterface
         return $view;
     }
 
-    private function getRequestConfiguration(array $options): RequestConfiguration
+    protected function getRequestConfiguration(array $options): ?RequestConfiguration
     {
         $requestConfiguration = $options['request_configuration'];
         if($requestConfiguration instanceof RequestConfiguration) {

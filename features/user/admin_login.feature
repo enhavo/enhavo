@@ -28,7 +28,7 @@ Feature: Admin Login
       | username | peter  |
       | password | savePW |
     And I press "Log in"
-    Then I should be on "/admin/enhavo/dashboard"
+    Then I should be on "/admin/"
 
   Scenario: Log in with missing permission
     Given I am on "/admin"

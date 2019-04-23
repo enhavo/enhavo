@@ -6,3 +6,19 @@ services:
             - '%enhavo_app.login.route_parameters%'
         tags:
             - { name: controller.service_arguments }
+
+    Enhavo\Bundle\AppBundle\Controller\MainController:
+        arguments:
+            - '@enhavo_app.menu.manager'
+            - '%kernel.project_dir%'
+            - '%enhavo_app.branding%'
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\AppBundle\Controller\AbstractViewController:
+        abstract: true
+        arguments:
+            - '@view.factory'
+            - '@fos_rest.view_handler'
+        calls:
+            - [setContainer, ['@service_container']]

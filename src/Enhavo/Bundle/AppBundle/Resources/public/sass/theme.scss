@@ -2,13 +2,8 @@
 @import 'module/vars';
 @import 'module/base';
 @import 'module/navigation';
-@import 'module/form';
-@import 'module/icheck';
-@import 'module/tinymce';
-@import 'module/jquery-ui';
 @import 'module/block';
 @import 'module/format';
-@import 'module/dynamic-form';
 @import 'module/application';
 
 html, body{
@@ -128,7 +123,9 @@ h1.cat{font-size: 36px;color: #454545;font-weight: lighter;padding: 30px 0px;mar
   .confirmation { padding-top:0;font-size:16px;color:#FFF; text-align:center;
     i{ color:#40cf19; padding-right:10px;}
   }
-  .input-container{padding: 17px 20px;background: #FFF;border-radius: 2px;}
+  .input-container{padding: 17px 20px;background: #FFF;border-radius: 2px;
+    input {width:100%;border:0;}
+  }
   .logo{width: 245px;margin: 0 auto;padding: 50px 0;text-align:center;}
   .resetButton { background:#82888b;margin-top: 15px;
     a{ float:none;text-align:center;color:#FFF; font-weight:800;}
@@ -298,61 +295,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 .tabContentContainer {padding-bottom:35px;padding-top:35px;background:#fefefe;border-radius:0 2px 0 0;
-    .choice-input-with-label {
-        &:first-child {
-            .icheckbox-esperanto { margin-left:0;}
-        }
-        .icheckbox-esperanto { border-radius:50%; margin-left:0;}
-    }
-    .list-fields {
-        &.border {
-            > li {border: 1px solid #ddd;padding:10px;}
-        }
-        &.border-delete {
-            > li{border: 1px solid #ddd;padding:10px;
-                > .buttons-container {top:-1px;
-                    .button {line-height:26px;}
-                }
-            }
-        }
-        &.sortable-border {
-            > li{border: 1px solid #ddd;padding:10px;
-                .buttons-container {top:-1px;
-                    .button {line-height:26px;}
-                }
-            }
-        }
-        &.sortable-border-delete {
-            > li{border: 1px solid #ddd;padding:10px;
-                > .buttons-container {top:-1px;
-                    .button {line-height:26px;}
-                }
-            }
-        }
 
-        li {position: relative;
-            + li {margin-top:10px;}
-            .buttons-container {position:absolute;left:calc(100% + 8px);top:0;width:78px;
-                .button {display:inline-block;width:26px;line-height:30px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border:1px solid #ddd;border-right:0;
-                    &:last-child {border-right:1px solid #ddd;}
-                    &.button-delete {background:#eeaaaa;border-color:#eeaaaa;
-                        &:hover {background:#cc8888;border-color:#cc8888;}
-                    }
-                    &:hover {background:$primaryColor;
-                        i { color:#fff;}
-                    }
-                }
-            }
-        }
-
-        .list-fields {
-            > li {
-                .buttons-container {width:60px;left:calc(100% + 4px);
-                    .button {width:20px;line-height:20px;}
-                }
-            }
-        }
-    }
 }
 
 .error {color:#d87676;}

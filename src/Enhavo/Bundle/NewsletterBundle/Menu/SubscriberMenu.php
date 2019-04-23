@@ -18,9 +18,9 @@ class SubscriberMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'user-plus',
+            'icon' => 'add_box',
             'label' => 'subscriber.label.subscriber',
-            'translationDomain' => 'EnhavoNewsletterBundle',
+            'translation_domain' => 'EnhavoNewsletterBundle',
             'route' => 'enhavo_newsletter_subscriber_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX',
         ]);

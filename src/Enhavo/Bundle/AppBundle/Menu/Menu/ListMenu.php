@@ -8,106 +8,82 @@
 
 namespace Enhavo\Bundle\AppBundle\Menu\Menu;
 
-use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenu;
-use Enhavo\Bundle\AppBundle\Menu\Menu;
-use Enhavo\Bundle\AppBundle\Type\TypeFactory;
+use Enhavo\Bundle\AppBundle\Menu\MenuManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListMenu extends AbstractMenu
 {
     /**
-     * @var TypeFactory
+     * @var TranslatorInterface
      */
-    private $factory;
+    private $translator;
 
-    public function __construct(TypeFactory $factory)
+    /**
+     * @var MenuManager
+     */
+    private $menuManager;
+
+    public function __construct(TranslatorInterface $translator, MenuManager $menuManager)
     {
-        $this->factory = $factory;
+        $this->translator = $translator;
+        $this->menuManager = $menuManager;
     }
 
-    public function render(array $options)
+    public function createViewData(array $options)
     {
-        $template = $options['template'];
-        $translationDomain = $options['translationDomain'];
-        $icon = $options['icon'];
-        $label = $options['label'];
-        $menuConfig = $options['menu'];
-
-        $menus = $this->getMenus($menuConfig);
+        $items = $this->menuManager->getMenuItemsByConfiguration($options['children']);
 
         $active = false;
-        foreach($menus as $menu) {
+        foreach($items as $menu) {
             if($menu->isActive()) {
                 $active = true;
                 break;
             }
         }
 
-        return $this->renderTemplate($template, [
-            'label' => $label,
-            'translationDomain' => $translationDomain,
-            'icon' => $icon,
-            'menus' => $menus,
-            'active' => $active
-        ]);
+        $children = [];
+        foreach($items as $menu) {
+            $children[] = $menu->createViewData();
+        }
+
+        $data = [
+            'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
+            'icon' => $options['icon'],
+            'component' => $options['component'],
+            'class' => $options['class'],
+            'active' => $active,
+            'items' => $children
+        ];
+
+        $parentData = parent::createViewData($options);
+        $data = array_merge($parentData, $data);
+        return $data;
     }
     
     public function isHidden(array $options)
     {
         $isHidden = parent::isHidden($options);
         if(!$isHidden) {
-            $menus = $this->getMenus($options['menu']);
-            return count($menus) == 0;
+            $items = $this->menuManager->getMenuItemsByConfiguration($options['children']);
+            return count($items) == 0;
         }
         return $isHidden;
-    }
-
-    /**
-     * @return AuthorizationCheckerInterface
-     */
-    private function getSecurityChecker()
-    {
-        return $this->container->get('security.authorization_checker');
-    }
-
-    /**
-     * @param $menuConfig
-     * @return Menu[]
-     * @throws TypeMissingException
-     */
-    private function getMenus($menuConfig)
-    {
-        $menus = [];
-        foreach($menuConfig as $name => $options) {
-            /** @var Menu $menu */
-            $menu = $this->factory->create($options);
-
-            if($menu->isHidden()) {
-                continue;
-            }
-
-            if($menu->getPermission() !== null && !$this->getSecurityChecker()->isGranted($menu->getPermission())) {
-                continue;
-            }
-
-            $menus[] = $menu;
-        }
-        return $menus;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Menu:list.html.twig',
-            'translationDomain' => null,
-            'icon' => ''
+            'component' => 'menu-list',
+            'translation_domain' => null,
+            'icon' => null,
+            'children' => [],
+            'class' => null,
         ]);
 
         $resolver->setRequired([
             'label',
-            'menu'
         ]);
     }
 

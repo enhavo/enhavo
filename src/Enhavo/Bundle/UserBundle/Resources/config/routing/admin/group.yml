@@ -50,7 +50,6 @@ enhavo_user_group_table:
     options:
         expose: true
     path: /enhavo/user/group/table
-    methods: [GET]
     defaults:
         _controller: enhavo_user.controller.group:tableAction
         _sylius:

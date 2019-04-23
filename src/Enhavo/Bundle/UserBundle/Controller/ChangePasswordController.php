@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\View;
@@ -26,6 +27,11 @@ class ChangePasswordController extends AbstractController
     private $viewHandler;
 
     /**
+     * @var ViewFactory
+     */
+    private $viewFactory;
+
+    /**
      * @var UserManager
      */
     private $userManager;
@@ -38,12 +44,14 @@ class ChangePasswordController extends AbstractController
     /**
      * ChangePasswordController constructor.
      * @param ViewHandler $viewHandler
+     * @param ViewFactory $viewFactory
      * @param UserManager $userManager
      * @param FactoryInterface $formFactory
      */
-    public function __construct(ViewHandler $viewHandler, UserManager $userManager, FactoryInterface $formFactory)
+    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, FactoryInterface $formFactory)
     {
         $this->viewHandler = $viewHandler;
+        $this->viewFactory = $viewFactory;
         $this->userManager = $userManager;
         $this->formFactory = $formFactory;
     }
@@ -55,27 +63,22 @@ class ChangePasswordController extends AbstractController
             throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        $configuration = $this->createConfiguration($request);
-
         $form = $this->formFactory->createForm();
         $form->setData($user);
         $form->handleRequest($request);
-        $valid = true;
         if($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $this->userManager->updateUser($user);
+                $this->addFlash('success', $this->get('translator')->trans('change_password.message.success', [], 'EnhavoUserBundle'));
             } else {
-                $valid = false;
+                $this->addFlash('error', $this->get('translator')->trans('change_password.message.error', [], 'EnhavoUserBundle'));
             }
         }
 
-        $view = View::create($form)
-            ->setData([
-                'form' => $form->createView(),
-            ])
-            ->setStatusCode($valid ? 200 : 400)
-            ->setTemplate($configuration->getTemplate('EnhavoUserBundle:Admin:User/change-password.html.twig'))
-        ;
+        $view = $this->viewFactory->create('form', [
+            'resource' => $user,
+            'form' => $form
+        ]);
 
         return $this->viewHandler->handle($view);
     }

@@ -1,0 +1,12 @@
+.filter-bar {display:flex;align-items:center;margin-bottom:70px;
+  .apply-button {@extend %iconButton;}
+  .view-table-filter {margin-right:20px;
+    + &:last-child {margin-right:0;}
+    input[type="text"] {@extend %textfield;
+      &.has-value {border-color:$color1;}
+    }
+    .checkbox-container {@extend %checkboxContainer;}
+  }
+}
+
+.grid {padding:50px 30px;}

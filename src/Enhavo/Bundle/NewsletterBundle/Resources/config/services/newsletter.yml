@@ -1,19 +1,19 @@
 services:
-    Enhavo\Bundle\NewsletterBundle\Button\SendButton:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.button, alias: newsletter_send }
+#    Enhavo\Bundle\NewsletterBundle\Button\SendButton:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.button, alias: newsletter_send }
+#
+#    Enhavo\Bundle\NewsletterBundle\Button\ViewButton:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.button, alias: newsletter_view }
 
-    Enhavo\Bundle\NewsletterBundle\Button\ViewButton:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.button, alias: newsletter_view }
-
-    Enhavo\Bundle\NewsletterBundle\Batch\SendBatch:
+    Enhavo\Bundle\NewsletterBundle\Batch\SendType:
         public: true
         calls:
             - [setContainer, ['@service_container']]
@@ -34,9 +34,7 @@ services:
             - { name: form.type, alias: enhavo_newsletter_newsletter }
 
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMenu:
-        public: true
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: newsletter_newsletter }
 

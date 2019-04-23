@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\AppBundle;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,7 +19,7 @@ class EnhavoAppBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_app.table_widget_collector', 'enhavo.table_widget')
+            new TypeCompilerPass('enhavo_app.column_collector', 'enhavo.column')
         );
 
         $container->addCompilerPass(
@@ -68,6 +69,10 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new FOSRestCompilerPass()
+        );
+
+        $container->addCompilerPass(
+            new TranslationDumperPass()
         );
     }
 }

@@ -1,4 +1,4 @@
-define(["require", "exports", "app/app/DynamicForm", "app/app/Form/Form", "app/Form", "media/Media"], function (require, exports, DynamicForm_1, Form_1, form, Media_1) {
+define(["require", "exports", "app/DynamicForm", "app/Form/Form", "app/Form", "media/Media"], function (require, exports, DynamicForm_1, Form_1, form, Media_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EnhavoAdapter = /** @class */ (function () {

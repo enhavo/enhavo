@@ -1,6 +1,6 @@
 enhavo_app:
-    stylesheets:
-      - '@EnhavoSearchBundle/Resources/public/css/style.css'
+#    stylesheets:
+#      - '@EnhavoSearchBundle/Resources/public/css/style.css'
 
 enhavo_assets:
     require_js:

@@ -30,10 +30,11 @@ enhavo_article_article_create:
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
-                buttons:
+                actions:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
+            redirect: enhavo_article_article_update
 
 enhavo_article_article_update:
     options:
@@ -55,7 +56,7 @@ enhavo_article_article_update:
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
-                buttons:
+                actions:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
@@ -64,7 +65,6 @@ enhavo_article_article_table:
     options:
         expose: true
     path: /enhavo/article/article/table
-    methods: [GET]
     defaults:
         _controller: enhavo_article.controller.article:tableAction
         _sylius:
@@ -90,22 +90,25 @@ enhavo_article_article_table:
                         property: public
                         width: 2
                         type: boolean
+                        sortable: true
                     title:
                         type: text
                         label: article.label.title
                         property: title
                         width: 7
+                        sortable: true
                     publicationDate:
                         label: article.label.publicationDate
                         property: publicationDate
                         type: date
                         width: 3
+                        sortable: true
 
 enhavo_article_article_delete:
     options:
         expose: true
     path: /enhavo/article/article/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_article.controller.article:deleteAction
 
@@ -130,9 +133,21 @@ enhavo_article_article_preview:
     options:
         expose: true
     path: /enhavo/article/article/preview
-    methods: [POST]
+    methods: [GET]
     defaults:
         _controller: enhavo_article.controller.article:previewAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+
+enhavo_article_article_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/article/article/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_article.controller.article:previewResourceAction
         _sylius:
             viewer:
                 strategy_options:

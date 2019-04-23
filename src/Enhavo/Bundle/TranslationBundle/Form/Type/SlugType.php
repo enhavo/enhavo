@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\SlugType as AppSlugType;
+use Enhavo\Bundle\FormBundle\Form\Type\SlugType as AppSlugType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SlugType extends AppSlugType

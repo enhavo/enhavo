@@ -47,11 +47,11 @@ enhavo_app:
             type: redirect
         media_library:
             type: media_library
-#        magazine:
-#            type: base
-#            route: enhavo_project_magazine_index
-#            icon: open-book
-#            label: Magazine
+        magazine:
+            type: base
+            route: enhavo_project_magazine_index
+            icon: local_library
+            label: Magazine
 
 enhavo_grid:
     items:

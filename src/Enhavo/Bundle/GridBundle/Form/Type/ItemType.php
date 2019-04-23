@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicItemType;
-use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
+use Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType;
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;

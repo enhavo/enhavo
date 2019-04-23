@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Item;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\ConfigurationInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

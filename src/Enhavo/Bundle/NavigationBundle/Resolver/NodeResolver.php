@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Resolver;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NavigationBundle\Item\Item;
-use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Enhavo\Bundle\NavigationBundle\Item\ItemManager;
 use Sylius\Component\Resource\Factory\FactoryInterface as SyliusFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;

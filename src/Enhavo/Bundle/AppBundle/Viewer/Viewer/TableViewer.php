@@ -8,14 +8,39 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
+use Pagerfanta\Pagerfanta;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableViewer extends AbstractViewer
 {
+    /**
+     * @var ColumnManager
+     */
+    private $columnManager;
+
+    /**
+     * TableViewer constructor.
+     * @param RequestConfigurationFactory $requestConfigurationFactory
+     * @param ViewerUtil $util
+     * @param ColumnManager $columnManager
+     */
+    public function __construct(
+        RequestConfigurationFactory $requestConfigurationFactory,
+        ViewerUtil $util,
+        ColumnManager $columnManager
+        )
+    {
+        parent::__construct($requestConfigurationFactory, $util);
+        $this->columnManager = $columnManager;
+    }
+
     public function getType()
     {
         return 'table';
@@ -85,10 +110,11 @@ class TableViewer extends AbstractViewer
             $requestConfiguration->isSortable(),
         ]));
 
-        $parameters->set('columns', $this->mergeConfigArray([
+        $columns = $this->mergeConfigArray([
             $options['columns'],
             $this->getColumns($requestConfiguration, $parameters->get('translationDomain'))
-        ]));
+        ]);
+        $columns = $this->getViewerOption('columns', $requestConfiguration);
 
         $parameters->set('batch_route', $this->mergeConfig([
             sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
@@ -110,6 +136,15 @@ class TableViewer extends AbstractViewer
             sprintf('%s_%s_move_to_page', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             $options['move_to_page_route']
         ]));
+
+        $resources = $options['resources'];
+        if($resources instanceof Pagerfanta) {
+            $parameters->set('pages', [
+                'count' => $resources->count(),
+                'page' => $resources->getCurrentPage()
+            ]);
+        }
+        $parameters->set('resources', $this->columnManager->createResourcesViewData($columns, $options['resources']));
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)

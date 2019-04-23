@@ -1,20 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "app/Admin": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Admin"],
-      "app/Form": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Form"],
-      "app/Router": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Router"],
-      "app/Templating": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Templating"],
-      "app/Translator": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Translator"],
-      "app/Menu": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Menu"],
-      "app/app/Form/Form": ["./src/Enhavo/Bundle/AppBundle/Resources/public/ts/src/app/Form/Form"],
-      "media/Media": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Media"],
-      "media/Extension/ImageCropper": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Extension/ImageCropper"],
-      "media/Adapter/EnhavoAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/EnhavoAdapter"],
-      "media/Adapter/JQueryAdapter": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/media/Adapter/JQueryAdapter"],
-      "grid/Grid": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/grid/Grid"],
-      "grid/Form": ["./src/Enhavo/Bundle/MediaBundle/Resources/public/ts/src/grid/Form"]
-    }
-  }
+    "lib": [ "es2015", "dom" ],
+    "module": "amd",
+    "target": "es5",
+    "allowJs": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./assets/**/*"
+  ]
 }

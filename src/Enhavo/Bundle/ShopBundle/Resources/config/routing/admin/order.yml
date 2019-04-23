@@ -8,8 +8,8 @@ enhavo_shop_order_index:
         _sylius:
             viewer:
                 title: order.label.order
-                stylesheets:
-                    - '@EnhavoShopBundle/Resources/public/css/order.css'
+#                stylesheets:
+#                    - '@EnhavoShopBundle/Resources/public/css/order.css'
                 translationDomain: EnhavoShopBundle
                 app: shop/OrderApp
                 blocks:
@@ -20,7 +20,7 @@ enhavo_shop_order_index:
                 actions:
                     create:
                         route: ~
-                        display: false
+                        hidden: true
 
 enhavo_shop_order_update:
     options:
@@ -57,7 +57,6 @@ enhavo_shop_order_table:
     options:
         expose: true
     path: /enhavo/shop/order/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: sylius.controller.order:tableAction

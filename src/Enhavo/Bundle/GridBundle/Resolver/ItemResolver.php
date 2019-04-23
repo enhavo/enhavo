@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\GridBundle\Resolver;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
-use Enhavo\Bundle\AppBundle\DynamicForm\ItemInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\GridBundle\Factory\ItemFactory;
@@ -17,7 +17,7 @@ use Enhavo\Bundle\GridBundle\Factory\ItemTypeFactory;
 use Enhavo\Bundle\GridBundle\Form\Type\ItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
 use Enhavo\Bundle\GridBundle\Item\Item;
-use Enhavo\Bundle\AppBundle\DynamicForm\ResolverInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Enhavo\Bundle\GridBundle\Item\ItemManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormFactoryInterface;

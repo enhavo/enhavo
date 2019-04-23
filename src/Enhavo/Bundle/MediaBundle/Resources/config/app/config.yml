@@ -9,8 +9,8 @@ doctrine:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
 
 enhavo_app:
-    stylesheets:
-        - '@EnhavoMediaBundle/Resources/public/css/style.css'
+#    stylesheets:
+#        - '@EnhavoMediaBundle/Resources/public/css/style.css'
     apps:
         - 'media/Adapter/EnhavoAdapter'
         - 'media/Extension/ImageCropper'

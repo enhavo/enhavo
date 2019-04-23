@@ -1,0 +1,36 @@
+enhavo_app:
+    logout: 'Logout'
+    change_password: 'Change password'
+    edit: 'Edit'
+    preview: 'Preview'
+    open_homepage: 'Open Homepage'
+    batch:
+        label:
+            placeholder: 'Choose Batch'
+            execute: 'Execute'
+        message:
+            success: 'Batch successfully executed'
+            error: 'Error occures while executing batch'
+            no_batch_select: 'No batch action selected'
+            no_row_select: 'No rows selected'
+    view:
+        message:
+            not_saved: 'Close without saving?'
+        label:
+            ok: 'Ok'
+            cancel: 'Cancel'
+    grid:
+        label:
+            entry_per_page: 'Entries per page'
+    list:
+        message:
+            save: 'Successfully saved'
+            error: 'Error occurred'
+    delete:
+        message:
+            question: 'Do you really want to delete this resource?'
+            success: 'Resource successfully deleted'
+        label:
+            delete: 'Delete'
+            cancel: 'Cancel'
+            close: 'Close'

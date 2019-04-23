@@ -1,9 +1,12 @@
 language: php
 
-dist: trusty
+dist: xenial
 
 php:
   - 7.2
+
+services:
+  - mysql
 
 env:
   - ENVIRONMENT=test DEBUG=true
@@ -14,7 +17,9 @@ before_install:
     - export USE_ZEND_ALLOC=0
     
 install:
-    - sudo apt-get install -y --force-yes php5-mysql
+    - sudo apt-get install -y --force-yes php-mysql
+    - sudo apt-get install -y --force-yes npm
+    - sudo npm install -g yarn
     - mysql -e 'create database enhavo_test'
     - composer install --no-interaction --optimize-autoloader --prefer-dist
 
@@ -22,6 +27,9 @@ before_script:
     - bin/console cache:warmup --env=test --no-debug
     - bin/console doctrine:schema:create --env=test
     - bin/console assets:install --env=test --no-debug
+    - bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
+    - yarn install
+    - yarn encore dev
 
     - php -v
     - php -i | grep -v GITHUB_OAUTH_TOKEN

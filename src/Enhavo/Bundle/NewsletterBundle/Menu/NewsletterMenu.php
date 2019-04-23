@@ -18,9 +18,9 @@ class NewsletterMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'newsletter',
+            'icon' => 'inbox',
             'label' => 'newsletter.label.newsletter',
-            'translationDomain' => 'EnhavoNewsletterBundle',
+            'translation_domain' => 'EnhavoNewsletterBundle',
             'route' => 'enhavo_newsletter_newsletter_index',
             'role' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX'
         ]);

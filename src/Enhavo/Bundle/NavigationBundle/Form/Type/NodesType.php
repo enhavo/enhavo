@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DynamicFormType;
+use Enhavo\Bundle\FormBundle\Form\Type\DynamicFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

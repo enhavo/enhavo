@@ -8,8 +8,8 @@ enhavo_dashboard_index:
                 type: app
                 title: dashboard.label.dashboard
                 translationDomain: EnhavoDashboardBundle
-                stylesheets:
-                    - '@EnhavoDashboardBundle/Resources/public/css/dashboard.css'
+#                stylesheets:
+#                    - '@EnhavoDashboardBundle/Resources/public/css/dashboard.css'
                 blocks:
 #                    search:
 #                        type: search

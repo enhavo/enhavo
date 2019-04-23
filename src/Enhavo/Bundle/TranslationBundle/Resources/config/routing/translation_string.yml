@@ -42,7 +42,6 @@ enhavo_translation_translation_string_table:
     options:
         expose: true
     path: /enhavo/translation/translation/string/table
-    methods: [GET]
     defaults:
         page: 1
         _controller: enhavo_translation.controller.translation_string:tableAction

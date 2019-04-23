@@ -8,40 +8,38 @@
 
 namespace Enhavo\Bundle\ShopBundle\Table\Widget;;
 
-use Enhavo\Bundle\AppBundle\Table\AbstractTableWidget;
+use Enhavo\Bundle\AppBundle\Column\AbstractColumnType;
 use Enhavo\Bundle\ShopBundle\Entity\Order;
 
-class OrderStateWidget extends AbstractTableWidget
+class OrderStateWidget extends AbstractColumnType
 {
     const STATE_SHIPPED = 'shipped';
     const STATE_PAYED = 'payed';
     const STATE_CANCELLED = 'cancelled';
     const STATE_PACKED = 'packed';
 
-    public function render($options, $item)
+    public function createResourceViewData(array $options, $resource)
     {
-        if($item instanceof Order) {
+        if($resource instanceof Order) {
             $property = $options['property'];
             $value = null;
             if($property == self::STATE_SHIPPED) {
-                $value = $item->getShippingState() == 'shipped';
+                $value = $resource->getShippingState() == 'shipped';
             }
 
             if($property == self::STATE_PAYED) {
-                $value = $item->getPaymentState() == 'completed';
+                $value = $resource->getPaymentState() == 'completed';
             }
 
             if($property == self::STATE_PACKED) {
-                $value = $item->getShippingState() == 'ready' || $item->getShippingState() == 'shipped';
+                $value = $resource->getShippingState() == 'ready' || $resource->getShippingState() == 'shipped';
             }
 
             if($property == self::STATE_CANCELLED) {
-                $value = $item->getState() == 'cancelled';
+                $value = $resource->getState() == 'cancelled';
             }
 
-            return $this->renderTemplate('EnhavoAppBundle:TableWidget:boolean.html.twig', array(
-                'value' => $value
-            ));
+            return $value;
         }
         return '';
     }

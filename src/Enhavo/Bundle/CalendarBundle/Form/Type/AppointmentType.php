@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;

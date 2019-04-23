@@ -42,37 +42,43 @@ class UpdateViewer extends CreateViewer
             $this->getViewerOption('form.action_parameters', $requestConfiguration)
         ]));
 
-        $parameters->set('form_delete', $this->mergeConfig([
+        $actionsSecondary = $this->mergeConfigArray([
+            $this->createActionsSecondary($options, $requestConfiguration, $resource),
+            $options['actions_secondary'],
+            $this->getViewerOption('actions_secondary', $requestConfiguration)
+        ]);
+
+        $data = $parameters->get('data');
+        $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
+        $parameters->set('data', $data);
+    }
+
+    private function createActionsSecondary($options, $requestConfiguration, $resource)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+
+        $formDelete = $this->mergeConfig([
             sprintf('%s_%s_delete', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
             $options['form_delete'],
             $this->getViewerOption('form.delete', $requestConfiguration)
-        ]));
+        ]);
 
-        $parameters->set('form_delete_parameters', $this->mergeConfigArray([
+        $formDeleteParameters = $this->mergeConfigArray([
             [ 'id' => $resource->getId() ],
             $options['form_delete_parameters'],
             $this->getViewerOption('form.delete_parameters', $requestConfiguration)
-        ]));
+        ]);
 
-        $parameters->set('csrf_token', $this->container->get('security.csrf.token_manager')->getToken((string)$resource->getId())->getValue());
+        $default = [
+            'delete' => [
+                'type' => 'delete',
+                'route' => $formDelete,
+                'route_parameters' => $formDeleteParameters
+            ]
+        ];
 
-        $parameters->set('buttons', $this->mergeConfigArray([
-            'buttons' => [
-                'cancel' => [
-                    'type' => 'cancel',
-                ],
-                'save' => [
-                    'type' => 'save',
-                ],
-                'delete' => [
-                    'type' => 'delete'
-                ],
-            ],
-            $options['buttons'],
-            $this->getViewerOption('buttons', $requestConfiguration)
-        ]));
-
-        $parameters->set('data', $options['resource']);
+        return $default;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -81,7 +87,6 @@ class UpdateViewer extends CreateViewer
         $optionsResolver->setDefaults([
             'form_delete' => null,
             'form_delete_parameters' => [],
-            'template' => 'EnhavoAppBundle:Resource:update.html.twig',
         ]);
     }
 }

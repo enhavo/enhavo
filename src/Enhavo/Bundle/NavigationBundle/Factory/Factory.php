@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 
 class Factory implements FactoryInterface
 {

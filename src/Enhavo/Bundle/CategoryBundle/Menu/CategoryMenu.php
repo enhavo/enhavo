@@ -18,9 +18,9 @@ class CategoryMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'th',
+            'icon' => 'apps',
             'label' => 'category.label.category',
-            'translationDomain' => 'EnhavoCategoryBundle',
+            'translation_domain' => 'EnhavoCategoryBundle',
             'route' => 'enhavo_category_category_index',
             'role' => 'ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX',
         ]);

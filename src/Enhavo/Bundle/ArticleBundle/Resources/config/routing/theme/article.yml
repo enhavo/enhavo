@@ -6,3 +6,12 @@ enhavo_article_theme_category:
     defaults:
         _controller: enhavo_article.controller.article:categoryAction
         _sylius:
+
+enhavo_article_theme_article_show:
+    options:
+        expose: true
+    path: /article/show/{slug}
+    methods: [GET]
+    defaults:
+        _controller: enhavo_article.controller.article:categoryAction
+        _sylius:

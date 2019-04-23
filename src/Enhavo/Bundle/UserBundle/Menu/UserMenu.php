@@ -18,9 +18,9 @@ class UserMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'user',
+            'icon' => 'person',
             'label' => 'user.label.user',
-            'translationDomain' => 'EnhavoUserBundle',
+            'translation_domain' => 'EnhavoUserBundle',
             'route' => 'enhavo_user_user_index',
             'role' => 'ROLE_ENHAVO_USER_USER_INDEX',
         ]);

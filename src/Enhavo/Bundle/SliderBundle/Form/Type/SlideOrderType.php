@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\PositionType;
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -7,9 +7,7 @@ enhavo_media_library_index:
         _controller: enhavo_media.controller.library:indexAction
         _sylius:
             viewer:
-                blocks:
-                    media_library:
-                        type: media_library
+                type: media_library
 
 enhavo_media_library_upload:
     path:  /media/library/upload
@@ -33,8 +31,20 @@ enhavo_media_library_list:
             sorting:
                 createdAt: desc
             paginate: 30
-            template: 'EnhavoMediaBundle:Block:list.html.twig'
             viewer:
+                columns:
+                    name:
+                        type: property
+                        property: filename
+                        label: name
+                    extension:
+                        type: property
+                        property: extension
+                        label: extension
+                    media:
+                        type: media
+                        property: _self
+                        label: url
 
 enhavo_media_library_update:
     options:

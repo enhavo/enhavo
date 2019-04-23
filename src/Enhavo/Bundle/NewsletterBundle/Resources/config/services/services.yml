@@ -78,10 +78,6 @@ services:
             - { name: validator.constraint_validator, alias: subscriber_exists }
 
     Enhavo\Bundle\NewsletterBundle\Menu\NewsletterMainMenu:
-        public: true
-        arguments:
-          - '@enhavo_app.menu.factory'
-        calls:
-          - [ 'setContainer', ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
             - { name: enhavo.menu, alias: newsletter }

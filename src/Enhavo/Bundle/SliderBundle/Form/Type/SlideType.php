@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
-use Enhavo\Bundle\AppBundle\Form\Type\DateType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

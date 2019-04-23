@@ -8,18 +8,17 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
-use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateViewer extends AbstractViewer
+class CreateViewer extends BaseViewer
 {
     /**
      * @var string[]
@@ -27,36 +26,40 @@ class CreateViewer extends AbstractViewer
     private $formThemes;
 
     /**
+     * @var ActionManager
+     */
+    protected $actionManager;
+
+    /**
+     * @var FlashBag
+     */
+    protected $flashBag;
+
+    /**
      * CreateViewer constructor.
      * @param RequestConfigurationFactory $requestConfigurationFactory
      * @param ViewerUtil $util
+     * @param array $formThemes
+     * @param ActionManager $actionManager
+     * @param FlashBag $flashBag
      */
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util, array $formThemes)
+    public function __construct(
+        RequestConfigurationFactory $requestConfigurationFactory,
+        ViewerUtil $util,
+        array $formThemes,
+        ActionManager $actionManager,
+        FlashBag $flashBag
+    )
     {
         parent::__construct($requestConfigurationFactory, $util);
         $this->formThemes = $formThemes;
+        $this->actionManager = $actionManager;
+        $this->flashBag = $flashBag;
     }
 
     public function getType()
     {
         return 'create';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function create($options): View
-    {
-        /** @var FormInterface $form */
-        $form = $options['form'];
-
-        if($form->isSubmitted()) {
-            $view = View::create($form, $form->isValid() ? 200 : 400);
-            $view->setFormat('json');
-            return $view;
-        }
-
-        return parent::create($options);
     }
 
     protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
@@ -70,7 +73,18 @@ class CreateViewer extends AbstractViewer
 
         $parameters->set('form', $form->createView());
 
-        $parameters->set('tabs', $this->mergeConfigArray([
+        $actions = $this->mergeConfigArray([
+            $this->createActions($options),
+            $options['actions'],
+            $this->getViewerOption('actions', $requestConfiguration)
+        ]);
+
+        $actionsSecondary = $this->mergeConfigArray([
+            $options['actions_secondary'],
+            $this->getViewerOption('actions_secondary', $requestConfiguration)
+        ]);
+
+        $tabs = $this->mergeConfigArray([
             [
                 'main' => [
                     'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
@@ -79,7 +93,8 @@ class CreateViewer extends AbstractViewer
             ],
             $options['tabs'],
             $this->getViewerOption('tabs', $requestConfiguration)
-        ]));
+        ]);
+        $parameters->set('tabs', $tabs);
 
         $parameters->set('form_template', $this->mergeConfig([
             $options['form_template'],
@@ -103,20 +118,59 @@ class CreateViewer extends AbstractViewer
             $this->getViewerOption('form.themes', $requestConfiguration)
         ]));
 
-        $parameters->set('buttons', $this->mergeConfigArray([
-            'buttons' => [
-                'cancel' => [
-                    'type' => 'cancel',
-                ],
-                'save' => [
-                    'type' => 'save',
-                ]
-            ],
-            $options['buttons'],
-            $this->getViewerOption('buttons', $requestConfiguration)
-        ]));
+        $parameters->set('data', [
+            'actions' => $this->actionManager->createActionsViewData($actions, $options['resource']),
+            'actionsSecondary' => $this->actionManager->createActionsViewData($actionsSecondary),
+            'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain')),
+            'messages' => $this->getFlashMessages(),
+            'view' => [
+                'id' => null,
+            ]
+        ]);
 
-        $parameters->set('data', $options['resource']);
+        $parameters->set('resource', $options['resource']);
+    }
+
+    protected function createTabViewData($configuration, $translationDomain)
+    {
+        $data = [];
+        foreach($configuration as $key => $tab) {
+            $tabData = [];
+            $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], $translationDomain);
+            $tabData['key'] = $key;
+            $data[] = $tabData;
+        }
+        return $data;
+    }
+
+    private function createActions($options)
+    {
+        /** @var MetadataInterface $metadata */
+        $metadata = $options['metadata'];
+
+        $default = [
+            'save' => [
+                'type' => 'save',
+                'route' => sprintf('%s_%s_create', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
+            ],
+        ];
+
+        return $default;
+    }
+
+    private function getFlashMessages()
+    {
+        $messages = [];
+        $types = ['success', 'error', 'notice', 'warning'];
+        foreach($types as $type) {
+            foreach($this->flashBag->get($type) as $message) {
+                $messages[] = [
+                    'message' => is_array($message) ? $message['message'] : $message,
+                    'type' => $type
+                ];
+            }
+        }
+        return $messages;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
@@ -124,13 +178,20 @@ class CreateViewer extends AbstractViewer
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
             'tabs' => [],
-            'buttons' => [],
+            'javascripts' => [
+                'enhavo/form'
+            ],
+            'stylesheets' => [
+                'enhavo/form'
+            ],
+            'actions' => [],
+            'actions_secondary' => [],
             'form' => null,
             'form_themes' => [],
             'form_action' => null,
             'form_action_parameters' => [],
             'form_template' => 'EnhavoAppBundle:View:tab.html.twig',
-            'template' => 'EnhavoAppBundle:Resource:create.html.twig'
+            'template' => 'EnhavoAppBundle:Viewer:form.html.twig'
         ]);
     }
 }

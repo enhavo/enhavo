@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Factory;
 
-use Enhavo\Bundle\AppBundle\DynamicForm\FactoryInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
 use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;

@@ -39,10 +39,10 @@ enhavo_user_user_table:
     options:
         expose: true
     path: /enhavo/user/user/table
-    methods: [GET]
     defaults:
         _controller: enhavo_user.controller.user:tableAction
         _sylius:
+            paginate: $pagination
             filters:
                 username:
                     type: text
@@ -64,12 +64,14 @@ enhavo_user_user_table:
                         label: user.label.email
                         property: email
                         width: 6
+                        sortable: true
                     groups:
                         type: list
                         label: group.label.group
                         property: groups
                         item_property: name
                         width: 6
+                        sortable: true
 
 enhavo_user_user_delete:
     options:

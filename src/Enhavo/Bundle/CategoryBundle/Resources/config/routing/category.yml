@@ -40,7 +40,6 @@ enhavo_category_category_table:
     options:
         expose: true
     path: /enhavo/category/category/table
-    methods: [GET]
     defaults:
         _controller: enhavo_category.controller.category:tableAction
         _sylius:

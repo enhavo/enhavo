@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\ContentBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
-use Enhavo\Bundle\AppBundle\Form\Type\DateTimeType;
-use Enhavo\Bundle\AppBundle\Form\Type\SlugType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\FormBundle\Form\Type\SlugType;
 use Enhavo\Bundle\ContentBundle\EventListener\RouterSubscriber;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouterType;

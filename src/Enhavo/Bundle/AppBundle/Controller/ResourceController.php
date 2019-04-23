@@ -14,8 +14,10 @@ use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface
 use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController as BaseController;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -132,9 +134,20 @@ class ResourceController extends BaseController
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->repository->add($newResource);
-                $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
                 $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
+                $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
+                $route = $configuration->getRedirectRoute(null);
+                return $this->redirectToRoute($route, [
+                    'id' => $newResource->getId(),
+                    'tab' => $request->get('tab'),
+                    'view_id' => $request->get('view_id')
+                ]);
+            } else {
+                $this->addFlash('error', $this->get('translator')->trans('form.message.error', [], 'EnhavoAppBundle'));
+                foreach($form->getErrors() as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
             }
         }
 
@@ -168,6 +181,12 @@ class ResourceController extends BaseController
                 $this->manager->flush();
                 $this->appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
+                $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
+            } else {
+                $this->addFlash('error', $this->get('translator')->trans('form.message.error', [], 'EnhavoAppBundle'));
+                foreach($form->getErrors() as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
             }
         }
 
@@ -195,7 +214,6 @@ class ResourceController extends BaseController
         $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->repository->add($newResource);
-        $this->sortingManger->initialize($configuration, $this->metadata, $newResource, $this->repository);
         $this->appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
 
@@ -221,6 +239,18 @@ class ResourceController extends BaseController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        $view = $this->viewFactory->create('preview', [
+            'metadata' => $this->metadata
+        ]);
+
+        return $this->viewHandler->handle($configuration, $view);
+    }
+
+    public function previewResourceAction(Request $request): Response
+    {
+        /** @var RequestConfiguration $configuration */
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+
         $this->appEventDispatcher->dispatchInitEvent(ResourceEvents::INIT_PREVIEW, $configuration);
 
         if($request->query->has('id')) {
@@ -235,7 +265,7 @@ class ResourceController extends BaseController
         $form = $this->resourceFormFactory->create($configuration, $resource);
         $form->handleRequest($request);
 
-        $view = $this->viewFactory->create('preview', [
+        $view = $this->viewFactory->create('resource_preview', [
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resource' => $resource,
@@ -258,6 +288,25 @@ class ResourceController extends BaseController
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resources' => $resources,
+            'request' => $request,
+        ]);
+
+        $response = $this->viewHandler->handle($configuration, $view);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+ * {@inheritdoc}
+ */
+    public function listAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $this->isGrantedOr403($configuration, ResourceActions::INDEX);
+
+        $view = $this->viewFactory->create('list', [
+            'request_configuration' => $configuration,
+            'metadata' => $this->metadata,
         ]);
 
         return $this->viewHandler->handle($configuration, $view);
@@ -266,19 +315,46 @@ class ResourceController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function listAction(Request $request): Response
+    public function listDataAction(Request $request): Response
     {
+        $request->query->set('limit', 1000000); // never show pagination
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::INDEX);
-        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        $view = $this->viewFactory->create('list', [
+        if(in_array($request->getMethod(), ['POST'])) {
+            if ($configuration->isCsrfProtectionEnabled() && !$this->isCsrfTokenValid('list_data', $request->get('_csrf_token'))) {
+                throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
+            }
+            $this->sortingManger->handleSort($request, $configuration, $this->repository);
+            return new JsonResponse();
+        }
+
+        $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
+        $view = $this->viewFactory->create('list_data', [
             'request_configuration' => $configuration,
             'metadata' => $this->metadata,
             'resources' => $resources,
+            'request' => $request,
         ]);
 
-        return $this->viewHandler->handle($configuration, $view);
+        $response = $this->viewHandler->handle($configuration, $view);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    public function deleteAction(Request $request): Response
+    {
+        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        $response = parent::deleteAction($request);
+        if($response instanceof RedirectResponse) {
+            $view = $this->viewFactory->create('delete', [
+                'metadata' => $this->metadata,
+                'request_configuration' => $configuration,
+                'request' => $request
+            ]);
+            return $this->viewHandler->handle($configuration, $view);
+        }
+        return $response;
     }
 
     /**
@@ -287,34 +363,18 @@ class ResourceController extends BaseController
      */
     public function batchAction(Request $request): Response
     {
+        /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
-        $this->batchManager->executeBatch($resources, $configuration);
-        return new JsonResponse();
-    }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function moveAfterAction(Request $request): JsonResponse
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $resource = $this->findOr404($configuration);
-        $this->sortingManger->moveAfter($configuration, $this->metadata, $resource, $this->repository, $request->get('target'));
+        $batchConfiguration = $configuration->getBatches();
+        $type = $configuration->getBatchType();
 
-        return new JsonResponse();
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function moveToPageAction(Request $request): JsonResponse
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-        $resource = $this->findOr404($configuration);
-        $this->sortingManger->moveToPage($configuration, $this->metadata, $resource, $this->repository, $request->get('page'), $request->get('top'));
+        $batch = $this->batchManager->getBatch($type, $batchConfiguration);
+        if($batch === null) {
+            throw $this->createNotFoundException();
+        }
+        $this->batchManager->executeBatch($batch, $resources);
 
         return new JsonResponse();
     }

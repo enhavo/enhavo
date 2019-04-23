@@ -18,9 +18,9 @@ class NavigationMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'map',
+            'icon' => 'layers',
             'label' => 'navigation.label.navigation',
-            'translationDomain' => 'EnhavoNavigationBundle',
+            'translation_domain' => 'EnhavoNavigationBundle',
             'route' => 'enhavo_navigation_navigation_index',
             'role' => 'ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX',
         ]);

@@ -60,7 +60,7 @@ class FilterFactory
             if(!isset($options['type'])) {
                 throw new TypeMissingException(sprintf('No type was set for filter "%s"', $name));
             }
-            /** @var FilterInterface $filter */
+            /** @var FilterTypeInterface $filter */
             $filter = $this->createFilter($name, $options);
             $filterData[$name] = $filter;
         }

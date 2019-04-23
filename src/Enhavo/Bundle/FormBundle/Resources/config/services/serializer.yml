@@ -1,0 +1,7 @@
+services:
+    Enhavo\Bundle\FormBundle\Encoder\Encoder:
+
+    Enhavo\Bundle\FormBundle\Serializer\FormSerializer:
+        arguments:
+          - '@form.factory'
+          - '@Enhavo\Bundle\FormBundle\Encoder\Encoder'

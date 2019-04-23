@@ -6,10 +6,10 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Enhavo\Bundle\AppBundle\Form\Type\BooleanType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Enhavo\Bundle\GridBundle\Model\Item\TextPictureItem;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;

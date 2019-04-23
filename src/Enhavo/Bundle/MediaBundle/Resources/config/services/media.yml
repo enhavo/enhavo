@@ -104,12 +104,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    Enhavo\Bundle\MediaBundle\Table\Widget\PictureWidget:
+    Enhavo\Bundle\MediaBundle\Column\MediaColumn:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.table_widget, alias: picture }
+            - { name: enhavo.column, alias: media }
 
     enhavo_media.factory.file:
         class: Enhavo\Bundle\MediaBundle\Factory\FileFactory
@@ -139,8 +139,33 @@ services:
         arguments:
             - '@enhavo_media.media.image_cropper_manager'
             - '@enhavo_media.media.media_manager'
+            - '@view.factory'
+            - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\MediaBundle\Viewer\ImageCropperViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+            - '@enhavo_media.media.image_cropper_manager'
+            - '@enhavo_media.media.media_manager'
+            - '@enhavo_media.media.url_resolver'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: image_cropper }
+
+    Enhavo\Bundle\MediaBundle\Viewer\MediaLibraryViewer:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+            - '@session.flash_bag'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: media_library }
 
     enhavo_media.security.default_authorization_checker:
         public: true
@@ -148,6 +173,7 @@ services:
 
     enhavo_media.media.url_resolver:
         class: Enhavo\Bundle\MediaBundle\Media\UrlResolver
+        public: true
         arguments:
             - '@enhavo_media.media.media_manager'
             - '@router'
@@ -171,18 +197,14 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     Enhavo\Bundle\MediaBundle\Menu\LibraryMenu:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: 'media_library' }
 
     enhavo_media.controller.library:
+        parent: Enhavo\Bundle\AppBundle\Controller\AbstractViewController
         class: Enhavo\Bundle\MediaBundle\Controller\LibraryController
         public: true
-        arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler.default'
         calls:
             - [setContainer, ['@service_container']]
 

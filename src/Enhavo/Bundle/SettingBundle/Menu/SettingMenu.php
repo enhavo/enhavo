@@ -18,9 +18,9 @@ class SettingMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'cog',
+            'icon' => 'settings',
             'label' => 'label.setting',
-            'translationDomain' => 'EnhavoSettingBundle',
+            'translation_domain' => 'EnhavoSettingBundle',
             'route' => 'enhavo_setting_setting_index',
             'role' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
         ]);

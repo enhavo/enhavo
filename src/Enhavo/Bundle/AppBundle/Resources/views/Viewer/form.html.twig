@@ -1,0 +1,14 @@
+{% extends 'EnhavoAppBundle:Viewer:base.html.twig' %}
+
+{% form_theme form with form_themes %}
+
+{% block content %}
+    <div id="app"></div>
+    <div data-tab-container style="display: none">
+        {% for key,tab in tabs %}
+            <div data-tab="{{ key }}">
+                {% include tab.template %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

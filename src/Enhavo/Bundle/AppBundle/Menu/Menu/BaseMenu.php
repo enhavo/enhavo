@@ -10,29 +10,54 @@ namespace Enhavo\Bundle\AppBundle\Menu\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseMenu extends AbstractMenu
 {
-    public function render(array $options)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * BaseMenu constructor.
+     *
+     * @param TranslatorInterface $translator
+     * @param RouterInterface $router
+     */
+    public function __construct(TranslatorInterface $translator, RouterInterface $router)
     {
-        $template = $options['template'];
-        $translationDomain = $options['translationDomain'];
-        $icon = $options['icon'];
-        $class = $options['class'];
+        $this->translator = $translator;
+        $this->router = $router;
+    }
 
-        $label = $options['label'];
-        $route = $options['route'];
+    public function createViewData(array $options)
+    {
+        $data = [
+            'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
+            'url' => $this->router->generate($options['route']),
+            'icon' => $options['icon'],
+            'component' => $options['component'],
+            'class' => $options['class'],
+            'active' => $this->isActive($options),
+            'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
+            'notification' => [
+                'class' => $options['notification_class'],
+                'label' => $this->translator->trans($options['notification_label'], [], $options['translation_domain']),
+                'icon' => $options['notification_icon'],
+                'info' => $this->translator->trans($options['notification_info'], [], $options['translation_domain']),
+            ],
+        ];
 
-        $active = $this->isActive($options);
-
-        return $this->renderTemplate($template, [
-            'label' => $label,
-            'translationDomain' => $translationDomain,
-            'icon' => $icon,
-            'route' => $route,
-            'class' => $class,
-            'active' => $active
-        ]);
+        $parentData = parent::createViewData($options);
+        $data = array_merge($parentData, $data);
+        return $data;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -40,10 +65,15 @@ class BaseMenu extends AbstractMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Menu:base.html.twig',
-            'translationDomain' => null,
+            'component' => 'menu-item',
+            'translation_domain' => null,
             'icon' => null,
-            'class' => '',
+            'class' => null,
+            'info' => null,
+            'notification_class' => null,
+            'notification_label' => null,
+            'notification_icon' => null,
+            'notification_info' => null
         ]);
 
         $resolver->setRequired([

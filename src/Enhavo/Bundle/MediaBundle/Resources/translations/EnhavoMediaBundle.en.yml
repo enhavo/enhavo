@@ -1,4 +1,6 @@
 library:
+  label:
+    upload: 'Upload'
   role:
     label:
       index: 'Media library show'
@@ -28,8 +30,10 @@ media:
       open_image_cropper: "Edit image"
       submit: "Apply"
     label:
-      tooltip_move: "Move image"
-      tooltip_cropframe: "Draw crop frame"
+      tooltip_move: "Move"
+      tooltip_cropframe: "Crop"
       tooltip_zoom_in: "Zoom in"
       tooltip_zoom_out: "Zoom out"
       tooltip_reset: "Reset"
+    message:
+      save: 'Save successful'

@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Model\Item\TextItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

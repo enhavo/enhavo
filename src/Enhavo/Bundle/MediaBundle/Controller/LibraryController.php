@@ -8,17 +8,26 @@
 
 namespace Enhavo\Bundle\MediaBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\AppController;
+use Enhavo\Bundle\AppBundle\Controller\AbstractViewController;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class LibraryController extends AppController
+class LibraryController extends AbstractViewController
 {
     use FileControllerTrait;
+
+    public function indexAction(Request $request): Response
+    {
+        $view = $this->viewFactory->create('media_library', [
+//            'request' => $request
+        ]);
+        return $this->viewHandler->handle($view);
+    }
 
     public function uploadAction(Request $request)
     {

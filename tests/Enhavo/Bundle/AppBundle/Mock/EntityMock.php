@@ -34,6 +34,11 @@ class EntityMock implements ResourceInterface
     private $route;
 
     /**
+     * @var mixed
+     */
+    private $data;
+
+    /**
      * @return int
      */
     public function getId()
@@ -89,5 +94,21 @@ class EntityMock implements ResourceInterface
     public function setRoute($route)
     {
         $this->route = $route;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data): void
+    {
+        $this->data = $data;
     }
 }

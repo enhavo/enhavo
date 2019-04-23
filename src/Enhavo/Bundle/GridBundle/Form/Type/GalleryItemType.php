@@ -5,7 +5,7 @@
 
 namespace Enhavo\Bundle\GridBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Type\WysiwygType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Model\Item\GalleryItem;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;

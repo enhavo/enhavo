@@ -90,3 +90,9 @@ services:
 
     enhavo_app.util.secure_url_token_generator:
         class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
+
+    enhavo_app.translation.translation_dumper:
+        public: true
+        class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
+        arguments:
+            - []

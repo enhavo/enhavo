@@ -23,19 +23,9 @@ class AppViewer extends BaseViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
-        $parameters->set('blocks', $this->mergeConfigArray([
-            $options['blocks'],
-            $this->getViewerOption('blocks', $requestConfiguration)
-        ]));
-
         $parameters->set('actions', $this->mergeConfigArray([
             $options['actions'],
             $this->getViewerOption('actions', $requestConfiguration)
-        ]));
-
-        $parameters->set('title', $this->mergeConfig([
-            $options['title'],
-            $this->getViewerOption('title', $requestConfiguration)
         ]));
     }
 
@@ -44,11 +34,7 @@ class AppViewer extends BaseViewer
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'title' => '',
-            'blocks' => [],
-            'actions' => [],
-            'apps' => ['app/Index'],
-            'template' => 'EnhavoAppBundle:Viewer:app.html.twig'
+            'actions' => []
         ]);
     }
 }

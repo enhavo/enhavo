@@ -1,31 +1,77 @@
-parameters:
-    enhavo_app.twig.action_render.class: Enhavo\Bundle\AppBundle\Action\ActionRenderer
-    enhavo_app.twig.action_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-
 services:
     enhavo_app.action_collector:
-        class: '%enhavo_app.twig.action_collector.class%'
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
             - 'Action'
 
-    enhavo_app.twig.action_renderer:
-        class: '%enhavo_app.twig.action_render.class%'
+    enhavo_app.action_manager:
+        class: Enhavo\Bundle\AppBundle\Action\ActionManager
         arguments:
             - '@enhavo_app.action_collector'
-        tags:
-            - { name: twig.extension }
+            - '@security.authorization_checker'
 
-    Enhavo\Bundle\AppBundle\Action\Action\CreateAction:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
+    Enhavo\Bundle\AppBundle\Action\AbstractActionType:
+        abstract: true
+        arguments:
+            - '@translator'
         tags:
             - { name: enhavo.action, alias: create }
 
-    Enhavo\Bundle\AppBundle\Action\Action\DownloadAction:
+    Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        abstract: true
+        arguments:
+            - '@router'
+        tags:
+            - { name: enhavo.action, alias: create }
+
+    Enhavo\Bundle\AppBundle\Action\Type\CreateActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.action, alias: create }
+
+    Enhavo\Bundle\AppBundle\Action\Type\DownloadActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
         tags:
             - { name: enhavo.action, alias: download }
+              
+    Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        arguments:
+            - '@security.csrf.token_manager'
+        public: true
+        tags:
+            - { name: enhavo.action, alias: delete }
+
+    Enhavo\Bundle\AppBundle\Action\Type\CloseActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: close }
+
+    Enhavo\Bundle\AppBundle\Action\Type\PreviewActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: preview }
+
+    Enhavo\Bundle\AppBundle\Action\Type\SaveActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: save }
+
+    Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: duplicate }
+
+    Enhavo\Bundle\AppBundle\Action\Type\EventActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: event }

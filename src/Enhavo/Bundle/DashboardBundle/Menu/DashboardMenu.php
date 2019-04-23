@@ -18,9 +18,9 @@ class DashboardMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'stopwatch',
+            'icon' => 'dashboard',
             'label' => 'dashboard.label.dashboard',
-            'translationDomain' => 'EnhavoDashboardBundle',
+            'translation_domain' => 'EnhavoDashboardBundle',
             'route' => 'enhavo_dashboard_index',
             'role' => 'ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX',
         ]);
