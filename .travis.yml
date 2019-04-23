@@ -1,9 +1,12 @@
 language: php
 
-dist: trusty
+dist: xenial
 
 php:
   - 7.2
+
+services:
+  - mysql
 
 env:
   - ENVIRONMENT=test DEBUG=true
@@ -14,8 +17,9 @@ before_install:
     - export USE_ZEND_ALLOC=0
     
 install:
-    - sudo apt-get install -y --force-yes php5-mysql
-    - sudo apt-get install -y --force-yes yarn
+    - sudo apt-get install -y --force-yes php-mysql
+    - sudo apt-get install -y --force-yes npm
+    - sudo npm install -g yarn
     - mysql -e 'create database enhavo_test'
     - composer install --no-interaction --optimize-autoloader --prefer-dist
 
