@@ -58,6 +58,6 @@ config.module.rules.forEach(function(rule) {
 });
 
 config.resolve.alias['jquery'] = path.join(__dirname, 'node_modules/jquery/src/jquery');
-config.resolve.alias['jquery.ui.widget'] = path.join(__dirname, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
+config.resolve.alias['jquery-ui/ui/widget'] = path.join(__dirname, 'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
 
 module.exports = config;
