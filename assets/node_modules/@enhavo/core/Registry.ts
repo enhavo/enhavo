@@ -24,12 +24,13 @@ export default class Registry implements RegistryInterface
         return this.get(name).component;
     }
 
-    register(name: string, component: object, factory: object): void
+    register(name: string, component: object, factory: object): RegistryInterface
     {
         if(this.has(name)) {
             throw 'Object with name "'+name+'" already exists in registry';
         }
-        this.entries.push(new Entry(name, component, factory))
+        this.entries.push(new Entry(name, component, factory));
+        return this;
     }
 
     has(name: string): boolean

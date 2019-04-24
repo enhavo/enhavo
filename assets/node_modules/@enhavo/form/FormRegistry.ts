@@ -25,7 +25,7 @@ export default class FormRegistry
     public static INSERT = 'insert';
     public static RELEASE = 'release';
 
-    addLoader(loader: LoaderInterface)
+    addLoader(loader: LoaderInterface): FormRegistry
     {
         FormListener.onInsert((event: FormInsertEvent) => {
             loader.insert(event.getElement());
@@ -42,6 +42,8 @@ export default class FormRegistry
         FormListener.onDrop((event: FormReleaseEvent) => {
             loader.drop(event.getElement());
         });
+
+        return this;
     }
 
     load() {
