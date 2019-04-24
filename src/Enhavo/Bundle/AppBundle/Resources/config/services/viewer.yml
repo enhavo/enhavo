@@ -58,6 +58,8 @@ services:
     Enhavo\Bundle\AppBundle\Viewer\Viewer\UpdateViewer:
         public: true
         parent: Enhavo\Bundle\AppBundle\Viewer\Viewer\CreateViewer
+        arguments:
+            - '@serializer'
         tags:
             - { name: enhavo.viewer, alias: update }
 

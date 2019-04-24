@@ -2,6 +2,7 @@ enhavo_app:
     logout: 'Logout'
     change_password: 'Change Password'
     edit: 'Bearbeiten'
+    create: 'Erstellen'
     preview: 'Vorschau'
     open_homepage: 'Zur Startseite'
     batch:

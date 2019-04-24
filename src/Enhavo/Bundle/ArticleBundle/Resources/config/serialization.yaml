@@ -1,0 +1,6 @@
+Enhavo\Bundle\ArticleBundle\Entity\Article:
+    attributes:
+        id:
+            groups: ['form']
+        title:
+            groups: ['form']

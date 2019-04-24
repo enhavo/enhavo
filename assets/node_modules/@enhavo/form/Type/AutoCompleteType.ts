@@ -6,6 +6,8 @@ import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
 export default class AutoCompleteType extends FormType
 {
     private config: AutoCompleteConfig;
+    private idProperty: string;
+    private labelProperty: string;
 
     constructor(element: HTMLElement, config: AutoCompleteConfig)
     {
@@ -16,6 +18,8 @@ export default class AutoCompleteType extends FormType
     protected init()
     {
         let data = this.$element.data('auto-complete-entity');
+        this.idProperty = data.id_property;
+        this.labelProperty = data.label_property;
         let config: Select2Options = {
             minimumInputLength: data.minimum_input_length,
             ajax: {
@@ -27,7 +31,7 @@ export default class AutoCompleteType extends FormType
                         page: page || 1
                     };
                 },
-                processResults: function (data: any) {
+                results: function (data: any, page: any) {
                     return data;
                 },
                 cache: true
@@ -48,10 +52,34 @@ export default class AutoCompleteType extends FormType
         $input.select2('data', data.value);
 
         this.$element.find('[data-auto-complete-create]').click((event) => {
+            event.preventDefault();
             let url = $(event.target).attr('href');
             if(this.config.create) {
                 this.config.create(this, url);
             }
         });
+    }
+
+    public addElement(data: any)
+    {
+        if(this.idProperty && this.labelProperty) {
+            let id = data[this.idProperty];
+            let label = data[this.labelProperty];
+            let $input = this.$element.find('[data-auto-complete-input]');
+            let currentData = $input.select2('data');
+            let exists = false;
+            for(let item of currentData) {
+                if(item.id == id) {
+                    exists = true;
+                    item.text = label;
+                    break;
+                }
+            }
+            currentData.push({
+                id: id,
+                text: label
+            });
+            $input.select2('data', currentData);
+        }
     }
 }

@@ -26,14 +26,6 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    enhavo_app.controller.auto_complete:
-        class: Enhavo\Bundle\AppBundle\Controller\AutoCompleteController
-        arguments:
-            - '@sylius.expression_language'
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-
     enhavo_app.preview.default_renderer:
         class: Enhavo\Bundle\AppBundle\Preview\DefaultRenderer
         public: true

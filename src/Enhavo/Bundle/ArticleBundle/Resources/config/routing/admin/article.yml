@@ -44,6 +44,7 @@ enhavo_article_article_update:
     defaults:
         _controller: enhavo_article.controller.article:updateAction
         _sylius:
+            serialization_groups: ['form']
             viewer:
                 translationDomain: EnhavoArticleBundle
                 tabs:
