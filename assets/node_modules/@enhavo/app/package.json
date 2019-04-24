@@ -22,6 +22,7 @@
     "vue": "^2.5.22",
     "vue-property-decorator": "^6.0.0",
     "pako": "^1.0.10",
-    "vuedraggable": "^2.20.0"
+    "vuedraggable": "^2.20.0",
+    "vue-select": "^3.0.0"
   }
 }

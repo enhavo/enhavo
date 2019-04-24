@@ -1,4 +1,2 @@
 import Application from "@enhavo/media/MediaLibrary/MediaLibraryApplication";
-import Component from "@enhavo/media/MediaLibrary/Components/ApplicationComponent.vue";
-
-Application.getVueLoader().load(Component);
+Application.getVueLoader().load(() => import("@enhavo/media/MediaLibrary/Components/ApplicationComponent.vue"));

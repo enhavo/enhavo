@@ -23,7 +23,7 @@ export default class VueLoader
         this.view = view;
     }
 
-    load(component: VueConstructor, loadOnMount: boolean = true) {
+    load(component: object, loadOnMount: boolean = true) {
         Vue.config.devtools = true;
         Vue.config.productionTip = false;
         Vue.directive('click-outside', new ClickOutside(this.dispatcher, this.view));
