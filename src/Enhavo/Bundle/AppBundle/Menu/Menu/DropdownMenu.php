@@ -18,12 +18,12 @@ class DropdownMenu extends AbstractMenu
     /**
      * @var TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var RouterInterface
      */
-    private $router;
+    protected $router;
 
     /**
      * BaseMenu constructor.
@@ -41,9 +41,10 @@ class DropdownMenu extends AbstractMenu
     {
         $data = [
             'info' => $this->translator->trans($options['info'], [], $options['translation_domain']),
-            'choices' => $this->formatChoices($options['choices'], $options['translation_domain']),
+            'choices' => $this->formatChoices($this->getChoices($options), $options['translation_domain']),
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'value' => $this->getValue($options),
+            'event' => $options['event'],
         ];
 
         $parentData = parent::createViewData($options);
@@ -63,6 +64,11 @@ class DropdownMenu extends AbstractMenu
         return $data;
     }
 
+    protected function getChoices($options)
+    {
+        return $options['choices'];
+    }
+
     protected function getValue(array $options)
     {
         return $options['value'];
@@ -78,12 +84,13 @@ class DropdownMenu extends AbstractMenu
             'class' => '',
             'component' => 'menu-dropdown',
             'info' => null,
-            'value' => null
+            'value' => null,
         ]);
 
         $resolver->remove(['icon']);
         $resolver->setRequired([
             'choices',
+            'event'
         ]);
     }
 
