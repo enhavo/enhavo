@@ -41,8 +41,13 @@ export default class MenuManager
     start() {
         if(this.data.items.length > 0) {
             this.clearSelections();
-            this.data.items[0].select();
-            this.data.items[0].open();
+            for(let item of this.data.items) {
+                if(item.clickable) {
+                    item.select();
+                    item.open();
+                    return;
+                }
+            }
         }
     }
 }
