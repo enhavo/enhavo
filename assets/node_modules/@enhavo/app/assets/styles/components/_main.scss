@@ -1,9 +1,6 @@
 .app {min-height:100vh;display:flex;
-  .sidebar {width:260px;background:$color2;@include transition(width 300ms);
-    &.menu-collapsed {width:$collapsedMenuWidth;
-      .branding-container {background-position:8px 52%;}
-    }
-    .branding-container {height:$toolbarHeight;background:url('../images/enhavo_white.svg');background-size:auto 50%;background-position:10px 52%;background-repeat:no-repeat;position:relative;@include transition(all 300ms);cursor:pointer;}
+  .sidebar {width:$sidebarWidth;background:$color2;@include transition(width 300ms);height:calc(100vh - #{$toolbarHeight});flex:0 0 auto;
+    &.menu-collapsed {width:auto;}
   }
   .toolbar-viewstack-container {width:100%;display:flex;flex-direction:column;background:#fff;@include transition(width 300ms);}
 }

@@ -52,6 +52,12 @@ enhavo_app:
             route: enhavo_project_magazine_index
             icon: local_library
             label: Magazine
+        portal:
+            type: dropdown
+            label: Portal
+            choices:
+                hl: hightlight
+                nv: neue-verpackung
 
 enhavo_grid:
     items:

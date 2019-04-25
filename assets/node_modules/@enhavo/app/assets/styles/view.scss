@@ -1,7 +1,8 @@
 @import "base";
 @import "components";
+@import "~@enhavo/media/assets/styles/style";
 .app-view {padding-top:60px;
-  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;z-index:1;
+  .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;z-index:3;
     .action {text-align:center;flex:1 1 100px;min-width:85px;padding:8px 5px;cursor:pointer;
       &:hover {color:$color1;
         .action-icon {color:$color1;}
@@ -16,8 +17,21 @@
     .btn {display:inline-block;}
     .text {margin-bottom:12px;}
   }
-  .btn {@extend %btn;}
+  .btn {@extend %btn-primary;}
   .checkbox-container {@extend %checkboxContainer;}
+  .modal-confirm {position:fixed;top:0;left:0;width:100%;height:100%;z-index:11;background:rgba($color2,0.7);text-align:center;display:flex;align-items:center;justify-content: center;
+    .buttons {display:flex;justify-content:center;
+      .modal-btn {@extend %modal-btn;margin:0 10px;
+        &.primary {@extend %modal-btn-primary;}
+      }
+    }
+    .message {margin-bottom:30px;color:$grey5;font-size:2rem;}
+  }
+  .preview-view {border:1px solid $grey3;box-shadow:3px 3px 11px rgba(#ccc, 0.4);height:calc(100vh - 80px);margin:10px;
+    &.tablet {width:768px;height:1024px;}
+    &.mobile {width:375px;height:667px;}
+    > iframe {width:100%;height:100%;}
+  }
   .v-select {display:inline-block;
     &.vs--single {
       &.vs--open {

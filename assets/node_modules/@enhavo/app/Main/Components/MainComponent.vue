@@ -1,12 +1,10 @@
 <template>
     <div class="app">
-        <view-view v-bind:data="view"></view-view>
+        <toolbar v-bind:menu_open="menu.open" :branding="branding" v-on:toogle-menu="toogleMenu"></toolbar>
         <div class="sidebar" v-bind:class="{ 'menu-collapsed':!menu.open}">
-            <div class="branding-container" v-bind:style="brandingImageStyles" @click="home"></div>
             <app-menu v-bind:menu="menu" v-bind:class="{ 'menu-collapsed':!menu.open}"></app-menu>
         </div>
         <div class="toolbar-viewstack-container">
-            <toolbar v-bind:menu_open="menu.open" v-on:toogle-menu="toogleMenu"></toolbar>
             <view-stack v-bind:data="view_stack"></view-stack>
         </div>
     </div>
@@ -50,19 +48,6 @@ export default class App extends Vue {
     toogleMenu()
     {
         this.menu.open = !this.menu.open;
-    }
-
-    get brandingImageStyles() {
-        if(this.branding.logo) {
-            return {
-                backgroundImage: 'url(' + this.branding.logo + ')',
-            }
-        }
-        return {};
-    }
-
-    home() {
-        window.location.href = '/admin/'
     }
 }
 </script>

@@ -20,6 +20,7 @@ enhavo_app:
         label:
             ok: 'Ok'
             cancel: 'Cancel'
+            close: 'Close'
     grid:
         label:
             entry_per_page: 'Entries per page'

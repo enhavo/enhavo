@@ -66,20 +66,3 @@ export default class ApplicationComponent extends Vue
 }
 </script>
 
-<style lang="scss">
-    .app-view {
-        height: 100vh;
-        .preview-view {
-            border: 2px solid black; height: 100vh;
-            &.tablet {
-                width: 768px; height: 1024px;
-            }
-            &.mobile {
-                width: 368px; height: 624px;
-            }
-        }
-        .iframe { height: 100vh; display: block; width: 100% }
-    }
-</style>
-
-

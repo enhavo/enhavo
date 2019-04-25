@@ -31,15 +31,15 @@ export default class FormApp extends AbstractViewApp implements AppInterface
                     this.view.confirm(new Confirm(
                         this.translator.trans('enhavo_app.view.message.not_saved'),
                         () => {
-                            event.reject();
-                        },
-                        () => {
                             event.resolve();
                             let id = this.view.getId();
                             this.eventDispatcher.dispatch(new RemoveEvent(id));
                         },
-                        this.translator.trans('enhavo_app.view.label.ok'),
-                        this.translator.trans('enhavo_app.view.label.cancel')
+                        () => {
+                            event.reject();
+                        },
+                        this.translator.trans('enhavo_app.view.label.cancel'),
+                        this.translator.trans('enhavo_app.view.label.close')
                     ));
                 } else {
                     event.resolve();

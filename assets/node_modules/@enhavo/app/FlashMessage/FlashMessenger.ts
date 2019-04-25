@@ -34,7 +34,7 @@ export default class FlashMessenger
     protected tick()
     {
         for(let message of this.messages) {
-            message.ttl--
+            //message.ttl--
         }
 
         for(let message of this.messages) {

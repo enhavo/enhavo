@@ -14,12 +14,9 @@
     .view-resizer {width:100%;border:0;cursor:pointer;@extend .icon-play_arrow;
       &:hover {
         &:before {color:$grey2;}
-        .view-label {display:block;}
       }
-      &:before {color:$grey4;left:-2px;font-size:1.3rem;}
-      .view-label {display:none;position:absolute;top:50%;left:calc(100% + 10px);transform:translateY(-50%);padding:8px;z-index:1;white-space:nowrap;background:$color1b;color:#fff;border-radius:3px;
-        &:before {content:"";position:absolute;left:-8px;top:calc(50% - 9px);border-right:8px solid;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right-color:$color1b;}
-      }
+      &:before {color:$grey4;left:-1px;font-size:1.1rem;}
+      .view-label {position:absolute;top:0;left:0;padding:6px;width:100%;z-index:1;white-space:pre-wrap;word-wrap:break-word;color:$grey3;text-transform:uppercase;text-align:center;font-size:0.75rem;}
     }
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;

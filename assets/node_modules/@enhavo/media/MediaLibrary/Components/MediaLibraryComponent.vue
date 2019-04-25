@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="media-library">
         <div ref="dropzone" class="dropzone" v-show="data.dropZone"></div>
         <input v-once type="file" ref="upload" v-show="false">
         <ul class="media-library-file-list">
@@ -102,7 +102,7 @@ export default class MediaLibraryComponent extends Vue
 
     getType(extension)
     {
-        if(extension == 'png' || extension == 'jpg' ||  extension == 'jepg' ||  extension == 'gif') {
+        if(extension == 'png' || extension == 'jpg' ||  extension == 'jpeg' ||  extension == 'gif') {
             return 'image';
         }
 
@@ -114,13 +114,5 @@ export default class MediaLibraryComponent extends Vue
     }
 }
 </script>
-
-<style lang="css" scoped>
-    .dropzone {
-        height: 100px;
-        width: 100px;
-        background-color: red
-    }
-</style>
 
 
