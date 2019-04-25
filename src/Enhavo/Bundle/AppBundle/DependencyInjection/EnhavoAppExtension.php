@@ -33,7 +33,6 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.roles', $config['roles']);
         $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
         $container->setParameter('enhavo_app.translate', $config[ 'translate' ]);
-        $container->setParameter('enhavo_app.wysiwyg', $config[ 'wysiwyg' ]);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
