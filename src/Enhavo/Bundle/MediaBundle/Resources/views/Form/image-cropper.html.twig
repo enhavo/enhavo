@@ -1,9 +1,11 @@
 {% block enhavo_image_cropper_widget %}
     {% trans_default_domain translation_domain %}
 
-    <div style="margin-top: 5px;">
+    <div class="image-cropper-format-list">
         {% for format,label in formats %}
-            <div data-image-cropping-tool="{{ format }}">{{ label }}</div>
+            <div class="image-cropper-format-item">
+                <div data-image-cropping-tool="{{ format }}" class="image-cropper-format-item-btn">{{ label }} <i class="icon icon-crop"></i></div>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}

@@ -45,6 +45,7 @@ enhavo_media_library_list:
                         type: media
                         property: _self
                         label: url
+                        format: enhavoMediaLibraryThumb
 
 enhavo_media_library_update:
     options:

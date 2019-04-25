@@ -2,7 +2,7 @@
     <div class="view-table-pagination">
         <div class="pagination-select">
             <div class="label">{{ entryPerPage }}:</div>
-            <v-select @input="changePagination" :value="pagination" :options="options" :clearable="false"></v-select>
+            <v-select @input="changePagination" :value="pagination" :options="options" :clearable="false" :searchable="false"></v-select>
         </div>
 
         <div class="pagination-nav">

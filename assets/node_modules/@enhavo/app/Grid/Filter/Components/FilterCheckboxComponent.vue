@@ -2,7 +2,8 @@
     <div class="view-table-filter-search">
         <div class="checkbox-container">
             <input type="checkbox" v-on:change="change" :checked="data.value" />
-            <span>{{ data.label }}</span>
+            <span></span>
+            <div class="label">{{ data.label }}</div>
         </div>
     </div>
 </template>

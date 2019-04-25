@@ -1,15 +1,15 @@
 @import "~compass-mixins/lib/_animate.scss";
 @import "~compass-mixins/lib/_compass.scss";
 
-.media-library {min-height: 485px; background-color: #FFF;position:relative;padding:15px;
+.media-library {min-height: 485px; background-color:$grey1;position:relative;padding:15px;margin:15px;
   &.drop-zone {
     &:after {content:"";position:absolute;top:25px;left:25px;right:25px;bottom:25px;border:8px dashed #fff;z-index:2;border-radius:25px;}
     &:before {content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-color:#ddd;z-index:1;}
   }
   &-block-description {margin-bottom:40px;}
   &-block-title {font-size:2rem;line-height:1.3em;margin-bottom:0.5em;}
-  &-file-list {margin:20px -7px;
-    li {width:calc(16.66666% - 14px);margin:0 7px 14px 7px;display:inline-block;vertical-align:top;cursor:pointer;position:relative;overflow:hidden;border-radius:4px;
+  &-file-list {margin:0 -7px;
+    li {width:150px;margin:0 7px 14px 7px;display:inline-block;vertical-align:top;cursor:pointer;position:relative;overflow:hidden;border-radius:4px;
       &:hover {
         img {@include transform(scale(1.05));}
         .filename {display:block;}

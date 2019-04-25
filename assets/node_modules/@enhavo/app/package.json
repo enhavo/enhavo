@@ -2,7 +2,7 @@
   "name": "@enhavo/app",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@ibm/plex": "^1.2.3",
-    "@enhavo/core": "^0.1.4",
-    "@enhavo/font": "^0.1.4",
+    "@enhavo/core": "^0.1.5",
+    "@enhavo/font": "^0.1.5",
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "compass-mixins": "^0.12.10",
