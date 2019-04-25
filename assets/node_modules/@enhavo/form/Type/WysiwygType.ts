@@ -41,7 +41,7 @@ export default class WysiwygType extends FormType
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table paste autoresize"],
             content_css: '/build/enhavo/editor.css',
-            min_height: 120,
+            min_height: 160,
             autoresize_on_init: false,
             autoresize_max_height: 1000,
             setup: function (editor: any) {
