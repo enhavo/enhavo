@@ -8,14 +8,36 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
+use Enhavo\Bundle\AppBundle\Action\ActionManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
+use Symfony\Component\Serializer\SerializerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateViewer extends CreateViewer
 {
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    public function __construct(
+        RequestConfigurationFactory $requestConfigurationFactory,
+        ViewerUtil $util,
+        array $formThemes,
+        ActionManager $actionManager,
+        FlashBag $flashBag,
+        SerializerInterface $serializer
+    ) {
+        parent::__construct($requestConfigurationFactory, $util, $formThemes, $actionManager, $flashBag);
+        $this->serializer = $serializer;
+    }
+
     public function getType()
     {
         return 'update';
@@ -50,6 +72,12 @@ class UpdateViewer extends CreateViewer
 
         $data = $parameters->get('data');
         $data['actionsSecondary'] = $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']);
+        $resourceData = null;
+        $serializationGroups = $requestConfiguration->getSerializationGroups();
+        if($serializationGroups) {
+            $resourceData = json_decode($this->serializer->serialize($resource, 'json', ['groups' => $serializationGroups]), true);
+        }
+        $data['resource'] = $resourceData;
         $parameters->set('data', $data);
     }
 

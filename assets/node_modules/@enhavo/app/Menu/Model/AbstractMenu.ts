@@ -10,6 +10,7 @@ export default abstract class AbstractMenu implements MenuInterface
     public selected: boolean = false;
     protected application: ApplicationInterface;
     private parentItem: MenuInterface;
+    public clickable: boolean = false;
 
     constructor(application: ApplicationInterface)
     {

@@ -12,8 +12,7 @@ import OpenActionFactory from "@enhavo/app/Action/Factory/OpenActionFactory";
 import DuplicateActionFactory from "@enhavo/app/Action/Factory/DuplicateActionFactory";
 import DownloadActionFactory from "@enhavo/app/Action/Factory/DownloadActionFactory";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import DropdownActionComponent from './Components/DropdownActionComponent.vue'
-import ActionComponent from './Components/ActionComponent.vue'
+import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class ActionRegistry extends Registry
 {
@@ -21,22 +20,22 @@ export default class ActionRegistry extends Registry
         return <ActionFactoryInterface>super.getFactory(name);
     }
 
-    register(name: string, component: object, factory: ActionFactoryInterface): void {
+    register(name: string, component: object, factory: ActionFactoryInterface): RegistryInterface {
         return super.register(name, component, factory);
     }
 
     load(application: ApplicationInterface)
     {
-        this.register('close-action', ActionComponent, new CloseActionFactory(application));
-        this.register('create-action', ActionComponent, new CreateActionFactory(application));
-        this.register('delete-action', ActionComponent, new DeleteActionFactory(application));
-        this.register('dropdown-action', DropdownActionComponent, new DropdownActionFactory(application));
-        this.register('filter-action', ActionComponent, new FilterActionFactory(application));
-        this.register('preview-action', ActionComponent, new PreviewActionFactory(application));
-        this.register('save-action', ActionComponent, new SaveActionFactory(application));
-        this.register('event-action', ActionComponent, new EventActionFactory(application));
-        this.register('open-action', ActionComponent, new OpenActionFactory(application));
-        this.register('duplicate-action', ActionComponent, new DuplicateActionFactory(application));
-        this.register('download-action', ActionComponent, new DownloadActionFactory(application));
+        this.register('close-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new CloseActionFactory(application));
+        this.register('create-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new CreateActionFactory(application));
+        this.register('delete-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DeleteActionFactory(application));
+        this.register('dropdown-action', () => import('@enhavo/app/Action/Components/DropdownActionComponent.vue'), new DropdownActionFactory(application));
+        this.register('filter-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new FilterActionFactory(application));
+        this.register('preview-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new PreviewActionFactory(application));
+        this.register('save-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new SaveActionFactory(application));
+        this.register('event-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new EventActionFactory(application));
+        this.register('open-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new OpenActionFactory(application));
+        this.register('duplicate-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DuplicateActionFactory(application));
+        this.register('download-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DownloadActionFactory(application));
     }
 }

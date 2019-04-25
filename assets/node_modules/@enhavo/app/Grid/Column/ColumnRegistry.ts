@@ -6,6 +6,7 @@ import TextFactory from "@enhavo/app/Grid/Column/Factory/TextFactory";
 import ActionFactory from "@enhavo/app/Grid/Column/Factory/ActionFactory";
 import SubFactory from "@enhavo/app/Grid/Column/Factory/SubFactory";
 import MediaFactory from "@enhavo/app/Grid/Column/Factory/MediaFactory";
+import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class ColumnRegistry extends Registry
 {
@@ -13,7 +14,7 @@ export default class ColumnRegistry extends Registry
         return <ColumnFactoryInterface>super.getFactory(name);
     }
 
-    register(name: string, component: object, factory: ColumnFactoryInterface): void {
+    register(name: string, component: object, factory: ColumnFactoryInterface): RegistryInterface {
         return super.register(name, component, factory);
     }
 

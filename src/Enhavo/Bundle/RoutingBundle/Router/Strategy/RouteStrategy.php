@@ -18,10 +18,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RouteStrategy extends AbstractStrategy
 {
+    /**
+     * @param $resource
+     * @param array $parameters
+     * @param int $referenceType
+     * @param array $options
+     * @return string
+     * @throws UrlResolverException
+     */
     public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
         /** @var RouteInterface $route */
         $route = $this->getProperty($resource, $options['property']);
+
+        if($route->getName() == null) {
+            throw new UrlResolverException(sprintf('The route function getName of class "%s" returns null. Can\'t generate url', get_class($resource)));
+        }
+
         try {
             return $this->getRouter()->generate($route->getName(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {

@@ -1,4 +1,2 @@
 import Application from "@enhavo/app/Delete/DeleteApplication";
-import Component from "@enhavo/app/Delete/Components/DeleteComponent.vue";
-
-Application.getVueLoader().load(Component);
+Application.getVueLoader().load(() => import ("@enhavo/app/Delete/Components/DeleteComponent.vue"));

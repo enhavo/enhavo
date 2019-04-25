@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
+use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
@@ -26,7 +27,7 @@ class ArticleType extends AbstractResourceType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('teaser', TextareaType::class, array(
+        $builder->add('teaser', WysiwygType::class, array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
             'translation' => $this->translation

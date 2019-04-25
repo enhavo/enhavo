@@ -1,10 +1,13 @@
+import * as $ from "jquery";
+import * as _ from "lodash";
 
-export default class WysiwygConfig {
-    height: string;
-    plugins: string;
-    style_formats: string;
-    formats: string;
-    toolbar1: string;
-    toolbar2: string;
-    content_css: string;
+export default class WysiwygConfig
+{
+    static set(type: string, config: any) {
+        $(document).on('tinymceInit', (event, data: any) => {
+            if(type == data.configType) {
+                _.merge(data.options, config);
+            }
+        })
+    }
 }

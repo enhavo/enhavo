@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
-use Enhavo\Bundle\AppBundle\Form\Helper\EntityTreeChoiceBuilder;
+use Enhavo\Bundle\FormBundle\Form\Helper\EntityTreeChoiceBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;

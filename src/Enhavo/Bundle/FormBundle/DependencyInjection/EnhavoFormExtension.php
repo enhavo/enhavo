@@ -25,5 +25,7 @@ class EnhavoFormExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/form.yml');
         $loader->load('services/serializer.yml');
+        $loader->load('services/controller.yml');
+        $loader->load('services/services.yml');
     }
 }

@@ -33,7 +33,7 @@ export default class Form
         this.eventDispatcher = eventDispatcher;
 
         if(this.flashMessenger.has('success')) {
-            this.eventDispatcher.dispatch(new UpdatedEvent(view.getId()))
+            this.eventDispatcher.dispatch(new UpdatedEvent(view.getId(), data.resource))
         }
     }
 

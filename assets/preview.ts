@@ -1,4 +1,2 @@
 import Application from "@enhavo/app/Preview/PreviewApplication";
-import Component from "@enhavo/app/Preview/Components/ApplicationComponent.vue";
-
-Application.getVueLoader().load(Component);
+Application.getVueLoader().load(() => import("@enhavo/app/Preview/Components/ApplicationComponent.vue"));

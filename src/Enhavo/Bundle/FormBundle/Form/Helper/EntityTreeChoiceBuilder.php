@@ -6,7 +6,7 @@
  * Time: 17:31
  */
 
-namespace Enhavo\Bundle\AppBundle\Form\Helper;
+namespace Enhavo\Bundle\FormBundle\Form\Helper;
 
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\FormView;

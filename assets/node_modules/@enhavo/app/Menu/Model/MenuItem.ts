@@ -5,6 +5,7 @@ import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
 export default class MenuItem extends AbstractMenu
 {
     public url: string;
+    public clickable: boolean = true;
 
     open(): void {
         this.application.getEventDispatcher().dispatch(new ClearEvent())

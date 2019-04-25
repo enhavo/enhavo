@@ -1,0 +1,8 @@
+services:
+    enhavo_form.controller.auto_complete:
+        class: Enhavo\Bundle\FormBundle\Controller\AutoCompleteController
+        arguments:
+            - '@sylius.expression_language'
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]

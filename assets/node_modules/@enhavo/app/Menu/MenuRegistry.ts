@@ -4,6 +4,7 @@ import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import MenuListFactory from "@enhavo/app/Menu/Factory/MenuListFactory";
 import MenuItemFactory from "@enhavo/app/Menu/Factory/MenuItemFactory";
 import MenuDropdownFactory from "@enhavo/app/Menu/Factory/MenuDropdownFactory";
+import RegistryInterface from "@enhavo/core/RegistryInterface";
 
 export default class MenuRegistry extends Registry
 {
@@ -11,7 +12,7 @@ export default class MenuRegistry extends Registry
         return <MenuFactoryInterface>super.getFactory(name);
     }
 
-    register(name: string, component: object, factory: MenuFactoryInterface): void {
+    register(name: string, component: object, factory: MenuFactoryInterface): RegistryInterface {
         return super.register(name, component, factory);
     }
 

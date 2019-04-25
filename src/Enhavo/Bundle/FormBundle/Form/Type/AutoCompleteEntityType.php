@@ -50,7 +50,7 @@ class AutoCompleteEntityType extends AbstractType
         $propertyAccessor = $this->propertyAccessor;
 
         if($options['multiple'] === true) {
-            $builder->addModelTransformer(new CallbackTransformer(
+            $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
                     $collection = new ArrayCollection();
                     if($originalDescription instanceof Collection) {
@@ -89,7 +89,7 @@ class AutoCompleteEntityType extends AbstractType
                 }
             ));
         } else {
-            $builder->addModelTransformer(new CallbackTransformer(
+            $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
                     if($originalDescription !== null) {
                         if(!method_exists($originalDescription, 'getId')) {
@@ -123,7 +123,7 @@ class AutoCompleteEntityType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['auto_complete_data'] = [
             'url' => $this->router->generate($options['route'], $options['route_parameters']),
@@ -132,7 +132,9 @@ class AutoCompleteEntityType extends AbstractType
             'value' => $view->vars['value'],
             'multiple' => $options['multiple'],
             'minimum_input_length' => $options['minimum_input_length'],
-            'placeholder' => $options['placeholder']
+            'placeholder' => $options['placeholder'],
+            'id_property' => $options['id_property'],
+            'label_property' => $options['label_property'],
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['create_route'] = $options['create_route'];
@@ -163,9 +165,11 @@ class AutoCompleteEntityType extends AbstractType
             'minimum_input_length' => 0,
             'placeholder' => null,
             'create_route' => null,
-            'create_button_label' => null
+            'create_button_label' => null,
+            'id_property' => 'id',
+            'label_property' => null,
         ]);
-        
+
         $resolver->setRequired([
             'route',
             'class',
