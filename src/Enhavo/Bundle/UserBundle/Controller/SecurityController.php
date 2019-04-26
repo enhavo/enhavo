@@ -39,10 +39,12 @@ class SecurityController extends FOSSecurityController
     {
         $request = $this->get('request_stack')->getCurrentRequest();
 
-        $view = $this->viewFactory->create('base', [
-            'template' => 'EnhavoUserBundle:Theme:Security/login.html.twig',
-            'request' => $request,
+        $form = null;
+
+        $view = $this->viewFactory->create('login', [
+//            'request' => $request,
             'parameters' => $data,
+//            'form' => $form
         ]);
 
         return $this->viewHandler->handle($view);

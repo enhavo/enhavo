@@ -9,14 +9,14 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Preview\StrategyResolver;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResourcePreviewViewer extends AbstractViewer
+class ResourcePreviewViewer extends AbstractResourceViewer
 {
     /**
      * @var StrategyResolver
