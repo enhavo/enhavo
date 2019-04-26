@@ -3,12 +3,6 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
 
-enhavo_assets:
-    require_js:
-        paths:
-            slider:
-                location: /bundles/enhavoslider/js
-
 enhavo_app:
     roles:
         enhavo_slider_slide_index:

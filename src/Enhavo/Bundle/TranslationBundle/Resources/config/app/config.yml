@@ -3,12 +3,6 @@ enhavo_translation:
     locales:
         en:
 
-enhavo_assets:
-    require_js:
-        paths:
-            translation:
-                location: /bundles/enhavotranslation/js
-
 enhavo_app:
 #    stylesheets:
 #      - '@EnhavoTranslationBundle/Resources/public/css/translation.css'

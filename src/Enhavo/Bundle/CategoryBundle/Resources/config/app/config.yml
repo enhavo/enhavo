@@ -4,11 +4,6 @@ doctrine:
             Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
             Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
 
-enhavo_assets:
-    require_js:
-        paths:
-            category:
-                location: /bundles/enhavocategory/js
 
 enhavo_app:
     form_themes:

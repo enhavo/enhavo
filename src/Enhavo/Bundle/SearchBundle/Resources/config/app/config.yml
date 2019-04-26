@@ -1,9 +1,3 @@
 enhavo_app:
 #    stylesheets:
 #      - '@EnhavoSearchBundle/Resources/public/css/style.css'
-
-enhavo_assets:
-    require_js:
-        paths:
-            search:
-                location: /bundles/enhavosearch/js

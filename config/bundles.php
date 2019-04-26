@@ -27,7 +27,6 @@ return [
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Enhavo\Bundle\AppBundle\EnhavoAppBundle::class => ['all' => true],
     Enhavo\Bundle\UserBundle\EnhavoUserBundle::class => ['all' => true],
-    Enhavo\Bundle\AssetsBundle\EnhavoAssetsBundle::class => ['all' => true],
     Enhavo\Bundle\MediaBundle\EnhavoMediaBundle::class => ['all' => true],
     Enhavo\Bundle\SearchBundle\EnhavoSearchBundle::class => ['all' => true],
     Enhavo\Bundle\FormBundle\EnhavoFormBundle::class => ['all' => true],
