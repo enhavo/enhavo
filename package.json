@@ -54,7 +54,6 @@
     "gulp-download": "^0.0.1",
     "gulp-options": "^1.1.1",
     "gulp-sass": "^4.0.2",
-    "hard-source-webpack-plugin": "^0.13.1",
     "webfonts-generator": "^0.4.0",
     "webpack-notifier": "^1.7.0"
   }
