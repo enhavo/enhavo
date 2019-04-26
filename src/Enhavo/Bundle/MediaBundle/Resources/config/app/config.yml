@@ -33,11 +33,6 @@ enhavo_app:
             label: library.role.label.delete
             translationDomain: EnhavoMediaBundle
 
-enhavo_assets:
-    require_js:
-        paths:
-            media:
-                location: /bundles/enhavomedia/js/media
 
 enhavo_media:
     formats:

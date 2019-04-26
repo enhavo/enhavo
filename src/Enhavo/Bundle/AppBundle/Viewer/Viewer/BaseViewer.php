@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BaseViewer extends AbstractViewer
+class BaseViewer extends AbstractResourceViewer
 {
     public function getType()
     {

@@ -1,8 +1,0 @@
-<div data-filter data-filter-select>
-    <select name="{{ name }}" data-filter-input>
-        <option value="">-- {{ label|trans([], translationDomain) }} --</option>
-        {% for value,name in options %}
-            <option value="{{ value }}">{{ name }}</option>
-        {% endfor %}
-    </select>
-</div>

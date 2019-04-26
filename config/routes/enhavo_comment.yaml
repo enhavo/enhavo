@@ -1,0 +1,3 @@
+enhavo_comment:
+    resource: "@EnhavoCommentBundle/Resources/config/routing.yml"
+    prefix: /

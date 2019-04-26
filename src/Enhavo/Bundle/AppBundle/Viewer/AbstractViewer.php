@@ -1,160 +1,77 @@
 <?php
 /**
- * AbstractViewer.php
- *
- * @since 29/05/15
- * @author gseidel
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 2019-04-11
+ * Time: 21:06
  */
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
-use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use FOS\RestBundle\View\View;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractViewer extends AbstractType implements ViewerInterface
+abstract class AbstractViewer implements ViewerInterface
 {
-    /**
-     * @var RequestConfigurationFactory
-     */
-    private $requestConfigurationFactory;
+    use ContainerAwareTrait;
 
-    /**
-     * @var ViewerUtil
-     */
-    protected $util;
-
-    /**
-     * AbstractViewer constructor.
-     *
-     * @param RequestConfigurationFactory $requestConfigurationFactory
-     * @param ViewerUtil $util
-     */
-    public function __construct(RequestConfigurationFactory $requestConfigurationFactory, ViewerUtil $util)
-    {
-        $this->requestConfigurationFactory = $requestConfigurationFactory;
-        $this->util = $util;
-    }
+    abstract public function getType();
 
     /**
      * {@inheritdoc}
      */
     public function createView($options = []): View
     {
-        $view = $this->create($options);
-        $requestConfiguration = $this->getRequestConfiguration($options);
-
-        // set template data
-        $parameters = new ParameterBag();
-        $this->buildTemplateParameters($parameters, $requestConfiguration, $options);
+        $view = View::create(null, 200);
         $templateVars = [];
-        foreach($parameters as $key => $value) {
-            $templateVars[$key] = $value;
+
+        $templateVars['stylesheets'] = $options['stylesheets'];
+        $templateVars['javascripts'] = $options['javascripts'];
+
+        if($options['translations']) {
+            $templateVars['translations'] = $this->getTranslations();
         }
+
+        if($options['routes']) {
+            $templateVars['routes'] = $this->getRoutes();
+        }
+
+        $templateVars['data'] = [
+            'view' => ['view_id' => null]
+        ];
+
         $view->setTemplateData($templateVars);
-
-        // set template
-        if(isset($options['template'])) {
-            $view->setTemplate($this->resolveTemplate($requestConfiguration, $options));
-        }
+        $view->setTemplate($options['template']);
 
         return $view;
     }
 
-    protected function create($options): View
+    private function getRoutes()
     {
-        $view = null;
-        if(isset($options['resource'])) {
-            $view = View::create($options['resource'], 200);
-        } elseif(isset($options['resources'])) {
-            $view = View::create($options['resources'], 200);
-        } else {
-            $view = View::create(null, 200);
+        $file = $this->container->getParameter('kernel.project_dir').'/public/js/fos_js_routes.json';
+        if(file_exists($file)) {
+            return file_get_contents($file);
         }
-        return $view;
+        return null;
     }
 
-    protected function getRequestConfiguration(array $options): ?RequestConfiguration
+    private function getTranslations()
     {
-        $requestConfiguration = $options['request_configuration'];
-        if($requestConfiguration instanceof RequestConfiguration) {
-            return $requestConfiguration;
-        } else {
-            /** @var Request $request */
-            $request = $options['request'];
-            $metadata = new DummyMetadata();
-            /** @var RequestConfiguration $requestConfiguration */
-            $requestConfiguration = $this->requestConfigurationFactory->create($metadata, $request);
-            return $requestConfiguration;
-        }
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $dumper = $this->container->get('enhavo_app.translation.translation_dumper');
+        $translations = $dumper->getTranslations('javascript', $request->getLocale());
+        return $translations;
     }
 
-    private function resolveTemplate(RequestConfiguration $requestConfiguration, array $options)
-    {
-        return $requestConfiguration->getTemplate($options['template']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'translation_domain' => null,
-            'resource' => null,
-            'resources' => null,
-            'metadata' => null,
-            'template' => null,
-            'request_configuration' => null,
-            'request' => null,
+            'javascripts' => [],
+            'stylesheets' => [],
+            'translations' => false,
+            'routes' => false,
+            'template' => 'EnhavoAppBundle:Viewer:base.html.twig'
         ]);
-    }
-
-    protected function getUnderscoreName(MetadataInterface $metadata)
-    {
-        $name = $metadata->getHumanizedName();
-        $name = str_replace(' ', '_', $name);
-        return $name;
-    }
-
-    protected function buildTemplateParameters(ParameterBag $parameters, RequestConfiguration $requestConfiguration, array $options)
-    {
-        $parameters->set('translationDomain', $this->mergeConfig([
-            $options['translation_domain'],
-            $this->getViewerOption('translationDomain', $requestConfiguration)
-        ]));
-    }
-
-    protected function mergeConfigArray($configs)
-    {
-        $data = [];
-        foreach($configs as $config) {
-            if(is_array($config)) {
-                $data = array_merge($data, $config);
-            }
-        }
-        return $data;
-    }
-
-    protected function mergeConfig($configs)
-    {
-        $data = null;
-        foreach($configs as $config) {
-            if($config != null) {
-                $data = $config;
-            }
-        }
-        return $data;
-    }
-
-    protected function getViewerOption($key, RequestConfiguration $requestConfiguration)
-    {
-        $options = $requestConfiguration->getViewerOptions();
-        return $this->util->getConfigValue($key, $options);
     }
 }

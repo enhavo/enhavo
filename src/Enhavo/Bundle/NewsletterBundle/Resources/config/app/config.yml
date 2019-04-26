@@ -1,9 +1,3 @@
-enhavo_assets:
-    require_js:
-        paths:
-            newsletter:
-                location: /bundles/enhavonewsletter/js
-
 enhavo_newsletter:
     strategy:
         settings:

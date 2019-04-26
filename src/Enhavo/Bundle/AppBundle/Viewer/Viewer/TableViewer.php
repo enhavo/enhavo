@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Pagerfanta\Pagerfanta;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
@@ -18,7 +18,7 @@ use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TableViewer extends AbstractViewer
+class TableViewer extends AbstractResourceViewer
 {
     /**
      * @var ColumnManager

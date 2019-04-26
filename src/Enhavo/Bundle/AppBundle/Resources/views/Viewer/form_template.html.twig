@@ -1,1 +1,3 @@
-{{ form_widget(form) }}
+{% for row in form %}
+    {{ form_row(row) }}
+{% endfor %}

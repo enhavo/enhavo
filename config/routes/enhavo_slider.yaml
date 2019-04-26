@@ -1,0 +1,3 @@
+enhavo_slide:
+    resource: "@EnhavoSliderBundle/Resources/config/routing/slide.yml"
+    prefix: /admin

@@ -10,13 +10,13 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 
 use Enhavo\Bundle\AppBundle\Column\ColumnManager;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
-use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
+use Enhavo\Bundle\AppBundle\Viewer\AbstractResourceViewer;
 use Enhavo\Bundle\AppBundle\Viewer\ViewerUtil;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ListDataViewer extends AbstractViewer
+class ListDataViewer extends AbstractResourceViewer
 {
     /**
      * @var ColumnManager

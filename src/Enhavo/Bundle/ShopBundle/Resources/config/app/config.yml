@@ -93,12 +93,6 @@ doctrine:
             Sylius\Component\Product\Model\ProductOptionInterface: Sylius\Component\Product\Model\ProductOption
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
 
-enhavo_assets:
-    require_js:
-        paths:
-            shop:
-                location: /bundles/enhavoshop/js
-
 enhavo_app:
     roles:
         enhavo_shop_product_index:
