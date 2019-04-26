@@ -1,0 +1,3 @@
+enhavo_project_theme:
+    resource: "@EnhavoProjectBundle/Resources/config/routing/theme.yml"
+    prefix: /

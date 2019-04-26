@@ -1,0 +1,7 @@
+enhavo_redirect_admin:
+    resource: "@EnhavoContentBundle/Resources/config/routing/redirect.yml"
+    prefix: /admin
+
+enhavo_sitemap:
+    resource: "@EnhavoContentBundle/Resources/config/routing/sitemap.yml"
+    prefix: /

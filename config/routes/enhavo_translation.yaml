@@ -1,0 +1,3 @@
+#enhavo_translation:
+#    resource: "@EnhavoTranslationBundle/Resources/config/routing/translation_string.yml"
+#    prefix: /admin
