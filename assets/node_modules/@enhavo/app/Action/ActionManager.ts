@@ -4,16 +4,24 @@ import * as _ from 'lodash';
 
 export default class ActionManager
 {
-    private actions: ActionInterface[];
+    private primary: ActionInterface[];
+    private secondary: ActionInterface[];
     private registry: ActionRegistry;
 
-    constructor(actions: ActionInterface[], registry: ActionRegistry)
+    constructor(primary: ActionInterface[], secondary: ActionInterface[], registry: ActionRegistry)
     {
         this.registry = registry;
-        for (let i in actions) {
-            let action = registry.getFactory(actions[i].component).createFromData(actions[i]);
-            _.extend(actions[i], action);
+
+        for (let i in primary) {
+            let action = registry.getFactory(primary[i].component).createFromData(primary[i]);
+            _.extend(primary[i], action);
         }
-        this.actions = actions;
+        this.primary = primary;
+
+        for (let i in secondary) {
+            let action = registry.getFactory(secondary[i].component).createFromData(secondary[i]);
+            _.extend(secondary[i], action);
+        }
+        this.secondary = secondary;
     }
 }

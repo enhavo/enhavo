@@ -9,8 +9,11 @@ import Router from "@enhavo/core/Router";
 import Translator from "@enhavo/core/Translator";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import StateManager from "@enhavo/app/State/StateManager";
+import ActionManager from "@enhavo/app/Action/ActionManager";
+import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
+import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 
-export default abstract class AbstractApplication implements ApplicationInterface
+export default abstract class AbstractApplication implements ApplicationInterface, ActionAwareApplication
 {
     protected dataLoader: DataLoader;
     protected vueLoader: VueLoader;
@@ -21,6 +24,8 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected translator: Translator;
     protected flashMessenger: FlashMessenger;
     protected stateManager: StateManager;
+    protected actionManager: ActionManager;
+    protected actionRegistry: ActionRegistry;
 
     constructor()
     {
@@ -95,5 +100,23 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.stateManager = new StateManager();
         }
         return this.stateManager;
+    }
+
+
+    public getActionManager(): ActionManager
+    {
+        if(this.actionManager == null) {
+            this.actionManager = new ActionManager(this.getDataLoader().load().actions, this.getDataLoader().load().actionsSecondary, this.getActionRegistry());
+        }
+        return this.actionManager;
+    }
+
+    public getActionRegistry(): ActionRegistry
+    {
+        if(this.actionRegistry == null) {
+            this.actionRegistry = new ActionRegistry();
+            this.actionRegistry.load(this);
+        }
+        return this.actionRegistry;
     }
 }
