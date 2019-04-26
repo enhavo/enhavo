@@ -1,8 +1,6 @@
 import FormApp from "@enhavo/app/Form/FormApp";
-import ActionManager from "@enhavo/app/Action/ActionManager";
 import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Form from "@enhavo/app/Form/Form";
 import FormListener from "@enhavo/form/FormListener";
@@ -10,8 +8,6 @@ import FormRegistry from "@enhavo/form/FormRegistry";
 
 export class FormApplication extends AbstractApplication implements ActionAwareApplication
 {
-    protected actionManager: ActionManager;
-    protected actionRegistry: ActionRegistry;
     protected form: Form;
     protected formListener: FormListener;
     protected formRegistry: FormRegistry;
@@ -22,23 +18,6 @@ export class FormApplication extends AbstractApplication implements ActionAwareA
             this.app = new FormApp(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager(), this.getTranslator());
         }
         return this.app;
-    }
-
-    public getActionManager(): ActionManager
-    {
-        if(this.actionManager == null) {
-            this.actionManager = new ActionManager(this.getDataLoader().load().actions, this.getActionRegistry());
-        }
-        return this.actionManager;
-    }
-
-    public getActionRegistry(): ActionRegistry
-    {
-        if(this.actionRegistry == null) {
-            this.actionRegistry = new ActionRegistry;
-            this.actionRegistry.load(this);
-        }
-        return this.actionRegistry;
     }
 
     public getForm(): Form

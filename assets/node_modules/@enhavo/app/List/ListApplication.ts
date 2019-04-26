@@ -1,8 +1,6 @@
 import App from "@enhavo/app/List/ListApp";
-import ActionManager from "@enhavo/app/Action/ActionManager";
 import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
-import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
@@ -11,8 +9,6 @@ import Editable from "@enhavo/app/Action/Editable";
 
 export class ListApplication extends AbstractApplication implements ActionAwareApplication
 {
-    protected actionManager: ActionManager;
-    protected actionRegistry: ActionRegistry;
     protected columnManager: ColumnManager;
     protected columnRegistry: ColumnRegistry;
     protected list: List;
@@ -28,23 +24,6 @@ export class ListApplication extends AbstractApplication implements ActionAwareA
             this.app = new App(this.getDataLoader(), this.getEventDispatcher(), this.getView(), this.getActionManager());
         }
         return this.app;
-    }
-
-    public getActionManager(): ActionManager
-    {
-        if(this.actionManager == null) {
-            this.actionManager = new ActionManager(this.getDataLoader().load().actions, this.getActionRegistry());
-        }
-        return this.actionManager;
-    }
-
-    public getActionRegistry(): ActionRegistry
-    {
-        if(this.actionRegistry == null) {
-            this.actionRegistry = new ActionRegistry();
-            this.actionRegistry.load(this);
-        }
-        return this.actionRegistry;
     }
 
     public getList(): List

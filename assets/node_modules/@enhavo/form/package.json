@@ -2,14 +2,14 @@
   "name": "@enhavo/form",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "^0.1.5",
+    "@enhavo/app": "^0.1.6",
     "copy-webpack-plugin": "^4.5.2",
     "icheck": "~1.0.2",
     "jquery": "~3.1.0",
