@@ -20,6 +20,10 @@ This is the main repository of the enhavo project. If you want to contribute you
 After checkout out just use the installer to create the database and the admin user.
 
 ```bash
+$ composer install
+$ yarn install
+$ yarn encore dev
+$ bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 $ bin/console enhavo:install
 ```
 
