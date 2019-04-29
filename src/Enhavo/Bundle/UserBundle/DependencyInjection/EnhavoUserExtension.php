@@ -28,6 +28,7 @@ class EnhavoUserExtension extends AbstractResourceExtension
             'services/services.yml',
             'services/form.yml',
             'services/menu.yml',
+            'services/viewer.yml',
         );
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

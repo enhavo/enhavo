@@ -11,7 +11,7 @@ Enhavo\Bundle\UserBundle\Entity\User:
                 groups: [create, default]
             - NotBlank: { groups: [create, default] }
         plainPassword:
-            - NotBlank: { groups: [create] }
+            - NotBlank: { groups: [create, reset] }
 
 Enhavo\Bundle\UserBundle\Entity\Group:
     constraints:

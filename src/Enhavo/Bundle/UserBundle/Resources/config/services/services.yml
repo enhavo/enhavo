@@ -37,14 +37,5 @@ services:
         tags:
             - { name: enhavo.widget, alias: login }
 
-    Enhavo\Bundle\UserBundle\Viewer\LoginViewer:
-        public: true
-        arguments:
-            - '@session.flash_bag'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.viewer, alias: login }
-
 
 

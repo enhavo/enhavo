@@ -14,8 +14,10 @@ services:
         class: Enhavo\Bundle\UserBundle\Controller\ResetPasswordController
         public: true
         arguments:
+            - '@fos_rest.view_handler'
+            - '@view.factory'
             - '@fos_user.user_manager'
-            - '@fos_user.resetting.form.factory'
+            - '@fos_user.change_password.form.factory'
         calls:
             - [setContainer, ['@service_container']]
 
