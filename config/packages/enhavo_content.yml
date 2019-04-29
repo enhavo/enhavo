@@ -1,0 +1,2 @@
+imports:
+    - { resource: '@EnhavoContentBundle/Resources/config/app/config.yml' }

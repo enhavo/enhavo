@@ -1,22 +1,6 @@
-parameters:
-    locale: en
+#parameters:
+#    locale: en
 
-imports:
-    - { resource: '@EnhavoArticleBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoCalendarBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoCategoryBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoContactBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoContentBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoGridBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoNewsletterBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoPageBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoSettingBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoSliderBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoNavigationBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoRoutingBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoProjectBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoTranslationBundle/Resources/config/app/config.yml' }
-    - { resource: '@EnhavoShopBundle/Resources/config/app/config.yml' }
 enhavo_app:
     menu:
         dashboard:
