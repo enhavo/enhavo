@@ -8,7 +8,10 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
+use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use FOS\RestBundle\View\ViewHandler;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,38 +33,49 @@ class ResetPasswordController extends AbstractController
     private $formFactory;
 
     /**
+     * @var ViewHandler
+     */
+    private $viewHandler;
+
+    /**
+     * @var ViewFactory
+     */
+    private $viewFactory;
+
+    /**
      * ResetPasswordController constructor.
-     *
+     * @param ViewHandler $viewHandler
+     * @param ViewFactory $viewFactory
      * @param UserManager $userManager
      * @param FactoryInterface $formFactory
      */
-    public function __construct(UserManager $userManager, FactoryInterface $formFactory)
+    public function __construct(ViewHandler $viewHandler, ViewFactory $viewFactory, UserManager $userManager, FactoryInterface $formFactory)
     {
         $this->userManager = $userManager;
         $this->formFactory = $formFactory;
+        $this->viewHandler = $viewHandler;
+        $this->viewFactory = $viewFactory;
     }
 
     public function resetPasswordAction(Request $request)
     {
         $configuration = $this->createConfiguration($request);
 
-        $error = false;
-        $reset = false;
         if($request->getMethod() == 'POST') {
             $user = $this->userManager->findUserByUsernameOrEmail($request->get('username'));
             if($user === null) {
-                $error = true;
+                $this->addFlash('error', $this->get('translator')->trans('reset.form.error.invalid-user', [], 'EnhavoUserBundle'));
             } else {
-                $reset = true;
-                $template = null;
+                $this->addFlash('success', $this->get('translator')->trans('reset.message.success', [], 'EnhavoUserBundle'));
                 $this->userManager->sendResetEmail($user, $configuration->getMailTemplate(), $configuration->getConfirmRoute());
             }
         }
 
-        return $this->render($configuration->getTemplate('EnhavoUserBundle:Admin:User/reset-password.html.twig'), array(
-            'error' => $error,
-            'reset' => $reset,
-        ));
+        $view = $this->viewFactory->create('reset', [
+
+        ]);
+
+        return $this->viewHandler->handle($view);
     }
 
     public function resetPasswordConfirmAction(Request $request)
@@ -75,12 +89,13 @@ class ResetPasswordController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $form = $this->formFactory->createForm();
-        $form->setData($user);
-        $error = null;
+        $form = $this->createForm(ResetPasswordType::class, $user, [
+            'validation_groups' => 'reset'
+        ]);
 
-        if($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) {
             if ($form->isValid()) {
                 $user->setConfirmationToken(null);
                 $user->setPasswordRequestedAt(null);
@@ -90,17 +105,15 @@ class ResetPasswordController extends AbstractController
                 $response = new RedirectResponse($url);
                 $this->userManager->authenticateUser($user, $response);
                 return $response;
-            } else {
-                foreach($form->getErrors() as $errorMessage) {
-                    $error = $errorMessage;
-                }
             }
         }
 
-        return $this->render($configuration->getTemplate('EnhavoUserBundle:Admin:User/reset-password-confirm.html.twig'), array(
-            'token' => $token,
-            'error' => $error,
-            'form' => $form->createView(),
-        ));
+        $form = $form->createView();
+        $view = $this->viewFactory->create('reset', [
+            'form' => $form,
+            'template' => $configuration->getTemplate('EnhavoUserBundle:Admin:User/reset-password-confirm.html.twig'),
+        ]);
+
+        return $this->viewHandler->handle($view);
     }
 }

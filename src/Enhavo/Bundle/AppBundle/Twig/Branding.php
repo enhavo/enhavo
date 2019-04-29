@@ -71,7 +71,7 @@ class Branding extends \Twig_Extension
 
     public function getBackgroundImage()
     {
-        return Assetic::convertPathToAsset($this->brandingParameters['background_image']);
+        return $this->brandingParameters['background_image'];
     }
 
     public function getName()

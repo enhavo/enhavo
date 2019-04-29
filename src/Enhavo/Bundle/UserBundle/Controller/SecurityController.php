@@ -37,14 +37,12 @@ class SecurityController extends FOSSecurityController
 
     public function renderLogin(array $data)
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
-
-        $form = null;
+        if(isset($data['error']) && $data['error']) {
+            $this->addFlash('error', $this->container->get('translator')->trans('login.error.credentials', [], 'EnhavoUserBundle'));
+        }
 
         $view = $this->viewFactory->create('login', [
-//            'request' => $request,
             'parameters' => $data,
-//            'form' => $form
         ]);
 
         return $this->viewHandler->handle($view);

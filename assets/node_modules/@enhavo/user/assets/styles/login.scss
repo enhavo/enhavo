@@ -27,6 +27,7 @@ b {font-weight:700;}
 body {font: 14px/1.6em "IBM Plex Sans";background:#f3f3f3;color: #454545}
 img {max-width:100%;}
 
+#background { background-image: url(../images/background/enhavo-7-bg.jpg) }
 
 .nopadding {  padding: 0 !important; margin: 0 !important; }
 #content-container {float:left; padding: 60px 0 60px 60px;margin-left: 245px;}
@@ -435,7 +436,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     #loginBox .btn{padding: 11px 10px;margin-top: 16px;width: 100%; position:relative;}
     #loginBox p {padding: 20px 4.5%;width: 100%;position: relative;background: #072129;}
     #loginBox .logo {padding:50px 0 20px 0;}
-    #background { background:none;}
+    #background { background: none; }
     input[type="checkbox"]{transform: none; display:block;}
     input[type="checkbox"] + span { margin-left:0;}
     #loginBox .resetButton a{ margin:0;}

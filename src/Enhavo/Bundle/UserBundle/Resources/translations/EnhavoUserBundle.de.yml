@@ -1,3 +1,6 @@
+login:
+  error:
+    credentials: 'Falsche Logindaten'
 group:
   role:
     label:
@@ -48,7 +51,7 @@ reset:
   label:
     login: Zur Anmeldung
   message:
-    email: Die Email wurde vesendet.
+    success: Eine Email wurde an Ihr Konto versendet.
 change_password:
   message:
     success: 'Passwort erfolgreich geändert'

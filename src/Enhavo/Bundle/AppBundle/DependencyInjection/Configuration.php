@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('logo')->defaultValue(null)->end()
                         ->scalarNode('text')->defaultValue('enhavo is an open source content-management-system based on symfony and sylius.')->end()
                         ->scalarNode('version')->defaultValue(EnhavoAppBundle::VERSION)->end()
-                        ->scalarNode('background_image')->defaultValue('@EnhavoAppBundle/Resources/public/img/background/enhavo-7-bg.jpg')->end()
+                        ->scalarNode('background_image')->defaultValue(null)->end()
                     ->end()
                 ->end()
             ->end()

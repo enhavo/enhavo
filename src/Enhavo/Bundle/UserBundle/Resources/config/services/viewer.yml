@@ -1,0 +1,18 @@
+services:
+    Enhavo\Bundle\UserBundle\Viewer\LoginViewer:
+        public: true
+        arguments:
+            - '@session.flash_bag'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: login }
+
+    Enhavo\Bundle\UserBundle\Viewer\ResetViewer:
+        public: true
+        arguments:
+            - '@session.flash_bag'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.viewer, alias: reset }

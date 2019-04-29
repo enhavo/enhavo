@@ -1,3 +1,6 @@
+login:
+  error:
+    credentials: 'Bad credentials'
 group:
   role:
     label:
@@ -48,7 +51,7 @@ reset:
   label:
     login: Login
   message:
-      email: An email was sent.
+      success: An email was sent to your account.
 change_password:
     message:
         success: 'Password saved successfully'

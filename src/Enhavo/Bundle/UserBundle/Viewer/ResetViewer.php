@@ -13,7 +13,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LoginViewer extends AbstractViewer
+class ResetViewer extends AbstractViewer
 {
     /**
      * @var FlashBag
@@ -27,7 +27,7 @@ class LoginViewer extends AbstractViewer
 
     public function getType()
     {
-        return 'login';
+        return 'reset';
     }
 
     /**
@@ -38,8 +38,9 @@ class LoginViewer extends AbstractViewer
         $view = parent::createView($options);
 
         $templateVars = $view->getTemplateData();
+        $templateVars['form'] = $options['form'];
         $templateVars['data'] = [
-            'messages' => $this->getFlashMessages()
+            'messages' => $this->getFlashMessages(),
         ];
 
         $templateVars = array_merge($templateVars, $options['parameters']);
@@ -68,7 +69,7 @@ class LoginViewer extends AbstractViewer
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoUserBundle:Admin/Security:login.html.twig',
+            'template' => 'EnhavoUserBundle:Admin:User/reset-password.html.twig',
             'stylesheets' => [
                 'enhavo/login'
             ],
@@ -77,7 +78,8 @@ class LoginViewer extends AbstractViewer
             ],
             'parameters' => [
 
-            ]
+            ],
+            'form' => null,
         ]);
     }
 }
