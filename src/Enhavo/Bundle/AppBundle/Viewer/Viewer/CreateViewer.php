@@ -88,7 +88,7 @@ class CreateViewer extends BaseViewer
             [
                 'main' => [
                     'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
-                    'template' => 'EnhavoAppBundle:Tab:default.html.twig'
+                    'template' => 'EnhavoAppBundle:Viewer:form_template.html.twig'
                 ],
             ],
             $options['tabs'],

@@ -46,7 +46,7 @@ enhavo_project_magazine_delete:
     options:
         expose: true
     path: /enhavo/project/magazine/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_project.controller.magazine:deleteAction
 

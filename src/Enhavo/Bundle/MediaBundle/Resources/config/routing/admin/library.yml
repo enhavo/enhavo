@@ -71,7 +71,7 @@ enhavo_media_library_delete:
     options:
         expose: true
     path: /media/library/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_media.controller.file:deleteAction
         _sylius:

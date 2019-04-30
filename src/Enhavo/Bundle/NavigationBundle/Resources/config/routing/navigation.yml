@@ -67,6 +67,6 @@ enhavo_navigation_navigation_delete:
     options:
         expose: true
     path: /enhavo/navigation/navigation/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_navigation.controller.navigation:deleteAction

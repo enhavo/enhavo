@@ -68,7 +68,7 @@ enhavo_newsletter_subscriber_delete:
     options:
         expose: true
     path: /enhavo/newsletter/subscriber/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.subscriber:deleteAction
 

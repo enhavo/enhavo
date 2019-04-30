@@ -63,7 +63,7 @@ enhavo_shop_voucher_delete:
     options:
         expose: true
     path: /enhavo/shop/voucher/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_shop.controller.voucher:deleteAction
 
