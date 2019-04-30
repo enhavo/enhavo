@@ -1,6 +1,6 @@
 <template>
     <div class="grid">
-        <filter-bar v-bind:filters="data.filters"></filter-bar>
+        <filter-bar v-if="data.showFilter" v-bind:filters="data.filters"></filter-bar>
         <table-pagination
             v-bind:page="data.page"
             v-bind:count="data.count"

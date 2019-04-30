@@ -39,6 +39,7 @@ label:
   goToPage: 'Go to Page'
   greeting: 'Hello username'
   ok: 'Ok'
+  filter: 'Filter'
 message:
   duplicate:
     confirm: 'Warning: This form will be closed without saving. Do you really want to continue?'

@@ -6,6 +6,7 @@ import Router from "@enhavo/core/Router";
 import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 import axios, {CancelTokenSource} from 'axios';
 import * as _ from "lodash";
+import * as $ from "jquery";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
@@ -82,6 +83,10 @@ export default class Grid implements Editable
                     this.configuration.editView = data.id;
                 }
             });
+
+        $(document).on('gridFilter', (event, data) => {
+           this.configuration.showFilter = data;
+        });
     }
 
     public load()

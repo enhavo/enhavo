@@ -75,3 +75,9 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: event }
+
+    Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: filter }

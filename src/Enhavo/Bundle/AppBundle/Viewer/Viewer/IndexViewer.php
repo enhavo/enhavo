@@ -84,6 +84,10 @@ class IndexViewer extends AppViewer
         $filterData = $tableConfiguration->getFilters();
         $columnData = $this->getViewerOption('columns', $tableConfiguration);
 
+        if($filterData) {
+            $actions = $this->addFilterAction($actions);
+        }
+
         $batchRoute = $this->mergeConfig([
             $this->getBatchRoute($options),
             $options['batch_route'],
@@ -176,6 +180,16 @@ class IndexViewer extends AppViewer
         ];
 
         return $default;
+    }
+
+    private function addFilterAction($actions)
+    {
+        if(!isset($actions['filter'])) {
+            $actions['filter'] = [
+                'type' => 'filter'
+            ];
+        }
+        return $actions;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
