@@ -67,7 +67,7 @@ enhavo_translation_translation_string_delete:
     options:
         expose: true
     path: /enhavo/translation/translation/string/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_translation.controller.translation_string:deleteAction
 

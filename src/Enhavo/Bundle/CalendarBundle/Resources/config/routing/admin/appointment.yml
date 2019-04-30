@@ -83,7 +83,7 @@ enhavo_calendar_appointment_delete:
     options:
         expose: true
     path: /enhavo/calendar/appointment/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_calendar.controller.appointment:deleteAction
 

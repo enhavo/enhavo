@@ -82,7 +82,7 @@ enhavo_content_redirect_delete:
     options:
         expose: true
     path: /enhavo/content/redirect/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_content.controller.redirect:deleteAction
 

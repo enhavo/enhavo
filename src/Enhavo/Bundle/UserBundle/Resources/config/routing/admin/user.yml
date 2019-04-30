@@ -77,7 +77,7 @@ enhavo_user_user_delete:
     options:
         expose: true
     path: /enhavo/user/user/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_user.controller.user:deleteAction
         _format: json

@@ -63,7 +63,7 @@ enhavo_category_category_delete:
     options:
         expose: true
     path: /enhavo/category/category/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_category.controller.category:deleteAction
 

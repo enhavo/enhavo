@@ -106,7 +106,7 @@ enhavo_shop_product_delete:
     options:
         expose: true
     path: /enhavo/shop/product/delete/{id}
-    methods: [DELETE]
+    methods: [POST]
     defaults:
         _controller: sylius.controller.product:deleteAction
 
