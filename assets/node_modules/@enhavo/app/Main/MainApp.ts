@@ -1,18 +1,21 @@
 import DataLoader from '@enhavo/app/DataLoader';
 import ViewStack from '@enhavo/app/ViewStack/ViewStack';
 import MenuManager from '@enhavo/app/Menu/MenuManager';
+import StateManager from "@enhavo/app/State/StateManager";
 
 export default class MainApp
 {
     private data: any;
     private viewStack: ViewStack;
     private menuManager: MenuManager;
+    private stateManager: StateManager;
 
-    constructor(loader: DataLoader, viewStack: ViewStack, menuManager: MenuManager)
+    constructor(loader: DataLoader, viewStack: ViewStack, menuManager: MenuManager, stateManager: StateManager)
     {
         this.data = loader.load();
         this.viewStack = viewStack;
         this.menuManager = menuManager;
+        this.stateManager = stateManager;
         if(!this.viewStack.hasViews()) {
             this.menuManager.start();
         }

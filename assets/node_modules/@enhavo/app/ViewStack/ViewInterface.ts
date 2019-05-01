@@ -1,4 +1,5 @@
 import { ComponentAwareInterface } from "@enhavo/core/index";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default interface ViewInterface extends ComponentAwareInterface
 {
@@ -14,6 +15,7 @@ export default interface ViewInterface extends ComponentAwareInterface
     position: number;
     url: string;
     customMinimized: boolean;
+    storage: DataStorageEntry[]
 
     finish(): void;
 }

@@ -3,6 +3,8 @@ import Confirm from "@enhavo/app/View/Confirm";
 import * as _ from 'lodash';
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
+import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
+import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
 
 export default class View
 {
@@ -10,12 +12,17 @@ export default class View
     private data: ViewData;
     private eventDispatcher: EventDispatcher;
 
-    constructor(data: ViewData)
+    constructor(data: ViewData, eventDispatcher: EventDispatcher)
     {
+        this.eventDispatcher = eventDispatcher;
         this.id = this.getIdFromUrl();
         _.extend(data, new ViewData);
         this.data = data;
         this.data.id = this.id;
+
+        window.addEventListener('click', () => {
+            this.eventDispatcher.dispatch(new ClickEvent(this.id));
+        });
     }
 
     private getIdFromUrl(): number|null
@@ -26,17 +33,6 @@ export default class View
             return id
         }
         return 0;
-    }
-
-    setEventDispatcher(eventDispatcher: EventDispatcher)
-    {
-        this.eventDispatcher = eventDispatcher;
-    }
-
-    load() {
-        window.addEventListener('click', () => {
-            this.eventDispatcher.dispatch(new ClickEvent(this.id));
-        });
     }
 
     getId(): number|null
@@ -74,5 +70,10 @@ export default class View
     loaded()
     {
         this.data.loading = false;
+    }
+
+    openView()
+    {
+
     }
 }

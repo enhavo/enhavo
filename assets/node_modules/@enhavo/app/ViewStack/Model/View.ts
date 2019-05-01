@@ -1,4 +1,5 @@
 import ViewInterface from "../ViewInterface";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default class View implements ViewInterface
 {
@@ -15,6 +16,7 @@ export default class View implements ViewInterface
     removed: boolean = false;
     position: number = 0;
     url: string;
+    storage: DataStorageEntry[] = [];
 
     finish(): void {
         this.loaded = true;
