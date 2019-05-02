@@ -10,10 +10,13 @@ export default class ViewFactory implements ViewFactoryInterface
         view.id = object.id;
         view.label = object.label;
         view.component = object.component;
+        view.storage = object.storage;
         return view;
     }
 
     createNew(): View {
-        return new View()
+        let view = new View();
+        view.storage = [];
+        return view;
     }
 }

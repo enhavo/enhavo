@@ -25,6 +25,7 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
+    import SaveStateEvent from  '@enhavo/app/ViewStack/Event/SaveStateEvent';
     import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
     import OverlayContainer from "@enhavo/app/Main/Components/OverlayContainer.vue";
     import LoadingScreen from "@enhavo/app/Main/Components/LoadingScreen.vue";
@@ -54,7 +55,12 @@
         }
 
         close() {
-            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id));
+            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id)).then(() => {
+                // delay so the view stack has time to remove the view
+                window.setTimeout(() => {
+                    application.getEventDispatcher().dispatch(new SaveStateEvent());
+                }, 10)
+            });
         }
 
         minimize() {

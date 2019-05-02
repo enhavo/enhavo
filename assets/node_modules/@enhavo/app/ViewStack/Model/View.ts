@@ -16,7 +16,7 @@ export default class View implements ViewInterface
     removed: boolean = false;
     position: number = 0;
     url: string;
-    storage: DataStorageEntry[] = [];
+    storage: DataStorageEntry[];
 
     finish(): void {
         this.loaded = true;

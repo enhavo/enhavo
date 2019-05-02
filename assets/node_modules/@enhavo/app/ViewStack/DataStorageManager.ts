@@ -32,6 +32,9 @@ export default class DataStorageManager
     {
         let view = this.viewStack.get(id);
         if(view != null) {
+            if(!view.storage) {
+                return null
+            }
             for(let entry of view.storage) {
                 if(entry.key == key) {
                     return entry;
@@ -49,6 +52,9 @@ export default class DataStorageManager
             entry.key = key;
             let view =  this.viewStack.get(id);
             if(view != null) {
+                if(!view.storage) {
+                    view.storage = [];
+                }
                 view.storage.push(entry);
             }
         }

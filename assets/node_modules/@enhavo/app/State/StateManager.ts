@@ -1,5 +1,4 @@
 import * as URI from 'urijs';
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import * as pako from "pako";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
@@ -7,7 +6,6 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 export default class StateManager
 {
     private baseUrl: string;
-    private storage: DataStorageEntry[];
     private viewStack: ViewStack;
     private eventDispatcher: EventDispatcher;
 
@@ -28,7 +26,7 @@ export default class StateManager
 
     private applyState(state: any)
     {
-        console.log(state);
+        location.reload();
     }
 
     private saveState()
@@ -49,9 +47,6 @@ export default class StateManager
     {
         let viewData = [];
         for(let view of this.viewStack.getViews()) {
-            if(view.removed) {
-                continue;
-            }
             viewData.push({
                 url: view.url,
                 label: view.label,
