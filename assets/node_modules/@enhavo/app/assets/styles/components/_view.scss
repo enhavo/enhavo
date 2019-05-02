@@ -16,7 +16,7 @@
         &:before {color:$grey2;}
       }
       &:before {color:$grey4;left:-1px;font-size:1.1rem;}
-      .view-label {position:absolute;top:0;left:0;padding:6px;width:100%;z-index:1;white-space:pre-wrap;word-wrap:break-word;color:$grey3;text-transform:uppercase;text-align:center;font-size:0.75rem;}
+      .view-label {position:absolute;top:0;left:0;padding:6px;width:100%;z-index:1;white-space:pre-wrap;word-wrap:break-word;color:$grey3;text-transform:uppercase;text-align:center;font-size:0.75rem;line-height:1.1em;}
     }
   }
   .toolbar {background-image:linear-gradient(to right, $color1b, $color1);color:#fff;font-size:0.875rem;padding:0 2px 0 11px;font-weight:$fontMedium;height:30px;line-height:30px;position:relative;display:flex;

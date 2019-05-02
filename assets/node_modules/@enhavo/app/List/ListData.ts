@@ -10,4 +10,5 @@ export default class ListData
     public loading: boolean = false;
     public editView: number = null;
     public token: string;
+    public dragging: boolean = false;
 }

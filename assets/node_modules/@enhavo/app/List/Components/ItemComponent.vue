@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="view-table-row" @click="open()">
+    <div class="view-table-list-row">
+        <div class="view-table-row" @click="open()" :class="{ 'has-children': data.children && data.children.length > 0 }">
             <div @click="toggleExpand()" v-on:click.stop><i class="icon icon-unfold_less"></i></div>
             <div class="view-table-row-columns">
                 <template v-for="column in columns">
@@ -14,8 +14,8 @@
                 </template>
             </div>
         </div>
-        <div style="margin-left: 10px" v-if="data.expand">
-            <draggable group="list" v-model="data.children" v-on:change="save($event, data)">
+        <div class="view-table-list-row-children" v-if="data.expand" :class="{ 'has-children': data.children && data.children.length > 0 }">
+            <draggable group="list" v-model="data.children" v-on:change="save($event, data)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
                 <template v-for="item in data.children">
                     <list-item v-bind:columns="columns" v-bind:data="item" :key="item.id"></list-item>
                 </template>
