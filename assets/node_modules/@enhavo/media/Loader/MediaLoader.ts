@@ -14,6 +14,7 @@ import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -29,11 +30,12 @@ export default class MediaLoader extends AbstractLoader
         super();
         this.application = application;
 
-        let cropperStorageKey = 'media-image-cropper-' + this.application.getView().getId();
+        let cropperStorageKey = 'media-image-cropper';
         this.application.getEventDispatcher().dispatch(new LoadDataEvent(cropperStorageKey))
-            .then((data: CropperStorageData) => {
-                if(data.id) {
-                    MediaLoader.cropperViewId = data.id;
+            .then((data: DataStorageEntry) => {
+                MediaLoader.cropperViewId = null;
+                if(data) {
+                    MediaLoader.cropperViewId = data.value;
                 }
             });
 
@@ -106,7 +108,7 @@ export default class MediaLoader extends AbstractLoader
 
     private openCropperView(media: MediaItem, format: string)
     {
-        let cropperStorageKey = 'media-image-cropper-' + this.application.getView().getId();
+        let cropperStorageKey = 'media-image-cropper';
 
         let url = this.application.getRouter().generate('enhavo_media_image_cropper_index', {
             format: format,
@@ -123,14 +125,7 @@ export default class MediaLoader extends AbstractLoader
             .then((view: ViewInterface) => {
                 MediaLoader.cropperViewId = view.id;
                 MediaLoader.cropperMediaItem = media;
-                this.application.getEventDispatcher().dispatch(new SaveDataEvent(cropperStorageKey, {
-                    id: view.id
-                }));
+                this.application.getEventDispatcher().dispatch(new SaveDataEvent(cropperStorageKey, view.id));
             }).catch(() => {});
     }
-}
-
-interface CropperStorageData
-{
-    id: number;
 }

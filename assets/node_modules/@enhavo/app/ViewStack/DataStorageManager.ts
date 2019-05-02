@@ -12,6 +12,7 @@ export default class DataStorageManager
     constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher)
     {
         this.eventDispatcher = eventDispatcher;
+        this.viewStack = viewStack;
 
         this.eventDispatcher.on('save-data', (event: SaveDataEvent) => {
             this.set(event.key, event.value, event.origin)
@@ -19,7 +20,7 @@ export default class DataStorageManager
 
         this.eventDispatcher.on('load-data', (event: LoadDataEvent) => {
             let entry = this.get(event.key, event.origin);
-            event.resolve(entry.value);
+            event.resolve(entry);
         });
 
         this.eventDispatcher.on('remove-data', (event: LoadDataEvent) => {
@@ -29,7 +30,7 @@ export default class DataStorageManager
 
     private get(key: string, id: number): DataStorageEntry
     {
-        let view =  this.viewStack.get(id);
+        let view = this.viewStack.get(id);
         if(view != null) {
             for(let entry of view.storage) {
                 if(entry.key == key) {

@@ -9,24 +9,15 @@ import * as _ from "lodash";
 import * as $ from "jquery";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
-import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
 import View from "@enhavo/app/View/View";
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
-import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
-import RemovedEvent from "@enhavo/app/ViewStack/Event/RemovedEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
 import Confirm from "@enhavo/app/View/Confirm";
 import Batch from "@enhavo/app/Grid/Batch/Batch";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import Message from "@enhavo/app/FlashMessage/Message";
-import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
-import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
-import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
-import ExistsData from "@enhavo/app/ViewStack/ExistsData";
-import Editable from "@enhavo/app/Action/Editable";
 
-export default class Grid implements Editable
+export default class Grid
 {
     private filterManager: FilterManager;
     private columnManager: ColumnManager;
@@ -64,25 +55,11 @@ export default class Grid implements Editable
 
     private initListener()
     {
-        this.eventDispatcher.on('removed', (event: RemovedEvent) => {
-            if(event.id == this.configuration.editView) {
-                this.configuration.editView = null;
-            }
-        });
-
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
             if(event.id == this.configuration.editView) {
                 this.loadTable();
             }
         });
-
-        let key = this.getEditKey();
-        this.eventDispatcher.dispatch(new LoadDataEvent(key))
-            .then((data: EditViewData) => {
-                if(data.id) {
-                    this.configuration.editView = data.id;
-                }
-            });
 
         $(document).on('gridFilter', (event, data) => {
            this.configuration.showFilter = data;
@@ -125,63 +102,13 @@ export default class Grid implements Editable
         this.configuration.batch = value;
     }
 
-    public changeEditView(id: number|null)
-    {
-        this.configuration.editView = id;
-    }
-
     public open(row: RowData)
-    {
-        if(this.configuration.editView != null) {
-            this.eventDispatcher.dispatch(new ExistsEvent(this.getEditView())).then((data: ExistsData) => {
-                if(data.exists) {
-                    this.eventDispatcher.dispatch(new CloseEvent(this.configuration.editView))
-                        .then(() => {
-                            this.openView(row);
-                        })
-                        .catch(() => {})
-                    ;
-                } else {
-                    this.openView(row);
-                }
-            });
-        } else {
-            this.openView(row);
-        }
-    }
-
-    protected openView(row: RowData)
     {
         let url = this.router.generate(this.configuration.updateRoute, {
             id: row.id
         });
-
-        this.eventDispatcher.dispatch(new CreateEvent({
-            label: this.translator.trans('enhavo_app.edit'),
-            component: 'iframe-view',
-            url: url
-        }, this.view.getId())).then((view: ViewInterface) => {
-            this.setEditView(view.id);
-        }).catch(() => {});
-    }
-
-    public setEditView(id: number)
-    {
-        this.configuration.editView = id;
-        let key = this.getEditKey();
-        this.eventDispatcher.dispatch(new SaveDataEvent(key, {
-            id: id
-        }));
-    }
-
-    private getEditKey()
-    {
-        return 'edit-view-' + this.view.getId();
-    }
-
-    public getEditView(): number
-    {
-        return this.configuration.editView;
+        let label = this.translator.trans('enhavo_app.edit');
+        this.view.open(label, url, 'edit-view')
     }
 
     public applyFilter()
@@ -321,8 +248,4 @@ export default class Grid implements Editable
         }
         return data;
     }
-}
-
-interface EditViewData {
-    id: number;
 }

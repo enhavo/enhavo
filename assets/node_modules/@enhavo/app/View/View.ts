@@ -3,8 +3,15 @@ import Confirm from "@enhavo/app/View/Confirm";
 import * as _ from 'lodash';
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import ClickEvent from "@enhavo/app/ViewStack/Event/ClickEvent";
-import ClearEvent from "@enhavo/app/ViewStack/Event/ClearEvent";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
+import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
+import ExistsData from "@enhavo/app/ViewStack/ExistsData";
+import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
+import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 
 export default class View
 {
@@ -72,8 +79,52 @@ export default class View
         this.data.loading = false;
     }
 
-    openView()
+    public open(label: string, url: string, key: string = null)
     {
+        if(key) {
+            this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+                let viewId: number = null;
+                if(data != null) {
+                    viewId = data.value;
+                }
+                if(viewId != null) {
+                    this.eventDispatcher.dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
+                        if(data.exists) {
+                            this.eventDispatcher.dispatch(new CloseEvent(viewId))
+                                .then(() => {
+                                    this.openView(label, url, key);
+                                })
+                                .catch(() => {})
+                            ;
+                        } else {
+                            this.openView(label, url, key);
+                        }
+                    });
+                } else {
+                    this.openView(label, url, key);
+                }
+            });
+        } else {
+            this.open(label, url)
+        }
+    }
 
+    private openView(label: string, url: string, key: string = null)
+    {
+        this.eventDispatcher.dispatch(new CreateEvent(        {
+            label: label,
+            component: 'iframe-view',
+            url: url
+        }, this.getId())).then((view: ViewInterface) => {
+            if(key) {
+                this.saveViewKey(key, view.id);
+            }
+            this.eventDispatcher.dispatch(new SaveStateEvent())
+        }).catch(() => {});
+    }
+
+    private saveViewKey(key: string, id: number)
+    {
+        this.eventDispatcher.dispatch(new SaveDataEvent(key, id))
     }
 }

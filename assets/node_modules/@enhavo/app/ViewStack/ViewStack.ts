@@ -130,13 +130,13 @@ export default class ViewStack
     {
         this.dispatcher.on('clear', (event: ClearEvent) => {
 
-            if(this.views.length == 0) {
+            if(this.getViews().length == 0) {
                 event.resolve();
                 this.dispatcher.dispatch(new ClearedEvent(event.uuid));
             }
 
             let parallels = [];
-            for(let view of this.views) {
+            for(let view of this.getViews()) {
                 parallels.push((callback: (err: any) => void) => {
                     if(this.close(view)) {
                         callback(null);
@@ -156,7 +156,7 @@ export default class ViewStack
                 if(err) {
                     event.reject();
                 } else {
-                    for(let view of this.views) {
+                    for(let view of this.getViews()) {
                         this.remove(view);
                     }
                     event.resolve();
@@ -192,8 +192,9 @@ export default class ViewStack
         return id;
     }
     
-    get(id: number) {
-        for(let view of this.views) {
+    get(id: number)
+    {
+        for(let view of this.getViews()) {
             if(view.id == id) {
                 return view;
             }
@@ -212,7 +213,7 @@ export default class ViewStack
         return views;
     }
 
-    push(view: ViewInterface)
+    private push(view: ViewInterface)
     {
         this.views.push(view);
     }

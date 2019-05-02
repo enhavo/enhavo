@@ -22,7 +22,13 @@ export class MainApplication extends AbstractApplication
     public getApp(): AppInterface
     {
         if(this.app == null) {
-            this.app = new MainApp(this.getDataLoader(), this.getViewStack(), this.getMenuManager(), this.getStateManager());
+            this.app = new MainApp(
+                this.getDataLoader(),
+                this.getViewStack(),
+                this.getMenuManager(),
+                this.getStateManager(),
+                this.getDataStorageManager()
+            );
         }
         return this.app;
     }

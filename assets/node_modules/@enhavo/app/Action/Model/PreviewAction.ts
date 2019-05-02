@@ -1,7 +1,6 @@
 import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
 import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
-import View from "@enhavo/app/View/View";
 import * as $ from 'jquery';
 import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
@@ -9,6 +8,8 @@ import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
 import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
 import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
+import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 
 export default class PreviewAction extends AbstractAction
 {
@@ -22,82 +23,57 @@ export default class PreviewAction extends AbstractAction
                 this.sendData();
             }
         });
-
-        let key = this.getPreviewKey();
-        this.application.getEventDispatcher().dispatch(new LoadDataEvent(key))
-            .then((data: PreviewData) => {
-                if(data.id) {
-                    this.previewView = data.id;
-                }
-            });
     }
 
     execute(): void
     {
-        if(this.previewView == null) {
-            this.openView();
-        } else {
-            this.existsPreviewView((exists: boolean) => {
-                if(exists) {
-                    this.sendData();
-                } else {
-                    this.openView()
-                }
-            });
-        }
+        let label = this.application.getTranslator().trans('enhavo_app.preview');
+        this.open(label, this.url, 'preview-view');
     }
 
     private sendData()
     {
-        let data = this.getData();
+        let data = $('form').serializeArray();
         this.application.getEventDispatcher().dispatch(new DataEvent(this.previewView, data));
     }
 
-    private existsPreviewView(callback: (exists: boolean) => void)
+    private open(label: string, url: string, key: string = null)
     {
-        this.application.getEventDispatcher().dispatch(new ExistsEvent(this.previewView)).then((data: ExistsData) => {
-            callback(data.exists);
+        this.application.getEventDispatcher().dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+            let viewId: number = null;
+            if(data) {
+                viewId = data.value;
+            }
+            this.previewView = viewId;
+            if(viewId != null) {
+                this.application.getEventDispatcher().dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
+                    if(data.exists) {
+                        this.sendData();
+                    } else {
+                        this.openView(label, url, key);
+                    }
+                });
+            } else {
+                this.openView(label, url, key);
+            }
         });
     }
 
-    private openView()
+    private openView(label: string, url: string, key: string)
     {
         this.application.getEventDispatcher().dispatch(new CreateEvent({
-            label: this.application.getTranslator().trans('enhavo_app.preview'),
+            label: label,
             component: 'iframe-view',
-            url: this.url
-        }, this.getView().getId()))
-        .then((view: ViewInterface) => {
-            this.setPreviewView(view.id);
-        })
-        .catch(() => {});
+            url: url
+        }, this.application.getView().getId())).then((view: ViewInterface) => {
+            this.saveViewKey(key, view.id);
+            this.application.getEventDispatcher().dispatch(new SaveStateEvent())
+        }).catch(() => {});
     }
 
-    private setPreviewView(id: number)
+    private saveViewKey(key: string, id: number)
     {
         this.previewView = id;
-        let key = this.getPreviewKey();
-        this.application.getEventDispatcher().dispatch(new SaveDataEvent(key, {
-            id: id
-        }));
+        this.application.getEventDispatcher().dispatch(new SaveDataEvent(key, id))
     }
-
-    private getPreviewKey()
-    {
-        return 'preview-view-' + this.application.getView().getId();
-    }
-
-    private getView(): View
-    {
-        return this.application.getView();
-    }
-
-    private getData()
-    {
-        return $('form').serializeArray();
-    }
-}
-
-interface PreviewData {
-    id: number;
 }
