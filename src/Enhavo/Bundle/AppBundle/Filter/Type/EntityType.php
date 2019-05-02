@@ -65,7 +65,7 @@ class EntityType extends AbstractFilterType
             }
             $choices[] = [
                 'label' => $label,
-                'value' => $this->getProperty($entity, 'id')
+                'code' => $this->getProperty($entity, 'id')
             ];
         }
         return $choices;

@@ -88,7 +88,7 @@ enhavo_article_article_table:
                     repository: EnhavoCategoryBundle:Category
                     label: article.label.category
                     translation_domain: EnhavoArticleBundle
-                    property: category
+                    property: categories
             viewer:
                 translationDomain: EnhavoArticleBundle
                 columns:

@@ -43,9 +43,9 @@
             axios
                 .get(uri)
                 .then((data) => {
-                    let options = [];
-                    for(result of data.results) {
-                        options.push({
+                    this.options = [];
+                    for(let result of data.data.results) {
+                        this.options.push({
                             label: result.text,
                             code: result.id
                         })
