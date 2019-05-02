@@ -1,5 +1,5 @@
 <template>
-    <div class="flash-message">
+    <div class="flash-message" :class="message.type">
         {{ message.message }}
     </div>
 </template>

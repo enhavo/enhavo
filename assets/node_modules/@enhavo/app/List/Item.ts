@@ -5,4 +5,5 @@ export default class Item
     public data: any;
     public id: number;
     public expand: boolean = true;
+    public dragging: boolean = false;
 }

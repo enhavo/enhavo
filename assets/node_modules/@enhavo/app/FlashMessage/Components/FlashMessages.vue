@@ -1,5 +1,5 @@
 <template>
-    <div class="flash-message-container">
+    <div v-show="messages && messages.length > 0" class="flash-message-container">
         <template v-for="message in messages">
             <flash-message v-bind:message="message"></flash-message>
         </template>

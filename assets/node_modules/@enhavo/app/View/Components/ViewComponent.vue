@@ -10,9 +10,11 @@
             </div>
         </div>
 
-        <div v-if="data.alert" class="alert-box">
-            <div class="text">{{ data.alert }}</div>
-            <div @click="data.alert = null" class="btn">Ok</div>
+        <div v-if="data.alert" class="modal-confirm">
+            <div class="message">{{ data.alert }}</div>
+            <div class="buttons">
+                <div @click="data.alert = null" class="modal-btn primary">Ok</div>
+            </div>
         </div>
         <loading-screen v-if="data.loading"></loading-screen>
     </div>
