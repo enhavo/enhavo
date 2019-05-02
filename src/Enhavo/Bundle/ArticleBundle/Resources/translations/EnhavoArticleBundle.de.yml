@@ -15,6 +15,7 @@ article:
       publication_date: 'Erscheinungsdatum'
   label:
     article: 'Artikel'
+    category: 'Kategorie'
     teaser: 'Teaser'
     content: 'Inhalt'
     seo: 'SEO'
