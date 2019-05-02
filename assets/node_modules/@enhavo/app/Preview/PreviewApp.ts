@@ -22,7 +22,7 @@ export default class PreviewApp extends AbstractViewApp implements AppInterface
                 // delay submit so vue has time to update form
                 setTimeout(() => {
                     this.submit();
-                }, 10);
+                }, 500);
             }
         });
     }

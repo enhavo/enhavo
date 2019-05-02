@@ -12,6 +12,8 @@ export default class IframeViewFactory extends ViewFactory
     }
 
     createNew(): IframeView {
-        return new IframeView()
+        let view = new IframeView();
+        view.storage = [];
+        return view;
     }
 }

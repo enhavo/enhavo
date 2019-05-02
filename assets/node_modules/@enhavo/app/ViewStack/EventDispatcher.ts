@@ -1,5 +1,4 @@
-import Event, {ResolveEvent, RejectEvent} from './Event/Event';
-import View from '../View/View';
+import Event, {ResolveEvent, RejectEvent} from '@enhavo/app/ViewStack/Event/Event';
 import * as _ from 'lodash';
 
 export default class EventDispatcher
@@ -8,19 +7,19 @@ export default class EventDispatcher
     private dispatchSubscriber: Subscriber[] = [];
     private allSubscriber: Subscriber[] = [];
     private events: EventStore[] = [];
-    private view: View;
+    private viewId: number;
 
-    constructor(view: View)
+    constructor()
     {
-        this.view = view;
+        this.viewId = this.getIdFromUrl();
 
         this.onDispatch((event: Event) => {
             if(event.origin == null) {
-                event.origin = this.view.getId();
+                event.origin = this.viewId;
             }
             event.history.push(window.location.href);
             if(event.ttl == null) {
-                event.ttl = view.isRoot() ? 2 : 3;
+                event.ttl = this.isRootView() ? 2 : 3;
             }
         });
 
@@ -35,7 +34,7 @@ export default class EventDispatcher
                 _.extend(newEvent, eventData);
 
                 if(this.isDebug()) {
-                    console.groupCollapsed('receive event ('+ newEvent.name+') on ' + view.getId());
+                    console.groupCollapsed('receive event ('+ newEvent.name+') on ' + this.viewId);
                     console.dir(newEvent);
                     console.groupEnd();
                 }
@@ -45,9 +44,9 @@ export default class EventDispatcher
         }, false);
 
         // send event to parent window
-        if(window.parent && !view.isRoot()) {
-            this.all(function (event: Event) {
-                if(event.origin == view.getId()) {
+        if(window.parent && !this.isRootView()) {
+            this.all((event: Event) => {
+                if(event.origin == this.viewId) {
                     let serializeEvent = 'view_stack_event|'+JSON.stringify(event);
                     window.parent.postMessage(serializeEvent, '*');
                 }
@@ -73,6 +72,21 @@ export default class EventDispatcher
         });
     }
 
+    private getIdFromUrl(): number|null
+    {
+        let url = new URL(window.location.href);
+        let id = parseInt(url.searchParams.get("view_id"));
+        if(id > 0) {
+            return id
+        }
+        return 0;
+    }
+
+    private isRootView()
+    {
+        return this.viewId == 0;
+    }
+
     private removeEvent(eventStore: EventStore)
     {
         for(let i in this.events) {
@@ -95,13 +109,13 @@ export default class EventDispatcher
         event.ttl--;
 
         if(this.isDebug()) {
-            console.groupCollapsed('dispatch event ('+ event.name+') on ' + this.view.getId());
+            console.groupCollapsed('dispatch event ('+ event.name+') on ' + this.viewId);
             console.dir(event);
             console.groupEnd();
         }
 
         const promise = new Promise((resolve, reject) => {
-            if(event.origin == this.view.getId()) {
+            if(event.origin == this.viewId) {
                 if(event.name != 'reject' && event.name != 'resolve') {
                     this.events.push(new EventStore(event, resolve, reject));
                 }

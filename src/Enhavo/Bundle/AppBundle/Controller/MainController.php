@@ -40,7 +40,6 @@ class MainController extends AbstractController
     {
         $state = $this->getState($request);
         $data = [
-            'storage' => $state['storage'],
             'view' => [
                 'id' => null,
             ],
@@ -74,7 +73,6 @@ class MainController extends AbstractController
     {
         $default = [
             'views' => [],
-            'storage' => [],
         ];
 
         if(!$request->query->has('state')) {
@@ -94,7 +92,6 @@ class MainController extends AbstractController
         }
         return [
             'views' => $views,
-            'storage' => isset($state['storage']) ? $state['storage'] : [],
         ];
     }
 

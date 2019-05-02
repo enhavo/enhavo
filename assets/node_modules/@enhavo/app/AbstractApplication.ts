@@ -53,7 +53,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     public getEventDispatcher(): EventDispatcher
     {
         if(this.eventDispatcher == null) {
-            this.eventDispatcher = new EventDispatcher(this.getView());
+            this.eventDispatcher = new EventDispatcher();
         }
         return this.eventDispatcher;
     }
@@ -61,9 +61,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     public getView(): View
     {
         if(this.view == null) {
-            this.view = new View(this.getDataLoader().load()['view']);
-            this.view.setEventDispatcher(this.getEventDispatcher());
-            this.view.load();
+            this.view = new View(this.getDataLoader().load()['view'], this.getEventDispatcher());
         }
         return this.view;
     }
@@ -93,15 +91,6 @@ export default abstract class AbstractApplication implements ApplicationInterfac
         }
         return this.flashMessenger;
     }
-
-    public getStateManager(): StateManager
-    {
-        if(this.stateManager == null) {
-            this.stateManager = new StateManager();
-        }
-        return this.stateManager;
-    }
-
 
     public getActionManager(): ActionManager
     {
