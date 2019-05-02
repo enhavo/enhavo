@@ -428,7 +428,7 @@ define(["require", "exports", "jquery", "blueimp-file-upload", "jquery-ui"], fun
                     this.$element.find('[data-media-thumb-icon]').addClass('icon-file-code');
                     break;
                 default:
-                    this.$element.find('[data-file-icon]').addClass('icon-doc');
+                    this.$element.find('[data-media-thumb-icon]').addClass('icon-doc');
             }
         };
         MediaItem.prototype.getThumbUrl = function () {
