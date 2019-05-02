@@ -1,34 +1,32 @@
 import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import * as $ from 'jquery';
 import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
 import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import ExistsData from "@enhavo/app/ViewStack/ExistsData";
-import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
 import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
-import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 
 export default class PreviewAction extends AbstractAction
 {
     public url: string;
-    public previewView: number;
 
     loadListener()
     {
-        this.application.getEventDispatcher().dispatch(new LoadDataEvent('preview-view')).then((data: DataStorageEntry) => {
-            if (data) {
-                this.previewView = data.value;
-                this.sendData();
+        this.application.getView().loadValue('preview-view', (id) => {
+            let viewId = id ? parseInt(id) : null;
+            if(viewId) {
+                this.sendData(viewId);
             }
         });
 
         this.application.getEventDispatcher().on('loaded', (event: LoadedEvent) => {
-            if(event.id == this.previewView) {
-                this.sendData();
-            }
+            this.application.getView().loadValue('preview-view', (id) => {
+                let viewId = id ? parseInt(id) : null;
+                if(event.id == viewId) {
+                    this.sendData(viewId);
+                }
+            });
         });
     }
 
@@ -38,10 +36,10 @@ export default class PreviewAction extends AbstractAction
         this.open(label, this.url, 'preview-view');
     }
 
-    private sendData()
+    private sendData(id :number)
     {
         let data = $('form').serializeArray();
-        this.application.getEventDispatcher().dispatch(new DataEvent(this.previewView, data));
+        this.application.getEventDispatcher().dispatch(new DataEvent(id, data));
     }
 
     private open(label: string, url: string, key: string = null)
@@ -51,36 +49,17 @@ export default class PreviewAction extends AbstractAction
             if(data) {
                 viewId = data.value;
             }
-            this.previewView = viewId;
             if(viewId != null) {
                 this.application.getEventDispatcher().dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
                     if(data.exists) {
-                        this.sendData();
+                        this.sendData(viewId);
                     } else {
-                        this.openView(label, url, key);
+                        this.application.getView().openView(label, url, key);
                     }
                 });
             } else {
-                this.openView(label, url, key);
+                this.application.getView().openView(label, url, key);
             }
         });
-    }
-
-    private openView(label: string, url: string, key: string)
-    {
-        this.application.getEventDispatcher().dispatch(new CreateEvent({
-            label: label,
-            component: 'iframe-view',
-            url: url
-        }, this.application.getView().getId())).then((view: ViewInterface) => {
-            this.saveViewKey(key, view.id);
-            this.application.getEventDispatcher().dispatch(new SaveStateEvent())
-        }).catch(() => {});
-    }
-
-    private saveViewKey(key: string, id: number)
-    {
-        this.previewView = id;
-        this.application.getEventDispatcher().dispatch(new SaveDataEvent(key, id))
     }
 }

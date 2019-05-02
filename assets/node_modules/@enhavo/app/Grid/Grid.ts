@@ -56,9 +56,11 @@ export default class Grid
     private initListener()
     {
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
-            if(event.id == this.configuration.editView) {
-                this.loadTable();
-            }
+            this.view.loadValue('edit-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.loadTable();
+                }
+            });
         });
 
         $(document).on('gridFilter', (event, data) => {

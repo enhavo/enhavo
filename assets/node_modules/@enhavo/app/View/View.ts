@@ -109,7 +109,7 @@ export default class View
         }
     }
 
-    private openView(label: string, url: string, key: string = null)
+    public openView(label: string, url: string, key: string = null)
     {
         this.eventDispatcher.dispatch(new CreateEvent(        {
             label: label,
@@ -117,14 +117,27 @@ export default class View
             url: url
         }, this.getId())).then((view: ViewInterface) => {
             if(key) {
-                this.saveViewKey(key, view.id);
+                this.storeValue(key, view.id);
             }
             this.eventDispatcher.dispatch(new SaveStateEvent())
         }).catch(() => {});
     }
 
-    private saveViewKey(key: string, id: number)
+    public storeValue(key: string, value: any, callback: () => void = () => {})
     {
-        this.eventDispatcher.dispatch(new SaveDataEvent(key, id))
+        this.eventDispatcher.dispatch(new SaveDataEvent(key, value)).then(() => {
+            callback();
+        })
+    }
+
+    public loadValue(key: string, callback: (value: string) => void): void
+    {
+        this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+            let value = null;
+            if (data != null) {
+                value = data.value;
+            }
+            callback(value);
+        });
     }
 }

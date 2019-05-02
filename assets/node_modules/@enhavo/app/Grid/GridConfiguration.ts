@@ -18,6 +18,5 @@ export default class GridConfiguration
     public pagination: number;
     public paginationSteps: number;
     public selectAll: boolean = false;
-    public editView: number;
     public showFilter: boolean = false;
 }
