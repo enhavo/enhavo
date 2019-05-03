@@ -10,8 +10,10 @@ namespace Enhavo\Bundle\RoutingBundle\Twig;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Enhavo\Bundle\RoutingBundle\Router\Router;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class RouterExtension extends \Twig_Extension
+class RouterExtension extends AbstractExtension
 {
     /**
      * @var Router
@@ -31,7 +33,7 @@ class RouterExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('router', array($this, 'generate')),
+            new TwigFunction('router', array($this, 'generate')),
         );
     }
 
@@ -45,10 +47,5 @@ class RouterExtension extends \Twig_Extension
     public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $type = 'default')
     {
         return $this->router->generate($resource , $parameters, $referenceType, $type = 'default');
-    }
-
-    public function getName()
-    {
-        return 'enhavo_routing_router';
     }
 }

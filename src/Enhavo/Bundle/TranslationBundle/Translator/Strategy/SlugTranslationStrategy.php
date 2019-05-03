@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
 
-use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;

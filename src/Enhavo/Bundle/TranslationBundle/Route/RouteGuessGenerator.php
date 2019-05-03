@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Route;
 
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
-use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 
 class RouteGuessGenerator implements LocaleGenerator
 {

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Route;
 
 use Enhavo\Bundle\AppBundle\Routing\RouteGuesser as AppRouteGuesser;
-use Enhavo\Bundle\AppBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 
 class RouteGuesser extends AppRouteGuesser
 {

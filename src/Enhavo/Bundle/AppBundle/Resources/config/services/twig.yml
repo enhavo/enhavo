@@ -1,5 +1,5 @@
 services:
-    Enhavo\Bundle\AppBundle\Twig\PaginationRender:
+    Enhavo\Bundle\AppBundle\Twig\PaginationExtension:
         arguments:
             - 'EnhavoAppBundle:View:pagination.html.twig'
         calls:
@@ -7,37 +7,20 @@ services:
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\AppBundle\Twig\AdminAsset:
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\AppBundle\Twig\Branding:
+    Enhavo\Bundle\AppBundle\Twig\BrandingExtension:
         arguments:
             - '%enhavo_app.branding%'
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\AppBundle\Twig\Template:
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\AppBundle\Twig\UrlBeautifier:
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\AppBundle\Twig\Form:
+    Enhavo\Bundle\AppBundle\Twig\TemplateExtension:
         arguments:
             - '%enhavo_app.form_themes%'
-            - '@enhavo_form.error.error.resolver'
+        calls:
+            - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\AppBundle\Twig\Slugify:
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\AppBundle\Twig\SplObject:
+    Enhavo\Bundle\AppBundle\Twig\SplObjectExtension:
         tags:
             - { name: twig.extension }

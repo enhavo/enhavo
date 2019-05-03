@@ -3,3 +3,18 @@ services:
         class: Enhavo\Bundle\FormBundle\Error\FormErrorResolver
         arguments:
             - '@translator'
+
+    Enhavo\Bundle\FormBundle\Twig\FormExtension:
+        arguments:
+            - '@enhavo_form.error.error.resolver'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FormBundle\Twig\CurrencyExtension:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter:
+        public: true

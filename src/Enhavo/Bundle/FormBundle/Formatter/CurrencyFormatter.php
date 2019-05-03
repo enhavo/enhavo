@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Formatter;
+namespace Enhavo\Bundle\FormBundle\Formatter;
 /**
  * Created by PhpStorm.
  * User: jenny

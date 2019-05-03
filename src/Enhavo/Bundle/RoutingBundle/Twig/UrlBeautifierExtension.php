@@ -6,15 +6,17 @@
  * Time: 14:08
  */
 
-namespace Enhavo\Bundle\AppBundle\Twig;
+namespace Enhavo\Bundle\RoutingBundle\Twig;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class UrlBeautifier extends \Twig_Extension
+class UrlBeautifierExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('url_beautifier',function ($url) {
+            new TwigFilter('url_beautifier',function ($url) {
                 $parsedUrl = parse_url($url);
                 if(!array_key_exists('scheme', $parsedUrl)){
                     $url = 'http://'.$url;
@@ -22,10 +24,5 @@ class UrlBeautifier extends \Twig_Extension
                 return $url;
             })
         );
-    }
-
-    public function getName()
-    {
-        return 'url_beautifier';
     }
 }
