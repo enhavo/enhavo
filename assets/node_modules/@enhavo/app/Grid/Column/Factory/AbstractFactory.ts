@@ -1,4 +1,6 @@
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+import * as _ from "lodash";
+import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
 
 export default abstract class AbstractFactory
 {
@@ -8,4 +10,13 @@ export default abstract class AbstractFactory
     {
         this.application = application;
     }
+
+    createFromData(data: object): ColumnInterface
+    {
+        let column = this.createNew();
+        column = _.extend(data, column);
+        return column;
+    }
+
+    abstract createNew(): ColumnInterface;
 }

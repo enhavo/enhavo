@@ -6,19 +6,21 @@
                 <span></span>
             </div>
             <div class="view-table-head-columns">
-                <div
-                    v-for="column in columns"
-                    v-bind:key="column.key"
-                    v-bind:style="getColumnStyle(column)"
-                    v-bind:class="['view-table-col', {'sortable': column.sortable}]"
-                    v-on:click="changeSortDirection(column)">
+                <template v-for="column in columns">
+                    <div
+                        v-if="checkCondition(column)"
+                        v-bind:key="column.key"
+                        v-bind:style="getColumnStyle(column)"
+                        v-bind:class="['view-table-col', {'sortable': column.sortable}]"
+                        v-on:click="changeSortDirection(column)">
                         {{ column.label }}
                         <i
                             v-if="column.sortable && column.directionDesc !== null"
                             v-bind:class="['icon', {'icon-keyboard_arrow_up': !column.directionDesc}, {'icon-keyboard_arrow_down': column.directionDesc}, {'sortable': column.sortable}]"
                             aria-hidden="true">
                         </i>
-                </div>
+                    </div>
+                </template>
             </div>
         </div>
 
@@ -47,6 +49,7 @@
     import RowData from "@enhavo/app/Grid/Column/RowData"
     import ApplicationBag from "@enhavo/app/ApplicationBag";
     import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    import * as $ from "jquery";
     const application = <IndexApplication>ApplicationBag.getApplication();
 
     @Component({
@@ -72,6 +75,12 @@
         @Prop()
         batches: Array<object>;
 
+        mounted() {
+            $(window).resize(() => {
+                this.$forceUpdate();
+            });
+        }
+
         calcColumnWidth(parts: number): string {
             return (100 / 12 * parts) + '%';
         }
@@ -91,6 +100,10 @@
 
         changeSortDirection(column: any) {
             application.getGrid().changeSortDirection(column);
+        }
+
+        checkCondition(column: ColumnInterface): boolean {
+            return application.getGrid().checkCondition(column);
         }
     }
 </script>

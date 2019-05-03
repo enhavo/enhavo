@@ -8,6 +8,7 @@
             <template v-for="column in columns">
                 <component
                     class="view-table-col"
+                    v-if="checkCondition(column)"
                     v-bind:is="column.component"
                     v-bind:key="column.key"
                     v-bind:column="column"
@@ -23,6 +24,7 @@
     import RowData from "@enhavo/app/Grid/Column/RowData";
     import ApplicationBag from "@enhavo/app/ApplicationBag";
     import IndexApplication from "@enhavo/app/Index/IndexApplication";
+    import * as $ from "jquery";
     const application = <IndexApplication>ApplicationBag.getApplication();
 
     @Component({
@@ -42,6 +44,12 @@
 
         @Prop()
         batches: Array<object>;
+
+        mounted() {
+            $(window).resize(() => {
+                this.$forceUpdate();
+            });
+        }
 
         changeSelect() {
             application.getGrid().changeSelect(this.data, !this.data.selected);
@@ -69,6 +77,10 @@
                 return this.data.data[column];
             }
             return null;
+        }
+
+        checkCondition(column: ColumnInterface): boolean {
+            return application.getGrid().checkCondition(column);
         }
     }
 </script>

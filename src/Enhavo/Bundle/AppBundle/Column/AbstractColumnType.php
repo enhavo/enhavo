@@ -19,6 +19,7 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
             'width' => $this->getWidth($options),
             'component' => $options['component'],
             'sortable' => isset($options['sortable']) ? $options['sortable'] : false,
+            'condition' => $options['condition'],
         ];
 
         return $data;
@@ -47,7 +48,8 @@ abstract class AbstractColumnType extends AbstractType implements ColumnTypeInte
             'label' => '',
             'translation_domain' => null,
             'width' => 1,
-            'sortable' => false
+            'sortable' => false,
+            'condition' => null
         ]);
     }
 }

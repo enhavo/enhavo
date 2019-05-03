@@ -16,6 +16,7 @@ import Confirm from "@enhavo/app/View/Confirm";
 import Batch from "@enhavo/app/Grid/Batch/Batch";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import Message from "@enhavo/app/FlashMessage/Message";
+import * as jexl from "jexl";
 
 export default class Grid
 {
@@ -249,5 +250,19 @@ export default class Grid
             data.push(_.extend(row, rowData));
         }
         return data;
+    }
+
+    public checkCondition(column: ColumnInterface): boolean {
+        let context = {
+            mobile: window.innerWidth <= 360,
+            tablet: window.innerWidth > 360 && window.innerWidth <= 768,
+            desktop: window.innerWidth > 768,
+            width: window.innerWidth,
+            this: column
+        };
+        if(column.condition) {
+            return jexl.evalSync(column.condition, context);
+        }
+        return true;
     }
 }

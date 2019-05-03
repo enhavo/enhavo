@@ -6,4 +6,5 @@ export default class AbstractColumn implements ColumnInterface
     public directionDesc: boolean = null;
     public key: string;
     public component: string;
+    public condition: string;
 }

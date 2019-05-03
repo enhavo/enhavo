@@ -180,7 +180,7 @@
                 this.clickPage(page + 1);
             }
         }
-        
+
         clickPage(page: number): void {
             application.getGrid().changePage(page);
         }

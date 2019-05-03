@@ -6,4 +6,5 @@ export default interface ColumnInterface extends ComponentAwareInterface
     directionDesc: boolean;
     key: string;
     property?: string;
+    condition: string;
 }
