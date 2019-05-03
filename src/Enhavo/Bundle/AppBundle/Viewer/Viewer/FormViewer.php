@@ -99,6 +99,7 @@ class FormViewer extends AbstractActionViewer
             $tabData = [];
             $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], $translationDomain);
             $tabData['key'] = $key;
+            $tabData['fullWidth'] = isset($tabData['full_width']) && $tabData['full_width'] ? true : false;
             $data[] = $tabData;
         }
         return $data;

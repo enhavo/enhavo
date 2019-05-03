@@ -54,6 +54,7 @@ enhavo_article_article_update:
                     content:
                         label: article.label.content
                         template: EnhavoArticleBundle:Tab:content.html.twig
+                        full_width: true
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
