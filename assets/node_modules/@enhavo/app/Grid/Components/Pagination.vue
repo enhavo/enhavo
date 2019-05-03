@@ -164,7 +164,7 @@
         }
 
         clickLast(): void {
-            this.clickPage(this.page['last']);
+            this.clickPage(this.lastPage);
         }
 
         clickPrev(): void {
@@ -180,9 +180,7 @@
                 this.clickPage(page + 1);
             }
         }
-
-
-
+        
         clickPage(page: number): void {
             application.getGrid().changePage(page);
         }
