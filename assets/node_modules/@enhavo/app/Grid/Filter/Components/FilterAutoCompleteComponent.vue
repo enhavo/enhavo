@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-filter-search">
-        <v-select :options="options" @search="fetchOptions" :placeholder="data.label" :value="data.value" @input="change"></v-select>
+        <v-select :options="options" @search="fetchOptions" :placeholder="data.label" @input="change"></v-select>
     </div>
 </template>
 
