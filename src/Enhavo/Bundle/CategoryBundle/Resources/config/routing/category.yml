@@ -18,6 +18,7 @@ enhavo_category_category_create:
     defaults:
         _controller: enhavo_category.controller.category:createAction
         _sylius:
+            redirect: enhavo_category_category_update
             viewer:
                 translationDomain: EnhavoCategoryBundle
                 tabs:

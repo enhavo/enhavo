@@ -8,6 +8,8 @@
             <input type="hidden" name="y" v-bind:value="data.y">
         </form>
     </div>
+
+
 </template>
 
 <script lang="ts">
@@ -16,6 +18,9 @@ import * as Cropper from 'cropperjs';
 import FormatData from "@enhavo/media/ImageCropper/FormatData";
 import 'cropperjs/dist/cropper.min.css';
 import * as $ from 'jquery';
+import ApplicationBag from "@enhavo/app/ApplicationBag";
+import ApplicationInterface from "@enhavo/app/ApplicationInterface";
+const application = <ApplicationInterface>ApplicationBag.getApplication();
 
 @Component()
 export default class ImageCropperStageComponent extends Vue
@@ -25,8 +30,11 @@ export default class ImageCropperStageComponent extends Vue
 
     cropper: Cropper;
 
+    loading = true;
+
     mounted()
     {
+        application.getView().loading();
         let element = <HTMLElement>this.$refs['cropper-stage'];
         element.src = this.data.url;
         this.cropper = new Cropper(element, {
@@ -35,8 +43,9 @@ export default class ImageCropperStageComponent extends Vue
                     this.cropper.setAspectRatio(this.data.ratio);
                 }
                 if(this.data.getData()) {
-                    this.cropper.setAspectRatio(this.data.ratio);
+                    this.cropper.setData(this.data.getData());
                 }
+                application.getView().loaded();
             }
         });
 
@@ -46,14 +55,6 @@ export default class ImageCropperStageComponent extends Vue
             this.data.x = this.cropper.getData().x;
             this.data.y = this.cropper.getData().y;
             this.data.changed = true;
-        });
-
-        $(document).on('image-cropper-move', () => {
-            this.cropper.setDragMode('move');
-        });
-
-        $(document).on('image-cropper-crop', () => {
-            this.cropper.setDragMode('crop');
         });
 
         $(document).on('image-cropper-zoom-in', () => {

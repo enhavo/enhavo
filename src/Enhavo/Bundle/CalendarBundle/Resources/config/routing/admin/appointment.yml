@@ -18,6 +18,7 @@ enhavo_calendar_appointment_create:
     defaults:
         _controller: enhavo_calendar.controller.appointment:createAction
         _sylius:
+            redirect: enhavo_calendar_appointment_update
             viewer:
                 translationDomain: EnhavoCalendarBundle
                 tabs:

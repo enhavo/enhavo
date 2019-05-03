@@ -18,6 +18,7 @@ enhavo_translation_translation_string_create:
     defaults:
         _controller: enhavo_translation.controller.translation_string:createAction
         _sylius:
+            redirect: enhavo_translation_translation_string_update
             viewer:
                 translationDomain: EnhavoTranslationBundle
                 tabs:

@@ -18,6 +18,7 @@ enhavo_article_article_create:
     defaults:
         _controller: enhavo_article.controller.article:createAction
         _sylius:
+            redirect: enhavo_article_article_update
             viewer:
                 translationDomain: EnhavoArticleBundle
                 tabs:
@@ -34,7 +35,6 @@ enhavo_article_article_create:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
-            redirect: enhavo_article_article_update
 
 enhavo_article_article_update:
     options:
@@ -54,6 +54,7 @@ enhavo_article_article_update:
                     content:
                         label: article.label.content
                         template: EnhavoArticleBundle:Tab:content.html.twig
+                        full_width: true
                     seo:
                         label: article.label.seo
                         template: EnhavoArticleBundle:Tab:seo.html.twig
@@ -98,6 +99,7 @@ enhavo_article_article_table:
                         width: 2
                         type: boolean
                         sortable: true
+                        condition: "desktop"
                     title:
                         type: text
                         label: article.label.title
@@ -110,6 +112,7 @@ enhavo_article_article_table:
                         type: date
                         width: 3
                         sortable: true
+                        condition: "desktop || tablet"
 
 enhavo_article_article_delete:
     options:

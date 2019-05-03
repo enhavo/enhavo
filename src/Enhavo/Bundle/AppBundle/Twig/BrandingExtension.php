@@ -8,10 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\DependencyInjection\EnhavoAppExtension;
-use Enhavo\Bundle\AppBundle\Util\Assetic;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Branding extends \Twig_Extension
+class BrandingExtension extends AbstractExtension
 {
     /**
      * @var string[]
@@ -29,13 +29,13 @@ class Branding extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('is_branding', array($this, 'isBranding')),
-            new \Twig_SimpleFunction('is_branding_version', array($this, 'isBrandingVersion')),
-            new \Twig_SimpleFunction('is_branding_created_by', array($this, 'isBrandingCreatedBy')),
-            new \Twig_SimpleFunction('branding_text', array($this, 'getBrandingText'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('branding_logo', array($this, 'getBrandingLogo')),
-            new \Twig_SimpleFunction('branding_version', array($this, 'getBrandingVersion')),
-            new \Twig_SimpleFunction('branding_background_image', array($this, 'getBackgroundImage')),
+            new TwigFunction('is_branding', array($this, 'isBranding')),
+            new TwigFunction('is_branding_version', array($this, 'isBrandingVersion')),
+            new TwigFunction('is_branding_created_by', array($this, 'isBrandingCreatedBy')),
+            new TwigFunction('branding_text', array($this, 'getBrandingText'), array('is_safe' => array('html'))),
+            new TwigFunction('branding_logo', array($this, 'getBrandingLogo')),
+            new TwigFunction('branding_version', array($this, 'getBrandingVersion')),
+            new TwigFunction('branding_background_image', array($this, 'getBackgroundImage')),
         );
     }
 
@@ -72,10 +72,5 @@ class Branding extends \Twig_Extension
     public function getBackgroundImage()
     {
         return $this->brandingParameters['background_image'];
-    }
-
-    public function getName()
-    {
-        return 'branding';
     }
 }

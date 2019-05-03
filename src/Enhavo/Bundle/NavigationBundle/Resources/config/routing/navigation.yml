@@ -18,6 +18,7 @@ enhavo_navigation_navigation_create:
     defaults:
         _controller: enhavo_navigation.controller.navigation:createAction
         _sylius:
+            redirect: enhavo_navigation_navigation_update
             viewer:
                 translationDomain: EnhavoNavigationBundle
                 tabs:

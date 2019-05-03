@@ -25,6 +25,7 @@ enhavo_shop_product_option_create:
     defaults:
         _controller: sylius.controller.product_option:createAction
         _sylius:
+            redirect: enhavo_shop_product_option_update
             form: enhavo_shop_product_option
             viewer:
                 translationDomain: EnhavoShopBundle

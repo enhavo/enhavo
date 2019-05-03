@@ -596,6 +596,11 @@
   version "0.8.29"
   resolved "https://registry.yarnpkg.com/@types/icheck/-/icheck-0.8.29.tgz#2633a76e2c3572300f5c8258dda2d207fc1bdc28"
 
+"@types/jexl@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/jexl/-/jexl-2.1.0.tgz#5c08251c9890935b83527b3514e574145ef85b26"
+  integrity sha512-bMYxYd+KjQPh517n/Gigsvow1k2hPX3fXBmDxhcRP2Tugkva250y/kETXakkAvuteGAeCQ/xFgRmpSv+OF91dA==
+
 "@types/jquery.fileupload@^5.40.36":
   version "5.40.36"
   resolved "https://registry.yarnpkg.com/@types/jquery.fileupload/-/jquery.fileupload-5.40.36.tgz#e19ba9917e3bc52d63d9f7b51113b329e2f7a039"
@@ -4198,6 +4203,11 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jexl@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/jexl/-/jexl-2.1.1.tgz#d4f2cb9e488ff737f73acc08c5afed37e07f886b"
+  integrity sha512-a+dZiuYIKl0nPYdAe7sJ8D/bCAbemwLjLypcT2brXtft/Mi3titp1QRCpTkaHrp+qeno8DKFxVpVKYNvw1AV3A==
+
 jodid25519@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/jodid25519/-/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
@@ -4221,9 +4231,10 @@ jquery-datetimepicker@^2.5.21:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
-jquery@~3.1.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.1.1.tgz#347c1c21c7e004115e0a4da32cece041fad3c8a3"
+jquery@~3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
 
 js-base64@^2.1.8:
   version "2.5.0"

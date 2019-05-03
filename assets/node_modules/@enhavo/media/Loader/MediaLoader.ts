@@ -6,15 +6,6 @@ import ImageCropperExtension from "@enhavo/media/Extension/ImageCropperExtension
 import ImageCropperConfiguration from "@enhavo/media/Extension/ImageCropperConfiguration";
 import MediaItem from "@enhavo/media/Type/MediaItem";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import CreateEvent from "@enhavo/app/ViewStack/Event/CreateEvent";
-import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
-import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
-import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
-import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
-import ExistsEvent from "@enhavo/app/ViewStack/Event/ExistsEvent";
-import ExistsData from "@enhavo/app/ViewStack/ExistsData";
-import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
-import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default class MediaLoader extends AbstractLoader
 {
@@ -22,34 +13,15 @@ export default class MediaLoader extends AbstractLoader
 
     private application: ApplicationInterface;
 
-    private static cropperViewId: number = null;
-
-    private static cropperMediaItem: MediaItem = null;
-
     constructor(application: ApplicationInterface) {
         super();
         this.application = application;
-
-        let cropperStorageKey = 'media-image-cropper';
-        this.application.getEventDispatcher().dispatch(new LoadDataEvent(cropperStorageKey))
-            .then((data: DataStorageEntry) => {
-                MediaLoader.cropperViewId = null;
-                if(data) {
-                    MediaLoader.cropperViewId = data.value;
-                }
-            });
-
-        this.application.getEventDispatcher().on('updated', (event: UpdatedEvent) => {
-            if(event.id == MediaLoader.cropperViewId && MediaLoader.cropperMediaItem != null) {
-                // hook for updated by cropper
-            }
-        });
+        this.bindDragAndDrop();
+        this.initImageCropper();
     }
 
     public insert(element: HTMLElement): void
     {
-        this.bindDragAndDrop();
-        this.initImageCropper();
         let elements = this.findElements(element, '[data-media-type]');
         for(element of elements) {
             let type = new MediaType(element);
@@ -86,46 +58,14 @@ export default class MediaLoader extends AbstractLoader
         $(document).on('mediaAddItem', (event, item) => {
             let config = new ImageCropperConfiguration();
             config.openCropper = (media: MediaItem, format: string) => {
-
-                if(MediaLoader.cropperViewId == null) {
-                    this.openCropperView(media, format)
-                } else {
-                    this.application.getEventDispatcher().dispatch(new ExistsEvent(MediaLoader.cropperViewId)).then((data: ExistsData) => {
-                        if(data.exists) {
-                            this.application.getEventDispatcher().dispatch(new CloseEvent(MediaLoader.cropperViewId))
-                                .then(() => {
-                                    this.openCropperView(media, format)
-                                })
-                        } else {
-                            this.openCropperView(media, format)
-                        }
-                    });
-                }
+                let label = this.application.getTranslator().trans('enhavo_media.cropping');
+                let url = this.application.getRouter().generate('enhavo_media_image_cropper_index', {
+                    format: format,
+                    token: media.getMeta().token
+                });
+                this.application.getView().open(label, url, 'media-image-cropper')
             };
             new ImageCropperExtension(item, config);
         });
-    }
-
-    private openCropperView(media: MediaItem, format: string)
-    {
-        let cropperStorageKey = 'media-image-cropper';
-
-        let url = this.application.getRouter().generate('enhavo_media_image_cropper_index', {
-            format: format,
-            token: media.getMeta().token
-        });
-
-        this.application.getEventDispatcher().dispatch(new CreateEvent(
-            {
-                label: this.application.getTranslator().trans('enhavo_media.cropping'),
-                component: 'iframe-view',
-                url: url
-            }, this.application.getView().getId())
-        )
-            .then((view: ViewInterface) => {
-                MediaLoader.cropperViewId = view.id;
-                MediaLoader.cropperMediaItem = media;
-                this.application.getEventDispatcher().dispatch(new SaveDataEvent(cropperStorageKey, view.id));
-            }).catch(() => {});
     }
 }

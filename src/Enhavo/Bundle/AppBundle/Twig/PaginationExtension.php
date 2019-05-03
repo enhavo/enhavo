@@ -4,8 +4,10 @@ namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class PaginationRender extends \Twig_Extension
+class PaginationExtension extends AbstractExtension
 {
     /**
      * @var EngineInterface
@@ -37,7 +39,7 @@ class PaginationRender extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('pagination_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction('pagination_render', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 

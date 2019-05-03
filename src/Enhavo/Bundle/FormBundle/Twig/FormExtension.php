@@ -6,57 +6,42 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\AppBundle\Twig;
+namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormErrorIterator;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Form extends \Twig_Extension
+class FormExtension extends AbstractExtension
 {
-    /**
-     * @var string[]
-     */
-    private $formThemes;
-
     /**
      * @var FormErrorResolver
      */
     private $formErrorResolver;
     
-    public function __construct(array $formThemes, FormErrorResolver $formErrorResolver)
+    public function __construct(FormErrorResolver $formErrorResolver)
     {
         $this->formErrorResolver = $formErrorResolver;
-        $this->formThemes = $formThemes;
-    }
-
-    public function getName()
-    {
-        return 'enhavo_form'; // prevent name conflict with symfony
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('form_errors_recursive', array($this, 'getErrorRecursive')),
-            new \Twig_SimpleFunction('form_has_errors', array($this, 'hasErrors')),
-            new \Twig_SimpleFunction('form_is_submitted', array($this, 'isSubmitted')),
-            new \Twig_SimpleFunction('form_is_successful', array($this, 'isSuccessful')),
-            new \Twig_SimpleFunction('form_themes', array($this, 'getFormThemes')),
+            new TwigFunction('form_errors_recursive', array($this, 'getErrorRecursive')),
+            new TwigFunction('form_has_errors', array($this, 'hasErrors')),
+            new TwigFunction('form_is_submitted', array($this, 'isSubmitted')),
+            new TwigFunction('form_is_successful', array($this, 'isSuccessful')),
         );
     }
 
-    public function getFormThemes()
-    {
-        return $this->formThemes;
-    }
-
-    public function getErrorRecursive(FormView $formView, $translationDomain = null)
+    public function getErrorRecursive(FormView $formView)
     {
         $form = $this->convertFormViewToForm($formView);
         if($form) {
-            $errors = $this->formErrorResolver->getErrors($form, $translationDomain);
+            $errors = $this->formErrorResolver->getErrors($form);
             return $errors;
         }
         return [];

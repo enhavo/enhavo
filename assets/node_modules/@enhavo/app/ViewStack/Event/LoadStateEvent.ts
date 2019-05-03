@@ -1,6 +1,6 @@
 import Event from "./Event"
 
-export default class SaveStateEvent extends Event
+export default class LoadStateEvent extends Event
 {
     constructor()
     {

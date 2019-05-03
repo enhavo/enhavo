@@ -138,6 +138,7 @@ class CreateViewer extends BaseViewer
             $tabData = [];
             $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], $translationDomain);
             $tabData['key'] = $key;
+            $tabData['fullWidth'] = isset($tab['full_width']) && $tab['full_width'] ? true : false;
             $data[] = $tabData;
         }
         return $data;

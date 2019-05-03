@@ -9,7 +9,8 @@ export default class DateTimeType extends FormType
         $.datetimepicker.setLocale('de');
         this.$element.datetimepicker({
             format:'d.m.Y H:i',
-            dayOfWeekStart: 1
+            dayOfWeekStart: 1,
+            scrollInput: false
         });
     }
 }

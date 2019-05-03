@@ -43,24 +43,47 @@ export default class ArrangeManager
 
     private setSize(views: ViewInterface[])
     {
+        this.setMinimized(views);
+
+        if(views.length == 1) {
+            if(!views[0].minimize) {
+                views[0].width = '100%';
+            }
+        } else if(views.length == 2) {
+            if(!views[0].minimize) {
+                if(views[1].minimize) {
+                    views[0].width = '100%';
+                } else {
+                    views[0].width = '30%';
+                }
+            }
+        } else if(views.length == 3) {
+            if(!views[0].minimize) {
+                if(views[1].minimize && views[2].minimize) {
+                    views[0].width = '100%';
+                } else {
+                    views[0].width = '30%';
+                }
+            }
+        }
+    }
+
+    private setMinimized(views: ViewInterface[])
+    {
         if(views.length == 1) {
             if(!views[0].customMinimized) {
                 views[0].minimize = false;
             }
-            views[0].width = '100%';
         } else if(views.length == 2) {
-            views[0].width = '30%';
+
             if(!views[0].customMinimized) {
                 views[0].minimize = false;
             }
-            views[1].width = 'inherit';
+
         } else if(views.length == 3) {
             if(!views[0].customMinimized) {
                 views[0].minimize = true;
             }
-            views[0].width = '30%';
-            views[1].width = 'inherit';
-            views[2].width = 'inherit';
         }
     }
 

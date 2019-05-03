@@ -16,6 +16,7 @@ enhavo_project_magazine_create:
     defaults:
         _controller: enhavo_project.controller.magazine:createAction
         _sylius:
+            redirect: enhavo_project_magazine_update
             viewer:
 
 enhavo_project_magazine_update:

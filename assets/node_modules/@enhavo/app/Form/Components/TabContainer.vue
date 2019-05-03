@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-container">
+    <div :class="{'tab-container': true, 'tab-full-width': tab.fullWidth }">
         <div v-once ref="container"></div>
     </div>
 </template>
@@ -23,7 +23,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-
-</style>

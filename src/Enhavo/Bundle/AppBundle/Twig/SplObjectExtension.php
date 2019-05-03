@@ -8,29 +8,28 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-class SplObject extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+
+class SplObjectExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('spl_object_hash', array($this, 'getSplObjectHash')),
+            new TwigFilter('spl_object_hash', array($this, 'getSplObjectHash')),
         );
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('spl_object_hash', array($this, 'getSplObjectHash')),
+            new TwigFunction('spl_object_hash', array($this, 'getSplObjectHash')),
         );
     }
 
     public function getSplObjectHash($object)
     {
         return spl_object_hash($object);
-    }
-
-    public function getName()
-    {
-        return 'spl_object';
     }
 }

@@ -12,10 +12,17 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    enhavo_routing.twig.router_extension:
-        class: Enhavo\Bundle\RoutingBundle\Twig\RouterExtension
+    Enhavo\Bundle\RoutingBundle\Twig\RouterExtension:
         arguments:
             - '@enhavo_routing.router'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\RoutingBundle\Twig\UrlBeautifierExtension:
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\RoutingBundle\Twig\SlugifyExtension:
         tags:
             - { name: twig.extension }
 

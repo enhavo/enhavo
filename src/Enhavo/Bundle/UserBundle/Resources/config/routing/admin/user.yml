@@ -18,6 +18,7 @@ enhavo_user_user_create:
     defaults:
         _controller: enhavo_user.controller.user:createAction
         _sylius:
+            redirect: enhavo_user_user_update
             form:
                 options:
                     validation_groups: [create]

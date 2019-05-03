@@ -7,4 +7,9 @@
   }
 }
 
-.form-container {margin:15px;padding:15px;}
+.form-container {
+    .tab-container {
+        margin:15px;padding:15px;
+        &.tab-full-width {margin:0; padding:0}
+    }
+}

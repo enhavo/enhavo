@@ -18,6 +18,7 @@ enhavo_user_group_create:
     defaults:
         _controller: enhavo_user.controller.group:createAction
         _sylius:
+            redirect: enhavo_user_group_update
             viewer:
                 translationDomain: EnhavoUserBundle
                 tabs:
