@@ -7,4 +7,6 @@ export default class AbstractColumn implements ColumnInterface
     public key: string;
     public component: string;
     public condition: string;
+    public display: boolean;
+    public width: number;
 }

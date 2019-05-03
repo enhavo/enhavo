@@ -7,4 +7,6 @@ export default interface ColumnInterface extends ComponentAwareInterface
     key: string;
     property?: string;
     condition: string;
+    display: boolean;
+    width: number;
 }

@@ -8,7 +8,7 @@
             <template v-for="column in columns">
                 <component
                     class="view-table-col"
-                    v-if="checkCondition(column)"
+                    v-if="column.display"
                     v-bind:is="column.component"
                     v-bind:key="column.key"
                     v-bind:column="column"
@@ -47,6 +47,7 @@
 
         mounted() {
             $(window).resize(() => {
+                application.getGrid().resize();
                 this.$forceUpdate();
             });
         }
@@ -60,7 +61,13 @@
         }
 
         calcColumnWidth(parts: number): string {
-            return (100 / 12 * parts) + '%';
+            let totalWidth = 0;
+            for(let column of this.columns) {
+                if(column.display) {
+                    totalWidth += column.width;
+                }
+            }
+            return (100 / totalWidth * parts) + '%';
         }
 
         getColumnStyle(column: any): object {
@@ -77,10 +84,6 @@
                 return this.data.data[column];
             }
             return null;
-        }
-
-        checkCondition(column: ColumnInterface): boolean {
-            return application.getGrid().checkCondition(column);
         }
     }
 </script>

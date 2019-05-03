@@ -51,6 +51,7 @@ export default class Grid
 
         _.extend(configuration, new GridConfiguration());
         this.configuration = configuration;
+        this.checkColumnConditions();
         this.initListener();
     }
 
@@ -252,7 +253,7 @@ export default class Grid
         return data;
     }
 
-    public checkCondition(column: ColumnInterface): boolean {
+    private checkColumnCondition(column: ColumnInterface): boolean {
         let context = {
             mobile: window.innerWidth <= 360,
             tablet: window.innerWidth > 360 && window.innerWidth <= 768,
@@ -264,5 +265,17 @@ export default class Grid
             return jexl.evalSync(column.condition, context);
         }
         return true;
+    }
+
+    private checkColumnConditions()
+    {
+        for(let column of this.configuration.columns) {
+            column.display = this.checkColumnCondition(column);
+        }
+    }
+
+    public resize()
+    {
+        this.checkColumnConditions();
     }
 }
