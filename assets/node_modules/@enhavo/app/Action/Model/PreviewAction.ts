@@ -11,8 +11,16 @@ export default class PreviewAction extends AbstractAction
 {
     public url: string;
 
+    private static listenerLoaded = false;
+
     loadListener()
     {
+        if(PreviewAction.listenerLoaded) {
+            return;
+        }
+
+        PreviewAction.listenerLoaded = true;
+
         this.application.getView().loadValue('preview-view', (id) => {
             let viewId = id ? parseInt(id) : null;
             if(viewId) {

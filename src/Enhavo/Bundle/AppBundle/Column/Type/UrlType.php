@@ -20,23 +20,13 @@ class UrlType extends AbstractColumnType
         /** @var Router $router */
         $router = $this->container->get('enhavo_routing.router');
         $url = $router->generate($resource, [], UrlGenerator::ABSOLUTE_PATH, $resolverType);
-        return $url;
-    }
 
-    public function createColumnViewData(array $options)
-    {
-        $data = parent::createColumnViewData($options);
-
-        $data = array_merge($data, [
-            'action' => [
-                'component' => 'open-action',
-                'target' => $options['target'],
-                'icon' => $options['icon'],
-            ],
-            'mapping' => 'url'
-        ]);
-
-        return $data;
+        return [
+            'component' => 'open-action',
+            'target' => $options['target'],
+            'icon' => $options['icon'],
+            'url' => $url
+        ];
     }
 
     public function configureOptions(OptionsResolver $resolver)

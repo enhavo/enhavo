@@ -85,3 +85,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: text }
+
+    Enhavo\Bundle\AppBundle\Column\Type\ActionType:
+        public: true
+        arguments:
+            - '@enhavo_app.action_manager'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.column, alias: action }
