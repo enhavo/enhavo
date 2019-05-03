@@ -33,7 +33,8 @@ class DateType extends AbstractType
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy',
             'attr' => [
-                'data-date-picker' => null
+                'data-date-picker' => null,
+                'autocomplete' => 'off'
             ]
         ));
     }

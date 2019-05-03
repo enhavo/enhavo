@@ -10,7 +10,8 @@ export default class DateType extends FormType
         this.$element.datetimepicker({
             format:'d.m.Y H:i',
             timepicker: false,
-            dayOfWeekStart: 1
+            dayOfWeekStart: 1,
+            scrollInput: false
         });
     }
 }
