@@ -18,6 +18,7 @@ enhavo_content_redirect_create:
     defaults:
         _controller: enhavo_content.controller.redirect:createAction
         _sylius:
+            redirect: enhavo_content_redirect_update
             viewer:
                 translationDomain: EnhavoContentBundle
 

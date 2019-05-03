@@ -16,6 +16,7 @@ enhavo_newsletter_subscriber_create:
     defaults:
         _controller: enhavo_newsletter.controller.subscriber:createAction
         _sylius:
+            redirect: enhavo_newsletter_subscriber_update
             viewer:
                 translationDomain: EnhavoNewsletterBundle
 

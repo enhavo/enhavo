@@ -18,6 +18,7 @@ enhavo_slider_slide_create:
     defaults:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
+            redirect: enhavo_slider_slide_update
             sortable: true
             sortable_position: position
             sorting_strategy: desc_first

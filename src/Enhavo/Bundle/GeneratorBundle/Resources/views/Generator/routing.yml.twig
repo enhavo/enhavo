@@ -16,6 +16,7 @@
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:createAction
         _sylius:
+            redirect: {{ app }}_{{ resource }}_update
 {% if not sorting is null %}
             sortable: true
 {% endif %}
@@ -83,27 +84,21 @@
     options:
         expose: true
     path: /{{ app_url }}/{{ resource_url }}/preview
-    methods: [POST]
+    methods: [GET]
     defaults:
         _controller: {{ app }}.controller.{{ resource }}:previewAction
         _sylius:
             viewer:
 
-
-{% if not sorting is null %}
-{{ app }}_{{ resource }}_move_after:
+{{ app }}_{{ resource }}_resource_preview:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/move-after/{id}/{target}
+    path: /{{ app_url }}/{{ resource_url }}/resource/preview
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveAfterAction
+        _controller:{{ app }}.controller.{{ resource }}:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
 
-{{ app }}_{{ resource }}_move_to_page:
-    options:
-        expose: true
-    path: /{{ app_url }}/{{ resource_url }}/move-to-page/{id}/{page}/{top}
-    methods: [POST]
-    defaults:
-        _controller: {{ app }}.controller.{{ resource }}:moveToPageAction
-{% endif %}

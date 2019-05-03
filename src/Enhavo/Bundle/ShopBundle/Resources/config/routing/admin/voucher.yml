@@ -18,6 +18,7 @@ enhavo_shop_voucher_create:
     defaults:
         _controller: enhavo_shop.controller.voucher:createAction
         _sylius:
+            redirect: enhavo_shop_voucher_update
             viewer:
                 translationDomain: EnhavoShopBundle
 

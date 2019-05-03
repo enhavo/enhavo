@@ -18,6 +18,7 @@ enhavo_article_article_create:
     defaults:
         _controller: enhavo_article.controller.article:createAction
         _sylius:
+            redirect: enhavo_article_article_update
             viewer:
                 translationDomain: EnhavoArticleBundle
                 tabs:
@@ -34,7 +35,6 @@ enhavo_article_article_create:
                     preview:
                         type: preview
                         route: enhavo_article_article_preview
-            redirect: enhavo_article_article_update
 
 enhavo_article_article_update:
     options:

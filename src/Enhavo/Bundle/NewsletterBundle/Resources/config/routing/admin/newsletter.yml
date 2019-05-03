@@ -20,6 +20,7 @@ enhavo_newsletter_newsletter_create:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:createAction
         _sylius:
+            redirect: enhavo_newsletter_newsletter_update
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 tabs:
