@@ -137,20 +137,6 @@ class ImageCropperViewer extends AbstractActionViewer
             'save' => [
                 'type' => 'save'
             ],
-            'move' => [
-                'type' => 'event',
-                'label' => 'media.image_cropper.label.tooltip_move',
-                'translation_domain' => 'EnhavoMediaBundle',
-                'icon' => 'zoom_out_map',
-                'event' => 'image-cropper-move'
-            ],
-            'crop' => [
-                'type' => 'event',
-                'label' => 'media.image_cropper.label.tooltip_cropframe',
-                'translation_domain' => 'EnhavoMediaBundle',
-                'icon' => 'crop',
-                'event' => 'image-cropper-crop'
-            ],
             'zoom-in' => [
                 'type' => 'event',
                 'label' => 'media.image_cropper.label.tooltip_zoom_in',
