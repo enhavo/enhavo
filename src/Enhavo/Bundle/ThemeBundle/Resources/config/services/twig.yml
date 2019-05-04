@@ -1,0 +1,9 @@
+parameters:
+
+services:
+    enhavo_theme.twig.template:
+        class:  Enhavo\Bundle\ThemeBundle\Twig\ThemeTemplate
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
