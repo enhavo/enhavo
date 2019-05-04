@@ -5,9 +5,7 @@ import ActionInterface from "@enhavo/app/Action/ActionInterface";
 export default class ActionColumn extends AbstractColumn
 {
     private registry: ActionRegistry;
-    public mapping: string;
     public action: ActionInterface;
-    private actionLoaded: boolean = false;
 
     constructor(registry: ActionRegistry)
     {
@@ -15,11 +13,7 @@ export default class ActionColumn extends AbstractColumn
         this.registry = registry;
     }
 
-    getAction() {
-        if(!this.actionLoaded) {
-            this.action = this.registry.getFactory(this.action.component).createFromData(this.action);
-            this.actionLoaded = true;
-        }
-        return this.action;
+    getAction(data: any) {
+        return this.registry.getFactory(data.component).createFromData(data);
     }
 }
