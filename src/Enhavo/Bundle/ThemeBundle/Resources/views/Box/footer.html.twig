@@ -1,0 +1,13 @@
+<footer>
+    {% block top %}{% endblock %}
+    {% block rows %}
+        <div class="row npam">
+            {% block widget %}
+                {% for widget in widgets %}
+                    {{ theme_widget_render(widget.type, widget) }}
+                {% endfor %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+    {% block bottom %}{% endblock %}
+</footer>

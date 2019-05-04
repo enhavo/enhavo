@@ -1,0 +1,24 @@
+parameters:
+    enhavo_app.twig.block_render.class: Enhavo\Bundle\AppBundle\Block\BlockRenderer
+    enhavo_app.twig.block_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+
+services:
+    enhavo_theme.theme_widget_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'ThemeWidget'
+
+    enhavo_theme.twig.widget_renderer:
+        class: Enhavo\Bundle\ThemeBundle\Widget\WidgetRendererExtension
+        arguments:
+            - @enhavo_theme.theme_widget_collector
+        tags:
+            - { name: twig.extension }
+
+    enhavo_theme.widget.template:
+        class: Enhavo\Bundle\ThemeBundle\Widget\Widget\TemplateWidget
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.theme_widget, alias: template}
