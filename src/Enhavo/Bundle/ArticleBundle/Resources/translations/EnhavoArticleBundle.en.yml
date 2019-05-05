@@ -15,6 +15,9 @@ article:
       publication_date: 'Publication date'
   label:
     article: 'Article'
+    article_stream: 'Article Stream'
+    pagination: 'Pagination'
+    limit: 'Limit per Page'
     category: 'Category'
     teaser: 'Teaser'
     content: 'Content'

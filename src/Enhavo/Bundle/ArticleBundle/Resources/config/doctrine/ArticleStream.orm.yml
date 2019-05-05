@@ -2,4 +2,13 @@ Enhavo\Bundle\ArticleBundle\Entity\ArticleStream:
     type: entity
     table: article_article_stream
 
+    fields:
+        limit:
+            type: integer
+            nullable: true
+            column: '`limit`'
+        pagination:
+            type: boolean
+            nullable: true
+
     lifecycleCallbacks: {  }

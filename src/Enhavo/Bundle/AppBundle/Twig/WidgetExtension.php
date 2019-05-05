@@ -28,7 +28,7 @@ class WidgetExtension extends AbstractExtension
         );
     }
 
-    public function renderWidget($type, $options, $resource = null): string
+    public function renderWidget($type, $options = [], $resource = null): string
     {
         $widget = $this->widgetManager->getWidget($type, $options);
         $data = $widget->createViewData($resource);

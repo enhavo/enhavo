@@ -15,6 +15,9 @@ article:
       publication_date: 'Erscheinungsdatum'
   label:
     article: 'Artikel'
+    article_stream: 'Artikel Stream'
+    pagination: 'Seiten'
+    limit: 'Anzahl pro Seite'
     category: 'Kategorie'
     teaser: 'Teaser'
     content: 'Inhalt'
