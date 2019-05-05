@@ -1,4 +1,4 @@
-category:
+taxonomy:
   role:
     label:
       index: 'Katgorie anzeigen'
@@ -8,7 +8,7 @@ category:
   label:
     id: 'ID'
     name: 'Name'
-    category: 'Kategorie'
+    taxonomy: 'Kategorie'
     categories: 'Kategorien'
     manageCategories: 'Kategorien verwalten'
 

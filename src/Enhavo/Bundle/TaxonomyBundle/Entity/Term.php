@@ -1,16 +1,16 @@
 <?php
 
-namespace Enhavo\Bundle\CategoryBundle\Entity;
+namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
-use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
-use Enhavo\Bundle\CategoryBundle\Model\CollectionInterface;
+use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
+use Enhavo\Bundle\TaxonomyBundle\Model\CollectionInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
- * Category
+ * Taxonomy
  */
-class Category implements CategoryInterface, ResourceInterface
+class Term implements TaxonomyInterface, ResourceInterface
 {
     /**
      * @var integer
@@ -25,12 +25,12 @@ class Category implements CategoryInterface, ResourceInterface
     /**
      * @var CollectionInterface
      */
-    protected $collection;
+    protected $taxonomy;
 
     /**
      * @var integer
      */
-    protected $order;
+    protected $position;
 
     /**
      * @var string
@@ -48,6 +48,16 @@ class Category implements CategoryInterface, ResourceInterface
     private $picture;
 
     /**
+     * @var Term[]|Collection
+     */
+    private $children;
+
+    /**
+     * @var Term
+     */
+    private $parent;
+
+    /**
      * Get id
      *
      * @return integer
@@ -61,7 +71,7 @@ class Category implements CategoryInterface, ResourceInterface
      * Set name
      *
      * @param string $name
-     * @return Category
+     * @return Taxonomy
      */
     public function setName($name)
     {
@@ -84,7 +94,7 @@ class Category implements CategoryInterface, ResourceInterface
      * Set collection
      *
      * @param CollectionInterface $collection
-     * @return Category
+     * @return Taxonomy
      */
     public function setCollection(CollectionInterface $collection = null)
     {
@@ -112,34 +122,11 @@ class Category implements CategoryInterface, ResourceInterface
     }
 
     /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Category
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
      * Set text
      *
      * @param string $text
      *
-     * @return Category
+     * @return Taxonomy
      */
     public function setText($text)
     {
@@ -161,7 +148,7 @@ class Category implements CategoryInterface, ResourceInterface
     /**
      * @param FileInterface|null $picture
      *
-     * @return Category
+     * @return Taxonomy
      */
     public function setPicture(FileInterface $picture = null)
     {

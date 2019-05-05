@@ -1,32 +1,32 @@
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\CategoryBundle\Model\CategoryInterface: Enhavo\Bundle\CategoryBundle\Entity\Category
-            Enhavo\Bundle\CategoryBundle\Model\CollectionInterface: Enhavo\Bundle\CategoryBundle\Entity\Collection
+            Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy
+            Enhavo\Bundle\TaxonomyBundle\Model\CollectionInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Collection
 
 
 enhavo_app:
     form_themes:
-        - 'EnhavoCategoryBundle:Form:fields.html.twig'
+        - 'EnhavoTaxonomyBundle:Form:fields.html.twig'
     roles:
-        enhavo_category_category_index:
-            role: ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX
-            label: category.role.label.index
-            translationDomain: EnhavoCategoryBundle
-        enhavo_category_category_create:
-            role: ROLE_ENHAVO_CATEGORY_CATEGORY_CREATE
-            label: category.role.label.create
-            translationDomain: EnhavoCategoryBundle
-        enhavo_category_category_update:
-            role: ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE
-            label: category.role.label.update
-            translationDomain: EnhavoCategoryBundle
-        enhavo_category_category_delete:
-            role: ROLE_ENHAVO_CATEGORY_CATEGORY_DELETE
-            label: category.role.label.delete
-            translationDomain: EnhavoCategoryBundle
+        enhavo_taxonomy_taxonomy_index:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX
+            label: taxonomy.role.label.index
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_create:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE
+            label: taxonomy.role.label.create
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_update:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE
+            label: taxonomy.role.label.update
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_delete:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE
+            label: taxonomy.role.label.delete
+            translationDomain: EnhavoTaxonomyBundle
 
 security:
     role_hierarchy:
-        ROLE_ENHAVO_CATEGORY_CATEGORY_UPDATE:
-            ROLE_ENHAVO_CATEGORY_COLLECTION_UPDATE:
+        ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE:
+            ROLE_ENHAVO_TAXONOMY_COLLECTION_UPDATE:

@@ -1,6 +1,6 @@
-Enhavo\Bundle\CategoryBundle\Entity\Collection:
+Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy:
     type: entity
-    table: category_collection
+    table: taxonomy_taxonomy
     id:
         id:
             type: integer
@@ -15,10 +15,11 @@ Enhavo\Bundle\CategoryBundle\Entity\Collection:
             nullable: true
 
     oneToMany:
-        categories:
-            mappedBy: collection
-            targetEntity: Category
+        terms:
+            mappedBy: taxonomy
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
             cascade: ['persist', 'refresh', 'remove']
-            orderBy: { 'order': 'ASC' }
+            orderBy:
+                position: 'ASC'
 
     lifecycleCallbacks: {  }

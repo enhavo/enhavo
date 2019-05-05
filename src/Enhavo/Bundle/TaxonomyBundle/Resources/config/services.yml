@@ -1,80 +1,19 @@
-parameters:
-    enhavo_category.form.collection.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionType
-    enhavo_category.class: Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType
-    enhavo_category.category.subscriber.class: Enhavo\Bundle\CategoryBundle\EventListener\CategorySubscriber
-    enhavo_category.form.type.collection_category.class: Enhavo\Bundle\CategoryBundle\Form\Type\CollectionCategoryType
-
 services:
-    enhavo_category_collection:
-        class: '%enhavo_category.form.collection.class%'
-        arguments:
-            - '%enhavo_category.model.collection.class%'
-        tags:
-            - { name: form.type }
-
-    enhavo_category:
-        class: '%enhavo_category.class%'
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%enhavo_category.model.category.class%'
-            - '%enhavo_category.default_collection%'
-        tags:
-            - { name: form.type, alias: 'enhavo_category'}
-
-    Enhavo\Bundle\CategoryBundle\Form\Type\CategoryType:
-        arguments:
-            - '%enhavo_category.model.category.class%'
-            - '%enhavo_app.translate%'
-        tags:
-            - { name: form.type, alias: 'enhavo_category_category'}
-
-    enhavo_collection_category:
-        class: '%enhavo_category.form.type.collection_category.class%'
-        arguments:
-            - '%enhavo_category.model.category.class%'
-        tags:
-            - { name: form.type, alias: 'enhavo_collection_category'}
-
-    enhavo_category.category.subscriber:
-        class: '%enhavo_category.category.subscriber.class%'
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    enhavo_category.factory.category:
-        class: '%enhavo_category.factory.category.class%'
-        arguments:
-            - '%enhavo_category.model.category.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-
-    Enhavo\Bundle\CategoryBundle\Action\CategoryAction:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.action, alias: category }
-
-    enhavo_category.extend_listener.category:
-        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
-        arguments:
-            - Enhavo\Bundle\CategoryBundle\Entity\Category
-            - '%enhavo_category.model.category.class%'
-            - true
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    Enhavo\Bundle\CategoryBundle\Menu\CategoryMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: category }
-
-    enhavo_category.save_listener:
-        class: Enhavo\Bundle\CategoryBundle\EventListener\SaveListener
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%enhavo_category.model.collection.class%'
-        tags:
-            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
+#    Enhavo\Bundle\TaxonomyBundle\Form\Type\TaxonomyType:
+#        arguments:
+#            - '%enhavo_taxonomy.model.taxonomy.class%'
+#            - '%enhavo_app.translate%'
+#        tags:
+#            - { name: form.type, alias: 'enhavo_taxonomy_taxonomy'}
+#
+#    Enhavo\Bundle\TaxonomyBundle\Action\TaxonomyAction:
+#        public: true
+#        calls:
+#            - [setContainer, ['@service_container']]
+#        tags:
+#            - { name: enhavo.action, alias: taxonomy }
+#
+#    Enhavo\Bundle\TaxonomyBundle\Menu\TaxonomyMenu:
+#        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+#        tags:
+#            - { name: enhavo.menu, alias: taxonomy }

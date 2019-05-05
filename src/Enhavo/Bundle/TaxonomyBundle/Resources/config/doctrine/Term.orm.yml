@@ -1,7 +1,7 @@
-Enhavo\Bundle\CategoryBundle\Entity\Category:
+Enhavo\Bundle\TaxonomyBundle\Entity\Term:
     type: entity
-    repositoryClass: Enhavo\Bundle\CategoryBundle\Repository\CategoryRepository
-    table: category_category
+    repositoryClass: Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository
+    table: taxonomy_term
     id:
         id:
             type: integer
@@ -17,10 +17,9 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
             type: text
             nullable: true
 
-        order:
+        position:
             type: integer
             nullable: true
-            column: '`order`'
 
         slug:
             type: string
@@ -34,10 +33,16 @@ Enhavo\Bundle\CategoryBundle\Entity\Category:
                     fields: ['name']
 
     manyToOne:
-        collection:
-            targetEntity: Enhavo\Bundle\CategoryBundle\Model\CollectionInterface
+        taxonomy:
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface
             joinColumn:
                 onDelete: CASCADE
+
+        parent:
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
+            joinColumn:
+                onDelete: CASCADE
+
     oneToOne:
         picture:
             cascade: ['persist', 'refresh', 'remove']

@@ -1,17 +1,17 @@
 <?php
 /**
- * CategoryMenuBuilder.php
+ * TaxonomyMenuBuilder.php
  *
  * @since 21/09/16
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\CategoryBundle\Menu;
+namespace Enhavo\Bundle\TaxonomyBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryMenu extends BaseMenu
+class TaxonomyMenu extends BaseMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -19,15 +19,16 @@ class CategoryMenu extends BaseMenu
 
         $resolver->setDefaults([
             'icon' => 'apps',
-            'label' => 'category.label.category',
-            'translation_domain' => 'EnhavoCategoryBundle',
-            'route' => 'enhavo_category_category_index',
-            'role' => 'ROLE_ENHAVO_CATEGORY_CATEGORY_INDEX',
+            'translation_domain' => 'EnhavoTaxonomyBundle',
+            'route' => 'enhavo_taxonomy_taxonomy_index',
+            'role' => 'ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX',
         ]);
+
+        $resolver->setRequired(['label', 'taxonomy']);
     }
 
     public function getType()
     {
-        return 'category';
+        return 'taxonomy';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\CategoryBundle\Form\Type;
+namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -9,29 +9,32 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryType extends AbstractType
+class TermType extends AbstractType
 {
     /**
-     * @var $dataClass
+     * @var string $dataClass
      */
     protected $dataClass;
 
-    protected $translation;
-
-    public function __construct($dataClass, $translation)
+    /**
+     * TermType constructor.
+     * @param $dataClass
+     */
+    public function __construct($dataClass)
     {
         $this->dataClass = $dataClass;
-        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'translation' => $this->translation
+            'label' => 'form.label.name',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('text', WysiwygType::class, array(
-            'translation' => $this->translation
+            'label' => 'form.label.text',
+            'translation_domain' => 'EnhavoAppBundle',
         ));
 
         $builder->add('picture', MediaType::class, array(
@@ -51,10 +54,5 @@ class CategoryType extends AbstractType
         $resolver->setDefaults( array(
             'data_class' => $this->dataClass
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_category_category';
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace Enhavo\Bundle\CategoryBundle;
+namespace Enhavo\Bundle\TaxonomyBundle;
 
-use Enhavo\Bundle\CategoryBundle\DependencyInjection\Compiler\CollectionRepositoryCompiler;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class EnhavoCategoryBundle extends Bundle
+class EnhavoTaxonomyBundle extends Bundle
 {
     public static function getSupportedDrivers()
     {
@@ -16,6 +15,5 @@ class EnhavoCategoryBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new CollectionRepositoryCompiler());
     }
 }

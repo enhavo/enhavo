@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\CategoryBundle\DependencyInjection;
+namespace Enhavo\Bundle\TaxonomyBundle\DependencyInjection;
 
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Sylius\Component\Resource\Factory;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class EnhavoCategoryExtension extends AbstractResourceExtension
+class EnhavoTaxonomyExtension extends AbstractResourceExtension
 {
     /**
      * {@inheritdoc}
@@ -22,9 +22,9 @@ class EnhavoCategoryExtension extends AbstractResourceExtension
     {
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $this->registerResources('enhavo_category', $config['driver'], $config['resources'], $container);
+        $this->registerResources('enhavo_taxonomy', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_category.default_collection', $config['default_collection']);
+        $container->setParameter('enhavo_taxonomy.default_collection', $config['default_collection']);
 
         $configFiles = array(
             'services.yml',

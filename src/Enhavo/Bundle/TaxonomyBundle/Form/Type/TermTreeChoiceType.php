@@ -1,17 +1,19 @@
 <?php
-namespace Enhavo\Bundle\CategoryBundle\Form\Type;
 
+namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CollectionCategoryType extends AbstractType
+class TermTreeChoiceType extends AbstractType
 {
-    /**
+    /*
      * @var string
      */
     protected $dataClass;
+
 
     public function __construct($dataClass)
     {
@@ -20,18 +22,21 @@ class CollectionCategoryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->dataClass,
+            'expanded' => true,
+            'multiple' => true,
+            'class' => $this->dataClass,
+            'translation_domain' => 'EnhavoTaxonomyBundle'
         ));
     }
 
-    public function getBlockPrefix()
+    public function getParent()
     {
-        return 'enhavo_collection_category';
+        return EntityType::class;
     }
 }

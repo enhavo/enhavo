@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\CategoryBundle\Model;
+namespace Enhavo\Bundle\TaxonomyBundle\Model;
 
 
 interface CollectionInterface

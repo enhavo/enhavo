@@ -1,13 +1,13 @@
-category:
+taxonomy:
   role:
     label:
-      index: 'Category list'
-      update: 'Category update'
-      create: 'Category create'
-      delete: 'Category delete'
+      index: 'Taxonomy list'
+      update: 'Taxonomy update'
+      create: 'Taxonomy create'
+      delete: 'Taxonomy delete'
   label:
     id: 'ID'
     name: 'Name'
-    category: 'Category'
+    taxonomy: 'Taxonomy'
     categories: 'Categories'
     manageCategories: 'Manage categories'

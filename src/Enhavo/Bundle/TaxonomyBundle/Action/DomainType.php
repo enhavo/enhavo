@@ -1,15 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\CategoryBundle\Action;
+namespace Enhavo\Bundle\TaxonomyBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\ActionInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class CategoryAction extends AbstractType implements ActionInterface
+class DomainType extends AbstractType implements ActionInterface
 {
     public function render($parameters)
     {
-        $collection = $this->container->getParameter('enhavo_category.default_collection');
+        $collection = $this->container->getParameter('enhavo_taxonomy.default_collection');
         if(isset($parameters['collection'])) {
             $collection = $parameters['collection'];
         }
@@ -17,13 +17,13 @@ class CategoryAction extends AbstractType implements ActionInterface
         return $this->renderTemplate('EnhavoAppBundle:Action:default.html.twig', [
             'type' => $this->getType(),
             'actionType' => 'overlay',
-            'route' => isset($parameters['route']) ? $parameters['route'] : 'enhavo_category_collection_update',
-            'label' => isset($parameters['label']) ? $parameters['label'] : 'category.label.manageCategories',
+            'route' => isset($parameters['route']) ? $parameters['route'] : 'enhavo_taxonomy_collection_update',
+            'label' => isset($parameters['label']) ? $parameters['label'] : 'taxonomy.label.manageCategories',
             'icon' => isset($parameters['icon']) ? $parameters['icon'] : 'create',
             'routeParameters' => [
                 'collection' => $collection
             ],
-            'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoCategoryBundle',
+            'translationDomain' => isset($parameters['translationDomain']) ? $parameters['translationDomain'] : 'EnhavoTaxonomyBundle',
             'display' =>  isset($parameters['display']) ? $parameters['display'] : true,
 
         ]);
@@ -31,6 +31,6 @@ class CategoryAction extends AbstractType implements ActionInterface
 
     public function getType()
     {
-        return 'category';
+        return 'taxonomy';
     }
 }

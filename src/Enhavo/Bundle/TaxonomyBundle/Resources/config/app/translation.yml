@@ -1,0 +1,4 @@
+Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy:
+    properties:
+        name:
+        text:

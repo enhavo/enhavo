@@ -35,7 +35,7 @@ return [
     Enhavo\Bundle\GeneratorBundle\EnhavoGeneratorBundle::class => ['all' => true],
     Enhavo\Bundle\ArticleBundle\EnhavoArticleBundle::class => ['all' => true],
     Enhavo\Bundle\PageBundle\EnhavoPageBundle::class => ['all' => true],
-    Enhavo\Bundle\CategoryBundle\EnhavoCategoryBundle::class => ['all' => true],
+    Enhavo\Bundle\TaxonomyBundle\EnhavoTaxonomyBundle::class => ['all' => true],
     Enhavo\Bundle\GridBundle\EnhavoGridBundle::class => ['all' => true],
     Enhavo\Bundle\SliderBundle\EnhavoSliderBundle::class => ['all' => true],
     Enhavo\Bundle\SettingBundle\EnhavoSettingBundle::class => ['all' => true],
