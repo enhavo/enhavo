@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ArticleBundle\Grid\Type;
+namespace Enhavo\Bundle\ArticleBundle\Grid;
 
 use Enhavo\Bundle\ArticleBundle\Entity\ArticleStream;
 use Enhavo\Bundle\ArticleBundle\Factory\ArticleStreamFactory;

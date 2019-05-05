@@ -52,7 +52,7 @@ class ArticleStreamType extends AbstractWidgetType
             if($page === null) {
                 $page = $this->requestStack->getCurrentRequest()->get($options['page_parameter']);
             }
-            $articles->setCurrentPage($page);
+            $articles->setCurrentPage($page ?  $page : 1);
         }
 
         return [
@@ -63,7 +63,7 @@ class ArticleStreamType extends AbstractWidgetType
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'template' => null,
+            'template' => 'EnhavoArticleBundle:Widget:article_stream.html.twig',
             'categories' => [],
             'tags' => [],
             'pagination' => true,

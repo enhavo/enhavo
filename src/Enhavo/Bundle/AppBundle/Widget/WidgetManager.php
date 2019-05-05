@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\AppBundle\Widget;
 
-use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 
 class WidgetManager
@@ -27,24 +26,25 @@ class WidgetManager
         $this->collector = $collector;
     }
 
+    /**
+     * @param $type
+     * @param $options
+     * @return Widget
+     */
     public function getWidget($type, $options)
     {
         return $this->createWidget($type, $options);
     }
 
     /**
-     * @param $options
+     * @param string $type
+     * @param array $options
      * @return Widget
-     * @throws TypeMissingException
      */
-    private function createWidget($type, $options)
+    private function createWidget(string $type, array $options): Widget
     {
-        if(!isset($options['type'])) {
-            throw new TypeMissingException(sprintf('No type was given to create "%s"', Action::class));
-        }
-
         /** @var WidgetTypeInterface $type */
-        $type = $this->collector->getType($options['type']);
+        $type = $this->collector->getType($type);
         unset($options['type']);
         $action = new Widget($type, $options);
         return $action;

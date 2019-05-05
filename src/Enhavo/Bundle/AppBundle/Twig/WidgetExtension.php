@@ -24,14 +24,14 @@ class WidgetExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('widget', array($this, 'render'), array('is_safe' => array('html')))
+            new TwigFunction('widget', array($this, 'renderWidget'), array('is_safe' => array('html')))
         );
     }
 
-    public function renderWidget($type, $options, $resource = null)
+    public function renderWidget($type, $options, $resource = null): string
     {
         $widget = $this->widgetManager->getWidget($type, $options);
         $data = $widget->createViewData($resource);
-        $this->container->get('templating')->render($widget->getTemplate(), $data);
+        return $this->container->get('templating')->render($widget->getTemplate(), $data);
     }
 }

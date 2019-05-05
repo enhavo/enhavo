@@ -1,4 +1,4 @@
-{{ widget('article_stream', [
-    limit: data.limit
-    limit: data.limit
-]) }}
+{{ widget('article_stream', {
+    limit: data.limit,
+    pagination: data.pagination
+}) }}

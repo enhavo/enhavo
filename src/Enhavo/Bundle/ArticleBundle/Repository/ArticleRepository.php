@@ -16,13 +16,13 @@ class ArticleRepository extends ContentRepository
     {
         $query = $this->createQueryBuilder('a');
 
-        if($categories > 0) {
+        if(count($categories) > 0) {
             $query->innerJoin('a.categories', 'c');
             $query->andWhere('c.id IN (:categories)');
             $query->setParameter('categories', $categories);
         }
 
-        if($tags > 0) {
+        if(count($tags) > 0) {
             $query->innerJoin('a.tags', 't');
             $query->andWhere('t.id IN (:tags)');
             $query->setParameter('tags', $tags);
