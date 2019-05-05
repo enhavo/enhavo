@@ -9,16 +9,12 @@ services:
             - '@service_container'
             - 'Widget'
 
-    enhavo_app.twig.widget_renderer:
-        class: Enhavo\Bundle\AppBundle\Widget\WidgetRendererExtension
+    enhavo_app.widget.widget_manager:
+        class: Enhavo\Bundle\AppBundle\Widget\WidgetManager
         arguments:
             - '@enhavo_app.widget_collector'
-        tags:
-            - { name: twig.extension }
 
-    Enhavo\Bundle\AppBundle\Widget\Widget\TemplateWidget:
+    Enhavo\Bundle\AppBundle\Widget\Type\TemplateType:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.widget, alias: template }
