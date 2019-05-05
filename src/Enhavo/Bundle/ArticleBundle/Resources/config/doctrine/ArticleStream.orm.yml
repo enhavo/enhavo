@@ -1,0 +1,5 @@
+Enhavo\Bundle\ArticleBundle\Entity\ArticleStream:
+    type: entity
+    table: enhavo_article_article_stream
+
+    lifecycleCallbacks: {  }

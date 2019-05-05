@@ -1,7 +1,7 @@
-<div class="category-widget">
+<div class="article-stream-widget">
     <h3>Categories</h3>
     <ul class="columns">
-        {% for category in categories %}
+        {% for articles in ar %}
             <li><a href="{{ path('enhavo_article_theme_category', {slug: category.slug}) }}">{{ category }}</a></li>
         {% endfor %}
     </ul>
