@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta charset="utf-8" />
+        <meta name="description" content="{% block metadescription %}{% endblock %}" />
+        <meta name="og:url" content="{{ app.request.uri }}" />
+        <meta name="og:title" content="{% block ogtitle %}{% endblock %}" />
+        <meta name="og:description" content="{% block ogdescription %}{% endblock %}" />
+        <meta name="og:image" content="{% block ogimage %}/img/logo-share.jpg{% endblock %}" />
+
+        <title>{% block pageTitle %}Enhavo Demo{% endblock %}</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodemo/css/alegreyaSansWebfont.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoassets/css/enhavo-iconfont.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodemo/css/bootstrap.min.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavoslider/css/items.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodownload/css/items.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavogrid/css/items.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodemo/css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodemo/css/items.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/enhavodemo/css/slick.css') }}">
+
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
+        <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
+    </head>
+    <body class="{% block bodyclass %}{% endblock %}" lang="{{ app.request.locale }}">
+        <div id="ipad-overlay">
+            <div class="ipad-view">
+                <iframe src="{{ path('enhavo_demo_article_mobile', {id: 0}) }}" frameborder="0" data-tablet-view></iframe>
+                <div class="close-btn" data-close-tabletview><i class="icon-cross"></i></div>
+            </div>
+        </div>
+        <header>
+            {% block header %}
+                {% block hero %}{% endblock %}
+                {% block main_navigation %}
+                    {{ widget_render('page', { template: 'EnhavoDemoBundle:Theme:Widget/main-navigation.html.twig' }) }}
+                {% endblock %}
+            {% endblock %}
+        </header>
+
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq05BnATUjF7WNO5UtKlhLtgmY7KH5o8w" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/jquery.waypoints.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/slick.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/class/Base.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavodemo/js/main.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavocontact/js/ContactForm.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavogrid/js/Grid.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavosearch/js/Search.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/bundles/enhavonewsletter/js/SubscribeForm.js') }}" type="text/javascript"></script>
+        {% block javascripts %}{% endblock %}
+
+    </body>
+</html>

@@ -1,1 +1,1 @@
-# EnhavoTaxonomyBundle
+# EnhavoDemoBundle

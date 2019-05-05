@@ -1,0 +1,14 @@
+{% extends 'EnhavoDemoBundle:Theme:base.html.twig' %}
+
+{% block bodyclass %}light{% endblock %}
+
+{% block main %}
+    <div class="clearfix page-wrap about-container">
+        <section>
+            <article class="container">
+                <h2>{{ page.title }}</h2>
+                {{ grid_render(page.grid) }}
+            </article>
+        </section>
+    </div>
+{% endblock %}

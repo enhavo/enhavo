@@ -1,0 +1,30 @@
+enhavo_media:
+    formats:
+        articleThumbnail:
+            type: image
+            width: 350
+            height: 350
+        sliderHero:
+            type: image
+            width: 1300
+            height: 600
+        magazine_cover:
+            type: image
+            width: 1300
+            height: 600
+
+enhavo_contact:
+    forms:
+        contact:
+            recipient: '%env(string:MAILER_TO)%'
+            from: '%env(string:MAILER_FROM)%'
+            sender_name: '%env(string:MAILER_NAME)%'
+
+enhavo_search:
+    search:
+        indexing: true
+    index:
+        classes:
+            - Enhavo\Bundle\PageBundle\Entity\Page
+            - Enhavo\Bundle\ArticleBundle\Entity\Article
+            - Enhavo\Bundle\ShopBundle\Entity\Product

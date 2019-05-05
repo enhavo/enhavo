@@ -29,11 +29,6 @@ enhavo_app:
             type: redirect
         media_library:
             type: media_library
-        magazine:
-            type: base
-            route: enhavo_project_magazine_index
-            icon: local_library
-            label: Magazine
         sidebar:
             type: sidebar
         template:

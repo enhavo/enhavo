@@ -46,7 +46,7 @@ return [
     Enhavo\Bundle\CommentBundle\EnhavoCommentBundle::class => ['all' => true],
     Enhavo\Bundle\RoutingBundle\EnhavoRoutingBundle::class => ['all' => true],
     Enhavo\Bundle\NavigationBundle\EnhavoNavigationBundle::class => ['all' => true],
-    Enhavo\Bundle\ProjectBundle\EnhavoProjectBundle::class => ['all' => true],
+    Enhavo\Bundle\DemoBundle\EnhavoDemoBundle::class => ['all' => true],
     Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle::class => ['all' => true],
     Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
