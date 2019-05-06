@@ -185,9 +185,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 
 .action-row {margin-bottom:45px;}
 .action-row [class*=col-]:first-child {padding-left:0;}
-.autocomplete-create-button {display:inline-block;margin-top:3px;@extend .btn;
-    &:before {font-family:"enhavo-iconfont";content:"\e96c";}
-}
 .btnsmall {display: inline-block;padding:5px 0 0 0;text-align:center;vertical-align: middle;cursor:pointer;font-size: 28px;color:$primaryColor;font-weight:700;border:none;}
 .btnsmall[class*="fa-"] {font-weight:normal;}
 .btn {border: 0;font-weight: 700;background: none;color:$primaryColor;padding: 0;text-align: left;white-space: nowrap;@include transition(all 200ms);

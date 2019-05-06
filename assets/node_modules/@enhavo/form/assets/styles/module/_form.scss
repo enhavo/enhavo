@@ -1,6 +1,10 @@
 .form-row {
     + .form-row {margin-top:15px;}
 
+    .autocomplete-create-button {display:inline-block;margin-top:3px;@extend %btn-secondary;padding:1px 9px 1px 5px;
+        &:before {font-family:"enhavo-icons";content:"\f10d";position:relative;top:2px;margin-right:2px;}
+    }
+
     .entity-tree-children {margin:0 0 10px 0;padding-left:30px;position:relative;
         &:before {content:"";position:absolute;top: 6px;left: 10px;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;width: 8px;height: 8px;}
         .entity-tree-children {
@@ -30,7 +34,7 @@
             &:hover {
                 .help-text {display:block;}
             }
-            .help-text {position:absolute;top:0;left:calc(100% - 1px);min-width:200px;padding:6px;box-shadow:1px 1px 3px rgba(#000,0.16);border-radius:3px;background:rgba(#fff,0.95);display:none;z-index:2;}
+            .help-text {position:absolute;top:-3px;left:calc(100% + 1px);min-width:260px;padding:6px;box-shadow:1px 1px 3px rgba(#000,0.16);border-radius:3px;background:rgba(#fff,0.95);display:none;z-index:2;line-height:1.25em;}
         }
     }
     .wysiwyg-container {

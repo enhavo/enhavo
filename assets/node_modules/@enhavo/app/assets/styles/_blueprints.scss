@@ -1,8 +1,12 @@
+@import "~compass-mixins/lib/_animate.scss";
 %btn {border-radius:3px;font-family:inherit;margin:0;padding:4px 15px;border:0;cursor:pointer;}
 %btn-secondary {@extend %btn;background:$grey5;color:#000;
   &:hover {background:$color1;color:#fff;}
 }
 %btn-primary {@extend %btn;background:$color1;color:#fff;
+  &:hover {background:$color1b;color:#fff;}
+}
+%btn-delete {@extend %btn;background:$color1;color:#fff;
   &:hover {background:$color1b;color:#fff;}
 }
 
@@ -38,4 +42,5 @@
   &:hover {background:$color2;}
 }
 
-%textfield {background:$grey1;border:1px solid $grey1;border-radius:10px;box-shadow:none;padding:4px 14px;font-size:1rem;line-height:28px;@include placeholder {color:$grey3;}}
+%textfield {background:$grey1;border:1px solid $grey1;border-radius:3px;margin:0;box-shadow:none;padding:6px 9px;font-size:1rem;line-height:1.6em;width:100%;font-family:inherit;}
+%textarea {@extend %textfield;resize:none;min-height:8em;}
