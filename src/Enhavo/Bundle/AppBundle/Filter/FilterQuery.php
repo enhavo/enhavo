@@ -12,6 +12,11 @@ namespace Enhavo\Bundle\AppBundle\Filter;
 class FilterQuery
 {
     const OPERATOR_EQUALS = '=';
+    const OPERATOR_GREATER = '>';
+    const OPERATOR_LESS = '<';
+    const OPERATOR_GREATER_EQUAL = '>=';
+    const OPERATOR_LESS_EQUAL = '<=';
+    const OPERATOR_NOT = '!=';
     const OPERATOR_LIKE = 'like';
     const OPERATOR_START_LIKE = 'start_like';
     const OPERATOR_END_LIKE = 'end_like';
