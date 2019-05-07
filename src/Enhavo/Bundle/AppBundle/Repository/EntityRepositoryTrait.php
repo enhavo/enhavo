@@ -125,6 +125,16 @@ trait EntityRepositoryTrait
                     return 'is';
                 }
                 return '=';
+            case(FilterQuery::OPERATOR_GREATER):
+                return '>';
+            case(FilterQuery::OPERATOR_GREATER_EQUAL):
+                return '>=';
+            case(FilterQuery::OPERATOR_LESS):
+                return '<';
+            case(FilterQuery::OPERATOR_LESS_EQUAL):
+                return '<=';
+            case(FilterQuery::OPERATOR_NOT):
+                return '!=';
             case(FilterQuery::OPERATOR_LIKE):
             case(FilterQuery::OPERATOR_START_LIKE):
             case(FilterQuery::OPERATOR_END_LIKE):
