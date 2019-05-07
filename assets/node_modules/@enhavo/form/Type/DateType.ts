@@ -8,10 +8,10 @@ export default class DateType extends FormType
     {
         $.datetimepicker.setLocale('de');
         this.$element.datetimepicker({
-            format:'d.m.Y H:i',
+            format:'d.m.Y',
             timepicker: false,
             dayOfWeekStart: 1,
             scrollInput: false
-        });
+        }).attr('readonly', true);
     }
 }

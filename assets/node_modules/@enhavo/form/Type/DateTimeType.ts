@@ -11,6 +11,6 @@ export default class DateTimeType extends FormType
             format:'d.m.Y H:i',
             dayOfWeekStart: 1,
             scrollInput: false
-        });
+        }).attr('readonly', true);
     }
 }
