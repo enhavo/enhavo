@@ -1,6 +1,7 @@
 <template>
     <div class="image-cropper-stage">
-        <img v-once ref="cropper-stage" />
+        <loading-screen v-if="loading"></loading-screen>
+        <img v-once ref="cropper-stage" v-show="!loading" />
         <form method="POST" v-show="false">
             <input type="hidden" name="height" v-bind:value="data.height">
             <input type="hidden" name="width" v-bind:value="data.width">
@@ -30,11 +31,11 @@ export default class ImageCropperStageComponent extends Vue
 
     cropper: Cropper;
 
-    loading = true;
+    loading = false;
 
     mounted()
     {
-        application.getView().loading();
+        this.loading = true;
         let element = <HTMLElement>this.$refs['cropper-stage'];
         element.src = this.data.url;
         this.cropper = new Cropper(element, {
@@ -45,7 +46,8 @@ export default class ImageCropperStageComponent extends Vue
                 if(this.data.getData()) {
                     this.cropper.setData(this.data.getData());
                 }
-                application.getView().loaded();
+                this.loading = false;
+                this.$forceUpdate();
             }
         });
 
@@ -73,7 +75,7 @@ export default class ImageCropperStageComponent extends Vue
 </script>
 
 <style lang="css" scoped>
-    .image-cropper-stage { height: 100% }
+    .image-cropper-stage { height: 100%;position:relative; }
 </style>
 
 
