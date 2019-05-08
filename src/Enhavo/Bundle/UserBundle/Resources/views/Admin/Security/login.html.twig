@@ -15,18 +15,21 @@
                 <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6 col-xs-12">
-                <input type="checkbox" id="_remember" name="_remember">
-                <span></span>
-                <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <input type="checkbox" id="_remember" name="_remember">
+                    <span></span>
+                    <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
+                </div>
+                <div class="col-sm-6 col-xs-12 reset">
+                    <a href="{{ path('enhavo_user_reset_password_reset') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
+                </div>
             </div>
-            <div class="col-sm-6 col-xs-12 reset">
-                <a href="{{ path('enhavo_user_reset_password_reset') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
-            </div>
-        </div>
         <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% if redirect_uri %}
+            <input type="hidden" name="_target_path" value="{{ redirect_uri }}" />
+        {% endif %}
     </form>
 {% endblock %}
 

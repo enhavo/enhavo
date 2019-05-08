@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SecurityCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
@@ -73,6 +74,10 @@ class EnhavoAppBundle extends Bundle
 
         $container->addCompilerPass(
             new TranslationDumperPass()
+        );
+
+        $container->addCompilerPass(
+            new SecurityCompilerPass()
         );
     }
 }
