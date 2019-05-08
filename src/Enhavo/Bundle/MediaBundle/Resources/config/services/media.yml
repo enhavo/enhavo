@@ -1,6 +1,5 @@
 parameters:
     enhavo_media.twig_extension.class: Enhavo\Bundle\MediaBundle\Twig\MediaExtension
-    enhavo_media.lifecycle_listener.class: Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener
     enhavo_media.controller.file.class: Enhavo\Bundle\MediaBundle\Controller\FileController
     enhavo_media.controller.upload.class: Enhavo\Bundle\MediaBundle\Controller\UploadController
     enhavo_media.file_storage_path: '%kernel.project_dir%/var/media'
@@ -62,6 +61,7 @@ services:
             - '@enhavo_media.filter_collector'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_media.provider'
+            - '@Enhavo\Bundle\MediaBundle\Cache\HttpCache'
 
     enhavo_media.media.image_cropper_manager:
         class: Enhavo\Bundle\MediaBundle\Media\ImageCropperManager
@@ -89,10 +89,9 @@ services:
         tags:
             - { name: twig.extension }
 
-    enhavo_media.listener.lifecycle_listener:
-        class: '%enhavo_media.lifecycle_listener.class%'
+    Enhavo\Bundle\MediaBundle\EventListener\LifecycleListener:
         arguments:
-             - '@service_container'
+            - '@enhavo_media.media.media_manager'
         tags:
             - { name: kernel.event_listener, event: enhavo_app.create, method: collectGarbage }
             - { name: kernel.event_listener, event: enhavo_app.update, method: collectGarbage }
@@ -208,9 +207,9 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    Enhavo\Bundle\MediaBundle\Block\LibraryBlock:
-        public: true
+    Enhavo\Bundle\MediaBundle\Cache\HttpCache:
+        arguments:
+            - '@request_stack'
         calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.block, alias: 'media_library' }
+            - [setResolver, ['@enhavo_media.media.url_resolver']]
+

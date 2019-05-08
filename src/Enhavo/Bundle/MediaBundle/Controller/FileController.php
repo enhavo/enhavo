@@ -113,6 +113,7 @@ class FileController extends ResourceController
         $response->setContent($content);
         $response->headers->set('Content-Type', $formatFile->getMimeType());
         $response->headers->set('Content-Length', strlen($content));
+        $response->headers->set('Cache-Control', 'max-age=600, public');
         return $response;
     }
 

@@ -2,25 +2,22 @@
 
 namespace Enhavo\Bundle\MediaBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Enhavo\Bundle\MediaBundle\Entity\File;
-use Symfony\Component\DependencyInjection\Container;
+use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 
 class LifecycleListener
 {
     /**
-     * @var Container
+     * @var MediaManager
      */
-    protected $container;
+    protected $mediaManager;
 
-    public function __construct(Container $container)
+    public function __construct(MediaManager $mediaManager)
     {
-        $this->container = $container;
+        $this->mediaManager = $mediaManager;
     }
 
     public function collectGarbage()
     {
-        $mediaManager = $this->container->get('enhavo_media.media.media_manager');
-        $mediaManager->collectGarbage();
+        $this->mediaManager->collectGarbage();
     }
 }
