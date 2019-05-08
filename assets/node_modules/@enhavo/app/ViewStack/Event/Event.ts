@@ -1,7 +1,5 @@
 import * as uuidv4 from "uuid/v4";
 import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
-import ApplicationBag from "@enhavo/app/ApplicationBag";
-import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 
 export default class Event
 {
@@ -21,14 +19,21 @@ export default class Event
 
     resolve(data: object = {})
     {
-        let application = <ApplicationInterface>ApplicationBag.getApplication();
-        application.getEventDispatcher().dispatch(new ResolveEvent(this.uuid, data));
+        this.dispatcher.dispatch(new ResolveEvent(this.uuid, data));
     }
 
     reject(data: object = {})
     {
-        let application = <ApplicationInterface>ApplicationBag.getApplication();
-        application.getEventDispatcher().dispatch(new RejectEvent(this.uuid, data));
+        this.dispatcher.dispatch(new RejectEvent(this.uuid, data));
+    }
+
+    serialize(): string
+    {
+        let dispatcher = this.dispatcher;
+        this.dispatcher = null;
+        let data = JSON.stringify(this);
+        this.dispatcher = dispatcher;
+        return data
     }
 }
 

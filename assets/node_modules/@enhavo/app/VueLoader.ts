@@ -39,7 +39,7 @@ export default class VueLoader
             },
             mounted: () => {
                 if(loadOnMount) {
-                    this.dispatcher.dispatch(new LoadedEvent(this.view.getId()));
+                    this.view.ready();
                 }
             }
         });

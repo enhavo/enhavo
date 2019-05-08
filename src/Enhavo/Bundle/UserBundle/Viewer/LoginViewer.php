@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\UserBundle\Viewer;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractViewer;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginViewer extends AbstractViewer
@@ -20,9 +21,15 @@ class LoginViewer extends AbstractViewer
      */
     private $flashBag;
 
-    public function __construct(FlashBag $flashBag)
+    /**
+     * @var Session
+     */
+    private $session;
+
+    public function __construct(FlashBag $flashBag, Session $session)
     {
         $this->flashBag = $flashBag;
+        $this->session = $session;
     }
 
     public function getType()
@@ -39,14 +46,26 @@ class LoginViewer extends AbstractViewer
 
         $templateVars = $view->getTemplateData();
         $templateVars['data'] = [
-            'messages' => $this->getFlashMessages()
+            'messages' => $this->getFlashMessages(),
+            'view' => [
+                'id' => $this->getViewId()
+            ]
         ];
 
         $templateVars = array_merge($templateVars, $options['parameters']);
-
+        $templateVars['redirect_uri'] = $this->session->get('enhavo.redirect_uri');
         $view->setTemplateData($templateVars);
 
         return $view;
+    }
+
+    private function getViewId()
+    {
+        $viewId = $this->session->get('enhavo.view_id');
+        if($viewId) {
+            return $viewId;
+        }
+        return 0;
     }
 
     private function getFlashMessages()

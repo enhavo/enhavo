@@ -6,7 +6,7 @@ use Enhavo\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class SuperAdminVoter  implements VoterInterface
+class SuperAdminVoter implements VoterInterface
 {
     public function supportsAttribute($attribute)
     {

@@ -122,6 +122,7 @@ class ResourceController extends BaseController
      */
     public function createAction(Request $request): Response
     {
+        $this->updateRequest($request);
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
@@ -166,6 +167,7 @@ class ResourceController extends BaseController
      */
     public function updateAction(Request $request): Response
     {
+        $this->updateRequest($request);
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
         $this->isGrantedOr403($configuration, ResourceActions::UPDATE);
         $resource = $this->findOr404($configuration);
@@ -414,5 +416,18 @@ class ResourceController extends BaseController
             $permission
         );
         return strtoupper($role);
+    }
+
+    private function updateRequest(Request $request)
+    {
+        if($request->getSession() && $request->getSession()->has('enhavo.post')) {
+            $postData = $request->getSession()->get('enhavo.post');
+            if($postData) {
+                foreach($postData as $key => $value) {
+                    $request->query->set($key, $value);
+                }
+                $request->getSession()->remove('enhavo.post');
+            }
+        }
     }
 }

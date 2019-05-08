@@ -53,7 +53,6 @@ export default class ApplicationComponent extends Vue
         });
 
         $(document).on('desktop', ()  => {
-            console.log('hello');
             this.iframeClass = 'desktop';
             this.$forceUpdate();
         });

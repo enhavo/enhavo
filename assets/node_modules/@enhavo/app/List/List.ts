@@ -72,6 +72,8 @@ export default class List
             if(resource.children) {
                 this.createItemsData(resource.children);
             }
+            resource.parentProperty = this.data.parentProperty;
+            resource.positionProperty = this.data.positionProperty;
         }
         return resources;
     }

@@ -11,4 +11,6 @@ export default class ListData
     public editView: number = null;
     public token: string;
     public dragging: boolean = false;
+    public positionProperty: string;
+    public parentProperty: string;
 }

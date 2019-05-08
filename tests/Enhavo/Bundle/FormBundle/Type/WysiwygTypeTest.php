@@ -7,20 +7,9 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class WysiwygTypeTest extends TypeTestCase
 {
-    private $config;
-
-    protected function setUp()
-    {
-        $this->config = $this->getMockBuilder('Enhavo\Bundle\FormBundle\Form\Config\WysiwygConfig')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->config->method('getData')->willReturn('config');
-        parent::setUp();
-    }
-
     protected function getExtensions()
     {
-        $type = new WysiwygType($this->config);
+        $type = new WysiwygType();
         return array(
             new PreloadedExtension(array($type), array()),
         );
@@ -32,9 +21,6 @@ class WysiwygTypeTest extends TypeTestCase
 
         $form->setData('old text');
         $form->submit('new text');
-        $view = $form->createView();
-
         $this->assertEquals('new text', $form->getData());
-        $this->assertEquals('config', $view->vars['config']);
     }
 }

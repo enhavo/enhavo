@@ -3,6 +3,7 @@ services:
         public: true
         arguments:
             - '@session.flash_bag'
+            - '@session'
         calls:
             - [setContainer, ['@service_container']]
         tags:

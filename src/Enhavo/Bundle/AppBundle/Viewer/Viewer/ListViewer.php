@@ -29,7 +29,6 @@ class ListViewer extends AppViewer
      */
     private $columnManager;
 
-
     public function __construct(
         RequestConfigurationFactory $requestConfigurationFactory,
         ViewerUtil $util,
@@ -62,12 +61,15 @@ class ListViewer extends AppViewer
             $this->getViewerOption('data_route', $requestConfiguration)
         ]);
 
+
         $dataConfiguration = $this->util->createConfigurationFromRoute($dataRoute);
         if($dataConfiguration == null) {
             throw new \Exception(sprintf('Data route "%s" for list viewer is not defined', $dataRoute));
         }
         $columnData = $this->getViewerOption('columns', $dataConfiguration);
-        
+        $positionProperty = $this->getViewerOption('position_property', $dataConfiguration);
+        $parentProperty = $this->getViewerOption('parent_property', $dataConfiguration);
+
         $updateRoute = $this->mergeConfig([
             $this->geUpdateRoute($options),
             $options['update_route'],
@@ -83,7 +85,9 @@ class ListViewer extends AppViewer
             'dataRoute' => $dataRoute,
             'updateRoute' => $updateRoute,
             'columns' => $this->columnManager->createColumnsViewData($columnData),
-            'items' => []
+            'items' => [],
+            'positionProperty' => $positionProperty,
+            'parentProperty' => $parentProperty,
         ];
 
         $parameters->set('data', [
