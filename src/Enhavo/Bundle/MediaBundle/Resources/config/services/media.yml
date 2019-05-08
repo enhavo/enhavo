@@ -61,7 +61,7 @@ services:
             - '@enhavo_media.filter_collector'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_media.provider'
-            - '@Enhavo\Bundle\MediaBundle\Cache\HttpCache'
+            - '@enhavo_media.cache'
 
     enhavo_media.media.image_cropper_manager:
         class: Enhavo\Bundle\MediaBundle\Media\ImageCropperManager
@@ -212,4 +212,6 @@ services:
             - '@request_stack'
         calls:
             - [setResolver, ['@enhavo_media.media.url_resolver']]
+
+    Enhavo\Bundle\MediaBundle\Cache\NoCache:
 

@@ -29,6 +29,8 @@ class EnhavoMediaExtension extends AbstractResourceExtension
         $container->setParameter('enhavo_media.filter.video_image', $config['filter']['video_image']);
         $container->setParameter('enhavo_media.filter.image_compression', $config['filter']['image_compression']);
         $container->setParameter('enhavo_media.form', $config['form']);
+        $container->setParameter('enhavo_media.cache_control.max_age', $config['cache_control']['max_age']);
+        $container->setParameter('enhavo_media.cache_control.class', $config['cache_control']['class']);
 
         $configFiles = array(
             'services/command.yml',
