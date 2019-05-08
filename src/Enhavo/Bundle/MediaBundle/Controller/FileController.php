@@ -113,6 +113,12 @@ class FileController extends ResourceController
         $response->setContent($content);
         $response->headers->set('Content-Type', $formatFile->getMimeType());
         $response->headers->set('Content-Length', strlen($content));
+
+        $maxAge = $this->getParameter('enhavo_media.cache_control.max_age');
+        if($maxAge) {
+            $response->headers->set('Cache-Control', sprintf('max-age=%s, public', $maxAge));
+        }
+
         return $response;
     }
 

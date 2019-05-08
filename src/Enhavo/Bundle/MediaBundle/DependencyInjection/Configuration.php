@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
+use Enhavo\Bundle\MediaBundle\Cache\NoCache;
 use Enhavo\Bundle\MediaBundle\Controller\FileController;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -62,6 +63,16 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('pngquant_path')->defaultValue('pngquant')->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+
+            ->children()
+                ->arrayNode('cache_control')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('max_age')->defaultValue(null)->end()
+                        ->scalarNode('class')->defaultValue(NoCache::class)->end()
                     ->end()
                 ->end()
             ->end()

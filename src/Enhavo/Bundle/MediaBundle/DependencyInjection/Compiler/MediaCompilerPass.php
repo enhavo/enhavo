@@ -17,6 +17,7 @@ class MediaCompilerPass implements CompilerPassInterface
     {
         $this->createProviderAlias($container);
         $this->createStorageAlias($container);
+        $this->createCacheAlias($container);
     }
 
     public function createProviderAlias(ContainerBuilder $container)
@@ -29,5 +30,11 @@ class MediaCompilerPass implements CompilerPassInterface
     {
         $providerServiceName = $container->getParameter('enhavo_media.storage');
         $container->setAlias('enhavo_media.storage', $providerServiceName);
+    }
+
+    public function createCacheAlias(ContainerBuilder $container)
+    {
+        $providerServiceName = $container->getParameter('enhavo_media.cache_control.class');
+        $container->setAlias('enhavo_media.cache', $providerServiceName);
     }
 }

@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\MediaBundle\Cache\CacheInterface;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
@@ -58,6 +59,11 @@ class FormatManager
      */
     private $provider;
 
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
+
     public function __construct(
         $formats,
         StorageInterface $storage,
@@ -65,7 +71,8 @@ class FormatManager
         FormatFactory $formatFactory,
         TypeCollector $filterCollector,
         EntityManagerInterface $em,
-        ProviderInterface $provider
+        ProviderInterface $provider,
+        CacheInterface $cache
     )
     {
         $this->formats = $formats;
@@ -75,6 +82,7 @@ class FormatManager
         $this->filterCollector = $filterCollector;
         $this->em = $em;
         $this->provider = $provider;
+        $this->cache = $cache;
     }
 
     private function createFormat(FileInterface $file, $format, $parameters = [])
@@ -92,7 +100,7 @@ class FormatManager
         ]);
 
         if($fileFormat === null) {
-            return $this->createFormat($file, $format, $parameters);
+            $fileFormat = $this->createFormat($file, $format, $parameters);
         }
         return $fileFormat;
     }
@@ -141,6 +149,7 @@ class FormatManager
         $this->em->persist($fileFormat);
         $this->em->flush();
         $this->storage->saveFile($fileFormat);
+        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
 
         return $fileFormat;
     }
