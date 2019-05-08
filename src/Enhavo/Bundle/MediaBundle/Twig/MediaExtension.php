@@ -14,8 +14,10 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MediaExtension extends \Twig_Extension
+class MediaExtension extends AbstractExtension
 {
     /**
      * @var EngineInterface
@@ -47,13 +49,13 @@ class MediaExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('media_url', array($this, 'getMediaUrl')),
-            new \Twig_SimpleFunction('media_filename', array($this, 'getMediaFilename')),
-            new \Twig_SimpleFunction('media_parameter', array($this, 'getMediaParameter')),
-            new \Twig_SimpleFunction('media_extension', array($this, 'getMediaExtension')),
-            new \Twig_SimpleFunction('media_is_picture', array($this, 'isPicture')),
-            new \Twig_SimpleFunction('media_render_item', array($this, 'renderItem'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('media_meta', array($this, 'getMeta')),
+            new TwigFunction('media_url', array($this, 'getMediaUrl')),
+            new TwigFunction('media_filename', array($this, 'getMediaFilename')),
+            new TwigFunction('media_parameter', array($this, 'getMediaParameter')),
+            new TwigFunction('media_extension', array($this, 'getMediaExtension')),
+            new TwigFunction('media_is_picture', array($this, 'isPicture')),
+            new TwigFunction('media_render_item', array($this, 'renderItem'), array('is_safe' => array('html'))),
+            new TwigFunction('media_meta', array($this, 'getMeta')),
         );
     }
 
@@ -108,8 +110,8 @@ class MediaExtension extends \Twig_Extension
 
     public function getMeta($file = null)
     {
-        if($file instanceof FileInterface) {
-            $data =  [
+        if ($file instanceof FileInterface) {
+            $data = [
                 'id' => $file->getId(),
                 'mimeType' => $file->getMimeType(),
                 'extension' => $file->getExtension(),
@@ -121,10 +123,5 @@ class MediaExtension extends \Twig_Extension
             return $data;
         }
         return null;
-    }
-
-    public function getName()
-    {
-        return 'enhavo_media_media_extension';
     }
 } 
