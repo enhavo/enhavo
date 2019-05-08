@@ -12,23 +12,34 @@ import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
+import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
+import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
+import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
+import {type} from "os";
 
 export default class View
 {
-    private readonly id: number|null;
     private data: ViewData;
     private eventDispatcher: EventDispatcher;
 
-    constructor(data: ViewData, eventDispatcher: EventDispatcher)
+    constructor(data: ViewData = null)
     {
-        this.eventDispatcher = eventDispatcher;
-        this.id = this.getIdFromUrl();
+        if(data === null) {
+            data = new ViewData;
+        }
         _.extend(data, new ViewData);
         this.data = data;
-        this.data.id = this.id;
+
+        if(this.data.id == null) {
+            this.data.id = this.getIdFromUrl();
+        }
+
+        if(typeof this.data.id == 'string') {
+            this.data.id = parseInt(this.data.id);
+        }
 
         window.addEventListener('click', () => {
-            this.eventDispatcher.dispatch(new ClickEvent(this.id));
+            this.eventDispatcher.dispatch(new ClickEvent(this.getId()));
         });
     }
 
@@ -44,12 +55,12 @@ export default class View
 
     getId(): number|null
     {
-        return this.id;
+        return this.data.id;
     }
 
     isRoot()
     {
-        return this.id == 0;
+        return this.data.id == 0;
     }
 
     confirm(confirm: Confirm)
@@ -139,5 +150,30 @@ export default class View
             }
             callback(value);
         });
+    }
+
+    public addDefaultCloseListener(): void
+    {
+        this.eventDispatcher.on('close', (event: CloseEvent) => {
+            if(this.getId() === event.id) {
+                event.resolve();
+                this.eventDispatcher.dispatch(new RemoveEvent(this.getId()));
+            }
+        });
+    }
+
+    public ready()
+    {
+        this.eventDispatcher.dispatch(new LoadedEvent(this.getId()));
+    }
+
+    public exit()
+    {
+        this.eventDispatcher.dispatch(new LoadingEvent(this.getId()));
+    }
+
+    public setEventDispatcher(dispatcher: EventDispatcher)
+    {
+        this.eventDispatcher = dispatcher;
     }
 }

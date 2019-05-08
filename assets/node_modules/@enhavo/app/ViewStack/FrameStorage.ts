@@ -14,7 +14,7 @@ export default class FrameStorage
                         console.dir(event);
                         console.groupEnd()
                     }
-                    let data = 'view_stack_event|'+JSON.stringify(event);
+                    let data = 'view_stack_event|' + event.serialize();
                     frame.element.contentWindow.postMessage(data, '*');
                 }
             }
