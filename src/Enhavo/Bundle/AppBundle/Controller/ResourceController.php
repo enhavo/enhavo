@@ -420,7 +420,7 @@ class ResourceController extends BaseController
 
     private function updateRequest(Request $request)
     {
-        if($request->getSession()->has('enhavo.post')) {
+        if($request->getSession() && $request->getSession()->has('enhavo.post')) {
             $postData = $request->getSession()->get('enhavo.post');
             if($postData) {
                 foreach($postData as $key => $value) {
