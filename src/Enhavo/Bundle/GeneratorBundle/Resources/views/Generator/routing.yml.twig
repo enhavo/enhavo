@@ -96,7 +96,7 @@
     path: /{{ app_url }}/{{ resource_url }}/resource/preview
     methods: [POST]
     defaults:
-        _controller:{{ app }}.controller.{{ resource }}:previewResourceAction
+        _controller: {{ app }}.controller.{{ resource }}:previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
