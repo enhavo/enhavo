@@ -9,7 +9,6 @@ import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 export default class DynamicFormLoader extends AbstractLoader
 {
     private application: ApplicationInterface;
-    private editView: number;
     private currentType: AutoCompleteType;
 
     constructor(application: ApplicationInterface) {
@@ -21,18 +20,15 @@ export default class DynamicFormLoader extends AbstractLoader
     private initListener()
     {
         this.application.getEventDispatcher().on('updated', (event: UpdatedEvent) => {
-            if(event.id == this.editView && event.data != null) {
-                this.currentType.addElement(event.data)
-            }
+            this.application.getEventDispatcher().dispatch(new LoadDataEvent('autocomplete_loader'))
+                .then((data: DataStorageEntry) => {
+                    if(data) {
+                        if(event.id == data.value && event.data != null) {
+                            this.currentType.addElement(event.data)
+                        }
+                    }
+                });
         });
-
-        this.application.getEventDispatcher().dispatch(new LoadDataEvent('autocomplete_loader'))
-            .then((data: DataStorageEntry) => {
-                this.editView = null;
-                if(data) {
-                    this.editView = data.value;
-                }
-            });
     }
 
     public insert(element: HTMLElement): void
@@ -41,6 +37,7 @@ export default class DynamicFormLoader extends AbstractLoader
         config.create = (type: AutoCompleteType, url: string) => {
             let label = this.application.getTranslator().trans('enhavo_app.create');
             this.application.getView().open(label, url, 'autocomplete_loader');
+            this.currentType = type;
         };
 
         let elements = this.findElements(element, '[data-auto-complete-entity]');
