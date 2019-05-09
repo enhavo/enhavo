@@ -4,6 +4,7 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
+import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 
 export default class DeleteApp extends AbstractViewApp
 {
@@ -14,6 +15,6 @@ export default class DeleteApp extends AbstractViewApp
     }
 
     close() {
-        this.eventDispatcher.dispatch(new CloseEvent(this.view.getId()));
+        this.eventDispatcher.dispatch(new RemoveEvent(this.view.getId()));
     }
 }

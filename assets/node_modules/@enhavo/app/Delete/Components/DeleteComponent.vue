@@ -1,9 +1,9 @@
 <template>
     <div class="app-view">
         <view-view v-bind:data="view"></view-view>
-        <div>
-            {{ message }}
-            <button @click="close">{{ button }}</button>
+        <div class="inline-confirm-dialogue">
+            <div class="message">{{ message }}</div>
+            <button @click="close" class="btn">{{ button }}</button>
         </div>
     </div>
 </template>
@@ -31,7 +31,7 @@ export default class AppView extends Vue {
     view: ViewData;
 
     close() {
-        application.getApp().close();
+        application.getApp().close()
     }
 
     get message() {
