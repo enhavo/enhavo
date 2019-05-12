@@ -2,12 +2,9 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy
-            Enhavo\Bundle\TaxonomyBundle\Model\CollectionInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Collection
-
+            Enhavo\Bundle\TaxonomyBundle\Model\TermInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Term
 
 enhavo_app:
-    form_themes:
-        - 'EnhavoTaxonomyBundle:Form:fields.html.twig'
     roles:
         enhavo_taxonomy_taxonomy_index:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX

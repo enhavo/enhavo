@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
-use Enhavo\Bundle\TaxonomyBundle\Model\CollectionInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
@@ -15,27 +15,27 @@ class Term implements TaxonomyInterface, ResourceInterface
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
-     * @var CollectionInterface
+     * @var Taxonomy
      */
-    protected $taxonomy;
+    private $taxonomy;
 
     /**
      * @var integer
      */
-    protected $position;
+    private $position;
 
     /**
      * @var string
      */
-    protected $slug;
+    private $slug;
 
     /**
      * @var string
@@ -71,12 +71,11 @@ class Term implements TaxonomyInterface, ResourceInterface
      * Set name
      *
      * @param string $name
-     * @return Taxonomy
+     * @return Term
      */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -88,29 +87,6 @@ class Term implements TaxonomyInterface, ResourceInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set collection
-     *
-     * @param CollectionInterface $collection
-     * @return Taxonomy
-     */
-    public function setCollection(CollectionInterface $collection = null)
-    {
-        $this->collection = $collection;
-
-        return $this;
-    }
-
-    /**
-     * Get collection
-     *
-     * @return CollectionInterface
-     */
-    public function getCollection()
-    {
-        return $this->collection;
     }
 
     public function __toString()
@@ -125,8 +101,7 @@ class Term implements TaxonomyInterface, ResourceInterface
      * Set text
      *
      * @param string $text
-     *
-     * @return Taxonomy
+     * @return Term
      */
     public function setText($text)
     {
@@ -148,12 +123,11 @@ class Term implements TaxonomyInterface, ResourceInterface
     /**
      * @param FileInterface|null $picture
      *
-     * @return Taxonomy
+     * @return Term
      */
     public function setPicture(FileInterface $picture = null)
     {
         $this->picture = $picture;
-
         return $this;
     }
 

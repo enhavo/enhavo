@@ -11,8 +11,6 @@ enhavo_app:
             type: article
         page:
             type: page
-        category:
-            type: category
         slider:
             type: slider
         newsletter:

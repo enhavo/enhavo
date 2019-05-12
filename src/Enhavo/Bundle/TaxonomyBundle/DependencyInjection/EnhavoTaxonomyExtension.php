@@ -24,7 +24,7 @@ class EnhavoTaxonomyExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_taxonomy', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_taxonomy.default_collection', $config['default_collection']);
+        $container->setParameter('enhavo_taxonomy.taxonomies', isset($config['taxonomies']) ? $config['taxonomies'] : []);
 
         $configFiles = array(
             'services.yml',

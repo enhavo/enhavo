@@ -9,13 +9,12 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Model;
 
 
-interface CollectionInterface
+interface TaxonomyInterface
 {
     /**
      * Set name
      *
      * @param string $name
-     * @return CollectionInterface
      */
     public function setName($name);
 

@@ -21,7 +21,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     manyToMany:
         categories:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\CategoryBundle\Model\CategoryInterface
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
             joinTable:
                 name: article_category
                 joinColumns:

@@ -1,0 +1,92 @@
+enhavo_taxonomy_term_index:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/term/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:indexAction
+        _sylius:
+            viewer:
+                title: taxonomy.label.term
+                translationDomain: EnhavoTaxonomyBundle
+
+enhavo_taxonomy_taxonomy_create:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:createAction
+        _sylius:
+            redirect: enhavo_taxonomy_taxonomy_update
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+                tabs:
+                    main:
+                        label: taxonomy.label.taxonomy
+                        template: EnhavoTaxonomyBundle:Tab:taxonomy.html.twig
+
+enhavo_taxonomy_taxonomy_update:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+
+enhavo_taxonomy_taxonomy_table:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/table
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:tableAction
+        _sylius:
+            repository:
+                method: findByCollection
+                arguments:
+                    criteria:
+                        collection: '%enhavo_taxonomy.default_collection%'
+                        paging: true
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+                width: 12
+                columns:
+                    name:
+                        type: text
+                        width: 12
+                        label: taxonomy.label.name
+                        property: name
+
+enhavo_taxonomy_taxonomy_delete:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:deleteAction
+
+enhavo_taxonomy_taxonomy_batch:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_taxonomy_taxonomy_preview:
+    options:
+        expose: true
+    path: /enhavo/taxonomy/taxonomy/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:previewAction

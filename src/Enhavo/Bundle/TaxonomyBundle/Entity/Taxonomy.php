@@ -8,17 +8,17 @@ class Taxonomy implements ResourceInterface
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $terms;
+    private $terms;
 
     /**
      * Constructor

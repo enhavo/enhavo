@@ -19,22 +19,22 @@ class Article extends Content
     /**
      * @var FileInterface
      */
-    protected $picture;
+    private $picture;
 
     /**
      * @var string
      */
-    protected $teaser;
+    private $teaser;
 
     /**
      * @var GridInterface
      */
-    protected $grid;
+    private $grid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    protected $categories;
+    private $categories;
 
     /**
      * Constructor
