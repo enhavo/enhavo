@@ -156,7 +156,7 @@ export default class View
         this.eventDispatcher.on('close', (event: CloseEvent) => {
             if(this.getId() === event.id) {
                 event.resolve();
-                this.eventDispatcher.dispatch(new RemoveEvent(this.getId()));
+                this.eventDispatcher.dispatch(new RemoveEvent(this.getId(), event.saveState));
             }
         });
     }

@@ -16,7 +16,9 @@ export default class StateManager
         this.eventDispatcher = eventDispatcher;
 
         this.eventDispatcher.on('save-state', () => {
-            this.saveState();
+            window.setTimeout(() => {
+                this.saveState();
+            }, 50);
         });
 
         window.onpopstate = (event) => {

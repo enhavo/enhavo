@@ -25,7 +25,6 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import CloseEvent from  '@enhavo/app/ViewStack/Event/CloseEvent';
-    import SaveStateEvent from  '@enhavo/app/ViewStack/Event/SaveStateEvent';
     import ArrangeEvent from  '@enhavo/app/ViewStack/Event/ArrangeEvent';
     import OverlayContainer from "@enhavo/app/Main/Components/OverlayContainer.vue";
     import LoadingScreen from "@enhavo/app/Main/Components/LoadingScreen.vue";

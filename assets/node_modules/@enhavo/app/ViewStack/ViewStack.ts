@@ -110,7 +110,7 @@ export default class ViewStack
             if(view) {
                 // if view was not loaded, it can't receive close events, so we trigger remove event as fallback
                 if(!view.loaded) {
-                    this.dispatcher.dispatch(new RemoveEvent(view.id));
+                    this.dispatcher.dispatch(new RemoveEvent(view.id, event.saveState));
                     event.resolve();
                 }
             }
@@ -147,7 +147,7 @@ export default class ViewStack
             let parallels = [];
             for(let view of this.getViews()) {
                 parallels.push((callback: (err: any) => void) => {
-                    this.dispatcher.dispatch(new CloseEvent(view.id))
+                    this.dispatcher.dispatch(new CloseEvent(view.id, false))
                         .then(() => {
                             callback(null);
                         })
@@ -160,6 +160,7 @@ export default class ViewStack
             async.parallel(parallels, (err) => {
                 if(err) {
                     event.reject();
+                    this.dispatcher.dispatch(new SaveStateEvent());
                 } else {
                     event.resolve();
                     this.dispatcher.dispatch(new ClearedEvent(event.uuid));
