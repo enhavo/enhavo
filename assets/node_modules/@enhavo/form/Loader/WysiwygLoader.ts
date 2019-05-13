@@ -20,6 +20,14 @@ export default class WysiwygLoader extends AbstractLoader
         }
     }
 
+    public remove(element: HTMLElement): void
+    {
+        let elements = this.findElements(element, '[data-wysiwyg]');
+        for(element of elements) {
+            tinymce.EditorManager.remove('#'+element.id);
+        }
+    }
+
     public drop(element: HTMLElement): void
     {
         let elements = this.findElements(element, '[data-wysiwyg]');

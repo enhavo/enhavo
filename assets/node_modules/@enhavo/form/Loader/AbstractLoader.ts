@@ -37,4 +37,9 @@ export default abstract class AbstractLoader implements LoaderInterface
     {
 
     }
+
+    remove(element: HTMLElement): void
+    {
+
+    }
 }

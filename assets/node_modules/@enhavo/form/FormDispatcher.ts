@@ -40,4 +40,11 @@ export default class FormDispatcher
         $('body').trigger('formRelease', event);
         return event;
     }
+
+    public static dispatchRemove(element: HTMLElement)
+    {
+        let event = new FormElementEvent(element);
+        $('body').trigger('formRemove', event);
+        return event;
+    }
 }
