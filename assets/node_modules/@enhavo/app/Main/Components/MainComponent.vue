@@ -48,6 +48,7 @@ export default class App extends Vue {
     toogleMenu()
     {
         this.menu.open = !this.menu.open;
+        this.menu.customChange = true;
     }
 }
 </script>

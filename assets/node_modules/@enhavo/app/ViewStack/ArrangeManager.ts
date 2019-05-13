@@ -8,7 +8,6 @@ export default class ArrangeManager
     private views: ViewInterface[];
     private data: ViewStackData;
     private menuManager: MenuManager;
-    private minifiedMenu: boolean = false;
 
     constructor(views: ViewInterface[], data: ViewStackData, menuManager: MenuManager)
     {
@@ -28,12 +27,15 @@ export default class ArrangeManager
 
     arrange()
     {
-        setTimeout(() => {
+        window.setTimeout(() => {
             let views = this.getViews();
 
-            if(!this.minifiedMenu && this.views.length >= 2) {
-                this.menuManager.close();
-                this.minifiedMenu = true;
+            if(!this.menuManager.isCustomChange()) {
+                if(views.length >= 2) {
+                    this.menuManager.close();
+                } else if(views.length == 0) {
+                    this.menuManager.open();
+                }
             }
 
             this.setSize(views);

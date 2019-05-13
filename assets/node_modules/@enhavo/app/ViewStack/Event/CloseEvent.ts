@@ -3,12 +3,12 @@ import Event from "./Event"
 export default class CloseEvent extends Event
 {
     id: number;
-    options: object;
+    saveState: boolean = true;
 
-    constructor(id: number, options: object = {})
+    constructor(id: number, saveState: boolean = true)
     {
         super('close');
         this.id = id;
-        this.options = options;
+        this.saveState = saveState;
     }
 }

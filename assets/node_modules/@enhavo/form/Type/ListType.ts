@@ -51,6 +51,7 @@ export default class ListType extends FormType
 
     public removeItem(item: ListItem)
     {
+        FormDispatcher.dispatchRemove(item.getElement());
         let index = this.items.indexOf(item);
         this.items.splice(index, index);
     }

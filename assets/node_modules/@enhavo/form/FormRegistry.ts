@@ -3,6 +3,7 @@ import FormInsertEvent from "@enhavo/form/Event/FormInsertEvent";
 import LoaderInterface from "@enhavo/form/LoaderInterface";
 import CheckboxLoader from "@enhavo/form/Loader/CheckboxLoader";
 import FormReleaseEvent from "@enhavo/form/Event/FormReleaseEvent";
+import FormElementEvent from "@enhavo/form/Event/FormElementEvent";
 import SelectLoader from "@enhavo/form/Loader/SelectLoader";
 import DateTimeLoader from "@enhavo/form/Loader/DateTimeLoader";
 import DateLoader from "@enhavo/form/Loader/DateLoader";
@@ -41,6 +42,10 @@ export default class FormRegistry
 
         FormListener.onDrop((event: FormReleaseEvent) => {
             loader.drop(event.getElement());
+        });
+
+        FormListener.onRemove((event: FormElementEvent) => {
+            loader.remove(event.getElement());
         });
 
         return this;

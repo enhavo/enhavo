@@ -22,7 +22,7 @@
         &.primary {@extend %modal-btn-primary;}
       }
     }
-    .message {margin-bottom:30px;color:$grey5;font-size:2rem;}
+    .message {margin-bottom:30px;color:$grey5;font-size:2rem;line-height:2.5rem}
   }
   .preview-view {border:1px solid $grey3;box-shadow:3px 3px 11px rgba(#ccc, 0.4);height:calc(100vh - 80px);margin:10px;
     &.tablet {width:768px;height:1024px;}

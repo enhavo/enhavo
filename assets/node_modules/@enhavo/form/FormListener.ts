@@ -40,6 +40,13 @@ export default class FormListener
             callback(formEvent);
         });
     }
+
+    public static onRemove(callback: (event: FormElementEvent) => void)
+    {
+        $('body').on('formRemove', function(event, formEvent: FormElementEvent) {
+            callback(formEvent);
+        });
+    }
 }
 
 

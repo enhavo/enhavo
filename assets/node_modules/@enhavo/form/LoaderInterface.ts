@@ -7,4 +7,6 @@ export default interface LoaderInterface
     drop(element: HTMLElement): void;
 
     move(element: HTMLElement): void;
+
+    remove(element: HTMLElement): void;
 }

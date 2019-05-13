@@ -49,7 +49,7 @@ export default class ImageCropperApp extends AbstractViewApp implements AppInter
                 } else {
                     event.resolve();
                     let id = this.view.getId();
-                    this.eventDispatcher.dispatch(new RemoveEvent(id));
+                    this.eventDispatcher.dispatch(new RemoveEvent(id, event.saveState));
                 }
             }
         });

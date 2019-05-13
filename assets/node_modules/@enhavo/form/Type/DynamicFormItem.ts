@@ -88,6 +88,7 @@ export default class DynamicFormItem
 
     public remove()
     {
+        FormDispatcher.dispatchRemove(this.getElement());
         this.dynamicForm.removeItem(this);
     }
 }
