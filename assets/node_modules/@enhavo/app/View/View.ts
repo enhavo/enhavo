@@ -15,7 +15,6 @@ import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
 import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
-import {type} from "os";
 
 export default class View
 {

@@ -55,12 +55,7 @@
         }
 
         close() {
-            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id)).then(() => {
-                // delay so the view stack has time to remove the view
-                window.setTimeout(() => {
-                    application.getEventDispatcher().dispatch(new SaveStateEvent());
-                }, 10)
-            });
+            application.getEventDispatcher().dispatch(new CloseEvent(this.data.id));
         }
 
         minimize() {

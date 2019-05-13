@@ -2,7 +2,6 @@ import DataLoader from '@enhavo/app/DataLoader';
 import AbstractViewApp from "@enhavo/app/AbstractViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
-import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 

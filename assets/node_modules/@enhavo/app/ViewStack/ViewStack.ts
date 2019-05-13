@@ -15,6 +15,7 @@ import LoadingEvent from "@enhavo/app/ViewStack/Event/LoadingEvent";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as _ from 'lodash';
 import * as async from 'async';
+import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 
 export default class ViewStack
 {
@@ -72,6 +73,10 @@ export default class ViewStack
             let view = this.get(event.id);
             if(view) {
                 this.remove(view);
+            }
+
+            if(event.saveState) {
+                this.dispatcher.dispatch(new SaveStateEvent());
             }
         });
     }
