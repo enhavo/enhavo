@@ -32,6 +32,11 @@ export default class MenuManager
         this.data.open = false;
     }
 
+    isCustomChange()
+    {
+        return this.data.customChange;
+    }
+
     clearSelections() {
         for(let item of this.data.items) {
             item.unselect();

@@ -12,10 +12,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ViewComponent from '@enhavo/app/ViewStack/Components/ViewComponent.vue'
 import ViewStackData from '@enhavo/app/ViewStack/ViewStackData'
-import ArrangeEvent from '@enhavo/app/ViewStack/Event/ArrangeEvent'
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import * as $ from "jquery"
 let application = <ApplicationInterface>ApplicationBag.getApplication();
 
 Vue.component('view-component', ViewComponent);
@@ -28,7 +26,6 @@ export default class ViewStack extends Vue {
 
     mounted() {
         this.data.width = this.getWidth();
-        application.getEventDispatcher().dispatch(new ArrangeEvent());
     }
 
     private getWidth(): number

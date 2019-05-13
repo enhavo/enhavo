@@ -46,7 +46,7 @@
         @Prop()
         data: ViewInterface;
 
-        created() {
+        mounted() {
             application.getEventDispatcher().dispatch(new ArrangeEvent());
         }
 
