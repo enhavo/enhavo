@@ -78,6 +78,8 @@ export default class ViewStack
             if(event.saveState) {
                 this.dispatcher.dispatch(new SaveStateEvent());
             }
+
+            event.resolve();
         });
     }
 
@@ -106,8 +108,9 @@ export default class ViewStack
         this.dispatcher.on('close', (event: CloseEvent) => {
             let view = this.get(event.id);
             if(view) {
-                let closed = this.close(view);
-                if(closed) {
+                // if view was not loaded, it can't receive close events, so we trigger remove event as fallback
+                if(!view.loaded) {
+                    this.dispatcher.dispatch(new RemoveEvent(view.id));
                     event.resolve();
                 }
             }
@@ -138,22 +141,19 @@ export default class ViewStack
             if(this.getViews().length == 0) {
                 event.resolve();
                 this.dispatcher.dispatch(new ClearedEvent(event.uuid));
+                return;
             }
 
             let parallels = [];
             for(let view of this.getViews()) {
                 parallels.push((callback: (err: any) => void) => {
-                    if(this.close(view)) {
-                        callback(null);
-                    } else {
-                        this.dispatcher.dispatch(new CloseEvent(view.id))
-                            .then(() => {
-                                callback(null);
-                            })
-                            .catch(() => {
-                                callback('reject');
-                            })
-                    }
+                    this.dispatcher.dispatch(new CloseEvent(view.id))
+                        .then(() => {
+                            callback(null);
+                        })
+                        .catch(() => {
+                            callback('reject');
+                        })
                 });
             }
 
@@ -161,9 +161,6 @@ export default class ViewStack
                 if(err) {
                     event.reject();
                 } else {
-                    for(let view of this.getViews()) {
-                        this.remove(view);
-                    }
                     event.resolve();
                     this.dispatcher.dispatch(new ClearedEvent(event.uuid));
                 }
@@ -221,15 +218,6 @@ export default class ViewStack
     private push(view: ViewInterface)
     {
         this.views.push(view);
-    }
-
-    close(view: ViewInterface): boolean
-    {
-        if(!view.loaded) {
-            this.remove(view);
-            return true;
-        }
-        return false;
     }
 
     hasViews()
