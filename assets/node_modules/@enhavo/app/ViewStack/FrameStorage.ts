@@ -19,12 +19,6 @@ export default class FrameStorage
                 }
             }
         });
-
-        dispatcher.on('removed', (event: RemovedEvent) => {
-            let frame = this.getFrame(event.id);
-            let index = this.frames.indexOf(frame);
-            this.frames.splice(index, 1);
-        });
     }
 
     add(id: number, element: HTMLIFrameElement)
@@ -45,6 +39,14 @@ export default class FrameStorage
     has(id: number): boolean
     {
         return this.getFrame(id) != null;
+    }
+
+    remove(id: number) {
+        let frame = this.getFrame(id);
+        if(frame) {
+            let index = this.frames.indexOf(frame);
+            this.frames.splice(index, 1);
+        }
     }
 
     private getFrame(id: number): Frame|null

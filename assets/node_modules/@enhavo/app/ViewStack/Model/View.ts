@@ -3,8 +3,8 @@ import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default class View implements ViewInterface
 {
-    id: number;
-    label: string;
+    id: number = null;
+    label: string = '';
     children: ViewInterface[] = [];
     parent: ViewInterface = null;
     component: string;
