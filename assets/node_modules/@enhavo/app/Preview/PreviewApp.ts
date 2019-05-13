@@ -18,6 +18,9 @@ export default class PreviewApp extends AbstractViewApp implements AppInterface
 
         eventDispatcher.on('data', (event: DataEvent) => {
             if(event.id == view.getId()) {
+                if (!event.data || event.data.length === 0) {
+                    return;
+                }
                 this.data.inputs = event.data;
                 // delay submit so vue has time to update form
                 setTimeout(() => {
