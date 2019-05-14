@@ -51,4 +51,20 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
             $file->setExtension($extension);
         }
     }
+
+    protected function getImageFormat(ContentInterface $content)
+    {
+        $type = exif_imagetype($content->getFilePath());
+        switch ($type) {
+            case(IMAGETYPE_GIF):
+                return 'gif';
+            case(IMAGETYPE_JPEG):
+                return 'jpg';
+            case(IMAGETYPE_PNG):
+                return 'png';
+            case(IMAGETYPE_BMP):
+                return 'bmp';
+        }
+        return null;
+    }
 }
