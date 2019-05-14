@@ -83,16 +83,9 @@ class ImageFilter extends AbstractFilter
     {
         $format = $setting->getSetting('format');
         if($format === null) {
-            $type = exif_imagetype($content->getFilePath());
-            switch ($type) {
-                case(IMAGETYPE_GIF):
-                    return 'gif';
-                case(IMAGETYPE_JPEG):
-                    return 'jpg';
-                case(IMAGETYPE_PNG):
-                    return 'png';
-                case(IMAGETYPE_BMP):
-                    return 'bmp';
+            $format = $this->getImageFormat($content);
+            if($format) {
+                return $format;
             }
             return 'png';
         }
