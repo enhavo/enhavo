@@ -88,6 +88,17 @@ class FormatManager
         }
     }
 
+    /**
+     * @param $type
+     * @return FilterInterface
+     */
+    public function getFilter($type)
+    {
+        /** @var FilterInterface $filter */
+        $filter = $this->filterCollector->getType($type);
+        return $filter;
+    }
+
     private function applyFilter(FormatInterface $fileFormat, $parameters)
     {
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
@@ -97,8 +108,7 @@ class FormatManager
         $fileFormat->setContent($newFileFormat->getContent());
 
         foreach($settings as $setting) {
-            /** @var FilterInterface $filter */
-            $filter = $this->filterCollector->getType($setting->getType());
+            $filter = $this->getFilter($setting->getType());
             $filter->apply($fileFormat, $setting);
         }
 
@@ -134,7 +144,7 @@ class FormatManager
      * @return FilterSetting[]
      * @throws \Exception
      */
-    private function getFormatSettings($format, $parameters = [])
+    public function getFormatSettings($format, $parameters = [])
     {
         if(!is_array($this->formats) || !isset($this->formats[$format])) {
             throw new \Exception(sprintf('format "%s" not available', $format));
