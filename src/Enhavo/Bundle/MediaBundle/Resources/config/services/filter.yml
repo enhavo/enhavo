@@ -39,3 +39,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_compression }
+
+    Enhavo\Bundle\MediaBundle\Filter\Filter\ImageBlurFilter:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: image_blur }
