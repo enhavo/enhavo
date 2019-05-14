@@ -46,3 +46,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_blur }
+
+    Enhavo\Bundle\MediaBundle\Filter\Filter\ImageZoomFilter:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: image_zoom }
