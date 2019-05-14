@@ -53,3 +53,12 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_zoom }
+
+    Enhavo\Bundle\MediaBundle\Filter\Filter\ParentFilter:
+        public: true
+        arguments:
+            - '@enhavo_media.media.format_manager'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.media_filter, alias: parent }
