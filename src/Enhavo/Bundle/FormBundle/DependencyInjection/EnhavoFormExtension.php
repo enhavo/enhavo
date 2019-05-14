@@ -22,6 +22,8 @@ class EnhavoFormExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('enhavo_form.wysiwyg.editor_entrypoint', $config['wysiwyg']['editor_entrypoint']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/form.yml');
         $loader->load('services/serializer.yml');

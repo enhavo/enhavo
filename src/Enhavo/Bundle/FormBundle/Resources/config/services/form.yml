@@ -32,6 +32,9 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\FormBundle\Form\Type\WysiwygType:
+        arguments:
+            - '%enhavo_form.wysiwyg.editor_entrypoint%'
+            - '@webpack_encore.entrypoint_lookup[_default]'
         tags:
             - { name: form.type }
 
