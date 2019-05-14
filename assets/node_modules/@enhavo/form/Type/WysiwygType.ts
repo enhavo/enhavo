@@ -23,6 +23,7 @@ export default class WysiwygType extends FormType
             this.$element.attr('id', id);
         }
 
+        let editorCss = this.$element.data('editor-css');
         let options = {
             target: this.$element.get(0),
             menubar: false,
@@ -40,7 +41,7 @@ export default class WysiwygType extends FormType
             plugins: ["advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table paste autoresize"],
-            content_css: '/build/enhavo/editor.css',
+            content_css: editorCss,
             min_height: 160,
             autoresize_on_init: false,
             autoresize_max_height: 1000,

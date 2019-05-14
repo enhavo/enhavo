@@ -61,7 +61,7 @@
 
 {% block enhavo_wysiwyg_widget %}
     <div class="wysiwyg-container">
-        <textarea data-wysiwyg="{{ config }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
+        <textarea data-editor-css="{{ editor_css|json_encode|e }}" data-wysiwyg="{{ config }}" {{ block('widget_attributes') }}>{{ value }}</textarea>
     </div>
 {% endblock %}
 
