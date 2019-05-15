@@ -41,24 +41,24 @@ services:
             - { name: enhavo.media_filter, alias: image_compression }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageBlurFilter:
-        public: true
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageBlurFilter
         calls:
-            - [setContainer, ['@service_container']]
+           - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.media_filter, alias: image_blur }
+           - { name: enhavo.media_filter, alias: image_blur }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageZoomFilter:
-        public: true
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ImageZoomFilter
         calls:
-            - [setContainer, ['@service_container']]
+           - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.media_filter, alias: image_zoom }
+           - { name: enhavo.media_filter, alias: image_zoom }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ParentFilter:
-        public: true
+        class: Enhavo\Bundle\MediaBundle\Filter\Filter\ParentFilter
         arguments:
-            - '@enhavo_media.media.format_manager'
+           - '@enhavo_media.media.format_manager'
         calls:
-            - [setContainer, ['@service_container']]
+           - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.media_filter, alias: parent }
+           - { name: enhavo.media_filter, alias: parent }
