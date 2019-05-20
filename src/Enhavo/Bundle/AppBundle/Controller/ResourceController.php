@@ -184,6 +184,12 @@ class ResourceController extends BaseController
                 $this->appEventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->eventDispatcher->dispatchPostEvent(ResourceActions::UPDATE, $configuration, $resource);
                 $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
+                $route = $request->get('_route');
+                return $this->redirectToRoute($route, [
+                    'id' => $resource->getId(),
+                    'tab' => $request->get('tab'),
+                    'view_id' => $request->get('view_id')
+                ]);
             } else {
                 $this->addFlash('error', $this->get('translator')->trans('form.message.error', [], 'EnhavoAppBundle'));
                 foreach($form->getErrors() as $error) {
