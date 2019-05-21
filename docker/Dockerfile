@@ -28,6 +28,7 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     git clone https://github.com/vishnubob/wait-for-it.git /var/startup/wait-for-it
 
 COPY etc/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY etc/php/docker-php-enhavo.ini /usr/local/etc/php/conf.d/docker-php-enhavo.ini
 COPY startup/startup.bash /var/startup/startup.bash
 COPY startup/docker-php-enrypoint.sh /usr/local/bin/docker-php-entrypoint
 COPY startup/install.bash /var/startup/install.bash
