@@ -25,7 +25,9 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     docker-php-ext-install mbstring && \
     php composer.phar install --prefer-dist && \
     mkdir /var/startup && \
-    git clone https://github.com/vishnubob/wait-for-it.git /var/startup/wait-for-it
+    git clone https://github.com/vishnubob/wait-for-it.git /var/startup/wait-for-it && \
+    yarn install && \
+    yarn encore prod
 
 COPY etc/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY etc/php/docker-php-enhavo.ini /usr/local/etc/php/conf.d/docker-php-enhavo.ini
@@ -36,6 +38,9 @@ COPY startup/install.bash /var/startup/install.bash
 RUN chmod 755 /usr/local/bin/docker-php-entrypoint && \
     chmod 755 /var/startup/startup.bash && \
     chmod 755 /var/startup/install.bash && \
+    chmod 755 /var/www/var && \
+    bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json && \
+    bin/console cache:warmup && \
     chown -R www-data:www-data /var/www/var
 
 EXPOSE 80
