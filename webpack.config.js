@@ -13,6 +13,7 @@ Encore
   .enableSassLoader()
   .enableTypeScriptLoader()
   .enableBuildNotifications()
+  .enableVersioning(Encore.isProduction())
 
   .addEntry('enhavo/main', './assets/enhavo/main')
   .addEntry('enhavo/index', './assets/enhavo/index')
