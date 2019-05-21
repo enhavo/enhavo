@@ -2,8 +2,13 @@ FROM php:7.2-apache
 
 WORKDIR /var/www/
 
-RUN apt-get update && \
-    apt-get -y install git && \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    apt-get install -y yarn && \
+    apt-get install -y git && \
     a2enmod rewrite && \
     rm -r -f /var/www/html && \
     git clone https://github.com/enhavo/enhavo.git /var/www && \
@@ -29,6 +34,7 @@ COPY startup/install.bash /var/startup/install.bash
 
 RUN chmod 755 /usr/local/bin/docker-php-entrypoint && \
     chmod 755 /var/startup/startup.bash && \
-    chmod 755 /var/startup/install.bash
+    chmod 755 /var/startup/install.bash && \
+    chown -R www-data:www-data /var/www/var
 
 EXPOSE 80
