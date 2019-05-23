@@ -1,4 +1,5 @@
 webpack_encore:
-    # The path where Encore is building the assets.
-    # This should match Encore.setOutputPath() in webpack.config.js.
-    output_path: '%kernel.project_dir%/public/build'
+    output_path: '%kernel.project_dir%/public/build/enhavo'
+    builds:
+        enhavo: '%kernel.project_dir%/public/build/enhavo'
+        theme: '%kernel.project_dir%/public/build/theme'

@@ -8,14 +8,14 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <script id="data" type="application/json">{{ data|json_encode|raw }}</script>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('enhavo/view') }}
+        {{ encore_entry_link_tags('enhavo/view', null, 'enhavo') }}
     {% endblock %}
 </head>
 
 <body>
 <div id="app"></div>
 {% block javascripts %}
-    {{ encore_entry_script_tags('enhavo/view') }}
+    {{ encore_entry_script_tags('enhavo/view', null, 'enhavo') }}
 {% endblock %}
 </body>
 </html>
