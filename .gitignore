@@ -2,6 +2,7 @@
 .settings
 .build
 /public/bundles/
+!/public/build/.gitkeep
 /public/build/*
 /public/videos
 /public/js

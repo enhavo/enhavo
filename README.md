@@ -1,4 +1,4 @@
-![alt text](assets/images/enhavo.svg "enhavo")
+![alt text](assets/enhavo/images/enhavo.svg "enhavo")
 <br/>
 <br/>
 

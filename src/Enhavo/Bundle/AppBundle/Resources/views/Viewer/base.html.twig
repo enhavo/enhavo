@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% block stylesheets %}
         {% for stylesheet in stylesheets %}
-            {{ encore_entry_link_tags(stylesheet) }}
+            {{ encore_entry_link_tags(stylesheet, null, 'enhavo') }}
         {% endfor %}
     {% endblock %}
 </head>
@@ -27,7 +27,7 @@
     {% endif %}
     {% block javascripts %}
         {% for javascript in javascripts %}
-            {{ encore_entry_script_tags(javascript) }}
+            {{ encore_entry_script_tags(javascript, null, 'enhavo') }}
         {% endfor %}
     {% endblock %}
 </body>
