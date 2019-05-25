@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TaxonomyBundle\Maker;
 
+use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -19,12 +20,23 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class MakeTaxonomy extends AbstractMaker
 {
+    /**
+     * @var MakerUtil
+     */
+    private $util;
+
+    public function __construct(MakerUtil $util)
+    {
+        $this->util = $util;
+    }
+
     public function configureCommand(Command $command, InputConfiguration $inputConf)
     {
         $command
             ->setDescription('Creates a new taxonomy')
             ->addArgument('bundle', InputArgument::REQUIRED, 'What is the Bundle name?')
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of your taxonomy?')
+            ->addArgument('hierarchy', InputArgument::OPTIONAL, 'Is the taxonomy hierarchy? [yes/no]', 'no')
         ;
     }
 
@@ -40,22 +52,24 @@ class MakeTaxonomy extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
+        $bundleName = $input->getArgument('bundle');
+        $name = $input->getArgument('name');
+        $path = $this->util->getBundlePath($bundleName);
+        $hierarchy = $input->getArgument('hierarchy');
+
         $generator->generateFile(
-            '',
-            'EnhavoTaxonomyBundle:Maker/routing.yml.twig',
+            sprintf('%sResources/config/routing/admin/%s.yaml', $path, $this->util->camelCaseToSnakeCase($name)),
+            $this->util->getRealpath('@EnhavoTaxonomyBundle/Resources/skeleton/routing.tpl.php'),
             [
-                'app' => $input->getArgument('app'),
-                'resource' => $input->getArgument('resource'),
-                'sorting' => $input->getArgument('sorting'),
-                'app_url' => $this->getUrl($input->getArgument('app')),
-                'resource_url' => $this->getUrl($input->getArgument('resource'))
+                'bundle_name' => $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundleName)),
+                'name' => $this->util->camelCaseToSnakeCase($name),
+                'bundle_url' => $this->util->getBundleUrl($bundleName),
+                'name_url' => $this->util->getResourceUrl($name),
+                'hierarchy' => $hierarchy,
             ]
         );
-        $io->text('Next: Open your new controller class and add some pages!');
-    }
+        $generator->writeChanges();
 
-    private function getUrl($input)
-    {
-        return preg_replace('/_/', '/', $input);
+        $io->writeln(sprintf('Add the %s.yaml to your routing', $this->util->camelCaseToSnakeCase($name)));
     }
 }

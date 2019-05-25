@@ -73,13 +73,50 @@ class MakerUtil
         return $camelCasedName;
     }
 
-    public function getBundleNameWithoutPostfix(BundleInterface $bundle)
+    public function getBundleNameWithoutPostfix($bundle)
     {
-        $result = $bundle->getName();
+        $result = $bundle;
+        if($bundle instanceof BundleInterface) {
+            $result = $bundle->getName();
+        }
+
         $matches = [];
         if (preg_match('/^(.+)Bundle$/', $result, $matches)) {
             $result = $matches[1];
         }
         return $result;
+    }
+
+    public function getBundlePath($bundleName)
+    {
+        return $this->kernel->locateResource(sprintf('@%s', $bundleName));
+    }
+
+    public function existsBundle($bundleName)
+    {
+
+    }
+
+    public function getBundleUrl($bundleName)
+    {
+        return preg_replace('/_/', '/', $this->camelCaseToSnakeCase($this->getBundleNameWithoutPostfix($bundleName)));
+    }
+
+    public function getBundleNamespace($bundleName)
+    {
+        $bundle = $this->kernel->getBundle($bundleName);
+        $class = get_class($bundle);
+        $namespace = substr($class, 0, strlen($class) -  strlen($bundleName) - 1);
+        return $namespace;
+    }
+
+    public function getResourceUrl($name)
+    {
+        return $this->camelCaseToSnakeCase($name, true);
+    }
+
+    public function getRealpath($path)
+    {
+        return $this->kernel->locateResource($path);
     }
 }
