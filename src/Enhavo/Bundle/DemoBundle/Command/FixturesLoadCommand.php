@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Command;
+namespace Enhavo\Bundle\DemoBundle\Command;
 
-use Enhavo\Bundle\InstallerBundle\Fixtures\DemoFixtures;
+use Enhavo\Bundle\DemoBundle\Fixtures\DemoFixtures;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

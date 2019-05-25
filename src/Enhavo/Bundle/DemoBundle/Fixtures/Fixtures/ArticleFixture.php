@@ -7,11 +7,11 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Fixtures\Fixtures;
+namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\CategoryBundle\Entity\Category;
-use Enhavo\Bundle\InstallerBundle\Fixtures\AbstractFixture;
+use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
 
 class ArticleFixture extends AbstractFixture
 {

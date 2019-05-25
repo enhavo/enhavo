@@ -7,9 +7,9 @@
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Fixtures\Fixtures;
+namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
-use Enhavo\Bundle\InstallerBundle\Fixtures\AbstractFixture;
+use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
 use Enhavo\Bundle\SliderBundle\Entity\Slide;
 use Enhavo\Bundle\SliderBundle\Entity\Slider;
 

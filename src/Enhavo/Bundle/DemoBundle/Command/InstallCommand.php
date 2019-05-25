@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Command;
+namespace Enhavo\Bundle\DemoBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Repository\EntityRepositoryInterface;

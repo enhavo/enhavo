@@ -7,7 +7,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Fixtures;
+namespace Enhavo\Bundle\DemoBundle\Fixtures;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;

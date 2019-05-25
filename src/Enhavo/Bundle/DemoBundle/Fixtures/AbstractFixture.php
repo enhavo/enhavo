@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Fixtures;
+namespace Enhavo\Bundle\DemoBundle\Fixtures;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;

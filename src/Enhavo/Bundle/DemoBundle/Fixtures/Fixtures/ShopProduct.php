@@ -6,9 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\InstallerBundle\Fixtures\Fixtures;
+namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
-use Enhavo\Bundle\InstallerBundle\Fixtures\AbstractFixture;
+use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
 use Enhavo\Bundle\ShopBundle\Entity\Product;
 
 class ShopProduct extends AbstractFixture
