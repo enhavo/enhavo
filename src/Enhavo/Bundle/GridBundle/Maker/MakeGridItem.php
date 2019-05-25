@@ -2,13 +2,22 @@
 
 namespace Enhavo\Bundle\GeneratorBundle\Generator;
 
+use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\GeneratorInterface;
+use Symfony\Bundle\MakerBundle\ConsoleStyle;
+use Symfony\Bundle\MakerBundle\DependencyBuilder;
+use Symfony\Bundle\MakerBundle\Generator;
+use Symfony\Bundle\MakerBundle\InputConfiguration;
+use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class GridItemGenerator
+class MakeGridItem extends AbstractMaker
 {
     /**
      * @var KernelInterface
@@ -21,19 +30,49 @@ class GridItemGenerator
     private $output;
 
     /**
-     * @var GeneratorInterface
+     * @var MakerUtil
      */
-    private $generator;
+    private $util;
 
-    public function __construct(KernelInterface $kernel, Generator $generator)
+    public function __construct(KernelInterface $kernel, MakerUtil $util)
     {
         $this->kernel = $kernel;
-        $this->generator = $generator;
+        $this->util = $util;
         $this->output = new ConsoleOutput();
     }
 
-    public function generateGridItem($bundleName, $itemName)
+    public static function getCommandName(): string
     {
+        return 'make:enhavo:grid-item';
+    }
+
+    public function configureCommand(Command $command, InputConfiguration $inputConfig)
+    {
+        $command
+        ->setDescription('Creates a new grid item')
+        ->addArgument(
+            'bundleName',
+            InputArgument::REQUIRED,
+            'What is the name of the bundle the new item should be added to?'
+        )
+        ->addArgument(
+            'itemName',
+            InputArgument::REQUIRED,
+            'What is the name the item should have?'
+        );
+
+    }
+
+    public function configureDependencies(DependencyBuilder $dependencies)
+    {
+
+    }
+
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    {
+        $bundleName = $input->getArgument('');
+        $itemName = $input->getArgument('');
+
         $bundle = $this->kernel->getBundle($bundleName);
 
         $itemSubDirectory = '';
@@ -45,10 +84,10 @@ class GridItemGenerator
         $this->generateFactoryFile($bundle, $itemName, $itemSubDirectory);
         $this->generateTemplateFile($bundle, $itemName, $itemSubDirectory);
 
-        $this->output->writeln('');
-        $this->output->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_grid -> items:</>');
-        $this->output->writeln($this->generateEnhavoConfigCode($bundle, $itemName, $itemSubDirectory));
-        $this->output->writeln('');
+        $io->writeln('');
+        $io->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_grid -> items:</>');
+        $io->writeln($this->generateEnhavoConfigCode($bundle, $itemName, $itemSubDirectory));
+        $io->writeln('');
     }
 
     private function generateDoctrineOrmFile(BundleInterface $bundle, $itemName, $itemSubDirectory)
@@ -63,11 +102,11 @@ class GridItemGenerator
             throw new \RuntimeException('Entity "' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $itemName . '" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $bundleNameSnakeCase = $this->generator->camelCaseToSnakeCase($this->generator->getBundleNameWithoutPostfix($bundle));
-        $itemNameSnakeCase = $this->generator->camelCaseToSnakeCase($itemName);
-        $itemSubDirectorySnakeCase = str_replace('/', '', $this->generator->camelCaseToSnakeCase($itemSubDirectory));
+        $bundleNameSnakeCase = $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundle));
+        $itemNameSnakeCase = $this->util->camelCaseToSnakeCase($itemName);
+        $itemSubDirectorySnakeCase = str_replace('/', '', $this->util->camelCaseToSnakeCase($itemSubDirectory));
 
-        $this->generator->renderFile(
+        $this->util->renderFile(
             '@EnhavoGenerator/Generator/GridItem/doctrine.orm.yml.twig',
             $filePath,
             [
@@ -86,7 +125,7 @@ class GridItemGenerator
             throw new \RuntimeException('Entity "' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $itemName . '" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $this->generator->renderFile(
+        $this->util->renderFile(
             '@EnhavoGenerator/Generator/GridItem/entity.php.twig',
             $filePath,
             [
@@ -104,7 +143,7 @@ class GridItemGenerator
             throw new \RuntimeException('FormType "' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $itemName . 'Type" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $this->generator->renderFile(
+        $this->util->renderFile(
             '@EnhavoGenerator/Generator/GridItem/form-type.php.twig',
             $filePath,
             [
@@ -124,7 +163,7 @@ class GridItemGenerator
             throw new \RuntimeException('Factory class "' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $itemName . 'Factory" already exists in bundle "' . $bundle->getName() . '".');
         }
 
-        $this->generator->renderFile(
+        $this->util->renderFile(
             '@EnhavoGenerator/Generator/GridItem/factory.php.twig',
             $filePath,
             [
@@ -136,13 +175,13 @@ class GridItemGenerator
 
     private function generateTemplateFile(BundleInterface $bundle, $itemName, $itemSubDirectory)
     {
-        $filePath = $bundle->getPath() . '/Resources/views/Theme/Grid/' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $this->generator->camelCaseToSnakeCase($itemName, true) . '.html.twig';
+        $filePath = $bundle->getPath() . '/Resources/views/Theme/Grid/' . ($itemSubDirectory ? $itemSubDirectory . '/' : '') . $this->util->camelCaseToSnakeCase($itemName, true) . '.html.twig';
         $this->createPathToFileIfNotExists($filePath);
         if (file_exists($filePath)) {
             throw new \RuntimeException('Frontend template file "' . $filePath . '" already exists.');
         }
 
-        $this->generator->renderFile(
+        $this->util->renderFile(
             '@EnhavoGenerator/Generator/GridItem/template.html.twig',
             $filePath,
             [
@@ -155,13 +194,13 @@ class GridItemGenerator
     {
         $itemNameSpace = $this->getNameSpace($bundle, '\\Entity', $itemSubDirectory) . '\\' . $itemName;
         $formTypeNamespace = $this->getNameSpace($bundle, '\\Form\\Type', $itemSubDirectory) . '\\' .$itemName . 'Type';
-        $template = $bundle->getName() . ':Theme/Grid' . ($itemSubDirectory ? '/' . $itemSubDirectory : '') . ':' . $this->generator->camelCaseToSnakeCase($itemName, true) . '.html.twig';
+        $template = $bundle->getName() . ':Theme/Grid' . ($itemSubDirectory ? '/' . $itemSubDirectory : '') . ':' . $this->util->camelCaseToSnakeCase($itemName, true) . '.html.twig';
         $factoryNamespace = $this->getNameSpace($bundle, '\\Factory', $itemSubDirectory) . '\\' . $itemName . 'Factory';
 
-        return $this->generator->render('@EnhavoGenerator/Generator/GridItem/enhavo_config_entry.yml.twig', array(
+        return $this->util->render('@EnhavoGenerator/Generator/GridItem/enhavo_config_entry.yml.twig', array(
             'item_name' => $itemName,
             'bundle_name' => $bundle->getName(),
-            'item_name_snake_case' => $this->generator->camelCaseToSnakeCase($itemName),
+            'item_name_snake_case' => $this->util->camelCaseToSnakeCase($itemName),
             'item_namespace' => $itemNameSpace,
             'form_type_namespace' => $formTypeNamespace,
             'template' => $template,
@@ -171,11 +210,11 @@ class GridItemGenerator
 
     private function getFormTypeName(BundleInterface $bundle, $itemName, $itemSubDirectory)
     {
-        $itemSubDirectorySnakeCase = str_replace('/', '', $this->generator->camelCaseToSnakeCase($itemSubDirectory));
+        $itemSubDirectorySnakeCase = str_replace('/', '', $this->util->camelCaseToSnakeCase($itemSubDirectory));
 
         return
-            $this->generator->camelCaseToSnakeCase($this->generator->getBundleNameWithoutPostfix($bundle))
-            . '_' . ($itemSubDirectorySnakeCase ? $itemSubDirectorySnakeCase . '_' : '') . $this->generator->camelCaseToSnakeCase($itemName);
+            $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundle))
+            . '_' . ($itemSubDirectorySnakeCase ? $itemSubDirectorySnakeCase . '_' : '') . $this->util->camelCaseToSnakeCase($itemName);
     }
 
     private function splitItemNameSubDirectory(&$itemName, &$subDirectory)

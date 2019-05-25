@@ -31,7 +31,6 @@ return [
     Enhavo\Bundle\SearchBundle\EnhavoSearchBundle::class => ['all' => true],
     Enhavo\Bundle\FormBundle\EnhavoFormBundle::class => ['all' => true],
     Enhavo\Bundle\DashboardBundle\EnhavoDashboardBundle::class => ['all' => true],
-    Enhavo\Bundle\GeneratorBundle\EnhavoGeneratorBundle::class => ['all' => true],
     Enhavo\Bundle\ArticleBundle\EnhavoArticleBundle::class => ['all' => true],
     Enhavo\Bundle\PageBundle\EnhavoPageBundle::class => ['all' => true],
     Enhavo\Bundle\TaxonomyBundle\EnhavoTaxonomyBundle::class => ['all' => true],

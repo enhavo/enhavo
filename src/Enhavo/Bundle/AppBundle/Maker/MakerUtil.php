@@ -1,32 +1,24 @@
 <?php
 
-namespace Enhavo\Bundle\GeneratorBundle\Generator;
+namespace Enhavo\Bundle\AppBundle\Maker;
 
-use Enhavo\Bundle\AppBundle\Filesystem\Filesystem;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class Generator
+class MakerUtil
 {
     /**
-     * @var EngineInterface
+     * @var KernelInterface
      */
-    private $twigEngine;
+    private $kernel;
 
     /**
-     * @var Filesystem
+     * MakerUtil constructor.
+     * @param KernelInterface $kernel
      */
-    private $fs;
-
-    /**
-     * Generator constructor.
-     * @param EngineInterface $twigEngine
-     * @param Filesystem $fs
-     */
-    public function __construct(EngineInterface $twigEngine, Filesystem $fs)
+    public function __construct(KernelInterface $kernel)
     {
-        $this->twigEngine = $twigEngine;
-        $this->fs = $fs;
+        $this->kernel = $kernel;
     }
 
     public function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
@@ -89,16 +81,5 @@ class Generator
             $result = $matches[1];
         }
         return $result;
-    }
-
-    public function renderFile($template, $target, $parameters)
-    {
-        $this->fs->mkdir(dirname($target));
-        $this->fs->dumpFile($target, $this->twigEngine->render($template, $parameters));
-    }
-
-    public function render($template, $parameters)
-    {
-        return $this->twigEngine->render($template, $parameters);
     }
 }

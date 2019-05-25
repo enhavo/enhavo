@@ -1,12 +1,12 @@
 services:
     enhavo_generator.generator.generator:
-        class: Enhavo\Bundle\GeneratorBundle\Generator\Generator
+        class: Enhavo\Bundle\AppBundle\Generator\Generator
         arguments:
             - '@templating'
             - '@filesystem'
 
     enhavo_generator.generator.route_generator:
-        class: Enhavo\Bundle\GeneratorBundle\Generator\RoutingGenerator
+        class: Enhavo\Bundle\AppBundle\Generator\Type\RoutingGenerator
         arguments:
             - '@enhavo_generator.generator.generator'
 
