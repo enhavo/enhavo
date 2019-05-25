@@ -14,7 +14,7 @@ class TermType extends AbstractType
     /**
      * @var string $dataClass
      */
-    protected $dataClass;
+    private $dataClass;
 
     /**
      * TermType constructor.
@@ -35,12 +35,6 @@ class TermType extends AbstractType
         $builder->add('text', WysiwygType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
-
-        $builder->add('picture', MediaType::class, array(
-            'label' => 'form.label.picture',
-            'translation_domain' => 'EnhavoAppBundle',
-            'multiple' => false
         ));
 
         $builder->add('slug', TextType::class, array(

@@ -81,8 +81,8 @@ class IndexViewer extends AppViewer
 
         $tableConfiguration = $this->util->createConfigurationFromRoute($tableRoute);
 
-        $filterData = $tableConfiguration->getFilters();
-        $columnData = $this->getViewerOption('columns', $tableConfiguration);
+        $filterData = $tableConfiguration ? $tableConfiguration->getFilters() : [];
+        $columnData = $tableConfiguration ? $this->getViewerOption('columns', $tableConfiguration) : [];
 
         if($filterData) {
             $actions = $this->addFilterAction($actions);

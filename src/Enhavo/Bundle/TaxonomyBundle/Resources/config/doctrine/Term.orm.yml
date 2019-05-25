@@ -48,10 +48,4 @@ Enhavo\Bundle\TaxonomyBundle\Entity\Term:
             targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
             mappedBy: parent
 
-    oneToOne:
-        picture:
-            cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
-            orphanRemoval: true
-
     lifecycleCallbacks: {  }

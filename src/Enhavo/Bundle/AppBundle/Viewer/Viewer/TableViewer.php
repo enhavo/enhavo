@@ -127,16 +127,6 @@ class TableViewer extends AbstractResourceViewer
             $options['width']
         ]));
 
-        $parameters->set('move_after_route', $this->mergeConfig([
-            sprintf('%s_%s_move_after', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            $options['move_after_route']
-        ]));
-
-        $parameters->set('move_to_page_route', $this->mergeConfig([
-            sprintf('%s_%s_move_to_page', $metadata->getApplicationName(), $this->getUnderscoreName($metadata)),
-            $options['move_to_page_route']
-        ]));
-
         $resources = $options['resources'];
         if($resources instanceof Pagerfanta) {
             $parameters->set('pages', [

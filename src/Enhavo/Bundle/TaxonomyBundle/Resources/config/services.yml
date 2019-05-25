@@ -1,14 +1,24 @@
 services:
     Enhavo\Bundle\TaxonomyBundle\Maker\MakeTaxonomy:
+        arguments:
+            - '@enhavo_app.maker.util'
         tags:
             - { name: 'maker.command' }
 
-#    Enhavo\Bundle\TaxonomyBundle\Form\Type\TaxonomyType:
-#        arguments:
-#            - '%enhavo_taxonomy.model.taxonomy.class%'
-#            - '%enhavo_app.translate%'
-#        tags:
-#            - { name: form.type, alias: 'enhavo_taxonomy_taxonomy'}
+    Enhavo\Bundle\TaxonomyBundle\Filter\TaxonomyFilterType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'enhavo.filter', alias: 'taxonomy' }
+
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+        tags:
+            - { name: form.type }
 #
 #    Enhavo\Bundle\TaxonomyBundle\Action\TaxonomyAction:
 #        public: true
