@@ -1,0 +1,90 @@
+enhavo_article_tag_index:
+    options:
+        expose: true
+    path: /enhavo/article/tag/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_taxonomy.controller.taxonomy:indexAction
+        _sylius:
+            viewer:
+                table_route: enhavo_article_tag_table
+                batch_route: enhavo_article_tag_batch
+                update_route: enhavo_article_tag_update
+                title: taxonomy.label.term
+                translationDomain: EnhavoTaxonomyBundle
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_article_tag_create
+
+enhavo_article_tag_create:
+    options:
+        expose: true
+    path:  /enhavo/article/tag/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:createAction
+        _sylius:
+            redirect: enhavo_article_tag_update
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+
+enhavo_article_tag_update:
+    options:
+        expose: true
+    path:  /enhavo/article/tag/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+                actions_secondary:
+                    delete:
+                        type: delete
+                        route: enhavo_article_tag_delete
+
+enhavo_article_tag_table:
+    options:
+        expose: true
+    path:  /enhavo/article/tag/table
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:tableAction
+        _sylius:
+            repository:
+                method: findByTaxonomyName
+                arguments:
+                    - 'article_tag'
+                    - true
+            viewer:
+                translationDomain: EnhavoTaxonomyBundle
+                width: 12
+                columns:
+                    name:
+                        type: property
+                        width: 12
+                        label: term.label.name
+                        property: name
+
+enhavo_article_tag_delete:
+    options:
+        expose: true
+    path: /enhavo/article/tag/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:deleteAction
+
+enhavo_article_tag_batch:
+    options:
+        expose: true
+    path: /enhavo/article/tag/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_taxonomy.controller.term:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete

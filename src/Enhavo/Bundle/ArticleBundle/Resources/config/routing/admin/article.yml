@@ -85,11 +85,10 @@ enhavo_article_article_table:
                     property: public
                     equals: true
                 category:
-                    type: entity
-                    repository: EnhavoCategoryBundle:Category
+                    type: taxonomy
                     label: article.label.category
                     translation_domain: EnhavoArticleBundle
-                    property: categories
+                    taxonomy: article_category
             viewer:
                 translationDomain: EnhavoArticleBundle
                 columns:

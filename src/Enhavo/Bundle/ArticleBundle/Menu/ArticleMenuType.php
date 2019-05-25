@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ArticleBundle\Menu;
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleMenu extends BaseMenu
+class ArticleMenuType extends BaseMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -23,10 +23,15 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    Enhavo\Bundle\ArticleBundle\Menu\ArticleMenu:
+    Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: article }
+
+    Enhavo\Bundle\ArticleBundle\Menu\TagMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: article_tag }
 
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
