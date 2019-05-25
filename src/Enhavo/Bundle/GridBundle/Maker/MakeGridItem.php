@@ -1,9 +1,8 @@
 <?php
 
-namespace Enhavo\Bundle\GeneratorBundle\Generator;
+namespace Enhavo\Bundle\GridBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
-use Enhavo\Bundle\RoutingBundle\AutoGenerator\GeneratorInterface;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;

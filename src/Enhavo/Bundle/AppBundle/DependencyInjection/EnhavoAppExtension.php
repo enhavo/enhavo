@@ -49,6 +49,7 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/chart.yml');
         $loader->load('services/reference.yml');
         $loader->load('services/metadata.yml');
+        $loader->load('services/maker.yml');
         $loader->load('services/widget.yml');
     }
 }

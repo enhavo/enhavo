@@ -1,4 +1,8 @@
 services:
+    Enhavo\Bundle\TaxonomyBundle\Maker\MakeTaxonomy:
+        tags:
+            - { name: 'maker.command' }
+
 #    Enhavo\Bundle\TaxonomyBundle\Form\Type\TaxonomyType:
 #        arguments:
 #            - '%enhavo_taxonomy.model.taxonomy.class%'

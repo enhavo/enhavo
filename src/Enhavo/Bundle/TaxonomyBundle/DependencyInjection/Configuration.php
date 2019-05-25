@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->scalarNode('label')->end()
+                            ->scalarNode('translation_domain')->end()
                         ->end()
                     ->end()
                 ->end()
