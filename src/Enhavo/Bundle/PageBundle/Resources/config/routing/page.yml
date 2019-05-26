@@ -36,18 +36,6 @@ enhavo_page_page_create:
                         type: preview
                         route: enhavo_page_page_preview
 
-enhavo_page_page_preview:
-    options:
-        expose: true
-    path: /enhavo/page/page/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_page.controller.page:previewAction
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_page.controller.page:showResourceAction
-
 enhavo_page_page_update:
     options:
         expose: true
@@ -133,3 +121,23 @@ enhavo_page_page_batch:
                     type: delete
                 publish:
                     type: publish
+
+enhavo_page_page_preview:
+    options:
+        expose: true
+    path: /enhavo/page/page/preview
+    defaults:
+        _controller: enhavo_page.controller.page:previewAction
+        _sylius:
+            viewer:
+
+enhavo_page_page_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/page/page/preview/resource
+    defaults:
+        _controller: enhavo_page.controller.page:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_page.controller.page:showResourceAction
