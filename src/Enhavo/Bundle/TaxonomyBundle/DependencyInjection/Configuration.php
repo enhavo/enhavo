@@ -6,6 +6,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
+use Enhavo\Bundle\TaxonomyBundle\Factory\TermFactory;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TaxonomyRepository;
 use Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository;
@@ -77,7 +78,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(Term::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(TermRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(TermFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(TermType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

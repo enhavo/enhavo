@@ -4,13 +4,13 @@ namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * Taxonomy
  */
-class Term implements TaxonomyInterface, ResourceInterface
+class Term implements TermInterface, ResourceInterface
 {
     /**
      * @var integer
@@ -41,11 +41,6 @@ class Term implements TaxonomyInterface, ResourceInterface
      * @var string
      */
     private $text;
-
-    /**
-     * @var FileInterface
-     */
-    private $picture;
 
     /**
      * @var Term[]|Collection
@@ -121,27 +116,6 @@ class Term implements TaxonomyInterface, ResourceInterface
     }
 
     /**
-     * @param FileInterface|null $picture
-     *
-     * @return Term
-     */
-    public function setPicture(FileInterface $picture = null)
-    {
-        $this->picture = $picture;
-        return $this;
-    }
-
-    /**
-     * Get picture
-     *
-     * @return FileInterface|null
-     */
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    /**
      * @return string
      */
     public function getSlug()
@@ -155,5 +129,79 @@ class Term implements TaxonomyInterface, ResourceInterface
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return TaxonomyInterface
+     */
+    public function getTaxonomy(): TaxonomyInterface
+    {
+        return $this->taxonomy;
+    }
+
+    /**
+     * @param TaxonomyInterface $taxonomy
+     */
+    public function setTaxonomy(TaxonomyInterface $taxonomy): void
+    {
+        $this->taxonomy = $taxonomy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return Term
+     */
+    public function getParent(): TermInterface
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param TermInterface $parent
+     */
+    public function setParent(TermInterface $parent): void
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @param TermInterface $child
+     */
+    public function addChildren(TermInterface $child)
+    {
+        $this->children->add($child);
+        $child->setParent($this);
+    }
+
+    /**
+     * @param TermInterface $children
+     */
+    public function removeChildren(TermInterface $children)
+    {
+        $this->children->removeElement($children);
+        $children->setParent(null);
+    }
+
+    /**
+     * @return Collection|Term[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

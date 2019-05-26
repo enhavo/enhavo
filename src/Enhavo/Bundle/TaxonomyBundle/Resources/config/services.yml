@@ -19,15 +19,19 @@ services:
             - '%enhavo_taxonomy.model.term.class%'
         tags:
             - { name: form.type }
-#
-#    Enhavo\Bundle\TaxonomyBundle\Action\TaxonomyAction:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.action, alias: taxonomy }
-#
-#    Enhavo\Bundle\TaxonomyBundle\Menu\TaxonomyMenu:
-#        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-#        tags:
-#            - { name: enhavo.menu, alias: taxonomy }
+
+    Enhavo\Bundle\TaxonomyBundle\Init\InitTaxonomy:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_taxonomy.repository.taxonomy'
+            - '@enhavo_taxonomy.factory.taxonomy'
+            - '%enhavo_taxonomy.taxonomies%'
+        tags:
+            - { name: 'enhavo.init', alias: 'taxonomy'}
+
+    enhavo_taxonomy.factory.term:
+        class: '%enhavo_taxonomy.factory.term.class%'
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+            - '@enhavo_taxonomy.repository.taxonomy'

@@ -1,9 +1,10 @@
 <?php
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
+use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Taxonomy implements ResourceInterface
+class Taxonomy implements ResourceInterface, TaxonomyInterface
 {
     /**
      * @var integer
