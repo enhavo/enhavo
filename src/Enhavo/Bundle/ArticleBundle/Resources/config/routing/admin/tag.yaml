@@ -26,6 +26,10 @@ enhavo_article_tag_create:
         _controller: enhavo_taxonomy.controller.term:createAction
         _sylius:
             redirect: enhavo_article_tag_update
+            factory:
+                method: createNewOnTaxonomy
+                arguments:
+                    - 'article_tag'
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
 

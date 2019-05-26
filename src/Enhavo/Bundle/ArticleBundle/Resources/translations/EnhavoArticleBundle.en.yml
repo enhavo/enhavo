@@ -19,6 +19,7 @@ article:
     pagination: 'Pagination'
     limit: 'Limit per Page'
     category: 'Category'
+    tag: 'Tag'
     teaser: 'Teaser'
     content: 'Content'
     seo: 'SEO'

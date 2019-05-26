@@ -44,3 +44,6 @@ enhavo_taxonomy:
         article_category:
             label: article.label.category
             translation_domain: EnhavoArticleBundle
+        article_tag:
+            label: article.label.tag
+            translation_domain: EnhavoArticleBundle
