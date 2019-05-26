@@ -39,6 +39,8 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/services.yml');
         $loader->load('services/controller.yml');
         $loader->load('services/twig.yml');
+        $loader->load('services/init.yml');
+        $loader->load('services/command.yml');
         $loader->load('services/viewer.yml');
         $loader->load('services/filter.yml');
         $loader->load('services/column.yml');

@@ -1,0 +1,6 @@
+services:
+    Enhavo\Bundle\AppBundle\Command\InitCommand:
+        arguments:
+            - '@enhavo_app.init.init_manager'
+        tags:
+            - { name: console.command, command: 'enhavo:init' }

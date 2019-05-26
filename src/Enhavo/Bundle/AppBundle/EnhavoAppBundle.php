@@ -55,6 +55,10 @@ class EnhavoAppBundle extends Bundle
             new TypeCompilerPass('enhavo_app.widget_collector', 'enhavo.widget')
         );
 
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_app.init_collector', 'enhavo.init')
+        );
+
 
         $container->addCompilerPass(
             new SyliusCompilerPass()

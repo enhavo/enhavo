@@ -1,0 +1,11 @@
+services:
+    enhavo_app.init_collector:
+        class: Enhavo\Bundle\AppBundle\Type\TypeCollector
+        arguments:
+            - '@service_container'
+            - 'Init'
+
+    enhavo_app.init.init_manager:
+        class: Enhavo\Bundle\AppBundle\Init\InitManager
+        arguments:
+            - '@enhavo_app.init_collector'

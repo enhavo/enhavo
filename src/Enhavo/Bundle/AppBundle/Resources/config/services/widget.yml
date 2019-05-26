@@ -1,7 +1,3 @@
-parameters:
-    enhavo_app.twig.block_render.class: Enhavo\Bundle\AppBundle\Block\BlockRenderer
-    enhavo_app.twig.block_collector.class: Enhavo\Bundle\AppBundle\Type\TypeCollector
-
 services:
     enhavo_app.widget_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
