@@ -13,6 +13,7 @@ use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
 class Article extends Content
 {
@@ -37,11 +38,17 @@ class Article extends Content
     private $categories;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tags;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -116,11 +123,11 @@ class Article extends Content
     /**
      * Add category
      *
-     * @param CategoryInterface $category
+     * @param TermInterface $category
      *
      * @return Article
      */
-    public function addCategory(CategoryInterface $category)
+    public function addCategory(TermInterface $category)
     {
         $this->categories[] = $category;
 
@@ -130,9 +137,9 @@ class Article extends Content
     /**
      * Remove category
      *
-     * @param CategoryInterface $category
+     * @param TermInterface $category
      */
-    public function removeCategory(CategoryInterface $category)
+    public function removeCategory(TermInterface $category)
     {
         $this->categories->removeElement($category);
     }
@@ -140,10 +147,44 @@ class Article extends Content
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|TermInterface[]
      */
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param TermInterface $tag
+     *
+     * @return Article
+     */
+    public function addTag(TermInterface $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param TermInterface $tag
+     */
+    public function removeTag(TermInterface $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection|TermInterface[]
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

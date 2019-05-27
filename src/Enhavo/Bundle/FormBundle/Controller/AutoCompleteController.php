@@ -58,10 +58,12 @@ class AutoCompleteController extends AbstractController
         if($configuration->getRepositoryArguments()) {
             $arguments = $configuration->getRepositoryArguments();
             foreach($arguments as &$argument) {
-                $argument = $this->expressionLanguage->evaluate($argument, [
-                    'request' => $request,
-                    'configuration' => $configuration
-                ]);
+                if(preg_match('/^expr:/', $argument)) {
+                    $argument = $this->expressionLanguage->evaluate(substr($argument, 5), [
+                        'request' => $request,
+                        'configuration' => $configuration
+                    ]);
+                }
             }
         } else {
             $arguments[] = $configuration->getSearchTerm();

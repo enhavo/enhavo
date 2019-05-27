@@ -33,6 +33,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: article_tag }
 
+    Enhavo\Bundle\ArticleBundle\Menu\CategoryMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: article_category }
+
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
         calls:

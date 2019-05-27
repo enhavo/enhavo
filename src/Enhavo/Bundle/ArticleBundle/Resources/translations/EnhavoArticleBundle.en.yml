@@ -13,6 +13,7 @@ article:
       priority: 'Priority'
       change_frequency: 'Change frequency'
       publication_date: 'Publication date'
+      create_tag: 'Create tag'
   label:
     article: 'Article'
     article_stream: 'Article Stream'

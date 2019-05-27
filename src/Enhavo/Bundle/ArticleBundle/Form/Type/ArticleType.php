@@ -7,6 +7,8 @@ use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
+use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
+use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +49,18 @@ class ArticleType extends AbstractResourceType
             'translation_domain' => 'EnhavoAppBundle',
         ));
 
-        $builder->add('categories', CategoryEntityType::class);
+        $builder->add('categories', TermTreeChoiceType::class, [
+            'multiple' => true,
+            'taxonomy' => 'article_category'
+        ]);
+
+        $builder->add('tags', TermAutoCompleteChoiceType::class, [
+            'multiple' => true,
+            'route' => 'enhavo_article_tag_auto_complete',
+            'create_route' => 'enhavo_article_tag_create',
+            'create_button_label' => 'article.form.label.create_tag',
+            'translation_domain' => 'EnhavoArticleBundle',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
