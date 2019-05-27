@@ -16,6 +16,9 @@ form:
     picture: 'Picture'
     text: 'Text'
     content: 'Content'
+    name: 'Name'
+    parent: 'Parent'
+    children: 'Children'
   message:
       error: 'An error occurred while saving'
       success: 'Save successful'

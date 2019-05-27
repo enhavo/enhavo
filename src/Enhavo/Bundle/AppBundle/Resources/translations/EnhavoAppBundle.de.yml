@@ -23,6 +23,9 @@ form:
     picture: 'Bild'
     text: 'Text'
     content: 'Inhalt'
+    name: 'Name'
+    parent: 'Elternelement'
+    children: 'Kindelelement'
   message:
     error: 'Fehler beim speichern'
     success: 'Erfolgreich gespeichert'

@@ -1,14 +1,13 @@
 taxonomy:
   role:
     label:
-      index: 'Katgorie anzeigen'
-      update: 'Katgorie bearbeiten'
-      create: 'Katgorie erstellen'
-      delete: 'Katgorie löschen'
+      index: 'Taxonomy anzeigen'
+      update: 'Taxonomy bearbeiten'
+      create: 'Taxonomy erstellen'
+      delete: 'Taxonomy löschen'
   label:
     id: 'ID'
-    name: 'Name'
     taxonomy: 'Kategorie'
-    categories: 'Kategorien'
-    manageCategories: 'Kategorien verwalten'
-
+term:
+    label:
+        name: 'Name'

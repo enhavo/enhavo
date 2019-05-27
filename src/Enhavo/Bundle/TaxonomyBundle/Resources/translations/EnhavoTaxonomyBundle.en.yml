@@ -7,7 +7,7 @@ taxonomy:
       delete: 'Taxonomy delete'
   label:
     id: 'ID'
-    name: 'Name'
     taxonomy: 'Taxonomy'
-    categories: 'Categories'
-    manageCategories: 'Manage categories'
+term:
+  label:
+    name: 'Name'

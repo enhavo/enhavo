@@ -18,7 +18,7 @@ class SlugType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label' => 'form.label.slug',
-            'translation_domain' => 'EnhavoFormBundle'
+            'translation_domain' => 'EnhavoAppBundle'
         ));
     }
 
