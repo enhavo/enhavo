@@ -36,7 +36,7 @@ class MakeTaxonomy extends AbstractMaker
             ->setDescription('Creates a new taxonomy')
             ->addArgument('bundle', InputArgument::REQUIRED, 'What is the Bundle name?')
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of your taxonomy?')
-            ->addArgument('hierarchy', InputArgument::OPTIONAL, 'Is the taxonomy hierarchy? [yes/no]', 'no')
+            ->addArgument('hierarchy', InputArgument::REQUIRED, 'Is the taxonomy hierarchy? [yes/no]')
         ;
     }
 
@@ -52,10 +52,13 @@ class MakeTaxonomy extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $bundleName = $input->getArgument('bundle');
-        $name = $input->getArgument('name');
+        $bundleName = trim($input->getArgument('bundle'));
+        $name = trim($input->getArgument('name'));
         $path = $this->util->getBundlePath($bundleName);
         $hierarchy = $input->getArgument('hierarchy');
+        $namespace = sprintf('%s\\Form\\Type', $this->util->getBundleNamespace($bundleName));
+        $className = sprintf('%sType', $name);
+        $class = sprintf("%s\\%s", $namespace, $className);
 
         $generator->generateFile(
             sprintf('%sResources/config/routing/admin/%s.yaml', $path, $this->util->camelCaseToSnakeCase($name)),
@@ -66,8 +69,21 @@ class MakeTaxonomy extends AbstractMaker
                 'bundle_url' => $this->util->getBundleUrl($bundleName),
                 'name_url' => $this->util->getResourceUrl($name),
                 'hierarchy' => $hierarchy,
+                'form_type' => $class,
             ]
         );
+
+        $generator->generateClass(
+            $class,
+            $this->util->getRealpath('@EnhavoTaxonomyBundle/Resources/skeleton/TermType.tpl.php'),
+            [
+                'namespace' => $namespace,
+                'class_name' => $className,
+                'hierarchy' => $hierarchy,
+                'name' => $this->util->camelCaseToSnakeCase($name),
+            ]
+        );
+
         $generator->writeChanges();
 
         $io->writeln(sprintf('Add the %s.yaml to your routing', $this->util->camelCaseToSnakeCase($name)));

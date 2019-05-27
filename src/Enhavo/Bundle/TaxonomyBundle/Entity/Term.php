@@ -150,7 +150,7 @@ class Term implements TermInterface, ResourceInterface
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -166,7 +166,7 @@ class Term implements TermInterface, ResourceInterface
     /**
      * @return Term
      */
-    public function getParent(): TermInterface
+    public function getParent(): ?TermInterface
     {
         return $this->parent;
     }

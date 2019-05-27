@@ -64,7 +64,7 @@ interface TermInterface
     /**
      * @return int
      */
-    public function getPosition(): int;
+    public function getPosition(): ?int;
 
     /**
      * @param int $position
@@ -74,7 +74,7 @@ interface TermInterface
     /**
      * @return TermInterface
      */
-    public function getParent(): TermInterface;
+    public function getParent(): ?TermInterface;
 
     /**
      * @param TermInterface $parent

@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
-use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
