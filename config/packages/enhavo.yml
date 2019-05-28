@@ -21,8 +21,6 @@ enhavo_app:
 #            type: shop
         navigation:
             type: navigation
-#        translation_strings:
-#            type: translation
         redirect:
             type: redirect
         media_library:
