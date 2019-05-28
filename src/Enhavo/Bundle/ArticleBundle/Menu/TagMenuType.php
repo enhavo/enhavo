@@ -10,7 +10,6 @@ class TagMenuType extends BaseMenu
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'icon' => 'label_outline',
             'label' => 'article.label.tag',

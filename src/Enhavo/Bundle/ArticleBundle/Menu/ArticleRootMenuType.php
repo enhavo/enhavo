@@ -8,25 +8,35 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Menu;
 
-use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
+use Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleMenuType extends BaseMenu
+class ArticleRootMenuType extends ListMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'icon' => 'book',
             'label' => 'article.label.article',
             'translation_domain' => 'EnhavoArticleBundle',
-            'route' => 'enhavo_article_article_index',
-            'role' => 'ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX'
+            'children' => [
+                'article' => [
+                    'type' => 'article_article'
+                ],
+                'category' => [
+                    'type' => 'article_category'
+                ],
+                'tag' => [
+                    'type' => 'article_tag'
+                ],
+            ]
         ]);
     }
 
     public function getType()
     {
-        return 'article_article';
+        return 'article';
     }
 }

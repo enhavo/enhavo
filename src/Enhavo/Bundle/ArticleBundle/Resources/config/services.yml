@@ -7,13 +7,6 @@ services:
         tags:
             - { name: form.type, alias: enhavo_article_article }
 
-    Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.widget, alias: article_category }
-
     enhavo_article.extend_listener.article:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
@@ -23,10 +16,15 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    Enhavo\Bundle\ArticleBundle\Menu\ArticleRootMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
+        tags:
+            - { name: enhavo.menu, alias: article }
+
     Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
-            - { name: enhavo.menu, alias: article }
+            - { name: enhavo.menu, alias: article_article }
 
     Enhavo\Bundle\ArticleBundle\Menu\TagMenuType:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu

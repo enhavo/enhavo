@@ -9,10 +9,6 @@ enhavo_app:
             type: user
         article:
             type: article
-        article_tag:
-            type: article_tag
-        article_category:
-            type: article_category
         page:
             type: page
         slider:
