@@ -43,6 +43,7 @@ enhavo_article_tag_update:
         _controller: enhavo_taxonomy.controller.term:updateAction
         _sylius:
             form: Enhavo\Bundle\ArticleBundle\Form\Type\TagType
+            serialization_groups: ['form']
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 actions_secondary:
