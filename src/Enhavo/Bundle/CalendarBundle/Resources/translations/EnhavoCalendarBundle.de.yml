@@ -25,7 +25,9 @@ appointment:
     id: 'ID'
     title: 'Titel'
     date: 'Datum'
-    seo: 'Seo'
+    meta: 'Meta'
+    location: 'Ort'
+    import: 'Import'
   validator:
     error:
       dates: 'Das Anfangs- muss vor dem End-Datum sein.'

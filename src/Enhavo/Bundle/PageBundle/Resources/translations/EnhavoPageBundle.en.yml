@@ -17,7 +17,7 @@ page:
     public: 'public'
     title: 'Title'
     content: 'Content'
-    seo: 'SEO'
+    meta: 'Meta'
     always: 'Always'
     hourly: 'Hourly'
     daily: 'Daily'

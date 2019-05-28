@@ -23,7 +23,7 @@ article:
     tag: 'Tag'
     teaser: 'Teaser'
     content: 'Content'
-    seo: 'SEO'
+    meta: 'Meta'
     preview: 'Preview'
     id: 'ID'
     title: 'Title'

@@ -28,9 +28,9 @@ enhavo_page_page_create:
                         label: page.label.content
                         template: EnhavoPageBundle:Tab:content.html.twig
                         full_width: true
-                    seo:
-                        label: page.label.seo
-                        template: EnhavoPageBundle:Tab:seo.html.twig
+                    meta:
+                        label: page.label.meta
+                        template: EnhavoPageBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview
@@ -54,9 +54,9 @@ enhavo_page_page_update:
                         label: page.label.content
                         template: EnhavoPageBundle:Tab:content.html.twig
                         full_width: true
-                    seo:
-                        label: page.label.seo
-                        template: EnhavoPageBundle:Tab:seo.html.twig
+                    meta:
+                        label: page.label.meta
+                        template: EnhavoPageBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview

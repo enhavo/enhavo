@@ -29,9 +29,9 @@ enhavo_article_article_create:
                         label: article.label.content
                         template: EnhavoArticleBundle:Tab:content.html.twig
                         full_width: true
-                    seo:
-                        label: article.label.seo
-                        template: EnhavoArticleBundle:Tab:seo.html.twig
+                    meta:
+                        label: article.label.meta
+                        template: EnhavoArticleBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview
@@ -56,9 +56,9 @@ enhavo_article_article_update:
                         label: article.label.content
                         template: EnhavoArticleBundle:Tab:content.html.twig
                         full_width: true
-                    seo:
-                        label: article.label.seo
-                        template: EnhavoArticleBundle:Tab:seo.html.twig
+                    meta:
+                        label: article.label.meta
+                        template: EnhavoArticleBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview
