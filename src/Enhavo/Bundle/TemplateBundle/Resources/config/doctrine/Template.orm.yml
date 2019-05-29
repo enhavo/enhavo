@@ -1,32 +1,21 @@
-Enhavo\Bundle\NavigationBundle\Entity\Navigation:
+Enhavo\Bundle\TemplateBundle\Entity\Template:
     type: entity
-    table: navigation_navigation
-    repositoryClass: Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+    table: template_template
+    repositoryClass: Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository
 
     fields:
         name:
             type: string
             length: 255
             nullable: true
-
         code:
             type: string
             length: 255
             nullable: true
 
-    oneToMany:
-        nodes:
-            cascade: ['persist']
-            targetEntity: Enhavo\Bundle\NavigationBundle\Model\NodeInterface
-            mappedBy: navigation
-            orphanRemoval: true
-            orderBy:
-                position: ASC
+    oneToOne:
+        grid:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
 
     lifecycleCallbacks: { }

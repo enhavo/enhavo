@@ -1,34 +1,18 @@
 enhavo_app:
-#    stylesheets:
-#      - '@EnhavoNavigationBundle/Resources/public/css/style.css'
-      
     roles:
-        enhavo_navigation_navigation_index:
-            role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX
-            label: navigation.role.label.index
-            translationDomain: EnhavoNavigationBundle
-        enhavo_navigation_navigation_create:
-            role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_CREATE
-            label: navigation.role.label.create
-            translationDomain: EnhavoNavigationBundle
-        enhavo_navigation_navigation_update:
-            role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_UPDATE
-            label: navigation.role.label.update
-            translationDomain: EnhavoNavigationBundle
-        enhavo_navigation_navigation_delete:
-            role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_DELETE
-            label: navigation.role.label.delete
-            translationDomain: EnhavoNavigationBundle
-
-doctrine:
-    orm:
-        resolve_target_entities:
-            Enhavo\Bundle\NavigationBundle\Model\NodeInterface: Enhavo\Bundle\NavigationBundle\Entity\Node
-            Enhavo\Bundle\NavigationBundle\Model\NavigationInterface: Enhavo\Bundle\NavigationBundle\Entity\Navigation
-
-enhavo_navigation:
-    items:
-        submenu:
-            type: submenu
-        link:
-            type: link
+        enhavo_template_template_index:
+            role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX
+            label: template.role.label.index
+            translationDomain: EnhavoTemplateBundle
+        enhavo_template_template_create:
+            role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_CREATE
+            label: template.role.label.create
+            translationDomain: EnhavoTemplateBundle
+        enhavo_template_template_update:
+            role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_UPDATE
+            label: template.role.label.update
+            translationDomain: EnhavoTemplateBundle
+        enhavo_template_template_delete:
+            role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_DELETE
+            label: template.role.label.delete
+            translationDomain: EnhavoTemplateBundle

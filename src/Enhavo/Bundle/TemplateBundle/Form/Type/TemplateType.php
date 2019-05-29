@@ -5,3 +5,65 @@
  * Date: 24.05.19
  * Time: 19:22
  */
+
+namespace Enhavo\Bundle\TemplateBundle\Form\Type;
+
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
+use Enhavo\Bundle\GridBundle\Form\Type\GridType;
+
+class TemplateType extends AbstractType
+{
+    protected $class;
+
+    /**
+     * @var boolean
+     */
+    #protected $translation;
+
+    public function __construct($class)
+    {
+        $this->class = $class;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('name', TextType::class, [
+            'label' => 'template.label.name',
+            'translation_domain' => 'EnhavoTemplateBundle',
+        ]);
+        $builder->add('code', TextType::class, [
+            'label' => 'template.label.code',
+            'translation_domain' => 'EnhavoTemplateBundle',
+        ]);
+        $builder->add('grid', GridType::class, array(
+            'label' => 'form.label.content',
+            'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => ['layout'],
+        ));
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults( array(
+            'data_class' => $this->class
+        ));
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'enhavo_template_template';
+    }
+
+    /**
+     * Returns a unique type name for this type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return 'template';
+    }
+}

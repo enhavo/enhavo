@@ -77,8 +77,6 @@ enhavo_sidebar_sidebar_table:
                         property: name
                         width: 10
 
-
-
 enhavo_sidebar_sidebar_delete:
     options:
         expose: true

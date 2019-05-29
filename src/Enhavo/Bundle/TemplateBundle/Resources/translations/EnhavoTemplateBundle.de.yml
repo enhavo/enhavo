@@ -1,0 +1,12 @@
+template:
+    role:
+        label:
+            index: 'Template anzeigen'
+            update: 'Template bearbeiten'
+            create: 'Template erstellen'
+            delete: 'Template löschen'
+    label:
+        template: 'Template'
+        name: 'Name'
+        code: 'Code'
+        content: 'Inhalt'

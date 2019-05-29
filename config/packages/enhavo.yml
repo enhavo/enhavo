@@ -38,6 +38,8 @@ enhavo_app:
             label: Magazine
         sidebar:
             type: sidebar
+        template:
+            type: template
 
 enhavo_grid:
     items:

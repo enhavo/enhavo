@@ -1,0 +1,108 @@
+enhavo_template_template_index:
+    options:
+        expose: true
+    path: /enhavo/template/template/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_template.controller.template:indexAction
+        _sylius:
+            viewer:
+
+enhavo_template_template_create:
+    options:
+        expose: true
+    path: /enhavo/template/template/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_template.controller.template:createAction
+        _sylius:
+            redirect: enhavo_template_template_update
+            sortable: true
+            sortable_position: position
+            sorting_strategy: desc_first
+            viewer:
+                translationDomain: EnhavoTemplateBundle
+                tabs:
+                    main:
+                        label: template.label.template
+                        template: EnhavoTemplateBundle:Tab:template.html.twig
+                    content:
+                        label: template.label.content
+                        template: EnhavoTemplateBundle:Tab:content.html.twig
+
+enhavo_template_template_update:
+    options:
+        expose: true
+    path: /enhavo/template/template/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_template.controller.template:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoTemplateBundle
+                tabs:
+                    main:
+                        label: template.label.template
+                        template: EnhavoTemplateBundle:Tab:template.html.twig
+                    content:
+                        label: template.label.content
+                        template: EnhavoTemplateBundle:Tab:content.html.twig
+
+enhavo_template_template_table:
+    options:
+        expose: true
+    path: /enhavo/template/template/table
+    methods: [GET,POST]
+    defaults:
+        sorting:
+            position: desc
+        filters:
+            name:
+                type: text
+                label: template.label.template
+                translation_domain: EnhavoTemplateBundle
+                property: name
+        _controller: enhavo_template.controller.template:tableAction
+        _sylius:
+            viewer:
+                translation_domain: EnhavoTemplateBundle
+                columns:
+                    name:
+                        type: text
+                        label: template.label.name
+                        property: name
+                        width: 10
+
+enhavo_template_template_delete:
+    options:
+        expose: true
+    path: /enhavo/template/template/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_template.controller.template:deleteAction
+
+enhavo_template_template_batch:
+    options:
+        expose: true
+    path: /enhavo/template/template/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_template.controller.template:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_template_template_preview:
+    options:
+        expose: true
+    path: /enhavo/template/template/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_template.controller.template:previewAction
+        _sylius:
+            viewer:
+
