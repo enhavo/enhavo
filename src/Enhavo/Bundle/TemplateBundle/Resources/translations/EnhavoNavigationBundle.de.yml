@@ -1,0 +1,22 @@
+navigation:
+    role:
+        label:
+            index: 'Navigation anzeigen'
+            update: 'Navigation bearbeiten'
+            create: 'Navigation erstellen'
+            delete: 'Navigation löschen'
+    label:
+        navigation: 'Navigation'
+        name: 'Name'
+        items: 'Items'
+        code: 'Code'
+
+node:
+    label:
+        items: 'Items'
+        label: 'Name'
+        submenu: 'Submenü'
+
+link:
+    label:
+        link: 'Link'

@@ -1,0 +1,21 @@
+Enhavo\Bundle\SidebarBundle\Entity\Sidebar:
+    type: entity
+    table: sidebar_sidebar
+    repositoryClass: Enhavo\Bundle\SidebarBundle\Repository\SidebarRepository
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+        code:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToOne:
+        grid:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+
+    lifecycleCallbacks: { }

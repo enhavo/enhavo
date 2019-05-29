@@ -1,0 +1,113 @@
+enhavo_sidebar_sidebar_index:
+    options:
+        expose: true
+    path: /sidebar/sidebar/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:indexAction
+        _sylius:
+            viewer:
+                type: sidebar
+                title: sidebar.label.sidebar
+                translationDomain: EnhavoSidebarBundle
+
+enhavo_sidebar_sidebar_create:
+    options:
+        expose: true
+    path: /sidebar/sidebar/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:createAction
+        _sylius:
+            redirect: enhavo_sidebar_sidebar_update
+            sortable: true
+            sortable_position: position
+            sorting_strategy: desc_first
+            viewer:
+                translationDomain: EnhavoSidebarBundle
+                tabs:
+                    main:
+                        label: sidebar.label.sidebar
+                        template: EnhavoSidebarBundle:Tab:sidebar.html.twig
+                    content:
+                        label: sidebar.label.content
+                        template: EnhavoSidebarBundle:Tab:content.html.twig
+
+
+enhavo_sidebar_sidebar_update:
+    options:
+        expose: true
+    path: /sidebar/sidebar/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:updateAction
+        _sylius:
+            viewer:
+                translationDomain: EnhavoSidebarBundle
+                tabs:
+                    main:
+                        label: sidebar.label.sidebar
+                        template: EnhavoSidebarBundle:Tab:sidebar.html.twig
+                    content:
+                        label: sidebar.label.content
+                        template: EnhavoSidebarBundle:Tab:content.html.twig
+
+
+enhavo_sidebar_sidebar_table:
+    options:
+        expose: true
+    path: /sidebar/sidebar/table
+    defaults:
+        sorting:
+            position: desc
+        filters:
+            name:
+                type: text
+                label: sidebar.label.sidebar
+                translation_domain: EnhavoSidebarBundle
+                property: name
+        _controller: enhavo_sidebar.controller.sidebar:tableAction
+        _sylius:
+            viewer:
+                translation_domain: EnhavoSidebarBundle
+                columns:
+                    name:
+                        type: text
+                        label: sidebar.label.name
+                        property: name
+                        width: 10
+
+
+
+enhavo_sidebar_sidebar_delete:
+    options:
+        expose: true
+    path: /sidebar/sidebar/delete/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:deleteAction
+
+enhavo_sidebar_sidebar_batch:
+    options:
+        expose: true
+    path: /sidebar/sidebar/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_sidebar_sidebar_preview:
+    options:
+        expose: true
+    path: /sidebar/sidebar/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_sidebar.controller.sidebar:previewAction
+        _sylius:
+            viewer:

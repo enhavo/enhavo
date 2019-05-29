@@ -1,0 +1,11 @@
+enhavo_sidebar_index:
+    path:  /enhavo/sidebar
+    methods: [GET]
+    defaults:
+        _controller: enhavo_app.controller.app:indexAction
+        _sylius:
+            viewer:
+                type: app
+                title: sidebar.label.sidebar
+                translationDomain: EnhavoSidebarBundle
+
