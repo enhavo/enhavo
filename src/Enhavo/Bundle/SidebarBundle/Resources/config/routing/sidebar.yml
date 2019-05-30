@@ -21,7 +21,7 @@ enhavo_sidebar_sidebar_create:
         _sylius:
             redirect: enhavo_sidebar_sidebar_update
             viewer:
-                translation_domain: EnhavoSidebarBundle
+                translationDomain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
@@ -29,7 +29,7 @@ enhavo_sidebar_sidebar_create:
                     content:
                         label: sidebar.label.content
                         template: EnhavoSidebarBundle:Tab:content.html.twig
-
+                        full_width: true
 
 enhavo_sidebar_sidebar_update:
     options:
@@ -40,7 +40,7 @@ enhavo_sidebar_sidebar_update:
         _controller: enhavo_sidebar.controller.sidebar:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoSidebarBundle
+                translationDomain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
@@ -48,7 +48,7 @@ enhavo_sidebar_sidebar_update:
                     content:
                         label: sidebar.label.content
                         template: EnhavoSidebarBundle:Tab:content.html.twig
-
+                        full_width: true
 
 enhavo_sidebar_sidebar_table:
     options:
@@ -66,7 +66,7 @@ enhavo_sidebar_sidebar_table:
                     translation_domain: EnhavoSidebarBundle
                     property: name
             viewer:
-                translation_domain: EnhavoSidebarBundle
+                translationDomain: EnhavoSidebarBundle
                 columns:
                     name:
                         type: text
@@ -96,13 +96,3 @@ enhavo_sidebar_sidebar_batch:
             batches:
                 delete:
                     type: delete
-
-enhavo_sidebar_sidebar_preview:
-    options:
-        expose: true
-    path: /sidebar/sidebar/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_sidebar.controller.sidebar:previewAction
-        _sylius:
-            viewer:

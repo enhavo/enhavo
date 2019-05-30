@@ -36,7 +36,7 @@ class SidebarType extends AbstractType
         $builder->add('grid', GridType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'item_groups' => ['layout'],
+            'item_groups' => ['content'],
         ));
     }
 
