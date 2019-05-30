@@ -1,18 +1,4 @@
 services:
-#    Enhavo\Bundle\NewsletterBundle\Button\SendButton:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.button, alias: newsletter_send }
-#
-#    Enhavo\Bundle\NewsletterBundle\Button\ViewButton:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-#        tags:
-#            - { name: enhavo.button, alias: newsletter_view }
-
     Enhavo\Bundle\NewsletterBundle\Batch\SendType:
         public: true
         calls:
@@ -42,6 +28,24 @@ services:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
             - Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
+            - '%enhavo_newsletter.model.newsletter.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_newsletter.extend_listener.subscriber:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            - '%enhavo_newsletter.model.newsletter.class%'
+            - true
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_newsletter.extend_listener.group:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
+        arguments:
+            - Enhavo\Bundle\NewsletterBundle\Entity\Group
             - '%enhavo_newsletter.model.newsletter.class%'
             - true
         tags:
