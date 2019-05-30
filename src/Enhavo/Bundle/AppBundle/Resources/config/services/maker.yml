@@ -25,3 +25,9 @@ services:
             - '@enhavo_app.maker.util'
         tags:
             - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeAction:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
