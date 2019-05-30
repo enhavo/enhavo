@@ -94,6 +94,6 @@ enhavo_routing:
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\NewsetterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsetterBundle\Entity\Subscriber
-            Enhavo\Bundle\NewsetterBundle\Model\GroupInterface: Enhavo\Bundle\NewsetterBundle\Entity\Group
-            Enhavo\Bundle\NewsetterBundle\Model\NewsletterInterface: Enhavo\Bundle\NewsetterBundle\Entity\Newsletter
+            Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            Enhavo\Bundle\NewsletterBundle\Model\GroupInterface: Enhavo\Bundle\NewsletterBundle\Entity\Group
+            Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
