@@ -8,11 +8,14 @@ newsletter:
       send: 'Newsletter send'
       view: 'Newsletter view in frontend'
   action:
-    sent:
-      sent: 'Send'
+    test_mail:
+      label: 'Test Mail'
+      success: 'Test Mail successfully sent!'
+      error: 'An error occured!'
+    send:
+      label: 'Send'
       success: 'Newsletter successfully sent!'
       error: 'An error occured!'
-      again: 'Do you really want to sent the newsletter again?'
     view: 'View'
   label:
     sent: 'sent'

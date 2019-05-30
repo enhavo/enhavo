@@ -4,8 +4,10 @@ namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
 use Enhavo\Bundle\NewsletterBundle\Form\Resolver;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SubscribeFormRenderer extends \Twig_Extension
+class SubscribeFormRenderer extends AbstractExtension
 {
     use ContainerAwareTrait;
 
@@ -27,7 +29,7 @@ class SubscribeFormRenderer extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('subscribe_form', array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction('subscribe_form', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 

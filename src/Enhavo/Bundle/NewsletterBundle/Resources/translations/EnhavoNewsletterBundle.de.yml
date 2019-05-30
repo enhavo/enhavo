@@ -8,11 +8,14 @@ newsletter:
       send: 'Newsletter verschicken'
       view: 'Newsletter im Frontend anzeigen'
   action:
-    sent:
-      sent: 'Senden'
+    test_mail:
+      label: 'Test Mail'
+      success: 'Test Mail erfolgreich gesendet!'
+      error: 'Test Mail konnte nicht gesendet werden!'
+    send:
+      label: 'Senden'
       success: 'Newsletter erfolgreich gesendet!'
       error: 'Newsletter konnte nicht gesendet werden!'
-      again: 'Möchten Sie den Newsletter wirklich erneut senden?'
     view: 'Anzeigen'
   label:
     sent: 'gesendet'
