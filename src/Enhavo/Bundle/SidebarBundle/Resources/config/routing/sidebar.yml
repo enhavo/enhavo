@@ -20,9 +20,6 @@ enhavo_sidebar_sidebar_create:
         _controller: enhavo_sidebar.controller.sidebar:createAction
         _sylius:
             redirect: enhavo_sidebar_sidebar_update
-            sortable: true
-            sortable_position: position
-            sorting_strategy: desc_first
             viewer:
                 translationDomain: EnhavoSidebarBundle
                 tabs:

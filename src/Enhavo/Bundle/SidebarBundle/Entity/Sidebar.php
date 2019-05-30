@@ -17,17 +17,17 @@ class Sidebar extends Content implements ResourceInterface
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      */
-    protected $code;
+    private $code;
 
     /**
      * @var GridInterface
      */
-    protected $grid;
+    private $grid;
 
     /**
      * @return string

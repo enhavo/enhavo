@@ -12,12 +12,6 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 
 class TemplateController extends ResourceController
 {
-    public function showResourceAction($contentDocument)
-    {
-        return $this->render('EnhavoTemplateBundle:Template:show.html.twig', array(
-            'data' => $contentDocument
-        ));
-    }
 }
 
 

@@ -12,12 +12,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 
 class SidebarController extends ResourceController
 {
-    public function showResourceAction($contentDocument)
-    {
-        return $this->render('EnhavoSidebarBundle:Sidebar:show.html.twig', array(
-            'data' => $contentDocument
-        ));
-    }
+
 }
 
 

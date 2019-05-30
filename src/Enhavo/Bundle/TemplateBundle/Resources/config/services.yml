@@ -10,23 +10,6 @@ services:
         tags:
             - { name: form.type, alias: enhavo_template_template }
 
-#    enhavo_sidebar.controller.sidebar:
-#        class: Enhavo\Bundle\SidebarBundle\Controller\SidebarController
-#        arguments:
-#        public: true
-#        calls:
-#            - [setContainer, ['@service_container']]
-
-    Enhavo\Bundle\TemplateBundle\Viewer\TemplateViewer:
-        public: true
-        arguments:
-            - '@enhavo_app.action_manager'
-            - '@session.flash_bag'
-        calls:
-            - ['setContainer', ['@service_container']]
-        tags:
-            - { name: enhavo.viewer, alias: template }
-
 
 
 

@@ -16,12 +16,7 @@ use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 
 class SidebarType extends AbstractType
 {
-    protected $class;
-
-    /**
-     * @var boolean
-     */
-    #protected $translation;
+    private $class;
 
     public function __construct($class)
     {
@@ -50,20 +45,5 @@ class SidebarType extends AbstractType
         $resolver->setDefaults( array(
             'data_class' => $this->class
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_sidebar_sidebar';
-    }
-
-    /**
-     * Returns a unique type name for this type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return 'sidebar';
     }
 }

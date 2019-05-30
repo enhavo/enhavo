@@ -17,9 +17,6 @@ enhavo_template_template_create:
         _controller: enhavo_template.controller.template:createAction
         _sylius:
             redirect: enhavo_template_template_update
-            sortable: true
-            sortable_position: position
-            sorting_strategy: desc_first
             viewer:
                 translationDomain: EnhavoTemplateBundle
                 tabs:

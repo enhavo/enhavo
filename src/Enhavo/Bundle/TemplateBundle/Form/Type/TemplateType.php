@@ -18,11 +18,6 @@ class TemplateType extends AbstractType
 {
     protected $class;
 
-    /**
-     * @var boolean
-     */
-    #protected $translation;
-
     public function __construct($class)
     {
         $this->class = $class;
@@ -50,20 +45,5 @@ class TemplateType extends AbstractType
         $resolver->setDefaults( array(
             'data_class' => $this->class
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_template_template';
-    }
-
-    /**
-     * Returns a unique type name for this type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return 'template';
     }
 }
