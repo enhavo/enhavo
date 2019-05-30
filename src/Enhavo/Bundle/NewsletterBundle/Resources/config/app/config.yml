@@ -62,7 +62,6 @@ enhavo_app:
             label: newsletter.role.label.view
             translationDomain: EnhavoNewsletterBundle
 
-
 enhavo_grid:
     render:
         sets:
@@ -91,3 +90,10 @@ enhavo_routing:
                 slug:
                     type: slug
                     property: title
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\NewsetterBundle\Model\SubscriberInterface: Enhavo\Bundle\NewsetterBundle\Entity\Subscriber
+            Enhavo\Bundle\NewsetterBundle\Model\GroupInterface: Enhavo\Bundle\NewsetterBundle\Entity\Group
+            Enhavo\Bundle\NewsetterBundle\Model\NewsletterInterface: Enhavo\Bundle\NewsetterBundle\Entity\Newsletter

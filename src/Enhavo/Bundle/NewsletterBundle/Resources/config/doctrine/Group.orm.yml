@@ -17,5 +17,5 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
 
     manyToMany:
         subscriber:
-            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface
             mappedBy: group
