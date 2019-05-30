@@ -1,0 +1,19 @@
+services:
+    Enhavo\Bundle\TemplateBundle\Menu\TemplateMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: template }
+
+    Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType:
+        arguments:
+            - '%enhavo_template.model.template.class%'
+        tags:
+            - { name: form.type, alias: enhavo_template_template }
+
+
+
+
+
+
+
+

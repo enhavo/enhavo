@@ -1,0 +1,19 @@
+services:
+    Enhavo\Bundle\SidebarBundle\Menu\SidebarMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: sidebar }
+
+    Enhavo\Bundle\SidebarBundle\Form\Type\SidebarType:
+        arguments:
+            - '%enhavo_sidebar.model.sidebar.class%'
+        tags:
+            - { name: form.type, alias: enhavo_sidebar_sidebar }
+
+
+
+
+
+
+
+

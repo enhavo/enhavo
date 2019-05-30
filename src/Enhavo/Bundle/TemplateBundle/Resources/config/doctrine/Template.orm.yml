@@ -1,0 +1,28 @@
+Enhavo\Bundle\TemplateBundle\Entity\Template:
+    type: entity
+    table: template_template
+    repositoryClass: Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+        code:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToOne:
+        grid:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+
+    lifecycleCallbacks: { }
