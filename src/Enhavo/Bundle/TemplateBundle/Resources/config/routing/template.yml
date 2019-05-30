@@ -18,7 +18,7 @@ enhavo_template_template_create:
         _sylius:
             redirect: enhavo_template_template_update
             viewer:
-                translation_domain: EnhavoTemplateBundle
+                translationDomain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
@@ -26,6 +26,7 @@ enhavo_template_template_create:
                     content:
                         label: template.label.content
                         template: EnhavoTemplateBundle:Tab:content.html.twig
+                        full_width: true
 
 enhavo_template_template_update:
     options:
@@ -36,7 +37,7 @@ enhavo_template_template_update:
         _controller: enhavo_template.controller.template:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoTemplateBundle
+                translationDomain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
@@ -44,6 +45,7 @@ enhavo_template_template_update:
                     content:
                         label: template.label.content
                         template: EnhavoTemplateBundle:Tab:content.html.twig
+                        full_width: true
 
 enhavo_template_template_table:
     options:
@@ -61,12 +63,13 @@ enhavo_template_template_table:
                     translation_domain: EnhavoTemplateBundle
                     property: name
             viewer:
-                translation_domain: EnhavoTemplateBundle
+                translationDomain: EnhavoTemplateBundle
                 columns:
                     name:
                         type: text
                         label: template.label.name
                         property: name
+                        translation_domain: EnhavoTemplateBundle
                         width: 12
 
 enhavo_template_template_delete:
@@ -91,14 +94,4 @@ enhavo_template_template_batch:
             batches:
                 delete:
                     type: delete
-
-enhavo_template_template_preview:
-    options:
-        expose: true
-    path: /enhavo/template/template/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_template.controller.template:previewAction
-        _sylius:
-            viewer:
 
