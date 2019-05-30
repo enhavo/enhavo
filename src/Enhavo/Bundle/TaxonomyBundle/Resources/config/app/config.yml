@@ -1,0 +1,29 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy
+            Enhavo\Bundle\TaxonomyBundle\Model\TermInterface: Enhavo\Bundle\TaxonomyBundle\Entity\Term
+
+enhavo_app:
+    roles:
+        enhavo_taxonomy_taxonomy_index:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX
+            label: taxonomy.role.label.index
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_create:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE
+            label: taxonomy.role.label.create
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_update:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE
+            label: taxonomy.role.label.update
+            translationDomain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_taxonomy_delete:
+            role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE
+            label: taxonomy.role.label.delete
+            translationDomain: EnhavoTaxonomyBundle
+
+security:
+    role_hierarchy:
+        ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE:
+            ROLE_ENHAVO_TAXONOMY_COLLECTION_UPDATE:

@@ -1,0 +1,8 @@
+<div class="article-stream">
+    <h3>Articles</h3>
+    <ul class="columns">
+        {% for article in articles %}
+            <li><a href="{{ router(article) }}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

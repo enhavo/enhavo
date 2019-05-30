@@ -1,0 +1,33 @@
+services:
+    enhavo_app.maker.util:
+        class: Enhavo\Bundle\AppBundle\Maker\MakerUtil
+        arguments:
+            - '@kernel'
+
+    Enhavo\Bundle\AppBundle\Maker\MakeRouting:
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeWidget:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeFilter:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeMenu:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeAction:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }

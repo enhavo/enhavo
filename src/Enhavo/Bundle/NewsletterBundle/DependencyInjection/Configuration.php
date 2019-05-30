@@ -2,6 +2,11 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType;
+use Enhavo\Bundle\UserBundle\Repository\GroupRepository;
+use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -61,6 +66,23 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue('Enhavo\Bundle\NewsletterBundle\Repository\SubscriberRepository')->end()
                                         ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
                                         ->scalarNode('form')->defaultValue('Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+
+                        ->arrayNode('group')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Group::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(GroupRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(GroupType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

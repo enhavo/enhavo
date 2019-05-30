@@ -1,17 +1,5 @@
-enhavo_article_theme_category:
-    options:
-        expose: true
-    path: /article/category/{slug}
-    methods: [GET]
-    defaults:
-        _controller: enhavo_article.controller.article:categoryAction
-        _sylius:
-
 enhavo_article_theme_article_show:
-    options:
-        expose: true
-    path: /article/show/{slug}
+    path: /article/{slug}
     methods: [GET]
     defaults:
-        _controller: enhavo_article.controller.article:categoryAction
-        _sylius:
+        _controller: Enhavo\Bundle\ArticleBundle\Controller\ArticleController:showAction

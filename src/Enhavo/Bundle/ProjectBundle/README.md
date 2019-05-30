@@ -1,2 +1,0 @@
-# EnhavoProjectBundle
-[READ-ONLY] EnhavoProjectBundle

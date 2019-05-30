@@ -26,7 +26,17 @@ enhavo_newsletter_newsletter_create:
                 tabs:
                     main:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:main.html.twig
+                    content:
+                        label: newsletter.label.content
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:content.html.twig
+                        full_width: true
+                actions:
+                    preview:
+                        type: preview
+                        route: enhavo_newsletter_newsletter_preview
+                    test_mail:
+                        type: newsletter_test_mail
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -41,13 +51,19 @@ enhavo_newsletter_newsletter_update:
                 tabs:
                     main:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
-                buttons:
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:main.html.twig
+                    content:
+                        label: newsletter.label.content
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:content.html.twig
+                        full_width: true
+                actions:
+                    preview:
+                        type: preview
+                        route: enhavo_newsletter_newsletter_preview
+                    test_mail:
+                        type: newsletter_test_mail
                     send:
                         type: newsletter_send
-                    view:
-                        type: newsletter_view
-                        route: enhavo_newsletter_newsletter_show
 
 enhavo_newsletter_newsletter_table:
     options:
@@ -114,13 +130,28 @@ enhavo_newsletter_newsletter_batch:
                 newsletter_send:
                     type: newsletter_send
 
+
 enhavo_newsletter_newsletter_preview:
     options:
         expose: true
-    path: /admin/enhavo/newsletter/newsletter/preview
-    methods: [POST]
+    path: /enhavo/newsletter/newsletter/preview
+    methods: [GET]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:previewAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_newsletter_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/newsletter/newsletter/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_newsletter.controller.newsletter:showResourceAction
 
 enhavo_newsletter_newsletter_send:
     options:
@@ -128,4 +159,4 @@ enhavo_newsletter_newsletter_send:
     path: /admin/newsletter/newsletter/{id}/edit/send
     methods: [POST]
     defaults:
-        _controller: enhavo_newsletter.controller.newsletter:sendEmailAction
+        _controller: enhavo_newsletter.controller.newsletter:sendAction

@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -8,38 +9,37 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /**
  * Newsletter
  */
-class Newsletter implements ResourceInterface, Slugable
+class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
 {
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $slug;
+    private $slug;
 
     /**
      * @var string
      */
-    protected $subject;
+    private $subject;
 
     /**
      * @var GridInterface
      */
-    protected $grid;
+    private $grid;
 
     /**
      * @var boolean
      */
-    protected $sent;
-
+    private $sent;
 
     /**
      * Get id

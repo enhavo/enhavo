@@ -65,3 +65,9 @@ services:
             - '@enhavo_grid.item_collector'
             - '%enhavo_grid.items%'
 
+    Enhavo\Bundle\GridBundle\Maker\MakeGridItem:
+        arguments:
+            - '@kernel'
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }

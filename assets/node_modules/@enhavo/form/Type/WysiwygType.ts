@@ -45,6 +45,7 @@ export default class WysiwygType extends FormType
             min_height: 160,
             autoresize_on_init: false,
             autoresize_max_height: 1000,
+            contextmenu: "",
             setup: function (editor: any) {
                 editor.on('change', function () {
                     tinymce.triggerSave();

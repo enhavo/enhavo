@@ -81,3 +81,17 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
             - { name: enhavo.menu, alias: newsletter }
+
+    Enhavo\Bundle\NewsletterBundle\Action\SendActionType:
+        public: true
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo.action, alias: newsletter_send }
+
+    Enhavo\Bundle\NewsletterBundle\Action\TestMailActionType:
+        public: true
+        arguments:
+            - '@translator'
+        tags:
+            - { name: enhavo.action, alias: newsletter_test_mail }

@@ -1,7 +1,0 @@
-enhavo_shop_theme_cart_summary:
-    path: /summary.{_format}
-    defaults:
-        _controller: sylius.controller.cart:summaryAction
-        _format: html
-        _sylius:
-            template: EnhavoProjectBundle:Theme/Shop:cart-summary.html.twig

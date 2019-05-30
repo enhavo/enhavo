@@ -11,11 +11,8 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
         name:
             type: text
             nullable: false
-        code:
-            type: text
-            nullable: false
 
     manyToMany:
         subscriber:
-            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface
             mappedBy: group

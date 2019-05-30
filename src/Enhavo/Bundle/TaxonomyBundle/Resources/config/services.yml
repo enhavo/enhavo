@@ -1,0 +1,56 @@
+services:
+    Enhavo\Bundle\TaxonomyBundle\Maker\MakeTaxonomy:
+        arguments:
+            - '@enhavo_app.maker.util'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\TaxonomyBundle\Filter\TaxonomyFilterType:
+        public: true
+        arguments:
+            - '@translator'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'enhavo.filter', alias: 'taxonomy' }
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermChoiceType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+            - '@enhavo_taxonomy.repository.term'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+            - '@enhavo_taxonomy.repository.term'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\TaxonomyBundle\Form\Type\TermType:
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\TaxonomyBundle\Init\InitTaxonomy:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_taxonomy.repository.taxonomy'
+            - '@enhavo_taxonomy.factory.taxonomy'
+            - '%enhavo_taxonomy.taxonomies%'
+        tags:
+            - { name: 'enhavo.init', alias: 'taxonomy'}
+
+    enhavo_taxonomy.factory.term:
+        class: '%enhavo_taxonomy.factory.term.class%'
+        arguments:
+            - '%enhavo_taxonomy.model.term.class%'
+            - '@enhavo_taxonomy.repository.taxonomy'

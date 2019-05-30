@@ -9,7 +9,11 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 
-class Group
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
+use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
+
+class Group implements GroupInterface, ResourceInterface
 {
     /**
      * @var integer
@@ -22,20 +26,18 @@ class Group
     private $name;
 
     /**
-     * @var Subscriber
+     * @var SubscriberInterface
      */
     private $subscriber;
 
     /**
-     * @var string
+     * @return int
      */
-    private $code;
+    public function getId()
+    {
+        return $this->id;
+    }
 
-    /**
-     * @var string
-     */
-    private $condition;
-    
     /**
      * @return string
      */
@@ -53,22 +55,6 @@ class Group
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -77,35 +63,12 @@ class Group
     }
 
     /**
-     * Set condition
-     *
-     * @param string $condition
-     * @return Group
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string 
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
-
-    /**
      * Add subscriber
      *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Subscriber $subscriber
-     * @return Group
+     * @param SubscriberInterface $subscriber
+     * @return GroupInterface
      */
-    public function addSubscriber(\Enhavo\Bundle\NewsletterBundle\Entity\Subscriber $subscriber)
+    public function addSubscriber(SubscriberInterface $subscriber): GroupInterface
     {
         $this->subscriber[] = $subscriber;
 
@@ -115,9 +78,9 @@ class Group
     /**
      * Remove subscriber
      *
-     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Subscriber $subscriber
+     * @param SubscriberInterface $subscriber
      */
-    public function removeSubscriber(\Enhavo\Bundle\NewsletterBundle\Entity\Subscriber $subscriber)
+    public function removeSubscriber(SubscriberInterface $subscriber)
     {
         $this->subscriber->removeElement($subscriber);
     }
@@ -130,21 +93,5 @@ class Group
     public function getSubscriber()
     {
         return $this->subscriber;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
     }
 }

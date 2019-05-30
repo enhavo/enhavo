@@ -38,3 +38,12 @@ enhavo_app:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
             label: article.role.label.delete
             translationDomain: EnhavoArticleBundle
+
+enhavo_taxonomy:
+    taxonomies:
+        article_category:
+            label: article.label.category
+            translation_domain: EnhavoArticleBundle
+        article_tag:
+            label: article.label.tag
+            translation_domain: EnhavoArticleBundle

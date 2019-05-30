@@ -6,27 +6,39 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsletterController extends ResourceController
 {
-    public function showNewsletterAction(Request $request, $slug)
+    public function showNewsletterAction(Request $request)
     {
-        $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
-
-        $contentDocument = $this->get('enhavo_newsletter.repository.newsletter')->findOneBy(array('slug' => $slug));
-
-        if (!$contentDocument) {
-            throw new NotFoundHttpException();
+        $slug = $request->get('slug');
+        if (empty($slug)) {
+            throw $this->createNotFoundException();
         }
 
-        return $this->render($configuration->getTemplate($this->getParameter('enhavo_newsletter.newsletter.template.show')), array(
-            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.template.base'),
-            'data' => $contentDocument
-        ));
+        /** @var Newsletter $contentDocument */
+        $contentDocument = $this->get('enhavo_newsletter.repository.newsletter')->findOneBy([
+            'slug' => $slug
+        ]);
+
+        if (!$contentDocument) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->showResourceAction($contentDocument);
     }
 
-    public function sendEmailAction(Request $request)
+    public function showResourceAction(Newsletter $contentDocument)
+    {
+        $template = $this->getParameter('enhavo_newsletter.newsletter.template.show');
+
+        return $this->render($template, [
+            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.template.base'),
+            'data' => $contentDocument
+        ]);
+    }
+
+    public function sendAction(Request $request)
     {
         $id = $request->get('id');
         $newsletterData = $request->get('enhavo_newsletter_newsletter');
@@ -50,6 +62,11 @@ class NewsletterController extends ResourceController
         $newsletterManager = $this->getNewsletterManager();
         $newsletterManager->send($currentNewsletter);
 
+        return new JsonResponse();
+    }
+
+    public function sendTestAction(Request $request)
+    {
         return new JsonResponse();
     }
 

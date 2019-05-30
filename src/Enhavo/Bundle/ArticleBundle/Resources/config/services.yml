@@ -7,13 +7,6 @@ services:
         tags:
             - { name: form.type, alias: enhavo_article_article }
 
-    Enhavo\Bundle\ArticleBundle\Widget\ArticleCategoryWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.widget, alias: article_category }
-
     enhavo_article.extend_listener.article:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
@@ -23,10 +16,25 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    Enhavo\Bundle\ArticleBundle\Menu\ArticleMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+    Enhavo\Bundle\ArticleBundle\Menu\ArticleRootMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\ListMenu
         tags:
             - { name: enhavo.menu, alias: article }
+
+    Enhavo\Bundle\ArticleBundle\Menu\ArticleMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: article_article }
+
+    Enhavo\Bundle\ArticleBundle\Menu\TagMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: article_tag }
+
+    Enhavo\Bundle\ArticleBundle\Menu\CategoryMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: article_category }
 
     enhavo_article.statistic.article:
         class: Enhavo\Bundle\ArticleBundle\Statistic\ArticleStatistic
@@ -34,3 +42,18 @@ services:
           - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.statistic, alias: article }
+
+    Enhavo\Bundle\ArticleBundle\Grid\ArticleStreamType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.grid_item, alias: article_stream }
+
+    Enhavo\Bundle\ArticleBundle\Widget\ArticleStreamType:
+        public: true
+        arguments:
+            - '@enhavo_article.repository.article'
+            - '@request_stack'
+        tags:
+            - { name: enhavo.widget, alias: article_stream }

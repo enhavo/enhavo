@@ -39,8 +39,9 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/services.yml');
         $loader->load('services/controller.yml');
         $loader->load('services/twig.yml');
+        $loader->load('services/init.yml');
+        $loader->load('services/command.yml');
         $loader->load('services/viewer.yml');
-        $loader->load('services/block.yml');
         $loader->load('services/filter.yml');
         $loader->load('services/column.yml');
         $loader->load('services/action.yml');
@@ -49,6 +50,7 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/chart.yml');
         $loader->load('services/reference.yml');
         $loader->load('services/metadata.yml');
+        $loader->load('services/maker.yml');
         $loader->load('services/widget.yml');
     }
 }

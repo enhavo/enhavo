@@ -11,8 +11,6 @@ enhavo_app:
             type: article
         page:
             type: page
-        category:
-            type: category
         slider:
             type: slider
         newsletter:
@@ -23,23 +21,14 @@ enhavo_app:
 #            type: shop
         navigation:
             type: navigation
-#        translation_strings:
-#            type: translation
         redirect:
             type: redirect
         media_library:
             type: media_library
-        magazine:
-            type: base
-            route: enhavo_project_magazine_index
-            icon: local_library
-            label: Magazine
         sidebar:
             type: sidebar
         template:
             type: template
-        setting:
-            type: setting
 
 enhavo_grid:
     items:
@@ -61,6 +50,8 @@ enhavo_grid:
             type: two_column
         three_column:
             type: three_column
+        article_stream:
+            type: article_stream
         sidebar_column:
             type: sidebar_column
 

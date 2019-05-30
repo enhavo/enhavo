@@ -24,3 +24,11 @@ services:
     Enhavo\Bundle\AppBundle\Twig\SplObjectExtension:
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\AppBundle\Twig\WidgetExtension:
+        arguments:
+            - '@enhavo_app.widget.widget_manager'
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: twig.extension }

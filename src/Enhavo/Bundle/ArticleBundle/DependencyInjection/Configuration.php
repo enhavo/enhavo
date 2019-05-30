@@ -2,6 +2,12 @@
 
 namespace Enhavo\Bundle\ArticleBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
+use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType;
+use Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository;
+use Enhavo\Bundle\FormBundle\Serializer\Mock\Resource;
+use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -34,21 +40,14 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
-                                ->arrayNode('routing')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('strategy')->defaultValue('slug')->end()
-                                        ->scalarNode('route')->defaultValue(null)->end()
-                                    ->end()
-                                ->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\ArticleBundle\Entity\Article')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\ArticleBundle\Controller\ArticleController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\ArticleBundle\Form\Type\ArticleType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Article::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(ArticleRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ArticleType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

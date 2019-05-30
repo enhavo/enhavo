@@ -1,0 +1,51 @@
+Enhavo\Bundle\TaxonomyBundle\Entity\Term:
+    type: entity
+    repositoryClass: Enhavo\Bundle\TaxonomyBundle\Repository\TermRepository
+    table: taxonomy_term
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+        text:
+            type: text
+            nullable: true
+
+        position:
+            type: integer
+            nullable: true
+
+        slug:
+            type: string
+            length: 255
+            nullable: true
+            gedmo:
+                slug:
+                    separator: -
+                    style: default
+                    updatable: false
+                    fields: ['name']
+
+    manyToOne:
+        taxonomy:
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface
+            joinColumn:
+                onDelete: CASCADE
+
+        parent:
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    oneToMany:
+        children:
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
+            mappedBy: parent
+
+    lifecycleCallbacks: {  }

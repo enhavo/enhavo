@@ -24,13 +24,20 @@ enhavo_calendar_appointment_create:
                 tabs:
                     main:
                         label: appointment.label.appointment
-                        template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                        template: EnhavoCalendarBundle:Tab:main.html.twig
+                    location:
+                        label: appointment.label.location
+                        template: EnhavoCalendarBundle:Tab:location.html.twig
                     content:
                         label: appointment.label.content
                         template: EnhavoCalendarBundle:Tab:content.html.twig
-                    seo:
-                        label: appointment.label.seo
-                        template: EnhavoCalendarBundle:Tab:seo.html.twig
+                        full_width: true
+                    meta:
+                        label: appointment.label.meta
+                        template: EnhavoCalendarBundle:Tab:meta.html.twig
+                    import:
+                        label: appointment.label.import
+                        template: EnhavoCalendarBundle:Tab:import.html.twig
 
 enhavo_calendar_appointment_update:
     options:
@@ -45,13 +52,20 @@ enhavo_calendar_appointment_update:
                 tabs:
                     main:
                         label: appointment.label.appointment
-                        template: EnhavoCalendarBundle:Tab:appointment.html.twig
+                        template: EnhavoCalendarBundle:Tab:main.html.twig
+                    location:
+                        label: appointment.label.location
+                        template: EnhavoCalendarBundle:Tab:location.html.twig
                     content:
                         label: appointment.label.content
                         template: EnhavoCalendarBundle:Tab:content.html.twig
-                    seo:
-                        label: appointment.label.seo
-                        template: EnhavoCalendarBundle:Tab:seo.html.twig
+                        full_width: true
+                    meta:
+                        label: appointment.label.meta
+                        template: EnhavoCalendarBundle:Tab:meta.html.twig
+                    import:
+                        label: appointment.label.import
+                        template: EnhavoCalendarBundle:Tab:import.html.twig
 
 enhavo_calendar_appointment_table:
     options:

@@ -21,9 +21,9 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     manyToMany:
         categories:
             cascade: ['persist', 'refresh']
-            targetEntity: Enhavo\Bundle\CategoryBundle\Model\CategoryInterface
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
             joinTable:
-                name: article_category
+                name: article_article_category
                 joinColumns:
                   article_id:
                     referencedColumnName: id
@@ -32,3 +32,17 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
                   category_id:
                     referencedColumnName: id
                     onDelete: CASCADE
+
+        tags:
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\TaxonomyBundle\Model\TermInterface
+            joinTable:
+                name: article_article_tag
+                joinColumns:
+                    article_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    category_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE

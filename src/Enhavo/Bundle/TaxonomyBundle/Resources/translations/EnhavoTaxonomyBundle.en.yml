@@ -1,0 +1,13 @@
+taxonomy:
+  role:
+    label:
+      index: 'Taxonomy list'
+      update: 'Taxonomy update'
+      create: 'Taxonomy create'
+      delete: 'Taxonomy delete'
+  label:
+    id: 'ID'
+    taxonomy: 'Taxonomy'
+term:
+  label:
+    name: 'Name'

@@ -27,25 +27,14 @@ enhavo_page_page_create:
                     content:
                         label: page.label.content
                         template: EnhavoPageBundle:Tab:content.html.twig
-                    seo:
-                        label: page.label.seo
-                        template: EnhavoPageBundle:Tab:seo.html.twig
+                        full_width: true
+                    meta:
+                        label: page.label.meta
+                        template: EnhavoPageBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview
                         route: enhavo_page_page_preview
-
-enhavo_page_page_preview:
-    options:
-        expose: true
-    path: /enhavo/page/page/preview
-    methods: [POST]
-    defaults:
-        _controller: enhavo_page.controller.page:previewAction
-        _sylius:
-            viewer:
-                strategy_options:
-                    service: enhavo_page.controller.page:showResourceAction
 
 enhavo_page_page_update:
     options:
@@ -64,9 +53,10 @@ enhavo_page_page_update:
                     content:
                         label: page.label.content
                         template: EnhavoPageBundle:Tab:content.html.twig
-                    seo:
-                        label: page.label.seo
-                        template: EnhavoPageBundle:Tab:seo.html.twig
+                        full_width: true
+                    meta:
+                        label: page.label.meta
+                        template: EnhavoPageBundle:Tab:meta.html.twig
                 actions:
                     preview:
                         type: preview
@@ -131,3 +121,23 @@ enhavo_page_page_batch:
                     type: delete
                 publish:
                     type: publish
+
+enhavo_page_page_preview:
+    options:
+        expose: true
+    path: /enhavo/page/page/preview
+    defaults:
+        _controller: enhavo_page.controller.page:previewAction
+        _sylius:
+            viewer:
+
+enhavo_page_page_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/page/page/preview/resource
+    defaults:
+        _controller: enhavo_page.controller.page:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_page.controller.page:showResourceAction

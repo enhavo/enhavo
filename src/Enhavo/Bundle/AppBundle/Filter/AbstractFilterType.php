@@ -28,6 +28,15 @@ abstract class AbstractFilterType extends AbstractType implements FilterTypeInte
         $this->translator = $translator;
     }
 
+    public function createViewData($options, $name)
+    {
+        return [
+            'label' => $this->getLabel($options),
+            'type' => $this->getType(),
+            'key' => $name,
+            'component' => $options['component']
+        ];
+    }
 
     public function getPermission($options)
     {

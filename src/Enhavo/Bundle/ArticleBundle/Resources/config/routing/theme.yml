@@ -1,0 +1,3 @@
+enhavo_article_theme_article:
+    resource: "@EnhavoArticleBundle/Resources/config/routing/theme/article.yml"
+    prefix:   /

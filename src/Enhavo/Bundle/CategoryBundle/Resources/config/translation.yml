@@ -1,4 +1,0 @@
-Enhavo\Bundle\CategoryBundle\Entity\Category:
-    properties:
-        name:
-        text:

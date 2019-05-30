@@ -22,21 +22,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('boxes')
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('template')->end()
-                            ->variableNode('widgets')->end()
-                        ->end()
-                    ->end()
-                ->end()
-
-                ->arrayNode('template')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('base')->defaultValue('EnhavoThemeBundle:Theme:base.html.twig')->end()
-                    ->end()
-                ->end()
             ->end();
 
         return $treeBuilder;

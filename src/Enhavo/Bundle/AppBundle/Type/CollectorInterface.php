@@ -15,4 +15,6 @@ interface CollectorInterface
     public function add($alias, $id);
 
     public function getType($name);
+
+    public function getTypes();
 }

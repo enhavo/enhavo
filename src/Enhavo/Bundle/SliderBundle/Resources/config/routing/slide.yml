@@ -4,7 +4,7 @@ enhavo_slider_slide_index:
     path: /enhavo/slider/slide/index
     methods: [GET]
     defaults:
-        _controller: enhavo_slider.controller.slide:indexAction
+        _controller: enhavo_slider.controller.slide:listAction
         _sylius:
             viewer:
                 title: slider.label.slider
@@ -19,9 +19,6 @@ enhavo_slider_slide_create:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
             redirect: enhavo_slider_slide_update
-            sortable: true
-            sortable_position: position
-            sorting_strategy: desc_first
             viewer:
                 translationDomain: EnhavoSliderBundle
 
@@ -36,32 +33,18 @@ enhavo_slider_slide_update:
             viewer:
                 translationDomain: EnhavoSliderBundle
 
-enhavo_slider_slide_table:
+enhavo_slider_slide_data:
     options:
         expose: true
     path: /enhavo/slider/slide/table
     defaults:
-        _controller: enhavo_slider.controller.slide:tableAction
+        _controller: enhavo_slider.controller.slide:listDataAction
         _sylius:
             sorting:
                 position: desc
-            filters:
-                title:
-                    type: text
-                    label: article.label.title
-                    translation_domain: EnhavoArticleBundle
-                    property: title
-                public:
-                    type: boolean
-                    label: article.label.public
-                    translation_domain: EnhavoArticleBundle
-                    property: public
-                    equals: true
             viewer:
                 translationDomain: EnhavoSliderBundle
-                sorting:
-                    move_after_route: enhavo_slider_slide_move_after
-                    move_to_page_route: enhavo_slider_slide_move_to_page
+                sorting_property: sorting
                 columns:
                     picture:
                         type: media
@@ -77,7 +60,7 @@ enhavo_slider_slide_delete:
     options:
         expose: true
     path: /enhavo/slider/slide/delete/{id}
-    methods: [POST, DELETE]
+    methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slide:deleteAction
 
@@ -97,25 +80,3 @@ enhavo_slider_slide_batch:
                     type: delete
                 publish:
                     type: publish
-
-enhavo_slider_slide_move_after:
-    options:
-        expose: true
-    path: /enhavo/slider/slide/move-after/{id}/{target}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_slider.controller.slide:moveAfterAction
-        _sylius:
-            sortable_position: position
-            sorting_strategy: desc_first
-
-enhavo_slider_slide_move_to_page:
-    options:
-        expose: true
-    path: /enhavo/slider/slide/move-to-page/{id}/{page}/{top}
-    methods: [POST]
-    defaults:
-        _controller: enhavo_slider.controller.slide:moveToPageAction
-        _sylius:
-            sortable_position: position
-            sorting_strategy: desc_first

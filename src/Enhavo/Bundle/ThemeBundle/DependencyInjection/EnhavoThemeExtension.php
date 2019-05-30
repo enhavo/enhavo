@@ -22,18 +22,8 @@ class EnhavoThemeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $boxes = [];
-        if(isset($config['boxes'])) {
-            $boxes = $config['boxes'];
-        }
-
-        $container->setParameter('enhavo_theme.boxes', $boxes);
-        $container->setParameter('enhavo_theme.template', $config[ 'template' ]);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        
+
         $loader->load('services/services.yml');
-        $loader->load('services/widget.yml');
-        $loader->load('services/twig.yml');
     }
 }

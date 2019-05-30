@@ -1,4 +1,0 @@
-enhavo_project_download_index:
-    path: /downloads
-    defaults:
-        _controller: EnhavoProjectBundle:Download:index
