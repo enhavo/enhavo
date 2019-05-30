@@ -12,22 +12,35 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 
-class Template extends Content implements ResourceInterface
+class Template implements ResourceInterface
 {
     /**
-     * @var string
+     * @var int
      */
-    protected $name;
+    private $id;
 
     /**
      * @var string
      */
-    protected $code;
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $code;
 
     /**
      * @var GridInterface
      */
-    protected $grid;
+    private $grid;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
@@ -65,7 +78,7 @@ class Template extends Content implements ResourceInterface
      * Set content
      *
      * @param GridInterface $grid
-     * @return Content
+     * @return Template
      */
     public function setGrid(GridInterface $grid = null)
     {
