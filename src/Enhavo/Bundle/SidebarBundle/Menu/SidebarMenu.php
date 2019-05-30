@@ -18,7 +18,7 @@ class SidebarMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'dashboard',
+            'icon' => 'view_column',
             'label' => 'sidebar.label.sidebar',
             'translation_domain' => 'EnhavoSidebarBundle',
             'route' => 'enhavo_sidebar_sidebar_index',

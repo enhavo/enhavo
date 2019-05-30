@@ -21,7 +21,7 @@ enhavo_sidebar_sidebar_create:
         _sylius:
             redirect: enhavo_sidebar_sidebar_update
             viewer:
-                translationDomain: EnhavoSidebarBundle
+                translation_domain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
@@ -40,7 +40,7 @@ enhavo_sidebar_sidebar_update:
         _controller: enhavo_sidebar.controller.sidebar:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoSidebarBundle
+                translation_domain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
@@ -57,14 +57,14 @@ enhavo_sidebar_sidebar_table:
     defaults:
         sorting:
             position: desc
-        filters:
-            name:
-                type: text
-                label: sidebar.label.sidebar
-                translation_domain: EnhavoSidebarBundle
-                property: name
         _controller: enhavo_sidebar.controller.sidebar:tableAction
         _sylius:
+            filters:
+                name:
+                    type: text
+                    label: sidebar.label.sidebar
+                    translation_domain: EnhavoSidebarBundle
+                    property: name
             viewer:
                 translation_domain: EnhavoSidebarBundle
                 columns:

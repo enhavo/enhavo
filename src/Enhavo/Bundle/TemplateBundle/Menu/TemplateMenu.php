@@ -18,7 +18,7 @@ class TemplateMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'pages',
+            'icon' => 'chrome_reader_mode',
             'label' => 'template.label.template',
             'translation_domain' => 'EnhavoTemplateBundle',
             'route' => 'enhavo_template_template_index',
