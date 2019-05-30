@@ -55,8 +55,8 @@ class TextPictureItemType extends AbstractType
             'label' => 'textPicture.form.label.position',
             'translation_domain' => 'EnhavoGridBundle',
             'choices' => array(
-                BooleanType::VALUE_FALSE => 'textPicture.form.label.picture_left-text_right',
-                BooleanType::VALUE_TRUE => 'textPicture.form.label.text_left-picture_right'
+                'textPicture.form.label.picture_left-text_right' => BooleanType::VALUE_FALSE,
+                'textPicture.form.label.text_left-picture_right' => BooleanType::VALUE_TRUE
             ),
             'expanded' => true,
             'multiple' => false
@@ -71,9 +71,9 @@ class TextPictureItemType extends AbstractType
             'label' => 'textText.form.label.layout',
             'translation_domain' => 'EnhavoGridBundle',
             'choices' => [
-                'textPicture.form.label.1_1' => TextPictureItem::LAYOUT_1_1,
-                'textPicture.form.label.1_2' => TextPictureItem::LAYOUT_1_2,
-                'textPicture.form.label.2_1' => TextPictureItem::LAYOUT_2_1
+                '1:1' => TextPictureItem::LAYOUT_1_1,
+                '1:2' => TextPictureItem::LAYOUT_1_2,
+                '2:1' => TextPictureItem::LAYOUT_2_1
             ],
             'expanded' => true,
             'multiple' => false

@@ -6,15 +6,16 @@
  * Time: 16:33
  */
 
-namespace Enhavo\Bundle\GridBundle\Form\Type;
+namespace Enhavo\Bundle\SidebarBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Model\Column\OneColumnItem;
+use Enhavo\Bundle\GridBundle\Form\Type\ColumnType;
+use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\SidebarBundle\Entity\Sidebar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Enhavo\Bundle\GridBundle\Model\Column\SidebarColumnItem;
+use Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnItem;
 
 class SidebarColumnItemType extends AbstractType
 {
@@ -24,12 +25,14 @@ class SidebarColumnItemType extends AbstractType
             'class' => Sidebar::class,
             'label' => 'sidebar.label.sidebar',
             'translation_domain' => 'EnhavoSidebarBundle',
-            'choice_label' => 'name'
+            'choice_label' => 'name',
+            'placeholder' => '---'
         ]);
+
         $builder->add('column', GridType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoGridBundle',
-            'item_groups' => ['content']
+            'item_groups' => ['content'],
         ]);
     }
 

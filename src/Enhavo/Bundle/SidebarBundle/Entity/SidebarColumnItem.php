@@ -6,17 +6,13 @@
  * Time: 16:29
  */
 
-namespace Enhavo\Bundle\GridBundle\Model\Column;
+namespace Enhavo\Bundle\SidebarBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
-use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
-use Enhavo\Bundle\SidebarBundle\Entity\Sidebar;
+use Enhavo\Bundle\GridBundle\Model\Column\Column;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 
 class SidebarColumnItem extends Column
 {
-
     /**
      * @var Sidebar
      */

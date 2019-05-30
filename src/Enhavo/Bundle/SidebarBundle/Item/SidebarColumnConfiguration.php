@@ -6,11 +6,11 @@
  * Time: 16:26
  */
 
-namespace Enhavo\Bundle\GridBundle\Item\Configuration;
+namespace Enhavo\Bundle\SidebarBundle\Item;
 
-use Enhavo\Bundle\GridBundle\Model\Column\SidebarColumnItem;
-use Enhavo\Bundle\GridBundle\Factory\SidebarColumnItemFactory;
-use Enhavo\Bundle\GridBundle\Form\Type\SidebarColumnItemType;
+use Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnItem;
+use Enhavo\Bundle\SidebarBundle\Factory\SidebarColumnItemFactory;
+use Enhavo\Bundle\SidebarBundle\Form\Type\SidebarColumnItemType;
 use Enhavo\Bundle\GridBundle\Item\AbstractConfiguration;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,11 +25,11 @@ class SidebarColumnConfiguration extends AbstractConfiguration
             'parent' => SidebarColumnItem::class,
             'form' => SidebarColumnItemType::class,
             'factory' => SidebarColumnItemFactory::class,
-            'repository' => 'EnhavoGridBundle:SidebarColumn',
-            'template' => 'EnhavoGridBundle:Item:sidebar-column.html.twig',
+            'repository' => 'EnhavoSidebarBundle:SidebarColumn',
+            'template' => 'EnhavoSidebarBundle:Item:sidebar-column.html.twig',
             'form_template' => 'EnhavoGridBundle:Form:item_fields.html.twig',
             'label' => 'sidebar_column.label.sidebar_column',
-            'translationDomain' => 'EnhavoGridBundle',
+            'translationDomain' => 'EnhavoSidebarBundle',
             'groups' => ['default', 'layout']
         ]);
     }

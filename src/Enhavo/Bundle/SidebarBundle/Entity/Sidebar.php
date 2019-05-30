@@ -8,13 +8,12 @@
 
 namespace Enhavo\Bundle\SidebarBundle\Entity;
 
+use Enhavo\Bundle\SidebarBundle\Model\SidebarInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
-use Enhavo\Bundle\ContentBundle\Entity\Content;
 
-class Sidebar implements ResourceInterface
+class Sidebar implements ResourceInterface, SidebarInterface
 {
-
     /**
      * @var int
      */
@@ -24,7 +23,7 @@ class Sidebar implements ResourceInterface
      * @var string
      */
     private $name;
-
+    
     /**
      * @var string
      */
@@ -79,7 +78,7 @@ class Sidebar implements ResourceInterface
      * Set content
      *
      * @param GridInterface $grid
-     * @return Content
+     * @return Sidebar
      */
     public function setGrid(GridInterface $grid = null)
     {

@@ -6,7 +6,9 @@
  * Time: 16:38
  */
 
-namespace Enhavo\Bundle\GridBundle\Factory;
+namespace Enhavo\Bundle\SidebarBundle\Factory;
+
+use Enhavo\Bundle\GridBundle\Factory\AbstractItemFactory;
 
 class SidebarColumnItemFactory extends AbstractItemFactory
 {
