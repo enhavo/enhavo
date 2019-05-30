@@ -49,7 +49,6 @@ enhavo_template_template_table:
     options:
         expose: true
     path: /enhavo/template/template/table
-    methods: [GET,POST]
     defaults:
         sorting:
             position: desc
@@ -62,13 +61,13 @@ enhavo_template_template_table:
         _controller: enhavo_template.controller.template:tableAction
         _sylius:
             viewer:
-                translation_domain: EnhavoTemplateBundle
+                translation_domain: EnhavoSidebarBundle
                 columns:
                     name:
                         type: text
                         label: template.label.name
                         property: name
-                        width: 10
+                        width: 12
 
 enhavo_template_template_delete:
     options:

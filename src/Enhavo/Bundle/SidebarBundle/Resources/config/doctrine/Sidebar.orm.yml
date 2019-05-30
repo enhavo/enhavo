@@ -3,6 +3,13 @@ Enhavo\Bundle\SidebarBundle\Entity\Sidebar:
     table: sidebar_sidebar
     repositoryClass: Enhavo\Bundle\SidebarBundle\Repository\SidebarRepository
 
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
     fields:
         name:
             type: string

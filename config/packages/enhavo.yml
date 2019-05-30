@@ -21,8 +21,6 @@ enhavo_app:
             type: calendar
 #        shop:
 #            type: shop
-        setting:
-            type: setting
         navigation:
             type: navigation
 #        translation_strings:
@@ -40,6 +38,8 @@ enhavo_app:
             type: sidebar
         template:
             type: template
+        setting:
+            type: setting
 
 enhavo_grid:
     items:
@@ -61,4 +61,6 @@ enhavo_grid:
             type: two_column
         three_column:
             type: three_column
+        sidebar_column:
+            type: sidebar_column
 

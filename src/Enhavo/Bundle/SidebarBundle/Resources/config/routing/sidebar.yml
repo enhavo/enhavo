@@ -72,7 +72,7 @@ enhavo_sidebar_sidebar_table:
                         type: text
                         label: sidebar.label.name
                         property: name
-                        width: 10
+                        width: 12
 
 enhavo_sidebar_sidebar_delete:
     options:

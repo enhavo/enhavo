@@ -24,7 +24,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-
                 ->arrayNode('render')
                     ->children()
                         ->arrayNode('sets')
@@ -35,7 +34,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('doctrine')
                     ->addDefaultsIfNotSet()
                     ->children()

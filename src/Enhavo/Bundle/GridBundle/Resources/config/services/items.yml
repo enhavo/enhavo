@@ -49,3 +49,8 @@ services:
         public: true
         tags:
             - { name: enhavo.grid_item, alias: three_column }
+
+    Enhavo\Bundle\GridBundle\Item\Configuration\SidebarColumnConfiguration:
+        public: true
+        tags:
+            - { name: enhavo.grid_item, alias: sidebar_column }

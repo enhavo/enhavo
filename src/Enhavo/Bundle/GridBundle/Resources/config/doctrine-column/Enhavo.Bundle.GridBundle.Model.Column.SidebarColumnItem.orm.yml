@@ -1,0 +1,18 @@
+Enhavo\Bundle\GridBundle\Model\Column\SidebarColumnItem:
+    type: entity
+    table: grid_item_sidebar_column
+
+    oneToOne:
+        sidebar:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\SidebarBundle\Entity\Sidebar
+            joinColumn:
+                onDelete: CASCADE
+    manyToOne:
+        column:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,12 @@
+{#{% if data.width == 'container' %}#}
+<div class="sidebar-container">
+    {#{% endif %}#}
+    <div class="row">
+        <div class="col-md-4">
+            {{ grid_render(data.sidebar.grid) }}
+            {{ grid_render(data.column) }}
+        </div>
+    </div>
+    {#{% if data.width == 'container' %}#}
+</div>
+{#{% endif %}#}

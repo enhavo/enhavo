@@ -12,8 +12,14 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Enhavo\Bundle\GridBundle\Model\GridInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 
-class Sidebar extends Content implements ResourceInterface
+class Sidebar implements ResourceInterface
 {
+
+    /**
+     * @var int
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -28,6 +34,14 @@ class Sidebar extends Content implements ResourceInterface
      * @var GridInterface
      */
     private $grid;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string

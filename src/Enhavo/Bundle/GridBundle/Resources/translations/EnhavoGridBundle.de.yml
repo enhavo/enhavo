@@ -105,3 +105,6 @@ two_column:
 three_column:
   label:
     three_column: 'Drei Spalten'
+sidebar_column:
+  label:
+    sidebar_column: 'Sidebar Spalte'
