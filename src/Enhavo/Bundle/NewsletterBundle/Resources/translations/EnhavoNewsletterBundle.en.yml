@@ -22,6 +22,7 @@ newsletter:
     id: 'ID'
     title: 'Title'
     newsletter: 'Newsletter'
+    content: 'Content'
   form:
     label:
       subject: 'Subject'

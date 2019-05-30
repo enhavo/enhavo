@@ -26,14 +26,17 @@ enhavo_newsletter_newsletter_create:
                 tabs:
                     main:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:main.html.twig
+                    content:
+                        label: newsletter.label.content
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:content.html.twig
+                        full_width: true
                 actions:
                     preview:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
                     test_mail:
                         type: newsletter_test_mail
-
 
 enhavo_newsletter_newsletter_update:
     options:
@@ -48,7 +51,11 @@ enhavo_newsletter_newsletter_update:
                 tabs:
                     main:
                         label: newsletter.label.newsletter
-                        template: EnhavoNewsletterBundle:Newsletter:form.html.twig
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:main.html.twig
+                    content:
+                        label: newsletter.label.content
+                        template: EnhavoNewsletterBundle:Admin/Newsletter:content.html.twig
+                        full_width: true
                 actions:
                     preview:
                         type: preview

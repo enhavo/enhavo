@@ -11,9 +11,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
         name:
             type: text
             nullable: false
-        code:
-            type: text
-            nullable: false
 
     manyToMany:
         subscriber:
