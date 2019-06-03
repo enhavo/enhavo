@@ -39,7 +39,7 @@ class BackgroundFilter extends AbstractFilter
         $palette = new RGB();
         $backgroundColor = $palette->color($setting->getSetting('color', '#FFFFFF'), $setting->getSetting('alpha', 100));
         $imagine = new Imagine();
-        $newImage = $imagine->create(new Box($image->getSize()->getWidth(), $image->getSize()->getWidth()), $backgroundColor);
+        $newImage = $imagine->create(new Box($image->getSize()->getWidth(), $image->getSize()->getHeight()), $backgroundColor);
         $newImage->paste($image, new Point(0, 0));
         return $newImage;
     }
