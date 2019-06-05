@@ -26,16 +26,3 @@ form:
     openGraphTitle: 'Open Graph Titel'
     openGraphDescription: 'Open Graph Beschreibung'
     openGraphImage: 'Open Graph Bild'
-    from: 'Von'
-    to: 'Nach'
-    code: 'Code'
-
-redirect:
-    label:
-        redirect: 'Weiterleitung'
-    role:
-      label:
-        index: 'Weiterleitung liste'
-        create: 'Weiterleitung erstellen'
-        update: 'Weiterleitung bearbeiten'
-        delete: 'Weiterleitung löschen'

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentBundle\Menu;
+namespace Enhavo\Bundle\RedirectBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,9 +20,9 @@ class RedirectMenu extends BaseMenu
         $resolver->setDefaults([
             'icon' => 'compare_arrows',
             'label' => 'redirect.label.redirect',
-            'translation_domain' => 'EnhavoContentBundle',
-            'route' => 'enhavo_content_redirect_index',
-            'role' => 'ROLE_ENHAVO_CONTENT_REDIRECT_INDEX',
+            'translation_domain' => 'EnhavoRedirectBundle',
+            'route' => 'enhavo_redirect_redirect_index',
+            'role' => 'ROLE_ENHAVO_REDIRECT_REDIRECT_INDEX',
         ]);
     }
 

@@ -6,7 +6,7 @@
  * Time: 19:59
  */
 
-namespace Enhavo\Bundle\ContentBundle\Model;
+namespace Enhavo\Bundle\RedirectBundle\Model;
 
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 

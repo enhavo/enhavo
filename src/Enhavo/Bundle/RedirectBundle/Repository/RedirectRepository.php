@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle\Repository;
+namespace Enhavo\Bundle\RedirectBundle\Repository;
 
 use Enhavo\Bundle\AppBundle\Repository\EntityRepository;
 

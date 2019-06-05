@@ -1,7 +1,7 @@
-Enhavo\Bundle\ContentBundle\Entity\Redirect:
+Enhavo\Bundle\RedirectBundle\Entity\Redirect:
     type: entity
-    table: content_redirect
-    repositoryClass: Enhavo\Bundle\ContentBundle\Repository\RedirectRepository
+    table: redirect_redirect
+    repositoryClass: Enhavo\Bundle\RedirectBundle\Repository\RedirectRepository
     id:
         id:
             type: integer

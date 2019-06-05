@@ -6,10 +6,10 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ContentBundle\EventListener;
+namespace Enhavo\Bundle\RedirectBundle\EventListener;
 
-use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
-use Enhavo\Bundle\ContentBundle\Redirect\RedirectManager;
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
+use Enhavo\Bundle\RedirectBundle\Redirect\RedirectManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 
@@ -28,8 +28,8 @@ class RedirectSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'enhavo_content.redirect.pre_create' => 'preSave',
-            'enhavo_content.redirect.pre_update' => 'preSave'
+            'enhavo_redirect.redirect.pre_create' => 'preSave',
+            'enhavo_redirect.redirect.pre_update' => 'preSave'
         );
     }
 

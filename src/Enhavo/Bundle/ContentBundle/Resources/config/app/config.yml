@@ -3,25 +3,3 @@ enhavo_app:
         - 'EnhavoContentBundle:Form:fields.html.twig'
 #    stylesheets:
 #        - '@EnhavoContentBundle/Resources/public/css/style.css'
-    roles:
-        enhavo_content_redirect_index:
-            role: ROLE_ENHAVO_CONTENT_REDIRECT_INDEX
-            label: redirect.role.label.index
-            translationDomain: EnhavoContentBundle
-        enhavo_content_redirect_create:
-            role: ROLE_ENHAVO_CONTENT_REDIRECT_CREATE
-            label: redirect.role.label.create
-            translationDomain: EnhavoContentBundle
-        enhavo_content_redirect_update:
-            role: ROLE_ENHAVO_CONTENT_REDIRECT_UPDATE
-            label: redirect.role.label.update
-            translationDomain: EnhavoContentBundle
-        enhavo_content_redirect_delete:
-            role: ROLE_ENHAVO_CONTENT_REDIRECT_DELETE
-            label: redirect.role.label.delete
-            translationDomain: EnhavoContentBundle
-
-cmf_routing:
-    dynamic:
-        controllers_by_class:
-            Enhavo\Bundle\ContentBundle\Entity\Redirect: enhavo_content.controller.redirect:redirectAction

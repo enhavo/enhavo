@@ -1,56 +1,56 @@
-enhavo_content_redirect_index:
+enhavo_redirect_redirect_index:
     options:
         expose: true
-    path: /enhavo/content/redirect/index
+    path: /enhavo/redirect/redirect/index
     methods: [GET]
     defaults:
-        _controller: enhavo_content.controller.redirect:indexAction
+        _controller: enhavo_redirect.controller.redirect:indexAction
         _sylius:
             viewer:
                 title: redirect.label.redirect
-                translationDomain: EnhavoContentBundle
+                translationDomain: EnhavoRedirectBundle
 
-enhavo_content_redirect_create:
+enhavo_redirect_redirect_create:
     options:
         expose: true
-    path: /enhavo/content/redirect/create
+    path: /enhavo/redirect/redirect/create
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_content.controller.redirect:createAction
+        _controller: enhavo_redirect.controller.redirect:createAction
         _sylius:
-            redirect: enhavo_content_redirect_update
+            redirect: enhavo_redirect_redirect_update
             viewer:
-                translationDomain: EnhavoContentBundle
+                translationDomain: EnhavoRedirectBundle
 
-enhavo_content_redirect_update:
+enhavo_redirect_redirect_update:
     options:
         expose: true
-    path: /enhavo/content/redirect/update/{id}
+    path: /enhavo/redirect/redirect/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: enhavo_content.controller.redirect:updateAction
+        _controller: enhavo_redirect.controller.redirect:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoContentBundle
+                translationDomain: EnhavoRedirectBundle
 
-enhavo_content_redirect_table:
+enhavo_redirect_redirect_table:
     options:
         expose: true
-    path: /enhavo/content/redirect/table
+    path: /enhavo/redirect/redirect/table
     defaults:
-        _controller: enhavo_content.controller.redirect:tableAction
+        _controller: enhavo_redirect.controller.redirect:tableAction
         _sylius:
             filters:
                 from:
                     type: text
                     property: from
                     label: form.label.from
-                    translation_domain: EnhavoContentBundle
+                    translation_domain: EnhavoRedirectBundle
                 to:
                     type: text
                     property: to
                     label: form.label.to
-                    translation_domain: EnhavoContentBundle
+                    translation_domain: EnhavoRedirectBundle
                 code:
                     type: option
                     property: code
@@ -58,10 +58,10 @@ enhavo_content_redirect_table:
                         - 301
                         - 302
                     label: form.label.code
-                    translation_domain: EnhavoContentBundle
+                    translation_domain: EnhavoRedirectBundle
 
             viewer:
-                translationDomain: EnhavoContentBundle
+                translationDomain: EnhavoRedirectBundle
                 columns:
                     from:
                         type: text
@@ -79,21 +79,21 @@ enhavo_content_redirect_table:
                         label: form.label.code
                         width: 1
 
-enhavo_content_redirect_delete:
+enhavo_redirect_redirect_delete:
     options:
         expose: true
-    path: /enhavo/content/redirect/delete/{id}
+    path: /enhavo/redirect/redirect/delete/{id}
     methods: [POST]
     defaults:
-        _controller: enhavo_content.controller.redirect:deleteAction
+        _controller: enhavo_redirect.controller.redirect:deleteAction
 
-enhavo_content_redirect_batch:
+enhavo_redirect_redirect_batch:
     options:
         expose: true
-    path: /enhavo/content/redirect/batch
+    path: /enhavo/redirect/redirect/batch
     methods: [POST]
     defaults:
-        _controller: enhavo_content.controller.redirect:batchAction
+        _controller: enhavo_redirect.controller.redirect:batchAction
         _sylius:
             paginate: false
             criteria:
