@@ -1,0 +1,8 @@
+services:
+    enhavo_theme.theme_loader.config:
+        class: Enhavo\Bundle\ThemeBundle\ThemeLoader\ConfigThemeLoader
+        arguments:
+            - '%enhavo_theme.theme%'
+            - '%enhavo_theme.themes%'
+            - '@serializer'
+            - '@file_locator'

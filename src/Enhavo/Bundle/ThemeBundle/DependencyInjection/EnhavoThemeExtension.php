@@ -22,6 +22,10 @@ class EnhavoThemeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('enhavo_theme.dynamic_theme', $config['dynamic_theme']);
+        $container->setParameter('enhavo_theme.theme', $config['theme']);
+        $container->setParameter('enhavo_theme.themes', $config['themes']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/services.yml');

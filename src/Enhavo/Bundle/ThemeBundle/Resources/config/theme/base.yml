@@ -1,0 +1,14 @@
+name: 'base'
+webpack_build: 'enhavo'
+description: ''
+image:
+extends:
+templates:
+    '@EnhavoAppBundle': ''
+settings:
+block:
+    column_styles:
+    templates:
+
+
+

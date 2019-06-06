@@ -1,0 +1,3 @@
+enhavo_theme:
+    themes:
+        base: '@EnhavoThemeBundle/Resources/config/theme/base.yml'
