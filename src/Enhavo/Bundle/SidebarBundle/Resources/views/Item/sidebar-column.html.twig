@@ -6,7 +6,9 @@
             {{ grid_render(data.column) }}
         </div>
         <div class="col-md-4">
-            {{ grid_render(data.sidebar.grid) }}
+            {% if data.sidebar %}
+                {{ grid_render(data.sidebar.grid) }}
+            {% endif %}
         </div>
     </div>
 {% if data.width == 'container' %}
