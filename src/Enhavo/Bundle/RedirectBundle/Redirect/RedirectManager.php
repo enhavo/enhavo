@@ -6,12 +6,12 @@
  * Time: 16:17
  */
 
-namespace Enhavo\Bundle\ContentBundle\Redirect;
+namespace Enhavo\Bundle\RedirectBundle\Redirect;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
-use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
-use League\Uri\Schemes\Http;
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
+use League\Uri\Http;
 
 class RedirectManager
 {

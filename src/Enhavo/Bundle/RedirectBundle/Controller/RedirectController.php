@@ -6,10 +6,10 @@
  * Time: 19:58
  */
 
-namespace Enhavo\Bundle\ContentBundle\Controller;
+namespace Enhavo\Bundle\RedirectBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 

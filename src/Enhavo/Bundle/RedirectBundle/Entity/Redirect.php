@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\ContentBundle\Entity;
+namespace Enhavo\Bundle\RedirectBundle\Entity;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\ContentBundle\Model\RedirectInterface;
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**

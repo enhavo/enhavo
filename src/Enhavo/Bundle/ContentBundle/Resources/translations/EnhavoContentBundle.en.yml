@@ -26,16 +26,3 @@ form:
     openGraphTitle: 'Open Graph Title'
     openGraphDescription: 'Open Graph Description'
     openGraphImage: 'Open Graph Image'
-    from: 'From'
-    to: 'To'
-    code: 'Code'
-
-redirect:
-    label:
-        redirect: 'Redirect'
-    role:
-      label:
-        index: 'Redirect index'
-        create: 'Redirect create'
-        update: 'Redirect update'
-        delete: 'Redirect delete'

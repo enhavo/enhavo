@@ -2,12 +2,6 @@
 
 namespace Enhavo\Bundle\ContentBundle\DependencyInjection;
 
-use Enhavo\Bundle\AppBundle\Controller\ResourceController;
-use Enhavo\Bundle\ContentBundle\Controller\RedirectController;
-use Enhavo\Bundle\ContentBundle\Entity\Redirect;
-use Enhavo\Bundle\ContentBundle\Form\Type\RedirectType;
-use Enhavo\Bundle\ContentBundle\Repository\RedirectRepository;
-use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -45,24 +39,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('redirect')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue(Redirect::class)->end()
-                                        ->scalarNode('controller')->defaultValue(RedirectController::class)->end()
-                                        ->scalarNode('repository')->defaultValue(RedirectRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(RedirectType::class)->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
                 ->end()
             ->end()
         ;

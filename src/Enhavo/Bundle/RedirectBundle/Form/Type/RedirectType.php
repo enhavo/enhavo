@@ -6,7 +6,7 @@
  * Time: 20:00
  */
 
-namespace Enhavo\Bundle\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\RedirectBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,12 +19,12 @@ class RedirectType extends AbstractType
     {
         $builder->add('from', TextType::class, [
             'label' => 'form.label.from',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoRedirectBundle'
         ]);
 
         $builder->add('to', TextType::class, [
             'label' => 'form.label.to',
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoRedirectBundle'
         ]);
 
         $builder->add('code', ChoiceType::class, [
@@ -33,12 +33,12 @@ class RedirectType extends AbstractType
                 '301' => '301',
                 '302' => '302'
             ],
-            'translation_domain' => 'EnhavoContentBundle'
+            'translation_domain' => 'EnhavoRedirectBundle'
         ]);
     }
 
     public function getBlockPrefix()
     {
-        return 'enhavo_content_redirect';
+        return 'enhavo_redirect_redirect';
     }
 }

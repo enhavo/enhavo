@@ -47,6 +47,7 @@ return [
     Enhavo\Bundle\DemoBundle\EnhavoDemoBundle::class => ['all' => true],
     Enhavo\Bundle\ThemeBundle\EnhavoThemeBundle::class => ['all' => true],
     Enhavo\Bundle\TranslationBundle\EnhavoTranslationBundle::class => ['all' => true],
+    Enhavo\Bundle\RedirectBundle\EnhavoRedirectBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Enhavo\Bundle\ShopBundle\EnhavoShopBundle::class => ['all' => true],
     Enhavo\Bundle\SidebarBundle\EnhavoSidebarBundle::class => ['all' => true],

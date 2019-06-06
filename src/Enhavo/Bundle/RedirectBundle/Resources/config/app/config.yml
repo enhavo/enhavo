@@ -1,0 +1,23 @@
+enhavo_app:
+    roles:
+        enhavo_redirect_redirect_index:
+            role: ROLE_ENHAVO_REDIRECT_REDIRECT_INDEX
+            label: redirect.role.label.index
+            translationDomain: EnhavoRedirectBundle
+        enhavo_redirect_redirect_create:
+            role: ROLE_ENHAVO_REDIRECT_REDIRECT_CREATE
+            label: redirect.role.label.create
+            translationDomain: EnhavoRedirectBundle
+        enhavo_redirect_redirect_update:
+            role: ROLE_ENHAVO_REDIRECT_REDIRECT_UPDATE
+            label: redirect.role.label.update
+            translationDomain: EnhavoRedirectBundle
+        enhavo_redirect_redirect_delete:
+            role: ROLE_ENHAVO_REDIRECT_REDIRECT_DELETE
+            label: redirect.role.label.delete
+            translationDomain: EnhavoRedirectBundle
+
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\RedirectBundle\Entity\Redirect: enhavo_redirect.controller.redirect:redirectAction
