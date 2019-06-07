@@ -6,34 +6,34 @@
  * Time: 21:56
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Block;
+namespace Enhavo\Bundle\NavigationBundle\Item;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
 
-class BlockManager
+class ItemManager
 {
     /**
-     * @var Block[]
+     * @var Item[]
      */
-    private $blocks = [];
+    private $items = [];
 
     public function __construct(TypeCollector $collector, $configurations)
     {
         foreach($configurations as $name => $options) {
             /** @var AbstractConfiguration $configuration */
             $configuration = $collector->getType($options['type']);
-            $block = new Block($configuration, $name, $options);
-            $this->blocks[$name] = $block;
+            $block = new Item($configuration, $name, $options);
+            $this->items[$name] = $block;
         }
     }
 
-    public function getBlocks()
+    public function getItems()
     {
-        return $this->blocks;
+        return $this->items;
     }
 
     public function getBlock($name)
     {
-        return $this->blocks[$name];
+        return $this->items[$name];
     }
 }

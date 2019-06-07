@@ -6,11 +6,11 @@
  * Time: 13:54
  */
 
-namespace Enhavo\Bundle\NavigationBundle\Block;
+namespace Enhavo\Bundle\NavigationBundle\Item;
 
-use Enhavo\Bundle\FormBundle\DynamicForm\AbstractBlock;
+use Enhavo\Bundle\FormBundle\DynamicForm\AbstractItem;
 
-class Block extends AbstractBlock
+class Item extends AbstractItem
 {
     /**
      * @return AbstractConfiguration
