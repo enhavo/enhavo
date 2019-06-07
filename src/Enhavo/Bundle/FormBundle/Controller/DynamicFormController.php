@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DynamicFormController extends AbstractController
 {
-    public function itemAction(Request $request)
+    public function blockAction(Request $request)
     {
         $resolver = $this->getResolver($request);
 
@@ -28,8 +28,8 @@ class DynamicFormController extends AbstractController
         /** @var $form Form */
         $form = $resolver->resolveForm($type, $data, array(
             'csrf_protection' => false,
-            'item_resolver' => $this->getResolverName($request),
-            'item_full_name' => $formName
+            'block_resolver' => $this->getResolverName($request),
+            'block_full_name' => $formName
         ));
 
         return $this->render('EnhavoFormBundle:DynamicForm:form.html.twig', array(

@@ -24,33 +24,33 @@ class DynamicFormType extends AbstractType
     {
         $resolver = $this->getResolver($options);
 
-        $items = [];
+        $blocks = [];
 
-        if(empty($options['items']) && empty($options['item_groups'])) {
-            $items = $resolver->resolveDefaultItems();
+        if(empty($options['blocks']) && empty($options['block_groups'])) {
+            $blocks = $resolver->resolveDefaultBlocks();
         } else {
-            if(count($options['items'])) {
-                foreach($options['items'] as $item) {
-                    $item = $resolver->resolveItem($item);
-                    if(!in_array($item, $items)) {
-                        $items[] = $item;
+            if(count($options['blocks'])) {
+                foreach($options['blocks'] as $block) {
+                    $block = $resolver->resolveBlock($block);
+                    if(!in_array($block, $blocks)) {
+                        $blocks[] = $block;
                     }
                 }
             }
 
-            if(count($options['item_groups'])) {
-                $itemGroup = $resolver->resolveItemGroup($options['item_groups']);
-                foreach($itemGroup as $item) {
-                    if(!in_array($item, $items)) {
-                        $items[] = $item;
+            if(count($options['block_groups'])) {
+                $blockGroup = $resolver->resolveBlockGroup($options['block_groups']);
+                foreach($blockGroup as $block) {
+                    if(!in_array($block, $blocks)) {
+                        $blocks[] = $block;
                     }
                 }
             }
         }
 
-        $view->vars['items'] = $items;
+        $view->vars['blocks'] = $blocks;
         $view->vars['dynamic_config'] = [
-            'route' => $options['item_route'],
+            'route' => $options['block_route'],
             'prototypeName' => $options['prototype_name'],
             'collapsed' => $options['collapsed']
         ];
@@ -63,7 +63,7 @@ class DynamicFormType extends AbstractType
      */
     private function getResolver(array $options)
     {
-        $resolver = $options['item_resolver'];
+        $resolver = $options['block_resolver'];
         if(is_string($resolver)) {
             if(!$this->container->has($resolver)) {
                 throw new \Exception(sprintf('Resolver "%s" for dynamic form not found', $resolver));
@@ -72,7 +72,7 @@ class DynamicFormType extends AbstractType
         }
 
         if(!$resolver instanceof ResolverInterface) {
-            throw new \Exception(sprintf('Resolver for dynamic form is not implements ItemResolverInterface', $resolver));
+            throw new \Exception(sprintf('Resolver for dynamic form is not implements BlockResolverInterface', $resolver));
         }
 
         return $resolver;
@@ -94,13 +94,13 @@ class DynamicFormType extends AbstractType
             'allow_delete' => true,
             'allow_add' => true,
             'by_reference' => false,
-            'items' => [],
-            'item_groups' => [],
-            'item_resolver' => null,
-            'item_route' => null,
-            'item_class' => null,
+            'blocks' => [],
+            'block_groups' => [],
+            'block_resolver' => null,
+            'block_route' => null,
+            'block_class' => null,
             'prototype' => false,
-            'entry_type' => DynamicItemType::class,
+            'entry_type' => DynamicBlockType::class,
             'collapsed' => false
         ]);
 
@@ -117,8 +117,8 @@ class DynamicFormType extends AbstractType
                 $value = [];
             }
             return array_merge([
-                'item_resolver' => $options['item_resolver'],
-                'data_class' => $options['item_class']
+                'block_resolver' => $options['block_resolver'],
+                'data_class' => $options['block_class']
             ], $value);
         });
     }

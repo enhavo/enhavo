@@ -173,7 +173,7 @@
     </div>
 {% endblock %}
 
-{% block enhavo_dynamic_item_widget %}
+{% block enhavo_dynamic_block_widget %}
     <div class="dynamic-form-item" data-dynamic-form-item>
         <div class="button-container" data-dynamic-form-item-action>
             <div class="button button-up" data-dynamic-form-item-action-up>
@@ -195,8 +195,8 @@
         </div>
 
         <div class="dynamic-form-item-content-container" data-dynamic-form-item-container>
-            {% if item_template %}
-                {% include item_template %}
+            {% if block_template %}
+                {% include block_template %}
             {% else %}
                 {% for child in form %}
                     <div class="clearfix" data-form-row>

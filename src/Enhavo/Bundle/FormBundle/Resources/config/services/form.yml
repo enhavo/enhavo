@@ -44,7 +44,7 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType:
+    Enhavo\Bundle\FormBundle\Form\Type\DynamicBlockType:
         calls:
             - ['setContainer', ['@service_container']]
         tags:
