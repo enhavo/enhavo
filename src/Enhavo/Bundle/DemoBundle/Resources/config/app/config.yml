@@ -28,3 +28,8 @@ enhavo_search:
             - Enhavo\Bundle\PageBundle\Entity\Page
             - Enhavo\Bundle\ArticleBundle\Entity\Article
             - Enhavo\Bundle\ShopBundle\Entity\Product
+
+enhavo_theme:
+    theme: 'demo'
+    themes:
+        demo: '@EnhavoDemoBundle/Resources/config/theme/demo.yml'

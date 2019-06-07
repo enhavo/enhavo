@@ -1,14 +1,14 @@
-name: 'base'
-webpack_build: 'enhavo'
-description: ''
-image:
-extends:
-templates:
-    '@EnhavoAppBundle': ''
-settings:
+extends: []
+meta:
+    name: 'base'
+    image: ~
+    description: ''
+webpack:
+    build: 'enhavo'
+    options:
+        color1:
+template:
+    mapping: []
 block:
-    column_styles:
-    templates:
-
-
-
+    column_styles: []
+    templates: []

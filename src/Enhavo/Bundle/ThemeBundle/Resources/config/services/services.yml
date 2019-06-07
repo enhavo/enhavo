@@ -1,8 +1,18 @@
 services:
     enhavo_theme.theme_loader.config:
+        public: true
         class: Enhavo\Bundle\ThemeBundle\ThemeLoader\ConfigThemeLoader
         arguments:
             - '%enhavo_theme.theme%'
             - '%enhavo_theme.themes%'
             - '@serializer'
             - '@file_locator'
+
+    Enhavo\Bundle\ThemeBundle\Init\InitTheme:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.init, alias: 'theme' }

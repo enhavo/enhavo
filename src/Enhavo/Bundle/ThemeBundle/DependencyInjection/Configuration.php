@@ -24,7 +24,10 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('dynamic_theme')->defaultValue(false)->end()
                 ->scalarNode('theme')->defaultValue('base')->end()
-                ->variableNode('themes')->defaultValue([])->end()
+                ->arrayNode('themes')
+                    ->useAttributeAsKey('key')
+                    ->prototype('variable')
+            ->defaultValue([])->end()
             ->end();
 
         return $treeBuilder;

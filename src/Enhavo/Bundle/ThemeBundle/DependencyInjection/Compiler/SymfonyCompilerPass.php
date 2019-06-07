@@ -25,7 +25,7 @@ class SymfonyCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('templating.locator');
         $definition->setClass(ThemeTemplateLocator::class);
-        $definition->addArgument($container->getDefinition('enhavo_theme.theme_loader.config'));
+        $definition->addArgument($container->getDefinition('enhavo_theme.template.mapper'));
     }
 
     protected function overwriteCacheWarmer(ContainerBuilder $container)

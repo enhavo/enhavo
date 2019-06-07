@@ -12,32 +12,86 @@ namespace Enhavo\Bundle\ThemeBundle\Model;
 class Theme
 {
     /**
-     * @var integer
+     * @var Meta
      */
-    private $id;
+    private $meta;
 
     /**
-     * @var string
+     * @var Webpack
      */
-    private $key;
+    private $webpack;
 
     /**
-     * @var string
+     * @var Template
      */
-    private $name;
+    private $template;
 
     /**
-     * @var boolean
+     * @var Block
      */
-    private $active;
+    private $block;
 
     /**
-     * @var string
+     * @return Meta
      */
-    private $description;
+    public function getMeta(): Meta
+    {
+        return $this->meta;
+    }
 
     /**
-     * @var string[]
+     * @param Meta $meta
      */
-    private $templates;
+    public function setMeta(Meta $meta): void
+    {
+        $this->meta = $meta;
+    }
+
+    /**
+     * @return Webpack
+     */
+    public function getWebpack(): Webpack
+    {
+        return $this->webpack;
+    }
+
+    /**
+     * @param Webpack $webpack
+     */
+    public function setWebpack(Webpack $webpack): void
+    {
+        $this->webpack = $webpack;
+    }
+
+    /**
+     * @return Template
+     */
+    public function getTemplate(): Template
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param Template $template
+     */
+    public function setTemplate(Template $template): void
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return Block
+     */
+    public function getBlock(): Block
+    {
+        return $this->block;
+    }
+
+    /**
+     * @param Block $block
+     */
+    public function setBlock(Block $block): void
+    {
+        $this->block = $block;
+    }
 }

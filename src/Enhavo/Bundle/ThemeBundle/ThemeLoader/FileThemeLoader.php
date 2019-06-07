@@ -39,7 +39,9 @@ class FileThemeLoader implements ThemeLoaderInterface
     {
         if($this->theme === null) {
             $config = Yaml::parse(file_get_contents($this->path));
-            $this->theme = $this->serializer->denormalize($config, Theme::class);
+            $this->theme = $this->serializer->denormalize($config, Theme::class, null, [
+                'groups' => 'theme'
+            ]);
         }
         return $this->theme;
     }
