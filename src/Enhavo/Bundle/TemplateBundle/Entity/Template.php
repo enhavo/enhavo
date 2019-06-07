@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TemplateBundle\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 
 class Template implements ResourceInterface
@@ -30,9 +30,9 @@ class Template implements ResourceInterface
     private $code;
 
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    private $grid;
+    private $container;
 
     /**
      * @return int
@@ -77,12 +77,12 @@ class Template implements ResourceInterface
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $container
      * @return Template
      */
-    public function setGrid(GridInterface $grid = null)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->grid = $grid;
+        $this->container = $container;
 
         return $this;
     }
@@ -90,10 +90,10 @@ class Template implements ResourceInterface
     /**
      * Get content
      * 
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContainer()
     {
-        return $this->grid;
+        return $this->container;
     }
 }

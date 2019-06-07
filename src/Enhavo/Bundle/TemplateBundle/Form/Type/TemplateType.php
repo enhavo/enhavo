@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 
 class TemplateType extends AbstractType
 {
@@ -33,10 +33,10 @@ class TemplateType extends AbstractType
             'label' => 'template.label.code',
             'translation_domain' => 'EnhavoTemplateBundle',
         ]);
-        $builder->add('grid', GridType::class, array(
+        $builder->add('container', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'item_groups' => ['layout'],
+            'block_groups' => ['layout'],
         ));
     }
 
