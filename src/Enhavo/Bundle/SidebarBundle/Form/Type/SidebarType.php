@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\SidebarBundle\Form\Type;
 
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 
 class SidebarType extends AbstractType
 {
@@ -33,10 +33,10 @@ class SidebarType extends AbstractType
             'label' => 'sidebar.label.code',
             'translation_domain' => 'EnhavoSidebarBundle',
         ]);
-        $builder->add('grid', GridType::class, array(
+        $builder->add('container', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'item_groups' => ['content'],
+            'block_groups' => ['content'],
         ));
     }
 

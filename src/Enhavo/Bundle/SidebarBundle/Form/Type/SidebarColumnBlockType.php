@@ -32,7 +32,7 @@ class SidebarColumnBlockType extends AbstractType
         $builder->add('column', ContainerType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'item_groups' => ['content'],
+            'block_groups' => ['content'],
         ]);
     }
 

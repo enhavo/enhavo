@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\SidebarBundle\Entity;
 
 use Enhavo\Bundle\SidebarBundle\Model\SidebarInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 
 class Sidebar implements ResourceInterface, SidebarInterface
 {
@@ -30,9 +30,9 @@ class Sidebar implements ResourceInterface, SidebarInterface
     private $code;
 
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    private $grid;
+    private $container;
 
     /**
      * @return int
@@ -77,12 +77,12 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $container
      * @return Sidebar
      */
-    public function setGrid(GridInterface $grid = null)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->grid = $grid;
+        $this->container = $container;
 
         return $this;
     }
@@ -90,10 +90,10 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * Get content
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContainer()
     {
-        return $this->grid;
+        return $this->container;
     }
 }

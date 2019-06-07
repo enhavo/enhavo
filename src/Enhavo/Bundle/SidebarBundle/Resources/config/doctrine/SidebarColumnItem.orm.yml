@@ -5,7 +5,7 @@ Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnItem:
     manyToOne:
         column:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
             joinColumn:
                 onDelete: CASCADE
 

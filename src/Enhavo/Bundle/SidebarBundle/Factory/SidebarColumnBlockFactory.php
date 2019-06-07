@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\SidebarBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Factory\AbstractItemFactory;
+use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 
-class SidebarColumnItemFactory extends AbstractItemFactory
+class SidebarColumnBlockFactory extends AbstractBlockFactory
 {
 }

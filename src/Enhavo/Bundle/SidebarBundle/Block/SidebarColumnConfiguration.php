@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\SidebarBundle\Block;
 
 use Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnBlock;
-use Enhavo\Bundle\SidebarBundle\Factory\SidebarColumnItemFactory;
+use Enhavo\Bundle\SidebarBundle\Factory\SidebarColumnBlockFactory;
 use Enhavo\Bundle\SidebarBundle\Form\Type\SidebarColumnBlockType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,10 +24,10 @@ class SidebarColumnConfiguration extends AbstractConfiguration
             'model' => SidebarColumnBlock::class,
             'parent' => SidebarColumnBlock::class,
             'form' => SidebarColumnBlockType::class,
-            'factory' => SidebarColumnItemFactory::class,
+            'factory' => SidebarColumnBlockFactory::class,
             'repository' => 'EnhavoSidebarBundle:SidebarColumn',
             'template' => 'EnhavoSidebarBundle:Block:sidebar-column.html.twig',
-            'form_template' => 'EnhavoBlockBundle:Form:item_fields.html.twig',
+            'form_template' => 'EnhavoBlockBundle:Form:block_fields.html.twig',
             'label' => 'sidebar_column.label.sidebar_column',
             'translationDomain' => 'EnhavoSidebarBundle',
             'groups' => ['default', 'layout']
