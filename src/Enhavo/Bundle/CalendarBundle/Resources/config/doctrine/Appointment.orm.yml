@@ -46,9 +46,9 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             type: boolean
             nullable: true
     oneToOne:
-        grid:
+        container:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 
         picture:
             cascade: ['persist', 'refresh', 'remove']

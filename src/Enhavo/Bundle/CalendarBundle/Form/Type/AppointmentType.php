@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
+use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -49,7 +49,7 @@ class AppointmentType extends AbstractResourceType
             'multiple' => false
         ));
 
-        $builder->add('grid', GridType::class, array(
+        $builder->add('container', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));

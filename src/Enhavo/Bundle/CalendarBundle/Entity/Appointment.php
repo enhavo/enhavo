@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 
@@ -28,9 +28,9 @@ class Appointment extends Content implements AppointmentInterface
     protected $dateTo;
 
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    protected $grid;
+    protected $container;
 
     /**
      * @var FileInterface
@@ -167,12 +167,12 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $container
      * @return Appointment
      */
-    public function setGrid(GridInterface $grid = null)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->grid = $grid;
+        $this->container = $container;
 
         return $this;
     }
@@ -180,11 +180,11 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Get content
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContainer()
     {
-        return $this->grid;
+        return $this->container;
     }
 
     /**
