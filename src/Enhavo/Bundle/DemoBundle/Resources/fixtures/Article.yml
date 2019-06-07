@@ -8,7 +8,7 @@
     en: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
   picture: article/article-img-01.jpg
   public: true
-  grid:
+  container:
     -
       type: text
       title:
@@ -28,7 +28,7 @@
     en: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
   picture: article/article-img-02.jpg
   public: true
-  grid:
+  container:
     -
       type: text
       title:
@@ -48,7 +48,7 @@
     en: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
   picture: article/article-img-03.jpg
   public: true
-  grid:
+  container:
     -
       type: text
       title:
@@ -67,7 +67,7 @@
     en: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
   picture: article/article-img-04.png
   public: true
-  grid:
+  container:
     -
       type: text
       title:
@@ -86,7 +86,7 @@
     en: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
   picture: article/article-img-05.png
   public: true
-  grid:
+  container:
     -
       type: text
       title:

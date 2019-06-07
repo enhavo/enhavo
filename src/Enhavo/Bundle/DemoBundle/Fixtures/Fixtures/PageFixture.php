@@ -22,7 +22,7 @@ class PageFixture extends AbstractFixture
         $page = new Page();
         $page->setTitle($args['title']);
         $page->setPublic($args['public']);
-        $page->setGrid($this->createGrid($args['grid']));
+        $page->setContainer($this->createContainer($args['container']));
         $page->setRoute($this->createRoute($args['route'], $page));
         $this->translate($page);
         return $page;

@@ -8,22 +8,21 @@
 
 namespace Enhavo\Bundle\DemoBundle\Fixtures;
 
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Enhavo\Bundle\BlockBundle\Entity\Block;
+use Enhavo\Bundle\BlockBundle\Entity\Container;
+use Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock;
+use Enhavo\Bundle\BlockBundle\Model\Block\TextBlock;
+use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
+use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
-use Enhavo\Bundle\RoutingBundle\Model\Routeable;
-use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Entity\Item;
-use Enhavo\Bundle\GridBundle\Entity\PictureItem;
-use Enhavo\Bundle\GridBundle\Entity\TextItem;
-use Enhavo\Bundle\GridBundle\Entity\TextPictureItem;
-use Enhavo\Bundle\GridBundle\Item\ItemTypeInterface;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Yaml\Yaml;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 
 abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -136,59 +135,59 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
     abstract function getOrder();
 
     /**
-     * @param $grid
-     * @return Grid
+     * @param $container
+     * @return Container
      */
-    protected function createGrid($grid)
+    protected function createContainer($container)
     {
-        $gridEntity = new Grid();
-        foreach($grid as $fields) {
-            $itemEntity = new Item();
+        $containerEntity = new Container();
+        foreach($container as $fields) {
+            $blockEntity = new Block();
             $type = $fields['type'];
             unset($fields['type']);
-            $itemEntity->setItemType($this->createItemType($type, $fields));
-            $gridEntity->addItem($itemEntity);
+            $blockEntity->setBlockType($this->createBlockType($type, $fields));
+            $containerEntity->addBlock($blockEntity);
         }
-        $this->translate($gridEntity);
-        return $gridEntity;
+        $this->translate($containerEntity);
+        return $containerEntity;
     }
 
     /**
      * @param $type
      * @param $fields
-     * @return ItemTypeInterface
+     * @return BlockTypeInterface
      */
-    protected function createItemType($type, $fields)
+    protected function createBlockType($type, $fields)
     {
-        $factory = $this->container->get('enhavo_grid.factory.item_type');
+        $factory = $this->container->get('enhavo_block.factory.block_type');
         $itemType = $factory->create($type);
         $this->setFields($type, $itemType, $fields);
         $this->translate($itemType);
         return $itemType;
     }
 
-    protected function setFields($type, $itemType, $fields)
+    protected function setFields($type, $blockType, $fields)
     {
         switch($type) {
             case('text'):
-                /** @var $itemType TextItem */
-                $itemType->setText($fields['text']);
-                $itemType->setTitle($fields['title']);
+                /** @var $blockType TextBlock */
+                $blockType->setText($fields['text']);
+                $blockType->setTitle($fields['title']);
                 break;
             case('picture'):
-                /** @var $itemType PictureItem */
-                $itemType->setFile($this->createImage($fields['file']));
-                $itemType->setTitle($fields['title']);
-                $itemType->setCaption($fields['caption']);
+                /** @var $blockType PictureBlock */
+                $blockType->setFile($this->createImage($fields['file']));
+                $blockType->setTitle($fields['title']);
+                $blockType->setCaption($fields['caption']);
                 break;
             case('text_picture'):
-                /** @var $itemType TextPictureItem */
-                $itemType->setFile($this->createImage($fields['file']));
-                $itemType->setTitle($fields['title']);
-                $itemType->setCaption($fields['caption']);
-                $itemType->setFloat($fields['float']);
-                $itemType->setTitle($fields['title']);
-                $itemType->setText($fields['text']);
+                /** @var $blockType TextPictureBlock */
+                $blockType->setFile($this->createImage($fields['file']));
+                $blockType->setTitle($fields['title']);
+                $blockType->setCaption($fields['caption']);
+                $blockType->setFloat($fields['float']);
+                $blockType->setTitle($fields['title']);
+                $blockType->setText($fields['text']);
                 break;
         }
     }
