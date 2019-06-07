@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\FormBundle\Form\Type\DynamicBlockType;
+use Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -37,7 +37,7 @@ class BlockType extends AbstractType
 
     public function getParent()
     {
-        return DynamicBlockType::class;
+        return DynamicItemType::class;
     }
 
     public function getBlockPrefix()

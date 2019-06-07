@@ -14,7 +14,7 @@ use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\BlockTypeFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockType;
-use Enhavo\Bundle\FormBundle\DynamicForm\BlockInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -47,9 +47,9 @@ class BlockResolver implements ResolverInterface
 
     /**
      * @param string[] $groups
-     * @return BlockInterface[]
+     * @return ItemInterface[]
      */
-    public function resolveBlockGroup($groups = [])
+    public function resolveItemGroup($groups = [])
     {
         $blocks = [];
         foreach($this->blocks as $block) {
@@ -69,7 +69,7 @@ class BlockResolver implements ResolverInterface
      * @return Block
      * @throws \Exception
      */
-    public function resolveBlock($name)
+    public function resolveItem($name)
     {
         if(!array_key_exists($name, $this->blocks)) {
             throw new ResolverException(sprintf('ContainerBlock with name "%s" does not exist', $name));
@@ -78,7 +78,7 @@ class BlockResolver implements ResolverInterface
         return $this->blocks[$name];
     }
 
-    public function resolveDefaultBlocks()
+    public function resolveDefaultItems()
     {
         return array_values($this->blocks);
     }

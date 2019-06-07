@@ -8,9 +8,9 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\FormBundle\DynamicForm\AbstractBlock;
+use Enhavo\Bundle\FormBundle\DynamicForm\AbstractItem;
 
-class Block extends AbstractBlock
+class Block extends AbstractItem
 {
     /**
      * @return AbstractConfiguration
