@@ -1,6 +1,6 @@
-Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnItem:
+Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnBlock:
     type: entity
-    table: sidebar_item_sidebar_column
+    table: sidebar_block_sidebar_column
 
     manyToOne:
         column:
