@@ -14,7 +14,7 @@ class OneColumnBlockType extends AbstractType
         $builder->add('column', ContainerType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_groups' => ['content']
+            'item_groups' => ['content']
         ]);
     }
 

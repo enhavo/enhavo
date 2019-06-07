@@ -19,8 +19,8 @@ class ContainerType extends AbstractType
     {
         $builder->add('blocks', BlocksType::class, [
             'entry_type' => BlockType::class,
-            'block_groups' => $options['block_groups'],
-            'blocks' => $options['blocks']
+            'item_groups' => $options['item_groups'],
+            'items' => $options['items']
         ]);
     }
 
@@ -30,8 +30,8 @@ class ContainerType extends AbstractType
             'data_class' => Container::class,
             'label' => 'block.label.container',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_groups' => [],
-            'blocks' => []
+            'item_groups' => [],
+            'items' => []
         ));
     }
 

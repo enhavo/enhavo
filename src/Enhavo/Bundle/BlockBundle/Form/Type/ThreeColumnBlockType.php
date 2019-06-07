@@ -14,19 +14,19 @@ class ThreeColumnBlockType extends AbstractType
         $builder->add('columnOne', ContainerType::class, [
             'label' => 'column.label.column_one',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_groups' => ['content']
+            'item_groups' => ['content']
         ]);
 
         $builder->add('columnTwo', ContainerType::class, [
             'label' => 'column.label.column_two',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_groups' => ['content']
+            'item_groups' => ['content']
         ]);
 
         $builder->add('columnThree', ContainerType::class, [
             'label' => 'column.label.column_three',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_groups' => ['content']
+            'item_groups' => ['content']
         ]);
     }
 

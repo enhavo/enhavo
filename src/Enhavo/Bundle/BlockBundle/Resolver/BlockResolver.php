@@ -88,10 +88,10 @@ class BlockResolver implements ResolverInterface
         $block = $this->resolveBlock($name);
 
         $formOptions = [
-            'block_type_form' => $block->getForm(),
-            'block_type_parameters' => isset($options['block_type_parameters']) ?: [],
-            'block_resolver' => 'enhavo_block.resolver.block_resolver',
-            'block_property' => 'name',
+            'item_type_form' => $block->getForm(),
+            'item_type_parameters' => isset($options['item_type_parameters']) ?: [],
+            'item_resolver' => 'enhavo_block.resolver.block_resolver',
+            'item_property' => 'name',
         ];
 
         $form = $this->formFactory->create(BlockType::class, $data, array_merge($formOptions, $options));

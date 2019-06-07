@@ -102,3 +102,6 @@ two_column:
 three_column:
   label:
     three_column: 'Drei Spalten'
+block:
+  label:
+    blocks: 'Blocks'

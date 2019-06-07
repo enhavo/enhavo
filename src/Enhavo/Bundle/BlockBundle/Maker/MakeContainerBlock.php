@@ -54,8 +54,8 @@ class MakeContainerBlock extends AbstractMaker
             'What is the name of the bundle the new block should be added to?'
         )
         ->addArgument(
-            InputArgument::REQUIRED,
             'blockName',
+            InputArgument::REQUIRED,
             'What is the name the block should have?'
         );
     }

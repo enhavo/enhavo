@@ -36,7 +36,7 @@ class SidebarType extends AbstractType
         $builder->add('container', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'block_groups' => ['content'],
+            'item_groups' => ['content'],
         ));
     }
 

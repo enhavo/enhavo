@@ -22,16 +22,16 @@ class BlockType extends AbstractType
     {
         $builder->add('position', PositionType::class);
         $builder->add('name', HiddenType::class);
-        $builder->add('blockType', $options['block_type_form'], $options['block_type_parameters']);
+        $builder->add('blockType', $options['item_type_form'], $options['item_type_parameters']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => Block::class,
-            'block_type_form' => null,
-            'block_type_parameters' => [],
-            'block_property' => 'name',
+            'item_type_form' => null,
+            'item_type_parameters' => [],
+            'item_property' => 'name',
         ));
     }
 

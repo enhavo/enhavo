@@ -29,7 +29,7 @@ class BlocksType extends AbstractType
         $resolver->setDefaults([
             'label' => 'block.label.blocks',
             'translation_domain' => 'EnhavoBlockBundle',
-            'block_resolver' => 'enhavo_block.resolver.block_resolver',
+            'item_resolver' => 'enhavo_block.resolver.block_resolver',
             'block_route' => 'enhavo_block_block_form',
             'block_class' => $this->class,
         ]);

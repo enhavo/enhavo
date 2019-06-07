@@ -28,8 +28,8 @@ class DynamicFormController extends AbstractController
         /** @var $form Form */
         $form = $resolver->resolveForm($type, $data, array(
             'csrf_protection' => false,
-            'block_resolver' => $this->getResolverName($request),
-            'block_full_name' => $formName
+            'item_resolver' => $this->getResolverName($request),
+            'item_full_name' => $formName
         ));
 
         return $this->render('EnhavoFormBundle:DynamicForm:form.html.twig', array(
