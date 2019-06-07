@@ -1,0 +1,15 @@
+extends: ['base']
+meta:
+    name: 'Demo template'
+    image: ~
+    description: ''
+webpack:
+    build: 'enhavo'
+    options:
+        color1:
+template:
+    mapping:
+        'EnhavoPageBundle:Page:show.html.twig': 'EnhavoDemoBundle:Theme/Page:show.html.twig'
+block:
+    column_styles: []
+    templates: []

@@ -8,6 +8,8 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Locator;
 
+use Enhavo\Bundle\ThemeBundle\Exception\TemplateMapException;
+use Enhavo\Bundle\ThemeBundle\Template\TemplateMapper;
 use Enhavo\Bundle\ThemeBundle\ThemeLoader\ThemeLoaderInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
@@ -22,9 +24,9 @@ class ThemeTemplateLocator implements FileLocatorInterface
     private $locator;
 
     /**
-     * @var ThemeLoaderInterface
+     * @var TemplateMapper
      */
-    private $loader;
+    private $templateMapper;
 
     /**
      * @var string[]
@@ -38,14 +40,14 @@ class ThemeTemplateLocator implements FileLocatorInterface
      * @param string|null $cacheDir
      * @param ThemeLoaderInterface $loader
      */
-    public function __construct(FileLocatorInterface $locator, string $cacheDir, ThemeLoaderInterface $loader)
+    public function __construct(FileLocatorInterface $locator, string $cacheDir, TemplateMapper $templateMapper)
     {
         if (null !== $cacheDir && file_exists($cache = $cacheDir.'/templates.php')) {
             $this->cache = require $cache;
         }
 
         $this->locator = $locator;
-        $this->loader = $loader;
+        $this->templateMapper = $templateMapper;
     }
 
     /**
@@ -96,7 +98,14 @@ class ThemeTemplateLocator implements FileLocatorInterface
 
     private function locateTemplate($template)
     {
-        $theme = $this->loader->load();
-        return $this->locator->locate($template->getPath());
+        try {
+            $mapTemplate = $this->templateMapper->map($template);
+            return $this->locator->locate($mapTemplate->getPath());
+        } catch(\InvalidArgumentException $e) {
+            if (isset($mapTemplate) && $mapTemplate !== $template) {
+                throw new TemplateMapException(sprintf('Unable to map template template "%s" : "%s".', $template, $e->getMessage()));
+            }
+            throw $e;
+        }
     }
 }

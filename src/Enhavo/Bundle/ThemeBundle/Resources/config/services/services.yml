@@ -8,6 +8,12 @@ services:
             - '@serializer'
             - '@file_locator'
 
+    enhavo_theme.template.mapper:
+        class: Enhavo\Bundle\ThemeBundle\Template\TemplateMapper
+        arguments:
+            - '@enhavo_theme.theme_loader.config'
+            - '@templating.name_parser'
+
     Enhavo\Bundle\ThemeBundle\Init\InitTheme:
         public: true
         arguments:
