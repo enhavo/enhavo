@@ -54,7 +54,7 @@ services:
         class: '%enhavo_page.factory.page.class%'
         arguments:
             - '%enhavo_page.model.page.class%'
-            - '@enhavo_grid.factory.grid'
+            - '@enhavo_block.factory.container'
 
     Enhavo\Bundle\PageBundle\Navigation\PageConfiguration:
         public: true

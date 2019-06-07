@@ -9,24 +9,24 @@
 namespace Enhavo\Bundle\PageBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 
 interface PageInterface
 {
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $container
      * @return PageInterface
      */
-    public function setGrid(GridInterface $grid = null);
+    public function setContainer(ContainerInterface $container = null);
 
     /**
      * Get content
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid();
+    public function getContainer();
 
     /**
      * Set code

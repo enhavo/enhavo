@@ -1,23 +1,23 @@
 <?php
 namespace Enhavo\Bundle\PageBundle\Factory;
 
+use Enhavo\Bundle\BlockBundle\Factory\ContainerFactory;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\ContentBundle\Factory\ContentFactory;
-use Enhavo\Bundle\GridBundle\Factory\GridFactory;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 
 class PageFactory extends ContentFactory
 {
     /**
-     * @var GridFactory
+     * @var ContainerFactory
      */
-    protected $gridFactory;
+    protected $containerFactory;
 
-    public function __construct($className, GridFactory $gridFactory)
+    public function __construct($className, ContainerFactory $containerFactory)
     {
         parent::__construct($className);
 
-        $this->gridFactory = $gridFactory;
+        $this->containerFactory = $containerFactory;
     }
 
     /**
@@ -38,8 +38,8 @@ class PageFactory extends ContentFactory
         $newPage->setPublic(false);
         $newPage->setCode(null);
 
-        $newGrid = $this->gridFactory->duplicate($originalResource->getGrid());
-        $newPage->setGrid($newGrid);
+        $newContainer = $this->containerFactory->duplicate($originalResource->getContainer());
+        $newPage->setContainer($newContainer);
 
         $newPage->setParent($originalResource->getParent());
 

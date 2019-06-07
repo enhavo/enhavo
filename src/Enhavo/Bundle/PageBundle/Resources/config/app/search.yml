@@ -5,5 +5,5 @@ enhavo_search:
                 title:
                     type: text
                     weight: 5
-                grid:
+                container:
                     type: model
