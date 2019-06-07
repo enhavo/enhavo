@@ -14,9 +14,9 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             orphanRemoval: true
 
-        grid:
+        container:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 
     manyToMany:
         categories:

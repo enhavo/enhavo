@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Factory;
 
-use Enhavo\Bundle\GridBundle\Factory\AbstractItemFactory;
+use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 
-class ArticleStreamFactory extends AbstractItemFactory
+class ArticleStreamFactory extends AbstractBlockFactory
 {
 }

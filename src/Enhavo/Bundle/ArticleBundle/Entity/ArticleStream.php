@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
-use Enhavo\Bundle\GridBundle\Entity\AbstractItem;
+use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 
-class ArticleStream extends AbstractItem
+class ArticleStream extends AbstractBlock
 {
     /**
      * @var  boolean

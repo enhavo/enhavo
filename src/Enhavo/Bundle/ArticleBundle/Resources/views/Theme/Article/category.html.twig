@@ -3,7 +3,7 @@
 {% block main %}
     <div>{{ category.title }}</div>
     {% for article in articles %}
-        <article class="clearfix" data-article-item>
+        <article class="clearfix" data-article-block>
             <a href="{{ path('enhavo_project_article_show', {slug: article.slug}) }}">
             <span class="article-photo">
                 {% if article.picture %}

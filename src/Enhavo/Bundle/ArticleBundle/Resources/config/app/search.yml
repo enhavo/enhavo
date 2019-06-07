@@ -8,7 +8,7 @@ enhavo_search:
                 teaser:
                     type: text
                     weight: 8
-                grid:
+                container:
                     type: model
             filter:
                 permission:

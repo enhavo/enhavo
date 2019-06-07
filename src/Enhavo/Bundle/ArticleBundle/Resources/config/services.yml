@@ -43,12 +43,12 @@ services:
         tags:
             - { name: enhavo.statistic, alias: article }
 
-    Enhavo\Bundle\ArticleBundle\Grid\ArticleStreamType:
+    Enhavo\Bundle\ArticleBundle\Container\ArticleStreamType:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.grid_item, alias: article_stream }
+            - { name: enhavo.container_block, alias: article_stream }
 
     Enhavo\Bundle\ArticleBundle\Widget\ArticleStreamType:
         public: true
