@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -32,9 +32,9 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $subject;
 
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    private $grid;
+    private $container;
 
     /**
      * @var boolean
@@ -119,27 +119,27 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Set grid
+     * Set container
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $container
      *
      * @return Newsletter
      */
-    public function setGrid(GridInterface $grid)
+    public function setContainer(ContainerInterface $container)
     {
-        $this->grid = $grid;
+        $this->container = $container;
 
         return $this;
     }
 
     /**
-     * Get grid
+     * Get container
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContainer()
     {
-        return $this->grid;
+        return $this->container;
     }
 
     /**

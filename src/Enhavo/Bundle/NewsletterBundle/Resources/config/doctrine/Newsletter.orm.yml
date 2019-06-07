@@ -37,8 +37,8 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                 default: false
 
     oneToOne:
-        grid:
+        container:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 
     lifecycleCallbacks: {  }
