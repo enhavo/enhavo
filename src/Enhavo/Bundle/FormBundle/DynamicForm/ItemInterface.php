@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\DynamicForm;
 
-interface BlockInterface
+interface ItemInterface
 {
     public function getName();
 

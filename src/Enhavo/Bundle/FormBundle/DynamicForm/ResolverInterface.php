@@ -8,33 +8,32 @@
 
 namespace Enhavo\Bundle\FormBundle\DynamicForm;
 
-use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 interface ResolverInterface
 {
     /**
-     * Return all blocks from this group
+     * Return all items from this group
      *
      * @param $group
-     * @return BlockInterface[]
+     * @return ItemInterface[]
      */
-    public function resolveBlockGroup($group);
+    public function resolveItemGroup($group);
 
     /**
-     * Return all default blocks
+     * Return all default items
      *
-     * @return BlockInterface[]
+     * @return ItemInterface[]
      */
-    public function resolveDefaultBlocks();
+    public function resolveDefaultItems();
 
     /**
      * Get block by name
      *
      * @param $name
-     * @return BlockInterface
+     * @return ItemInterface
      */
-    public function resolveBlock($name);
+    public function resolveItem($name);
 
     /**
      * Get factory

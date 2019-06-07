@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\FormBundle\DynamicForm;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractBlock implements BlockInterface
+abstract class AbstractItem implements ItemInterface
 {
     /**
      * @var ConfigurationInterface

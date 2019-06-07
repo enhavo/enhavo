@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockType.php
+ * ItemType.php
  *
  * @since 23/08/14
  * @author Gerhard Seidel <gseidel.message@googlemail.com>
@@ -20,35 +20,35 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class DynamicBlockType extends AbstractType
+class DynamicItemType extends AbstractType
 {
     use ContainerAwareTrait;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $blockProperty = $options['block_property'];
+        $itemProperty = $options['item_property'];
 
-        $builder->add($blockProperty, HiddenType::class);
+        $builder->add($itemProperty, HiddenType::class);
 
         $resolver = $this->getResolver($options);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver, $blockProperty) {
-            $block = $event->getData();
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver, $itemProperty) {
+            $item = $event->getData();
             $form = $event->getForm();
-            if(!empty($block) && isset($block[$blockProperty])) {
-                $resolvedForm = $resolver->resolveForm($block[$blockProperty]);
+            if(!empty($item) && isset($item[$itemProperty])) {
+                $resolvedForm = $resolver->resolveForm($item[$itemProperty]);
                 foreach($resolvedForm as $child) {
                     $form->add($child);
                 }
             }
         });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver, $blockProperty) {
-            $block = $event->getData();
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($resolver, $itemProperty) {
+            $item = $event->getData();
             $form = $event->getForm();
             $accessor = PropertyAccess::createPropertyAccessor();
-            if(!empty($block) && $accessor->getValue($block, $blockProperty)) {
-                $resolvedForm = $resolver->resolveForm($accessor->getValue($block, $blockProperty));
+            if(!empty($item) && $accessor->getValue($item, $itemProperty)) {
+                $resolvedForm = $resolver->resolveForm($accessor->getValue($item, $itemProperty));
                 foreach($resolvedForm as $child) {
                     $form->add($child);
                 }
@@ -62,37 +62,37 @@ class DynamicBlockType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $resolver = $this->getResolver($options);
-        $blockProperty = $options['block_property'];
+        $itemProperty = $options['item_property'];
 
         $accessor = PropertyAccess::createPropertyAccessor();
 
         $data = $form->getData();
         if($data) {
-            $block = $resolver->resolveBlock($accessor->getValue($data, $blockProperty));
-            $view->vars['label'] = $block->getLabel();
-            $view->vars['translation_domain'] = $block->getTranslationDomain();
+            $item = $resolver->resolveItem($accessor->getValue($data, $itemProperty));
+            $view->vars['label'] = $item->getLabel();
+            $view->vars['translation_domain'] = $item->getTranslationDomain();
         }
 
-        if(isset($options['block_full_name'])) {
-            $view->vars['full_name'] = sprintf('%s', ($options['block_full_name']));
+        if(isset($options['item_full_name'])) {
+            $view->vars['full_name'] = sprintf('%s', ($options['item_full_name']));
         }
 
-        $view->vars['block_template'] = $resolver->resolveFormTemplate($accessor->getValue($data, $blockProperty));;
+        $view->vars['item_template'] = $resolver->resolveFormTemplate($accessor->getValue($data, $itemProperty));;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'block_property' => 'type',
-            'block_resolver' => null,
-            'block_full_name' => null
+            'item_property' => 'type',
+            'item_resolver' => null,
+            'item_full_name' => null
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getItemPrefix()
     {
-        return 'enhavo_dynamic_block';
+        return 'enhavo_dynamic_item';
     }
 
     /**
@@ -102,7 +102,7 @@ class DynamicBlockType extends AbstractType
      */
     private function getResolver(array $options)
     {
-        $resolver = $options['block_resolver'];
+        $resolver = $options['item_resolver'];
         if(is_string($resolver)) {
             if(!$this->container->has($resolver)) {
                 throw new \Exception(sprintf('Resolver "%s" for dynamic form not found', $resolver));
