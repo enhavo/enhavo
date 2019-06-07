@@ -1,71 +1,71 @@
 services:
-    enhavo_grid.context.builder:
-        class: Enhavo\Bundle\GridBundle\Context\ContextBuilder
+    enhavo_block.context.builder:
+        class: Enhavo\Bundle\BlockBundle\Context\ContextBuilder
 
-    enhavo_grid.form.items:
-        class: Enhavo\Bundle\GridBundle\Form\Type\ItemsType
+    enhavo_block.form.blocks:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\BlocksType
         arguments:
-            - Enhavo\Bundle\GridBundle\Entity\Item
+            - Enhavo\Bundle\BlockBundle\Entity\Block
         tags:
-            - { name: form.type, alias: enhavo_grid_items }
+            - { name: form.type, alias: enhavo_container_blocks }
 
-    enhavo_grid.twig.grid_extension:
-        class: Enhavo\Bundle\GridBundle\Twig\GridExtension
+    enhavo_block.twig.container_extension:
+        class: Enhavo\Bundle\BlockBundle\Twig\ContainerExtension
         arguments:
-            - '@enhavo_grid.renderer.grid_renderer'
+            - '@enhavo_block.renderer.block_renderer'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 
-    enhavo_grid.renderer.grid_renderer:
-        class: Enhavo\Bundle\GridBundle\Renderer\GridRenderer
+    enhavo_block.renderer.block_renderer:
+        class: Enhavo\Bundle\BlockBundle\Renderer\ContainerRenderer
         arguments:
-            - '@enhavo_grid.resolver.item_resolver'
-            - '@enhavo_grid.context.builder'
-            - '%enhavo_grid.render.sets%'
+            - '@enhavo_block.resolver.block_resolver'
+            - '@enhavo_block.context.builder'
+            - '%enhavo_block.render.sets%'
         calls:
             - [ setContainer, ['@service_container']]
 
-    enhavo_grid.resolver.item_resolver:
+    enhavo_block.resolver.block_resolver:
         public: true
-        class: Enhavo\Bundle\GridBundle\Resolver\ItemResolver
+        class: Enhavo\Bundle\BlockBundle\Resolver\BlockResolver
         calls:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
-            - '@enhavo_grid.factory.item_type'
-            - '@enhavo_grid.item.manager'
+            - '@enhavo_block.factory.block_type'
+            - '@enhavo_block.block.manager'
 
-    enhavo_grid.item_collector:
+    enhavo_block.block_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
-            - 'GridItem'
+            - 'ContainerBlock'
 
     validator.video_url_validator:
-        class:  Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrlValidator
+        class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator
         tags:
             - { name: validator.constraint_validator, alias: video_url }
 
-    enhavo_grid.event_listener.item_reference:
+    enhavo_block.event_listener.block_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
-          - 'Enhavo\Bundle\GridBundle\Entity\Item'
-          - 'itemType'
-          - 'itemTypeClass'
-          - 'itemTypeId'
+          - 'Enhavo\Bundle\BlockBundle\Entity\Block'
+          - 'blockType'
+          - 'blockTypeClass'
+          - 'blockTypeId'
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
 
-    enhavo_grid.item.manager:
-        class: Enhavo\Bundle\GridBundle\Item\ItemManager
+    enhavo_block.block.manager:
+        class: Enhavo\Bundle\BlockBundle\Block\BlockManager
         arguments:
-            - '@enhavo_grid.item_collector'
-            - '%enhavo_grid.items%'
+            - '@enhavo_block.block_collector'
+            - '%enhavo_block.blocks%'
 
-    Enhavo\Bundle\GridBundle\Maker\MakeGridItem:
+    Enhavo\Bundle\BlockBundle\Maker\MakeContainerBlock:
         arguments:
             - '@kernel'
             - '@enhavo_app.maker.util'

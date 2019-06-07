@@ -1,13 +1,13 @@
 services:
-    enhavo_grid.factory.grid:
-        class: Enhavo\Bundle\GridBundle\Factory\GridFactory
+    enhavo_block.factory.container:
+        class: Enhavo\Bundle\BlockBundle\Factory\ContainerFactory
         arguments:
-            - 'Enhavo\Bundle\GridBundle\Entity\Grid'
+            - 'Enhavo\Bundle\BlockBundle\Entity\Container'
             - '@enhavo_grid.factory.item_type'
         calls:
             - [setContainer, ['@service_container']]
 
-    enhavo_grid.factory.item_type:
-        class: Enhavo\Bundle\GridBundle\Factory\ItemTypeFactory
+    enhavo_block.factory.block_type:
+        class: Enhavo\Bundle\BlockBundle\Factory\BlockTypeFactory
         calls:
             - [setContainer, ['@service_container']]

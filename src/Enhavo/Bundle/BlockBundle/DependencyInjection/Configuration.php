@@ -1,9 +1,9 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\DependencyInjection;
+namespace Enhavo\Bundle\BlockBundle\DependencyInjection;
 
-use Enhavo\Bundle\GridBundle\Form\Type\StyleType;
-use Enhavo\Bundle\GridBundle\Form\Type\WidthType;
+use Enhavo\Bundle\BlockBundle\Form\Type\StyleType;
+use Enhavo\Bundle\BlockBundle\Form\Type\WidthType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_grid');
+        $rootNode = $treeBuilder->root('enhavo_block');
 
         $rootNode
             ->children()
@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enable_columns')->defaultValue(true)->end()
-                        ->scalarNode('enable_items')->defaultValue(true)->end()
+                        ->scalarNode('enable_blocks')->defaultValue(true)->end()
                     ->end()
                 ->end()
 
@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                ->arrayNode('items')
+                ->arrayNode('blocks')
                     ->isRequired()
                     ->useAttributeAsKey('name')
                     ->prototype('array')

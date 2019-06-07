@@ -1,0 +1,13 @@
+<div class="enhavo_block">
+    <div class="enhavo_block_picture container">
+        {% if data.title %}
+            <h2 class="title">{{ data.title|raw }}</h2>
+        {% endif %}
+        {% if data.file %}
+            <img class="enhavo_block_img" src="{{ media_url(data.file, 'container_width') }}">
+        {% endif %}
+        {% if data.caption %}
+            <p class="picture_caption">{{ data.caption }}</p>
+        {% endif %}
+    </div>
+</div>

@@ -1,8 +1,8 @@
-{% block enhavo_grid_widget %}
-    {{ form_widget(form.items) }}
+{% block enhavo_block_widget %}
+    {{ form_widget(form.blocks) }}
 {% endblock %}
 
-{% block enhavo_grid_column_widget %}
+{% block enhavo_block_column_widget %}
     {{ form_row(form.width) }}
     {{ form_row(form.style) }}
     {% for child in form %}

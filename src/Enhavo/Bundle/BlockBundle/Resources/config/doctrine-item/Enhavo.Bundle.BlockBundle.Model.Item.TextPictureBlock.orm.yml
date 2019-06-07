@@ -1,0 +1,33 @@
+Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
+    type: entity
+    table: block_block_text_picture
+
+    fields:
+        text:
+            type: text
+            nullable: true
+        title:
+            type: string
+            length: 255
+            nullable: true
+        caption:
+            type: string
+            length: 255
+            nullable: true
+        textLeft:
+            type: boolean
+            nullable: true
+        float:
+            type: boolean
+            nullable: true
+            column: '`float`'
+        layout:
+            type: integer
+            nullable: true
+
+    oneToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+    lifecycleCallbacks: {  }

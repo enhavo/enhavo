@@ -21,7 +21,7 @@ enhavo_app:
             ok: 'Ok'
             cancel: 'Abbrechen'
             close: 'Schließen'
-    grid:
+    container:
         label:
             entry_per_page: 'Ergebnisse pro Seite'
     list:

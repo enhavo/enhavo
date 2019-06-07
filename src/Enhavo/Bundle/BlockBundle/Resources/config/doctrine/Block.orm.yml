@@ -1,0 +1,37 @@
+Enhavo\Bundle\BlockBundle\Entity\Block:
+    type: entity
+    table: block_block
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: true
+
+        position:
+            type: integer
+            nullable: true
+
+        blockTypeId:
+            type: integer
+            nullable: true
+
+        blockTypeClass:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        container:
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            mappedBy: blocks
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

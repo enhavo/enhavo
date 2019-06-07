@@ -1,0 +1,16 @@
+Enhavo\Bundle\BlockBundle\Entity\AbstractBlock:
+    type: mappedSuperclass
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        block:
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\BlockInterface
+            joinColumn:
+                onDelete: CASCADE
+
+lifecycleCallbacks: {  }

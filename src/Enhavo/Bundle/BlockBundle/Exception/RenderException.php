@@ -6,7 +6,7 @@
  * Time: 21:16
  */
 
-class RenderException extends \Excp
+class RenderException extends \Exception
 {
 
 }

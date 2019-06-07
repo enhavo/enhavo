@@ -1,0 +1,9 @@
+        {{ block_name_snake_case }}:
+            type: base
+            model: {{ block_namespace }}
+            parent: {{ block_namespace }}
+            label: {{ block_name }}
+            form: {{ form_type_namespace }}
+            repository: {{ bundle_name }}:{{ block_name }}
+            template: {{ template }}
+            factory: {{ factory_namespace }}

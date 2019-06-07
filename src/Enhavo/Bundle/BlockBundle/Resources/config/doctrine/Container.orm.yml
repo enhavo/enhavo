@@ -1,0 +1,20 @@
+Enhavo\Bundle\BlockBundle\Entity\Container:
+    type: entity
+    table: block_container
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToMany:
+        blocks:
+            targetEntity: Block
+            mappedBy: container
+            cascade: ['persist', 'refresh', 'remove']
+            orphanRemoval: true
+            orderBy:
+                position: ASC
+
+    lifecycleCallbacks: {  }

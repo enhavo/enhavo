@@ -6,13 +6,13 @@
  * Time: 20:35
  */
 
-namespace Enhavo\Bundle\GridBundle\Context;
+namespace Enhavo\Bundle\BlockBundle\Context;
 
-use Enhavo\Bundle\GridBundle\Model\Context;
-use Enhavo\Bundle\GridBundle\Model\ContextAwareInterface;
-use Enhavo\Bundle\GridBundle\Model\GridsAwareInterface;
-use Enhavo\Bundle\GridBundle\Model\ItemInterface;
-use Enhavo\Bundle\GridBundle\Model\ItemsAwareInterface;
+use Enhavo\Bundle\BlockBundle\Model\Context;
+use Enhavo\Bundle\BlockBundle\Model\ContextAwareInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerAwareInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlocksAwareInterface;
 
 class ContextBuilder
 {
@@ -36,27 +36,27 @@ class ContextBuilder
 
     private function addChildren($data, Context $context)
     {
-        if($data instanceof ItemsAwareInterface) {
-            $items = $data->getItems();
-            foreach($items as $item) {
-                if($item instanceof ContextAwareInterface) {
-                    $context->addChild($this->build($item, $context));
+        if($data instanceof BlocksAwareInterface) {
+            $blocks = $data->getBlocks();
+            foreach($blocks as $block) {
+                if($block instanceof ContextAwareInterface) {
+                    $context->addChild($this->build($block, $context));
                 }
             }
         }
 
-        if($data instanceof GridsAwareInterface) {
-            $grids = $data->getGrids();
-            foreach($grids as $grid) {
-                if($grid instanceof ContextAwareInterface) {
-                    $context->addChild($this->build($grid, $context));
+        if($data instanceof ContainerAwareInterface) {
+            $containers = $data->getContainers();
+            foreach($containers as $container) {
+                if($container instanceof ContextAwareInterface) {
+                    $context->addChild($this->build($container, $context));
                 }
             }
         }
 
-        if($data instanceof ItemInterface) {
-            $itemType = $data->getItemType();
-            $this->addChildren($itemType, $context);
+        if($data instanceof BlockInterface) {
+            $blockType = $data->getBlockType();
+            $this->addChildren($blockType, $context);
         }
     }
 

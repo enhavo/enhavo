@@ -6,9 +6,9 @@
  * Time: 15:21
  */
 
-namespace Enhavo\Bundle\GridBundle\Form\Type;
+namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Model\Column\Column;
+use Enhavo\Bundle\BlockBundle\Model\Column\Column;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +19,7 @@ class WidthType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'column.label.width.label',
-            'translation_domain' => 'EnhavoGridBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'choices_as_values' => true,
             'choices' => [
                 'column.label.width.full' => Column::WIDTH_FULL,

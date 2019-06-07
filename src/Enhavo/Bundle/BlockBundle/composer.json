@@ -1,7 +1,7 @@
 {
-  "name": "enhavo/grid-bundle",
+  "name": "enhavo/block-bundle",
   "type": "library",
-  "description": "EnhavoGridBundle",
+  "description": "EnhavoBlockBundle",
   "keywords": ["framework"],
   "homepage": "http://enhavo.com",
   "license": "MIT",
@@ -17,6 +17,6 @@
     "doctrine/doctrine-bundle": "~1.2"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Bundle\\GridBundle\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\BlockBundle\\": "" }
   }
 }

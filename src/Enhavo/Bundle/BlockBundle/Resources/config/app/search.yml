@@ -1,22 +1,22 @@
 enhavo_search:
     metadata:
-        Enhavo\Bundle\GridBundle\Entity\Grid:
+        Enhavo\Bundle\BlockBundle\Entity\Container:
             properties:
-                items:
+                blocks:
                     type: collection
 
-        Enhavo\Bundle\GridBundle\Entity\Item:
+        Enhavo\Bundle\BlockBundle\Entity\Block:
             properties:
-                itemType:
+                blockType:
                     type: model
 
-        Enhavo\Bundle\GridBundle\Entity\CiteText:
+        Enhavo\Bundle\BlockBundle\Entity\CiteText:
             properties:
                 cite:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\GridBundle\Entity\Picture:
+        Enhavo\Bundle\BlockBundle\Entity\Picture:
             properties:
                 title:
                     type: text
@@ -25,7 +25,7 @@ enhavo_search:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\GridBundle\Entity\PicturePicture:
+        Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
             properties:
                 title:
                     type: text
@@ -37,7 +37,7 @@ enhavo_search:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\GridBundle\Entity\Text:
+        Enhavo\Bundle\BlockBundle\Entity\Text:
             properties:
                 title:
                     type: text
@@ -49,7 +49,7 @@ enhavo_search:
                         h2: 10
                         p: 7
 
-        Enhavo\Bundle\GridBundle\Entity\TextPicture:
+        Enhavo\Bundle\BlockBundle\Entity\TextPicture:
             properties:
                 title:
                     type: text
@@ -57,7 +57,7 @@ enhavo_search:
                 text:
                     type: html
 
-        Enhavo\Bundle\GridBundle\Entity\TextText:
+        Enhavo\Bundle\BlockBundle\Entity\TextText:
             properties:
                 title:
                     type: text
@@ -73,13 +73,13 @@ enhavo_search:
                 textRight:
                     type: html
 
-        Enhavo\Bundle\GridBundle\Entity\Video:
+        Enhavo\Bundle\BlockBundle\Entity\Video:
             properties:
                 title:
                     type: text
                     weight: 8
 
-        Enhavo\Bundle\GridBundle\Entity\Gallery:
+        Enhavo\Bundle\BlockBundle\Entity\Gallery:
             properties:
                 title:
                     type: text

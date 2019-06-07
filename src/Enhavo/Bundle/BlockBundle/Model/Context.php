@@ -6,7 +6,7 @@
  * Time: 01:29
  */
 
-namespace Enhavo\Bundle\GridBundle\Model;
+namespace Enhavo\Bundle\BlockBundle\Model;
 
 class Context
 {

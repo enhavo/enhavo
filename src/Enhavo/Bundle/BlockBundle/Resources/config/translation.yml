@@ -1,35 +1,35 @@
-Enhavo\Bundle\GridBundle\Entity\CiteText:
+Enhavo\Bundle\BlockBundle\Entity\CiteText:
     properties:
         cite:
 
-Enhavo\Bundle\GridBundle\Entity\Gallery:
+Enhavo\Bundle\BlockBundle\Entity\Gallery:
     properties:
         title:
         text:
 
-Enhavo\Bundle\GridBundle\Entity\Picture:
+Enhavo\Bundle\BlockBundle\Entity\Picture:
     properties:
         title:
         caption:
 
-Enhavo\Bundle\GridBundle\Entity\PicturePicture:
+Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
     properties:
         title:
         captionLeft:
         captionRight:
 
-Enhavo\Bundle\GridBundle\Entity\Text:
+Enhavo\Bundle\BlockBundle\Entity\Text:
     properties:
         title:
         text:
 
-Enhavo\Bundle\GridBundle\Entity\TextPicture:
+Enhavo\Bundle\BlockBundle\Entity\TextPicture:
     properties:
         title:
         text:
         caption:
 
-Enhavo\Bundle\GridBundle\Entity\TextText:
+Enhavo\Bundle\BlockBundle\Entity\TextText:
     properties:
         title:
         textLeft:
@@ -37,7 +37,7 @@ Enhavo\Bundle\GridBundle\Entity\TextText:
         textRight:
         titleRight:
 
-Enhavo\Bundle\GridBundle\Entity\ThreePicture:
+Enhavo\Bundle\BlockBundle\Entity\ThreePicture:
     properties:
         titleLeft:
         titleRight:
@@ -46,6 +46,6 @@ Enhavo\Bundle\GridBundle\Entity\ThreePicture:
         captionRight:
         captionCenter:
 
-Enhavo\Bundle\GridBundle\Entity\Video:
+Enhavo\Bundle\BlockBundle\Entity\Video:
     properties:
         title:

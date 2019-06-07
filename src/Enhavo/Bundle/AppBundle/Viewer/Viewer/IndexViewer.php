@@ -111,7 +111,7 @@ class IndexViewer extends AppViewer
             $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
         }
 
-        $grid = [
+        $container = [
             'tableRoute' => $tableRoute,
             'batchRoute' => $batchRoute,
             'updateRoute' => $updateRoute,
@@ -127,7 +127,7 @@ class IndexViewer extends AppViewer
         
         $parameters->set('data', [
             'messages' => [],
-            'grid' => $grid,
+            'container' => $container,
             'actions' => $this->actionManager->createActionsViewData($actions),
             'view' => [
                 'id' => null,

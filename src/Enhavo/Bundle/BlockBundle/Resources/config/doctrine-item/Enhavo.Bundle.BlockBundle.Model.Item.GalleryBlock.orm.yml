@@ -1,0 +1,30 @@
+Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
+    type: entity
+    table: block_block_gallery
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        text:
+            type: text
+            nullable: true
+
+    manyToMany:
+        files:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+            orderBy: { 'order': 'ASC' }
+            joinTable:
+                name: block_block_gallery_file
+                joinColumns:
+                    gallery_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+                        onDelete: cascade
+
+    lifecycleCallbacks: {  }

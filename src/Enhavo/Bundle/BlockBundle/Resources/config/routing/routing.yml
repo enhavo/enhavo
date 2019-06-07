@@ -1,7 +1,7 @@
-enhavo_grid_item_form:
-    path:  /enhavo/grid/form
+enhavo_block_block_form:
+    path:  /enhavo/block/form
     defaults:
-        _controller: EnhavoFormBundle:DynamicForm:item
-        _resolver: enhavo_grid.resolver.item_resolver
+        _controller: EnhavoFormBundle:DynamicForm:block
+        _resolver: enhavo_block.resolver.block_resolver
     options:
         expose: true

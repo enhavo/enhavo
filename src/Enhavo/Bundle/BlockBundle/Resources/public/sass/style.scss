@@ -1,23 +1,23 @@
 @import 'compass';
 @import 'vars';
 
-.enhavo_gridForm {
+.enhavo_blockForm {
   position: relative;
-  .addItem {cursor: pointer;}
-  .add-enhavo_grid-button {font-size:14px;line-height:19px;}
+  .addBlock {cursor: pointer;}
+  .add-enhavo_block-button {font-size:14px;line-height:19px;}
 
-  .grid-actions {
+  .container-actions {
 
   }
 
-  .grid-container {
-    .grid-item-add-button {
+  .container-container {
+    .container-block-add-button {
 
     }
 
-    .grid-item {
+    .container-block {
       border:1px solid #eee;padding-bottom:15px;
-      + .item {margin-top:15px;}
+      + .block {margin-top:15px;}
       .button-container {
         background-color: #eee;border-bottom: 1px solid #eee;padding-left:85px;position: relative;line-height:25px;margin-bottom:15px;
         .button {position: absolute;cursor: pointer;height:100%;z-index: 1;top:0;text-align:center;width:33px;background:#fff;
@@ -33,7 +33,7 @@
     }
   }
 
-  .grid-menu {
+  .container-menu {
     display: none;position: absolute;color: #000;z-index: 1000;padding: 1px;margin-top: 10px;@include transform(translateX(-50%));background-color:transparent;font-size:12px;line-height:16px;margin-left:19px;@include box-shadow(0px 0px 3px rgba(#4395d1,0.12));
     &.bottomTriangle {
       .triangle-up {display: none;}

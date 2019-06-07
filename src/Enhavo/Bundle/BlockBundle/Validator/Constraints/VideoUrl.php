@@ -1,5 +1,5 @@
 <?php
-namespace Enhavo\Bundle\GridBundle\Validator\Constraints;
+namespace Enhavo\Bundle\BlockBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

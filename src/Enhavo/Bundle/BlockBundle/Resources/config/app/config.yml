@@ -1,15 +1,15 @@
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\GridBundle\Model\GridInterface: Enhavo\Bundle\GridBundle\Entity\Grid
-            Enhavo\Bundle\GridBundle\Model\ItemInterface: Enhavo\Bundle\GridBundle\Entity\Item
+            Enhavo\Bundle\BlockBundle\Model\ContainerInterface: Enhavo\Bundle\BlockBundle\Entity\Container
+            Enhavo\Bundle\BlockBundle\Model\BlockInterface: Enhavo\Bundle\BlockBundle\Entity\Block
 
 enhavo_media:
     formats:
-        enhavoGridFull:
+        container_width:
             type: image
             width: 960
 
 enhavo_app:
     form_themes:
-        - 'EnhavoGridBundle:Form:fields.html.twig'
+        - 'EnhavoBlockBundle:Form:fields.html.twig'

@@ -6,7 +6,7 @@
  * Time: 20:36
  */
 
-namespace Enhavo\Bundle\GridBundle\Model;
+namespace Enhavo\Bundle\BlockBundle\Model;
 
 
 interface ContextAwareInterface

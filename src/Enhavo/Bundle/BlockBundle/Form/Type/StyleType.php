@@ -6,7 +6,7 @@
  * Time: 15:21
  */
 
-namespace Enhavo\Bundle\GridBundle\Form\Type;
+namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,7 +31,7 @@ class StyleType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'column.label.style.label',
-            'translation_domain' => 'EnhavoGridBundle',
+            'translation_domain' => 'EnhavoBlockBundle',
             'choices_as_values' => true,
             'choices' => $this->styles,
             'placeholder' => 'column.label.style.placeholder'

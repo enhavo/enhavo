@@ -1,14 +1,14 @@
-Enhavo\Bundle\GridBundle\Entity\Grid:
+Enhavo\Bundle\BlockBundle\Entity\Container:
     properties:
-        items:
+        blocks:
             - Valid: ~
 
-Enhavo\Bundle\GridBundle\Entity\Item:
+Enhavo\Bundle\BlockBundle\Entity\Block:
     properties:
-        itemType:
+        blockType:
             - Valid: ~
 
-Enhavo\Bundle\GridBundle\Entity\Video:
+Enhavo\Bundle\BlockBundle\Entity\Video:
     properties:
         url:
-            - Enhavo\Bundle\GridBundle\Validator\Constraints\VideoUrl: ~
+            - Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrl: ~

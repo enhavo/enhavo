@@ -1,12 +1,12 @@
 <?php
 
-namespace Enhavo\Bundle\GridBundle\Command;
+namespace Enhavo\Bundle\BlockBundle\Command;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Entity\Item;
+use Enhavo\Bundle\BlockBundle\Entity\Container;
+use Enhavo\Bundle\BlockBundle\Entity\Block;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -44,10 +44,10 @@ class CleanUpCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:grid:clean-up')
-            ->setDescription('Clean up orphaned grids and grid items')
+            ->setName('enhavo:block:clean-up')
+            ->setDescription('Clean up orphaned containers and container blocks')
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'perform a dry run, don\'t change anything')
-            ->addOption('mapping-error-delete', null, InputOption::VALUE_NONE, 'delete grid items with mapping errors')
+            ->addOption('mapping-error-delete', null, InputOption::VALUE_NONE, 'delete container blocks with mapping errors')
         ;
     }
 
@@ -64,13 +64,13 @@ class CleanUpCommand extends Command
         $output->writeln('Starting cleanup');
         if ($output->isVerbose()) $output->writeln('');
 
-        if ($output->isVerbose()) $output->writeln('Deleting unreferenced grids');
-        $deleted = $this->deleteUnreferencedGrids($output);
-        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' grids deleted.');
+        if ($output->isVerbose()) $output->writeln('Deleting unreferenced containers');
+        $deleted = $this->deleteUnreferencedContainers($output);
+        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' containers deleted.');
 
-        if ($output->isVerbose()) $output->writeln('Deleting grid item references without target entity');
-        $deleted = $this->deleteGridItemsWithoutTargetEntity($output);
-        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' grid item references deleted.');
+        if ($output->isVerbose()) $output->writeln('Deleting container block references without target entity');
+        $deleted = $this->deleteContainerBlockWithoutTargetEntity($output);
+        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' container block references deleted.');
 
         if ($output->isVerbose()) $output->writeln('');
         $output->writeln('Cleanup complete.');
@@ -84,23 +84,23 @@ class CleanUpCommand extends Command
      * @return int
      * @throws \Exception
      */
-    private function deleteUnreferencedGrids(OutputInterface $output)
+    private function deleteUnreferencedContainers(OutputInterface $output)
     {
         $numDeleted = 0;
 
-        $references = $this->getReferencesFor('grid_grid');
-        $grids = $this->entityManager->getRepository(Grid::class)->findAll();
+        $references = $this->getReferencesFor('block_container');
+        $containers = $this->entityManager->getRepository(Container::class)->findAll();
 
-        /** @var Grid $grid */
-        foreach($grids as $grid) {
+        /** @var Container $container */
+        foreach($containers as $container) {
             try {
-                $isReferenced = $this->isReferenced($grid->getId(), $references);
+                $isReferenced = $this->isReferenced($container->getId(), $references);
             } catch (\Exception $exception) {
-                throw new \Exception('Exception occurred while checking references for grid #' . $grid->getId() . ': ' . $exception->getMessage());
+                throw new \Exception('Exception occurred while checking references for container #' . $container->getId() . ': ' . $exception->getMessage());
             }
 
             if (!$isReferenced) {
-                if (!$this->isDryRun) $this->entityManager->remove($grid);
+                if (!$this->isDryRun) $this->entityManager->remove($container);
                 if ($output->isVerbose()) $output->write('.');
                 $numDeleted++;
             }
@@ -113,40 +113,40 @@ class CleanUpCommand extends Command
         return $numDeleted;
     }
 
-    private function deleteGridItemsWithoutTargetEntity(OutputInterface $output)
+    private function deleteContainerBlockWithoutTargetEntity(OutputInterface $output)
     {
         $numDeleted = 0;
         $classRepositoryMappingExceptions = [];
 
-        $gridItems = $this->entityManager->getRepository(Item::class)->findAll();
-        foreach($gridItems as $gridItem) {
-            if (isset($classRepositoryMappingExceptions[$gridItem->getItemTypeClass()])) {
+        $containerBlocks = $this->entityManager->getRepository(Block::class)->findAll();
+        foreach($containerBlocks as $containerBlock) {
+            if (isset($classRepositoryMappingExceptions[$containerBlock->getBlockTypeClass()])) {
                 if ($this->isDeleteOnMappingError) {
-                    $this->entityManager->remove($gridItem);
+                    $this->entityManager->remove($containerBlock);
                     if ($output->isVerbose()) $output->write('.');
                     $numDeleted++;
                 }
                 continue;
             }
             try {
-                $targetEntityRepository = $this->entityManager->getRepository($gridItem->getItemTypeClass());
-                $targetEntity = $targetEntityRepository->find($gridItem->getItemTypeId());
+                $targetEntityRepository = $this->entityManager->getRepository($containerBlock->getBlockTypeClass());
+                $targetEntity = $targetEntityRepository->find($containerBlock->getBlockTypeId());
                 if (!$targetEntity) {
-                    $this->entityManager->remove($gridItem);
+                    $this->entityManager->remove($containerBlock);
                     if ($output->isVerbose()) $output->write('.');
                     $numDeleted++;
                 }
             } catch (\Doctrine\Common\Persistence\Mapping\MappingException $exception) {
-                $classRepositoryMappingExceptions[$gridItem->getItemTypeClass()] = $gridItem->getItemTypeClass();
+                $classRepositoryMappingExceptions[$containerBlock->getBlockTypeClass()] = $containerBlock->getBlockTypeClass();
                 $output->write('');
-                $output->write('MappingException trying to get Repository for class "' . $gridItem->getItemTypeClass() . '", ' . ($this->isDeleteOnMappingError ? 'deleting' : 'skipping'));
+                $output->write('MappingException trying to get Repository for class "' . $containerBlock->getBlockTypeClass() . '", ' . ($this->isDeleteOnMappingError ? 'deleting' : 'skipping'));
                 if ($this->isDeleteOnMappingError) {
                     $output->write('');
-                    $this->entityManager->remove($gridItem);
+                    $this->entityManager->remove($containerBlock);
                     if ($output->isVerbose()) $output->write('.');
                     $numDeleted++;
                 } else {
-                    $output->write('If you want grid items with mapping errors to be deleted, run again with option "--mapping-error-delete"');
+                    $output->write('If you want container blocks with mapping errors to be deleted, run again with option "--mapping-error-delete"');
                     $output->write('');
                 }
             }

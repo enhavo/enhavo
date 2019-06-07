@@ -6,7 +6,7 @@
  * Time: 11:09
  */
 
-namespace Enhavo\Bundle\GridBundle\Form\Type;
+namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +37,6 @@ class ColumnType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'enhavo_grid_column';
+        return 'enhavo_block_column';
     }
 }
