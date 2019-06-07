@@ -1,13 +1,13 @@
-<?php
+<?= "<?php\n" ?>
 
-namespace {{ namespace }};
+namespace <?= $namespace ?>;
 
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class {{ item_name }}Type extends AbstractType
+class <?= $item_name ?>Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,12 +17,12 @@ class {{ item_name }}Type extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ item_namespace }}'
+            'data_class' => '<?= $item_namespace ?>'
         ));
     }
 
     public function getName()
     {
-        return '{{ form_type_name }}';
+        return '<?= $form_type_name ?>';
     }
 }
