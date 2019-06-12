@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DynamicFormController extends AbstractController
 {
-    public function blockAction(Request $request)
+    public function itemAction(Request $request)
     {
         $resolver = $this->getResolver($request);
 

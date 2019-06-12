@@ -1,7 +1,7 @@
 enhavo_block_block_form:
     path:  /enhavo/block/form
     defaults:
-        _controller: EnhavoFormBundle:DynamicForm:block
+        _controller: EnhavoFormBundle:DynamicForm:item
         _resolver: enhavo_block.resolver.block_resolver
     options:
         expose: true
