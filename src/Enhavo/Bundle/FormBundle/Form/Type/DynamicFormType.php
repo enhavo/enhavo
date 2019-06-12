@@ -83,7 +83,7 @@ class DynamicFormType extends AbstractType
         return CollectionType::class;
     }
 
-    public function getItemPrefix()
+    public function getBlockPrefix()
     {
         return 'enhavo_dynamic_form';
     }

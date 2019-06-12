@@ -30,8 +30,8 @@ class BlocksType extends AbstractType
             'label' => 'block.label.blocks',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_resolver' => 'enhavo_block.resolver.block_resolver',
-            'block_route' => 'enhavo_block_block_form',
-            'block_class' => $this->class,
+            'item_route' => 'enhavo_block_block_form',
+            'item_class' => $this->class,
         ]);
     }
 

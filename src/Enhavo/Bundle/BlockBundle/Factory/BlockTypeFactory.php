@@ -10,7 +10,7 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
-use Enhavo\Bundle\BlockBundle\Entity\Block;
+use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -26,7 +26,7 @@ class BlockTypeFactory
     public function createNew($name)
     {
         /** @var Block $block */
-        $block = $this->getResolver()->resolveBlock($name);
+        $block = $this->getResolver()->resolveItem($name);
         $factory = $this->getFactory($block);
         return $factory->createNew();
     }
@@ -38,7 +38,7 @@ class BlockTypeFactory
     public function duplicate(BlockTypeInterface $blockType, $name)
     {
         /** @var Block $block */
-        $block = $this->getResolver()->resolveBlock($name);
+        $block = $this->getResolver()->resolveItem($name);
         $factory = $this->getFactory($block);
         return $factory->duplicate($blockType);
     }

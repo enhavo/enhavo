@@ -123,7 +123,7 @@ class ContainerRenderer
     private function renderBlock(BlockInterface $block, $template = null)
     {
         if($template === null) {
-            $template = $this->resolver->resolveBlock($block->getName())->getTemplate();
+            $template = $this->resolver->resolveItem($block->getName())->getTemplate();
         }
 
         $context = null;

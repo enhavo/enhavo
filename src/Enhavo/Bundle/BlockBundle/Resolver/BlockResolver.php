@@ -85,7 +85,7 @@ class BlockResolver implements ResolverInterface
 
     public function resolveForm($name, $data = null, $options = [])
     {
-        $block = $this->resolveBlock($name);
+        $block = $this->resolveItem($name);
 
         $formOptions = [
             'item_type_form' => $block->getForm(),
@@ -100,13 +100,13 @@ class BlockResolver implements ResolverInterface
 
     public function resolveFactory($name)
     {
-        $block = $this->resolveBlock($name);
+        $block = $this->resolveItem($name);
         return new BlockFactory($this->blockTypeFactory, $name);
     }
 
     public function resolveFormTemplate($name)
     {
-        $block = $this->resolveBlock($name);
+        $block = $this->resolveItem($name);
         return $block->getFormTemplate();
     }
 }
