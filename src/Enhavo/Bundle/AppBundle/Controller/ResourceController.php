@@ -214,11 +214,11 @@ class ResourceController extends BaseController
         $this->isGrantedOr403($configuration, ResourceActions::CREATE);
         $resource = $this->findOr404($configuration);
 
-        if(!$this->newResourceFactory instanceof DuplicateResourceFactoryInterface) {
+        if(!$this->duplicateResourceFactory instanceof DuplicateResourceFactoryInterface) {
             throw new \Exception('newResourceFactory should implement DuplicateResourceFactoryInterface');
         }
 
-        $newResource = $this->newResourceFactory->duplicate($configuration, $this->factory, $resource);
+        $newResource = $this->duplicateResourceFactory->duplicate($configuration, $this->factory, $resource);
         $this->appEventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPreEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->repository->add($newResource);
