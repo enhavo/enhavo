@@ -10,7 +10,7 @@
 namespace Enhavo\Bundle\GridBundle\Factory;
 
 use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
-use Enhavo\Bundle\GridBundle\Model\ItemTypeInterface;
+use Enhavo\Bundle\GridBundle\Model\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Enhavo\Bundle\GridBundle\Entity\Item;
 
@@ -42,12 +42,12 @@ class ItemFactory implements FactoryInterface
         return $item;
     }
 
-    public function duplicate(ItemTypeInterface $itemType)
+    public function duplicate(ItemInterface $originalItem)
     {
         $item = new Item();
-        $item->setName($item->getName());
-        $item->setPosition($item->getPosition());
-        $item->setItemType($this->itemTypeFactory->duplicate($itemType, $item->getName()));
+        $item->setName($originalItem->getName());
+        $item->setPosition($originalItem->getPosition());
+        $item->setItemType($this->itemTypeFactory->duplicate($originalItem->getItemType(), $item->getName()));
         return $item;
     }
 }

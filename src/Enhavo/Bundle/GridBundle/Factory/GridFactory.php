@@ -11,9 +11,20 @@ class GridFactory extends Factory
     use ContainerAwareTrait;
 
     /**
+     * @var ItemTypeFactory
+     */
+    private $itemTypeFactory;
+
+    /**
      * @var ItemFactory
      */
     private $itemFactories = [];
+
+    public function __construct($className, ItemTypeFactory $itemTypeFactory)
+    {
+        $this->itemTypeFactory = $itemTypeFactory;
+        parent::__construct($className);
+    }
 
     /**
      * @param Grid|null $originalResource
@@ -30,8 +41,8 @@ class GridFactory extends Factory
 
         /** @var Item $item */
         foreach($originalResource->getItems() as $item) {
-            $item = $this->getItemFactory($item->getName())->duplicate($item->getItemType());
-            $newGrid->addItem($item);
+            $newItem = $this->getItemFactory($item->getName())->duplicate($item);
+            $newGrid->addItem($newItem);
         }
 
         return $newGrid;
@@ -49,6 +60,6 @@ class GridFactory extends Factory
 
     private function getItemTypeFactory()
     {
-        return $this->container->get('enhavo_grid.factory.item_type');
+        return $this->itemTypeFactory;
     }
 }
