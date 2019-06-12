@@ -225,7 +225,13 @@ class ResourceController extends BaseController
         $this->appEventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
         $this->eventDispatcher->dispatchPostEvent(ResourceActions::CREATE, $configuration, $newResource);
 
-        return $this->redirectHandler->redirectToResource($configuration, $newResource);
+        $this->addFlash('success', $this->get('translator')->trans('form.message.success', [], 'EnhavoAppBundle'));
+        $route = $configuration->getRedirectRoute(null);
+        return $this->redirectToRoute($route, [
+            'id' => $newResource->getId(),
+            'tab' => $request->get('tab'),
+            'view_id' => $request->get('view_id')
+        ]);
     }
 
     public function indexAction(Request $request): Response
