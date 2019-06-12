@@ -32,7 +32,7 @@ class ItemManager
         return $this->items;
     }
 
-    public function getBlock($name)
+    public function getItem($name)
     {
         return $this->items[$name];
     }
