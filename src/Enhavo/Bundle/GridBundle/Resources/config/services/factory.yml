@@ -3,6 +3,7 @@ services:
         class: Enhavo\Bundle\GridBundle\Factory\GridFactory
         arguments:
             - 'Enhavo\Bundle\GridBundle\Entity\Grid'
+            - '@enhavo_grid.factory.item_type'
         calls:
             - [setContainer, ['@service_container']]
 
