@@ -36,8 +36,7 @@ export default class ListType extends FormType
             let item = $listContainer.attr('data-prototype');
             let prototype_name = $listContainer.attr('data-prototype-name');
 
-            // generate unique placeholder for reindexing service
-            let placeholder = '__name' + self.placeholderIndex + '__';
+            let placeholder = String(self.placeholderIndex);
             self.placeholderIndex++;
 
             item = item.replace(new RegExp(prototype_name, 'g'), placeholder).trim();
