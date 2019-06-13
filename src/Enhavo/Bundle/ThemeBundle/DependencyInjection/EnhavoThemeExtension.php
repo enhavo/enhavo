@@ -20,13 +20,12 @@ class EnhavoThemeExtension extends AbstractResourceExtension
     public function load(array $config, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $config);
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_theme', $config['driver'], $config['resources'], $container);
 
         $container->setParameter('enhavo_theme.dynamic_theme.enable', $config['dynamic_theme']['enable']);
         $container->setParameter('enhavo_theme.theme', $config['theme']);
         $container->setParameter('enhavo_theme.themes', $config['themes']);
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/services.yml');
     }

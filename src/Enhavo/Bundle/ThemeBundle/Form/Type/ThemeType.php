@@ -8,9 +8,16 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-class ThemeType extends AbstractResourceType
+class ThemeType extends AbstractType
 {
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('active', BooleanType::class, [
+            'label' => 'active',
+        ]);
+    }
 }

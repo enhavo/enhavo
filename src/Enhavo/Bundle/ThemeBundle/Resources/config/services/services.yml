@@ -33,3 +33,12 @@ services:
             - ['setContainer', ['@service_container']]
         tags:
             - { name: enhavo.init, alias: 'theme' }
+
+    Enhavo\Bundle\ThemeBundle\Menu\ThemeMenuType:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: 'theme' }
+
+    Enhavo\Bundle\ThemeBundle\Form\Type\ThemeType:
+        arguments:
+            - '%enhavo_theme.model.theme.class%'
