@@ -2,15 +2,15 @@
   "name": "@enhavo/app",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/core": "^0.7.1",
-    "@enhavo/font": "^0.7.1",
+    "@enhavo/core": "^0.7.2",
+    "@enhavo/font": "^0.7.2",
     "@ibm/plex": "^1.2.3",
     "async": "^2.6.2",
     "axios": "^0.18.0",
