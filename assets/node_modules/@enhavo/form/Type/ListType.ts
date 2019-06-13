@@ -6,45 +6,44 @@ import FormInitializer from "@enhavo/form/FormInitializer";
 export default class ListType extends FormType
 {
     private items : ListItem[];
-
-    private placeholderIndex : number = 0;
+    private placeholderIndex: number;
 
     protected init()
     {
+        this.placeholderIndex = 0;
         this.initItems();
         this.initAddButton();
     }
 
     private initItems()
     {
-        let self = this;
         this.items = [];
-        this.$element.children('[data-list-container]').children().each(function(index,element) {
-            self.items.push(new  ListItem(<HTMLElement>element, self));
+        this.$element.children('[data-list-container]').children().each((index, element) => {
+            this.items.push(new  ListItem(<HTMLElement>element, this));
+            this.placeholderIndex++;
         });
     }
 
     private initAddButton()
     {
-        let self = this;
-        this.$element.children('[data-add-button]').click(function (event) {
+        this.$element.children('[data-add-button]').click((event) => {
             event.preventDefault();
 
-            let $listContainer = self.$element.children('[data-list-container]');
+            let $listContainer = this.$element.children('[data-list-container]');
 
             // grab the prototype template
             let item = $listContainer.attr('data-prototype');
             let prototype_name = $listContainer.attr('data-prototype-name');
 
-            let placeholder = String(self.placeholderIndex);
-            self.placeholderIndex++;
+            let placeholder = String(this.placeholderIndex);
+            this.placeholderIndex++;
 
             item = item.replace(new RegExp(prototype_name, 'g'), placeholder).trim();
             let initializer = new FormInitializer;
             initializer.setHtml(item);
             initializer.append(<HTMLElement>$listContainer.get(0));
-            self.items.push(new ListItem(initializer.getElement(), self));
-            self.updatePosition();
+            this.items.push(new ListItem(initializer.getElement(), this));
+            this.updatePosition();
         })
     }
 
