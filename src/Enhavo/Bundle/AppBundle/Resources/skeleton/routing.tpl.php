@@ -1,77 +1,64 @@
-{{ app }}_{{ resource }}_index:
+<?= $app; ?>_<?= $resource; ?>_index:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/index
+    path: /<?= $app_url ?>/<?= $resource_url ?>/index
     methods: [GET]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:indexAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:indexAction
         _sylius:
             viewer:
 
-{{ app }}_{{ resource }}_create:
+<?= $app ?>_<?= $resource ?>_create:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/create
+    path: /<?= $app_url ?>/<?= $resource_url ?>/create
     methods: [GET,POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:createAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:createAction
         _sylius:
-            redirect: {{ app }}_{{ resource }}_update
-{% if not sorting is null %}
-            sortable: true
-{% endif %}
+            redirect: <?= $app ?>_<?= $resource ?>_update
             viewer:
 
-{{ app }}_{{ resource }}_update:
+<?= $app ?>_<?= $resource ?>_update:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/update/{id}
+    path: /<?= $app_url ?>/<?= $resource_url ?>/update/{id}
     methods: [GET,POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:updateAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:updateAction
         _sylius:
             viewer:
 
-{{ app }}_{{ resource }}_table:
+<?= $app ?>_<?= $resource ?>_table:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/table
+    path: /<?= $app_url ?>/<?= $resource_url ?>/table
     methods: [GET]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:tableAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:tableAction
         _sylius:
-{% if not sorting is null %}
-            sortable: true
-            sorting:
-                {{ sorting }}: asc
-{% endif %}
             viewer:
-{% if not sorting is null %}
                 columns:
-                    title:
+                    id:
                         property: id
-                        width: 11
+                        width: 12
                         label: id
-                    position:
-                        type: position
-                        width: 1
-{% endif %}
 
-{{ app }}_{{ resource }}_delete:
+<?= $app ?>_<?= $resource ?>_delete:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/delete/{id}
+    path: /<?= $app_url ?>/<?= $resource_url ?>/delete/{id}
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:deleteAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:deleteAction
 
-{{ app }}_{{ resource }}_batch:
+<?= $app ?>_<?= $resource ?>_batch:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/batch
+    path: /<?= $app_url ?>/<?= $resource_url ?>/batch
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:batchAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:batchAction
         _sylius:
             paginate: false
             criteria:
@@ -80,23 +67,23 @@
                 delete:
                     type: delete
 
-{{ app }}_{{ resource }}_preview:
+<?= $app ?>_<?= $resource ?>_preview:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/preview
+    path: /<?= $app_url ?>/<?= $resource_url ?>/preview
     methods: [GET]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:previewAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:previewAction
         _sylius:
             viewer:
 
-{{ app }}_{{ resource }}_resource_preview:
+<?= $app ?>_<?= $resource ?>_resource_preview:
     options:
         expose: true
-    path: /{{ app_url }}/{{ resource_url }}/resource/preview
+    path: /<?= $app_url ?>/<?= $resource_url ?>/resource/preview
     methods: [POST]
     defaults:
-        _controller: {{ app }}.controller.{{ resource }}:previewResourceAction
+        _controller: <?= $app ?>.controller.<?= $resource ?>:previewResourceAction
         _sylius:
             viewer:
                 strategy_options:
