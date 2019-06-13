@@ -8,10 +8,8 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Template;
 
-use Enhavo\Bundle\ThemeBundle\ThemeLoader\ThemeLoaderInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\TemplateFilenameParser;
+use Enhavo\Bundle\ThemeBundle\Theme\Loader\ThemeLoaderInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
-use Symfony\Component\Templating\TemplateReference;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 class TemplateMapper

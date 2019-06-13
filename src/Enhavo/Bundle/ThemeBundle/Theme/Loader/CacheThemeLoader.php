@@ -6,10 +6,10 @@
  * Time: 18:49
  */
 
-namespace Enhavo\Bundle\ThemeBundle\ThemeLoader;
+namespace Enhavo\Bundle\ThemeBundle\Theme\Loader;
 
 
-class DynamicThemeLoader
+class CacheThemeLoader
 {
 
 }

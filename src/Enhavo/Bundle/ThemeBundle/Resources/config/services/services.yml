@@ -1,7 +1,7 @@
 services:
     enhavo_theme.theme_loader.config:
         public: true
-        class: Enhavo\Bundle\ThemeBundle\ThemeLoader\ConfigThemeLoader
+        class: Enhavo\Bundle\ThemeBundle\Theme\Loader\ConfigThemeLoader
         arguments:
             - '%enhavo_theme.theme%'
             - '%enhavo_theme.themes%'
@@ -14,10 +14,21 @@ services:
             - '@enhavo_theme.theme_loader.config'
             - '@templating.name_parser'
 
+    enhavo_theme.theme.manager:
+        class: Enhavo\Bundle\ThemeBundle\Theme\ThemeManager
+        arguments:
+            - '%enhavo_theme.themes%'
+            - '@serializer'
+            - '@file_locator'
+            -
     Enhavo\Bundle\ThemeBundle\Init\InitTheme:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@enhavo_theme.theme.manager'
+            - '%enhavo_theme.dynamic_theme.enable%'
+            - '@enhavo_theme.factory.theme'
+            - '@enhavo_theme.repository.theme'
         calls:
             - ['setContainer', ['@service_container']]
         tags:

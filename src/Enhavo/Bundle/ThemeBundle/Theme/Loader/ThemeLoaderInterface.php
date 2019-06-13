@@ -6,7 +6,7 @@
  * Time: 18:48
  */
 
-namespace Enhavo\Bundle\ThemeBundle\ThemeLoader;
+namespace Enhavo\Bundle\ThemeBundle\Theme\Loader;
 
 use Enhavo\Bundle\ThemeBundle\Model\Theme;
 

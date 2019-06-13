@@ -8,8 +8,9 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Model\Entity;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Theme
+class Theme implements ResourceInterface
 {
     /**
      * @var integer
@@ -24,14 +25,14 @@ class Theme
     /**
      * @var boolean
      */
-    private $active;
+    private $active = false;
 
     /**
-     * @param int $id
+     * @return int
      */
-    public function setId(int $id): void
+    public function getId(): int
     {
-        $this->id = $id;
+        return $this->id;
     }
 
     /**
