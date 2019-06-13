@@ -33,7 +33,7 @@
     options:
         expose: true
     path: /<?= $app_url ?>/<?= $resource_url ?>/table
-    methods: [GET]
+    methods: [GET,POST]
     defaults:
         _controller: <?= $app ?>.controller.<?= $resource ?>:tableAction
         _sylius:
@@ -43,6 +43,7 @@
                         property: id
                         width: 12
                         label: id
+                        type: property
 
 <?= $app ?>_<?= $resource ?>_delete:
     options:
