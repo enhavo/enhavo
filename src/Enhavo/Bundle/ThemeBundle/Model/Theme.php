@@ -37,6 +37,11 @@ class Theme
     private $block;
 
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * @return Meta
      */
     public function getMeta(): Meta
@@ -114,5 +119,21 @@ class Theme
     public function setKey(string $key): void
     {
         $this->key = $key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath(string $path): void
+    {
+        $this->path = $path;
     }
 }

@@ -30,8 +30,5 @@ enhavo_search:
             - Enhavo\Bundle\ShopBundle\Entity\Product
 
 enhavo_theme:
-    dynamic_theme:
+    dynamic:
         enable: true
-    theme: 'demo'
-    themes:
-        demo: '@EnhavoDemoBundle/Resources/config/theme/demo.yml'

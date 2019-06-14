@@ -9,8 +9,7 @@ webpack:
     entry:
         base: './base.ts'
 template:
-    mapping:
-        EnhavoPageBundle:Page:show.html.twig: 'Page/show.html.twig'
+    mapping: []
 block:
     column_styles: []
     templates: []

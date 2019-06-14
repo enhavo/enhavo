@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\ThemeBundle\Template;
 
-use Enhavo\Bundle\ThemeBundle\Theme\Loader\ThemeLoaderInterface;
 use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
@@ -39,14 +38,28 @@ class TemplateMapper
     public function map(TemplateReferenceInterface $template)
     {
         $theme = $this->themeManager->getTheme();
-//        $mapping = $theme->getTemplate()->getMapping();
-//
-//        foreach($mapping as $key => $map)
-//        {
-//            if($key === $template->getPath() || $key === $template->getLogicalName()) {
-//                return $this->parser->parse($map);
-//            }
-//        }
+        $mapping = $theme->getTemplate()->getMapping();
+
+        foreach($mapping as $key => $map)
+        {
+            if($key === $template->getPath() || $key === $template->getLogicalName()) {
+                $path = sprintf('%s/templates/%s', $theme->getPath(), $map);
+                if(file_exists($path)) {
+                    $templateReference = new TemplateReference($template->getLogicalName(), 'twig');
+                    $templateReference->setPath($path);
+                } else {
+                    $templateReference = $this->parser->parse($map);
+                }
+                return $templateReference;
+            }
+
+            $path = sprintf('%s/templates/%s', $theme->getPath(), $template->getLogicalName());
+            if(file_exists($path)) {
+                $templateReference = new TemplateReference($template->getLogicalName(), 'twig');
+                $templateReference->setPath($path);
+                return $templateReference;
+            }
+        }
 
         return $template;
     }

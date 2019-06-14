@@ -42,6 +42,7 @@ class FileThemeLoader implements ThemeLoaderInterface
             $this->theme = $this->serializer->denormalize($config, Theme::class, null, [
                 'groups' => 'theme'
             ]);
+            $this->theme->setPath(realpath(dirname($this->path)));
         }
         return $this->theme;
     }
