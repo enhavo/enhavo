@@ -9,6 +9,8 @@ Enhavo\Bundle\ThemeBundle\Model\Entity\Theme:
 
 Enhavo\Bundle\ThemeBundle\Model\Theme:
     attributes:
+        key:
+            groups: ['theme']
         meta:
             groups: ['theme']
         webpack:

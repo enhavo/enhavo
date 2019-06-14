@@ -39,14 +39,14 @@ class TemplateMapper
     public function map(TemplateReferenceInterface $template)
     {
         $theme = $this->themeManager->getTheme();
-        $mapping = $theme->getTemplate()->getMapping();
-
-        foreach($mapping as $key => $map)
-        {
-            if($key === $template->getPath() || $key === $template->getLogicalName()) {
-                return $this->parser->parse($map);
-            }
-        }
+//        $mapping = $theme->getTemplate()->getMapping();
+//
+//        foreach($mapping as $key => $map)
+//        {
+//            if($key === $template->getPath() || $key === $template->getLogicalName()) {
+//                return $this->parser->parse($map);
+//            }
+//        }
 
         return $template;
     }

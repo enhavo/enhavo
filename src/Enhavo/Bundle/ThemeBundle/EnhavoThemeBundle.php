@@ -30,7 +30,7 @@ class EnhavoThemeBundle extends Bundle
             $driver,
             ['Enhavo\\Bundle\\ThemeBundle\\Model\\Entity'],
             [],
-            'enhavo_theme.dynamic_theme.enable'
+            'enhavo_theme.dynamic.enable'
         );
     }
 }

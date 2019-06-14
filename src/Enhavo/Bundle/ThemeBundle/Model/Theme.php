@@ -12,6 +12,11 @@ namespace Enhavo\Bundle\ThemeBundle\Model;
 class Theme
 {
     /**
+     * @var string
+     */
+    private $key;
+
+    /**
      * @var Meta
      */
     private $meta;
@@ -93,5 +98,21 @@ class Theme
     public function setBlock(Block $block): void
     {
         $this->block = $block;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setKey(string $key): void
+    {
+        $this->key = $key;
     }
 }

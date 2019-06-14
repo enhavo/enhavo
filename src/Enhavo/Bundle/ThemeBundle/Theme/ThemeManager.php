@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\ThemeBundle\Theme;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ThemeBundle\Model\Theme;
-use Enhavo\Bundle\ThemeBundle\Repository\ThemeRepository;
+use Enhavo\Bundle\ThemeBundle\Theme\Finder\DirThemeFinder;
 use Enhavo\Bundle\ThemeBundle\Theme\Loader\FileThemeLoader;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -17,9 +17,9 @@ use Symfony\Component\Serializer\Serializer;
 class ThemeManager
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $themesConfig;
+    private $themesDir;
 
     /**
      * @var Theme[]
@@ -44,7 +44,7 @@ class ThemeManager
     /**
      * @var string
      */
-    private $theme = [];
+    private $theme;
 
     /**
      * @var EntityRepository
@@ -52,27 +52,36 @@ class ThemeManager
     private $repository;
 
     /**
-     * @var bool
+     * @var string
      */
-    private $load = false;
+    private $customFile;
 
     /**
      * ThemeManager constructor.
-     * @param $themesConfig
+     * @param $themesDir
      * @param Serializer $serializer
      * @param FileLocatorInterface $locator
      * @param $dynamicEnable
      * @param $theme
      * @param EntityRepository $repository
+     * @param string $customFile
      */
-    public function __construct($themesConfig, Serializer $serializer, FileLocatorInterface $locator, $dynamicEnable, $theme, EntityRepository $repository)
-    {
-        $this->themesConfig = $themesConfig;
+    public function __construct(
+        $themesDir,
+        Serializer $serializer,
+        FileLocatorInterface $locator,
+        $dynamicEnable,
+        $theme,
+        EntityRepository $repository,
+        $customFile
+    ) {
+        $this->themesDir = $themesDir;
         $this->serializer = $serializer;
         $this->locator = $locator;
         $this->dynamicEnable = $dynamicEnable;
         $this->theme = $theme;
         $this->repository = $repository;
+        $this->customFile = $customFile;
     }
 
     public function getThemes()
@@ -87,33 +96,25 @@ class ThemeManager
             $key = $this->getCurrentKey();
         }
 
-        $this->load($key);
+        $this->load();
         return $this->themes[$key];
     }
 
-    private function load(string $key = null)
+    private function load()
     {
-        if($key === null && $this->load) {
-            return;
+        if($this->themes !== null) {
+            $this->themes = [];
         }
 
-        if($key !== null && isset($this->theme[$key])) {
-            return;
-        }
-
-        foreach($this->themesConfig as $themeKey => $path) {
-            if($key !== null && $key !== $themeKey) {
-                continue;
-            }
-            if(!isset($this->theme[$themeKey])) {
-                $file = $this->locator->locate($path);
+        foreach($this->themesDir as $dir)
+        {
+            $finder = new DirThemeFinder($dir);
+            $files = $finder->find();
+            foreach($files as $file) {
                 $loader = new FileThemeLoader($file, $this->serializer);
-                $this->themes[$themeKey] = $loader->load();
+                $theme = $loader->load();
+                $this->themes[$theme->getKey()] = $theme;
             }
-        }
-
-        if($key === null) {
-            $this->load = true;
         }
     }
 
@@ -128,5 +129,10 @@ class ThemeManager
             }
         }
         return $this->theme;
+    }
+
+    public function buildWebpackOption()
+    {
+
     }
 }

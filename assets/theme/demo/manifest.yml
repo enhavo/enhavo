@@ -1,0 +1,16 @@
+key: demo
+meta:
+    name: 'Demo template'
+    image: ~
+    description: ''
+webpack:
+    options:
+        color1:
+    entry:
+        base: './base.ts'
+template:
+    mapping:
+        EnhavoPageBundle:Page:show.html.twig: 'Page/show.html.twig'
+block:
+    column_styles: []
+    templates: []

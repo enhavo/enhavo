@@ -1,5 +1,6 @@
 const Encore = require('@symfony/webpack-encore');
 const EnhavoEncore = require('./assets/node_modules/@enhavo/core/EnhavoEncore');
+const EnhavoThemeEncore = require('./assets/node_modules/@enhavo/theme/EnhavoThemeEncore');
 
 Encore
     .setOutputPath('public/build/enhavo/')
@@ -27,35 +28,12 @@ Encore
     .addEntry('enhavo/delete', './assets/enhavo/delete')
     .addEntry('enhavo/list', './assets/enhavo/list')
     .addEntry('enhavo/login', './assets/enhavo/login')
-
 ;
 
 enhavoConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
 enhavoConfig.name = 'enhavo';
 
 Encore.reset();
-
-Encore
-    .setOutputPath('public/build/theme/')
-    .setPublicPath('/build/theme')
-    .enableSingleRuntimeChunk()
-    .enableSourceMaps(!Encore.isProduction())
-    .splitEntryChunks()
-    .autoProvidejQuery()
-    .enableVueLoader()
-    .enableSassLoader()
-    .enableTypeScriptLoader()
-    .enableVersioning(Encore.isProduction())
-
-    .addEntry('base', './assets/theme/base')
-
-    .copyFiles({
-        from: './assets/theme/images',
-        to: 'images/[path][name].[ext]'
-    })
-;
-
-themeConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
-themeConfig.name = 'theme';
-
-module.exports = [enhavoConfig, themeConfig];
+let configs = EnhavoThemeEncore.getThemeConfigs(Encore);
+configs.push(enhavoConfig);
+module.exports = configs;
