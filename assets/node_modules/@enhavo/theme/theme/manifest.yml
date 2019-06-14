@@ -1,6 +1,6 @@
 key: base
 meta:
-    name: 'base'
+    name: 'Enhavo base template'
     image: ~
     description: ''
 webpack:

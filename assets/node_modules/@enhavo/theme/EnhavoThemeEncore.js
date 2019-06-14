@@ -5,6 +5,10 @@ const yaml = require('js-yaml');
 
 class EnhavoThemeEncore
 {
+    constructor() {
+        this.manifestFiles = [];
+    }
+
     getWebpackConfig(config)
     {
         const projectDir = this.getProjectDir();
@@ -41,10 +45,11 @@ class EnhavoThemeEncore
         return config;
     }
 
-    getThemeConfigs(Encore)
+    getThemeConfigs(Encore, base = true)
     {
         let configs = [];
-        for(let theme of this.getThemes()) {
+        for(let theme of this.getThemes(base)) {
+            Encore.reset();
             Encore
                 .setOutputPath('public/build/' + theme.key)
                 .setPublicPath('/build/' + theme.key)
@@ -75,10 +80,20 @@ class EnhavoThemeEncore
         return configs;
     }
 
-    getThemes()
+    getThemes(base = true)
     {
-        let theme = this.loadFile(path.dirname(__dirname) + '/theme/theme/base/manifest.yml');
-        return [theme];
+        let themes = [];
+        if(base) {
+            themes.push(this.loadFile(path.dirname(__dirname) + '/theme/theme/manifest.yml'));
+        }
+        this.searchFile(this.getProjectDir() + '/assets/theme', 'manifest.yml');
+        this.searchFile(this.getProjectDir() + '/assets/theme', 'manifest.yaml');
+
+        for(let file of this.manifestFiles) {
+            themes.push(this.loadFile(file));
+        }
+
+        return themes;
     }
 
     loadFile(file)
@@ -101,6 +116,24 @@ class EnhavoThemeEncore
         }
 
         return theme;
+    }
+
+    searchFile(searchPath, filter) {
+        if (!fs.existsSync(searchPath)){
+            return;
+        }
+
+        let files = fs.readdirSync(searchPath);
+        for(let i=0;i<files.length;i++){
+            let filename = path.join(searchPath, files[i]);
+            let stat = fs.lstatSync(filename);
+            if (stat.isDirectory()){
+                this.searchFile(filename,filter); //recurse
+            }
+            else if (filename.indexOf(filter)>=0) {
+                this.manifestFiles.push(filename);
+            }
+        }
     }
 
     getProjectDir()

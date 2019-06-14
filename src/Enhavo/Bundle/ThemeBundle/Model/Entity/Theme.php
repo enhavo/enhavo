@@ -33,6 +33,11 @@ class Theme implements ResourceInterface
     private $theme;
 
     /**
+     * @var array
+     */
+    private $parameters = [];
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -75,7 +80,7 @@ class Theme implements ResourceInterface
     /**
      * @return \Enhavo\Bundle\ThemeBundle\Model\Theme
      */
-    public function getTheme(): \Enhavo\Bundle\ThemeBundle\Model\Theme
+    public function getTheme(): ?\Enhavo\Bundle\ThemeBundle\Model\Theme
     {
         return $this->theme;
     }
@@ -83,8 +88,24 @@ class Theme implements ResourceInterface
     /**
      * @param \Enhavo\Bundle\ThemeBundle\Model\Theme $theme
      */
-    public function setTheme(\Enhavo\Bundle\ThemeBundle\Model\Theme $theme): void
+    public function setTheme(?\Enhavo\Bundle\ThemeBundle\Model\Theme $theme): void
     {
         $this->theme = $theme;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     */
+    public function setParameters(array $parameters): void
+    {
+        $this->parameters = $parameters;
     }
 }

@@ -97,7 +97,11 @@ class ThemeManager
         }
 
         $this->load();
-        return $this->themes[$key];
+        if(isset($this->themes[$key])) {
+            return $this->themes[$key];
+        }
+
+        return null;
     }
 
     private function load()

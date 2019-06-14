@@ -14,5 +14,7 @@ Enhavo\Bundle\ThemeBundle\Model\Entity\Theme:
             column: '`key`'
         active:
             type: boolean
+        parameters:
+            type: json_array
 
 lifecycleCallbacks: {  }

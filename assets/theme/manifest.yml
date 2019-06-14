@@ -1,4 +1,4 @@
-key: demo
+key: theme
 meta:
     name: 'Demo template'
     image: ~
@@ -6,8 +6,8 @@ meta:
 webpack:
     options:
         color1:
-    entry:
-        base: './base.ts'
+    entries:
+        base: './entry/base.ts'
 template:
     mapping: []
 block:

@@ -33,7 +33,6 @@ Encore
 enhavoConfig = EnhavoEncore.getWebpackConfig(Encore.getWebpackConfig());
 enhavoConfig.name = 'enhavo';
 
-Encore.reset();
-let configs = EnhavoThemeEncore.getThemeConfigs(Encore);
+let configs = EnhavoThemeEncore.getThemeConfigs(Encore, true);
 configs.push(enhavoConfig);
 module.exports = configs;
