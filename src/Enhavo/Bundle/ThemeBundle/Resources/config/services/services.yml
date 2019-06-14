@@ -1,26 +1,21 @@
 services:
-    enhavo_theme.theme_loader.config:
-        public: true
-        class: Enhavo\Bundle\ThemeBundle\Theme\Loader\ConfigThemeLoader
-        arguments:
-            - '%enhavo_theme.theme%'
-            - '%enhavo_theme.themes%'
-            - '@serializer'
-            - '@file_locator'
-
     enhavo_theme.template.mapper:
         class: Enhavo\Bundle\ThemeBundle\Template\TemplateMapper
         arguments:
-            - '@enhavo_theme.theme_loader.config'
+            - '@enhavo_theme.theme.manager'
             - '@templating.name_parser'
 
     enhavo_theme.theme.manager:
         class: Enhavo\Bundle\ThemeBundle\Theme\ThemeManager
+        public: true
         arguments:
             - '%enhavo_theme.themes%'
             - '@serializer'
             - '@file_locator'
-            -
+            - '%enhavo_theme.dynamic_theme.enable%'
+            - '%enhavo_theme.theme%'
+            - '@enhavo_theme.repository.theme'
+
     Enhavo\Bundle\ThemeBundle\Init\InitTheme:
         public: true
         arguments:
@@ -42,3 +37,16 @@ services:
     Enhavo\Bundle\ThemeBundle\Form\Type\ThemeType:
         arguments:
             - '%enhavo_theme.model.theme.class%'
+
+    Enhavo\Bundle\ThemeBundle\EventListener\ThemeSaveListener:
+        arguments:
+            - '@enhavo_theme.repository.theme'
+            - '%enhavo_theme.dynamic_theme.enable%'
+        tags:
+            - { name: kernel.event_listener, event: enhavo_app.pre_update, method: onSave }
+
+    Enhavo\Bundle\ThemeBundle\EventListener\ThemeDoctrineSubscriber:
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

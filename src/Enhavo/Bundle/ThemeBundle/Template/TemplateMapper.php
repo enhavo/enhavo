@@ -9,15 +9,16 @@
 namespace Enhavo\Bundle\ThemeBundle\Template;
 
 use Enhavo\Bundle\ThemeBundle\Theme\Loader\ThemeLoaderInterface;
+use Enhavo\Bundle\ThemeBundle\Theme\ThemeManager;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 class TemplateMapper
 {
     /**
-     * @var ThemeLoaderInterface
+     * @var ThemeManager
      */
-    private $loader;
+    private $themeManager;
 
     /**
      * @var TemplateNameParserInterface
@@ -26,18 +27,18 @@ class TemplateMapper
 
     /**
      * TemplateMapper constructor.
-     * @param ThemeLoaderInterface $loader
+     * @param ThemeManager $themeManager
      * @param TemplateNameParserInterface $parser
      */
-    public function __construct(ThemeLoaderInterface $loader, TemplateNameParserInterface $parser)
+    public function __construct(ThemeManager $themeManager, TemplateNameParserInterface $parser)
     {
-        $this->loader = $loader;
+        $this->themeManager = $themeManager;
         $this->parser = $parser;
     }
 
     public function map(TemplateReferenceInterface $template)
     {
-        $theme = $this->loader->load();
+        $theme = $this->themeManager->getTheme();
         $mapping = $theme->getTemplate()->getMapping();
 
         foreach($mapping as $key => $map)

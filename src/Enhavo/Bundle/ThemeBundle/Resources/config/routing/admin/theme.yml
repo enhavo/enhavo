@@ -40,10 +40,10 @@ enhavo_theme_theme_table:
         _sylius:
             viewer:
                 columns:
-                    key:
-                        property: key
+                    name:
+                        property: theme.meta.name
                         width: 9
-                        label: key
+                        label: name
                         type: property
                     active:
                         property: active

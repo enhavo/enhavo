@@ -28,6 +28,11 @@ class Theme implements ResourceInterface
     private $active = false;
 
     /**
+     * @var \Enhavo\Bundle\ThemeBundle\Model\Theme
+     */
+    private $theme;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -65,5 +70,21 @@ class Theme implements ResourceInterface
     public function setActive(bool $active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return \Enhavo\Bundle\ThemeBundle\Model\Theme
+     */
+    public function getTheme(): \Enhavo\Bundle\ThemeBundle\Model\Theme
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param \Enhavo\Bundle\ThemeBundle\Model\Theme $theme
+     */
+    public function setTheme(\Enhavo\Bundle\ThemeBundle\Model\Theme $theme): void
+    {
+        $this->theme = $theme;
     }
 }
