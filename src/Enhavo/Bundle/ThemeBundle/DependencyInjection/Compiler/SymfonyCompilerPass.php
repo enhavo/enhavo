@@ -32,5 +32,6 @@ class SymfonyCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('templating.cache_warmer.template_paths');
         $definition->setClass(TemplatePathsCacheWarmer::class);
+        $definition->addArgument($container->getParameter('enhavo_theme.dynamic.enable'));
     }
 }

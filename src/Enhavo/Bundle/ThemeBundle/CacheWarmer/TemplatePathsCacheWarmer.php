@@ -5,6 +5,7 @@
 
 namespace Enhavo\Bundle\ThemeBundle\CacheWarmer;
 
+use Doctrine\DBAL\Driver\PDOException;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -19,11 +20,13 @@ class TemplatePathsCacheWarmer extends CacheWarmer
 {
     protected $finder;
     protected $locator;
+    private $dynamic;
 
-    public function __construct(TemplateFinderInterface $finder, FileLocatorInterface $locator)
+    public function __construct(TemplateFinderInterface $finder, FileLocatorInterface $locator, $dynamic)
     {
         $this->finder = $finder;
         $this->locator = $locator;
+        $this->dynamic = $dynamic;
     }
 
     /**
@@ -33,6 +36,12 @@ class TemplatePathsCacheWarmer extends CacheWarmer
      */
     public function warmUp($cacheDir)
     {
+        // if dynamic is enable we have dependencies to the database, but cache warm up should be independent, because
+        // it could be executed before database is set up
+        if($this->dynamic) {
+            return;
+        }
+
         $filesystem = new Filesystem();
         $templates = [];
 
