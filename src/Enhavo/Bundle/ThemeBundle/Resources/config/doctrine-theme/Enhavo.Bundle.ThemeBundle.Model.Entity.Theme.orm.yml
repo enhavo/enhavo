@@ -1,0 +1,20 @@
+Enhavo\Bundle\ThemeBundle\Model\Entity\Theme:
+    type: entity
+    table: theme_theme
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        key:
+            type: string
+            column: '`key`'
+        active:
+            type: boolean
+        parameters:
+            type: json_array
+
+lifecycleCallbacks: {  }

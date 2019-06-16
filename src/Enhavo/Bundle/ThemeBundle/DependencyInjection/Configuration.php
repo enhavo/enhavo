@@ -2,6 +2,11 @@
 
 namespace Enhavo\Bundle\ThemeBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\ThemeBundle\Form\Type\ThemeType;
+use Enhavo\Bundle\ThemeBundle\Model\Entity\Theme;
+use Enhavo\Bundle\ThemeBundle\Repository\ThemeRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,6 +27,42 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('dynamic')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enable')->defaultValue(false)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('webpack')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('custom_file')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+                ->scalarNode('theme')->defaultValue('base')->end()
+                ->variableNode('themes_dir')->end()
+                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('theme')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Theme::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(ThemeRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ThemeType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
             ->end();
 
         return $treeBuilder;

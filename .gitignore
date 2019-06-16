@@ -23,3 +23,4 @@
 /behat.yml
 /npm-debug.log
 /yarn-error.log
+/assets/theme/custom.scss

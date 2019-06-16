@@ -1,0 +1,7 @@
+enhavo_theme:
+    webpack:
+        custom_file: '%kernel.project_dir%/var/theme/custom.scss'
+    themes_dir:
+        - '%kernel.project_dir%/node_modules/@enhavo/theme/theme'
+        - '%kernel.project_dir%/assets/node_modules/@enhavo/theme/theme'
+        - '%kernel.project_dir%/assets/theme'

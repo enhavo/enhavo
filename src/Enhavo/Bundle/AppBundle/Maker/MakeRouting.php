@@ -20,6 +20,16 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeRouting extends AbstractMaker
 {
+    /**
+     * @var MakerUtil
+     */
+    private $util;
+
+    public function __construct(MakerUtil $util)
+    {
+        $this->util = $util;
+    }
+
     public function configureCommand(Command $command, InputConfiguration $inputConf)
     {
         $command
@@ -42,22 +52,26 @@ class MakeRouting extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
+        $resource = $input->getArgument('resource');
+        $app = $input->getArgument('app');
+        $bundleName = sprintf('%sBundle', $this->util->snakeCaseToCamelCase($app));
+
         $generator->generateFile(
-            '',
-            'EnhavoAppBundle:Maker/routing.yml.twig',
+            sprintf('%s/Resources/config/routing/admin/%s.yml', $this->util->getBundlePath($bundleName), $this->util->camelCaseToSnakeCase($resource)),
+            $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/routing.tpl.php'),
             [
-                'app' => $input->getArgument('app'),
-                'resource' => $input->getArgument('resource'),
-                'sorting' => $input->getArgument('sorting'),
-                'app_url' => $this->getUrl($input->getArgument('app')),
-                'resource_url' => $this->getUrl($input->getArgument('resource'))
+                'app' => $this->util->camelCaseToSnakeCase($app),
+                'resource' => $this->util->camelCaseToSnakeCase($resource),
+                'app_url' => $this->getUrl($app),
+                'resource_url' => $this->getUrl($resource)
             ]
         );
-        $io->text('Next: Open your new controller class and add some pages!');
+
+        $generator->writeChanges();
     }
 
     private function getUrl($input)
     {
-        return preg_replace('/_/', '/', $input);
+        return preg_replace('/_/', '/',  $this->util->camelCaseToSnakeCase($input));
     }
 }

@@ -5,6 +5,8 @@ services:
             - '@kernel'
 
     Enhavo\Bundle\AppBundle\Maker\MakeRouting:
+        arguments:
+            - '@enhavo_app.maker.util'
         tags:
             - { name: 'maker.command' }
 
