@@ -5,7 +5,6 @@
 
 namespace Enhavo\Bundle\ThemeBundle\CacheWarmer;
 
-use Doctrine\DBAL\Driver\PDOException;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
