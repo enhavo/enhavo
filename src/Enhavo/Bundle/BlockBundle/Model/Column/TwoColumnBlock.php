@@ -57,7 +57,7 @@ class TwoColumnBlock extends Column
             $containers[] = $this->columnOne;
         }
         if($this->columnTwo) {
-            $containers[] = $this->columnOne;
+            $containers[] = $this->columnTwo;
         }
         return $containers;
     }
