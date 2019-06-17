@@ -38,8 +38,8 @@ class PageFactory extends ContentFactory
         $newPage->setPublic(false);
         $newPage->setCode(null);
 
-        $newContainer = $this->containerFactory->duplicate($originalResource->getContainer());
-        $newPage->setContainer($newContainer);
+        $newContainer = $this->containerFactory->duplicate($originalResource->getContent());
+        $newPage->setContent($newContainer);
 
         $newPage->setParent($originalResource->getParent());
 

@@ -13,4 +13,4 @@ services:
     Enhavo\Bundle\SidebarBundle\Block\SidebarColumnConfiguration:
         public: true
         tags:
-            - { name: enhavo.container_block, alias: sidebar_column }
+            - { name: enhavo.block, alias: sidebar_column }

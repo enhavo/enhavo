@@ -21,7 +21,7 @@ Enhavo\Bundle\TemplateBundle\Entity\Template:
             nullable: true
 
     oneToOne:
-        container:
+        content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 

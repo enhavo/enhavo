@@ -49,7 +49,7 @@ class AppointmentType extends AbstractResourceType
             'multiple' => false
         ));
 
-        $builder->add('container', ContainerType::class, array(
+        $builder->add('content', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));

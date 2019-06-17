@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\ArticleBundle\Container;
+namespace Enhavo\Bundle\ArticleBundle\Block;
 
 use Enhavo\Bundle\ArticleBundle\Entity\ArticleStream;
 use Enhavo\Bundle\ArticleBundle\Factory\ArticleStreamFactory;
@@ -26,7 +26,7 @@ class ArticleStreamType extends AbstractConfiguration
             'form' => ArticleStreamFormType::class,
             'factory' => ArticleStreamFactory::class,
             'repository' => 'EnhavoArticleBundle:ArticleStream',
-            'template' => 'EnhavoArticleBundle:Theme/Container:article-stream.html.twig',
+            'template' => 'EnhavoArticleBundle:Theme/Block:article-stream.html.twig',
             'label' => 'article.label.article_stream',
             'translationDomain' => 'EnhavoArticleBundle',
             'groups' => ['default', 'content']

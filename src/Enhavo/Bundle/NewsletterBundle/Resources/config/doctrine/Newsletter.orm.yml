@@ -37,7 +37,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
                 default: false
 
     oneToOne:
-        container:
+        content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 

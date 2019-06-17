@@ -33,7 +33,7 @@ class TemplateType extends AbstractType
             'label' => 'template.label.code',
             'translation_domain' => 'EnhavoTemplateBundle',
         ]);
-        $builder->add('container', ContainerType::class, array(
+        $builder->add('content', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
             'item_groups' => ['layout'],

@@ -32,7 +32,7 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * @var ContainerInterface
      */
-    private $container;
+    private $content;
 
     /**
      * @return int
@@ -77,12 +77,12 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface $content
      * @return Sidebar
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContent(ContainerInterface $content = null)
     {
-        $this->container = $container;
+        $this->content = $content;
 
         return $this;
     }
@@ -92,8 +92,8 @@ class Sidebar implements ResourceInterface, SidebarInterface
      *
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContent()
     {
-        return $this->container;
+        return $this->content;
     }
 }

@@ -30,7 +30,7 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected $content;
 
     /**
      * @var FileInterface
@@ -167,12 +167,12 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface $content
      * @return Appointment
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContent(ContainerInterface $content = null)
     {
-        $this->container = $container;
+        $this->content = $content;
 
         return $this;
     }
@@ -182,9 +182,9 @@ class Appointment extends Content implements AppointmentInterface
      *
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContent()
     {
-        return $this->container;
+        return $this->content;
     }
 
     /**

@@ -50,7 +50,7 @@ class TwoColumnBlock extends Column
         $this->columnTwo = $columnTwo;
     }
 
-    public function getContainers()
+    public function getContent()
     {
         $containers = [];
         if($this->columnOne) {

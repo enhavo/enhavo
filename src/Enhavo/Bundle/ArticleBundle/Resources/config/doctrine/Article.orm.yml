@@ -14,7 +14,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             orphanRemoval: true
 
-        container:
+        content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 

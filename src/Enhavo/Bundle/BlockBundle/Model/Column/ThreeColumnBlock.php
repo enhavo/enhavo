@@ -71,7 +71,7 @@ class ThreeColumnBlock extends Column
         $this->columnThree = $columnThree;
     }
 
-    public function getContainers()
+    public function getContent()
     {
         $containers = [];
         if($this->columnOne) {

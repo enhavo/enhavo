@@ -28,7 +28,7 @@ abstract class AbstractItem implements ItemInterface
     protected $name;
 
     /**
-     * Block constructor.
+     * Item constructor.
      * @param ConfigurationInterface $configuration
      * @param string $name
      * @param $options

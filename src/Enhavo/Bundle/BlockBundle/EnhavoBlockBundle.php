@@ -27,7 +27,7 @@ class EnhavoBlockBundle extends Bundle
         ));
 
         $container->addCompilerPass(
-            new TypeCompilerPass('enhavo_block.block_collector', 'enhavo.container_block')
+            new TypeCompilerPass('enhavo_block.block_collector', 'enhavo.block')
         );
     }
 

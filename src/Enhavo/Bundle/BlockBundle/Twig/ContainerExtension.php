@@ -29,7 +29,7 @@ class ContainerExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('container_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('block_render', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 

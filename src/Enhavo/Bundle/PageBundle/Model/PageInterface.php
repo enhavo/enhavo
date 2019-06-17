@@ -16,17 +16,17 @@ interface PageInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface $content
      * @return PageInterface
      */
-    public function setContainer(ContainerInterface $container = null);
+    public function setContent(ContainerInterface $content = null);
 
     /**
      * Get content
      *
      * @return ContainerInterface
      */
-    public function getContainer();
+    public function getContent();
 
     /**
      * Set code

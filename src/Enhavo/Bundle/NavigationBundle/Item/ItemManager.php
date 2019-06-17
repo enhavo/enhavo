@@ -22,8 +22,8 @@ class ItemManager
         foreach($configurations as $name => $options) {
             /** @var AbstractConfiguration $configuration */
             $configuration = $collector->getType($options['type']);
-            $block = new Item($configuration, $name, $options);
-            $this->items[$name] = $block;
+            $item = new Item($configuration, $name, $options);
+            $this->items[$name] = $item;
         }
     }
 

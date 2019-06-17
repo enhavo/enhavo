@@ -27,7 +27,7 @@ class OneColumnBlock extends Column
         $this->column = $column;
     }
 
-    public function getContainers()
+    public function getContent()
     {
         if($this->column) {
             return [$this->column];

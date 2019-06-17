@@ -30,7 +30,7 @@ class Article extends Content
     /**
      * @var ContainerInterface
      */
-    private $container;
+    private $content;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -100,12 +100,12 @@ class Article extends Content
     /**
      * Set content
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface $content
      * @return Content
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContent(ContainerInterface $content = null)
     {
-        $this->container = $container;
+        $this->content = $content;
 
         return $this;
     }
@@ -115,9 +115,9 @@ class Article extends Content
      *
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContent()
     {
-        return $this->container;
+        return $this->content;
     }
 
     /**

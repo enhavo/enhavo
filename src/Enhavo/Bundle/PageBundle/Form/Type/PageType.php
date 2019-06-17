@@ -39,7 +39,7 @@ class PageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('container', ContainerType::class, array(
+        $builder->add('content', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
             'item_groups' => ['layout'],

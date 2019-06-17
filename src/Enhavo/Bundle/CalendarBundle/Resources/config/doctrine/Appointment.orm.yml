@@ -46,7 +46,7 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             type: boolean
             nullable: true
     oneToOne:
-        container:
+        content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 

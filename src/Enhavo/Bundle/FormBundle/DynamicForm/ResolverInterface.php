@@ -28,7 +28,7 @@ interface ResolverInterface
     public function resolveDefaultItems();
 
     /**
-     * Get block by name
+     * Get item by name
      *
      * @param $name
      * @return ItemInterface

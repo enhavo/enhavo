@@ -6,7 +6,7 @@
   route:
     de: /de/ueber-uns
     en: /en/about-us
-  container:
+  content:
     -
       type: text
       title:
@@ -23,7 +23,7 @@
   route:
     de: /de/philosophie
     en: /en/philosophy
-  container:
+  content:
     -
       type: text
       title:

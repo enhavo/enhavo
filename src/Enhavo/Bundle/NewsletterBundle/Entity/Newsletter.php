@@ -34,7 +34,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * @var ContainerInterface
      */
-    private $container;
+    private $content;
 
     /**
      * @var boolean
@@ -119,27 +119,27 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     }
 
     /**
-     * Set container
+     * Set content
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface $content
      *
      * @return Newsletter
      */
-    public function setContainer(ContainerInterface $container)
+    public function setContent(ContainerInterface $content)
     {
-        $this->container = $container;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get container
+     * Get content
      *
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContent()
     {
-        return $this->container;
+        return $this->content;
     }
 
     /**

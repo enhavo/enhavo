@@ -46,7 +46,7 @@ class ContextBuilder
         }
 
         if($data instanceof ContainerAwareInterface) {
-            $containers = $data->getContainers();
+            $containers = $data->getContent();
             foreach($containers as $container) {
                 if($container instanceof ContextAwareInterface) {
                     $context->addChild($this->build($container, $context));

@@ -1,6 +1,6 @@
 <?php
 /**
- * BlockTypeInterface.php
+ * ItemTypeInterface.php
  *
  * @since 15/03/18
  * @author gseidel

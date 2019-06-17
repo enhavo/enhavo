@@ -197,7 +197,7 @@ class MakeContainerBlock extends AbstractMaker
         $template = $bundle->getName() . ':Theme/Block' . ($blockSubDirectory ? '/' . $blockSubDirectory : '') . ':' . $this->util->camelCaseToSnakeCase($blockName, true) . '.html.twig';
         $factoryNamespace = $this->getNameSpace($bundle, '\\Factory', $blockSubDirectory) . '\\' . $blockName . 'Factory';
 
-        return $this->templateEngine->render('@EnhavoBlock/Maker/ContainerBlock/enhavo_config_entry.yml.twig', array(
+        return $this->templateEngine->render('@EnhavoBlock/Maker/Block/enhavo_config_entry.yml.twig', array(
             'block_name' => $blockName,
             'bundle_name' => $bundle->getName(),
             'block_name_snake_case' => $this->util->camelCaseToSnakeCase($blockName),

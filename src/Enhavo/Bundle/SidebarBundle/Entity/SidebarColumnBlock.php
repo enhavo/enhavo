@@ -55,12 +55,12 @@ class SidebarColumnBlock extends Column
         $this->sidebar = $sidebar;
     }
 
-    public function getContainers()
+    public function getContent()
     {
-        $containers = [];
+        $content = [];
         if($this->column) {
-            $containers[] = $this->column;
+            $content[] = $this->column;
         }
-        return $containers;
+        return $content;
     }
 }
