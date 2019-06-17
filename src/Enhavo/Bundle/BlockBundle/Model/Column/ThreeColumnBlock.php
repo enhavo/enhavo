@@ -78,10 +78,10 @@ class ThreeColumnBlock extends Column
             $containers[] = $this->columnOne;
         }
         if($this->columnTwo) {
-            $containers[] = $this->columnOne;
+            $containers[] = $this->columnTwo;
         }
         if($this->columnThree) {
-            $containers[] = $this->columnOne;
+            $containers[] = $this->columnThree;
         }
         return $containers;
     }
