@@ -43,7 +43,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('ALTER TABLE grid_item_gallery_file DROP FOREIGN KEY FK_6D1055DB4E7AF8F');
         $this->addSql('CREATE TABLE block_container (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE block_block (id INT AUTO_INCREMENT NOT NULL, container_id INT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, position INT DEFAULT NULL, blockTypeId INT DEFAULT NULL, blockTypeClass VARCHAR(255) DEFAULT NULL, INDEX IDX_440A51C4BC21F742 (container_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE redirect_redirect (id INT AUTO_INCREMENT NOT NULL, route_id INT DEFAULT NULL, `from` VARCHAR(512) DEFAULT NULL, `to` VARCHAR(512) DEFAULT NULL, code INT DEFAULT NULL, INDEX IDX_87BE679834ECB4E6 (route_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sidebar_block_sidebar_column (id INT AUTO_INCREMENT NOT NULL, block_id INT DEFAULT NULL, column_id INT DEFAULT NULL, sidebar_id INT DEFAULT NULL, width VARCHAR(255) DEFAULT NULL, style VARCHAR(255) DEFAULT NULL, INDEX IDX_75D34050E9ED820C (block_id), INDEX IDX_75D34050BE8E8ED5 (column_id), INDEX IDX_75D340503A432888 (sidebar_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE block_block_text_picture (id INT AUTO_INCREMENT NOT NULL, block_id INT DEFAULT NULL, file_id INT DEFAULT NULL, text LONGTEXT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL, caption VARCHAR(255) DEFAULT NULL, textLeft TINYINT(1) DEFAULT NULL, `float` TINYINT(1) DEFAULT NULL, layout INT DEFAULT NULL, INDEX IDX_675F3508E9ED820C (block_id), UNIQUE INDEX UNIQ_675F350893CB796C (file_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE block_block_video (id INT AUTO_INCREMENT NOT NULL, block_id INT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, INDEX IDX_61DB4911E9ED820C (block_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -56,7 +55,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('CREATE TABLE block_block_one_column (id INT AUTO_INCREMENT NOT NULL, block_id INT DEFAULT NULL, column_id INT DEFAULT NULL, width VARCHAR(255) DEFAULT NULL, style VARCHAR(255) DEFAULT NULL, INDEX IDX_CAD47894E9ED820C (block_id), INDEX IDX_CAD47894BE8E8ED5 (column_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE block_block_three_column (id INT AUTO_INCREMENT NOT NULL, block_id INT DEFAULT NULL, width VARCHAR(255) DEFAULT NULL, style VARCHAR(255) DEFAULT NULL, columnOne_id INT DEFAULT NULL, columnTwo_id INT DEFAULT NULL, columnThree_id INT DEFAULT NULL, INDEX IDX_86E4DE35E9ED820C (block_id), INDEX IDX_86E4DE354B499059 (columnOne_id), INDEX IDX_86E4DE3520157796 (columnTwo_id), INDEX IDX_86E4DE35F1E466CA (columnThree_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE block_block ADD CONSTRAINT FK_440A51C4BC21F742 FOREIGN KEY (container_id) REFERENCES block_container (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE redirect_redirect ADD CONSTRAINT FK_87BE679834ECB4E6 FOREIGN KEY (route_id) REFERENCES routing_route (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE sidebar_block_sidebar_column ADD CONSTRAINT FK_75D34050E9ED820C FOREIGN KEY (block_id) REFERENCES block_block (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE sidebar_block_sidebar_column ADD CONSTRAINT FK_75D34050BE8E8ED5 FOREIGN KEY (column_id) REFERENCES block_container (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE sidebar_block_sidebar_column ADD CONSTRAINT FK_75D340503A432888 FOREIGN KEY (sidebar_id) REFERENCES sidebar_sidebar (id) ON DELETE CASCADE');
@@ -79,7 +77,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('ALTER TABLE block_block_three_column ADD CONSTRAINT FK_86E4DE354B499059 FOREIGN KEY (columnOne_id) REFERENCES block_container (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE block_block_three_column ADD CONSTRAINT FK_86E4DE3520157796 FOREIGN KEY (columnTwo_id) REFERENCES block_container (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE block_block_three_column ADD CONSTRAINT FK_86E4DE35F1E466CA FOREIGN KEY (columnThree_id) REFERENCES block_container (id) ON DELETE CASCADE');
-        $this->addSql('DROP TABLE content_redirect');
         $this->addSql('DROP TABLE grid_grid');
         $this->addSql('DROP TABLE grid_item');
         $this->addSql('DROP TABLE grid_item_cite');
@@ -154,7 +151,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('ALTER TABLE block_block_one_column DROP FOREIGN KEY FK_CAD47894E9ED820C');
         $this->addSql('ALTER TABLE block_block_three_column DROP FOREIGN KEY FK_86E4DE35E9ED820C');
         $this->addSql('ALTER TABLE block_block_gallery_file DROP FOREIGN KEY FK_4AA54B224E7AF8F');
-        $this->addSql('CREATE TABLE content_redirect (id INT AUTO_INCREMENT NOT NULL, route_id INT DEFAULT NULL, `from` VARCHAR(512) DEFAULT NULL COLLATE utf8_unicode_ci, `to` VARCHAR(512) DEFAULT NULL COLLATE utf8_unicode_ci, code INT DEFAULT NULL, INDEX IDX_91BB74C434ECB4E6 (route_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE grid_grid (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE grid_item (id INT AUTO_INCREMENT NOT NULL, grid_id INT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, position INT DEFAULT NULL, itemTypeId INT DEFAULT NULL, itemTypeClass VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, INDEX IDX_3929884C2CF16895 (grid_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE grid_item_cite (id INT AUTO_INCREMENT NOT NULL, item_id INT DEFAULT NULL, text LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, INDEX IDX_E889F529126F525E (item_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
@@ -168,7 +164,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('CREATE TABLE grid_item_two_column (id INT AUTO_INCREMENT NOT NULL, item_id INT DEFAULT NULL, width VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, style VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, columnOne_id INT DEFAULT NULL, columnTwo_id INT DEFAULT NULL, INDEX IDX_6636A0174B499059 (columnOne_id), INDEX IDX_6636A017126F525E (item_id), INDEX IDX_6636A01720157796 (columnTwo_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE grid_item_video (id INT AUTO_INCREMENT NOT NULL, item_id INT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, url VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, INDEX IDX_F973395F126F525E (item_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE sidebar_item_sidebar_column (id INT AUTO_INCREMENT NOT NULL, item_id INT DEFAULT NULL, column_id INT DEFAULT NULL, sidebar_id INT DEFAULT NULL, width VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, style VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, INDEX IDX_6C0652D8BE8E8ED5 (column_id), INDEX IDX_6C0652D8126F525E (item_id), INDEX IDX_6C0652D83A432888 (sidebar_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
-        $this->addSql('ALTER TABLE content_redirect ADD CONSTRAINT FK_91BB74C434ECB4E6 FOREIGN KEY (route_id) REFERENCES routing_route (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE grid_item ADD CONSTRAINT FK_3929884C2CF16895 FOREIGN KEY (grid_id) REFERENCES grid_grid (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE grid_item_cite ADD CONSTRAINT FK_E889F529126F525E FOREIGN KEY (item_id) REFERENCES grid_item (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE grid_item_gallery ADD CONSTRAINT FK_7A3A6479126F525E FOREIGN KEY (item_id) REFERENCES grid_item (id) ON DELETE CASCADE');
@@ -194,7 +189,6 @@ final class Version20190617132316 extends AbstractMigration
         $this->addSql('ALTER TABLE sidebar_item_sidebar_column ADD CONSTRAINT FK_6C0652D8BE8E8ED5 FOREIGN KEY (column_id) REFERENCES grid_grid (id) ON DELETE CASCADE');
         $this->addSql('DROP TABLE block_container');
         $this->addSql('DROP TABLE block_block');
-        $this->addSql('DROP TABLE redirect_redirect');
         $this->addSql('DROP TABLE sidebar_block_sidebar_column');
         $this->addSql('DROP TABLE block_block_text_picture');
         $this->addSql('DROP TABLE block_block_video');
