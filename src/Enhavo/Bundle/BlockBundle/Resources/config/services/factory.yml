@@ -3,7 +3,7 @@ services:
         class: Enhavo\Bundle\BlockBundle\Factory\ContainerFactory
         arguments:
             - 'Enhavo\Bundle\BlockBundle\Entity\Container'
-            - '@enhavo_grid.factory.item_type'
+            - '@enhavo_block.factory.block_type'
         calls:
             - [setContainer, ['@service_container']]
 
