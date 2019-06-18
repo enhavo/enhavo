@@ -22,7 +22,7 @@ class SubmenuConfiguration extends AbstractConfiguration
         $resolver->setDefaults([
             'form' => SubmenuType::class,
             'label' => 'node.label.submenu',
-            'translation_domain' => 'EnhavoNavigationBundle',
+            'translationDomain' => 'EnhavoNavigationBundle',
             'type' => 'submenu',
             'factory' => SubmenuFactory::class,
         ]);

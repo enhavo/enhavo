@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,7 +37,7 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoNewsletterBundle'
         ) );
 
-        $builder->add('grid', GridType::class, array(
+        $builder->add('content', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ) );

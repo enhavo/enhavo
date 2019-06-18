@@ -1,0 +1,22 @@
+Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock:
+    type: entity
+    table: block_block_three_column
+
+    manyToOne:
+        columnOne:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
+        columnTwo:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
+        columnThree:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

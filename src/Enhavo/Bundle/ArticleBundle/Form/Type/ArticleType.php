@@ -2,10 +2,10 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 use Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
@@ -44,7 +44,7 @@ class ArticleType extends AbstractResourceType
             ]
         ));
 
-        $builder->add('grid', GridType::class, array(
+        $builder->add('content', ContainerType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));

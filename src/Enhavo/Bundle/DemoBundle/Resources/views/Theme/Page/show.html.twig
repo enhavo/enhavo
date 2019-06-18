@@ -6,7 +6,8 @@
     <div class="clearfix page-wrap about-container">
         <section>
             <article class="container">
-
+                <h2>{{ page.title }}</h2>
+                {{ block_render(page.content) }}
             </article>
         </section>
     </div>

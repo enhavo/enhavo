@@ -1,0 +1,10 @@
+Enhavo\Bundle\BlockBundle\Model\Block\CiteBlock:
+    type: entity
+    table: block_block_cite
+
+    fields:
+        text:
+            type: text
+            nullable: true
+
+lifecycleCallbacks: {  }

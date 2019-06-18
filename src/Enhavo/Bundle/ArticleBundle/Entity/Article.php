@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\ArticleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
@@ -28,9 +28,9 @@ class Article extends Content
     private $teaser;
 
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    private $grid;
+    private $content;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -100,12 +100,12 @@ class Article extends Content
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $content
      * @return Content
      */
-    public function setGrid(GridInterface $grid = null)
+    public function setContent(ContainerInterface $content = null)
     {
-        $this->grid = $grid;
+        $this->content = $content;
 
         return $this;
     }
@@ -113,11 +113,11 @@ class Article extends Content
     /**
      * Get content
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContent()
     {
-        return $this->grid;
+        return $this->content;
     }
 
     /**

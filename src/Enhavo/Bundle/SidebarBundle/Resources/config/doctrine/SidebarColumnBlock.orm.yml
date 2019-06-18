@@ -1,0 +1,18 @@
+Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnBlock:
+    type: entity
+    table: sidebar_block_sidebar_column
+
+    manyToOne:
+        column:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
+
+        sidebar:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\SidebarBundle\Model\SidebarInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,10 @@
+<div class="user-data-container container-type-video enhavo_block">
+    <div class="container enhavo_block_video">
+        {% if data.title %}
+            <h2 class="title">{{ data.title|raw }}</h2>
+        {% endif %}
+        <div class="video-container">
+            <iframe src="{{ data.url }}"></iframe>
+        </div>
+    </div>
+</div>

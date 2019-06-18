@@ -1,0 +1,13 @@
+services:
+    enhavo_block.factory.container:
+        class: Enhavo\Bundle\BlockBundle\Factory\ContainerFactory
+        arguments:
+            - 'Enhavo\Bundle\BlockBundle\Entity\Container'
+            - '@enhavo_block.factory.block_type'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    enhavo_block.factory.block_type:
+        class: Enhavo\Bundle\BlockBundle\Factory\BlockTypeFactory
+        calls:
+            - [setContainer, ['@service_container']]

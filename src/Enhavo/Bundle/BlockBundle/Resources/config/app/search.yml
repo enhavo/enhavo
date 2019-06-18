@@ -1,0 +1,88 @@
+enhavo_search:
+    metadata:
+        Enhavo\Bundle\BlockBundle\Entity\Container:
+            properties:
+                blocks:
+                    type: collection
+
+        Enhavo\Bundle\BlockBundle\Entity\Block:
+            properties:
+                blockType:
+                    type: model
+
+        Enhavo\Bundle\BlockBundle\Entity\CiteText:
+            properties:
+                cite:
+                    type: text
+                    weight: 8
+
+        Enhavo\Bundle\BlockBundle\Entity\Picture:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                caption:
+                    type: text
+                    weight: 8
+
+        Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                captionLeft:
+                    type: text
+                    weight: 8
+                captionRight:
+                    type: text
+                    weight: 8
+
+        Enhavo\Bundle\BlockBundle\Entity\Text:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                text:
+                    type: html
+                    weights:
+                        h1: 12
+                        h2: 10
+                        p: 7
+
+        Enhavo\Bundle\BlockBundle\Entity\TextPicture:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                text:
+                    type: html
+
+        Enhavo\Bundle\BlockBundle\Entity\TextText:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                titleLeft:
+                    type: text
+                    weight: 8
+                textLeft:
+                    type: html
+                titleRight:
+                    type: text
+                    weight: 8
+                textRight:
+                    type: html
+
+        Enhavo\Bundle\BlockBundle\Entity\Video:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+
+        Enhavo\Bundle\BlockBundle\Entity\Gallery:
+            properties:
+                title:
+                    type: text
+                    weight: 8
+                text:
+                    type: html

@@ -1,0 +1,17 @@
+.enhavo_block_textpicture {
+  &.float.position-left {
+    .picture_container {
+      float: left;
+    }
+  }
+  &.float.position-right {
+    .picture_container {
+      float: right;
+    }
+  }
+  &.float {
+    .picture_container {
+      width: 50%;
+    }
+  }
+}

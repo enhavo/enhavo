@@ -21,8 +21,8 @@ Enhavo\Bundle\SidebarBundle\Entity\Sidebar:
             nullable: true
 
     oneToOne:
-        grid:
+        content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\GridBundle\Model\GridInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
 
     lifecycleCallbacks: { }

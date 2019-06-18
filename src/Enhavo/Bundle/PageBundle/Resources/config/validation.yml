@@ -1,4 +1,4 @@
 Enhavo\Bundle\PageBundle\Entity\Page:
     properties:
-        grid:
+        content:
             - Valid: ~

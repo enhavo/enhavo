@@ -1,0 +1,17 @@
+{% form_theme form with form_themes() %}
+{% block form %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.name) }}
+
+    {% if form.blockType.children|length > 0 %}
+        {% for child in form.blockType.children %}
+            {{ form_row(child) }}
+        {% endfor %}
+    {% else %}
+        {{ form_row(form.blockType) }}
+    {% endif %}
+
+    {% if form.offsetExists('children') %}
+        {{ form_row(form.offsetGet('children')) }}
+    {% endif %}
+{% endblock %}

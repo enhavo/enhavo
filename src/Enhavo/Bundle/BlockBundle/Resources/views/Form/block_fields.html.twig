@@ -1,0 +1,6 @@
+{% form_theme form with form_themes() %}
+{% block form %}
+    {{ form_widget(form.position) }}
+    {{ form_widget(form.name) }}
+    {{ form_widget(form.blockType) }}
+{% endblock %}

@@ -26,7 +26,7 @@ class ArticleFixture extends AbstractFixture
         $article->setPublic($args['public']);
         $article->setPublicationDate(new \DateTime());
         $article->setPicture($this->createImage($args['picture']));
-        $article->setGrid($this->createGrid($args['grid']));
+        $article->setContent($this->createContainer($args['container']));
         foreach($args['categories'] as $category) {
             $article->addCategory($this->getCategory($category));
         }

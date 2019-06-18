@@ -1,0 +1,17 @@
+@import 'compass';
+@import 'blocks/citetext';
+@import 'blocks/textpicture';
+
+.enhavo_block {padding-top: 10px; padding-bottom: 10px;}
+.enhavo_block_img {width: 100%;}
+.picture_caption{font-size: 13px;margin-top: 5px}
+.enhavo_block_picturepicture {margin-left: 0px;margin-right: 0px;}
+.enhavo_block_picturepicture .left6{padding-left: 0px;}
+.enhavo_block_picturepicture .right6 {padding-right: 0px;}
+
+.textleft label {
+  color: black !important;
+}
+.enhavo_block_frame{border: black;border-style: solid;}
+
+.darkbg {background-color:#777;}

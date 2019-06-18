@@ -1,0 +1,11 @@
+{% block enhavo_block_container_widget %}
+    {{ form_widget(form.blocks) }}
+{% endblock %}
+
+{% block enhavo_block_column_widget %}
+    {{ form_row(form.width) }}
+    {{ form_row(form.style) }}
+    {% for child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
+{% endblock %}

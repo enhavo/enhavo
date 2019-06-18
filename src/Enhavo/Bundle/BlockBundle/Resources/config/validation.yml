@@ -1,0 +1,14 @@
+Enhavo\Bundle\BlockBundle\Entity\Container:
+    properties:
+        blocks:
+            - Valid: ~
+
+Enhavo\Bundle\BlockBundle\Entity\Block:
+    properties:
+        blockType:
+            - Valid: ~
+
+Enhavo\Bundle\BlockBundle\Entity\Video:
+    properties:
+        url:
+            - Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrl: ~

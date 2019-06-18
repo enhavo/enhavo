@@ -1,0 +1,72 @@
+services:
+    enhavo_block.form.container:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\ContainerType
+        tags:
+            - { name: form.type, alias: enhavo_block_container }
+
+    enhavo_block.form.block:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\BlockType
+        tags:
+            - { name: form.type, alias: enhavo_block_block }
+
+    enhavo_block.form.cite:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_cite }
+
+    enhavo_block.form.gallery:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_gallery }
+
+    enhavo_block.form.picture:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\PictureBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_picture }
+
+    enhavo_block.form.text:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_text }
+
+    enhavo_block.form.text_picture:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\TextPictureBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_text_picture }
+
+    enhavo_block.form.video:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType
+        arguments:
+            - '%enhavo_app.translate%'
+        tags:
+            - { name: form.type, alias: enhavo_block_block_video }
+
+    enhavo_block.form.column:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\ColumnType
+        arguments:
+            - '%enhavo_block.column.width_form%'
+            - '%enhavo_block.column.style_form%'
+        tags:
+            - { name: form.type, alias: enhavo_block_column }
+
+    enhavo_block.form.style:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\StyleType
+        arguments:
+            - '%enhavo_block.column.styles%'
+        tags:
+            - { name: form.type, alias: enhavo_block_style }
+
+    enhavo_block.form.width:
+        class: Enhavo\Bundle\BlockBundle\Form\Type\WidthType
+        tags:
+            - { name: form.type, alias: enhavo_block_width }

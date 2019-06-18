@@ -8,12 +8,12 @@
 
 namespace Enhavo\Bundle\DemoBundle\Controller;
 
+use Enhavo\Bundle\BlockBundle\Entity\Container;
+use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
-use Enhavo\Bundle\GridBundle\Entity\Grid;
-use Enhavo\Bundle\GridBundle\Form\Type\GridType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
 use Enhavo\Bundle\NavigationBundle\Form\Type\NavigationType;
@@ -48,11 +48,11 @@ class DemoController extends AbstractController
         ]);
     }
 
-    public function gridAction(Request $request)
+    public function containerAction(Request $request)
     {
-        $grid = new Grid();
+        $container = new Container();
 
-        $form = $this->createForm(GridType::class, $grid);
+        $form = $this->createForm(ContainerType::class, $container);
 
         if($request->isMethod('post')) {
             $form->submit($request);
@@ -60,7 +60,7 @@ class DemoController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('EnhavoDemoBundle:Theme/Demo:grid.html.twig', [
+        return $this->render('EnhavoDemoBundle:Theme/Demo:container.html.twig', [
             'form' => $formView
         ]);
     }

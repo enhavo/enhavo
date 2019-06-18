@@ -2,5 +2,5 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
     properties:
         title:
             - NotBlank: { groups: [default] }
-        grid:
+        content:
             - Valid: { groups: [default] }

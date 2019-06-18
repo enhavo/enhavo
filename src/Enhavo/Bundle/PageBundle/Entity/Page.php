@@ -5,7 +5,7 @@ namespace Enhavo\Bundle\PageBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\GridBundle\Model\GridInterface;
+use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
 
 /**
@@ -14,9 +14,9 @@ use Enhavo\Bundle\PageBundle\Model\PageInterface;
 class Page extends Content implements PageInterface
 {
     /**
-     * @var GridInterface
+     * @var ContainerInterface
      */
-    protected $grid;
+    protected $content;
 
     /**
      * @var string
@@ -44,12 +44,12 @@ class Page extends Content implements PageInterface
     /**
      * Set content
      *
-     * @param GridInterface $grid
+     * @param ContainerInterface $content
      * @return Content
      */
-    public function setGrid(GridInterface $grid = null)
+    public function setContent(ContainerInterface $content = null)
     {
-        $this->grid = $grid;
+        $this->content = $content;
 
         return $this;
     }
@@ -57,11 +57,11 @@ class Page extends Content implements PageInterface
     /**
      * Get content
      *
-     * @return GridInterface
+     * @return ContainerInterface
      */
-    public function getGrid()
+    public function getContent()
     {
-        return $this->grid;
+        return $this->content;
     }
     
     /**

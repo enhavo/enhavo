@@ -1,0 +1,20 @@
+Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
+    type: entity
+    table: block_block_picture
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        caption:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToOne:
+        file:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
+
+    lifecycleCallbacks: {  }

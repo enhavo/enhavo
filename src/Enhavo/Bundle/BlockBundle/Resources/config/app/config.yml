@@ -1,0 +1,15 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\BlockBundle\Model\ContainerInterface: Enhavo\Bundle\BlockBundle\Entity\Container
+            Enhavo\Bundle\BlockBundle\Model\BlockInterface: Enhavo\Bundle\BlockBundle\Entity\Block
+
+enhavo_media:
+    formats:
+        container_width:
+            type: image
+            width: 960
+
+enhavo_app:
+    form_themes:
+        - 'EnhavoBlockBundle:Form:fields.html.twig'

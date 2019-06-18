@@ -1,0 +1,12 @@
+Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
+    type: entity
+    table: block_block_one_column
+
+    manyToOne:
+        column:
+            cascade: ['persist', 'remove', 'refresh']
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

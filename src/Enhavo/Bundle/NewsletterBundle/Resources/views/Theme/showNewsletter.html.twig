@@ -1,5 +1,5 @@
 {% extends base_template %}
 
 {% block main %}
-    {{ grid_render(data.grid, 'newsletter') }}
+    {{ block_render(data.content, 'newsletter') }}
 {% endblock %}

@@ -62,20 +62,20 @@ enhavo_app:
             label: newsletter.role.label.view
             translationDomain: EnhavoNewsletterBundle
 
-enhavo_grid:
+enhavo_block:
     render:
         sets:
             newsletter:
-                picture: EnhavoNewsletterBundle:Theme\GridItem:picture.html.twig
-                picture_picture: EnhavoNewsletterBundle:Theme\GridItem:picture_picture.html.twig
-                three_picture: EnhavoNewsletterBundle:Theme\GridItem:three_picture.html.twig
-                gallery: EnhavoNewsletterBundle:Theme\GridItem:gallery.html.twig
-                text: EnhavoNewsletterBundle:Theme\GridItem:text.html.twig
-                text_picture: EnhavoNewsletterBundle:Theme\GridItem:text_picture.html.twig
-                text_text: EnhavoNewsletterBundle:Theme\GridItem:text_text.html.twig
-                cite_text: EnhavoNewsletterBundle:Theme\GridItem:cite_text.html.twig
-                download: EnhavoNewsletterBundle:Theme\GridItem:download.html.twig
-                video: EnhavoNewsletterBundle:Theme\GridItem:video.html.twig
+                picture: EnhavoNewsletterBundle:Theme\Block:picture.html.twig
+                picture_picture: EnhavoNewsletterBundle:Theme\Block:picture_picture.html.twig
+                three_picture: EnhavoNewsletterBundle:Theme\Block:three_picture.html.twig
+                gallery: EnhavoNewsletterBundle:Theme\Block:gallery.html.twig
+                text: EnhavoNewsletterBundle:Theme\Block:text.html.twig
+                text_picture: EnhavoNewsletterBundle:Theme\Block:text_picture.html.twig
+                text_text: EnhavoNewsletterBundle:Theme\Block:text_text.html.twig
+                cite_text: EnhavoNewsletterBundle:Theme\Block:cite_text.html.twig
+                download: EnhavoNewsletterBundle:Theme\Block:download.html.twig
+                video: EnhavoNewsletterBundle:Theme\Block:video.html.twig
 
 enhavo_routing:
     classes:
