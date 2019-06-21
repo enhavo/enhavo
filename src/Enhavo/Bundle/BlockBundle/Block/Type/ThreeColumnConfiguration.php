@@ -6,15 +6,15 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\BlockBundle\Block\Configuration;
+namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock;
 use Enhavo\Bundle\BlockBundle\Factory\ThreeColumnBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\ThreeColumnBlockType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ThreeColumnConfiguration extends AbstractConfiguration
+class ThreeColumnConfiguration extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {

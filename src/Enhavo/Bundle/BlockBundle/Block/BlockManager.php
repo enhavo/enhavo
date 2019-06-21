@@ -20,7 +20,7 @@ class BlockManager
     public function __construct(TypeCollector $collector, $configurations)
     {
         foreach($configurations as $name => $options) {
-            /** @var AbstractConfiguration $configuration */
+            /** @var AbstractBlockType $configuration */
             $configuration = $collector->getType($options['type']);
             unset($options['type']);
             $block = new Block($configuration, $name, $options);

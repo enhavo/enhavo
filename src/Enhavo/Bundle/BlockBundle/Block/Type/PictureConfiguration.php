@@ -6,15 +6,15 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\BlockBundle\Block\Configuration;
+namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock;
 use Enhavo\Bundle\BlockBundle\Factory\PictureBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\PictureBlockType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureConfiguration extends AbstractConfiguration
+class PictureConfiguration extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {

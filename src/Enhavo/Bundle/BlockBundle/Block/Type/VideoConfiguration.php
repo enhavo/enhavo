@@ -6,15 +6,15 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\BlockBundle\Block\Configuration;
+namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
 use Enhavo\Bundle\BlockBundle\Factory\VideoBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VideoConfiguration extends AbstractConfiguration
+class VideoConfiguration extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {

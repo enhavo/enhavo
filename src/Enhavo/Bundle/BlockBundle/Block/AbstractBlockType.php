@@ -12,7 +12,7 @@ use Enhavo\Bundle\FormBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractConfiguration extends AbstractType implements ConfigurationInterface
+abstract class AbstractBlockType extends AbstractType implements ConfigurationInterface
 {
     public function getModel($options)
     {

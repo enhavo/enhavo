@@ -13,11 +13,11 @@ use Enhavo\Bundle\FormBundle\DynamicForm\AbstractItem;
 class Block extends AbstractItem
 {
     /**
-     * @return AbstractConfiguration
+     * @return AbstractBlockType
      */
     private function getConfiguration()
     {
-        /** @var AbstractConfiguration $configuration */
+        /** @var AbstractBlockType $configuration */
         $configuration = $this->configuration;
         return $configuration;
     }
