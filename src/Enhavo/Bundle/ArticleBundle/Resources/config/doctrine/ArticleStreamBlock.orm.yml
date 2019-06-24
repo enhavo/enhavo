@@ -1,4 +1,4 @@
-Enhavo\Bundle\ArticleBundle\Entity\ArticleStream:
+Enhavo\Bundle\ArticleBundle\Entity\ArticleStreamBlock:
     type: entity
     table: article_article_stream_block
 
