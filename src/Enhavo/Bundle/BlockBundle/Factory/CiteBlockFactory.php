@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\CiteBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 class CiteBlockFactory extends AbstractBlockFactory
 {
-    public function duplicate(BlockTypeInterface $original)
+    public function duplicate(BlockInterface $original)
     {
         /** @var CiteBlock $data */
         /** @var CiteBlock $original */
