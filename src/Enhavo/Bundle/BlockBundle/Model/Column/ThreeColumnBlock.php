@@ -35,6 +35,8 @@ class ThreeColumnBlock extends Column
     public function setColumnOne($columnOne)
     {
         $columnOne->setParent($this->getNode());
+        $columnOne->setProperty('columnOne');
+        $columnOne->setType(NodeInterface::TYPE_LIST);
         $this->columnOne = $columnOne;
     }
 
@@ -52,6 +54,8 @@ class ThreeColumnBlock extends Column
     public function setColumnTwo($columnTwo)
     {
         $columnTwo->setParent($this->getNode());
+        $columnTwo->setProperty('columnTwo');
+        $columnTwo->setType(NodeInterface::TYPE_LIST);
         $this->columnTwo = $columnTwo;
     }
 
@@ -69,6 +73,8 @@ class ThreeColumnBlock extends Column
     public function setColumnThree($columnThree)
     {
         $columnThree->setParent($this->getNode());
+        $columnThree->setProperty('columnThree');
+        $columnThree->setType(NodeInterface::TYPE_LIST);
         $this->columnThree = $columnThree;
     }
 

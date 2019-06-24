@@ -17,7 +17,7 @@ Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
             targetEntity: Enhavo\Bundle\MediaBundle\Model\FileInterface
             orderBy: { 'order': 'ASC' }
             joinTable:
-                name: block_block_gallery_file
+                name: block_gallery_block_file
                 joinColumns:
                     gallery_id:
                         referencedColumnName: id

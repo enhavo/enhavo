@@ -128,7 +128,10 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function setContent(NodeInterface $content)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 

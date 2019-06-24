@@ -82,7 +82,10 @@ class Template implements ResourceInterface
     public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 

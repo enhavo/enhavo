@@ -37,6 +37,8 @@ class SidebarColumnBlock extends Column
     public function setColumn($column)
     {
         $column->setParent($this->getNode());
+        $column->setProperty('column');
+        $column->setType(NodeInterface::TYPE_LIST);
         $this->column = $column;
     }
 

@@ -30,6 +30,8 @@ class TwoColumnBlock extends Column
     public function setColumnOne($columnOne)
     {
         $columnOne->setParent($this->getNode());
+        $columnOne->setProperty('columnOne');
+        $columnOne->setType(NodeInterface::TYPE_LIST);
         $this->columnOne = $columnOne;
     }
 
@@ -47,6 +49,8 @@ class TwoColumnBlock extends Column
     public function setColumnTwo($columnTwo)
     {
         $columnTwo->setParent($this->getNode());
+        $columnTwo->setProperty('columnTwo');
+        $columnTwo->setType(NodeInterface::TYPE_LIST);
         $this->columnTwo = $columnTwo;
     }
 

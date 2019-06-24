@@ -73,6 +73,11 @@ class Node implements NodeInterface
     private $enable;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -148,6 +153,7 @@ class Node implements NodeInterface
         }
 
         if($block) {
+            $this->setType(NodeInterface::TYPE_BLOCK);
             $block->setNode($this);
         }
 
@@ -293,7 +299,23 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return Context[]
+     * @return string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return NodeInterface[]
      */
     public function getParents()
     {
@@ -310,7 +332,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return Context
+     * @return NodeInterface
      */
     public function getRoot()
     {
@@ -319,7 +341,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return Context[]
+     * @return NodeInterface[]
      */
     public function getDescendants()
     {
@@ -335,40 +357,36 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return Context
+     * @return NodeInterface|null
      */
     public function getBefore()
     {
-        return $this->before;
+        if($this->parent) {
+            $index = $this->parent->getChildren()->indexOf($this);
+            $beforeIndex = $this->parent->getChildren()->indexOf($index-1);
+            if($beforeIndex !== false) {
+                return $this->parent->getChildren()->get($beforeIndex);
+            }
+        }
+        return null;
     }
-
     /**
-     * @param Context $before
-     */
-    public function setBefore($before)
-    {
-        $this->before = $before;
-    }
-
-    /**
-     * @return Context
+     * @return NodeInterface|null
      */
     public function getNext()
     {
-        return $this->next;
+        if($this->parent) {
+            $index = $this->parent->getChildren()->indexOf($this);
+            $nextIndex = $this->parent->getChildren()->indexOf($index+1);
+            if($nextIndex !== false) {
+                return $this->parent->getChildren()->get($nextIndex);
+            }
+        }
+        return null;
     }
 
     /**
-     * @param Context $next
-     */
-    public function setNext($next)
-    {
-        $this->next = $next;
-    }
-
-
-    /**
-     * @return  Context[]
+     * @return  NodeInterface[]
      */
     public function getSiblings()
     {
@@ -387,7 +405,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return  Context[]
+     * @return  NodeInterface[]
      */
     public function getNextSiblings()
     {
@@ -404,7 +422,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return  Context[]
+     * @return NodeInterface[]
      */
     public function getBeforeSiblings()
     {
@@ -419,5 +437,4 @@ class Node implements NodeInterface
         } while($sibling = $sibling->getBefore());
         return $siblings;
     }
-
 }

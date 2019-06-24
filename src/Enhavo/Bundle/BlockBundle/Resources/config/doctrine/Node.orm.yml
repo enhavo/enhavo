@@ -35,6 +35,10 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
             type: boolean
             nullable: true
 
+        type:
+            type: string
+            nullable: true
+
     oneToMany:
         children:
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
