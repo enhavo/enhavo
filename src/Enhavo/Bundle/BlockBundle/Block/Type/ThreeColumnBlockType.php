@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock;
 use Enhavo\Bundle\BlockBundle\Factory\ThreeColumnBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\ThreeColumnBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\ThreeColumnBlockType as ThreeColumnBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ThreeColumnConfiguration extends AbstractBlockType
+class ThreeColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class ThreeColumnConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => ThreeColumnBlock::class,
             'parent' => ThreeColumnBlock::class,
-            'form' => ThreeColumnBlockType::class,
+            'form' => ThreeColumnBlockFormType::class,
             'factory' => ThreeColumnBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:ThreeColumn',
             'template' => 'EnhavoBlockBundle:Block:three-column.html.twig',

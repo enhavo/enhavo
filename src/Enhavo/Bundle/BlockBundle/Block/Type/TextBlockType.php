@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\TextBlock;
 use Enhavo\Bundle\BlockBundle\Factory\TextBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType as TextBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TextConfiguration extends AbstractBlockType
+class TextBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class TextConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => TextBlock::class,
             'parent' => TextBlock::class,
-            'form' => TextBlockType::class,
+            'form' => TextBlockFormType::class,
             'factory' => TextBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:Text',
             'template' => 'EnhavoBlockBundle:Block:text.html.twig',

@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
 use Enhavo\Bundle\BlockBundle\Factory\VideoBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType as VideoBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VideoConfiguration extends AbstractBlockType
+class VideoBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class VideoConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => VideoBlock::class,
             'parent' => VideoBlock::class,
-            'form' => VideoBlockType::class,
+            'form' => VideoBlockFormType::class,
             'factory' => VideoBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:Video',
             'template' => 'EnhavoBlockBundle:Block:video.html.twig',

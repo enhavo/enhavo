@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock;
 use Enhavo\Bundle\BlockBundle\Factory\TwoColumnBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\TwoColumnBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\TwoColumnBlockType as TwoColumnBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TwoColumnConfiguration extends AbstractBlockType
+class TwoColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class TwoColumnConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => TwoColumnBlock::class,
             'parent' => TwoColumnBlock::class,
-            'form' => TwoColumnBlockType::class,
+            'form' => TwoColumnBlockFormType::class,
             'factory' => TwoColumnBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:TwoColumn',
             'template' => 'EnhavoBlockBundle:Block:two-column.html.twig',

@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock;
 use Enhavo\Bundle\BlockBundle\Factory\GalleryBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType as GalleryBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GalleryConfiguration extends AbstractBlockType
+class GalleryBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class GalleryConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => GalleryBlock::class,
             'parent' => GalleryBlock::class,
-            'form' => GalleryBlockType::class,
+            'form' => GalleryBlockFormType::class,
             'factory' => GalleryBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:Gallery',
             'template' => 'EnhavoBlockBundle:Block:gallery.html.twig',

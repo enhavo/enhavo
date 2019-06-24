@@ -10,11 +10,11 @@ namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock;
 use Enhavo\Bundle\BlockBundle\Factory\OneColumnBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\OneColumnBlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\OneColumnBlockType as OneColumnBlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OneColumnConfiguration extends AbstractBlockType
+class OneColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class OneColumnConfiguration extends AbstractBlockType
         $optionsResolver->setDefaults([
             'model' => OneColumnBlock::class,
             'parent' => OneColumnBlock::class,
-            'form' => OneColumnBlockType::class,
+            'form' => OneColumnBlockFormType::class,
             'factory' => OneColumnBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:OneColumn',
             'template' => 'EnhavoBlockBundle:Block:one-column.html.twig',
