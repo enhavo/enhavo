@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
+use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\DynamicItemType;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Enhavo\Bundle\BlockBundle\Entity\Block;
 
 class BlockType extends AbstractType
 {
@@ -28,7 +28,7 @@ class BlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Block::class,
+            'data_class' => Node::class,
             'item_type_form' => null,
             'item_type_parameters' => [],
             'item_property' => 'name',

@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\DemoBundle\Controller;
 
 use Enhavo\Bundle\BlockBundle\Entity\Container;
-use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
+use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
@@ -52,7 +52,7 @@ class DemoController extends AbstractController
     {
         $container = new Container();
 
-        $form = $this->createForm(ContainerType::class, $container);
+        $form = $this->createForm(BlockNodeType::class, $container);
 
         if($request->isMethod('post')) {
             $form->submit($request);

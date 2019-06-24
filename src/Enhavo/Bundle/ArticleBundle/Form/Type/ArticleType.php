@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
+use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
@@ -44,7 +44,7 @@ class ArticleType extends AbstractResourceType
             ]
         ));
 
-        $builder->add('content', ContainerType::class, array(
+        $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));

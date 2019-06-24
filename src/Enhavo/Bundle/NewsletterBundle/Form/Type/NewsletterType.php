@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
+use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,7 +37,7 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoNewsletterBundle'
         ) );
 
-        $builder->add('content', ContainerType::class, array(
+        $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ) );
