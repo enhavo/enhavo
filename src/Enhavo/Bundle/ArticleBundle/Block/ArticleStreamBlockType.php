@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Block;
 
-use Enhavo\Bundle\ArticleBundle\Entity\ArticleStream;
+use Enhavo\Bundle\ArticleBundle\Entity\ArticleStreamBlock;
 use Enhavo\Bundle\ArticleBundle\Factory\ArticleStreamFactory;
 use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleStreamType as ArticleStreamFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
@@ -21,8 +21,8 @@ class ArticleStreamBlockType extends AbstractBlockType
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'model' => ArticleStream::class,
-            'parent' => ArticleStream::class,
+            'model' => ArticleStreamBlock::class,
+            'parent' => ArticleStreamBlock::class,
             'form' => ArticleStreamFormType::class,
             'factory' => ArticleStreamFactory::class,
             'repository' => 'EnhavoArticleBundle:ArticleStream',

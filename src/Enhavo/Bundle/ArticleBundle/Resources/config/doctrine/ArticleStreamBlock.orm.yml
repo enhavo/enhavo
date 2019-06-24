@@ -1,6 +1,6 @@
 Enhavo\Bundle\ArticleBundle\Entity\ArticleStream:
     type: entity
-    table: article_article_stream
+    table: article_article_stream_block
 
     fields:
         limit:
