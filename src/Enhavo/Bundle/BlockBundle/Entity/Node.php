@@ -237,7 +237,7 @@ class Node implements NodeInterface
     /**
      * @return array
      */
-    public function getViewData(): array
+    public function getViewData(): ?array
     {
         return $this->viewData;
     }
@@ -245,7 +245,7 @@ class Node implements NodeInterface
     /**
      * @param array $viewData
      */
-    public function setViewData(array $viewData): void
+    public function setViewData(?array $viewData): void
     {
         $this->viewData = $viewData;
     }

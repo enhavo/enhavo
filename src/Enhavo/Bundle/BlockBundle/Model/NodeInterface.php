@@ -81,12 +81,12 @@ interface NodeInterface
     /**
      * @return array
      */
-    public function getViewData(): array;
+    public function getViewData(): ?array;
 
     /**
      * @param array $viewData
      */
-    public function setViewData(array $viewData): void;
+    public function setViewData(?array $viewData): void;
 
     /**
      * @return string

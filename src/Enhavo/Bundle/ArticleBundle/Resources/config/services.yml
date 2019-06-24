@@ -57,3 +57,10 @@ services:
             - '@request_stack'
         tags:
             - { name: enhavo.widget, alias: article_stream }
+
+    Enhavo\Bundle\ArticleBundle\Controller\ArticleController:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+
+

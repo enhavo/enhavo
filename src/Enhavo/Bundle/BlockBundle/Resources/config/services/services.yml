@@ -1,27 +1,21 @@
 services:
-    enhavo_block.context.builder:
-        class: Enhavo\Bundle\BlockBundle\Context\ContextBuilder
-
     Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
         arguments:
             - Enhavo\Bundle\BlockBundle\Entity\Node
         tags:
             - { name: form.type }
 
-    enhavo_block.twig.container_extension:
-        class: Enhavo\Bundle\BlockBundle\Twig\ContainerExtension
+    Enhavo\Bundle\BlockBundle\Twig\TwigExtension:
         arguments:
-            - '@enhavo_block.renderer.block_renderer'
+            - '@Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 
-    enhavo_block.renderer.block_renderer:
-        class: Enhavo\Bundle\BlockBundle\Renderer\ContainerRenderer
+    Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer:
         arguments:
-            - '@enhavo_block.resolver.block_resolver'
-            - '@enhavo_block.context.builder'
+            - '@enhavo_block.block.manager'
             - '%enhavo_block.render.sets%'
         calls:
             - [ setContainer, ['@service_container']]

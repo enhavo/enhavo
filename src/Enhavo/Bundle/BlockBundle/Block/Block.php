@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\AbstractItem;
 
 class Block extends AbstractItem
@@ -55,5 +56,15 @@ class Block extends AbstractItem
     public function getGroups()
     {
         return $this->getConfiguration()->getGroups($this->options);
+    }
+
+    public function createViewData(BlockInterface $block, $resource = null)
+    {
+        return $this->getConfiguration()->createViewData($block, $resource, $this->options);
+    }
+
+    public function finishViewData(BlockInterface $block, array $viewData, $resource = null)
+    {
+        return $this->getConfiguration()->finishViewData($block, $viewData, $resource, $this->options);
     }
 }

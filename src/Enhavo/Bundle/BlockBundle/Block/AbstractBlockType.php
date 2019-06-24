@@ -9,14 +9,12 @@
 namespace Enhavo\Bundle\BlockBundle\Block;
 
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Bundle\BlockBundle\Model\Context;
-use Enhavo\Bundle\FormBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractBlockType extends AbstractType implements ConfigurationInterface, BlockTypeInterface
+abstract class AbstractBlockType extends AbstractType implements BlockTypeInterface
 {
-    public function createViewData(BlockInterface $block, array $options, $resource = null)
+    public function createViewData(BlockInterface $block, $resource, array $options)
     {
         return [
             'block' => $block,
@@ -24,7 +22,7 @@ abstract class AbstractBlockType extends AbstractType implements ConfigurationIn
         ];
     }
 
-    public function finishViewData(BlockInterface $block, array $options, array $viewData, Context $context, $resource = null)
+    public function finishViewData(BlockInterface $block, array $viewData, $resource, array $options)
     {
         return $viewData;
     }
@@ -64,9 +62,9 @@ abstract class AbstractBlockType extends AbstractType implements ConfigurationIn
         return $options['factory'];
     }
 
-    public function getTemplates(array $options)
+    public function getTemplate(array $options)
     {
-        return $options['templates'];
+        return $options['template'];
     }
 
     public function getFormTemplate(array $options)

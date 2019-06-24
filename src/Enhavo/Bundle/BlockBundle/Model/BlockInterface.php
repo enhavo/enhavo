@@ -10,6 +10,9 @@ namespace Enhavo\Bundle\BlockBundle\Model;
 
 interface BlockInterface
 {
+    /**
+     * @return NodeInterface
+     */
     public function getNode();
 
     public function setNode(NodeInterface $node);
