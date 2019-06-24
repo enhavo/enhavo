@@ -25,7 +25,7 @@ interface NodeInterface
     public function setParent(NodeInterface $node);
 
     /**
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getParent();
 
@@ -67,12 +67,12 @@ interface NodeInterface
     /**
      * @param NodeInterface $child
      */
-    public function addChildren(NodeInterface $child);
+    public function addChild(NodeInterface $child);
 
     /**
      * @param NodeInterface $child
      */
-    public function removeChildren(NodeInterface $child);
+    public function removeChild(NodeInterface $child);
 
     /**
      * @return array

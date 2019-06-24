@@ -5,9 +5,9 @@ enhavo_search:
                 blocks:
                     type: collection
 
-        Enhavo\Bundle\BlockBundle\Entity\Block:
+        Enhavo\Bundle\BlockBundle\Entity\Node:
             properties:
-                blockType:
+                block:
                     type: model
 
         Enhavo\Bundle\BlockBundle\Entity\CiteText:

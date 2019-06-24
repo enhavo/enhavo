@@ -4,3 +4,11 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: console.command, command: 'enhavo:block:clean-up' }
+
+    Enhavo\Bundle\BlockBundle\Maker\MakeContainerBlock:
+        arguments:
+            - '@kernel'
+            - '@enhavo_app.maker.util'
+            - '@templating.engine.twig'
+        tags:
+            - { name: 'maker.command' }

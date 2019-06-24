@@ -133,7 +133,7 @@ class Node implements NodeInterface
     /**
      * @return BlockInterface
      */
-    public function getBlock(): BlockInterface
+    public function getBlock(): ?BlockInterface
     {
         return $this->block;
     }
@@ -157,7 +157,7 @@ class Node implements NodeInterface
     /**
      * @return int
      */
-    public function getBlockId(): int
+    public function getBlockId(): ?int
     {
         return $this->blockId;
     }
@@ -165,7 +165,7 @@ class Node implements NodeInterface
     /**
      * @param int $blockId
      */
-    public function setBlockId(int $blockId): void
+    public function setBlockId(int $blockId = null): void
     {
         $this->blockId = $blockId;
     }
@@ -173,7 +173,7 @@ class Node implements NodeInterface
     /**
      * @return string
      */
-    public function getBlockClass(): string
+    public function getBlockClass(): ?string
     {
         return $this->blockClass;
     }
@@ -181,7 +181,7 @@ class Node implements NodeInterface
     /**
      * @param string $blockClass
      */
-    public function setBlockClass(string $blockClass): void
+    public function setBlockClass(string $blockClass = null): void
     {
         $this->blockClass = $blockClass;
     }
@@ -213,7 +213,7 @@ class Node implements NodeInterface
     /**
      * @param NodeInterface $child
      */
-    public function addChildren(NodeInterface $child)
+    public function addChild(NodeInterface $child)
     {
         $this->children->add($child);
         $child->setParent($this);
@@ -222,7 +222,7 @@ class Node implements NodeInterface
     /**
      * @param NodeInterface $child
      */
-    public function removeChildren(NodeInterface $child)
+    public function removeChild(NodeInterface $child)
     {
         $this->children->removeElement($child);
         $child->setParent(null);

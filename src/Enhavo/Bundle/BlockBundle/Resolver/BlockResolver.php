@@ -12,7 +12,7 @@ use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
-use Enhavo\Bundle\BlockBundle\Factory\BlockTypeFactory;
+use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockType;
 use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
@@ -29,19 +29,19 @@ class BlockResolver implements ResolverInterface
     private $formFactory;
 
     /**
-     * @var BlockTypeFactory
+     * @var BlockFactory
      */
-    private $blockTypeFactory;
+    private $blockFactory;
 
     /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(FormFactoryInterface $formFactory, BlockTypeFactory $blockTypeFactory, BlockManager $blockManager)
+    public function __construct(FormFactoryInterface $formFactory, BlockFactory $blockFactory, BlockManager $blockManager)
     {
         $this->formFactory = $formFactory;
-        $this->blockTypeFactory = $blockTypeFactory;
+        $this->blockFactory = $blockFactory;
         $this->blocks = $blockManager->getBlocks();
     }
 
@@ -101,7 +101,7 @@ class BlockResolver implements ResolverInterface
     public function resolveFactory($name)
     {
         $block = $this->resolveItem($name);
-        return new BlockFactory($this->blockTypeFactory, $name);
+        return new NodeFactory($this->blockFactory, $name);
     }
 
     public function resolveFormTemplate($name)

@@ -3,12 +3,12 @@
     {{ form_widget(form.position) }}
     {{ form_widget(form.name) }}
 
-    {% if form.blockType.children|length > 0 %}
-        {% for child in form.blockType.children %}
+    {% if form.block.children|length > 0 %}
+        {% for child in form.block.children %}
             {{ form_row(child) }}
         {% endfor %}
     {% else %}
-        {{ form_row(form.blockType) }}
+        {{ form_row(form.block) }}
     {% endif %}
 
     {% if form.offsetExists('children') %}

@@ -22,7 +22,7 @@ class BlockType extends AbstractType
     {
         $builder->add('position', PositionType::class);
         $builder->add('name', HiddenType::class);
-        $builder->add('blockType', $options['item_type_form'], $options['item_type_parameters']);
+        $builder->add('block', $options['item_type_form'], $options['item_type_parameters']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

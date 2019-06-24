@@ -39,6 +39,7 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
         children:
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
             mappedBy: parent
+            cascade: ['persist', 'remove', 'refresh']
 
     manyToOne:
         parent:

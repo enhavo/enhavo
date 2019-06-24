@@ -2,12 +2,11 @@ services:
     enhavo_block.context.builder:
         class: Enhavo\Bundle\BlockBundle\Context\ContextBuilder
 
-    enhavo_block.form.blocks:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\BlocksType
+    Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
         arguments:
-            - Enhavo\Bundle\BlockBundle\Entity\Block
+            - Enhavo\Bundle\BlockBundle\Entity\Node
         tags:
-            - { name: form.type, alias: enhavo_container_blocks }
+            - { name: form.type }
 
     enhavo_block.twig.container_extension:
         class: Enhavo\Bundle\BlockBundle\Twig\ContainerExtension
@@ -34,7 +33,7 @@ services:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
-            - '@enhavo_block.factory.block_type'
+            - '@enhavo_block.factory.block'
             - '@enhavo_block.block.manager'
 
     enhavo_block.block_collector:
@@ -51,10 +50,10 @@ services:
     enhavo_block.event_listener.block_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
-          - 'Enhavo\Bundle\BlockBundle\Entity\Block'
-          - 'blockType'
-          - 'blockTypeClass'
-          - 'blockTypeId'
+          - 'Enhavo\Bundle\BlockBundle\Entity\Node'
+          - 'block'
+          - 'blockClass'
+          - 'blockId'
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
@@ -64,11 +63,3 @@ services:
         arguments:
             - '@enhavo_block.block_collector'
             - '%enhavo_block.blocks%'
-
-    Enhavo\Bundle\BlockBundle\Maker\MakeContainerBlock:
-        arguments:
-            - '@kernel'
-            - '@enhavo_app.maker.util'
-            - '@templating.engine.twig'
-        tags:
-            - { name: 'maker.command' }
