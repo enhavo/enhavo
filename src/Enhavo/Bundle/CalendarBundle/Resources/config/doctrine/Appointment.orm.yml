@@ -48,7 +48,7 @@ Enhavo\Bundle\CalendarBundle\Entity\Appointment:
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
         picture:
             cascade: ['persist', 'refresh', 'remove']

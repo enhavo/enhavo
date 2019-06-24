@@ -20,4 +20,4 @@ Enhavo\Bundle\PageBundle\Entity\Page:
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface

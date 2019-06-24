@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\SidebarBundle\Entity;
 
 use Enhavo\Bundle\SidebarBundle\Model\SidebarInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class Sidebar implements ResourceInterface, SidebarInterface
 {
@@ -30,7 +30,7 @@ class Sidebar implements ResourceInterface, SidebarInterface
     private $code;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $content;
 
@@ -77,10 +77,10 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return Sidebar
      */
-    public function setContent(ContainerInterface $content = null)
+    public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
 
@@ -90,7 +90,7 @@ class Sidebar implements ResourceInterface, SidebarInterface
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

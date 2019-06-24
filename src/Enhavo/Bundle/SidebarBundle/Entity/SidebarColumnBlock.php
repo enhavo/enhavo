@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\SidebarBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Model\Column\Column;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class SidebarColumnBlock extends Column
 {
@@ -19,12 +19,12 @@ class SidebarColumnBlock extends Column
     private $sidebar;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $column;
 
     /**
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getColumn()
     {
@@ -32,11 +32,20 @@ class SidebarColumnBlock extends Column
     }
 
     /**
-     * @param ContainerInterface $column
+     * @param NodeInterface $column
      */
     public function setColumn($column)
     {
+        $column->setParent($this->getNode());
         $this->column = $column;
+    }
+
+    public function setNode(NodeInterface $node = null)
+    {
+        parent::setNode($node);
+        if($this->getColumn()) {
+            $this->getColumn()->setParent($node);
+        }
     }
 
     /**
@@ -53,14 +62,5 @@ class SidebarColumnBlock extends Column
     public function setSidebar(Sidebar $sidebar)
     {
         $this->sidebar = $sidebar;
-    }
-
-    public function getContent()
-    {
-        $content = [];
-        if($this->column) {
-            $content[] = $this->column;
-        }
-        return $content;
     }
 }
