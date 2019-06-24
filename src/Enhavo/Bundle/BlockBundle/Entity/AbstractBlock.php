@@ -9,19 +9,24 @@
 namespace Enhavo\Bundle\BlockBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
-class AbstractBlock implements BlockTypeInterface
+class AbstractBlock implements BlockInterface
 {
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
-     * @var BlockInterface
+     * @var NodeInterface
      */
-    protected $block;
+    private $node;
+
+    /**
+     * @var string
+     */
+    private $template;
 
     /**
      * Get id
@@ -34,18 +39,34 @@ class AbstractBlock implements BlockTypeInterface
     }
 
     /**
-     * @return BlockInterface
+     * @return NodeInterface
      */
-    public function getBlock()
+    public function getNode()
     {
-        return $this->block;
+        return $this->node;
     }
 
     /**
-     * @param BlockInterface $block
+     * @param NodeInterface $node
      */
-    public function setBlock(BlockInterface $block = null)
+    public function setNode(NodeInterface $node = null)
     {
-        $this->block = $block;
+        $this->node = $node;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(string $template): void
+    {
+        $this->template = $template;
     }
 }

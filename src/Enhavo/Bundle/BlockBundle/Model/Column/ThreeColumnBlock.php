@@ -2,29 +2,27 @@
 
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
-use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-use Enhavo\Bundle\BlockBundle\Entity\Container;
-use Enhavo\Bundle\BlockBundle\Model\ContainerAwareInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class ThreeColumnBlock extends Column
 {
     /**
-     * @var Container
+     * @var NodeInterface
      */
     private $columnOne;
 
     /**
-     * @var Container
+     * @var NodeInterface
      */
     private $columnTwo;
 
     /**
-     * @var Container
+     * @var NodeInterface
      */
     private $columnThree;
 
     /**
-     * @return Container
+     * @return NodeInterface
      */
     public function getColumnOne()
     {
@@ -32,15 +30,16 @@ class ThreeColumnBlock extends Column
     }
 
     /**
-     * @param Container $columnOne
+     * @param NodeInterface $columnOne
      */
     public function setColumnOne($columnOne)
     {
+        $columnOne->setParent($this->getNode());
         $this->columnOne = $columnOne;
     }
 
     /**
-     * @return Container
+     * @return NodeInterface
      */
     public function getColumnTwo()
     {
@@ -48,15 +47,16 @@ class ThreeColumnBlock extends Column
     }
 
     /**
-     * @param Container $columnTwo
+     * @param NodeInterface $columnTwo
      */
     public function setColumnTwo($columnTwo)
     {
+        $columnTwo->setParent($this->getNode());
         $this->columnTwo = $columnTwo;
     }
 
     /**
-     * @return Container
+     * @return NodeInterface
      */
     public function getColumnThree()
     {
@@ -64,25 +64,25 @@ class ThreeColumnBlock extends Column
     }
 
     /**
-     * @param Container $columnThree
+     * @param NodeInterface $columnThree
      */
     public function setColumnThree($columnThree)
     {
+        $columnThree->setParent($this->getNode());
         $this->columnThree = $columnThree;
     }
 
-    public function getContent()
+    public function setNode(NodeInterface $node = null)
     {
-        $containers = [];
-        if($this->columnOne) {
-            $containers[] = $this->columnOne;
+        parent::setNode($node);
+        if($this->getColumnOne()) {
+            $this->getColumnOne()->setParent($node);
         }
-        if($this->columnTwo) {
-            $containers[] = $this->columnTwo;
+        if($this->getColumnTwo()) {
+            $this->getColumnTwo()->setParent($node);
         }
-        if($this->columnThree) {
-            $containers[] = $this->columnThree;
+        if($this->getColumnThree()) {
+            $this->getColumnThree()->setParent($node);
         }
-        return $containers;
     }
 }

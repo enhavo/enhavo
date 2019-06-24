@@ -2,17 +2,17 @@
 
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class OneColumnBlock extends Column
 {
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $column;
 
     /**
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getColumn()
     {
@@ -20,18 +20,19 @@ class OneColumnBlock extends Column
     }
 
     /**
-     * @param ContainerInterface $column
+     * @param NodeInterface $column
      */
     public function setColumn($column)
     {
+        $column->setParent($this->getNode());
         $this->column = $column;
     }
 
-    public function getContent()
+    public function setNode(NodeInterface $node = null)
     {
-        if($this->column) {
-            return [$this->column];
+        parent::setNode($node);
+        if($this->getColumn()) {
+            $this->getColumn()->setParent($node);
         }
-        return [];
     }
 }

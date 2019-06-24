@@ -8,58 +8,73 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\BlockBundle\Model\Context;
 use Enhavo\Bundle\FormBundle\DynamicForm\ConfigurationInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractBlockType extends AbstractType implements ConfigurationInterface
+abstract class AbstractBlockType extends AbstractType implements ConfigurationInterface, BlockTypeInterface
 {
-    public function getModel($options)
+    public function createViewData(BlockInterface $block, array $options, $resource = null)
+    {
+        return [
+            'block' => $block,
+            'resource' => $resource
+        ];
+    }
+
+    public function finishViewData(BlockInterface $block, array $options, array $viewData, Context $context, $resource = null)
+    {
+        return $viewData;
+    }
+
+    public function getModel(array $options)
     {
         return $options['model'];
     }
 
-    public function getForm($options)
+    public function getForm(array $options)
     {
         return $options['form'];
     }
 
-    public function getRepository($options)
+    public function getRepository(array $options)
     {
         return $options['repository'];
     }
 
-    public function getLabel($options)
+    public function getLabel(array $options)
     {
         return $options['label'];
     }
 
-    public function getTranslationDomain($options)
+    public function getTranslationDomain(array $options)
     {
         return $options['translationDomain'];
     }
 
-    public function getParent($options)
+    public function getParent(array $options)
     {
         return $options['parent'];
     }
 
-    public function getFactory($options)
+    public function getFactory(array $options)
     {
         return $options['factory'];
     }
 
-    public function getTemplate($options)
+    public function getTemplates(array $options)
     {
-        return $options['template'];
+        return $options['templates'];
     }
 
-    public function getFormTemplate($options)
+    public function getFormTemplate(array $options)
     {
         return $options['form_template'];
     }
 
-    public function getGroups($options)
+    public function getGroups(array $options)
     {
         return $options['groups'];
     }
