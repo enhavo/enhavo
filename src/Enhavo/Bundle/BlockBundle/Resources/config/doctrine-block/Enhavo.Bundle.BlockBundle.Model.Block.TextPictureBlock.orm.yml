@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
     type: entity
-    table: block_block_text_picture
+    table: blocl_text_picture_block
 
     fields:
         text:

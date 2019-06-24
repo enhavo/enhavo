@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
     type: entity
-    table: block_block_gallery
+    table: block_gallery_block
 
     fields:
         title:

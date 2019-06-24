@@ -1,6 +1,6 @@
-Enhavo\Bundle\BlockBundle\Entity\Block:
+Enhavo\Bundle\BlockBundle\Entity\Node:
     type: entity
-    table: block_block
+    table: block_node
     id:
         id:
             type: integer
@@ -18,19 +18,32 @@ Enhavo\Bundle\BlockBundle\Entity\Block:
             type: integer
             nullable: true
 
-        blockTypeId:
+        blockId:
             type: integer
             nullable: true
 
-        blockTypeClass:
+        blockClass:
             type: string
             length: 255
             nullable: true
 
+        property:
+            type: string
+            nullable: true
+
+        enable:
+            type: boolean
+            nullable: true
+
+    oneToMany:
+        children:
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
+            mappedBy: parent
+
     manyToOne:
-        container:
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
-            mappedBy: blocks
+        parent:
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
+            inversedBy: children
             joinColumn:
                 onDelete: CASCADE
 

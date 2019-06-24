@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
     type: entity
-    table: block_block_text
+    table: block_text_block
 
     fields:
         title:

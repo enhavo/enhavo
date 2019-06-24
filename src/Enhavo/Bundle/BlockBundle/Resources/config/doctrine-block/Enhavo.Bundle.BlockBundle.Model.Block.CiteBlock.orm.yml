@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Model\Block\CiteBlock:
     type: entity
-    table: block_block_cite
+    table: block_cite_block
 
     fields:
         text:

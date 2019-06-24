@@ -1,6 +1,6 @@
 Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
     type: entity
-    table: block_block_video
+    table: block_video_block
 
     fields:
         title:

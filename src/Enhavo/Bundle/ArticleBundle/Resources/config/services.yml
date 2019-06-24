@@ -43,7 +43,7 @@ services:
         tags:
             - { name: enhavo.statistic, alias: article }
 
-    Enhavo\Bundle\ArticleBundle\Block\ArticleStreamType:
+    Enhavo\Bundle\ArticleBundle\Block\ArticleStreamBlockType:
         public: true
         calls:
             - [setContainer, ['@service_container']]
