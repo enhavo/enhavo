@@ -3,9 +3,11 @@ services:
         tags:
             - { name: form.type }
 
-    Enhavo\Bundle\BlockBundle\Form\Type\BlockType:
+    Enhavo\Bundle\BlockBundle\Form\Type\NodeType:
         tags:
             - { name: form.type }
+        calls:
+            - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType:
         arguments:

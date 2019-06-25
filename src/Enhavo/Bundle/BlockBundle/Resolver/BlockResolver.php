@@ -11,15 +11,13 @@ namespace Enhavo\Bundle\BlockBundle\Resolver;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\BlockBundle\Factory\NodeResolverFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\BlockType;
+use Enhavo\Bundle\BlockBundle\Form\Type\NodeType;
 use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class BlockResolver implements ResolverInterface
@@ -109,7 +107,7 @@ class BlockResolver implements ResolverInterface
             'item_property' => 'name',
         ];
 
-        $form = $this->formFactory->create(BlockType::class, $data, array_merge($formOptions, $options));
+        $form = $this->formFactory->create(NodeType::class, $data, array_merge($formOptions, $options));
         return $form;
     }
 

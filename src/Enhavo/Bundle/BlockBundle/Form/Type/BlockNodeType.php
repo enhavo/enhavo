@@ -18,7 +18,7 @@ class BlockNodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('children', BlocksType::class, [
-            'entry_type' => BlockType::class,
+            'entry_type' => NodeType::class,
             'item_groups' => $options['item_groups'],
             'items' => $options['items']
         ]);
@@ -37,6 +37,6 @@ class BlockNodeType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'enhavo_block_node';
+        return 'enhavo_block_block_node';
     }
 }
