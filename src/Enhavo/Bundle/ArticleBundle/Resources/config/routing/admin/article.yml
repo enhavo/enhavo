@@ -148,8 +148,6 @@ enhavo_article_article_preview:
         _controller: enhavo_article.controller.article:previewAction
         _sylius:
             viewer:
-                strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
 
 enhavo_article_article_resource_preview:
     options:
@@ -161,4 +159,4 @@ enhavo_article_article_resource_preview:
         _sylius:
             viewer:
                 strategy_options:
-                    service: enhavo_article.controller.article:showResourceAction
+                    service: Enhavo\Bundle\ArticleBundle\Controller\ArticleController:showResourceAction

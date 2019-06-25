@@ -6,15 +6,15 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\BlockBundle\Block\Configuration;
+namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\CiteBlock;
 use Enhavo\Bundle\BlockBundle\Factory\CiteBlockFactory;
-use Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
+use Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType as CiteBlockFormType;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CiteConfiguration extends AbstractConfiguration
+class CiteBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class CiteConfiguration extends AbstractConfiguration
         $optionsResolver->setDefaults([
             'model' => CiteBlock::class,
             'parent' => CiteBlock::class,
-            'form' => CiteBlockType::class,
+            'form' => CiteBlockFormType::class,
             'factory' =>  CiteBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:CiteText',
             'template' => 'EnhavoBlockBundle:Block:cite_text.html.twig',

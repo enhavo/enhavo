@@ -1,9 +1,9 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -32,7 +32,7 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $subject;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $content;
 
@@ -121,21 +121,24 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      *
      * @return Newsletter
      */
-    public function setContent(ContainerInterface $content)
+    public function setContent(NodeInterface $content)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

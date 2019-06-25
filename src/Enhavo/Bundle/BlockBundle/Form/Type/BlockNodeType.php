@@ -8,16 +8,16 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Entity\Container;
+use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContainerType extends AbstractType
+class BlockNodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('blocks', BlocksType::class, [
+        $builder->add('children', BlocksType::class, [
             'entry_type' => BlockType::class,
             'item_groups' => $options['item_groups'],
             'items' => $options['items']
@@ -27,7 +27,7 @@ class ContainerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Container::class,
+            'data_class' => Node::class,
             'label' => 'block.label.container',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => [],
@@ -37,6 +37,6 @@ class ContainerType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'enhavo_block_container';
+        return 'enhavo_block_node';
     }
 }

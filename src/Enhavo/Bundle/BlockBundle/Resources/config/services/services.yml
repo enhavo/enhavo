@@ -1,28 +1,21 @@
 services:
-    enhavo_block.context.builder:
-        class: Enhavo\Bundle\BlockBundle\Context\ContextBuilder
-
-    enhavo_block.form.blocks:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\BlocksType
+    Enhavo\Bundle\BlockBundle\Form\Type\BlocksType:
         arguments:
-            - Enhavo\Bundle\BlockBundle\Entity\Block
+            - Enhavo\Bundle\BlockBundle\Entity\Node
         tags:
-            - { name: form.type, alias: enhavo_container_blocks }
+            - { name: form.type }
 
-    enhavo_block.twig.container_extension:
-        class: Enhavo\Bundle\BlockBundle\Twig\ContainerExtension
+    Enhavo\Bundle\BlockBundle\Twig\TwigExtension:
         arguments:
-            - '@enhavo_block.renderer.block_renderer'
+            - '@Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 
-    enhavo_block.renderer.block_renderer:
-        class: Enhavo\Bundle\BlockBundle\Renderer\ContainerRenderer
+    Enhavo\Bundle\BlockBundle\Renderer\BlockRenderer:
         arguments:
-            - '@enhavo_block.resolver.block_resolver'
-            - '@enhavo_block.context.builder'
+            - '@enhavo_block.block.manager'
             - '%enhavo_block.render.sets%'
         calls:
             - [ setContainer, ['@service_container']]
@@ -34,8 +27,9 @@ services:
             - ['setContainer', ['@service_container']]
         arguments:
             - '@form.factory'
-            - '@enhavo_block.factory.block_type'
+            - '@enhavo_block.factory.block'
             - '@enhavo_block.block.manager'
+            - '@enhavo_block.factory.node'
 
     enhavo_block.block_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -51,24 +45,19 @@ services:
     enhavo_block.event_listener.block_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
         arguments:
-          - 'Enhavo\Bundle\BlockBundle\Entity\Block'
-          - 'blockType'
-          - 'blockTypeClass'
-          - 'blockTypeId'
+          - 'Enhavo\Bundle\BlockBundle\Entity\Node'
+          - 'block'
+          - 'blockClass'
+          - 'blockId'
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
 
     enhavo_block.block.manager:
         class: Enhavo\Bundle\BlockBundle\Block\BlockManager
+        public: true
         arguments:
             - '@enhavo_block.block_collector'
             - '%enhavo_block.blocks%'
-
-    Enhavo\Bundle\BlockBundle\Maker\MakeContainerBlock:
-        arguments:
-            - '@kernel'
-            - '@enhavo_app.maker.util'
-            - '@templating.engine.twig'
-        tags:
-            - { name: 'maker.command' }
+        calls:
+            - ['setContainer', ['@service_container']]

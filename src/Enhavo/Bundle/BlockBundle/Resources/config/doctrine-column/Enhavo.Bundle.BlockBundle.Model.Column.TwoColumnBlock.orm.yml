@@ -1,16 +1,16 @@
 Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock:
     type: entity
-    table: block_block_two_column
+    table: block_two_column_block
 
     manyToOne:
         columnOne:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
             joinColumn:
                 onDelete: CASCADE
         columnTwo:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
             joinColumn:
                 onDelete: CASCADE
 

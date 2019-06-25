@@ -1,72 +1,61 @@
 services:
-    enhavo_block.form.container:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\ContainerType
+    Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType:
         tags:
-            - { name: form.type, alias: enhavo_block_container }
+            - { name: form.type }
 
-    enhavo_block.form.block:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\BlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\BlockType:
         tags:
-            - { name: form.type, alias: enhavo_block_block }
+            - { name: form.type }
 
-    enhavo_block.form.cite:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_cite }
+            - { name: form.type }
 
-    enhavo_block.form.gallery:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_gallery }
+            - { name: form.type }
 
-    enhavo_block.form.picture:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\PictureBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\PictureBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_picture }
+            - { name: form.type }
 
-    enhavo_block.form.text:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_text }
+            - { name: form.type }
 
-    enhavo_block.form.text_picture:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\TextPictureBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\TextPictureBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_text_picture }
+            - { name: form.type }
 
-    enhavo_block.form.video:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType
+    Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:
-            - { name: form.type, alias: enhavo_block_block_video }
+            - { name: form.type }
 
-    enhavo_block.form.column:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\ColumnType
+    Enhavo\Bundle\BlockBundle\Form\Type\ColumnType:
         arguments:
             - '%enhavo_block.column.width_form%'
             - '%enhavo_block.column.style_form%'
         tags:
-            - { name: form.type, alias: enhavo_block_column }
+            - { name: form.type }
 
-    enhavo_block.form.style:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\StyleType
+    Enhavo\Bundle\BlockBundle\Form\Type\StyleType:
         arguments:
             - '%enhavo_block.column.styles%'
         tags:
-            - { name: form.type, alias: enhavo_block_style }
+            - { name: form.type }
 
-    enhavo_block.form.width:
-        class: Enhavo\Bundle\BlockBundle\Form\Type\WidthType
+    Enhavo\Bundle\BlockBundle\Form\Type\WidthType:
         tags:
-            - { name: form.type, alias: enhavo_block_width }
+            - { name: form.type }

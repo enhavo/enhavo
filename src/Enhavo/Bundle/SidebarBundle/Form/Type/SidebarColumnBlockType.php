@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\SidebarBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\ColumnType;
-use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
+use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\SidebarBundle\Entity\Sidebar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +29,7 @@ class SidebarColumnBlockType extends AbstractType
             'placeholder' => '---'
         ]);
 
-        $builder->add('column', ContainerType::class, [
+        $builder->add('column', BlockNodeType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => ['content'],

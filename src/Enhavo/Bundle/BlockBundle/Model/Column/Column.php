@@ -9,9 +9,8 @@
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-use Enhavo\Bundle\BlockBundle\Model\ContainerAwareInterface;
 
-abstract class Column extends AbstractBlock implements ContainerAwareInterface
+abstract class Column extends AbstractBlock
 {
     const WIDTH_FULL = 'full';
     const WIDTH_CONTAINER = 'container';

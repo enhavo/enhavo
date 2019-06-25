@@ -10,7 +10,7 @@ services:
         tags:
             - { name: form.type, alias: enhavo_sidebar_sidebar }
 
-    Enhavo\Bundle\SidebarBundle\Block\SidebarColumnConfiguration:
+    Enhavo\Bundle\SidebarBundle\Block\SidebarColumnBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: sidebar_column }

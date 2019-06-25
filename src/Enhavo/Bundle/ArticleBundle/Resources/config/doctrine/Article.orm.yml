@@ -16,7 +16,7 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
 
         content:
             cascade: ['persist', 'refresh', 'remove']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
     manyToMany:
         categories:

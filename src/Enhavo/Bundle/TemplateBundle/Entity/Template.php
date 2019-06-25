@@ -8,9 +8,8 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Entity;
 
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
-use Enhavo\Bundle\ContentBundle\Entity\Content;
 
 class Template implements ResourceInterface
 {
@@ -30,7 +29,7 @@ class Template implements ResourceInterface
     private $code;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $content;
 
@@ -77,20 +76,23 @@ class Template implements ResourceInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return Template
      */
-    public function setContent(ContainerInterface $content = null)
+    public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 
     /**
      * Get content
      * 
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

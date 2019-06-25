@@ -1,10 +1,9 @@
 <?php
-
 /**
- * BlockInterface.php
- *
- * @since 22/05/16
- * @author gseidel
+ * Created by PhpStorm.
+ * User: gseidel
+ * Date: 2019-06-24
+ * Time: 13:52
  */
 
 namespace Enhavo\Bundle\BlockBundle\Model;
@@ -12,48 +11,9 @@ namespace Enhavo\Bundle\BlockBundle\Model;
 interface BlockInterface
 {
     /**
-     * @return integer
+     * @return NodeInterface
      */
-    public function getId();
+    public function getNode();
 
-    /**
-     * @param ContainerInterface $container
-     * @return mixed
-     */
-    public function setContainer(ContainerInterface $container);
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer();
-
-    /**
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * @param string $name
-     */
-    public function setName($name);
-
-    /**
-     * @return BlockTypeInterface
-     */
-    public function getBlockType();
-
-    /**
-     * @param BlockTypeInterface $block
-     */
-    public function setBlockType(BlockTypeInterface $block = null);
-
-    /**
-     * @return int
-     */
-    public function getPosition();
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position);
+    public function setNode(NodeInterface $node);
 }

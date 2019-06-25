@@ -4,8 +4,8 @@ namespace Enhavo\Bundle\PageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
 
 /**
@@ -14,7 +14,7 @@ use Enhavo\Bundle\PageBundle\Model\PageInterface;
 class Page extends Content implements PageInterface
 {
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     protected $content;
 
@@ -44,20 +44,23 @@ class Page extends Content implements PageInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return Content
      */
-    public function setContent(ContainerInterface $content = null)
+    public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

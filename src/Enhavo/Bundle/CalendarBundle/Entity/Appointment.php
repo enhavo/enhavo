@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 
@@ -28,7 +28,7 @@ class Appointment extends Content implements AppointmentInterface
     protected $dateTo;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     protected $content;
 
@@ -167,20 +167,23 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return Appointment
      */
-    public function setContent(ContainerInterface $content = null)
+    public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\DynamicForm;
 
+use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Symfony\Component\Form\FormInterface;
 
 interface ResolverInterface
@@ -17,6 +18,7 @@ interface ResolverInterface
      *
      * @param $group
      * @return ItemInterface[]
+     * @throws ResolverException
      */
     public function resolveItemGroup($group);
 
@@ -24,6 +26,7 @@ interface ResolverInterface
      * Return all default items
      *
      * @return ItemInterface[]
+     * @throws ResolverException
      */
     public function resolveDefaultItems();
 
@@ -32,6 +35,7 @@ interface ResolverInterface
      *
      * @param $name
      * @return ItemInterface
+     * @throws ResolverException
      */
     public function resolveItem($name);
 
@@ -40,6 +44,7 @@ interface ResolverInterface
      *
      * @param string $name
      * @return FactoryInterface
+     * @throws ResolverException
      */
     public function resolveFactory($name);
 
@@ -50,6 +55,7 @@ interface ResolverInterface
      * @param object|null $data
      * @param array $options
      * @return FormInterface
+     * @throws ResolverException
      */
     public function resolveForm($name, $data = null, $options = []);
 
@@ -58,6 +64,7 @@ interface ResolverInterface
      *
      * @param string $name
      * @return string
+     * @throws ResolverException
      */
     public function resolveFormTemplate($name);
 }

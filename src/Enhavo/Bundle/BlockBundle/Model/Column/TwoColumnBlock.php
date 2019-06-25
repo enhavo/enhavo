@@ -2,24 +2,22 @@
 
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
-use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-use Enhavo\Bundle\BlockBundle\Entity\Container;
-use Enhavo\Bundle\BlockBundle\Model\ContainerAwareInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 class TwoColumnBlock extends Column
 {
     /**
-     * @var Container
+     * @var NodeInterface
      */
     private $columnOne;
 
     /**
-     * @var Container
+     * @var NodeInterface
      */
     private $columnTwo;
 
     /**
-     * @return Container
+     * @return NodeInterface
      */
     public function getColumnOne()
     {
@@ -27,15 +25,18 @@ class TwoColumnBlock extends Column
     }
 
     /**
-     * @param Container $columnOne
+     * @param NodeInterface $columnOne
      */
     public function setColumnOne($columnOne)
     {
+        $columnOne->setParent($this->getNode());
+        $columnOne->setProperty('columnOne');
+        $columnOne->setType(NodeInterface::TYPE_LIST);
         $this->columnOne = $columnOne;
     }
 
     /**
-     * @return Container
+     * @return NodeInterface
      */
     public function getColumnTwo()
     {
@@ -43,22 +44,24 @@ class TwoColumnBlock extends Column
     }
 
     /**
-     * @param Container $columnTwo
+     * @param NodeInterface $columnTwo
      */
     public function setColumnTwo($columnTwo)
     {
+        $columnTwo->setParent($this->getNode());
+        $columnTwo->setProperty('columnTwo');
+        $columnTwo->setType(NodeInterface::TYPE_LIST);
         $this->columnTwo = $columnTwo;
     }
 
-    public function getContent()
+    public function setNode(NodeInterface $node = null)
     {
-        $containers = [];
-        if($this->columnOne) {
-            $containers[] = $this->columnOne;
+        parent::setNode($node);
+        if($this->getColumnOne()) {
+            $this->getColumnOne()->setParent($node);
         }
-        if($this->columnTwo) {
-            $containers[] = $this->columnTwo;
+        if($this->getColumnTwo()) {
+            $this->getColumnTwo()->setParent($node);
         }
-        return $containers;
     }
 }

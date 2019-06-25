@@ -12,13 +12,13 @@ class TwoColumnBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('columnOne', ContainerType::class, [
+        $builder->add('columnOne', BlockNodeType::class, [
             'label' => 'column.label.column_one',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => ['content']
         ]);
 
-        $builder->add('columnTwo', ContainerType::class, [
+        $builder->add('columnTwo', BlockNodeType::class, [
             'label' => 'column.label.column_two',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => ['content']

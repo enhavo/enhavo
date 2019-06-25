@@ -1,8 +1,7 @@
 doctrine:
     orm:
         resolve_target_entities:
-            Enhavo\Bundle\BlockBundle\Model\ContainerInterface: Enhavo\Bundle\BlockBundle\Entity\Container
-            Enhavo\Bundle\BlockBundle\Model\BlockInterface: Enhavo\Bundle\BlockBundle\Entity\Block
+            Enhavo\Bundle\BlockBundle\Model\NodeInterface: Enhavo\Bundle\BlockBundle\Entity\Node
 
 enhavo_media:
     formats:

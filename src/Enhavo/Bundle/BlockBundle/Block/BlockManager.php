@@ -8,10 +8,17 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BlockManager
 {
+    use ContainerAwareTrait;
+
     /**
      * @var Block[]
      */
@@ -20,7 +27,7 @@ class BlockManager
     public function __construct(TypeCollector $collector, $configurations)
     {
         foreach($configurations as $name => $options) {
-            /** @var AbstractConfiguration $configuration */
+            /** @var BlockTypeInterface $configuration */
             $configuration = $collector->getType($options['type']);
             unset($options['type']);
             $block = new Block($configuration, $name, $options);
@@ -31,5 +38,57 @@ class BlockManager
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    public function getBlock($name)
+    {
+        return $this->blocks[$name];
+    }
+
+    public function createViewData(NodeInterface $node, $resource = null)
+    {
+        /** @var BlockManager $manager */
+        $manager = $this;
+        $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
+            if($node->getType() === NodeInterface::TYPE_BLOCK) {
+                $node->setResource($resource);
+                $viewData = $manager->getBlock($node->getName())->createViewData($node->getBlock(), $resource);
+                $node->setViewData($viewData);
+            }
+        });
+
+        $this->walk($node, function (NodeInterface $node) use ($manager, $resource) {
+            if($node->getType() === NodeInterface::TYPE_BLOCK) {
+                $viewData = $manager->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource);
+                $node->setViewData($viewData);
+            }
+        });
+    }
+
+    private function walk(NodeInterface $node, $callback)
+    {
+        $callback($node);
+        foreach($node->getChildren() as $child) {
+            $this->walk($child, $callback);
+        }
+    }
+
+    public function getFactory($name)
+    {
+        $block = $this->getBlock($name);
+        $factoryClass = $block->getFactory();
+        if($factoryClass) {
+            if ($this->container->has($factoryClass)) {
+                $factory = $this->container->get($factoryClass);
+            } else {
+                /** @var AbstractBlockFactory $factory */
+                $factory = new $factoryClass($block->getModel());
+                if($factory instanceof ContainerInterface) {
+                    $factory->setContainer($this->container);
+                }
+            }
+            return $factory;
+        }
+        return null;
     }
 }

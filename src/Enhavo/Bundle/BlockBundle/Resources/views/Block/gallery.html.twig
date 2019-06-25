@@ -1,16 +1,16 @@
 <div class="enhavo_block">
 
     <div class="container">
-        {% if data.title %}
-            <h2 class="title">{{ data.title|raw }}</h2>
+        {% if block.title %}
+            <h2 class="title">{{ block.title|raw }}</h2>
         {% endif %}
-        {% if data.text %}
-        <p>{{ data.text|raw }}</p>
+        {% if block.text %}
+        <p>{{ block.text|raw }}</p>
         {% endif %}
     </div>
     <div class="enhavo_block_gallery">
         <div class="slider">
-            {% for file in data.files %}
+            {% for file in block.files %}
                 <div>
                     <img src="{{ media_url(file) }}" />
                 </div>

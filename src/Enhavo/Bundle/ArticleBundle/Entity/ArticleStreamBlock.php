@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 
-class ArticleStream extends AbstractBlock
+class ArticleStreamBlock extends AbstractBlock
 {
     /**
      * @var  boolean

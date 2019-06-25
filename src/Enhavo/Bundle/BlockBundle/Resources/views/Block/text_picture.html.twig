@@ -1,46 +1,46 @@
 {% import _self as element %}
 
-{% macro text(data, layout = 0) %}
+{% macro text(block, layout = 0) %}
     {% import _self as element %}
-    <div class="{% if not data.float %}{% if layout == 0 %}col-sm-6{% endif %}{% if layout == 1 %}col-sm-3{% endif %}{% if layout == 2 %}col-sm-9{% endif %}{% endif %} text_container">
+    <div class="{% if not block.float %}{% if layout == 0 %}col-sm-6{% endif %}{% if layout == 1 %}col-sm-3{% endif %}{% if layout == 2 %}col-sm-9{% endif %}{% endif %} text_container">
         <div class="enhavo_block_text">
-            {% if data.title %}
-                <h2 class="title">{{ data.title }}</h2>
+            {% if block.title %}
+                <h2 class="title">{{ block.title }}</h2>
             {% endif %}
-            {% if data.float %}
-                {{ element.picture(data) }}
+            {% if block.float %}
+                {{ element.picture(block) }}
             {% endif %}
-            {% if data.text %}
-                <p>{{ data.text|raw }}</p>
+            {% if block.text %}
+                <p>{{ block.text|raw }}</p>
             {% endif %}
         </div>
     </div>
 {% endmacro %}
 
-{% macro picture(data, layout = 0) %}
-    <div class="picture_container {% if not data.float %}{% if layout == 0 %}col-sm-6{% endif %}{% if layout == 1 %}col-sm-3{% endif %}{% if layout == 2 %}col-sm-9{% endif %}{% endif %}">
-        {% if data.file %}
-            <img class="enhavo_block_img" src="{{ media_url(data.file, 'container_width') }}">
+{% macro picture(block, layout = 0) %}
+    <div class="picture_container {% if not block.float %}{% if layout == 0 %}col-sm-6{% endif %}{% if layout == 1 %}col-sm-3{% endif %}{% if layout == 2 %}col-sm-9{% endif %}{% endif %}">
+        {% if block.file %}
+            <img class="enhavo_block_img" src="{{ media_url(block.file, 'container_width') }}">
         {% endif %}
-        {% if data.caption %}
-            <p class="picture_caption">{{ data.caption }}</p>
+        {% if block.caption %}
+            <p class="picture_caption">{{ block.caption }}</p>
         {% endif %}
     </div>
 {% endmacro %}
 
 
 <div class="enhavo_block">
-    <div class="enhavo_block_textpicture container{% if data.float %}float{% endif %} {% if data.textLeft %}position-right{% else %}position-left{% endif %}">
+    <div class="enhavo_block_textpicture container{% if block.float %}float{% endif %} {% if block.textLeft %}position-right{% else %}position-left{% endif %}">
         <div class="row">
-            {% if data.float %}
-                {{ element.text(data) }}
+            {% if block.float %}
+                {{ element.text(block) }}
             {% else %}
-                {% if data.textLeft %}
-                    {{ element.text(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
-                    {{ element.picture(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
+                {% if block.textLeft %}
+                    {{ element.text(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
+                    {{ element.picture(block, block.layout == 1 ? 2 : (block.layout == 2 ? 1 : 0)) }}
                 {% else %}
-                    {{ element.picture(data, data.layout == 1 ? 1 : (data.layout == 2 ? 2 : 0)) }}
-                    {{ element.text(data, data.layout == 1 ? 2 : (data.layout == 2 ? 1 : 0)) }}
+                    {{ element.picture(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
+                    {{ element.text(block, block.layout == 1 ? 2 : (block.layout == 2 ? 1 : 0)) }}
                 {% endif %}
             {% endif %}
         </div>

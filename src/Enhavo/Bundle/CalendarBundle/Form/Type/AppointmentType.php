@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Form\Type\ContainerType;
+use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -49,7 +49,7 @@ class AppointmentType extends AbstractResourceType
             'multiple' => false
         ));
 
-        $builder->add('content', ContainerType::class, array(
+        $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
         ));

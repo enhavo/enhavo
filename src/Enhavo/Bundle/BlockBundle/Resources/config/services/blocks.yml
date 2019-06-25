@@ -1,51 +1,51 @@
 services:
-    Enhavo\Bundle\BlockBundle\Block\Configuration\BaseConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\BaseBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: base }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\GalleryConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\GalleryBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: gallery }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\PictureConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\PictureBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: picture }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\TextConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\TextBlockType:
         public: true
         arguments:
         tags:
             - { name: enhavo.block, alias: text }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\TextPictureConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\TextPictureBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: text_picture }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\VideoConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\VideoBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: video }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\CiteConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\CiteBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: cite }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\OneColumnConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\OneColumnBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: one_column }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\TwoColumnConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\TwoColumnBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: two_column }
 
-    Enhavo\Bundle\BlockBundle\Block\Configuration\ThreeColumnConfiguration:
+    Enhavo\Bundle\BlockBundle\Block\Type\ThreeColumnBlockType:
         public: true
         tags:
             - { name: enhavo.block, alias: three_column }

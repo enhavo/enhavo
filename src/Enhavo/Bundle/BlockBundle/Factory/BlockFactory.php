@@ -9,45 +9,55 @@
 
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
+use Enhavo\Bundle\BlockBundle\Block\Block;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\FactoryInterface;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Enhavo\Bundle\BlockBundle\Entity\Block;
 
-class BlockFactory implements FactoryInterface
+class BlockFactory
 {
     use ContainerAwareTrait;
 
     /**
-     * @var BlockTypeFactory
+     * @param string $name
+     * @return BlockInterface
      */
-    private $blockTypeFactory;
+    public function createNew($name)
+    {
+        /** @var Block $block */
+        $block = $this->getResolver()->resolveItem($name);
+        $factory = $this->getFactory($block->getName());
+        return $factory->createNew();
+    }
 
     /**
-     * @var string
+     * @param BlockInterface $original
+     * @return BlockInterface
      */
-    private $name;
-
-    public function __construct(BlockTypeFactory $blockTypeFactory, $name)
+    public function duplicate(BlockInterface $original)
     {
-        $this->blockTypeFactory = $blockTypeFactory;
-        $this->name = $name;
+        /** @var Block $block */
+        $block = $this->getResolver()->resolveItem($original->getNode()->getName());
+        $factory = $this->getFactory($block->getName());
+        return $factory->duplicate($original);
     }
 
-    public function createNew()
+    /**
+     * @return ResolverInterface
+     */
+    private function getResolver()
     {
-        $block = new Block();
-        $block->setBlockType($this->blockTypeFactory->createNew($this->name));
-        $block->setName($this->name);
-        return $block;
+        return $this->container->get('enhavo_block.resolver.block_resolver');
     }
 
-    public function duplicate(BlockTypeInterface $blockType)
+    /**
+     * @param string $name
+     * @return FactoryInterface
+     */
+    private function getFactory($name)
     {
-        $block = new Block();
-        $block->setName($block->getName());
-        $block->setPosition($block->getPosition());
-        $block->setBlockType($this->blockTypeFactory->duplicate($blockType, $block->getName()));
-        return $block;
+        $blockManager = $this->container->get('enhavo_block.block.manager');
+        return $blockManager->getFactory($name);
     }
 }

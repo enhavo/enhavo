@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 class TextPictureBlockFactory extends AbstractBlockFactory
 {
@@ -24,7 +24,7 @@ class TextPictureBlockFactory extends AbstractBlockFactory
         return $data;
     }
 
-    public function duplicate(BlockTypeInterface $original)
+    public function duplicate(BlockInterface $original)
     {
         /** @var TextPictureBlock $data */
         /** @var TextPictureBlock $original */

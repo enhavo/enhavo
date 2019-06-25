@@ -8,13 +8,13 @@
 
 namespace Enhavo\Bundle\SidebarBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\SidebarBundle\Entity\SidebarColumnBlock;
 use Enhavo\Bundle\SidebarBundle\Factory\SidebarColumnBlockFactory;
-use Enhavo\Bundle\SidebarBundle\Form\Type\SidebarColumnBlockType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractConfiguration;
+use Enhavo\Bundle\SidebarBundle\Form\Type\SidebarColumnBlockType as SidebarColumnBlockFormType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SidebarColumnConfiguration extends AbstractConfiguration
+class SidebarColumnBlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
@@ -23,7 +23,7 @@ class SidebarColumnConfiguration extends AbstractConfiguration
         $optionsResolver->setDefaults([
             'model' => SidebarColumnBlock::class,
             'parent' => SidebarColumnBlock::class,
-            'form' => SidebarColumnBlockType::class,
+            'form' => SidebarColumnBlockFormType::class,
             'factory' => SidebarColumnBlockFactory::class,
             'repository' => 'EnhavoSidebarBundle:SidebarColumn',
             'template' => 'EnhavoSidebarBundle:Block:sidebar-column.html.twig',

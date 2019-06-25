@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\TextBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 class TextBlockFactory extends AbstractBlockFactory
 {
-    public function duplicate(BlockTypeInterface $original)
+    public function duplicate(BlockInterface $original)
     {
         /** @var TextBlock $data */
         /** @var TextBlock $original */

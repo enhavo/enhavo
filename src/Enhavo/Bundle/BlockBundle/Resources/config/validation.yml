@@ -3,9 +3,9 @@ Enhavo\Bundle\BlockBundle\Entity\Container:
         blocks:
             - Valid: ~
 
-Enhavo\Bundle\BlockBundle\Entity\Block:
+Enhavo\Bundle\BlockBundle\Entity\Node:
     properties:
-        blockType:
+        block:
             - Valid: ~
 
 Enhavo\Bundle\BlockBundle\Entity\Video:

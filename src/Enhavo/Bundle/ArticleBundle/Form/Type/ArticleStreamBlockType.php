@@ -3,14 +3,14 @@
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 
-use Enhavo\Bundle\ArticleBundle\Entity\ArticleStream;
+use Enhavo\Bundle\ArticleBundle\Entity\ArticleStreamBlock;
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleStreamType extends AbstractType
+class ArticleStreamBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,12 +28,7 @@ class ArticleStreamType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => ArticleStream::class
+            'data_class' => ArticleStreamBlock::class
         ));
-    }
-
-    public function getName()
-    {
-        return 'enhavo_article_article_stream';
     }
 }

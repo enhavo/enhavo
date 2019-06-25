@@ -9,22 +9,22 @@
 namespace Enhavo\Bundle\PageBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 interface PageInterface
 {
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return PageInterface
      */
-    public function setContent(ContainerInterface $content = null);
+    public function setContent(NodeInterface $content = null);
 
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent();
 

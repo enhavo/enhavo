@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 class VideoBlockFactory extends AbstractBlockFactory
 {
-    public function duplicate(BlockTypeInterface $original)
+    public function duplicate(BlockInterface $original)
     {
         /** @var VideoBlock $data */
         /** @var VideoBlock $original */

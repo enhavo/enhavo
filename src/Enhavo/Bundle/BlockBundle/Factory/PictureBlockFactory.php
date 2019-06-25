@@ -9,11 +9,11 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock;
-use Enhavo\Bundle\BlockBundle\Model\BlockTypeInterface;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 
 class PictureBlockFactory extends AbstractBlockFactory
 {
-    public function duplicate(BlockTypeInterface $original)
+    public function duplicate(BlockInterface $original)
     {
         /** @var PictureBlock $data */
         /** @var PictureBlock $original */

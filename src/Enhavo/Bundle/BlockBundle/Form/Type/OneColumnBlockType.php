@@ -11,7 +11,7 @@ class OneColumnBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('column', ContainerType::class, [
+        $builder->add('column', BlockNodeType::class, [
             'label' => 'column.label.column',
             'translation_domain' => 'EnhavoBlockBundle',
             'item_groups' => ['content']

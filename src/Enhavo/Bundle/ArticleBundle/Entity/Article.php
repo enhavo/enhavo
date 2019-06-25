@@ -8,10 +8,8 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Enhavo\Bundle\CategoryBundle\Model\CategoryInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\BlockBundle\Model\ContainerInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
@@ -28,7 +26,7 @@ class Article extends Content
     private $teaser;
 
     /**
-     * @var ContainerInterface
+     * @var NodeInterface
      */
     private $content;
 
@@ -100,20 +98,23 @@ class Article extends Content
     /**
      * Set content
      *
-     * @param ContainerInterface $content
+     * @param NodeInterface $content
      * @return Content
      */
-    public function setContent(ContainerInterface $content = null)
+    public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-
+        if($content) {
+            $content->setType(NodeInterface::TYPE_ROOT);
+            $content->setProperty('content');
+        }
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return ContainerInterface
+     * @return NodeInterface
      */
     public function getContent()
     {

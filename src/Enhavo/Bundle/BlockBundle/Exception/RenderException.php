@@ -6,6 +6,8 @@
  * Time: 21:16
  */
 
+namespace Enhavo\Bundle\BlockBundle\Exception;
+
 class RenderException extends \Exception
 {
 

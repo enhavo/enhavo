@@ -1,11 +1,11 @@
 Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
     type: entity
-    table: block_block_one_column
+    table: block_one_column_block
 
     manyToOne:
         column:
             cascade: ['persist', 'remove', 'refresh']
-            targetEntity: Enhavo\Bundle\BlockBundle\Model\ContainerInterface
+            targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
             joinColumn:
                 onDelete: CASCADE
 
