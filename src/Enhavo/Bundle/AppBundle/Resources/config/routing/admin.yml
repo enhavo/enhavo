@@ -2,13 +2,3 @@ enhavo_app_index:
     path:  /
     defaults:
         _controller: Enhavo\Bundle\AppBundle\Controller\MainController:indexAction
-
-enhavo_app_view:
-    path:  /view
-    defaults:
-        _controller: Enhavo\Bundle\AppBundle\Controller\AppController:viewAction
-
-enhavo_app_table:
-    path:  /table
-    defaults:
-        _controller: Enhavo\Bundle\AppBundle\Controller\AppController:tableAction
