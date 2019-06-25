@@ -105,5 +105,7 @@ three_column:
 block:
   label:
     blocks: 'Blocks'
-
+template:
+    label:
+        template: 'Template'
 

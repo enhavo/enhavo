@@ -67,7 +67,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('model')->end()
                             ->scalarNode('form')->end()
                             ->scalarNode('repository')->end()
-                            ->scalarNode('template')->end()
+                            ->variableNode('template')->end()
                             ->scalarNode('form_template')->end()
                             ->scalarNode('label')->end()
                             ->scalarNode('translationDomain')->end()

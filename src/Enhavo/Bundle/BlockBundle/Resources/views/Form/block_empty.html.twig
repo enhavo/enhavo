@@ -5,5 +5,7 @@
     {% if form.template is defined %}
         {{ form_row(form.template) }}
     {% endif %}
-    {{ form_widget(form.block) }}
+    {% if form._token is defined %}
+        {{ form_row(form._token) }}
+    {% endif %}
 {% endblock %}
