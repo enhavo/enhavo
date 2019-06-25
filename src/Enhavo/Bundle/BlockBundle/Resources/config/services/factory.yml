@@ -2,7 +2,6 @@ services:
     enhavo_block.factory.node:
         class: Enhavo\Bundle\BlockBundle\Factory\NodeFactory
         arguments:
-            - 'Enhavo\Bundle\BlockBundle\Entity\Node'
             - '@enhavo_block.factory.block'
         calls:
             - [setContainer, ['@service_container']]

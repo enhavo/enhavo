@@ -29,6 +29,7 @@ services:
             - '@form.factory'
             - '@enhavo_block.factory.block'
             - '@enhavo_block.block.manager'
+            - '@enhavo_block.factory.node'
 
     enhavo_block.block_collector:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
@@ -54,6 +55,9 @@ services:
 
     enhavo_block.block.manager:
         class: Enhavo\Bundle\BlockBundle\Block\BlockManager
+        public: true
         arguments:
             - '@enhavo_block.block_collector'
             - '%enhavo_block.blocks%'
+        calls:
+            - ['setContainer', ['@service_container']]

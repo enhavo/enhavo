@@ -11,12 +11,15 @@ namespace Enhavo\Bundle\BlockBundle\Resolver;
 use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
+use Enhavo\Bundle\BlockBundle\Factory\NodeResolverFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockType;
 use Enhavo\Bundle\FormBundle\DynamicForm\ItemInterface;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class BlockResolver implements ResolverInterface
@@ -34,14 +37,26 @@ class BlockResolver implements ResolverInterface
     private $blockFactory;
 
     /**
+     * @var BlockFactory
+     */
+    private $nodeFactory;
+
+    /**
      * @var Block[]
      */
     private $blocks = [];
 
-    public function __construct(FormFactoryInterface $formFactory, BlockFactory $blockFactory, BlockManager $blockManager)
+    /**
+     * @var BlockManager
+     */
+    private $blockManager;
+
+    public function __construct(FormFactoryInterface $formFactory, BlockFactory $blockFactory, BlockManager $blockManager, NodeFactory $nodeFactory)
     {
         $this->formFactory = $formFactory;
         $this->blockFactory = $blockFactory;
+        $this->nodeFactory = $nodeFactory;
+        $this->blockManager = $blockManager;
         $this->blocks = $blockManager->getBlocks();
     }
 
@@ -100,8 +115,11 @@ class BlockResolver implements ResolverInterface
 
     public function resolveFactory($name)
     {
-        $block = $this->resolveItem($name);
-        return new NodeFactory($this->blockFactory, $name);
+        $factory = $this->blockManager->getFactory($name);
+        if($factory === null) {
+            throw new ResolverException(sprintf('Factory for block type "%s" is required', $name));
+        }
+        return new NodeResolverFactory($factory, $this->nodeFactory, $name);
     }
 
     public function resolveFormTemplate($name)

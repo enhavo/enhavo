@@ -8,11 +8,17 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
+use Enhavo\Bundle\AppBundle\Exception\ResolverException;
 use Enhavo\Bundle\AppBundle\Type\TypeCollector;
+use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BlockManager
 {
+    use ContainerAwareTrait;
+
     /**
      * @var Block[]
      */
@@ -65,5 +71,24 @@ class BlockManager
         foreach($node->getChildren() as $child) {
             $this->walk($child, $callback);
         }
+    }
+
+    public function getFactory($name)
+    {
+        $block = $this->getBlock($name);
+        $factoryClass = $block->getFactory();
+        if($factoryClass) {
+            if ($this->container->has($factoryClass)) {
+                $factory = $this->container->get($factoryClass);
+            } else {
+                /** @var AbstractBlockFactory $factory */
+                $factory = new $factoryClass($block->getModel());
+                if($factory instanceof ContainerInterface) {
+                    $factory->setContainer($this->container);
+                }
+            }
+            return $factory;
+        }
+        return null;
     }
 }

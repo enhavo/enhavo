@@ -23,22 +23,14 @@ class NodeFactory implements FactoryInterface
      */
     private $blockFactory;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    public function __construct(BlockFactory $blockFactory, $name)
+    public function __construct(BlockFactory $blockFactory)
     {
         $this->blockFactory = $blockFactory;
-        $this->name = $name;
     }
 
     public function createNew()
     {
         $node = new Node();
-        $node->setBlock($this->blockFactory->createNew($this->name));
-        $node->setName($this->name);
         return $node;
     }
 
@@ -48,7 +40,7 @@ class NodeFactory implements FactoryInterface
         $node->setName($original->getName());
         $node->setPosition($original->getPosition());
         $node->setEnable($original->isEnable());
-        $node->setBlock($this->blockFactory->duplicate($original->getBlock(), $original->getName()));
+        $node->setBlock($this->blockFactory->duplicate($original->getBlock()));
         return $node;
     }
 }
