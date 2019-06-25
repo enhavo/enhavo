@@ -24,11 +24,6 @@ class AbstractBlock implements BlockInterface
     private $node;
 
     /**
-     * @var string
-     */
-    private $template;
-
-    /**
      * Get id
      *
      * @return integer
@@ -52,21 +47,5 @@ class AbstractBlock implements BlockInterface
     public function setNode(NodeInterface $node = null)
     {
         $this->node = $node;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplate(): string
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param string $template
-     */
-    public function setTemplate(string $template): void
-    {
-        $this->template = $template;
     }
 }

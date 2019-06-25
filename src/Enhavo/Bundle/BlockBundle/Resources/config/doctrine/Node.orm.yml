@@ -13,29 +13,26 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
             type: string
             length: 255
             nullable: true
-
         position:
             type: integer
             nullable: true
-
         blockId:
             type: integer
             nullable: true
-
         blockClass:
             type: string
             length: 255
             nullable: true
-
         property:
             type: string
             nullable: true
-
         enable:
             type: boolean
             nullable: true
-
         type:
+            type: string
+            nullable: true
+        template:
             type: string
             nullable: true
 
@@ -44,6 +41,8 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
             mappedBy: parent
             cascade: ['persist', 'remove', 'refresh']
+            orderBy:
+                position: ASC
 
     manyToOne:
         parent:

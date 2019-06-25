@@ -2,6 +2,9 @@
 {% block form %}
     {{ form_widget(form.position) }}
     {{ form_widget(form.name) }}
+    {% if form.template is defined %}
+        {{ form_row(form.template) }}
+    {% endif %}
 
     {% if form.block.children|length > 0 %}
         {% for child in form.block.children %}

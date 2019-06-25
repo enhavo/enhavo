@@ -78,6 +78,11 @@ class Node implements NodeInterface
     private $type;
 
     /**
+     * @var string
+     */
+    private $template;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -133,6 +138,22 @@ class Node implements NodeInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): ?string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(?string $template): void
+    {
+        $this->template = $template;
     }
 
     /**
