@@ -1,22 +1,24 @@
-<html>
+<html lang="{{  app.request.locale }}">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         <meta charset="utf-8" />
-        <meta name="description" content="{% block metadescription %}{% endblock %}" />
+        <meta name="description" content="{% block meta_description %}{% endblock %}" />
         <meta name="og:url" content="{{ app.request.uri }}" />
-        <meta name="og:title" content="{% block ogtitle %}{% endblock %}" />
-        <meta name="og:description" content="{% block ogdescription %}{% endblock %}" />
-        <meta name="og:image" content="{% block ogimage %}/img/logo-share.jpg{% endblock %}" />
+        <meta name="og:title" content="{% block og_title %}{% endblock %}" />
+        <meta name="og:description" content="{% block og_description %}{% endblock %}" />
+        <meta name="og:image" content="{% block og_image %}{% endblock %}" />
 
-        <title>{% block pageTitle %}{% endblock %}</title>
+        <title>{% block meta_title %}{% endblock %}</title>
 
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/ico">
         <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
         <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
+
+        {% block styles %}{% endblock %}
     </head>
-    <body class="{% block bodyclass %}{% endblock %}">
+    <body class="{% block body_class %}{% endblock %}">
         <header>
         </header>
 
@@ -25,6 +27,5 @@
         </main>
 
         {% block javascripts %}{% endblock %}
-
     </body>
 </html>

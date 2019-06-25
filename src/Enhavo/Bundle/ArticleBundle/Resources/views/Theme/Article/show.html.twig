@@ -1,5 +1,8 @@
-<div>
-    <h1>{{ data.title }}</h1>
-</div>
+{% extends template('theme_base') %}
 
-{{ block_render(data.content) }}
+{% block main %}
+    <div>
+        <h1>{{ data.title }}</h1>
+    </div>
+    {{ block_render(data.content) }}
+{% endblock %}

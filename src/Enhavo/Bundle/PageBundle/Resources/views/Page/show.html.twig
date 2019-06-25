@@ -1,7 +1,8 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('/bundles/enhavotheme/css/bootstrap.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('/bundles/enhavoblock/css/items.css') }}">
+{% extends template('theme_base') %}
 
-<h1>{{ data.title }}</h1>
-<div>
+{% block main %}
+    <div>
+        <h1>{{ data.title }}</h1>
+    </div>
     {{ block_render(data.content) }}
-</div>
+{% endblock %}
