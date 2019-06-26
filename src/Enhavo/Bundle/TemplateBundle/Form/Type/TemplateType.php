@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Form\Type;
 
+use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,19 +26,13 @@ class TemplateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, [
-            'label' => 'template.label.name',
-            'translation_domain' => 'EnhavoTemplateBundle',
-        ]);
-        $builder->add('code', TextType::class, [
-            'label' => 'template.label.code',
-            'translation_domain' => 'EnhavoTemplateBundle',
-        ]);
         $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'item_groups' => ['layout'],
+            'item_groups' => ['layout', 'template'],
         ));
+
+        $builder->add('route', RouteType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

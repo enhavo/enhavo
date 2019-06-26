@@ -9,19 +9,17 @@
 namespace Enhavo\Bundle\TemplateBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Template implements ResourceInterface
+class Template implements ResourceInterface, Routeable
 {
     /**
      * @var int
      */
     private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var string
@@ -34,27 +32,21 @@ class Template implements ResourceInterface
     private $content;
 
     /**
+     * @var Route
+     */
+    private $route;
+
+    /**
+     * @var \Enhavo\Bundle\TemplateBundle\Template\Template
+     */
+    private $template;
+
+    /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -97,5 +89,37 @@ class Template implements ResourceInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @return RouteInterface
+     */
+    public function getRoute(): ?RouteInterface
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param RouteInterface $route
+     */
+    public function setRoute(?RouteInterface $route): void
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * @return \Enhavo\Bundle\TemplateBundle\Template\Template
+     */
+    public function getTemplate(): \Enhavo\Bundle\TemplateBundle\Template\Template
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param \Enhavo\Bundle\TemplateBundle\Template\Template $template
+     */
+    public function setTemplate(\Enhavo\Bundle\TemplateBundle\Template\Template $template): void
+    {
+        $this->template = $template;
     }
 }

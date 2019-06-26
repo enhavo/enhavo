@@ -16,3 +16,21 @@ enhavo_app:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_DELETE
             label: template.role.label.delete
             translationDomain: EnhavoTemplateBundle
+
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\TemplateBundle\Entity\Template:
+            router:
+                default:
+                    type: route
+                admin:
+                    type: id
+                    route: enhavo_template_template_update
+            generators:
+                route_name:
+                    type: route_name
+
+cmf_routing:
+    dynamic:
+        controllers_by_class:
+            Enhavo\Bundle\TemplateBundle\Entity\Template: Enhavo\Bundle\TemplateBundle\Controller\TemplateController:showResourceAction

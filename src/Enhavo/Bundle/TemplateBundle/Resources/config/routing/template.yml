@@ -68,7 +68,7 @@ enhavo_template_template_table:
                     name:
                         type: text
                         label: template.label.name
-                        property: name
+                        property: template.name
                         translation_domain: EnhavoTemplateBundle
                         width: 12
 

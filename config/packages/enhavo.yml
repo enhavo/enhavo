@@ -59,3 +59,5 @@ enhavo_block:
             type: sidebar_column
         template:
             type: template
+        resource:
+            type: resource

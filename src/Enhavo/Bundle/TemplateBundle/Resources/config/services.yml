@@ -10,8 +10,35 @@ services:
         tags:
             - { name: form.type, alias: enhavo_template_template }
 
+    Enhavo\Bundle\TemplateBundle\Block\ResourceBlockType:
+        public: true
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: resource }
 
+    Enhavo\Bundle\TemplateBundle\Template\TemplateManager:
+        public: true
+        arguments:
+            - '%enhavo_template.template%'
+            - '@doctrine.orm.entity_manager'
+            - '@translator'
+        calls:
+            - ['setContainer', ['@service_container']]
 
+    Enhavo\Bundle\TemplateBundle\Controller\TemplateController:
+        arguments:
+            - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
+    Enhavo\Bundle\TemplateBundle\EventListener\TemplateDoctrineSubscriber:
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
 
 
 
