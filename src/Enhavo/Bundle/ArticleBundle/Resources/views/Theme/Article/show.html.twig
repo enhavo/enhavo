@@ -1,8 +1,5 @@
 {% extends template('theme_base') %}
 
 {% block main %}
-    <div>
-        <h1>{{ data.title }}</h1>
-    </div>
-    {{ block_render(data.content) }}
+    {% include '@EnhavoArticle/Theme/Article/resource.html.twig' %}
 {% endblock %}
