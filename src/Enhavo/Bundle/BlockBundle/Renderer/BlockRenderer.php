@@ -107,11 +107,23 @@ class BlockRenderer
      * @param NodeInterface $node
      * @param string $template
      * @return string
+     * @throws \Exception
      */
     private function renderNode(NodeInterface $node, $template = null)
     {
         if($template === null) {
-            $template = $this->blockManager->getBlock($node->getName())->getTemplate();
+            $block = $this->blockManager->getBlock($node->getName());
+            if($node->getTemplate()) {
+                if(!isset($block->getTemplate()[$node->getTemplate()])) {
+                    throw new \Exception(sprintf('Can\' render block "%s", because the template "%s" was set, but is not available in the configuration', $block->getName(), $node->getTemplate()));
+                }
+                $template = $block->getTemplate()[$node->getTemplate()]['template'];
+            } else {
+                $template = $block->getTemplate();
+                if(!is_string($template)) {
+                    throw new \Exception(sprintf('Can\' render block "%s", because the template is empty. Please set the template in the admin', $block->getName()));
+                }
+            }
         }
 
         $viewData = $node->getViewData();

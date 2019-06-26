@@ -129,6 +129,16 @@ interface NodeInterface
     public function setType(?string $type): void;
 
     /**
+     * @return string
+     */
+    public function getTemplate(): ?string;
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(?string $template): void;
+
+    /**
      * @return NodeInterface[]
      */
     public function getParents();

@@ -59,6 +59,27 @@ class NodeType extends AbstractType
             }
         });
 
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($resolver, $itemProperty) {
+            $item = $event->getData();
+            $form = $event->getForm();
+            if(!empty($item) && isset($item[$itemProperty])) {
+                $name = $item[$itemProperty];
+                /** @var Block $block */
+                $block = $resolver->resolveItem($name);
+                $template = $block->getTemplate();
+                if(is_array($template)) {
+                    $choices = [];
+                    foreach($template as $key => $value) {
+                        $choices[$value['label']] = $key;
+                    }
+                    $form->add('template', ChoiceType::class, [
+                        'label' => 'Template',
+                        'choices' => $choices
+                    ]);
+                }
+            }
+        });
+
         $builder->add('block', $options['item_type_form'], $options['item_type_parameters']);
     }
 
