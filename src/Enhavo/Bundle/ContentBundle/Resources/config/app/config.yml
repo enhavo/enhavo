@@ -1,5 +1,3 @@
 enhavo_app:
     form_themes:
         - 'EnhavoContentBundle:Form:fields.html.twig'
-#    stylesheets:
-#        - '@EnhavoContentBundle/Resources/public/css/style.css'
