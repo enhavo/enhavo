@@ -1,0 +1,5 @@
+Enhavo\Bundle\TemplateBundle\Entity\ResourceBlock:
+    type: entity
+    table: enhavo_template_resource_block
+
+    lifecycleCallbacks: {  }

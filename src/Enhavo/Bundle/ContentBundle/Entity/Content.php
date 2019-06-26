@@ -91,7 +91,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
      * @var string
      */
     protected $openGraphDescription;
-    
 
     /**
      * @var RouteInterface
@@ -341,12 +340,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     }
 
     /**
-     * @var string
-     */
-    private $condition;
-
-
-    /**
      * Get public
      *
      * @return boolean 
@@ -403,29 +396,6 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     }
 
     /**
-     * Set condition
-     *
-     * @param string $condition
-     * @return Content
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string 
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
-
-    /**
      * Set openGraphImage
      *
      * @param \Enhavo\Bundle\MediaBundle\Entity\File $openGraphImage
@@ -441,7 +411,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     /**
      * Get openGraphImage
      *
-     * @return \Enhavo\Bundle\MediaBundle\Entity\File 
+     * @return \Enhavo\Bundle\MediaBundle\Model\FileInterface
      */
     public function getOpenGraphImage()
     {

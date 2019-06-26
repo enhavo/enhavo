@@ -11,10 +11,6 @@ Enhavo\Bundle\TemplateBundle\Entity\Template:
                 strategy: AUTO
 
     fields:
-        name:
-            type: string
-            length: 255
-            nullable: true
         code:
             type: string
             length: 255
@@ -24,5 +20,8 @@ Enhavo\Bundle\TemplateBundle\Entity\Template:
         content:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
+        route:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\RoutingBundle\Model\RouteInterface
 
     lifecycleCallbacks: { }

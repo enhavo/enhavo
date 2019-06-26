@@ -41,7 +41,7 @@ class MakeContainerBlock extends AbstractMaker
 
     public static function getCommandName(): string
     {
-        return 'make:enhavo:container-block';
+        return 'make:enhavo:block';
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConfig)

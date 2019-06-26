@@ -1,5 +1,5 @@
 {% extends template('theme_base') %}
 
 {% block main %}
-    {% include '@EnhavoArticle/Theme/Article/resource.html.twig' %}
+    {{ block_render(template.content, resource) }}
 {% endblock %}

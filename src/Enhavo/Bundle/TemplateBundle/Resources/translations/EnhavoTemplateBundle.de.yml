@@ -10,3 +10,6 @@ template:
         name: 'Name'
         code: 'Code'
         content: 'Inhalt'
+resource:
+    label:
+        resource: 'Resource'

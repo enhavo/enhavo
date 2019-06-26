@@ -8,4 +8,5 @@
     {% if form._token is defined %}
         {{ form_row(form._token) }}
     {% endif %}
+    {% block content %}{% endblock %}
 {% endblock %}

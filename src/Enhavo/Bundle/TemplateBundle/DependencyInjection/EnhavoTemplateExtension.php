@@ -28,6 +28,9 @@ class EnhavoTemplateExtension extends AbstractResourceExtension
         $config = $this->processConfiguration(new Configuration(), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_template', $config['driver'], $config['resources'], $container);
+
+        $container->setParameter('enhavo_template.template', $config['template']);
+
         $configFiles = array(
             'services.yml',
         );

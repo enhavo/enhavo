@@ -47,3 +47,11 @@ enhavo_taxonomy:
         article_tag:
             label: article.label.tag
             translation_domain: EnhavoArticleBundle
+
+enhavo_template:
+    template:
+        article:
+            repository: enhavo_article.repository.article
+            label: article.label.article
+            translation_domain: EnhavoArticleBundle
+            resource_template: EnhavoArticleBundle:Theme/Article:resource.html.twig

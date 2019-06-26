@@ -10,7 +10,7 @@ class ArticleController extends AbstractController
     public function showResourceAction($contentDocument)
     {
         return $this->render('EnhavoArticleBundle:Theme/Article:show.html.twig', array(
-            'data' => $contentDocument
+            'resource' => $contentDocument
         ));
     }
 
