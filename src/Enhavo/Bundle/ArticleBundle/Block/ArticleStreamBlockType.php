@@ -10,7 +10,7 @@ namespace Enhavo\Bundle\ArticleBundle\Block;
 
 use Enhavo\Bundle\ArticleBundle\Entity\ArticleStreamBlock;
 use Enhavo\Bundle\ArticleBundle\Factory\ArticleStreamFactory;
-use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleStreamType as ArticleStreamFormType;
+use Enhavo\Bundle\ArticleBundle\Form\Type\ArticleStreamBlockType as ArticleStreamFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
