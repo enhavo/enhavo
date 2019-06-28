@@ -1,17 +1,5 @@
-.enhavo_grid_textpicture {
-  [class*=col-sm-] {
-    &:first-child {padding-right:$smallerColumnSpacing;}
-    &:nth-child(2) {padding-left:$smallerColumnSpacing;}
-  }
-}
-
-@media all and (max-width:767px) {
-  .enhavo_grid_textpicture {
-    .picture_container {
-      + .text-container { padding-top:45px;}
-    }
-    .text-container {
-      + .picture_container { padding-top:45px;}
-    }
+.block-text_picture {
+  figure { margin:0;
+    img {max-width:100%}
   }
 }

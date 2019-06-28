@@ -1,13 +1,15 @@
-<div class="enhavo_block">
-    <div class="enhavo_block_picture container">
+<article class="block">
+    <div class="block-picture">
         {% if block.title %}
-            <h2 class="title">{{ block.title|raw }}</h2>
+            {{ block.title|raw }}
         {% endif %}
-        {% if block.file %}
-            <img class="enhavo_block_img" src="{{ media_url(block.file, 'container_width') }}">
-        {% endif %}
-        {% if block.caption %}
-            <p class="picture_caption">{{ block.caption }}</p>
-        {% endif %}
+        <figure>
+            {% if block.file %}
+                <img src="{{ media_url(block.file, 'container_width') }}">
+            {% endif %}
+            {% if block.caption %}
+                <figcaption>{{ block.caption }}</figcaption>
+            {% endif %}
+        </figure>
     </div>
-</div>
+</article>

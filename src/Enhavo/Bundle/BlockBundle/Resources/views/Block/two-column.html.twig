@@ -1,8 +1,16 @@
-<div class="row">
-    <div class="col-md-6">
-        {{ block_render(block.columnOne) }}
+<section>
+    {% if block.width == 'container' %}
+    <div class="container">
+    {% endif %}
+        <div class="row">
+            <div class="col-md-6">
+                {{ block_render(block.columnOne) }}
+            </div>
+            <div class="col-md-6">
+                {{ block_render(block.columnTwo) }}
+            </div>
+        </div>
+    {% if block.width == 'container' %}
     </div>
-    <div class="col-md-6">
-        {{ block_render(block.columnTwo) }}
-    </div>
-</div>
+    {% endif %}
+</section>

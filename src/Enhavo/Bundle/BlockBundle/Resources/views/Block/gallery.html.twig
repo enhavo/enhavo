@@ -1,20 +1,18 @@
-<div class="enhavo_block">
-
-    <div class="container">
-        {% if block.title %}
-            <h2 class="title">{{ block.title|raw }}</h2>
-        {% endif %}
-        {% if block.text %}
+<article class="block">
+    {% if block.title %}
+       {#{{ block.title|headline('title') }}#}
+       {{ block.title|raw }}
+    {% endif %}
+    {% if block.text %}
         <p>{{ block.text|raw }}</p>
-        {% endif %}
-    </div>
-    <div class="enhavo_block_gallery">
-        <div class="slider">
+    {% endif %}
+    <div class="block-gallery">
+        <ul class="slider">
             {% for file in block.files %}
-                <div>
+                <li>
                     <img src="{{ media_url(file) }}" />
-                </div>
+                </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
-</div>
+</article>
