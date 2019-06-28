@@ -5,6 +5,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
+use Enhavo\Bundle\ContentBundle\Form\Type\HeadLineType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -24,16 +25,14 @@ class GalleryBlockType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', HeadLineType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('text', WysiwygType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('files', MediaType::class, array(

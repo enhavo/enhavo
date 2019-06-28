@@ -25,8 +25,8 @@ class CiteBlockType extends AbstractBlockType
             'parent' => CiteBlock::class,
             'form' => CiteBlockFormType::class,
             'factory' =>  CiteBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:CiteText',
-            'template' => 'EnhavoBlockBundle:Block:cite_text.html.twig',
+            'repository' => 'EnhavoBlockBundle:CiteBlock',
+            'template' => 'EnhavoBlockBundle:Block:cite.html.twig',
             'label' =>  'citeText.label.citeText',
             'translationDomain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content']

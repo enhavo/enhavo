@@ -1,10 +1,10 @@
-<div class="user-block-container container-type-video enhavo_block">
-    <div class="container enhavo_block_video">
+<article class="block">
+    <div class="block-video">
         {% if block.title %}
-            <h2 class="title">{{ block.title|raw }}</h2>
+            {{ block.title|raw }}
         {% endif %}
         <div class="video-container">
             <iframe src="{{ block.url }}"></iframe>
         </div>
     </div>
-</div>
+</article>

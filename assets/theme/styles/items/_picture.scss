@@ -1,3 +1,5 @@
-@media all and (max-width:767px) {
-  .enhavo_grid_picture { padding-bottom:120px;}
+.block-picture {
+  figure { margin:0;
+    img {max-width:100%}
+  }
 }
