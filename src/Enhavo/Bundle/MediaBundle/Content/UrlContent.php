@@ -59,7 +59,7 @@ class UrlContent extends AbstractContent
             throw new FileException(sprintf('File could not be download from uri "%s".', $this->url));
         }
 
-        file_put_contents($this->getFilePath(), $response->getBody()->getContents());
+        file_put_contents($this->path, $response->getBody()->getContents());
     }
 
     public function __unset($reference)
