@@ -97,6 +97,11 @@ class MakeBlock extends AbstractMaker
         $io->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_block -> blocks:</>');
         $io->writeln($this->generateEnhavoConfigCode($bundle, $blockName, $originName, $blockSubDirectory, $blockType));
         $io->writeln('');
+        if($blockType) {
+            $io->writeln('<options=bold>Add this to your service.yml config</>');
+            $io->writeln($this->generateServiceCode($bundle, $blockName, $originName, $blockSubDirectory));
+        }
+        $io->writeln('');
 
         $generator->writeChanges();
     }
@@ -242,6 +247,15 @@ class MakeBlock extends AbstractMaker
             'template' => $template,
             'factory_namespace' => $factoryNamespace,
             'block_type' => $blockType,
+        ));
+    }
+
+    private function generateServiceCode(BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
+    {
+        $class = $this->getNameSpace($bundle, '\\Block', $blockSubDirectory) . '\\' . $blockName . 'Type';
+        return $this->templateEngine->render('@EnhavoBlock/Maker/Block/block_service.yml.twig', array(
+            'class' => $class,
+            'type' => $this->util->camelCaseToSnakeCase($originName),
         ));
     }
 

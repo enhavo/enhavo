@@ -1,0 +1,6 @@
+{{ class }}:
+    public: true
+    calls:
+        - [setContainer, ['@service_container']]
+    tags:
+        - { name: enhavo.block, alias: {{ type }} }
