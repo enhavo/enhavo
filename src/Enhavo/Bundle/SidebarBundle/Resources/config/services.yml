@@ -14,3 +14,10 @@ services:
         public: true
         tags:
             - { name: enhavo.block, alias: sidebar_column }
+
+    Enhavo\Bundle\SliderBundle\Block\SliderBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: slider }

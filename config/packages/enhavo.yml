@@ -63,4 +63,7 @@ enhavo_block:
             type: resource
         contact:
             type: contact
-
+        calendar:
+            type: calendar
+        slider:
+            type: slider

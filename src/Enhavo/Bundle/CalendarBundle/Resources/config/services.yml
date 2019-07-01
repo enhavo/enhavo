@@ -50,3 +50,10 @@ services:
             - '@enhavo_calendar.import_manager'
         tags:
             - { name: console.command, command: 'enhavo:calendar:import' }
+
+    Enhavo\Bundle\CalendarBundle\Block\CalendarBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: calendar }
