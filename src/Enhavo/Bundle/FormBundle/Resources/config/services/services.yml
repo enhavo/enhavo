@@ -10,7 +10,7 @@ services:
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\FormBundle\Twig\CurrencyExtension:
+    Enhavo\Bundle\FormBundle\Twig\FormatExtension:
         calls:
             - [setContainer, ['@service_container']]
         tags:

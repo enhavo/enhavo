@@ -1,7 +1,6 @@
 <article class="block">
     {% if block.title %}
-       {#{{ block.title|headline('title') }}#}
-       {{ block.title|raw }}
+       {{ block.title|headline('title') }}
     {% endif %}
     {% if block.text %}
         <p>{{ block.text|raw }}</p>

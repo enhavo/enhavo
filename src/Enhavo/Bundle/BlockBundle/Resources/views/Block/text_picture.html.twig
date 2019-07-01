@@ -4,7 +4,7 @@
     {% import _self as element %}
     <div class="{% if not block.float %}{% if layout == 0 %}col-md-6{% endif %}{% if layout == 1 %}col-md-4{% endif %}{% if layout == 2 %}col-md-8{% endif %}{% endif %} text-container">
         {% if block.title %}
-            {{ block.title }}
+            {{ block.title|headline('title') }}
         {% endif %}
         {% if block.float %}
             {{ element.picture(block) }}
