@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-class MakeContainerBlock extends AbstractMaker
+class MakeBlock extends AbstractMaker
 {
     /**
      * @var KernelInterface
@@ -47,7 +47,7 @@ class MakeContainerBlock extends AbstractMaker
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
-        ->setDescription('Creates a new container block')
+        ->setDescription('Creates a new block')
         ->addArgument(
             'bundleName',
             InputArgument::REQUIRED,
@@ -56,7 +56,12 @@ class MakeContainerBlock extends AbstractMaker
         ->addArgument(
             'blockName',
             InputArgument::REQUIRED,
-            'What is the name the block should have?'
+            'What is the name the block should have (Without "Block" postfix)?'
+        )
+        ->addArgument(
+            'blockType',
+            InputArgument::REQUIRED,
+            'Create block type? [no/yes]'
         );
     }
 
@@ -69,21 +74,28 @@ class MakeContainerBlock extends AbstractMaker
     {
         $bundleName = $input->getArgument('bundleName');
         $blockName = $input->getArgument('blockName');
+        $blockType = $input->getArgument('blockType');
+        $blockType = $blockType === 'yes' ? true : false;
 
         $bundle = $this->kernel->getBundle($bundleName);
 
         $blockSubDirectory = '';
         $this->splitBlockNameSubDirectory($blockName, $blockSubDirectory);
+        $originName = $blockName;
+        $blockName = sprintf('%sBlock', $blockName);
 
         $this->generateDoctrineOrmFile($generator, $bundle, $blockName, $blockSubDirectory);
         $this->generateEntityFile($generator, $bundle, $blockName, $blockSubDirectory);
         $this->generateFormTypeFile($generator, $bundle, $blockName, $blockSubDirectory);
         $this->generateFactoryFile($generator, $bundle, $blockName, $blockSubDirectory);
-        $this->generateTemplateFile($generator, $bundle, $blockName, $blockSubDirectory);
+        $this->generateTemplateFile($generator, $bundle, $blockName, $originName, $blockSubDirectory);
+        if($blockType) {
+            $this->generateTypeFile($generator, $bundle, $blockName, $originName, $blockSubDirectory);
+        }
 
         $io->writeln('');
         $io->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_block -> blocks:</>');
-        $io->writeln($this->generateEnhavoConfigCode($bundle, $blockName, $blockSubDirectory));
+        $io->writeln($this->generateEnhavoConfigCode($bundle, $blockName, $originName, $blockSubDirectory, $blockType));
         $io->writeln('');
 
         $generator->writeChanges();
@@ -107,7 +119,7 @@ class MakeContainerBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->createTemplatePath('container_block/doctrine.tpl.php'),
+            $this->createTemplatePath('block/doctrine.tpl.php'),
             [
                 'bundle_namespace' => $bundle->getNamespace(),
                 'block_sub_directory' => str_replace('/', '\\', $blockSubDirectory),
@@ -127,7 +139,7 @@ class MakeContainerBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->createTemplatePath('container_block/entity.tpl.php'),
+            $this->createTemplatePath('block/entity.tpl.php'),
             [
                 'namespace' => $this->getNameSpace($bundle, '\\Entity', $blockSubDirectory),
                 'block_name' => $blockName
@@ -145,7 +157,7 @@ class MakeContainerBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->createTemplatePath('container_block/form_type.tpl.php'),
+            $this->createTemplatePath('block/form-type.tpl.php'),
             [
                 'namespace' => $this->getNameSpace($bundle, '\\Form\\Type', $blockSubDirectory),
                 'block_name' => $blockName,
@@ -165,7 +177,7 @@ class MakeContainerBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->createTemplatePath('container_block/factory.tpl.php'),
+            $this->createTemplatePath('block/factory.tpl.php'),
             [
                 'namespace' => $this->getNameSpace($bundle, '\\Factory', $blockSubDirectory),
                 'block_name' => $blockName
@@ -173,9 +185,9 @@ class MakeContainerBlock extends AbstractMaker
         );
     }
 
-    private function generateTemplateFile(Generator $generator, BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateTemplateFile(Generator $generator, BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
     {
-        $filePath = $bundle->getPath() . '/Resources/views/Theme/Block/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $this->util->camelCaseToSnakeCase($blockName, true) . '.html.twig';
+        $filePath = $bundle->getPath() . '/Resources/views/Theme/Block/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $this->util->camelCaseToSnakeCase($originName, true) . '.html.twig';
         $this->createPathToFileIfNotExists($filePath);
         if (file_exists($filePath)) {
             throw new \RuntimeException('Frontend template file "' . $filePath . '" already exists.');
@@ -183,28 +195,53 @@ class MakeContainerBlock extends AbstractMaker
 
         $generator->generateFile(
             $filePath,
-            $this->createTemplatePath('container_block/template.tpl.php'),
+            $this->createTemplatePath('block/template.tpl.php'),
             [
                 'block_name' => $blockName,
             ]
         );
     }
 
-    private function generateEnhavoConfigCode(BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateTypeFile(Generator $generator, BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
+    {
+        $filePath = $bundle->getPath() . '/Block/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Type.php';
+        $this->createPathToFileIfNotExists($filePath);
+        if (file_exists($filePath)) {
+            throw new \RuntimeException('BlockType "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . '" already exists in bundle "' . $bundle->getName() . '".');
+        }
+
+        $generator->generateFile(
+            $filePath,
+            $this->createTemplatePath('block/block-type.tpl.php'),
+            [
+                'namespace' => $this->getNameSpace($bundle, '', $blockSubDirectory),
+                'block_name' => $blockName,
+                'name_camel' => $originName,
+                'name_kebab' => $this->util->camelCaseToSnakeCase($originName, true),
+                'name_snake' => $this->util->camelCaseToSnakeCase($originName),
+                'name_underscore' => str_replace('-', '_', $this->util->camelCaseToSnakeCase($originName)),
+                'bundle_name' => $bundle->getName(),
+            ]
+        );
+    }
+
+    private function generateEnhavoConfigCode(BundleInterface $bundle, $blockName, $originName, $blockSubDirectory, $blockType)
     {
         $blockNameSpace = $this->getNameSpace($bundle, '\\Entity', $blockSubDirectory) . '\\' . $blockName;
         $formTypeNamespace = $this->getNameSpace($bundle, '\\Form\\Type', $blockSubDirectory) . '\\' .$blockName . 'Type';
-        $template = $bundle->getName() . ':Theme/Block' . ($blockSubDirectory ? '/' . $blockSubDirectory : '') . ':' . $this->util->camelCaseToSnakeCase($blockName, true) . '.html.twig';
+        $template = $bundle->getName() . ':Theme/Block' . ($blockSubDirectory ? '/' . $blockSubDirectory : '') . ':' . $this->util->camelCaseToSnakeCase($originName, true) . '.html.twig';
         $factoryNamespace = $this->getNameSpace($bundle, '\\Factory', $blockSubDirectory) . '\\' . $blockName . 'Factory';
 
         return $this->templateEngine->render('@EnhavoBlock/Maker/Block/enhavo_config_entry.yml.twig', array(
             'block_name' => $blockName,
+            'origin_name' => $this->util->camelCaseToSnakeCase($originName),
             'bundle_name' => $bundle->getName(),
             'block_name_snake_case' => $this->util->camelCaseToSnakeCase($blockName),
             'block_namespace' => $blockNameSpace,
             'form_type_namespace' => $formTypeNamespace,
             'template' => $template,
-            'factory_namespace' => $factoryNamespace
+            'factory_namespace' => $factoryNamespace,
+            'block_type' => $blockType,
         ));
     }
 

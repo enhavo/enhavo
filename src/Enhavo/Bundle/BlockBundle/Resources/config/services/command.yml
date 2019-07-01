@@ -5,7 +5,7 @@ services:
         tags:
             - { name: console.command, command: 'enhavo:block:clean-up' }
 
-    Enhavo\Bundle\BlockBundle\Maker\MakeContainerBlock:
+    Enhavo\Bundle\BlockBundle\Maker\MakeBlock:
         arguments:
             - '@kernel'
             - '@enhavo_app.maker.util'
