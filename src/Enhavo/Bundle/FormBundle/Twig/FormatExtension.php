@@ -29,7 +29,8 @@ class FormatExtension extends AbstractExtension
     {
         return array(
             new TwigFilter('currency', array($this, 'formatCurrency'), array('is_safe' => array('html'))),
-            new TwigFilter('headline', array($this, 'formatHeadline'), array('is_safe' => array('html')))
+            new TwigFilter('headline', array($this, 'formatHeadline'), array('is_safe' => array('html'))),
+            new TwigFilter('html_sanitize', array($this, 'sanitizeHtml'), array('is_safe' => array('html')))
         );
     }
 
@@ -71,4 +72,20 @@ class FormatExtension extends AbstractExtension
             return sprintf('<div%s>%s</div>', $attribute, $value);
         }
     }
+
+    public function sanitizeHtml($value, $tags = ['script', 'style', 'iframe', 'link'])
+    {
+        $dom = new \DOMDocument();
+        $dom->loadHTML($value);
+        $tagsToRemove = $tags;
+        foreach($tagsToRemove as $tag) {
+            $element = $dom->getElementsByTagName($tag);
+            foreach($element  as $item){
+                $item->parentNode->removeChild($item);
+            }
+        }
+        return $dom->saveHTML();
+    }
+
+
 }

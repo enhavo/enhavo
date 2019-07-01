@@ -10,7 +10,7 @@
             {{ element.picture(block) }}
         {% endif %}
         {% if block.text %}
-            <p>{{ block.text|raw }}</p>
+            <p>{{ block.text|html_sanitize }}</p>
         {% endif %}
     </div>
 {% endmacro %}
