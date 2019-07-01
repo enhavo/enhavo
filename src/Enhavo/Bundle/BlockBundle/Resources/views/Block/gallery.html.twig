@@ -7,7 +7,7 @@
         <p>{{ block.text|raw }}</p>
     {% endif %}
     <div class="block-gallery">
-        <ul class="slider">
+        <ul class="slider" data-slider>
             {% for file in block.files %}
                 <li>
                     <img src="{{ media_url(file) }}" />

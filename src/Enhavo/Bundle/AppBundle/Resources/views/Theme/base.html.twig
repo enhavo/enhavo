@@ -28,6 +28,8 @@
             {% block main %}{% endblock %}
         </main>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('base', null, 'theme') }}
+        {% endblock %}
     </body>
 </html>
