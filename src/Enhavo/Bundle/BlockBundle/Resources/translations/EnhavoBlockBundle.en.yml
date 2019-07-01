@@ -67,6 +67,7 @@ blockquoteText:
   form:
     label:
       blockquote: 'Blockquote'
+      author: 'Author'
   label:
     blockquoteText: 'Blockquote'
 download:

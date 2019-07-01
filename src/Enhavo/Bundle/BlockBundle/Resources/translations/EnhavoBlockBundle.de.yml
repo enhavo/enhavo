@@ -67,12 +67,12 @@ blockquoteText:
   form:
     label:
       blockquote: 'Zitat'
+      author: 'Autor'
   label:
     blockquoteText: 'Zitat'
 download:
   label:
     download: 'Download'
-
 video:
   label:
     title: 'Titel'

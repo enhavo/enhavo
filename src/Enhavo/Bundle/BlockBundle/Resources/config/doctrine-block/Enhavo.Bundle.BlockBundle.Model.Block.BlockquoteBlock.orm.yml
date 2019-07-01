@@ -6,5 +6,7 @@ Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
         text:
             type: text
             nullable: true
-
+        author:
+            type: string
+            nullable: true
 lifecycleCallbacks: {  }

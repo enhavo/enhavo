@@ -43,8 +43,8 @@ enhavo_block:
             type: text
         text_picture:
             type: text_picture
-        cite:
-            type: cite
+        blockquote:
+            type: blockquote
         video:
             type: video
         one_column:

@@ -38,7 +38,7 @@ class BlockquoteBlock extends AbstractBlock
     /**
      * @return string
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
@@ -46,7 +46,7 @@ class BlockquoteBlock extends AbstractBlock
     /**
      * @param string $author
      */
-    public function setAuthor(string $author): void
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
     }
