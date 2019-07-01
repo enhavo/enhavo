@@ -1,0 +1,5 @@
+Enhavo\Bundle\SliderBundle\Entity\SliderBlock:
+    type: entity
+    table: enhavo_slider_slider_block
+
+    lifecycleCallbacks: {  }
