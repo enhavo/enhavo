@@ -61,3 +61,6 @@ enhavo_block:
             type: template
         resource:
             type: resource
+        contact:
+            type: contact
+

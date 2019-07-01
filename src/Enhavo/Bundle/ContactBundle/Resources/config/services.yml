@@ -49,3 +49,10 @@ services:
             - '@sylius.resource_controller.request_configuration_factory'
         calls:
             - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\ContactBundle\Block\ContactBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: contact }
