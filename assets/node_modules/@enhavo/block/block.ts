@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import "slick-carousel/slick/slick.min.js"
+import "slick-carousel"
 
 export default class Block
 {

@@ -28,6 +28,7 @@ enhavo_navigation_navigation_create:
                     nodes:
                         label: navigation.label.items
                         template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
+                        full_width: true
 
 enhavo_navigation_navigation_update:
     options:
@@ -46,6 +47,7 @@ enhavo_navigation_navigation_update:
                     nodes:
                         label: navigation.label.items
                         template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
+                        full_width: true
 
 enhavo_navigation_navigation_table:
     options:

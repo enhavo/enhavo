@@ -729,6 +729,13 @@
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
 
+"@types/slick-carousel@^1.6.33":
+  version "1.6.33"
+  resolved "https://registry.yarnpkg.com/@types/slick-carousel/-/slick-carousel-1.6.33.tgz#473cd8dffb73a7a7965aee119dd256b857ce3683"
+  integrity sha512-JYECbTcqpcNYiKy3bsnBCKUuf8bIf74UJMd21Da6LrGt1zVj1GgfQD4BZTGUCEDzF2a7hchuRpg240Y93Py/iQ==
+  dependencies:
+    "@types/jquery" "*"
+
 "@types/tapable@*":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.4.tgz#b4ffc7dc97b498c969b360a41eee247f82616370"
@@ -7787,11 +7794,6 @@ slick-carousel@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
   integrity sha512-XB9Ftrf2EEKfzoQXt3Nitrt/IPbT+f1fgqBdoxO3W/+JYvtEOW6EgxnWfr9GH6nmULv7Y2tPmEX3koxThVmebA==
-
-slick@^1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/slick/-/slick-1.12.2.tgz#bd048ddb74de7d1ca6915faa4a57570b3550c2d7"
-  integrity sha1-vQSN23TefRymkV+qSldXCzVQwtc=
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
