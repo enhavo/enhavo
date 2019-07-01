@@ -25,7 +25,7 @@ class TextPictureBlockType extends AbstractBlockType
             'parent' => TextPictureBlock::class,
             'form' => TextPictureBlockFormType::class,
             'factory' => TextPictureBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:TextPicture',
+            'repository' => 'EnhavoBlockBundle:TextPictureBlock',
             'template' => 'EnhavoBlockBundle:Block:text-picture.html.twig',
             'label' => 'textPicture.label.textPicture',
             'translationDomain' => 'EnhavoBlockBundle',

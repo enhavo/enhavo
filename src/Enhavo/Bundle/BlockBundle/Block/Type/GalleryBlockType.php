@@ -25,7 +25,7 @@ class GalleryBlockType extends AbstractBlockType
             'parent' => GalleryBlock::class,
             'form' => GalleryBlockFormType::class,
             'factory' => GalleryBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:Gallery',
+            'repository' => 'EnhavoBlockBundle:GalleryBlock',
             'template' => 'EnhavoBlockBundle:Block:gallery.html.twig',
             'label' => 'gallery.label.gallery',
             'translationDomain' => 'EnhavoBlockBundle',

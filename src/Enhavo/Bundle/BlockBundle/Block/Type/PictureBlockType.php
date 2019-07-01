@@ -25,7 +25,7 @@ class PictureBlockType extends AbstractBlockType
             'parent' => PictureBlock::class,
             'form' => PictureBlockFormType::class,
             'factory' => PictureBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:Picture',
+            'repository' => 'EnhavoBlockBundle:PictureBlock',
             'template' => 'EnhavoBlockBundle:Block:picture.html.twig',
             'label' => 'picture.label.picture',
             'translationDomain' => 'EnhavoBlockBundle',
