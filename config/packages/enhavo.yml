@@ -67,3 +67,5 @@ enhavo_block:
             type: calendar
         slider:
             type: slider
+        newsletter_subscribe:
+            type: newsletter_subscribe

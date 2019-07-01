@@ -1,0 +1,5 @@
+Enhavo\Bundle\NewsletterBundle\Entity\SubscribeBlock:
+    type: entity
+    table: enhavo_newsletter_subscribe_block
+
+    lifecycleCallbacks: {  }
