@@ -1,12 +1,10 @@
-{% if block.width == 'container' %}
+<section>
+    {% if block.width == 'container' %}
     <div class="container">
-{% endif %}
-    <div class="row">
-        <div class="col-md-12">
-            {{ block_render(block.column) }}
-        </div>
+    {% endif %}
+        {{ block_render(block.column) }}
+    {% if block.width == 'container' %}
     </div>
-{% if block.width == 'container' %}
-    </div>
-{% endif %}
+    {% endif %}
+</section>
 

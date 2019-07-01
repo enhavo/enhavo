@@ -16,7 +16,9 @@
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon.ico') }}">
         <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
 
-        {% block styles %}{% endblock %}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('base', null, 'theme') }}
+        {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
         <header>
@@ -26,6 +28,8 @@
             {% block main %}{% endblock %}
         </main>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('base', null, 'theme') }}
+        {% endblock %}
     </body>
 </html>

@@ -1,13 +1,19 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            {{ block_render(block.columnOne) }}
+<section>
+    {% if block.width == 'container' %}
+    <div class="container">
+    {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                {{ block_render(block.columnOne) }}
+            </div>
+            <div class="col-md-4">
+                {{ block_render(block.columnTwo) }}
+            </div>
+            <div class="col-md-4">
+                {{ block_render(block.columnThree) }}
+            </div>
         </div>
-        <div class="col-md-4">
-            {{ block_render(block.columnTwo) }}
-        </div>
-        <div class="col-md-4">
-            {{ block_render(block.columnThree) }}
-        </div>
+    {% if block.width == 'container' %}
     </div>
-</div>
+    {% endif %}
+</section>

@@ -1,10 +1,10 @@
-<div class="enhavo_block">
-    <div class="container enhavo_block_text">
+<article class="block">
+    <div class="block-text">
         {% if block.title %}
-            <h2 class="title">{{ block.title|raw }}</h2>
+            {{ block.title|raw }}
         {% endif %}
         {% if block.text %}
-            {{ block.text|raw }}
+            <p>{{ block.text|raw }}</p>
         {% endif %}
     </div>
-</div>
+</article>

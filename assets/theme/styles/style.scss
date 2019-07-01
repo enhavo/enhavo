@@ -1,11 +1,11 @@
-@import "compass";
-@import 'partials/vars';
-@import 'partials/reset';
-@import 'partials/bootstrap.custom';
-@import 'partials/animation';
+//@import 'partials/_vars';
+//@import 'partials/_bootstrap.custom';
+//@import 'partials/animation';
 
-@import 'start';
-@import 'base';
-@import 'theme';
-@import 'shop';
-@import 'responsive/responsive';
+//@import 'start';
+//@import 'base';
+//@import 'theme';
+//@import 'shop';
+//@import 'responsive/responsive';
+
+@import '~@enhavo/theme/theme/styles/base.scss';
