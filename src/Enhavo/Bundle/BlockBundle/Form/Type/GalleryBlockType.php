@@ -5,7 +5,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\ContentBundle\Form\Type\HeadLineType;
+use Enhavo\Bundle\FormBundle\Form\Type\HeadLineType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;

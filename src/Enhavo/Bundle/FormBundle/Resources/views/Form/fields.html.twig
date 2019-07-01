@@ -298,3 +298,16 @@
         </ul>
     {%- endif -%}
 {%- endblock form_errors -%}
+
+{% block head_line_widget %}
+    <div class="head-line-widget">
+        {% spaceless %}
+            <div class="head-line-widget-text">
+                {{ form_widget(form.text) }}
+            </div>
+            <div class="head-line-widget-tag">
+                {{ form_widget(form.tag) }}
+            </div>
+        {% endspaceless %}
+    </div>
+{% endblock %}
