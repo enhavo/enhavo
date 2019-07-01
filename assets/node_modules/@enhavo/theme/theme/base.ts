@@ -1,3 +1,4 @@
 import './styles/base.scss';
+import Block from "@enhavo/block/block"
 
-console.log('TEST');
+(new Block).init();

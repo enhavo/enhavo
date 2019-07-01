@@ -1,0 +1,10 @@
+$baseFontSize: 18px;
+$titleFontSize: 1.444rem;
+$smallFontSize: 0.7778rem;
+$lineHeight: 1.3em;
+
+html {font-size:$baseFontSize}
+body { font-size:100%; font-family:sans-serif; line-height:$lineHeight;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+blockquote { font-size:$titleFontSize; font-style:italic;}
+figcaption { font-size:$smallFontSize;}
+small { font-size:$smallFontSize;}
