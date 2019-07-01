@@ -1,7 +1,7 @@
 <article class="block">
     <div class="block-video">
         {% if block.title %}
-            {{ block.title|raw }}
+            {{ block.title|headline('title') }}
         {% endif %}
         <div class="video-container">
             <iframe src="{{ block.url }}"></iframe>

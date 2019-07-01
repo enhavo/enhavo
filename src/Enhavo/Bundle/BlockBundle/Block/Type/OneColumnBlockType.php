@@ -25,7 +25,7 @@ class OneColumnBlockType extends AbstractBlockType
             'parent' => OneColumnBlock::class,
             'form' => OneColumnBlockFormType::class,
             'factory' => OneColumnBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:OneColumn',
+            'repository' => 'EnhavoBlockBundle:OneColumnBlock',
             'template' => 'EnhavoBlockBundle:Block:one-column.html.twig',
             'form_template' => 'EnhavoBlockBundle:Form:block_fields.html.twig',
             'label' => 'one_column.label.one_column',

@@ -1,5 +1,6 @@
-        {{ block_name_snake_case }}:
-            type: base
+        {{ origin_name }}:
+{% if block_type %}            type: {{ origin_name }}
+{% else %}            type: base
             model: {{ block_namespace }}
             parent: {{ block_namespace }}
             label: {{ block_name }}
@@ -7,3 +8,4 @@
             repository: {{ bundle_name }}:{{ block_name }}
             template: {{ template }}
             factory: {{ factory_namespace }}
+{% endif %}

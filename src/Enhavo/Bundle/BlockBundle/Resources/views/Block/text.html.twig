@@ -1,10 +1,10 @@
 <article class="block">
     <div class="block-text">
         {% if block.title %}
-            {{ block.title|raw }}
+            {{ block.title|headline('title') }}
         {% endif %}
         {% if block.text %}
-            <p>{{ block.text|raw }}</p>
+            <p>{{ block.text|html_sanitize }}</p>
         {% endif %}
     </div>
 </article>

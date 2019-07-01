@@ -25,7 +25,7 @@ class TextBlockType extends AbstractBlockType
             'parent' => TextBlock::class,
             'form' => TextBlockFormType::class,
             'factory' => TextBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:Text',
+            'repository' => 'EnhavoBlockBundle:TextBlock',
             'template' => 'EnhavoBlockBundle:Block:text.html.twig',
             'label' => 'text.label.text',
             'translationDomain' => 'EnhavoBlockBundle',

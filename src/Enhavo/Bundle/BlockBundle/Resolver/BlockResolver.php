@@ -85,7 +85,7 @@ class BlockResolver implements ResolverInterface
     public function resolveItem($name)
     {
         if(!array_key_exists($name, $this->blocks)) {
-            throw new ResolverException(sprintf('ContainerBlock with name "%s" does not exist', $name));
+            throw new ResolverException(sprintf('Block type with name "%s" does not exist', $name));
         }
 
         return $this->blocks[$name];

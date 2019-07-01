@@ -30,10 +30,10 @@ services:
         tags:
             - { name: enhavo.block, alias: video }
 
-    Enhavo\Bundle\BlockBundle\Block\Type\CiteBlockType:
+    Enhavo\Bundle\BlockBundle\Block\Type\BlockquoteBlockType:
         public: true
         tags:
-            - { name: enhavo.block, alias: cite }
+            - { name: enhavo.block, alias: blockquote }
 
     Enhavo\Bundle\BlockBundle\Block\Type\TemplateBlockType:
         public: true

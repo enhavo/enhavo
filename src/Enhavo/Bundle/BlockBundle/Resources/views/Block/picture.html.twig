@@ -1,7 +1,7 @@
 <article class="block">
     <div class="block-picture">
         {% if block.title %}
-            {{ block.title|raw }}
+            {{ block.title|headline('title') }}
         {% endif %}
         <figure>
             {% if block.file %}

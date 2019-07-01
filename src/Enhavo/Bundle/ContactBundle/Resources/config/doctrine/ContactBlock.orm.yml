@@ -1,0 +1,5 @@
+Enhavo\Bundle\ContactBundle\Entity\ContactBlock:
+    type: entity
+    table: enhavo_contact_contact_block
+
+    lifecycleCallbacks: {  }

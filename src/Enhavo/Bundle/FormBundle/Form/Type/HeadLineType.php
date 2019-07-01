@@ -6,7 +6,7 @@
  * Time: 16:34
  */
 
-namespace Enhavo\Bundle\ContentBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -43,7 +43,7 @@ class HeadLineType extends AbstractType
 
                 if(preg_match("#<(.*?)>(.*?)</(.*?)>#i", $original, $match)) {
                     return [
-                        'text' => $match[2],
+                        'text' => html_entity_decode($match[2]),
                         'tag' => $match[1]
                     ];
                 }
@@ -55,7 +55,7 @@ class HeadLineType extends AbstractType
             },
             function ($submitted) {
                 if($submitted['tag'] !== null) {
-                    return sprintf('<%s>%s</%s>', $submitted['tag'],  $submitted['text'],  $submitted['tag']);
+                    return sprintf('<%s>%s</%s>', $submitted['tag'],  htmlentities($submitted['text']),  $submitted['tag']);
                 }
                 return $submitted['text'];
             }

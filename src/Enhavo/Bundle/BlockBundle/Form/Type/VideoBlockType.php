@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
+use Enhavo\Bundle\FormBundle\Form\Type\HeadLineType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,10 +20,9 @@ class VideoBlockType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', HeadLineType::class, array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('url', TextType::class, array(

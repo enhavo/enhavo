@@ -6,6 +6,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Type\HeadLineType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,10 +28,9 @@ class TextPictureBlockType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', HeadLineType::class, array(
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
+            'translation_domain' => 'EnhavoAppBundle'
         ));
 
         $builder->add('text', WysiwygType::class, array(

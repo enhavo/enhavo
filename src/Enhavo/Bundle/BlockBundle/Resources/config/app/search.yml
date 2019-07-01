@@ -10,9 +10,9 @@ enhavo_search:
                 block:
                     type: model
 
-        Enhavo\Bundle\BlockBundle\Entity\CiteText:
+        Enhavo\Bundle\BlockBundle\Entity\BlockquoteText:
             properties:
-                cite:
+                blockquote:
                     type: text
                     weight: 8
 

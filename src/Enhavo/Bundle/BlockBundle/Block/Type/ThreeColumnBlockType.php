@@ -25,7 +25,7 @@ class ThreeColumnBlockType extends AbstractBlockType
             'parent' => ThreeColumnBlock::class,
             'form' => ThreeColumnBlockFormType::class,
             'factory' => ThreeColumnBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:ThreeColumn',
+            'repository' => 'EnhavoBlockBundle:ThreeColumnBlock',
             'template' => 'EnhavoBlockBundle:Block:three-column.html.twig',
             'form_template' => 'EnhavoBlockBundle:Form:block_fields.html.twig',
             'label' => 'three_column.label.three_column',

@@ -1,6 +1,6 @@
-Enhavo\Bundle\BlockBundle\Entity\CiteText:
+Enhavo\Bundle\BlockBundle\Entity\BlockquoteText:
     properties:
-        cite:
+        blockquote:
 
 Enhavo\Bundle\BlockBundle\Entity\Gallery:
     properties:

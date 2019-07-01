@@ -43,8 +43,8 @@ enhavo_block:
             type: text
         text_picture:
             type: text_picture
-        cite:
-            type: cite
+        blockquote:
+            type: blockquote
         video:
             type: video
         one_column:
@@ -61,3 +61,11 @@ enhavo_block:
             type: template
         resource:
             type: resource
+        contact:
+            type: contact
+        calendar:
+            type: calendar
+        slider:
+            type: slider
+        newsletter_subscribe:
+            type: newsletter_subscribe

@@ -25,7 +25,7 @@ class VideoBlockType extends AbstractBlockType
             'parent' => VideoBlock::class,
             'form' => VideoBlockFormType::class,
             'factory' => VideoBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:Video',
+            'repository' => 'EnhavoBlockBundle:VideoBlock',
             'template' => 'EnhavoBlockBundle:Block:video.html.twig',
             'label' => 'video.label.video',
             'translationDomain' => 'EnhavoBlockBundle',

@@ -25,7 +25,7 @@ class TemplateBlockType extends AbstractBlockType
             'parent' => TemplateBlock::class,
             'form' => TemplateBlockFormType::class,
             'factory' => TemplateBlockFactory::class,
-            'repository' => 'EnhavoBlockBundle:Template',
+            'repository' => 'EnhavoBlockBundle:TemplateBlock',
             'template' => 'EnhavoBlockBundle:Block:template.html.twig',
             'form_template' => 'EnhavoBlockBundle:Form:block_empty.html.twig',
             'label' => 'template.label.template',

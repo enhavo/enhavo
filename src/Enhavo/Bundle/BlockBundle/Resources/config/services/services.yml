@@ -35,7 +35,7 @@ services:
         class: Enhavo\Bundle\AppBundle\Type\TypeCollector
         arguments:
             - '@service_container'
-            - 'ContainerBlock'
+            - 'Block'
 
     validator.video_url_validator:
         class:  Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrlValidator

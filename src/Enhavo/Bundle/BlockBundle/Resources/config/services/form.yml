@@ -9,7 +9,7 @@ services:
         calls:
             - ['setContainer', ['@service_container']]
 
-    Enhavo\Bundle\BlockBundle\Form\Type\CiteBlockType:
+    Enhavo\Bundle\BlockBundle\Form\Type\BlockquoteBlockType:
         arguments:
             - '%enhavo_app.translate%'
         tags:

@@ -4,13 +4,13 @@
     {% import _self as element %}
     <div class="{% if not block.float %}{% if layout == 0 %}col-md-6{% endif %}{% if layout == 1 %}col-md-4{% endif %}{% if layout == 2 %}col-md-8{% endif %}{% endif %} text-container">
         {% if block.title %}
-            {{ block.title }}
+            {{ block.title|headline('title') }}
         {% endif %}
         {% if block.float %}
             {{ element.picture(block) }}
         {% endif %}
         {% if block.text %}
-            <p>{{ block.text|raw }}</p>
+            <p>{{ block.text|html_sanitize }}</p>
         {% endif %}
     </div>
 {% endmacro %}
@@ -29,7 +29,7 @@
 {% endmacro %}
 
 <article class="block">
-    <div class="block-text-picture{% if block.float %}float{% endif %} {% if block.textLeft %}text-picture{% else %}picture-text{% endif %}">
+    <div class="block-text-picture{% if block.float %}-float{% endif %} {% if block.textLeft %}text-picture{% else %}picture-text{% endif %}">
         <div class="row">
             {% if block.float %}
                 {{ element.text(block) }}
