@@ -63,12 +63,12 @@ gallery:
       pictures: 'Bilder'
   label:
     gallery: 'Galerie'
-citeText:
+blockquoteText:
   form:
     label:
-      cite: 'Zitat'
+      blockquote: 'Zitat'
   label:
-    citeText: 'Zitat'
+    blockquoteText: 'Zitat'
 download:
   label:
     download: 'Download'

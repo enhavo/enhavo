@@ -1,18 +1,18 @@
 <?php
 /**
- * CiteTextType.php
+ * BlockquoteTextType.php
  *
  */
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Block\CiteBlock;
+use Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CiteBlockType extends AbstractType
+class BlockquoteBlockType extends AbstractType
 {
     private $translation;
 
@@ -24,7 +24,7 @@ class CiteBlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', TextareaType::class, array(
-            'label' => 'citeText.form.label.cite',
+            'label' => 'blockquoteText.form.label.blockquote',
             'translation_domain' => 'EnhavoBlockBundle',
             'translation' => $this->translation
         ));
@@ -33,12 +33,12 @@ class CiteBlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => CiteBlock::class
+            'data_class' => BlockquoteBlock::class
         ));
     }
 
     public function getBlockPrefix()
     {
-        return 'enhavo_block_block_cite';
+        return 'enhavo_block_block_blockquote';
     }
 } 
