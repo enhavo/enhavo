@@ -84,10 +84,8 @@ export default class ListType extends FormType
 
     private updatePosition()
     {
-        let i = 0;
         for(let item of this.items) {
-            i++;
-            item.setPosition(i);
+            item.setPosition($(item.getElement()).index()+1);
         }
     }
 }
