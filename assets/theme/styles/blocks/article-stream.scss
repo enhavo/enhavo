@@ -1,0 +1,16 @@
+.block-article-stream { margin-top:150px;
+  .title {font-size:$fontSize1; letter-spacing:0.3em; text-align:center; display:block; font-family:$fontFamily; margin-bottom:75px; text-transform:uppercase; font-weight:$medium;}
+  article { display:flex;flex-flow: row wrap;align-content: center;
+    &:nth-child(2n) {
+      .article-content {order: -1;padding:0 100px 0 0;}
+    }
+  }
+  .article-thumb {position:relative; padding-bottom:46%;flex:50%;
+    img {width:100%;object-fit:cover; position:absolute; left:0; top:0; height:100%;}
+  }
+  .article-content {flex:50%;align-self: center; padding:0 0 0 100px;}
+  .article-teaser { font-size:$fontSize2;}
+  .article-date { font-size:$fontSize1;}
+  .article-title { font-weight:$bold; margin-bottom:20px;}
+  .btn { margin-top:40px;}
+}

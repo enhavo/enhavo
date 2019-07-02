@@ -1,8 +1,27 @@
-<div class="article-stream">
-    <h3>Articles</h3>
-    <ul class="columns">
-        {% for article in articles %}
-            <li><a href="{{ router(article) }}">{{ article.title }}</a></li>
-        {% endfor %}
+<nav class="main-menu">
+    <a href="/" class="logo">ACME</a>
+    <ul>
+        <li class="active"><a href="">Home</a></li>
+        <li><a href="">Company</a></li>
+        <li><a href="">Blog</a></li>
+        <li><a href="">About</a></li>
+        <li><a href="">Contact</a></li>
     </ul>
+</nav>
+
+<div class="block">
+    <div class="block-article-stream">
+        <div class="title">Articles</div>
+        {% for article in articles %}
+        <article>
+            <div class="article-thumb"><img src="{{ media_url(article.picture) }}"></div>
+            <div class="article-content">
+                <div class="article-date">{{ article.publicationDate|date('d.m.y') }}</div>
+                <div class="article-title">{{ article.title }}</div>
+                <div class="article-teaser">{{ article.teaser|raw }}</div>
+                <a href="{{ router(article) }}" class="btn">Mehr lesen</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </div>
