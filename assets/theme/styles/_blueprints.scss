@@ -1,5 +1,6 @@
 %btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none; cursor:pointer;
   &.white { border-color:#FFF; color:#FFF;}
+  &:focus {outline:0}
 }
 %checkbox {position:relative; padding-left:36px; display:inline-block;
   label { font-size:$fontSize2; position:relative; top:-3px;

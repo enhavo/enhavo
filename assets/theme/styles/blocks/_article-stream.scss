@@ -25,6 +25,25 @@
       }
     }
   }
+  .pagination {justify-content: center;
+    li {
+      a { border:1px solid #e6e6e6; padding:4px 15px; font-size:$fontSize1; text-transform:uppercase; min-width:38px; height:38px; font-weight:$medium; line-height:29px; color:darken(#e6e6e6, 30%);transition:all .2s}
+      +li { margin-left:-1px;}
+      &.active { position:relative; z-index:1;
+        a { border-color:$black; color:$black; font-weight:$semibold;}
+      }
+      &.next, &.prev {
+        a {color:$black;
+          &:hover { color:$spotColor; border-color:$spotColor;}
+        }
+      }
+      &.prev { margin-right:10px;}
+      &.next { margin-left:10px;}
+      &:hover {
+        a{color:$black;}
+      }
+    }
+  }
 }
 
 @media all and(max-width:1450px) {
