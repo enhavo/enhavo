@@ -2,4 +2,17 @@
   figure {
     img {max-width:100%}
   }
+  &.float {
+    .half { width:50%;}
+    .third { width:33.333%;}
+    .two-thirds { width:66.666%;}
+    &.picture-text {
+      .column { float:left;}
+      .picture-container {margin:0 25px 25px 0;}
+    }
+    &.text-picture {
+      .column {float:right;}
+      .picture-container {margin:0 0 25px 25px;}
+    }
+  }
 }

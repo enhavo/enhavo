@@ -1,8 +1,22 @@
 html { font-size:$baseFontSize;}
 body { color:$black; font-family:$fontFamily; line-height:$lineHeight;}
-.btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none;}
+footer { border-top:1px solid $black; margin-top:3%; padding-top:3%; padding-bottom:10%; font-size:$fontSize1;
+  p { line-height:$lineHeight;}
+  .footer-title { font-family:$serifFontFamily; font-size:$fontSize3; margin-bottom:10px; font-weight:$semibold;}
+  .logo { font-size:$fontSize4; margin-bottom:60px; display:block;}
+  ul {line-height:$lineHeight*1.5;
+    li { display:inline-block; margin-right:15px;
+      a { text-decoration:none; color:$black;
+        &:hover {border-bottom:1px solid $black}
+      }
+    }
+  }
+}
+main { padding-top:0;}
+.btn { @extend %btn;}
+[class*="col-"] { padding: 0 $columnSpacing;}
 .container { max-width:$containerWidth;}
-.main-menu { padding:75px 15px;
+.main-menu { padding:30px 0;
   ul { display:flex;justify-content: flex-end;
     li {
       a { font-size:$fontSize2; font-weight:$medium; text-decoration:none; color:$black;}
@@ -12,5 +26,13 @@ body { color:$black; font-family:$fontFamily; line-height:$lineHeight;}
       }
     }
   }
-  .logo {font-size:$fontSize5; font-family:$serifFontFamily;color:$black; text-decoration:none; float:left;font-weight:$bold; letter-spacing:0.1em; text-transform:uppercase;}
+  .logo { float:left;font-size:$fontSize5}
+}
+.logo {; font-family:$serifFontFamily;color:$black; text-decoration:none;font-weight:$bold; letter-spacing:0.1em; text-transform:uppercase;transition:color .2s;
+  &:hover {color:$spotColor}
+}
+.row { margin:0 -$columnSpacing;}
+
+@media all and(max-width:1025px) {
+  html { font-size:20px;}
 }

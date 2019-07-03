@@ -1,3 +1,8 @@
 h1, h2, h3, .title {
-  font-family:$serifFontFamily; font-size:$fontSize7;
+  font-size:$fontSize4; font-weight:$bold; margin-bottom:15px;
+}
+.small-title {@extend %smallTitle}
+
+@media all and(max-width:1025px) {
+  h1, h2, h3, .title { margin-bottom:10px;}
 }

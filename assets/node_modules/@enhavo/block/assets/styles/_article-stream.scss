@@ -1,0 +1,9 @@
+.block-article-stream {
+  article {
+    +article { margin-top:$blockSpacing;}
+  }
+  .article-title {font-size:$titleFontSize; margin:.25em 0 .5em 0;}
+  .article-thumb {max-width:300px; margin-bottom:15px;
+    img {max-width:100%}
+  }
+}

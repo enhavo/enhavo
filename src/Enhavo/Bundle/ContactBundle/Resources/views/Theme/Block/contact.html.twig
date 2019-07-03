@@ -1,1 +1,33 @@
 {# Template for container block ContactBlock #}
+<article class="block">
+    <div class="block-contact">
+        <h2 class="title">Kontakt</h2>
+        <p>Kontaktieren Sie uns</p>
+        <form action="">
+            <fieldset>
+                <div class="select">
+                    <select name="Anrede" id="">
+                        <option value="" disabled>Anrede</option>
+                        <option value="">Herr</option>
+                        <option value="">Frau</option>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <input type="text" placeholder="Vorname">
+                <input type="text" placeholder="Nachname">
+            </fieldset>
+            <fieldset>
+                <input type="text" placeholder="Telefonnr.">
+                <input type="email" placeholder="E-Mail">
+            </fieldset>
+            <textarea></textarea>
+            <div class="checkbox">
+                <label for="">Ich habe die <a href="">Datenschutzbestimmungen</a> gelesen und akzeptiere Sie</label>
+                <input type="checkbox">
+                <span></span>
+            </div>
+            <input type="submit" value="Abschicken">
+        </form>
+    </div>
+</article>

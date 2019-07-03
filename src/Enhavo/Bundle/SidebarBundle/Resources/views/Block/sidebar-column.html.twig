@@ -1,16 +1,16 @@
-{% if data.width == 'container' %}
+{% if block.width == 'container' %}
     <div class="container">
 {% endif %}
     <div class="row">
         <div class="col-md-8">
-            {{ block_render(data.column) }}
+            {{ block_render(block.column) }}
         </div>
         <div class="col-md-4">
-            {% if data.sidebar %}
-                {{ block_render(data.sidebar.content) }}
+            {% if block.sidebar %}
+                {{ block_render(block.sidebar.content) }}
             {% endif %}
         </div>
     </div>
-{% if data.width == 'container' %}
+{% if block.width == 'container' %}
     </div>
 {% endif %}

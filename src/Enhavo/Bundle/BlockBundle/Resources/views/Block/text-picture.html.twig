@@ -7,7 +7,9 @@
             {{ block.title|headline('title') }}
         {% endif %}
         {% if block.float %}
-            {{ element.picture(block) }}
+            <div class="column {% if layout == 0 %}half{% endif %}{% if layout == 1 %}third{% endif %}{% if layout == 2 %}two-thirds{% endif %}">
+                {{ element.picture(block) }}
+            </div>
         {% endif %}
         {% if block.text %}
             <p>{{ block.text|html_sanitize }}</p>
@@ -29,10 +31,10 @@
 {% endmacro %}
 
 <article class="block">
-    <div class="block-text-picture{% if block.float %}-float{% endif %} {% if block.textLeft %}text-picture{% else %}picture-text{% endif %}">
+    <div class="block-text-picture{% if block.float %} float{% endif %} {% if block.textLeft %}text-picture{% else %}picture-text{% endif %}">
         <div class="row">
             {% if block.float %}
-                {{ element.text(block) }}
+                {{ element.text(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}
             {% else %}
                 {% if block.textLeft %}
                     {{ element.text(block, block.layout == 1 ? 1 : (block.layout == 2 ? 2 : 0)) }}

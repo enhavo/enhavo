@@ -2,16 +2,8 @@
 @import '~source-sans-pro/source-sans-pro.css';
 @import '~typeface-cormorant-garamond/index.css';
 @import 'vars';
+@import 'blueprints';
 @import 'typography';
 @import 'theme';
 @import 'blocks/block';
-
-
-//@import 'partials/bootstrap.custom';
-//@import 'partials/animation';
-//
-//@import 'start';
-//@import 'base';
-//@import 'theme';
-//@import 'shop';
-//@import 'responsive/responsive';
+@import 'pages/page';

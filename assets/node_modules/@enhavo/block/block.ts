@@ -12,6 +12,13 @@ export default class Block
                 nextArrow: '<div class="arrow next"></div>',
                 prevArrow: '<div class="arrow prev"></div>'
             });
+
+            $('[data-hero-slider]').slick({
+                nextArrow: '<div class="arrow next"></div>',
+                prevArrow: '<div class="arrow prev"></div>',
+                fade: true,
+                dots:true
+            });
         });
     }
 }
