@@ -18,3 +18,25 @@
     }
   }
 }
+
+@media all and (max-width:1025px) {
+  .block-slider {
+    .caption { width:100%;
+      .title { margin: 0 auto;font-size:$fontSize8;}
+    }
+  }
+}
+
+@media all and (max-width:767px) {
+  .block-slider { height:100vh;
+    .btn { margin-top:15px;}
+    .caption { width:100%; padding:0 25px;
+      .title { font-size:$fontSize7; margin-bottom:8px;}
+    }
+    .slick-dots { top:auto; bottom:25px; right:auto; left:50%;transform:translateX(-50%);
+      li { display:inline-block;
+        +li { margin-left:8px; margin-top:0;}
+      }
+    }
+  }
+}

@@ -3,6 +3,14 @@
   .blockquote-author { text-transform:uppercase; text-align:center; letter-spacing:0.3em; font-size:$fontSize1; display:block;}
 }
 
-@media all and(max-width:1450px) {
+@media all and(max-width:1025px) {
+  .block-blockquote {
+    blockquote { font-size:$fontSize6;}
+  }
+}
 
+@media all and(max-width:767px) {
+  .block-blockquote {
+    blockquote { font-size:$fontSize4; margin-left:15px; margin-right:15px; line-height:$lineHeight*.9;}
+  }
 }

@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import "slick-carousel"
+// import "fullcalendar";
 
 export default class Block
 {
@@ -20,22 +21,18 @@ export default class Block
                 dots:true
             });
 
-            window.onload = function(){
-                var paginationPage = parseInt($('.cdp').attr('actpage'), 10);
-                $('.cdp_i').on('click', function(){
-                    var go = $(this).attr('href').replace('#!', '');
-                    if (go === '+1') {
-                        paginationPage++;
-                    } else if (go === '-1') {
-                        paginationPage--;
-                    }else{
-                        paginationPage = parseInt(go, 10);
-                    }
-                    $('.cdp').attr('actpage', paginationPage);
-                });
-            };
+            $('[data-show-menu]').on('click', function() {
+                $('[data-menu-items]').toggle();
+                $(this).toggleClass('active');
+            });
 
-
+            // setTimeout(function() {
+            //     let calendarEl = document.getElementById('calendar');
+            //     let calendar = new FullCalendar.Calendar(calendarEl, {
+            //         plugins: [ 'dayGrid' ]
+            //     });
+            //     calendar.render();
+            // },2000);
         });
     }
 }

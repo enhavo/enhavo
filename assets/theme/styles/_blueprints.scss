@@ -1,4 +1,4 @@
-%btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none; cursor:pointer;
+%btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none; cursor:pointer; background:none;
   &.white { border-color:#FFF; color:#FFF;}
   &:focus {outline:0}
 }
@@ -25,4 +25,15 @@
 @media all and(max-width:1025px) {
   %btn { padding:8px 35px;}
   %textInput {padding:8px 12px;}
+}
+
+@media all and(max-width:767px) {
+  %btn {font-size:$fontSize3; font-weight:$medium;}
+  %checkbox {
+    label { line-height:$lineHeight;}
+  }
+  .select {
+    &:after { right:18px;}
+  }
+  %textInput {font-size:$fontSize3; font-weight:$medium;}
 }

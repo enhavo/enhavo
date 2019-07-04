@@ -15,7 +15,19 @@
       &:focus {outline:0;}
     }
     textarea {@extend %textInput;min-height:250px; margin-top:3%;}
-    .checkbox {@extend %checkbox; margin-top:3%;}
+    .checkbox {@extend %checkbox; margin-top:5%;}
     .select {@extend %select;}
+  }
+}
+
+@media all and(max-width:767px) {
+  .block-contact {
+    form {
+      fieldset {
+        + fieldset { margin-top:5%;}
+      }
+      input[type="submit"] { font-size:$fontSize3;padding: 10px 35px; }
+      textarea {min-height:150px; margin-top:5%;}
+    }
   }
 }

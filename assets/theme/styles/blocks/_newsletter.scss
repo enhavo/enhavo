@@ -13,7 +13,7 @@
     input[type="submit"] {@extend %btn; font-size:$baseFontSize; margin-top:6%;
       &:focus {outline:0;}
     }
-    .checkbox {@extend %checkbox; margin-top:3%;}
+    .checkbox {@extend %checkbox; margin-top:5%;}
   }
 }
 
@@ -24,6 +24,7 @@
         &:first-of-type { margin-right:0;}
         &:nth-of-type(2) { margin-left:0; margin-top:-1px;}
       }
+      input[type="submit"] {font-size:$fontSize3;padding: 10px 35px;}
       input[type="email"] { width:100%;}
       .checkbox { float:left; text-align:left;}
     }

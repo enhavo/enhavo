@@ -1,3 +1,4 @@
+html, body {overflow-x:hidden;}
 html { font-size:$baseFontSize;}
 body { color:$black; font-family:$fontFamily; line-height:$lineHeight;}
 footer { border-top:1px solid $black; margin-top:3%; padding-top:3%; padding-bottom:10%; font-size:$fontSize1;
@@ -28,11 +29,51 @@ main { padding-top:0;}
   }
   .logo { float:left;font-size:$fontSize5}
 }
-.logo {; font-family:$serifFontFamily;color:$black; text-decoration:none;font-weight:$bold; letter-spacing:0.1em; text-transform:uppercase;transition:color .2s;
+.menu-btn {width:55px; height:55px; right:0; top:0; position:absolute; background:$black; display:none;
+  div { position:absolute; left:50%; top:50%;transform:translate(-50%, -50%);
+    span { width:20px; height:2px; background:#FFF; display:block;transition: transform .3s, margin .3s, opacity .1s;
+      +span { margin-top:5px;}
+    }
+  }
+  &.active {
+    span {transition: transform .3s, margin .3s, opacity .1s;
+      &:first-child { opacity:0;}
+      &:nth-child(2) { transform: rotate(45deg); margin-top:-2px;}
+      &:nth-child(3) {transform:rotate(-45deg); margin-top:-2px;}
+      +span { margin-top:0;}
+    }
+  }
+}
+.logo {font-family:$serifFontFamily;color:$black; text-decoration:none;font-weight:$bold; letter-spacing:0.1em; text-transform:uppercase;transition:color .2s;
   &:hover {color:$spotColor}
 }
-.row { margin:0 -$columnSpacing;}
+.row { margin: 0 (-$columnSpacing);}
+
+@media all and(max-width:1350px) {
+  .main-menu {
+    ul { padding:0 25px;}
+  }
+}
 
 @media all and(max-width:1025px) {
   html { font-size:20px;}
+}
+
+@media all and (max-width:767px) {
+  footer { padding:25px 0 45px 0;
+    .logo { margin-bottom:25px;}
+    ul { line-height:$lineHeight*1.2;}
+    .footer-title { margin-top:20px; margin-bottom:5px;}
+  }
+  .block {padding-bottom: 2em;}
+  .main-menu {position:fixed; width:100%; top:0; left:0; z-index:10; background:#FFF; padding:0;box-shadow: inset 0 -1px 0 lighten($black, 80%);
+    .menu-btn { display:block;}
+    .logo { font-size:$fontSize4; float:none; margin-left:15px; padding:14px 0; display:inline-block;}
+    ul { display:block;border-top:1px solid lighten($black, 80%); display:none; padding:0;
+      li { display:block;
+        a { padding:14px 30px; display:block;}
+        +li { margin-left:0; border-top:1px solid lighten($black, 80%);}
+      }
+    }
+  }
 }
