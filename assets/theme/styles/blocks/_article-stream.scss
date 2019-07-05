@@ -111,5 +111,12 @@
       }
       .btn { margin-top:10px;}
     }
+    .pagination {
+      li {
+        a { padding:4px 11px;min-width:34px; height:34px; line-height:24px; text-align:center;}
+        &.prev { margin-right:0;}
+        &.next { margin-left:-1px;}
+      }
+    }
   }
 }

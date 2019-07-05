@@ -5,6 +5,10 @@
     "routes:dump": "bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json"
   },
   "dependencies": {
+    "@fullcalendar/core": "^4.2.0",
+    "@fullcalendar/daygrid": "^4.2.0",
+    "@fullcalendar/list": "^4.2.0",
+    "@fullcalendar/timegrid": "^4.2.0",
     "@ibm/plex": "^1.2.3",
     "async": "^2.6.2",
     "axios": "^0.18.0",

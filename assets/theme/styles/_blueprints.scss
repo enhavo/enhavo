@@ -21,6 +21,7 @@
   &:after {content:''; position:absolute; right:28px; top:50%; margin-top:-2px;pointer-events:none;width: 0;height: 0;border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 6px solid $black;}
 }
 %smallTitle {font-size: $fontSize1;letter-spacing: 0.3em;text-align: center;display: block;text-transform: uppercase;font-weight: $medium;}
+%title {font-size:$fontSize4; font-weight:$bold; margin-bottom:15px;}
 
 @media all and(max-width:1025px) {
   %btn { padding:8px 35px;}

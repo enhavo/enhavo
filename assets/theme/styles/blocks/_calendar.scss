@@ -1,3 +1,21 @@
 .block-calendar {
-  #calendar { padding:45px 0;background:#F0F;}
+  .fc-toolbar {
+    h2 {@extend %title}
+    &.fc-header-toolbar { margin-bottom:10px;}
+  }
+  .fc-icon { line-height:1em;font-size:25px;}
+  .fc-button-primary {@extend %btn;border-radius:0; padding:10px;
+    &.fc-today-button { border-width:0 0 1px 0; padding:0; display:inline-block;}
+    &:disabled { opacity:0;}
+    &:focus, &:active {box-shadow:none!important;}
+  }
+  .fc-unthemed {
+    .fc-day-number { font-size:1.5em; padding:2px 10px;font-family:$serifFontFamily;}
+    th { @extend %smallTitle;display:table-cell}
+    td {
+      &.fc-today { background:lighten($spotColor, 10%); border-color:$black;}
+    }
+  }
+  .fc-event, .fc-event-dot { background:$spotColor;border-radius:0}
+  .fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover, .fc-unthemed .fc-list-view, .fc-unthemed .fc-list-heading td { border-color:$black;}
 }

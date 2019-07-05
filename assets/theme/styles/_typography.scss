@@ -1,6 +1,4 @@
-h1, h2, h3, .title {
-  font-size:$fontSize4; font-weight:$bold; margin-bottom:15px;
-}
+h1, h2, h3, .title {@extend %title}
 .small-title {@extend %smallTitle}
 
 @media all and(max-width:1025px) {

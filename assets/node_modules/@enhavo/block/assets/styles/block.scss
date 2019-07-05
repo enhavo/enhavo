@@ -1,11 +1,11 @@
 @import '~bootstrap/dist/css/bootstrap-grid.css';
 @import '~slick-carousel/slick/slick.css';
-@import '~fullcalendar/dist/fullcalendar.min.css';
+@import 'article-stream';
+@import 'blockquote';
+@import 'calendar';
+@import 'gallery';
+@import 'picture';
+@import 'slider';
 @import 'text-picture';
 @import 'text';
-@import 'picture';
-@import 'blockquote';
 @import 'video';
-@import 'gallery';
-@import 'slider';
-@import 'article-stream';

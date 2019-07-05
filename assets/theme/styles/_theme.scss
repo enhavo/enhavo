@@ -14,6 +14,7 @@ footer { border-top:1px solid $black; margin-top:3%; padding-top:3%; padding-bot
   }
 }
 main { padding-top:0;}
+.select {@extend %select;}
 .btn { @extend %btn;}
 [class*="col-"] { padding: 0 $columnSpacing;}
 .container { max-width:$containerWidth;}

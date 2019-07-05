@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\CalendarBundle\Entity\CalendarBlock;
 use Enhavo\Bundle\CalendarBundle\Factory\CalendarBlockFactory;
 use Enhavo\Bundle\CalendarBundle\Form\Type\CalendarBlockType as CalendarBlockFormType;
@@ -10,6 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CalendarBlockType extends AbstractBlockType
 {
+    public function createViewData(BlockInterface $block, $resource, array $options)
+    {
+        $data = parent::createViewData($block, $resource, $options);
+        $data['appointments'] = $this->container->get('enhavo_calendar.repository.appointment')->findAll();
+        return $data;
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);

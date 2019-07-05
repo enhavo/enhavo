@@ -1,11 +1,24 @@
 import * as $ from "jquery";
 import "slick-carousel"
-// import "fullcalendar";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 
 export default class Block
 {
     public init()
     {
+
+        // todo use data el
+        document.addEventListener('DOMContentLoaded', function() {
+            let calendarEl = document.getElementById('calendar');
+            let calendar = new Calendar(calendarEl, {
+                plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ]
+            });
+            calendar.render();
+        });
+
         $(document).ready(function(){
             $('[data-slider]').slick({
                 adaptiveHeight: true,
@@ -25,14 +38,6 @@ export default class Block
                 $('[data-menu-items]').toggle();
                 $(this).toggleClass('active');
             });
-
-            // setTimeout(function() {
-            //     let calendarEl = document.getElementById('calendar');
-            //     let calendar = new FullCalendar.Calendar(calendarEl, {
-            //         plugins: [ 'dayGrid' ]
-            //     });
-            //     calendar.render();
-            // },2000);
         });
     }
 }

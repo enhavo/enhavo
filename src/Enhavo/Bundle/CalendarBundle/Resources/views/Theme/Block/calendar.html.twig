@@ -1,4 +1,9 @@
-{# Template for container block CalendarBlock #}
-<article class="block-calendar">
-    <div id='calendar'></div>
+<article class="block">
+    <div class="block-calendar">
+        {#{% for appointment in appointments %}#}
+            {#<h1>{{ appointments.teaser }}</h1>#}
+        {#{% endfor %}#}
+        {#todo use data el#}
+        <div id='calendar' data-calendar></div>
+    </div>
 </article>
