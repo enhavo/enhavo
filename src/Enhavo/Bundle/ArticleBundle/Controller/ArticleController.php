@@ -2,14 +2,17 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Controller\TemplateControllerTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
+    use TemplateControllerTrait;
+
     public function showResourceAction($contentDocument)
     {
-        return $this->render('EnhavoArticleBundle:Theme/Article:show.html.twig', array(
+        return $this->render($this->getTemplate('article/show.html.twig'), array(
             'resource' => $contentDocument
         ));
     }
