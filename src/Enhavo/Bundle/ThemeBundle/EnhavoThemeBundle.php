@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ThemeBundle;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
 use Doctrine\ORM\Mapping\Driver\YamlDriver;
+use Enhavo\Bundle\ThemeBundle\DependencyInjection\Compiler\EnhavoCompilerPass;
 use Enhavo\Bundle\ThemeBundle\DependencyInjection\Compiler\SymfonyCompilerPass;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -16,6 +17,7 @@ class EnhavoThemeBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass($this->buildDoctrineCompilerPass());
+        $container->addCompilerPass(new EnhavoCompilerPass());
     }
 
     private function buildDoctrineCompilerPass()

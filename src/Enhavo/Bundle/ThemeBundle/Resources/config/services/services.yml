@@ -1,10 +1,4 @@
 services:
-    enhavo_theme.template.mapper:
-        class: Enhavo\Bundle\ThemeBundle\Template\TemplateMapper
-        arguments:
-            - '@enhavo_theme.theme.manager'
-            - '@templating.name_parser'
-
     enhavo_theme.theme.manager:
         class: Enhavo\Bundle\ThemeBundle\Theme\ThemeManager
         public: true
@@ -64,3 +58,7 @@ services:
             - '@enhavo_theme.theme.manager'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\ThemeBundle\Theme\ThemeWebpackBuildResolver:
+        arguments:
+            - '@enhavo_theme.theme.manager'

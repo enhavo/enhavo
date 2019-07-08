@@ -9,4 +9,4 @@ webpack:
     entries:
         base: './entry/base.ts'
 template:
-    path: '@EnhavoDemoBunde/Resources/views'
+    path: '@EnhavoDemoBundle/Resources/views/Theme'
