@@ -1,11 +1,10 @@
-//@import 'partials/_vars';
-//@import 'partials/_bootstrap.custom';
-//@import 'partials/animation';
-
-//@import 'start';
-//@import 'base';
-//@import 'theme';
-//@import 'shop';
-//@import 'responsive/responsive';
-
 @import '~@enhavo/theme/theme/styles/base.scss';
+@import '~source-sans-pro/source-sans-pro.css';
+@import '~typeface-cormorant-garamond/index.css';
+@import 'vars';
+@import 'blueprints';
+@import 'typography';
+@import 'theme';
+@import 'blocks/block';
+@import 'pages/page';
+@import 'shop';

@@ -2,7 +2,7 @@
     <div class="block-blockquote">
         {% if block.text %}
             <blockquote>{{ block.text|html_sanitize }}</blockquote>
-            <small class="blockquote-author"></small>
+            <small class="blockquote-author">{{ block.author|html_sanitize }}</small>
         {% endif %}
     </div>
 </article>

@@ -299,7 +299,7 @@
     }
   }
   #image-text {
-    .image img {top: 0;width: 150%;position: relative;left: 50%;@include transform(translateX(-50%));}
+    .image img {top: 0;width: 150%;position: relative;left: 50%;transform:translateX(-50%);}
   }
   #article-feed {
     .articles {

@@ -1,7 +1,7 @@
 .shop-product {
   .product-title {
     color:$night; font-size:$biggerFontSize;
-    &.single-view { font-size:$secondHeadingFontSize; font-family:$lightFontFamily;}
+    &.single-view { font-size:$secondHeadingFontSize; font-weight:$lightFontFamily;}
   }
   .product-description { margin-top:45px;}
   .price {
@@ -11,14 +11,14 @@
   .product-picture {
     border:4px solid $softwhite; margin-bottom:10px; padding:40px; overflow:hidden;
     &:hover {
-      img {@include transform(scale(1.05));@include transition(all .4s cubic-bezier(0.19, 1, 0.22, 1));}
+      img {transform:scale(1.05);transition:all .4s cubic-bezier(0.19, 1, 0.22, 1);}
     }
-    img {@include transition(all .4s);}
+    img {transition:all .4s;}
   }
-  .product-id { font-size:$smallFontSize; font-family:$capitalFontBold; text-transform:uppercase; letter-spacing:$defaultLetterSpacing; color:$light;}
+  .product-id { font-size:$smallFontSize; font-weight:$capitalFontBold; text-transform:uppercase; letter-spacing:$defaultLetterSpacing; color:$light;}
   .product-thumb {
     border:4px solid $softwhite; width:80px; height:80px; display:inline-block; padding:12px;
-    + .product-title { display:inline-block; margin-left:25px;position:absolute; top:50%;@include transform(translateY(-50%)); margin-top:-15px;}
+    + .product-title { display:inline-block; margin-left:25px;position:absolute; top:50%;transform:translateY(-50%); margin-top:-15px;}
   }
   .proceed { margin-top:45px;}
 }
@@ -33,11 +33,11 @@
     }
     .add-to-cart-btn {
       position: absolute;top: 0;right: 0;background: $blueberry;width: 80px;height: 80px;border: 0;color: #FFF;padding: 0; overflow:hidden;
-      i { position:absolute; left:50%; top:50%;@include transform(translateY(-50%) translateX(-50%));}
+      i { position:absolute; left:50%; top:50%;transform:translateY(-50%) translateX(-50%);}
       &:hover { background:$aubergine;}
       &.added {
         background:$citrus;
-        i { color:$aubergine;@include animation(slideOut 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards 400ms);}
+        i { color:$aubergine;animation:slideOut 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards 400ms;}
       }
     }
   }
@@ -72,9 +72,9 @@
   }
   .price-total {
     .show-details {
-      border-radius:50%; background:$light; width:20px; height:20px; display:inline-block; margin-left:8px; position: relative;top: -19px;@include transition(all .3s); cursor:pointer;
+      border-radius:50%; background:$light; width:20px; height:20px; display:inline-block; margin-left:8px; position: relative;top: -19px;transition:all .3s; cursor:pointer;
       i { color:#FFF; font-size:12px; color:#FFF; position:relative; top:4px; left:1px;}
-      &:hover { background:$medium;@include transition(all .3s);}
+      &:hover { background:$medium;transition:all .3s;}
     }
     .remove-product {
       display:inline-block; color:$light;float: right;position: relative;top: -9px;
@@ -82,7 +82,7 @@
     }
   }
   .product-quantity {
-    position:relative; display:inline-block;@include transition(all .3s);
+    position:relative; display:inline-block;transition:all .3s;
     .quantity-input {
       display:none;position:absolute;left:-3px; top:44px;
       input {
@@ -90,16 +90,16 @@
         &:focus { outline:0;}
       }
       .save-quantity {
-        position:absolute; font-size:$smallFontSize; background:none; border:0; color:$light; right:5px;top: 17px; display:none; z-index:2;@include transition(all .2s);
-        &:hover { color:$medium;@include transition(all .2s);}
+        position:absolute; font-size:$smallFontSize; background:none; border:0; color:$light; right:5px;top: 17px; display:none; z-index:2;transition:all .2s;
+        &:hover { color:$medium;transition:all .2s;}
         &.save-it { color:$blueberry;}
       }
       &:before {width: 0; content:'';height: 0; position:absolute; top:-8px; left:10px;border-left: 9px solid transparent;border-right: 9px solid transparent;border-bottom: 9px solid $light;}
       &:after {width: 0; content:'';height: 0; position:absolute; top:-7px; left:10px;border-left: 9px solid transparent;border-right: 9px solid transparent;border-bottom: 9px solid #FFF;}
     }
-        .edit-quantity { position:absolute; font-size:$smallFontSize; background:none; border:0; color:$light;left: -20px;top: 14px; opacity:0;}
+    .edit-quantity { position:absolute; font-size:$smallFontSize; background:none; border:0; color:$light;left: -20px;top: 14px; opacity:0;}
     &:hover {
-      color:$mediumlight; cursor:pointer;@include transition(all .3s);
+      color:$mediumlight; cursor:pointer;transition:all .3s;
       .edit-quantity { opacity:1;}
     }
   }
@@ -158,8 +158,8 @@
       input {padding: 27px 95px 27px 35px;border: 1px solid $light;width: 100%; position:relative; max-width:500px;min-width:500px; display:inline-block;}
     }
     .redeem-btn {
-      position:absolute; right:0; top:0;background: $aubergine;width: 80px;height: 80px;border: 0;color: #FFF;padding: 0;@include transition(all .2s);
-      &:hover { background:$citrus;@include transition(all .2s); color:$aubergine;}
+      position:absolute; right:0; top:0;background: $aubergine;width: 80px;height: 80px;border: 0;color: #FFF;padding: 0;transition:all .2s;
+      &:hover { background:$citrus;transition:all .2s; color:$aubergine;}
     }
   }
 }
@@ -190,7 +190,7 @@
   .shop-product{
     .product-thumb {
       display:block;
-      + .product-title {display:block;position:initial;@include transform(none); margin-left:0; margin-top:15px; font-size:$bigFontSize; font-family:$blackFontFamily;}
+      + .product-title {display:block;position:initial;transform:none; margin-left:0; margin-top:15px; font-size:$bigFontSize; font-weight:$blackFontFamily;}
     }
   }
 }

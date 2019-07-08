@@ -26,6 +26,14 @@
         input[type="text"],input[type="password"] {@extend %textfield;}
         textarea {@extend %textarea;}
     }
+
+    .head-line-widget { position:relative;
+        .head-line-widget-tag {border-left:1px solid $grey5; width:160px; position:absolute; right:0; top:0;}
+        .head-line-widget-text {
+            input {padding-right:170px; overflow:hidden;}
+        }
+    }
+
     .label-help-container {font-size:0.85rem;line-height:1.1em;padding-left:2px;margin-bottom:1px;
         .label {display:inline-block;
             + .help-container {margin-left:5px;}

@@ -100,7 +100,7 @@
     ul {
       padding-left:0;
       &.open {
-        li{ display:block;@include animation(fadeIn 1s);}
+        li{ display:block;animation:fadeIn 1s;}
       }
       li {
         display:none; float:none; width:100%;

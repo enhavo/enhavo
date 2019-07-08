@@ -1,50 +1,80 @@
-@import "compass";
-@import 'partials/vars';
-
-/* ====== Article Single View ====== */
-// general
-#article {
-  position:relative; padding-bottom:100px;
-  .article-head {
-    display:block; padding-bottom: 30px;
-    .article-title { padding-bottom:10px; font-size:$secondHeadingFontSize;}
-    .category {
-      padding-bottom:20px; font-size:$smallFontSize; display:inline-block;;
-      &:nth-of-type(n+2) {
-        &:before {margin:0 10px;content:"\2022";height: auto;width: 0;background: none;display: inline;}
+html, body {overflow-x:hidden;}
+html { font-size:$baseFontSize;}
+body { color:$black; font-family:$fontFamily; line-height:$lineHeight;}
+footer { border-top:1px solid $black; margin-top:3%; padding-top:3%; padding-bottom:10%; font-size:$fontSize1;
+  p { line-height:$lineHeight;}
+  .footer-title { font-family:$serifFontFamily; font-size:$fontSize3; margin-bottom:10px; font-weight:$semibold;}
+  .logo { font-size:$fontSize4; margin-bottom:60px; display:block;}
+  ul {line-height:$lineHeight*1.5;
+    li { display:inline-block; margin-right:15px;
+      a { text-decoration:none; color:$black;
+        &:hover {border-bottom:1px solid $black}
       }
     }
   }
-  .enhavo_grid {
-    clear:both;
-    .title {
-      padding-bottom:30px;font-size:$thirdHeadingFontSize; text-transform:none; letter-spacing:normal; font-family:$lightFontFamily;
-      &:before {content:normal; }
+}
+main { padding-top:0;}
+.select {@extend %select;}
+.btn { @extend %btn;}
+[class*="col-"] { padding: 0 $columnSpacing;}
+.container { max-width:$containerWidth;}
+.main-menu { padding:30px 0;
+  ul { display:flex;justify-content: flex-end;
+    li {
+      a { font-size:$fontSize2; font-weight:$medium; text-decoration:none; color:$black;}
+      +li { margin-left:25px;}
+      &.active {
+        a {font-weight:$bold;}
+      }
+    }
+  }
+  .logo { float:left;font-size:$fontSize5}
+}
+.menu-btn {width:55px; height:55px; right:0; top:0; position:absolute; background:$black; display:none;
+  div { position:absolute; left:50%; top:50%;transform:translate(-50%, -50%);
+    span { width:20px; height:2px; background:#FFF; display:block;transition: transform .3s, margin .3s, opacity .1s;
+      +span { margin-top:5px;}
+    }
+  }
+  &.active {
+    span {transition: transform .3s, margin .3s, opacity .1s;
+      &:first-child { opacity:0;}
+      &:nth-child(2) { transform: rotate(45deg); margin-top:-2px;}
+      &:nth-child(3) {transform:rotate(-45deg); margin-top:-2px;}
+      +span { margin-top:0;}
     }
   }
 }
+.logo {font-family:$serifFontFamily;color:$black; text-decoration:none;font-weight:$bold; letter-spacing:0.1em; text-transform:uppercase;transition:color .2s;
+  &:hover {color:$spotColor}
+}
+.row { margin: 0 (-$columnSpacing);}
 
-.back-to-blog {
-  width:80px; height:80px; position:absolute; left:0; bottom:0; background:$blueberry;
-  &:hover {
-    background:$citrus;
-    i{color:$night;@include transition(all .3s);}
+@media all and(max-width:1350px) {
+  .main-menu {
+    ul { padding:0 25px;}
   }
-  i {color:#FFF;@include transform(scaleX(-1));display: inline-block;position: absolute;left: 50%;margin-left: -12px;top: 50%;margin-top: -9px;;@include transition(all .3s);}
 }
 
-.enhavo_grid_frame {border:6px solid $light;}
-.picture_caption{color:$medium; padding-top:10px;}
-
-.article-footer {
-  background:$softwhite;
-  .container { padding-top:0; padding-bottom:0;}
-  .pub-date {font-size:$smallFontSize;color:$medium; padding:12px;}
+@media all and(max-width:1025px) {
+  html { font-size:20px;}
 }
 
-.back-btn {
-  width:80px; height:80px; background:$citrus;
-  position:absolute; left:0; top:0; display:block;
-  i{color:#FFF; font-size:24px; position:absolute; left:50%; top:50%;@include transform(translateX(-50%) translateY(-50%))}
-  &:hover { background:$blueberry;}
+@media all and (max-width:767px) {
+  footer { padding:25px 0 45px 0;
+    .logo { margin-bottom:25px;}
+    ul { line-height:$lineHeight*1.2;}
+    .footer-title { margin-top:20px; margin-bottom:5px;}
+  }
+  .block {padding-bottom: 2em;}
+  .main-menu {position:fixed; width:100%; top:0; left:0; z-index:10; background:#FFF; padding:0;box-shadow: inset 0 -1px 0 lighten($black, 80%);
+    .menu-btn { display:block;}
+    .logo { font-size:$fontSize4; float:none; margin-left:15px; padding:14px 0; display:inline-block;}
+    ul { display:block;border-top:1px solid lighten($black, 80%); display:none; padding:0;
+      li { display:block;
+        a { padding:14px 30px; display:block;}
+        +li { margin-left:0; border-top:1px solid lighten($black, 80%);}
+      }
+    }
+  }
 }
