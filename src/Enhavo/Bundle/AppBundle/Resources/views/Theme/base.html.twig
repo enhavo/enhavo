@@ -29,6 +29,7 @@
         </main>
 
         {% block javascripts %}
+            <script id="routes" type="application/json">{{ routes()|raw }}</script>
             {{ encore_entry_script_tags('base', null, 'base') }}
         {% endblock %}
     </body>
