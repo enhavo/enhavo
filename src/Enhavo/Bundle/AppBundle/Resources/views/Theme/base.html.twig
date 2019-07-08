@@ -17,7 +17,7 @@
         <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon.ico') }}">
 
         {% block stylesheets %}
-            {{ encore_entry_link_tags('base', null, 'base') }}
+            {{ encore_entry_link_tags('base', null, webpack_build()) }}
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
@@ -30,7 +30,7 @@
 
         {% block javascripts %}
             <script id="routes" type="application/json">{{ routes()|raw }}</script>
-            {{ encore_entry_script_tags('base', null, 'base') }}
+            {{ encore_entry_script_tags('base', null, webpack_build()) }}
         {% endblock %}
     </body>
 </html>

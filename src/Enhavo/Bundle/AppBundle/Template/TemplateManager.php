@@ -43,17 +43,24 @@ class TemplateManager
     private $defaultPath;
 
     /**
+     * @var $resolver
+     */
+    private $resolver;
+
+    /**
      * TemplateManager constructor.
      * @param KernelInterface $kernel
      * @param Filesystem $fs
+     * @param WebpackBuildResolverInterface $resolver
      * @param array $templatePaths
      * @param string $defaultPath
      */
-    public function __construct(KernelInterface $kernel, Filesystem $fs, array $templatePaths = [], string $defaultPath = null)
+    public function __construct(KernelInterface $kernel, Filesystem $fs, WebpackBuildResolverInterface $resolver, array $templatePaths = [], string $defaultPath = null)
     {
         $this->fs = $fs;
         $this->kernel = $kernel;
         $this->defaultPath = $defaultPath;
+        $this->resolver = $resolver;
 
         foreach($templatePaths as $path) {
             $this->registerPath($path['path'], $path['priority']);
@@ -113,5 +120,10 @@ class TemplateManager
         }
 
         throw new TemplateNotFoundException(sprintf('The template "%s" could not be found', $template));
+    }
+
+    public function getWebpackBuild()
+    {
+        return $this->resolver->resolve();
     }
 }

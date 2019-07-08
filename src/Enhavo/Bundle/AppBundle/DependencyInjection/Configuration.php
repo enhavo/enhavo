@@ -49,6 +49,10 @@ class Configuration implements ConfigurationInterface
             ->end()
 
             ->children()
+                ->scalarNode('webpack_build')->defaultValue('_default')->end()
+            ->end()
+
+            ->children()
                 ->arrayNode('form_themes')
                     ->prototype('scalar')->end()
                 ->end()

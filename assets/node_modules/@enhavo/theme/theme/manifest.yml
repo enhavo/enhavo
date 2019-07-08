@@ -11,6 +11,3 @@ webpack:
         base: './base.ts'
 template:
     mapping: []
-block:
-    column_styles: []
-    templates: []
