@@ -9,9 +9,10 @@
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
-use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Templating\EngineInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Twig\Extension\AbstractExtension;
@@ -19,15 +20,12 @@ use Twig\TwigFunction;
 
 class MediaExtension extends AbstractExtension
 {
+    use ContainerAwareTrait;
+
     /**
      * @var EngineInterface
      */
     private $engine;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
     /**
      * @var EntityManager
@@ -35,15 +33,19 @@ class MediaExtension extends AbstractExtension
     private $em;
 
     /**
-     * @var UrlResolver
+     * @var UrlGeneratorInterface
      */
-    private $resolver;
+    private $generator;
 
-    public function __construct($container, $em, UrlResolver $resolver)
+    /**
+     * MediaExtension constructor.
+     * @param $em
+     * @param UrlGeneratorInterface $generator
+     */
+    public function __construct($em, UrlGeneratorInterface $generator)
     {
-        $this->container = $container;
         $this->em = $em;
-        $this->resolver = $resolver;
+        $this->generator = $generator;
     }
 
     public function getFunctions()
@@ -69,12 +71,12 @@ class MediaExtension extends AbstractExtension
         return $this->engine;
     }
 
-    public function getMediaUrl(File $file, $format = null)
+    public function getMediaUrl(File $file, $format = null, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         if($format) {
-            return $this->resolver->getPublicFormatUrl($file, $format);
+            return $this->generator->generateFormat($file, $format, $referenceType);
         } else {
-            return $this->resolver->getPublicUrl($file);
+            return $this->generator->generate($file, $referenceType);
         }
     }
 

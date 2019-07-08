@@ -32,3 +32,9 @@ services:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\AppBundle\Twig\RouteExtension:
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: twig.extension }

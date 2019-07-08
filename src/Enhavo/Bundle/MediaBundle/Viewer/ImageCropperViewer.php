@@ -13,6 +13,7 @@ use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
 use FOS\RestBundle\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -39,9 +40,9 @@ class ImageCropperViewer extends AbstractActionViewer
     private $mediaManager;
 
     /**
-     * @var UrlResolver
+     * @var UrlGeneratorInterface
      */
-    private $urlResolver;
+    private $urlGenerator;
 
     /**
      * ImageCropperViewer constructor.
@@ -49,20 +50,20 @@ class ImageCropperViewer extends AbstractActionViewer
      * @param FlashBag $flashBag
      * @param ImageCropperManager $imageCropperManager
      * @param MediaManager $mediaManager
-     * @param UrlResolver $urlResolver
+     * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ActionManager $actionManager,
         FlashBag $flashBag,
         ImageCropperManager $imageCropperManager,
         MediaManager $mediaManager,
-        UrlResolver $urlResolver
+        UrlGeneratorInterface $urlGenerator
     ) {
         parent::__construct($actionManager);
         $this->flashBag = $flashBag;
         $this->imageCropperManager = $imageCropperManager;
         $this->mediaManager = $mediaManager;
-        $this->urlResolver = $urlResolver;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function getType()
@@ -100,7 +101,7 @@ class ImageCropperViewer extends AbstractActionViewer
 
     private function createFormatData(Format $format)
     {
-        $url = $this->urlResolver->getPrivateUrl($format->getFile());
+        $url = $this->urlGenerator->generate($format->getFile());
         $parameters = $format->getParameters();
         $ratio = $this->imageCropperManager->getFormatRatio($format);
 
