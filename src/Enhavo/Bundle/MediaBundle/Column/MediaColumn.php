@@ -54,7 +54,7 @@ class MediaColumn extends AbstractColumnType
             ));
         }
 
-        $url = $this->container->get('enhavo_media.media.url_resolver')->getPublicFormatUrl($file, $format);
+        $url = $this->container->get('enhavo_media.media.public_url_generator')->generateFormat($file, $format);
 
         return [
             'height' => $height,

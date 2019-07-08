@@ -8,8 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Cache;
 
-
-use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -18,9 +17,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class HttpCache implements CacheInterface
 {
     /**
-     * @var UrlResolver;
+     * @var UrlGeneratorInterface;
      */
-    private $resolver;
+    private $generator;
 
     /**
      * @var Client
@@ -62,7 +61,7 @@ class HttpCache implements CacheInterface
 
     private function getUri(FileInterface $file, $format)
     {
-        $path = $this->resolver->getPublicFormatUrl($file, $format);
+        $path = $this->generator->generateFormat($file, $format);
         $request = $this->requestStack->getMasterRequest();
 
         $host = $this->host ? $this->host :$request->getHost();
@@ -72,9 +71,9 @@ class HttpCache implements CacheInterface
         return sprintf('%s://%s:%s%s', $schema, $host, $port, $path);
     }
 
-    public function setResolver(UrlResolver $resolver)
+    public function setUrlGenerator(UrlGeneratorInterface $generator)
     {
-        $this->resolver = $resolver;
+        $this->generator = $generator;
     }
 
     public function invalid(FileInterface $file, $format)

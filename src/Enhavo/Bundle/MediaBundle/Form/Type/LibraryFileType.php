@@ -8,7 +8,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
-use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
+use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,31 +24,31 @@ class LibraryFileType extends AbstractType
     private $dataClass;
 
     /**
-     * @var UrlResolver $resolver
+     * @var UrlGeneratorInterface $generator
      */
-    private $resolver;
+    private $urlGenerator;
 
     /**
      * LibraryFileType constructor.
      *
      * @param $dataClass
-     * @param UrlResolver $resolver
+     * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct($dataClass, UrlResolver $resolver)
+    public function __construct($dataClass, UrlGeneratorInterface $urlGenerator)
     {
         $this->dataClass = $dataClass;
-        $this->resolver = $resolver;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $resolver = $this->resolver;
+        $resolver = $this->urlGenerator;
         $builder->addEventListener(FormEvents::PRE_SET_DATA,  function(FormEvent $event) use ($resolver) {
             $data = $event->getData();
             $form = $event->getForm();
             $form->add('url', TextType::class, [
                 'mapped' => false,
-                'data' => $resolver->getPublicUrl($data)
+                'data' => $this->urlGenerator->generate($data)
             ]);
         });
 
