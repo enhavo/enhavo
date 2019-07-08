@@ -9,9 +9,10 @@
 namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 
-class UrlResolver
+class PublicUrlGenerator implements UrlGeneratorInterface
 {
     /**
      * @var MediaManager
@@ -29,23 +30,16 @@ class UrlResolver
         $this->router = $router;
     }
 
-    public function getPublicUrl(FileInterface $file)
+    public function generate(FileInterface $file, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         return $this->router->generate('enhavo_media_file_show', [
             'id' => $file->getId(),
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $file->getFilename()
-        ]);
-    }
-    
-    public function getPrivateUrl(FileInterface $file)
-    {
-        return $this->router->generate('enhavo_media_file_resolve', [
-            'token' => $file->getToken()
-        ]);
+        ], $referenceType);
     }
 
-    public function getPublicFormatUrl(FileInterface $file, $format)
+    public function generateFormat(FileInterface $file, string $format, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         $formatObj = $this->mediaManager->getFormat($file, $format);
         return $this->router->generate('enhavo_media_file_format', [
@@ -53,17 +47,6 @@ class UrlResolver
             'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
             'filename' => $formatObj->getFilename(),
             'format' => $format,
-        ]);
-    }
-
-    public function getPrivateFormatUrl(FileInterface $file, $format)
-    {
-        $formatObj = $this->mediaManager->getFormat($file, $format);
-        return $this->router->generate('enhavo_media_file_format', [
-            'id' => $file->getId(),
-            'shortMd5Checksum' => substr($file->getMd5Checksum(), 0, 6),
-            'filename' => $formatObj->getFilename(),
-            'format' => $format,
-        ]);
+        ], $referenceType);
     }
 }
