@@ -17,6 +17,7 @@ services:
         arguments:
             - '@enhavo_block.block.manager'
             - '%enhavo_block.render.sets%'
+            - '@enhavo_app.template.manager'
         calls:
             - [ setContainer, ['@service_container']]
 
