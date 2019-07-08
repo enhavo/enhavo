@@ -1,9 +1,15 @@
 <article class="block">
     <div class="block-calendar">
         {#{% for appointment in appointments %}#}
-            {#<h1>{{ appointments.teaser }}</h1>#}
+            {#{{ appointment.teaser }}#}
         {#{% endfor %}#}
         {#todo use data el#}
+
+        <ul class="calendar-events" data-event-container>
+        {% for appointment in appointments %}
+            <li class="event" data-event data-appointment-title="{{ appointment.title }}" data-appointment-start="{% if appointment.dateto|date("Y-m-d") != appointment.datefrom|date("Y-m-d") %}{{ appointment.datefrom|date("Y-m-d") }}{% endif %}" data-appointment-end="{{ appointment.dateto|date("Y-m-d") }}" data-appointment-url="{{ appointment.id }}"></li>
+        {% endfor %}
+        </ul>
         <div id='calendar' data-calendar></div>
     </div>
 </article>
