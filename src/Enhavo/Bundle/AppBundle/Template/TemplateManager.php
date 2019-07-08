@@ -87,7 +87,6 @@ class TemplateManager
     /**
      * @param $template
      * @return string
-     * @throws TemplateNotFoundException
      */
     public function getTemplate($template)
     {
@@ -119,7 +118,8 @@ class TemplateManager
             }
         }
 
-        throw new TemplateNotFoundException(sprintf('The template "%s" could not be found', $template));
+        $this->cache[$template] = $template;
+        return $template;
     }
 
     public function getWebpackBuild()

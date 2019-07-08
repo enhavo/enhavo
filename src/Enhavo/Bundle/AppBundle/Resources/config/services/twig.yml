@@ -29,6 +29,7 @@ services:
     Enhavo\Bundle\AppBundle\Twig\WidgetExtension:
         arguments:
             - '@enhavo_app.widget.widget_manager'
+            - '@enhavo_app.template.manager'
         calls:
             - [ setContainer, ['@service_container']]
         tags:

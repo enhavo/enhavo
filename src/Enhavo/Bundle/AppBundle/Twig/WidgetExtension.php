@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\AppBundle\Widget\WidgetManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
@@ -16,9 +17,15 @@ class WidgetExtension extends AbstractExtension
      */
     private $widgetManager;
 
-    public function __construct(WidgetManager $widgetManager)
+    /**
+     * @var TemplateManager
+     */
+    private $templateManager;
+
+    public function __construct(WidgetManager $widgetManager, TemplateManager $templateManager)
     {
         $this->widgetManager = $widgetManager;
+        $this->templateManager = $templateManager;
     }
 
     public function getFunctions()
@@ -32,6 +39,6 @@ class WidgetExtension extends AbstractExtension
     {
         $widget = $this->widgetManager->getWidget($type, $options);
         $data = $widget->createViewData($resource);
-        return $this->container->get('templating')->render($widget->getTemplate(), $data);
+        return $this->container->get('templating')->render($this->templateManager->getTemplate($widget->getTemplate()), $data);
     }
 }

@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('editor_entrypoint')->defaultValue('enhavo/editor')->end()
+                        ->scalarNode('editor_entrypoint_build')->defaultValue('enhavo')->end()
                     ->end()
                 ->end()
             ->end()
