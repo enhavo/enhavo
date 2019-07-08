@@ -31,6 +31,8 @@ Enhavo\Bundle\ThemeBundle\Model\Template:
     attributes:
         mapping:
             groups: ['theme']
+        path:
+            groups: ['theme']
 
 Enhavo\Bundle\ThemeBundle\Model\Meta:
     attributes:

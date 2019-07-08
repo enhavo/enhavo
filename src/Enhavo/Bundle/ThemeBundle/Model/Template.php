@@ -17,6 +17,11 @@ class Template
     private $mapping;
 
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * @return string[]
      */
     public function getMapping(): array
@@ -30,5 +35,21 @@ class Template
     public function setMapping(array $mapping): void
     {
         $this->mapping = $mapping;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath(?string $path): void
+    {
+        $this->path = $path;
     }
 }

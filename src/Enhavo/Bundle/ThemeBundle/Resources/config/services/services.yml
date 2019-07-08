@@ -52,6 +52,13 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    Enhavo\Bundle\ThemeBundle\EventListener\ThemeRegisterSubscriber:
+        arguments:
+            - '@enhavo_theme.theme.manager'
+            - '@enhavo_app.template.manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\ThemeBundle\Command\ThemeDebugCommand:
         arguments:
             - '@enhavo_theme.theme.manager'
