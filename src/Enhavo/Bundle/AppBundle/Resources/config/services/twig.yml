@@ -16,6 +16,7 @@ services:
     Enhavo\Bundle\AppBundle\Twig\TemplateExtension:
         arguments:
             - '%enhavo_app.form_themes%'
+            - '@enhavo_app.template.manager'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
