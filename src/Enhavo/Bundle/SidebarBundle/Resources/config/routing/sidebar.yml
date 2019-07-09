@@ -25,10 +25,10 @@ enhavo_sidebar_sidebar_create:
                 tabs:
                     main:
                         label: sidebar.label.sidebar
-                        template: EnhavoSidebarBundle:Tab:sidebar.html.twig
+                        template: admin/resource/sidebar/sidebar.html.twig
                     content:
                         label: sidebar.label.content
-                        template: EnhavoSidebarBundle:Tab:content.html.twig
+                        template: admin/resource/content/content.html.twig
                         full_width: true
 
 enhavo_sidebar_sidebar_update:
@@ -44,10 +44,10 @@ enhavo_sidebar_sidebar_update:
                 tabs:
                     main:
                         label: sidebar.label.sidebar
-                        template: EnhavoSidebarBundle:Tab:sidebar.html.twig
+                        template: admin/resource/sidebar/sidebar.html.twig
                     content:
                         label: sidebar.label.content
-                        template: EnhavoSidebarBundle:Tab:content.html.twig
+                        template: admin/resource/content/content.html.twig
                         full_width: true
 
 enhavo_sidebar_sidebar_table:

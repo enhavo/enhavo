@@ -12,15 +12,6 @@ services:
             - '%enhavo_app.roles%'
             - '@translator'
 
-    enhavo_app.controller.app:
-        class: Enhavo\Bundle\AppBundle\Controller\AppController
-        public: true
-        arguments:
-            - '@view.factory'
-            - '@fos_rest.view_handler'
-        calls:
-            - [setContainer, ['@service_container']]
-
     enhavo_app.event_dispatcher:
         class: Enhavo\Bundle\AppBundle\Controller\AppEventDispatcher
         arguments:
@@ -78,3 +69,18 @@ services:
         class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
         arguments:
             - []
+
+    enhavo_app.template.manager:
+        public: true
+        class: Enhavo\Bundle\AppBundle\Template\TemplateManager
+        arguments:
+            - '@kernel'
+            - '@filesystem'
+            - '@enhavo_app.template.config_webpack_build_resolver'
+            - '%enhavo_app.template_paths%'
+            - '%twig.default_path%'
+
+    enhavo_app.template.config_webpack_build_resolver:
+        class: Enhavo\Bundle\AppBundle\Template\ConfigWebpackBuildResolver
+        arguments:
+            - '%enhavo_app.webpack_build%'

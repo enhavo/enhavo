@@ -1,3 +1,7 @@
 enhavo_app:
     form_themes:
-        - 'EnhavoFormBundle:Form:fields.html.twig'
+        - '@EnhavoForm/admin/form/form/fields.html.twig'
+    template_paths:
+        enhavo_form:
+            path: '@EnhavoFormBundle/Resources/views'
+            priority: 10

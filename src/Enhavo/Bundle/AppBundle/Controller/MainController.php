@@ -9,11 +9,14 @@
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
+    use TemplateTrait;
+
     /**
      * @var MenuManager
      */
@@ -62,7 +65,7 @@ class MainController extends AbstractController
             ]
         ];
 
-        return $this->render('EnhavoAppBundle:Main:index.html.twig', [
+        return $this->render($this->getTemplate('admin/main/index.html.twig'), [
             'data' => $data,
             'routes' => $this->getRoutes(),
             'translations' => $this->getTranslations(),

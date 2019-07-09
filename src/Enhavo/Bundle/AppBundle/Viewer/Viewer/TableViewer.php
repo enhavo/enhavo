@@ -147,7 +147,7 @@ class TableViewer extends AbstractResourceViewer
             'batch_route' => null,
             'columns' => [],
             'sortable' => false,
-            'template' => 'EnhavoAppBundle:Viewer:table.html.twig'
+            'template' => 'admin/view/table.html.twig'
         ]);
     }
 }

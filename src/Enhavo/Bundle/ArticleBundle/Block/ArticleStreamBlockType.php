@@ -26,7 +26,7 @@ class ArticleStreamBlockType extends AbstractBlockType
             'form' => ArticleStreamFormType::class,
             'factory' => ArticleStreamFactory::class,
             'repository' => 'EnhavoArticleBundle:ArticleStream',
-            'template' => 'EnhavoArticleBundle:Theme/Block:article-stream.html.twig',
+            'template' => 'theme/block/article-stream.html.twig',
             'label' => 'article.label.article_stream',
             'translationDomain' => 'EnhavoArticleBundle',
             'groups' => ['default', 'content']

@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use FOS\RestBundle\View\View;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactory;
@@ -19,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractResourceViewer extends AbstractType implements ViewerInterface
 {
+    use TemplateTrait;
+
     /**
      * @var RequestConfigurationFactory
      */
@@ -60,7 +63,7 @@ abstract class AbstractResourceViewer extends AbstractType implements ViewerInte
 
         // set template
         if(isset($options['template'])) {
-            $view->setTemplate($this->resolveTemplate($requestConfiguration, $options));
+            $view->setTemplate($this->getTemplate($this->resolveTemplate($requestConfiguration, $options)));
         }
 
         return $view;

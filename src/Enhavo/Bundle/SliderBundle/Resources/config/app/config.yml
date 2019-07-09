@@ -4,6 +4,10 @@ doctrine:
             Enhavo\Bundle\SliderBundle\Model\SliderInterface: Enhavo\Bundle\SliderBundle\Entity\Slider
 
 enhavo_app:
+    template_paths:
+        enhavo_slider:
+            path: '@EnhavoSliderBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_slider_slide_index:
             role: ROLE_ENHAVO_SLIDER_SLIDE_INDEX

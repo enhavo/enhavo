@@ -26,7 +26,7 @@ class BlockquoteBlockType extends AbstractBlockType
             'form' => BlockquoteBlockFormType::class,
             'factory' =>  BlockquoteBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:BlockquoteBlock',
-            'template' => 'EnhavoBlockBundle:Block:blockquote.html.twig',
+            'template' => 'theme/block/blockquote.html.twig',
             'label' =>  'blockquoteText.label.blockquoteText',
             'translationDomain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'content']

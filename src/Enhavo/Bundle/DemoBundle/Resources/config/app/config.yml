@@ -34,5 +34,7 @@ enhavo_theme:
         enable: true
 
 enhavo_app:
-    template:
-       theme_base: 'EnhavoDemoBundle:Theme:base.html.twig'
+    template_paths:
+        enhavo_demo:
+            path: '@EnhavoDemoBundle/Resources/views'
+            priority: 50

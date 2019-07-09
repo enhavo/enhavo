@@ -9,6 +9,10 @@ doctrine:
             Enhavo\Bundle\PageBundle\Model\PageInterface: Enhavo\Bundle\PageBundle\Entity\Page
 
 enhavo_app:
+    template_paths:
+        enhavo_page:
+            path: '@EnhavoPageBundle/Resources/views'
+            priority: 10
     roles:
         page_index:
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX

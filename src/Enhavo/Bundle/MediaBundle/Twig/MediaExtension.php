@@ -71,8 +71,12 @@ class MediaExtension extends AbstractExtension
         return $this->engine;
     }
 
-    public function getMediaUrl(File $file, $format = null, $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function getMediaUrl(?File $file, $format = null, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
+        if($file === null) {
+            return '';
+        }
+
         if($format) {
             return $this->generator->generateFormat($file, $format, $referenceType);
         } else {

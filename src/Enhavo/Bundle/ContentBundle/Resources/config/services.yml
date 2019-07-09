@@ -55,10 +55,3 @@ services:
         class: Enhavo\Bundle\ContentBundle\EventListener\PublishSubscriber
         tags:
             - { name: kernel.event_subscriber }
-
-    Enhavo\Bundle\ContentBundle\Widget\PaginationWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.widget, alias: 'pagination' }

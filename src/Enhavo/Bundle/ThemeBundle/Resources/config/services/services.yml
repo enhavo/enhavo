@@ -1,10 +1,4 @@
 services:
-    enhavo_theme.template.mapper:
-        class: Enhavo\Bundle\ThemeBundle\Template\TemplateMapper
-        arguments:
-            - '@enhavo_theme.theme.manager'
-            - '@templating.name_parser'
-
     enhavo_theme.theme.manager:
         class: Enhavo\Bundle\ThemeBundle\Theme\ThemeManager
         public: true
@@ -52,8 +46,19 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    Enhavo\Bundle\ThemeBundle\EventListener\ThemeRegisterSubscriber:
+        arguments:
+            - '@enhavo_theme.theme.manager'
+            - '@enhavo_app.template.manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
     Enhavo\Bundle\ThemeBundle\Command\ThemeDebugCommand:
         arguments:
             - '@enhavo_theme.theme.manager'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\ThemeBundle\Theme\ThemeWebpackBuildResolver:
+        arguments:
+            - '@enhavo_theme.theme.manager'

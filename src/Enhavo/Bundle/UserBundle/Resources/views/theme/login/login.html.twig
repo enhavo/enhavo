@@ -1,0 +1,9 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block main %}
+    {{ widget_render('login', {
+        error: error,
+        csrf_token: csrf_token,
+        last_username: last_username
+    }) }}
+{% endblock main %}

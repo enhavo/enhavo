@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Viewer;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use FOS\RestBundle\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractViewer implements ViewerInterface
 {
     use ContainerAwareTrait;
+    use TemplateTrait;
 
     abstract public function getType();
 
@@ -42,7 +44,7 @@ abstract class AbstractViewer implements ViewerInterface
         ];
 
         $view->setTemplateData($templateVars);
-        $view->setTemplate($options['template']);
+        $view->setTemplate($this->getTemplate($options['template']));
 
         return $view;
     }
@@ -71,7 +73,7 @@ abstract class AbstractViewer implements ViewerInterface
             'stylesheets' => [],
             'translations' => false,
             'routes' => false,
-            'template' => 'EnhavoAppBundle:Viewer:base.html.twig'
+            'template' => 'admin/view/base.html.twig'
         ]);
     }
 }

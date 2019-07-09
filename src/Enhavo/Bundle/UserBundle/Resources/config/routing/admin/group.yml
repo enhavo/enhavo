@@ -23,10 +23,10 @@ enhavo_user_group_create:
                 translationDomain: EnhavoUserBundle
                 tabs:
                     main:
-                        template: EnhavoUserBundle:Admin/Group:group.html.twig
+                        template: admin/resource/group/group.html.twig
                         label: group.label.group
                     permission:
-                        template: EnhavoUserBundle:Admin/Group:permission.html.twig
+                        template: admin/resource/group/permission.html.twig
                         label: group.label.permission
 
 enhavo_user_group_update:
@@ -40,11 +40,11 @@ enhavo_user_group_update:
             viewer:
                 translationDomain: EnhavoUserBundle
                 tabs:
-                   main:
-                       template: EnhavoUserBundle:Admin/Group:group.html.twig
-                       label: group.label.group
-                   permission:
-                        template: EnhavoUserBundle:Admin/Group:permission.html.twig
+                    main:
+                        template: admin/resource/group/group.html.twig
+                        label: group.label.group
+                    permission:
+                        template: admin/resource/group/permission.html.twig
                         label: group.label.permission
 
 enhavo_user_group_table:

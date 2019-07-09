@@ -26,8 +26,8 @@ class SidebarColumnBlockType extends AbstractBlockType
             'form' => SidebarColumnBlockFormType::class,
             'factory' => SidebarColumnBlockFactory::class,
             'repository' => 'EnhavoSidebarBundle:SidebarColumn',
-            'template' => 'EnhavoSidebarBundle:Block:sidebar-column.html.twig',
-            'form_template' => 'EnhavoBlockBundle:Form:block_fields.html.twig',
+            'template' => 'theme/block/sidebar-column.html.twig',
+            'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'sidebar_column.label.sidebar_column',
             'translationDomain' => 'EnhavoSidebarBundle',
             'groups' => ['default', 'layout']

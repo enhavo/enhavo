@@ -56,14 +56,14 @@ class ArticleStreamType extends AbstractWidgetType
         }
 
         return [
-            'articles' => $articles,
+            'resources' => $articles,
         ];
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoArticleBundle:Widget:article_stream.html.twig',
+            'template' => 'theme/resource/article/list.html.twig',
             'categories' => [],
             'tags' => [],
             'pagination' => true,

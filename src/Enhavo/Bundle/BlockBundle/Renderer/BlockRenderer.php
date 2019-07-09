@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Renderer;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Exception\RenderException;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -28,15 +29,22 @@ class BlockRenderer
     private $renderSets;
 
     /**
+     * @var TemplateManager
+     */
+    private $templateManager;
+
+    /**
      * ContainerRenderer constructor.
      *
      * @param BlockManager $blockManager
      * @param array $renderSets
+     * @param TemplateManager $templateManager
      */
-    public function __construct(BlockManager $blockManager, $renderSets)
+    public function __construct(BlockManager $blockManager, $renderSets, TemplateManager $templateManager)
     {
         $this->blockManager = $blockManager;
         $this->renderSets = $renderSets;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -128,6 +136,6 @@ class BlockRenderer
 
         $viewData = $node->getViewData();
 
-        return $this->renderTemplate($template, $viewData);
+        return $this->renderTemplate($this->templateManager->getTemplate($template), $viewData);
     }
 }

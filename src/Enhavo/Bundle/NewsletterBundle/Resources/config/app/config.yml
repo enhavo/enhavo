@@ -19,6 +19,10 @@ enhavo_newsletter:
             template: EnhavoNewsletterBundle:Subscriber:subscribe.html.twig
 
 enhavo_app:
+    template_paths:
+        enhavo_newsletter:
+            path: '@EnhavoNewsletterBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_newsletter_subscriber_index:
             role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX

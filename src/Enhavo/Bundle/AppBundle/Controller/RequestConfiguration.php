@@ -32,17 +32,7 @@ class RequestConfiguration extends SyliusRequestConfiguration
 
     public function getDefaultTemplate($name)
     {
-        if(substr_count($name, ':') == 2) {
-            return $name;
-        }
-
-        $templatesNamespace = $this->getMetadata()->getTemplatesNamespace();
-
-        if (false !== strpos($templatesNamespace, ':')) {
-            return sprintf('%s:%s.%s', $templatesNamespace ?: ':', $name, 'twig');
-        }
-
-        return sprintf('%s/%s.%s', $templatesNamespace, $name, 'twig');
+        return $name;
     }
 
     public function isAjaxRequest()

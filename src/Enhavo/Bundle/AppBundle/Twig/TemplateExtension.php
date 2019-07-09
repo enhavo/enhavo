@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -22,12 +23,19 @@ class TemplateExtension extends AbstractExtension
     private $formThemes;
 
     /**
+     * @var TemplateManager
+     */
+    private $templateManager;
+
+    /**
      * TemplateExtension constructor.
      * @param array $formThemes
+     * @param TemplateManager $templateManager
      */
-    public function __construct(array $formThemes)
+    public function __construct(array $formThemes, TemplateManager $templateManager)
     {
         $this->formThemes = $formThemes;
+        $this->templateManager = $templateManager;
     }
 
     public function getFunctions()
@@ -35,6 +43,7 @@ class TemplateExtension extends AbstractExtension
         return array(
             new TwigFunction('template', array($this, 'getTemplate')),
             new TwigFunction('form_themes', array($this, 'getFormThemes')),
+            new TwigFunction('webpack_build', array($this, 'getWebpackBuild')),
         );
     }
 
@@ -49,13 +58,11 @@ class TemplateExtension extends AbstractExtension
      */
     public function getTemplate(string $template): string
     {
-        $templates = $this->container->getParameter('enhavo_app.template');
-        if(!array_key_exists($template, $templates)) {
-            throw new \InvalidArgumentException(sprintf('Template "%s" does not exists. Did you mean one of them [%s]',
-                $template,
-                implode(',', $templates)
-            ));
-        }
-        return $templates[$template];
+        return $this->templateManager->getTemplate($template);
+    }
+
+    public function getWebpackBuild()
+    {
+        return $this->templateManager->getWebpackBuild();
     }
 }

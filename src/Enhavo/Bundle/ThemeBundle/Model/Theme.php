@@ -32,11 +32,6 @@ class Theme
     private $template;
 
     /**
-     * @var Block
-     */
-    private $block;
-
-    /**
      * @var string
      */
     private $path;
@@ -87,22 +82,6 @@ class Theme
     public function setTemplate(Template $template): void
     {
         $this->template = $template;
-    }
-
-    /**
-     * @return Block
-     */
-    public function getBlock(): Block
-    {
-        return $this->block;
-    }
-
-    /**
-     * @param Block $block
-     */
-    public function setBlock(Block $block): void
-    {
-        $this->block = $block;
     }
 
     /**

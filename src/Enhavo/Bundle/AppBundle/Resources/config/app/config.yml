@@ -27,3 +27,12 @@ sylius_resource:
 jms_serializer:
     metadata:
         auto_detection: false
+
+enhavo_app:
+    template_paths:
+        default:
+            path: ''
+            priority: 150
+        enhavo_app:
+            path: '@EnhavoAppBundle/Resources/views'
+            priority: 10

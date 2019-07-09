@@ -87,16 +87,14 @@ class LoginViewer extends AbstractViewer
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoUserBundle:Admin/Security:login.html.twig',
+            'template' => 'admin/login/login.html.twig',
             'stylesheets' => [
                 'enhavo/login'
             ],
             'javascripts' => [
                 'enhavo/login'
             ],
-            'parameters' => [
-
-            ]
+            'parameters' => []
         ]);
     }
 }

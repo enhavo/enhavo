@@ -26,8 +26,8 @@ class TwoColumnBlockType extends AbstractBlockType
             'form' => TwoColumnBlockFormType::class,
             'factory' => TwoColumnBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:TwoColumnBlock',
-            'template' => 'EnhavoBlockBundle:Block:two-column.html.twig',
-            'form_template' => 'EnhavoBlockBundle:Form:block_fields.html.twig',
+            'template' => 'theme/block/two-column.html.twig',
+            'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'two_column.label.two_column',
             'translationDomain' => 'EnhavoBlockBundle',
             'groups' => ['default', 'layout']

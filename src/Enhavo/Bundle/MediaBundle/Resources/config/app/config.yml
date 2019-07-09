@@ -1,7 +1,7 @@
 twig:
     form_themes:
-        - 'EnhavoMediaBundle:Form:media.html.twig'
-        - 'EnhavoMediaBundle:Form:image-cropper.html.twig'
+        - '@EnhavoMedia/admin/form/media/media.html.twig'
+        - '@EnhavoMedia/admin/form/media/image-cropper.html.twig'
 
 doctrine:
     orm:
@@ -9,8 +9,10 @@ doctrine:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
 
 enhavo_app:
-#    stylesheets:
-#        - '@EnhavoMediaBundle/Resources/public/css/style.css'
+    template_paths:
+        enhavo_media:
+            path: '@EnhavoMediaBundle/Resources/views'
+            priority: 10
     apps:
         - 'media/Adapter/EnhavoAdapter'
         - 'media/Extension/ImageCropper'
