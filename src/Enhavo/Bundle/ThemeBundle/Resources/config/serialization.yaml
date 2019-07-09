@@ -42,10 +42,3 @@ Enhavo\Bundle\ThemeBundle\Model\Meta:
             groups: ['theme']
         description:
             groups: ['theme']
-
-Enhavo\Bundle\ThemeBundle\Model\Block:
-    attributes:
-        column_styles:
-            groups: ['theme']
-        templates:
-            groups: ['theme']

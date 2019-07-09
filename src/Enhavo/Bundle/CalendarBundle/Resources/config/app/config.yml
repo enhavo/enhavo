@@ -9,7 +9,7 @@ enhavo_app:
     template_paths:
         enhavo_calendar:
             path: '@EnhavoCalendarBundle/Resources/views'
-            priority: 50
+            priority: 10
     roles:
         enhavo_calendar_appointment_index:
             role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX

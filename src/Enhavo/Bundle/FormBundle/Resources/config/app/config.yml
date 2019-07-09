@@ -4,4 +4,4 @@ enhavo_app:
     template_paths:
         enhavo_form:
             path: '@EnhavoFormBundle/Resources/views'
-            priority: 50
+            priority: 10

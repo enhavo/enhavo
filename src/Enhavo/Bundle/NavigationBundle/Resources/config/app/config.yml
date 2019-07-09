@@ -2,7 +2,7 @@ enhavo_app:
     template_paths:
         enhavo_navigation:
             path: '@EnhavoNavigationBundle/Resources/views'
-            priority: 50
+            priority: 10
     roles:
         enhavo_navigation_navigation_index:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX

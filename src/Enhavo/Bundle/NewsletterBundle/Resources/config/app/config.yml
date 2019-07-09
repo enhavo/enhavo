@@ -22,7 +22,7 @@ enhavo_app:
     template_paths:
         enhavo_newsletter:
             path: '@EnhavoNewsletterBundle/Resources/views'
-            priority: 50
+            priority: 10
     roles:
         enhavo_newsletter_subscriber_index:
             role: ROLE_ENHAVO_NEWSLETTER_SUBSCRIBER_INDEX

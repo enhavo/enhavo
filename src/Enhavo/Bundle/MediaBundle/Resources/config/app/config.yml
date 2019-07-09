@@ -12,7 +12,7 @@ enhavo_app:
     template_paths:
         enhavo_media:
             path: '@EnhavoMediaBundle/Resources/views'
-            priority: 50
+            priority: 10
     apps:
         - 'media/Adapter/EnhavoAdapter'
         - 'media/Extension/ImageCropper'
