@@ -1,0 +1,6 @@
+<section>
+    <article class="container page-article">
+        <div class="article-date">{{ resource.publicationDate|date('d.m.y') }}</div>
+        {{ block_render(resource.content) }}
+    </article>
+</section>

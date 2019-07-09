@@ -3,11 +3,11 @@
 namespace Enhavo\Bundle\CalendarBundle\Controller;
 
 use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExportController extends Controller
+class ExportController extends AbstractController
 {
     public function exportAction()
     {
