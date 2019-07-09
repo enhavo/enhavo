@@ -12,7 +12,7 @@ class ArticleController extends AbstractController
 
     public function showResourceAction($contentDocument)
     {
-        return $this->render($this->getTemplate('article/show.html.twig'), array(
+        return $this->render($this->getTemplate('theme/resource/article/show.html.twig'), array(
             'resource' => $contentDocument
         ));
     }

@@ -5,3 +5,7 @@ enhavo_calendar:
 enhavo_calendar_export:
     resource: "@EnhavoCalendarBundle/Resources/config/routing/theme/export.yml"
     prefix: /
+
+enhavo_calendar_appointment:
+    resource: "@EnhavoCalendarBundle/Resources/config/routing/theme/appointment.yml"
+    prefix: /

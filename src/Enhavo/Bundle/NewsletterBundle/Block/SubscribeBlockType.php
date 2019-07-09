@@ -20,7 +20,7 @@ class SubscribeBlockType extends AbstractBlockType
             'form' => SubscribeBlockFormType::class,
             'factory' => SubscribeBlockFactory::class,
             'repository' => 'EnhavoNewsletterBundle:SubscribeBlock',
-            'template' => 'EnhavoNewsletterBundle:Theme/Block:subscribe.html.twig',
+            'template' => 'theme/block/subscribe.html.twig',
             'label' => 'Newsletter Subscribe',
             'translationDomain' => 'EnhavoNewsletterBundle',
             'groups' => ['default', 'content']
