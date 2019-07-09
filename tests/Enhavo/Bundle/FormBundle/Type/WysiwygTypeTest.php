@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class WysiwygTypeTest extends TypeTestCase
@@ -11,11 +12,16 @@ class WysiwygTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         $entrypontLookupMock = $this->getMockBuilder(EntrypointLookupInterface::class)->getMock();
-        $entrypontLookupMock->method('getCssFiles')->willReturnCallback(function($message) {
+        $entrypontLookupMock->method('getCssFiles')->willReturnCallback(function() {
             return ['entrypoint_css'];
         });
 
-        $type = new WysiwygType('entrypoint', $entrypontLookupMock);
+        $entrypontLookupCollectionMock = $this->getMockBuilder(EntrypointLookupCollectionInterface::class)->getMock();
+        $entrypontLookupCollectionMock->method('getEntrypointLookup')->willReturnCallback(function() use ($entrypontLookupMock) {
+            return $entrypontLookupMock;
+        });
+
+        $type = new WysiwygType('entrypoint', 'build', $entrypontLookupCollectionMock);
         return array(
             new PreloadedExtension(array($type), array()),
         );
