@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('repository')->end()
                             ->scalarNode('label')->end()
                             ->scalarNode('translation_domain')->end()
-                            ->scalarNode('template')->defaultValue('EnhavoTemplateBundle:Theme/Template:show.html.twig')->end()
+                            ->scalarNode('template')->defaultValue('theme/resource/template/show.html.twig')->end()
                             ->scalarNode('resource_template')->end()
                         ->end()
                     ->end()

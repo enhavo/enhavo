@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TemplateController extends AbstractController
 {
+    use TemplateTrait;
+
     /**
      * @var TemplateManager
      */
@@ -45,7 +48,7 @@ class TemplateController extends AbstractController
 
         $this->templateManager->injectTemplate($contentDocument, $template);
 
-        return $this->render($template->getTemplate(), [
+        return $this->render($this->getTemplate($template->getTemplate()), [
             'template' => $contentDocument,
             'resource' => $resource
         ]);

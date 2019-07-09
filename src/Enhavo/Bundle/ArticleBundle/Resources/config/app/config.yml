@@ -58,4 +58,4 @@ enhavo_template:
             repository: enhavo_article.repository.article
             label: article.label.article
             translation_domain: EnhavoArticleBundle
-            resource_template: EnhavoArticleBundle:Theme/Article:resource.html.twig
+            resource_template: theme/resource/article/resource.html.twig
