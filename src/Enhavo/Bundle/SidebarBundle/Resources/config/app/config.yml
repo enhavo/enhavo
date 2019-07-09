@@ -4,6 +4,10 @@ doctrine:
             Enhavo\Bundle\SidebarBundle\Model\SidebarInterface: Enhavo\Bundle\SidebarBundle\Entity\Sidebar
 
 enhavo_app:
+    template_paths:
+        enhavo_sidebar:
+            path: '@EnhavoSidebarBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_sidebar_sidebar_index:
             role: ROLE_ENHAVO_SIDEBAR_SIDEBAR_INDEX

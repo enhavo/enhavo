@@ -64,7 +64,7 @@ class BaseViewer extends AbstractResourceViewer
             'javascripts' => [],
             'stylesheets' => [],
             'translation_domain' => null,
-            'template' => 'EnhavoAppBundle:Viewer:base.html.twig',
+            'template' => 'admin/view/base.html.twig',
             'parameters' => []
         ]);
     }

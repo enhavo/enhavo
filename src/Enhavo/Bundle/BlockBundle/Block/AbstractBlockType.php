@@ -83,7 +83,7 @@ abstract class AbstractBlockType extends AbstractType implements BlockTypeInterf
             'options' => [],
             'parent' => null,
             'translationDomain' => null,
-            'form_template' => 'EnhavoBlockBundle:Form:block.html.twig',
+            'form_template' => '@EnhavoBlock/admin/form/block/block.html.twig',
             'groups' => ['default']
         ]);
 

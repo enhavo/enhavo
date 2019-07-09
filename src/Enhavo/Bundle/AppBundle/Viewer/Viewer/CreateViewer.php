@@ -88,7 +88,7 @@ class CreateViewer extends BaseViewer
             [
                 'main' => [
                     'label' => sprintf('%s.label.%s', $this->getUnderscoreName($metadata), $this->getUnderscoreName($metadata)),
-                    'template' => 'EnhavoAppBundle:Viewer:form_template.html.twig'
+                    'template' => 'admin/view/form_template.html.twig'
                 ],
             ],
             $options['tabs'],
@@ -192,7 +192,7 @@ class CreateViewer extends BaseViewer
             'form_action' => null,
             'form_action_parameters' => [],
             'form_template' => 'EnhavoAppBundle:View:tab.html.twig',
-            'template' => 'EnhavoAppBundle:Viewer:form.html.twig'
+            'template' => 'admin/view/form.html.twig'
         ]);
     }
 }

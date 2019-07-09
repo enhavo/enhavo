@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main %}
-    {% form_theme form 'EnhavoShopBundle:Theme:Form/fields.html.twig' %}
+    {% form_theme form template('admin/form/shop/fields.html.twig' %}
     <h1>Payment</h1>
     <div>
         <form action="{{ path('enhavo_shop_theme_checkout_payment') }}" method="POST" data-checkout-form>

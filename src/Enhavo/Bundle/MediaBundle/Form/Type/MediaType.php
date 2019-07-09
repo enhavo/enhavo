@@ -118,7 +118,7 @@ class MediaType extends AbstractType
             'prototype' => true,
             'prototype_data' => null,
             'prototype_name' => '__name__',
-            'item_template' => 'EnhavoMediaBundle:Form:item.html.twig',
+            'item_template' => '@EnhavoMedia/admin/form/media/item.html.twig',
             'upload' => true,
             'extensions' => []
         ));

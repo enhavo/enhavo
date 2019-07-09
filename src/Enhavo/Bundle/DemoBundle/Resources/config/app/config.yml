@@ -32,3 +32,9 @@ enhavo_search:
 enhavo_theme:
     dynamic:
         enable: true
+
+enhavo_app:
+    template_paths:
+        enhavo_demo:
+            path: '@EnhavoDemoBundle/Resources/views'
+            priority: 50

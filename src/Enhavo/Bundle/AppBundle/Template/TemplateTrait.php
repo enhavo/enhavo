@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-namespace Enhavo\Bundle\AppBundle\Controller;
+namespace Enhavo\Bundle\AppBundle\Template;
 
 use Psr\Container\ContainerInterface;
 
@@ -15,7 +15,7 @@ use Psr\Container\ContainerInterface;
  * @package Enhavo\Bundle\AppBundle\Controller
  * @property ContainerInterface $container
  */
-trait TemplateControllerTrait
+trait TemplateTrait
 {
     public function getTemplate($name)
     {

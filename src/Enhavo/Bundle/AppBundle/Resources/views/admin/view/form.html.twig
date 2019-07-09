@@ -1,4 +1,4 @@
-{% extends 'EnhavoAppBundle:Viewer:base.html.twig' %}
+{% extends template('admin/view/base.html.twig') %}
 
 {% form_theme form with form_themes %}
 
@@ -7,7 +7,7 @@
     <div data-tab-container style="display: none">
         {% for key,tab in tabs %}
             <div data-tab="{{ key }}">
-                {% include tab.template %}
+                {% include template(tab.template) %}
                 {% if loop.last and form._token is defined and not form._token.rendered%}
                     {{ form_row(form._token) }}
                 {% endif %}

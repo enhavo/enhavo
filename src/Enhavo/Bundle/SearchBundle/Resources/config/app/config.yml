@@ -1,3 +1,5 @@
 enhavo_app:
-#    stylesheets:
-#      - '@EnhavoSearchBundle/Resources/public/css/style.css'
+    template_paths:
+        enhavo_search:
+            path: '@EnhavoSearchBundle/Resources/views'
+            priority: 10

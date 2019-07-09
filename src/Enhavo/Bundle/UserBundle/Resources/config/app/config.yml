@@ -15,6 +15,10 @@ fos_user:
         group_class: Enhavo\Bundle\UserBundle\Entity\Group
 
 enhavo_app:
+    template_paths:
+        enhavo_user:
+            path: '@EnhavoUserBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_user_user_index:
             role: ROLE_ENHAVO_USER_USER_INDEX

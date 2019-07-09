@@ -2,13 +2,13 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Controller\TemplateControllerTrait;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
-    use TemplateControllerTrait;
+    use TemplateTrait;
 
     public function showResourceAction($contentDocument)
     {

@@ -1,1 +1,5 @@
-
+enhavo_app:
+    template_paths:
+        enhavo_contact:
+            path: '@EnhavoContactBundle/Resources/views'
+            priority: 50

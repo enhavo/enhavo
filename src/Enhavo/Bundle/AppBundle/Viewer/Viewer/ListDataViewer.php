@@ -62,7 +62,7 @@ class ListDataViewer extends AbstractResourceViewer
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([
-            'template' => 'EnhavoAppBundle:Viewer:data.html.twig',
+            'template' => 'admin/view/data.html.twig',
             'columns' => [],
             'children_property' => null,
             'position_property' => null,

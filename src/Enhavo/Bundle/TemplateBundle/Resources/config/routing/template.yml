@@ -22,10 +22,10 @@ enhavo_template_template_create:
                 tabs:
                     main:
                         label: template.label.template
-                        template: EnhavoTemplateBundle:Tab:template.html.twig
+                        template: admin/resource/template/template.html.twig
                     content:
                         label: template.label.content
-                        template: EnhavoTemplateBundle:Tab:content.html.twig
+                        template: admin/resource/content/content.html.twig
                         full_width: true
 
 enhavo_template_template_update:
@@ -41,10 +41,10 @@ enhavo_template_template_update:
                 tabs:
                     main:
                         label: template.label.template
-                        template: EnhavoTemplateBundle:Tab:template.html.twig
+                        template: admin/resource/template/template.html.twig
                     content:
                         label: template.label.content
-                        template: EnhavoTemplateBundle:Tab:content.html.twig
+                        template: admin/resource/content/content.html.twig
                         full_width: true
 
 enhavo_template_template_table:

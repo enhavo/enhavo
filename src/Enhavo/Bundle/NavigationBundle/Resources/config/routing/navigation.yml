@@ -24,10 +24,10 @@ enhavo_navigation_navigation_create:
                 tabs:
                     main:
                         label: navigation.label.navigation
-                        template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
+                        template: admin/resource/navigation/main.html.twig
                     nodes:
                         label: navigation.label.items
-                        template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
+                        template: admin/resource/navigation/nodes.html.twig
                         full_width: true
 
 enhavo_navigation_navigation_update:
@@ -43,10 +43,10 @@ enhavo_navigation_navigation_update:
                 tabs:
                     main:
                         label: navigation.label.navigation
-                        template: EnhavoNavigationBundle:Admin/Navigation:main.html.twig
+                        template: admin/resource/navigation/main.html.twig
                     nodes:
                         label: navigation.label.items
-                        template: EnhavoNavigationBundle:Admin/Navigation:nodes.html.twig
+                        template: admin/resource/navigation/nodes.html.twig
                         full_width: true
 
 enhavo_navigation_navigation_table:

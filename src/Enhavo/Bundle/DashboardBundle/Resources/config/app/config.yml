@@ -4,3 +4,7 @@ enhavo_app:
             role: ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX
             label: dashboard.role.label.index
             translationDomain: EnhavoDashboardBundle
+    template_paths:
+        enhavo_dashboard:
+            path: '@EnhavoDashboardBundle/Resources/views'
+            priority: 50

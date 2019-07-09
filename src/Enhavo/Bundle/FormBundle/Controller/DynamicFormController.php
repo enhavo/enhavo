@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\FormBundle\DynamicForm\ResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DynamicFormController extends AbstractController
 {
+    use TemplateTrait;
+
     public function itemAction(Request $request)
     {
         $resolver = $this->getResolver($request);
@@ -32,7 +35,7 @@ class DynamicFormController extends AbstractController
             'item_full_name' => $formName
         ));
 
-        return $this->render('EnhavoFormBundle:DynamicForm:form.html.twig', array(
+        return $this->render($this->getTemplate('admin/form/form/dynamic-form.html.twig'), array(
             'form' => $form->createView()
         ));
     }

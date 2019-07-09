@@ -10,5 +10,9 @@ enhavo_media:
             width: 960
 
 enhavo_app:
+    template_paths:
+        enhavo_block:
+            path: '@EnhavoBlockBundle/Resources/views'
+            priority: 50
     form_themes:
-        - 'EnhavoBlockBundle:Form:fields.html.twig'
+        - '@EnhavoBlock/admin/form/block/fields.html.twig'

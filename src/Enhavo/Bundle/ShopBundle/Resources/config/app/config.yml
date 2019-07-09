@@ -94,6 +94,10 @@ doctrine:
             Sylius\Component\Product\Model\ProductAssociationInterface: Enhavo\Bundle\ShopBundle\Entity\ProductAssociation
 
 enhavo_app:
+    template_paths:
+        enhavo_shop:
+            path: '@EnhavoShopBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_shop_product_index:
             role: ROLE_ENHAVO_SHOP_PRODUCT_INDEX

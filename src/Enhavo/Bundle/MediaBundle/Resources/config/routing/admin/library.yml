@@ -65,7 +65,7 @@ enhavo_media_library_update:
                 tabs:
                     main:
                         label: file.label.file
-                        template: 'EnhavoMediaBundle:Admin/Library:file.html.twig'
+                        template: 'admin/resource/file/library.html.twig'
 
 enhavo_media_library_delete:
     options:

@@ -35,8 +35,8 @@ class ResourceBlockType extends AbstractBlockType
             'form' => ResourceBlockFormType::class,
             'factory' => ResourceBlockFactory::class,
             'repository' => 'EnhavoBlockBundle:CiteText',
-            'template' => 'EnhavoTemplateBundle:Theme/Block:resource.html.twig',
-            'form_template' => 'EnhavoBlockBundle:Form:block_empty.html.twig',
+            'template' => 'theme/block/resource.html.twig',
+            'form_template' => '@EnhavoBlock/admin/form/block/block_empty.html.twig',
             'label' =>  'resource.label.resource',
             'translationDomain' => 'EnhavoTemplateBundle',
             'groups' => ['template']

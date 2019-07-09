@@ -1,4 +1,8 @@
 enhavo_app:
+    template_paths:
+        enhavo_template:
+            path: '@EnhavoTemplateBundle/Resources/views'
+            priority: 10
     roles:
         enhavo_template_template_index:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX

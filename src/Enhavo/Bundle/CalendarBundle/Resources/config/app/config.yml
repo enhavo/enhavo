@@ -6,6 +6,10 @@ enhavo_content:
                 repository: enhavo_calendar.repository.appointment
 
 enhavo_app:
+    template_paths:
+        enhavo_calendar:
+            path: '@EnhavoCalendarBundle/Resources/views'
+            priority: 50
     roles:
         enhavo_calendar_appointment_index:
             role: ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX

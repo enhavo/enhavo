@@ -1,7 +1,7 @@
 {% trans_default_domain 'EnhavoShopBundle' %}
 
-{% form_theme form 'EnhavoShopBundle:Theme/Form:fields.html.twig' %}
-
+{% form_theme form template('admin/form/shop/fields.html.twig' %}
+{% form_theme form template('admin/form/form/fields.html.twig' %}
 <div class="coupon">
     <div data-coupon-form data-reedem-action="{{ path('enhavo_shop_theme_promotion_redeem_coupon') }}" data-cancel-action="{{ path('enhavo_shop_theme_promotion_cancel_coupon') }}" >
         {% if order.promotionCoupon %}

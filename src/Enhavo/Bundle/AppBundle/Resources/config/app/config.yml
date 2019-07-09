@@ -31,8 +31,8 @@ jms_serializer:
 enhavo_app:
     template_paths:
         default:
-            path: 'theme'
+            path: ''
             priority: 150
         enhavo_app:
-            path: '@EnhavoAppBundle/Resources/views/theme'
+            path: '@EnhavoAppBundle/Resources/views'
             priority: 50
