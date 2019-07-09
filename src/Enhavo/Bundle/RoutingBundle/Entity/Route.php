@@ -54,4 +54,20 @@ class Route extends RouteModel implements RouteInterface
     {
         $this->contentId = $contentId;
     }
+
+    public function setPath($path)
+    {
+        $prefix = $path;
+        $variablePattern = null;
+
+        $position = strpos($path, '/{');
+
+        if($position !== false) {
+            $prefix = substr($path, 0, $position);
+            $variablePattern = substr($path, $position);
+        }
+
+        $this->setStaticPrefix($prefix);
+        $this->setVariablePattern($variablePattern);
+    }
 }

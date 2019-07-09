@@ -21,3 +21,7 @@ stof_doctrine_extensions:
 
 enhavo_routing:
     classes:
+
+enhavo_app:
+    form_themes:
+        - '@EnhavoRouting/admin/form/route/fields.html.twig'
