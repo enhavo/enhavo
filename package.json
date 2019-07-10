@@ -9,7 +9,6 @@
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "blueimp-file-upload": "^9.22.1",
-    "bootstrap": "^4.3.1",
     "chart.js": "^2.4.0",
     "compass-mixins": "^0.12.10",
     "copy-webpack-plugin": "^4.5.2",
