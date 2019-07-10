@@ -34,9 +34,9 @@ class MakeRouting extends AbstractMaker
     {
         $command
             ->setDescription('Creates a new routing file')
-            ->addArgument('app', InputArgument::REQUIRED, 'What is the app name?')
             ->addArgument('resource', InputArgument::REQUIRED, 'What is the name of the resource?')
-            ->addOption('What is the name of the resource?', null, InputOption::VALUE_REQUIRED, 'If the resource can be sorted, what is the property name to sort by?')
+            ->addArgument('bundle', InputArgument::OPTIONAL, 'What is the bundle name? Type "no" if no bundle is needed')
+            ->addArgument('sortable', InputArgument::OPTIONAL, 'Is the resource sortable? [yes/no]')
         ;
     }
 
@@ -53,11 +53,18 @@ class MakeRouting extends AbstractMaker
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
         $resource = $input->getArgument('resource');
-        $app = $input->getArgument('app');
-        $bundleName = sprintf('%sBundle', $this->util->snakeCaseToCamelCase($app));
+        $bundle = $input->hasArgument('bundle');
 
+        if($bundle == 'no') {
+            $app = 'app';
+            $path = sprintf('%s/config/routes/admin/%s.yaml', $this->util->getProjectPath(), $this->util->camelCaseToSnakeCase($resource));
+        } else {
+            $app = $this->util->getBundleNameWithoutPostfix($bundle);
+            $path = sprintf('%s/Resources/config/routing/admin/%s.yml', $this->util->getBundlePath($bundle), $this->util->camelCaseToSnakeCase($resource));
+        }
+        
         $generator->generateFile(
-            sprintf('%s/Resources/config/routing/admin/%s.yml', $this->util->getBundlePath($bundleName), $this->util->camelCaseToSnakeCase($resource)),
+            $path,
             $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/routing.tpl.php'),
             [
                 'app' => $this->util->camelCaseToSnakeCase($app),

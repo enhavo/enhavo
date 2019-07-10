@@ -21,6 +21,74 @@ class MakerUtil
         $this->kernel = $kernel;
     }
 
+    private function normalizeCase($name)
+    {
+        if(is_array($name)) {
+            $parts = $name;
+        } elseif(preg_match('/-/', $name)) {
+            $parts = explode('-', $name);
+        } elseif(preg_match('/_/', $name)) {
+            $parts = explode('_', $name);
+        } elseif($this->isCamelCase($name)) {
+            $parts = [];
+            $name = lcfirst($name);
+            $length = strlen($name);
+            $word = '';
+            for ($i = 0; $i < $length; ++$i) {
+                if (ctype_upper($name[$i])) {
+                    $parts[] = $word;
+                    $word = '';
+                    $word .= $name[$i];
+                } else {
+                    $word .= $name[$i];
+                }
+            }
+            if($word) {
+                $parts[] = $word;
+            }
+        } else {
+            $parts = [$name];
+        }
+
+        foreach($parts as &$part) {
+            $part = strtolower($part);
+        }
+
+        return $parts;
+    }
+
+    private function isCamelCase($name)
+    {
+        $length = strlen($name);
+        for ($i = 0; $i < $length; ++$i) {
+            if (ctype_upper($name[$i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function camelCase($name)
+    {
+        $parts = $this->normalizeCase($name);
+        foreach($parts as &$part) {
+            $part = ucfirst($part);
+        }
+        return implode('', $parts);
+    }
+
+    public function kebabCase($name)
+    {
+        $parts = $this->normalizeCase($name);
+        return implode('-', $parts);
+    }
+
+    public function snakeCase($name)
+    {
+        $parts = $this->normalizeCase($name);
+        return implode('_', $parts);
+    }
+
     public function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
     {
         $lcCamelCaseName = lcfirst($camelCaseName);
@@ -118,5 +186,10 @@ class MakerUtil
     public function getRealpath($path)
     {
         return $this->kernel->locateResource($path);
+    }
+
+    public function getProjectPath()
+    {
+        return $this->kernel->getProjectDir();
     }
 }

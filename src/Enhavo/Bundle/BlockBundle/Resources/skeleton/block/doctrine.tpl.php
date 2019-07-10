@@ -1,4 +1,4 @@
-<?= $bundle_namespace; ?>\Entity\<?=  $block_sub_directory ? $block_sub_directory.'\\' : ''; ?><?= $block_name; ?>:
+<?= $namespace; ?>\<?= $name; ?>Block:
     type: entity
     table: <?= $table_name; ?><?= "\n"; ?>
 

@@ -1,1 +1,1 @@
-{# Template for container block <?= $block_name ?> #}
+{# Template for container block <?= $name ?> #}
