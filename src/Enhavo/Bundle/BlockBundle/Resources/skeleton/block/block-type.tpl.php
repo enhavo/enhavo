@@ -2,27 +2,27 @@
 
 namespace <?= $namespace ?>\Block;
 
-use <?= $namespace ?>\Entity\<?= $block_name ?>;
-use <?= $namespace ?>\Factory\<?= $block_name ?>Factory;
-use <?= $namespace ?>\Form\Type\<?= $block_name ?>Type as <?= $block_name ?>FormType;
+use <?= $entity_namespace ?>\<?= $name_camel ?>Block;
+use <?= $factory_namespace ?>\<?= $name_camel ?>BlockFactory;
+use <?= $form_namespace ?>\<?= $name_camel ?>BlockType as <?= $name_camel ?>BlockFormType;
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $block_name ?>Type extends AbstractBlockType
+class <?= $name_camel ?>BlockType extends AbstractBlockType
 {
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'model' => <?= $block_name ?>::class,
-            'parent' => <?= $block_name ?>::class,
-            'form' => <?= $block_name ?>FormType::class,
-            'factory' => <?= $block_name ?>Factory::class,
-            'repository' => '<?= $bundle_name ?>:<?= $block_name ?>',
-            'template' => '<?= $bundle_name ?>:Theme/Block:<?= $name_kebab ?>.html.twig',
+            'model' => <?= $name_camel ?>Block::class,
+            'parent' => <?= $name_camel ?>Block::class,
+            'form' => <?= $name_camel ?>BlockFormType::class,
+            'factory' => <?= $name_camel ?>BlockFactory::class,
+            'repository' => '<?= $name_camel ?>Block::class',
+            'template' => 'theme/block/<?= $name_kebab ?>.html.twig',
             'label' => '<?= $name_camel ?>',
-            'translationDomain' => '<?= $bundle_name ?>',
+            'translationDomain' => <?= $translation_domain ? "'".$translation_domain."'" : null ?>,
             'groups' => ['default', 'content']
         ]);
     }

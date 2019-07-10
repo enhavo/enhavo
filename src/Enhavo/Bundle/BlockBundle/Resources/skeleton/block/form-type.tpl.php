@@ -1,13 +1,13 @@
 <?= "<?php\n" ?>
 
-namespace <?= $namespace ?>;
+namespace <?= $form_namespace ?>;
 
-
+use <?= $entity_namespace ?>\<?= $name ?>Block;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $block_name ?>Type extends AbstractType
+class <?= $name ?>BlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,7 +17,7 @@ class <?= $block_name ?>Type extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '<?= $block_namespace ?>'
+            'data_class' => <?= $name ?>Block::class
         ));
     }
 

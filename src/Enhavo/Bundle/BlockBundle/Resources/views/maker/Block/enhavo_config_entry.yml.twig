@@ -1,11 +1,11 @@
         {{ origin_name }}:
-{% if block_type %}            type: {{ origin_name }}
+{% if block_type %}            type: {{ name_snake }}
 {% else %}            type: base
-            model: {{ block_namespace }}
-            parent: {{ block_namespace }}
-            label: {{ block_name }}
-            form: {{ form_type_namespace }}
-            repository: {{ bundle_name }}:{{ block_name }}
-            template: {{ template }}
-            factory: {{ factory_namespace }}
+            model: {{ entity_namespace }}\{{ name_camel }}Block
+            parent: {{ entity_namespace }}\{{ name_camel }}Block
+            label: {{ name_camel }}
+            form: {{ form_namespace }}\{{ name_camel }}BlockType
+            repository: {{ entity_namespace }}\{{ name_camel }}Block
+            template: 'theme/block/{{ name_kebab }}.html.twig'
+            factory: {{ factory_namespace }}\{{ name_camel }}BlockFactory
 {% endif %}

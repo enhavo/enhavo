@@ -11,7 +11,6 @@ use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -49,14 +48,14 @@ class MakeBlock extends AbstractMaker
         $command
         ->setDescription('Creates a new block')
         ->addArgument(
-            'bundleName',
+            'namespace',
             InputArgument::REQUIRED,
-            'What is the name of the bundle the new block should be added to?'
+            'What is the name of the bundle or namespace?'
         )
         ->addArgument(
-            'blockName',
+            'name',
             InputArgument::REQUIRED,
-            'What is the name the block should have (Without "Block" postfix)?'
+            'What is the name the block should have (Without "Block" postfix, but pre directories allowed)?'
         )
         ->addArgument(
             'blockType',
@@ -72,223 +71,140 @@ class MakeBlock extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $bundleName = $input->getArgument('bundleName');
-        $blockName = $input->getArgument('blockName');
-        $blockType = $input->getArgument('blockType');
-        $blockType = $blockType === 'yes' ? true : false;
+        $namespace = $input->getArgument('namespace');
+        $name = $input->getArgument('name');
+        $type = 'yes' === $input->getArgument('type') ? true : false;
 
-        $bundle = $this->kernel->getBundle($bundleName);
+        $block = new BlockName($this->util, $this->kernel, $namespace, $name);
 
-        $blockSubDirectory = '';
-        $this->splitBlockNameSubDirectory($blockName, $blockSubDirectory);
-        $originName = $blockName;
-        $blockName = sprintf('%sBlock', $blockName);
+        $this->generateDoctrineOrmFile($generator, $block);
+        $this->generateEntityFile($generator, $block);
+        $this->generateFormTypeFile($generator, $block);
+        $this->generateFactoryFile($generator, $block);
+        $this->generateTemplateFile($generator, $block);
 
-        $this->generateDoctrineOrmFile($generator, $bundle, $blockName, $blockSubDirectory);
-        $this->generateEntityFile($generator, $bundle, $blockName, $blockSubDirectory);
-        $this->generateFormTypeFile($generator, $bundle, $blockName, $blockSubDirectory);
-        $this->generateFactoryFile($generator, $bundle, $blockName, $blockSubDirectory);
-        $this->generateTemplateFile($generator, $bundle, $blockName, $originName, $blockSubDirectory);
-        if($blockType) {
-            $this->generateTypeFile($generator, $bundle, $blockName, $originName, $blockSubDirectory);
+        if($type) {
+            $this->generateTypeFile($generator, $block);
         }
 
         $io->writeln('');
         $io->writeln('<options=bold>Add this to your enhavo.yml config file under enhavo_block -> blocks:</>');
-        $io->writeln($this->generateEnhavoConfigCode($bundle, $blockName, $originName, $blockSubDirectory, $blockType));
+        $io->writeln($this->generateEnhavoConfigCode($block, $type));
         $io->writeln('');
-        if($blockType) {
+
+        if($type) {
             $io->writeln('<options=bold>Add this to your service.yml config</>');
-            $io->writeln($this->generateServiceCode($bundle, $blockName, $originName, $blockSubDirectory));
+            $io->writeln($this->generateServiceCode($block));
         }
         $io->writeln('');
 
         $generator->writeChanges();
     }
 
-    private function generateDoctrineOrmFile(Generator $generator, BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
     {
-        $blockFileName = $blockName;
-        if ($blockSubDirectory) {
-            $blockFileName = str_replace('/', '.', $blockSubDirectory) . '.' . $blockName;
-        }
-        $filePath = $bundle->getPath() . '/Resources/config/doctrine/' . $blockFileName . '.orm.yml';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('Entity "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . '" already exists in bundle "' . $bundle->getName() . '".');
-        }
-
-        $bundleNameSnakeCase = $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundle));
-        $blockNameSnakeCase = $this->util->camelCaseToSnakeCase($blockName);
-        $blockSubDirectorySnakeCase = str_replace('/', '', $this->util->camelCaseToSnakeCase($blockSubDirectory));
-
+        $tableName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()))
         $generator->generateFile(
-            $filePath,
+            $block->getDoctrineORMFilePath(),
             $this->createTemplatePath('block/doctrine.tpl.php'),
             [
-                'bundle_namespace' => $bundle->getNamespace(),
-                'block_sub_directory' => str_replace('/', '\\', $blockSubDirectory),
-                'block_name' => $blockName,
-                'table_name' => $bundleNameSnakeCase . '_' . ($blockSubDirectorySnakeCase ? $blockSubDirectorySnakeCase . '_' : '') . $blockNameSnakeCase
+                'namespace' => $block->getEntityNamespace(),
+                'name' => $block->getName(),
+                'table_name' => $tableName
             ]
         );
     }
 
-    private function generateEntityFile(Generator $generator, BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateEntityFile(Generator $generator, BlockName $block)
     {
-        $filePath = $bundle->getPath() . '/Entity/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . '.php';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('Entity "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . '" already exists in bundle "' . $bundle->getName() . '".');
-        }
-
         $generator->generateFile(
-            $filePath,
+            $block->getEntityFilePath(),
             $this->createTemplatePath('block/entity.tpl.php'),
             [
-                'namespace' => $this->getNameSpace($bundle, '\\Entity', $blockSubDirectory),
-                'block_name' => $blockName
+                'entity_namespace' => $block->getEntityNamespace(),
+                'name' => $block->getName()
             ]
         );
     }
 
-    private function generateFormTypeFile(Generator $generator, BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateFormTypeFile(Generator $generator, BlockName $block)
     {
-        $filePath = $bundle->getPath() . '/Form/Type/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Type.php';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('FormType "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Type" already exists in bundle "' . $bundle->getName() . '".');
-        }
-
+        $formTypeName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()));
         $generator->generateFile(
-            $filePath,
+            $block->getFormTypeFilePath(),
             $this->createTemplatePath('block/form-type.tpl.php'),
             [
-                'namespace' => $this->getNameSpace($bundle, '\\Form\\Type', $blockSubDirectory),
-                'block_name' => $blockName,
-                'block_namespace' => $this->getNameSpace($bundle, '\\Entity', $blockSubDirectory) . '\\' . $blockName,
-                'form_type_name' => $this->getFormTypeName($bundle, $blockName, $blockSubDirectory)
+                'form_namespace' => $block->getNamespace(),
+                'name' => $block->getName(),
+                'entity_namespace' => $block->getEntityNamespace(),
+                'form_type_name' => $formTypeName
             ]
         );
     }
 
-    private function generateFactoryFile(Generator $generator, BundleInterface $bundle, $blockName, $blockSubDirectory)
+    private function generateFactoryFile(Generator $generator, BlockName $block)
     {
-        $filePath = $bundle->getPath() . '/Factory/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Factory.php';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('Factory class "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Factory" already exists in bundle "' . $bundle->getName() . '".');
-        }
-
         $generator->generateFile(
-            $filePath,
+            $block->getFactoryFilePath(),
             $this->createTemplatePath('block/factory.tpl.php'),
             [
-                'namespace' => $this->getNameSpace($bundle, '\\Factory', $blockSubDirectory),
-                'block_name' => $blockName
+                'factory_namespace' => $block->getFactoryNamespace(),
+                'name' => $block->getName()
             ]
         );
     }
 
-    private function generateTemplateFile(Generator $generator, BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
+    private function generateTemplateFile(Generator $generator, BlockName $block)
     {
-        $filePath = $bundle->getPath() . '/Resources/views/Theme/Block/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $this->util->camelCaseToSnakeCase($originName, true) . '.html.twig';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('Frontend template file "' . $filePath . '" already exists.');
-        }
-
         $generator->generateFile(
-            $filePath,
+            $block->getTemplateFilePath(),
             $this->createTemplatePath('block/template.tpl.php'),
             [
-                'block_name' => $blockName,
+                'name' => $this->util->snakeCase($block->getName()),
             ]
         );
     }
 
-    private function generateTypeFile(Generator $generator, BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
+    private function generateTypeFile(Generator $generator, BlockName $block)
     {
-        $filePath = $bundle->getPath() . '/Block/' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . 'Type.php';
-        $this->createPathToFileIfNotExists($filePath);
-        if (file_exists($filePath)) {
-            throw new \RuntimeException('BlockType "' . ($blockSubDirectory ? $blockSubDirectory . '/' : '') . $blockName . '" already exists in bundle "' . $bundle->getName() . '".');
-        }
-
         $generator->generateFile(
-            $filePath,
+            $block->getTypeFilePath(),
             $this->createTemplatePath('block/block-type.tpl.php'),
             [
-                'namespace' => $this->getNameSpace($bundle, '', $blockSubDirectory),
-                'block_name' => $blockName,
-                'name_camel' => $originName,
-                'name_kebab' => $this->util->camelCaseToSnakeCase($originName, true),
-                'name_snake' => $this->util->camelCaseToSnakeCase($originName),
-                'name_underscore' => str_replace('-', '_', $this->util->camelCaseToSnakeCase($originName)),
-                'bundle_name' => $bundle->getName(),
+                'namespace' => $block->getNamespace(),
+                'entity_namespace' => $block->getEntityNamespace(),
+                'form_namespace' => $block->getFormNamespace(),
+                'factory_namespace' => $block->getFactoryNamespace(),
+                'name_snake' => $this->util->snakeCase($block->getName()),
+                'name_camel' => $this->util->camelCase($block->getName()),
+                'name_kebap' => $this->util->kebapCase($block->getName()),
+                'translation_domain' => $block->getTranslationDomain(),
             ]
         );
     }
 
-    private function generateEnhavoConfigCode(BundleInterface $bundle, $blockName, $originName, $blockSubDirectory, $blockType)
+    private function generateEnhavoConfigCode(BlockName $block, $type)
     {
-        $blockNameSpace = $this->getNameSpace($bundle, '\\Entity', $blockSubDirectory) . '\\' . $blockName;
-        $formTypeNamespace = $this->getNameSpace($bundle, '\\Form\\Type', $blockSubDirectory) . '\\' .$blockName . 'Type';
-        $template = $bundle->getName() . ':Theme/Block' . ($blockSubDirectory ? '/' . $blockSubDirectory : '') . ':' . $this->util->camelCaseToSnakeCase($originName, true) . '.html.twig';
-        $factoryNamespace = $this->getNameSpace($bundle, '\\Factory', $blockSubDirectory) . '\\' . $blockName . 'Factory';
-
-        return $this->templateEngine->render('@EnhavoBlock/Maker/Block/enhavo_config_entry.yml.twig', array(
-            'block_name' => $blockName,
-            'origin_name' => $this->util->camelCaseToSnakeCase($originName),
-            'bundle_name' => $bundle->getName(),
-            'block_name_snake_case' => $this->util->camelCaseToSnakeCase($blockName),
-            'block_namespace' => $blockNameSpace,
-            'form_type_namespace' => $formTypeNamespace,
-            'template' => $template,
-            'factory_namespace' => $factoryNamespace,
-            'block_type' => $blockType,
+        return $this->templateEngine->render('@EnhavoBlock/maker/Block/enhavo_config_entry.yml.twig', array(
+            'namespace' => $block->getNamespace(),
+            'entity_namespace' => $block->getEntityNamespace(),
+            'form_namespace' => $block->getFormNamespace(),
+            'factory_namespace' => $block->getFactoryNamespace(),
+            'name_snake' => $this->util->snakeCase($block->getName()),
+            'name_camel' => $this->util->camelCase($block->getName()),
+            'name_kebap' => $this->util->kebapCase($block->getName()),
+            'translation_domain' => $block->getTranslationDomain(),
+            'block_type' => $type,
         ));
     }
 
-    private function generateServiceCode(BundleInterface $bundle, $blockName, $originName, $blockSubDirectory)
+    private function generateServiceCode(BlockName $block)
     {
-        $class = $this->getNameSpace($bundle, '\\Block', $blockSubDirectory) . '\\' . $blockName . 'Type';
-        return $this->templateEngine->render('@EnhavoBlock/Maker/Block/block_service.yml.twig', array(
-            'class' => $class,
-            'type' => $this->util->camelCaseToSnakeCase($originName),
+        return $this->templateEngine->render('@EnhavoBlock/maker/Block/block_service.yml.twig', array(
+            'namespace' => $block->getNamespace(),
+            'type' => $this->util->snakeCase($block->getName()),
+            'name' => $block->getName(),
         ));
-    }
-
-    private function getFormTypeName(BundleInterface $bundle, $blockName, $blockSubDirectory)
-    {
-        $blockSubDirectorySnakeCase = str_replace('/', '', $this->util->camelCaseToSnakeCase($blockSubDirectory));
-
-        return
-            $this->util->camelCaseToSnakeCase($this->util->getBundleNameWithoutPostfix($bundle))
-            . '_' . ($blockSubDirectorySnakeCase ? $blockSubDirectorySnakeCase . '_' : '') . $this->util->camelCaseToSnakeCase($blockName);
-    }
-
-    private function splitBlockNameSubDirectory(&$blockName, &$subDirectory)
-    {
-        $subDirectory = null;
-        $matches = array();
-        if (preg_match('/^(.*)\/([^\/]*)$/', $blockName, $matches)) {
-            $subDirectory = $matches[1];
-            $blockName = $matches[2];
-        }
-    }
-
-    private function getNameSpace(BundleInterface $bundle, $staticPath, $blockSubDirectory)
-    {
-        return $bundle->getNamespace() . $staticPath . ($blockSubDirectory ? '\\' . str_replace('/', '\\', $blockSubDirectory) : '');
-    }
-
-    private function createPathToFileIfNotExists($fullFileName)
-    {
-        $info = pathinfo($fullFileName);
-        if (!file_exists($info['dirname'])) {
-            mkdir($info['dirname'], 0777, true);
-        }
     }
 
     private function createTemplatePath($name)

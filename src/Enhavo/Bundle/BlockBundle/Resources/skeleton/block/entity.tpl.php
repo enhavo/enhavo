@@ -1,10 +1,10 @@
 <?= "<?php\n" ?>
 
-namespace <?= $namespace ?>;
+namespace <?= $entity_namespace ?>;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 
-class <?= $block_name ?> extends AbstractBlock
+class <?= $name ?>Block extends AbstractBlock
 {
 
 }
