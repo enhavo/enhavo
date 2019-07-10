@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\TemplateBundle\Form\Type;
 
 use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;

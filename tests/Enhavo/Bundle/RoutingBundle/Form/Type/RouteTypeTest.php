@@ -11,7 +11,7 @@ class RouteTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(RouteType::class);
 
-        $form->submit(['staticPrefix' => '/hello']);
+        $form->submit(['path' => '/hello']);
         /** @var Route $route */
         $route = $form->getData();
 

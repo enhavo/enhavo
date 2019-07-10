@@ -21,7 +21,7 @@ class RouteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('staticPrefix', TextType::class);
+        $builder->add('path', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
