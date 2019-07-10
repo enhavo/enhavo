@@ -119,4 +119,9 @@ class MakerUtil
     {
         return $this->kernel->locateResource($path);
     }
+
+    public function getProjectPath()
+    {
+        return $this->kernel->getProjectDir();
+    }
 }
