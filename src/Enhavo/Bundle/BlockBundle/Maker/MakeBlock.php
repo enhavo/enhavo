@@ -58,7 +58,7 @@ class MakeBlock extends AbstractMaker
             'What is the name the block should have (Without "Block" postfix, but pre directories allowed)?'
         )
         ->addArgument(
-            'blockType',
+            'type',
             InputArgument::REQUIRED,
             'Create block type? [no/yes]'
         );
@@ -103,7 +103,7 @@ class MakeBlock extends AbstractMaker
 
     private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
     {
-        $tableName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()))
+        $tableName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()));
         $generator->generateFile(
             $block->getDoctrineORMFilePath(),
             $this->createTemplatePath('block/doctrine.tpl.php'),
@@ -177,7 +177,7 @@ class MakeBlock extends AbstractMaker
                 'factory_namespace' => $block->getFactoryNamespace(),
                 'name_snake' => $this->util->snakeCase($block->getName()),
                 'name_camel' => $this->util->camelCase($block->getName()),
-                'name_kebap' => $this->util->kebapCase($block->getName()),
+                'name_kebab' => $this->util->kebabCase($block->getName()),
                 'translation_domain' => $block->getTranslationDomain(),
             ]
         );
@@ -192,7 +192,7 @@ class MakeBlock extends AbstractMaker
             'factory_namespace' => $block->getFactoryNamespace(),
             'name_snake' => $this->util->snakeCase($block->getName()),
             'name_camel' => $this->util->camelCase($block->getName()),
-            'name_kebap' => $this->util->kebapCase($block->getName()),
+            'name_kebab' => $this->util->kebabCase($block->getName()),
             'translation_domain' => $block->getTranslationDomain(),
             'block_type' => $type,
         ));

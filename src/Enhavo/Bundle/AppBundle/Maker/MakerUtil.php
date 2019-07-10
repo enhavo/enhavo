@@ -29,19 +29,22 @@ class MakerUtil
             $parts = explode('-', $name);
         } elseif(preg_match('/_/', $name)) {
             $parts = explode('_', $name);
-        } elseif(ctype_upper($name)) {
+        } elseif($this->isCamelCase($name)) {
             $parts = [];
             $name = lcfirst($name);
             $length = strlen($name);
             $word = '';
             for ($i = 0; $i < $length; ++$i) {
                 if (ctype_upper($name[$i])) {
-                    $parts[] = $parts;
+                    $parts[] = $word;
                     $word = '';
                     $word .= $name[$i];
                 } else {
                     $word .= $name[$i];
                 }
+            }
+            if($word) {
+                $parts[] = $word;
             }
         } else {
             $parts = [$name];
@@ -54,6 +57,17 @@ class MakerUtil
         return $parts;
     }
 
+    private function isCamelCase($name)
+    {
+        $length = strlen($name);
+        for ($i = 0; $i < $length; ++$i) {
+            if (ctype_upper($name[$i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function camelCase($name)
     {
         $parts = $this->normalizeCase($name);
@@ -63,7 +77,7 @@ class MakerUtil
         return implode('', $parts);
     }
 
-    public function kebapCase($name)
+    public function kebabCase($name)
     {
         $parts = $this->normalizeCase($name);
         return implode('-', $parts);
