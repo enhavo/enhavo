@@ -190,9 +190,7 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .btn {border: 0;font-weight: 700;background: none;color:$primaryColor;padding: 0;text-align: left;white-space: nowrap;@include transition(all 200ms);
     &:before{width: 24px;height: 24px;display: inline-block;text-align: center;font-weight: normal;}
     &:hover{color: #4ea2e0;}
-    &.create{background: none;color: $primaryColor;text-align: left;font-size: 14px; padding-right:15px;
-        &:before{content: '\e834';font-family: "enhavo-iconfont";font-size:28px;display:inline-block;margin: 0 6px 0 0;position: relative;top: 4px;}
-    }
+    &.create{background: none;color: $primaryColor;text-align: left;font-size: 14px; padding-right:15px;}
     &.upload-button {
         &:before{font-size: 22px;position: relative;top: 3px;display:inline-block;margin-right:5px;}
     }
@@ -201,8 +199,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 }
 
 .btn.dropdown{background: none;color: #a7b1b3;text-align: left;font-size: 14px;}
-.btn.dropdown:before{font-family: "enhavo-iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d8';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
-.btn.dropdown.clicked:before{font-family: "enhavo-iconfont";position: relative;border-radius: 50%;background: #a7b1b3;width: 23px;height: 23px;margin-right: 5px;content: '\e8d9';display: inline-block;font-size: 16px;font-weight: 700;text-align: center;color: #fbfbfb;}
 
 .bullList {list-style:disc;padding-left:20px;}
 
@@ -239,8 +235,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
 .entry-row.has-batch-actions.batch-checkbox-wrapper:hover {background-color:#3d88be;}
 .batch-checkbox-wrapper .icheckbox-esperanto {margin:0;width:21px;height:21px;line-height:12px;border-radius:50%;}
 .batch-checkbox-wrapper .icheckbox-esperanto:before {content: '';font-family: 'enhavo-iconfont';color:#ccc;padding: 2px 0;display: block;}
-.batch-checkbox-wrapper .icheckbox-esperanto.checked:before {content:"\e847";color:$primaryColor;}
-.choice-input-container .icheckbox-esperanto.checked:before {content: '\e847';font-family: 'enhavo-iconfont';color:$primaryColor;}
 .select2-search input {padding: 0px 19px 0 5px;border-color:#eee}
 .row-container .entry-row:first-child{border-radius:2px 2px 0 0}
 .row-container .entry-row:last-child{border-radius:0 0 2px 2px}
@@ -373,8 +367,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     .responsive-menu-btn:after{content:"Menu";color: $primaryColor;font-size: 14px;padding: 0 7px;display: inline-block;font-weight: 700;font-size: 14px;}
 
     .responsive-menu-btn{display: block;-webkit-transition: all .2s;-moz-transition: all .2s;-ms-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
-    .responsive-menu-btn:before{content: '\e9cc';padding: 1px 6px 0 6px; display:inline-block;font-family: "enhavo-iconfont";border-radius:50%; color:#eee;background:$primaryColor; position:relative; top:-2px; width:23px; height:23px; font-size:13px;}
-    .responsive-menu-btn.push:before {content: '\e847';padding: 1px 5px 0 5px;}
 
     #user-menu { position:absolute; height:100%; right:-200px; width:200px;transition:all .2s}
     #user-menu.push-left {right:0;transition:all .2s;}
@@ -401,7 +393,6 @@ input:-moz-placeholder { color:#d3d3d3;text-transform: uppercase;letter-spacing:
     .loginContainer {width: 80%;}
     .reset {padding-left: 0;}
     .reset a {float:none;margin-left: 10px; text-align:left;display: block; margin-top:15px;}
-    .reset a:before {content: '\ea7a'; display:inline-block;font-family: "enhavo-iconfont"; margin-right:17px; margin-left:5px; }
     #loginBox .resetButton a { margin-top:0;}
 }
 
