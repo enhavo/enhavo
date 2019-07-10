@@ -1,5 +1,6 @@
-.product-item { margin-bottom:$columnSpacing*2;
-  .product-image { margin-bottom:15px;border:1px solid #dedede;}
+.product-list {justify-content:center;}
+.product-item { margin-bottom:$columnSpacing*3;max-width:460px;
+  .product-image { margin-bottom:15px;border:1px solid lighten($black, 80%);}
   .product-title { font-family:$serifFontFamily; font-size:$fontSize4; font-weight:$medium;}
   .product-vendor { font-size:$fontSize2; font-weight:$semibold;}
   .product-teaser { font-size:$fontSize2; margin-top:15px; line-height:$lineHeight;}

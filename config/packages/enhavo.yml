@@ -59,6 +59,13 @@ enhavo_block:
             type: sidebar_column
         template:
             type: template
+            template:
+                product_list:
+                    label: Product List
+                    template: theme/shop/block/product-list.html.twig
+                cart_list:
+                    label: Cart List
+                    template: theme/shop/block/cart-list.html.twig
         resource:
             type: resource
         contact:
