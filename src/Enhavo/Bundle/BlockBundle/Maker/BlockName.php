@@ -180,7 +180,8 @@ class BlockName
     public function getApplicationName()
     {
         if($this->bundle) {
-            return $this->util->snakeCase($this->util->getBundleNameWithoutPostfix($this->bundle->getName()));
+            $bundleName = $this->util->getBundleNameWithoutPostfix($this->bundle->getName());
+            return $this->util->snakeCase($bundleName);
         } else {
             return $this->util->snakeCase(explode('\\', $this->namespace));
         }

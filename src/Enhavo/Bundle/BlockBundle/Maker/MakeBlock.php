@@ -103,7 +103,9 @@ class MakeBlock extends AbstractMaker
 
     private function generateDoctrineOrmFile(Generator $generator, BlockName $block)
     {
-        $tableName = sprintf('%s_%s_block', $this->util->snakeCase($block->getApplicationName()), $this->util->snakeCase($block->getName()));
+        $applicationName = $this->util->snakeCase($block->getApplicationName());
+        $applicationName = str_replace('enhavo_', '', $applicationName); // special case for enhavo
+        $tableName = sprintf('%s_%s_block', $applicationName, $this->util->snakeCase($block->getName()));
         $generator->generateFile(
             $block->getDoctrineORMFilePath(),
             $this->createTemplatePath('block/doctrine.tpl.php'),

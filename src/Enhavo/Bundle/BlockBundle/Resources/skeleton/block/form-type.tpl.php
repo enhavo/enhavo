@@ -20,9 +20,4 @@ class <?= $name ?>BlockType extends AbstractType
             'data_class' => <?= $name ?>Block::class
         ));
     }
-
-    public function getName()
-    {
-        return '<?= $form_type_name ?>';
-    }
 }
