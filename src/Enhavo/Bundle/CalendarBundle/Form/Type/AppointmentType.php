@@ -52,6 +52,7 @@ class AppointmentType extends AbstractResourceType
         $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => ['content']
         ));
 
         $builder->add('externalId', TextType::class, array(
