@@ -7,6 +7,7 @@ import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import View from "@enhavo/app/View/View";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
 
 export default class Form
 {
@@ -21,7 +22,7 @@ export default class Form
         registry: FormRegistry,
         flashMessenger: FlashMessenger,
         eventDispatcher: EventDispatcher,
-        view: View
+        view: View,
     ) {
         this.data = _.extend(data, new FormData);
         for (let i in data.tabs) {

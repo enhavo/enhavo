@@ -12,6 +12,8 @@ import StateManager from "@enhavo/app/State/StateManager";
 import ActionManager from "@enhavo/app/Action/ActionManager";
 import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
 
 export default abstract class AbstractApplication implements ApplicationInterface, ActionAwareApplication
 {
@@ -26,6 +28,8 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected stateManager: StateManager;
     protected actionManager: ActionManager;
     protected actionRegistry: ActionRegistry;
+    protected modalManager: ModalManager;
+    protected modalRegistry: ModalRegistry;
 
     constructor()
     {
@@ -108,5 +112,22 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.actionRegistry.load(this);
         }
         return this.actionRegistry;
+    }
+
+    public getModalManager(): ModalManager
+    {
+        if(this.modalManager == null) {
+            this.modalManager = new ModalManager(this.getDataLoader().load().modals, this.getModalRegistry());
+        }
+        return this.modalManager;
+    }
+
+    public getModalRegistry(): ModalRegistry
+    {
+        if(this.modalRegistry == null) {
+            this.modalRegistry = new ModalRegistry();
+            this.modalRegistry.load(this);
+        }
+        return this.modalRegistry;
     }
 }

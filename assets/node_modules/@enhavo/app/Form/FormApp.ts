@@ -9,18 +9,21 @@ import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import FormData from "@enhavo/app/form/FormData";
 import Confirm from "@enhavo/app/View/Confirm";
 import Translator from "@enhavo/core/Translator";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
 
 export default class FormApp extends AbstractViewApp implements AppInterface
 {
     private actionManager: ActionManager;
     private translator: Translator;
+    private modalManager: ModalManager;
     protected data: FormData;
 
-    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, translator: Translator)
+    constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View, actionManager: ActionManager, translator: Translator, modalManager: ModalManager)
     {
         super(loader, eventDispatcher, view);
         this.actionManager = actionManager;
         this.translator = translator;
+        this.modalManager = modalManager;
     }
 
     protected addCloseListener()
