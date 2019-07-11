@@ -8,11 +8,9 @@
 
 namespace Enhavo\Bundle\DashboardBundle\Block;
 
-
-use Enhavo\Bundle\AppBundle\Block\BlockInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class StatisticBlock extends AbstractType implements BlockInterface
+class StatisticBlock extends AbstractType
 {
     public function render($parameters)
     {

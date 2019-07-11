@@ -48,11 +48,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    enhavo.translation.locale_provider.contextual:
-        class: Enhavo\Bundle\AppBundle\Provider\TranslationLocaleProvider
-        arguments:
-            - '%locale%'
-
     enhavo_app.factory.duplicate_resource_factory:
         class: Enhavo\Bundle\AppBundle\Controller\DuplicateResourceFactory
 

@@ -22,7 +22,7 @@ services:
         tags:
             - { name: form.type, alias: enhavo_slider_slider }
 
-    Enhavo\Bundle\SliderBundle\Widget\SliderWidget:
+    Enhavo\Bundle\SliderBundle\Widget\SliderWidgetType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

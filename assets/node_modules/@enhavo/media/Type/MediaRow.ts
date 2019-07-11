@@ -2,10 +2,13 @@ import MediaType from "@enhavo/media/Type/MediaType";
 import MediaConfig from "@enhavo/media/Type/MediaConfig";
 import MediaItem from "@enhavo/media/Type/MediaItem";
 import MediaItemMeta from "@enhavo/media/Type/MediaItemMeta";
+import * as Sortable from "sortablejs";
 import * as $ from "jquery";
 
 export default class MediaRow
 {
+    private static sorting = false;
+
     private $element: JQuery;
 
     private readonly items: Array<MediaItem>;
@@ -26,7 +29,7 @@ export default class MediaRow
         this.media = media;
         this.$element = $(element);
         this.items = [];
-        //this.initSortable();
+        this.initSortable();
 
         let self = this;
         this.$element.children('[data-media-item]').each(function (index, element) {
@@ -65,6 +68,7 @@ export default class MediaRow
 
     showDropZone()
     {
+        if (MediaRow.sorting) return;
         this.$element.css('background-color', '#49a4e5');
     }
 
@@ -190,15 +194,19 @@ export default class MediaRow
     {
         if (this.config.multiple && this.config.sortable) {
             let self = this;
-            this.$element.sortable({
-                delay: 150,
-                update: function () {
+            new Sortable(this.$element[0], {
+                animation: 150,
+                touchStartThreshold: 10,
+                onStart: function() {
+                    MediaRow.sorting = true;
+                    self.closeEdit();
+                },
+                onUpdate: function () {
                     self.setOrder();
                 },
-                items: '> li[data-media-item]',
-                start: function() {
-                    self.closeEdit();
-                }
+                onEnd: function () {
+                    MediaRow.sorting = false;
+                },
             });
         }
     }

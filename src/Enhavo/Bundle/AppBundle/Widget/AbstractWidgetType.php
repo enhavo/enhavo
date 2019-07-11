@@ -8,9 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Widget;
 
+use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractWidgetType implements WidgetTypeInterface
+abstract class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
 {
     public function createViewData(array $options, $resource = null)
     {

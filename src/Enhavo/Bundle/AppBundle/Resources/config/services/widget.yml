@@ -15,7 +15,7 @@ services:
         tags:
             - { name: enhavo.widget, alias: template }
 
-    Enhavo\Bundle\AppBundle\Widget\Type\PaginationWidget:
+    Enhavo\Bundle\AppBundle\Widget\Type\PaginationWidgetType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

@@ -8,11 +8,10 @@
 
 namespace Enhavo\Bundle\AppBundle\Block\Block;
 
-use Enhavo\Bundle\AppBundle\Block\BlockInterface;
 use Enhavo\Bundle\AppBundle\Chart\ChartProviderInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 
-class ChartBlock extends AbstractType implements BlockInterface
+class ChartBlock extends AbstractType
 {
     public function render($parameters)
     {
