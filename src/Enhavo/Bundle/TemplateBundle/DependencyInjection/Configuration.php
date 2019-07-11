@@ -2,6 +2,12 @@
 
 namespace Enhavo\Bundle\TemplateBundle\DependencyInjection;
 
+use Enhavo\Bundle\AppBundle\Controller\ResourceController;
+use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\TemplateBundle\Entity\Template;
+use Enhavo\Bundle\TemplateBundle\Factory\TemplateFactory;
+use Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType;
+use Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -53,11 +59,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\TemplateBundle\Entity\Template')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\TemplateBundle\Repository\TemplateRepository')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\TemplateBundle\Form\Type\TemplateType')->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Template::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(TemplateRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(TemplateFactory::class)->end()
+                                        ->scalarNode('form')->defaultValue(TemplateType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

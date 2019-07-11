@@ -6,10 +6,11 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class NewsletterController extends ResourceController
 {
-    public function showNewsletterAction(Request $request)
+    public function showAction(Request $request): Response
     {
         $slug = $request->get('slug');
         if (empty($slug)) {

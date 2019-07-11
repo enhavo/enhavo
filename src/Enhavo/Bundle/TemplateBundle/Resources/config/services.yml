@@ -49,6 +49,14 @@ services:
         tags:
             - { name: enhavo_route.strategy, alias: 'template' }
 
-
-
-
+    Enhavo\Bundle\TemplateBundle\Init\InitTemplate:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\TemplateBundle\Template\TemplateManager'
+            - '@enhavo_template.factory.template'
+            - '@enhavo_template.repository.template'
+        calls:
+            - [ setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.init, alias: 'template' }
