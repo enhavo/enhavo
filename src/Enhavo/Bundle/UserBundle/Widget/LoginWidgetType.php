@@ -1,7 +1,7 @@
 <?php
 
 /**
- * LoginWidget.php
+ * LoginWidgetType.php
  *
  * @since 23/09/16
  * @author gseidel
@@ -9,12 +9,12 @@
 
 namespace Enhavo\Bundle\UserBundle\Widget;
 
-use Enhavo\Bundle\AppBundle\Type\AbstractType;
-use Enhavo\Bundle\AppBundle\Widget\WidgetInterface;
+use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
-class LoginWidget extends AbstractType implements WidgetInterface
+class LoginWidgetType extends AbstractWidgetType
 {
     /**
      * @inheritDoc
@@ -24,42 +24,44 @@ class LoginWidget extends AbstractType implements WidgetInterface
         return 'login';
     }
 
-    public function render($options)
+    public function createViewData($options, $resource = null)
     {
-        $template = 'EnhavoUserBundle:Theme:Widget/login.html.twig';
-        if(isset($options['template'])) {
-            $template = $options['template'];
-        }
-
-        if(isset($options['csrf_token'])) {
+        if(!$options['csrf_token']) {
             $token = $options['csrf_token'];
         } else {
             $token = $this->getCsrfToken();
         }
 
-        if(isset($options['last_username'])) {
+        if(!$options['last_username']) {
             $lastUsername = $options['last_username'];
         } else {
             $lastUsername = $this->getLastUserName();
         }
 
-        if(isset($options['error'])) {
+        if(!$options['error']) {
             $error = $options['error'];
         } else {
             $error = $this->getError();
         }
-
-        if(isset($options['failurePath'])) {
-            $failurePath = $options['failurePath'];
-        } else {
-            $failurePath = null;
-        }
         
-        return $this->renderTemplate($template, [
+        return [
             'csrf_token' => $token,
             'last_username' => $lastUsername,
             'error' => $error,
-            'failurePath' => $failurePath
+            'failurePath' => $options['failurePath']
+        ];
+    }
+
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        parent::configureOptions($optionsResolver);
+
+        $optionsResolver->setDefaults([
+            'template' => 'theme/widget/login.html.twig',
+            'csrf_token' => null,
+            'last_username' => null,
+            'error' => null,
+            'failurePath' => null,
         ]);
     }
 

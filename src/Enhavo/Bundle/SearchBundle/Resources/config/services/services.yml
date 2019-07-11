@@ -11,7 +11,7 @@ services:
         tags:
             - { name: twig.extension }
 
-    Enhavo\Bundle\SearchBundle\Widget\SearchWidget:
+    Enhavo\Bundle\SearchBundle\Widget\SearchWidgetType:
         public: true
         calls:
             - [setContainer, ['@service_container']]

@@ -15,7 +15,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-    Enhavo\Bundle\ContactBundle\Widget\ContactWidget:
+    Enhavo\Bundle\ContactBundle\Widget\ContactWidgetType:
         public: true
         arguments:
             - '@enhavo_contact.configuration.factory'

@@ -21,13 +21,6 @@ services:
         tags:
             - { name: form.type, alias: 'enhavo_page_page_choice' }
 
-    Enhavo\Bundle\PageBundle\Widget\PageWidget:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: enhavo.widget, alias: page }
-
     enhavo_page.extend_listener.page:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
         arguments:
