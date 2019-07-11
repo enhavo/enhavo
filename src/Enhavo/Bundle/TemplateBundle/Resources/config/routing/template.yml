@@ -7,6 +7,13 @@ enhavo_template_template_index:
         _controller: enhavo_template.controller.template:indexAction
         _sylius:
             viewer:
+                actions:
+                    create:
+                        hidden: true
+                        type: create
+                        route: ~
+                    filter:
+                        type: filter
 
 enhavo_template_template_create:
     options:

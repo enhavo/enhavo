@@ -10,8 +10,8 @@ enhavo_routing:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
             router:
                 default:
-                    type: slug
-                    route: enhavo_article_theme_article_show
+                    type: template
+                    template: article
                 admin:
                     type: id
                     route: enhavo_article_article_update

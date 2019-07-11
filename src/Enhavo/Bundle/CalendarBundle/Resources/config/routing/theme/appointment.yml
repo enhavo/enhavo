@@ -1,5 +1,0 @@
-enhavo_calendar_theme_appointment_show:
-    path: /appointment/{slug}
-    methods: [GET]
-    defaults:
-        _controller: Enhavo\Bundle\CalendarBundle\Controller\AppointmentController:showAction

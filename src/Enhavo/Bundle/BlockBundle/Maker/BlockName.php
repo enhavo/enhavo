@@ -81,7 +81,7 @@ class BlockName
         $filename = sprintf('%s%sBlock.orm.yaml', $subDirectory, $this->util->camelCase($this->name));
 
         if($this->bundle) {
-            return sprintf( '%s/Resources/config/doctrine/%s', $this->path, $filename);
+            return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
         } else {
             return sprintf('%s/config/doctrine/%s', $this->util->getProjectPath(), $filename);
         }
@@ -93,7 +93,7 @@ class BlockName
         $filename = sprintf('%s%sBlock.php', $subDirectory, $this->util->camelCase($this->name));
 
         if($this->bundle) {
-            return sprintf( '%s/Entity/%s', $this->path, $filename);
+            return sprintf( 'src/%s/Entity/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Entity/%s', $this->util->getProjectPath(), $filename);
         }
@@ -111,7 +111,7 @@ class BlockName
         $filename = sprintf('%s%sBlockType.php', $subDirectory, $this->util->camelCase($this->name));
 
         if($this->bundle) {
-            return sprintf( '%s/Form/Type/%s', $this->path, $filename);
+            return sprintf( 'src/%s/Form/Type/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Form/Type/%s', $this->util->getProjectPath(), $filename);
         }
@@ -120,7 +120,7 @@ class BlockName
     public function getTemplateFilePath()
     {
         if($this->bundle) {
-            return sprintf( '%s/Resources/views/theme/block/%s.html.twig', $this->path, $this->util->kebabCase($this->name));
+            return sprintf( 'src/%s/Resources/views/theme/block/%s.html.twig', $this->path, $this->util->kebabCase($this->name));
         } else {
             return sprintf('%s/templates/theme/block/%s.html.twig', $this->util->getProjectPath(), $this->util->kebabCase($this->name));
         }
@@ -132,7 +132,7 @@ class BlockName
         $filename = sprintf('%s%sBlockFactory.php', $subDirectory, $this->util->camelCase($this->name));
 
         if($this->bundle) {
-            return sprintf( '%s/Factory/%s', $this->path, $filename);
+            return sprintf( 'src/%s/Factory/%s', $this->path, $filename);
         } else {
             return sprintf('%s/src/Factory/%s', $this->util->getProjectPath(), $filename);
         }
@@ -141,7 +141,7 @@ class BlockName
     public function getTypeFilePath()
     {
         if($this->bundle) {
-            return sprintf( '%s/Block/%sBlockType.php', $this->path, $this->name);
+            return sprintf( 'src/%s/Block/%sBlockType.php', $this->path, $this->name);
         } else {
             return sprintf('%s/src/Block/%sBlockType.php', $this->util->getProjectPath(), $this->name);
         }

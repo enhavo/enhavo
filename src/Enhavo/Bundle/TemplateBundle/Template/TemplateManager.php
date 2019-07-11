@@ -86,4 +86,9 @@ class TemplateManager
             }
         }
     }
+
+    public function getTemplates()
+    {
+        return $this->templates;
+    }
 }
