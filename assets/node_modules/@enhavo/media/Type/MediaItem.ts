@@ -116,8 +116,6 @@ export default class MediaItem
         this.$element.find('[data-media-thumb]').css('background-image', 'none');
         this.$element.find('[data-media-thumb-icon]').removeClass().addClass('icon');
 
-        console.log(this.meta.mimeType);
-
         // set icon/image
         switch (this.meta.mimeType) {
             case 'image/png':
