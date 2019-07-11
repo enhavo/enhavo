@@ -39,6 +39,7 @@ abstract class AbstractActionViewer extends AbstractViewer
 
         $templateVars = $view->getTemplateData();
         $templateVars['data']['actions'] = $this->actionManager->createActionsViewData($this->createActions($options));
+        $templateVars['data']['modals'] = [];
         $view->setTemplateData($templateVars);
 
         return $view;
