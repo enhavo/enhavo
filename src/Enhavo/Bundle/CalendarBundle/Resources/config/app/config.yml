@@ -36,7 +36,8 @@ enhavo_routing:
         Enhavo\Bundle\CalendarBundle\Entity\Appointment:
             router:
                 default:
-                    type: slug
+                    type: template
+                    template: appointment
                 admin:
                     type: id
                     route: enhavo_calendar_appointment_update
@@ -44,3 +45,11 @@ enhavo_routing:
                 slug:
                     type: slug
                     property: title
+
+enhavo_template:
+    template:
+        appointment:
+            repository: enhavo_calendar.repository.appointment
+            label: appointment.label.appointment
+            translation_domain: EnhavoCalendarBundle
+            resource_template: theme/resource/appointment/resource.html.twig
