@@ -76,3 +76,5 @@ enhavo_block:
             type: slider
         newsletter_subscribe:
             type: newsletter_subscribe
+        shop_product_list:
+            type: shop_product_list
