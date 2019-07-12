@@ -71,10 +71,10 @@ class ProductType extends AbstractType
             'translation_domain' => 'EnhavoShopBundle',
         ));
 
-        $builder->add('shippingCategory', 'sylius_shipping_category_choice', array(
-            'label' => 'product.label.shippingCategory',
-            'translation_domain' => 'EnhavoShopBundle',
-        ));
+//        $builder->add('shippingCategory', 'sylius_shipping_category_choice', array(
+//            'label' => 'product.label.shippingCategory',
+//            'translation_domain' => 'EnhavoShopBundle',
+//        ));
 
         $builder->add('width', TextType::class, array(
             'label' => 'product.label.width',
@@ -130,10 +130,5 @@ class ProductType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->dataClass
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_shop_product';
     }
 }

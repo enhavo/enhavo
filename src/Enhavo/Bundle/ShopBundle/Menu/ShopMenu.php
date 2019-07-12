@@ -18,7 +18,7 @@ class ShopMenu extends ListMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'shopping-cart',
+            'icon' => 'store',
             'label' => 'label.shop',
             'translation_domain' => 'EnhavoShopBundle',
             'children' => [

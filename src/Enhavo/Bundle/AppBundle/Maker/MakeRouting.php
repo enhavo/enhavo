@@ -53,7 +53,7 @@ class MakeRouting extends AbstractMaker
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
         $resource = $input->getArgument('resource');
-        $bundle = $input->hasArgument('bundle');
+        $bundle = $input->getArgument('bundle');
 
         if($bundle == 'no') {
             $app = 'app';
