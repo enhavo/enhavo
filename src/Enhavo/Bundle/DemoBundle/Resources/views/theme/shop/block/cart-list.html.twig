@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="cart-list">
+        <h1>Cart</h1>
+        <ul class="cart-products">
+            {% for i in 0..4 %}
+                <li class="cart-product">
+                    <div class="cart-product-image"></div>
+                    <div class="cart-product-content">
+                        <div class="product-vendor">Händler</div>
+                        <div class="product-title">Produktname</div>
+                    </div>
+                    <div class="cart-product-config">
+                        <div class="product-amount">
+                            <div class="select" data-select-amount>
+                                <select>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option data-more>+</option>
+                                </select>
+                                <input type="text" data-more-amount>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-price">980,57 €</div>
+                    <a href="" class="remove"></a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

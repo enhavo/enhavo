@@ -9,9 +9,9 @@ export default class Block
 {
     public init()
     {
-
-        // todo use data el
+        // Calendar Block
         document.addEventListener('DOMContentLoaded', function() {
+            // todo use data el
             let calendarEl = document.getElementById('calendar');
             let calendar = new Calendar(calendarEl, {
                 plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],
@@ -30,7 +30,9 @@ export default class Block
             calendar.render();
         });
 
-        $(document).ready(function(){
+        $(document).ready(function() {
+
+            // Gallery Block
             $('[data-slider]').slick({
                 adaptiveHeight: true,
                 dots:true,
@@ -38,6 +40,7 @@ export default class Block
                 prevArrow: '<div class="arrow prev"></div>'
             });
 
+            // Slider Block
             $('[data-hero-slider]').slick({
                 nextArrow: '<div class="arrow next"></div>',
                 prevArrow: '<div class="arrow prev"></div>',
@@ -45,9 +48,26 @@ export default class Block
                 dots:true
             });
 
+            // Toggle mobile menu
             $('[data-show-menu]').on('click', function() {
                 $('[data-menu-items]').toggle();
                 $(this).toggleClass('active');
+            });
+
+            // handle amount select in cart list and product items
+            $('[data-select-amount] select').on('change', function() {
+                if($(this).children("option:selected").val() == '+') {
+                    $(this).next('[data-more-amount]').fadeIn();
+                    $(this).next('[data-more-amount]').focus();
+                }
+            });
+            $('[data-more-amount]').on('blur', function() {
+                if ($(this).val() != 0) {
+                    let value = $(this).val();
+                    $(this).parent('[data-select-amount]').find('select').append(new Option(value, value));
+                    $(this).parent('[data-select-amount]').find('select').val(value);
+                }
+                $(this).fadeOut();
             });
         });
     }
