@@ -33,31 +33,6 @@ services:
         arguments:
             - '@sylius.repository.country'
 
-    Enhavo\Bundle\ShopBundle\Menu\ProductMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_product }
-
-    Enhavo\Bundle\ShopBundle\Menu\OrderMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_order }
-
-    Enhavo\Bundle\ShopBundle\Menu\ProductOptionMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_product_option }
-
-    Enhavo\Bundle\ShopBundle\Menu\VoucherMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop_voucher }
-
-    Enhavo\Bundle\ShopBundle\Menu\ShopMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: shop }
-
     enhavo.token_generator:
         class: Sylius\Component\User\Security\Generator\TokenGenerator
 

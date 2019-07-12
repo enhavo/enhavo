@@ -4,6 +4,6 @@ export default class NewsletterTestMailAction extends AbstractAction
 {
     execute(): void
     {
-        console.log('test mail');
+        this.application.getModalManager().push('newsletter-test-modal');
     }
 }

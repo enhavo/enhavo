@@ -19,7 +19,7 @@ class VoucherMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'gift',
+            'icon' => 'card_giftcard',
             'label' =>  'voucher.label.voucher',
             'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_voucher_index',

@@ -11,96 +11,96 @@ services:
             - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
-        arguments:
-            - '%sylius.model.order.class%'
-            - '@enhavo_shop.order.order_address_provider'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderType:
-        arguments:
-            - '%sylius.model.order.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderItemType:
-        arguments:
-            - '%sylius.model.order_item.class%'
-            - '@sylius.form.data_mapper.order_item_quantity'
-            - '%sylius.model.product.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderPaymentType:
-        arguments:
-            - '%sylius.model.order.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType:
-        arguments:
-            - '%sylius.model.order.class%'
-        tags:
-            - { name: form.type }
-
-    enhavo_shop_payment:
-        class: '%enhavo_shop_payment.class%'
-        arguments:
-            - '%sylius.model.payment.class%'
-            - '%sylius.model.payment_method.class%'
-        tags:
-            - { name: form.type }
-
-    enhavo_shop_shipment:
-        class: '%enhavo_shop_shipment.class%'
-        arguments:
-            - '%sylius.model.shipment.class%'
-            - '%sylius.model.shipping_method.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType:
-        arguments:
-            - '%sylius.model.order.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType:
-        arguments:
-            - '%sylius.model.order.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
-        arguments:
-            - '%sylius.model.product_option.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType:
-        arguments:
-            - '%sylius.model.product.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType:
-        arguments:
-            - '%sylius.model.product.class%'
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\CurrencyType:
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\UnitType:
-        tags:
-            - { name: form.type }
-
-    Enhavo\Bundle\ShopBundle\Form\Type\UserAddressType:
-        arguments:
-            - 'Enhavo\Bundle\ShopBundle\Entity\UserAddress'
-        tags:
-            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderAddressType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#            - '@enhavo_shop.order.order_address_provider'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderItemType:
+#        arguments:
+#            - '%sylius.model.order_item.class%'
+#            - '@sylius.form.data_mapper.order_item_quantity'
+#            - '%sylius.model.product.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderPaymentType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderShipmentType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    enhavo_shop_payment:
+#        class: '%enhavo_shop_payment.class%'
+#        arguments:
+#            - '%sylius.model.payment.class%'
+#            - '%sylius.model.payment_method.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    enhavo_shop_shipment:
+#        class: '%enhavo_shop_shipment.class%'
+#        arguments:
+#            - '%sylius.model.shipment.class%'
+#            - '%sylius.model.shipping_method.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderConfirmType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\OrderPromotionCouponType:
+#        arguments:
+#            - '%sylius.model.order.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\ProductOptionType:
+#        arguments:
+#            - '%sylius.model.product_option.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantCreateType:
+#        arguments:
+#            - '%sylius.model.product.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\ProductVariantType:
+#        arguments:
+#            - '%sylius.model.product.class%'
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\CurrencyType:
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\UnitType:
+#        tags:
+#            - { name: form.type }
+#
+#    Enhavo\Bundle\ShopBundle\Form\Type\UserAddressType:
+#        arguments:
+#            - 'Enhavo\Bundle\ShopBundle\Entity\UserAddress'
+#        tags:
+#            - { name: form.type }

@@ -2,6 +2,7 @@
     <div class="app-view">
         <div class="form-view">
             <view-view v-bind:data="view"></view-view>
+            <modal-component v-bind:data="modals"></modal-component>
             <flash-messages v-bind:messages="messages"></flash-messages>
             <action-bar v-bind:primary="actions" v-bind:secondary="actionsSecondary"></action-bar>
             <div class="tab-header" v-if="tabs.length > 1">
@@ -33,10 +34,12 @@ import ViewComponent from "@enhavo/app/View/Components/ViewComponent";
 import ApplicationBag from "@enhavo/app/ApplicationBag";
 import FormApplication from "@enhavo/app/Form/FormApplication";
 import '@enhavo/app/assets/styles/view.scss';
+import ModalComponent from "@enhavo/app/Modal/Components/ModalComponent.vue";
+
 const application = <FormApplication>ApplicationBag.getApplication();
 
 @Component({
-    components: {FlashMessages, ActionBar, TabContainer, TabHead, 'view-view': ViewComponent}
+    components: {FlashMessages, ActionBar, TabContainer, TabHead, 'view-view': ViewComponent, ModalComponent}
 })
 export default class AppView extends Vue {
     name = 'app-view';
@@ -58,6 +61,9 @@ export default class AppView extends Vue {
 
     @Prop()
     messages: Array<object>;
+
+    @Prop()
+    modals: Array<object>;
 
     mounted() {
         $(document).on('change', ':input', () => {

@@ -7,6 +7,8 @@ import Router from "@enhavo/core/Router";
 import Translator from "@enhavo/core/Translator";
 import ActionManager from "@enhavo/app/Action/ActionManager";
 import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
+import ModalManager from "@enhavo/app/Modal/ModalManager";
+import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
 
 export default interface ApplicationInterface
 {
@@ -27,4 +29,8 @@ export default interface ApplicationInterface
     getActionManager(): ActionManager
 
     getActionRegistry(): ActionRegistry
+
+    getModalManager(): ModalManager
+
+    getModalRegistry(): ModalRegistry
 }

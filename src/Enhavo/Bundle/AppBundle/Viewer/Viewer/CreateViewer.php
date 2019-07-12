@@ -123,6 +123,7 @@ class CreateViewer extends BaseViewer
             'actionsSecondary' => $this->actionManager->createActionsViewData($actionsSecondary, $options['resource']),
             'tabs' => $this->createTabViewData($tabs, $parameters->get('translationDomain')),
             'messages' => $this->getFlashMessages(),
+            'modals' => [],
             'view' => [
                 'id' => null,
             ]

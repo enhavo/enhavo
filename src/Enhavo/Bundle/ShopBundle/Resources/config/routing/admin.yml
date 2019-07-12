@@ -1,5 +1,5 @@
 enhavo_shop_product_admin:
-    resource: "@EnhavoShopBundle/Resources/config/routing/admin/product.yml"
+    resource: "@EnhavoShopBundle/Resources/config/routing/admin/product.yaml"
 
 enhavo_shop_order_admin:
     resource: "@EnhavoShopBundle/Resources/config/routing/admin/order.yml"

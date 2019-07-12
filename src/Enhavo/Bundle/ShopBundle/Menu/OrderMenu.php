@@ -18,7 +18,7 @@ class OrderMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'shopping-cart',
+            'icon' => 'shopping_cart',
             'label' => 'label.order',
             'translation_domain' => 'EnhavoShopBundle',
             'route' => 'enhavo_shop_order_index',

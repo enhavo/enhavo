@@ -19,11 +19,11 @@ class ProductMenu extends BaseMenu
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'icon' => 'box',
+            'icon' => 'work',
             'label' =>  'label.product',
             'translation_domain' => 'EnhavoShopBundle',
-            'route' => 'enhavo_shop_product_index',
-            'role' => 'ROLE_ENHAVO_SHOP_PRODUCT_INDEX',
+            'route' => 'sylius_product_index',
+            'role' => 'ROLE_SYLIUS_PRODUCT_INDEX',
         ]);
     }
 

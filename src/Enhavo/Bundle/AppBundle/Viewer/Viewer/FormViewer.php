@@ -67,6 +67,7 @@ class FormViewer extends AbstractActionViewer
         $templateVars['data']['tabs'] = $this->createTabViewData($tabs, $options['translation_domain']);
 
         $templateVars['data']['messages'] = $this->getFlashMessages();
+        $templateVars['data']['modals'] = [];
 
         if($options['resource']) {
             $templateVars['data']['resource'] = [

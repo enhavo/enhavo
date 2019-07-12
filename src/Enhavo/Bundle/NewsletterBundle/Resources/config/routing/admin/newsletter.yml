@@ -46,6 +46,7 @@ enhavo_newsletter_newsletter_update:
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:updateAction
         _sylius:
+            serialization_groups: ['form']
             viewer:
                 translationDomain: EnhavoNewsletterBundle
                 tabs:
@@ -156,7 +157,15 @@ enhavo_newsletter_newsletter_resource_preview:
 enhavo_newsletter_newsletter_send:
     options:
         expose: true
-    path: /admin/newsletter/newsletter/{id}/edit/send
+    path: /admin/newsletter/newsletter/{id}/send
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:sendAction
+
+enhavo_newsletter_newsletter_test:
+    options:
+        expose: true
+    path: /admin/newsletter/newsletter/test
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.newsletter:testAction

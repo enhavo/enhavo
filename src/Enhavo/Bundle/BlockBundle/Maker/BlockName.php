@@ -78,7 +78,7 @@ class BlockName
     public function getDoctrineORMFilePath()
     {
         $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
-        $filename = sprintf('%s%sBlock.orm.yaml', $subDirectory, $this->util->camelCase($this->name));
+        $filename = sprintf('%s%sBlock.orm.yml', $subDirectory, $this->util->camelCase($this->name));
 
         if($this->bundle) {
             return sprintf( 'src/%s/Resources/config/doctrine/%s', $this->path, $filename);
