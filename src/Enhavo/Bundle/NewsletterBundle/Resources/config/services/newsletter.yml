@@ -6,7 +6,8 @@ services:
         tags:
             - { name: enhavo.batch, alias: newsletter_send }
 
-    enhavo_newsletter.newsletter.manager:
+    Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
         arguments:
           - '@doctrine.orm.entity_manager'

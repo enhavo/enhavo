@@ -63,7 +63,7 @@ class ResourceController extends BaseController
     /**
      * @var AppEventDispatcher
      */
-    private $appEventDispatcher;
+    protected $appEventDispatcher;
 
     public function __construct(
         MetadataInterface $metadata,

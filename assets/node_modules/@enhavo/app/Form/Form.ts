@@ -7,7 +7,6 @@ import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import View from "@enhavo/app/View/View";
-import ModalManager from "@enhavo/app/Modal/ModalManager";
 
 export default class Form
 {

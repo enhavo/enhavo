@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 
 /**
  * NewsletterManager.php
@@ -60,5 +61,22 @@ class NewsletterManager
         $newsletter->setSent(true);
         $this->em->persist($newsletter);
         $this->em->flush();
+    }
+
+    public function sendTest(NewsletterInterface $newsletter, string $email)
+    {
+        $message = new \Swift_Message();
+        $message
+            ->setSubject($newsletter->getSubject())
+            ->setContentType("text/html")
+            ->setFrom('no-reply@enhavo.com')
+            ->setTo($email)
+            ->setBody($this->render($newsletter));
+        $this->mailer->send($message);
+    }
+
+    public function render(NewsletterInterface $newsletter)
+    {
+        return $newsletter->getTitle();
     }
 }

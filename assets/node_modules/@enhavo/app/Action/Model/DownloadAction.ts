@@ -15,7 +15,6 @@ export default class DownloadAction extends AbstractAction
         }
 
         axios.post(this.url, $('form').serialize(), {
-            url: this.url,
             headers: {'Content-Type': 'multipart/form-data' },
             responseType: 'arraybuffer'
         })

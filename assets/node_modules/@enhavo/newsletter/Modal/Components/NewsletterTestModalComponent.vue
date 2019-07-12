@@ -2,7 +2,7 @@
     <div class="modal">
         Newsletter Test
         <input type="text" v-model="modal.email" />
-        <button @click="modal.send()">Senden</button>
+        <button @click="modal.send()" :disabled="!modal.email">Senden</button>
         <button @click="modal.close()">Close</button>
     </div>
 </template>
@@ -19,5 +19,3 @@
         modal: NewsletterTestModal;
     }
 </script>
-
-
