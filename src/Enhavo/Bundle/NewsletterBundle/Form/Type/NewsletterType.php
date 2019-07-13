@@ -59,7 +59,7 @@ class NewsletterType extends AbstractType
         if(count($this->templates) > 1) {
             $choices = [];
             foreach($this->templates as $key => $values) {
-                $choices[$this->translator->trans($values['label'], $values['translation_domain'])] = $key;
+                $choices[$this->translator->trans($values['label'], [], $values['translation_domain'])] = $key;
             }
 
             $builder->add('template', ChoiceType::class, array(
