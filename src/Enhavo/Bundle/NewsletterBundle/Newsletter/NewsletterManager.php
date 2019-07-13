@@ -4,8 +4,10 @@
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * NewsletterManager.php
@@ -15,6 +17,8 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
  */
 class NewsletterManager
 {
+    use ContainerAwareTrait;
+
     /**
      * @var \Swift_Mailer
      */
@@ -26,15 +30,21 @@ class NewsletterManager
     private $em;
 
     /**
+     * @var string
+     */
+    private $from;
+
+    /**
      * @var array
      */
-    private $config;
+    private $templates;
 
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, $config)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, $from, $templates)
     {
         $this->em = $em;
         $this->mailer = $mailer;
-        $this->config = $config;
+        $this->templates = $templates;
+        $this->from = $from;
     }
 
     public function send(Newsletter $newsletter)
@@ -69,14 +79,31 @@ class NewsletterManager
         $message
             ->setSubject($newsletter->getSubject())
             ->setContentType("text/html")
-            ->setFrom('no-reply@enhavo.com')
+            ->setFrom($this->from)
             ->setTo($email)
             ->setBody($this->render($newsletter));
-        $this->mailer->send($message);
+        return $this->mailer->send($message);
     }
 
     public function render(NewsletterInterface $newsletter)
     {
-        return $newsletter->getTitle();
+        $templateManager = $this->container->get('enhavo_app.template.manager');
+        $template = $this->getTemplate($newsletter->getTemplate());
+        $content = $this->container->get('templating')->render($templateManager->getTemplate($template), [
+            'resource' => $newsletter
+        ]);
+        return $content;
+    }
+
+    public function getTemplate(?string $key): string
+    {
+        if($key === null) {
+            if(count($this->templates) === 1) {
+                $key = array_keys($this->templates)[0];
+                return $this->templates[$key]['template'];
+            }
+            throw new \Exception(sprintf('No template found for key "%s"', $key));
+        }
+        return $this->templates[$key]['template'];
     }
 }

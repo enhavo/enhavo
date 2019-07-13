@@ -10,8 +10,8 @@ newsletter:
   action:
     test_mail:
       label: 'Test Mail'
-      success: 'Test Mail successfully sent!'
-      error: 'An error occured!'
+      success: 'Test mail successfully sent'
+      error: 'An error occured while sending test mail'
     send:
       label: 'Send'
       success: 'Newsletter successfully sent!'
@@ -23,11 +23,13 @@ newsletter:
     title: 'Title'
     newsletter: 'Newsletter'
     content: 'Content'
+    default: 'Default'
   form:
     label:
       subject: 'Subject'
       sent: 'sent'
       slug: 'Slug'
+      template: 'Template'
   batch:
     action:
       send: 'Send'

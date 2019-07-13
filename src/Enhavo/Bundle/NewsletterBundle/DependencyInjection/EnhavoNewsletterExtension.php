@@ -25,9 +25,8 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $this->registerResources('enhavo_newsletter', $config['driver'], $config['resources'], $container);
 
-        $container->setParameter('enhavo_newsletter.newsletter.mail', $config['newsletter']['mail']);
-        $container->setParameter('enhavo_newsletter.newsletter.template.base', $config['newsletter']['template']['base']);
-        $container->setParameter('enhavo_newsletter.newsletter.template.show', $config['newsletter']['template']['show']);
+        $container->setParameter('enhavo_newsletter.newsletter.mail.from', $config['newsletter']['mail']['from']);
+        $container->setParameter('enhavo_newsletter.newsletter.templates', $config['newsletter']['templates']);
 
         $container->setParameter('enhavo_newsletter.storage', $config['storage']['default']);
         $container->setParameter('enhavo_newsletter.strategy', $config['strategy']['default']);

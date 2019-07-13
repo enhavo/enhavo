@@ -13,7 +13,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             type: string
             length: 255
             nullable: true
-
         slug:
             type: string
             length: 255
@@ -29,13 +28,21 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             type: string
             length: 255
             nullable: true
-
         sent:
             type: boolean
             nullable: true
-            options:
-                default: false
-
+        template:
+            type: string
+            nullable: true
+        sentAt:
+            type: datetime
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create
     oneToOne:
         content:
             cascade: ['persist', 'refresh', 'remove']

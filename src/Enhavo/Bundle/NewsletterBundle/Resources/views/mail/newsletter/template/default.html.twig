@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <!--[if gte mso 9]><xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml><![endif]-->
+    <!-- fix outlook zooming on 120 DPI windows devices -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- So that mobile will display zoomed in -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
+    <meta name="format-detection" content="date=no"> <!-- disable auto date linking in iOS 7-9 -->
+    <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS 7-9 -->
+    <title>Template</title>
+    <style>
+        .header,
+        .title,
+        .subtitle,
+        .footer-text {font-family: Helvetica, Arial, sans-serif;}
+        .header {font-size: 24px;font-weight: bold;padding-bottom: 12px;color: #DF4726;}
+        .footer {height:70px;}
+        .footer-text {font-size: 12px;line-height: 16px;color: #aaaaaa;}
+        .footer-text a {color: #aaaaaa;}
+        .btn {border-radius: 0 10px 0 10px;background: #fbb900;padding: 8px 17px;color: #FFF;text-decoration: none;text-transform:uppercase; font-weight:bold;}
+        .btn.right { float:right;}
+        .container {width: 600px;max-width: 600px;}
+        .container-padding {padding-left: 24px;padding-right: 24px;}
+        .content {padding-top: 12px;padding-bottom: 12px;background-color: #ffffff;}
+        code {background-color: #eee;padding: 0 4px;font-family: Menlo, Courier, monospace;font-size: 12px;}
+        .force-row { padding:30px 0;}
+        hr {border: 0;border-bottom: 1px solid #cccccc;clear:both;}
+        .hr {height: 1px;border-bottom: 1px solid #cccccc;clear:both;}
+        .header {height:180px; max-width:600px;clear:both; width:100%;}
+        .title {font-size: 26px;display:block;font-weight: lighter;color: #374550;}
+        .title.big { font-size:30px;}
+        .subtitle {font-size: 16px;font-weight: 600;color: #2469A0;}
+        .subtitle span {font-weight: 400;color: #999999;}
+        .body-text {font-family: Helvetica, Arial, sans-serif;font-size: 16px;line-height: 23px;font-weight:lighter;color: #333333;}
+        .col {font-family: Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;text-align: left;color: #333333;width: 100%;}
+        a[href^="x-apple-data-detectors:"],
+        a[x-apple-data-detectors] {color: inherit !important;text-decoration: none !important;font-size: inherit !important;font-family: inherit !important;font-weight: inherit !important;line-height: inherit !important;}
+
+        /*responsive*/
+        body {margin: 0;padding: 0;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}
+        table {border-spacing: 0;}
+        table td {border-collapse: collapse;}
+        .ExternalClass {width: 100%;}
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {line-height: 100%;}
+        .ReadMsgBody {width: 100%;background-color: #ebebeb;}
+        table {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+        img {-ms-interpolation-mode: bicubic;}
+        .yshortcuts a {border-bottom: none !important;}
+
+        @media screen and (max-width: 599px) {
+            .force-row,
+            .container { width: 100% !important; max-width: 100% !important;}
+            .header { height:120px;}
+            .footer-text { padding-left:24px; padding-right:24px;}
+            .footer { margin-left:-24px; margin-right:-24px;}
+        }
+        @media screen and (max-width: 400px) {
+            .container-padding {padding-left: 12px !important;padding-right: 12px !important;}
+        }
+        .ios-footer a {color: #aaaaaa !important;text-decoration: underline;}
+    </style>
+
+</head>
+<body style="margin:0; padding:0;" bgcolor="#FFFFFF" background-color="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<!-- 100% background wrapper (grey background) -->
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+            <!-- 600px container (white background) -->
+            <table border="0" width="600" cellpadding="0" cellspacing="0" class="container">
+                <tr>
+                    <td>
+                        <div class="header" style=""></div>
+                    </td>
+                </tr>
+                <tr>
+                    <!--content-->
+                    <td class="container-padding content" align="center">
+                        {{ block_render(resource.content) }}
+                    </td>
+                    <!--/content-->
+                </tr>
+
+                <!--footer-->
+                <tr>
+                    <td class="footer-text" align="left">
+                        <div class="footer"></div></span>
+                        <br>
+                        <a href="#">vom Newsletter abmelden</a> <br><br>
+                    </td>
+                </tr>
+
+            </table><!--/600px container -->
+        </td>
+    </tr>
+
+</table><!--/100% background wrapper-->
+
+</body>
+</html>
