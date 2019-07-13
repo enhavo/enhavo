@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Controller;
 use Enhavo\Bundle\AppBundle\Controller\RequestConfiguration;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NewsletterController extends ResourceController
 {
+    use TemplateTrait;
+
     public function showAction(Request $request): Response
     {
         $slug = $request->get('slug');
@@ -37,12 +40,8 @@ class NewsletterController extends ResourceController
 
     public function showResourceAction(Newsletter $contentDocument)
     {
-        $template = $this->getParameter('enhavo_newsletter.newsletter.template.show');
-
-        return $this->render($template, [
-            'base_template' => $this->getParameter('enhavo_newsletter.newsletter.template.base'),
-            'data' => $contentDocument
-        ]);
+        $manager = $this->get(NewsletterManager::class);
+        return new Response($manager->render($contentDocument));
     }
 
     public function sendAction(Request $request)
@@ -94,16 +93,18 @@ class NewsletterController extends ResourceController
         $form->handleRequest($request);
 
         $manager = $this->get(NewsletterManager::class);
-        $manager->sendTest($resource, $request->get('email'));
+        $success = $manager->sendTest($resource, $request->get('email'));
 
-        return new JsonResponse([
-            'type' => 'success',
-            'message' => 'sent'
-        ]);
-    }
-
-    protected function getNewsletterManager()
-    {
-        return $this->get('enhavo_newsletter.newsletter.manager');
+        if($success) {
+            return new JsonResponse([
+                'type' => 'success',
+                'message' => $this->get('translator')->trans('newsletter.action.test_mail.success', [], 'EnhavoNewsletterBundle')
+            ]);
+        } else {
+            return new JsonResponse([
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('newsletter.action.test_mail.error', [], 'EnhavoNewsletterBundle')
+            ]);
+        }
     }
 }

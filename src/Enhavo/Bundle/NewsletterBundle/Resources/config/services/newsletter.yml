@@ -9,14 +9,19 @@ services:
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
+        calls:
+            - [setContainer, ['@service_container']]
         arguments:
           - '@doctrine.orm.entity_manager'
           - '@mailer'
-          - '%enhavo_newsletter.newsletter.mail%'
+          - '%enhavo_newsletter.newsletter.mail.from%'
+          - '%enhavo_newsletter.newsletter.templates%'
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType:
         arguments:
             - '%enhavo_newsletter.model.newsletter.class%'
+            - '%enhavo_newsletter.newsletter.templates%'
+            - '@translator'
         tags:
             - { name: form.type, alias: enhavo_newsletter_newsletter }
 

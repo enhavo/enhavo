@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
+
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -40,6 +41,21 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
      * @var boolean
      */
     private $sent;
+
+    /**
+     * @var \DateTime
+     */
+    private $sentAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var string
+     */
+    private $template;
 
     /**
      * Get id
@@ -167,5 +183,53 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function getSent()
     {
         return $this->sent;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getSentAt(): \DateTime
+    {
+        return $this->sentAt;
+    }
+
+    /**
+     * @param \DateTime $sentAt
+     */
+    public function setSentAt(\DateTime $sentAt): void
+    {
+        $this->sentAt = $sentAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): ?string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(?string $template): void
+    {
+        $this->template = $template;
     }
 }

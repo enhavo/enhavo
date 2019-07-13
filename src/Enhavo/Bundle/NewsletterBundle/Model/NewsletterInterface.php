@@ -72,4 +72,14 @@ interface NewsletterInterface
      * @return NodeInterface
      */
     public function getContent();
+
+    /**
+     * @return string|null
+     */
+    public function getTemplate(): ?string;
+
+    /**
+     * @param string|null $template
+     */
+    public function setTemplate(?string $template) ;
 }

@@ -1,4 +1,12 @@
 enhavo_newsletter:
+    newsletter:
+        mail:
+            from: '%env(string:MAILER_FROM)%'
+        templates:
+            default:
+                template: 'mail/newsletter/template/default.html.twig'
+                label: newsletter.label.default
+                translation_domain: EnhavoNewsletterBundle
     strategy:
         settings:
             notify:
