@@ -45,10 +45,10 @@ class EnhavoThemeEncore
         return config;
     }
 
-    getThemeConfigs(Encore, base = true)
+    getThemeConfigs(Encore)
     {
         let configs = [];
-        for(let theme of this.getThemes(base)) {
+        for(let theme of this.getThemes()) {
             Encore.reset();
             Encore
                 .setOutputPath('public/build/' + theme.key)
@@ -80,12 +80,10 @@ class EnhavoThemeEncore
         return configs;
     }
 
-    getThemes(base = true)
+    getThemes()
     {
         let themes = [];
-        if(base) {
-            themes.push(this.loadFile(path.dirname(__dirname) + '/theme/theme/manifest.yml'));
-        }
+
         this.searchFile(this.getProjectDir() + '/assets/theme', 'manifest.yml');
         this.searchFile(this.getProjectDir() + '/assets/theme', 'manifest.yaml');
 

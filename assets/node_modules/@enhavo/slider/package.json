@@ -1,0 +1,15 @@
+{
+  "name": "@enhavo/slider",
+  "license": "MIT",
+  "types": "index.ts",
+  "version": "0.1.15",
+  "homepage": "https://www.enhavo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enhavo/enhavo.git"
+  },
+  "dependencies": {
+    "slick-carousel": "^1.8.1",
+    "jquery": "~3.4.1"
+  }
+}

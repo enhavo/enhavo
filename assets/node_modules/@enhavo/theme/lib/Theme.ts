@@ -1,0 +1,10 @@
+import * as $ from "jquery";
+import InitializerInterface from "@enhavo/app/InitializerInterface";
+
+export default class Theme implements InitializerInterface
+{
+    public init(element: HTMLElement)
+    {
+
+    }
+}
