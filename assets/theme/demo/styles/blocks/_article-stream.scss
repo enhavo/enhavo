@@ -1,4 +1,4 @@
-.block-article-stream { margin-top:5%; border-top:1px solid $black; padding-top:5%;
+.block-article-list { margin-top:5%; border-top:1px solid $black; padding-top:5%;
   .title {@extend %smallTitle;margin-bottom:75px;}
   article { display:flex;flex-flow: row wrap;align-content: center;
     &:nth-child(2n) {
@@ -47,7 +47,7 @@
 }
 
 @media all and(max-width:1450px) {
-  .block-article-stream {
+  .block-article-list {
     article {
       &:nth-child(2n) {
         .article-content {padding:0 60px 0 15px}
@@ -63,7 +63,7 @@
 }
 
 @media all and(max-width:1350px) {
-  .block-article-stream {
+  .block-article-list {
     .recent-articles { padding:60px 10px 15px;
       article {margin: 10px;}
       .article-teaser { line-height:$lineHeight;}
@@ -76,7 +76,7 @@
 }
 
 @media all and(max-width:1025px) {
-  .block-article-stream {
+  .block-article-list {
     article {
       &:nth-child(2n) {
         .article-content {padding:10px 40px 35px 0}
@@ -89,7 +89,7 @@
 }
 
 @media all and(max-width:767px) {
-  .block-article-stream { border-top:0; margin-top:0; padding-top:0;
+  .block-article-list { border-top:0; margin-top:0; padding-top:0;
     .title { margin-bottom:25px;}
     article { display:block;
       &:nth-child(2n) {

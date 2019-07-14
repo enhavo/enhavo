@@ -16,7 +16,7 @@ article:
       create_tag: 'Tag erstellen'
   label:
     article: 'Artikel'
-    article_stream: 'Artikel Stream'
+    article_list: 'Artikel Liste'
     pagination: 'Seiten'
     limit: 'Anzahl pro Seite'
     category: 'Kategorie'
