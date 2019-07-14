@@ -1,0 +1,19 @@
+@import "~@enhavo/theme/vars.scss";
+
+.product-list { display:flex;flex-flow:row wrap; margin:0 -$columnSpacing; padding:$blockSpacing 0;}
+.product-item { width:33.333%; padding:0 $columnSpacing; margin-bottom:$columnSpacing;flex-direction: column;display: flex;
+  >a { text-decoration:none;color:inherit; display:block;flex:1 0 auto}
+  span { display:block;}
+  .product-image { padding-bottom:56.25%; position:relative; background:lighten(#000, 95%);
+    img { position:absolute; width:100%; height:100%; top:0; left:0;object-fit:cover}
+  }
+}
+
+@media all and(max-width:1025px) {
+  .product-list {margin:0 -($columnSpacing/2);}
+  .product-item { width:50%; padding:0 $columnSpacing/2;}
+}
+
+@media all and(max-width:767px) {
+  .product-item { width:100%;}
+}

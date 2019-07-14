@@ -25,3 +25,7 @@ enhavo_shop_theme_order:
 enhavo_shop_theme_user:
     resource: "@EnhavoShopBundle/Resources/config/routing/theme/user.yml"
     prefix: /user
+
+enhavo_shop_theme_template:
+    resource: "@EnhavoShopBundle/Resources/config/routing/theme/template.yml"
+    prefix: /shop
