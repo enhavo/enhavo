@@ -1,0 +1,4 @@
+enhavo_shop_theme_template_cart_list:
+    path: /cart-list
+    defaults:
+        _controller: EnhavoShopBundle:Template:cartList
