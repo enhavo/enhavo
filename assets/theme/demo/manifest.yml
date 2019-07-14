@@ -1,4 +1,4 @@
-key: theme
+key: demo
 meta:
     name: 'Demo template'
     image: ~
@@ -9,4 +9,4 @@ webpack:
     entries:
         base: './base.ts'
 template:
-    path: '@EnhavoDemoBundle/Resources/views/Theme'
+    path: '@EnhavoDemoBundle/Resources/views'

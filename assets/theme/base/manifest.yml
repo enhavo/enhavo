@@ -10,4 +10,3 @@ webpack:
     entries:
         base: './base.ts'
 template:
-    mapping: []
