@@ -50,6 +50,13 @@ services:
         tags:
             - { name: enhavo.block, alias: article_list }
 
+    Enhavo\Bundle\ArticleBundle\Block\ArticleTeaserBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: article_teaser }
+
     Enhavo\Bundle\ArticleBundle\Widget\ArticleListType:
         public: true
         arguments:

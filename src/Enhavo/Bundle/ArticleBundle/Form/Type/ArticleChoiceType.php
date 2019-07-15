@@ -10,9 +10,10 @@ namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleChoiceType
+class ArticleChoiceType extends AbstractType
 {
     public function getParent()
     {
@@ -23,7 +24,8 @@ class ArticleChoiceType
     {
         $resolver->setDefaults([
             'class' => Article::class,
-            'choice_label' => 'article.label.article',
+            'choice_label' => 'title',
+            'label' => 'article.label.article',
             'translation_domain' => 'EnhavoArticleBundle',
             'multiple' => false,
             'route' => 'enhavo_article_article_auto_complete',
