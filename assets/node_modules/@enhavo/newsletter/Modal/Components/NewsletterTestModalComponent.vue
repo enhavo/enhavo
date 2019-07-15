@@ -1,9 +1,13 @@
 <template>
     <div class="modal">
-        Newsletter Test
-        <input type="text" v-model="modal.email" />
-        <button @click="modal.send()" :disabled="!modal.email">Senden</button>
-        <button @click="modal.close()">Close</button>
+        <div class="title">Newsletter Test</div>
+        <div class="form">
+            <input type="text" v-model="modal.email" placeholder="E-Mail" />
+            <div class="buttons">
+                <button @click="modal.send()" :disabled="!modal.email" class="modal-btn primary">Senden</button>
+                <button @click="modal.close()" class="modal-btn">Close</button>
+            </div>
+        </div>
     </div>
 </template>
 
