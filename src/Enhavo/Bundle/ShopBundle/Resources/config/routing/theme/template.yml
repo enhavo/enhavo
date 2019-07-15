@@ -9,6 +9,11 @@ enhavo_shop_theme_template_checkout_address:
         _controller: EnhavoShopBundle:Template:addressing
 
 
+enhavo_shop_theme_template_checkout_shipping:
+    path: /shipping
+    defaults:
+        _controller: EnhavoShopBundle:Template:shipping
+
 enhavo_shop_theme_template_checkout_payment:
     path: /payment
     defaults:
