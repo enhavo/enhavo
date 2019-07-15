@@ -37,4 +37,16 @@ class ArticleRepository extends ContentRepository
             return $query->getQuery()->getResult();
         }
     }
+
+    public function findByTerm($term, $limit)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orWhere('a.title LIKE :term')
+            ->setParameter('term', sprintf('%s%%', $term))
+            ->orderBy('a.title');
+
+        $paginator = $this->getPaginator($query);
+        $paginator->setMaxPerPage($limit);
+        return $paginator;
+    }
 }
