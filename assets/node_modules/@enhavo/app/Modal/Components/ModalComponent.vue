@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-container">
+    <div v-if="data.length" class="modal-container">
         <template v-for="modal in data">
             <div class="modal-component">
                 <component v-bind:is="modal.component" v-bind:modal="modal"></component>

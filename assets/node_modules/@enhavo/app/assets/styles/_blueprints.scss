@@ -35,7 +35,7 @@
   }
 }
 
-%modal-btn {border-radius:18px;padding:8px 20px;background:$grey3;color:#fff;cursor:pointer;
+%modal-btn {border-radius:18px;padding:8px 20px;background:$grey3;color:#fff;cursor:pointer;border:0;margin:0;
   &:hover {background:$grey2;}
 }
 %modal-btn-primary {@extend %modal-btn;background:$color2b;color:#fff;
