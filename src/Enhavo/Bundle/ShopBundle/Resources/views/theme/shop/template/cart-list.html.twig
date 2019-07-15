@@ -11,6 +11,7 @@
                         <div class="cart-product-content">
                             <div class="product-vendor">Händler</div>
                             <div class="product-title">Produktname</div>
+                            <div class="product-detail">Produktdetail (2 kg)</div>
                         </div>
                         <div class="cart-product-config">
                             <div class="product-amount">
@@ -32,6 +33,54 @@
                     </li>
                 {% endfor %}
             </ul>
+            <div class="cart-footer">
+                <div class="cart-config">
+                    <div class="voucher">
+                        <form action="">
+                            <label>Gutschein</label>
+                            <input type="text">
+                            <input type="submit" class="btn" value="Einlösen">
+                        </form>
+                    </div>
+                    <div class="checkbox">
+                        <label>Ich bin mit den Datenschutzrichtlinien und den AGB einverstanden</label>
+                        <input type="checkbox">
+                        <span></span>
+                    </div>
+                    <div class="checkbox">
+                        <label>Ich akzeptiere die Bestellbedingungen</label>
+                        <input type="checkbox">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <div class="sum">
+                        <div class="pair">
+                            <div class="key">Zwischensumme</div>
+                            <div class="value">129,30 €</div>
+                        </div>
+                    </div>
+                    <div class="additional-information">
+                        <p>ergibt sich aus:</p>
+                        <div class="pair">
+                            <div class="key">Bestellwert:</div>
+                            <div class="value">29,50 €</div>
+                        </div>
+                        <div class="pair">
+                            <div class="key">Versandkosten:</div>
+                            <div class="value">5,00 €</div>
+                        </div>
+                        <div class="pair">
+                            <div class="key">zzgl. MwSt.:</div>
+                            <div class="value">5,66 €</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-action">
+                <a href="" class="btn">Weiter einkaufen</a>
+                <a href="" class="btn">Weiter zur Kasse</a>
+            </div>
         </div>
     </div>
 {% endblock %}

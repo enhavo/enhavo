@@ -19,4 +19,5 @@
       &:before { width:2px; height:100%; content:''; position:absolute; left:50%; margin-left:-1px; top:0; background:#000;transform:rotate(45deg)}
     }
   }
+  .cart-footer {border-top:1px solid #000; margin-top:$blockSpacing/2; padding-top:$blockSpacing/2}
 }

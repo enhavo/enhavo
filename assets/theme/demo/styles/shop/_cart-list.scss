@@ -5,6 +5,7 @@
     .product-vendor {font-size:$fontSize2; font-weight:$semibold;}
     .product-price {font-size:$fontSize2; text-align:right;}
     .product-title { font-family:$serifFontFamily; font-size:$fontSize4;}
+    .product-detail {font-size:$fontSize2;}
     .product-amount { margin-top:8px;}
     .select { display:inline-block;width:100px; line-height:1em;
       label { text-transform:uppercase; font-size:$fontSize1*0.8;}
@@ -17,10 +18,68 @@
       &:hover { opacity:.6;transition:all .3s}
     }
   }
+  .cart-action { display:flex;flex-flow:row wrap; padding-top:25px;align-content:flex-end;
+    .btn { flex:1;max-width:300px; float:left;
+      +.btn { margin-left:15px; float:right;}
+    }
+  }
+  .cart-footer { display:flex;flex-flow:row wrap; margin-top:30px; padding-top:30px;}
+  .cart-config {flex:1;
+    .checkbox {@extend %checkbox;
+      +.checkbox { margin-top:8px;}
+    }
+  }
+  .cart-summary {flex-flow: column wrap;align-content: flex-end; display:flex; padding-right:25px;flex:1;
+    .sum { margin-bottom:0.75em;font-weight:$semibold;}
+    .pair { display:flex;
+      .key {width:250px;
+        +.value { align-items:flex-end}
+      }
+    }
+    .additional-information { font-size:$fontSize2; line-height:$lineHeight;
+      >p { font-weight:$semibold;}
+    }
+  }
+  .voucher { margin-bottom:15px;
+    label { display:block; font-size:$fontSize2;}
+    .btn {min-width:150px;max-height:54px; position:relative; top:-1px; left:-7px; background:#FFF;}
+  }
+}
+
+@media all and (max-width:1025px) {
+  .cart-list {
+    .cart-action {
+      .btn {max-width:100%}
+    }
+    .cart-config { flex:3; padding-right:15px;
+      .checkbox {
+        +.checkbox { margin-top:8px;}
+      }
+    }
+    .cart-summary { flex:2;}
+    .voucher {
+      .btn {min-width: auto;max-height: 49px; left:-5px;}
+    }
+  }
 }
 
 @media all and (max-width:767px) {
   .cart-list {
+    .cart-action {
+      .btn {width: 100%;
+        + .btn { margin-left:-1px;}
+      }
+    }
+    .cart-config { padding-right:0;}
+    .cart-footer { flex-flow:column;}
+    .cart-summary {align-content:flex-start; padding-right:0; margin-top:30px;
+      .additional-information { width:100%;}
+      .sum { margin-bottom:0;}
+      .pair {
+        .key { width:auto;flex:1;align-items: flex-start;}
+        .value {align-items: flex-end;}
+      }
+    }
     .cart-products { margin-top:$columnSpacing;}
     .cart-product { display:block; position:relative;
       .product-amount { margin-top:0;}
@@ -39,11 +98,20 @@
         .remove { top:0;}
       }
     }
+    .voucher {
+      input {width:100%;}
+      .btn { left:0;}
+    }
   }
 }
 
 @media all and (max-width:481px) {
   .cart-list {
+    .cart-action {flex-direction:column;
+      .btn {
+        +.btn { margin-left:0; margin-top:8px;}
+      }
+    }
     .cart-product {
       .cart-product-image {margin-bottom:5px;}
       .cart-product-content { float:none;clear:both; width:100%; padding-right:0;}
