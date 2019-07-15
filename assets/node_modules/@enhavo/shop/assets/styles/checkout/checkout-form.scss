@@ -1,0 +1,8 @@
+@import "~@enhavo/theme/vars.scss";
+
+.checkout { padding:$blockSpacing 0;}
+.checkout-form {
+  select {margin-bottom:.5em;}
+  input[type="text"], input[type="email"] { width:100%;margin-bottom:.5em;}
+  .btn {min-width:250px}
+}

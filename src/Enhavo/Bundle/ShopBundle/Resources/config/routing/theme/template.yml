@@ -2,3 +2,14 @@ enhavo_shop_theme_template_cart_list:
     path: /cart-list
     defaults:
         _controller: EnhavoShopBundle:Template:cartList
+
+enhavo_shop_theme_template_checkout_address:
+    path: /addressing
+    defaults:
+        _controller: EnhavoShopBundle:Template:addressing
+
+
+enhavo_shop_theme_template_checkout_payment:
+    path: /payment
+    defaults:
+        _controller: EnhavoShopBundle:Template:payment

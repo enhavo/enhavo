@@ -1,0 +1,59 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block main %}
+    <section class="container">
+        <div class="checkout">
+            <h1>Addressing</h1>
+            <form action="" class="checkout-form">
+                <fieldset>
+                    <div class="select">
+                        <select name="" id="">
+                            <option value="">Mr.</option>
+                            <option value="">Mrs.</option>
+                        </select>
+                    </div>
+                    <input type="text" placeholder="prename">
+                    <input type="text" placeholder="name">
+                </fieldset>
+                <fieldset>
+                    <input type="text" placeholder="Street">
+                    <input type="text" placeholder="Number">
+                    <input type="text" placeholder="PLZ">
+                    <input type="text" placeholder="City">
+                    <input type="text" placeholder="Country">
+                    <input type="text" placeholder="Company">
+                </fieldset>
+                <fieldset>
+                    <input type="email" placeholder="E-Mail">
+                    <input type="text" placeholder="Telefonnummer">
+                </fieldset>
+                <div class="diff-bill-address">
+                    <div class="checkbox">
+                        <label>I have a different billing address</label>
+                        <input type="checkbox">
+                        <span></span>
+                    </div>
+                    <fieldset>
+                        <div class="select">
+                            <select name="" id="">
+                                <option value="">Mr.</option>
+                                <option value="">Mrs.</option>
+                            </select>
+                        </div>
+                        <input type="text" placeholder="prename">
+                        <input type="text" placeholder="name">
+                    </fieldset>
+                    <fieldset>
+                        <input type="text" placeholder="Street">
+                        <input type="text" placeholder="Number">
+                        <input type="text" placeholder="PLZ">
+                        <input type="text" placeholder="City">
+                        <input type="text" placeholder="Country">
+                        <input type="text" placeholder="Company">
+                    </fieldset>
+                </div>
+                <input type="submit" class="btn" value="Next">
+            </form>
+        </div>
+    </section>
+{% endblock %}
