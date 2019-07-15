@@ -160,3 +160,15 @@ enhavo_article_article_resource_preview:
             viewer:
                 strategy_options:
                     service: Enhavo\Bundle\ArticleBundle\Controller\ArticleController:showResourceAction
+
+enhavo_article_article_auto_complete:
+    options:
+        expose: true
+    path: /enhavo/article/article/auto-complete
+    defaults:
+        _controller: enhavo_form.controller.auto_complete:searchAction
+        _config:
+            class: '%enhavo_article.model.article.class%'
+            repository:
+                method: findByTerm
+            choice_label: title

@@ -43,20 +43,27 @@ services:
         tags:
             - { name: enhavo.statistic, alias: article }
 
-    Enhavo\Bundle\ArticleBundle\Block\ArticleStreamBlockType:
+    Enhavo\Bundle\ArticleBundle\Block\ArticleListBlockType:
         public: true
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: enhavo.block, alias: article_stream }
+            - { name: enhavo.block, alias: article_list }
 
-    Enhavo\Bundle\ArticleBundle\Widget\ArticleStreamType:
+    Enhavo\Bundle\ArticleBundle\Block\ArticleTeaserBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: article_teaser }
+
+    Enhavo\Bundle\ArticleBundle\Widget\ArticleListType:
         public: true
         arguments:
             - '@enhavo_article.repository.article'
             - '@request_stack'
         tags:
-            - { name: enhavo.widget, alias: article_stream }
+            - { name: enhavo.widget, alias: article_list }
 
     Enhavo\Bundle\ArticleBundle\Controller\ArticleController:
         public: true

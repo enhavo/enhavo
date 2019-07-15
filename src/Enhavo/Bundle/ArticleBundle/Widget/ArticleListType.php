@@ -14,7 +14,7 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleStreamType extends AbstractWidgetType
+class ArticleListType extends AbstractWidgetType
 {
     /**
      * @var ArticleRepository
@@ -76,6 +76,6 @@ class ArticleStreamType extends AbstractWidgetType
 
     public function getType()
     {
-        return 'article_stream';
+        return 'article_list';
     }
 }

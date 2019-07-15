@@ -8,12 +8,13 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
+use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
-class Article extends Content
+class Article extends Content implements ArticleInterface
 {
     /**
      * @var FileInterface

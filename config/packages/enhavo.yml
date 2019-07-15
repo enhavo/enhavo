@@ -53,8 +53,10 @@ enhavo_block:
             type: two_column
         three_column:
             type: three_column
-        article_stream:
-            type: article_stream
+        article_list:
+            type: article_list
+        article_teaser:
+            type: article_teaser
         sidebar_column:
             type: sidebar_column
         template:

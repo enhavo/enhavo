@@ -59,3 +59,8 @@ enhavo_template:
             label: article.label.article
             translation_domain: EnhavoArticleBundle
             resource_template: theme/resource/article/resource.html.twig
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\ArticleBundle\Model\ArticleInterface: Enhavo\Bundle\ArticleBundle\Entity\Article
