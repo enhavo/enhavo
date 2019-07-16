@@ -5,12 +5,9 @@ namespace Enhavo\Bundle\FormBundle\Form\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\AppBundle\Form\Listener\MergeDoctrineCollectionListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -76,14 +73,20 @@ class AutoCompleteEntityType extends AbstractType
                     }
                     return $data;
                 },
-                function ($submittedDescription) use ($repository) {
+                function ($submittedDescription) use ($repository, $options, $propertyAccessor) {
                     $collection = new ArrayCollection();
                     if(empty($submittedDescription)) {
                         return $collection;
                     }
                     $ids = explode(',', $submittedDescription);
+                    $i = 0;
                     foreach($ids as $id) {
-                        $collection->add($repository->find($id));
+                        $i++;
+                        $entity = $repository->find($id);
+                        if($options['sortable']) {
+                            $propertyAccessor->setValue($entity, $options['sort_property'], $i);
+                        }
+                        $collection->add($entity);
                     }
                     return $collection;
                 }
@@ -135,6 +138,7 @@ class AutoCompleteEntityType extends AbstractType
             'placeholder' => $options['placeholder'],
             'id_property' => $options['id_property'],
             'label_property' => $options['label_property'],
+            'sortable' => $options['sortable'],
         ];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['create_route'] = $options['create_route'];
@@ -168,6 +172,8 @@ class AutoCompleteEntityType extends AbstractType
             'create_button_label' => null,
             'id_property' => 'id',
             'label_property' => null,
+            'sortable' => false,
+            'sort_property' => null
         ]);
 
         $resolver->setRequired([
