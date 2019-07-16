@@ -13,3 +13,8 @@
     height: 20px;
   }
 }
+
+@keyframes firefoxBug {
+  0% {width:0;}
+  100% {width:auto;}
+}
