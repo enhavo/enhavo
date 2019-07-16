@@ -1,12 +1,12 @@
 .checkout {text-align:center;}
 .checkout-form {max-width:750px; margin:45px auto 0;
-  input[type="text"], input[type="email"] { @extend %textInput; margin-bottom:0;
+  input[type="text"], input[type="email"], input[type="password"] { @extend %textInput; margin-bottom:0;
     &:focus { position:relative; z-index:1;}
   }
   fieldset { margin-left:-4px; margin-right:-4px;
     &:after {content:''; display:table;clear:both}
-    input[type="text"], input[type="email"] { width:50%; float:left;margin-top:-1px;
-      +input[type="text"], input[type="email"] { margin-left:-1px;}
+    input[type="text"], input[type="email"], input[type="password"] { width:50%; float:left;margin-top:-1px;
+      +input[type="text"], input[type="email"], input[type="password"] { margin-left:-1px;}
     }
     +fieldset { margin-top:30px;}
   }

@@ -34,4 +34,14 @@ class TemplateController extends AbstractController
     {
         return $this->render($this->getTemplate('theme/shop/template/shipping.html.twig'));
     }
+
+    public function orderSummaryAction()
+    {
+        return $this->render($this->getTemplate('theme/shop/template/order-summary.html.twig'));
+    }
+
+    public function loginAction()
+    {
+        return $this->render($this->getTemplate('theme/shop/template/login.html.twig'));
+    }
 }

@@ -18,3 +18,18 @@ enhavo_shop_theme_template_checkout_payment:
     path: /payment
     defaults:
         _controller: EnhavoShopBundle:Template:payment
+
+enhavo_shop_theme_template_checkout_order_summary:
+    path: /order-summary
+    defaults:
+        _controller: EnhavoShopBundle:Template:orderSummary
+
+enhavo_shop_theme_template_checkout_order_finish:
+    path: /finish
+    defaults:
+        _controller: EnhavoShopBundle:Template:finish
+
+enhavo_shop_theme_template_checkout_order_login:
+    path: /login
+    defaults:
+        _controller: EnhavoShopBundle:Template:login
