@@ -9,8 +9,6 @@
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\Entity;
-use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\CallbackTransformer;
