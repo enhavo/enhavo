@@ -3,14 +3,12 @@
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
-use Enhavo\Bundle\CategoryBundle\Form\Type\CategoryEntityType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -75,10 +73,5 @@ class ArticleType extends AbstractResourceType
     public function getParent()
     {
         return ContentType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_article_article';
     }
 }

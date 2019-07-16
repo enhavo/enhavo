@@ -60,6 +60,7 @@
     "@types/pako": "^1.0.1",
     "@types/select2": "4.0.37",
     "@types/slick-carousel": "^1.6.33",
+    "@types/sortablejs": "^1.7.2",
     "@types/tinymce": "^4.5.16",
     "@types/urijs": "^1.19.0",
     "@types/uuid": "^3.4.4",

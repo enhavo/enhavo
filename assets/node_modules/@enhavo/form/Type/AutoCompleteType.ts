@@ -2,6 +2,8 @@ import 'select2'
 import 'select2/select2.css'
 import FormType from "@enhavo/form/FormType";
 import AutoCompleteConfig from "@enhavo/form/Type/AutoCompleteConfig";
+import * as Sortable from "sortablejs";
+
 
 export default class AutoCompleteType extends FormType
 {
@@ -21,6 +23,28 @@ export default class AutoCompleteType extends FormType
         this.idProperty = data.id_property;
         this.labelProperty = data.label_property;
         let config: Select2Options = {
+            initSelection: ($element: JQuery) => {
+                if(!data.sortable) {
+                    return;
+                }
+                let $list = $element.parent().find('ul.select2-choices');
+                let listElement = <HTMLElement>$list.get(0);
+                new Sortable(listElement, {
+                    draggable: ".select2-search-choice",
+                    animation: 150,
+                    onUpdate: () => {
+                        let data = <Array<any>>$element.select2('data');
+                        let list = [];
+                        for(let element of data) {
+                            list.push(element.id);
+                        }
+                        $element.val(list.join(','));
+                    },
+                    onEnd: () => {
+                        $list.find('.select2-search-field').appendTo($list.get(0));
+                    },
+                });
+            },
             minimumInputLength: data.minimum_input_length,
             ajax: {
                 url: data.url,
@@ -34,7 +58,7 @@ export default class AutoCompleteType extends FormType
                 results: function (data: any, page: any) {
                     return data;
                 },
-                cache: true
+                cache: true,
             }
         };
 
