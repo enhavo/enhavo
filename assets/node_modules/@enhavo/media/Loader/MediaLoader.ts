@@ -25,6 +25,7 @@ export default class MediaLoader extends AbstractLoader
         let elements = this.findElements(element, '[data-media-type]');
         for(element of elements) {
             let type = new MediaType(element);
+            $(document).trigger('mediaInit', type);
             MediaType.mediaTypes.push(type);
         }
     }
