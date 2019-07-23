@@ -44,7 +44,14 @@ abstract class AbstractViewer implements ViewerInterface
         ];
 
         $view->setTemplateData($templateVars);
-        $view->setTemplate($this->getTemplate($options['template']));
+
+        $template = $options['template'];
+        $request = $this->container->get('request_stack')->getMasterRequest();
+        if($request->attributes->has('_template')) {
+            $template = $request->attributes->get('_template');
+        }
+
+        $view->setTemplate($this->getTemplate($template));
 
         return $view;
     }

@@ -1,9 +1,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div id="loginBox">
-    <div class="loginContainer">
+<div id="login-box">
+    <div class="login-container">
         <form action="{{ path("enhavo_user_theme_security_login_check") }}" method="post">
-
             {% if error %}
                 <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
                     <div>{{ 'error.login'|trans|nl2br }}</div>
@@ -28,7 +27,8 @@
                     <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
                 </div>
                 <div class="col-sm-6 col-xs-12 reset">
-                    <a href="{{ path('enhavo_user_theme_user_reset_password') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
+                    <a href="{{ path('enhavo_user_theme_reset_password_reset') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
+                    <a href="{{ path('enhavo_user_theme_registration_register') }}">{{ 'registration'|trans|nl2br }}</a>
                 </div>
             </div>
             <button class="btn loginButton" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans|nl2br }}</button>

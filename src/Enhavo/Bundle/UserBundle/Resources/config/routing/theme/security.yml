@@ -5,8 +5,7 @@ enhavo_user_theme_security_login:
     methods: [GET]
     defaults:
         _controller: enhavo_user.controller.security:loginAction
-        _sylius:
-            template: EnhavoUserBundle:Theme:Security/login.html.twig
+        _template: theme/security/login.html.twig
 
 enhavo_user_theme_security_login_check:
     options:

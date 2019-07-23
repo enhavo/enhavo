@@ -49,13 +49,13 @@ security:
             context: user
             form_login:
                 provider:       fos_userbundle
-                login_path:     /login
+                login_path:     /user/login
                 use_forward:    false
-                check_path:     /login_check
-                failure_path:   null
+                check_path:     /user/login/check
+                failure_path:   /user/login
                 default_target_path: /user/profile
             logout:
-                path:   /logout
+                path:   /user/logout
                 target: /
             anonymous:  true
 
@@ -67,7 +67,6 @@ security:
 
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/login/check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/check-email, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/registration$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/registration, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }

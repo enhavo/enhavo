@@ -13,6 +13,12 @@ fos_user:
     user_class: Enhavo\Bundle\UserBundle\Entity\User
     group:
         group_class: Enhavo\Bundle\UserBundle\Entity\Group
+    resetting:
+        email:
+            template: mail/security/reset-password.html.twig
+    registration:
+        confirmation:
+            template: mail/security/registration.html.twig
 
 enhavo_app:
     template_paths:
