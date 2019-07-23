@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\UserBundle\Form\Type\ResetPasswordType;
 use Enhavo\Bundle\UserBundle\User\UserManager;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ResetPasswordController extends AbstractController
 {
+    use TemplateTrait;
     use UserConfigurationTrait;
 
     /**
@@ -57,7 +59,7 @@ class ResetPasswordController extends AbstractController
         $this->viewFactory = $viewFactory;
     }
 
-    public function resetPasswordAction(Request $request)
+    public function resetAction(Request $request)
     {
         $configuration = $this->createConfiguration($request);
 
@@ -68,6 +70,7 @@ class ResetPasswordController extends AbstractController
             } else {
                 $this->addFlash('success', $this->get('translator')->trans('reset.message.success', [], 'EnhavoUserBundle'));
                 $this->userManager->sendResetEmail($user, $configuration->getMailTemplate(), $configuration->getConfirmRoute());
+                return $this->redirectToRoute('enhavo_user_theme_reset_password_check');
             }
         }
 
@@ -78,7 +81,12 @@ class ResetPasswordController extends AbstractController
         return $this->viewHandler->handle($view);
     }
 
-    public function resetPasswordConfirmAction(Request $request)
+    public function checkAction(Request $request)
+    {
+        return $this->render($this->getTemplate('theme/security/registration/check.html.twig'));
+    }
+
+    public function confirmAction(Request $request)
     {
         $configuration = $this->createConfiguration($request);
 
@@ -111,9 +119,14 @@ class ResetPasswordController extends AbstractController
         $form = $form->createView();
         $view = $this->viewFactory->create('reset', [
             'form' => $form,
-            'template' => $configuration->getTemplate('EnhavoUserBundle:Admin:User/reset-password-confirm.html.twig'),
+            'template' => $configuration->getTemplate('theme/security/registration/confirm.html.twig'),
         ]);
 
         return $this->viewHandler->handle($view);
+    }
+
+    public function finishAction(Request $request)
+    {
+        return $this->render($this->getTemplate('theme/security/registration/check.html.twig'));
     }
 }

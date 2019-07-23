@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Controller;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use FOS\RestBundle\View\View;
@@ -19,13 +20,14 @@ use FOS\UserBundle\Form\Type\RegistrationFormType;
 use FOS\UserBundle\FOSUserEvents;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegistrationController extends AbstractController
 {
+    use TemplateTrait;
     use UserConfigurationTrait;
 
     /**
@@ -39,7 +41,7 @@ class RegistrationController extends AbstractController
     private $userManager;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
@@ -52,10 +54,10 @@ class RegistrationController extends AbstractController
      * RegistrationController constructor.
      * @param FactoryInterface $userFactory
      * @param UserManager $userManager
-     * @param EventDispatcher $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      * @param ViewHandler $viewHandler
      */
-    public function __construct(FactoryInterface $userFactory, UserManager $userManager, EventDispatcher $eventDispatcher, ViewHandler $viewHandler)
+    public function __construct(FactoryInterface $userFactory, UserManager $userManager, EventDispatcherInterface $eventDispatcher, ViewHandler $viewHandler)
     {
         $this->userFactory = $userFactory;
         $this->userManager = $userManager;
@@ -91,7 +93,7 @@ class RegistrationController extends AbstractController
                 $this->userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('enhavo_user_theme_user_registration_confirmed');
+                    $url = $this->generateUrl('enhavo_user_theme_registration_check');
                     $response = new RedirectResponse($url);
                 }
 
@@ -109,29 +111,16 @@ class RegistrationController extends AbstractController
                 'form' => $form->createView(),
             ])
             ->setStatusCode($valid ? 200 : 400)
-            ->setTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:register.html.twig'))
+            ->setTemplate($configuration->getTemplate($this->getTemplate('theme/security/registration/register.html.twig')))
         ;
 
         return $this->viewHandler->handle($view);
     }
 
-    public function confirmedAction(Request $request)
+    public function checkAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $configuration = $this->createConfiguration($request);
-
-        $view = View::create()
-            ->setData([
-                'user' => $this->getUser(),
-            ])
-            ->setStatusCode(200)
-            ->setTemplate($configuration->getTemplate('EnhavoUserBundle:Theme/User:registration-confirmed.html.twig'))
-        ;
-
-        return $this->viewHandler->handle($view);
+        return $this->render($this->getTemplate('theme/security/registration/check.html.twig'));
     }
-
 
     public function confirmAction(Request $request, $token)
     {
@@ -152,12 +141,29 @@ class RegistrationController extends AbstractController
         $this->userManager->updateUser($user);
 
         if (null === $response = $event->getResponse()) {
-            $url = $this->generateUrl($configuration->getConfirmedRoute('enhavo_user_theme_user_registration_confirmed'));
+            $url = $this->generateUrl($configuration->getConfirmedRoute('enhavo_user_theme_registration_finish'));
             $response = new RedirectResponse($url);
         }
 
         $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
 
         return $response;
+    }
+
+    public function finishAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $configuration = $this->createConfiguration($request);
+
+        $view = View::create()
+            ->setData([
+                'user' => $this->getUser(),
+            ])
+            ->setStatusCode(200)
+            ->setTemplate($configuration->getTemplate($this->getTemplate('theme/security/registration/finish')))
+        ;
+
+        return $this->viewHandler->handle($view);
     }
 }

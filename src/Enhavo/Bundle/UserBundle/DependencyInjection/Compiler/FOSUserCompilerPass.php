@@ -37,5 +37,6 @@ class FOSUserCompilerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('fos_user.mailer.default');
         $definition->setClass(UserMailer::class);
+        $definition->addMethodCall('setContainer', [new Reference('service_container')]);
     }
 }
