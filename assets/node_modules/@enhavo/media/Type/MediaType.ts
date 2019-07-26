@@ -17,12 +17,11 @@ export default class MediaType extends FormType
     {
         super(element);
         this.config = this.$element.data('media-type');
-        this.dispatchInitEvent();
-
         let rowElement = <HTMLElement>this.$element.find('[data-media-row]').get(0);
         this.row = new MediaRow(rowElement, this);
         this.initFileUpload();
         this.initUploadButton();
+        this.dispatchInitEvent();
     }
 
     protected init()
