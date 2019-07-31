@@ -12,6 +12,7 @@ export default class View implements ViewInterface
     width: string = null;
     loaded: boolean = false;
     minimize: boolean = false;
+    focus: boolean = false;
     customMinimized: boolean = false;
     removed: boolean = false;
     position: number = 0;

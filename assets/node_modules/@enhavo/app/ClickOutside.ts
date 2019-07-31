@@ -8,6 +8,7 @@ export default class ClickOutside implements DirectiveOptions
 {
     private static view: View;
     private static eventDispatcher: EventDispatcher;
+    private static clickHandlers: ClickHandler[] = [];
 
     constructor(eventDispatcher: EventDispatcher, view: View)
     {
@@ -17,26 +18,59 @@ export default class ClickOutside implements DirectiveOptions
 
     bind(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
     {
-        ClickOutside.eventDispatcher.on('click', (event: ClickEvent) => {
+        let clickHandler = new ClickHandler();
+        let executed = false;
+        clickHandler.subscriber = ClickOutside.eventDispatcher.on('click', (event: ClickEvent) => {
            if(ClickOutside.view.getId() != event.id) {
-               binding.value();
+               if(!executed) {
+                   binding.value();
+                   executed = true;
+                   setTimeout(() => {
+                       executed = false;
+                   },100);
+               }
            }
         });
 
-        document.addEventListener('click', (event: Event) => {
+        clickHandler.element = el;
+        clickHandler.handler = (event: Event) => {
             event.stopPropagation();
-            if(event.target == el) {
+            if (event.target == el) {
                 return;
             }
 
             let parentElement = (<HTMLElement>event.target).parentElement;
-            while(parentElement != el) {
+            while (parentElement != el) {
                 parentElement = parentElement.parentElement;
-                if(parentElement == null) {
-                    binding.value();
+                if (parentElement == null) {
+                    if(!executed) {
+                        binding.value();
+                        executed = true;
+                        setTimeout(() => {
+                            executed = false;
+                        },100);
+                    }
                     return;
                 }
             }
-        });
+        }
+        ClickOutside.clickHandlers.push(clickHandler);
+        document.addEventListener('click', clickHandler.handler);
     }
+
+    unbind(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)
+    {
+        for(let clickHandler of ClickOutside.clickHandlers) {
+            if(clickHandler.element == el) {
+                document.removeEventListener('click', clickHandler.handler);
+                ClickOutside.eventDispatcher.remove(clickHandler.subscriber);
+            }
+        }
+    }
+}
+
+class ClickHandler {
+    public element: any;
+    public handler: any;
+    public subscriber: any;
 }

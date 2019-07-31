@@ -38,6 +38,17 @@ export default class ArrangeManager
                 }
             }
 
+            let hasFocus = false;
+            for(let view of views) {
+                if(view.focus == true) hasFocus = true;
+            }
+
+            if(!hasFocus) {
+                if(views.length) {
+                    views[views.length - 1].focus = true;
+                }
+            }
+
             this.setSize(views);
             this.setPosition(views);
         }, 50);

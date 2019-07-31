@@ -31,3 +31,23 @@
     &:before {font-family:"enhavo-icons";position:absolute;top:50%;transform:translateY(-50%);color:$grey2;font-size:0.6rem;left:0;}
   }
 }
+
+@media screen and (max-width:767px) {
+  .view-component {max-width:none!important;display:none;
+    &.focused {display:block;}
+    .toolbar {
+      .actions {
+        .action {
+          &.minimize,&.maximize {display:none;}
+        }
+      }
+    }
+  }
+  .view-container {
+    &.has-viewstack-dropdown {
+      .view-component {
+        .toolbar {padding-left:56px;}
+      }
+    }
+  }
+}
