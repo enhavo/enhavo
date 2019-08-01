@@ -5,4 +5,7 @@
   select {margin-bottom:.5em;}
   input[type="text"], input[type="email"], input[type="password"] { width:100%;margin-bottom:.5em;}
   .btn {min-width:250px}
+  .diff-bill-address {
+    fieldset { display:none;}
+  }
 }

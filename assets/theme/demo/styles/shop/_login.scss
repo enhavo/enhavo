@@ -9,3 +9,12 @@
     +input { margin-top:-1px;}
   }
 }
+
+
+@media all and(max-width:767px) {
+  .login {
+    .btn {
+      +.btn { margin-left:0;}
+    }
+  }
+}

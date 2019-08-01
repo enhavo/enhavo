@@ -7,6 +7,7 @@ export default class Theme implements InitializerInterface
     {
         $(() => {
             this.initNavigation(element);
+            this.showDiffBillAddressForm(element);
         })
     }
 
@@ -17,4 +18,14 @@ export default class Theme implements InitializerInterface
             $(this).toggleClass('active');
         });
     }
+
+    private showDiffBillAddressForm(element: HTMLElement)
+    {
+
+        $(element).find('[data-billaddress-checkbox]').on('change', function() {
+            console.log('zes');
+            $(this).parent().parent().find('fieldset').fadeToggle();
+        });
+    }
+
 }

@@ -5,3 +5,11 @@
     }
   }
 }
+
+@media all and(max-width:767px) {
+  .finish { margin:1em 0;
+    h1 { font-size:$fontSize5;
+      +p { margin-top:1em;}
+    }
+  }
+}

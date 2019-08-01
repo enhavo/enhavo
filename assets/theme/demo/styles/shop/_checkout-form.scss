@@ -6,7 +6,9 @@
   fieldset { margin-left:-4px; margin-right:-4px;
     &:after {content:''; display:table;clear:both}
     input[type="text"], input[type="email"], input[type="password"] { width:50%; float:left;margin-top:-1px;
-      +input[type="text"], input[type="email"], input[type="password"] { margin-left:-1px;}
+      +input[type="text"], input[type="email"], input[type="password"] {
+        &:nth-of-type(2n) {margin-left:-1px;}
+      }
     }
     +fieldset { margin-top:30px;}
   }
@@ -14,5 +16,19 @@
   .checkbox {@extend %checkbox; margin:30px 0;}
   .select { width:calc(100% - 1px);max-width:100%;
     select { margin-bottom:0;}
+  }
+}
+
+@media all and(max-width:767px) {
+  .checkout { padding-top:4em;}
+  .checkout-form { margin-top:25px;
+    fieldset {
+      input[type="text"], input[type="email"], input[type="password"] { width:100%; float:none;margin-top:-1px;
+        +input[type="text"], input[type="email"], input[type="password"] {
+          &:nth-of-type(2n) {margin-left:0}
+        }
+      }
+      +fieldset { margin-top:15px;}
+    }
   }
 }

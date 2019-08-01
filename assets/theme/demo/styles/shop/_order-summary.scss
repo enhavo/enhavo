@@ -13,3 +13,17 @@
     }
   }
 }
+
+@media all and(max-width:767px) {
+  .summary { padding-top:4em;
+    .cart-list {
+      .cart-products {margin-top:0;}
+    }
+    .summary-boxes { display:block; margin:25px 0 0 0;
+      .summary-box {padding: 15px 40px 15px 15px; margin:0;
+        .edit { right:15px; bottom:15px;}
+        +.summary-box { margin-top:15px;}
+      }
+    }
+  }
+}

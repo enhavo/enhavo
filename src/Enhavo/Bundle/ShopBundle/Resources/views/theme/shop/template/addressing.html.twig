@@ -3,7 +3,7 @@
 {% block main %}
     <section class="container">
         <div class="checkout">
-            <h1>Addressing</h1>
+            <h1 class="title">Addressing</h1>
             <form action="" class="checkout-form">
                 <fieldset>
                     <div class="select">
@@ -27,10 +27,10 @@
                     <input type="email" placeholder="E-Mail">
                     <input type="text" placeholder="Telefonnummer">
                 </fieldset>
-                <div class="diff-bill-address">
+                <div class="diff-bill-address" data-diff-billaddress>
                     <div class="checkbox">
                         <label>I have a different billing address</label>
-                        <input type="checkbox">
+                        <input type="checkbox" data-billaddress-checkbox>
                         <span></span>
                     </div>
                     <fieldset>
