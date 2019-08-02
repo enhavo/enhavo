@@ -3,8 +3,9 @@
 {% block main %}
     <section class="container">
         <div class="checkout">
-            <h1 class="title">Addressing</h1>
-            <form action="" class="checkout-form">
+            <h1 class="title">Register</h1>
+            <div class="forgot-pw">Already have an account? <a href="">Log in</a></div>
+            <form action="" class="checkout-form login">
                 <fieldset>
                     <div class="select">
                         <select name="" id="">
@@ -27,32 +28,15 @@
                     <input type="email" placeholder="E-Mail">
                     <input type="text" placeholder="Phone">
                 </fieldset>
-                <div class="diff-bill-address" data-diff-billaddress>
+                <fieldset>
                     <div class="checkbox">
-                        <label>I have a different billing address</label>
-                        <input type="checkbox" data-billaddress-checkbox>
+                        <label>I agree with the terms of use</label>
+                        <input type="checkbox">
                         <span></span>
                     </div>
-                    <fieldset>
-                        <div class="select">
-                            <select name="" id="">
-                                <option value="">Mr.</option>
-                                <option value="">Mrs.</option>
-                            </select>
-                        </div>
-                        <input type="text" placeholder="prename">
-                        <input type="text" placeholder="name">
-                    </fieldset>
-                    <fieldset>
-                        <input type="text" placeholder="Street">
-                        <input type="text" placeholder="Number">
-                        <input type="text" placeholder="PLZ">
-                        <input type="text" placeholder="City">
-                        <input type="text" placeholder="Country">
-                        <input type="text" placeholder="Company">
-                    </fieldset>
-                </div>
-                <input type="submit" class="btn" value="Next">
+                </fieldset>
+
+                <input type="submit" class="btn" value="register">
             </form>
         </div>
     </section>

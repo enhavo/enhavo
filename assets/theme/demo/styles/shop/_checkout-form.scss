@@ -1,4 +1,8 @@
-.checkout {text-align:center;}
+.checkout {text-align:center;
+  .forgot-pw { font-size:$fontSize2; margin-top:5px;
+    a {text-decoration:none; border-bottom:1px solid $black; color:$black;}
+  }
+}
 .checkout-form {max-width:750px; margin:45px auto 0;
   input[type="text"], input[type="email"], input[type="password"] { @extend %textInput; margin-bottom:0;
     &:focus { position:relative; z-index:1;}

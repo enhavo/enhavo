@@ -33,3 +33,8 @@ enhavo_shop_theme_template_checkout_order_login:
     path: /login
     defaults:
         _controller: EnhavoShopBundle:Template:login
+
+enhavo_shop_theme_template_checkout_register:
+    path: /register
+    defaults:
+        _controller: EnhavoShopBundle:Template:register

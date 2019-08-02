@@ -2,9 +2,6 @@
   .btn { margin-top:5px;
     +.btn { margin-left:10px;}
   }
-  .forgot-pw { font-size:$fontSize2; margin-top:5px;
-    a {text-decoration:none; border-bottom:1px solid $black; color:$black;}
-  }
   input {
     +input { margin-top:-1px;}
   }
