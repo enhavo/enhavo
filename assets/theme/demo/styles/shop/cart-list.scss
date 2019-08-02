@@ -1,4 +1,4 @@
-.cart-list {
+.cart-list { position:relative;
   .cart-product {
     .cart-product-image {border-color:lighten($black, 80%);}
     .cart-product-content { line-height:$lineHeight;flex:6}
@@ -39,6 +39,9 @@
     .additional-information { font-size:$fontSize2; line-height:$lineHeight;
       >p { font-weight:$semibold;}
     }
+  }
+  .state-loading {position:absolute; width:100%; height:100%; top:0; left:0; background:rgba(255,255,255,.75); z-index:10;
+    .loading {@extend %loadingSpinner}
   }
   .voucher { margin-bottom:15px;
     label { display:block; font-size:$fontSize2;}

@@ -1,5 +1,4 @@
 @import "~@enhavo/theme/vars.scss";
-
 .cart-list { padding:$blockSpacing 0;
   .cart-product { display:flex;flex-flow:row wrap;
     .cart-product-image { width:100px; height:100px;position:relative;border:1px solid #000; margin-right:$columnSpacing;

@@ -13,14 +13,21 @@
     }
   }
 }
-%textInput {-webkit-appearance:none;-moz-appearance:none; padding:15px 18px; border:1px solid lighten($black, 80%); font-size:$baseFontSize;width:100%; color:$black;transition:border-color .2s; font-family:$serifFontFamily; display:block;
-  &:focus {outline:0;border-color:$spotColor}
+%loadingSpinner {position:absolute;top:0;left:0; display:none;
+  div {position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.5);opacity:0;animation: 1.5s loading infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);margin-left:-325px; margin-top:-60px;
+    &:nth-of-type(1){animation-delay:0s;}
+    &:nth-of-type(2){animation-delay:.5s;}
+    &:nth-of-type(3){animation-delay:1s;}
+  }
 }
 %select {max-width:350px; position:relative; cursor:pointer;
   select {@extend %textInput;border-radius:0; background:none;}
   &:after {content:''; position:absolute; right:28px; top:50%; margin-top:-2px;pointer-events:none;width: 0;height: 0;border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 6px solid $black;}
 }
 %smallTitle {font-size: $fontSize1;letter-spacing: 0.3em;text-align: center;display: block;text-transform: uppercase;font-weight: $medium;}
+%textInput {-webkit-appearance:none;-moz-appearance:none; padding:15px 18px; border:1px solid lighten($black, 80%); font-size:$baseFontSize;width:100%; color:$black;transition:border-color .2s; font-family:$serifFontFamily; display:block;
+  &:focus {outline:0;border-color:$spotColor}
+}
 %title {font-size:$fontSize4; font-weight:$bold; margin-bottom:15px;}
 
 @media all and(max-width:1025px) {
