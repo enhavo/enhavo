@@ -22,10 +22,11 @@
     </head>
     <body class="{% block body_class %}{% endblock %}">
         {#Shop#}
-        {#<div class="cart-sidebar">#}
-            {#<div class="cart-list">#}
-            {#</div>#}
-        {#</div>#}
+        <div class="cart-sidebar">
+            <div class="cart-list">
+            </div>
+        </div>
+
         <header>
             <div class="container">
                 <nav class="main-menu">
@@ -54,6 +55,12 @@
             </div>
         </header>
         <main>
+            {#Hints#}
+            {#<div class="hint">#}
+                {#<div class="hint-title">Beware of the dog</div>#}
+                {#<div>Please keep me informed if you order <a href="">something</a>. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</div>#}
+                {#<a href="" class="btn">Okay mom</a>#}
+            {#</div>#}
             {% block main %}{% endblock %}
         </main>
         <div class="container">

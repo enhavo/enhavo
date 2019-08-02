@@ -31,10 +31,11 @@ export default class Theme implements InitializerInterface
     private handleLoadingCursor(element: HTMLElement)
     {
         $('[data-loading-screen]').on('mouseover', function() {
-            $('[data-loading-spinner]').fadeIn();
+            $(this).find('[data-loading-spinner]').fadeIn();
             document.onmousemove = handleMouseMove;
             function handleMouseMove(event) {
-                var eventDoc, doc, body;
+
+                let eventDoc, doc, body;
                 event = event || window.event;
 
                 if (event.pageX == null && event.clientX != null) {
@@ -49,6 +50,10 @@ export default class Theme implements InitializerInterface
                         (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
                         (doc && doc.clientTop  || body && body.clientTop  || 0 );
                 }
+
+                console.log('X:'+event.pageX);
+                console.log(event.pageY);
+
                 document.getElementsByClassName('loading')[0].style.top=event.pageY+'px';
                 document.getElementsByClassName('loading')[0].style.left=event.pageX+'px';
             }
