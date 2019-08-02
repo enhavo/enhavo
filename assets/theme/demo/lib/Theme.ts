@@ -9,6 +9,7 @@ export default class Theme implements InitializerInterface
             this.initNavigation(element);
             this.showDiffBillAddressForm(element);
             this.handleLoadingCursor(element);
+            this.toggleSidebar(element);
         })
     }
 
@@ -17,6 +18,33 @@ export default class Theme implements InitializerInterface
         $(element).find('[data-show-menu]').on('click', function() {
             $('[data-menu-items]').toggle();
             $(this).toggleClass('active');
+        });
+    }
+
+    private toggleSidebar(element: HTMLElement)
+    {
+        let showCart = false;
+        let sidebar = $('[data-cart-sidebar]');
+        let sidebarContent = $('[data-cart-sidebar] *');
+        let body = $('body');
+
+        $(element).find('[data-show-cart]').on('click', function(e) {
+            e.preventDefault();
+            if(showCart == false) {
+                body.addClass('sidebar-visible');
+                setTimeout(function() {
+                    showCart = true;
+                },50);
+            }
+        });
+        $(element).on('click', function(e) {
+            if(showCart == true) {
+                let target = $(e.target);
+                if(!target.is(sidebar) && !target.is(sidebarContent)) {
+                    body.removeClass('sidebar-visible');
+                    showCart = false;
+                }
+            }
         });
     }
 

@@ -4,3 +4,8 @@
   80%{transform: scale(2);opacity:.3;}
   100%{opacity:.0;}
 }
+
+@keyframes fadeIn{
+  0% {opacity:0;}
+  100%{opacity:1;}
+}

@@ -1,5 +1,3 @@
-@import "~@enhavo/theme/vars.scss";
-
 .product-list { display:flex;flex-flow:row wrap; margin:0 -$columnSpacing; padding:$blockSpacing 0;}
 .product-item { width:33.333%; padding:0 $columnSpacing; margin-bottom:$columnSpacing;flex-direction: column;display: flex;
   >a { text-decoration:none;color:inherit; display:block;flex:1 0 auto}
