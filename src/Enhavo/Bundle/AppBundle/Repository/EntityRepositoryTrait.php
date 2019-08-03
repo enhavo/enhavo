@@ -39,6 +39,16 @@ trait EntityRepositoryTrait
 
     public function filter(FilterQuery $filterQuery)
     {
+        $query = $this->buildFilterQuery($filterQuery);
+        return $this->getPaginator($query);
+    }
+
+    /**
+     * @param FilterQuery $filterQuery
+     * @return QueryBuilder
+     */
+    public function buildFilterQuery(FilterQuery $filterQuery)
+    {
         /** @var QueryBuilder $query */
         $query = $this->createQueryBuilder('e');
         $i = 0;
@@ -69,7 +79,7 @@ trait EntityRepositoryTrait
             $query->addOrderBy(sprintf('e.%s', $order['property']), $order['order']);
         }
 
-        return $this->getPaginator($query);
+        return $query;
     }
 
     public function createJoinPropertyArray($index, $length)

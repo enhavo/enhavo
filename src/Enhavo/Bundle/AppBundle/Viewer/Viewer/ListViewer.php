@@ -61,6 +61,11 @@ class ListViewer extends AppViewer
             $this->getViewerOption('data_route', $requestConfiguration)
         ]);
 
+        $dataRouteParameters = $this->mergeConfig([
+            $options['data_route_parameters'],
+            $this->getViewerOption('data_route_parameters', $requestConfiguration)
+        ]);
+
 
         $dataConfiguration = $this->util->createConfigurationFromRoute($dataRoute);
         if($dataConfiguration == null) {
@@ -75,6 +80,11 @@ class ListViewer extends AppViewer
             $options['update_route'],
             $this->getViewerOption('update_route', $requestConfiguration)
         ]);
+
+        $updateRouteParameters = $this->mergeConfig([
+            $options['update_route_parameters'],
+            $this->getViewerOption('update_route_parameters', $requestConfiguration)
+        ]);
         
         $viewerOptions = $requestConfiguration->getViewerOptions();
         if(isset($viewerOptions['translationDomain'])) {
@@ -83,7 +93,9 @@ class ListViewer extends AppViewer
 
         $list = [
             'dataRoute' => $dataRoute,
+            'dataRouteParameters' => $dataRouteParameters,
             'updateRoute' => $updateRoute,
+            'updateRouteParameters' => $updateRouteParameters,
             'columns' => $this->columnManager->createColumnsViewData($columnData),
             'items' => [],
             'positionProperty' => $positionProperty,
@@ -153,7 +165,9 @@ class ListViewer extends AppViewer
             ],
             'actions' => [],
             'data_route' => null,
-            'update_route' => null
+            'data_route_parameters' => null,
+            'update_route' => null,
+            'update_route_parameters' => null
         ]);
     }
 }

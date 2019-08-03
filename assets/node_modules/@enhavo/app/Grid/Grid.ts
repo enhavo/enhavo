@@ -66,7 +66,7 @@ export default class Grid
         });
 
         $(document).on('gridFilter', (event, data) => {
-           this.configuration.showFilter = data;
+            this.configuration.showFilter = data;
         });
     }
 
@@ -108,9 +108,13 @@ export default class Grid
 
     public open(row: RowData)
     {
-        let url = this.router.generate(this.configuration.updateRoute, {
-            id: row.id
-        });
+        let parameters: any = {};
+        if(this.configuration.updateRouteParameters) {
+            parameters = this.configuration.updateRouteParameters;
+        }
+        parameters.id = row.id
+
+        let url = this.router.generate(this.configuration.updateRoute, parameters);
         let label = this.translator.trans('enhavo_app.edit');
         this.view.open(label, url, 'edit-view')
     }
@@ -155,22 +159,22 @@ export default class Grid
             () => {
                 this.view.loading();
                 axios.post(uri)
-                .then((response) => {
-                    this.view.loaded();
-                    this.configuration.page = 1;
-                    this.loadTable();
-                    this.flashMessenger.addMessage(new Message(
-                        'success',
-                        this.translator.trans('enhavo_app.batch.message.success')
-                    ))
-                })
-                .catch((error) => {
-                    this.view.loaded();
-                    this.flashMessenger.addMessage(new Message(
-                        'error',
-                        this.translator.trans('enhavo_app.batch.message.error')
-                    ))
-                })
+                    .then((response) => {
+                        this.view.loaded();
+                        this.configuration.page = 1;
+                        this.loadTable();
+                        this.flashMessenger.addMessage(new Message(
+                            'success',
+                            this.translator.trans('enhavo_app.batch.message.success')
+                        ))
+                    })
+                    .catch((error) => {
+                        this.view.loaded();
+                        this.flashMessenger.addMessage(new Message(
+                            'error',
+                            this.translator.trans('enhavo_app.batch.message.error')
+                        ))
+                    })
             },
             () => {},
             this.translator.trans('enhavo_app.view.label.cancel'),
@@ -212,11 +216,16 @@ export default class Grid
     {
         this.configuration.selectAll = false;
         this.configuration.loading = true;
-        let url = this.router.generate(this.configuration.tableRoute, {
-            page: this.configuration.page,
-            limit: this.configuration.pagination
-        });
 
+        let parameters: any = {};
+        if(this.configuration.tableRouteParameters) {
+            parameters = this.configuration.tableRouteParameters;
+        }
+
+        parameters.page = this.configuration.page;
+        parameters.limit = this.configuration.pagination;
+
+        let url = this.router.generate(this.configuration.tableRoute, parameters);
 
         if(this.source != null) {
             this.source.cancel();

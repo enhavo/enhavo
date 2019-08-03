@@ -49,7 +49,12 @@ export default class List
 
     public load()
     {
-        let url = this.router.generate(this.data.dataRoute);
+        let parameters: any = {};
+        if(this.data.dataRouteParameters) {
+            parameters = this.data.dataRouteParameters;
+        }
+        let url = this.router.generate(this.data.dataRoute, parameters);
+
         this.data.loading = true;
         axios
             .get(url)
@@ -80,9 +85,12 @@ export default class List
 
     public open(row: RowData)
     {
-        let url = this.router.generate(this.data.updateRoute, {
-            id: row.id
-        });
+        let parameters: any = {};
+        if(this.data.updateRouteParameters) {
+            parameters = this.data.updateRouteParameters;
+        }
+        parameters.id = row.id
+        let url = this.router.generate(this.data.updateRoute, parameters);
         let label = this.translator.trans('enhavo_app.edit');
         this.view.open(label, url, 'edit-view');
     }
