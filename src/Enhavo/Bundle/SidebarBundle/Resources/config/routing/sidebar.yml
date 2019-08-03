@@ -7,9 +7,8 @@ enhavo_sidebar_sidebar_index:
         _controller: enhavo_sidebar.controller.sidebar:indexAction
         _sylius:
             viewer:
-                type: sidebar
-                title: sidebar.label.sidebar
-                translationDomain: EnhavoSidebarBundle
+                label: sidebar.label.sidebar
+                translation_domain: EnhavoSidebarBundle
 
 enhavo_sidebar_sidebar_create:
     options:

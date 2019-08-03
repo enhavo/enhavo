@@ -7,6 +7,6 @@ export default class CreateAction extends AbstractAction
 
     execute(): void
     {
-        this.application.getView().open(this.label, this.url, 'edit-view');
+        this.application.getView().open(this.url, 'edit-view');
     }
 }

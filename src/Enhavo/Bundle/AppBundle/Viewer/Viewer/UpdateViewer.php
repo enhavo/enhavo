@@ -115,6 +115,7 @@ class UpdateViewer extends CreateViewer
         $optionsResolver->setDefaults([
             'form_delete' => null,
             'form_delete_parameters' => [],
+            'label' => 'label.edit'
         ]);
     }
 }

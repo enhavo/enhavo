@@ -7,6 +7,8 @@ enhavo_newsletter_subscriber_index:
         _controller: enhavo_newsletter.controller.subscriber:indexAction
         _sylius:
             viewer:
+                label: subscriber.label.subscriber
+                translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_create:
     options:
@@ -52,7 +54,7 @@ enhavo_newsletter_subscriber_table:
                     translation_domain: EnhavoNewsletterBundle
                     equals: true
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
                 columns:
                     email:
                         type: text

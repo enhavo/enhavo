@@ -54,6 +54,8 @@ class DashboardViewer extends AbstractActionViewer
             'stylesheets' => [
                 'enhavo/dashboard'
             ],
+            'label' => 'dashboard.label.dashboard',
+            'translation_domain' => 'EnhavoDashboardBundle'
         ]);
     }
 }

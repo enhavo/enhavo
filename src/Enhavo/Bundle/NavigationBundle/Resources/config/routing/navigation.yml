@@ -7,8 +7,8 @@ enhavo_navigation_navigation_index:
         _controller: enhavo_navigation.controller.navigation:indexAction
         _sylius:
             viewer:
-                title: navigation.label.navigation
-                translationDomain: EnhavoNavigationBundle
+                label: navigation.label.navigation
+                translation_domain: EnhavoNavigationBundle
 
 enhavo_navigation_navigation_create:
     options:

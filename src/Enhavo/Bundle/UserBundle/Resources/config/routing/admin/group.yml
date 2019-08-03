@@ -7,8 +7,8 @@ enhavo_user_group_index:
         _controller: enhavo_user.controller.group:indexAction
         _sylius:
             viewer:
-                title: group.label.group
-                translationDomain: EnhavoUserBundle
+                label: group.label.group
+                translation_domain: EnhavoUserBundle
 
 enhavo_user_group_create:
     options:

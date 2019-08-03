@@ -7,8 +7,8 @@ enhavo_user_user_index:
         _controller: enhavo_user.controller.user:indexAction
         _sylius:
             viewer:
-                title: user.label.user
-                translationDomain: EnhavoUserBundle
+                label: user.label.user
+                translation_domain: EnhavoUserBundle
 
 enhavo_user_user_create:
     options:

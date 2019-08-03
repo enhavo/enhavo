@@ -5,6 +5,6 @@ enhavo_dashboard_index:
         _controller: enhavo_dashboard.controller.dashboard:indexAction
         _sylius:
             viewer:
+                label: dashboard.label.dashboard
                 type: dashboard
-                title: dashboard.label.dashboard
                 translationDomain: EnhavoDashboardBundle

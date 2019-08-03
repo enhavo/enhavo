@@ -47,10 +47,16 @@ class DeleteViewer extends BaseViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
+        $label = $this->mergeConfig([
+            $options['label'],
+            $this->getViewerOption('label', $requestConfiguration)
+        ]);
+
         $parameters->set('data', [
             'messages' => $this->getFlashMessages(),
             'view' => [
-                'id' => null,
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
             ]
         ]);
 

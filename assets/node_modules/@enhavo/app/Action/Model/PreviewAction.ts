@@ -40,8 +40,7 @@ export default class PreviewAction extends AbstractAction
 
     execute(): void
     {
-        let label = this.application.getTranslator().trans('enhavo_app.preview');
-        this.open(label, this.url, 'preview-view');
+        this.open(this.url, 'preview-view');
     }
 
     private sendData(id :number)
@@ -50,7 +49,7 @@ export default class PreviewAction extends AbstractAction
         this.application.getEventDispatcher().dispatch(new DataEvent(id, data));
     }
 
-    private open(label: string, url: string, key: string = null)
+    private open(url: string, key: string = null, label: string = null)
     {
         this.application.getEventDispatcher().dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
             let viewId: number = null;
@@ -62,11 +61,11 @@ export default class PreviewAction extends AbstractAction
                     if(data.exists) {
                         this.sendData(viewId);
                     } else {
-                        this.application.getView().openView(label, url, key);
+                        this.application.getView().openView(url, key, label);
                     }
                 });
             } else {
-                this.application.getView().openView(label, url, key);
+                this.application.getView().openView(url, key, label);
             }
         });
     }

@@ -7,8 +7,8 @@ enhavo_article_article_index:
         _controller: enhavo_article.controller.article:indexAction
         _sylius:
             viewer:
-                title: article.label.article
-                translationDomain: EnhavoArticleBundle
+                label: article.label.article
+                translation_domain: EnhavoArticleBundle
 
 enhavo_article_article_create:
     options:

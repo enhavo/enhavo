@@ -7,8 +7,8 @@ enhavo_article_tag_index:
         _controller: enhavo_taxonomy.controller.term:indexAction
         _sylius:
             viewer:
-                title: taxonomy.label.term
-                translationDomain: EnhavoTaxonomyBundle
+                label: article.label.tag
+                translation_domain: EnhavoArticleBundle
                 table_route: enhavo_article_tag_table
                 batch_route: enhavo_article_tag_batch
                 update_route: enhavo_article_tag_update

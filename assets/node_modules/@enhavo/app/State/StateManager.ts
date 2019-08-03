@@ -51,7 +51,6 @@ export default class StateManager
         for(let view of this.viewStack.getViews()) {
             viewData.push({
                 url: view.url,
-                label: view.label,
                 id: view.id,
                 storage: view.storage
             });

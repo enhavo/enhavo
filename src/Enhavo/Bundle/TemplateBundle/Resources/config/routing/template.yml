@@ -7,6 +7,8 @@ enhavo_template_template_index:
         _controller: enhavo_template.controller.template:indexAction
         _sylius:
             viewer:
+                label: template.label.template
+                translation_domain: EnhavoTemplateBundle
                 actions:
                     create:
                         hidden: true

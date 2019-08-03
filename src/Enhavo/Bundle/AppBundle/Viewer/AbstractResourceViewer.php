@@ -102,22 +102,6 @@ abstract class AbstractResourceViewer extends AbstractType implements ViewerInte
         return $requestConfiguration->getTemplate($options['template']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $optionsResolver)
-    {
-        $optionsResolver->setDefaults([
-            'translation_domain' => null,
-            'resource' => null,
-            'resources' => null,
-            'metadata' => null,
-            'template' => null,
-            'request_configuration' => null,
-            'request' => null,
-        ]);
-    }
-
     protected function getUnderscoreName(MetadataInterface $metadata)
     {
         $name = $metadata->getHumanizedName();
@@ -159,5 +143,27 @@ abstract class AbstractResourceViewer extends AbstractType implements ViewerInte
     {
         $options = $requestConfiguration->getViewerOptions();
         return $this->util->getConfigValue($key, $options);
+    }
+
+    protected function getViewId()
+    {
+        return $this->container->get('request_stack')->getMasterRequest()->get('view_id');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver->setDefaults([
+            'resource' => null,
+            'resources' => null,
+            'metadata' => null,
+            'template' => null,
+            'request_configuration' => null,
+            'request' => null,
+            'label' => null,
+            'translation_domain' => null
+        ]);
     }
 }

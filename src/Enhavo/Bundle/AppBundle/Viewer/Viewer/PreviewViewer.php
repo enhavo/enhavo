@@ -78,6 +78,8 @@ class PreviewViewer extends AbstractActionViewer
             'stylesheets' => [
                 'enhavo/preview'
             ],
+            'translation_domain' => 'EnhavoAppBundle',
+            'label' => 'label.preview',
         ]);
         $optionsResolver->setRequired(['metadata']);
     }
