@@ -43,6 +43,8 @@ label:
   greeting: 'Hello username'
   ok: 'Ok'
   filter: 'Filter'
+  edit: 'Edit'
+  index: 'Index'
 message:
   duplicate:
     confirm: 'Warning: This form will be closed without saving. Do you really want to continue?'

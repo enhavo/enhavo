@@ -49,6 +49,11 @@ class ListViewer extends AppViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
+        $label = $this->mergeConfig([
+            $options['label'],
+            $this->getViewerOption('label', $requestConfiguration)
+        ]);
+
         $actions = $this->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
@@ -107,7 +112,8 @@ class ListViewer extends AppViewer
             'list' => $list,
             'actions' => $this->actionManager->createActionsViewData($actions),
             'view' => [
-                'id' => null,
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
             ]
         ]);
 
@@ -167,7 +173,9 @@ class ListViewer extends AppViewer
             'data_route' => null,
             'data_route_parameters' => null,
             'update_route' => null,
-            'update_route_parameters' => null
+            'update_route_parameters' => null,
+            'translation_domain' => 'EnhavoAppBundle',
+            'label' => 'label.index',
         ]);
     }
 }

@@ -49,7 +49,9 @@ label:
   goToPage: 'Zur Seite'
   greeting: 'Hallo username'
   ok: 'Ok'
-  filter: 'Filter'
+  filter: 'Filter',
+  edit: 'Bearbeiten',
+  index: 'Index'
 message:
   confirm:
     batch:

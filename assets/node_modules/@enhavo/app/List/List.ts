@@ -91,8 +91,7 @@ export default class List
         }
         parameters.id = row.id
         let url = this.router.generate(this.data.updateRoute, parameters);
-        let label = this.translator.trans('enhavo_app.edit');
-        this.view.open(label, url, 'edit-view');
+        this.view.open(url, 'edit-view');
     }
 
     save(parent: Item)

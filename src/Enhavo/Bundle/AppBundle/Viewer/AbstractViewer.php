@@ -40,7 +40,10 @@ abstract class AbstractViewer implements ViewerInterface
         }
 
         $templateVars['data'] = [
-            'view' => ['view_id' => null]
+            'view' => [
+                'view_id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($options['label'], [], $options['translation_domain'])
+            ]
         ];
 
         $view->setTemplateData($templateVars);
@@ -73,6 +76,11 @@ abstract class AbstractViewer implements ViewerInterface
         return $translations;
     }
 
+    protected function getViewId()
+    {
+        return $this->container->get('request_stack')->getMasterRequest()->get('view_id');
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
@@ -80,7 +88,9 @@ abstract class AbstractViewer implements ViewerInterface
             'stylesheets' => [],
             'translations' => false,
             'routes' => false,
-            'template' => 'admin/view/base.html.twig'
+            'template' => 'admin/view/base.html.twig',
+            'label' => null,
+            'translation_domain' => null
         ]);
     }
 }

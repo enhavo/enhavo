@@ -87,6 +87,9 @@ export default class ViewStack
     {
         this.dispatcher.on('loaded', (event: LoadedEvent) => {
             let view = this.get(event.id);
+            if(event.label) {
+                view.label = event.label;
+            }
             if(view) {
                 view.finish();
             }
@@ -97,6 +100,7 @@ export default class ViewStack
     {
         this.dispatcher.on('loading', (event: LoadingEvent) => {
             let view = this.get(event.id);
+            view.label = null;
             if(view) {
                 view.loaded = false;
             }

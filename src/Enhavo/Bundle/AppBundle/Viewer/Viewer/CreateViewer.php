@@ -73,6 +73,11 @@ class CreateViewer extends BaseViewer
 
         $parameters->set('form', $form->createView());
 
+        $label = $this->mergeConfig([
+            $options['label'],
+            $this->getViewerOption('label', $requestConfiguration)
+        ]);
+
         $actions = $this->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
@@ -125,7 +130,8 @@ class CreateViewer extends BaseViewer
             'messages' => $this->getFlashMessages(),
             'modals' => [],
             'view' => [
-                'id' => null,
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
             ]
         ]);
 
@@ -193,7 +199,9 @@ class CreateViewer extends BaseViewer
             'form_action' => null,
             'form_action_parameters' => [],
             'form_template' => 'EnhavoAppBundle:View:tab.html.twig',
-            'template' => 'admin/view/form.html.twig'
+            'template' => 'admin/view/form.html.twig',
+            'translation_domain' => 'EnhavoAppBundle',
+            'label' => 'label.create'
         ]);
     }
 }

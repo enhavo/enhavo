@@ -13,7 +13,6 @@ export default class MenuItem extends AbstractMenu
             .then(() => {
                 this.application.getEventDispatcher()
                     .dispatch(new CreateEvent({
-                        label: this.label,
                         component: 'iframe-view',
                         url: this.url
                     }))

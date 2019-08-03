@@ -6,4 +6,5 @@ export default class ViewData
     alert: string = null;
     loading: boolean = false;
     id: number;
+    label: string;
 }

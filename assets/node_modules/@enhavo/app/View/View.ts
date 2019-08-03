@@ -89,7 +89,7 @@ export default class View
         this.data.loading = false;
     }
 
-    public open(label: string, url: string, key: string = null)
+    public open(url: string, key: string = null, label: string = null)
     {
         if(key) {
             this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
@@ -102,26 +102,26 @@ export default class View
                         if(data.exists) {
                             this.eventDispatcher.dispatch(new CloseEvent(viewId))
                                 .then(() => {
-                                    this.openView(label, url, key);
+                                    this.openView(url, key, label);
                                 })
                                 .catch(() => {})
                             ;
                         } else {
-                            this.openView(label, url, key);
+                            this.openView(url, key, label);
                         }
                     });
                 } else {
-                    this.openView(label, url, key);
+                    this.openView(url, key, label);
                 }
             });
         } else {
-            this.open(label, url)
+            this.open(url, null, label)
         }
     }
 
-    public openView(label: string, url: string, key: string = null)
+    public openView(url: string, key: string = null, label: string = null)
     {
-        this.eventDispatcher.dispatch(new CreateEvent(        {
+        this.eventDispatcher.dispatch(new CreateEvent({
             label: label,
             component: 'iframe-view',
             url: url
@@ -163,7 +163,7 @@ export default class View
 
     public ready()
     {
-        this.eventDispatcher.dispatch(new LoadedEvent(this.getId()));
+        this.eventDispatcher.dispatch(new LoadedEvent(this.getId(), this.data.label));
     }
 
     public exit()

@@ -112,11 +112,10 @@ export default class Grid
         if(this.configuration.updateRouteParameters) {
             parameters = this.configuration.updateRouteParameters;
         }
-        parameters.id = row.id
+        parameters.id = row.id;
 
         let url = this.router.generate(this.configuration.updateRoute, parameters);
-        let label = this.translator.trans('enhavo_app.edit');
-        this.view.open(label, url, 'edit-view')
+        this.view.open(url, 'edit-view')
     }
 
     public applyFilter()

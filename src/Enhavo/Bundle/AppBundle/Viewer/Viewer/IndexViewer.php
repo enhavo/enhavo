@@ -67,6 +67,11 @@ class IndexViewer extends AppViewer
     {
         parent::buildTemplateParameters($parameters, $requestConfiguration, $options);
 
+        $label = $this->mergeConfig([
+            $options['label'],
+            $this->getViewerOption('label', $requestConfiguration)
+        ]);
+
         $actions = $this->mergeConfigArray([
             $this->createActions($options),
             $options['actions'],
@@ -142,7 +147,8 @@ class IndexViewer extends AppViewer
             'grid' => $grid,
             'actions' => $this->actionManager->createActionsViewData($actions),
             'view' => [
-                'id' => null,
+                'id' => $this->getViewId(),
+                'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
             ]
         ]);
 
@@ -220,7 +226,9 @@ class IndexViewer extends AppViewer
             'table_route_parameters' => null,
             'batch_route' => null,
             'update_route' => null,
-            'update_route_parameters' => null
+            'update_route_parameters' => null,
+            'label' => 'label.index',
+            'translation_domain' => 'EnhavoAppBundle'
         ]);
     }
 }
