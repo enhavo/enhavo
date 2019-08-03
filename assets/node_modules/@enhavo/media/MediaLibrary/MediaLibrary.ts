@@ -105,7 +105,6 @@ export default class MediaLibrary
         let url = this.router.generate(this.data.updateRoute, {
             id: item.id
         });
-        let label = this.translator.trans('enhavo_app.edit');
-        this.view.open(label, url, 'edit-view');
+        this.view.open(url, 'edit-view');
     }
 }

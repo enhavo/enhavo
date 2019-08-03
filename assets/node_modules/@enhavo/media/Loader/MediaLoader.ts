@@ -59,12 +59,11 @@ export default class MediaLoader extends AbstractLoader
         $(document).on('mediaAddItem', (event, item) => {
             let config = new ImageCropperConfiguration();
             config.openCropper = (media: MediaItem, format: string) => {
-                let label = this.application.getTranslator().trans('enhavo_media.cropping');
                 let url = this.application.getRouter().generate('enhavo_media_image_cropper_index', {
                     format: format,
                     token: media.getMeta().token
                 });
-                this.application.getView().open(label, url, 'media-image-cropper')
+                this.application.getView().open(url, 'media-image-cropper')
             };
             new ImageCropperExtension(item, config);
         });

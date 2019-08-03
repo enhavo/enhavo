@@ -35,8 +35,7 @@ export default class DynamicFormLoader extends AbstractLoader
     {
         let config = new AutoCompleteConfig();
         config.create = (type: AutoCompleteType, url: string) => {
-            let label = this.application.getTranslator().trans('enhavo_app.create');
-            this.application.getView().open(label, url, 'autocomplete_loader');
+            this.application.getView().open(url, 'autocomplete_loader');
             this.currentType = type;
         };
 

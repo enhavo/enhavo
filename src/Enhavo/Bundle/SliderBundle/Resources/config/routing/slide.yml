@@ -7,8 +7,8 @@ enhavo_slider_slide_index:
         _controller: enhavo_slider.controller.slide:listAction
         _sylius:
             viewer:
-                title: slider.label.slider
-                translationDomain: EnhavoSliderBundle
+                label: slider.label.slider
+                translation_domain: EnhavoSliderBundle
 
 enhavo_slider_slide_create:
     options:

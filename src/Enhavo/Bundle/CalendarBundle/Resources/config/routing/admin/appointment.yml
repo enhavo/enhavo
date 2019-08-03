@@ -7,8 +7,8 @@ enhavo_calendar_appointment_index:
         _controller: enhavo_calendar.controller.appointment:indexAction
         _sylius:
             viewer:
-                title: label.calendar
-                translationDomain: EnhavoCalendarBundle
+                label: label.calendar
+                translation_domain: EnhavoCalendarBundle
 
 enhavo_calendar_appointment_create:
     options:

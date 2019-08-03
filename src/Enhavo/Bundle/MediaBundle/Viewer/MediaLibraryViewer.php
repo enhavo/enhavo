@@ -85,6 +85,8 @@ class MediaLibraryViewer extends AbstractActionViewer
             ],
             'translations' => true,
             'routes' => true,
+            'label' => 'media.label.library',
+            'translation_domain' => 'EnhavoMediaBundle'
         ]);
     }
 }

@@ -59,7 +59,7 @@ class LoginViewer extends AbstractViewer
         return $view;
     }
 
-    private function getViewId()
+    protected function getViewId()
     {
         $viewId = $this->session->get('enhavo.view_id');
         if($viewId) {

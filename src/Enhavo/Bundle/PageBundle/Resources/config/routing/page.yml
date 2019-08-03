@@ -5,8 +5,8 @@ enhavo_page_page_index:
         _controller: enhavo_page.controller.page:listAction
         _sylius:
             viewer:
-                title: page.label.page
-                translationDomain: EnhavoPageBundle
+                label: page.label.page
+                translation_domain: EnhavoPageBundle
 
 enhavo_page_page_create:
     path: /enhavo/page/page/create

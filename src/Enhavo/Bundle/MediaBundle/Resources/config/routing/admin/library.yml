@@ -8,6 +8,8 @@ enhavo_media_library_index:
         _sylius:
             viewer:
                 type: media_library
+                label: media.label.library
+                translation_domain: EnhavoMediaBundle
 
 enhavo_media_library_upload:
     path:  /media/library/upload

@@ -7,8 +7,8 @@ enhavo_redirect_redirect_index:
         _controller: enhavo_redirect.controller.redirect:indexAction
         _sylius:
             viewer:
-                title: redirect.label.redirect
-                translationDomain: EnhavoRedirectBundle
+                label: redirect.label.redirect
+                translation_domain: EnhavoRedirectBundle
 
 enhavo_redirect_redirect_create:
     options:
