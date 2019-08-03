@@ -79,6 +79,11 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('table_route', $requestConfiguration)
         ]);
 
+        $tableRouteParameters = $this->mergeConfig([
+            $options['table_route_parameters'],
+            $this->getViewerOption('table_route_parameters', $requestConfiguration)
+        ]);
+
         $tableConfiguration = $this->util->createConfigurationFromRoute($tableRoute);
 
         $filterData = $tableConfiguration ? $tableConfiguration->getFilters() : [];
@@ -100,6 +105,11 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('update_route', $requestConfiguration)
         ]);
 
+        $updateRouteParameters = $this->mergeConfig([
+            $options['update_route_parameters'],
+            $this->getViewerOption('update_route_parameters', $requestConfiguration)
+        ]);
+
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
         $batchData = !empty($batchConfiguration) ? $batchConfiguration->getBatches() : [];
 
@@ -113,8 +123,10 @@ class IndexViewer extends AppViewer
 
         $grid = [
             'tableRoute' => $tableRoute,
+            'tableRouteParameters' => $tableRouteParameters,
             'batchRoute' => $batchRoute,
             'updateRoute' => $updateRoute,
+            'updateRouteParameters' => $updateRouteParameters,
             'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),
@@ -205,8 +217,10 @@ class IndexViewer extends AppViewer
             ],
             'actions' => [],
             'table_route' => null,
+            'table_route_parameters' => null,
             'batch_route' => null,
-            'update_route' => null
+            'update_route' => null,
+            'update_route_parameters' => null
         ]);
     }
 }

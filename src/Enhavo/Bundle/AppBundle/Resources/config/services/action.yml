@@ -81,3 +81,9 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: filter }
+
+    Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: update }
