@@ -1,5 +1,5 @@
 import AutoCompleteEntityFilter from "@enhavo/app/Grid/Filter/Model/AutoCompleteEntityFilter";
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
+import AbstractFactory from "@enhavo/app/Grid/Filter/Factory/AbstractFactory";
 
 export default class AutoCompleteEntityFactory extends AbstractFactory
 {

@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-filter-search">
-        <input type="text" v-model="data.value" :placeholder="data.label" v-bind:class="['filter-form-field', {'has-value': hasValue}]">
+        <input @keyup="keyup" type="text" v-model="data.value" :placeholder="data.label" :class="['filter-form-field', {'has-value': hasValue}]">
     </div>
 </template>
 
@@ -27,6 +27,12 @@
 
         get placeholder(): string {
             return (this.data && this.data['placeholder']) ? this.data['placeholder'] : null;
+        }
+
+        keyup(event: Event) {
+            if(event.keyCode == 13) {
+                this.$emit('apply')
+            }
         }
     }
 </script>

@@ -24,6 +24,7 @@ class EntityType extends AbstractFilterType
             'choices' => $choices,
             'key' => $name,
             'value' => null,
+            'initialValue' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
         ];

@@ -4,12 +4,15 @@
             <template>
                 <component
                     class="view-table-filter"
-                    v-bind:is="filter.component"
-                    v-bind:data="filter">
+                    :is="filter.component"
+                    :data="filter"
+                    @apply="apply()"
+                >
                 </component>
             </template>
         </template>
-        <button v-on:click="apply()" class="apply-button"><i class="icon icon-refresh"></i></button>
+        <button @click="apply()" class="apply-button"><i class="icon icon-check"></i></button>
+        <button @click="reset()" class="apply-button"><i class="icon icon-autorenew"></i></button>
     </div>
 </template>
 
@@ -35,6 +38,11 @@
     apply() {
         const application = <IndexApplication>ApplicationBag.getApplication();
         application.getGrid().applyFilter();
+    }
+
+    reset() {
+      const application = <IndexApplication>ApplicationBag.getApplication();
+      application.getGrid().resetFilter();
     }
   }
 </script>

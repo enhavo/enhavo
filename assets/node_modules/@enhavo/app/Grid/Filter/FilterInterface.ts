@@ -4,4 +4,5 @@ export default interface ActionInterface extends ComponentAwareInterface
 {
     getValue(): string;
     getKey(): string;
+    reset(): void
 }

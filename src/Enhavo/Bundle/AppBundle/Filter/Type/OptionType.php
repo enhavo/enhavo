@@ -22,6 +22,7 @@ class OptionType extends AbstractFilterType
             'choices' => $this->formatChoices($options),
             'key' => $name,
             'value' => null,
+            'initialValue' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options)
         ];

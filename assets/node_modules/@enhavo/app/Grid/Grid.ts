@@ -124,6 +124,11 @@ export default class Grid
         this.loadTable();
     }
 
+    public resetFilter()
+    {
+        this.filterManager.reset();
+    }
+
     private getCurrentBatch(): Batch
     {
         for(let batch of this.configuration.batches) {
