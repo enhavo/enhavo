@@ -7,8 +7,16 @@ enhavo_slider_slide_index:
         _controller: enhavo_slider.controller.slide:listAction
         _sylius:
             viewer:
-                label: slider.label.slider
+                label: slide.label.slide
                 translation_domain: EnhavoSliderBundle
+                data_route_parameters:
+                    slider: $id
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_slider_slide_create
+                        route_parameters:
+                            slider: $id
 
 enhavo_slider_slide_create:
     options:
@@ -19,6 +27,9 @@ enhavo_slider_slide_create:
         _controller: enhavo_slider.controller.slide:createAction
         _sylius:
             redirect: enhavo_slider_slide_update
+            factory:
+                method: createWithSliderId
+                arguments: $slider
             viewer:
                 translationDomain: EnhavoSliderBundle
 
@@ -40,8 +51,10 @@ enhavo_slider_slide_data:
     defaults:
         _controller: enhavo_slider.controller.slide:listDataAction
         _sylius:
-            sorting:
-                position: desc
+            repository:
+                method: findBySliderId
+                arguments:
+                    - $slider
             viewer:
                 translationDomain: EnhavoSliderBundle
                 sorting_property: sorting

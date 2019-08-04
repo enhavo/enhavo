@@ -29,4 +29,15 @@ class SlideRepository extends EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function findBySliderId($sliderId)
+    {
+        $query = $this->createQueryBuilder('s')
+            ->join('s.slider', 'sl')
+            ->andWhere('sl.id = :id')
+            ->setParameter('id', $sliderId)
+            ->addOrderBy('s.position', 'ASC');
+
+        return $query->getQuery()->getResult();
+    }
 }

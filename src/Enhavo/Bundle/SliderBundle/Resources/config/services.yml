@@ -52,3 +52,9 @@ services:
         parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
         tags:
             - { name: enhavo.menu, alias: slider }
+
+    enhavo_slider.factory.slide:
+        class: '%enhavo_slider.factory.slide.class%'
+        arguments:
+            - '%enhavo_slider.model.slide.class%'
+            - '@enhavo_slider.repository.slider'

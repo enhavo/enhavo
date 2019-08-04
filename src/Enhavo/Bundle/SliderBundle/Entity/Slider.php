@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\SliderBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -15,17 +14,22 @@ class Slider implements SliderInterface, ResourceInterface
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var string|null
      */
-    protected $slides;
+    private $code;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection|SlideInterface[]
+     */
+    private $slides;
 
     /**
      * Constructor
@@ -84,7 +88,7 @@ class Slider implements SliderInterface, ResourceInterface
     /**
      * Remove slides
      *
-     * @param SliderInterface $slides
+     * @param SlideInterface $slides
      */
     public function removeSlide(SlideInterface $slides)
     {
@@ -99,5 +103,21 @@ class Slider implements SliderInterface, ResourceInterface
     public function getSlides()
     {
         return $this->slides;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 }

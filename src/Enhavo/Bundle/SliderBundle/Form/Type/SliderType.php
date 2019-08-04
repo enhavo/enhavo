@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SliderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +24,15 @@ class SliderType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('title', TextType::class, [
+            'label' => 'slider.label.title',
+            'translation_domain' => 'EnhavoSliderBundle'
+        ]);
+
+        $builder->add('code', TextType::class, [
+            'label' => 'slider.label.code',
+            'translation_domain' => 'EnhavoSliderBundle'
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolver $resolver)
@@ -30,10 +40,5 @@ class SliderType extends AbstractType
         $resolver->setDefaults( array(
             'data_class' => $this->class
         ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_slider_slider';
     }
 } 
