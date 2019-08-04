@@ -28,4 +28,11 @@ export default class FilterManager
         }
         return data;
     }
+
+    public reset()
+    {
+        for(let filter of this.filters) {
+            filter.reset();
+        }
+    }
 }

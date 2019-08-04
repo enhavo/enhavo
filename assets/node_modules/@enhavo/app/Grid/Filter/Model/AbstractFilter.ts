@@ -8,6 +8,7 @@ export default abstract class AbstractFilter implements FilterInterface
     value: string;
     key: string;
     label: string;
+    initialValue: string;
 
     constructor(application: ApplicationInterface)
     {
@@ -21,4 +22,8 @@ export default abstract class AbstractFilter implements FilterInterface
     getKey() {
         return this.key;
     };
+
+    reset() {
+        this.value = this.initialValue;
+    }
 }

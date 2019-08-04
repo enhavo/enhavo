@@ -1,5 +1,5 @@
 import OptionFilter from "@enhavo/app/Grid/Filter/Model/OptionFilter";
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
+import AbstractFactory from "@enhavo/app/Grid/Filter/Factory/AbstractFactory";
 
 export default class OptionFactory extends AbstractFactory
 {

@@ -20,6 +20,7 @@ class AutoCompleteEntityType extends AbstractFilterType
             'type' => $this->getType(),
             'key' => $name,
             'value' => null,
+            'initialValue' => null,
             'component' => $options['component'],
             'label' => $this->getLabel($options),
             'url' => $this->getUrl($options),
