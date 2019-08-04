@@ -17,6 +17,7 @@ export default class GridConfiguration
     public loading: boolean = true;
     public page: number = 1;
     public count: number;
+    public paginate: boolean;
     public pagination: number;
     public paginationSteps: number;
     public selectAll: boolean = false;

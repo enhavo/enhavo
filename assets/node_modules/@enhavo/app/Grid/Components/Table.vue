@@ -1,8 +1,8 @@
 <template>
     <div v-bind:class="name">
         <div class="view-table-head">
-            <div class="checkbox-container">
-                <input v-if="batches.length > 0" type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
+            <div class="checkbox-container" v-if="batches.length > 0">
+                <input type="checkbox" v-on:change="changeSelectAll" :checked="selectAll" />
                 <span></span>
             </div>
             <div class="view-table-head-columns">

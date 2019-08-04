@@ -136,6 +136,7 @@ class IndexViewer extends AppViewer
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),
             'filters' => $this->filterManager->createFiltersViewData($filterData),
+            'paginate' => $tableConfiguration->isPaginated(),
             'pagination' => 100,
             'paginationSteps' => [
                 5, 10, 50, 100, 500

@@ -40,6 +40,7 @@ enhavo_slider_slider_table:
     defaults:
         _controller: enhavo_slider.controller.slider:tableAction
         _sylius:
+            paginate: false
             viewer:
                 translation_domain: EnhavoSliderBundle
                 columns:
@@ -64,21 +65,6 @@ enhavo_slider_slider_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_slider.controller.slider:deleteAction
-
-enhavo_slider_slider_batch:
-    options:
-        expose: true
-    path: /enhavo/slider/slider/batch
-    methods: [POST]
-    defaults:
-        _controller: enhavo_slider.controller.slider:batchAction
-        _sylius:
-            paginate: false
-            criteria:
-                id: $ids
-            batches:
-                delete:
-                    type: delete
 
 enhavo_slider_slider_preview:
     options:
