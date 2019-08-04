@@ -20,13 +20,14 @@ enhavo_newsletter_newsletter_create:
         _sylius:
             redirect: enhavo_newsletter_newsletter_update
             viewer:
-                translation_domain: EnhavoNewsletterBundle
                 tabs:
                     main:
                         label: newsletter.label.newsletter
+                        translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/newsletter/main.html.twig
                     content:
                         label: newsletter.label.content
+                        translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                 actions:
@@ -46,13 +47,14 @@ enhavo_newsletter_newsletter_update:
         _sylius:
             serialization_groups: ['form']
             viewer:
-                translation_domain: EnhavoNewsletterBundle
                 tabs:
                     main:
                         label: newsletter.label.newsletter
+                        translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/newsletter/main.html.twig
                     content:
                         label: newsletter.label.content
+                        translation_domain: EnhavoNewsletterBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                 actions:

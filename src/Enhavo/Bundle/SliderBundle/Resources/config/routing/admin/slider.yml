@@ -41,6 +41,7 @@ enhavo_slider_slider_table:
         _controller: enhavo_slider.controller.slider:tableAction
         _sylius:
             viewer:
+                translation_domain: EnhavoSliderBundle
                 columns:
                     title:
                         property: title

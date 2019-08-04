@@ -20,13 +20,14 @@ enhavo_navigation_navigation_create:
         _sylius:
             redirect: enhavo_navigation_navigation_update
             viewer:
-                translation_domain: EnhavoNavigationBundle
                 tabs:
                     main:
                         label: navigation.label.navigation
+                        translation_domain: EnhavoNavigationBundle
                         template: admin/resource/navigation/main.html.twig
                     nodes:
                         label: navigation.label.items
+                        translation_domain: EnhavoNavigationBundle
                         template: admin/resource/navigation/nodes.html.twig
                         full_width: true
 
@@ -39,13 +40,14 @@ enhavo_navigation_navigation_update:
         _controller: enhavo_navigation.controller.navigation:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoNavigationBundle
                 tabs:
                     main:
                         label: navigation.label.navigation
+                        translation_domain: EnhavoNavigationBundle
                         template: admin/resource/navigation/main.html.twig
                     nodes:
                         label: navigation.label.items
+                        translation_domain: EnhavoNavigationBundle
                         template: admin/resource/navigation/nodes.html.twig
                         full_width: true
 

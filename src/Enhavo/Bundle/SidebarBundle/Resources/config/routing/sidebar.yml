@@ -20,13 +20,14 @@ enhavo_sidebar_sidebar_create:
         _sylius:
             redirect: enhavo_sidebar_sidebar_update
             viewer:
-                translation_domain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
                         template: admin/resource/sidebar/sidebar.html.twig
+                        translation_domain: EnhavoSidebarBundle
                     content:
                         label: sidebar.label.content
+                        translation_domain: EnhavoSidebarBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
 
@@ -39,13 +40,14 @@ enhavo_sidebar_sidebar_update:
         _controller: enhavo_sidebar.controller.sidebar:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoSidebarBundle
                 tabs:
                     main:
                         label: sidebar.label.sidebar
+                        translation_domain: EnhavoSidebarBundle
                         template: admin/resource/sidebar/sidebar.html.twig
                     content:
                         label: sidebar.label.content
+                        translation_domain: EnhavoSidebarBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
 

@@ -27,13 +27,14 @@ enhavo_template_template_create:
         _sylius:
             redirect: enhavo_template_template_update
             viewer:
-                translation_domain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
+                        translation_domain: EnhavoTemplateBundle
                         template: admin/resource/template/template.html.twig
                     content:
                         label: template.label.content
+                        translation_domain: EnhavoTemplateBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
 
@@ -46,13 +47,14 @@ enhavo_template_template_update:
         _controller: enhavo_template.controller.template:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
+                        translation_domain: EnhavoTemplateBundle
                         template: admin/resource/template/template.html.twig
                     content:
                         label: template.label.content
+                        translation_domain: EnhavoTemplateBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
 

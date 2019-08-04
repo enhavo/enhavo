@@ -20,10 +20,10 @@ enhavo_translation_translation_string_create:
         _sylius:
             redirect: enhavo_translation_translation_string_update
             viewer:
-                translation_domain: EnhavoTranslationBundle
                 tabs:
                     main:
                         label: translation.label.translationString
+                        translation_domain: EnhavoTranslationBundle
 
 enhavo_translation_translation_string_update:
     options:
@@ -34,10 +34,10 @@ enhavo_translation_translation_string_update:
         _controller: enhavo_translation.controller.translation_string:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoTranslationBundle
                 tabs:
                     main:
                         label: translation.label.translationString
+                        translation_domain: EnhavoTranslationBundle
 
 enhavo_translation_translation_string_table:
     options:

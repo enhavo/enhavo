@@ -123,7 +123,7 @@ class ListViewer extends AppViewer
     private function addTranslationDomain(&$configuration, $translationDomain)
     {
         foreach($configuration as &$config) {
-            if($translationDomain) {
+            if(!isset($config['translation_domain']) && $translationDomain) {
                 $config['translation_domain'] = $translationDomain;
             }
         }

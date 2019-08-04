@@ -143,7 +143,7 @@ class CreateViewer extends BaseViewer
         $data = [];
         foreach($configuration as $key => $tab) {
             $tabData = [];
-            $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], $translationDomain);
+            $tabData['label'] = $this->container->get('translator')->trans($tab['label'], [], isset($tab['translation_domain']) ? $tab['translation_domain'] : $translationDomain);
             $tabData['key'] = $key;
             $tabData['fullWidth'] = isset($tab['full_width']) && $tab['full_width'] ? true : false;
             $data[] = $tabData;

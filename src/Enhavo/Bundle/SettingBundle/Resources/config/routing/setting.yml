@@ -24,7 +24,6 @@ enhavo_setting_setting_update:
         _controller: enhavo_setting.controller.setting:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoSettingBundle
                 form:
                     delete: ~
                 buttons:
@@ -33,6 +32,7 @@ enhavo_setting_setting_update:
                 tabs:
                     main:
                         label: setting.label.setting
+                        translation_domain: EnhavoSettingBundle
                         template: EnhavoSettingBundle:Setting:setting.html.twig
 
 enhavo_setting_setting_table:

@@ -18,3 +18,4 @@ slider:
   label:
     slider: 'Slider'
     title: 'Titel'
+    code: 'Code'
