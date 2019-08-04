@@ -76,6 +76,7 @@ enhavo_page_page_data:
     defaults:
         _controller: enhavo_page.controller.page:listDataAction
         _sylius:
+            sortable: true
             criteria:
                 parent: null
             viewer:

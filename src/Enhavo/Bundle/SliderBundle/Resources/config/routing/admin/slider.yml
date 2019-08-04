@@ -9,7 +9,7 @@ enhavo_slider_slider_index:
             viewer:
                 label: slider.label.slider
                 translation_domain: EnhavoSliderBundle
-                update_route: enhavo_slider_slide_index
+                open_route: enhavo_slider_slide_index
 
 enhavo_slider_slider_create:
     options:

@@ -49,6 +49,7 @@ enhavo_slider_slide_data:
     defaults:
         _controller: enhavo_slider.controller.slide:listDataAction
         _sylius:
+            sortable: true
             repository:
                 method: findBySliderId
                 arguments:

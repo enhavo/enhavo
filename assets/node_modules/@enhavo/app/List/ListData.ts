@@ -15,4 +15,5 @@ export default class ListData
     public dragging: boolean = false;
     public positionProperty: string;
     public parentProperty: string;
+    public sortable: boolean;
 }
