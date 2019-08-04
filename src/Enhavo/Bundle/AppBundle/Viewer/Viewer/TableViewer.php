@@ -78,8 +78,8 @@ class TableViewer extends AbstractResourceViewer
         }
 
         foreach($columns as $key => &$column) {
-            if(!array_key_exists('translationDomain', $column)) {
-                $column['translationDomain'] = $defaultTranslationDomain;
+            if(!array_key_exists('translation_domain', $column)) {
+                $column['translation_domain'] = $defaultTranslationDomain;
             }
         }
 
@@ -110,10 +110,6 @@ class TableViewer extends AbstractResourceViewer
             $requestConfiguration->isSortable(),
         ]));
 
-        $columns = $this->mergeConfigArray([
-            $options['columns'],
-            $this->getColumns($requestConfiguration, $parameters->get('translationDomain'))
-        ]);
         $columns = $this->getViewerOption('columns', $requestConfiguration);
 
         $parameters->set('batch_route', $this->mergeConfig([

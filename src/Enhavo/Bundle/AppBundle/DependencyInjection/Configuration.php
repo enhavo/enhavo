@@ -102,7 +102,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('role')->end()
                             ->scalarNode('label')->defaultValue('')->end()
-                            ->scalarNode('translationDomain')->defaultValue(null)->end()
+                            ->scalarNode('translation_domain')->defaultValue(null)->end()
                             ->scalarNode('display')->defaultValue(true)->end()
                         ->end()
                     ->end()

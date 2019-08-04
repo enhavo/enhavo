@@ -17,19 +17,19 @@ enhavo_app:
         page_index:
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX
             label: page.role.label.index
-            translationDomain: EnhavoPageBundle
+            translation_domain: EnhavoPageBundle
         page_create:
             role: ROLE_ENHAVO_PAGE_PAGE_CREATE
             label: page.role.label.create
-            translationDomain: EnhavoPageBundle
+            translation_domain: EnhavoPageBundle
         page_update:
             role: ROLE_ENHAVO_PAGE_PAGE_UPDATE
             label: page.role.label.update
-            translationDomain: EnhavoPageBundle
+            translation_domain: EnhavoPageBundle
         page_delete:
             role: ROLE_ENHAVO_PAGE_PAGE_DELETE
             label: page.role.label.delete
-            translationDomain: EnhavoPageBundle
+            translation_domain: EnhavoPageBundle
 
 enhavo_routing:
     classes:

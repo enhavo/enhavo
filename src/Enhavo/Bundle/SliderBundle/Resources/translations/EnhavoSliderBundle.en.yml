@@ -17,3 +17,5 @@ slide:
 slider:
   label:
     slider: 'Slider'
+    title: 'Title'
+    code: 'Code'

@@ -20,17 +20,19 @@ enhavo_article_article_create:
         _sylius:
             redirect: enhavo_article_article_update
             viewer:
-                translationDomain: EnhavoArticleBundle
                 tabs:
                     main:
                         label: article.label.article
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/article/article.html.twig
                     content:
                         label: article.label.content
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                     meta:
                         label: article.label.meta
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/meta.html.twig
                 actions:
                     preview:
@@ -47,17 +49,19 @@ enhavo_article_article_update:
         _sylius:
             serialization_groups: ['form']
             viewer:
-                translationDomain: EnhavoArticleBundle
                 tabs:
                     main:
                         label: article.label.article
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/article/article.html.twig
                     content:
                         label: article.label.content
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                     meta:
                         label: article.label.meta
+                        translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/meta.html.twig
                 actions:
                     preview:
@@ -91,7 +95,7 @@ enhavo_article_article_table:
                     translation_domain: EnhavoArticleBundle
                     taxonomy: article_category
             viewer:
-                translationDomain: EnhavoArticleBundle
+                translation_domain: EnhavoArticleBundle
                 columns:
                     public:
                         label: article.label.public

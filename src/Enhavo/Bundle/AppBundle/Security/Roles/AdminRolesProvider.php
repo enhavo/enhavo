@@ -21,7 +21,7 @@ class AdminRolesProvider implements RolesProvider
     {
         foreach($roles as $role => $data) {
             if($data['display']) {
-                $this->roles[$translator->trans($data['label'], [], $data['translationDomain'])] = $data['role'];
+                $this->roles[$translator->trans($data['label'], [], $data['translation_domain'])] = $data['role'];
             }
         }
     }

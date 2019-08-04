@@ -10,7 +10,7 @@ enhavo_shop_order_index:
                 title: order.label.order
 #                stylesheets:
 #                    - '@EnhavoShopBundle/Resources/public/css/order.css'
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 app: shop/OrderApp
                 blocks:
                     table:
@@ -32,19 +32,21 @@ enhavo_shop_order_update:
         _sylius:
             form: enhavo_shop_order
             viewer:
-                translationDomain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_order_update
                     delete: enhavo_shop_order_delete
                 tabs:
                     main:
                         label: order.label.order
+                        translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:Admin:Order/Tab/order.html.twig
                     address:
                         label: order.label.address
+                        translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:Admin:Order/Tab/address.html.twig
                     payment:
                         label: order.label.payment
+                        translation_domain: EnhavoShopBundle
                         template: EnhavoShopBundle:Admin:Order/Tab/payment.html.twig
                 buttons:
                     billing:
@@ -72,7 +74,7 @@ enhavo_shop_order_table:
             criteria:
                 checkoutState: completed
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 batch_route: enhavo_shop_order_batch
                 columns:
                     number:

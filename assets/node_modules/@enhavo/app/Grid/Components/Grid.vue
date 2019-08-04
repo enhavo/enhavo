@@ -2,6 +2,7 @@
     <div class="grid">
         <filter-bar v-if="data.showFilter" v-bind:filters="data.filters"></filter-bar>
         <table-pagination
+            v-if="data.paginate"
             v-bind:page="data.page"
             v-bind:count="data.count"
             v-bind:paginationSteps="data.paginationSteps"
@@ -16,6 +17,7 @@
         ></grid-table>
         <table-batches v-if="data.batches.length > 0" v-bind:value="data.batch" v-bind:batches="data.batches"></table-batches>
         <table-pagination
+            v-if="data.paginate"
             v-bind:page="data.page"
             v-bind:count="data.count"
             v-bind:paginationSteps="data.paginationSteps"

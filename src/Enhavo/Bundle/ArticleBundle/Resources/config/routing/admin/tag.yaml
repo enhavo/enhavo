@@ -32,7 +32,7 @@ enhavo_article_tag_create:
                 arguments:
                     - 'article_tag'
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
 
 enhavo_article_tag_update:
     options:
@@ -45,7 +45,7 @@ enhavo_article_tag_update:
             form: Enhavo\Bundle\ArticleBundle\Form\Type\TagType
             serialization_groups: ['form']
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete
@@ -64,7 +64,7 @@ enhavo_article_tag_table:
                     - 'article_tag'
                     - true
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
                 width: 12
                 columns:
                     name:

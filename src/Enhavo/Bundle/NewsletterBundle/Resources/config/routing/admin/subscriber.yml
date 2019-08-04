@@ -20,7 +20,7 @@ enhavo_newsletter_subscriber_create:
         _sylius:
             redirect: enhavo_newsletter_subscriber_update
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_update:
     options:
@@ -31,7 +31,7 @@ enhavo_newsletter_subscriber_update:
         _controller: enhavo_newsletter.controller.subscriber:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
 
 enhavo_newsletter_subscriber_table:
     options:

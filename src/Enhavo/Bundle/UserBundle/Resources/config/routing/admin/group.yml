@@ -20,14 +20,15 @@ enhavo_user_group_create:
         _sylius:
             redirect: enhavo_user_group_update
             viewer:
-                translationDomain: EnhavoUserBundle
                 tabs:
                     main:
                         template: admin/resource/group/group.html.twig
                         label: group.label.group
+                        translation_domain: EnhavoUserBundle
                     permission:
                         template: admin/resource/group/permission.html.twig
                         label: group.label.permission
+                        translation_domain: EnhavoUserBundle
 
 enhavo_user_group_update:
     options:
@@ -38,14 +39,15 @@ enhavo_user_group_update:
         _controller: enhavo_user.controller.group:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoUserBundle
                 tabs:
                     main:
                         template: admin/resource/group/group.html.twig
                         label: group.label.group
+                        translation_domain: EnhavoUserBundle
                     permission:
                         template: admin/resource/group/permission.html.twig
                         label: group.label.permission
+                        translation_domain: EnhavoUserBundle
 
 enhavo_user_group_table:
     options:
@@ -61,7 +63,7 @@ enhavo_user_group_table:
                     label: group.label.name
                     translation_domain: EnhavoUserBundle
             viewer:
-                translationDomain: EnhavoUserBundle
+                translation_domain: EnhavoUserBundle
                 columns:
                     name:
                         type: text

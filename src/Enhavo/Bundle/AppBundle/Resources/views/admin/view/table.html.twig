@@ -1,1 +1,1 @@
-{{ {resources: resources, pages: pages}|json_encode|raw }}
+{% if pages is defined %}{{ {resources: resources, pages: pages}|json_encode|raw }}{% else %}{{ {resources: resources}|json_encode|raw }}{% endif %}

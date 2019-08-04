@@ -11,7 +11,7 @@ namespace Enhavo\Bundle\SliderBundle\Menu;
 use Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SliderMenu extends BaseMenu
+class SlideMenu extends BaseMenu
 {
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -21,13 +21,13 @@ class SliderMenu extends BaseMenu
             'icon' => 'slideshow',
             'label' => 'slider.label.slider',
             'translation_domain' => 'EnhavoSliderBundle',
-            'route' => 'enhavo_slider_slider_index',
-            'role' => 'ROLE_ENHAVO_SLIDER_SLIDER_INDEX'
+            'route' => 'enhavo_slider_slide_index',
+            'role' => 'ROLE_ENHAVO_SLIDER_SLIDE_INDEX'
         ]);
     }
 
     public function getType()
     {
-        return 'slider';
+        return 'slide';
     }
 }

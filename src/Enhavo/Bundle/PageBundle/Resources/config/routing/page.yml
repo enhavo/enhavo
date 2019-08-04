@@ -18,18 +18,20 @@ enhavo_page_page_create:
         _sylius:
             redirect: enhavo_page_page_update
             viewer:
-                translationDomain: EnhavoPageBundle
                 type: create
                 tabs:
                     main:
                         label: page.label.page
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/page/page.html.twig
                     content:
                         label: page.label.content
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                     meta:
                         label: page.label.meta
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/content/meta.html.twig
                 actions:
                     preview:
@@ -45,17 +47,19 @@ enhavo_page_page_update:
         _controller: enhavo_page.controller.page:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoPageBundle
                 tabs:
                     main:
                         label: page.label.page
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/page/page.html.twig
                     content:
                         label: page.label.content
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
                     meta:
                         label: page.label.meta
+                        translation_domain: EnhavoPageBundle
                         template: admin/resource/content/meta.html.twig
                 actions:
                     preview:
@@ -72,10 +76,11 @@ enhavo_page_page_data:
     defaults:
         _controller: enhavo_page.controller.page:listDataAction
         _sylius:
+            sortable: true
             criteria:
                 parent: null
             viewer:
-                translationDomain: EnhavoPageBundle
+                translation_domain: EnhavoPageBundle
                 children_property: children
                 parent_property: parent
                 columns:

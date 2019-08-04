@@ -8,7 +8,7 @@ enhavo_setting_setting_index:
         _sylius:
             viewer:
                 title: label.setting
-                translationDomain: EnhavoSettingBundle
+                translation_domain: EnhavoSettingBundle
                 actions:
                     create:
                         type: create
@@ -24,7 +24,6 @@ enhavo_setting_setting_update:
         _controller: enhavo_setting.controller.setting:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoSettingBundle
                 form:
                     delete: ~
                 buttons:
@@ -33,6 +32,7 @@ enhavo_setting_setting_update:
                 tabs:
                     main:
                         label: setting.label.setting
+                        translation_domain: EnhavoSettingBundle
                         template: EnhavoSettingBundle:Setting:setting.html.twig
 
 enhavo_setting_setting_table:
@@ -44,7 +44,7 @@ enhavo_setting_setting_table:
         _controller: enhavo_setting.controller.setting:tableAction
         _sylius:
             viewer:
-                translationDomain: EnhavoSettingBundle
+                translation_domain: EnhavoSettingBundle
                 columns:
                     label:
                         type: label

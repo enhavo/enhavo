@@ -80,31 +80,32 @@ class ListViewer extends AppViewer
         $positionProperty = $this->getViewerOption('position_property', $dataConfiguration);
         $parentProperty = $this->getViewerOption('parent_property', $dataConfiguration);
 
-        $updateRoute = $this->mergeConfig([
-            $this->geUpdateRoute($options),
-            $options['update_route'],
-            $this->getViewerOption('update_route', $requestConfiguration)
+        $openRoute = $this->mergeConfig([
+            $this->getopenRoute($options),
+            $options['open_route'],
+            $this->getViewerOption('open_route', $requestConfiguration)
         ]);
 
-        $updateRouteParameters = $this->mergeConfig([
-            $options['update_route_parameters'],
-            $this->getViewerOption('update_route_parameters', $requestConfiguration)
+        $openRouteParameters = $this->mergeConfig([
+            $options['open_route_parameters'],
+            $this->getViewerOption('open_route_parameters', $requestConfiguration)
         ]);
         
         $viewerOptions = $requestConfiguration->getViewerOptions();
-        if(isset($viewerOptions['translationDomain'])) {
-            $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
+        if(isset($viewerOptions['translation_domain'])) {
+            $this->addTranslationDomain($columnData, $viewerOptions['translation_domain']);
         }
 
         $list = [
             'dataRoute' => $dataRoute,
             'dataRouteParameters' => $dataRouteParameters,
-            'updateRoute' => $updateRoute,
-            'updateRouteParameters' => $updateRouteParameters,
+            'openRoute' => $openRoute,
+            'openRouteParameters' => $openRouteParameters,
             'columns' => $this->columnManager->createColumnsViewData($columnData),
             'items' => [],
             'positionProperty' => $positionProperty,
             'parentProperty' => $parentProperty,
+            'sortable' => $dataConfiguration->isSortable()
         ];
 
         $parameters->set('data', [
@@ -123,7 +124,7 @@ class ListViewer extends AppViewer
     private function addTranslationDomain(&$configuration, $translationDomain)
     {
         foreach($configuration as &$config) {
-            if(!isset($config['translation_domain'])) {
+            if(!isset($config['translation_domain']) && $translationDomain) {
                 $config['translation_domain'] = $translationDomain;
             }
         }
@@ -136,7 +137,7 @@ class ListViewer extends AppViewer
         return sprintf('%s_%s_data', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
     }
 
-    private function geUpdateRoute($options)
+    private function getopenRoute($options)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
@@ -172,8 +173,8 @@ class ListViewer extends AppViewer
             'actions' => [],
             'data_route' => null,
             'data_route_parameters' => null,
-            'update_route' => null,
-            'update_route_parameters' => null,
+            'open_route' => null,
+            'open_route_parameters' => null,
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.index',
         ]);

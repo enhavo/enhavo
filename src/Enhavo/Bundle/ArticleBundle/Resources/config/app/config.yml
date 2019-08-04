@@ -29,19 +29,19 @@ enhavo_app:
         enhavo_article_article_index:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
             label: article.role.label.index
-            translationDomain: EnhavoArticleBundle
+            translation_domain: EnhavoArticleBundle
         enhavo_article_article_create:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
             label: article.role.label.create
-            translationDomain: EnhavoArticleBundle
+            translation_domain: EnhavoArticleBundle
         enhavo_article_article_update:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE
             label: article.role.label.update
-            translationDomain: EnhavoArticleBundle
+            translation_domain: EnhavoArticleBundle
         enhavo_article_article_delete:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
             label: article.role.label.delete
-            translationDomain: EnhavoArticleBundle
+            translation_domain: EnhavoArticleBundle
 
 enhavo_taxonomy:
     taxonomies:

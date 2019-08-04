@@ -3,7 +3,7 @@ enhavo_app:
         enhavo_dashboard_dashboard_index:
             role: ROLE_ENHAVO_DASHBOARD_DASHBOARD_INDEX
             label: dashboard.role.label.index
-            translationDomain: EnhavoDashboardBundle
+            translation_domain: EnhavoDashboardBundle
     template_paths:
         enhavo_dashboard:
             path: '@EnhavoDashboardBundle/Resources/views'

@@ -15,11 +15,18 @@
             </div>
 
             <template v-if="!data.loading">
-                <draggable group="list" v-model="data.items" v-on:change="save($event, null)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
+                <template v-if="data.sortable">
+                    <draggable group="list" v-model="data.items" v-on:change="save($event, null)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
+                        <template v-for="item in data.items">
+                            <list-item v-bind:columns="data.columns" v-bind:data="item" :key="item.id"></list-item>
+                        </template>
+                    </draggable>
+                </template>
+                <template v-else>
                     <template v-for="item in data.items">
                         <list-item v-bind:columns="data.columns" v-bind:data="item" :key="item.id"></list-item>
                     </template>
-                </draggable>
+                </template>
             </template>
 
             <template v-else>

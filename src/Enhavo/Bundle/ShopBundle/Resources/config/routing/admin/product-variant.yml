@@ -37,7 +37,7 @@ enhavo_shop_product_variant_create:
                 arguments: $productId
             form: enhavo_shop_product_variant_create
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_product_variant_create
                     action_parameters:
@@ -53,7 +53,7 @@ enhavo_shop_product_variant_update:
         _sylius:
             form: enhavo_shop_product_variant
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_product_variant_update
                     action_parameters:
@@ -73,7 +73,7 @@ enhavo_shop_product_variant_table:
         _controller: sylius.controller.product_variant:tableAction
         _sylius:
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 columns:
                     code:
                         type: text

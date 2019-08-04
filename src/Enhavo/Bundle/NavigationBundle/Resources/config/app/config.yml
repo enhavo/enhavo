@@ -7,19 +7,19 @@ enhavo_app:
         enhavo_navigation_navigation_index:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_INDEX
             label: navigation.role.label.index
-            translationDomain: EnhavoNavigationBundle
+            translation_domain: EnhavoNavigationBundle
         enhavo_navigation_navigation_create:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_CREATE
             label: navigation.role.label.create
-            translationDomain: EnhavoNavigationBundle
+            translation_domain: EnhavoNavigationBundle
         enhavo_navigation_navigation_update:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_UPDATE
             label: navigation.role.label.update
-            translationDomain: EnhavoNavigationBundle
+            translation_domain: EnhavoNavigationBundle
         enhavo_navigation_navigation_delete:
             role: ROLE_ENHAVO_NAVIGATION_NAVIGATION_DELETE
             label: navigation.role.label.delete
-            translationDomain: EnhavoNavigationBundle
+            translation_domain: EnhavoNavigationBundle
 
 doctrine:
     orm:

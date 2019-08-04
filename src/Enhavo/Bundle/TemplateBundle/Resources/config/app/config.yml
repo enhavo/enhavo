@@ -7,19 +7,19 @@ enhavo_app:
         enhavo_template_template_index:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX
             label: template.role.label.index
-            translationDomain: EnhavoTemplateBundle
+            translation_domain: EnhavoTemplateBundle
         enhavo_template_template_create:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_CREATE
             label: template.role.label.create
-            translationDomain: EnhavoTemplateBundle
+            translation_domain: EnhavoTemplateBundle
         enhavo_template_template_update:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_UPDATE
             label: template.role.label.update
-            translationDomain: EnhavoTemplateBundle
+            translation_domain: EnhavoTemplateBundle
         enhavo_template_template_delete:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_DELETE
             label: template.role.label.delete
-            translationDomain: EnhavoTemplateBundle
+            translation_domain: EnhavoTemplateBundle
 
 enhavo_routing:
     classes:
