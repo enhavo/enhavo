@@ -122,8 +122,8 @@ class IndexViewer extends AppViewer
         $request = $requestConfiguration->getRequest();
 
         $viewerOptions = $requestConfiguration->getViewerOptions();
-        if(isset($viewerOptions['translationDomain'])) {
-            $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
+        if(isset($viewerOptions['translation_domain'])) {
+            $this->addTranslationDomain($columnData, $viewerOptions['translation_domain']);
         }
 
         $grid = [
@@ -158,7 +158,7 @@ class IndexViewer extends AppViewer
     private function addTranslationDomain(&$configuration, $translationDomain)
     {
         foreach($configuration as &$config) {
-            if(!isset($config['translation_domain'])) {
+            if($translationDomain) {
                 $config['translation_domain'] = $translationDomain;
             }
         }

@@ -18,8 +18,8 @@ class LabelType extends AbstractColumnType
         $label = $this->getProperty($resource, $options['property']);
 
         $translationDomain = null;
-        if($options['translationDomain']) {
-            $translationDomain = $options['translationDomain'];
+        if($options['translation_domain']) {
+            $translationDomain = $options['translation_domain'];
         }
 
         return $this->container->get('translator')->trans($label, [], $translationDomain);

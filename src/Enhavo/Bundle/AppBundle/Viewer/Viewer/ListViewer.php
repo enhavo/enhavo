@@ -92,8 +92,8 @@ class ListViewer extends AppViewer
         ]);
         
         $viewerOptions = $requestConfiguration->getViewerOptions();
-        if(isset($viewerOptions['translationDomain'])) {
-            $this->addTranslationDomain($columnData, $viewerOptions['translationDomain']);
+        if(isset($viewerOptions['translation_domain'])) {
+            $this->addTranslationDomain($columnData, $viewerOptions['translation_domain']);
         }
 
         $list = [
@@ -123,7 +123,7 @@ class ListViewer extends AppViewer
     private function addTranslationDomain(&$configuration, $translationDomain)
     {
         foreach($configuration as &$config) {
-            if(!isset($config['translation_domain'])) {
+            if($translationDomain) {
                 $config['translation_domain'] = $translationDomain;
             }
         }
