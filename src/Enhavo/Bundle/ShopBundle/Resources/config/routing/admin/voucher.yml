@@ -8,7 +8,7 @@ enhavo_shop_voucher_index:
         _sylius:
             viewer:
                 title: voucher.label.voucher
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
 
 enhavo_shop_voucher_create:
     options:
@@ -20,7 +20,7 @@ enhavo_shop_voucher_create:
         _sylius:
             redirect: enhavo_shop_voucher_update
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
 
 enhavo_shop_voucher_update:
     options:
@@ -31,7 +31,7 @@ enhavo_shop_voucher_update:
         _controller: enhavo_shop.controller.voucher:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
 
 enhavo_shop_voucher_table:
     options:
@@ -41,7 +41,7 @@ enhavo_shop_voucher_table:
         _controller: enhavo_shop.controller.voucher:tableAction
         _sylius:
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 columns:
                     code:
                         label: voucher.label.code

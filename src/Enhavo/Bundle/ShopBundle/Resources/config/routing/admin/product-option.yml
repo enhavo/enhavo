@@ -28,7 +28,7 @@ enhavo_shop_product_option_create:
             redirect: enhavo_shop_product_option_update
             form: enhavo_shop_product_option
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_product_option_create
                 buttons:
@@ -46,7 +46,7 @@ enhavo_shop_product_option_update:
         _sylius:
             form: enhavo_shop_product_option
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 form:
                     action: enhavo_shop_product_option_update
                     delete: enhavo_shop_product_option_delete
@@ -64,7 +64,7 @@ enhavo_shop_product_option_table:
         _controller: sylius.controller.product_option:tableAction
         _sylius:
             viewer:
-                translationDomain: EnhavoShopBundle
+                translation_domain: EnhavoShopBundle
                 columns:
                     code:
                         type: text

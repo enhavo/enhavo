@@ -20,7 +20,7 @@ enhavo_user_group_create:
         _sylius:
             redirect: enhavo_user_group_update
             viewer:
-                translationDomain: EnhavoUserBundle
+                translation_domain: EnhavoUserBundle
                 tabs:
                     main:
                         template: admin/resource/group/group.html.twig
@@ -38,7 +38,7 @@ enhavo_user_group_update:
         _controller: enhavo_user.controller.group:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoUserBundle
+                translation_domain: EnhavoUserBundle
                 tabs:
                     main:
                         template: admin/resource/group/group.html.twig
@@ -61,7 +61,7 @@ enhavo_user_group_table:
                     label: group.label.name
                     translation_domain: EnhavoUserBundle
             viewer:
-                translationDomain: EnhavoUserBundle
+                translation_domain: EnhavoUserBundle
                 columns:
                     name:
                         type: text

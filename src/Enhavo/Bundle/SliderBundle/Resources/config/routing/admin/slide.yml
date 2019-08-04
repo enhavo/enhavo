@@ -31,7 +31,7 @@ enhavo_slider_slide_create:
                 method: createWithSliderId
                 arguments: $slider
             viewer:
-                translationDomain: EnhavoSliderBundle
+                translation_domain: EnhavoSliderBundle
 
 enhavo_slider_slide_update:
     options:
@@ -42,7 +42,7 @@ enhavo_slider_slide_update:
         _controller: enhavo_slider.controller.slide:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoSliderBundle
+                translation_domain: EnhavoSliderBundle
 
 enhavo_slider_slide_data:
     options:

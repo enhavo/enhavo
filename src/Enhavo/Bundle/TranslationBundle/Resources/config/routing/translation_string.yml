@@ -8,7 +8,7 @@ enhavo_translation_translation_string_index:
         _sylius:
             viewer:
                 title: translation.label.translationString
-                translationDomain: EnhavoTranslationBundle
+                translation_domain: EnhavoTranslationBundle
 
 enhavo_translation_translation_string_create:
     options:
@@ -20,7 +20,7 @@ enhavo_translation_translation_string_create:
         _sylius:
             redirect: enhavo_translation_translation_string_update
             viewer:
-                translationDomain: EnhavoTranslationBundle
+                translation_domain: EnhavoTranslationBundle
                 tabs:
                     main:
                         label: translation.label.translationString
@@ -34,7 +34,7 @@ enhavo_translation_translation_string_update:
         _controller: enhavo_translation.controller.translation_string:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoTranslationBundle
+                translation_domain: EnhavoTranslationBundle
                 tabs:
                     main:
                         label: translation.label.translationString
@@ -56,7 +56,7 @@ enhavo_translation_translation_string_table:
                     translation_domain: EnhavoTranslationBundle
                     property: translationKey
             viewer:
-                translationDomain: EnhavoTranslationBundle
+                translation_domain: EnhavoTranslationBundle
                 columns:
                     translationKey:
                         type: text

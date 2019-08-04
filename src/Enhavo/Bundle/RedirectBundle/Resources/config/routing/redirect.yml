@@ -20,7 +20,7 @@ enhavo_redirect_redirect_create:
         _sylius:
             redirect: enhavo_redirect_redirect_update
             viewer:
-                translationDomain: EnhavoRedirectBundle
+                translation_domain: EnhavoRedirectBundle
 
 enhavo_redirect_redirect_update:
     options:
@@ -31,7 +31,7 @@ enhavo_redirect_redirect_update:
         _controller: enhavo_redirect.controller.redirect:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoRedirectBundle
+                translation_domain: EnhavoRedirectBundle
 
 enhavo_redirect_redirect_table:
     options:
@@ -61,7 +61,7 @@ enhavo_redirect_redirect_table:
                     translation_domain: EnhavoRedirectBundle
 
             viewer:
-                translationDomain: EnhavoRedirectBundle
+                translation_domain: EnhavoRedirectBundle
                 columns:
                     from:
                         type: text

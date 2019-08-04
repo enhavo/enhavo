@@ -7,8 +7,8 @@ enhavo_app:
         enhavo_setting_setting_index:
             role: ROLE_ENHAVO_SETTING_SETTING_INDEX
             label: setting.role.label.index
-            translationDomain: EnhavoSettingBundle
+            translation_domain: EnhavoSettingBundle
         enhavo_setting_setting_update:
             role: ROLE_ENHAVO_SETTING_SETTING_UPDATE
             label: setting.role.label.update
-            translationDomain: EnhavoSettingBundle
+            translation_domain: EnhavoSettingBundle

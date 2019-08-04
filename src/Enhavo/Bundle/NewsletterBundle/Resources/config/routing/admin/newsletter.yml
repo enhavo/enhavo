@@ -20,7 +20,7 @@ enhavo_newsletter_newsletter_create:
         _sylius:
             redirect: enhavo_newsletter_newsletter_update
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
                 tabs:
                     main:
                         label: newsletter.label.newsletter
@@ -46,7 +46,7 @@ enhavo_newsletter_newsletter_update:
         _sylius:
             serialization_groups: ['form']
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
                 tabs:
                     main:
                         label: newsletter.label.newsletter
@@ -78,7 +78,7 @@ enhavo_newsletter_newsletter_table:
                     label: newsletter.label.title
                     translation_domain: EnhavoNewsletterBundle
             viewer:
-                translationDomain: EnhavoNewsletterBundle
+                translation_domain: EnhavoNewsletterBundle
                 batches:
                     actions:
                         delete:

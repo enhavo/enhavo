@@ -27,7 +27,7 @@ enhavo_template_template_create:
         _sylius:
             redirect: enhavo_template_template_update
             viewer:
-                translationDomain: EnhavoTemplateBundle
+                translation_domain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
@@ -46,7 +46,7 @@ enhavo_template_template_update:
         _controller: enhavo_template.controller.template:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoTemplateBundle
+                translation_domain: EnhavoTemplateBundle
                 tabs:
                     main:
                         label: template.label.template
@@ -72,7 +72,7 @@ enhavo_template_template_table:
                     translation_domain: EnhavoTemplateBundle
                     property: name
             viewer:
-                translationDomain: EnhavoTemplateBundle
+                translation_domain: EnhavoTemplateBundle
                 columns:
                     name:
                         type: text

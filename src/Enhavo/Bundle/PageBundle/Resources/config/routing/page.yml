@@ -18,7 +18,7 @@ enhavo_page_page_create:
         _sylius:
             redirect: enhavo_page_page_update
             viewer:
-                translationDomain: EnhavoPageBundle
+                translation_domain: EnhavoPageBundle
                 type: create
                 tabs:
                     main:
@@ -45,7 +45,7 @@ enhavo_page_page_update:
         _controller: enhavo_page.controller.page:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoPageBundle
+                translation_domain: EnhavoPageBundle
                 tabs:
                     main:
                         label: page.label.page
@@ -75,7 +75,7 @@ enhavo_page_page_data:
             criteria:
                 parent: null
             viewer:
-                translationDomain: EnhavoPageBundle
+                translation_domain: EnhavoPageBundle
                 children_property: children
                 parent_property: parent
                 columns:

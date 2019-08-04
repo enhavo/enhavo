@@ -20,7 +20,7 @@ enhavo_calendar_appointment_create:
         _sylius:
             redirect: enhavo_calendar_appointment_update
             viewer:
-                translationDomain: EnhavoCalendarBundle
+                translation_domain: EnhavoCalendarBundle
                 tabs:
                     main:
                         label: appointment.label.appointment
@@ -48,7 +48,7 @@ enhavo_calendar_appointment_update:
         _controller: enhavo_calendar.controller.appointment:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoCalendarBundle
+                translation_domain: EnhavoCalendarBundle
                 tabs:
                     main:
                         label: appointment.label.appointment
@@ -81,7 +81,7 @@ enhavo_calendar_appointment_table:
                     label: appointment.label.title
                     translation_domain: EnhavoCalendarBundle
             viewer:
-                translationDomain: EnhavoCalendarBundle
+                translation_domain: EnhavoCalendarBundle
                 columns:
                     title:
                         type: text

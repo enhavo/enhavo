@@ -20,7 +20,7 @@ enhavo_navigation_navigation_create:
         _sylius:
             redirect: enhavo_navigation_navigation_update
             viewer:
-                translationDomain: EnhavoNavigationBundle
+                translation_domain: EnhavoNavigationBundle
                 tabs:
                     main:
                         label: navigation.label.navigation
@@ -39,7 +39,7 @@ enhavo_navigation_navigation_update:
         _controller: enhavo_navigation.controller.navigation:updateAction
         _sylius:
             viewer:
-                translationDomain: EnhavoNavigationBundle
+                translation_domain: EnhavoNavigationBundle
                 tabs:
                     main:
                         label: navigation.label.navigation
@@ -58,7 +58,7 @@ enhavo_navigation_navigation_table:
         _sylius:
             paginate: 50
             viewer:
-                translationDomain: EnhavoNavigationBundle
+                translation_domain: EnhavoNavigationBundle
                 columns:
                     name:
                         type: text

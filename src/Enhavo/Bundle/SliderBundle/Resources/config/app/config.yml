@@ -12,16 +12,16 @@ enhavo_app:
         enhavo_slider_slide_index:
             role: ROLE_ENHAVO_SLIDER_SLIDE_INDEX
             label: slide.role.label.index
-            translationDomain: EnhavoSliderBundle
+            translation_domain: EnhavoSliderBundle
         enhavo_slider_slide_create:
             role: ROLE_ENHAVO_SLIDER_SLIDE_CREATE
             label: slide.role.label.create
-            translationDomain: EnhavoSliderBundle
+            translation_domain: EnhavoSliderBundle
         enhavo_slider_slide_update:
             role: ROLE_ENHAVO_SLIDER_SLIDE_UPDATE
             label: slide.role.label.update
-            translationDomain: EnhavoSliderBundle
+            translation_domain: EnhavoSliderBundle
         enhavo_slider_slide_delete:
             role: ROLE_ENHAVO_SLIDER_SLIDE_DELETE
             label: slide.role.label.delete
-            translationDomain: EnhavoSliderBundle
+            translation_domain: EnhavoSliderBundle

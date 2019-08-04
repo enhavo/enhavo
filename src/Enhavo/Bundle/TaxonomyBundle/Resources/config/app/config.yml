@@ -9,19 +9,19 @@ enhavo_app:
         enhavo_taxonomy_taxonomy_index:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX
             label: taxonomy.role.label.index
-            translationDomain: EnhavoTaxonomyBundle
+            translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_create:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE
             label: taxonomy.role.label.create
-            translationDomain: EnhavoTaxonomyBundle
+            translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_update:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE
             label: taxonomy.role.label.update
-            translationDomain: EnhavoTaxonomyBundle
+            translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_delete:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE
             label: taxonomy.role.label.delete
-            translationDomain: EnhavoTaxonomyBundle
+            translation_domain: EnhavoTaxonomyBundle
 
 security:
     role_hierarchy:

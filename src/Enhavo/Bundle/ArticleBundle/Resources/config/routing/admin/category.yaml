@@ -32,7 +32,7 @@ enhavo_article_category_create:
                 arguments:
                     - 'article_category'
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
 
 enhavo_article_category_update:
     options:
@@ -44,7 +44,7 @@ enhavo_article_category_update:
         _sylius:
             form: 'Enhavo\Bundle\ArticleBundle\Form\Type\CategoryType'
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete
@@ -63,7 +63,7 @@ enhavo_article_category_data:
                     - 'article_category'
                     - true
             viewer:
-                translationDomain: EnhavoTaxonomyBundle
+                translation_domain: EnhavoTaxonomyBundle
                 width: 12
                 children_property: children
                 parent_property: parent

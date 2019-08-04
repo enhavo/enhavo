@@ -60,7 +60,7 @@ enhavo_media_library_update:
             form: Enhavo\Bundle\MediaBundle\Form\Type\LibraryFileType
             permission: ROLE_ENHAVO_MEDIA_LIBRARY_UPDATE
             viewer:
-                translationDomain: EnhavoMediaBundle
+                translation_domain: EnhavoMediaBundle
                 form:
                     action: enhavo_media_library_update
                     delete: enhavo_media_library_delete

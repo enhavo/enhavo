@@ -7,4 +7,4 @@ enhavo_dashboard_index:
             viewer:
                 label: dashboard.label.dashboard
                 type: dashboard
-                translationDomain: EnhavoDashboardBundle
+                translation_domain: EnhavoDashboardBundle

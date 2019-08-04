@@ -12,16 +12,16 @@ enhavo_app:
         enhavo_sidebar_sidebar_index:
             role: ROLE_ENHAVO_SIDEBAR_SIDEBAR_INDEX
             label: sidebar.role.label.index
-            translationDomain: EnhavoSidebarBundle
+            translation_domain: EnhavoSidebarBundle
         enhavo_sidebar_sidebar_create:
             role: ROLE_ENHAVO_SIDEBAR_SIDEBAR_CREATE
             label: sidebar.role.label.create
-            translationDomain: EnhavoSidebarBundle
+            translation_domain: EnhavoSidebarBundle
         enhavo_sidebar_sidebar_update:
             role: ROLE_ENHAVO_SIDEBAR_SIDEBAR_UPDATE
             label: sidebar.role.label.update
-            translationDomain: EnhavoSidebarBundle
+            translation_domain: EnhavoSidebarBundle
         enhavo_sidebar_sidebar_delete:
             role: ROLE_ENHAVO_SIDEBAR_SIDEBAR_DELETE
             label: sidebar.role.label.delete
-            translationDomain: EnhavoSidebarBundle
+            translation_domain: EnhavoSidebarBundle
