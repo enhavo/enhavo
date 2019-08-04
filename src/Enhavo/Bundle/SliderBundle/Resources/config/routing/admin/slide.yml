@@ -47,7 +47,7 @@ enhavo_slider_slide_update:
 enhavo_slider_slide_data:
     options:
         expose: true
-    path: /enhavo/slider/slide/table
+    path: /enhavo/slider/slide/data
     defaults:
         _controller: enhavo_slider.controller.slide:listDataAction
         _sylius:
@@ -56,8 +56,8 @@ enhavo_slider_slide_data:
                 arguments:
                     - $slider
             viewer:
-                translationDomain: EnhavoSliderBundle
-                sorting_property: sorting
+                translation_domain: EnhavoSliderBundle
+                position_property: position
                 columns:
                     picture:
                         type: media
