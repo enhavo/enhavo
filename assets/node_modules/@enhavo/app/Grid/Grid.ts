@@ -109,12 +109,12 @@ export default class Grid
     public open(row: RowData)
     {
         let parameters: any = {};
-        if(this.configuration.updateRouteParameters) {
-            parameters = this.configuration.updateRouteParameters;
+        if(this.configuration.openRouteParameters) {
+            parameters = this.configuration.openRouteParameters;
         }
         parameters.id = row.id;
 
-        let url = this.router.generate(this.configuration.updateRoute, parameters);
+        let url = this.router.generate(this.configuration.openRoute, parameters);
         this.view.open(url, 'edit-view')
     }
 

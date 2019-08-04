@@ -5,8 +5,8 @@ export default class ListData
 {
     public dataRoute: string;
     public dataRouteParameters: object;
-    public updateRoute: string;
-    public updateRouteParameters: object;
+    public openRoute: string;
+    public openRouteParameters: object;
     public columns: Array<ColumnInterface>;
     public items: Array<Item>;
     public loading: boolean = false;

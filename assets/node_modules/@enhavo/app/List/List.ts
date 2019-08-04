@@ -88,11 +88,11 @@ export default class List
     public open(row: RowData)
     {
         let parameters: any = {};
-        if(this.data.updateRouteParameters) {
-            parameters = this.data.updateRouteParameters;
+        if(this.data.openRouteParameters) {
+            parameters = this.data.openRouteParameters;
         }
         parameters.id = row.id
-        let url = this.router.generate(this.data.updateRoute, parameters);
+        let url = this.router.generate(this.data.openRoute, parameters);
         this.view.open(url, 'edit-view');
     }
 

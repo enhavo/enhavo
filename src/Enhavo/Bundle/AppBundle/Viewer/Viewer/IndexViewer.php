@@ -104,15 +104,15 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('batch_route', $requestConfiguration)
         ]);
 
-        $updateRoute = $this->mergeConfig([
-            $this->geUpdateRoute($options),
-            $options['update_route'],
-            $this->getViewerOption('update_route', $requestConfiguration)
+        $openRoute = $this->mergeConfig([
+            $this->getOpenRoute($options),
+            $options['open_route'],
+            $this->getViewerOption('open_route', $requestConfiguration)
         ]);
 
-        $updateRouteParameters = $this->mergeConfig([
-            $options['update_route_parameters'],
-            $this->getViewerOption('update_route_parameters', $requestConfiguration)
+        $openRouteParameters = $this->mergeConfig([
+            $options['open_route_parameters'],
+            $this->getViewerOption('open_route_parameters', $requestConfiguration)
         ]);
 
         $batchConfiguration = $this->util->createConfigurationFromRoute($batchRoute);
@@ -130,8 +130,8 @@ class IndexViewer extends AppViewer
             'tableRoute' => $tableRoute,
             'tableRouteParameters' => $tableRouteParameters,
             'batchRoute' => $batchRoute,
-            'updateRoute' => $updateRoute,
-            'updateRouteParameters' => $updateRouteParameters,
+            'openRoute' => $openRoute,
+            'openRouteParameters' => $openRouteParameters,
             'page' => $request->get('page', 1),
             'batches' => $this->batchManager->createBatchesViewData($batchData),
             'columns' => $this->columnManager->createColumnsViewData($columnData),
@@ -178,7 +178,7 @@ class IndexViewer extends AppViewer
         return sprintf('%s_%s_batch', $metadata->getApplicationName(), $this->getUnderscoreName($metadata));
     }
 
-    private function geUpdateRoute($options)
+    private function getOpenRoute($options)
     {
         /** @var MetadataInterface $metadata */
         $metadata = $options['metadata'];
@@ -225,8 +225,8 @@ class IndexViewer extends AppViewer
             'table_route' => null,
             'table_route_parameters' => null,
             'batch_route' => null,
-            'update_route' => null,
-            'update_route_parameters' => null,
+            'open_route' => null,
+            'open_route_parameters' => null,
             'label' => 'label.index',
             'translation_domain' => 'EnhavoAppBundle'
         ]);

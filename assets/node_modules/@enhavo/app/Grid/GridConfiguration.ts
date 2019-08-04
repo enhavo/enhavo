@@ -8,8 +8,8 @@ export default class GridConfiguration
     public batchRoute: string;
     public tableRoute: string;
     public tableRouteParameters: object;
-    public updateRoute: string;
-    public updateRouteParameters: object;
+    public openRoute: string;
+    public openRouteParameters: object;
     public rows: Array<RowData>;
     public columns: Array<ColumnInterface>;
     public batches: Array<Batch>;
