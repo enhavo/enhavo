@@ -41,9 +41,11 @@ export default class List
         this.flashMessenger = flashMessenger;
 
         this.eventDispatcher.on('updated', (event: UpdatedEvent) => {
-            if(event.id == this.data.editView) {
-                this.load();
-            }
+            this.view.loadValue('edit-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.load();
+                }
+            });
         });
     }
 
