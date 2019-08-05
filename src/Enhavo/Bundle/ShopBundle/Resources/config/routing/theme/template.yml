@@ -48,3 +48,23 @@ enhavo_shop_theme_template_checkout_password_reset_success:
     path: /password-reset-success
     defaults:
         _controller: EnhavoShopBundle:Template:resetPasswordSuccess
+
+enhavo_shop_theme_template_checkout_profile:
+    path: /profile
+    defaults:
+        _controller: EnhavoShopBundle:Template:profile
+
+enhavo_shop_theme_template_checkout_account:
+    path: /account
+    defaults:
+        _controller: EnhavoShopBundle:Template:account
+
+enhavo_shop_theme_template_checkout_orders:
+    path: /orders
+    defaults:
+        _controller: EnhavoShopBundle:Template:orders
+
+enhavo_shop_theme_template_checkout_order_detail:
+    path: /order-detail
+    defaults:
+        _controller: EnhavoShopBundle:Template:orderDetail

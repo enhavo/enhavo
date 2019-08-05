@@ -18,8 +18,8 @@
       &:hover { opacity:.6;transition:all .3s}
     }
   }
-  .cart-action { display:flex;flex-flow:row wrap; padding-top:25px;align-content:flex-end;
-    .btn { flex:1;max-width:300px; float:left;
+  .cart-action { display:flex;flex-flow:row wrap; padding-top:45px;justify-content:flex-end;
+    .btn { flex:1;max-width:25%; float:left;
       +.btn { margin-left:15px; float:right;}
     }
   }

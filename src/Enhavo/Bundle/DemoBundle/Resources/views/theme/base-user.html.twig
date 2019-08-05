@@ -1,0 +1,16 @@
+{% extends template('theme/base.html.twig') %}
+
+{% block navigation %}
+    {{ parent() }}
+    <nav class="user-menu">
+        <div class="container">
+            <div class="label">User Area</div>
+            <ul>
+                <li class="active"><a href="">Profile</a></li>
+                <li><a href="">Account</a></li>
+                <li><a href="">Orders</a></li>
+                <li><a href="">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}

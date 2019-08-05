@@ -1,0 +1,9 @@
+.user-date { font-weight:$semibold; font-size:$fontSize1}
+.user-content {
+  .summary { padding-top:0;}
+  .cart-list {
+    .cart-action {
+      .btn {max-width:100%}
+    }
+  }
+}
