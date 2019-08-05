@@ -2,11 +2,7 @@
   .btn { margin-top:5px;
     +.btn { margin-left:10px;}
   }
-  input {
-    +input { margin-top:-1px;}
-  }
 }
-
 
 @media all and(max-width:767px) {
   .login {

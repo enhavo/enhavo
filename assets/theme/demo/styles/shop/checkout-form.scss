@@ -2,10 +2,14 @@
   .forgot-pw { font-size:$fontSize2; margin-top:5px;
     a {text-decoration:none; border-bottom:1px solid $black; color:$black;}
   }
+  p {
+    a {text-decoration:none; border-bottom:1px solid $black; color:$black;}
+  }
 }
 .checkout-form {max-width:750px; margin:45px auto 0;
   input[type="text"], input[type="email"], input[type="password"] { @extend %textInput; margin-bottom:0;
     &:focus { position:relative; z-index:1;}
+    +input[type="text"], +input[type="email"], +input[type="password"] { margin-top:-1px;}
   }
   fieldset { margin-left:-4px; margin-right:-4px;
     &:after {content:''; display:table;clear:both}

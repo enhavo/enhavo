@@ -54,4 +54,14 @@ class TemplateController extends AbstractController
     {
         return $this->render($this->getTemplate('theme/shop/template/register.html.twig'));
     }
+
+    public function resetPasswordAction()
+    {
+        return $this->render($this->getTemplate('theme/shop/template/password-reset.html.twig'));
+    }
+
+    public function resetPasswordSuccessAction()
+    {
+        return $this->render($this->getTemplate('theme/shop/template/password-reset-success.html.twig'));
+    }
 }

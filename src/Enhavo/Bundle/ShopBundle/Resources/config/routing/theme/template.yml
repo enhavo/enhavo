@@ -38,3 +38,13 @@ enhavo_shop_theme_template_checkout_register:
     path: /register
     defaults:
         _controller: EnhavoShopBundle:Template:register
+
+enhavo_shop_theme_template_checkout_password_reset:
+    path: /password-reset
+    defaults:
+        _controller: EnhavoShopBundle:Template:resetPassword
+
+enhavo_shop_theme_template_checkout_password_reset_success:
+    path: /password-reset-success
+    defaults:
+        _controller: EnhavoShopBundle:Template:resetPasswordSuccess
