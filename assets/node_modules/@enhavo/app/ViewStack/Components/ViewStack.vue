@@ -1,6 +1,6 @@
 <template>
     <div class="view-stack" ref="container">
-        <div class="view-container">
+        <div class="view-container" v-bind:class="{'has-viewstack-dropdown': hasMoreThanOneView}">
             <template v-for="view in data.views">
                 <view-component v-bind:data="view" v-if="!view.removed"></view-component>
             </template>
@@ -31,6 +31,16 @@ export default class ViewStack extends Vue {
     private getWidth(): number
     {
         return this.$refs.container.clientWidth;
+    }
+
+    get hasMoreThanOneView() {
+        let count = 0;
+        for(let i = 0;i<this.data.views.length;i++) {
+            if(this.data.views[i].removed == false) {
+                count++;
+            }
+        }
+        return count > 1;
     }
 }
 </script>

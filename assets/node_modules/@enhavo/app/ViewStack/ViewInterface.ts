@@ -10,6 +10,7 @@ export default interface ViewInterface extends ComponentAwareInterface
     loaded: boolean;
     width: string;
     minimize: boolean;
+    focus: boolean;
     priority: number;
     removed: boolean;
     position: number;

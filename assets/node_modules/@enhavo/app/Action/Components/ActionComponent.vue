@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click.stop @click="data.execute()" class="action">
+    <div @click="data.execute()" class="action">
         <div class="action-icon">
             <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
         </div>

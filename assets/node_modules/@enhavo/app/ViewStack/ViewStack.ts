@@ -223,6 +223,10 @@ export default class ViewStack
     private push(view: ViewInterface)
     {
         this.views.push(view);
+        for(let viewStackView of this.views) {
+            viewStackView.focus = false;
+        }
+        view.focus = true;
     }
 
     hasViews()
