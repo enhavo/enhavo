@@ -10,8 +10,65 @@ export default class Theme implements InitializerInterface
             this.showDiffBillAddressForm(element);
             this.handleLoadingCursor(element);
             this.toggleSidebar(element);
+            this.inspectShopImage(element);
+            this.handleShopGallery(element);
         })
     }
+
+    private handleShopGallery (element: HTMLElement)
+    {
+        $(element).find('[data-image]').on('click', function() {
+            let imgSrc = $(this).attr('src');
+            let fullImgSrc = $(this).data('full-image');
+
+            $(this).parent().parent().parent('[data-shop-gallery]').find('[data-image-zoom]').attr('src', imgSrc)
+            $(this).parent().parent().parent('[data-shop-gallery]').find('[data-image-zoom]').attr('data-image-zoom', fullImgSrc)
+        });
+    };
+
+    private inspectShopImage (element: HTMLElement)
+    {
+        $(element).find('[data-image-zoom]').on('click', function() {
+            let imgSrc = $(this).attr('data-image-zoom');
+            $('[data-product-zoom]').fadeIn();
+            $('[data-product-zoom]').find('[data-image-zoomed]').attr('src', imgSrc);
+        });
+
+        $(element).find('[data-product-zoom]').on('mousemove', function(event) {
+
+            let windowWidth = window.innerWidth;
+            let windowHeight = window.innerHeight;
+
+            let imgWidth = $(this).find('[data-image-zoomed]').innerWidth();
+            let imgHeight = $(this).find('[data-image-zoomed]').innerHeight();
+
+            let cursorX = event.pageX / windowWidth;
+            let cursorY = event.pageY / windowHeight;
+
+            let imageWindowDiffWidth = (imgWidth - windowWidth)
+            let imageWindowDiffHeight = (imgHeight - windowHeight)
+
+            let ImgPositionX = cursorX * imageWindowDiffWidth;
+            let ImgPositionY = cursorY * imageWindowDiffHeight;
+
+            // bild, das höher und breiter als das Fenster ist
+            if(imgHeight > windowHeight && imgWidth > windowWidth) {
+                $(this).find('[data-image-zoomed]').css({'left':-ImgPositionX, 'top': -ImgPositionY, 'transform':'none'});
+            };
+            // bild, das nicht höher als das Fenster ist, aber breiter
+            if(imgHeight < windowHeight && imgWidth > windowWidth) {
+                $(this).find('[data-image-zoomed]').css({'left':-ImgPositionX, 'top':'50%', 'transform':'translateY(-50%)'});
+            };
+            // bild, das nicht breiter als das Fenster ist, aber höher
+            if(imgHeight > windowHeight && imgWidth < windowWidth) {
+                $(this).find('[data-image-zoomed]').css({'left':'50%', 'transform':'translateX(-50%)', 'top': -ImgPositionY});
+            };
+        });
+
+        $(element).find('[data-product-zoom]').on('click', function() {
+            $(this).fadeOut();
+        });
+    };
 
     private initNavigation(element: HTMLElement)
     {
@@ -19,7 +76,7 @@ export default class Theme implements InitializerInterface
             $('[data-menu-items]').toggle();
             $(this).toggleClass('active');
         });
-    }
+    };
 
     private toggleSidebar(element: HTMLElement)
     {
@@ -46,7 +103,7 @@ export default class Theme implements InitializerInterface
                 }
             }
         });
-    }
+    };
 
     private showDiffBillAddressForm(element: HTMLElement)
     {
@@ -79,9 +136,6 @@ export default class Theme implements InitializerInterface
                         (doc && doc.clientTop  || body && body.clientTop  || 0 );
                 }
 
-                console.log('X:'+event.pageX);
-                console.log(event.pageY);
-
                 document.getElementsByClassName('loading')[0].style.top=event.pageY+'px';
                 document.getElementsByClassName('loading')[0].style.left=event.pageX+'px';
             }
@@ -89,7 +143,7 @@ export default class Theme implements InitializerInterface
         $('[data-loading-screen]').on('mouseleave', function() {
             $('[data-loading-spinner]').fadeOut();
         });
-    }
+    };
 
 
 }

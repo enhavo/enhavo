@@ -68,3 +68,8 @@ enhavo_shop_theme_template_checkout_order_detail:
     path: /order-detail
     defaults:
         _controller: EnhavoShopBundle:Template:orderDetail
+
+enhavo_shop_theme_template_checkout_show_product:
+    path: /show-product
+    defaults:
+        _controller: EnhavoShopBundle:Template:showProduct

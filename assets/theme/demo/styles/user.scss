@@ -15,7 +15,7 @@
   }
 }
 
-.user-content { margin-top:$columnSpacing*3;
+.user-content { padding-top:$columnSpacing*3;
   .checkout-form { margin-left:0; margin-right:0;}
   &.indented {max-width:750px;}
 }
