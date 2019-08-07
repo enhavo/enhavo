@@ -8,8 +8,27 @@
   }
 }
 
+@media (max-width: 1250px) {
+  .user-content {
+    .cart-list {
+      .cart-action {
+        .btn { padding-left:0; padding-right:0;
+          +.btn { margin-left:-1px;}
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 1025px) {
-  .cart-list {
-    .cart-summary { margin-top:0;}
+  .user-content {
+    .cart-list {
+      .cart-action {
+        .btn {margin-top:-1px;
+          + .btn { margin-top:-1px;}
+        }
+      }
+      .cart-summary { margin-top:0;}
+    }
   }
 }
