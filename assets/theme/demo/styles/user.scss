@@ -21,3 +21,11 @@
 }
 
 .user-title {margin-bottom:15px; font-size:$fontSize4; font-family:$serifFontFamily;}
+
+
+@media all and(max-width:767px) {
+  .user-content { padding-top:$columnSpacing*5;}
+  .user-menu { top:55px; position:fixed; width:100%; background:#FFF;
+    .label { display:none;}
+  }
+}

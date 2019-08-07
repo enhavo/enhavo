@@ -1,4 +1,4 @@
-%btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none; cursor:pointer; background:none;
+%btn { padding:15px 60px; border:1px solid $black; text-align:center; font-family:$serifFontFamily; display:inline-block;color:$black; text-decoration:none; cursor:pointer; background:none;min-width:250px;
   &.white { border-color:#FFF; color:#FFF;}
   &:focus {outline:0}
 }
@@ -50,4 +50,8 @@
   %loadingScreen { width:calc(100% + 30px); left:-15px;}
   %loadingSpinner { top:50% !important; margin-top:-13px; left:50% !important; margin-left:-13px; display:block !important;}
   %textInput {font-size:$fontSize3; font-weight:$medium;}
+}
+
+@media all and(max-width:481px) {
+  %btn {min-width:100%}
 }

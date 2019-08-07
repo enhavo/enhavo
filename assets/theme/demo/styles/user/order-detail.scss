@@ -7,3 +7,9 @@
     }
   }
 }
+
+@media (max-width: 1025px) {
+  .cart-list {
+    .cart-summary { margin-top:0;}
+  }
+}

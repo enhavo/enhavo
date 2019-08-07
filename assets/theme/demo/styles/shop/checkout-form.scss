@@ -11,7 +11,7 @@
     &:focus { position:relative; z-index:1;}
     +input[type="text"], +input[type="email"], +input[type="password"] { margin-top:-1px;}
   }
-  input[type="submit"] {@extend %btn}
+  input[type="submit"] {@extend %btn;padding: 17px 60px 16px;}
   fieldset { margin-left:-4px; margin-right:-4px;
     &:after {content:''; display:table;clear:both}
     input[type="text"], input[type="email"], input[type="password"] { width:50%; float:left;margin-top:-1px;
@@ -28,6 +28,12 @@
   }
 }
 
+@media all and(max-width:1025px) {
+  .checkout-form input[type="submit"] {
+    padding: 10px 35px 9px;
+  }
+}
+
 @media all and(max-width:767px) {
   .checkout { padding-top:4em;}
   .checkout-form { margin-top:25px;
@@ -39,5 +45,12 @@
       }
       +fieldset { margin-top:15px;}
     }
+    input[type="submit"] {padding: 11px 35px 10px;}
+  }
+}
+
+@media all and(max-width:481px) {
+  .checkout-form {
+    .btn {min-width:100%}
   }
 }

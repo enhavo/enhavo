@@ -12,3 +12,14 @@
   .items {flex:10}
   .state {flex:1; display:flex;justify-content:flex-end;min-width:85px}
 }
+
+@media all and(max-width:767px) {
+  .order-table { border-top:1px solid $black;
+    .order-table-head { display:none;}
+    .order-table-row { line-height:$lineHeight; padding-left:0; padding-right:0;
+      >div {flex:100%; padding:0;}
+      .state {justify-content:flex-start; margin-top:12px;}
+      .date { font-weight:$semibold;}
+    }
+  }
+}
