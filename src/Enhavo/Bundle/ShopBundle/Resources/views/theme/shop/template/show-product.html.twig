@@ -3,8 +3,16 @@
 {% block main %}
     <div class="container">
         <section class="page-product">
+            {#if state loading#}
+            {#<div class="state-loading" data-loading-screen>#}
+                {#<div class="loading" data-loading-spinner>#}
+                    {#<div></div>#}
+                    {#<div></div>#}
+                    {#<div></div>#}
+                {#</div>#}
+            {#</div>#}
             <div class="row">
-                <div class="col-5">
+                <div class="col-sm-5 column-1">
                     <div class="product-gallery" data-shop-gallery>
                         <div class="stage" data-stage>
                             <img src="https://images.unsplash.com/photo-1539614835982-ca889abfc027?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" alt="" data-image-zoom="https://images.unsplash.com/photo-1539614835982-ca889abfc027?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80">
@@ -32,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 offset-1">
+                <div class="col-sm-6 offset-1 column-2">
                     <h1 class="product-title">Produkt mit einem sehr langen namen der über mehrere Zeilen läuft, auch sowas gibt's</h1>
                     <div class="product-status">
                         <p class="in-stock">Deliverable within 2 Days</p>

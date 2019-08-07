@@ -34,6 +34,7 @@ export default class Theme implements InitializerInterface
             $('[data-product-zoom]').find('[data-image-zoomed]').attr('src', imgSrc);
         });
 
+
         $(element).find('[data-product-zoom]').on('mousemove', function(event) {
 
             let windowWidth = window.innerWidth;
