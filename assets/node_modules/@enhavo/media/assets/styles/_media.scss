@@ -14,8 +14,8 @@
   .media-row-container {position:relative;
     .indicator {position:absolute;top:0;left:0;width:82px;height:82px;border:3px solid $grey1;border-radius:3px;text-align:center;line-height:76px;font-size:4rem;color:$grey1;box-sizing:border-box;}
   }
-  .media-row {min-height: 82px; margin:0 0 5px 0; padding: 0;min-width: 82px;@include clearfix;border-radius:3px;position:relative;
-    &.multiple {background:$grey1;
+  .media-row {min-height: 82px; margin:0 0 5px 0; padding: 0;width: 82px;@include clearfix;border-radius:3px;position:relative;
+    &.multiple {background:$grey1;min-width: 82px;width:auto;
       .media-item { float: left; }
     }
 
@@ -53,9 +53,7 @@
       &:hover {background:$color1;
         .delete-button {display:block;}
       }
-      &.active {
-        background: #eee;
-      }
+      &.active {background: #eee;}
       .edit { display: none }
       .delete-button {z-index: 20;position: absolute;top:-8px;right:-8px;color:#fff;background:#d87676;display:none;cursor:pointer;width:24px;height:24px;text-align:center;line-height:24px; border-radius: 50%;
         .icon {text-align: center; }
@@ -63,14 +61,9 @@
       .thumb {width:72px; height:72px; position: absolute; z-index:2; left: 5px; top: 5px;
         >.icon { position: absolute; z-index: 5; font-size: 40px; line-height: 70px; color: #0090ba; left: 50%; transform: translateX(-50%) translateY(-50%); top:50%; }
         &:hover {
-          .hover { display: block }
           .icons { display: block }
         }
-        .hover {
-          display: none; background: #0a0a0a; z-index: 10; width:100%; height:100%; position: absolute; left: 0; top: 0; opacity: 0.5;
-        }
-        .icons {
-          display: none; position: absolute; z-index: 15; width:100%; height:100%; text-align: center;
+        .icons {display: none; position: absolute; z-index: 15; width:100%; height:100%; text-align: center;
           .icon { color: #fff; font-size: 22px; line-height: 70px; display: none }
         }
       }
@@ -79,9 +72,7 @@
       .form-row {margin-bottom:15px;}
     }
   }
-  .upload-input {
-    display: none
-  }
+  .upload-input {display: none;}
   .upload-button {
     &:after {content: '\f236';font-family: "enhavo-icons";position:relative;top:2px;left:2px;}
   }

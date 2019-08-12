@@ -1,16 +1,24 @@
 .table-batches {margin-bottom:20px;
   .apply-button {@extend %iconButton;line-height:30px;width:30px;border-radius:15px;margin-left:5px;}
 }
-.view-table {margin:40px 0;
+.view-table {margin:0 0 40px 0;
   .loading-placeholder {position:relative;height:64px;
     .loading-indicator {@extend %loadingIndicator;height:64px;top:0;width:140px;padding-left:68px;
       &:after {content:"loading ... ";position:absolute;top:22px;color:$grey4;}
       div {background:$grey4;}
     }
   }
-  .view-table-col {overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding-right:7px;}
+  .view-table-col {overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding-right:7px;
+    .action-container {display:flex;color:$color1;
+      &:hover {text-decoration:underline;}
+      .action-icon {flex:0 0 auto;position:relative;top:-1px;
+        + .label {margin-left:8px;}
+      }
+      .label {flex:1 0 auto;}
+    }
+  }
   .view-table-head {display:flex;padding:12px 10px;border-bottom:1px solid $grey5;align-items:center;
-    .view-table-head-columns {display:flex;flex:1 0 auto;padding:0 15px 0 25px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;
+    .view-table-head-columns {display:flex;flex:1 0 auto;padding:0 15px 0 20px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;
       .view-table-col {
         &.sortable {text-decoration: underline;cursor: pointer;}
       }
@@ -18,9 +26,9 @@
   }
 
   .view-table-row {display:flex;align-items:center;padding:0 10px;cursor:pointer;@include transition(all 300ms);border-bottom:1px solid $grey5;
-    &.has-children {border-left:1px solid $grey5;}
     &:hover {background:$grey5;}
-    .view-table-row-columns {display:flex;flex:1 1 auto;padding:12px 15px 12px 20px;max-width:calc(100% - 20px);}
+    &.has-children {border-left:1px solid $grey5;}
+    .view-table-row-columns {display:flex;flex:1 1 auto;padding:12px 15px 12px 20px;}
   }
 }
 
@@ -32,7 +40,7 @@
   }
 }
 
-.view-table-pagination {display: flex;justify-content: space-between;font-weight:600;font-size:0.875rem;line-height:1.1em;align-items: center;
+.view-table-pagination {display: flex;justify-content: space-between;font-weight:600;font-size:0.875rem;line-height:1.1em;align-items: center;margin-bottom:40px;
   .pagination-nav {display: flex;margin-left:auto;
     .pagination-nav-item {min-width:30px;line-height:30px;border-radius:15px;text-align:center;margin: 0 5px;padding:0 7px;
       &.active {background-color:$color1;color:#fff;}

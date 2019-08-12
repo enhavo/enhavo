@@ -1,5 +1,6 @@
-.filter-bar {display:flex;align-items:baseline;margin-bottom:60px;flex-wrap:wrap;
+.filter-bar {display:flex;align-items:baseline;margin-bottom:40px;flex-wrap:wrap;
   .apply-button {@extend %iconButton;}
+  .reset-button {@extend %iconButton;background:$color6;margin-left:10px;}
   .view-table-filter {margin-right:20px;margin-bottom:10px;
     + &:last-child {margin-right:0;}
     input[type="text"] {@extend %textfield;
