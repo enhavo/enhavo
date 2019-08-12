@@ -1,5 +1,5 @@
 <template>
-    <div @click="data.execute()" class="action">
+    <div @click="data.execute();if(clickStop) {$event.stopPropagation();}" class="action">
         <div class="action-icon">
             <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
         </div>
@@ -16,6 +16,8 @@
         name: 'action-component';
         @Prop()
         data: ActionInterface;
+        @Prop()
+        clickStop: boolean;
 
         get icon(): string {
             return (this.data && this.data.icon) ? 'icon-' + this.data.icon : '';
