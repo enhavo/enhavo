@@ -8,6 +8,7 @@ import FilterRegistry from "@enhavo/app/Grid/Filter/FilterRegistry";
 import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
+import BatchRegistry from "@enhavo/app/Grid/Batch/BatchRegistry";
 
 export class IndexApplication extends AbstractApplication implements ActionAwareApplication
 {
@@ -17,6 +18,7 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     protected columnManager: ColumnManager;
     protected columnRegistry: ColumnRegistry;
     protected batchManager: BatchManager;
+    protected batchRegistry: BatchRegistry;
 
     constructor()
     {
@@ -86,9 +88,18 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     public getBatchManager(): BatchManager
     {
         if(this.batchManager == null) {
-            this.batchManager = new BatchManager(this.getDataLoader().load().grid.batches);
+            this.batchManager = new BatchManager(this.getDataLoader().load().grid, this.getBatchRegistry(), this.getView(), this.getTranslator());
         }
         return this.batchManager;
+    }
+
+    public getBatchRegistry(): BatchRegistry
+    {
+        if(this.batchRegistry == null) {
+            this.batchRegistry = new BatchRegistry();
+            this.batchRegistry.load(this);
+        }
+        return this.batchRegistry;
     }
 }
 

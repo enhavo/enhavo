@@ -42,8 +42,9 @@ abstract class AbstractViewer implements ViewerInterface
         $templateVars['data'] = [
             'view' => [
                 'view_id' => $this->getViewId(),
-                'label' => $this->container->get('translator')->trans($options['label'], [], $options['translation_domain'])
-            ]
+                'label' => $this->container->get('translator')->trans($options['label'], [], $options['translation_domain']),
+            ],
+            'modals' => [],
         ];
 
         $view->setTemplateData($templateVars);

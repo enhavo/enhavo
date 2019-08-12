@@ -26,6 +26,17 @@ class DeleteType extends AbstractBatchType
         $em->flush();
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function createViewData(array $options, $resource = null)
+    {
+        $data = parent::createViewData($options, $resource);
+        $data['route'] = $options['route'];
+        $data['routeParameters'] = $options['route_parameters'];
+        return $data;
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -34,6 +45,8 @@ class DeleteType extends AbstractBatchType
             'label' => 'batch.delete.label',
             'confirm_message' => 'batch.delete.message.confirm',
             'translation_domain' => 'EnhavoAppBundle',
+            'route' => null,
+            'route_parameters' => null,
         ]);
     }
 

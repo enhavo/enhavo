@@ -9,6 +9,7 @@ import ActionManager from "@enhavo/app/Action/ActionManager";
 import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
+import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 
 export default interface ApplicationInterface
 {
@@ -33,4 +34,6 @@ export default interface ApplicationInterface
     getModalManager(): ModalManager
 
     getModalRegistry(): ModalRegistry
+
+    getFlashMessenger(): FlashMessenger
 }

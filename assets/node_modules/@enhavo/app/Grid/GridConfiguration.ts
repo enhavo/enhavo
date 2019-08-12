@@ -1,19 +1,21 @@
 
 import RowData from "@enhavo/app/Grid/Column/RowData";
 import ColumnInterface from "@enhavo/app/Grid/Column/ColumnInterface";
-import Batch from "@enhavo/app/Grid/Batch/Batch";
+import BatchInterface from "@enhavo/app/Grid/Batch/BatchInterface";
+import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
 
-export default class GridConfiguration
+export default class GridConfiguration implements BatchDataInterface
 {
-    public batchRoute: string;
     public tableRoute: string;
     public tableRouteParameters: object;
     public openRoute: string;
     public openRouteParameters: object;
     public rows: Array<RowData>;
     public columns: Array<ColumnInterface>;
-    public batches: Array<Batch>;
-    public batch: string = '';
+    public batches: Array<BatchInterface>;
+    public batch: string;
+    public batchRoute: string;
+    public batchRouteParameters: object;
     public loading: boolean = true;
     public page: number = 1;
     public count: number;

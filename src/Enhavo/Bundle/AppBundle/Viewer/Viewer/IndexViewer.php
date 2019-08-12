@@ -104,6 +104,11 @@ class IndexViewer extends AppViewer
             $this->getViewerOption('batch_route', $requestConfiguration)
         ]);
 
+        $batchRouteParameters = $this->mergeConfig([
+            $options['batch_route_parameters'],
+            $this->getViewerOption('batch_route_parameters', $requestConfiguration)
+        ]);
+
         $openRoute = $this->mergeConfig([
             $this->getOpenRoute($options),
             $options['open_route'],
@@ -130,6 +135,7 @@ class IndexViewer extends AppViewer
             'tableRoute' => $tableRoute,
             'tableRouteParameters' => $tableRouteParameters,
             'batchRoute' => $batchRoute,
+            'batchRouteParameters' => $batchRouteParameters,
             'openRoute' => $openRoute,
             'openRouteParameters' => $openRouteParameters,
             'page' => $request->get('page', 1),
@@ -150,7 +156,8 @@ class IndexViewer extends AppViewer
             'view' => [
                 'id' => $this->getViewId(),
                 'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ]
+            ],
+            'modals' => [],
         ]);
 
         return;
@@ -226,6 +233,7 @@ class IndexViewer extends AppViewer
             'table_route' => null,
             'table_route_parameters' => null,
             'batch_route' => null,
+            'batch_route_parameters' => null,
             'open_route' => null,
             'open_route_parameters' => null,
             'label' => 'label.index',

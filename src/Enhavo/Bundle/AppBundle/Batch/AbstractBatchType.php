@@ -20,7 +20,8 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
         return [
             'label' => $this->getLabel($options),
             'confirmMessage' => $this->getConfirmMessage($options),
-            'position' => $options['position']
+            'position' => $options['position'],
+            'component' => $options['component'],
         ];
     }
 
@@ -60,7 +61,9 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
             'position'  => 0,
             'translation_domain' => null,
             'hidden' => false,
-            'confirm_message' => null
+            'confirm_message' => null,
+            'component' => 'batch-url',
+            'route' => null
         ]);
 
         $resolver->setRequired(['label']);

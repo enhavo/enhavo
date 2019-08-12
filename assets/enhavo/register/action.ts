@@ -1,6 +1,6 @@
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
-import NewsletterSendActionFactory from "@enhavo/newsletter/Factory/NewsletterSendActionFactory";
-import NewsletterTestMailActionFactory from "@enhavo/newsletter/Factory/NewsletterTestMailActionFactory";
+import NewsletterSendActionFactory from "@enhavo/newsletter/Action/Factory/NewsletterSendActionFactory";
+import NewsletterTestMailActionFactory from "@enhavo/newsletter/Action/Factory/NewsletterTestMailActionFactory";
 
 export default function register(application: ApplicationInterface) {
     application.getActionRegistry()
