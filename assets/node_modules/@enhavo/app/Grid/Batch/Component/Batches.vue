@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="name">
         <v-select :placeholder="placeholder" @input="change" :options="options" :searchable="false"></v-select>
-        <button v-on:click="execute" v-bind:disabled="!value" class="apply-button"><i class="icon icon-play_arrow"></i></button>
+        <button @click="execute" v-bind:disabled="!value" class="apply-button"><i class="icon icon-play_arrow"></i></button>
     </div>
 </template>
 

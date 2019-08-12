@@ -31,7 +31,7 @@
     import Table from "@enhavo/app/Grid/Components/Table.vue";
     import Pagination from "@enhavo/app/Grid/Components/Pagination.vue";
     import FilterBar from "@enhavo/app/Grid/Filter/Components/FilterBar.vue"
-    import Batches from "@enhavo/app/Grid/Components/Batches.vue"
+    import Batches from "@enhavo/app/Grid/Batch/Component/Batches.vue"
     import GridConfiguration from "@enhavo/app/Grid/GridConfiguration";
 
     @Component({
