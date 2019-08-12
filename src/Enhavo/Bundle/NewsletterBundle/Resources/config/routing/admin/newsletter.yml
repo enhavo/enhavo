@@ -130,7 +130,8 @@ enhavo_newsletter_newsletter_batch:
                     type: delete
                 newsletter_send:
                     type: newsletter_send
-
+                newsletter_send_test:
+                    type: newsletter_send_test
 
 enhavo_newsletter_newsletter_preview:
     options:

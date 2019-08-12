@@ -156,7 +156,8 @@ class IndexViewer extends AppViewer
             'view' => [
                 'id' => $this->getViewId(),
                 'label' => $this->container->get('translator')->trans($label, [], $parameters->get('translation_domain'))
-            ]
+            ],
+            'modals' => [],
         ]);
 
         return;

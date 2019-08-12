@@ -6,6 +6,13 @@ services:
         tags:
             - { name: enhavo.batch, alias: newsletter_send }
 
+    Enhavo\Bundle\NewsletterBundle\Batch\SendTestType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.batch, alias: newsletter_send_test }
+
     Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager

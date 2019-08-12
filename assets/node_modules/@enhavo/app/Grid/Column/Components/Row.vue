@@ -1,7 +1,7 @@
 <template>
     <div class="view-table-row" @click="open()">
         <div class="checkbox-container" v-if="batches.length > 0">
-            <input type="checkbox" v-on:change="changeSelect" :checked="selected" />
+            <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="selected" />
             <span></span>
         </div>
         <div class="view-table-row-columns">
