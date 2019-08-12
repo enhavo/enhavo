@@ -1,6 +1,7 @@
 import AbstractBatch from "@enhavo/app/Grid/Batch/Model/AbstractBatch";
 import Confirm from "@enhavo/app/View/Confirm";
 import axios from "axios";
+import * as _ from "lodash";
 import Message from "@enhavo/app/FlashMessage/Message";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import BatchDataInterface from "@enhavo/app/Grid/Batch/BatchDataInterface";
@@ -72,7 +73,11 @@ export default class UrlBatch extends AbstractBatch
 
         let parameters = this.routeParameters;
         if(!parameters) {
-            parameters = this.batchData.batchRouteParameters;
+            parameters = {};
+        }
+
+        if(this.batchData.batchRouteParameters) {
+            parameters = _.extend(parameters, this.batchData.batchRouteParameters);
         }
 
         return this.application.getRouter().generate(route, parameters);

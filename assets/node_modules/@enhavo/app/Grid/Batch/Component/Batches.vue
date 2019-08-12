@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="name">
         <v-select :placeholder="placeholder" @input="change" :options="options" :searchable="false"></v-select>
-        <button @click="execute" v-bind:disabled="!value" class="apply-button"><i class="icon icon-play_arrow"></i></button>
+        <button @click="executeBatch" class="apply-button"><i class="icon icon-play_arrow"></i></button>
     </div>
 </template>
 
@@ -36,16 +36,16 @@
             return application.getTranslator().trans('enhavo_app.batch.label.placeholder')
         }
 
-        execute() {
+        executeBatch() {
             application.getGrid().executeBatch();
         }
 
         change(value) {
             let key = null;
             if(value != null) {
-                key = value.code
+                key = value.code;
+                application.getBatchManager().changeBatch(key);
             }
-            application.getGrid().changeBatch(key);
         }
   }
 </script>

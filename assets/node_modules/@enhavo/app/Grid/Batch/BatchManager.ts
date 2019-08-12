@@ -25,6 +25,7 @@ export default class BatchManager
     async execute(ids: number[]): Promise<boolean>
     {
         let batch = this.getCurrentBatch();
+
         if(batch == null) {
             this.view.alert(this.translator.trans('enhavo_app.batch.message.no_batch_select'));
             return;
@@ -41,6 +42,11 @@ export default class BatchManager
     public getCurrentBatch(): BatchInterface
     {
         return this.getBatch(this.data.batch);
+    }
+
+    public changeBatch(value: string)
+    {
+        this.data.batch = value;
     }
 
     private getBatch(key: string): BatchInterface

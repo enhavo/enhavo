@@ -101,11 +101,6 @@ export default class Grid
         }
     }
 
-    public changeBatch(value: string)
-    {
-        this.configuration.batch = value;
-    }
-
     public open(row: RowData)
     {
         let parameters: any = {};
@@ -143,9 +138,11 @@ export default class Grid
     private getSelectedIds()
     {
         let ids = [];
-        for(let row of this.configuration.rows) {
-            if(row.selected) {
-                ids.push(row.id)
+        if(this.configuration.rows) {
+            for(let row of this.configuration.rows) {
+                if(row.selected) {
+                    ids.push(row.id)
+                }
             }
         }
         return ids;
