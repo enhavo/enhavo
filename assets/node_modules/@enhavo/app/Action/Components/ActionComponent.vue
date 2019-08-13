@@ -1,5 +1,5 @@
 <template>
-    <div @click="data.execute();if(clickStop) {$event.stopPropagation();}" class="action">
+    <div @click="execute($event)" class="action">
         <div class="action-icon">
             <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
         </div>
@@ -12,7 +12,7 @@
     import ActionInterface from "@enhavo/app/Action/ActionInterface";
 
     @Component
-    export default class CloseActionComponent extends Vue {
+    export default class ActionComponent extends Vue {
         name: 'action-component';
         @Prop()
         data: ActionInterface;
@@ -21,6 +21,13 @@
 
         get icon(): string {
             return (this.data && this.data.icon) ? 'icon-' + this.data.icon : '';
+        }
+
+        execute($event) {
+            if(this.clickStop) {
+                $event.stopPropagation();
+            }
+            this.data.execute()
         }
     }
 </script>
