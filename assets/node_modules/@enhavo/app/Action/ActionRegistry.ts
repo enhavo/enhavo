@@ -11,6 +11,7 @@ import EventActionFactory from "@enhavo/app/Action/Factory/EventActionFactory";
 import OpenActionFactory from "@enhavo/app/Action/Factory/OpenActionFactory";
 import DuplicateActionFactory from "@enhavo/app/Action/Factory/DuplicateActionFactory";
 import DownloadActionFactory from "@enhavo/app/Action/Factory/DownloadActionFactory";
+import ModalActionFactory from "@enhavo/app/Action/Factory/ModalActionFactory";
 import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 import RegistryInterface from "@enhavo/core/RegistryInterface";
 
@@ -37,5 +38,6 @@ export default class ActionRegistry extends Registry
         this.register('open-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new OpenActionFactory(application));
         this.register('duplicate-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DuplicateActionFactory(application));
         this.register('download-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new DownloadActionFactory(application));
+        this.register('modal-action', () => import('@enhavo/app/Action/Components/ActionComponent.vue'), new ModalActionFactory(application));
     }
 }
