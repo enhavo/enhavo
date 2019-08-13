@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import * as _ from "lodash";
 import Tab from "@enhavo/app/Form/Tab";
 import FormData from "@enhavo/app/Form/FormData";
-import FormRegistry from "@enhavo/form/FormRegistry";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";

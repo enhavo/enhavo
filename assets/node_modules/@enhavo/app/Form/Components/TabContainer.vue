@@ -7,7 +7,7 @@
 <script lang="ts">
     import { Vue, Component, Prop } from "vue-property-decorator";
     import Tab from "@enhavo/app/Form/Tab";
-    import FormInitializer from "@enhavo/form/FormInitializer";
+    import FormInitializer from "@enhavo/app/Form/FormInitializer";
 
     @Component()
     export default class AppView extends Vue {

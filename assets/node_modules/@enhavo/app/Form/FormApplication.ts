@@ -3,8 +3,8 @@ import AbstractApplication from "@enhavo/app/AbstractApplication";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Form from "@enhavo/app/Form/Form";
-import FormListener from "@enhavo/form/FormListener";
-import FormRegistry from "@enhavo/form/FormRegistry";
+import FormListener from "@enhavo/app/Form/FormListener";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export class FormApplication extends AbstractApplication implements ActionAwareApplication
 {

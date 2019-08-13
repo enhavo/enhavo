@@ -1,13 +1,13 @@
 import * as $ from 'jquery'
 import Router from "@enhavo/core/Router";
-import FormListener from "@enhavo/form/FormListener";
-import FormConvertEvent from "@enhavo/form/Event/FormConvertEvent";
-import FormInitializer from "@enhavo/form/FormInitializer";
+import FormListener from "@enhavo/app/Form/FormListener";
+import FormConvertEvent from "@enhavo/app/Form/Event/FormConvertEvent";
+import FormInitializer from "@enhavo/app/Form/FormInitializer";
 import DynamicFormItem from "@enhavo/form/Type/DynamicFormItem";
 import DynamicFormMenu from "@enhavo/form/Type/DynamicFormMenu";
 import DynamicFormConfig from "@enhavo/form/Type/DynamicFormConfig";
 import DynamicFormItemAddButton from "@enhavo/form/Type/DynamicFormItemAddButton";
-import FormType from "@enhavo/form/FormType";
+import FormType from "@enhavo/app/Form/FormType";
 
 export default class DynamicFormType extends FormType
 {
