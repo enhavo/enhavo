@@ -15,7 +15,7 @@ class TestMailActionType extends ModalActionType implements ActionTypeInterface
         $resolver->setDefaults([
             'component' => 'modal-action',
             'modal' => [
-                'type' => 'newsletter-test-modal',
+                'component' => 'newsletter-test-modal',
             ],
             'label' => 'newsletter.action.test_mail.label',
             'translation_domain' => 'EnhavoNewsletterBundle',

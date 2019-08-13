@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\AppBundle\Batch\Type;
 
 use Enhavo\Bundle\AppBundle\Batch\AbstractBatchType;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**

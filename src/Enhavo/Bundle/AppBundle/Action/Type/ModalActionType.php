@@ -11,13 +11,7 @@ class ModalActionType extends AbstractActionType implements ActionTypeInterface
     public function createViewData(array $options, $resource = null)
     {
         $data = parent::createViewData($options, $resource);
-
-        if(!isset($options['modal']['type'])) {
-            throw new \InvalidArgumentException("Modal action needs a configuration with modal type");
-        }
-        $data['modal'] = $options['modal']['type'];
-        $data['options'] = $options['modal'];
-
+        $data['modal'] = $options['modal'];
         return $data;
     }
 

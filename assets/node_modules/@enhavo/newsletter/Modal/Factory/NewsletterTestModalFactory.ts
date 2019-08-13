@@ -4,8 +4,6 @@ import NewsletterTestModal from "@enhavo/newsletter/Modal/Model/NewsletterTestMo
 export default class NewsletterTestModalFactory extends AbstractFactory
 {
     createNew(): NewsletterTestModal {
-        let modal = new NewsletterTestModal(this.application);
-        modal.component = 'newsletter-test-modal';
-        return modal;
+        return new NewsletterTestModal(this.application);
     }
 }
