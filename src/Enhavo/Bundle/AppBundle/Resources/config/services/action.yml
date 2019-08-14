@@ -87,3 +87,9 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: update }
+
+    Enhavo\Bundle\AppBundle\Action\Type\ModalActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: modal }

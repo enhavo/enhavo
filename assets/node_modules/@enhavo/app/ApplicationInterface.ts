@@ -10,6 +10,7 @@ import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default interface ApplicationInterface
 {
@@ -25,15 +26,17 @@ export default interface ApplicationInterface
 
     getRouter(): Router
 
-    getTranslator(): Translator
+    getTranslator(): Translator;
 
-    getActionManager(): ActionManager
+    getActionManager(): ActionManager;
 
-    getActionRegistry(): ActionRegistry
+    getActionRegistry(): ActionRegistry;
 
-    getModalManager(): ModalManager
+    getModalManager(): ModalManager;
 
-    getModalRegistry(): ModalRegistry
+    getModalRegistry(): ModalRegistry;
 
-    getFlashMessenger(): FlashMessenger
+    getFlashMessenger(): FlashMessenger;
+
+    getFormRegistry(): FormRegistry;
 }

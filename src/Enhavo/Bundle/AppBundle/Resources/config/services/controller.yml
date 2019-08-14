@@ -22,3 +22,13 @@ services:
             - '@fos_rest.view_handler'
         calls:
             - [setContainer, ['@service_container']]
+
+    Enhavo\Bundle\AppBundle\Controller\ModalController:
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: controller.service_arguments }
+
+    enhavo_app.controller.modal:
+        public: true
+        alias: Enhavo\Bundle\AppBundle\Controller\ModalController
