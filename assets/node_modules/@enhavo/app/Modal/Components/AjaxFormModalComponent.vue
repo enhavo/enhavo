@@ -1,6 +1,6 @@
 <template>
     <div class="modal">
-        <div class="modal-form-container">
+        <div class="modal-form-container" v-if="!modal.loading">
             <form v-once ref="container">
             </form>
             <div class="buttons">
@@ -8,6 +8,7 @@
                 <button @click="close" class="modal-btn">{{ modal.closeLabel }}</button>
             </div>
         </div>
+        <loading-screen v-if="modal.loading"></loading-screen>
     </div>
 </template>
 

@@ -13,16 +13,20 @@ export default class AjaxFormModal extends AbstractModal
     public saveLabel: string = 'save';
     public closeLabel: string = 'close';
     public updateHandler: () => void;
+    public loading: boolean = true;
 
     async loadForm(): Promise<void>
     {
         let url = this.application.getRouter().generate(this.route, this.routeParameters);
+
+        this.loading = true;
 
         return new Promise((resolve, reject) => {
             axios.get(url).then((data) => {
                 let html = data.data.trim();
                 this.setElement(<HTMLElement[]>$.parseHTML(html.trim()));
                 resolve();
+                this.loading = false;
             }).catch(() => {
                 reject();
             });
@@ -31,6 +35,8 @@ export default class AjaxFormModal extends AbstractModal
 
     async sendForm(data: any): Promise<boolean>
     {
+        this.loading = true;
+
         return new Promise((resolve, reject) => {
             axios.post(this.getActionUrl(), data).then((responseData) => {
                 if(this.actionHandler) {
@@ -44,6 +50,7 @@ export default class AjaxFormModal extends AbstractModal
                 } else {
                     resolve(false);
                 }
+                this.loading = false;
             }).catch(() => {
                 reject();
             });
