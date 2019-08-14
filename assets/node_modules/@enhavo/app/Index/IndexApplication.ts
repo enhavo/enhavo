@@ -63,7 +63,6 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     {
         if(this.filterRegistry == null) {
             this.filterRegistry = new FilterRegistry();
-            this.filterRegistry.load(this);
         }
         return this.filterRegistry;
     }
@@ -80,7 +79,6 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     {
         if(this.columnRegistry == null) {
             this.columnRegistry = new ColumnRegistry();
-            this.columnRegistry.load(this);
         }
         return this.columnRegistry;
     }
@@ -97,7 +95,6 @@ export class IndexApplication extends AbstractApplication implements ActionAware
     {
         if(this.batchRegistry == null) {
             this.batchRegistry = new BatchRegistry();
-            this.batchRegistry.load(this);
         }
         return this.batchRegistry;
     }

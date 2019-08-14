@@ -66,7 +66,6 @@ export class MainApplication extends AbstractApplication
     {
         if(this.menuRegistry == null) {
             this.menuRegistry = new MenuRegistry();
-            this.menuRegistry.load(this);
         }
         return this.menuRegistry;
     }
@@ -83,7 +82,6 @@ export class MainApplication extends AbstractApplication
     {
         if(this.viewRegistry == null) {
             this.viewRegistry = new ViewRegistry();
-            this.viewRegistry.load();
         }
         return this.viewRegistry;
     }

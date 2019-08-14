@@ -45,8 +45,7 @@ export class FormApplication extends AbstractApplication implements ActionAwareA
     public getFormRegistry(): FormRegistry
     {
         if(this.formRegistry == null) {
-            this.formRegistry = new FormRegistry(this);
-            this.formRegistry.load();
+            this.formRegistry = new FormRegistry();
         }
         return this.formRegistry;
     }

@@ -53,7 +53,6 @@ export class ListApplication extends AbstractApplication implements ActionAwareA
     {
         if(this.columnRegistry == null) {
             this.columnRegistry = new ColumnRegistry();
-            this.columnRegistry.load(this);
         }
         return this.columnRegistry;
     }

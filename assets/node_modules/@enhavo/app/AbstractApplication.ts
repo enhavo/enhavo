@@ -109,7 +109,6 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     {
         if(this.actionRegistry == null) {
             this.actionRegistry = new ActionRegistry();
-            this.actionRegistry.load(this);
         }
         return this.actionRegistry;
     }
@@ -126,7 +125,6 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     {
         if(this.modalRegistry == null) {
             this.modalRegistry = new ModalRegistry();
-            this.modalRegistry.load(this);
         }
         return this.modalRegistry;
     }
