@@ -1,10 +1,14 @@
 <template>
     <div class="modal">
-        <form>
-            <div v-once ref="container"></div>
-        </form>
-        <button @click="save">{{ modal.saveLabel }}</button>
-        <button @click="close">{{ modal.closeLabel }}</button>
+        <div class="modal-form-container" v-if="!modal.loading">
+            <form v-once ref="container">
+            </form>
+            <div class="buttons">
+                <button @click="save" class="modal-btn primary">{{ modal.saveLabel }}</button>
+                <button @click="close" class="modal-btn">{{ modal.closeLabel }}</button>
+            </div>
+        </div>
+        <loading-screen v-if="modal.loading"></loading-screen>
     </div>
 </template>
 

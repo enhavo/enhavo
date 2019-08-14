@@ -1,4 +1,22 @@
 .menu {height:calc(100vh - #{$toolbarHeight});overflow-y:auto;
+  &.style-compact {
+    &.menu-collapsed {
+      > .menu-child {min-height:0;}
+      .menu-list {
+        .menu-list-items {
+          .label-container {padding-left:5px;}
+        }
+      }
+    }
+    .menu-child-title {min-height:0;padding-bottom:6px;padding-top:6px;}
+    .menu-list {
+      .menu-list-title {min-height:0;padding-bottom:6px;padding-top:6px;}
+      .menu-list-items {
+        .label-container {padding-left:26px;}
+        .symbol-container {display:none;}
+      }
+    }
+  }
   &.menu-collapsed {flex-wrap:wrap;display:inline-flex;writing-mode: vertical-lr;height:calc(100vh - #{$toolbarHeight + 13px});overflow-y:visible;
     > .menu-child, > .menu-child > .menu-child-title {text-align:center;
       > .label-container {display:none;text-align:left;}
