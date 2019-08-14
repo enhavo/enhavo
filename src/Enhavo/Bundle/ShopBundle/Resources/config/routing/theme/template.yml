@@ -2,3 +2,74 @@ enhavo_shop_theme_template_cart_list:
     path: /cart-list
     defaults:
         _controller: EnhavoShopBundle:Template:cartList
+
+enhavo_shop_theme_template_checkout_address:
+    path: /addressing
+    defaults:
+        _controller: EnhavoShopBundle:Template:addressing
+
+
+enhavo_shop_theme_template_checkout_shipping:
+    path: /shipping
+    defaults:
+        _controller: EnhavoShopBundle:Template:shipping
+
+enhavo_shop_theme_template_checkout_payment:
+    path: /payment
+    defaults:
+        _controller: EnhavoShopBundle:Template:payment
+
+enhavo_shop_theme_template_checkout_order_summary:
+    path: /order-summary
+    defaults:
+        _controller: EnhavoShopBundle:Template:orderSummary
+
+enhavo_shop_theme_template_checkout_order_finish:
+    path: /finish
+    defaults:
+        _controller: EnhavoShopBundle:Template:finish
+
+enhavo_shop_theme_template_checkout_order_login:
+    path: /login
+    defaults:
+        _controller: EnhavoShopBundle:Template:login
+
+enhavo_shop_theme_template_checkout_register:
+    path: /register
+    defaults:
+        _controller: EnhavoShopBundle:Template:register
+
+enhavo_shop_theme_template_checkout_password_reset:
+    path: /password-reset
+    defaults:
+        _controller: EnhavoShopBundle:Template:resetPassword
+
+enhavo_shop_theme_template_checkout_password_reset_success:
+    path: /password-reset-success
+    defaults:
+        _controller: EnhavoShopBundle:Template:resetPasswordSuccess
+
+enhavo_shop_theme_template_checkout_profile:
+    path: /profile
+    defaults:
+        _controller: EnhavoShopBundle:Template:profile
+
+enhavo_shop_theme_template_checkout_account:
+    path: /account
+    defaults:
+        _controller: EnhavoShopBundle:Template:account
+
+enhavo_shop_theme_template_checkout_orders:
+    path: /orders
+    defaults:
+        _controller: EnhavoShopBundle:Template:orders
+
+enhavo_shop_theme_template_checkout_order_detail:
+    path: /order-detail
+    defaults:
+        _controller: EnhavoShopBundle:Template:orderDetail
+
+enhavo_shop_theme_template_checkout_show_product:
+    path: /show-product
+    defaults:
+        _controller: EnhavoShopBundle:Template:showProduct

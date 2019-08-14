@@ -1,6 +1,6 @@
 h1, h2, h3, .title {@extend %title}
 .small-title {@extend %smallTitle}
-
+strong { font-weight:$semibold;}
 @media all and(max-width:1025px) {
   h1, h2, h3, .title { margin-bottom:10px;}
 }
