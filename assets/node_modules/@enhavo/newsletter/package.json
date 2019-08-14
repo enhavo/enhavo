@@ -2,13 +2,13 @@
   "name": "@enhavo/newsletter",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.1.16",
+  "version": "master",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "^0.1.16"
+    "@enhavo/app": "https://github.com/enhavo/app-assets.git"
   }
 }
