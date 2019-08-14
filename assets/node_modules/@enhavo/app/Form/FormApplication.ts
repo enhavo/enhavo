@@ -4,13 +4,11 @@ import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Form from "@enhavo/app/Form/Form";
 import FormListener from "@enhavo/app/Form/FormListener";
-import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export class FormApplication extends AbstractApplication implements ActionAwareApplication
 {
     protected form: Form;
     protected formListener: FormListener;
-    protected formRegistry: FormRegistry;
 
     public getApp(): AppInterface
     {
@@ -32,22 +30,6 @@ export class FormApplication extends AbstractApplication implements ActionAwareA
             );
         }
         return this.form;
-    }
-
-    public getFormListener(): FormListener
-    {
-        if(this.formListener == null) {
-            this.formListener = new FormListener();
-        }
-        return this.formListener;
-    }
-
-    public getFormRegistry(): FormRegistry
-    {
-        if(this.formRegistry == null) {
-            this.formRegistry = new FormRegistry();
-        }
-        return this.formRegistry;
     }
 }
 

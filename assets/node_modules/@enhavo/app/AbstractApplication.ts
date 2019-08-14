@@ -14,6 +14,7 @@ import ActionRegistry from "@enhavo/app/Action/ActionRegistry";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
+import FormRegistry from "@enhavo/app/Form/FormRegistry";
 
 export default abstract class AbstractApplication implements ApplicationInterface, ActionAwareApplication
 {
@@ -30,6 +31,7 @@ export default abstract class AbstractApplication implements ApplicationInterfac
     protected actionRegistry: ActionRegistry;
     protected modalManager: ModalManager;
     protected modalRegistry: ModalRegistry;
+    protected formRegistry: FormRegistry;
 
     constructor()
     {
@@ -127,5 +129,13 @@ export default abstract class AbstractApplication implements ApplicationInterfac
             this.modalRegistry = new ModalRegistry();
         }
         return this.modalRegistry;
+    }
+
+    public getFormRegistry(): FormRegistry
+    {
+        if(this.formRegistry == null) {
+            this.formRegistry = new FormRegistry();
+        }
+        return this.formRegistry;
     }
 }
