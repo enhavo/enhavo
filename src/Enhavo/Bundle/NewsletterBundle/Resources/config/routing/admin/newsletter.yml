@@ -1,3 +1,12 @@
+modal_test:
+    path: /modal/test
+    options:
+        expose: true
+    defaults:
+        _controller: enhavo_app.controller.modal:formAction
+        _config:
+            form: Enhavo\Bundle\MediaBundle\Form\Type\MediaType
+
 enhavo_newsletter_newsletter_index:
     options:
         expose: true
@@ -9,7 +18,6 @@ enhavo_newsletter_newsletter_index:
             viewer:
                 label: newsletter.label.newsletter
                 translation_domain: EnhavoNewsletterBundle
-
 enhavo_newsletter_newsletter_create:
     options:
         expose: true
@@ -35,8 +43,12 @@ enhavo_newsletter_newsletter_create:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
                     test_mail:
-                        type: newsletter_test_mail
-
+                        type: modal
+                        label: open
+                        icon: book
+                        modal:
+                            component: ajax-form-modal
+                            route: modal_test
 enhavo_newsletter_newsletter_update:
     options:
         expose: true
@@ -62,10 +74,12 @@ enhavo_newsletter_newsletter_update:
                         type: preview
                         route: enhavo_newsletter_newsletter_preview
                     test_mail:
-                        type: newsletter_test_mail
-                    send:
-                        type: newsletter_send
-
+                        type: modal
+                        label: open
+                        icon: book
+                        modal:
+                            component: ajax-form-modal
+                            route: modal_test
 enhavo_newsletter_newsletter_table:
     options:
         expose: true
@@ -105,7 +119,6 @@ enhavo_newsletter_newsletter_table:
                         label: newsletter.label.sent
                         property: sent
                         width: 2
-
 enhavo_newsletter_newsletter_delete:
     options:
         expose: true
@@ -113,7 +126,6 @@ enhavo_newsletter_newsletter_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:deleteAction
-
 enhavo_newsletter_newsletter_batch:
     options:
         expose: true
@@ -132,7 +144,6 @@ enhavo_newsletter_newsletter_batch:
                     type: newsletter_send
                 newsletter_send_test:
                     type: newsletter_send_test
-
 enhavo_newsletter_newsletter_preview:
     options:
         expose: true
@@ -142,7 +153,6 @@ enhavo_newsletter_newsletter_preview:
         _controller: enhavo_newsletter.controller.newsletter:previewAction
         _sylius:
             viewer:
-
 enhavo_newsletter_newsletter_resource_preview:
     options:
         expose: true
@@ -154,7 +164,6 @@ enhavo_newsletter_newsletter_resource_preview:
             viewer:
                 strategy_options:
                     service: enhavo_newsletter.controller.newsletter:showResourceAction
-
 enhavo_newsletter_newsletter_send:
     options:
         expose: true
@@ -162,7 +171,6 @@ enhavo_newsletter_newsletter_send:
     methods: [POST]
     defaults:
         _controller: enhavo_newsletter.controller.newsletter:sendAction
-
 enhavo_newsletter_newsletter_test:
     options:
         expose: true

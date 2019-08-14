@@ -1,5 +1,5 @@
 <template>
-    <div class="menu">
+    <div class="menu style-compact">
         <template v-for="item in menu.items">
             <component class="menu-child" v-bind:is="item.component" v-bind:data="item"></component>
         </template>
