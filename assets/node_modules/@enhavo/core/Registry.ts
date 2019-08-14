@@ -1,4 +1,5 @@
 import RegistryInterface from "./RegistryInterface";
+import RegistryPackageInterface from "@enhavo/core/RegistryPackageInterface";
 
 export default class Registry implements RegistryInterface
 {
@@ -30,6 +31,14 @@ export default class Registry implements RegistryInterface
             throw 'Object with name "'+name+'" already exists in registry';
         }
         this.entries.push(new Entry(name, component, factory));
+        return this;
+    }
+
+    registerPackage(registryPackage: RegistryPackageInterface)
+    {
+        for(let entry of registryPackage.getEntries()) {
+            this.register(entry.name, entry.component, entry.factory);
+        }
         return this;
     }
 

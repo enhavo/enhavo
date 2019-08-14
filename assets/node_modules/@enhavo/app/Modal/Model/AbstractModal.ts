@@ -5,17 +5,13 @@ export default abstract class AbstractModal implements ModalInterface
 {
     protected application: ApplicationInterface;
     component: string;
-    data: any;
 
     constructor(application: ApplicationInterface)
     {
         this.application = application;
     }
 
-    open(data: any): void
-    {
-        this.data = data;
-    }
+    init() {}
 
     close() {
         this.application.getModalManager().pop();

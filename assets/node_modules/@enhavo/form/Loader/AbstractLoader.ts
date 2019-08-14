@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import LoaderInterface from "@enhavo/form/LoaderInterface";
+import LoaderInterface from "@enhavo/app/Form/LoaderInterface";
 
 export default abstract class AbstractLoader implements LoaderInterface
 {

@@ -1,8 +1,10 @@
 import Application from "@enhavo/app/List/ListApplication";
-import RegisterAction from './register/action';
-import RegisterModal from './register/modal';
+import ActionRegistryPackage from "./registry/action";
+import ModalRegistryPackage from "./registry/modal";
+import ColumnRegistryPackage from "./registry/column";
 
-RegisterAction(Application);
-RegisterModal(Application);
+Application.getActionRegistry().registerPackage(new ActionRegistryPackage(Application));
+Application.getModalRegistry().registerPackage(new ModalRegistryPackage(Application));
+Application.getColumnRegistry().registerPackage(new ColumnRegistryPackage(Application));
 Application.getList().load();
 Application.getVueLoader().load(() => import("@enhavo/app/List/Components/ListApplicationComponent.vue"));

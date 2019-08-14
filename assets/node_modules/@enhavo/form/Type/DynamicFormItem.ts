@@ -1,6 +1,6 @@
 import * as $ from "jquery";
 import DynamicFormType from "@enhavo/form/Type/DynamicFormType";
-import FormDispatcher from "@enhavo/form/FormDispatcher";
+import FormDispatcher from "@enhavo/app/Form/FormDispatcher";
 
 export default class DynamicFormItem
 {

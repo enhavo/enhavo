@@ -130,7 +130,7 @@ export default class List
             // executed on error
             .catch(error => {
                 this.flashMessenger.addMessage(new Message(
-                    'success',
+                    'error',
                     this.translator.trans('enhavo_app.list.message.error')
                 ))
             })

@@ -2,27 +2,21 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
-use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Enhavo\Bundle\AppBundle\Action\Type\ModalActionType;
 
-class TestMailActionType extends AbstractActionType implements ActionTypeInterface
+class TestMailActionType extends ModalActionType implements ActionTypeInterface
 {
-    public function createViewData(array $options, $resource = null)
-    {
-        $data = parent::createViewData($options, $resource);
-        $data = array_merge($data, [
-
-        ]);
-        return $data;
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'component' => 'newsletter-test-mail',
+            'component' => 'modal-action',
+            'modal' => [
+                'component' => 'newsletter-test-modal',
+            ],
             'label' => 'newsletter.action.test_mail.label',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'icon' => 'email',

@@ -4,7 +4,7 @@ import ApplicationInterface from "@enhavo/app/ApplicationInterface";
 export default class ModalBatch extends AbstractBatch
 {
     public application: ApplicationInterface;
-    public modal: string;
+    public modal: any;
 
     public constructor(application: ApplicationInterface) {
         super();
@@ -13,7 +13,7 @@ export default class ModalBatch extends AbstractBatch
 
     async execute(ids: number[]): Promise<boolean>
     {
-        this.application.getModalManager().push(this.modal, {});
+        this.application.getModalManager().push(this.modal);
         return false;
     }
 }

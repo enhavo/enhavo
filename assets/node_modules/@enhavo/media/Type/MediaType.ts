@@ -1,4 +1,4 @@
-import FormType from "@enhavo/form/FormType";
+import FormType from "@enhavo/app/Form/FormType";
 import MediaRow from "@enhavo/media/Type/MediaRow";
 import MediaConfig from "@enhavo/media/Type/MediaConfig";
 import * as $ from "jquery";
