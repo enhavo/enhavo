@@ -30,11 +30,22 @@
         }
 
         save() {
-            this.modal.sendForm().then((close: boolean) => {
+            let data = this.getFormData();
+            this.modal.sendForm(data).then((close: boolean) => {
                 if(close) {
                     this.modal.close();
                 }
             }) ;
+        }
+
+        private getFormData(): object
+        {
+            let formData = {};
+            let data = $(this.$refs.container).serializeArray();
+            for(let row of data) {
+                formData[row.name] = row.value;
+            }
+            return formData;
         }
 
         close() {
