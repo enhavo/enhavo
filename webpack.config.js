@@ -6,7 +6,6 @@ Encore
     .setOutputPath('public/build/enhavo/')
     .setPublicPath('/build/enhavo')
     .enableSingleRuntimeChunk()
-    .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .splitEntryChunks()
     .autoProvidejQuery()
