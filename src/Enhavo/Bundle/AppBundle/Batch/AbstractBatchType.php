@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Batch;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,6 +34,14 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
     protected function getConfirmMessage($options)
     {
         return $this->container->get('translator')->trans($options['confirm_message'], [], $options['translation_domain']);
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    protected function getManager(): EntityManagerInterface
+    {
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     /**

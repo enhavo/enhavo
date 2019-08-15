@@ -55,7 +55,7 @@ class BatchManager
     {
         $batches = [];
         foreach($configuration as $name => $options) {
-            $batch = $this->createAction($options);
+            $batch = $this->createBatchFromOptions($options);
 
             if($batch->isHidden()) {
                 continue;
@@ -85,15 +85,25 @@ class BatchManager
      * @return Batch
      * @throws TypeMissingException
      */
-    private function createAction($options)
+    private function createBatchFromOptions($options)
     {
         if(!isset($options['type'])) {
-            throw new TypeMissingException(sprintf('No type was given to create "%s"', Action::class));
+            throw new TypeMissingException(sprintf('No type was given to create "%s"', Batch::class));
         }
-
-        /** @var BatchTypeInterface $type */
-        $type = $this->collector->getType($options['type']);
+        $type = $options['type'];
         unset($options['type']);
+        return $this->createBatch($type, $options);
+    }
+
+    /**
+     * @param $type
+     * @param $options
+     * @return Batch
+     */
+    public function createBatch($type, $options)
+    {
+        /** @var BatchTypeInterface $type */
+        $type = $this->collector->getType($type);
         $batch = new Batch($type, $options);
         return $batch;
     }
