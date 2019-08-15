@@ -1,8 +1,7 @@
 <template>
     <div class="modal">
-        <div class="modal-form-container" v-if="!modal.loading">
-            <form v-once ref="container">
-            </form>
+        <div class="modal-form-container" v-show="!modal.loading">
+            <form v-once ref="container"></form>
             <div class="buttons">
                 <button @click="save" class="modal-btn primary">{{ modal.saveLabel }}</button>
                 <button @click="close" class="modal-btn">{{ modal.closeLabel }}</button>
@@ -13,7 +12,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from "vue-property-decorator";
+    import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal"
     import FormInitializer from "@enhavo/app/Form/FormInitializer";
 
@@ -25,10 +24,7 @@
         modal: AjaxFormModal;
 
         mounted() {
-            this.modal.loadForm().then(() => {
-                this.setElement();
-                this.modal.updateHandler = this.setElement;
-            });
+            this.modal.loadForm().then(() => {});
         }
 
         save() {
@@ -43,6 +39,7 @@
             this.modal.close();
         }
 
+        @Watch('modal.element')
         private setElement()
         {
             let initializer = new FormInitializer();

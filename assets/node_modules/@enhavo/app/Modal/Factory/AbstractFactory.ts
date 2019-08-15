@@ -14,7 +14,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): ModalInterface
     {
         let modal = this.createNew();
-        modal = _.extend(data, modal);
+        modal = _.extend(_.assign({}, data), modal);
         return modal;
     }
 
