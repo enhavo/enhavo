@@ -9,8 +9,8 @@ export default class AjaxFormModal extends AbstractModal
     public actionRouteParameters: object;
     public actionHandler: (modal: AjaxFormModal, data: any) => Promise<boolean>;
     public element: HTMLElement = null;
-    public saveLabel: string = 'save';
-    public closeLabel: string = 'close';
+    public saveLabel: string = 'enhavo_app.save';
+    public closeLabel: string = 'enhavo_app.abort';
     public loading: boolean = true;
 
     async loadForm(): Promise<void>

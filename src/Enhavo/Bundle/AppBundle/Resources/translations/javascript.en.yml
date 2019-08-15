@@ -4,6 +4,8 @@ enhavo_app:
     edit: 'Edit'
     create: 'Create'
     preview: 'Preview'
+    save: 'Save'
+    abort: 'Close'
     open_homepage: 'Open Homepage'
     batch:
         label:

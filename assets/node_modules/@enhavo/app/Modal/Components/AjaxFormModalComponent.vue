@@ -3,8 +3,8 @@
         <div class="modal-form-container" v-show="!modal.loading">
             <form v-once ref="container"></form>
             <div class="buttons">
-                <button @click="save" class="modal-btn primary">{{ modal.saveLabel }}</button>
-                <button @click="close" class="modal-btn">{{ modal.closeLabel }}</button>
+                <button @click="save" class="modal-btn primary">{{ trans(modal.saveLabel) }}</button>
+                <button @click="close" class="modal-btn">{{ trans(modal.closeLabel) }}</button>
             </div>
         </div>
         <loading-screen v-if="modal.loading"></loading-screen>
@@ -15,6 +15,8 @@
     import { Vue, Component, Prop, Watch } from "vue-property-decorator";
     import AjaxFormModal from "@enhavo/app/Modal/Model/AjaxFormModal"
     import FormInitializer from "@enhavo/app/Form/FormInitializer";
+    import ApplicationBag from "@enhavo/app/ApplicationBag";
+    let application = ApplicationBag.getApplication();
 
     @Component()
     export default class ModalComponent extends Vue {
@@ -37,6 +39,10 @@
 
         close() {
             this.modal.close();
+        }
+
+        trans(text) {
+            return application.getTranslator().trans(text);
         }
 
         @Watch('modal.element')
