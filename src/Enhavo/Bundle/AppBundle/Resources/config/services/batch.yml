@@ -17,6 +17,7 @@ services:
 
     enhavo_app.batch_manager:
         class: Enhavo\Bundle\AppBundle\Batch\BatchManager
+        public: true
         arguments:
             - '@enhavo_app.batch_collector'
             - '@security.authorization_checker'

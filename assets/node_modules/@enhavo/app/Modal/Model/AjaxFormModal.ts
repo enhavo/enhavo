@@ -1,5 +1,7 @@
 import AbstractModal from "@enhavo/app/Modal/Model/AbstractModal";
 import axios from "axios";
+import * as _ from "lodash";
+import * as URI from 'urijs';
 
 export default class AjaxFormModal extends AbstractModal
 {
@@ -12,6 +14,7 @@ export default class AjaxFormModal extends AbstractModal
     public saveLabel: string = 'enhavo_app.save';
     public closeLabel: string = 'enhavo_app.abort';
     public loading: boolean = true;
+    public data: any;
 
     async loadForm(): Promise<void>
     {
@@ -34,9 +37,11 @@ export default class AjaxFormModal extends AbstractModal
     async sendForm(data: any): Promise<boolean>
     {
         this.loading = true;
-
         return new Promise((resolve, reject) => {
-            axios.post(this.getActionUrl(), data).then((responseData) => {
+            if(this.data) {
+                data = _.extend(data, this.data)
+            }
+            axios.post(this.getActionUrl(), URI.buildQuery(data)).then((responseData) => {
                 if(this.actionHandler) {
                     this.actionHandler(this, responseData)
                         .then((value) => {
