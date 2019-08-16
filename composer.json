@@ -3,6 +3,12 @@
   "license": "MIT",
   "type": "project",
   "description": "enhavo",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "": "src/"
@@ -73,28 +79,36 @@
     "twig/extensions": "^1.3"
   },
   "replace": {
-    "enhavo/app-bundle": "0.7",
-    "enhavo/article-bundle": "0.7",
-    "enhavo/assets-bundle": "0.7",
-    "enhavo/calendar-bundle": "0.7",
-    "enhavo/category-bundle": "0.7",
-    "enhavo/contact-bundle": "0.7",
-    "enhavo/dashboard-bundle": "0.7",
-    "enhavo/generator-bundle": "0.7",
-    "enhavo/grid-bundle": "0.7",
-    "enhavo/installer-bundle": "0.7",
-    "enhavo/media-bundle": "0.7",
-    "enhavo/navigation-bundle": "0.7",
-    "enhavo/newsletter-bundle": "0.7",
-    "enhavo/page-bundle": "0.7",
-    "enhavo/search-bundle": "0.7",
-    "enhavo/serializer-bundle": "0.7",
-    "enhavo/setting-bundle": "0.7",
-    "enhavo/shop-bundle": "0.7",
-    "enhavo/slider-bundle": "0.7",
-    "enhavo/theme-bundle": "0.7",
-    "enhavo/translation-bundle": "0.7",
-    "enhavo/user-bundle": "0.7"
+    "enhavo/app-bundle": "self.version",
+    "enhavo/article-bundle": "self.version",
+    "enhavo/block-bundle": "self.version",
+    "enhavo/calendar-bundle": "self.version",
+    "enhavo/comment-bundle": "self.version",
+    "enhavo/contact-bundle": "self.version",
+    "enhavo/content-bundle": "self.version",
+    "enhavo/dashboard-bundle": "self.version",
+    "enhavo/form-bundle": "self.version",
+    "enhavo/media-bundle": "self.version",
+    "enhavo/navigation-bundle": "self.version",
+    "enhavo/newsletter-bundle": "self.version",
+    "enhavo/page-bundle": "self.version",
+    "enhavo/portal-bundle": "self.version",
+    "enhavo/redirect-bundle": "self.version",
+    "enhavo/revision-bundle": "self.version",
+    "enhavo/routing-bundle": "self.version",
+    "enhavo/search-bundle": "self.version",
+    "enhavo/setting-bundle": "self.version",
+    "enhavo/shop-bundle": "self.version",
+    "enhavo/sidebar-bundle": "self.version",
+    "enhavo/slider-bundle": "self.version",
+    "enhavo/taxonomy-bundle": "self.version",
+    "enhavo/template-bundle": "self.version",
+    "enhavo/theme-bundle": "self.version",
+    "enhavo/translation-bundle": "self.version",
+    "enhavo/user-bundle": "self.version",
+    "enhavo/class-analyzer": "self.version",
+    "enhavo/metadata": "self.version",
+    "enhavo/doctrine-extension": "self.version"
   },
   "require-dev": {
     "behat/behat": "^3.0",

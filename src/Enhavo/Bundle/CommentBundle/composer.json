@@ -1,9 +1,9 @@
 {
-  "name": "enhavo/class-analyzer",
+  "name": "enhavo/comment-bundle",
   "type": "library",
-  "description": "ClassAnalyzer",
+  "description": "EnhavoCommentBundle",
   "keywords": ["framework"],
-  "homepage": "http://enhavo.com",
+  "homepage": "https://enhavo.com",
   "license": "MIT",
   "authors": [
     {
@@ -12,9 +12,10 @@
     }
   ],
   "require": {
-    "php": "^7.2"
+    "php": "^7.2",
+    "enhavo/app-bundle": "0.8.*"
   },
   "autoload": {
-    "psr-4": { "Enhavo\\Component\\ClassAnalyzer\\": "" }
+    "psr-4": { "Enhavo\\Bundle\\CommentBundle\\": "" }
   }
 }
