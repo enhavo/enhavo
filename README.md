@@ -10,21 +10,32 @@
 [![Version](https://img.shields.io/packagist/v/enhavo/enhavo.svg)](https://packagist.org/packages/enhavo/enhavo)
 
 
-The enhavo CMS is a open source PHP project based on the fullstack Symfony framework and uses awesome Sylius components
+The enhavo CMS is a open source PHP project on top of the fullstack Symfony framework and uses awesome Sylius components
 to serve a very flexible software, that can handle most of complex data structure with a clean and usability interface.
+
+Enhavo is still under heavy development and we can't gurantee for backward compatibility or security issues nor is our documentation up to date. 
+So we advice you to not use the software for production until we reach a stable release. 
+
 
 Contribute
 ----------
 
-This is the main repository of the enhavo project. If you want to contribute you need to checkout this repository.
-After checkout out just use the installer to create the database and the admin user.
+Help us to develop the software. This is the main repository of the enhavo project. 
+Feel free to open tickets or pull requests or just give us feedback.
+If you are a github user, you can star our project.
+
+Install
+-------
+
+For install enhavo, you need `composer` and `yarn`
 
 ```bash
 $ composer install
 $ yarn install
 $ yarn encore dev
-$ bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
-$ bin/console enhavo:install
+$ yarn routes:dump
+$ bin/console enhavo:init
+$ bin/console fos:user:create my@email.com my@email.com password --super-admin
 ```
 
 Editions
@@ -32,7 +43,7 @@ Editions
 
 If you want to use enhavo CMS, we recommend to use one of the enhavo editions:
 
-* [Enhavo CMS](https://github.com/enhavo/enhavo-cms) Contians all CMS relavent feature
+* [Enhavo CMS](https://github.com/enhavo/enhavo-cms) Contais CMS relavent feature
 * [Enhavo Shop](https://github.com/enhavo/enhavo-shop) Same as CMS but also contain Shop features
 * [Enhavo App](https://github.com/enhavo/enhavo-app) Contains only basic Admin features
 

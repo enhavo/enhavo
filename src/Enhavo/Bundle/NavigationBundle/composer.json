@@ -1,0 +1,22 @@
+{
+  "name": "enhavo/navigation-bundle",
+  "type": "library",
+  "description": "EnhavoNavigationBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "enhavo/app-bundle": "0.8.*",
+    "enhavo/form-bundle": "0.8.*"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\NavigationBundle\\": "" }
+  }
+}

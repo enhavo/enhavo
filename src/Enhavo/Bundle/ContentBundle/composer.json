@@ -3,7 +3,7 @@
   "type": "library",
   "description": "EnhavoContentBundle",
   "keywords": ["framework"],
-  "homepage": "http://enhavo.com",
+  "homepage": "https://enhavo.com",
   "license": "MIT",
   "authors": [
     {
@@ -12,9 +12,8 @@
     }
   ],
   "require": {
-    "php": ">=5.3.3",
-    "doctrine/orm": "~2.2,>=2.2.3",
-    "doctrine/doctrine-bundle": "~1.2"
+    "php": "^7.2",
+    "enhavo/app-bundle": "0.8.*"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\ContentBundle\\": "" }

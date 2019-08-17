@@ -3,7 +3,7 @@
   "type": "library",
   "description": "EnhavoCalendarBundle",
   "keywords": ["framework"],
-  "homepage": "http://enhavo.com",
+  "homepage": "https://enhavo.com",
   "license": "MIT",
   "authors": [
     {
@@ -12,9 +12,16 @@
     }
   ],
   "require": {
-    "php": ">=5.3.3",
-    "doctrine/orm": "~2.2,>=2.2.3",
-    "doctrine/doctrine-bundle": "~1.2"
+    "php": "^7.2",
+    "enhavo/app-bundle": "0.8.*",
+    "enhavo/content-bundle": "0.8.*",
+    "enhavo/block-bundle": "0.8.*",
+    "enhavo/form-bundle": "0.8.*",
+    "facebook/graph-sdk": "^5.4",
+    "johngrogg/ics-parser": "^2.0",
+    "jsvrcek/ics-bundle": "^0.1.0",
+    "guzzlehttp/guzzle": "^6.2",
+    "simshaun/recurr": "^2.2"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\CalendarBundle\\": "" }

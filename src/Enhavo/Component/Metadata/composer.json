@@ -1,0 +1,20 @@
+{
+  "name": "enhavo/metadata",
+  "type": "library",
+  "description": "Metadata",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Component\\Metadata\\": "" }
+  }
+}

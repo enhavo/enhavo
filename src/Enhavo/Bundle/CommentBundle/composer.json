@@ -1,0 +1,21 @@
+{
+  "name": "enhavo/comment-bundle",
+  "type": "library",
+  "description": "EnhavoCommentBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "enhavo/app-bundle": "0.8.*"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\CommentBundle\\": "" }
+  }
+}
