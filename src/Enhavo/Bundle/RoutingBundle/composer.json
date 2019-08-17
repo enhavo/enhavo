@@ -13,7 +13,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "enhavo/app-bundle": "0.8.*"
+    "enhavo/app-bundle": "dev-master",
+    "symfony-cmf/routing-bundle": "^2.1"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\RoutingBundle\\": "" }
