@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
@@ -56,11 +57,17 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     private $condition;
 
     /**
+     * @var Collection
+     */
+    private $receiver;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->receiver = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -267,5 +274,40 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Add receiver
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
+     * @return Subscriber
+     */
+    public function addReceiver(Receiver $receiver)
+    {
+        $this->receiver[] = $receiver;
+        $receiver->setSubscriber($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove receiver
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
+     */
+    public function removeReceiver(Receiver $receiver)
+    {
+        $this->receiver->removeElement($receiver);
+        $receiver->setSubscriber(null);
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceivers()
+    {
+        return $this->receiver;
     }
 }
