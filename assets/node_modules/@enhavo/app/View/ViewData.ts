@@ -7,4 +7,5 @@ export default class ViewData
     loading: boolean = false;
     id: number;
     label: string;
+    closeable: boolean = false;
 }

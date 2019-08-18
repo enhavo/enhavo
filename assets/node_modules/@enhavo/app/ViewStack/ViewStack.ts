@@ -90,6 +90,7 @@ export default class ViewStack
             if(event.label) {
                 view.label = event.label;
             }
+            view.closeable = event.closeable;
             if(view) {
                 view.finish();
             }
@@ -112,7 +113,7 @@ export default class ViewStack
             let view = this.get(event.id);
             if(view) {
                 // if view was not loaded, it can't receive close events, so we trigger remove event as fallback
-                if(!view.loaded) {
+                if(!view.loaded || view.closeable) {
                     this.dispatcher.dispatch(new RemoveEvent(view.id, event.saveState));
                     event.resolve();
                 }

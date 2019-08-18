@@ -18,7 +18,11 @@
     "enhavo/taxonomy-bundle": "dev-master",
     "enhavo/block-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master"
+    "enhavo/media-bundle": "dev-master",
+    "enhavo/template-bundle": "dev-master"
+  },
+  "suggest": {
+    "enhavo/search-bundle": "Make your articles searchable with EnhavoSearchBundle"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\ArticleBundle\\": "" }

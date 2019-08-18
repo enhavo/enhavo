@@ -16,7 +16,8 @@ export default interface ViewInterface extends ComponentAwareInterface
     position: number;
     url: string;
     customMinimized: boolean;
-    storage: DataStorageEntry[]
+    storage: DataStorageEntry[];
+    closeable: boolean;
 
     finish(): void;
 }
