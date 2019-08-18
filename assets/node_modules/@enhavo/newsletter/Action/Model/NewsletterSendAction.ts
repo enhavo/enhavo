@@ -4,6 +4,6 @@ export default class NewsletterSendAction extends AbstractAction
 {
     execute(): void
     {
-        console.log('send');
+        this.application.getView().loading();
     }
 }
