@@ -1,5 +1,0 @@
-sylius_promotion:
-    resources:
-        promotion_subject:
-            classes:
-                model: Enhavo\Bundle\ShopBundle\Entity\Order

@@ -24,6 +24,7 @@ Enhavo\Bundle\RoutingBundle\Entity\Route:
             type: string
             length: 255
             nullable: true
+            column: 'staticPrefix'
 
         name:
             type: string
