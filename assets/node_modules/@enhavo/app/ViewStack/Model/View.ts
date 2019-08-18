@@ -15,6 +15,7 @@ export default class View implements ViewInterface
     focus: boolean = false;
     customMinimized: boolean = false;
     removed: boolean = false;
+    closeable: boolean = true;
     position: number = 0;
     url: string;
     storage: DataStorageEntry[];

@@ -25,8 +25,9 @@ export default class View
     {
         if(data === null) {
             data = new ViewData;
+        } else {
+            _.extend(data, new ViewData);
         }
-        _.extend(data, new ViewData);
         this.data = data;
 
         if(this.data.id == null) {
@@ -163,7 +164,7 @@ export default class View
 
     public ready()
     {
-        this.eventDispatcher.dispatch(new LoadedEvent(this.getId(), this.data.label));
+        this.eventDispatcher.dispatch(new LoadedEvent(this.getId(), this.data.label, this.data.closeable));
     }
 
     public exit()
