@@ -11,7 +11,6 @@ namespace Enhavo\Bundle\UserBundle\Controller;
 use Enhavo\Bundle\AppBundle\Viewer\ViewFactory;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
-use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
