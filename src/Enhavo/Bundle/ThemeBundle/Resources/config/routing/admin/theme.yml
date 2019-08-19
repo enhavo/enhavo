@@ -26,6 +26,13 @@ enhavo_theme_theme_update:
         _controller: enhavo_theme.controller.theme:updateAction
         _sylius:
             viewer:
+                actions:
+                    build:
+                        type: output_stream
+                        route: enhavo_theme_theme_build
+                        label: theme.action.build.label
+                        translation_domain: EnhavoThemeBundle
+                        icon: build
                 actions_secondary:
                     delete:
                         type: delete
@@ -83,3 +90,9 @@ enhavo_theme_theme_resource_preview:
                 strategy_options:
                     service: enhavo_article.controller.article:showResourceAction
 
+enhavo_theme_theme_build:
+    options:
+        expose: true
+    path: /enhavo/theme/theme/build
+    defaults:
+        _controller: Enhavo\Bundle\ThemeBundle\Controller\ThemeController:buildAction

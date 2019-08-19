@@ -10,6 +10,7 @@
     "@fullcalendar/list": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
     "@ibm/plex": "^1.2.3",
+    "ansi-to-html": "^0.6.11",
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "blueimp-file-upload": "^9.22.1",
