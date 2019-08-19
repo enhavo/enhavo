@@ -23,6 +23,7 @@ services:
           - '@mailer'
           - '%enhavo_newsletter.newsletter.mail.from%'
           - '%enhavo_newsletter.newsletter.templates%'
+          - '@fos_user.util.token_generator'
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType:
         arguments:

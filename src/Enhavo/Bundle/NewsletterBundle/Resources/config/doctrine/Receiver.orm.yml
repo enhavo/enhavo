@@ -11,12 +11,14 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
     fields:
         eMail:
             type: string
-            nullable: false
+            nullable: true
 
         createdAt:
             type: datetime
             nullable: false
-
+            gedmo:
+                timestampable:
+                    on: create
         sentAt:
             type: datetime
             nullable: false
@@ -28,6 +30,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
         token:
             type: string
             nullable: false
+
 
     manyToOne:
         subscriber:

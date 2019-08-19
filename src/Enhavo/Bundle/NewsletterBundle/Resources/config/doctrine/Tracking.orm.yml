@@ -11,6 +11,9 @@ Enhavo\Bundle\NewsletterBundle\Entity\Tracking:
         date:
             type: datetime
             nullable: true
+            gedmo:
+                timestampable:
+                    on: create
         type:
             type: string
             nullable: true
