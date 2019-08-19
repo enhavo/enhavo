@@ -93,3 +93,9 @@ services:
         public: true
         tags:
             - { name: enhavo.action, alias: modal }
+
+    Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType:
+        parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
+        public: true
+        tags:
+            - { name: enhavo.action, alias: output_stream }

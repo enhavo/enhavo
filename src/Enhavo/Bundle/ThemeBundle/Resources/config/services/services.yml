@@ -59,6 +59,19 @@ services:
         tags:
             - { name: console.command }
 
+    Enhavo\Bundle\ThemeBundle\Command\WebpackBuildCommand:
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: console.command }
+
     Enhavo\Bundle\ThemeBundle\Theme\ThemeWebpackBuildResolver:
         arguments:
             - '@enhavo_theme.theme.manager'
+
+    Enhavo\Bundle\ThemeBundle\Controller\ThemeController:
+        public: true
+        calls:
+            - ['setContainer', ['@service_container']]
+        tags:
+            - { name: 'controller.service_arguments' }
