@@ -34,7 +34,6 @@ class NewsletterController extends ResourceController
         if (!$contentDocument) {
             throw $this->createNotFoundException();
         }
-
         return $this->showResourceAction($contentDocument);
     }
 
@@ -47,7 +46,7 @@ class NewsletterController extends ResourceController
     public function sendAction(Request $request)
     {
         $id = $request->get('id');
-        $newsletterData = $request->get('enhavo_newsletter_newsletter');
+        # $newsletterData = $request->get('enhavo_newsletter_newsletter');
 
         $currentNewsletter = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Newsletter')
@@ -56,17 +55,15 @@ class NewsletterController extends ResourceController
         if (!$currentNewsletter) {
             $currentNewsletter = new Newsletter();
         }
-        $currentNewsletter->setTitle($newsletterData['title']);
-        $currentNewsletter->setSubject($newsletterData['subject']);
-        $currentNewsletter->setText($newsletterData['text']);
+
+        $manager = $this->get(NewsletterManager::class);
+        $manager->send($currentNewsletter);
+
         $currentNewsletter->setSent(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($currentNewsletter);
         $em->flush();
-
-        $manager = $this->get(NewsletterManager::class);
-        $manager->send($currentNewsletter);
 
         return new JsonResponse();
     }
