@@ -24,12 +24,12 @@ class Receiver implements ResourceInterface
     private $eMail;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $createdAt;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $sentAt;
 
@@ -88,33 +88,33 @@ class Receiver implements ResourceInterface
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param \DateTime $createdAt
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getSentAt(): string
+    public function getSentAt(): \DateTime
     {
         return $this->sentAt;
     }
 
     /**
-     * @param string $sentAt
+     * @param \DateTime $sentAt
      */
-    public function setSentAt(string $sentAt): void
+    public function setSentAt(\DateTime $sentAt): void
     {
         $this->sentAt = $sentAt;
     }
