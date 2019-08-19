@@ -1,5 +1,5 @@
 <template>
-    <div class="actions" v-if="primary.length > 0 || secondary.length > 0">
+    <div class="actions" v-if="(primary && primary.length > 0) || (secondary && secondary.length > 0)">
         <div class="primary-actions">
             <template v-for="action in primary">
                 <component class="action-container" v-bind:is="action.component" v-bind:data="action"></component>
