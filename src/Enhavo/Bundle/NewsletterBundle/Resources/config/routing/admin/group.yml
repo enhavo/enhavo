@@ -1,0 +1,92 @@
+enhavo_newsletter_group_index:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:indexAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_group_create:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:createAction
+        _sylius:
+            redirect: enhavo_newsletter_group_update
+            viewer:
+
+enhavo_newsletter_group_update:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:updateAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_group_table:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/table
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:tableAction
+        _sylius:
+            viewer:
+                columns:
+                    name:
+                        property: name
+                        width: 12
+                        label: id
+                        type: property
+
+enhavo_newsletter_group_delete:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:deleteAction
+
+enhavo_newsletter_group_batch:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_newsletter_group_preview:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/preview
+    methods: [GET]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:previewAction
+        _sylius:
+            viewer:
+
+enhavo_newsletter_group_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/newsletter/group/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_newsletter.controller.group:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+

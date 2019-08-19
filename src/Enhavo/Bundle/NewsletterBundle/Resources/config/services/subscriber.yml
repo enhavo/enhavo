@@ -13,6 +13,11 @@ services:
         tags:
             - { name: enhavo.menu, alias: newsletter_subscriber }
 
+    Enhavo\Bundle\NewsletterBundle\Menu\GroupMenu:
+        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
+        tags:
+            - { name: enhavo.menu, alias: newsletter_group }
+
     Enhavo\Bundle\NewsletterBundle\Form\Type\SubscriberType:
         tags:
             - { name: form.type, alias: enhavo_newsletter_subscriber }

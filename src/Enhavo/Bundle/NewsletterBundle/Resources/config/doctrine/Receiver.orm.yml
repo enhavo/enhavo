@@ -41,5 +41,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
 
     oneToMany:
         tracking:
+            cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Tracking
             mappedBy: tracking

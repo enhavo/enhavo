@@ -61,3 +61,8 @@ subscriber:
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
+
+group:
+  label:
+      group: Group
+      name: 'Name'
