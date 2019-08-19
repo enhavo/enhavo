@@ -12,6 +12,7 @@
     "@enhavo/core": "https://github.com/enhavo/core-assets.git",
     "@enhavo/font": "https://github.com/enhavo/font-assets.git",
     "@ibm/plex": "^1.2.3",
+    "ansi-to-html": "^0.6.11",
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "compass-mixins": "^0.12.10",
