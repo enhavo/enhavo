@@ -28,6 +28,9 @@ class NewsletterMainMenu extends ListMenu
                 'subscriber' => [
                     'type' => 'newsletter_subscriber'
                 ],
+//                'group' => [
+//                    'type' => 'newsletter_group'
+//                ],
             ]
         ]);
     }
