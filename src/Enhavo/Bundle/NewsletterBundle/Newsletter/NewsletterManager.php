@@ -121,8 +121,8 @@ class NewsletterManager
     public function updateReceiver(Subscriber $subscriber) {
         $receiver = $this->em
             ->getRepository('EnhavoNewsletterBundle:Receiver')->findOneBy([
-           'subscriber' => $subscriber
-        ]);
+                'subscriber' => $subscriber
+            ]);
 
         if (!$receiver) {
             $receiver = new Receiver();
@@ -131,22 +131,20 @@ class NewsletterManager
 
         $receiver->setEMail($subscriber->getEmail());
         $receiver->setSentAt(new \DateTime());
-        // toDo: which Parameters usefull?
-        //        $parameters = $subscriber->getParameters();
-        //        $receiver->setParameters(json_encode($parameters));
+//        $parameters = $subscriber->getParameters();
+//        $receiver->setParameters(json_encode($parameters));
         $receiver->setSubscriber($subscriber);
 
-        $tracking = new Tracking();
-        $tracking->setDate(new \DateTime());
-        $tracking->setReceiver($receiver);
-        $tracking->setType('enhavo-newsletter');
+        $tracking = $this->addTracking('send');
+        $receiver->addTracking($tracking);
 
         $this->em->persist($receiver);
-        $this->em->persist($tracking);
-//        $this->em->flush();
     }
 
-    public function addTracking() {
-
+    public function addTracking($type) {
+        $tracking = new Tracking();
+        $tracking->setDate(new \DateTime());
+        $tracking->setType($type);
+        return $tracking;
     }
 }
