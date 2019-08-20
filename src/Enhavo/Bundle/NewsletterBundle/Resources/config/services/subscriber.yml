@@ -91,3 +91,10 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+
+    enhavo_newsletter.factory.subscriber:
+        class: Enhavo\Bundle\NewsletterBundle\Factory\SubscriberFactory
+        arguments:
+            - '%enhavo_newsletter.model.subscriber.class%'
+            - '@enhavo_newsletter.repository.group'
