@@ -4,11 +4,19 @@ enhavo_newsletter_subscriber_index:
     path: /enhavo/newsletter/subscriber/index
     methods: [GET]
     defaults:
-        _controller: enhavo_newsletter.controller.subscriber:indexAction
+        _controller: enhavo_newsletter.controller.subscriber:listAction
         _sylius:
             viewer:
                 label: subscriber.label.subscriber
                 translation_domain: EnhavoNewsletterBundle
+                data_route_parameters:
+                    group: $id
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_newsletter_subscriber_create
+                        route_parameters:
+                            group: $id
 
 enhavo_newsletter_subscriber_create:
     options:
@@ -19,6 +27,9 @@ enhavo_newsletter_subscriber_create:
         _controller: enhavo_newsletter.controller.subscriber:createAction
         _sylius:
             redirect: enhavo_newsletter_subscriber_update
+            factory:
+                method: createWithGroupId
+                arguments: $group
             viewer:
                 translation_domain: EnhavoNewsletterBundle
 
@@ -33,26 +44,17 @@ enhavo_newsletter_subscriber_update:
             viewer:
                 translation_domain: EnhavoNewsletterBundle
 
-enhavo_newsletter_subscriber_table:
+enhavo_newsletter_subscriber_data:
     options:
         expose: true
-    path: /enhavo/newsletter/subscriber/table
+    path: /enhavo/slider/slide/data
     defaults:
-        page: 1
-        _controller: enhavo_newsletter.controller.subscriber:tableAction
+        _controller: enhavo_newsletter.controller.subscriber:listDataAction
         _sylius:
-            filters:
-                title:
-                    type: text
-                    property: email
-                    label: subscriber.label.email
-                    translation_domain: EnhavoNewsletterBundle
-                active:
-                    type: boolean
-                    property: active
-                    label: subscriber.label.active
-                    translation_domain: EnhavoNewsletterBundle
-                    equals: true
+            repository:
+                method: findByGroupId
+                arguments:
+                    - $group
             viewer:
                 translation_domain: EnhavoNewsletterBundle
                 columns:
