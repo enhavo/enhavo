@@ -1,0 +1,31 @@
+version: "1.0"
+stages:
+    - "clone"
+    - "build"
+    - "push"
+steps:
+    main_clone:
+        type: "git-clone"
+        description: "Cloning main repository..."
+        repo: "enhavo/enhavo"
+        revision: "${{CF_BRANCH}}"
+        stage: "clone"
+    build:
+        title: "Building Docker Image"
+        type: "build"
+        image_name: "enhavo/enhavo"
+        working_directory: "./docker"
+        tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+        dockerfile: "Dockerfile"
+        stage: "build"
+    push:
+        title: "Pushing image to docker hub"
+        type: "push"
+        image_name: "enhavo/enhavo"
+        registry: "dockerhub"
+        candidate: "${{build}}"
+        tags:
+            - "${{CF_BRANCH_TAG_NORMALIZED}}"
+        stage: "push"
+
+
