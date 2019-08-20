@@ -1,10 +1,10 @@
 import DataLoader from '@enhavo/app/DataLoader';
-import AbstractViewApp from "@enhavo/app/AbstractViewApp";
+import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import * as $ from "jquery";
 
-export default class LoginApp extends AbstractViewApp
+export default class LoginApp extends ViewApp
 {
     constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View)
     {
