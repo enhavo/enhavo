@@ -1,8 +1,9 @@
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import DataLoader from "@enhavo/app/DataLoader";
+import AppInterface from "@enhavo/app/AppInterface";
 
-export default class ViewApp
+export default class ViewApp implements AppInterface
 {
     protected data: any;
     protected eventDispatcher: EventDispatcher;
