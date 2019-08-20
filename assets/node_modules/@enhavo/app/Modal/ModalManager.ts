@@ -1,6 +1,6 @@
 import ModalInterface from "@enhavo/app/Modal/ModalInterface";
 import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
-import ComponentAwareInterface from "@enhavo/core/ComponentAwareInterface";
+import ComponentAwareInterface, { ComponentAwareType } from "@enhavo/core/ComponentAwareInterface";
 
 export default class ModalManager
 {
@@ -14,7 +14,7 @@ export default class ModalManager
         this.modalRegistry = modalRegistry;
     }
 
-    public push(data: ComponentAwareInterface)
+    public push(data: ComponentAwareInterface | ComponentAwareType)
     {
         let factory = this.modalRegistry.getFactory(data.component);
         let modal = factory.createFromData(data);
