@@ -1,10 +1,10 @@
 import ImageCropperApp from "@enhavo/media/ImageCropper/ImageCropperApp";
 
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 
-export class ImageCropperApplication extends AbstractApplication implements ActionAwareApplication
+export class ImageCropperApplication extends Application implements ActionAwareApplication
 {
     public getApp(): AppInterface
     {

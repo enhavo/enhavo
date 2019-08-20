@@ -1,8 +1,8 @@
 import DeleteApp from "@enhavo/app/Delete/DeleteApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 
-export class DeleteApplication extends AbstractApplication
+export class DeleteApplication extends Application
 {
     public getApp(): AppInterface
     {

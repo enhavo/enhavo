@@ -1,12 +1,12 @@
 import App from "@enhavo/app/List/ListApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 import List from "@enhavo/app/List/List";
 
-export class ListApplication extends AbstractApplication implements ActionAwareApplication
+export class ListApplication extends Application implements ActionAwareApplication
 {
     protected columnManager: ColumnManager;
     protected columnRegistry: ColumnRegistry;

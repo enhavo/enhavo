@@ -1,11 +1,11 @@
 import FormApp from "@enhavo/app/Form/FormApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Form from "@enhavo/app/Form/Form";
 import FormListener from "@enhavo/app/Form/FormListener";
 
-export class FormApplication extends AbstractApplication implements ActionAwareApplication
+export class FormApplication extends Application implements ActionAwareApplication
 {
     protected form: Form;
     protected formListener: FormListener;

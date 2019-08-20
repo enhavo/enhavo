@@ -1,11 +1,11 @@
 import DataLoader from '@enhavo/app/DataLoader';
-import AbstractViewApp from "@enhavo/app/AbstractViewApp";
+import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import CloseEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 
-export default class DeleteApp extends AbstractViewApp
+export default class DeleteApp extends ViewApp
 {
     constructor(loader: DataLoader, eventDispatcher: EventDispatcher, view: View)
     {

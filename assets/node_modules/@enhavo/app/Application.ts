@@ -15,8 +15,9 @@ import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 import ModalRegistry from "@enhavo/app/Modal/ModalRegistry";
 import FormRegistry from "@enhavo/app/Form/FormRegistry";
+import ViewApp from "@enhavo/app/ViewApp";
 
-export default abstract class AbstractApplication implements ApplicationInterface, ActionAwareApplication
+export default class Application implements ApplicationInterface, ActionAwareApplication
 {
     protected dataLoader: DataLoader;
     protected vueLoader: VueLoader;
@@ -38,7 +39,10 @@ export default abstract class AbstractApplication implements ApplicationInterfac
         ApplicationBag.setApplication(this);
     }
 
-    abstract getApp(): AppInterface;
+    public getApp(): AppInterface
+    {
+        return new ViewApp(this.getDataLoader(), this.getEventDispatcher(), this.getView());
+    }
 
     public getDataLoader(): DataLoader
     {

@@ -1,7 +1,7 @@
 import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
 import AppInterface from "@enhavo/app/AppInterface";
-import AbstractViewApp from "@enhavo/app/AbstractViewApp";
+import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
@@ -11,7 +11,7 @@ import Confirm from "@enhavo/app/View/Confirm";
 import Translator from "@enhavo/core/Translator";
 import ModalManager from "@enhavo/app/Modal/ModalManager";
 
-export default class FormApp extends AbstractViewApp implements AppInterface
+export default class FormApp extends ViewApp implements AppInterface
 {
     private actionManager: ActionManager;
     private translator: Translator;

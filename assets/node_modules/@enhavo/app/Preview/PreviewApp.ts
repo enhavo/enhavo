@@ -1,13 +1,13 @@
 import DataLoader from '@enhavo/app/DataLoader';
 import ActionManager from "@enhavo/app/Action/ActionManager";
 import AppInterface from "@enhavo/app/AppInterface";
-import AbstractViewApp from "@enhavo/app/AbstractViewApp";
+import ViewApp from "@enhavo/app/ViewApp";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import DataEvent from "@enhavo/app/ViewStack/Event/DataEvent";
 import * as $ from "jquery"
 
-export default class PreviewApp extends AbstractViewApp implements AppInterface
+export default class PreviewApp extends ViewApp implements AppInterface
 {
     private actionManager: ActionManager;
 
