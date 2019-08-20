@@ -1,5 +1,5 @@
 import MainApp from "@enhavo/app/Main/MainApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
@@ -9,7 +9,7 @@ import ViewRegistry from "@enhavo/app/ViewStack/ViewRegistry";
 import DataStorageManager from "@enhavo/app/ViewStack/DataStorageManager";
 import StateManager from "@enhavo/app/State/StateManager";
 
-export class MainApplication extends AbstractApplication
+export class MainApplication extends Application
 {
     protected viewStack: ViewStack;
     protected menuManager: MenuManager;

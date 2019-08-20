@@ -1,9 +1,9 @@
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import PreviewApp from "@enhavo/app/Preview/PreviewApp";
 
-export class PreviewApplication extends AbstractApplication implements ActionAwareApplication
+export class PreviewApplication extends Application implements ActionAwareApplication
 {
     public getApp(): AppInterface
     {

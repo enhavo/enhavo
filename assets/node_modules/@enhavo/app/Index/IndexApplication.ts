@@ -1,5 +1,5 @@
 import IndexApp from "@enhavo/app/Index/IndexApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import Grid from "@enhavo/app/Grid/Grid";
@@ -10,7 +10,7 @@ import ColumnRegistry from "@enhavo/app/Grid/Column/ColumnRegistry";
 import BatchManager from "@enhavo/app/Grid/Batch/BatchManager";
 import BatchRegistry from "@enhavo/app/Grid/Batch/BatchRegistry";
 
-export class IndexApplication extends AbstractApplication implements ActionAwareApplication
+export class IndexApplication extends Application implements ActionAwareApplication
 {
     protected grid: Grid;
     protected filterManager: FilterManager;

@@ -1,10 +1,10 @@
 import MediaLibraryApp from "@enhavo/media/MediaLibrary/MediaLibraryApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 import MediaLibrary from "@enhavo/media/MediaLibrary/MediaLibrary";
 
-export class MediaLibraryApplication extends AbstractApplication implements ActionAwareApplication
+export class MediaLibraryApplication extends Application implements ActionAwareApplication
 {
     protected mediaLibrary: MediaLibrary;
 

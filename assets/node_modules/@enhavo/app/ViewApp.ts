@@ -2,7 +2,7 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import DataLoader from "@enhavo/app/DataLoader";
 
-export default class AbstractViewApp
+export default class ViewApp
 {
     protected data: any;
     protected eventDispatcher: EventDispatcher;

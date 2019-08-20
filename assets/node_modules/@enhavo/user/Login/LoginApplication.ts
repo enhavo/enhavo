@@ -1,9 +1,9 @@
 import LoginApp from "@enhavo/user/Login/LoginApp";
-import AbstractApplication from "@enhavo/app/AbstractApplication";
+import Application from "@enhavo/app/Application";
 import AppInterface from "@enhavo/app/AppInterface";
 import ActionAwareApplication from "@enhavo/app/Action/ActionAwareApplication";
 
-export class LoginApplication extends AbstractApplication implements ActionAwareApplication
+export class LoginApplication extends Application implements ActionAwareApplication
 {
     constructor()
     {
