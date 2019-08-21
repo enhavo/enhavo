@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Entity\Tracking;
@@ -57,7 +58,7 @@ class NewsletterManager
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    public function send(Newsletter $newsletter)
+    public function prepareReceiver(Newsletter $newsletter, Group $group)
     {
         if($newsletter->getSent()) {
             return;
@@ -65,24 +66,43 @@ class NewsletterManager
 
         $subscribers = $this->em
             ->getRepository('EnhavoNewsletterBundle:Subscriber')
-            ->findBy(array('active' => true));
+            ->findBy([
+                'active' => true,
+                'group' => $group
+            ]);
 
         foreach ($subscribers as $subscriber) {
-            $this->updateReceiver($subscriber);
-            $message = new \Swift_Message();
-            $message
-                ->setSubject($newsletter->getSubject())
-                ->setContentType("text/html")
-                ->setFrom($this->from)
-                ->setTo($subscriber->getEmail())
-                ->setBody($this->render($newsletter));
-            $this->container->get('mailer')->send($message);
+            $this->createReceiver($subscriber);
         }
+        $this->em->flush();
 
+        foreach ($subscribers as $subscriber) {
+            $this->sendNewsletter($newsletter, $subscriber);
+        }
+    }
+
+    public function sendNewsletter(Newsletter $newsletter, Subscriber $subscriber)
+    {
+        $receiver = $this->em
+            ->getRepository('EnhavoNewsletterBundle:Receiver')
+            ->findBy([
+                'subscriber' => $subscriber
+            ]);
+
+        $message = new \Swift_Message();
+        $message
+            ->setSubject($newsletter->getSubject())
+            ->setContentType("text/html")
+            ->setFrom($this->from)
+            ->setTo($receiver->getEmail())
+            ->setBody($this->render($newsletter));
+
+        $this->container->get('mailer')->send($message);
         $newsletter->setSent(true);
         $this->em->persist($newsletter);
         $this->em->flush();
     }
+
 
     public function sendTest(NewsletterInterface $newsletter, string $email)
     {
@@ -118,7 +138,7 @@ class NewsletterManager
         return $this->templates[$key]['template'];
     }
 
-    public function updateReceiver(Subscriber $subscriber) {
+    public function createReceiver(Subscriber $subscriber) {
         $receiver = $this->em
             ->getRepository('EnhavoNewsletterBundle:Receiver')->findOneBy([
                 'subscriber' => $subscriber
@@ -137,7 +157,6 @@ class NewsletterManager
 
         $tracking = $this->addTracking('send');
         $receiver->addTracking($tracking);
-
         $this->em->persist($receiver);
     }
 

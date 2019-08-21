@@ -58,6 +58,11 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $template;
 
     /**
+     * @var Group $group
+     */
+    private $group;
+
+    /**
      * Get id
      *
      * @return integer
@@ -231,5 +236,21 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function setTemplate(?string $template): void
     {
         $this->template = $template;
+    }
+
+    /**
+     * @return Group
+     */
+    public function getGroup(): ?Group
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param Group $group
+     */
+    public function setGroup(Group $group): void
+    {
+        $this->group = $group;
     }
 }

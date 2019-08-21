@@ -48,4 +48,9 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
-    lifecycleCallbacks: {  }
+    manyToOne:
+        group:
+            cascade: ['persist', 'refresh']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Model\GroupInterface
+
+    lifecycleCallbacks: { }
