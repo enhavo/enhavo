@@ -101,3 +101,16 @@ enhavo_newsletter_group_resource_preview:
                 strategy_options:
                     service: enhavo_article.controller.article:showResourceAction
 
+enhavo_newsletter_group_auto_complete:
+   options:
+       expose: true
+   path: /enhavo/newsletter/group/auto_complete
+   methods: [GET]
+   defaults:
+       _controller: enhavo_form.controller.auto_complete:searchAction
+       _config:
+           class: '%enhavo_newsletter.model.group.class%'
+           repository:
+               method: findByTerm
+           choice_label: name
+
