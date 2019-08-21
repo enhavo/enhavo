@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -46,7 +47,6 @@ class NewsletterController extends ResourceController
     public function sendAction(Request $request)
     {
         $id = $request->get('id');
-        # $newsletterData = $request->get('enhavo_newsletter_newsletter');
 
         $currentNewsletter = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Newsletter')
@@ -55,9 +55,15 @@ class NewsletterController extends ResourceController
         if (!$currentNewsletter) {
             $currentNewsletter = new Newsletter();
         }
+        $group = $currentNewsletter->getGroup();
+
+        // toDo: Fehlermeldung
+        if(!$group) {
+            return new JsonResponse('Keine Gruppe ausgewählt. Wählen Sie eine Versandgruppe.');
+        }
 
         $manager = $this->get(NewsletterManager::class);
-        $manager->send($currentNewsletter);
+        $manager->prepareReceiver($currentNewsletter, $group);
 
         $currentNewsletter->setSent(true);
 

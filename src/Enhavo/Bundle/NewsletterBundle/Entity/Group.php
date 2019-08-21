@@ -12,6 +12,8 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 
 class Group implements GroupInterface, ResourceInterface
 {
@@ -29,6 +31,20 @@ class Group implements GroupInterface, ResourceInterface
      * @var SubscriberInterface
      */
     private $subscriber;
+
+    /**
+     * @var Collection
+     */
+    private $newsletters;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subscriber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->newsletters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return int
@@ -52,14 +68,6 @@ class Group implements GroupInterface, ResourceInterface
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->subscriber = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -88,10 +96,43 @@ class Group implements GroupInterface, ResourceInterface
     /**
      * Get subscriber
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * Add newsletter
+     *
+     * @param NewsletterInterface $newsletter
+     * @return GroupInterface
+     */
+    public function addNewsletter(NewsletterInterface $newsletter): GroupInterface
+    {
+        $this->newsletters[] = $newsletter;
+
+        return $this;
+    }
+
+    /**
+     * Remove newsletter
+     *
+     * @param NewsletterInterface $newsletter
+     */
+    public function removeNewsletter(NewsletterInterface $newsletter)
+    {
+        $this->newsletters->removeElement($newsletter);
+    }
+
+    /**
+     * Get newsletters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNewsletters()
+    {
+        return $this->newsletters;
     }
 }
