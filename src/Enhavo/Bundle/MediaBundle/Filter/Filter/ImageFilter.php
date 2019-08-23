@@ -42,6 +42,11 @@ class ImageFilter extends AbstractFilter
                 $resultImage = $image->copy();
                 $resultImage = $this->resize($resultImage, $setting);
                 $resultImage->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
+            } elseif(class_exists('Imagick') ) {
+                $imagine = new ImagickImagine();
+                $imagine = $imagine->load($content->getContent());
+                $imagine = $this->resize($imagine, $setting);
+                $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
             } else {
                 $imagine = new Imagine();
                 $imagine = $imagine->load($content->getContent());
