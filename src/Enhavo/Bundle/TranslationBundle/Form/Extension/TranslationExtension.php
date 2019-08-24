@@ -8,19 +8,21 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
 
+use Enhavo\Bundle\ArticleBundle\Entity\Article;
+use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
-abstract class TranslationExtension extends AbstractTypeExtension
+class TranslationExtension extends AbstractTypeExtension
 {
     /**
      * @var Translator
@@ -84,5 +86,34 @@ abstract class TranslationExtension extends AbstractTypeExtension
                 $view->vars['translations'] = $translations;
             }
         }
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+            if($data instanceof Article) {
+                $child = null;
+                $property = 'title';
+                foreach($form->all() as $key => $child) {
+                    if($child->getName() == $property) {
+                        $form->remove($property);
+                        break;
+                    }
+                }
+
+                if($child) {
+                    $form->add($property, TranslationType::class, [
+                        'child' => $child
+                    ]);
+                }
+            }
+        });
+    }
+
+    public function getExtendedTypes()
+    {
+        return [FormType::class];
     }
 }

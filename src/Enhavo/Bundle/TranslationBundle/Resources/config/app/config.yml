@@ -6,20 +6,3 @@ enhavo_translation:
 enhavo_app:
     form_themes:
       - '@EnhavoTranslation/admin/form/translation/fields.html.twig'
-    roles:
-        enhavo_translation_translation_string_index:
-            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_INDEX
-            label: translation_string.role.label.index
-            translation_domain: EnhavoTranslationBundle
-        enhavo_translation_translation_string_create:
-            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_CREATE
-            label: translation_string.role.label.create
-            translation_domain: EnhavoTranslationBundle
-        enhavo_translation_translation_string_update:
-            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_UPDATE
-            label: translation_string.role.label.update
-            translation_domain: EnhavoTranslationBundle
-        enhavo_translation_translation_string_delete:
-            role: ROLE_ENHAVO_TRANSLATION_TRANSLATION_STRING_DELETE
-            label: translation_string.role.label.delete
-            translation_domain: EnhavoTranslationBundle
