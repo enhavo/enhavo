@@ -17,12 +17,12 @@ class Metadata
     private $class;
 
     /**
-     * @var Property[]
+     * @var PropertyNode[]
      */
     private $properties = [];
 
     /**
-     * @return Property[]
+     * @return PropertyNode[]
      */
     public function getProperties()
     {
@@ -30,14 +30,14 @@ class Metadata
     }
 
     /**
-     * @param Property[] $properties
+     * @param PropertyNode[] $properties
      */
     public function setProperties($properties)
     {
         $this->properties = $properties;
     }
 
-    public function addProperty(Property $property)
+    public function addProperty(PropertyNode $property)
     {
         $this->properties[] = $property;
     }
@@ -56,16 +56,5 @@ class Metadata
     public function setClass($class)
     {
         $this->class = $class;
-    }
-
-    public function getProperty($name)
-    {
-        /** @var Property $property */
-        foreach($this->properties as $property) {
-            if($property->getName() == $name || $property->getUnderscoreName() == $name) {
-                return $property;
-            }
-        }
-        return null;
     }
 }

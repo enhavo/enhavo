@@ -1,14 +1,8 @@
 services:
-    enhavo_translation.metatdata.collection:
-        class: Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection
-        arguments:
-            - '@kernel'
-
     enhavo_translation.translator:
         class: Enhavo\Bundle\TranslationBundle\Translator\Translator
         arguments:
-            - '@enhavo_translation.metatdata.collection'
-            - '@enhavo_translation.strategy_resolver'
+            - '@enhavo_translation.metadata.repository'
             - '%enhavo_translation.default_locale%'
         calls:
             - [ setContainer, ['@service_container']]
@@ -62,8 +56,8 @@ services:
         arguments:
             - '@enhavo_translation.translator'
             - '@enhavo_translation.locale_resolver'
-        tags:
-            - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
+#        tags:
+#            - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
 
     Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension:
         arguments:
@@ -84,23 +78,23 @@ services:
         class: Enhavo\Bundle\TranslationBundle\EventListener\SaveTranslatorListener
         arguments:
             - '@enhavo_translation.translator'
-        tags:
-            - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
-            - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
+#        tags:
+#            - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
+#            - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
 
     enhavo_translation.preview_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
         arguments:
             - '@enhavo_translation.locale_resolver'
-        tags:
-            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
+#        tags:
+#            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
 
     enhavo_translation.listener.locale_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener
         arguments:
             - '@enhavo_translation.locale_resolver'
-        tags:
-            - { name: kernel.event_subscriber }
+#        tags:
+#            - { name: kernel.event_subscriber }
 
     enhavo_translation.slug_translator:
         class: Enhavo\Bundle\TranslationBundle\Translator\SlugTranslator

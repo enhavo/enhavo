@@ -10,8 +10,8 @@ namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
-use Enhavo\Bundle\TranslationBundle\Metadata\MetadataCollection;
-use Enhavo\Bundle\TranslationBundle\Metadata\Property;
+use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
+use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -27,24 +27,28 @@ class Translator
     use ContainerAwareTrait;
 
     /**
-     * @var MetadataCollection
+     * @var MetadataRepository
      */
-    private $metadataCollection;
+    private $metadataRepository;
 
     /**
      * @var StrategyResolver
      */
-    private $strategyResolver;
+    private $types;
 
     /**
      * @var string
      */
     private $defaultLocale;
 
-    public function __construct(MetadataCollection $metadataCollection, StrategyResolver $strategyResolver, $defaultLocale)
+    /**
+     * @var string
+     */
+    private $locales;
+
+    public function __construct(MetadataRepository $metadataRepository, $defaultLocale)
     {
-        $this->metadataCollection = $metadataCollection;
-        $this->strategyResolver = $strategyResolver;
+        $this->metadataRepository = $metadataRepository;
         $this->defaultLocale = $defaultLocale;
     }
 
