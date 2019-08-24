@@ -26,7 +26,7 @@ export default class View
         if(data === null) {
             data = new ViewData;
         } else {
-            _.extend(data, new ViewData);
+            data = _.extend(new ViewData, data);
         }
         this.data = data;
 
