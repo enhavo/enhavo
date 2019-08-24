@@ -1,0 +1,16 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\ContentBundle\Entity\Content:
+            properties:
+                title:
+                    type: text
+                metaDescription:
+                    type: text
+                pageTitle:
+                    type: text
+                openGraphTitle:
+                    type: text
+                openGraphDescription:
+                    type: text
+#                slug:
+#                    type: text

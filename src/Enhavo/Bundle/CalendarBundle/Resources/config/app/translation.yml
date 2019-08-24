@@ -1,0 +1,6 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\CalendarBundle\Entity\Appointment:
+            properties:
+                teaser:
+                    type: text

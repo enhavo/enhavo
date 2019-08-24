@@ -1,0 +1,8 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\ArticleBundle\Entity\Article:
+            properties:
+                title:
+                    type: text
+                teaser:
+                    type: text

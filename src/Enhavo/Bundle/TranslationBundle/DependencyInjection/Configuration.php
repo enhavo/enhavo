@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enhavo_translation');
+        $treeBuilder = new TreeBuilder('enhavo_translation');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -42,38 +42,16 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->children()
-                ->arrayNode('resources')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('translation_string')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode('options')->end()
-                                ->arrayNode('routing')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('strategy')->defaultValue('slug')->end()
-                                        ->scalarNode('route')->defaultValue(null)->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('classes')
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('model')->defaultValue('Enhavo\Bundle\TranslationBundle\Entity\TranslationString')->end()
-                                        ->scalarNode('controller')->defaultValue('Enhavo\Bundle\AppBundle\Controller\ResourceController')->end()
-                                        ->scalarNode('factory')->defaultValue('Sylius\Component\Resource\Factory\Factory')->end()
-                                        ->scalarNode('repository')->defaultValue('Enhavo\Bundle\TranslationBundle\Repository\TranslationStringRepository')->end()
-                                        ->scalarNode('form')->defaultValue('Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringType')->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
+                ->arrayNode('metadata')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->arrayNode('properties')
+                                ->useAttributeAsKey('name')
+                                ->prototype('variable')->end()
                             ->end()
                         ->end()
                     ->end()
-                ->end()
-            ->end()
-            ->children()
-                ->arrayNode('translation_strings')
-                    ->prototype('scalar')->end()
                 ->end()
             ->end();
 
