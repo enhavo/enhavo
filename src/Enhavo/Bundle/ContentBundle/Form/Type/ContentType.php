@@ -17,34 +17,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $translation;
-
-    public function __construct($translation)
-    {
-        $this->translation = $translation;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('meta_description', TextareaType::class, array(
             'label' => 'form.label.meta_description',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('page_title', TextType::class, array(
             'label' => 'form.label.page_title',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('public', BooleanType::class, array(
@@ -110,13 +97,11 @@ class ContentType extends AbstractType
         $builder->add('openGraphTitle', TextType::class, array(
             'label' => 'form.label.openGraphTitle',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('openGraphDescription', TextType::class, array(
             'label' => 'form.label.openGraphDescription',
             'translation_domain' => 'EnhavoContentBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('openGraphImage', MediaType::class, array(

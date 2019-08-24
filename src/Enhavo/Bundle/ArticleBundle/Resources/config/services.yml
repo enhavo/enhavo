@@ -3,7 +3,6 @@ services:
         arguments:
             - '%enhavo_article.model.article.class%'
             - [default]
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: enhavo_article_article }
 

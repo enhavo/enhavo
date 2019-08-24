@@ -12,7 +12,6 @@ services:
     Enhavo\Bundle\SliderBundle\Form\Type\SlideType:
         arguments:
             - '%enhavo_slider.model.slide.class%'
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: enhavo_slider_slide }
 

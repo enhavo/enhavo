@@ -4,8 +4,6 @@ services:
     Enhavo\Bundle\PageBundle\Form\Type\PageType:
         arguments:
             - '%enhavo_page.model.page.class%'
-            - '%enhavo_page.routing.page.strategy%'
-            - '%enhavo_page.routing.page.route%'
         tags:
             - { name: form.type, alias: enhavo_page_page }
 

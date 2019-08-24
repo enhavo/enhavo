@@ -10,38 +10,26 @@ services:
             - ['setContainer', ['@service_container']]
 
     Enhavo\Bundle\BlockBundle\Form\Type\BlockquoteBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\BlockBundle\Form\Type\GalleryBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\BlockBundle\Form\Type\PictureBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\BlockBundle\Form\Type\TextBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\BlockBundle\Form\Type\TextPictureBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 
     Enhavo\Bundle\BlockBundle\Form\Type\VideoBlockType:
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 

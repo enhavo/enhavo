@@ -32,8 +32,6 @@ class NodeType extends AbstractType
         $builder->add('position', PositionType::class);
         $builder->add('name', HiddenType::class);
 
-
-
         $itemProperty = $options['item_property'];
         $resolver = $this->getResolver($options);
 

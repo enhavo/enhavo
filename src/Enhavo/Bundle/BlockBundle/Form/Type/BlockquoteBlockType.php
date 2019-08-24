@@ -15,25 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockquoteBlockType extends AbstractType
 {
-    private $translation;
-
-    public function __construct($translation)
-    {
-        $this->translation = $translation;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', TextareaType::class, array(
             'label' => 'blockquoteText.form.label.blockquote',
             'translation_domain' => 'EnhavoBlockBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('author', TextType::class, array(
             'label' => 'blockquoteText.form.label.author',
             'translation_domain' => 'EnhavoBlockBundle',
-            'translation' => $this->translation
         ));
     }
 

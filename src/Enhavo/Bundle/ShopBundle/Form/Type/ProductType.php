@@ -34,17 +34,10 @@ class ProductType extends AbstractType
      */
     private $optionClass;
 
-    /**
-     * @var boolean
-     */
-    protected $translation;
-
-    public function __construct($dataClass, $taxRateClass, $optionClass, $translation)
+    public function __construct($dataClass, $taxRateClass, $optionClass)
     {
         $this->dataClass = $dataClass;
         $this->taxRateClass = $taxRateClass;
-        $this->optionClass = $optionClass;
-        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -52,7 +45,6 @@ class ProductType extends AbstractType
         $builder->add('title', TextType::class, array(
             'label' => 'product.label.title',
             'translation_domain' => 'EnhavoShopBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('picture', MediaType::class, array(
