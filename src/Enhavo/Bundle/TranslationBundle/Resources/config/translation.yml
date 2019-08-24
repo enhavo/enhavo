@@ -1,7 +1,3 @@
-Enhavo\Bundle\TranslationBundle\Entity\TranslationString:
-    properties:
-        translationValue:
-
 #Enhavo\Bundle\RoutingBundle\Entity\Route:
 #    properties:
 #        staticPrefix:

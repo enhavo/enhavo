@@ -65,13 +65,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
 
-    enhavo_translation.extension.text:
-        class: Enhavo\Bundle\TranslationBundle\Form\Extension\TextExtension
+    Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension:
         arguments:
             - '@enhavo_translation.translator'
             - '%enhavo_translation.default_locale%'
         tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+            - { name: form.type_extension }
 
     enhavo_translation.extension.translation_data:
         class: Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationDataExtension
@@ -96,17 +95,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
 
-    Enhavo\Bundle\TranslationBundle\Menu\TranslationStringMenu:
-        parent: Enhavo\Bundle\AppBundle\Menu\Menu\BaseMenu
-        tags:
-            - { name: enhavo.menu, alias: translation }
-
-    Enhavo\Bundle\TranslationBundle\Form\Type\TranslationStringType:
-        arguments:
-            - '%enhavo_app.translate%'
-        tags:
-            - { name: form.type, alias: enhavo_translation_string }
-
     enhavo_translation.listener.locale_listener:
         class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener
         arguments:
@@ -119,13 +107,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_translation.locale_resolver'
-
-    enhavo_translation.twig.translate_string:
-        class: Enhavo\Bundle\TranslationBundle\Twig\TranslateString
-        tags:
-            - { name: twig.extension }
-        calls:
-            - [ setContainer, ['@service_container']]
 
     enhavo_translation.twig.locale:
         class: Enhavo\Bundle\TranslationBundle\Twig\Locale
@@ -140,18 +121,8 @@ services:
 #            - '@enhavo_app.route_manager'
 #            - '@doctrine.orm.entity_manager'
 
-    enhavo_translation.translate_string.translator:
-        class: Enhavo\Bundle\TranslationBundle\TranslationString\TranslateStringTranslator
+    Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType:
         arguments:
-            - '@enhavo_translation.repository.translation_string'
-
-    Enhavo\Bundle\TranslationBundle\Command\UpdateTranslationStringsCommand:
-        arguments:
-            - '@enhavo_translation.factory.translation_string'
-            - '@enhavo_translation.repository.translation_string'
-            - '@doctrine.orm.entity_manager'
-            - '%enhavo_translation.translation_strings%'
+            - '@form.factory'
         tags:
-            - { name: console.command, command: 'enhavo:translation:update' }
-
-
+            - { name: form.type }
