@@ -1,0 +1,3 @@
+services:
+    enhavo_translation.translation.manager:
+        class: Enhavo\Bundle\TranslationBundle\Translation\TranslationManager

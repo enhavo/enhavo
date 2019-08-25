@@ -1,4 +1,0 @@
-#Enhavo\Bundle\RoutingBundle\Entity\Route:
-#    properties:
-#        staticPrefix:
-#            strategy: route_translation

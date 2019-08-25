@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
+namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
 
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
@@ -17,7 +17,7 @@ use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class SlugTranslationStrategy extends TranslationTableStrategy
+class SlugTranslationType extends TranslationTableStrategy
 {
     /**
      * @var RouteGuesser

@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
+namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
@@ -19,7 +19,7 @@ use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
-class RouteTranslationStrategy extends TranslationTableStrategy
+class RouteTranslationType extends TranslationTableStrategy
 {
     /**
      * @var RouteGuesser

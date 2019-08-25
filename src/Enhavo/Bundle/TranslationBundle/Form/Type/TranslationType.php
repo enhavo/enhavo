@@ -8,15 +8,13 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
+use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\TranslationBundle\Validator\Constraints\Translation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -30,37 +28,54 @@ class TranslationType extends AbstractType
     private $formFactory;
 
     /**
+     * @var TranslationManager
+     */
+    private $translationManager;
+
+    /**
      * TranslationType constructor.
      * @param FormFactory $formFactory
+     * @param TranslationManager $translationManager
      */
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactory $formFactory, TranslationManager $translationManager)
     {
         $this->formFactory = $formFactory;
+        $this->translationManager = $translationManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var FormInterface $child */
-        $child = $options['child'];
+        $form = $options['form'];
+        $translationManager = $this->translationManager;
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($originalDescription) {
+            function ($originalDescription) use($translationManager, $form) {
                 $data = [
-                    'de' => $originalDescription,
-                    'en' => 'en title',
-                    'fr' => 'fr title',
+                    $translationManager->getDefaultLocale() => $originalDescription,
                 ];
+
+                $translations = $translationManager->getTranslations($form->getData(), $form->getName());
+                foreach($translations as $locale => $value) {
+                    $data[$locale] = $value;
+                }
+
                 return $data;
             },
-            function ($submittedDescription) {
+            function ($submittedDescription) use($translationManager, $form) {
                 $data = $submittedDescription;
-                return $data['de'];
+                foreach($data as $locale => $value) {
+                    if($locale !== $translationManager->getDefaultLocale()) {
+                        $translationManager->setTranslation($form->getData(), $form->getName(), $locale, $value);
+                    }
+                }
+                return $data[$translationManager->getDefaultLocale()];
             }
         ));
 
-        $builder->add('de', TextType::class, $child->getConfig()->getOptions());
-        $builder->add('fr', TextType::class, $child->getConfig()->getOptions());
-        $builder->add('en', TextType::class, $child->getConfig()->getOptions());
+        foreach($translationManager->getLocales() as $locale) {
+            $builder->add($locale, $options['form_type'], $form->getConfig()->getOptions());
+        }
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -73,7 +88,7 @@ class TranslationType extends AbstractType
         foreach($errors as $error) {
             if(!preg_match('/^\(.+\) /', $error->getMessage())) {
                 $newErrors[] = new FormError(
-                    sprintf('(de) %s', $error->getMessage()),
+                    sprintf('(%s) %s', $this->translationManager->getDefaultLocale(), $error->getMessage()),
                     $error->getMessageTemplate(),
                     $error->getMessageParameters(),
                     $error->getMessagePluralization(),
@@ -98,7 +113,7 @@ class TranslationType extends AbstractType
             ]
         ]);
 
-        $resolver->setRequired('child');
+        $resolver->setRequired(['form', 'form_type']);
     }
 
     public function getBlockPrefix()

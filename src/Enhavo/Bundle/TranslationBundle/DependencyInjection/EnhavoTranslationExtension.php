@@ -29,6 +29,7 @@ class EnhavoTranslationExtension extends AbstractResourceExtension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/translator.yml');
+        $loader->load('services/translation.yml');
         $loader->load('services/form.yml');
         $loader->load('services/metadata.yml');
     }

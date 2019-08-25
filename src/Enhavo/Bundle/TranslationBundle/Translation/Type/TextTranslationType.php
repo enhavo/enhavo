@@ -6,7 +6,7 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Strategy;
+namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 
-class TranslationTableStrategy implements TranslationStrategyInterface
+class TextTranslationType implements TranslationStrategyInterface
 {
     use ContainerAwareTrait;
 
