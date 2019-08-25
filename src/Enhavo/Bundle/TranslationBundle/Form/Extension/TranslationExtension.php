@@ -53,7 +53,7 @@ class TranslationExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if(!$this->translationManager->isTranslation()) {
+        if(!$this->translationManager->isEnabled()) {
             return;
         }
 
@@ -72,6 +72,7 @@ class TranslationExtension extends AbstractTypeExtension
                 foreach($translations as $key => $child) {
                     $form->add($key, TranslationType::class, [
                         'form' => $child,
+                        'form_data' => $data,
                         'form_type' => $this->translationManager->getFormType($data, $key)
                     ]);
                 }

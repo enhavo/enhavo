@@ -6,9 +6,10 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
+namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
@@ -19,7 +20,7 @@ use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
-class RouteTranslationType extends TranslationTableStrategy
+class RouteTranslationType extends AbstractTranslationType
 {
     /**
      * @var RouteGuesser
@@ -31,10 +32,24 @@ class RouteTranslationType extends TranslationTableStrategy
      */
     protected $updateRouteMap = [];
 
-    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em, $routeGuesser)
+    public function getFormType(array $options)
     {
-        parent::__construct($locales, $localeResolver, $em);
-        $this->routeGuesser = $routeGuesser;
+        return $options['form_type'];
+    }
+
+    public function setTranslation(array $options, $data, $property, $locale, $value)
+    {
+        return;
+    }
+
+    public function getTranslation(array $options, $data, $property, $locale)
+    {
+        return 'test';
+    }
+
+    public function getType()
+    {
+        return 'route';
     }
 
     public function addTranslationData($entity, Property $property, $data, Metadata $metadata)
@@ -232,9 +247,9 @@ class RouteTranslationType extends TranslationTableStrategy
         return $context;
     }
 
-    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
-    {
-        $accessor = PropertyAccess::createPropertyAccessor();
-        return $accessor->getValue($entity, $property->getName());
-    }
+//    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
+//    {
+//        $accessor = PropertyAccess::createPropertyAccessor();
+//        return $accessor->getValue($entity, $property->getName());
+//    }
 }

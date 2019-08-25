@@ -30,6 +30,18 @@ class Metadata
     }
 
     /**
+     * @param string $property
+     * @return PropertyNode|null
+     */
+    public function getProperty(string $property)
+    {
+        if(isset($this->properties[$property])) {
+            return $this->properties[$property];
+        }
+        return null;
+    }
+
+    /**
      * @param PropertyNode[] $properties
      */
     public function setProperties($properties)

@@ -6,12 +6,14 @@
  * Time: 02:14
  */
 
-namespace Enhavo\Bundle\AppBundle\Action;
-
+namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AbstractTranslationType
+abstract class AbstractTranslationType implements TranslationTypeInterface
 {
+    public function configureOptions(OptionsResolver $resolver)
+    {
 
+    }
 }

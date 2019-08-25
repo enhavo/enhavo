@@ -22,10 +22,11 @@ class EnhavoTranslationExtension extends AbstractResourceExtension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_translation.translate', $config['translate']);
+        $container->setParameter('enhavo_translation.enabled', $config['enabled']);
         $container->setParameter('enhavo_translation.default_locale', $config['default_locale']);
         $container->setParameter('enhavo_translation.locales', $config['locales']);
         $container->setParameter('enhavo_translation.metadata', $config['metadata']);
+        $container->setParameter('enhavo_translation.translation_paths', $config['translation_paths']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/translator.yml');

@@ -39,7 +39,7 @@ class MetadataFactory implements MetadataFactoryInterface
                 unset($config['type']);
                 $propertyNode->setOptions($config);
                 $propertyNode->setProperty($property);
-                $properties[] = $propertyNode;
+                $properties[$property] = $propertyNode;
             }
             $metadata->setProperties($properties);
         }

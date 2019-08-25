@@ -6,20 +6,20 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
+namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
-use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
-use Enhavo\Bundle\TranslationBundle\Translator\TranslationStrategyInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 
-class TextTranslationType implements TranslationStrategyInterface
+class TextTranslationType extends AbstractTranslationType
 {
     use ContainerAwareTrait;
 
@@ -48,13 +48,30 @@ class TextTranslationType implements TranslationStrategyInterface
      */
     protected $em;
 
-    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em)
+    public function getFormType(array $options)
     {
-        foreach($locales as $locale => $data) {
-            $this->locales[] = $locale;
-        }
-        $this->localeResolver = $localeResolver;
-        $this->em = $em;
+        return $options['form_type'];
+    }
+
+    public function setTranslation(array $options, $data, $property, $locale, $value)
+    {
+        return;
+    }
+
+    public function getTranslation(array $options, $data, $property, $locale)
+    {
+        return 'test';
+    }
+
+    public function getType()
+    {
+        return 'text';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setRequired(['form_type']);
     }
 
     protected function getEntityManager()
@@ -208,19 +225,19 @@ class TextTranslationType implements TranslationStrategyInterface
         $this->getEntityManager()->flush();
     }
 
-    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
-    {
-        /** @var Translation $translation */
-        $translation = $this->getRepository()->findOneBy([
-            'class' => $metadata->getClass(),
-            'refId' => $entity->getId(),
-            'property' => $property->getName(),
-            'locale' => $locale
-        ]);
-        $value = '';
-        if($translation !== null && $translation->getTranslation() !== null) {
-            $value = $translation->getTranslation();
-        }
-        return $value;
-    }
+//    public function getTranslation($entity, Property $property, $locale, Metadata $metadata)
+//    {
+//        /** @var Translation $translation */
+//        $translation = $this->getRepository()->findOneBy([
+//            'class' => $metadata->getClass(),
+//            'refId' => $entity->getId(),
+//            'property' => $property->getName(),
+//            'locale' => $locale
+//        ]);
+//        $value = '';
+//        if($translation !== null && $translation->getTranslation() !== null) {
+//            $value = $translation->getTranslation();
+//        }
+//        return $value;
+//    }
 }

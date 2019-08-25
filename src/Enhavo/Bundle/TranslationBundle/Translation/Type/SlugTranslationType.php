@@ -6,8 +6,9 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator\Type;
+namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
+use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
@@ -17,7 +18,7 @@ use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class SlugTranslationType extends TranslationTableStrategy
+class SlugTranslationType extends AbstractTranslationType
 {
     /**
      * @var RouteGuesser
@@ -29,10 +30,24 @@ class SlugTranslationType extends TranslationTableStrategy
      */
     protected $updateSlugMap = [];
 
-    public function __construct($locales, LocaleResolver $localeResolver, EntityManagerInterface $em, $routeGuesser)
+    public function getFormType(array $options)
     {
-        parent::__construct($locales, $localeResolver, $em);
-        $this->routeGuesser = $routeGuesser;
+        return $options['form_type'];
+    }
+
+    public function setTranslation(array $options, $data, $property, $locale, $value)
+    {
+        return;
+    }
+
+    public function getTranslation(array $options, $data, $property, $locale)
+    {
+        return 'slug';
+    }
+
+    public function getType()
+    {
+        return 'text';
     }
 
     public function normalizeToTranslationData($entity, Property $property, $formData, Metadata $metadata)

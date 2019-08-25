@@ -47,15 +47,16 @@ class TranslationType extends AbstractType
     {
         /** @var FormInterface $child */
         $form = $options['form'];
+        $formData = $options['form_data'];
         $translationManager = $this->translationManager;
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($originalDescription) use($translationManager, $form) {
+            function ($originalDescription) use($translationManager, $form, $formData) {
                 $data = [
                     $translationManager->getDefaultLocale() => $originalDescription,
                 ];
 
-                $translations = $translationManager->getTranslations($form->getData(), $form->getName());
+                $translations = $translationManager->getTranslations($formData, $form->getName());
                 foreach($translations as $locale => $value) {
                     $data[$locale] = $value;
                 }
@@ -113,7 +114,7 @@ class TranslationType extends AbstractType
             ]
         ]);
 
-        $resolver->setRequired(['form', 'form_type']);
+        $resolver->setRequired(['form', 'form_type', 'form_data']);
     }
 
     public function getBlockPrefix()

@@ -1,7 +1,11 @@
 enhavo_translation:
-    default_locale: '%locale%'
+    enabled: true
+    default_locale: 'en'
     locales:
-        en:
+        - 'en'
+        - 'de'
+    translation_paths:
+        - '#^/admin/.+#'
 
 enhavo_app:
     form_themes:

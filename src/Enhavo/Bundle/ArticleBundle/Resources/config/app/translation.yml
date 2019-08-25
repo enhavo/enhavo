@@ -4,5 +4,7 @@ enhavo_translation:
             properties:
                 title:
                     type: text
+                    form_type: 'Symfony\Component\Form\Extension\Core\Type\TextType'
                 teaser:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
