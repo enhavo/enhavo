@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 
-use Enhavo\Bundle\TranslationBundle\Translator\Strategy\TranslationTableStrategy;
+use Enhavo\Bundle\TranslationBundle\Translator\Type\TranslationTableStrategy;
 
 class ContextFinder
 {

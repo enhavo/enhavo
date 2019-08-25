@@ -3,7 +3,6 @@ services:
         arguments:
             - '%enhavo_calendar.model.appointment.class%'
             - [default]
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type, alias: enhavo_calendar_appointment }
 

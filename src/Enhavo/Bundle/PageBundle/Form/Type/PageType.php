@@ -20,21 +20,9 @@ class PageType extends AbstractType
      */
     protected $dataClass;
 
-    /**
-     * @var string
-     */
-    protected $route;
-
-    /**
-     * @var bool
-     */
-    protected $routingStrategy;
-
-    public function __construct($dataClass, $routingStrategy, $route)
+    public function __construct($dataClass)
     {
         $this->dataClass = $dataClass;
-        $this->route = $route;
-        $this->routingStrategy = $routingStrategy;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

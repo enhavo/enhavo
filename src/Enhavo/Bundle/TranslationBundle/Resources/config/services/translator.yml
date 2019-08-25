@@ -1,0 +1,103 @@
+services:
+    enhavo_translation.translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Translator
+        arguments:
+            - '@enhavo_translation.metadata.repository'
+            - '%enhavo_translation.default_locale%'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.locale_resolver:
+        class: Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver
+        arguments:
+            - '@request_stack'
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
+        calls:
+          - [ 'setContainer', ['@service_container']]
+
+    enhavo_translation.strategy_resolver:
+        class: Enhavo\Bundle\TranslationBundle\Translator\StrategyResolver
+        calls:
+            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.strategy.translation_table:
+        public: true
+        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\TranslationTableStrategy
+        arguments:
+            - '%enhavo_translation.locales%'
+            - '@enhavo_translation.locale_resolver'
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [ setContainer, ['@service_container']]
+
+#    enhavo_translation.strategy.route_translation:
+#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
+#        arguments:
+#            - '%enhavo_translation.locales%'
+#            - '@enhavo_translation.locale_resolver'
+#            - '@doctrine.orm.entity_manager'
+#            - '@enhavo_app.route_guesser'
+#        calls:
+#            - [ setContainer, ['@service_container']]
+
+#    enhavo_translation.strategy.slug_translation:
+#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
+#        arguments:
+#            - '%enhavo_translation.locales%'
+#            - '@enhavo_translation.locale_resolver'
+#            - '@doctrine.orm.entity_manager'
+#            - '@enhavo_app.route_guesser'
+#        calls:
+#            - [ setContainer, ['@service_container']]
+
+    enhavo_translation.doctrine_subscriber:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslatorSubscriber
+        arguments:
+            - '@enhavo_translation.translator'
+            - '@enhavo_translation.locale_resolver'
+#        tags:
+#            - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
+
+    enhavo_translation.save_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\SaveTranslatorListener
+        arguments:
+            - '@enhavo_translation.translator'
+#        tags:
+#            - { name: kernel.event_listener, event: enhavo_app.post_create, method: postSave }
+#            - { name: kernel.event_listener, event: enhavo_app.post_update, method: postSave }
+
+    enhavo_translation.preview_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
+        arguments:
+            - '@enhavo_translation.locale_resolver'
+#        tags:
+#            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
+
+    enhavo_translation.listener.locale_listener:
+        class: Enhavo\Bundle\TranslationBundle\EventListener\LocaleListener
+        arguments:
+            - '@enhavo_translation.locale_resolver'
+#        tags:
+#            - { name: kernel.event_subscriber }
+
+    enhavo_translation.slug_translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\SlugTranslator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_translation.locale_resolver'
+
+    enhavo_translation.twig.locale:
+        class: Enhavo\Bundle\TranslationBundle\Twig\Locale
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setContainer, ['@service_container']]
+
+#    enhavo_translation.translation_route_manager:
+#        class: Enhavo\Bundle\TranslationBundle\Route\TranslationRouteManager
+#        arguments:
+#            - '@enhavo_app.route_manager'
+#            - '@doctrine.orm.entity_manager'
+
+

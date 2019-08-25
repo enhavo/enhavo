@@ -1,0 +1,18 @@
+services:
+    enhavo_translation.metadata.configuration:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataConfiguration
+        arguments:
+            - '%enhavo_translation.metadata%'
+
+    enhavo_translation.metadata.factory:
+        class: Enhavo\Bundle\TranslationBundle\Metadata\MetadataFactory
+        arguments:
+            - '@kernel'
+
+    enhavo_translation.metadata.repository:
+        class: Enhavo\Bundle\AppBundle\Metadata\MetadataRepository
+        arguments:
+            - '@enhavo_translation.metadata.configuration'
+            - '@enhavo_translation.metadata.factory'
+        calls:
+            - [addParser, ['@enhavo_app.metadata.parser.property_parser']]

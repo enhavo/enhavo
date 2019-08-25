@@ -1,0 +1,20 @@
+services:
+    Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType:
+        arguments:
+            - '@form.factory'
+            - '@enhavo_translation.translation.manager'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension:
+        arguments:
+            - '@enhavo_translation.translation.manager'
+        tags:
+            - { name: form.type_extension }
+
+    Enhavo\Bundle\TranslationBundle\Validator\Constraints\TranslationValidator:
+        arguments:
+            - '@enhavo_translation.translation.manager'
+            - '@validator'
+        tags:
+            - { name: validator.constraint_validator }

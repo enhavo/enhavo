@@ -1,0 +1,78 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\BlockBundle\Entity\BlockquoteText:
+            properties:
+                blockquote:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\Gallery:
+            properties:
+                title:
+                    type: text
+                text:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\Picture:
+            properties:
+                title:
+                    type: text
+                caption:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
+            properties:
+                title:
+                    type: text
+                captionLeft:
+                    type: text
+                captionRight:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\Text:
+            properties:
+                title:
+                    type: text
+                text:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\TextPicture:
+            properties:
+                title:
+                    type: text
+                text:
+                    type: text
+                caption:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\TextText:
+            properties:
+                title:
+                    type: text
+                textLeft:
+                    type: text
+                titleLeft:
+                    type: text
+                textRight:
+                    type: text
+                titleRight:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\ThreePicture:
+            properties:
+                titleLeft:
+                    type: text
+                titleRight:
+                    type: text
+                titleCenter:
+                    type: text
+                captionLeft:
+                    type: text
+                captionRight:
+                    type: text
+                captionCenter:
+                    type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\Video:
+            properties:
+                title:
+                    type: text

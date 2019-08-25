@@ -8,81 +8,80 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
 
-use Enhavo\Bundle\TranslationBundle\Metadata\Property;
+use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
+use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Enhavo\Bundle\TranslationBundle\Translator\Translator;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
-abstract class TranslationExtension extends AbstractTypeExtension
+class TranslationExtension extends AbstractTypeExtension
 {
     /**
      * @var Translator
      */
-    protected $translator;
-
-    /**
-     * @var string
-     */
-    protected $defaultLocale;
+    private $translationManager;
 
     /**
      * DoctrineSubscriber constructor.
      *
-     * @param Translator $translator
-     * @param string $defaultLocale
+     * @param TranslationManager $translationManager
      */
-    public function __construct(Translator $translator, $defaultLocale)
+    public function __construct(TranslationManager $translationManager)
     {
-        $this->translator = $translator;
-        $this->defaultLocale = $defaultLocale;
+        $this->translationManager = $translationManager;
     }
 
     /**
-     * Add the image_path option
-     *
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefined([
-            'translation'
-        ]);
-    }
-
-    /**
-     * Pass the image URL to the view
-     *
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
+     * @inheritdoc
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['translation'] = isset($options['translation']) && $options['translation'] === true;
-        $view->vars['currentLocale'] = $this->defaultLocale;
-        if($view->vars['translation']) {
-            $parent = $form->getParent();
-            if($parent instanceof Form) {
-                $property = new Property($form->getPropertyPath());
-                $entity = $parent->getConfig()->getDataClass();
-                if(is_object($parent->getData())) {
-                    $entity = $parent->getData();
+        if(!$this->translationManager->isTranslation()) {
+            return;
+        }
+
+        $view->vars['translation_locales'] = $this->translationManager->getLocales();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if(!$this->translationManager->isEnabled()) {
+            return;
+        }
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+            if($this->translationManager->isTranslatable($data)) {
+                $translations = [];
+                foreach($form->all() as $key => $child) {
+                    if($this->translationManager->isTranslatable($data, $key)) {
+                        $form->remove($key);
+                        $translations[$key] = $child;
+                    }
                 }
 
-                $translations = $this->translator->getTranslationData($entity, $property);
-                if($translations === null) {
-                    $view->vars['translation'] = false;
-                    return;
+                foreach($translations as $key => $child) {
+                    $form->add($key, TranslationType::class, [
+                        'form' => $child,
+                        'form_data' => $data,
+                        'form_type' => $this->translationManager->getFormType($data, $key)
+                    ]);
                 }
-                $view->vars['translations'] = $translations;
             }
-        }
+        });
+    }
+
+    public function getExtendedTypes()
+    {
+        return [FormType::class];
     }
 }

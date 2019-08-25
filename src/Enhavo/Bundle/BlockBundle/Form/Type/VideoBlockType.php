@@ -11,13 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VideoBlockType extends AbstractType
 {
-    private $translation;
-
-    public function __construct($translation)
-    {
-        $this->translation = $translation;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', HeadLineType::class, array(

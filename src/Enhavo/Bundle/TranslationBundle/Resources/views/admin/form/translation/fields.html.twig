@@ -1,82 +1,32 @@
-{% extends template('admin/form/form/fields.html.twig') %}
+{% block enhavo_translation_tranlsation_widget %}
+    {% for child in form.children %}
+        {{ form_widget(child) }}
+    {% endfor %}
 
-{% block sylius_translations_widget %}
-    {{ form_errors(form) }}
-    <div class="tab-container">
-        <ul class="nav nav-tabs">
-            {% for translationsFields in form %}
-                {% set locale = translationsFields.vars.name %}
+    {#<li {% if app.request.locale == locale %}class="active"{% endif %}>#}
+        {#<a href="#" data-toggle="tab" data-target=".{{ translationsFields.vars.id }}_translation_fields-{{ locale }}">#}
+            {#{{ locale|capitalize }}#}
+            {#{% if translationsFields.vars.required %}*{% endif %}#}
+        {#</a>#}
+    {#</li>#}
 
-                <li {% if app.request.locale == locale %}class="active"{% endif %}>
-                    <a href="#" data-toggle="tab" data-target=".{{ translationsFields.vars.id }}_translation_fields-{{ locale }}">
-                        {{ locale|capitalize }}
-                        {% if translationsFields.vars.required %}*{% endif %}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+    {#<div class="translation-switcher" data-translation-current-locale="{{ currentLocale }}">#}
+        {#<div class="translation-switcher-current">#}
+            {#{% if translations is defined %}#}
+                {#{% for locale, value in translations %}#}
+                    {#<img data-translation-current="{{ locale }}" class="{% if loop.first %}active{% endif %}" src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+        {#</div>#}
+        {#<div class="translation-switcher-menu">#}
+            {#{% if translations is defined %}#}
+                {#{% for locale, value in translations %}#}
+                    {#<div data-translation-switch="{{ locale }}" class="flag-container{% if loop.first %} active{% endif %}">#}
+                        {#<img src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+        {#</div>#}
+    {#</div>#}
 
-        <div class="tab-content">
-            {% for translationsFields in form %}
-                {% set locale = translationsFields.vars.name %}
-
-                <div class="{{ translationsFields.vars.id }}_translation_fields-{{ locale }} tab-pane {% if app.request.locale == locale %}active{% endif %} {% if not form.vars.valid %}error{% endif %}">
-                    {{ form_errors(translationsFields) }}
-                    {{ form_widget(translationsFields) }}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endblock %}
-
-{% block textarea_widget %}
-    {% if translation %}
-        <div class="translation">
-            <div class="translation-input-container">
-                {% for locale, value in translations %}
-                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
-                        <textarea name="{{ full_name }}[{{ locale }}]" {{ block('widget_attributes') }}>{{ value }}</textarea>
-                    </div>
-                {% endfor %}
-            </div>
-            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
-        </div>
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block text_widget %}
-    {% if translation %}
-        <div class="translation">
-            <div class="translation-input-container">
-                {% for locale, value in translations %}
-                    <div class="{% if loop.first  %}active{% endif %} input-container" data-translation-input="{{ locale }}">
-                        <input type="text" name="{{ full_name }}[{{ locale }}]" value="{{ value }}" {{ block('widget_attributes') }}>
-                    </div>
-                {% endfor %}
-            </div>
-            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
-        </div>
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block enhavo_wysiwyg_widget %}
-    {% if translation %}
-        <div class="translation" data-translation>
-            <div class="wysiwyg-container" >
-                <textarea data-wysiwyg data-config="{{ config|e }}">{{ translations[currentLocale] }}</textarea>
-            </div>
-            {% if translations is defined %}
-                {% for locale, value in translations %}
-                    <input type="hidden" data-translation-value="{{ locale }}" name="{{ full_name }}[{{ locale }}]" value="{{ value }}" {{ block('widget_attributes') }}>
-                {% endfor %}
-            {% endif %}
-            {% include 'EnhavoTranslationBundle:Form:translation-switcher.html.twig' %}
-        </div>
-    {% else %}
-        {{ parent() }}
-    {% endif %}
 {% endblock %}

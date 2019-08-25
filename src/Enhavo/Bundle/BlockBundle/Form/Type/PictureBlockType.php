@@ -18,13 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PictureBlockType extends AbstractType
 {
-    private $translation;
-
-    public function __construct($translation)
-    {
-        $this->translation = $translation;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', HeadLineType::class, array(
@@ -41,7 +34,6 @@ class PictureBlockType extends AbstractType
         $builder->add('caption', TextType::class, array(
             'label' => 'picture.form.label.caption',
             'translation_domain' => 'EnhavoBlockBundle',
-            'translation' => $this->translation
         ));
     }
 

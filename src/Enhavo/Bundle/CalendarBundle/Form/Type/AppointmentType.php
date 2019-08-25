@@ -14,23 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AppointmentType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $translation;
-
-    public function __construct($dataClass, $validationGroups, $translation)
-    {
-        parent::__construct($dataClass, $validationGroups);
-        $this->translation = $translation;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('teaser', TextareaType::class, array(
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('dateFrom', DateTimeType::class, array(

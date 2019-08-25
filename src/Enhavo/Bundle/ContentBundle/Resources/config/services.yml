@@ -4,8 +4,6 @@ parameters:
 services:
     enhavo_content_content:
         class: '%enhavo_content.form.type.content.class%'
-        arguments:
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 

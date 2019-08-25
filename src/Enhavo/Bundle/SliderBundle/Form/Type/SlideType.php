@@ -22,15 +22,9 @@ class SlideType extends AbstractType
 {
     protected $class;
 
-    /**
-     * @var boolean
-     */
-    protected $translation;
-
-    public function __construct($class, $translation)
+    public function __construct($class)
     {
         $this->class = $class;
-        $this->translation = $translation;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,7 +32,6 @@ class SlideType extends AbstractType
         $builder->add('title', TextType::class, array(
             'label' => 'form.label.title',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('url', TextType::class, array(
@@ -50,7 +43,6 @@ class SlideType extends AbstractType
         $builder->add('text', TextareaType::class, array(
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-            'translation' => $this->translation
         ));
 
         $builder->add('publicationDate', DateType::class, array(

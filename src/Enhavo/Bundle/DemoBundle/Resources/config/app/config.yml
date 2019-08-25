@@ -32,3 +32,11 @@ enhavo_search:
 enhavo_theme:
     dynamic:
         enable: true
+
+
+enhavo_translation:
+    enable: true
+    default_locale: 'en'
+    locales:
+        - 'en'
+        - 'de'

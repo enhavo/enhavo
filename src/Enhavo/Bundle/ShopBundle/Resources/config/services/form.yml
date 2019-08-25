@@ -8,7 +8,6 @@ services:
             - '%sylius.model.product.class%'
             - '%sylius.model.tax_rate.class%'
             - '%sylius.model.product_option.class%'
-            - '%enhavo_app.translate%'
         tags:
             - { name: form.type }
 #
