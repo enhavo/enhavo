@@ -74,7 +74,7 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new TranslationDumperPass()
+            new TranslationDumperCompilerPass()
         );
 
         $container->addCompilerPass(
