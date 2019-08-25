@@ -1,0 +1,14 @@
+services:
+    Enhavo\Bundle\AppBundle\EventListener\LocaleSubscriber:
+        arguments:
+            - 'replace'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\AppBundle\Locale\FixLocaleResolver:
+        arguments:
+            - '%enhavo_app.locale%'
+
+    Enhavo\Bundle\AppBundle\Locale\RequestLocaleResolver:
+        arguments:
+            - '@request_stack'

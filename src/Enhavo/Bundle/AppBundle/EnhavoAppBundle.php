@@ -4,9 +4,10 @@ namespace Enhavo\Bundle\AppBundle;
 
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FilesystemCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\FOSRestCompilerPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\LocaleResolverCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SecurityCompilerPass;
 use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\SyliusCompilerPass;
-use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperPass;
+use Enhavo\Bundle\AppBundle\DependencyInjection\Compiler\TranslationDumperCompilerPass;
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -73,11 +74,15 @@ class EnhavoAppBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new TranslationDumperPass()
+            new TranslationDumperCompilerPass()
         );
 
         $container->addCompilerPass(
             new SecurityCompilerPass()
+        );
+
+        $container->addCompilerPass(
+            new LocaleResolverCompilerPass()
         );
     }
 }

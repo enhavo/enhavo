@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
 use Symfony\Component\DependencyInjection\Reference;
 
-class TranslationDumperPass implements CompilerPassInterface
+class TranslationDumperCompilerPass implements CompilerPassInterface
 {
     const SERVICE = 'enhavo_app.translation.translation_dumper';
 
