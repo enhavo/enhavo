@@ -63,11 +63,11 @@ class TranslationType extends AbstractType
 
                 return $data;
             },
-            function ($submittedDescription) use($translationManager, $form) {
+            function ($submittedDescription) use($translationManager, $form, $formData) {
                 $data = $submittedDescription;
                 foreach($data as $locale => $value) {
                     if($locale !== $translationManager->getDefaultLocale()) {
-                        $translationManager->setTranslation($form->getData(), $form->getName(), $locale, $value);
+                        $translationManager->setTranslation($formData, $form->getName(), $locale, $value);
                     }
                 }
                 return $data[$translationManager->getDefaultLocale()];

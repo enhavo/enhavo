@@ -1,9 +1,4 @@
 enhavo_translation:
-    enabled: true
-    default_locale: 'en'
-    locales:
-        - 'en'
-        - 'de'
     translation_paths:
         - '#^/admin/.+#'
 

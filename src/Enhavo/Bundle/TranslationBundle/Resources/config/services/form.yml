@@ -11,3 +11,10 @@ services:
             - '@enhavo_translation.translation.manager'
         tags:
             - { name: form.type_extension }
+
+    Enhavo\Bundle\TranslationBundle\Validator\Constraints\TranslationValidator:
+        arguments:
+            - '@enhavo_translation.translation.manager'
+            - '@validator'
+        tags:
+            - { name: validator.constraint_validator }

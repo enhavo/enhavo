@@ -66,4 +66,9 @@ class Translation
     {
         return $this->type->setTranslation($this->options, $this->data, $this->property, $locale, $value);
     }
+
+    public function getValidationConstraints($locale)
+    {
+        return $this->type->getValidationConstraints($this->options, $this->data, $this->property, $locale);
+    }
 }

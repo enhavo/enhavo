@@ -19,6 +19,8 @@ interface TranslationTypeInterface extends TypeInterface
 
     public function getTranslation(array $options, $data, $property, $locale);
 
+    public function getValidationConstraints(array $options, $data, $property, $locale);
+
     /**
      * @param $resolver OptionsResolver
      * @return void

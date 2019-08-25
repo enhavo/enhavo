@@ -1,16 +1,50 @@
 <?php
 namespace Enhavo\Bundle\TranslationBundle\Validator\Constraints;
 
+use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TranslationValidator extends ConstraintValidator
 {
+    /**
+     * @var TranslationManager
+     */
+    private $translationManager;
+
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
+     * TranslationValidator constructor.
+     * @param TranslationManager $translationManager
+     * @param ValidatorInterface $validator
+     */
+    public function __construct(TranslationManager $translationManager, ValidatorInterface $validator)
+    {
+        $this->translationManager = $translationManager;
+        $this->validator = $validator;
+    }
+
     public function validate($value, Constraint $constraint)
     {
-        //$property = $this->context->getObject()->getName();
-        //$data = $this->context->getObject()->getParent()->getData();
-        $this->context->buildViolation('(fr) message')->addViolation();
-        return;
+        $property = $this->context->getObject()->getName();
+        $data = $this->context->getObject()->getParent()->getData();
+
+        $translations = $this->translationManager->getTranslations($data, $property);
+        foreach($translations as $locale => $translation) {
+            $constraints = $this->translationManager->getValidationConstraints($data, $property, $locale);
+            foreach($constraints as $translationConstraint) {
+                /** @var ConstraintViolationInterface[] $violations */
+                $violations = $this->validator->validate($translation, new $translationConstraint);
+                foreach ($violations as $violation) {
+                    $this->context->buildViolation(sprintf('(%s) %s', $locale, $violation->getMessage()))->addViolation();
+                }
+            }
+        }
     }
 }

@@ -143,6 +143,12 @@ class TranslationManager
         return $this->defaultLocale;
     }
 
+    public function getValidationConstraints($data, $property, $locale)
+    {
+        $type = $this->getType($data, $property);
+        return $type->getValidationConstraints($locale);
+    }
+
     public function getTranslations($data, $property)
     {
         $translations = [];

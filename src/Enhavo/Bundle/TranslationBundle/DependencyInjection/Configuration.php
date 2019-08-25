@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
                ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()
             ->children()
-                ->scalarNode('enabled')->defaultValue(false)->end()
+                ->scalarNode('enable')->defaultValue(false)->end()
                 ->arrayNode('translation_paths')
                     ->prototype('scalar')->end()
                 ->end()

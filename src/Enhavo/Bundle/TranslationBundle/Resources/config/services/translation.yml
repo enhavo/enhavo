@@ -6,7 +6,7 @@ services:
             - '@enhavo_translation.translation_collector'
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
-            - '%enhavo_translation.enabled%'
+            - '%enhavo_translation.enable%'
             - '%enhavo_translation.translation_paths%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
 

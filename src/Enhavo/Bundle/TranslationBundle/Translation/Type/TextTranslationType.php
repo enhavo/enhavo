@@ -55,12 +55,12 @@ class TextTranslationType extends AbstractTranslationType
 
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {
-        return;
+        $this->value = '';
     }
 
     public function getTranslation(array $options, $data, $property, $locale)
     {
-        return 'test';
+        return '';
     }
 
     public function getType()
@@ -68,9 +68,17 @@ class TextTranslationType extends AbstractTranslationType
         return 'text';
     }
 
+   public function getValidationConstraints(array $options, $data, $property, $locale)
+    {
+        return $options['constraints'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'constraints' => []
+        ]);
         $resolver->setRequired(['form_type']);
     }
 

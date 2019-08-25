@@ -16,4 +16,9 @@ abstract class AbstractTranslationType implements TranslationTypeInterface
     {
 
     }
+
+    public function getValidationConstraints(array $options, $data, $property, $locale)
+    {
+        return [];
+    }
 }
