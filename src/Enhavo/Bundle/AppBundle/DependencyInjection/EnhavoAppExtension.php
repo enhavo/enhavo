@@ -33,7 +33,8 @@ class EnhavoAppExtension extends Extension
         $container->setParameter('enhavo_app.webpack_build', $config['webpack_build']);
         $container->setParameter('enhavo_app.roles', $config['roles']);
         $container->setParameter('enhavo_app.form_themes', $config['form_themes']);
-        $container->setParameter('enhavo_app.translate', $config[ 'translate' ]);
+        $container->setParameter('enhavo_app.locale', $config['locale']);
+        $container->setParameter('enhavo_app.locale_resolver', $config['locale_resolver']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -41,6 +42,7 @@ class EnhavoAppExtension extends Extension
         $loader->load('services/controller.yml');
         $loader->load('services/twig.yml');
         $loader->load('services/init.yml');
+        $loader->load('services/locale.yml');
         $loader->load('services/command.yml');
         $loader->load('services/viewer.yml');
         $loader->load('services/filter.yml');

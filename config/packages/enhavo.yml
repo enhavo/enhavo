@@ -1,6 +1,3 @@
-#parameters:
-#    locale: en
-
 enhavo_app:
     menu:
         dashboard:
@@ -31,7 +28,6 @@ enhavo_app:
             type: template
         theme:
             type: theme
-
 
 enhavo_block:
     blocks:

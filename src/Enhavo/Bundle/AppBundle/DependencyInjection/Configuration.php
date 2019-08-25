@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\EnhavoAppBundle;
+use Enhavo\Bundle\AppBundle\Locale\FixLocaleResolver;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,7 +24,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('translate')->defaultValue(false)->end()
+                ->scalarNode('locale')->defaultValue('en')->end()
+                ->scalarNode('locale_resolver')->defaultValue(FixLocaleResolver::class)->end()
             ->end()
 
             ->children()
