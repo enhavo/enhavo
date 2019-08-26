@@ -12,7 +12,7 @@ class SendActionType extends AbstractActionType implements ActionTypeInterface
     {
         $data = parent::createViewData($options, $resource);
         $data = array_merge($data, [
-            'resourceId' => $resource->getId()
+            'resourceId' => $resource->getId(),
         ]);
         return $data;
     }

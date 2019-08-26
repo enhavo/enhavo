@@ -135,4 +135,9 @@ class Group implements GroupInterface, ResourceInterface
     {
         return $this->newsletters;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
