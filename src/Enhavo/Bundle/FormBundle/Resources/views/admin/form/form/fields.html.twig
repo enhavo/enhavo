@@ -192,7 +192,7 @@
 
         <div class="dynamic-form-item-content-container" data-dynamic-form-item-container>
             {% if item_template %}
-                {% include item_template %}
+                {% include template(item_template) %}
             {% else %}
                 {% for child in form %}
                     <div class="clearfix" data-form-row>

@@ -14,7 +14,7 @@ export default abstract class AbstractFactory
     createFromData(data: object): MenuInterface
     {
         let menu = this.createNew();
-        menu = _.extend(menu, data);
+        menu = _.extend(data, menu);
         return menu;
     }
 

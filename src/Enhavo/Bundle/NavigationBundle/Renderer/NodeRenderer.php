@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Renderer;
 
+use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NavigationBundle\Exception\RenderException;
 use Enhavo\Bundle\NavigationBundle\Item\ItemManager;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 class NodeRenderer
 {
     use ContainerAwareTrait;
+    use TemplateTrait;
 
     /**
      * @var ItemManager
@@ -37,7 +39,7 @@ class NodeRenderer
 
     private function renderView($template, $parameters = [])
     {
-        return $this->container->get('templating')->render($template, $parameters);
+        return $this->container->get('twig')->render($template, $parameters);
     }
 
     public function render(NodeInterface $node, $renderSet = null)
@@ -56,7 +58,7 @@ class NodeRenderer
             throw new RenderException(sprintf('No default template found for node type "%s"', $node->getType()));
         }
 
-        return $this->renderView($template, [
+        return $this->renderView($this->getTemplate($template), [
             'node' => $node
         ]);
     }

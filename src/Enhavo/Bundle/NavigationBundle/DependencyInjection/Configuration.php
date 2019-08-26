@@ -85,7 +85,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('form')->defaultValue(NodeType::class)->end()
                         ->scalarNode('repository')->defaultValue(NodeRepository::class)->end()
                         ->scalarNode('factory')->defaultValue(NodeFactory::class)->end()
-                        ->scalarNode('template')->defaultValue('@EnhavoNavigation/Form/node.html.twig')->end()
+                        ->scalarNode('template')->defaultValue('admin/form/navigation/node.html.twig')->end()
                     ->end()
                  ->end()
             ->end()

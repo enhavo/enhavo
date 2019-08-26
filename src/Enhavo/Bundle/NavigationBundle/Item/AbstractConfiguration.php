@@ -29,12 +29,12 @@ abstract class AbstractConfiguration extends AbstractType implements Configurati
         return $options['repository'];
     }
 
-    public function getLabel($options)
+    public function getLabel(array $options)
     {
         return $options['label'];
     }
 
-    public function getTranslationDomain($options)
+    public function getTranslationDomain(array $options)
     {
         return $options['translationDomain'];
     }
