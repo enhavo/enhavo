@@ -58,4 +58,9 @@ export default class Form
     {
         this.data.formChanged = true;
     }
+
+    public isFormChanged(): boolean
+    {
+        return this.data.formChanged;
+    }
 }
