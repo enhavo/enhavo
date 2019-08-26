@@ -109,9 +109,8 @@ class MainController extends AbstractController
 
     private function getTranslations()
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
         $dumper = $this->get('enhavo_app.translation.translation_dumper');
-        $translations = $dumper->getTranslations('javascript', $request->getLocale());
+        $translations = $dumper->getTranslations('javascript', $this->container->get('enhavo_app.locale_resolver')->resolve());
         return $translations;
     }
 }

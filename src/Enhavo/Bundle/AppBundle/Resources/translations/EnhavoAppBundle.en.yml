@@ -1,5 +1,5 @@
 action:
-  changePassword: 'Change password'
+  changePassword: 'Passwort ändern'
 error:
   occurred: 'An error occured'
   forbidden: 'You have not the rights for this action'
