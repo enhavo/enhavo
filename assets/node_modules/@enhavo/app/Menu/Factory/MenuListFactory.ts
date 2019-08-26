@@ -1,4 +1,4 @@
-import AbstractFactory from "@enhavo/app/Action/Factory/AbstractFactory";
+import AbstractFactory from "@enhavo/app/Menu/Factory/AbstractFactory";
 import MenuList from "@enhavo/app/Menu/Model/MenuList";
 import * as _ from "lodash";
 import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
@@ -8,7 +8,8 @@ export default class MenuListFactory extends AbstractFactory
 {
     createFromData(data: object): MenuList
     {
-        let menu = _.extend(data, this.createNew());
+        let menu = this.createNew();
+        menu = _.extend(data, menu);
         for(let i in menu.items) {
             let item = this.getRegistry().getFactory(menu.items[i].component).createFromData(menu.items[i]);
             item.setParent(menu);

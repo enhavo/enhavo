@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\AppBundle\EventListener\LocaleSubscriber;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -12,5 +13,6 @@ class LocaleResolverCompilerPass implements CompilerPassInterface
     {
         $resolver = $container->getParameter('enhavo_app.locale_resolver');
         $container->getDefinition(LocaleSubscriber::class)->replaceArgument(0, $container->getDefinition($resolver));
+        $container->setAlias('enhavo_app.locale_resolver', new Alias($resolver, true));
     }
 }

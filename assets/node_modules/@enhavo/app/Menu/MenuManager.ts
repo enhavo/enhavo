@@ -1,6 +1,7 @@
 import MenuData from "@enhavo/app/Menu/MenuData";
 import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
 import * as _ from "lodash";
+import MenuInterface from "@enhavo/app/Menu/MenuInterface";
 
 export default class MenuManager
 {
@@ -54,5 +55,10 @@ export default class MenuManager
                 }
             }
         }
+    }
+
+    getItems(): Array<MenuInterface>
+    {
+        return this.data.items;
     }
 }

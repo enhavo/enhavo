@@ -46,9 +46,8 @@ class BaseViewer extends AbstractResourceViewer
             $this->getViewerOption('translation_domain', $requestConfiguration)
         ]));
 
-        $request = $this->container->get('request_stack')->getCurrentRequest();
         $dumper = $this->container->get('enhavo_app.translation.translation_dumper');
-        $translations = $dumper->getTranslations('javascript', $request->getLocale());
+        $translations = $dumper->getTranslations('javascript', $this->container->get('enhavo_app.locale_resolver')->resolve());
         $parameters->set('translations', $translations);
         $parameters->set('routes', $this->getRoutes());
 

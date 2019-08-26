@@ -23,7 +23,6 @@ enhavo_user_user_create:
                 options:
                     validation_groups: [create]
             viewer:
-                translation_domain: EnhavoUserBundle
 
 enhavo_user_user_update:
     options:
@@ -34,7 +33,6 @@ enhavo_user_user_update:
         _controller: enhavo_user.controller.user:updateAction
         _sylius:
             viewer:
-                translation_domain: EnhavoUserBundle
 
 enhavo_user_user_table:
     options:

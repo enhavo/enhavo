@@ -8,9 +8,9 @@
                 {{ label }}
             </div>
             <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
-            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': isOpen }, {'icon-keyboard_arrow_down': !isOpen }]" aria-hidden="true"></i>
+            <i v-bind:class="['open-indicator', 'icon', {'icon-keyboard_arrow_up': data.isOpen }, {'icon-keyboard_arrow_down': !data.isOpen }]" aria-hidden="true"></i>
         </div>
-        <div class="menu-list-child menu-list-items" v-show="isOpen">
+        <div class="menu-list-child menu-list-items" v-show="data.isOpen">
             <template v-for="item in data.children()">
                 <component v-bind:is="item.component" v-bind:data="item"></component>
             </template>
@@ -36,8 +36,6 @@
         @Prop()
         data: MenuList;
 
-        isOpen: boolean = false;
-
         get label(): string {
             return (this.data && this.data.label) ? this.data.label : false;
         }
@@ -51,16 +49,21 @@
         }
 
         toggle (): void {
-            this.isOpen = !this.isOpen;
-            if(this.isOpen) {
+            this.data.isOpen = !this.data.isOpen;
+            if(this.data.isOpen) {
                 this.data.open();
+                this.data.closeOtherMenus();
             } else {
                 this.data.close();
             }
         }
 
         outside(): void {
-            this.isOpen = false
+            window.setTimeout(() => {
+                if(!this.data.isMainMenuOpen()) {
+                    this.data.isOpen = false
+                }
+            }, 100)
         }
     }
 </script>
