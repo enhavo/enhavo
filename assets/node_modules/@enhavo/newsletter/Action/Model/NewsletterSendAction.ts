@@ -1,5 +1,4 @@
 import AbstractAction from "@enhavo/app/Action/Model/AbstractAction";
-import * as $ from "jquery";
 import Message from "@enhavo/app/FlashMessage/Message";
 import axios from "axios";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
@@ -7,23 +6,31 @@ import {FormApplication} from "@enhavo/app/Form/FormApplication";
 
 export default class NewsletterSendAction extends AbstractAction
 {
-    public email: string;
     public resourceId: number;
 
     execute(): void
     {
-        let id = this.resourceId;
-        this.application.getView().loading();
+        let formApplication = <FormApplication>this.application;
+        if(formApplication.getForm != null) {
+            if(!formApplication.getForm().isFormChanged()) {
+                this.send();
+            } else {
+                this.application.getView().alert('Please save form');
+            }
+        } else {
+            this.send();
+        }
+    }
 
+    private send()
+    {
+        this.application.getView().loading();
         let url = this.application.getRouter().generate('enhavo_newsletter_newsletter_send', {
-            id: id,
-            email: this.email
+            id: this.resourceId,
         });
-        axios.post(url, $('form').serialize(), {
-            headers: {'Content-Type': 'multipart/form-data' }
-        }).then((data) => {
+        axios.post(url, {}).then((data) => {
             this.application.getView().loaded();
-            this.getFlashMessanger().addMessage(new Message(data.data.type, data.data.message));
+            this.getFlashMessanger().addMessage(new Message(Message.SUCCESS,'Newsletter will be send'));
         })
     }
 
@@ -31,5 +38,5 @@ export default class NewsletterSendAction extends AbstractAction
     {
         return (<FormApplication>this.application).getFlashMessenger();
     }
-
 }
+
