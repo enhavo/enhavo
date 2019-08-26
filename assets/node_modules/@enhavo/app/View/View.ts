@@ -26,7 +26,9 @@ export default class View
         if(data === null) {
             data = new ViewData;
         } else {
-            data = _.extend(new ViewData, data);
+            data = _.assignWith(data, new ViewData, (objValue, srcValue) => {
+                return _.isUndefined(objValue) ? srcValue : objValue;
+            });
         }
         this.data = data;
 
