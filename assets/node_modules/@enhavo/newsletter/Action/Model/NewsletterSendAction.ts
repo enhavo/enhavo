@@ -11,8 +11,6 @@ export default class NewsletterSendAction extends AbstractAction
     execute(): void
     {
         let formApplication = <FormApplication>this.application;
-        console.log(this.application.getTranslator());
-        console.log(this.application.getTranslator().trans('enhavo_newsletter.send.message.form_changed'));
         if(formApplication.getForm != null) {
             if(!formApplication.getForm().isFormChanged()) {
                 this.send();
