@@ -1,0 +1,5 @@
+enhavo_newsletter:
+    send:
+        message:
+            form_changed: 'Der Newsletter-Inhalt hat sich geändert. Bitte speichern Sie zuerst, bevor Sie senden'
+
