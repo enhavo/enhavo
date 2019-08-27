@@ -11,19 +11,20 @@
                         v-if="column.display"
                         v-bind:key="column.key"
                         v-bind:style="getColumnStyle(column)"
-                        v-bind:class="['view-table-col', {'sortable': column.sortable}]"
-                        v-on:click="changeSortDirection(column)">
+                        v-bind:class="['view-table-col', {'sortable': column.sortable}, {'sorted': column.directionDesc !== null}]"
+                        v-on:click="changeSortDirection(column)"
+
+                    >
                         {{ column.label }}
                         <i
-                            v-if="column.sortable && column.directionDesc !== null"
-                            v-bind:class="['icon', {'icon-keyboard_arrow_up': !column.directionDesc}, {'icon-keyboard_arrow_down': column.directionDesc}, {'sortable': column.sortable}]"
+                            v-if="column.sortable"
+                            v-bind:class="['icon', {'icon-arrow_upward': !column.directionDesc}, {'icon-arrow_downward': column.directionDesc}, {'sortable': column.sortable}]"
                             aria-hidden="true">
                         </i>
                     </div>
                 </template>
             </div>
         </div>
-
 
         <template v-if="!loading">
             <template v-for="row in rows">
@@ -33,6 +34,7 @@
         <template v-else>
             <div class="loading-placeholder">
                 <div class="loading-indicator">
+                    <div></div>
                     <div></div>
                     <div></div>
                     <div></div>

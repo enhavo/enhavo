@@ -1,10 +1,9 @@
 .table-batches {margin-bottom:20px;
-  .apply-button {@extend %iconButton;line-height:30px;width:30px;border-radius:15px;margin-left:5px;}
+  .apply-button {@extend %iconButton;line-height:40px;border-radius:50%;margin-left:8px;}
 }
 .view-table {margin:0 0 40px 0;
   .loading-placeholder {position:relative;height:64px;
-    .loading-indicator {@extend %loadingIndicator;height:64px;top:0;width:140px;padding-left:68px;
-      &:after {content:"loading ... ";position:absolute;top:22px;color:$grey4;}
+    .loading-indicator {@extend %loadingIndicator;height:64px;top:0;padding-left:68px; margin-top:25px;
       div {background:$grey4;}
     }
   }
@@ -20,7 +19,10 @@
   .view-table-head {display:flex;padding:12px 10px;border-bottom:1px solid $grey5;align-items:center;
     .view-table-head-columns {display:flex;flex:1 0 auto;padding:0 15px 0 20px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;
       .view-table-col {
-        &.sortable {text-decoration: underline;cursor: pointer;}
+        &.sortable {cursor: pointer;
+          .icon {font-size:0.75rem;line-height:1.1em;}
+        }
+        &.sorted { color:$color1b;}
       }
     }
   }
@@ -44,7 +46,9 @@
   .pagination-nav {display: flex;margin-left:auto;
     .pagination-nav-item {min-width:30px;line-height:30px;border-radius:15px;text-align:center;margin: 0 5px;padding:0 7px;
       &.active {background-color:$color1;color:#fff;}
-      &.button {cursor: pointer;background:$grey1;}
+      &.button {cursor: pointer;background:$grey1;transition:all .2s;
+        &:hover { background:$grey5;}
+      }
       &.disabled {}
       &.number {cursor: pointer;}
     }

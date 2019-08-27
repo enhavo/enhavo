@@ -12,7 +12,7 @@
             </template>
         </template>
         <button @click="apply()" class="apply-button"><i class="icon icon-check"></i></button>
-        <button @click="reset()" class="reset-button"><i class="icon icon-close"></i></button>
+        <button @click="reset()" class="reset-button red"><i class="icon icon-close"></i></button>
     </div>
 </template>
 

@@ -69,13 +69,13 @@
     {% import _self as forms %}
     <div data-list class="list-type">
         <ul
-                data-list-container
-                {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
-                data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
-                data-prototype-name="{{ prototype_name }}"
-                class="list-fields{% if border %} border{% endif %}{% if sortable %} sortable{% endif %}{% if allow_delete %} delete{% endif %}"
-                data-reindexable
-                {{ block('widget_attributes') }}>
+            data-list-container
+            {% if sortable %} data-order="{{ sortable_property }}"{% endif %}
+            data-prototype="{% if form.vars.prototype is defined %}{{ forms.input(sortable, border, allow_delete, null, null, form_widget(form.vars.prototype))|e }}{% endif %}"
+            data-prototype-name="{{ prototype_name }}"
+            class="list-fields{% if border %} border{% endif %}{% if sortable %} sortable{% endif %}{% if allow_delete %} delete{% endif %}"
+            data-reindexable
+            {{ block('widget_attributes') }}>
             {% for item in form.children %}
                 {{ forms.input(sortable, border, allow_delete, null, null, form_widget(item))|raw }}
             {% endfor %}
@@ -95,8 +95,8 @@
             {% spaceless %}
                 <ul class="buttons-container" data-list-item-buttons>
                     {% if sortable %}
-                        <li class="button button-up" data-list-item-up><i class="icon icon-keyboard_arrow_up"></i></li>
-                        <li class="button button-down" data-list-item-down><i class="icon icon-keyboard_arrow_down"></i></li>
+                        <li class="button button-up" data-list-item-up><i class="icon icon-arrow_downward"></i></li>
+                        <li class="button button-down" data-list-item-down><i class="icon icon-arrow_upward"></i></li>
                     {% endif %}
                     {% if allow_delete %}
                         <li class="button button-delete" data-list-item-delete>

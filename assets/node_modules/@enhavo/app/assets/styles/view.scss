@@ -2,11 +2,12 @@
 @import "components";
 .app-view {padding-top:60px;
   .actions {height:60px;position:fixed;top:0;left:0;width:100%;background:#fff;z-index:3;
-    .action {text-align:center;flex:1 1 100px;min-width:90px;padding:8px 3px;cursor:pointer;
+    .action {text-align:center;flex:1 1 100px;min-width:90px;padding:8px 3px;cursor:pointer; color:$grey3;transition:all .2s;
       &:hover {color:$color1;
         .action-icon {color:$color1;}
       }
-      .action-icon {color:$grey4;margin-bottom:6px;
+      &:active { background:$grey1;}
+      .action-icon {color:$grey3;margin-bottom:6px;transition:all .2s;
         .icon {font-size:1.5rem;}
       }
       .label {font-size:0.75rem;line-height:1em;font-family:$fontFamily2;font-weight:600;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
