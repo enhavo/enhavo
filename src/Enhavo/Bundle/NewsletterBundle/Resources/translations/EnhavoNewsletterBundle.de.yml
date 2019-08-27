@@ -15,7 +15,8 @@ newsletter:
     send:
       label: 'Senden'
       success: 'Newsletter erfolgreich gesendet!'
-      error: 'Newsletter konnte nicht gesendet werden!'
+      error:
+        no_group: 'Newsletter konnte nicht gesendet werden! Es wurde keine Gruppe für den Newsletter angegeben'
     view: 'Anzeigen'
   label:
     sent: 'gesendet'
@@ -30,6 +31,7 @@ newsletter:
       sent: 'gesendet'
       slug: 'Slug'
       template: 'Template'
+      group: 'Gruppe'
   batch:
     action:
       send: 'Senden'
@@ -61,3 +63,8 @@ subscriber:
     error:
       valid: 'E-Mail nicht gültig'
       sent_again: 'Bitte bestätigen Sie ihre Registrierung'
+
+group:
+  label:
+      group: Gruppe
+      name: 'Name'

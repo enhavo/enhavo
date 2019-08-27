@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Event\ResourceEvents;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
+use Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -34,7 +35,6 @@ class NewsletterController extends ResourceController
         if (!$contentDocument) {
             throw $this->createNotFoundException();
         }
-
         return $this->showResourceAction($contentDocument);
     }
 
@@ -47,7 +47,6 @@ class NewsletterController extends ResourceController
     public function sendAction(Request $request)
     {
         $id = $request->get('id');
-        $newsletterData = $request->get('enhavo_newsletter_newsletter');
 
         $currentNewsletter = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Newsletter')
@@ -56,19 +55,28 @@ class NewsletterController extends ResourceController
         if (!$currentNewsletter) {
             $currentNewsletter = new Newsletter();
         }
-        $currentNewsletter->setTitle($newsletterData['title']);
-        $currentNewsletter->setSubject($newsletterData['subject']);
-        $currentNewsletter->setText($newsletterData['text']);
+        $group = $currentNewsletter->getGroup();
+
+        if(!$group) {
+            return new JsonResponse([
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('newsletter.action.send.error.no_group', [], 'EnhavoNewsletterBundle')
+            ], 400);
+        }
+
+        $manager = $this->get('enhavo.newsletter.newsletter_manager');
+        $manager->prepareReceiver($currentNewsletter, $group);
+
         $currentNewsletter->setSent(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($currentNewsletter);
         $em->flush();
 
-        $manager = $this->get(NewsletterManager::class);
-        $manager->send($currentNewsletter);
-
-        return new JsonResponse();
+        return new JsonResponse([
+            'type' => 'success',
+            'message' => $this->get('translator')->trans('newsletter.action.send.success', [], 'EnhavoNewsletterBundle')
+        ], 200);
     }
 
     public function testAction(Request $request)

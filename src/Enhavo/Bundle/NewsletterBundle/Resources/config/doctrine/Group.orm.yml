@@ -1,6 +1,8 @@
 Enhavo\Bundle\NewsletterBundle\Entity\Group:
     type: entity
     table: newsletter_group
+    repositoryClass: Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository
+
     id:
         id:
             type: integer
@@ -16,3 +18,8 @@ Enhavo\Bundle\NewsletterBundle\Entity\Group:
         subscriber:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface
             mappedBy: group
+
+    oneToMany:
+        newsletters:
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface
+            mappedBy: newsletters

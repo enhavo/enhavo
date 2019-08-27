@@ -3,12 +3,14 @@
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
+use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 
 class NewsletterType extends AbstractType
 {
@@ -50,6 +52,13 @@ class NewsletterType extends AbstractType
             'label' => 'newsletter.form.label.subject',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
+
+        $builder->add('group', AutoCompleteEntityType::class, [
+            'label' => 'newsletter.form.label.group',
+            'translation_domain' => 'EnhavoNewsletterBundle',
+            'class' => GroupInterface::class,
+            'route' => "enhavo_newsletter_group_auto_complete",
+        ]);
 
         $builder->add('content', BlockNodeType::class, array(
             'label' => 'form.label.content',

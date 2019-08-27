@@ -49,6 +49,23 @@ enhavo_app:
             label: subscriber.role.label.delete
             translation_domain: EnhavoNewsletterBundle
 
+        enhavo_newsletter_group_index:
+            role: ROLE_ENHAVO_NEWSLETTER_GROUP_INDEX
+            label: group.role.label.index
+            translation_domain: EnhavoNewsletterBundle
+        enhavo_newsletter_group_create:
+            role: ROLE_ENHAVO_NEWSLETTER_GROUP_CREATE
+            label: group.role.label.create
+            translation_domain: EnhavoNewsletterBundle
+        enhavo_newsletter_group_update:
+            role: ROLE_ENHAVO_NEWSLETTER_GROUP_UPDATE
+            label: group.role.label.update
+            translation_domain: EnhavoNewsletterBundle
+        enhavo_newsletter_group_delete:
+            role: ROLE_ENHAVO_NEWSLETTER_GROUP_DELETE
+            label: group.role.label.delete
+            translation_domain: EnhavoNewsletterBundle
+
         enhavo_newsletter_newsletter_index:
             role: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX
             label: newsletter.role.label.index

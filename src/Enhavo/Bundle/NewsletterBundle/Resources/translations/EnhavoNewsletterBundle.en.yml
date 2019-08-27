@@ -15,7 +15,8 @@ newsletter:
     send:
       label: 'Send'
       success: 'Newsletter successfully sent!'
-      error: 'An error occured!'
+      error:
+        no_group: 'An error occured! No Newslettergroup found.'
     view: 'View'
   label:
     sent: 'sent'
@@ -30,6 +31,7 @@ newsletter:
       sent: 'sent'
       slug: 'Slug'
       template: 'Template'
+      group: 'Group'
   batch:
     action:
       send: 'Send'
@@ -61,3 +63,8 @@ subscriber:
     error:
       valid: 'E-Mail not valid'
       sent_again: 'Please confirm your registration'
+
+group:
+  label:
+      group: Group
+      name: 'Name'

@@ -31,10 +31,16 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
             lenght: 255
             nullable: true
 
+    oneToMany:
+        receiver:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Receiver
+            mappedBy: receiver
+            orphanRemoval: true
+
     manyToMany:
         group:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\GroupInterface
-            inversedBy: subscriber
             joinTable:
                 name: newsletter_subscriber_group
                 joinColumns:

@@ -13,7 +13,7 @@ services:
         tags:
             - { name: enhavo.batch, alias: newsletter_send_test }
 
-    Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager:
+    enhavo.newsletter.newsletter_manager:
         public: true
         class: Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager
         calls:
@@ -23,6 +23,7 @@ services:
           - '@mailer'
           - '%enhavo_newsletter.newsletter.mail.from%'
           - '%enhavo_newsletter.newsletter.templates%'
+          - '@enhavo_app.util.secure_url_token_generator'
 
     Enhavo\Bundle\NewsletterBundle\Form\Type\NewsletterType:
         arguments:
@@ -63,3 +64,12 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    Enhavo\Bundle\NewsletterBundle\Command\SendNewsletterCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: console.command, command: 'enhavo:newsletter:send' }

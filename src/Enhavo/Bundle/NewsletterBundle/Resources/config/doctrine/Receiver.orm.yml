@@ -1,0 +1,50 @@
+Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
+    type: entity
+    table: newsletter_receiver
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        eMail:
+            type: string
+            nullable: true
+
+        createdAt:
+            type: datetime
+            nullable: false
+            gedmo:
+                timestampable:
+                    on: create
+        sentAt:
+            type: datetime
+            nullable: true
+
+        parameters:
+            type: json_array
+            nullable: true
+
+        token:
+            type: string
+            nullable: false
+
+    manyToOne:
+        subscriber:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            joinColumn:
+                onDelete: CASCADE
+        newsletter:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
+            joinColumn:
+                onDelete: CASCADE
+
+    oneToMany:
+        tracking:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Tracking
+            mappedBy: tracking
