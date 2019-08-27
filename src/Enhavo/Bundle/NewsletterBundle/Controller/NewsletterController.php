@@ -57,12 +57,14 @@ class NewsletterController extends ResourceController
         }
         $group = $currentNewsletter->getGroup();
 
-        // toDo: Fehlermeldung
         if(!$group) {
-            return new JsonResponse('Keine Gruppe ausgewählt. Wählen Sie eine Versandgruppe.');
+            return new JsonResponse([
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('newsletter.action.send.error.no_group', [], 'EnhavoNewsletterBundle')
+            ], 400);
         }
 
-        $manager = $this->get(NewsletterManager::class);
+        $manager = $this->get('enhavo.newsletter.newsletter_manager');
         $manager->prepareReceiver($currentNewsletter, $group);
 
         $currentNewsletter->setSent(true);
@@ -71,7 +73,10 @@ class NewsletterController extends ResourceController
         $em->persist($currentNewsletter);
         $em->flush();
 
-        return new JsonResponse();
+        return new JsonResponse([
+            'type' => 'success',
+            'message' => $this->get('translator')->trans('newsletter.action.send.success', [], 'EnhavoNewsletterBundle')
+        ], 200);
     }
 
     public function testAction(Request $request)

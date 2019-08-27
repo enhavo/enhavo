@@ -63,6 +63,19 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     private $group;
 
     /**
+     * @var Collection
+     */
+    private $receiver;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->receiver = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -252,5 +265,40 @@ class Newsletter implements ResourceInterface, Slugable, NewsletterInterface
     public function setGroup(Group $group): void
     {
         $this->group = $group;
+    }
+
+    /**
+     * Add receiver
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
+     * @return Newsletter
+     */
+    public function addReceiver(Receiver $receiver)
+    {
+        $this->receiver[] = $receiver;
+        $receiver->setNewsletter($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove receiver
+     *
+     * @param \Enhavo\Bundle\NewsletterBundle\Entity\Receiver $receiver
+     */
+    public function removeReceiver(Receiver $receiver)
+    {
+        $this->receiver->removeElement($receiver);
+        $receiver->setNewsletter(null);
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceivers()
+    {
+        return $this->receiver;
     }
 }
