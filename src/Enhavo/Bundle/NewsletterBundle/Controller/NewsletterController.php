@@ -48,14 +48,15 @@ class NewsletterController extends ResourceController
     {
         $id = $request->get('id');
 
-        $currentNewsletter = $this->getDoctrine()
+        $newsletter = $this->getDoctrine()
             ->getRepository('EnhavoNewsletterBundle:Newsletter')
             ->find($id);
 
-        if (!$currentNewsletter) {
-            $currentNewsletter = new Newsletter();
+        if($newsletter === null) {
+            throw $this->createNotFoundException();
         }
-        $group = $currentNewsletter->getGroup();
+
+        $group = $newsletter->getGroup();
 
         if(!$group) {
             return new JsonResponse([
@@ -64,13 +65,20 @@ class NewsletterController extends ResourceController
             ], 400);
         }
 
-        $manager = $this->get('enhavo.newsletter.newsletter_manager');
-        $manager->prepareReceiver($currentNewsletter, $group);
+        if($newsletter->getSent()) {
+            return new JsonResponse([
+                'type' => 'error',
+                'message' => $this->get('translator')->trans('newsletter.action.send.error.already_sent', [], 'EnhavoNewsletterBundle')
+            ], 400);
+        }
 
-        $currentNewsletter->setSent(true);
+        $manager = $this->get('enhavo.newsletter.newsletter_manager');
+        $manager->prepareReceivers($newsletter, $group);
+
+        $newsletter->setSent(true);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($currentNewsletter);
+        $em->persist($newsletter);
         $em->flush();
 
         return new JsonResponse([

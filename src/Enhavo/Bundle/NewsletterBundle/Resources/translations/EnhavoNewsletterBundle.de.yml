@@ -17,6 +17,7 @@ newsletter:
       success: 'Newsletter erfolgreich gesendet!'
       error:
         no_group: 'Newsletter konnte nicht gesendet werden! Es wurde keine Gruppe für den Newsletter angegeben'
+        already_sent: 'Newsletter wurde bereits versendet'
     view: 'Anzeigen'
   label:
     sent: 'gesendet'
