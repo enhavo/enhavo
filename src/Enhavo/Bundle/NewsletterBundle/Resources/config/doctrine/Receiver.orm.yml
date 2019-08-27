@@ -21,7 +21,7 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
                     on: create
         sentAt:
             type: datetime
-            nullable: false
+            nullable: true
 
         parameters:
             type: json_array
@@ -31,11 +31,15 @@ Enhavo\Bundle\NewsletterBundle\Entity\Receiver:
             type: string
             nullable: false
 
-
     manyToOne:
         subscriber:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Subscriber
+            joinColumn:
+                onDelete: CASCADE
+        newsletter:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Newsletter
             joinColumn:
                 onDelete: CASCADE
 

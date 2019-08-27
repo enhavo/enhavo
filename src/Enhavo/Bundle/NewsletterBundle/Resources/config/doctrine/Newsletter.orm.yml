@@ -48,6 +48,13 @@ Enhavo\Bundle\NewsletterBundle\Entity\Newsletter:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
+    oneToMany:
+        receiver:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\NewsletterBundle\Entity\Receiver
+            mappedBy: receiver
+            orphanRemoval: true
+
     manyToOne:
         group:
             cascade: ['persist', 'refresh']

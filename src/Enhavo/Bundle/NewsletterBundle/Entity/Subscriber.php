@@ -310,4 +310,9 @@ class Subscriber implements ResourceInterface, SubscriberInterface
     {
         return $this->receiver;
     }
+
+    public function __toString()
+    {
+        return $this->email;
+    }
 }

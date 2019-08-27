@@ -4,7 +4,6 @@
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Entity\Subscriber;
@@ -13,6 +12,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
+use Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator;
 
 /**
  * NewsletterManager.php
@@ -49,7 +49,7 @@ class NewsletterManager
      */
     private $tokenGenerator;
 
-    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, $from, $templates, TokenGeneratorInterface $tokenGenerator)
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, $from, $templates, SecureUrlTokenGenerator $tokenGenerator)
     {
         $this->em = $em;
         $this->mailer = $mailer;
@@ -64,31 +64,16 @@ class NewsletterManager
             return;
         }
 
-        $subscribers = $this->em
-            ->getRepository('EnhavoNewsletterBundle:Subscriber')
-            ->findBy([
-                'active' => true,
-                'group' => $group
-            ]);
+        $subscribers = $group->getSubscriber();
 
         foreach ($subscribers as $subscriber) {
-            $this->createReceiver($subscriber);
+            $this->createReceiver($subscriber, $newsletter);
         }
         $this->em->flush();
-
-        foreach ($subscribers as $subscriber) {
-            $this->sendNewsletter($newsletter, $subscriber);
-        }
     }
 
-    public function sendNewsletter(Newsletter $newsletter, Subscriber $subscriber)
+    public function sendNewsletter(Newsletter $newsletter, Receiver $receiver)
     {
-        $receiver = $this->em
-            ->getRepository('EnhavoNewsletterBundle:Receiver')
-            ->findBy([
-                'subscriber' => $subscriber
-            ]);
-
         $message = new \Swift_Message();
         $message
             ->setSubject($newsletter->getSubject())
@@ -96,13 +81,10 @@ class NewsletterManager
             ->setFrom($this->from)
             ->setTo($receiver->getEmail())
             ->setBody($this->render($newsletter));
-
-        $this->container->get('mailer')->send($message);
-        $newsletter->setSent(true);
-        $this->em->persist($newsletter);
-        $this->em->flush();
+        $receiver->setSentAt(new \DateTime());
+        $this->addTracking($receiver, 'sent');
+        $this->em->persist($receiver);
     }
-
 
     public function sendTest(NewsletterInterface $newsletter, string $email)
     {
@@ -138,32 +120,23 @@ class NewsletterManager
         return $this->templates[$key]['template'];
     }
 
-    public function createReceiver(Subscriber $subscriber) {
-        $receiver = $this->em
-            ->getRepository('EnhavoNewsletterBundle:Receiver')->findOneBy([
-                'subscriber' => $subscriber
-            ]);
-
-        if (!$receiver) {
-            $receiver = new Receiver();
-            $receiver->setToken($this->tokenGenerator->generateToken());
-        }
-
+    private function createReceiver(Subscriber $subscriber, Newsletter $newsletter) {
+        $receiver = new Receiver();
+        $receiver->setToken($this->tokenGenerator->generateToken());
         $receiver->setEMail($subscriber->getEmail());
-        $receiver->setSentAt(new \DateTime());
 //        $parameters = $subscriber->getParameters();
 //        $receiver->setParameters(json_encode($parameters));
         $receiver->setSubscriber($subscriber);
+        $receiver->setNewsletter($newsletter);
+        $this->addTracking($receiver,'prepared');
 
-        $tracking = $this->addTracking('send');
-        $receiver->addTracking($tracking);
         $this->em->persist($receiver);
     }
 
-    public function addTracking($type) {
+    private function addTracking(Receiver $receiver, $type) {
         $tracking = new Tracking();
         $tracking->setDate(new \DateTime());
         $tracking->setType($type);
-        return $tracking;
+        $receiver->addTracking($tracking);
     }
 }
