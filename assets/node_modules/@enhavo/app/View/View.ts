@@ -92,54 +92,82 @@ export default class View
         this.data.loading = false;
     }
 
-    public open(url: string, key: string = null, label: string = null)
+    public open(url: string, key: string = null, label: string = null): Promise<ViewInterface>
     {
-        if(key) {
-            this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
-                let viewId: number = null;
-                if(data != null) {
-                    viewId = data.value;
-                }
-                if(viewId != null) {
-                    this.eventDispatcher.dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
-                        if(data.exists) {
-                            this.eventDispatcher.dispatch(new CloseEvent(viewId))
-                                .then(() => {
-                                    this.openView(url, key, label);
-                                })
-                                .catch(() => {})
-                            ;
-                        } else {
-                            this.openView(url, key, label);
-                        }
-                    });
-                } else {
-                    this.openView(url, key, label);
-                }
-            });
-        } else {
-            this.open(url, null, label)
-        }
+        return new Promise((resolve, reject) => {
+            if(key) {
+                this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+                    let viewId: number = null;
+                    if(data != null) {
+                        viewId = data.value;
+                    }
+                    if(viewId != null) {
+                        this.eventDispatcher.dispatch(new ExistsEvent(viewId)).then((data: ExistsData) => {
+                            if(data.exists) {
+                                this.eventDispatcher.dispatch(new CloseEvent(viewId))
+                                    .then(() => {
+                                        this.openView(url, key, label).then((view: ViewInterface) => {
+                                            resolve(view)
+                                        }).catch(() => {
+                                            reject();
+                                        });
+                                    })
+                                    .catch(() => {})
+                                ;
+                            } else {
+                                this.openView(url, key, label).then((view: ViewInterface) => {
+                                    resolve(view)
+                                }).catch(() => {
+                                    reject();
+                                });
+                            }
+                        });
+                    } else {
+                        this.openView(url, key, label).then((view: ViewInterface) => {
+                            resolve(view)
+                        }).catch(() => {
+                            reject();
+                        });
+                    }
+                });
+            } else {
+                this.openView(url, null, label).then((view: ViewInterface) => {
+                    resolve(view)
+                }).catch(() => {
+                    reject();
+                });
+            }
+        })
     }
 
-    public openView(url: string, key: string = null, label: string = null)
+    public openView(url: string, key: string = null, label: string = null): Promise<ViewInterface>
     {
-        this.eventDispatcher.dispatch(new CreateEvent({
-            label: label,
-            component: 'iframe-view',
-            url: url
-        }, this.getId())).then((view: ViewInterface) => {
-            if(key) {
-                this.storeValue(key, view.id);
-            }
-            this.eventDispatcher.dispatch(new SaveStateEvent())
-        }).catch(() => {});
+        return new Promise((resolve, reject) => {
+            this.eventDispatcher.dispatch(new CreateEvent({
+                label: label,
+                component: 'iframe-view',
+                url: url
+            }, this.getId())).then((view: ViewInterface) => {
+                if (key) {
+                    this.storeValue(key, view.id);
+                }
+                resolve(view);
+                this.eventDispatcher.dispatch(new SaveStateEvent())
+            }).catch(() => {
+                reject();
+            });
+        });
     }
 
     public storeValue(key: string, value: any, callback: () => void = () => {})
     {
-        this.eventDispatcher.dispatch(new SaveDataEvent(key, value)).then(() => {
-            callback();
+        return new Promise((resolve, reject) => {
+            this.eventDispatcher.dispatch(new SaveDataEvent(key, value)).then(() => {
+                callback();
+                resolve();
+            }).catch(() => {
+                reject();
+            });
         })
     }
 

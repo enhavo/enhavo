@@ -12,9 +12,10 @@ import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import View from "@enhavo/app/View/View";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import Translator from "@enhavo/core/Translator";
-import Batch from "@enhavo/app/Grid/Batch/Batch";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import * as jexl from "jexl";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
+import * as async from "async";
 
 export default class Grid
 {
@@ -65,6 +66,22 @@ export default class Grid
             });
         });
 
+        this.eventDispatcher.on('removed', (event: UpdatedEvent) => {
+            this.view.loadValue('active-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.clearActiveRow();
+                }
+            });
+        });
+
+        this.eventDispatcher.on('loaded', (event: UpdatedEvent) => {
+            this.view.loadValue('edit-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.checkActiveRow();
+                }
+            });
+        });
+
         $(document).on('gridFilter', (event, data) => {
             this.configuration.showFilter = data;
         });
@@ -108,9 +125,12 @@ export default class Grid
             parameters = this.configuration.openRouteParameters;
         }
         parameters.id = row.id;
-
-        let url = this.router.generate(this.configuration.openRoute, parameters);
-        this.view.open(url, 'edit-view')
+        this.activateRow(row).then(() => {
+            let url = this.router.generate(this.configuration.openRoute, parameters);
+            this.view.open(url, 'edit-view').then((view: ViewInterface) => {
+                this.view.storeValue('active-view', view.id);
+            });
+        });
     }
 
     public applyFilter()
@@ -205,6 +225,8 @@ export default class Grid
                     this.configuration.count = parseInt(response.data.pages.count);
                     this.configuration.page = parseInt(response.data.pages.page);
                 }
+
+                this.checkActiveRow();
             })
             // executed on error
             .catch(error => {
@@ -246,5 +268,54 @@ export default class Grid
     public resize()
     {
         this.checkColumnConditions();
+    }
+
+    private activateRow(row: RowData)
+    {
+        return new Promise((resolve, reject) => {
+            for(let currentRow of this.configuration.rows) {
+                currentRow.active = currentRow.id === row.id;
+            }
+
+            async.parallel([(callback: (err: any) => void) => {
+                this.view.storeValue('active-view', null).then(() => {
+                    callback(null);
+                }).catch(() => {
+                    callback(true);
+                });
+            },(callback: (err: any) => void) => {
+                this.view.storeValue('active-row', row.id).then(() => {
+                    callback(null);
+                }).catch(() => {
+                    callback(true);
+                });
+            }], (err) => {
+                if(err) {
+                    reject();
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    private checkActiveRow()
+    {
+        this.view.loadValue('active-row', (id) => {
+            if(id) {
+                for(let currentRow of this.configuration.rows) {
+                    currentRow.active = currentRow.id === parseInt(id);
+                }
+            }
+        });
+    }
+
+    public clearActiveRow()
+    {
+        this.view.storeValue('active-view', null);
+        this.view.storeValue('active-row', null);
+        for(let currentRow of this.configuration.rows) {
+            currentRow.active = false;
+        }
     }
 }

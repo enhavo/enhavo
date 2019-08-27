@@ -15,7 +15,8 @@ export default class DataStorageManager
         this.viewStack = viewStack;
 
         this.eventDispatcher.on('save-data', (event: SaveDataEvent) => {
-            this.set(event.key, event.value, event.origin)
+            this.set(event.key, event.value, event.origin);
+            event.resolve();
         });
 
         this.eventDispatcher.on('load-data', (event: LoadDataEvent) => {
@@ -25,6 +26,7 @@ export default class DataStorageManager
 
         this.eventDispatcher.on('remove-data', (event: LoadDataEvent) => {
             this.delete(event.key, event.origin);
+            event.resolve();
         });
     }
 
