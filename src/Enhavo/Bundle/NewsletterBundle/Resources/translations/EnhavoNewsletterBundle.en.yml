@@ -17,7 +17,6 @@ newsletter:
       success: 'Newsletter successfully sent!'
       error:
         no_group: 'An error occured! No Newslettergroup found.'
-
     view: 'View'
   label:
     sent: 'sent'

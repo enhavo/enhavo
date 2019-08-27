@@ -11,11 +11,13 @@ export default class NewsletterSendAction extends AbstractAction
     execute(): void
     {
         let formApplication = <FormApplication>this.application;
+        console.log(this.application.getTranslator());
+        console.log(this.application.getTranslator().trans('enhavo_newsletter.send.message.form_changed'));
         if(formApplication.getForm != null) {
             if(!formApplication.getForm().isFormChanged()) {
                 this.send();
             } else {
-                this.application.getView().alert('Please save form');
+                formApplication.getView().alert(this.application.getTranslator().trans('enhavo_newsletter.send.message.form_changed'));
             }
         } else {
             this.send();
@@ -28,10 +30,22 @@ export default class NewsletterSendAction extends AbstractAction
         let url = this.application.getRouter().generate('enhavo_newsletter_newsletter_send', {
             id: this.resourceId,
         });
-        axios.post(url, {}).then((data) => {
-            this.application.getView().loaded();
-            this.getFlashMessanger().addMessage(new Message(Message.SUCCESS,'Newsletter will be send'));
-        })
+        axios
+            .post(url, {})
+            .then((data) => {
+                this.application.getView().loaded();
+                this.getFlashMessanger().addMessage(new Message(
+                    data.data.type, data.data.message
+                )
+                );
+            })
+            .catch(error => {
+                this.application.getView().loaded();
+                this.getFlashMessanger().addMessage(new Message(
+                    error.response.data.type,
+                    error.response.data.message
+                ))
+            })
     }
 
     private getFlashMessanger(): FlashMessenger

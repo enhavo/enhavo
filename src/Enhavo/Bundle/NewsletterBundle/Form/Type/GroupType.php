@@ -13,7 +13,7 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'label' => 'group.form.label.name',
+            'label' => 'group.label.name',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
     }

@@ -1,0 +1,4 @@
+enhavo_newsletter:
+    send:
+        message:
+            form_changed: 'Newsletter content has changed. Please save first, before sending'
