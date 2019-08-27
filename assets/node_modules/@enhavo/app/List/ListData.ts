@@ -8,7 +8,7 @@ export default class ListData
     public openRoute: string;
     public openRouteParameters: object;
     public columns: Array<ColumnInterface>;
-    public items: Array<Item>;
+    public items: Array<Item> = [];
     public loading: boolean = false;
     public editView: number = null;
     public token: string;

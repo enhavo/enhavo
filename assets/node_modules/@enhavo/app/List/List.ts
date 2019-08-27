@@ -6,11 +6,12 @@ import ColumnManager from "@enhavo/app/Grid/Column/ColumnManager";
 import Router from "@enhavo/core/Router";
 import axios from "axios";
 import Item from "@enhavo/app/List/Item";
-import RowData from "@enhavo/app/Grid/Column/RowData";
 import Translator from "@enhavo/core/Translator";
 import UpdatedEvent from "@enhavo/app/ViewStack/Event/UpdatedEvent";
 import FlashMessenger from "@enhavo/app/FlashMessage/FlashMessenger";
 import Message from "@enhavo/app/FlashMessage/Message";
+import * as async from "async";
+import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 
 export default class List
 {
@@ -47,6 +48,22 @@ export default class List
                 }
             });
         });
+
+        this.eventDispatcher.on('removed', (event: UpdatedEvent) => {
+            this.view.loadValue('active-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.clearActiveItem();
+                }
+            });
+        });
+
+        this.eventDispatcher.on('loaded', (event: UpdatedEvent) => {
+            this.view.loadValue('edit-view', (id) => {
+                if(event.id == parseInt(id)) {
+                    this.checkActiveItem();
+                }
+            });
+        });
     }
 
     public load()
@@ -65,6 +82,7 @@ export default class List
                 this.data.items = this.createItemsData(response.data.resources);
                 this.data.token = response.data.token;
                 this.data.loading = false;
+                this.checkActiveItem();
             })
             // executed on error
             .catch(error => {
@@ -85,15 +103,19 @@ export default class List
         return resources;
     }
 
-    public open(row: RowData)
+    public open(item: Item)
     {
         let parameters: any = {};
         if(this.data.openRouteParameters) {
             parameters = this.data.openRouteParameters;
         }
-        parameters.id = row.id
-        let url = this.router.generate(this.data.openRoute, parameters);
-        this.view.open(url, 'edit-view');
+        parameters.id = item.id;
+        this.activateItem(item).then(() => {
+            let url = this.router.generate(this.data.openRoute, parameters);
+            this.view.open(url, 'edit-view').then((view: ViewInterface) => {
+                this.view.storeValue('active-view', view.id);
+            });
+        });
     }
 
     save(parent: Item)
@@ -118,6 +140,7 @@ export default class List
         let url = this.router.generate(this.data.dataRoute, {
             _csrf_token: this.data.token,
         });
+
         axios
             .post(url, data)
             // executed on success
@@ -134,5 +157,66 @@ export default class List
                     this.translator.trans('enhavo_app.list.message.error')
                 ))
             })
+    }
+
+    private getAllItems(): Item[]
+    {
+        let items = [];
+        for(let item of this.data.items) {
+            items.push(item);
+            for(let descendant of item.getDescendants()) {
+                items.push(descendant);
+            }
+        }
+        return items;
+    }
+
+    private activateItem(item: Item)
+    {
+        return new Promise((resolve, reject) => {
+            for(let currentItem of this.getAllItems()) {
+                currentItem.active = currentItem.id == item.id;
+            }
+
+            async.parallel([(callback: (err: any) => void) => {
+                this.view.storeValue('active-view', null).then(() => {
+                    callback(null);
+                }).catch(() => {
+                    callback(true);
+                });
+            },(callback: (err: any) => void) => {
+                this.view.storeValue('active-item', item.id).then(() => {
+                    callback(null);
+                }).catch(() => {
+                    callback(true);
+                });
+            }], (err) => {
+                if(err) {
+                    reject();
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    private checkActiveItem()
+    {
+        this.view.loadValue('active-item', (id) => {
+            if(id) {
+                for(let currentItem of this.getAllItems()) {
+                    currentItem.active = currentItem.id === parseInt(id);
+                }
+            }
+        });
+    }
+
+    public clearActiveItem()
+    {
+        this.view.storeValue('active-view', null);
+        this.view.storeValue('active-item', null);
+        for(let currentItem of this.getAllItems()) {
+            currentItem.active = false;
+        }
     }
 }

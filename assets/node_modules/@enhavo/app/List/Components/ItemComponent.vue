@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-list-row">
-        <div class="view-table-row" @click="open()" :class="{ 'has-children': data.children && data.children.length > 0,'hide-children':!data.expand }">
+        <div :class="{'view-table-row': true, 'active': data.active, 'has-children': data.children && data.children.length > 0,'hide-children':!data.expand}" @click="open()">
             <div v-if="data.parentProperty && data.children && data.children.length > 0" @click="toggleExpand()" v-on:click.stop>
                 <i v-if="data.expand" class="icon icon-unfold_more"></i>
                 <i v-if="!data.expand" class="icon icon-unfold_less"></i>
@@ -45,7 +45,7 @@
 
         @Prop()
         columns: Array<object>;
-
+        
         open() {
             application.getList().open(this.data);
         }

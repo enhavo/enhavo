@@ -1,7 +1,7 @@
 <template>
-    <div class="view-table-row" @click="open()">
+    <div :class="{'view-table-row': true, 'active': data.active}" @click="open()">
         <div class="checkbox-container" v-if="batches.length > 0">
-            <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="selected" />
+            <input type="checkbox" v-on:change="changeSelect" v-on:click.stop :checked="data.selected" />
             <span></span>
         </div>
         <div class="view-table-row-columns">
@@ -38,9 +38,6 @@
 
         @Prop()
         data: RowData;
-
-        @Prop()
-        selected: boolean;
 
         @Prop()
         batches: Array<object>;

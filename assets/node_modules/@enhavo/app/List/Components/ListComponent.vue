@@ -16,7 +16,7 @@
 
             <template v-if="!data.loading">
                 <template v-if="data.sortable">
-                    <draggable group="list" v-model="data.items" v-on:change="save($event, null)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging':data.dragging == true}">
+                    <draggable group="list" v-model="data.items" v-on:change="save($event, null)" @start="data.dragging = true" @end="data.dragging = false" :class="{'dragging': data.dragging}">
                         <template v-for="item in data.items">
                             <list-item v-bind:columns="data.columns" v-bind:data="item" :key="item.id"></list-item>
                         </template>
