@@ -41,7 +41,6 @@ Enhavo\Bundle\NewsletterBundle\Entity\Subscriber:
     manyToMany:
         group:
             targetEntity: Enhavo\Bundle\NewsletterBundle\Model\GroupInterface
-            inversedBy: subscriber
             joinTable:
                 name: newsletter_subscriber_group
                 joinColumns:

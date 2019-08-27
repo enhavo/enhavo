@@ -54,6 +54,11 @@ class Receiver implements ResourceInterface
     private $tracking;
 
     /**
+     * @var Newsletter $newsletter
+     */
+    private $newsletter;
+
+    /**
      * Get id
      *
      * @return integer
@@ -199,5 +204,21 @@ class Receiver implements ResourceInterface
     public function getTrackings()
     {
         return $this->tracking;
+    }
+
+    /**
+     * @return Newsletter
+     */
+    public function getNewsletter(): Newsletter
+    {
+        return $this->newsletter;
+    }
+
+    /**
+     * @param Newsletter $newsletter
+     */
+    public function setNewsletter(Newsletter $newsletter): void
+    {
+        $this->newsletter = $newsletter;
     }
 }
