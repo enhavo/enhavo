@@ -55,6 +55,7 @@ class NewsletterType extends AbstractType
 
         $builder->add('group', AutoCompleteEntityType::class, [
             'label' => 'newsletter.form.label.group',
+            'translation_domain' => 'EnhavoNewsletterBundle',
             'class' => GroupInterface::class,
             'route' => "enhavo_newsletter_group_auto_complete",
         ]);
