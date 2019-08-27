@@ -1,32 +1,18 @@
 {% block enhavo_translation_tranlsation_widget %}
-    {% for child in form.children %}
-        {{ form_widget(child) }}
-    {% endfor %}
+    <div data-translation-type="{{ translation_locales|json_encode|e }}" class="translation">
+        {% for locale,child in form.children %}
+            <div data-translation-widget="{{ locale }}" {% if loop.index0 != 0 %}style="display: none"{% endif %}>
+                {{ form_widget(child) }}
+            </div>
+        {% endfor %}
 
-    {#<li {% if app.request.locale == locale %}class="active"{% endif %}>#}
-        {#<a href="#" data-toggle="tab" data-target=".{{ translationsFields.vars.id }}_translation_fields-{{ locale }}">#}
-            {#{{ locale|capitalize }}#}
-            {#{% if translationsFields.vars.required %}*{% endif %}#}
-        {#</a>#}
-    {#</li>#}
-
-    {#<div class="translation-switcher" data-translation-current-locale="{{ currentLocale }}">#}
-        {#<div class="translation-switcher-current">#}
-            {#{% if translations is defined %}#}
-                {#{% for locale, value in translations %}#}
-                    {#<img data-translation-current="{{ locale }}" class="{% if loop.first %}active{% endif %}" src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />#}
-                {#{% endfor %}#}
-            {#{% endif %}#}
-        {#</div>#}
-        {#<div class="translation-switcher-menu">#}
-            {#{% if translations is defined %}#}
-                {#{% for locale, value in translations %}#}
-                    {#<div data-translation-switch="{{ locale }}" class="flag-container{% if loop.first %} active{% endif %}">#}
-                        {#<img src="{{ asset('/bundles/enhavotranslation/image/flag/' ~ locale ~ '.png') }}" />#}
-                    {#</div>#}
-                {#{% endfor %}#}
-            {#{% endif %}#}
-        {#</div>#}
-    {#</div>#}
-
+        <div class="translation-switcher" data-translation-switcher>
+            <div class="translation-switcher-current" data-translation-switcher-current></div>
+            <div class="translation-switcher-menu">
+                {% for locale in translation_locales %}
+                    <div data-translation-switch="{{ locale }}">{{ locale }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
