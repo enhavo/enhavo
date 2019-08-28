@@ -1,0 +1,21 @@
+.translation {
+    position: relative;
+    .translation-switcher {
+        position: absolute; right: 0; top: 0; height: 24px; width: 24px; cursor: pointer; background-color: #fefefe;
+        .active {display:none;}
+        .translation-switcher-current {
+            img { display: none;
+                &.active { display: block; }
+            }
+        }
+        &:hover {
+            .translation-switcher-menu {display: block;}
+        }
+        .translation-switcher-menu {
+            display: none; position: absolute; z-index: 100; top: 24px; left: -3px; width:30px; background-color: #fefefe; border: 1px dashed #eee;
+            .flag-container {padding:3px;line-height:0;}
+        }
+    }
+}
+
+

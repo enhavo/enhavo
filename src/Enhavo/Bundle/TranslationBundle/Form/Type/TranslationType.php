@@ -101,6 +101,7 @@ class TranslationType extends AbstractType
         }
 
         $view->vars['errors'] = new FormErrorIterator($errors->getForm(), $newErrors);
+        $view->vars['translation_locales'] = $this->translationManager->getLocales();
     }
 
     public function configureOptions(OptionsResolver $resolver): void
