@@ -26,19 +26,19 @@ class LoginWidgetType extends AbstractWidgetType
 
     public function createViewData($options, $resource = null)
     {
-        if(!$options['csrf_token']) {
+        if($options['csrf_token']) {
             $token = $options['csrf_token'];
         } else {
             $token = $this->getCsrfToken();
         }
 
-        if(!$options['last_username']) {
+        if($options['last_username']) {
             $lastUsername = $options['last_username'];
         } else {
             $lastUsername = $this->getLastUserName();
         }
 
-        if(!$options['error']) {
+        if($options['error']) {
             $error = $options['error'];
         } else {
             $error = $this->getError();
