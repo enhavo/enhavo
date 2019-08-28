@@ -1,6 +1,6 @@
-.tab-header {height:60px;border-bottom:1px solid $grey5;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center;
-  .tab-head {height:100%;padding:0 20px;display:flex;align-items:center;cursor:pointer;
-    &.selected {color:$color1;box-shadow: inset 0 -4px 0 $color1;}
+.tab-header {height:60px;font-size:0.75rem;line-height:1.1em;letter-spacing:0.06em;text-transform: uppercase;display:flex;align-items:center; background:$grey1;
+  .tab-head {height:100%;padding:0 20px;display:flex;align-items:center;cursor:pointer; flex:1;max-width:250px;justify-content:center; border-right:1px solid $grey5;
+    &.selected {color:$color1; background:#FFF;border-right:1px solid transparent;}
     &.has-error {
       &:after {content:"*";color:$color4;padding-left:2px;}
     }
