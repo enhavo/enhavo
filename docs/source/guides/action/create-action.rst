@@ -1,33 +1,47 @@
-Create Block
-============
+Create Action
+=============
 
-Create class
-------------
+Create Action Type
+------------------
 
-First you have to define a class that implements the ``BlockInterface``.
-On that interface you have to provide a ``getType``. This is the type name we use later display this block.
-If you want to have some additional helper methods we recommend to extend from ``AbstractType``
-that provide some helpers like ``renderTemplate``.
+First you have to create your php action type class, which implements the ``Enhavo\Bundle\AppBundle\Action\ActionTypeInterface``. Enhavo provide some
+abstract classes with base functionality such as ``Enhavo\Bundle\AppBundle\Action\AbstractActionType`` and ``Enhavo\Bundle\AppBundle\Action\AbstractActionUrlType``.
 
 .. code-block:: php
 
     <?php
 
-    namespace AppBundle\Block;
+    namespace App\Action;
 
-    use Enhavo\Bundle\AppBundle\Block\BlockInterface;
-    use Enhavo\Bundle\AppBundle\Type\AbstractType;
-
-    class GoogleAnalyticsBlock extends AbstractType implements BlockInterface
+    class ExportActionType extends AbstractActionType implements ActionTypeInterface
     {
-        public function render($parameters)
+        // the view data will be pass to directly to the component
+        public function createViewData(array $options, $resource = null)
         {
-            $this->renderTemplate('AppBundle:Block:google_analytics.html.twig');
+            $data = parent::createViewData($options, $resource);
+
+            $data = array_merge($data, [
+
+            ]);
+
+            return $data;
+        }
+
+        // define options for your action
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            parent::configureOptions($resolver);
+
+            $resolver->setDefaults([
+                'component' => 'download-action',
+                'label' => 'Export',
+                'icon' => 'download',
+            ]);
         }
 
         public function getType()
         {
-            return 'google_analytics';
+            return 'export';
         }
     }
 
@@ -38,9 +52,7 @@ Now you have to add the created class to the dependency injection container.
 
 .. code-block:: yaml
 
-    app.block.google_analytics:
-        class: AppBundle\Block\GoogleAnalyticsBlock
-        calls:
-            - [setContainer, ['@service_container']]
+   App\Action\ExportActionType:
+        public: true
         tags:
-            - { name: enhavo.block }
+            - { name: 'enhavo.action', alias: 'export' }
