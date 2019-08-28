@@ -43,9 +43,8 @@
     }
     .image-cropper-format-list {margin-bottom:-10px;
       .image-cropper-format-item {cursor:pointer;display:inline-block;margin-right:6px;margin-bottom:6px;
-        .image-cropper-format-item-btn {border-radius:3px;padding:6px 9px;background:$grey5;
-          &:hover {background:$color1;color:#fff;}
-          .icon {position: relative;top: -1px;margin-left: 2px;}
+        .image-cropper-format-item-btn {@extend %btn-secondary;
+          .icon {position: absolute;right: 20px; top:9px;}
         }
       }
     }
@@ -73,8 +72,8 @@
     }
   }
   .upload-input {display: none;}
-  .upload-button {
-    &:after {content: '\f236';font-family: "enhavo-icons";position:relative;top:2px;left:2px;}
+  .upload-button { margin-top:8px;
+    &:after {content: '\f236';font-family: "enhavo-icons";position:absolute;top:8px;right:20px;}
     + .upload-button {margin-left:7px;}
   }
 }

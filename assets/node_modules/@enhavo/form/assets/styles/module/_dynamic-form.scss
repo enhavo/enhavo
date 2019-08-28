@@ -7,33 +7,29 @@
     }
   }
   .dynamic-form-container {
-    .dynamic-form-item-add-button-row {margin:10px 0;padding-left:0;position:relative;cursor:pointer;color:$grey3;font-size:0.75rem;z-index:1;
-      &:hover {
-        .label {border-width:0;}
-      }
-      .label {display:inline-block;background:#fff;padding:4px 10px 4px 5px;border-radius:3px;}
+    .dynamic-form-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;
+      i {color:$grey3}
     }
     .dynamic-nested-container {padding-left: 10px;padding-right: 10px;}
     .dynamic-form-item {background:#fff;box-shadow:1px 1px 4px 0 rgba(0, 0, 0, 0.11);border-radius:3px;overflow:hidden;
-      .button-container {border-bottom: 1px solid $grey5;padding:6px 15px;display:flex;align-items:center;
+      .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
         .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#fff;border-radius:3px;color:$grey3;padding:4px 0;
-          + .button {margin-left:10px;}
           &:hover {color:#fff;background:$color1;}
         }
-        .button-delete {order:5;margin-left:auto!important;}
+        .button-delete {order:5;}
         .button-down {order:2;}
         .button-up {order:1;}
         .button-expand {order:3;}
         .button-collapse {order:3;}
-        .label {padding-left:10px; font-weight: 600;order:4;}
+        .label { padding-left:9px;font-weight: 600;order:0;margin-right:auto!important;}
       }
       .dynamic-form-item-content-container {padding:15px;}
     }
   }
 
-  .dynamic-form-menu-dialogue {display:none;margin-top:-15px;margin-bottom:10px;border:1px solid #fff;border-radius:3px;padding:6px 12px;
+  .dynamic-form-menu-dialogue {display:none;margin-top:-10px;margin-bottom:10px;border-radius:0 0 3px 3px;padding:10px 20px 20px; background:#FFF;border-top: 1px solid $grey5;
     .item-list {display:flex;flex-wrap:wrap;margin:0 -6px;
-      li {width:150px;margin:6px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;text-align:center;cursor:pointer;flex:1 1 auto;border-radius:3px;background:#fff;font-size:0.875rem;line-height:1.3em;
+      li {width:150px;margin:6px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;text-align:center;cursor:pointer;flex:1 1 auto;border-radius:10px;background:$grey1;font-size:0.875rem;line-height:1.3em;
         &:hover {background:$color1;color:#fff;}
       }
     }

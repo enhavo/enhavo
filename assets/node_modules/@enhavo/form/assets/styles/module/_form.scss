@@ -1,10 +1,8 @@
 .form-row {
     + .form-row {margin-top:15px;}
-
-    .autocomplete-create-button {display:inline-block;margin-top:3px;@extend %btn-secondary;padding:1px 9px 1px 5px;text-decoration: none;font-size: 0.875rem;
-        &:before {font-family:"enhavo-icons";content:"\f10d";position:relative;top:2px;margin-right:2px;}
+    .autocomplete-create-button {display:inline-block;margin-top:8px;@extend %btn-secondary;text-decoration: none;
+        &:after {font-family:"enhavo-icons";content:"\f10d";position:absolute;top:8px; right:20px; font-weight:$fontRegular;}
     }
-
     .entity-tree-children {margin:0 0 10px 0;padding-left:30px;position:relative;
         &:before {content:"";position:absolute;top: 6px;left: 10px;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;width: 8px;height: 8px;}
         .entity-tree-children {
@@ -15,7 +13,7 @@
     .choice-input-container {padding-top:3px;
         .choice-input-with-label {display: inline-block;white-space:nowrap;margin-right:20px;}
         .icheckbox {
-            + label {margin-left:10px;}
+            + label {color:$black;display: inline-block;vertical-align: middle; margin-left:7px;transition:all .2s; font-weight:$fontMedium;}
         }
     }
 
@@ -54,7 +52,7 @@
             }
             .tox-toolbar__group {border-color:$grey5;}
         }
-        .tox-tinymce {border-radius:3px;border-color:$grey5;}
+        .tox-tinymce {border-radius:10px 10px 3px 3px;border-color:$grey5;}
     }
 }
 

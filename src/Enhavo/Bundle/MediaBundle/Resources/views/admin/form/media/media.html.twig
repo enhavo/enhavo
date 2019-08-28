@@ -27,7 +27,7 @@
 
             <div>
                 {% if upload %}
-                    <button class="btn upload-button" data-file-upload-button> {{ 'label.upload'|trans|nl2br }}</button>
+                    <button class="btn has-symbol upload-button" data-file-upload-button> {{ 'label.upload'|trans|nl2br }}</button>
                 {% endif %}
                 {{ extensionManager.renderButtons(extensions)|raw }}
             </div>

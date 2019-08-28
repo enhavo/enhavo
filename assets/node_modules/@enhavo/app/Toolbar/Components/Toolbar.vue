@@ -1,7 +1,5 @@
 <template>
     <div class="app-toolbar" v-bind:class="{ 'menu-collapsed':!menu_open}">
-
-
         <div class="toolbar-item branding">
             <div class="branding-container" v-bind:style="brandingImageStyles" @click="home"></div>
         </div>
@@ -19,10 +17,10 @@
                 <span class="icon icon-menu"></span>
             </div>
         </div>
-        <!--<div class="toolbar-item right">-->
+        <div class="toolbar-item right">
             <!--<a class="toolbar-link">Open Homepage</a>-->
-            <!--<toolbar-dropdown></toolbar-dropdown>-->
-        <!--</div>-->
+            <toolbar-dropdown></toolbar-dropdown>
+        </div>
     </div>
 </template>
 
