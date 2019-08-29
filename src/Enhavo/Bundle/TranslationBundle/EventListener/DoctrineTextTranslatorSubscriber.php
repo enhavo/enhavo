@@ -9,8 +9,8 @@ namespace Enhavo\Bundle\TranslationBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
-use Enhavo\Bundle\TranslationBundle\Translator\Translator;
+use Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl;
+use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 
 /**
  * Class DoctrineTranslatorSubscriber
@@ -21,27 +21,27 @@ use Enhavo\Bundle\TranslationBundle\Translator\Translator;
  * @author gseidel
  * @package Enhavo\Bundle\TranslationBundle\EventListener
  */
-class DoctrineTranslatorSubscriber implements EventSubscriber
+class DoctrineTextTranslatorSubscriber implements EventSubscriber
 {
     /**
-     * @var Translator
+     * @var TextTranslator
      */
-    protected $translator;
+    private $translator;
 
     /**
-     * @var LocaleResolver
+     * @var AccessControl
      */
-    protected $localeResolver;
+    private $accessControl;
 
     /**
-     * DoctrineSubscriber constructor.
-     *
-     * @param Translator $translator
+     * DoctrineTextTranslatorSubscriber constructor.
+     * @param TextTranslator $translator
+     * @param AccessControl $accessControl
      */
-    public function __construct(Translator $translator, LocaleResolver $localeResolver)
+    public function __construct(TextTranslator $translator, AccessControl $accessControl)
     {
         $this->translator = $translator;
-        $this->localeResolver = $localeResolver;
+        $this->accessControl = $accessControl;
     }
 
     /**
@@ -63,18 +63,18 @@ class DoctrineTranslatorSubscriber implements EventSubscriber
      */
     public function preFlush(PreFlushEventArgs $event)
     {
-        $em = $event->getEntityManager();
-        $uow = $em->getUnitOfWork();
-
-        /*
-         * We need to use the IdentityMap, because the update and persist collection stores entities, that have
-         * computed changes, but translation data might have changed without changing it underlying model!
-         */
-        foreach($uow->getIdentityMap() as $className) {
-            foreach($className as $object) {
-                $this->translator->storeTranslationData($object);
-            }
-        }
+//        $em = $event->getEntityManager();
+//        $uow = $em->getUnitOfWork();
+//
+//        /*
+//         * We need to use the IdentityMap, because the update and persist collection stores entities, that have
+//         * computed changes, but translation data might have changed without changing it underlying model!
+//         */
+//        foreach($uow->getIdentityMap() as $className) {
+//            foreach($className as $object) {
+//                $this->translator->storeTranslationData($object);
+//            }
+//        }
     }
 
     /**
@@ -84,8 +84,8 @@ class DoctrineTranslatorSubscriber implements EventSubscriber
      */
     public function preRemove(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        $this->translator->deleteTranslationData($entity);
+//        $entity = $args->getEntity();
+//        $this->translator->deleteTranslationData($entity);
     }
 
     /**
@@ -95,7 +95,7 @@ class DoctrineTranslatorSubscriber implements EventSubscriber
      */
     public function postLoad(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        $this->translator->translate($entity, $this->localeResolver->getLocale());
+//        $entity = $args->getEntity();
+//        $this->translator->translate($entity, $this->localeResolver->getLocale());
     }
 }

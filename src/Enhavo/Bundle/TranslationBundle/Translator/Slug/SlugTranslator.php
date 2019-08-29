@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 
 class SlugTranslator
