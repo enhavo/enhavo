@@ -32,6 +32,7 @@ services:
         arguments:
             - '@enhavo_translation.text.translator'
             - '@enhavo_translation.text.access_control'
+            - '@enhavo_translation.metadata.repository'
         tags:
             - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
 

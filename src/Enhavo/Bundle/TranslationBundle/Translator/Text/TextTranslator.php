@@ -112,6 +112,12 @@ class TextTranslator
         return null;
     }
 
+    public function isTranslated($entity)
+    {
+        $oid = spl_object_hash($entity);
+        return isset($this->translatedLocale[$oid]);
+    }
+
     public function translate($entity, $locale)
     {
         $this->checkEntity($entity);
