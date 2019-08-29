@@ -10,7 +10,10 @@ export default class Translator
 
     public trans(value: string, parameters?: object)
     {
-        return this.data[value];
+        if(this.data[value]) {
+            return this.data[value];
+        }
+        return value;
     }
 }
 
