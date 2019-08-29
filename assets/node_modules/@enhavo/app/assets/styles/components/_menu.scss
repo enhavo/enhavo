@@ -63,7 +63,7 @@
     &.selected {color:#fff;box-shadow: inset 4px 0 0 $color1b;}
   }
 
-  .menu-child-title {padding:0 18px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;position:relative;
+  .menu-child-title {padding:0 17px;display: flex; align-items: center; justify-content: flex-start;cursor:pointer;min-height:46px;position:relative;
     &:hover {color:#fff;}
     i {
       &.open-indicator {position:absolute;right:18px;}

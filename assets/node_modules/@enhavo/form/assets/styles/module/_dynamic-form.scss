@@ -1,17 +1,20 @@
 .enhavo-dynamic-form {position: relative;padding:20px;border-radius:3px;
   .addItem {cursor: pointer;}
   .add-enhavo_dynamic-form-button {font-size:14px;line-height:19px;}
-  .dynamic-form-actions {margin-bottom:25px;
+  .dynamic-form-actions {
     .button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background:$grey1;border-radius:3px;color:$grey3;padding:4px 0;
       &:hover {color:#fff;background:$color1;}
     }
   }
   .dynamic-form-container {
-    .dynamic-form-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;border: 1px solid $grey5;
+    .dynamic-form-item-add-button-row {margin:10px 0;position:relative;cursor:pointer;z-index:1; width:100%; text-align:center; background:#FFF; padding:11px 0 10px 0;border-radius: 0 0 3px 3px;border: 1px solid $grey5;transition:all .3s;
       i {color:$grey3}
+      &:hover { color:$color1;
+        i {color:$color1}
+      }
     }
     .dynamic-nested-container {padding-left: 10px;padding-right: 10px;}
-    .dynamic-form-item {background:#fff; box-shadow: 0 1px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); border-radius:3px;overflow:hidden;
+    .dynamic-form-item {background:#fff; box-shadow: 0 0 4px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23); border-radius:3px;overflow:hidden;
       .button-container {border-bottom: 1px solid $grey5;padding:6px;display:flex;align-items:center;
         .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color:$grey3;padding:4px 0;
           &:hover {color:#fff;background:$color1;}
