@@ -1,7 +1,11 @@
 enhavo_translation:
     translation_paths:
         - '#^/admin/.+#'
+    translator:
+        access_control:
+            - '#^(?!/admin/).*#'
 
 enhavo_app:
+    locale_resolver: Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver
     form_themes:
       - '@EnhavoTranslation/admin/form/translation/fields.html.twig'

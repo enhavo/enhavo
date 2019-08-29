@@ -14,7 +14,7 @@ services:
         arguments:
             - '@request_stack'
             - '@enhavo_app.locale_resolver'
-            - []
+            - '%enhavo_translation.translator.access_control%'
 
     enhavo_translation.event_listener.translation_reference:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
@@ -35,6 +35,12 @@ services:
             - '@enhavo_translation.metadata.repository'
         tags:
             - { name: doctrine.event_subscriber, connection: default,  priority: 1000 }
+
+    Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver:
+        arguments:
+            - '@request_stack'
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
 
 #    enhavo_translation.strategy.route_translation:
 #        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy

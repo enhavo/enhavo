@@ -8,7 +8,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
 
-
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -27,28 +26,55 @@ class AccessControl
     /**
      * @var string[]
      */
-    private $controlList;
+    private $accessControl;
+
+    /**
+     * @var boolean
+     */
+    private $access;
+
+    /**
+     * @var string
+     */
+    private $locale;
 
     /**
      * AccessControl constructor.
      * @param RequestStack $requestStack
      * @param LocaleResolverInterface $localResolver
-     * @param string[] $controlList
+     * @param string[] $accessControl
      */
-    public function __construct(RequestStack $requestStack, LocaleResolverInterface $localResolver, array $controlList)
+    public function __construct(RequestStack $requestStack, LocaleResolverInterface $localResolver, array $accessControl)
     {
         $this->requestStack = $requestStack;
         $this->localResolver = $localResolver;
-        $this->controlList = $controlList;
+        $this->accessControl = $accessControl;
     }
 
     public function isAccess()
     {
+        if($this->access !== null) {
+            return $this->access;
+        }
 
+        $this->access = true;
+        $request = $this->requestStack->getMasterRequest();
+        $path = $request->getPathInfo();
+        foreach($this->accessControl as $regex) {
+            if(!preg_match($regex, $path)) {
+                $this->access = false;
+                break;
+            }
+        }
+        return $this->access;
     }
 
     public function getLocale()
     {
-
+        if($this->locale !== null) {
+            return $this->locale;
+        }
+        $this->locale = $this->localResolver->resolve();
+        return $this->locale;;
     }
 }
