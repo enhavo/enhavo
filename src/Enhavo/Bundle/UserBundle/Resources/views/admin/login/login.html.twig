@@ -15,13 +15,13 @@
                 <input placeholder="{{ 'security.login.password'|trans }}" type="password" id="password" name="_password" required="required" />
             </div>
         </div>
-            <div class="row">
-                <div class="col-sm-6 col-xs-12">
+            <div class="additional-options">
+                <div class="remember-me">
                     <input type="checkbox" id="_remember" name="_remember">
                     <span></span>
                     <label for="_remember">{{ 'security.login.remember_me'|trans|nl2br }}</label>
                 </div>
-                <div class="col-sm-6 col-xs-12 reset">
+                <div class="reset-pw">
                     <a href="{{ path('enhavo_user_reset_password_reset') }}">{{ 'resetting.request.submit'|trans|nl2br }}</a>
                 </div>
             </div>
