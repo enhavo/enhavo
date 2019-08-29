@@ -6,6 +6,8 @@ services:
             - '%enhavo_translation.default_locale%'
             - '@enhavo_app.reference.target_class_resolver'
             - '@doctrine.orm.entity_manager'
+        calls:
+            - [ setContainer, ['@service_container']]
 
     enhavo_translation.text.access_control:
         class: Enhavo\Bundle\TranslationBundle\Translator\Text\AccessControl

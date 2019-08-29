@@ -18,6 +18,8 @@ services:
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
         public: true
+        arguments:
+            - '@enhavo_translation.text.translator'
         tags:
             - { name: enhavo.translation, alias: text }
 

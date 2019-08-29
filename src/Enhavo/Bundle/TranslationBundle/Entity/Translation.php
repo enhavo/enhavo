@@ -2,8 +2,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Translation
  */

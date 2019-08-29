@@ -20,13 +20,16 @@ Enhavo\Bundle\TranslationBundle\Entity\Translation:
     fields:
         class:
             type: string
+            nullable: true
         property:
             type: string
+            nullable: true
         refId:
             type: integer
             nullable: true
         locale:
             type: string
+            nullable: true
         translation:
             type: text
             nullable: true

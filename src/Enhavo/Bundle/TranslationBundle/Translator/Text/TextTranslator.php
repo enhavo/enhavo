@@ -8,16 +8,13 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Enhavo\Bundle\TranslationBundle\Repository\TranslationRepository;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\AppBundle\Metadata\MetadataRepository;
-use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
-
 
 /**
  * Class TextTranslator
@@ -26,6 +23,8 @@ use Enhavo\Bundle\TranslationBundle\Translator\DataMap;
  */
 class TextTranslator
 {
+    use ContainerAwareTrait;
+
     /**
      * @var MetadataRepository
      */
@@ -42,11 +41,6 @@ class TextTranslator
     private $classResolver;
 
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var DataMap
      */
     private $buffer;
@@ -56,34 +50,63 @@ class TextTranslator
      */
     private $originalData;
 
-    public function __construct(MetadataRepository $metadataRepository, $defaultLocale, TargetClassResolverInterface $classResolver, EntityManagerInterface $em)
+    /**
+     * @var string[]
+     */
+    private $translatedLocale;
+
+    public function __construct(MetadataRepository $metadataRepository, $defaultLocale, TargetClassResolverInterface $classResolver)
     {
         $this->metadataRepository = $metadataRepository;
         $this->defaultLocale = $defaultLocale;
         $this->classResolver = $classResolver;
-        $this->em = $em;
+
         $this->buffer = new DataMap;
         $this->originalData = new DataMap;
+        $this->translatedLocale = [];
     }
 
-    public function setTranslation($entity, $property, $locale, $value)
+    public function setTranslation($entity, $property, $locale, $value): void
     {
         $this->checkEntity($entity);
-        $translation = $this->createTranslation($entity, $property, $locale, $value);
+
+        if($locale == $this->defaultLocale) {
+            return;
+        }
+
+        $translation = $this->buffer->load($entity, $property, $locale);
+        if($translation instanceof Translation) {
+            $translation->setTranslation($value);
+            return;
+        }
+
+        $translation = $this->load($entity, $property, $locale);
+        if($translation === null) {
+            $translation = $this->createTranslation($entity, $property, $locale, $value);
+        } else {
+            $translation->setTranslation($value);
+        }
+
         $this->buffer->store($entity, $property, $locale, $translation);
     }
 
-    public function getTranslation($entity, $property, $locale)
+    public function getTranslation($entity, $property, $locale): ?string
     {
         $this->checkEntity($entity);
+
+        if($locale == $this->defaultLocale) {
+            return null;
+        }
+
         $translation = $this->buffer->load($entity, $property, $locale);
         if($translation !== null) {
-            return $translation;
+            return $translation->getTranslation();
         }
 
         $translation = $this->load($entity, $property, $locale);
         if($translation !== null) {
-            return $translation;
+            $this->buffer->store($entity, $property, $locale, $translation);
+            return $translation->getTranslation();
         }
 
         return null;
@@ -98,13 +121,18 @@ class TextTranslator
             return null;
         }
 
-        //translation data is stored inside the object
+        // translation data is stored inside the object
         if($locale === $this->defaultLocale) {
             return;
         }
 
-        $accessor = PropertyAccess::createPropertyAccessor();
+        $oid = spl_object_hash($entity);
+        if(isset($this->translatedLocale[$oid])) {
+            throw new TranslationException('Entity was already translated. It could only translated once. Please detach before using translate again');
+        }
+        $this->translatedLocale[$oid] = $locale;
 
+        $accessor = PropertyAccess::createPropertyAccessor();
         foreach($metadata->getProperties() as $property) {
             if(!$this->isTypeAccepted($property->getType())) {
                 return null;
@@ -113,14 +141,41 @@ class TextTranslator
             $newValue = $this->getTranslation($entity, $property->getProperty(), $locale);
             $oldValue = $accessor->getValue($entity, $property->getProperty());
 
-            $this->originalData->store($entity, $property->getProperty(), $locale, $oldValue);
+            $this->originalData->store($entity, $property->getProperty(), null, $oldValue);
             $accessor->setValue($entity, $property->getProperty(), $newValue);
         }
     }
 
     public function detach($entity)
     {
+        $this->checkEntity($entity);
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($entity);
+        if($metadata === null) {
+            return null;
+        }
 
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $oid = spl_object_hash($entity);
+        if(!isset($this->translatedLocale[$oid])) {
+            throw new TranslationException('Entity was not translated. You can only detach already translated objects');
+        }
+
+        $locale = $this->translatedLocale[$oid];
+
+        foreach($metadata->getProperties() as $property) {
+            if(!$this->isTypeAccepted($property->getType())) {
+                return null;
+            }
+
+            $originalValue = $this->originalData->load($entity, $property->getProperty(), null);
+            $translationValue = $accessor->getValue($entity, $property->getProperty());
+            $this->setTranslation($entity, $property->getProperty(), $locale, $translationValue);
+            $accessor->setValue($entity, $property->getProperty(), $originalValue);
+        }
+
+        unset($this->translatedLocale[$oid]);
+        $this->originalData->delete($entity);
     }
 
     public function translatable($entity)
@@ -131,6 +186,16 @@ class TextTranslator
     private function getAcceptedTypes()
     {
         return ['text'];
+    }
+
+    private function getRepository()
+    {
+        return $this->container->get('doctrine.orm.entity_manager')->getRepository(Translation::class);
+    }
+
+    private function getEntityManager()
+    {
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     private function isTypeAccepted($type)
@@ -152,25 +217,31 @@ class TextTranslator
         $translation->setProperty($property);
         $translation->setLocale($locale);
         $translation->setTranslation($data);
+        $this->getEntityManager()->persist($translation);
         return $translation;
     }
 
     private function load($entity, $property, $locale): ?Translation
     {
-        return $this->repository->findOneBy([
+        $translation = $this->getRepository()->findOneBy([
             'class' => $this->classResolver->resolveClass($entity),
             'refId' => $entity->getId(),
-            'property' => $property
+            'property' => $property,
+            'locale' => $locale
         ]);
+        return $translation;
     }
 
-    public function deleteTranslationData($entity, Metadata $metadata)
+    public function delete($entity)
     {
+        $this->checkEntity($entity);
+
         /** @var Translation[] $translations */
         $translations = $this->getRepository()->findBy([
-            'class' => $metadata->getClass(),
+            'class' => $this->classResolver->resolveClass($entity),
             'refId' => $entity->getId()
         ]);
+
         foreach($translations as $translation) {
             $this->getEntityManager()->remove($translation);
         }
