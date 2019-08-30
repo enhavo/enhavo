@@ -13,10 +13,12 @@ export default class Item
     public getDescendants(): Item[]
     {
         let descendants = [];
-        for(let child of this.children) {
-            descendants.push(child);
-            for(let descendant of child.getDescendants()) {
-                descendants.push(descendant);
+        if(this.children) {
+            for(let child of this.children) {
+                descendants.push(child);
+                for(let descendant of child.getDescendants()) {
+                    descendants.push(descendant);
+                }
             }
         }
         return descendants;
