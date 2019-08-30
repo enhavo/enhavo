@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\RoutingBundle\Form\Type\RouteType;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
@@ -17,6 +18,7 @@ use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\Property;
 use Enhavo\Bundle\TranslationBundle\Model\TranslationTableData;
 use Enhavo\Bundle\TranslationBundle\Translator\LocaleResolver;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Enhavo\Bundle\TranslationBundle\Route\RouteGuesser;
 
@@ -44,7 +46,16 @@ class RouteTranslationType extends AbstractTranslationType
 
     public function getTranslation(array $options, $data, $property, $locale)
     {
-        return 'test';
+        return null;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'constraints' => [],
+            'form_type' => RouteType::class
+        ]);
     }
 
     public function getType()

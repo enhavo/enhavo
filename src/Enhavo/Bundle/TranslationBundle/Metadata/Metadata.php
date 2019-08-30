@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 
 class Metadata
 {
@@ -20,6 +21,16 @@ class Metadata
      * @var PropertyNode[]
      */
     private $properties = [];
+
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
+    public function __construct()
+    {
+        $this->nameTransformer = new NameTransformer();
+    }
 
     /**
      * @return PropertyNode[]
@@ -35,8 +46,9 @@ class Metadata
      */
     public function getProperty(string $property)
     {
-        if(isset($this->properties[$property])) {
-            return $this->properties[$property];
+        $name = $this->nameTransformer->camelCase($property, true);
+        if(isset($this->properties[$name])) {
+            return $this->properties[$name];
         }
         return null;
     }

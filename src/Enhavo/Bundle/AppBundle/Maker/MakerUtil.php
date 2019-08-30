@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -11,6 +12,7 @@ class MakerUtil
      * @var KernelInterface
      */
     private $kernel;
+    private $nameTransformer;
 
     /**
      * MakerUtil constructor.
@@ -19,76 +21,39 @@ class MakerUtil
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+        $this->nameTransformer = new NameTransformer();
     }
 
-    private function normalizeCase($name)
-    {
-        if(is_array($name)) {
-            $parts = $name;
-        } elseif(preg_match('/-/', $name)) {
-            $parts = explode('-', $name);
-        } elseif(preg_match('/_/', $name)) {
-            $parts = explode('_', $name);
-        } elseif($this->isCamelCase($name)) {
-            $parts = [];
-            $name = lcfirst($name);
-            $length = strlen($name);
-            $word = '';
-            for ($i = 0; $i < $length; ++$i) {
-                if (ctype_upper($name[$i])) {
-                    $parts[] = $word;
-                    $word = '';
-                    $word .= $name[$i];
-                } else {
-                    $word .= $name[$i];
-                }
-            }
-            if($word) {
-                $parts[] = $word;
-            }
-        } else {
-            $parts = [$name];
-        }
-
-        foreach($parts as &$part) {
-            $part = strtolower($part);
-        }
-
-        return $parts;
-    }
-
-    private function isCamelCase($name)
-    {
-        $length = strlen($name);
-        for ($i = 0; $i < $length; ++$i) {
-            if (ctype_upper($name[$i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * @param $name
+     * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     */
     public function camelCase($name)
     {
-        $parts = $this->normalizeCase($name);
-        foreach($parts as &$part) {
-            $part = ucfirst($part);
-        }
-        return implode('', $parts);
+        $this->nameTransformer->camelCase($name);
     }
 
+    /**
+     * @param $name
+     * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     */
     public function kebabCase($name)
     {
-        $parts = $this->normalizeCase($name);
-        return implode('-', $parts);
+        $this->nameTransformer->kebabCase($name);
     }
 
+    /**
+     * @param $name
+     * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     */
     public function snakeCase($name)
     {
-        $parts = $this->normalizeCase($name);
-        return implode('_', $parts);
+        $this->nameTransformer->snakeCase($name);
     }
 
+    /**
+     * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     */
     public function camelCaseToSnakeCase($camelCaseName, $minusSeparator = false)
     {
         $lcCamelCaseName = lcfirst($camelCaseName);
@@ -112,6 +77,9 @@ class MakerUtil
         return $snakeCasedName;
     }
 
+    /**
+     * @deprecated Use Enhavo\Bundle\AppBundle\Util\NameTransformer
+     */
     public function snakeCaseToCamelCase($snakeCaseName, $minusSeparator = false)
     {
         $ucSnakeCaseName = ucfirst($snakeCaseName);

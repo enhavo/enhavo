@@ -16,7 +16,7 @@ class Page extends Content implements PageInterface
     /**
      * @var NodeInterface
      */
-    protected $content;
+    private $content;
 
     /**
      * @var string
