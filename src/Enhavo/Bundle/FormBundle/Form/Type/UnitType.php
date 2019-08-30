@@ -6,13 +6,12 @@
  * Time: 14:41
  */
 
-namespace Enhavo\Bundle\ShopBundle\Form\Type;
+namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UnitType extends AbstractType
 {
@@ -30,16 +29,9 @@ class UnitType extends AbstractType
                     //text -> int
                     $string = $currencyAsString;
                     $string = str_replace(',', '.', $string);
-
                     return $string;
                 }
-            ))
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-
+            ));
     }
 
     public function getParent()
