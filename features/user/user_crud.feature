@@ -1,4 +1,4 @@
-Feature: Page CRUD
+Feature: User CRUD
   In order to create users in backend
   As a user
   I want to see, create, edit and delete users

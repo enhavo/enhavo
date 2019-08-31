@@ -74,4 +74,9 @@ class Group extends BaseGroup implements GroupInterface, ResourceInterface
     {
         return $this->users;
     }
+
+    public function __toString()
+    {
+        return (string)$this->getName();
+    }
 }
