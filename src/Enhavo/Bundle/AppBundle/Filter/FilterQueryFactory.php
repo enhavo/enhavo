@@ -9,13 +9,30 @@
 namespace Enhavo\Bundle\AppBundle\Filter;
 
 
+use Doctrine\ORM\EntityManagerInterface;
+
 class FilterQueryFactory
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * FilterQueryFactory constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @param string $class
      * @return FilterQuery
      */
-    public function create()
+    public function create($class)
     {
-        return new FilterQuery();
+        return new FilterQuery($this->em, $class);
     }
 }
