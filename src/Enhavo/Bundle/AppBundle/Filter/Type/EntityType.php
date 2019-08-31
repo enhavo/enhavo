@@ -56,11 +56,11 @@ class EntityType extends AbstractFilterType
             $entities = call_user_func([$repository, $method]);
         }
 
-        $path = $this->getOption('path', $options);
+        $choiceLabel = $this->getOption('choice_label', $options);
         $choices = [];
         foreach ($entities as $entity) {
-            if ($path) {
-                $label = $this->getProperty($entity, $path);
+            if ($choiceLabel) {
+                $label = $this->getProperty($entity, $choiceLabel);
             } else {
                 $label = (string)$entity;
             }
@@ -103,6 +103,7 @@ class EntityType extends AbstractFilterType
             'method' => 'findAll',
             'arguments' => null,
             'path' => null,
+            'choice_label' => null,
             'component' => 'filter-entity'
         ]);
 
