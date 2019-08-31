@@ -94,6 +94,7 @@ enhavo_article_article_table:
                     label: article.label.category
                     translation_domain: EnhavoArticleBundle
                     taxonomy: article_category
+                    property: categories
             viewer:
                 translation_domain: EnhavoArticleBundle
                 columns:

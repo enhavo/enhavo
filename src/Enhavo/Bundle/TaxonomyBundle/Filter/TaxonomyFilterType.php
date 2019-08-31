@@ -72,8 +72,6 @@ class TaxonomyFilterType extends AbstractFilterType
         $optionsResolver->setRequired([
             'taxonomy'
         ]);
-
-        $optionsResolver->remove('property');
     }
 
     public function getType()

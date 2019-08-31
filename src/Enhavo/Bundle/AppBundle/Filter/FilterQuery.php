@@ -9,6 +9,9 @@
 namespace Enhavo\Bundle\AppBundle\Filter;
 
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+
 class FilterQuery
 {
     const OPERATOR_EQUALS = '=';
@@ -34,12 +37,36 @@ class FilterQuery
      */
     private $orderBy = [];
 
+    /**
+     * @var QueryBuilder
+     */
+    private $queryBuilder;
+
+    /**
+     * @var string
+     */
+    private $alias;
+
+    public function __construct(EntityManagerInterface $em, $class, $alias = 'a')
+    {
+        if(strlen($alias) != 1) {
+            throw new \InvalidArgumentException('Alias should be a single letter');
+        }
+
+        $this->alias = $alias;
+        $this->queryBuilder = new QueryBuilder($em);
+        $this->queryBuilder->select($this->getAlias());
+        $this->queryBuilder->from($class, $this->getAlias());
+    }
+
     public function addOrderBy($property, $order)
     {
         $this->orderBy[] = [
             'property' => $property,
             'order' => $order
         ];
+
+        return $this;
     }
 
     public function removeOrderBy($property, $order)
@@ -56,6 +83,8 @@ class FilterQuery
             }
             unset($this->orderBy[$index]);
         }
+
+        return $this;
     }
 
     public function addWhere($property, $operator, $value, $joinProperty = null)
@@ -66,6 +95,8 @@ class FilterQuery
             'value' => $value,
             'joinProperty' => $joinProperty
         ];
+
+        return $this;
     }
 
     public function removeWhere($property, $operator, $value, $joinProperty = null)
@@ -88,6 +119,8 @@ class FilterQuery
             }
             unset($this->where[$index]);
         }
+
+        return $this;
     }
 
     public function getWhere()
@@ -98,5 +131,142 @@ class FilterQuery
     public function getOrderBy()
     {
         return $this->orderBy;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getQueryBuilder()
+    {
+        return $this->queryBuilder;
+    }
+
+    public function build()
+    {
+        /** @var QueryBuilder $query */
+        $query = $this->queryBuilder;
+        $i = 0;
+        foreach($this->getWhere() as $index => $where) {
+            $i++;
+            if($where['joinProperty']) {
+                if(is_array($where['joinProperty']) && count($where['joinProperty'])) {
+                    $joinPrefixes = $this->createJoinPropertyArray($index, count($where['joinProperty']) + 1);
+                    foreach($where['joinProperty'] as $joinProperty) {
+                        $joinPrefix = array_shift($joinPrefixes);
+                        $query->join(sprintf('%s.%s', $joinPrefix, $joinProperty), $joinPrefixes[0]);
+                    }
+                    $query->andWhere(sprintf('%s.%s %s %s', $joinPrefixes[0], $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
+                } else {
+                    $query->join(sprintf('%s.%s', $this->getAlias(), $where['property']), sprintf('j%s', $i));
+                    $query->andWhere(sprintf('j%s.%s %s %s', $i, $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
+                }
+            } else {
+                $query->andWhere(sprintf('%s.%s %s %s', $this->getAlias(), $where['property'], $this->getOperator($where), $this->getParameter($where, $i)));
+            }
+
+            if($this->hasParameter($where)) {
+                $query->setParameter(sprintf('parameter%s', $i), $this->getValue($where));
+            }
+        }
+
+        foreach($this->getOrderBy() as $order) {
+            $query->addOrderBy(sprintf('%s.%s', $this->getAlias(), $order['property']), $order['order']);
+        }
+
+        return $this;
+    }
+
+    public function createJoinPropertyArray($index, $length)
+    {
+        $i=0;
+        $allLetters = [];
+
+        $letters = range($this->getAlias(), 'z');
+        $lettersAdded = $letters;
+        while ($length > 0) {
+            $i++;
+            foreach ($lettersAdded as $indexFor => &$addLetter){
+                $addLetter .= $letters[$indexFor];
+            }
+            foreach ($lettersAdded as $letter) {
+                $letter .= $index;
+                $allLetters[] = $letter;
+                $length--;
+                if($length <= 0){
+                    $allLetters[0] = $this->getAlias();
+                    return $allLetters;
+                }
+            }
+        }
+    }
+
+    private function getValue($where)
+    {
+        $value = $where['value'];
+
+        if($where['operator'] == FilterQuery::OPERATOR_LIKE) {
+            return '%'.$value.'%';
+        }
+
+        if($where['operator'] == FilterQuery::OPERATOR_START_LIKE) {
+            return $value.'%';
+        }
+
+        if($where['operator'] == FilterQuery::OPERATOR_END_LIKE) {
+            return '%'.$value;
+        }
+
+        return $value;
+    }
+
+    private function getOperator($where)
+    {
+        $value = $where['value'];
+
+        switch($where['operator']) {
+            case(FilterQuery::OPERATOR_EQUALS):
+                if($value === null) {
+                    return 'is';
+                }
+                return '=';
+            case(FilterQuery::OPERATOR_GREATER):
+                return '>';
+            case(FilterQuery::OPERATOR_GREATER_EQUAL):
+                return '>=';
+            case(FilterQuery::OPERATOR_LESS):
+                return '<';
+            case(FilterQuery::OPERATOR_LESS_EQUAL):
+                return '<=';
+            case(FilterQuery::OPERATOR_NOT):
+                return '!=';
+            case(FilterQuery::OPERATOR_LIKE):
+            case(FilterQuery::OPERATOR_START_LIKE):
+            case(FilterQuery::OPERATOR_END_LIKE):
+                return 'like';
+        }
+        throw new FilterException('Operator not supported in Repository');
+    }
+
+    private function getParameter($where, $number)
+    {
+        $value = $where['value'];
+        if(FilterQuery::OPERATOR_EQUALS && $value === null) {
+            return 'null';
+        }
+        return sprintf(':parameter%s', $number);
+    }
+
+    private function hasParameter($where)
+    {
+        $value = $where['value'];
+        if(FilterQuery::OPERATOR_EQUALS && $value === null) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getAlias()
+    {
+        return $this->alias;
     }
 }
