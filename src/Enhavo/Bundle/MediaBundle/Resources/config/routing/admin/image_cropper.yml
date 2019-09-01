@@ -1,7 +1,7 @@
 enhavo_media_image_cropper_index:
     path:  /media/image/cropper/{token}/{format}/index
+    options:
+        expose: true
     methods: [GET, POST]
     defaults:
         _controller: enhavo_media.controller.image_cropper:indexAction
-    options:
-        expose: true

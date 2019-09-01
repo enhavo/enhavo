@@ -30,6 +30,7 @@ media:
       open_image_cropper: "Edit image"
       submit: "Apply"
     label:
+      image_cropper: "Image cropper"
       tooltip_move: "Move"
       tooltip_cropframe: "Crop"
       tooltip_zoom_in: "Zoom in"

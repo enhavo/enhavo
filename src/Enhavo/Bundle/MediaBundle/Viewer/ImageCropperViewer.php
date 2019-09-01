@@ -14,7 +14,6 @@ use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Media\ImageCropperManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Media\UrlGeneratorInterface;
-use Enhavo\Bundle\MediaBundle\Media\UrlResolver;
 use FOS\RestBundle\View\View;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
@@ -174,7 +173,9 @@ class ImageCropperViewer extends AbstractActionViewer
             'stylesheets' => [
                 'enhavo/image-cropper'
             ],
-            'template' => 'EnhavoMediaBundle:ImageCropper:index.html.twig',
+            'template' => 'admin/view/image-cropper.html.twig',
+            'label' => 'media.image_cropper.label.image_cropper',
+            'translation_domain' => 'EnhavoMediaBundle'
         ]);
         $optionsResolver->setRequired('format');
     }
