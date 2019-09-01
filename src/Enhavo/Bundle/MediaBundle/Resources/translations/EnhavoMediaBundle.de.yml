@@ -30,6 +30,7 @@ media:
       open_image_cropper: "Bild bearbeiten"
       submit: "Anwenden"
     label:
+      image_cropper: "Bild zuschneiden"
       tooltip_move: "Bild bewegen"
       tooltip_cropframe: "Rahmen ziehen"
       tooltip_zoom_in: "Einzoomen"
