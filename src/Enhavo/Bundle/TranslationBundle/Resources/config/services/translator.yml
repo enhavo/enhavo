@@ -42,15 +42,15 @@ services:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
 
-#    enhavo_translation.strategy.route_translation:
-#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\RouteTranslationStrategy
-#        arguments:
-#            - '%enhavo_translation.locales%'
-#            - '@enhavo_translation.locale_resolver'
-#            - '@doctrine.orm.entity_manager'
-#            - '@enhavo_app.route_guesser'
-#        calls:
-#            - [ setContainer, ['@service_container']]
+    enhavo_translation.route.translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator
+        arguments:
+            - '@enhavo_translation.metadata.repository'
+            - '%enhavo_translation.default_locale%'
+            - '@enhavo_app.reference.target_class_resolver'
+            - '@doctrine.orm.entity_manager'
+
+
 
 #    enhavo_translation.strategy.slug_translation:
 #        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy

@@ -25,6 +25,8 @@ services:
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType:
         public: true
+        arguments:
+            - '@enhavo_translation.route.translator'
         tags:
             - { name: enhavo.translation, alias: route }
 
