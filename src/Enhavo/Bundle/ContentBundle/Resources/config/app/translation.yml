@@ -22,6 +22,5 @@ enhavo_translation:
                 route:
                     type: route
                     form_type: Enhavo\Bundle\RoutingBundle\Form\Type\RouteType
-
-#                slug:
-#                    type: text
+                slug:
+                    type: slug

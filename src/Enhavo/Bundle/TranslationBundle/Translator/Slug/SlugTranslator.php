@@ -6,49 +6,99 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator;
+namespace Enhavo\Bundle\TranslationBundle\Translator\Slug;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\AppBundle\Reference\TargetClassResolverInterface;
+use Enhavo\Bundle\TranslationBundle\Entity\Translation;
+use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 
 class SlugTranslator
 {
     /**
      * @var EntityManagerInterface
      */
-    protected $em;
+    private $em;
 
     /**
-     * @var LocaleResolver
+     * @var LocaleResolverInterface
      */
-    protected $localeResolver;
+    private $localeResolver;
 
-    public function __construct(EntityManagerInterface $em, LocaleResolver $localeResolver)
-    {
+    /**
+     * @var TargetClassResolverInterface
+     */
+    private $classResolver;
+
+    /**
+     * @var TextTranslator
+     */
+    private $textTranslator;
+
+    /**
+     * @var string
+     */
+    private $defaultLocale;
+
+    /**
+     * SlugTranslator constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param LocaleResolverInterface $localeResolver
+     * @param $defaultLocale string
+     * @param $classResolver TargetClassResolverInterface
+     * @param $textTranslator TextTranslator
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        LocaleResolverInterface $localeResolver,
+        $defaultLocale,
+        TargetClassResolverInterface $classResolver,
+        TextTranslator $textTranslator
+    ) {
         $this->em = $em;
         $this->localeResolver = $localeResolver;
+        $this->defaultLocale = $defaultLocale;
+        $this->classResolver = $classResolver;
+        $this->textTranslator = $textTranslator;
     }
 
-    public function fetch($slug, $class)
+    public function setTranslation($entity, $property, $locale, $value): void
     {
-        if($this->localeResolver->isDefaultLocale()) {
+        $this->textTranslator->setTranslation($entity, $property, $locale, $value);
+    }
+
+    public function getTranslation($entity, $property, $locale): ?string
+    {
+        return $this->textTranslator->getTranslation($entity, $property, $locale);
+    }
+
+    public function fetch($class, $slug, $locale = null)
+    {
+        if($locale === null) {
+            $locale = $this->localeResolver->resolve();
+        }
+
+        if($locale === $this->defaultLocale) {
             $entity = $this->em->getRepository($class)->findOneBy([
                 'slug' => $slug
             ]);
             return $entity;
         }
-        
-        $translation = $this->em->getRepository('EnhavoTranslationBundle:Translation')->findOneBy([
-            'class' => $class,
+
+        /** @var Translation $translation */
+        $translation = $this->em->getRepository(Translation::class)->findOneBy([
+            'class' => $this->classResolver->resolveClass($class),
             'property' => 'slug',
             'translation' => $slug,
-            'locale' => $this->localeResolver->getLocale()
+            'locale' => $locale
         ]);
 
         if($translation !== null) {
-            $id = $translation->getRefId();
-            $entity = $this->em->getRepository($class)->find($id);
-            return $entity;
+            return $translation->getObject();
         }
+
         return null;
     }
 }

@@ -50,17 +50,14 @@ services:
             - '@enhavo_app.reference.target_class_resolver'
             - '@doctrine.orm.entity_manager'
 
-
-
-#    enhavo_translation.strategy.slug_translation:
-#        class: Enhavo\Bundle\TranslationBundle\Translator\Strategy\SlugTranslationStrategy
-#        arguments:
-#            - '%enhavo_translation.locales%'
-#            - '@enhavo_translation.locale_resolver'
-#            - '@doctrine.orm.entity_manager'
-#            - '@enhavo_app.route_guesser'
-#        calls:
-#            - [ setContainer, ['@service_container']]
+    enhavo_translation.slug.translator:
+        class: Enhavo\Bundle\TranslationBundle\Translator\Slug\SlugTranslator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@enhavo_app.locale_resolver'
+            - '%enhavo_translation.default_locale%'
+            - '@enhavo_app.reference.target_class_resolver'
+            - '@enhavo_translation.text.translator'
 
 #    enhavo_translation.preview_listener:
 #        class: Enhavo\Bundle\TranslationBundle\EventListener\PreviewListener
