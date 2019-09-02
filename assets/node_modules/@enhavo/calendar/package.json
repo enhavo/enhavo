@@ -13,6 +13,7 @@
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/list": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
-    "jquery": "~3.4.1"
+    "jquery": "~3.4.1",
+    "bootstrap": "^4.3.1"
   }
 }

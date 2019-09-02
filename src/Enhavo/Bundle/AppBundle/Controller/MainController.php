@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
 use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
+use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -82,15 +83,19 @@ class MainController extends AbstractController
             return $default;
         }
         $state = $request->query->get('state');
-        $state = base64_decode($state);
-        $state = gzuncompress($state);
-        $state = json_decode($state, true);
+        $state = StateEncoder::decode($state);
         if($state === null) {
             return $default;
         }
         $views = $state['views'];
+        $id = 1;
         foreach($views as &$view) {
-            $view['component'] = 'iframe-view';
+            if(!isset($view['component'])) {
+                $view['component'] = 'iframe-view';
+            }
+            if(!isset($view['id'])) {
+                $view['id'] = $id++;
+            }
             $view['loaded'] = false;
         }
         return [
