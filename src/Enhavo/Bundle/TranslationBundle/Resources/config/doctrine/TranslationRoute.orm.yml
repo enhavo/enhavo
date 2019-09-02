@@ -8,21 +8,14 @@ Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute:
             id: true
             generator:
                 strategy: AUTO
+
     fields:
         locale:
             type: string
             length: 255
-        type:
+        property:
             type: string
             length: 255
-            nullable: true
-        typeId:
-            type: integer
-            nullable: true
-        path:
-            type: string
-            length: 255
-            nullable: true
 
     manyToOne:
         route:

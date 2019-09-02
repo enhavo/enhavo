@@ -128,7 +128,7 @@ class TranslationManager
 
         $this->cachedTranslation = false;
         $request = $this->requestStack->getMasterRequest();
-        $path = $request->getBasePath();
+        $path = $request->getPathInfo();
         foreach($this->translationPaths as $regex) {
             if(preg_match($regex, $path)) {
                 $this->cachedTranslation = true;

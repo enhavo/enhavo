@@ -15,6 +15,13 @@ export default class TranslationType extends FormType
         this.showWidget();
         this.showCurrentLocale();
         this.showLocaleSwitch();
+
+        $(document).on('switchLanguage', (event, locale) => {
+            this.currentLocale = locale;
+            this.showWidget();
+            this.showCurrentLocale();
+            this.showLocaleSwitch();
+        })
     }
 
     protected init() {}
@@ -30,10 +37,7 @@ export default class TranslationType extends FormType
 
     private switchLocale(locale: string)
     {
-        this.currentLocale = locale;
-        this.showWidget();
-        this.showCurrentLocale();
-        this.showLocaleSwitch();
+        $(document).trigger('switchLanguage', [locale]);
     }
 
     private showWidget()

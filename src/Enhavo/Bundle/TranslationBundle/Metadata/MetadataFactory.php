@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
 use Enhavo\Bundle\AppBundle\Metadata\MetadataFactoryInterface;
+use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -20,9 +21,15 @@ class MetadataFactory implements MetadataFactoryInterface
      */
     private $kernel;
 
+    /**
+     * @var NameTransformer
+     */
+    private $nameTransformer;
+
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+        $this->nameTransformer = new NameTransformer();
     }
 
     public function create($className, array $configuration = [])
@@ -38,8 +45,9 @@ class MetadataFactory implements MetadataFactoryInterface
                 $propertyNode->setType($config['type']);
                 unset($config['type']);
                 $propertyNode->setOptions($config);
-                $propertyNode->setProperty($property);
-                $properties[$property] = $propertyNode;
+                $propertyCamelCase = $this->nameTransformer->camelCase($property, true);
+                $propertyNode->setProperty($propertyCamelCase);
+                $properties[$propertyCamelCase] = $propertyNode;
             }
             $metadata->setProperties($properties);
         }

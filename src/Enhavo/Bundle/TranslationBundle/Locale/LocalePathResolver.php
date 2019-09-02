@@ -6,30 +6,31 @@
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Translator;
+namespace Enhavo\Bundle\TranslationBundle\Locale;
 
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 use League\Uri\Components\HierarchicalPath;
 
-class LocaleResolver
+class LocalePathResolver implements LocaleResolverInterface
 {
     use ContainerAwareTrait;
 
     /**
      * @var string[]
      */
-    protected $locales;
+    private $locales;
 
     /**
      * @var string
      */
-    protected $defaultLocale;
+    private $defaultLocale;
 
     /**
      * @var string
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @var RequestStack
@@ -38,14 +39,12 @@ class LocaleResolver
 
     public function __construct(RequestStack $requestStack, $locales, $defaultLocale)
     {
-        foreach($locales as $locale => $data) {
-            $this->locales[] = $locale;
-        }
+        $this->locales = $locales;
         $this->defaultLocale = $defaultLocale;
         $this->requestStack = $requestStack;
     }
 
-    public function getLocale()
+    public function resolve()
     {
         if($this->locale) {
             return $this->locale;
@@ -55,27 +54,16 @@ class LocaleResolver
         return $this->locale;
     }
 
-    public function setLocale($locale)
+    private function resolveLocale()
     {
-        $this->locale = $locale;
-    }
-
-    public function resolveLocale()
-    {
-        $this->setLocale($this->defaultLocale);
-
+        $this->locale = $this->defaultLocale;
         $request = $this->requestStack->getMasterRequest();
         if($request !== null) {
             $path = new HierarchicalPath($request->getPathInfo());
             $segment = $path->getSegment(0);
             if(!empty($segment) && in_array($segment, $this->locales)) {
-                $this->setLocale($segment);
+                $this->locale = $segment;
             }
         }
-    }
-
-    public function isDefaultLocale()
-    {
-        return $this->getLocale() === $this->defaultLocale;
     }
 }

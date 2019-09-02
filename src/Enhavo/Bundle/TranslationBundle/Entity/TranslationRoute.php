@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 
 /**
@@ -28,17 +27,7 @@ class TranslationRoute
     /**
      * @var string
      */
-    private $type;
-
-    /**
-     * @var integer
-     */
-    private $typeId;
-
-    /**
-     * @var string
-     */
-    private $path;
+    private $property;
 
     /**
      * Get id
@@ -92,48 +81,16 @@ class TranslationRoute
     /**
      * @return string
      */
-    public function getType()
+    public function getProperty(): string
     {
-        return $this->type;
+        return $this->property;
     }
 
     /**
-     * @param string $type
+     * @param string $property
      */
-    public function setType($type)
+    public function setProperty(string $property): void
     {
-        $this->type = $type;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTypeId()
-    {
-        return $this->typeId;
-    }
-
-    /**
-     * @param int $typeId
-     */
-    public function setTypeId($typeId)
-    {
-        $this->typeId = $typeId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * @param string $path
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
+        $this->property = $property;
     }
 }

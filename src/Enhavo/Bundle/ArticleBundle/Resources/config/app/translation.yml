@@ -2,11 +2,6 @@ enhavo_translation:
     metadata:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
             properties:
-                title:
-                    type: text
-                    form_type: 'Symfony\Component\Form\Extension\Core\Type\TextType'
-#                    constraints:
-#                        - Symfony\Component\Validator\Constraints\NotBlank
                 teaser:
                     type: text
                     form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'

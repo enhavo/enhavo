@@ -1,0 +1,4 @@
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            properties:

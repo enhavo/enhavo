@@ -40,3 +40,9 @@ services:
             - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\AppBundle\Twig\LocaleExtension:
+        arguments:
+            - '@enhavo_app.locale_resolver'
+        tags:
+            - { name: twig.extension }

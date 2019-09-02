@@ -36,3 +36,5 @@ services:
           - '@enhavo_app.reference.target_class_resolver'
         tags:
             - { name: doctrine.event_subscriber }
+
+    Enhavo\Bundle\RoutingBundle\Factory\RouteFactory:

@@ -18,15 +18,21 @@ services:
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
         public: true
+        arguments:
+            - '@enhavo_translation.text.translator'
         tags:
             - { name: enhavo.translation, alias: text }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType:
         public: true
+        arguments:
+            - '@enhavo_translation.route.translator'
         tags:
             - { name: enhavo.translation, alias: route }
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\SlugTranslationType:
         public: true
+        arguments:
+            - '@enhavo_translation.slug.translator'
         tags:
             - { name: enhavo.translation, alias: slug }
