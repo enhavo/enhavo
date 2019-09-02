@@ -6,6 +6,7 @@ import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
 export default class MenuItem extends AbstractMenu
 {
     public url: string;
+    public mainUrl: string;
     public clickable: boolean = true;
 
     open(): void {

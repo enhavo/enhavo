@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="{'menu-child-title menu-item': true, 'selected': data.selected}" @click="open()">
+    <a :href="data.mainUrl" v-bind:class="{'menu-child-title menu-item': true, 'selected': data.selected}" @click="open($event)">
         <div class="symbol-container">
             <i v-bind:class="['icon', icon]" aria-hidden="true"></i>
         </div>
@@ -7,7 +7,7 @@
             {{ label }}
         </div>
         <menu-notification v-if="notification" v-bind:data="notification"></menu-notification>
-    </div>
+    </a>
 </template>
 
 <script lang="ts">
@@ -36,7 +36,9 @@
             return (this.data && this.data.notification) ? this.data.notification : false;
         }
 
-        open(): void {
+        open(event): void
+        {
+            event.preventDefault();
             this.data.open()
         }
     }

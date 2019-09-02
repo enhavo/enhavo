@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "slick-carousel": "^1.8.1",
-    "jquery": "~3.4.1"
+    "jquery": "~3.4.1",
+    "bootstrap": "^4.3.1"
   }
 }

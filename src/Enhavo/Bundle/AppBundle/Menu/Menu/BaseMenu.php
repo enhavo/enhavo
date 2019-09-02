@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\AppBundle\Menu\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenu;
+use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -39,9 +40,11 @@ class BaseMenu extends AbstractMenu
 
     public function createViewData(array $options)
     {
+        $url = $this->router->generate($options['route']);
         $data = [
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
-            'url' => $this->router->generate($options['route']),
+            'url' => $url,
+            'mainUrl' => $this->generateMainUrl($url),
             'icon' => $options['icon'],
             'component' => $options['component'],
             'class' => $options['class'],
@@ -58,6 +61,17 @@ class BaseMenu extends AbstractMenu
         $parentData = parent::createViewData($options);
         $data = array_merge($parentData, $data);
         return $data;
+    }
+
+    private function generateMainUrl($url)
+    {
+        $state = StateEncoder::encode(['views' => [
+            ['url' => $url]
+        ]]);
+
+        return $this->router->generate('enhavo_app_index', [
+            'state' => $state
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
