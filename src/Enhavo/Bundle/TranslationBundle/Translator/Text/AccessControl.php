@@ -59,6 +59,9 @@ class AccessControl
 
         $this->access = true;
         $request = $this->requestStack->getMasterRequest();
+        if($request === null) {
+            return false;
+        }
         $path = $request->getPathInfo();
         foreach($this->accessControl as $regex) {
             if(!preg_match($regex, $path)) {
