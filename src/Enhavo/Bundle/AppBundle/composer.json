@@ -15,6 +15,7 @@
     "php": "^7.2",
     "ext-ctype": "*",
     "ext-json": "*",
+    "ext-zlib": "*",
     "league/uri": "^5.0",
     "stof/doctrine-extensions-bundle": "^1.2",
     "friendsofsymfony/jsrouting-bundle": "^2.2",
