@@ -2,17 +2,20 @@ import MenuData from "@enhavo/app/Menu/MenuData";
 import MenuRegistry from "@enhavo/app/Menu/MenuRegistry";
 import * as _ from "lodash";
 import MenuInterface from "@enhavo/app/Menu/MenuInterface";
+import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
 
 export default class MenuManager
 {
     private data: MenuData;
     private registry: MenuRegistry;
+    private dataStorage: GlobalDataStorageManager;
 
-    constructor(data: MenuData, registry: MenuRegistry)
+    constructor(data: MenuData, registry: MenuRegistry, dataStorage: GlobalDataStorageManager)
     {
         _.extend(data, new MenuData);
         this.data = data;
         this.registry = registry;
+        this.dataStorage = dataStorage;
 
         for (let i in this.data.items) {
             let item = registry.getFactory(this.data.items[i].component).createFromData(this.data.items[i]);
