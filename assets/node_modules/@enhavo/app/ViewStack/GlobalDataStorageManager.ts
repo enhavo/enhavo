@@ -9,7 +9,7 @@ export default class GlobalDataStorageManager
     private eventDispatcher: EventDispatcher;
     private entries: DataStorageEntry[];
 
-    constructor(eventDispatcher: EventDispatcher, data: any)
+    constructor(eventDispatcher: EventDispatcher, data: any = null)
     {
         this.eventDispatcher = eventDispatcher;
         this.entries = this.load(data);
@@ -66,6 +66,9 @@ export default class GlobalDataStorageManager
 
     private load(data: any): DataStorageEntry[]
     {
+        if(data !== null) {
+            return data;
+        }
         return [];
     }
 

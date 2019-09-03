@@ -99,7 +99,7 @@ export class MainApplication extends Application
     public getGlobalDataStorageManager(): GlobalDataStorageManager
     {
         if(this.globalDataStorageManager == null) {
-            this.globalDataStorageManager = new GlobalDataStorageManager(this.getEventDispatcher(), this.getDataLoader().load().storage);
+            this.globalDataStorageManager = new GlobalDataStorageManager(this.getEventDispatcher(), this.getDataLoader().load().view_stack.storage);
         }
         return this.globalDataStorageManager;
     }
