@@ -60,8 +60,30 @@ export default class MenuManager
         }
     }
 
+    init() {
+        let menuActiveKey = this.dataStorage.get('menu-active-key');
+        if(menuActiveKey !== null) {
+            for(let item of this.getItems()) {
+                if(item.key == menuActiveKey.value) {
+                    item.select();
+                }
+            }
+        }
+    }
+
+    setActive(key: string) {
+        this.dataStorage.set('menu-active-key', key);
+    }
+
     getItems(): Array<MenuInterface>
     {
-        return this.data.items;
+        let items = [];
+        for(let item of this.data.items) {
+            items.push(item);
+            for(let descendant of item.getDescendants()) {
+                items.push(descendant);
+            }
+        }
+        return items;
     }
 }

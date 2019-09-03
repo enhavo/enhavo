@@ -35,6 +35,7 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
     {
         return [
             'component' => $options['component'],
+            'key' => $options['key'],
         ];
     }
 
@@ -47,7 +48,8 @@ abstract class AbstractMenu extends AbstractType implements MenuInterface
         ]);
 
         $resolver->setRequired([
-            'component'
+            'component',
+            'key'
         ]);
     }
 }

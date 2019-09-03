@@ -12,6 +12,11 @@ export default class MenuList extends AbstractMenu
         return this.items;
     }
 
+    select() {
+        super.select();
+        this.isOpen = true;
+    }
+
     open() {
         this.isOpen = true;
     }
