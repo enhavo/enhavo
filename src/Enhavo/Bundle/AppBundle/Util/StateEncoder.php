@@ -22,7 +22,7 @@ class StateEncoder
     public static function decode($state)
     {
         $state = base64_decode($state);
-        $state = gzdecode($state);
+        $state = gzuncompress($state);
         $data = json_decode($state, true);
         return $data;
     }
