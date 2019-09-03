@@ -17,7 +17,7 @@ export default class TranslationLoader extends AbstractLoader
     {
         let elements = this.findElements(element, '[data-translation-type]');
         for(element of elements) {
-            new TranslationType(element);
+            new TranslationType(element, this.application.getEventDispatcher());
         }
     }
 }
