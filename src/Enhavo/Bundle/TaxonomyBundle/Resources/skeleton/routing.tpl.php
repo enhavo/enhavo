@@ -11,7 +11,7 @@
                 translationDomain: EnhavoTaxonomyBundle
                 <?php if($hierarchy): ?>data<?php else: ?>table<?php endif; ?>_route: <?= $bundle_name; ?>_<?= $name; ?>_<?php if($hierarchy): ?>data<?php else: ?>table<?php endif; ?>
                 batch_route: <?= $bundle_name; ?>_<?= $name; ?>_batch
-                update_route: <?= $bundle_name; ?>_<?= $name; ?>_update
+                open_route: <?= $bundle_name; ?>_<?= $name; ?>_update
                 actions:
                     create:
                         type: create

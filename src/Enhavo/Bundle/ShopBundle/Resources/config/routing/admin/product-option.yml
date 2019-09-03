@@ -12,7 +12,7 @@ enhavo_shop_product_option_index:
                     table:
                         type: table
                         table_route: enhavo_shop_product_option_table
-                        update_route: enhavo_shop_product_option_update
+                        open_route: enhavo_shop_product_option_update
                 actions:
                     create:
                         route: enhavo_shop_product_option_create

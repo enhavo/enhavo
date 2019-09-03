@@ -11,7 +11,7 @@ enhavo_article_tag_index:
                 translation_domain: EnhavoArticleBundle
                 table_route: enhavo_article_tag_table
                 batch_route: enhavo_article_tag_batch
-                update_route: enhavo_article_tag_update
+                open_route: enhavo_article_tag_update
                 actions:
                     create:
                         type: create

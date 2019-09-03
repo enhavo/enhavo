@@ -11,7 +11,7 @@ enhavo_article_category_index:
                 translation_domain: EnhavoArticleBundle
                 data_route: enhavo_article_category_data
                 batch_route: enhavo_article_category_batch
-                update_route: enhavo_article_category_update
+                open_route: enhavo_article_category_update
                 actions:
                     create:
                         type: create
