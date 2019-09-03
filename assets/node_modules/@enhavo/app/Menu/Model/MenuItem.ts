@@ -19,6 +19,7 @@ export default class MenuItem extends AbstractMenu
                     }))
                     .then(() => {
                         this.getManager().clearSelections();
+                        this.getManager().setActive(this.key);
                         this.select();
                         this.application.getEventDispatcher().dispatch(new SaveStateEvent());
                     });

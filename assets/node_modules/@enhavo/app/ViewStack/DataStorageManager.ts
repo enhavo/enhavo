@@ -2,6 +2,7 @@ import EventDispatcher from '@enhavo/app/ViewStack/EventDispatcher';
 import DataStorageEntry from '@enhavo/app/ViewStack/DataStorageEntry';
 import SaveDataEvent from '@enhavo/app/ViewStack/Event/SaveDataEvent';
 import LoadDataEvent from '@enhavo/app/ViewStack/Event/LoadDataEvent';
+import RemoveDataEvent from '@enhavo/app/ViewStack/Event/RemoveDataEvent';
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 
 export default class DataStorageManager
@@ -24,7 +25,7 @@ export default class DataStorageManager
             event.resolve(entry);
         });
 
-        this.eventDispatcher.on('remove-data', (event: LoadDataEvent) => {
+        this.eventDispatcher.on('remove-data', (event: RemoveDataEvent) => {
             this.delete(event.key, event.origin);
             event.resolve();
         });

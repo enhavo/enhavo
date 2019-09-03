@@ -74,6 +74,8 @@ class ListMenu extends AbstractMenu
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'component' => 'menu-list',
             'translation_domain' => null,

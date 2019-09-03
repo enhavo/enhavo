@@ -54,6 +54,7 @@ class MainController extends AbstractController
             'view_stack' => [
                 'width' => 0,
                 'views' => $state['views'],
+                'storage' => $state['storage'],
             ],
             'branding' => [
                 'logo' => $this->brandingConfig['logo'],
@@ -77,6 +78,7 @@ class MainController extends AbstractController
     {
         $default = [
             'views' => [],
+            'storage' => [],
         ];
 
         if(!$request->query->has('state')) {
@@ -87,19 +89,30 @@ class MainController extends AbstractController
         if($state === null) {
             return $default;
         }
-        $views = $state['views'];
-        $id = 1;
-        foreach($views as &$view) {
-            if(!isset($view['component'])) {
-                $view['component'] = 'iframe-view';
+
+        $views = [];
+        if(isset($state['views'])) {
+            $views = $state['views'];
+            $id = 1;
+            foreach($views as &$view) {
+                if(!isset($view['component'])) {
+                    $view['component'] = 'iframe-view';
+                }
+                if(!isset($view['id'])) {
+                    $view['id'] = $id++;
+                }
+                $view['loaded'] = false;
             }
-            if(!isset($view['id'])) {
-                $view['id'] = $id++;
-            }
-            $view['loaded'] = false;
         }
+
+        $storage = [];
+        if(isset($state['storage'])) {
+            $storage = $state['storage'];
+        }
+
         return [
             'views' => $views,
+            'storage' => $storage
         ];
     }
 

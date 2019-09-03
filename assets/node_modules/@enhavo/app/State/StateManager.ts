@@ -2,18 +2,21 @@ import * as URI from 'urijs';
 import ViewStack from "@enhavo/app/ViewStack/ViewStack";
 import * as pako from "pako";
 import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
+import GlobalDataStorageManager from "@enhavo/app/ViewStack/GlobalDataStorageManager";
 
 export default class StateManager
 {
     private baseUrl: string;
     private viewStack: ViewStack;
     private eventDispatcher: EventDispatcher;
+    private dataStorage: GlobalDataStorageManager;
 
-    constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher)
+    constructor(viewStack: ViewStack, eventDispatcher: EventDispatcher, dataStorage: GlobalDataStorageManager)
     {
         this.baseUrl = window.location.href;
         this.viewStack = viewStack;
         this.eventDispatcher = eventDispatcher;
+        this.dataStorage = dataStorage;
 
         this.eventDispatcher.on('save-state', () => {
             window.setTimeout(() => {
@@ -57,7 +60,8 @@ export default class StateManager
         }
 
         return {
-            views: viewData
+            views: viewData,
+            storage: this.dataStorage.getStorage()
         };
     }
 }

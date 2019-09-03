@@ -21,6 +21,8 @@ export default class MainApp
         this.stateManager = stateManager;
         if(!this.viewStack.hasViews()) {
             this.menuManager.start();
+        } else {
+            this.menuManager.init();
         }
     }
 

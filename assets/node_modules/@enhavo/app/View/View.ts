@@ -9,8 +9,10 @@ import ExistsData from "@enhavo/app/ViewStack/ExistsData";
 import CloseEvent from "@enhavo/app/ViewStack/Event/CloseEvent";
 import ViewInterface from "@enhavo/app/ViewStack/ViewInterface";
 import LoadDataEvent from "@enhavo/app/ViewStack/Event/LoadDataEvent";
+import LoadGlobalDataEvent from "@enhavo/app/ViewStack/Event/LoadGlobalDataEvent";
 import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 import SaveDataEvent from "@enhavo/app/ViewStack/Event/SaveDataEvent";
+import SaveGlobalDataEvent from "@enhavo/app/ViewStack/Event/SaveGlobalDataEvent";
 import SaveStateEvent from "@enhavo/app/ViewStack/Event/SaveStateEvent";
 import RemoveEvent from "@enhavo/app/ViewStack/Event/RemoveEvent";
 import LoadedEvent from "@enhavo/app/ViewStack/Event/LoadedEvent";
@@ -171,14 +173,50 @@ export default class View
         })
     }
 
-    public loadValue(key: string, callback: (value: string) => void): void
+    public loadValue(key: string, callback: (value: string) => void): Promise<string>
     {
-        this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
-            let value = null;
-            if (data != null) {
-                value = data.value;
-            }
-            callback(value);
+        return new Promise((resolve, reject) => {
+            this.eventDispatcher.dispatch(new LoadDataEvent(key)).then((data: DataStorageEntry) => {
+                let value = null;
+                if (data != null) {
+                    value = data.value;
+                }
+                resolve();
+                callback(value);
+            })
+            .catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public storeGlobalValue(key: string, value: any, callback: () => void = () => {})
+    {
+        return new Promise((resolve, reject) => {
+            this.eventDispatcher.dispatch(new SaveGlobalDataEvent(key, value)).then(() => {
+                callback();
+                resolve();
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public loadGlobalValue(key: string, callback: (value: string) => void): Promise<string>
+    {
+        return new Promise((resolve, reject) => {
+            this.eventDispatcher.dispatch(new LoadGlobalDataEvent(key))
+                .then((data: DataStorageEntry) => {
+                    let value = null;
+                    if (data != null) {
+                        value = data.value;
+                    }
+                    resolve();
+                    callback(value);
+                })
+                .catch(() => {
+                    reject();
+                });
         });
     }
 

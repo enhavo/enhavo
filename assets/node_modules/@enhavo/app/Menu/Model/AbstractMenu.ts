@@ -8,6 +8,7 @@ export default abstract class AbstractMenu implements MenuInterface
     public component: string;
     public label: string;
     public selected: boolean = false;
+    public key: string;
     protected application: ApplicationInterface;
     private parentItem: MenuInterface;
     public clickable: boolean = false;
@@ -19,6 +20,18 @@ export default abstract class AbstractMenu implements MenuInterface
 
     children(): Array<MenuInterface> {
         return [];
+    }
+
+    getDescendants(): Array<MenuInterface>
+    {
+        let descendants = [];
+        for(let child of this.children()) {
+            descendants.push(child);
+            for(let descendant of child.getDescendants()) {
+                descendants.push(descendant);
+            }
+        }
+        return descendants;
     }
 
     unselect(): void {

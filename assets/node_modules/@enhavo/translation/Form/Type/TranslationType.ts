@@ -1,16 +1,23 @@
 import FormType from "@enhavo/app/Form/FormType";
+import EventDispatcher from "@enhavo/app/ViewStack/EventDispatcher";
 import * as $ from "jquery";
+import LoadGlobalDataEvent from "@enhavo/app/ViewStack/Event/LoadGlobalDataEvent";
+import SaveGlobalDataEvent from "@enhavo/app/ViewStack/Event/SaveGlobalDataEvent";
+import DataStorageEntry from "@enhavo/app/ViewStack/DataStorageEntry";
 
 export default class TranslationType extends FormType
 {
     private locales: string[];
     private currentLocale: string;
+    private eventDispatcher: EventDispatcher;
 
-    constructor(element:HTMLElement)
+    constructor(element:HTMLElement, eventDispatcher: EventDispatcher)
     {
         super(element);
         this.locales = this.$element.data('translation-type');
+        this.eventDispatcher = eventDispatcher;
         this.currentLocale = this.locales[0];
+
         this.initListener();
         this.showWidget();
         this.showCurrentLocale();
@@ -21,7 +28,15 @@ export default class TranslationType extends FormType
             this.showWidget();
             this.showCurrentLocale();
             this.showLocaleSwitch();
-        })
+        });
+
+        this.eventDispatcher.dispatch(new LoadGlobalDataEvent('translation-locale')).then((data: DataStorageEntry) => {
+            if(data) {
+                if(data.value != this.currentLocale) {
+                    this.switchLocale(data.value);
+                }
+            }
+        });
     }
 
     protected init() {}
@@ -38,6 +53,7 @@ export default class TranslationType extends FormType
     private switchLocale(locale: string)
     {
         $(document).trigger('switchLanguage', [locale]);
+        this.eventDispatcher.dispatch(new SaveGlobalDataEvent('translation-locale', locale));
     }
 
     private showWidget()

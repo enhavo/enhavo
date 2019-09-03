@@ -63,9 +63,11 @@ class MenuManager
     public function getMenuItemsByConfiguration($configuration)
     {
         $menus = [];
-        foreach($configuration as $name => $options) {
+        foreach($configuration as $key => $options) {
             /** @var Menu $menu */
-            $menu = $this->factory->create($options);
+            $menu = $this->factory->create(array_merge($options, [
+                'key' => $key
+            ]));
 
             if($menu->isHidden()) {
                 continue;
