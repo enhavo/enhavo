@@ -22,10 +22,10 @@ class NewsletterMainMenu extends ListMenu
             'label' => 'newsletter.label.newsletter',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'children' => [
-                'newsletter' => [
+                'newsletter_newsletter' => [
                     'type' => 'newsletter_newsletter'
                 ],
-                'group' => [
+                'newsletter_group' => [
                     'type' => 'newsletter_group'
                 ],
             ]

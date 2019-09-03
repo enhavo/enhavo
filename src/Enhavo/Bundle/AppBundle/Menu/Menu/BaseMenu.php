@@ -44,7 +44,7 @@ class BaseMenu extends AbstractMenu
         $data = [
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'url' => $url,
-            'mainUrl' => $this->generateMainUrl($url),
+            'mainUrl' => $this->generateMainUrl($url, $options),
             'icon' => $options['icon'],
             'component' => $options['component'],
             'class' => $options['class'],
@@ -63,11 +63,12 @@ class BaseMenu extends AbstractMenu
         return $data;
     }
 
-    private function generateMainUrl($url)
+    private function generateMainUrl($url, $options)
     {
-        $state = StateEncoder::encode(['views' => [
-            ['url' => $url]
-        ]]);
+        $state = StateEncoder::encode([
+            'views' => [['url' => $url]],
+            'storage' => [['key' => 'menu-active-key', 'value' => $options['key']]]
+        ]);
 
         return $this->router->generate('enhavo_app_index', [
             'state' => $state
