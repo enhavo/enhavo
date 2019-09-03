@@ -90,20 +90,28 @@ export default class AutoCompleteType extends FormType
             let id = data[this.idProperty];
             let label = data[this.labelProperty];
             let $input = this.$element.find('[data-auto-complete-input]');
-            let currentData = $input.select2('data');
-            let exists = false;
-            for(let item of currentData) {
-                if(item.id == id) {
-                    exists = true;
-                    item.text = label;
-                    break;
+            let formTypeConfiguration = this.$element.data('auto-complete-entity')
+            if (formTypeConfiguration.multiple) {
+                let currentData = $input.select2('data');
+                let exists = false;
+                for(let item of currentData) {
+                    if(item.id == id) {
+                        exists = true;
+                        item.text = label;
+                        break;
+                    }
                 }
+                currentData.push({
+                    id: id,
+                    text: label
+                });
+                $input.select2('data', currentData);
+            } else {
+                $input.select2('data', {
+                    id: id,
+                    text: label
+                });
             }
-            currentData.push({
-                id: id,
-                text: label
-            });
-            $input.select2('data', currentData);
         }
     }
 }
