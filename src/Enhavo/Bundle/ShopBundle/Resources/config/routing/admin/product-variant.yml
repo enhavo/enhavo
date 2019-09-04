@@ -14,8 +14,8 @@ enhavo_shop_product_variant_index:
                         table_route: enhavo_shop_product_variant_table
                         table_route_parameters:
                             productId: $productId
-                        update_route: enhavo_shop_product_variant_update
-                        update_route_parameters:
+                        open_route: enhavo_shop_product_variant_update
+                        open_route_parameters:
                             productId: $productId
                 actions:
                     create:

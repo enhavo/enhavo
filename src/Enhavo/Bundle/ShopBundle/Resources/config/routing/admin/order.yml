@@ -16,7 +16,7 @@ enhavo_shop_order_index:
                     table:
                         type: table
                         table_route: enhavo_shop_order_table
-                        update_route: enhavo_shop_order_update
+                        open_route: enhavo_shop_order_update
                 actions:
                     create:
                         route: ~

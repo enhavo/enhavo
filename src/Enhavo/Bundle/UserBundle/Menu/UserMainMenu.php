@@ -22,10 +22,10 @@ class UserMainMenu extends ListMenu
             'label' => 'user.label.user',
             'translation_domain' => 'EnhavoUserBundle',
             'children' => [
-                'user' => [
+                'user_user' => [
                     'type' => 'user_user'
                 ],
-                'group' => [
+                'user_group' => [
                     'type' => 'user_group'
                 ]
             ]
