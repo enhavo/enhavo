@@ -1,17 +1,93 @@
-Installation
+Get started
 ============
 
-To create a project with enhavo, you just need to run the following composer command.
+Before Installation:
+--------------------
 
-.. code-block:: bash
+Before you can install and use enhavo, your local environment must fulfill some (really just some) basic requirements.
+First of all, you need the composer, a dependency management tool, in php, downloadable at `getcomposer.org`_
 
-    composer create-project enhavo/enhavo-project project-name 0.5
+.. _getcomposer.org: https://getcomposer.org/download/.
 
-After you have successfully installed enhavo via composer and set up the database settings in your parameters.yml
-you can run the enhavo installer.
+The second necessary tool is “yarn”, another powerful JavaScript dependency management tool, which you will find on `this page`_
 
-.. code-block:: bash
+.. _this page: https://yarnpkg.com/en/.
 
-    app/console enhavo:install
+That’s it! After you have installed these two tools, your system is ready for action.
 
-Now you are ready to use the enhavo cms. If you add **/web** to your document root, you will see the enhavo welcome page
+Install Enhavo within 5 Minutes.
+--------------------------------
+
+The Enhavo App Edition only contains basic admin features, use this, if your application is not used without standard content management features to create a project with enhavo, you just need to run the following composer command.
+
+    composer create-project enhavo/enhavo-app project-name
+
+Use enhavo/enhavo-cms for the standard-version and enhavo/enhavo-shop if you also need shop-features.
+
+Now, only a few terminal-commands are left (take care, that you are in your created project folder dir for all following commands).
+
+Use
+
+    yarn install
+
+for the installation of all JavaScript dependencies managed by yarn.
+
+With
+
+    yarn encore dev
+
+you will compile your assets once to a single final app.js-File which includes everything your app needs (Vue.js, Sass, TypeScript etc.)
+
+Yarn is also responsible for managing the project's routes. You have to update them after each route-change with the following command:
+
+    yarn routes:dump
+
+The finale installation steps are initializing Enhavo once and creating your first backend user account with super-admin permissions.
+
+    bin/console enhavo:init
+    bin/console fos:user:create my@email.com my@email.com password --super-admin
+
+Launching Project
+-----------------
+So far, so good. The installation is complete and you´re ready to launch your empty base-application.
+
+You can run this project on any webserver (like apache, nginx, etc.), but for testing reasons, the fastest way to start your application for the first time is using the PHP´s build-in web-server.
+
+Start that build-in server with
+
+    php bin/console server:run
+
+and see the result with
+
+    open http://127.0.0.1:8001/admin.
+
+Use the username and password from the user account, you´ve created before with ``fos:user:create`, to log in.
+
+Final Words
+-----------
+Great! We´ve got two awesome dependency management tools, installed a complete new web-application project based on the symfony-framework and included Enhavo as cms and launched our application with the build-in server.
+
+Well-intentioned Advices
+------------------------
+- During the complete developing process, it´s better to recompile assets automatically when files change, to do that, use:
+
+    yarn encore dev - -watch
+
+- If you want to launch your application with any other web server, use the ``~/PathToYourProject/YourProject/public`` - Folder as your document root.
+
+
+Enhavo-Editions
+---------------
+We divided Ènhavo into three different editions, choose the one that fit to your benefits.
+
+
+**Enhavo CMS** 	- Contains CMS relevant feature
+
+**Enhavo Shop** - Same as CMS but also contain Shop features
+
+**Enhavo App** 	- Contains only basic Admin features
+
+
+
+
+
