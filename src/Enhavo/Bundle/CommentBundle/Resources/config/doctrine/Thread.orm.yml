@@ -1,0 +1,16 @@
+Enhavo\Bundle\CommentBundle\Entity\Thread:
+    type: entity
+    table: comment_thread
+    repositoryClass: Enhavo\Bundle\CommentBundle\Repository\ThreadRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToMany:
+        comments:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface
+            orphanRemoval: true
+            mappedBy: thread

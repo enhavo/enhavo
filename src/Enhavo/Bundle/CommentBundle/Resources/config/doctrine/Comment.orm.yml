@@ -1,0 +1,31 @@
+Enhavo\Bundle\CommentBundle\Entity\Comment:
+    type: entity
+    table: comment_comment
+    repositoryClass: Enhavo\Bundle\CommentBundle\Repository\CommentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        comment:
+            type: text
+            nullable: true
+
+        createdAt:
+            type: text
+            nullable: true
+
+    manyToOne:
+        thread:
+            targetEntity: Enhavo\Bundle\CommentBundle\Model\ThreadInterface
+        parent:
+            targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface
+
+    oneToMany:
+        children:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface
+            orphanRemoval: true
+            mappedBy: parent
