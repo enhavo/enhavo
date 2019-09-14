@@ -120,6 +120,9 @@ class ResetPasswordController extends AbstractController
         $view = $this->viewFactory->create('reset', [
             'form' => $form,
             'template' => $configuration->getTemplate('theme/security/registration/confirm.html.twig'),
+            'parameters' => [
+                'token' => $token
+            ]
         ]);
 
         return $this->viewHandler->handle($view);
