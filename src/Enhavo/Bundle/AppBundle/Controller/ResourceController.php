@@ -254,8 +254,15 @@ class ResourceController extends BaseController
         /** @var RequestConfiguration $configuration */
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        $resource = null;
+        if($request->query->has('id')) {
+            $request->attributes->set('id', $request->query->get('id'));
+            $resource = $this->singleResourceProvider->get($configuration, $this->repository);
+        }
+
         $view = $this->viewFactory->create('preview', [
-            'metadata' => $this->metadata
+            'metadata' => $this->metadata,
+            'resource' => $resource
         ]);
 
         return $this->viewHandler->handle($configuration, $view);

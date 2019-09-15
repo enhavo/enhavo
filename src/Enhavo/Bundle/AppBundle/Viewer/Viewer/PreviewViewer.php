@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\AppBundle\Viewer\Viewer;
 use Enhavo\Bundle\AppBundle\Viewer\AbstractActionViewer;
 use FOS\RestBundle\View\View;
 use Sylius\Component\Resource\Metadata\Metadata;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PreviewViewer extends AbstractActionViewer
@@ -27,7 +28,13 @@ class PreviewViewer extends AbstractActionViewer
     {
         $view = parent::createView($options);
         $templateVars = $view->getTemplateData();
-        $templateVars['data']['url'] = $this->container->get('router')->generate($this->getResourcePreviewUrl($options));
+
+        $parameters = [];
+        if($options['resource'] instanceof ResourceInterface) {
+            $parameters['id'] = $options['resource']->getId();
+        }
+
+        $templateVars['data']['url'] = $this->container->get('router')->generate($this->getResourcePreviewUrl($options), $parameters);
         $templateVars['data']['inputs'] = [];
         $view->setTemplateData($templateVars);
         return $view;
@@ -80,6 +87,7 @@ class PreviewViewer extends AbstractActionViewer
             ],
             'translation_domain' => 'EnhavoAppBundle',
             'label' => 'label.preview',
+            'resource' => null
         ]);
         $optionsResolver->setRequired(['metadata']);
     }
