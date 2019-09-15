@@ -49,7 +49,8 @@ class RouteTranslationType extends AbstractTranslationType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'constraints' => [],
-            'form_type' => RouteType::class
+            'form_type' => RouteType::class,
+            'generators' => []
         ]);
     }
 

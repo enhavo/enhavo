@@ -91,7 +91,7 @@ class RouteTranslator
 
     public function delete($entity)
     {
-        return $this->deleteTranslationData($entity);
+        $this->deleteTranslationData($entity);
     }
 
     private function checkEntity($entity)

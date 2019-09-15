@@ -48,7 +48,8 @@ class SlugTranslationType extends AbstractTranslationType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'form_type' => TextType::class
+            'form_type' => TextType::class,
+            'generators' => []
         ]);
     }
 
