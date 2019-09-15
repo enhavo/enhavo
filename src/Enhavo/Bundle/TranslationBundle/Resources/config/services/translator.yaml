@@ -31,6 +31,12 @@ services:
             - '%enhavo_translation.locales%'
             - '%enhavo_translation.default_locale%'
 
+    Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver:
+        arguments:
+            - '@request_stack'
+            - '%enhavo_translation.locales%'
+            - '%enhavo_translation.default_locale%'
+
     enhavo_translation.route.translator:
         class: Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator
         arguments:
