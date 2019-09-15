@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationType extends AbstractTranslationType
@@ -57,8 +58,8 @@ class TextTranslationType extends AbstractTranslationType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'constraints' => []
+            'constraints' => [],
+            'form_type' => TextType::class
         ]);
-        $resolver->setRequired(['form_type']);
     }
 }

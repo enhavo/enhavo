@@ -1,78 +1,49 @@
 enhavo_translation:
     metadata:
-        Enhavo\Bundle\BlockBundle\Entity\BlockquoteText:
+        Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteTextBlock:
             properties:
                 blockquote:
                     type: text
 
-        Enhavo\Bundle\BlockBundle\Entity\Gallery:
+        Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
             properties:
                 title:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
 
-        Enhavo\Bundle\BlockBundle\Entity\Picture:
+        Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
             properties:
                 title:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 caption:
                     type: text
 
-        Enhavo\Bundle\BlockBundle\Entity\PicturePicture:
+        Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
             properties:
                 title:
                     type: text
-                captionLeft:
-                    type: text
-                captionRight:
-                    type: text
-
-        Enhavo\Bundle\BlockBundle\Entity\Text:
-            properties:
-                title:
-                    type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
 
-        Enhavo\Bundle\BlockBundle\Entity\TextPicture:
+        Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
             properties:
                 title:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
                 caption:
                     type: text
 
-        Enhavo\Bundle\BlockBundle\Entity\TextText:
+        Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
             properties:
                 title:
                     type: text
-                textLeft:
-                    type: text
-                titleLeft:
-                    type: text
-                textRight:
-                    type: text
-                titleRight:
-                    type: text
-
-        Enhavo\Bundle\BlockBundle\Entity\ThreePicture:
-            properties:
-                titleLeft:
-                    type: text
-                titleRight:
-                    type: text
-                titleCenter:
-                    type: text
-                captionLeft:
-                    type: text
-                captionRight:
-                    type: text
-                captionCenter:
-                    type: text
-
-        Enhavo\Bundle\BlockBundle\Entity\Video:
-            properties:
-                title:
-                    type: text
+                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
