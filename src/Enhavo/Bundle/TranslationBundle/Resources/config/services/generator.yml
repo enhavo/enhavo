@@ -38,3 +38,13 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_translation.locale_generator', alias: 'slug' }
+
+    Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocaleDefaultGenerator:
+        public: true
+        arguments:
+            - '@enhavo_translation.route.translator'
+            - '@enhavo_translation.text.translator'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: 'enhavo_translation.locale_generator', alias: 'locale_default' }

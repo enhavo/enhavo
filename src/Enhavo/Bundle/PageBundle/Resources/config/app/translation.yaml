@@ -8,3 +8,5 @@ enhavo_translation:
                         locale_prefix:
                             type: locale_prefix
                             property: title
+                        locale_default:
+                            type: locale_default
