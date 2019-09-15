@@ -60,7 +60,14 @@ class TranslationExtension extends AbstractTypeExtension
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
-            if($this->translationManager->isTranslatable($data)) {
+            $dataClass = $form->getConfig()->getDataClass();
+
+            if($this->translationManager->isTranslatable($dataClass)) {
+                if($data === null) {
+                    $data = new $dataClass;
+                    $event->setData($data);
+                }
+
                 $translations = [];
                 foreach($form->all() as $key => $child) {
                     if($this->translationManager->isTranslatable($data, $key)) {
@@ -69,11 +76,15 @@ class TranslationExtension extends AbstractTypeExtension
                     }
                 }
 
+                /**
+                 * @var string $key
+                 * @var FormInterface $child
+                 */
                 foreach($translations as $key => $child) {
                     $form->add($key, TranslationType::class, [
                         'form' => $child,
                         'form_data' => $data,
-                        'form_type' => $this->translationManager->getFormType($data, $key)
+                        'form_type' => get_class($child->getConfig()->getType()->getInnerType())
                     ]);
                 }
             }

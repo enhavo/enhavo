@@ -108,13 +108,6 @@ class TranslationManager
         return $metadata->getProperty($property) !== null;
     }
 
-    public function getFormType($data, $property)
-    {
-        $type = $this->getType($data, $property);
-        $formType = $type->getFormType();
-        return $formType;
-    }
-
     public function getLocales()
     {
         return $this->locales;

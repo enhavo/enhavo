@@ -52,11 +52,6 @@ class Translation
         return $this->property;
     }
 
-    public function getFormType()
-    {
-        return $this->type->getFormType($this->options);
-    }
-
     public function getTranslation($locale)
     {
         return $this->type->getTranslation($this->options, $this->data, $this->property, $locale);

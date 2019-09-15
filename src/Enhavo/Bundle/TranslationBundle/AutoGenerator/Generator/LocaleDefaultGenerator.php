@@ -16,9 +16,11 @@ class LocaleDefaultGenerator extends AbstractLocaleGenerator
     public function generate($resource, $property, $locale, $options = [])
     {
         $route = $this->routeTranslator->getTranslation($resource, $property, $locale);
-        $route->addDefaults([
-           '_locale' => $locale
-        ]);
+        if($route) {
+            $route->addDefaults([
+                '_locale' => $locale
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

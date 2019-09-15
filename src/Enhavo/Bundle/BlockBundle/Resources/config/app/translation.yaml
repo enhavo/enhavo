@@ -9,16 +9,13 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
 
         Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
             properties:
                 title:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 caption:
                     type: text
 
@@ -26,19 +23,15 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
 
         Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock:
             properties:
                 title:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'
                 text:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
                 caption:
                     type: text
 
@@ -46,4 +39,3 @@ enhavo_translation:
             properties:
                 title:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\HeadLineType'

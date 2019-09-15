@@ -4,7 +4,6 @@ enhavo_translation:
             properties:
                 teaser:
                     type: text
-                    form_type: 'Enhavo\Bundle\FormBundle\Form\Type\WysiwygType'
                 slug:
                     type: slug
                     generators:

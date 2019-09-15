@@ -29,11 +29,6 @@ class SlugTranslationType extends AbstractTranslationType
         $this->slugTranslator = $slugTranslator;
     }
 
-    public function getFormType(array $options)
-    {
-        return $options['form_type'];
-    }
-
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {
         $this->slugTranslator->setTranslation($data, $property, $locale, $value);

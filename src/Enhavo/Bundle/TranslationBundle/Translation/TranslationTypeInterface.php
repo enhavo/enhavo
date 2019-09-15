@@ -13,8 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface TranslationTypeInterface extends TypeInterface
 {
-    public function getFormType(array $options);
-
     public function setTranslation(array $options, $data, $property, $locale, $value);
 
     public function getTranslation(array $options, $data, $property, $locale);
