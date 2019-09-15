@@ -2,3 +2,9 @@ enhavo_translation:
     metadata:
         Enhavo\Bundle\PageBundle\Entity\Page:
             properties:
+                route:
+                    type: route
+                    generators:
+                        locale_prefix:
+                            type: locale_prefix
+                            property: title

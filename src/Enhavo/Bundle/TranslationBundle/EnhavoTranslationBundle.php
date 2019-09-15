@@ -13,5 +13,9 @@ class EnhavoTranslationBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_translation.translation_collector', 'enhavo.translation')
         );
+
+        $container->addCompilerPass(
+            new TypeCompilerPass('enhavo_translation.auto_generator.route_generator_collector', 'enhavo_translation.locale_generator')
+        );
     }
 }

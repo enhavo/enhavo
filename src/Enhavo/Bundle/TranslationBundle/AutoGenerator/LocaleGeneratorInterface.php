@@ -1,24 +1,26 @@
 <?php
 /**
- * GeneratorInterface.php
+ * LocaleGeneratorInterface.php
  *
- * @since 11/12/16
+ * @since 15/09/19
  * @author gseidel
  */
 
-namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
+namespace Enhavo\Bundle\TranslationBundle\AutoGenerator;
 
 use Enhavo\Bundle\AppBundle\Type\TypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-interface GeneratorInterface extends TypeInterface
+interface LocaleGeneratorInterface extends TypeInterface
 {
     /**
      * @param object $resource
+     * @param string $property
+     * @param string $locale
      * @param array $options
      * @return void
      */
-    public function generate($resource, $options = []);
+    public function generate($resource, $property, $locale, $options = []);
 
     /**
      * @param OptionsResolver $resolver
