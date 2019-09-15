@@ -29,11 +29,6 @@ class TextTranslationType extends AbstractTranslationType
         $this->translator = $translator;
     }
 
-    public function getFormType(array $options)
-    {
-        return $options['form_type'];
-    }
-
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {
         $this->translator->setTranslation($data, $property, $locale, $value);
@@ -58,8 +53,7 @@ class TextTranslationType extends AbstractTranslationType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'constraints' => [],
-            'form_type' => TextType::class
+            'constraints' => []
         ]);
     }
 }

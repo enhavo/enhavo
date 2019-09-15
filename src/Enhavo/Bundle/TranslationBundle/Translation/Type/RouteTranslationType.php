@@ -29,11 +29,6 @@ class RouteTranslationType extends AbstractTranslationType
         $this->routeTranslator = $routeTranslator;
     }
 
-    public function getFormType(array $options)
-    {
-        return $options['form_type'];
-    }
-
     public function setTranslation(array $options, $data, $property, $locale, $value)
     {
         $this->routeTranslator->setTranslation($data, $property, $locale, $value);
@@ -49,7 +44,6 @@ class RouteTranslationType extends AbstractTranslationType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'constraints' => [],
-            'form_type' => RouteType::class,
             'generators' => []
         ]);
     }
