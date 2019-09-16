@@ -69,3 +69,5 @@ enhavo_block:
             type: newsletter_subscribe
         shop_product_list:
             type: shop_product_list
+        comment:
+            type: comment

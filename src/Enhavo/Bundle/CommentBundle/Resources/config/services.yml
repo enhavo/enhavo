@@ -6,3 +6,10 @@ services:
     Enhavo\Bundle\CommentBundle\Form\ThreadType:
         tags:
             { name: form.type }
+
+    Enhavo\Bundle\CommentBundle\Block\CommentBlockType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            - { name: enhavo.block, alias: comment }

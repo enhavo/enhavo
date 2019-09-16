@@ -30,7 +30,7 @@ class MakerUtil
      */
     public function camelCase($name)
     {
-        $this->nameTransformer->camelCase($name);
+        return $this->nameTransformer->camelCase($name);
     }
 
     /**
@@ -39,7 +39,7 @@ class MakerUtil
      */
     public function kebabCase($name)
     {
-        $this->nameTransformer->kebabCase($name);
+        return $this->nameTransformer->kebabCase($name);
     }
 
     /**
@@ -48,7 +48,7 @@ class MakerUtil
      */
     public function snakeCase($name)
     {
-        $this->nameTransformer->snakeCase($name);
+        return $this->nameTransformer->snakeCase($name);
     }
 
     /**
