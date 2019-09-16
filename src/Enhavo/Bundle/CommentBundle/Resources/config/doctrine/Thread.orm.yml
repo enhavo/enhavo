@@ -13,4 +13,6 @@ Enhavo\Bundle\CommentBundle\Entity\Thread:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface
             orphanRemoval: true
+            orderBy:
+                createdAt: DESC
             mappedBy: thread

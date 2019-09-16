@@ -8,11 +8,11 @@
 
 namespace Enhavo\Bundle\CommentBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
+use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class Comment
+class Comment implements CommentInterface
 {
     /**
      * @var int
@@ -111,7 +111,7 @@ class Comment
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -119,7 +119,7 @@ class Comment
     /**
      * @param \DateTime $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }

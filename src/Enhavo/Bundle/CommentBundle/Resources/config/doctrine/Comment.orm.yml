@@ -14,8 +14,11 @@ Enhavo\Bundle\CommentBundle\Entity\Comment:
             nullable: true
 
         createdAt:
-            type: text
+            type: datetime
             nullable: true
+            gedmo:
+                timestampable:
+                    on: create
 
     manyToOne:
         thread:

@@ -1,4 +1,8 @@
 services:
-#    enhavo_comment.example:
-#        class: Enhavo\Bundle\CommentBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    Enhavo\Bundle\CommentBundle\Form\CommentType:
+        tags:
+            { name: form.type }
+
+    Enhavo\Bundle\CommentBundle\Form\ThreadType:
+        tags:
+            { name: form.type }

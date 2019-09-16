@@ -9,8 +9,10 @@
 namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 
-class Thread
+class Thread implements ThreadInterface
 {
     /**
      * @var integer
@@ -54,5 +56,13 @@ class Thread
     {
         $comment->setThread(null);
         $this->comments->remove($comment);
+    }
+
+    /**
+     * @return Comment[]|ArrayCollection
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }

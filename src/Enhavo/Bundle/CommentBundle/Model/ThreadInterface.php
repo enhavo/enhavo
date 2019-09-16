@@ -9,7 +9,7 @@
 namespace Enhavo\Bundle\CommentBundle\Model;
 
 
-class ThreadInterface
+interface ThreadInterface
 {
 
 }
