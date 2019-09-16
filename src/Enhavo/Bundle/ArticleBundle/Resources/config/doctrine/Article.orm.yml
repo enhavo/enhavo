@@ -18,6 +18,10 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             cascade: ['persist', 'refresh', 'remove']
             targetEntity: Enhavo\Bundle\BlockBundle\Model\NodeInterface
 
+        thread:
+            cascade: ['persist', 'refresh', 'remove']
+            targetEntity: Enhavo\Bundle\CommentBundle\Model\ThreadInterface
+
     manyToMany:
         categories:
             cascade: ['persist', 'refresh']

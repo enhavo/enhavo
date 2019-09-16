@@ -1,0 +1,11 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\CommentBundle\Model\ThreadInterface: Enhavo\Bundle\CommentBundle\Entity\Thread
+            Enhavo\Bundle\CommentBundle\Model\CommentInterface: Enhavo\Bundle\CommentBundle\Entity\Comment
+
+enhavo_app:
+    template_paths:
+        enhavo_comment:
+            path: '@EnhavoCommentBundle/Resources/views'
+            priority: 10

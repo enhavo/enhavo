@@ -30,6 +30,10 @@ enhavo_article_article_create:
                         translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
+                    comments:
+                        label: article.label.comments
+                        translation_domain: EnhavoArticleBundle
+                        template: admin/resource/article/comments.html.twig
                     meta:
                         label: article.label.meta
                         translation_domain: EnhavoArticleBundle
@@ -59,6 +63,10 @@ enhavo_article_article_update:
                         translation_domain: EnhavoArticleBundle
                         template: admin/resource/content/content.html.twig
                         full_width: true
+                    comments:
+                        label: article.label.comments
+                        translation_domain: EnhavoArticleBundle
+                        template: admin/resource/article/comments.html.twig
                     meta:
                         label: article.label.meta
                         translation_domain: EnhavoArticleBundle

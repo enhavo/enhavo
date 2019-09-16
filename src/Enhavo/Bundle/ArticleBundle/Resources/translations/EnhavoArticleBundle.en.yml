@@ -22,6 +22,7 @@ article:
     article: 'Article'
     article_list: 'Article List'
     article_teaser: 'Article Teaser'
+    comments: 'Comments'
     pagination: 'Pagination'
     limit: 'Limit per Page'
     category: 'Category'
