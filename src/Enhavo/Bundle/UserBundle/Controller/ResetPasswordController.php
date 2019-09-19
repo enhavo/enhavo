@@ -70,12 +70,12 @@ class ResetPasswordController extends AbstractController
             } else {
                 $this->addFlash('success', $this->get('translator')->trans('reset.message.success', [], 'EnhavoUserBundle'));
                 $this->userManager->sendResetEmail($user, $configuration->getMailTemplate(), $configuration->getConfirmRoute());
-                return $this->redirectToRoute('enhavo_user_theme_reset_password_check');
+                return $this->redirectToRoute($configuration->getRedirectRoute('enhavo_user_theme_reset_password_check'));
             }
         }
 
         $view = $this->viewFactory->create('reset', [
-
+            'template' => $configuration->getTemplate()
         ]);
 
         return $this->viewHandler->handle($view);

@@ -12,6 +12,7 @@ use Enhavo\Bundle\AppBundle\Template\TemplateTrait;
 use FOS\UserBundle\Mailer\Mailer as FOSMailer;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserMailer extends FOSMailer
 {
@@ -28,10 +29,10 @@ class UserMailer extends FOSMailer
             $route = 'enhavo_user_theme_reset_password_confirm';
         }
 
-        $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), true);
+        $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $rendered = $this->templating->render($this->getTemplate($template), array(
             'user' => $user,
-            'confirmationUrl' => $url
+            'confirmation_url' => $url
         ));
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['resetting'], $user->getEmail());
     }
@@ -46,10 +47,10 @@ class UserMailer extends FOSMailer
             $route = 'enhavo_user_theme_registration_confirm';
         }
 
-        $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), true);
+        $url = $this->router->generate($route, array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $rendered = $this->templating->render($this->getTemplate($template), array(
             'user' => $user,
-            'confirmationUrl' => $url
+            'confirmation_url' => $url
         ));
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['confirmation'], $user->getEmail());
     }

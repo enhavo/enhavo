@@ -52,6 +52,13 @@ reset:
     login: Login
   message:
       success: An email was sent to your account.
+  mail:
+      text: Please click on following link to reset your password
+      subject: Reset Password
+registration:
+    mail:
+        text: Please click on following link to to verify your email address
+        subject: Registration
 change_password:
     message:
         success: 'Password saved successfully'

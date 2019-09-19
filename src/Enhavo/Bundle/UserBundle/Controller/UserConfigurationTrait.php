@@ -30,7 +30,7 @@ trait UserConfigurationTrait
         }
 
         if(isset($config['mail_template'])) {
-            $configuration->setMailTemplate($config['repository']['arguments']);
+            $configuration->setMailTemplate($config['mail_template']);
         }
 
         if(isset($config['route']['confirm'])) {
