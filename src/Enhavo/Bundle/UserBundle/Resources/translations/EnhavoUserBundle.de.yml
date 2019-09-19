@@ -52,6 +52,13 @@ reset:
     login: Zur Anmeldung
   message:
     success: Eine Email wurde an Ihr Konto versendet.
+  mail:
+      text: Bitte klicken sie auf folgenden Link um ihr Passwort zurückzusetzen
+      subject: Passwort zurückzusetzen
+registration:
+    mail:
+        text: Bitte klicken sie auf folgenden Link um ihre Email zu verifizieren
+        subject: Registration
 change_password:
   message:
     success: 'Passwort erfolgreich geändert'
