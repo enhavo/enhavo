@@ -2,6 +2,7 @@ import CreateEvent from '@enhavo/app/ViewStack/Event/CreateEvent';
 import ClearEvent from '@enhavo/app/ViewStack/Event/ClearEvent';
 import SaveStateEvent from '@enhavo/app/ViewStack/Event/SaveStateEvent';
 import AbstractMenu from "@enhavo/app/Menu/Model/AbstractMenu";
+import MenuList from "@enhavo/app/Menu/Model/MenuList";
 
 export default class MenuItem extends AbstractMenu
 {
@@ -22,6 +23,11 @@ export default class MenuItem extends AbstractMenu
                         this.getManager().setActive(this.key);
                         this.select();
                         this.application.getEventDispatcher().dispatch(new SaveStateEvent());
+                        if(!this.getManager().isOpen()) {
+                            if(this.parent()) {
+                                (<MenuList>this.parent()).close();
+                            }
+                        }
                     });
             })
             .catch(() => {})
