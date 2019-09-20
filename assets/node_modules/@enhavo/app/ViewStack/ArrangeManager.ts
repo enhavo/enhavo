@@ -2,6 +2,7 @@ import ViewInterface from "./ViewInterface";
 import ViewStackData from "./ViewStackData";
 import MenuManager from "@enhavo/app/Menu/MenuManager";
 import * as $ from "jquery";
+import MenuList from "@enhavo/app/Menu/Model/MenuList";
 
 export default class ArrangeManager
 {
@@ -33,6 +34,11 @@ export default class ArrangeManager
             if(!this.menuManager.isCustomChange()) {
                 if(views.length >= 2) {
                     this.menuManager.close();
+                    for(let item of this.menuManager.getItems()) {
+                        if((<MenuList>item).close) {
+                            (<MenuList>item).close();
+                        }
+                    }
                 } else if(views.length == 0) {
                     this.menuManager.open();
                 }
