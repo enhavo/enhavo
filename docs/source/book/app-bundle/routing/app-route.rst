@@ -6,7 +6,7 @@ The app route is used to display these two kinds of abstractions. It is independ
 
 In this Picture you can see how the app route could render ``actions`` and ``blocks``.
 
-.. image:: ../../../_static/image/admin-wireframe.png
+.. image:: /_static/image/admin-wireframe.png
 
 
 Actions

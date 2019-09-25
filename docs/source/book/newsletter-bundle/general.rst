@@ -10,7 +10,7 @@ With enhavo you are able to set global values for your storage and strategy. Add
 Workflow
 --------
 
-.. image:: ../../_static/image/newsletter_workflow.png
+.. image:: /_static/image/newsletter_workflow.png
 
 Default Storage Type
 --------------------
