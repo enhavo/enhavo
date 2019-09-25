@@ -103,7 +103,7 @@ class Node implements NodeInterface
      * @param NodeInterface $parent
      * @return Node
      */
-    public function setParent(NodeInterface $parent = null)
+    public function setParent(?NodeInterface $parent)
     {
         $this->parent = $parent;
 
@@ -119,7 +119,7 @@ class Node implements NodeInterface
     /**
      * @return NodeInterface
      */
-    public function getParent(): NodeInterface
+    public function getParent(): ?NodeInterface
     {
         return $this->parent;
     }
