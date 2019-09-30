@@ -11,4 +11,4 @@ data will just add and remove to the form, so if you get the normal data out of 
 data and therefore it can you used as before. Meanwhile the translation data is stored in cache and will only apply
 to the database if the underlaying model is also stored to the database.
 
-.. image:: ../../_static/image/translation_architecture.png
+.. image:: /_static/image/translation_architecture.png

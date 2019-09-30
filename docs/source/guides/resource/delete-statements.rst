@@ -7,7 +7,7 @@ and help you to decide which statement should use.
 To understand the statements we will apply them on an example. Think of books and chapters, where book is the parent
 and chapter is the child and owning entity.
 
-.. image:: ../../_static/image/book-chapter-er.png
+.. image:: /_static/image/book-chapter-er.png
 
 Orphan Removal
 --------------

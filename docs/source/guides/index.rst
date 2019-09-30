@@ -49,14 +49,14 @@ Guides
 
   * :doc:`/guides/search/add-search-for-entity`
 
-* **Batch Actions**
+* **Batch**
 
   * :doc:`/guides/batch-actions/add-batch-action`
   * :doc:`/guides/batch-actions/remove-batch-actions`
 
-* **Button**
+* **Action**
 
-  * :doc:`/guides/button/create-button`
+  * :doc:`/guides/action/create-action`
 
 * **Block**
 

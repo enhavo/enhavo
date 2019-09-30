@@ -23,9 +23,7 @@ gulp.task('docs', function (cb) {
 });
 
 gulp.task('docs:watch', function () {
-  gulp.watch([
-    'docs/**/*.rst'
-  ], ['docs']);
+  gulp.watch('docs/**/*.rst', gulp.series('docs'));
 });
 
 

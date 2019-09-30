@@ -3,7 +3,7 @@ Add multiple categories
 
 Routing example for a collection that called `label`.
 
-.. code:: yaml
+.. code-block:: yaml
 
     #routing
     enhavo_category_label_index:
