@@ -7,3 +7,4 @@ Architecture
     introduction
     type-pattern
     bundle-structure
+    polymorph-entity

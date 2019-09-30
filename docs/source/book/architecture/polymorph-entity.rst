@@ -1,3 +1,3 @@
-Polymorph Entity
+Bundle Structure
 ================
 

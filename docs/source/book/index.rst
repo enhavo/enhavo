@@ -21,6 +21,9 @@ The book give you an overview about all components and bundles and how they work
 .. rubric:: Architecture
 
 * :doc:`/book/architecture/introduction`
+* :doc:`/book/architecture/bundle-structure`
+* :doc:`/book/architecture/type-pattern`
+* :doc:`/book/architecture/polymorph-entity`
 
 .. rubric:: AppBundle
 
