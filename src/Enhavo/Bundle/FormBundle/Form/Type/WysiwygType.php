@@ -8,42 +8,42 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class WysiwygType extends AbstractType
 {
     /**
      * @var string
      */
-    private $editorEntrypoint;
+    private $entrypoint;
 
     /**
      * @var string
      */
-    private $editorEntrypointBuild;
+    private $entrypointBuild;
 
     /**
-     * @var EntrypointLookupCollectionInterface
+     * @var EntrypointFileManager
      */
-    private $entrypointLookup;
-    
+    private $entrypointManager;
+
     /**
      * WysiwygType constructor.
-     * @param $editorEntrypoint
-     * @param $editorEntrypointBuild
-     * @param $entrypointLookup
+     *
+     * @param $entrypoint
+     * @param $entrypointBuild
+     * @param $entrypointManager
      */
-    public function __construct($editorEntrypoint, $editorEntrypointBuild, EntrypointLookupCollectionInterface $entrypointLookup)
+    public function __construct($entrypoint, $entrypointBuild, EntrypointFileManager $entrypointManager)
     {
-        $this->editorEntrypoint = $editorEntrypoint;
-        $this->editorEntrypointBuild = $editorEntrypointBuild;
-        $this->entrypointLookup = $entrypointLookup;
+        $this->entrypoint = $entrypoint;
+        $this->entrypointBuild = $entrypointBuild;
+        $this->entrypointManager = $entrypointManager;
     }
 
     /**
@@ -53,17 +53,12 @@ class WysiwygType extends AbstractType
     {
         $view->vars['config'] = $options['config'];
 
-        $editorEntrypoint = $options['editor_entrypoint'] === null ? $this->editorEntrypoint : $options['editor_entrypoint'];
-        $editorEntrypointBuild = $options['editor_entrypoint_build'] === null ? $this->editorEntrypointBuild : $options['editor_entrypoint_build'];
+        $editorEntrypoint = $options['editor_entrypoint'] === null ? $this->entrypoint : $options['editor_entrypoint'];
+        $editorEntrypointBuild = $options['editor_entrypoint_build'] === null ? $this->entrypointBuild : $options['editor_entrypoint_build'];
         $view->vars['editor_css'] = null;
         if($editorEntrypoint) {
-            $view->vars['editor_css'] = $this->getEditorEntrypoint($editorEntrypoint, $editorEntrypointBuild);
+            $view->vars['editor_css'] = $this->entrypointManager->getCssFiles($editorEntrypoint, $editorEntrypointBuild);
         }
-    }
-
-    private function getEditorEntrypoint($editorEntrypoint, $editorEntrypointBuild)
-    {
-        return $this->entrypointLookup->getEntrypointLookup($editorEntrypointBuild)->getCssFiles($editorEntrypoint);
     }
 
     public function configureOptions(OptionsResolver $resolver)

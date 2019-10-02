@@ -2,26 +2,20 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\Helper\EntrypointFileManager;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollectionInterface;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class WysiwygTypeTest extends TypeTestCase
 {
     protected function getExtensions()
     {
-        $entrypontLookupMock = $this->getMockBuilder(EntrypointLookupInterface::class)->getMock();
-        $entrypontLookupMock->method('getCssFiles')->willReturnCallback(function() {
-            return ['entrypoint_css'];
-        });
+        $entrypontFileManagerMock = $this->getMockBuilder(EntrypointFileManager::class)->disableOriginalConstructor()->getMock();
+        $entrypontFileManagerMock->method('getCssFiles')->willReturn([
+            'file1', 'file2'
+        ]);
 
-        $entrypontLookupCollectionMock = $this->getMockBuilder(EntrypointLookupCollectionInterface::class)->getMock();
-        $entrypontLookupCollectionMock->method('getEntrypointLookup')->willReturnCallback(function() use ($entrypontLookupMock) {
-            return $entrypontLookupMock;
-        });
-
-        $type = new WysiwygType('entrypoint', 'build', $entrypontLookupCollectionMock);
+        $type = new WysiwygType('entrypoint', 'build', $entrypontFileManagerMock);
         return array(
             new PreloadedExtension(array($type), array()),
         );
@@ -40,6 +34,7 @@ class WysiwygTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(WysiwygType::class);
         $formView = $form->createView();
-        $this->assertEquals('entrypoint_css', $formView->vars['editor_css'][0]);
+        $this->assertEquals('file1', $formView->vars['editor_css'][0]);
+        $this->assertEquals('file2', $formView->vars['editor_css'][1]);
     }
 }
