@@ -53,6 +53,8 @@ class ImageFilter extends AbstractFilter
                 $imagine = $this->resize($imagine, $setting);
                 $imagine->save($content->getFilePath(), $this->getSaveOptions($format, $setting));
             }
+            $this->setMimeType($file, $this->getMimeTypeFromImageFormat($format));
+            $this->setExtension($file, $format);
         } catch (RuntimeException $e) {
             // if image cant be created we make an empty file
             file_put_contents($content->getFilePath(), '');
