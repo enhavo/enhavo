@@ -67,4 +67,19 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
         }
         return null;
     }
+
+    protected function getMimeTypeFromImageFormat($imageFormat)
+    {
+        switch ($imageFormat) {
+            case('gif'):
+                return 'image/gif';
+            case('jpg'):
+                return 'image/jpeg';
+            case('png'):
+                return 'image/png';
+            case('bmp'):
+                return 'image/bmp';
+        }
+        return null;
+    }
 }
