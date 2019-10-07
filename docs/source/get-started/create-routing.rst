@@ -18,7 +18,7 @@ You can do this in two different ways. If you just want to use Enhavo to develop
                     form: App\Form\Type\ProductType
                     repository: App\Repository\ProductRepository
 
-In the configuration definition we can see, that we use the model, the form and a repository, we’ve already created. But what´s about the controller and where does it come from? Well, the directory tells us, that the Resource Controller is part of the Enhavo App Bundle and its name tells us, that it probably handles resources. Hopefully, you can remember the Resource Interface, we used to create our Product Entity. In Enhavo, all entities you want to create for your application, and which should be creatable, readable, editable and deletable by the user need this interface so the Resource Controller can work with them
+In the configuration definition we can see, that we use the model, the form and a repository, we’ve already created. But what about the controller and where does it come from? Well, the directory tells us, that the Resource Controller is part of the Enhavo App Bundle and its name tells us, that it probably handles resources. Hopefully, you can remember the Resource Interface, we used to create our Product Entity. In Enhavo, all entities you want to create for your application, and which should be creatable, readable, editable and deletable by the user need this interface so the Resource Controller can work with them
 If you want to provide a bundle to enhance enhavo for further projects use the ``Configuration.php`` in ``ProjectBundle/DependencyInjection` like in the Example below:
 
 .. code-block:: php
@@ -169,10 +169,11 @@ This is the code we get:
                     strategy_options:
                         service: enhavo_article.controller.article:showResourceAction
 
-Create a new file called ``project.yml`` in ``App/routes/admin/product.yaml``. Copy the routes from the terminal into it.
-After we have done this, we have to tell the ``routes.yaml`` in ``App/config/routes.yml`` where to find our new ``product.yaml``. That’s quite simple, we can just add
+The previously shown routes will be saved automatically into ``App/config/routes/admin/product.yaml`` and just have to be added manually to our global ``routes.yaml`` located in ``App/config/``.
 
-This routing file is very important for any customization affecting the resource view, handling, and processing.
+This file of the routing is very important for all actions like the resource view, handling, and processing.
+
+To do that, just add the following lines to the ``routes.yaml`` file:
 
 .. code-block:: yaml
     :linenos:
