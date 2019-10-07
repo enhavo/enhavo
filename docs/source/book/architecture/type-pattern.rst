@@ -1,18 +1,16 @@
 Type Pattern
 ============
 
-The ``Type Pattern`` is a behavioral pattern which is widley used in enhavo. It is not an official pattern like you may know
-from the Gang of Four. While developing on enhavo we realize that we need a abstract workflow
-to convert configurations into direct php classes. So over the time we found this pattern
-in our code a try to standardize it.
+The ``Type Pattern`` is a behavioral pattern which is widely used in enhavo. It is not an official pattern like the Gang of Four, you probably know.
+While developing enhavo we realized that we need an abstract workflow to convert configurations directly into php classes.
+So over the time we found this pattern in our code a try to standardize it.
 
-For programmers who use enhavo as a normal cms, it is not important to know how this pattern works in detail,
-but it will get more interesting for you if you want to understand and work at the enhavo project.
+For programmers who use enhavo as a normal CMS, it is not important to know this pattern in detail,
+but the more you work with enhavo it will interesting for you.
 
-The goal of this pattern is to work on objects that encapsulate the configuration they depends on and therefor
-having different behaviour while using the same api.
+Goal of this pattern are objects with an encapsulated configuration with different behaviours - while using the same api.
 
-For example, think of different actions or buttons in a system, that may configure in yaml like this:
+Think of different actions or buttons which can be configured easily in a yaml file like this:
 
 .. code-block:: yaml
 
@@ -30,8 +28,8 @@ The simplest configuration for a type is just the type option itself.
 When create the type we take care of the options with the Symfony ``OptionResolver``
 Here you can also set defaults and required options.
 
-Later on you want a object with the same api to handle your actions, but you are not interested
-how this object is configured inside.
+Later on you want a object with the same api to handle your actions, but you don't have to take care
+about how this object is configured inside.
 
 .. code-block:: php
 
