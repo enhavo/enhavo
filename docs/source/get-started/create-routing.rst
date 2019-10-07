@@ -187,14 +187,17 @@ We have to dump all new routes with the following command, otherwise, they are n
     yarn routes:dump
 
 
-The last step is to add a new menu topic to the main menu in Enhavo. We can do this by adding this code to the enhavo.yml in App/config/packages .
+The last step is to add a new menu topic to the main menu in Enhavo. We can do this by adding this code to the enhavo.yml in App/config/packages.
+
+There are already some default types for the menu, used by the Enhavo standard menu items. In order to add our product to the menu we should use the base type, which we extend with details of our product:
 
 .. code-block:: yaml
     :linenos:
 
     menu:
-        project:
-            label: Project
+        product:
+            type: base
+            label: Product
             route: app_product_index
-            role: ROLE_ENHAVO_PROJECT_PROJECT_INDEX
-            icon: box
+            role: ROLE_APP_PRODUCT_INDEX
+            icon: widgets
