@@ -27,8 +27,8 @@ For example, think of different actions or buttons in a system, that may configu
         icon: trash
 
 The simplest configuration for a type is just the type option itself.
-When create the type you can take care of the options with the Symfony ``OptionResolver``
-Here you can also set default and required options.
+When create the type we take care of the options with the Symfony ``OptionResolver``
+Here you can also set defaults and required options.
 
 Later on you want a object with the same api to handle your actions, but you are not interested
 how this object is configured inside.
@@ -43,9 +43,8 @@ how this object is configured inside.
             $viewData[$action->getKey()] = $action->createViewData($resource);
         }
 
-After you get the actions from the manager, you don't need the configuration anymore.
-Also you don't want to handle with ``OptionResolver``, this logic should be encapsulate in the action.
-How the view data is assembled is delegated to the type.
+As a user of actions you don't want to deal with ``OptionResolver``, this logic should be encapsulate inside the action.
+How the view data is assembled is delegated to the type. After you get the actions from the manager, you don't need the configuration anymore.
 
 .. code-block:: php
 
