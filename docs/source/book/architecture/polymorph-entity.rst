@@ -8,14 +8,14 @@ the concrete implementation. Of course that's a very common use case in object o
 
     Here you can see a simple page class, that contains blocks like a text or a picture.
 
-But if you want to translate polymorphisim into a relational database like mysql,
-then it's not so clear how your table structure will look like.
+But if you want to translate this polymorphism into a relational database like mysql,
+it's not so clear how your table structure will look like.
 
-Normally we are not interested how the sql schema will end up, because we use doctrine as our ORM layer and thus
-it should take care of it. But in doctrine we are not able to configure this out of the box. We need some help
+Normally we are not interested how the sql schema will end up, because we use doctrine as our ORM layer which
+should take care of it. But in doctrine, we are not able to configure this out of the box. We need some help
 by extensions. Enhavo has it's own extension for that use case.
 
-In general, we have two obviously sql implementation with pro and cons. Let's have look at the page table.
+In general, we have two obvious sql implementations with pros and cons. Let's have look at the page table.
 
 .. code::
 
@@ -27,12 +27,12 @@ In general, we have two obviously sql implementation with pro and cons. Let's ha
  | 2  | NULL          | 1                |
  +----+---------------+------------------+
 
-With this structure we can use sql foreign key constraints, because one column is refer to one table.
-This give us also the option to use delete cascades. But if we add more and more blocks, the table is growing
-by adding a new column for every block we add.
+With this structure we can use sql foreign key constraints, because one column is a reference to one specific table.
+This also gives us the option to use delete cascades. But if we add more and more blocks, the table is growing
+by adding a new column for each block we add.
 
-Further if we have a look to the php implementation, doctrine translate every column to a class property.
-The result is to encapsulate the data model we need to use if or switch statements for every block.
+Further, if we have a look to the php implementation, doctrine translates each column to a class property.
+As a result, to encapsulate the data model we need to use if or switch statements for each block.
 
 .. code-block:: php
 
@@ -51,10 +51,10 @@ The result is to encapsulate the data model we need to use if or switch statemen
         }
     }
 
-This is an anti-pattern because it violate the open close principle, which says open for extensions and close
-for modifications, but we need to edit this file for every block we want to add.
+This is an anti-pattern, because it violates the open close principle ("Open for extensions and close
+for modifications"). But we need to edit this file every time we want to add a block.
 
-So let's have a look to the other implementation.
+So let's have a look at the other possible implementation.
 
 .. code::
 
@@ -66,13 +66,13 @@ So let's have a look to the other implementation.
  | 2  | PictureBlock | 1        |
  +----+--------------+----------+
 
-With this structure we don't need any further column for blocks we add. We just need to inform someone that a TextBlock
-will resolve to a sql look up to the TextBlock table, but this is a easy feature in doctrine.
+With this structure we don't need any further columns for blocks we add. We just need to inform someone that a TextBlock
+will resolve to an sql look up on the TextBlock table, which is a easy feature in doctrine.
 
-On the other hand, we will lose some sql features like foreign keys and thus delete constraints. That can result to inconsistent
-data. In some cases we can help our self by saving a reference from the inverse block tables back to the page table.
+On the other hand, we lose some sql features like foreign keys and thus delete constraints. This is a risk for inconsistent
+data. In some cases we can help ourselves by creating a reference from the inverse block tables back to the page table.
 
-And how does our php code look like? Well it's strait forward. We just implement the common polymorphism.
+And how does our php code look like? Well, it's strait forward. We just implement the common polymorphism.
 
 .. code-block:: php
 
@@ -88,8 +88,8 @@ And how does our php code look like? Well it's strait forward. We just implement
         }
     }
 
-To make it work, you need to register a service, which hook into doctrine
-and take care of resolving ``$blockClass`` and ``$blockId`` and of course inject to correct
+To make it work, you need to register a service which hooks into doctrine
+and takes care of resolving ``$blockClass`` and ``$blockId``, and injects the correct
 block if you got the object from a repository.
 
 

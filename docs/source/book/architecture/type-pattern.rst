@@ -1,14 +1,14 @@
 Type Pattern
 ============
 
-The ``Type Pattern`` is a behavioral pattern which is widely used in enhavo. It is not an official pattern like the Gang of Four, you probably know.
-While developing enhavo we realized that we need an abstract workflow to convert configurations directly into php classes.
-So over the time we found this pattern in our code a try to standardize it.
+The ``Type Pattern`` is a behavioral pattern which is widely used in enhavo. It is not an official pattern like the Gang of Four, which you probably know.
+While developing enhavo, we realized that we need an abstract workflow to convert configurations directly into php classes.
+So over time we found this pattern in our code and standardized it.
 
-For programmers who use enhavo as a normal CMS, it is not important to know this pattern in detail,
-but the more you work with enhavo it will interesting for you.
+For developers who use enhavo as a normal CMS, it is not important to understand this pattern in detail,
+but the more you work with enhavo, the more interesting it will be for you.
 
-Goal of this pattern are objects with an encapsulated configuration with different behaviours - while using the same api.
+The Goal of this pattern is to create objects with an encapsulated configuration and different behaviours - but using the same api.
 
 Think of different actions or buttons which can be configured easily in a yaml file like this:
 
@@ -25,8 +25,8 @@ Think of different actions or buttons which can be configured easily in a yaml f
         icon: trash
 
 The simplest configuration for a type is just the type option itself.
-When create the type we take care of the options with the Symfony ``OptionResolver``
-Here you can also set defaults and required options.
+When creating the type we handle the options with the Symfony ``OptionResolver``.
+It allows you to set the possible options, and also the defaults and required options.
 
 Later on you want a object with the same api to handle your actions, but you don't have to take care
 about how this object is configured inside.
@@ -37,12 +37,12 @@ about how this object is configured inside.
 
         $actions = $manager->getActions($configuration);
         $viewData = [];
-        foreach($action as $actions) {
+        foreach($actions as $action) {
             $viewData[$action->getKey()] = $action->createViewData($resource);
         }
 
-As a user of actions you don't want to deal with ``OptionResolver``, this logic should be encapsulate inside the action.
-How the view data is assembled is delegated to the type. After you get the actions from the manager, you don't need the configuration anymore.
+As a user of actions you don't want to deal with ``OptionResolver``, this logic should be encapsulated inside the action.
+The assembly of the view data is delegated to the type. After you get the actions from the manager, you don't need the configuration anymore.
 
 .. code-block:: php
 
@@ -68,8 +68,8 @@ How the view data is assembled is delegated to the type. After you get the actio
             }
         }
 
-Thanks to the symfony dependency injection container we can add this type by tagging to the central repository
-and we will only created the type if it's really used.
+Thanks to the symfony dependency injection container we can add this type to the central repository by tagging,
+and it will only be instanciated if it is really used.
 
 .. note::
 
@@ -77,6 +77,6 @@ and we will only created the type if it's really used.
     to a member inside the type.
 
 
-The following UML shows the classes involved by the ``Type Pattern``.
+The following UML shows the classes involved in the ``Type Pattern``.
 
 .. image:: /_static/image/type-pattern.png
