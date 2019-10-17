@@ -5,6 +5,7 @@ Guides
     :hidden:
 
     package/index
+    advanced/index
     grid/index
     resource/index
     contact-form/index
