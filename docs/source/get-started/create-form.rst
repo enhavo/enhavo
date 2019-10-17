@@ -3,7 +3,7 @@ Create Form
 Creating a Form
 ---------------
 
-Suppose, you´re building an online marketplace where your users can sell their own products. Of cause, your users want to be able to create new products and load, edit and delete existing products. For this task, we need to build a form, which translate data from an object to a in HTML printable form, so a user can modify this data. After this modification, submitted by the user, this data has to be validated and, if possible, converted back to a data object.
+Suppose, you´re building an online marketplace where your users can sell their own products. Of course, your users want to be able to create new products and load, edit and delete existing products. For this task, we need to build a form, which translate data from an object to a in HTML printable form, so a user can modify this data. After this modification, submitted by the user, this data has to be validated and, if possible, converted back to a data object.
 
 At the beginning, focus on this Product class we´ve created in the chapter Create Entity before.
 
@@ -157,7 +157,7 @@ Now, when our separate form class is complete, we´re close to success. The last
 
 .. _Symfony Service Container Documentation: https://symfony.com/doc/current/service_container.html
 
-First, we create a yaml-file in the directory `App/config/services/forms.yml``, for this and all future form services. Of cause, you can name it completely different e.g. services.yml and you can also use one yaml-file for many different service-types, but in many applications, we will need a lot of form services, so it is a good practice to separate services by type in their own files.
+First, we create a yaml-file in the directory `App/config/services/forms.yml``, for this and all future form services. Of course, you can name it completely different e.g. services.yml and you can also use one yaml-file for many different service-types, but in many applications, we will need a lot of form services, so it is a good practice to separate services by type in their own files.
 
 .. code-block:: yaml
     :linenos:
