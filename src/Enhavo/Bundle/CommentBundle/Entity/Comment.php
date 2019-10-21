@@ -10,9 +10,10 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class Comment implements CommentInterface
+class Comment implements CommentInterface, ResourceInterface
 {
     /**
      * @var int
