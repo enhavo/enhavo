@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\CommentBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\CommentBundle\Entity\Comment;
+use Enhavo\Bundle\CommentBundle\Form\CommentSubmitType;
 use Enhavo\Bundle\CommentBundle\Form\CommentType;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -24,6 +25,11 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('enhavo_comment');
         $treeBuilder->getRootNode()
+
+            ->children()
+                ->scalarNode('submit_form')->defaultValue(CommentSubmitType::class)->end()
+            ->end()
+
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
             ->end()

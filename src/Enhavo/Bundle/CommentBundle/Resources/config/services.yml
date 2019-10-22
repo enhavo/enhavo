@@ -13,3 +13,16 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.block, alias: comment }
+
+    Enhavo\Bundle\CommentBundle\Widget\CommentsWidgetType:
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
+        arguments:
+            - '@enhavo_comment.repository.comment'
+            - '@request_stack'
+            - '@form.factory'
+            - '%enhavo_comment.submit_form%'
+            - '@enhavo_comment.factory.comment'
+        tags:
+            - { name: enhavo.widget, alias: comments }

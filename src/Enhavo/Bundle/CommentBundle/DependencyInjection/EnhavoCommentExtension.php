@@ -23,6 +23,8 @@ class EnhavoCommentExtension extends AbstractResourceExtension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $this->registerResources('enhavo_comment', $config['driver'], $config['resources'], $container);
 
+        $container->setParameter('enhavo_comment.submit_form', $config['submit_form']);
+
         $configFiles = array(
             'services.yml',
         );
