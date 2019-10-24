@@ -3,7 +3,7 @@
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
-use Enhavo\Bundle\CommentBundle\Form\ThreadType;
+use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
 use Enhavo\Bundle\ContentBundle\Form\Type\ContentType;
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;

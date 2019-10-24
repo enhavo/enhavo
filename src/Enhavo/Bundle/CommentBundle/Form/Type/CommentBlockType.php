@@ -9,9 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommentBlockType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Insert form fields
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

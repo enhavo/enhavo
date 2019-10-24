@@ -66,6 +66,8 @@ services:
 
     Enhavo\Bundle\ArticleBundle\Controller\ArticleController:
         public: true
+        arguments:
+            - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
         calls:
             - [setContainer, ['@service_container']]
 

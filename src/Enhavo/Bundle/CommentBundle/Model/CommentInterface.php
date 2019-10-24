@@ -11,5 +11,14 @@ namespace Enhavo\Bundle\CommentBundle\Model;
 
 interface CommentInterface
 {
+    /**
+     * @param ThreadInterface $thread
+     * @return self
+     */
+    public function setThread(?ThreadInterface $thread);
 
+    /**
+     * @return mixed
+     */
+    public function getThread(): ?ThreadInterface;
 }

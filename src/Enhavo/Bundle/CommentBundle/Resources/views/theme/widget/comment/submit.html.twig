@@ -1,0 +1,4 @@
+<form method="POST" {% if action is defined %}action="{{ action }}"{% endif %} novalidate>
+    {{ form_widget(form) }}
+    <button>{{ 'comment.action.submit'|trans({}, 'EnhavoCommentBundle') }}</button>
+</form>
