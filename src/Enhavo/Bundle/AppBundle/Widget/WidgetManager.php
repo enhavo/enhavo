@@ -45,8 +45,7 @@ class WidgetManager
     {
         /** @var WidgetTypeInterface $type */
         $type = $this->collector->getType($type);
-        unset($options['type']);
-        $action = new Widget($type, $options);
-        return $action;
+        $widget = new Widget($type, $options);
+        return $widget;
     }
 }

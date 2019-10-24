@@ -9,31 +9,37 @@
 namespace Enhavo\Bundle\AppBundle\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PaginationWidgetType extends AbstractWidgetType
 {
-    public function createViewData($options, $resource = null)
+    public function createViewData(array $options, $resource = null)
     {
-        $route = $options['route'];
-        $routeParameters = $options['routeParameters'];
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-
-        if($request instanceof Request) {
+        $pageParameter = $options['page_parameter'];
+        if($options['route'] === null) {
+            $request = $this->container->get('request_stack')->getCurrentRequest();
             $route = $request->get('_route');
-            $routeParameters = [];
+            $routeParameters = $options['routeParameters'];
             foreach($request->query as $key => $value) {
-                if($key != 'page') {
+                if($key != $pageParameter) {
                     $routeParameters[$key] = $value;
                 }
             }
+            foreach($request->attributes as $key => $value) {
+                if($key != $pageParameter && substr($key, 0, 1) != '_') {
+                    $routeParameters[$key] = $value;
+                }
+            }
+        } else {
+            $routeParameters = $options['routeParameters'];
+            $route = $options['route'];
         }
 
         return [
             'resources' => $options['resources'],
             'route' => $route,
-            'routeParameters' => $routeParameters
+            'routeParameters' => $routeParameters,
+            'pageParameter' => $pageParameter
         ];
     }
 
@@ -43,10 +49,13 @@ class PaginationWidgetType extends AbstractWidgetType
 
         $optionsResolver->setDefaults([
             'routeParameters' => [],
-            'template' => 'theme/widget/pagination.html.twig',
-        ])->setRequired([
+            'route' => null,
+            'page_parameter' => 'page',
+            'template' => 'theme/widget/pagination/pagination.html.twig',
+        ]);
+
+        $optionsResolver->setRequired([
             'resources',
-            'route',
         ]);
     }
 
