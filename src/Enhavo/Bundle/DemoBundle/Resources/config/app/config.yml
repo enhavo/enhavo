@@ -33,9 +33,8 @@ enhavo_theme:
     dynamic:
         enable: true
 
-
 enhavo_translation:
-    enable: true
+    enable: false
     default_locale: 'en'
     locales:
         - 'en'
