@@ -1,9 +1,19 @@
 services:
-    Enhavo\Bundle\CommentBundle\Form\CommentType:
+    Enhavo\Bundle\CommentBundle\Form\Type\CommentType:
+        arguments:
+            - '%enhavo_comment.model.comment.class%'
         tags:
             { name: form.type }
 
-    Enhavo\Bundle\CommentBundle\Form\ThreadType:
+    Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType:
+        arguments:
+            - '%enhavo_comment.model.comment.class%'
+        tags:
+            { name: form.type }
+
+    Enhavo\Bundle\CommentBundle\Form\Type\ThreadType:
+        arguments:
+            - '%enhavo_comment.model.thread.class%'
         tags:
             { name: form.type }
 
@@ -21,8 +31,16 @@ services:
         arguments:
             - '@enhavo_comment.repository.comment'
             - '@request_stack'
+            - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
+        tags:
+            - { name: enhavo.widget, alias: comments }
+
+    Enhavo\Bundle\CommentBundle\Widget\CommentWidgetType:
+
+    Enhavo\Bundle\CommentBundle\Comment\CommentManager:
+        arguments:
+            - '@enhavo_comment.factory.comment'
+            - '@doctrine.orm.entity_manager'
             - '@form.factory'
             - '%enhavo_comment.submit_form%'
             - '@enhavo_comment.factory.comment'
-        tags:
-            - { name: enhavo.widget, alias: comments }

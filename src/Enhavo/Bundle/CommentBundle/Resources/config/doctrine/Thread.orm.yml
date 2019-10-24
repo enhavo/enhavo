@@ -8,6 +8,9 @@ Enhavo\Bundle\CommentBundle\Entity\Thread:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        enable:
+            type: boolean
     oneToMany:
         comments:
             cascade: ['persist', 'refresh', 'remove']

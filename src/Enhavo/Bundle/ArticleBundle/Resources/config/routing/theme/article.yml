@@ -1,5 +1,5 @@
 enhavo_article_theme_article_show:
     path: /article/{slug}
-    methods: [GET]
+    methods: [GET,POST]
     defaults:
         _controller: Enhavo\Bundle\ArticleBundle\Controller\ArticleController:showAction

@@ -5,9 +5,12 @@ namespace Enhavo\Bundle\CommentBundle\DependencyInjection;
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\CommentBundle\Entity\Comment;
-use Enhavo\Bundle\CommentBundle\Form\CommentSubmitType;
-use Enhavo\Bundle\CommentBundle\Form\CommentType;
+use Enhavo\Bundle\CommentBundle\Entity\Thread;
+use Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType;
+use Enhavo\Bundle\CommentBundle\Form\Type\CommentType;
+use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
+use Enhavo\Bundle\CommentBundle\Repository\ThreadRepository;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -50,6 +53,22 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('repository')->defaultValue(CommentRepository::class)->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(CommentType::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('thread')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(Thread::class)->end()
+                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
+                                        ->scalarNode('repository')->defaultValue(ThreadRepository::class)->end()
+                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('form')->defaultValue(ThreadType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

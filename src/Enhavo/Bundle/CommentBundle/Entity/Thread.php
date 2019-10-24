@@ -11,8 +11,9 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Thread implements ThreadInterface
+class Thread implements ThreadInterface, ResourceInterface
 {
     /**
      * @var integer
@@ -23,6 +24,11 @@ class Thread implements ThreadInterface
      * @var Comment[]
      */
     private $comments;
+
+    /**
+     * @var boolean
+     */
+    private $enable = true;
 
     /**
      * Thread constructor.
@@ -64,5 +70,21 @@ class Thread implements ThreadInterface
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnable(): bool
+    {
+        return $this->enable;
+    }
+
+    /**
+     * @param bool $enable
+     */
+    public function setEnable(bool $enable): void
+    {
+        $this->enable = $enable;
     }
 }

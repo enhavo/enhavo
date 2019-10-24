@@ -9,13 +9,14 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
+use Enhavo\Bundle\CommentBundle\Model\ThreadAwareInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
-class Article extends Content implements ArticleInterface
+class Article extends Content implements ArticleInterface, ThreadAwareInterface
 {
     /**
      * @var FileInterface

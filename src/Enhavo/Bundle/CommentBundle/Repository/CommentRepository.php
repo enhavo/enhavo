@@ -17,6 +17,7 @@ class CommentRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('c')
             ->join('c.thread', 't')
+            ->orderBy('c.createdAt', 'DESC')
             ->where('t.id = :id')
             ->setParameter('id', $thread->getId());
 

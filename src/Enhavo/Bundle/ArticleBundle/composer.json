@@ -19,7 +19,8 @@
     "enhavo/block-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
     "enhavo/media-bundle": "dev-master",
-    "enhavo/template-bundle": "dev-master"
+    "enhavo/template-bundle": "dev-master",
+    "enhavo/comment-bundle": "dev-master"
   },
   "suggest": {
     "enhavo/search-bundle": "Make your articles searchable with EnhavoSearchBundle"

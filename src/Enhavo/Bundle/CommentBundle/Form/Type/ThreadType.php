@@ -6,9 +6,8 @@
  * Time: 15:18
  */
 
-namespace Enhavo\Bundle\CommentBundle\Form;
+namespace Enhavo\Bundle\CommentBundle\Form\Type;
 
-use Enhavo\Bundle\CommentBundle\Entity\Thread;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +15,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThreadType extends AbstractType
 {
+    /**
+     * @var string
+     */
+    private $dataClass;
+
+    /**
+     * ThreadType constructor.
+     * @param $dataClass
+     */
+    public function __construct($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('comments', ListType::class, [
@@ -27,7 +40,7 @@ class ThreadType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Thread::class
+            'data_class' => $this->dataClass,
         ]);
     }
 }

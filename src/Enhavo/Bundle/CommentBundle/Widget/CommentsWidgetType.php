@@ -9,10 +9,10 @@
 namespace Enhavo\Bundle\CommentBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
-use Enhavo\Bundle\CommentBundle\Form\CommentSubmitType;
+use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
+use Enhavo\Bundle\CommentBundle\Model\ThreadAwareInterface;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
-use Sylius\Component\Resource\Factory\FactoryInterface;
-use Symfony\Component\Form\FormFactoryInterface;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,64 +29,54 @@ class CommentsWidgetType extends AbstractWidgetType
     private $requestStack;
 
     /**
-     * @var FormFactoryInterface
+     * @var CommentManager
      */
-    private $formFactory;
-
-    /**
-     * @var string
-     */
-    private $submitForm;
-
-    /**
-     * @var FactoryInterface
-     */
-    private $commentFactory;
+    private $commentManager;
 
     public function __construct(
         CommentRepository $repository,
         RequestStack $requestStack,
-        FormFactoryInterface $formFactory,
-        $submitForm,
-        FactoryInterface $commentFactory
+        CommentManager $commentManager
     ) {
         $this->repository = $repository;
         $this->requestStack = $requestStack;
-        $this->formFactory = $formFactory;
-        $this->submitForm = $submitForm;
-        $this->commentFactory = $commentFactory;
+        $this->commentManager = $commentManager;
     }
 
     public function createViewData(array $options, $resource = null)
     {
-        $comments = $this->repository->findByThread([
-            'thread' => $options['thread']
-        ]);
+        $thread = $options['thread'] instanceof ThreadAwareInterface ? $options['thread']->getThread() : $options['thread'];
+        $form = $options['form'] !== null ? $options['form'] : $this->commentManager->createSubmitForm();
+        $action = $options['action'] !== null ? $options['action'] : $this->requestStack->getCurrentRequest()->getUri();
 
-        $formType = $options['form'] !== null ? $options['form'] : $this->submitForm;
-        $form = $this->formFactory->create($formType, $this->commentFactory->createNew());
-
-//        if($articles instanceof Pagerfanta) {
-//            $page = $options['page'];
-//            if($page === null) {
-//                $page = $this->requestStack->getCurrentRequest()->get($options['page_parameter']);
-//            }
-//            $articles->setCurrentPage($page ?  $page : 1);
-//        }
+        $comments = $thread !== null ? $this->repository->findByThread($thread) : [];
+        if($comments instanceof Pagerfanta) {
+            $page = $options['page'];
+            if($page === null) {
+                $page = $this->requestStack->getCurrentRequest()->get($options['page_parameter']);
+            }
+            $comments->setCurrentPage($page ?  $page : 1);
+            $comments->setMaxPerPage($options['limit']);
+        }
 
         return [
             'resources' => $comments,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'action' => $action,
+            'pageParameter' => $options['page_parameter']
         ];
     }
 
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
-            'template' => 'theme/resource/comment/list.html.twig',
+            'template' => 'theme/widget/comment/comments.html.twig',
             'pagination' => true,
+            'page' => null,
+            'page_parameter' => 'comment-page',
             'limit' => 10,
-            'form' => null
+            'form' => null,
+            'action' => null
         ]);
 
         $optionsResolver->setRequired('thread');

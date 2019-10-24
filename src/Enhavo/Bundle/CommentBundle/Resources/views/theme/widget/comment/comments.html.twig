@@ -1,0 +1,13 @@
+{% for comment in resources %}
+    <div>
+        {{ comment.comment }}
+        {{ comment.createdAt.format('d.m.Y H:i') }}
+    </div>
+{% endfor %}
+
+{{ widget('pagination', {
+    resources: resources,
+    page_parameter: pageParameter
+}) }}
+
+{% include template('theme/widget/comment/submit.html.twig') %}

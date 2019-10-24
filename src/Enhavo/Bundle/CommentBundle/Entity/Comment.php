@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -62,17 +63,17 @@ class Comment implements CommentInterface, ResourceInterface
     }
 
     /**
-     * @return Thread|null
+     * @return ThreadInterface|null
      */
-    public function getThread(): ?Thread
+    public function getThread(): ?ThreadInterface
     {
         return $this->thread;
     }
 
     /**
-     * @param Thread|null $thread
+     * @param ThreadInterface|null $thread
      */
-    public function setThread(?Thread $thread): void
+    public function setThread(?ThreadInterface $thread): void
     {
         $this->thread = $thread;
     }
