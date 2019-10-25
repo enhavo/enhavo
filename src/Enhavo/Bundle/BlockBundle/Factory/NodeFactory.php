@@ -40,7 +40,13 @@ class NodeFactory implements FactoryInterface
         $node->setName($original->getName());
         $node->setPosition($original->getPosition());
         $node->setEnable($original->isEnable());
-        $node->setBlock($this->blockFactory->duplicate($original->getBlock()));
+        if($original->getBlock()) {
+            $node->setBlock($this->blockFactory->duplicate($original->getBlock()));
+        }
+        foreach($original->getChildren() as $child) {
+            $newChild = $this->duplicate($child);
+            $node->addChild($newChild);
+        }
         return $node;
     }
 }

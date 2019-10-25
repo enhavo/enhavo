@@ -1,24 +1,31 @@
 <?php
 namespace Enhavo\Bundle\PageBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Factory\ContainerFactory;
 use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\ContentBundle\Factory\ContentFactory;
 use Enhavo\Bundle\PageBundle\Entity\Page;
+use Enhavo\Bundle\RoutingBundle\Factory\RouteFactory;
 
 class PageFactory extends ContentFactory
 {
-    /**
-     * @var ContainerFactory
-     */
-    protected $nodeFactory;
 
-    public function __construct($className, NodeFactory $nodeFactory)
+    /**
+     * @var NodeFactory
+     */
+    private $nodeFactory;
+
+    /**
+     * @var RouteFactory
+     */
+    private $routeFactory;
+
+    public function __construct($className, NodeFactory $nodeFactory, RouteFactory $routeFactory)
     {
         parent::__construct($className);
 
         $this->nodeFactory = $nodeFactory;
+        $this->routeFactory = $routeFactory;
     }
 
     /**
@@ -38,11 +45,12 @@ class PageFactory extends ContentFactory
         $newPage->setTitle($originalResource->getTitle() . ' (2)');
         $newPage->setPublic(false);
         $newPage->setCode(null);
+        $newPage->setRoute($this->routeFactory->createNew());
 
         $newContainer = $this->nodeFactory->duplicate($originalResource->getContent());
         $newPage->setContent($newContainer);
 
-        $newPage->setParent($originalResource->getParent());
+        $newPage->setParent(null);
 
         return $newPage;
     }
