@@ -111,12 +111,12 @@ interface NodeInterface
     /**
      * @return bool
      */
-    public function isEnable(): bool;
+    public function isEnable(): ?bool;
 
     /**
      * @param bool $enable
      */
-    public function setEnable(bool $enable);
+    public function setEnable(?bool $enable);
 
     /**
      * @return string|null

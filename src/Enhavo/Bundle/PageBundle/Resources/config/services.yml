@@ -46,6 +46,7 @@ services:
         arguments:
             - '%enhavo_page.model.page.class%'
             - '@enhavo_block.factory.node'
+            - '@Enhavo\Bundle\RoutingBundle\Factory\RouteFactory'
 
     Enhavo\Bundle\PageBundle\Navigation\PageConfiguration:
         public: true

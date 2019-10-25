@@ -306,7 +306,7 @@ class Node implements NodeInterface
     /**
      * @return bool
      */
-    public function isEnable(): bool
+    public function isEnable(): ?bool
     {
         return $this->enable;
     }
@@ -314,7 +314,7 @@ class Node implements NodeInterface
     /**
      * @param bool $enable
      */
-    public function setEnable(bool $enable): void
+    public function setEnable(?bool $enable): void
     {
         $this->enable = $enable;
     }
