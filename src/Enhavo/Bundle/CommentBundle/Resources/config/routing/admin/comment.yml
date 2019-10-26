@@ -25,6 +25,9 @@ enhavo_comment_comment_create:
         _controller: enhavo_comment.controller.comment:createAction
         _sylius:
             redirect: enhavo_comment_comment_update
+            factory:
+                method: createWithThreadId
+                arguments: [$id]
             viewer:
 
 enhavo_comment_comment_update:

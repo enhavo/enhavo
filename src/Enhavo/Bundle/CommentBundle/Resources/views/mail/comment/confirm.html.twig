@@ -1,0 +1,7 @@
+New Comment: <br />
+{{ comment_confirm_url(comment) }}<br/>
+<br/>
+Pending Comments: <br/>
+{% for pendingComment in pendingComments %}
+    <div>{{ comment_confirm_url(pendingComment) }}</div>
+{% endfor %}

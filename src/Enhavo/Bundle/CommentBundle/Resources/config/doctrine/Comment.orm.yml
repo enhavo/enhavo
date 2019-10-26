@@ -33,6 +33,8 @@ Enhavo\Bundle\CommentBundle\Entity\Comment:
 
     manyToOne:
         thread:
+            fetch: 'EAGER'
+            cascade: ['persist', 'refresh']
             targetEntity: Enhavo\Bundle\CommentBundle\Model\ThreadInterface
         parent:
             targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface

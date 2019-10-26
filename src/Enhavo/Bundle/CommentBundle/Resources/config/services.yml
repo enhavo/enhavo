@@ -85,6 +85,14 @@ services:
         arguments:
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
 
+    Enhavo\Bundle\CommentBundle\Comment\Strategy\ConfirmStrategy:
+        arguments:
+            - '@mailer'
+            - '@twig'
+            - '@enhavo_app.template.manager'
+            - '@translator'
+            - '@enhavo_comment.repository.comment'
+
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
         public: true
         arguments:
@@ -92,3 +100,21 @@ services:
             - '@Symfony\Component\Routing\RouterInterface'
         tags:
             - { name: enhavo.action, alias: 'comments' }
+
+    enhavo_comment.factory.comment:
+        class: '%enhavo_comment.factory.comment.class%'
+        arguments:
+            - '%enhavo_comment.model.comment.class%'
+        calls:
+            - [setThreadRepository, ['@enhavo_comment.repository.thread']]
+
+    Enhavo\Bundle\CommentBundle\Comment\AdminConfirmUrlGenerator:
+        arguments:
+            - '@router'
+            - '@enhavo_routing.router'
+
+    Enhavo\Bundle\CommentBundle\Twig\CommentTwigExtension:
+        arguments:
+            - '@Enhavo\Bundle\CommentBundle\Comment\AdminConfirmUrlGenerator'
+        tags:
+            - { name: twig.extension }

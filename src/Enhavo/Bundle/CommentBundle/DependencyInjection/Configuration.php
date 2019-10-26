@@ -7,6 +7,7 @@ use Enhavo\Bundle\AppBundle\Factory\Factory;
 use Enhavo\Bundle\CommentBundle\Comment\Strategy\ImmediatelyPublishStrategy;
 use Enhavo\Bundle\CommentBundle\Entity\Comment;
 use Enhavo\Bundle\CommentBundle\Entity\Thread;
+use Enhavo\Bundle\CommentBundle\Factory\CommentFactory;
 use Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType;
 use Enhavo\Bundle\CommentBundle\Form\Type\CommentType;
 use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
@@ -62,7 +63,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(Comment::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(CommentRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(CommentFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(CommentType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
