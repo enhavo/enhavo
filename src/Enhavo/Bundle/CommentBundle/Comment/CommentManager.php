@@ -10,7 +10,9 @@ namespace Enhavo\Bundle\CommentBundle\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
+use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
+use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
@@ -147,11 +149,11 @@ class CommentManager
         }
     }
 
-    public function publishComment(CommentInterface $comment, $flush = true)
+    public function publishComment(CommentInterface $comment)
     {
+        $this->eventDispatcher->dispatch(new PrePublishCommentEvent($comment));
         $comment->publish();
-        if($flush) {
-            $this->em->flush();
-        }
+        $this->em->flush();
+        $this->eventDispatcher->dispatch(new PostPublishCommentEvent($comment));
     }
 }
