@@ -25,4 +25,14 @@ class CommentController
     {
         //$this->commentManager->
     }
+
+    public function publishAction(Request $request)
+    {
+
+    }
+
+    public function deleteAction(Request $request)
+    {
+
+    }
 }

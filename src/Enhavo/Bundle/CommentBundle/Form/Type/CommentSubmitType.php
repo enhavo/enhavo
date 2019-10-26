@@ -20,9 +20,15 @@ class CommentSubmitType extends AbstractType
      */
     private $dataClass;
 
-    public function __construct($dataClass)
+    /**
+     * @var array
+     */
+    private $validationGroups;
+
+    public function __construct($dataClass, $validationGroups)
     {
         $this->dataClass = $dataClass;
+        $this->validationGroups = $validationGroups;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -37,7 +43,7 @@ class CommentSubmitType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => $this->dataClass,
-            'validation_groups' => ['submit']
+            'validation_groups' => $this->validationGroups
         ]);
     }
 }

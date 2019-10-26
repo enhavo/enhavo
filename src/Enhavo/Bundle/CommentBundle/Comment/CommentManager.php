@@ -9,13 +9,17 @@
 namespace Enhavo\Bundle\CommentBundle\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
+use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
+use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
-use Enhavo\Bundle\CommentBundle\Model\ThreadAwareInterface;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class CommentManager
@@ -49,32 +53,45 @@ class CommentManager
     private $commentFactory;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * CommentManager constructor.
      * @param FactoryInterface $threadFactory
      * @param EntityManagerInterface $em
      * @param FormFactoryInterface $formFactory
      * @param string $submitForm
      * @param FactoryInterface $commentFactory
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(FactoryInterface $threadFactory, EntityManagerInterface $em, FormFactoryInterface $formFactory, string $submitForm, FactoryInterface $commentFactory)
-    {
+    public function __construct(
+        FactoryInterface $threadFactory,
+        EntityManagerInterface $em,
+        FormFactoryInterface $formFactory,
+        string $submitForm,
+        FactoryInterface $commentFactory,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->threadFactory = $threadFactory;
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->submitForm = $submitForm;
         $this->commentFactory = $commentFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * @param ThreadAwareInterface $threadAware
+     * @param CommentSubjectInterface $subject
      * @param bool $flush
      */
-    public function updateThreadAware(ThreadAwareInterface $threadAware, $flush = true)
+    public function updateSubject(CommentSubjectInterface $subject, $flush = true)
     {
-        if($threadAware->getThread() === null) {
+        if($subject->getThread() === null) {
             /** @var ThreadInterface $thread */
             $thread = $this->threadFactory->createNew();
-            $threadAware->setThread($thread);
+            $subject->setThread($thread);
             if($flush) {
                 $this->em->flush();
             }
@@ -91,47 +108,50 @@ class CommentManager
 
     /**
      * @param CommentInterface $comment
-     * @param $thread
-     * @param bool $flush
      */
-    public function saveComment(CommentInterface $comment, $thread, $flush = true)
+    public function saveComment(CommentInterface $comment)
     {
-        $thread = $this->checkThread($thread);
-        $comment->setThread($thread);
+        $this->eventDispatcher->dispatch(new PreCreateCommentEvent($comment));
         $this->em->persist($comment);
-        if($flush) {
-            $this->em->flush();
-        }
+        $this->em->flush();
+        $this->eventDispatcher->dispatch(new PostCreateCommentEvent($comment));
     }
 
     /**
      * @param Request $request
-     * @param $thread ThreadAwareInterface|ThreadInterface
+     * @param $subject CommentSubjectInterface
      * @return SubmitContext
      */
-    public function handleSubmitForm(Request $request, $thread): SubmitContext
+    public function handleSubmitForm(Request $request, CommentSubjectInterface $subject): SubmitContext
     {
-        $thread = $this->checkThread($thread);
+        $this->checkThread($subject);
         $form = $this->createSubmitForm();
         $form->handleRequest($request);
         $insert = false;
         if($form->isSubmitted() && $form->isValid()) {
-            $this->saveComment($form->getData(), $thread);
+            /** @var CommentInterface $comment */
+            $comment = $form->getData();
+            $comment->setThread($subject->getThread());
+            $this->saveComment($comment);
             $form = $this->createSubmitForm();
             $insert = true;
         }
         return new SubmitContext($form, $insert);
     }
 
-    private function checkThread($thread): ThreadInterface
+    private function checkThread(CommentSubjectInterface $subject)
     {
-        if($thread instanceof ThreadAwareInterface) {
-            return $thread->getThread();
-        } else if(!$thread instanceof ThreadInterface) {
-            throw new \InvalidArgumentException(sprintf(
-                'Thread has to by type of "%s" or "%s" but the type is "%s"', ThreadInterface::class, ThreadAwareInterface::class, get_class($thread)
-            ));
+        $thread = $subject->getThread();
+        if($thread === null) {
+            throw CommentSubjectException::createNoThreadException($subject);
         }
-        return $thread;
+    }
+
+    public function publishComment(CommentInterface $comment, $flush = true)
+    {
+        $comment->publish();
+        if($flush) {
+            $this->em->flush();
+        }
     }
 }

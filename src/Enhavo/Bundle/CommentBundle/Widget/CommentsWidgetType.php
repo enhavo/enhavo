@@ -10,7 +10,8 @@ namespace Enhavo\Bundle\CommentBundle\Widget;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
-use Enhavo\Bundle\CommentBundle\Model\ThreadAwareInterface;
+use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -45,11 +46,11 @@ class CommentsWidgetType extends AbstractWidgetType
 
     public function createViewData(array $options, $resource = null)
     {
-        $thread = $options['thread'] instanceof ThreadAwareInterface ? $options['thread']->getThread() : $options['thread'];
+        $subject = $this->getSubject($options);
         $form = $options['form'] !== null ? $options['form'] : $this->commentManager->createSubmitForm();
         $action = $options['action'] !== null ? $options['action'] : $this->requestStack->getCurrentRequest()->getUri();
 
-        $comments = $thread !== null ? $this->repository->findByThread($thread) : [];
+        $comments = $this->repository->findPublicByThread($subject->getThread());
         if($comments instanceof Pagerfanta) {
             $page = $options['page'];
             if($page === null) {
@@ -67,6 +68,17 @@ class CommentsWidgetType extends AbstractWidgetType
         ];
     }
 
+    private function getSubject($options): CommentSubjectInterface
+    {
+        if(!$options['subject'] instanceof CommentSubjectInterface) {
+            throw CommentSubjectException::createTypeException($options['subject']);
+        } elseif($options['subject']->getThread() === null) {
+            throw CommentSubjectException::createNoThreadException($options['subject']);
+        }
+
+        return $options['subject'];
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefaults([
@@ -79,7 +91,7 @@ class CommentsWidgetType extends AbstractWidgetType
             'action' => null
         ]);
 
-        $optionsResolver->setRequired('thread');
+        $optionsResolver->setRequired('subject');
     }
 
     public function getType()

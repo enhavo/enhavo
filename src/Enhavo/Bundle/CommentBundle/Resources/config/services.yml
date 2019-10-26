@@ -8,6 +8,7 @@ services:
     Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType:
         arguments:
             - '%enhavo_comment.model.comment.class%'
+            - '%enhavo_comment.submit_form.validation_groups%'
         tags:
             { name: form.type }
 
@@ -40,8 +41,9 @@ services:
             - '@enhavo_comment.factory.comment'
             - '@doctrine.orm.entity_manager'
             - '@form.factory'
-            - '%enhavo_comment.submit_form%'
+            - '%enhavo_comment.submit_form.form%'
             - '@enhavo_comment.factory.comment'
+            - '@event_dispatcher'
 
     enhavo_comment.extend_listener.comment:
         class: Enhavo\Bundle\AppBundle\EventListener\DoctrineExtendListener
@@ -60,3 +62,25 @@ services:
             - true
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    enhavo_comment.reference.thread:
+        class: Enhavo\Bundle\AppBundle\EventListener\DoctrineReferenceListener
+        arguments:
+            - 'Enhavo\Bundle\CommentBundle\Entity\Thread'
+            - 'subject'
+            - 'subjectClass'
+            - 'subjectId'
+            - '@enhavo_app.reference.target_class_resolver'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    Enhavo\Bundle\CommentBundle\EventListener\PublishStrategySubscriber:
+        arguments:
+            - '@enhavo_comment.publish_strategy'
+            - '%enhavo_comment.publish_strategy.options%'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\CommentBundle\Comment\Strategy\ImmediatelyPublishStrategy:
+        arguments:
+            - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
