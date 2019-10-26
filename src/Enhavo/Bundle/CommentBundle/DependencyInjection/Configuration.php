@@ -4,8 +4,10 @@ namespace Enhavo\Bundle\CommentBundle\DependencyInjection;
 
 use Enhavo\Bundle\AppBundle\Controller\ResourceController;
 use Enhavo\Bundle\AppBundle\Factory\Factory;
+use Enhavo\Bundle\CommentBundle\Comment\Strategy\ImmediatelyPublishStrategy;
 use Enhavo\Bundle\CommentBundle\Entity\Comment;
 use Enhavo\Bundle\CommentBundle\Entity\Thread;
+use Enhavo\Bundle\CommentBundle\Factory\CommentFactory;
 use Enhavo\Bundle\CommentBundle\Form\Type\CommentSubmitType;
 use Enhavo\Bundle\CommentBundle\Form\Type\CommentType;
 use Enhavo\Bundle\CommentBundle\Form\Type\ThreadType;
@@ -30,14 +32,24 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
 
             ->children()
-                ->scalarNode('submit_form')->defaultValue(CommentSubmitType::class)->end()
+                ->arrayNode('submit_form')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('form')->defaultValue(CommentSubmitType::class)->end()
+                        ->variableNode('validation_groups')->defaultValue(['submit'])->end()
+                    ->end()
+                ->end()
+                ->arrayNode('publish_strategy')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('strategy')->defaultValue(ImmediatelyPublishStrategy::class)->end()
+                        ->variableNode('options')->defaultValue([])->end()
+                    ->end()
+                ->end()
             ->end()
 
             ->children()
                 ->scalarNode('driver')->defaultValue('doctrine/orm')->end()
-            ->end()
-
-            ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -51,7 +63,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(Comment::class)->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->end()
                                         ->scalarNode('repository')->defaultValue(CommentRepository::class)->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->end()
+                                        ->scalarNode('factory')->defaultValue(CommentFactory::class)->end()
                                         ->scalarNode('form')->defaultValue(CommentType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

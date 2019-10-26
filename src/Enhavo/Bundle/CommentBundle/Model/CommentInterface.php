@@ -8,9 +8,12 @@
 
 namespace Enhavo\Bundle\CommentBundle\Model;
 
-
 interface CommentInterface
 {
+    const STATE_PENDING = 'pending';
+    const STATE_PUBLISH = 'publish';
+    const STATE_DENY = 'deny';
+
     /**
      * @param ThreadInterface $thread
      * @return self
@@ -21,4 +24,19 @@ interface CommentInterface
      * @return mixed
      */
     public function getThread(): ?ThreadInterface;
+
+    /**
+     * @return self
+     */
+    public function publish(): self;
+
+    /**
+     * @return self
+     */
+    public function deny(): self;
+
+    /**
+     * @return CommentSubjectInterface
+     */
+    public function getSubject(): CommentSubjectInterface;
 }

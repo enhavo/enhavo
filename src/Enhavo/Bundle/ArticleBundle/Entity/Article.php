@@ -9,15 +9,17 @@
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
-use Enhavo\Bundle\CommentBundle\Model\ThreadAwareInterface;
-use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectTrait;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
-class Article extends Content implements ArticleInterface, ThreadAwareInterface
+class Article extends Content implements ArticleInterface, CommentSubjectInterface
 {
+    use CommentSubjectTrait;
+
     /**
      * @var FileInterface
      */
@@ -42,11 +44,6 @@ class Article extends Content implements ArticleInterface, ThreadAwareInterface
      * @var \Doctrine\Common\Collections\Collection
      */
     private $tags;
-
-    /**
-     * @var ThreadInterface
-     */
-    private $thread;
 
     /**
      * Constructor
@@ -195,21 +192,5 @@ class Article extends Content implements ArticleInterface, ThreadAwareInterface
     public function getTags()
     {
         return $this->tags;
-    }
-
-    /**
-     * @return ThreadInterface
-     */
-    public function getThread(): ?ThreadInterface
-    {
-        return $this->thread;
-    }
-
-    /**
-     * @param ThreadInterface $thread
-     */
-    public function setThread(?ThreadInterface $thread): void
-    {
-        $this->thread = $thread;
     }
 }

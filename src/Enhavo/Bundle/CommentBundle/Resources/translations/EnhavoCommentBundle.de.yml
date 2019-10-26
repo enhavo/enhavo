@@ -1,6 +1,13 @@
 comment:
   label:
     comment: 'Kommentar'
+    comments: 'Kommentare'
     created_at: 'Erstellt am'
+    state: 'Status'
+    deny: 'Abgelehnt'
+    publish: 'Öffentlich'
+    pending: 'Ausstehend'
+    name: 'Name'
+    email: 'Email'
   action:
     submit: 'Kommentar abschicken'

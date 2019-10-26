@@ -1,6 +1,13 @@
 comment:
   label:
     comment: 'Comment'
+    comments: 'Comments'
     created_at: 'Created at'
+    state: 'State'
+    deny: 'Deny'
+    publish: 'Publish'
+    pending: 'Pending'
+    name: 'Name'
+    email: 'Email'
   action:
     submit: 'Submit comment'

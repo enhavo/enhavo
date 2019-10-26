@@ -11,5 +11,7 @@ namespace Enhavo\Bundle\CommentBundle\Model;
 
 interface ThreadInterface
 {
+    public function setSubject(?CommentSubjectInterface $subject);
 
+    public function getSubject(): ?CommentSubjectInterface;
 }

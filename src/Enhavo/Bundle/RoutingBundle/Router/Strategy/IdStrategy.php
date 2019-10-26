@@ -18,7 +18,7 @@ class IdStrategy extends AbstractStrategy
     {
         $id = $this->getProperty($resource, $options['property']);
         $parameters = array_merge($parameters, ['id' => $id]);
-        return $this->getRouter()->generate($options['router'], $parameters, $referenceType);
+        return $this->getRouter()->generate($options['route'], $parameters, $referenceType);
     }
 
     public function getType()
