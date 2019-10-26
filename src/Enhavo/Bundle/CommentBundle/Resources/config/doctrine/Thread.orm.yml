@@ -11,6 +11,12 @@ Enhavo\Bundle\CommentBundle\Entity\Thread:
     fields:
         enable:
             type: boolean
+        subjectClass:
+            type: string
+            nullable: true
+        subjectId:
+            type: string
+            nullable: true
     oneToMany:
         comments:
             cascade: ['persist', 'refresh', 'remove']

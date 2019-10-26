@@ -10,7 +10,9 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -45,6 +47,31 @@ class Comment implements CommentInterface, ResourceInterface
      * @var \DateTime
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $publishedAt;
+
+    /**
+     * @var string
+     */
+    private $state = CommentInterface::STATE_PENDING;
+
+    /**
+     * @var string|null
+     */
+    private $email;
+
+    /**
+     * @var string|null
+     */
+    private $name;
+
+    /**
+     * @var UserInterface|null
+     */
+    private $user;
 
     /**
      * Comment constructor.
@@ -150,5 +177,124 @@ class Comment implements CommentInterface, ResourceInterface
     {
         $child->setParent(null);
         $this->children->remove($child);
+    }
+
+    public function publish(): CommentInterface
+    {
+        $this->publishedAt = new \DateTime();
+        $this->state = CommentInterface::STATE_PUBLISH;
+        return $this;
+    }
+
+    public function deny(): CommentInterface
+    {
+        $this->state = CommentInterface::STATE_DENY;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getPublishedAt(): ?\DateTime
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param \DateTime|null $publishedAt
+     */
+    public function setPublishedAt(?\DateTime $publishedAt): void
+    {
+        $this->publishedAt = $publishedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    public function getSubject(): CommentSubjectInterface
+    {
+        $parents = $this->getParents();
+        if(count($parents) > 0) {
+            return $parents[count($parents) - 1]->getThread()->getSubject();
+        }
+        return $this->getThread()->getSubject();
+    }
+
+    /**
+     * @return CommentInterface[]
+     */
+    public function getParents()
+    {
+        $parents = [];
+        $parent = $this->getParent();
+        do {
+            if($parent) {
+                $parents[] = $parent;
+            } else {
+                break;
+            }
+        } while($parent = $parent->getParent());
+        return $parents;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return UserInterface|null
+     */
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param UserInterface|null $user
+     */
+    public function setUser(?UserInterface $user): void
+    {
+        $this->user = $user;
     }
 }

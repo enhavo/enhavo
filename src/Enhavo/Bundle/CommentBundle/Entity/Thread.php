@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
@@ -31,10 +32,27 @@ class Thread implements ThreadInterface, ResourceInterface
     private $enable = true;
 
     /**
-     * Thread constructor.
+     * @var CommentSubjectInterface
      */
-    public function __construct()
+    private $subject;
+
+    /**
+     * @var string|null
+     */
+    private $subjectClass;
+
+    /**
+     * @var int|null
+     */
+    private $subjectId;
+
+    /**
+     * Thread constructor.
+     * @param CommentSubjectInterface|null $subject
+     */
+    public function __construct(CommentSubjectInterface $subject = null)
     {
+        $this->subject = $subject;
         $this->comments = new ArrayCollection();
     }
 
@@ -86,5 +104,53 @@ class Thread implements ThreadInterface, ResourceInterface
     public function setEnable(bool $enable): void
     {
         $this->enable = $enable;
+    }
+
+    /**
+     * @return CommentSubjectInterface
+     */
+    public function getSubject(): ?CommentSubjectInterface
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param CommentSubjectInterface $subject
+     */
+    public function setSubject(?CommentSubjectInterface $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubjectClass(): ?string
+    {
+        return $this->subjectClass;
+    }
+
+    /**
+     * @param string|null $subjectClass
+     */
+    public function setSubjectClass(?string $subjectClass): void
+    {
+        $this->subjectClass = $subjectClass;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSubjectId(): ?int
+    {
+        return $this->subjectId;
+    }
+
+    /**
+     * @param int|null $subjectId
+     */
+    public function setSubjectId(?int $subjectId): void
+    {
+        $this->subjectId = $subjectId;
     }
 }

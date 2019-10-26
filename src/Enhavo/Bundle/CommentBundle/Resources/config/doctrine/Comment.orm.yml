@@ -12,19 +12,32 @@ Enhavo\Bundle\CommentBundle\Entity\Comment:
         comment:
             type: text
             nullable: true
-
+        state:
+            type: string
+            nullable: true
         createdAt:
             type: datetime
             nullable: true
             gedmo:
                 timestampable:
                     on: create
+        publishedAt:
+            type: datetime
+            nullable: true
+        name:
+            type: string
+            nullable: true
+        email:
+            type: string
+            nullable: true
 
     manyToOne:
         thread:
             targetEntity: Enhavo\Bundle\CommentBundle\Model\ThreadInterface
         parent:
             targetEntity: Enhavo\Bundle\CommentBundle\Model\CommentInterface
+        user:
+            targetEntity: Enhavo\Bundle\UserBundle\Model\UserInterface
 
     oneToMany:
         children:

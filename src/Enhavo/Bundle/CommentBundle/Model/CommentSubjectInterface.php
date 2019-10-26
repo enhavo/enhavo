@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: gseidel
- * Date: 2019-10-22
- * Time: 23:15
+ * Date: 2019-10-26
+ * Time: 07:26
  */
 
 namespace Enhavo\Bundle\CommentBundle\Model;
 
 
-interface ThreadAwareInterface
+interface CommentSubjectInterface
 {
     /**
      * @return ThreadInterface
