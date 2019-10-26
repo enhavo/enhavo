@@ -95,3 +95,15 @@ enhavo_user_user_batch:
             batches:
                 delete:
                     type: delete
+
+enhavo_user_user_auto_complete:
+    options:
+        expose: true
+    path: /enhavo/user/user/auto_complete
+    methods: [GET]
+    defaults:
+        _controller: enhavo_form.controller.auto_complete:searchAction
+        _config:
+            class: '%enhavo_user.model.user.class%'
+            repository:
+                method: findByTerm

@@ -7,6 +7,10 @@ export default class OpenAction extends AbstractAction
 
     execute(): void
     {
+        if(this.target == '_view') {
+            this.application.getView().open(this.url);
+            return;
+        }
         window.open(this.url, this.target);
     }
 }

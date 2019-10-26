@@ -26,3 +26,9 @@ services:
             - { name: form.type }
         arguments:
             - '%enhavo_user.model.user.class%'
+
+    Enhavo\Bundle\UserBundle\Form\Type\UserAutoCompleteEntityType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%enhavo_user.model.user.class%'

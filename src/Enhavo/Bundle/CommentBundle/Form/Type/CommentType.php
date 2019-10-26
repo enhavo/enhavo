@@ -8,8 +8,12 @@
 
 namespace Enhavo\Bundle\CommentBundle\Form\Type;
 
+use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
+use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
+use Enhavo\Bundle\UserBundle\Form\Type\UserAutoCompleteEntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +32,16 @@ class CommentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('name', DateTimeType::class, [
+            'label' => 'comment.label.name',
+            'translation_domain' => 'EnhavoCommentBundle'
+        ]);
+
+        $builder->add('email', DateTimeType::class, [
+            'label' => 'comment.label.email',
+            'translation_domain' => 'EnhavoCommentBundle'
+        ]);
+
         $builder->add('comment', TextareaType::class, [
             'label' => 'comment.label.comment',
             'translation_domain' => 'EnhavoCommentBundle'
@@ -36,6 +50,20 @@ class CommentType extends AbstractType
         $builder->add('createdAt', DateTimeType::class, [
             'label' => 'comment.label.created_at',
             'translation_domain' => 'EnhavoCommentBundle'
+        ]);
+
+        $builder->add('user', UserAutoCompleteEntityType::class, [
+            'placeholder' => '---'
+        ]);
+
+        $builder->add('state', ChoiceType::class, [
+            'label' => 'comment.label.state',
+            'translation_domain' => 'EnhavoCommentBundle',
+            'choices' => [
+                'comment.label.pending' => CommentInterface::STATE_PENDING,
+                'comment.label.publish' => CommentInterface::STATE_PUBLISH,
+                'comment.label.deny' => CommentInterface::STATE_DENY
+            ]
         ]);
     }
 

@@ -24,7 +24,7 @@ class CommentSubjectException extends \InvalidArgumentException implements Comme
 
     public static function createTypeException($subject)
     {
-        return new CommentSubjectException(sprintf('The option subject needs to be type of "%s" but "%s" given',
+        return new CommentSubjectException(sprintf('The subject needs to be type of "%s" but "%s" given',
         CommentSubjectInterface::class,
             get_class($subject)
         ));

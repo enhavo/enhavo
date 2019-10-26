@@ -26,4 +26,15 @@ class CommentRepository extends EntityRepository
 
         return $this->getPaginator($qb);
     }
+
+    public function findByThreadId($id)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.thread', 't')
+            ->orderBy('c.createdAt', 'DESC')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id);
+
+        return $this->getPaginator($qb);
+    }
 }

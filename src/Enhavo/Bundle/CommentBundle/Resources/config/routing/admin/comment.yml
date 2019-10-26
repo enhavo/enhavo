@@ -1,0 +1,113 @@
+enhavo_comment_comment_index:
+    options:
+        expose: true
+    path: /enhavo/comment/thread/{id}/comment/index
+    methods: [GET]
+    defaults:
+        _controller: enhavo_comment.controller.comment:listAction
+        _sylius:
+            viewer:
+                data_route_parameters:
+                    id: $id
+                actions:
+                    create:
+                        type: create
+                        route: enhavo_comment_comment_create
+                        route_parameters:
+                            id: $id
+
+enhavo_comment_comment_create:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/create
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:createAction
+        _sylius:
+            redirect: enhavo_comment_comment_update
+            viewer:
+
+enhavo_comment_comment_update:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/update/{id}
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:updateAction
+        _sylius:
+            viewer:
+
+enhavo_comment_comment_data:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/data
+    methods: [GET,POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:listDataAction
+        _sylius:
+            repository:
+                method: findByThreadId
+                arguments:
+                    - $id
+            viewer:
+                children_property: children
+                parent_property: parent
+                columns:
+                    title:
+                        type: text
+                        property: comment
+                        width: 8
+                    createdAt:
+                        type: datetime
+                        property: createdAt
+                        width: 4
+                    state:
+                        type: text
+                        property: state
+                        width: 4
+
+enhavo_comment_comment_delete:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/delete/{id}
+    methods: [POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:deleteAction
+
+enhavo_comment_comment_batch:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/batch
+    methods: [POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:batchAction
+        _sylius:
+            paginate: false
+            criteria:
+                id: $ids
+            batches:
+                delete:
+                    type: delete
+
+enhavo_comment_comment_preview:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/preview
+    methods: [GET]
+    defaults:
+        _controller: enhavo_comment.controller.comment:previewAction
+        _sylius:
+            viewer:
+
+enhavo_comment_comment_resource_preview:
+    options:
+        expose: true
+    path: /enhavo/comment/comment/resource/preview
+    methods: [POST]
+    defaults:
+        _controller: enhavo_comment.controller.comment:previewResourceAction
+        _sylius:
+            viewer:
+                strategy_options:
+                    service: enhavo_article.controller.article:showResourceAction
+

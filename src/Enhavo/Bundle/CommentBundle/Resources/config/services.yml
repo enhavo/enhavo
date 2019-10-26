@@ -84,3 +84,11 @@ services:
     Enhavo\Bundle\CommentBundle\Comment\Strategy\ImmediatelyPublishStrategy:
         arguments:
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
+
+    Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
+        public: true
+        arguments:
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '@Symfony\Component\Routing\RouterInterface'
+        tags:
+            - { name: enhavo.action, alias: 'comments' }
