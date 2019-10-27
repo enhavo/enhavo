@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -65,25 +66,25 @@ class Thread implements ThreadInterface, ResourceInterface
     }
 
     /**
-     * @param Comment $comment
+     * @param CommentInterface $comment
      */
-    public function addComment(Comment $comment)
+    public function addComment(CommentInterface $comment)
     {
         $comment->setThread($this);
         $this->comments[] = $comment;
     }
 
     /**
-     * @param Comment $comment
+     * @param CommentInterface $comment
      */
-    public function removeComment(Comment $comment)
+    public function removeComment(CommentInterface $comment)
     {
         $comment->setThread(null);
         $this->comments->remove($comment);
     }
 
     /**
-     * @return Comment[]|ArrayCollection
+     * @return CommentInterface[]|Collection
      */
     public function getComments(): Collection
     {

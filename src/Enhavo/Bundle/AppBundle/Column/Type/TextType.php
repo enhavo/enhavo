@@ -24,7 +24,8 @@ class TextType extends AbstractColumnType
         $data = parent::createColumnViewData($options);
 
         $data = array_merge($data, [
-            'property' => $options['property']
+            'property' => $options['property'],
+            'wrap' => $options['wrap']
         ]);
 
         return $data;
@@ -35,6 +36,7 @@ class TextType extends AbstractColumnType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'component' => 'column-text',
+            'wrap' => true,
         ]);
         $resolver->setRequired(['property']);
     }

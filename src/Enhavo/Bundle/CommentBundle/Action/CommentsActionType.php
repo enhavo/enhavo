@@ -41,6 +41,7 @@ class CommentsActionType extends AbstractActionType
         $data = parent::createViewData($options, $resource);
         $data['url'] = $url;
         $data['target'] = '_view';
+        $data['key'] = 'comment-view';
         return $data;
     }
 

@@ -5,6 +5,7 @@ import TextFactory from "@enhavo/app/Grid/Column/Factory/TextFactory";
 import ActionFactory from "@enhavo/app/Grid/Column/Factory/ActionFactory";
 import SubFactory from "@enhavo/app/Grid/Column/Factory/SubFactory";
 import MediaFactory from "@enhavo/app/Grid/Column/Factory/MediaFactory";
+import StateFactory from "@enhavo/app/Grid/Column/Factory/StateFactory";
 
 export default class ColumnRegistryPackage extends RegistryPackage
 {
@@ -15,5 +16,6 @@ export default class ColumnRegistryPackage extends RegistryPackage
         this.register('column-action', () => import("@enhavo/app/Grid/Column/Components/ColumnActionComponent.vue"), new ActionFactory(application));
         this.register('column-sub', () => import("@enhavo/app/Grid/Column/Components/ColumnSubComponent.vue"), new SubFactory(application));
         this.register('column-media', () => import("@enhavo/app/Grid/Column/Components/ColumnMediaComponent.vue"), new MediaFactory(application));
+        this.register('column-state', () => import("@enhavo/app/Grid/Column/Components/ColumnStateComponent.vue"), new StateFactory(application));
     }
 }
