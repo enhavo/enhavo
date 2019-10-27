@@ -78,6 +78,7 @@ services:
         arguments:
             - '@enhavo_comment.publish_strategy'
             - '%enhavo_comment.publish_strategy.options%'
+            - '@event_dispatcher'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -118,3 +119,10 @@ services:
             - '@Enhavo\Bundle\CommentBundle\Comment\AdminConfirmUrlGenerator'
         tags:
             - { name: twig.extension }
+
+    Enhavo\Bundle\CommentBundle\Column\CommentStateColumnType:
+        public: true
+        tags:
+            - { name: enhavo.column, alias: 'comment_state' }
+        calls:
+            - [setContainer, ['@service_container']]
