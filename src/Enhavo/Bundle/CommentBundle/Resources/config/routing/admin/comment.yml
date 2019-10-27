@@ -65,8 +65,7 @@ enhavo_comment_comment_data:
                         property: createdAt
                         width: 4
                     state:
-                        type: text
-                        property: state
+                        type: comment_state
                         width: 4
 
 enhavo_comment_comment_delete:
@@ -76,6 +75,9 @@ enhavo_comment_comment_delete:
     methods: [POST]
     defaults:
         _controller: enhavo_comment.controller.comment:deleteAction
+        _sylius:
+            redirect: enhavo_comment_comment_data # BugFix: any route to generate url, because index route need id parameter
+
 
 enhavo_comment_comment_batch:
     options:

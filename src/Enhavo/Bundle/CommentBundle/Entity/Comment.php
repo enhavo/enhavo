@@ -74,6 +74,11 @@ class Comment implements CommentInterface, ResourceInterface
     private $user;
 
     /**
+     * @var
+     */
+    private $stateChanged = false;
+
+    /**
      * Comment constructor.
      */
     public function __construct()
@@ -221,6 +226,9 @@ class Comment implements CommentInterface, ResourceInterface
      */
     public function setState(string $state): void
     {
+        if($state != $this->state) {
+            $this->stateChanged = true;
+        }
         $this->state = $state;
     }
 
@@ -296,5 +304,10 @@ class Comment implements CommentInterface, ResourceInterface
     public function setUser(?UserInterface $user): void
     {
         $this->user = $user;
+    }
+
+    public function isStateChanged(): bool
+    {
+        return $this->stateChanged;
     }
 }

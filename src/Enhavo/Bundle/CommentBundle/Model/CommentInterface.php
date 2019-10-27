@@ -39,4 +39,19 @@ interface CommentInterface
      * @return CommentSubjectInterface
      */
     public function getSubject(): CommentSubjectInterface;
+
+    /**
+     * @return bool
+     */
+    public function isStateChanged(): bool;
+
+    /**
+     * @return string
+     */
+    public function getState(): string;
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void;
 }
