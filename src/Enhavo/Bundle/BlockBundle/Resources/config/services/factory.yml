@@ -10,3 +10,10 @@ services:
         class: Enhavo\Bundle\BlockBundle\Factory\BlockFactory
         calls:
             - [setContainer, ['@service_container']]
+
+    enhavo_block.factory.abstract_block:
+        class: Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory
+        abstract: true
+        public: true
+        calls:
+            - [setContainer, ['@service_container']]
