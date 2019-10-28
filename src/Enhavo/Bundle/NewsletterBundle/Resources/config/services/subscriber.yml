@@ -28,6 +28,7 @@ services:
             - { name: form.type }
 
     enhavo_newsletter.subscriber.manager:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager
         arguments:
             - '@enhavo_newsletter.strategy_collector'

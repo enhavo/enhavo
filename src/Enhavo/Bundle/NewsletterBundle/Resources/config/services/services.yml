@@ -15,6 +15,7 @@ services:
             - { name: enhavo.newsletter_storage, alias: local }
 
     enhavo_newsletter.storage.cleverreach:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Storage\CleverReachStorage
         arguments:
             - '@enhavo_newsletter.cleverreach_client'
