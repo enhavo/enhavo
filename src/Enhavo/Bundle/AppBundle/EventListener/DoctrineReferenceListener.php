@@ -82,8 +82,20 @@ class DoctrineReferenceListener implements EventSubscriber
     public function postLoad(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        if(get_class($object) === $this->targetClass) {
+        if(get_class($object) === $this->targetClass || $this->isParentClass($object, $this->targetClass)) {
             $this->loadEntity($object);
+        }
+    }
+
+    private function isParentClass($object, $class)
+    {
+        $parentClass = get_parent_class($object);
+        if($parentClass === false) {
+            return false;
+        } elseif($parentClass === $class) {
+            return true;
+        } else {
+            return $this->isParentClass($parentClass, $class);
         }
     }
 

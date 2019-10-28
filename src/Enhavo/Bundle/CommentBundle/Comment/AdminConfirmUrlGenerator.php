@@ -55,7 +55,10 @@ class AdminConfirmUrlGenerator implements ConfirmUrlGeneratorInterface
             'views' => [
                 [
                     'url' => $subjectUrl,
-                    'id' => '1'
+                    'id' => '1',
+                    'storage' => [
+                        ['key' => 'comment-view', 'value' => 2]
+                    ]
                 ],
                 [
                     'url' => $commentListUrl,
