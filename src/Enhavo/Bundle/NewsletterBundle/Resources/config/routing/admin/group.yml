@@ -47,6 +47,11 @@ enhavo_newsletter_group_table:
                         width: 12
                         label: id
                         type: property
+                    code:
+                        property: code
+                        width: 12
+                        label: code
+                        type: property
                     action:
                         width: 2
                         label: label.edit

@@ -16,6 +16,11 @@ class GroupType extends AbstractType
             'label' => 'group.label.name',
             'translation_domain' => 'EnhavoNewsletterBundle'
         ));
+
+        $builder->add('code', TextType::class, array(
+            'label' => 'group.label.code',
+            'translation_domain' => 'EnhavoNewsletterBundle'
+        ));
     }
 
     public function resolveOptions(OptionsResolver $resolver)
