@@ -6,6 +6,7 @@ services:
             - 'NewsletterStorage'
 
     enhavo_newsletter.storage.local:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage
         arguments:
             - []
@@ -23,6 +24,7 @@ services:
             - { name: enhavo.newsletter_storage, alias: cleverreach}
 
     enhavo_newsletter.storage.mailchimp:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Storage\MailChimpStorage
         arguments:
             - '%enhavo_newsletter.mailchimp.credentials%'
@@ -70,6 +72,9 @@ services:
         class: Enhavo\Bundle\NewsletterBundle\Group\GroupManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    enhavo_newsletter.token_generator:
+        class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
 
     enhavo_newsletter.subscriber_exists_validator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
