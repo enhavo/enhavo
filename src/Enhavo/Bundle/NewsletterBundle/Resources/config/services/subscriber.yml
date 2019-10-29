@@ -49,7 +49,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\NotifyStrategy:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.notify.settings%'
+            - '%enhavo_newsletter.strategy.settings.notify%'
             - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage_resolver'
             - '@enhavo_newsletter.form_resolver'
@@ -62,7 +62,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\DoubleOptInStrategy:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.double_opt_in.settings%'
+            - '%enhavo_newsletter.strategy.settings.double_opt_in%'
             - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
@@ -76,7 +76,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Strategy\AcceptStrategy:
         public: true
         arguments:
-            - '%enhavo_newsletter.strategy.accept.settings%'
+            - '%enhavo_newsletter.strategy.settings.accept%'
             - '%enhavo_newsletter.forms%'
             - '@enhavo_newsletter.storage.local'
             - '@enhavo_newsletter.storage_resolver'
