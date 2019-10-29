@@ -20,7 +20,7 @@ class ConfirmMailer extends AbstractMailer
             'translationDomain' => $this->translationDomain
         ]);
 
-        $attach = \Swift_Attachment::newInstance();
+        $attach = new \Swift_Attachment();
         $attach->setFilename('bill.pdf');
         $attach->setContentType('application/pdf');
         $attach->setBody($this->getBillingGenerator()->generate(
@@ -48,7 +48,7 @@ class ConfirmMailer extends AbstractMailer
         $generator = $this->container->get($generatorConfig);
         return $generator;
     }
-    
+
     protected function getBillingGeneratorOptions()
     {
         return $this->container->getParameter('enhavo_shop.document.billing.options');
