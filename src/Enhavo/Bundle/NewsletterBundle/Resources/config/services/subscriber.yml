@@ -55,6 +55,7 @@ services:
             - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
+          - [ 'setTokenGenerator', ['Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: notify }
 
@@ -68,6 +69,7 @@ services:
             - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
+          - [ 'setTokenGenerator', ['Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: double_opt_in }
 
@@ -81,6 +83,7 @@ services:
             - '@enhavo_newsletter.form_resolver'
         calls:
           - [ 'setContainer', ['@service_container']]
+          - [ 'setTokenGenerator', ['Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator']]
         tags:
             - { name: enhavo.newsletter_strategy, alias: accept }
 
