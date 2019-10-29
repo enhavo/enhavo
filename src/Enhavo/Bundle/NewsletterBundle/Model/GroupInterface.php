@@ -31,4 +31,11 @@ interface GroupInterface
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubscriber();
+
+    /**
+     * Get code for storage service mapping
+     *
+     * @return mixed
+     */
+    public function getCode();
 }

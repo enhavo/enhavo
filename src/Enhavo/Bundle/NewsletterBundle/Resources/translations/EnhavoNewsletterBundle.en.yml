@@ -69,3 +69,4 @@ group:
   label:
       group: Group
       name: 'Name'
+      code: 'Code'

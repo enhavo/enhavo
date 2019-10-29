@@ -28,6 +28,11 @@ class Group implements GroupInterface, ResourceInterface
     private $name;
 
     /**
+     * @var string
+     */
+    private $code;
+
+    /**
      * @var SubscriberInterface
      */
     private $subscriber;
@@ -68,6 +73,23 @@ class Group implements GroupInterface, ResourceInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 
     /**
