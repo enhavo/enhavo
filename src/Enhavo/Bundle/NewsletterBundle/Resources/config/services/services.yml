@@ -48,6 +48,7 @@ services:
             - { name: kernel.event_subscriber }
 
     enhavo_newsletter.strategy_resolver:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Strategy\StrategyResolver
         arguments:
             - '%enhavo_newsletter.forms%'
