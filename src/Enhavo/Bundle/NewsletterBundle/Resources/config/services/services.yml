@@ -73,9 +73,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    enhavo_newsletter.token_generator:
-        class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
-
     enhavo_newsletter.subscriber_exists_validator:
         class: Enhavo\Bundle\NewsletterBundle\Validator\Constraints\SubscriberExistsValidator
         arguments:
