@@ -61,8 +61,8 @@ class NotifyStrategy extends AbstractStrategy
             $from = $this->getTypeOption('from', $subscriber->getType(), 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->getSubject())
+            $message = new \Swift_Message();
+            $message->setSubject($this->getSubject())
                 ->setFrom($from, $senderName)
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
@@ -82,8 +82,8 @@ class NotifyStrategy extends AbstractStrategy
             $senderName = $this->getTypeOption('sender_name', $subscriber->getType(), 'enahvo');
             $to = $this->getTypeOption('admin_email', $subscriber->getType(), 'no-reply@enhavo.com');
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->getAdminSubject($subscriber->getType()))
+            $message = new \Swift_Message();
+            $message->setSubject($this->getAdminSubject($subscriber->getType()))
                 ->setFrom($from, $senderName)
                 ->setTo($to)
                 ->setBody($this->renderTemplate($template, [

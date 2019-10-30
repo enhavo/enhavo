@@ -62,8 +62,8 @@ class ContactMailer
             $configuration->getTranslationDomain()
         );
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
+        $message = new \Swift_Message();
+        $message->setSubject($subject)
             ->setFrom($configuration->getFrom(), $configuration->getSenderName())
             ->setReplyTo($model->getEmail())
             ->setTo($configuration->getRecipient())
@@ -88,8 +88,8 @@ class ContactMailer
             $configuration->getTranslationDomain()
         );
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
+        $message = new \Swift_Message();
+        $message->setSubject($subject)
             ->setFrom($configuration->getFrom(), $configuration->getSenderName())
             ->setTo($model->getEmail())
             ->setBody($text, 'text/html');

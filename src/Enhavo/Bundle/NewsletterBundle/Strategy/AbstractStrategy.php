@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Subscriber\SubscriberManager;
 
@@ -23,6 +24,11 @@ abstract class AbstractStrategy extends AbstractType implements StrategyInterfac
      * @var array
      */
     protected $typeOptions;
+
+    /**
+     * @var TokenGeneratorInterface
+     */
+    protected $tokenGenerator;
 
     public function __construct($options, $typeOptions = [])
     {
@@ -50,9 +56,20 @@ abstract class AbstractStrategy extends AbstractType implements StrategyInterfac
         return $this->container->get('translator')->trans($subject, [], $translationDomain);
     }
 
+    /**
+     * @param TokenGeneratorInterface $tokenGenerator
+     */
+    public function setTokenGenerator(TokenGeneratorInterface $tokenGenerator)
+    {
+        $this->tokenGenerator = $tokenGenerator;
+    }
+
+    /**
+     * @param SubscriberInterface $subscriber
+     */
     protected function setToken(SubscriberInterface $subscriber)
     {
-        $token = $this->container->get('fos_user.util.token_generator')->generateToken();
+        $token = $this->tokenGenerator->generateToken();
         $subscriber->setToken($token);
     }
 

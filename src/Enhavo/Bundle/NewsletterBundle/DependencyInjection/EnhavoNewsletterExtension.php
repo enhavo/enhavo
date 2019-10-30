@@ -36,7 +36,7 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
         } else {
             $container->setParameter('enhavo_newsletter.forms', []);
         }
-        
+
         $this->setStrategySettings($config, $container);
         $this->setStorageSettings($config, $container);
 
@@ -50,25 +50,25 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
             $loader->load($configFile);
         }
     }
-    
+
     private function setStrategySettings(array $config, ContainerBuilder $container)
     {
         if(isset($config['strategy']['settings']['notify'])) {
-            $container->setParameter('enhavo_newsletter.strategy.notify.settings', $config['strategy']['settings']['notify']);
+            $container->setParameter('enhavo_newsletter.strategy.settings.notify', $config['strategy']['settings']['notify']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.notify.settings', []);
+            $container->setParameter('enhavo_newsletter.strategy.settings.notify', []);
         }
 
         if(isset($config['strategy']['settings']['accept'])) {
-            $container->setParameter('enhavo_newsletter.strategy.accept.settings', $config['strategy']['settings']['accept']);
+            $container->setParameter('enhavo_newsletter.strategy.settings.accept', $config['strategy']['settings']['accept']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.accept.settings', []);
+            $container->setParameter('enhavo_newsletter.strategy.settings.accept', []);
         }
 
         if(isset($config['strategy']['settings']['double_opt_in'])) {
-            $container->setParameter('enhavo_newsletter.strategy.double_opt_in.settings', $config['strategy']['settings']['double_opt_in']);
+            $container->setParameter('enhavo_newsletter.strategy.settings.double_opt_in', $config['strategy']['settings']['double_opt_in']);
         } else {
-            $container->setParameter('enhavo_newsletter.strategy.double_opt_in.settings', []);
+            $container->setParameter('enhavo_newsletter.strategy.settings.double_opt_in', []);
         }
     }
 

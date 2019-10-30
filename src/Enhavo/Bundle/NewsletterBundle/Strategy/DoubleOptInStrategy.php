@@ -79,8 +79,8 @@ class DoubleOptInStrategy extends AbstractStrategy
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->getSubject())
+            $message = new \Swift_Message();
+            $message->setSubject($this->getSubject())
                 ->setFrom($from, $senderName)
                 ->setTo($subscriber->getEmail())
                 ->setBody($this->renderTemplate($template, [
@@ -101,8 +101,8 @@ class DoubleOptInStrategy extends AbstractStrategy
             $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
             $to = $this->getTypeOption('admin_email', $type, 'no-reply@enhavo.com');
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->getAdminSubject($type))
+            $message = new \Swift_Message();
+            $message->setSubject($this->getAdminSubject($type))
                 ->setFrom($from, $senderName)
                 ->setTo($to)
                 ->setBody($this->renderTemplate($template, [

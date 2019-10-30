@@ -11,7 +11,7 @@ class SubscriberRepository extends EntityRepository
     {
         $query = $this->buildFilterQuery($query);
         $query
-            ->join('e.group', 'gr')
+            ->join('a.group', 'gr')
             ->andWhere('gr.id = :id')
             ->setParameter('id', $groupId);
         return $query->getQuery()->getResult();

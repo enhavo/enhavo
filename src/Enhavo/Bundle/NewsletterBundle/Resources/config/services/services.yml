@@ -6,6 +6,7 @@ services:
             - 'NewsletterStorage'
 
     enhavo_newsletter.storage.local:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage
         arguments:
             - []
@@ -23,6 +24,7 @@ services:
             - { name: enhavo.newsletter_storage, alias: cleverreach}
 
     enhavo_newsletter.storage.mailchimp:
+        public: true
         class: Enhavo\Bundle\NewsletterBundle\Storage\MailChimpStorage
         arguments:
             - '%enhavo_newsletter.mailchimp.credentials%'
