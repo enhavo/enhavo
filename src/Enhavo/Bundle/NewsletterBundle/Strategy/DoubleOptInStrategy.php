@@ -122,14 +122,18 @@ class DoubleOptInStrategy extends AbstractStrategy
 
     public function exists(SubscriberInterface $subscriber)
     {
-        if( $this->localStorage->exists($subscriber)) {
-            return true;
-        }
+        $checkExists = $this->getTypeOption('check_exists',$subscriber->getType(), false);
 
-        /** @var StorageInterface $storage */
-        $storage = $this->storageResolver->resolve($subscriber->getType());
-        if($storage->exists($subscriber)) {
-            return true;
+        if ($checkExists) {
+            if ($this->localStorage->exists($subscriber)) {
+                return true;
+            }
+
+            /** @var StorageInterface $storage */
+            $storage = $this->storageResolver->resolve($subscriber->getType());
+            if ($storage->exists($subscriber)) {
+                return true;
+            }
         }
 
         return false;
