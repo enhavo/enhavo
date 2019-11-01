@@ -13,6 +13,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Storage\LocalStorage;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageResolver;
 use Enhavo\Bundle\NewsletterBundle\Storage\StorageInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DoubleOptInStrategy extends AbstractStrategy
 {
@@ -73,7 +74,7 @@ class DoubleOptInStrategy extends AbstractStrategy
             $link = $this->getRouter()->generate('enhavo_newsletter_subscribe_activate', [
                 'token' => $subscriber->getToken(),
                 'type' => $subscriber->getType()
-            ], true);
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $template = $this->getTypeOption('template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/double-opt-in.html.twig');
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
