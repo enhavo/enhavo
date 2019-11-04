@@ -65,6 +65,7 @@ class DoubleOptInStrategy extends AbstractStrategy
         $this->localStorage->saveSubscriber($subscriber);
         $this->getSubscriberManager()->saveSubscriber($subscriber, $type);
         $this->notifyAdmin($subscriber, $type);
+        $this->confirmSubscriber($subscriber, $subscriber->getType());
     }
 
     private function notifySubscriber(SubscriberInterface $subscriber, $type)
@@ -87,6 +88,27 @@ class DoubleOptInStrategy extends AbstractStrategy
                 ->setBody($this->renderTemplate($template, [
                     'subscriber' => $subscriber,
                     'link' => $link
+                ]), 'text/html');
+
+            $this->sendMessage($message);
+        }
+    }
+
+    private function confirmSubscriber(SubscriberInterface $subscriber, $type)
+    {
+        $notify = $this->getTypeOption('confirm', $type, true);
+        if($notify) {
+
+            $template = $this->getTypeOption('confirmation_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig');
+            $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
+            $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
+
+            $message = new \Swift_Message();
+            $message->setSubject($this->getSubject())
+                ->setFrom($from, $senderName)
+                ->setTo($subscriber->getEmail())
+                ->setBody($this->renderTemplate($template, [
+                    'subscriber' => $subscriber
                 ]), 'text/html');
 
             $this->sendMessage($message);
