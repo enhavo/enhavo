@@ -98,7 +98,7 @@ class DoubleOptInStrategy extends AbstractStrategy
     {
         $notify = $this->getTypeOption('confirm', $type, true);
         if($notify) {
-
+            // TODO add unsubscribe/change subscription link
             $template = $this->getTypeOption('confirmation_template', $type, 'EnhavoNewsletterBundle:Subscriber:Email/confirmation.html.twig');
             $from = $this->getTypeOption('from', $type, 'no-reply@enhavo.com');
             $senderName = $this->getTypeOption('sender_name', $type, 'enahvo');
