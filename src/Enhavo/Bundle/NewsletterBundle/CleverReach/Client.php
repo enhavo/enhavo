@@ -16,6 +16,7 @@ use Enhavo\Bundle\NewsletterBundle\Exception\MappingException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class Client
 {
@@ -23,6 +24,7 @@ class Client
 
     protected $guzzleClient;
     protected $credentials;
+    protected $postdata;
     protected $defaultGroupNames;
     protected $groupMapping;
     /**
@@ -30,10 +32,11 @@ class Client
      */
     protected $eventDispatcher;
 
-    public function __construct($credentials, $defaultGroupNames, $groupMapping, $eventDispatcher)
+    public function __construct($credentials, $postdata, $defaultGroupNames, $groupMapping, $eventDispatcher)
     {
         $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => Client::REST_BASE_URI]);
         $this->credentials = $credentials;
+        $this->postdata = $postdata;
         $this->defaultGroupNames = $defaultGroupNames;
         $this->groupMapping = $groupMapping;
         $this->eventDispatcher = $eventDispatcher;
@@ -59,6 +62,26 @@ class Client
             ]
         ];
 
+        if ($this->postdata && count($this->postdata)) {
+            $propertyAccessor = new PropertyAccessor();
+
+            foreach($this->postdata as $postKey => $postValue) {
+
+                $subData = [];
+
+                if (is_array($postValue)) {
+                    foreach ($postValue as $key => $value) {
+                        $property = $propertyAccessor->getValue($subscriber, $value);
+                        $subData[$key] = $property;
+                    }
+                } else {
+                    $subData = $propertyAccessor->getValue($subscriber, $postValue);
+                }
+
+                $data['postdata'][0][$postKey] = $subData;
+            }
+        }
+
         $event = new CleverReachEvent($subscriber, $data);
         $this->eventDispatcher->dispatch(NewsletterEvents::EVENT_CLEVERREACH_PRE_SEND, $event);
         if($event->getDataArray()){
@@ -72,14 +95,16 @@ class Client
             }
 
             $groupId = $this->mapGroup($group);
-
-            $res = $this->guzzleClient->request('POST', 'groups.json/' . $groupId . '/receivers/insert' . '?token=' . $token, [
+            $uri = 'groups.json/' . $groupId . '/receivers/insert' . '?token=' . $token;
+            $res = $this->guzzleClient->request('POST', $uri, [
                 'json' => $data
             ]);
 
             $response = $res->getBody()->getContents();
 
-            if (json_decode($response)[0]->status !== 'insert success') {
+            $decodedResponse = json_decode($response);
+
+            if ($decodedResponse[0]->status !== 'insert success') {
                 throw new InsertException(
                     sprintf('Insertion in group "%s" with id "%s" failed.', $group->getName(), $groupId)
                 );

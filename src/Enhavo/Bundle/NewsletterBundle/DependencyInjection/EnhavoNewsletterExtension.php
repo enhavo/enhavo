@@ -86,6 +86,12 @@ class EnhavoNewsletterExtension extends AbstractResourceExtension
             $container->setParameter('enhavo_newsletter.cleverreach.credentials', []);
         }
 
+        if(isset($config['storage']['settings']['cleverreach']['postdata'])) {
+            $container->setParameter('enhavo_newsletter.cleverreach.postdata', $config['storage']['settings']['cleverreach']['postdata']);
+        } else {
+            $container->setParameter('enhavo_newsletter.cleverreach.postdata', []);
+        }
+
         if(isset($config['storage']['settings']['cleverreach']['groups']['mapping'])){
             $container->setParameter('enhavo_newsletter.cleverreach.mapping', $config['storage']['settings']['cleverreach']['groups']['mapping']);
         } else {
