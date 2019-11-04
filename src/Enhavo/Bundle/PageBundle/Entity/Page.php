@@ -132,7 +132,7 @@ class Page extends Content implements PageInterface
     public function removeChild(PageInterface $page)
     {
         $page->setParent(null);
-        $this->children->remove($page);
+        $this->children->removeElement($page);
         return $this;
     }
 
