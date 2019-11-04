@@ -80,7 +80,7 @@ class Thread implements ThreadInterface, ResourceInterface
     public function removeComment(CommentInterface $comment)
     {
         $comment->setThread(null);
-        $this->comments->remove($comment);
+        $this->comments->removeElement($comment);
     }
 
     /**

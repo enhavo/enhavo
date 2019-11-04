@@ -181,7 +181,7 @@ class Comment implements CommentInterface, ResourceInterface
     public function removeChild(Comment $child)
     {
         $child->setParent(null);
-        $this->children->remove($child);
+        $this->children->removeElement($child);
     }
 
     public function publish(): CommentInterface
