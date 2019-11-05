@@ -99,6 +99,7 @@ export default class List
             }
             resource.parentProperty = this.data.parentProperty;
             resource.positionProperty = this.data.positionProperty;
+            resource.expand = this.data.initiallyExpanded;
         }
         return resources;
     }
