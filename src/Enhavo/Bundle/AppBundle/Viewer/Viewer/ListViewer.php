@@ -79,7 +79,7 @@ class ListViewer extends AppViewer
         $columnData = $this->getViewerOption('columns', $dataConfiguration);
         $positionProperty = $this->getViewerOption('position_property', $dataConfiguration);
         $parentProperty = $this->getViewerOption('parent_property', $dataConfiguration);
-        $initiallyExpanded = $this->getViewerOption('initially_expanded', $dataConfiguration);
+        $expanded = $this->getViewerOption('expanded', $dataConfiguration);
 
         $openRoute = $this->mergeConfig([
             $this->getopenRoute($options),
@@ -106,7 +106,7 @@ class ListViewer extends AppViewer
             'items' => [],
             'positionProperty' => $positionProperty,
             'parentProperty' => $parentProperty,
-            'initiallyExpanded' => $initiallyExpanded,
+            'expanded' => $expanded,
             'sortable' => $dataConfiguration->isSortable()
         ];
 
