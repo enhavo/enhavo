@@ -25,6 +25,10 @@
         }
 
         get hasValue(): boolean {
+            // this is not the right place for this piece of code. refactor please!
+            if(this.data.value == undefined && typeof this.$children == "object" && typeof this.$children[0] == "object" && typeof this.$children[0].clearSelection == "function") {
+                this.$children[0].clearSelection();
+            }
             return !!this.data.value;
         }
     }
