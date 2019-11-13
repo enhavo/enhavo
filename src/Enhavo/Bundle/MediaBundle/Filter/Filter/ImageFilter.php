@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Exception\FilterException;
 use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Imagine\Exception\RuntimeException;
@@ -21,6 +22,11 @@ use Imagine\Image\Point;
 
 class ImageFilter extends AbstractFilter
 {
+    /**
+     * @param ContentInterface|\Enhavo\Bundle\MediaBundle\Model\FileInterface|\Enhavo\Bundle\MediaBundle\Model\FormatInterface $file
+     * @param FilterSetting $setting
+     * @throws FilterException
+     */
     public function apply($file, FilterSetting $setting)
     {
         $content = $this->getContent($file);
@@ -99,6 +105,12 @@ class ImageFilter extends AbstractFilter
         return $format;
     }
 
+    /**
+     * @param ImageInterface $image
+     * @param FilterSetting $setting
+     * @return ImageInterface
+     * @throws FilterException
+     */
     private function resize(ImageInterface $image, FilterSetting $setting)
     {
         if($setting->getSetting('cropHeight') !== null &&
@@ -111,7 +123,9 @@ class ImageFilter extends AbstractFilter
                 $setting->getSetting('cropWidth'),
                 $setting->getSetting('cropHeight'),
                 $setting->getSetting('cropX'),
-                $setting->getSetting('cropY')
+                $setting->getSetting('cropY'),
+                $this->backgroundColorHexToByteArray($setting->getSetting('backgroundColor', 'FFFFFF')),
+                $setting->getSetting('backgroundColorAlpha', 0)
             );
         }
 
@@ -146,11 +160,16 @@ class ImageFilter extends AbstractFilter
         return $image;
     }
 
-    private function crop(ImageInterface $image, $width, $height, $x, $y)
+    private function crop(ImageInterface $image, $width, $height, $x, $y, $backgroundColorValues, $backgroundColorAlpha)
     {
         $palette = new RGB();
-        $backgroundColor = $palette->color(array(255, 255, 255), 0);
-        $imagine = new Imagine();
+        $backgroundColor = $palette->color($backgroundColorValues, $backgroundColorAlpha);
+
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $imagine = new ImagickImagine();
+        } else {
+            $imagine = new Imagine();
+        }
 
         $size = $image->getSize();
         // resize image for x position if necessary
@@ -288,6 +307,19 @@ class ImageFilter extends AbstractFilter
             default:
                 return ImageInterface::THUMBNAIL_OUTBOUND;
         }
+    }
+
+    /**
+     * @param string $backgroundColorHex
+     * @return array
+     * @throws FilterException
+     */
+    private function backgroundColorHexToByteArray($backgroundColorHex)
+    {
+        if (!preg_match('/^[0-9A-Fa-f]{6}$/', $backgroundColorHex)) {
+            throw new FilterException('Imagefilter: Parameter "backgroundColor" must be color in hex format (e.g. "FFFFFF")');
+        }
+        return sscanf($backgroundColorHex, "%02x%02x%02x");
     }
 
     public function getType()
