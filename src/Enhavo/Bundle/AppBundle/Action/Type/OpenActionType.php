@@ -1,6 +1,6 @@
 <?php
 
-namespace SummitDatabaseBundle\Action;
+namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType;
 use Enhavo\Bundle\AppBundle\Action\ActionTypeInterface;
