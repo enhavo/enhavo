@@ -41,9 +41,6 @@ services:
     Enhavo\Bundle\AppBundle\Action\Type\OpenActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
         public: true
-        arguments:
-            - '@translator'
-            - '@router'
         tags:
             - { name: enhavo.action, alias: open }
               
