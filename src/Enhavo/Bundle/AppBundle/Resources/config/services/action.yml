@@ -42,7 +42,7 @@ services:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
         public: true
         tags:
-            - { name: enhavo.action, alias: download }
+            - { name: enhavo.action, alias: open }
               
     Enhavo\Bundle\AppBundle\Action\Type\DeleteActionType:
         parent: Enhavo\Bundle\AppBundle\Action\AbstractUrlActionType
