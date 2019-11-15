@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-filter-search">
-        <v-select :placeholder="data.label" :options="data.choices" @input="change" v-bind:class="[{'has-value': hasValue}]"></v-select>
+        <v-select :placeholder="data.label" :options="data.choices" @input="change" v-model="data.value" v-bind:class="[{'has-value': hasValue}]"></v-select>
     </div>
 </template>
 
@@ -25,10 +25,6 @@
         }
 
         get hasValue(): boolean {
-            // this is not the right place for this piece of code. refactor please!
-            if(this.data.value == undefined && typeof this.$children == "object" && typeof this.$children[0] == "object" && typeof this.$children[0].clearSelection == "function") {
-                this.$children[0].clearSelection();
-            }
             return !!this.data.value;
         }
     }
