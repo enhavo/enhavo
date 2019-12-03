@@ -15,7 +15,7 @@ class TaxonomyNotFoundException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
     {
-        $message = sprintf('Could not found taxonomy "%s". Please add it to the taxonomies configuration under enhavo_taxonomy.taxonies and execute enhavo:init', $message);
+        $message = sprintf('Could not find taxonomy "%s". Please add it to the taxonomies configuration under enhavo_taxonomy.taxonomies and execute enhavo:init', $message);
         parent::__construct($message, $code, $previous);
     }
 }

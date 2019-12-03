@@ -1,6 +1,6 @@
 -
   code: prepayment
   gateway: offline
-  name:
-    de: Vorkasse
-    en: Prepayment
+  name: Prepayment
+    #de: Vorkasse
+    #en: Prepayment

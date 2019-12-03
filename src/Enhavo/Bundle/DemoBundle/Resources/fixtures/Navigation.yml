@@ -1,0 +1,26 @@
+-
+    name: Main
+    content:
+        -
+            type: link
+            label: Home
+            link: /
+        -
+            type: link
+            label: About
+            link: /about
+        -
+            type: link
+            label: Imprint
+            link: /imprint
+        -
+            type: submenu
+            content:
+                -
+                    type: link
+                    label: Product 1
+                    link: /products/product1
+                -
+                    type: link
+                    label: Product 2
+                    link: /products/product2
