@@ -8,6 +8,7 @@ import WysiwygLoader from "@enhavo/form/Loader/WysiwygLoader";
 import ListLoader from "@enhavo/form/Loader/ListLoader";
 import DynamicFormLoader from "@enhavo/form/Loader/DynamicFormLoader";
 import AutoCompleteLoader from "@enhavo/form/Loader/AutoCompleteLoader";
+import WeekendDateLoader from "@enhavo/form/Loader/WeekendDateLoader";
 
 export default class FormRegistryPackage extends RegistryPackage
 {
@@ -17,6 +18,7 @@ export default class FormRegistryPackage extends RegistryPackage
         this.register(new CheckboxLoader());
         this.register(new SelectLoader());
         this.register(new DateTimeLoader());
+        this.register(new WeekendDateLoader());
         this.register(new DateLoader());
         this.register(new WysiwygLoader());
         this.register(new ListLoader());

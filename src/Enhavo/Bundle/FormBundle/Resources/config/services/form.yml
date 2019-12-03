@@ -16,6 +16,11 @@ services:
         tags:
             - { name: form.type }
 
+    enhavo_weekenddate:
+        class: Enhavo\Bundle\FormBundle\Form\Type\WeekendDateType
+        tags:
+            - { name: form.type }
+
     enhavo_datetime:
         class: Enhavo\Bundle\FormBundle\Form\Type\DateTimeType
         tags:
