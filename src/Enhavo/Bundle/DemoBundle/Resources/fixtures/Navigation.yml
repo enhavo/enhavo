@@ -1,5 +1,6 @@
 -
     name: Main
+    code: main_nav
     content:
         -
             type: link

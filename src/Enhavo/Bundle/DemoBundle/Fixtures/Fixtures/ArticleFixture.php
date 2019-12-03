@@ -65,12 +65,13 @@ class ArticleFixture extends AbstractFixture
 
     function createTerm($name)
     {
-        $category = new Term();
-        $category->setName($name);
-        $category->setSlug('/' . strtolower($name));
-        $category->setTaxonomy($this->getTaxonomy('article_category'));
+        /** @var Term $term */
+        $term = $this->container->get('enhavo_taxonomy.factory.term')->createNew();
+        $term->setName($name);
+        $term->setSlug('/' . strtolower($name));
+        $term->setTaxonomy($this->getTaxonomy('article_category'));
 
-        return $category;
+        return $term;
     }
 
     function getTaxonomy($name)
@@ -88,7 +89,8 @@ class ArticleFixture extends AbstractFixture
 
     function createTaxonomy($name)
     {
-        $taxonomy = new Taxonomy();
+        /** @var Taxonomy $taxonomy */
+        $taxonomy = $this->container->get('enhavo_taxonomy.factory.taxonomy')->createNew();
         $taxonomy->setName($name);
 
         $this->manager->persist($taxonomy);

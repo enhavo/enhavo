@@ -194,6 +194,13 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
                 $blockType->setTitle($fields['title']);
                 $blockType->setText($fields['text']);
                 break;
+            case('sidebar_column'):
+                $code = $fields['code'];
+                $sidebar = $this->manager->getRepository('EnhavoSidebarBundle:Sidebar')->findOneBy([
+                    'code' => $code
+                ]);
+                $blockType->setSidebar($sidebar);
+                break;
         }
     }
 

@@ -32,7 +32,7 @@ class NavigationFixture extends AbstractFixture
     {
         $navigation = $this->container->get('enhavo_navigation.factory.navigation')->createNew();
         $navigation->setName($args['name']);
-        $navigation->setCode(strtolower($args['name']));
+        $navigation->setCode($args['code']);
 
         $this->addNodes($navigation, $args['content']);
 
