@@ -41,9 +41,14 @@ sylius_product_table:
                 columns:
                     id:
                         property: id
-                        width: 12
+                        width: 2
                         label: id
                         type: property
+                    title:
+                        property: title
+                        width: 12
+                        label: title
+                        type: text
 
 sylius_product_delete:
     options:
