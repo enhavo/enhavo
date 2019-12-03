@@ -14,8 +14,8 @@ enhavo_app:
             type: newsletter
         calendar:
             type: calendar
-        shop:
-            type: shop
+#        shop:
+#            type: shop
         navigation:
             type: navigation
         redirect:
@@ -24,10 +24,10 @@ enhavo_app:
             type: media_library
         sidebar:
             type: sidebar
-        template:
-            type: template
-        theme:
-            type: theme
+#        template:
+#            type: template
+#        theme:
+#            type: theme
 
 enhavo_block:
     blocks:
