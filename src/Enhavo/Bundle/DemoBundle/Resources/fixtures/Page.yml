@@ -13,7 +13,7 @@
 #    de: Über uns
 #    en: About Us
   public: true
-  route: /de/ueber-uns
+  route: /about-us
 #    de: /de/ueber-uns
 #    en: /en/about-us
   content:
@@ -30,7 +30,7 @@
 #    de: Philosophie
 #    en: Philosophy
   public: true
-  route: /en/philosophy
+  route: /philosophy
 #    de: /de/philosophie
 #    en: /en/philosophy
   content:

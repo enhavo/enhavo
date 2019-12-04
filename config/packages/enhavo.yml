@@ -26,8 +26,8 @@ enhavo_app:
             type: sidebar
 #        template:
 #            type: template
-#        theme:
-#            type: theme
+        theme:
+            type: theme
 
 enhavo_block:
     blocks:
