@@ -28,7 +28,7 @@ class SliderBlockType extends AbstractBlockType
             'form' => SliderBlockFormType::class,
             'factory' => SliderBlockFactory::class,
             'repository' => 'EnhavoSliderBundle:SliderBlock',
-            'template' => 'EnhavoSliderBundle:Theme/Block:slider.html.twig',
+            'template' => 'theme/block/slider.html.twig',
             'label' => 'Slider',
             'translationDomain' => 'EnhavoSliderBundle',
             'groups' => ['default', 'content']

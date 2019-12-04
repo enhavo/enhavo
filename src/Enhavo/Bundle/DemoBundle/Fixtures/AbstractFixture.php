@@ -12,6 +12,8 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
 use Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock;
 use Enhavo\Bundle\BlockBundle\Model\Block\TextBlock;
 use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
@@ -20,6 +22,7 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
@@ -140,13 +143,36 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
      */
     protected function createContent($container)
     {
-        $containerEntity = new Node();
+        /** @var NodeFactory $nodeFactory */
+        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $containerEntity = $nodeFactory->createNew();
+
         $position = 0;
         foreach($container as $fields) {
-            $node = new Node();
+            $node = $nodeFactory->createNew();
             $type = $fields['type'];
             unset($fields['type']);
+
+            $content = false;
+            $setter = 'content';
+            if (isset($fields['content'])) {
+                $content = $fields['content'];
+                unset($fields['content']);
+            }
+            if (isset($fields['setter'])) {
+                $setter = $fields['setter'];
+                unset($fields['setter']);
+            }
             $block = $this->createBlockType($type, $fields);
+
+            if ($content !== false) {
+                $subNode = $this->createContent($content);
+                if ($setter !== false) {
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $accessor->setValue($block, $setter, $subNode);
+                }
+            }
+
             $node->setName($type);
             $node->setBlock($block);
             $node->setPosition($position++);
@@ -156,6 +182,36 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
         return $containerEntity;
     }
 
+    protected function createNodes(NodeInterface $parent, array $container)
+    {
+        /** @var NodeFactory $nodeFactory */
+        $nodeFactory = $this->container->get('enhavo_block.factory.node');
+        $nodes = [];
+        $position = 0;
+        foreach($container as $fields) {
+            $node = $nodeFactory->createNew();
+            $type = $fields['type'];
+            unset($fields['type']);
+
+            $content = false;
+            if (isset($fields['content'])) {
+                $content = $fields['content'];
+                unset($fields['content']);
+            }
+            $block = $this->createBlockType($type, $fields);
+
+            $node->setName($type);
+            $node->setBlock($block);
+            $node->setPosition($position++);
+
+            if ($content !== false) {
+                $this->createNodes($node, $content);
+            }
+
+            $parent->addChild($node);
+        }
+    }
+
     /**
      * @param $type
      * @param $fields
@@ -163,6 +219,7 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
      */
     protected function createBlockType($type, $fields)
     {
+        /** @var BlockFactory $factory */
         $factory = $this->container->get('enhavo_block.factory.block');
         $itemType = $factory->createNew($type);
 
