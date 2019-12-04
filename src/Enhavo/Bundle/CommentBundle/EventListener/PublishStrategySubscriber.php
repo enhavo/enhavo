@@ -15,9 +15,10 @@ use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+
 
 class PublishStrategySubscriber  implements EventSubscriberInterface
 {
