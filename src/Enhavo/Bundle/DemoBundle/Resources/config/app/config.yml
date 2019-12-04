@@ -1,3 +1,9 @@
+enhavo_app:
+    template_paths:
+        enhavo_demo:
+            path: '@EnhavoDemoBundle/Resources/views'
+            priority: 100
+
 enhavo_media:
     formats:
         articleThumbnail:
