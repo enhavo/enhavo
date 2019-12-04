@@ -28,7 +28,7 @@ class CalendarBlockType extends AbstractBlockType
             'form' => CalendarBlockFormType::class,
             'factory' => CalendarBlockFactory::class,
             'repository' => 'EnhavoCalendarBundle:CalendarBlock',
-            'template' => 'EnhavoCalendarBundle:Theme/Block:calendar.html.twig',
+            'template' => 'theme/block/calendar.html.twig',
             'label' => 'Calendar',
             'translationDomain' => 'EnhavoCalendarBundle',
             'groups' => ['default', 'content']
