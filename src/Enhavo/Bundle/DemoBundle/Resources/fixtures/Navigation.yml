@@ -8,12 +8,24 @@
             link: home
         -
             type: page
-            label: About
-            link: about
+            label: Articles
+            link: articles
+        -
+            type: page
+            label: Calendar
+            link: calendar
+        -
+            type: page
+            label: Slider
+            link: slider
         -
             type: page
             label: Philosophy
             link: philosophy
+        -
+            type: page
+            label: About
+            link: about
 #        -
 #            type: submenu
 #            content:
