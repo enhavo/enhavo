@@ -197,6 +197,7 @@ export default class MediaRow
             new Sortable(this.$element[0], {
                 animation: 150,
                 touchStartThreshold: 10,
+                draggable: '[data-media-item]',
                 onStart: function() {
                     MediaRow.sorting = true;
                     self.closeEdit();
