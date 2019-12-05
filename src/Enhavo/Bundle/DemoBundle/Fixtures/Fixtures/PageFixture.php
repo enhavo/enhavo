@@ -19,9 +19,11 @@ class PageFixture extends AbstractFixture
      */
     function create($args)
     {
-        $page = new Page();
+        /** @var Page $page */
+        $page = $this->container->get('enhavo_page.factory.page')->createNew();
         $page->setTitle($args['title']);
         $page->setPublic($args['public']);
+        $page->setSlug($args['slug']);
         $page->setContent($this->createContent($args['content']));
         $page->setRoute($this->createRoute($args['route'], $page));
         $this->translate($page);

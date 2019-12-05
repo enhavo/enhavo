@@ -3,25 +3,25 @@
     code: main_nav
     content:
         -
-            type: link
+            type: page
             label: Home
-            link: /
+            link: home
         -
-            type: link
+            type: page
             label: About
-            link: /about
+            link: about
         -
-            type: link
-            label: Imprint
-            link: /imprint
-        -
-            type: submenu
-            content:
-                -
-                    type: link
-                    label: Product 1
-                    link: /products/product1
-                -
-                    type: link
-                    label: Product 2
-                    link: /products/product2
+            type: page
+            label: Philosophy
+            link: philosophy
+#        -
+#            type: submenu
+#            content:
+#                -
+#                    type: link
+#                    label: Product 1
+#                    link: /products/product1
+#                -
+#                    type: link
+#                    label: Product 2
+#                    link: /products/product2

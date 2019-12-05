@@ -22,3 +22,8 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: console.command, command: 'enhavo:install' }
+
+
+    enhavo_demo.factory.route:
+        public: true
+        class: Enhavo\Bundle\RoutingBundle\Factory\RouteFactory

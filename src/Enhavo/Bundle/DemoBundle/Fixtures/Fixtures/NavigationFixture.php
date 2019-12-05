@@ -2,19 +2,11 @@
 
 namespace Enhavo\Bundle\DemoBundle\Fixtures\Fixtures;
 
-use Enhavo\Bundle\ArticleBundle\Entity\Article;
-use Enhavo\Bundle\CommentBundle\Entity\Comment;
-use Enhavo\Bundle\CommentBundle\Entity\Thread;
+use Enhavo\Bundle\CommentBundle\Exception\NotFoundException;
 use Enhavo\Bundle\DemoBundle\Fixtures\AbstractFixture;
-use Enhavo\Bundle\FormBundle\DynamicForm\ConfigurationInterface;
-use Enhavo\Bundle\NavigationBundle\Entity\Link;
-use Enhavo\Bundle\NavigationBundle\Entity\Navigation;
-use Enhavo\Bundle\NavigationBundle\Item\ItemManager;
+use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
 use Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver;
-use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
-use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class NavigationFixture extends AbstractFixture
 {
@@ -77,11 +69,28 @@ class NavigationFixture extends AbstractFixture
         $resolver = $this->container->get('enhavo_navigation.resolver.node_resolver');
         $node = null;
         try {
+            /** @var NodeFactory $factory */
             $factory = $resolver->resolveFactory($type);
             $node = $factory->createNew();
-        } catch (\Exception $ex) {}
+        } catch (\Exception $ex) {
+            print_r($ex->getMessage());echo PHP_EOL;die;
+        }
 
         if ($node) {
+
+            if ($type == 'page' && isset($item['link'])) {
+                $page = $this->getPage($item['link']);
+                if (!$page) {
+                    throw new NotFoundException('Page with name"' . $item['link'] . '" was not found"');
+                }
+                $node->setContent($page);
+            }
+            $config = ['target' => 'self'];
+            if (isset($item['target'])) {
+                $config['target'] = $item['target'];
+            }
+            $node->setConfiguration($config);
+
             $accessor = $this->propertyAccessor;
             foreach ($item as $k => $v) {
                 if ($accessor->isWritable($node, $k)) {
@@ -99,6 +108,19 @@ class NavigationFixture extends AbstractFixture
     }
 
     /**
+     * @param $slug
+     * @return \Enhavo\Bundle\PageBundle\Entity\Page|object|null
+     */
+    function getPage($slug)
+    {
+        $page = $this->manager->getRepository('EnhavoPageBundle:Page')->findOneBy([
+            'slug' => $slug
+        ]);
+
+        return $page;
+    }
+
+    /**
      * @inheritdoc
      */
     function getName()
@@ -111,6 +133,6 @@ class NavigationFixture extends AbstractFixture
      */
     function getOrder()
     {
-        return 20;
+        return 30;
     }
 }

@@ -263,7 +263,8 @@ abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterf
 
     protected function createRoute($url, $content)
     {
-        $route = new Route();
+        $route = $this->container->get('enhavo_demo.factory.route')->createNew();
+        $route->setName(preg_replace('/ */', '', strtolower($content->getTitle())));
         $route->setStaticPrefix($url);
         $route->setContent($content);
         $this->translate($route);
