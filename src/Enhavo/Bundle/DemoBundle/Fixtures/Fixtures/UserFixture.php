@@ -18,11 +18,11 @@ class UserFixture extends AbstractFixture
      */
     function create($args)
     {
-        $user = new User();
+        $user = new User(); // todo use factory
         $user->setEmail($args['email']);
         $user->setUsername($args['email']);
         $user->setPlainPassword($args['password']);
-        
+
         if(isset($args['roles']) && is_array($args['roles'])) {
             foreach($args['roles'] as $role) {
                 $user->addRole($role);
