@@ -1,5 +1,6 @@
 services:
     enhavo_block.factory.node:
+        public: true
         class: Enhavo\Bundle\BlockBundle\Factory\NodeFactory
         arguments:
             - '@enhavo_block.factory.block'
@@ -7,6 +8,7 @@ services:
             - [setContainer, ['@service_container']]
 
     enhavo_block.factory.block:
+        public: true
         class: Enhavo\Bundle\BlockBundle\Factory\BlockFactory
         calls:
             - [setContainer, ['@service_container']]
