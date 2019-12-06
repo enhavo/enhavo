@@ -45,7 +45,7 @@ class ArticleFixture extends AbstractFixture
 
     function createThread()
     {
-        $thread = new Thread();
+        $thread = $this->container->get('enhavo_comment.factory.thread')->createNew();
 
         return $thread;
     }
