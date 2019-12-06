@@ -50,6 +50,7 @@ services:
             - { name: 'enhavo.init', alias: 'taxonomy'}
 
     enhavo_taxonomy.factory.term:
+        public: true
         class: '%enhavo_taxonomy.factory.term.class%'
         arguments:
             - '%enhavo_taxonomy.model.term.class%'
